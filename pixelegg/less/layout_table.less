@@ -34,8 +34,9 @@ table.et2_grid {
 }
 
 
-
-
+.innerContainer{
+	overflow:hidden;
+}
 // Table Head in Listen
 
 .egwGridView_grid tr.th > td, /*legacy*/
@@ -166,35 +167,31 @@ table.egwGridView_outer{
 
 table.egwGridView_grid{
 //	border-collapse:collapse;
-	font-size: 1.3em;
+	font-size: 1.4em;
 	.background-color-0-gray;
-	border-spacing: 0px;
-	
-//	width: 100%;
-
+	border-spacing: 0px 1px;
+	width: 100%;
 
 	img{ width: 16px;}
 
 	tbody {
-
 			border-bottom: 1px solid @lightgray;
 			padding: 2px 3px 2px 4px;
 			margin: 0;
 			vertical-align: top;
 
-		// Listendarstellung
+	// Listendarstellung
 	// Reihen ohne Border left und right
-//		tr {border-bottom: 1px solid !important; }
 
-		tr.selected{
-			.background_linear_gradient; .background-color-25-gray;
-		}
-		tr.focused{
-			.background_linear_gradient;
-			.background-color-25-gray;
-			background: @active_row !important;
-		}
-	}
+                        tr.selected{
+                                .background_linear_gradient; .background-color-25-gray;
+                        }
+                        tr.focused{
+                                .background_linear_gradient;
+                                .background-color-25-gray;
+                                background: @active_row !important;
+                        }
+                }
 
 	tr {
 
@@ -229,10 +226,6 @@ table.egwGridView_grid{
 } // table
 
 
-
-
-
-
 .nextmatch_header .selectcols {
 	background: none;
 //	height: auto;
@@ -244,7 +237,5 @@ table.egwGridView_grid{
 .nextmatch_header tr {
 	background: none;
 }
-.nextmatch_header {
-	padding: 0px;
-}
+
 //

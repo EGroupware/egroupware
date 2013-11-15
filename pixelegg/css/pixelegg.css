@@ -196,6 +196,8 @@ a.et2_url.url {
   border: none;
   background: transparent;
   padding: 0px;
+  width: 16px;
+  height: 16px;
 }
 button.et2_button_text:hover,
 input[type=button]:hover {
@@ -381,13 +383,13 @@ span.et2_date span {
 /* These change button alignment, but it seems the standard is right-aligned for
 action buttons, left aligned for "extra" controls
 .ui-dialog .ui-dialog-buttonpane {
-	text-align: left;
+        text-align: left;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-	float: none;
+        float: none;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	float: none;
+        float: none;
 }
 */
 /** 
@@ -885,6 +887,12 @@ div.message.floating {
   float: right;
   display: none;
 }
+.favorites .sideboxstar {
+  background-image: url("../images/bullet.png");
+  background-repeat: no-repeat;
+  height: 9px;
+  width: 9px;
+}
 .sidebox-favorites ul.favorites {
   width: 99%;
   padding: 0px;
@@ -893,7 +901,7 @@ div.message.floating {
 }
 .sidebox-favorites ul.favorites li {
   padding-left: 0 !important;
-  margin-left: -10px;
+  margin-left: 0px;
   line-height: 1.5em;
 }
 .sidebox-favorites ul.favorites li img {
@@ -911,14 +919,7 @@ div.message.floating {
 }
 .sidebox-favorites ul.favorites li img:hover {
   height: 16px;
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.Complete_Button_Icon_hover ;*/
 }
 .sidebox-favorites ul.favorites li img.sideboxstar {
   margin-right: 1ex;
@@ -973,6 +974,9 @@ div.message.floating {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+.sidebox-favorites .ui-menu .ui-menu-item:hover {
+  background-color: #ffdd73;
+}
 .sidebox-favorites .ui-menu .ui-menu-item a {
   line-height: inherit;
   padding: 2px 0px;
@@ -980,18 +984,11 @@ div.message.floating {
 }
 .sidebox-favorites .ui-menu .ui-menu-item a:hover {
   text-decoration: underline;
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.Complete_Button_Icon_hover ;*/
 }
 .sidebox-favorites .ui-menu .ui-menu-item a img {
-  height: 16px;
-  width: 16px;
+  height: 14px;
+  width: 14px;
 }
 .sidebox-favorites div.ui-icon-heart {
   position: relative;
@@ -1030,10 +1027,12 @@ div.message.floating {
 .nextmatch_sortheader.asc {
   font-weight: bold;
   background-image: url(../images/up.png);
+  background-size: 12px 12px;
 }
 .nextmatch_sortheader.desc {
   font-weight: bold;
   background-image: url(../images/down.png);
+  background-size: 12px 12px;
 }
 .nextmatch_resize_helper {
   border-right: 1px dotted gray;
@@ -1069,9 +1068,9 @@ div.message.floating {
 /* End of hierarchy */
 /* Mangled link-to widget inside a nextmatch - used for DnD uploads */
 .et2_nextmatch * .et2_link_to {
-  position: fixed;
+  position: relative;
   left: 0px;
-  background-color: white;
+  background-color: inherit;
   border: 1px gray;
   padding: 5px;
 }
@@ -1281,6 +1280,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
   overflow-x: hidden;
 }
+/*sadfs*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1351,7 +1351,7 @@ option:checked {
   color: #ffffff;
   font-weight: bold;
   background-image: none;
-  background-color: #679fd2;
+  background-color: #0c5da5;
 }
 .ui-widget-header a {
   color: #ffffff;
@@ -1412,7 +1412,7 @@ option:checked {
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-  color: #e17009;
+  color: #808080;
   text-decoration: none;
 }
 /* Interaction Cues
@@ -1444,14 +1444,18 @@ option:checked {
   color: #b3b3b3;
 }
 .ui-state-error a,
-.ui-widget-content .ui-state-error a,
-.ui-widget-header .ui-state-error a {
-  color: #b3b3b3;
+.ui-widget-content .ui-state-error a {
+  color: #ff0000;
 }
 .ui-state-error-text,
 .ui-widget-content .ui-state-error-text,
 .ui-widget-header .ui-state-error-text {
-  color: #b3b3b3;
+  color: #ff0000;
+}
+/*Schliessen x*/
+.ui-icon-closethick {
+  color: #ffffff;
+  background-color: #ff0000;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -2014,56 +2018,6 @@ button[id*="note"]:focus {
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
-button#mail-index_button[mailcreate],
-button[id*="mailcreate"] {
-  background-color: #0b5fa4;
-  color: #FFF;
-  text-shadow: none;
-  height: 35px;
-  background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  background-image: url("images/write_mail.png") !important;
-  background-position: right center !important;
-  background-repeat: no-repeat;
-  padding-left: 25px;
-  text-align: left;
-  width: 99%;
-}
-button#mail-index_button[mailcreate]:before,
-button[id*="mailcreate"]:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-button#mail-index_button[mailcreate]:hover,
-button[id*="mailcreate"]:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-button#mail-index_button[mailcreate]:focus,
-button[id*="mailcreate"]:focus {
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
 button#mail-compose_button[send],
 button#mail-compose_button[id*="send"],
 .mail-compose_button {
@@ -2142,9 +2096,16 @@ button[id*="add_alarm"]:focus {
 /* @group Base */
 .chzn-container {
   color: #808080;
+  width: auto;
+}
+.chzn-container .chzn-drop {
+  width: auto;
 }
 /* @end */
 /* @group Single Chosen */
+.chzn-container-single .chzn-single span {
+  width: auto;
+}
 /* @end */
 /* @group Results */
 .chzn-container .chzn-results {
@@ -2673,10 +2634,10 @@ a.textSidebox,
 td.lettersearch {
   background-image: none;
 }
-.nextmatch_header table {
-  border: none !important;
-  width: 99% !important;
-}
+/*.nextmatch_header table {
+	border: none !important;
+	width: 99% !important;
+}*/
 .egw_fw_ui_sidemenu_marker {
   display: block;
   height: 20px;
@@ -2947,6 +2908,9 @@ table.et2_grid {
   border-top: 3px solid;
   border-color: #f0f0f0;
 }
+.innerContainer {
+  overflow: hidden;
+}
 .egwGridView_grid tr.th > td,
 .nextmatch_header {
   background-color: #d9d9d9;
@@ -3045,9 +3009,10 @@ table.egwGridView_outer thead tr th.optcol .selectcols:active {
   background-repeat: no-repeat;
 }
 table.egwGridView_grid {
-  font-size: 1.3em;
+  font-size: 1.4em;
   background-color: #ffffff;
-  border-spacing: 0px;
+  border-spacing: 0px 1px;
+  width: 100%;
 }
 table.egwGridView_grid img {
   width: 16px;
@@ -3102,9 +3067,6 @@ table.egwGridView_grid tr td:active {
 }
 .nextmatch_header tr {
   background: none;
-}
-.nextmatch_header {
-  padding: 0px;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -3285,9 +3247,9 @@ table.egwGridView_grid tr td:active {
 #egw_fw_header {
   width: 100%;
   float: left;
-  /* ###########################################################################################################################################
+  /*     ###########################################################################################################################################
     /* ###########################################################################################################################################
-    * Topmenu
+    * Topmenu / Home / Einstellungen / usw..
     /* ###########################################################################################################################################
     */
 }
@@ -3311,18 +3273,6 @@ table.egwGridView_grid tr td:active {
 #egw_fw_header #egw_fw_topmenu_items,
 #egw_fw_header #egw_fw_topmenu_info_items {
   display: inline;
-}
-#egw_fw_header #egw_fw_topmenu {
-  display: block;
-  -webkit-transition: all 1s linear;
-  -moz-transition: all 1s linear;
-  -o-transition: all 1s linear;
-  -ms-transition: all 1s linear;
-  transition: all 1s linear;
-  color: #000000;
-  -webkit-border-bottom-left-radius: none;
-  -moz-border-radius-bottomleft: none;
-  border-bottom-left-radius: none;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items {
   float: left;
@@ -3358,6 +3308,10 @@ table.egwGridView_grid tr td:active {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child :before {
   border: none;
 }
+/*#################################################
+###################################################
+ Slide Effekt
+###################################################*/
 #egw_fw_topmenu_slide {
   width: auto;
   text-align: center;
@@ -3384,14 +3338,50 @@ table.egwGridView_grid tr td:active {
   margin-top: 10px;
   margin-left: 40px;
 }
+/*#################################################
+###################################################
+ Add / Print / Logout / 
+    - Name / Date
+###################################################*/
 #egw_fw_topmenu_addons {
-  /* ###################################################################
-     * Topmenu
-     *
-     * Name + Datum + Hinzufügen
-     *
-     *
-     * */
+  /*Name / Datum / angemeldete User*/
+}
+#egw_fw_topmenu_addons span#quick_add {
+  position: fixed;
+  right: 88px;
+  top: 0;
+  z-index: 200;
+  padding: 0 0.8em 0.8em 0.5em;
+}
+#egw_fw_topmenu_addons span#quick_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  height: 30px;
+  padding: 0 0 0 10px;
+  font-size: 0.9em;
+  line-height: 1.1em;
+}
+#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox:focus {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox option:first-child:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
 }
 #egw_fw_topmenu_addons #egw_fw_logout {
   background-image: url(../images/logout.png);
@@ -3454,54 +3444,41 @@ table.egwGridView_grid tr td:active {
 }
 #egw_fw_topmenu_addons #egw_fw_topmenu_info_items {
   padding-right: 20px;
-  float: right;
   white-space: nowrap;
+  float: right;
+  display: flex;
 }
 #egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(2) {
   /*float: right;*/
   margin-top: 0;
+  font-size: 1em;
+  padding-right: 5px;
 }
-#egw_fw_topmenu_addons span#quick_add {
-  position: fixed;
-  right: 88px;
-  top: 0;
-  z-index: 200;
-  padding: 0 0.8em 0.8em 0.5em;
+#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3) {
+  position: relative;
+  top: 0px;
+  display: inline-block;
 }
-#egw_fw_topmenu_addons span#quick_add:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  height: 30px;
-  padding: 0 0 0 10px;
-  font-size: 0.9em;
-  line-height: 1.1em;
-}
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox:hover {
+#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox:focus {
+#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox option:first-child:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
+#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):before {
+  content: "| ";
+  font-size: 1em;
+  color: #0c5da5;
 }
 /* ################################################################################################################
+ ################################################################################################################
+ ################################################################################################################
  * Sidebar
- * ################################################################################################################
- */
+ * ################################################################################################################*/
 #egw_fw_sidebar {
   position: fixed;
   overflow: hidden;
@@ -3533,9 +3510,9 @@ table.egwGridView_grid tr td:active {
   background-color: #fafafa;
   background-image: none;
   border-color: #f0f0f0;
-  border-radius: 5px 5px 5px 5px;
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:hover {
   background-color: #d9d9d9;
@@ -3693,12 +3670,6 @@ table.egwGridView_grid tr td:active {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   background-color: inherit !important;
 }
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .favorites .sideboxstar {
-  background-image: url("../images/bullet.png");
-  background-repeat: no-repeat;
-  height: 9px;
-  width: 9px;
-}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content_bottom {
   border-width: 0px 1px 1px 1px;
 }
@@ -3755,24 +3726,17 @@ table.egwGridView_grid tr td:active {
   background-color: #ffffff;
   border-color: #808080;
 }
-.egw_fw_ui_category_content .sidebox-favorites .favorites div.ui-icon-trash {
-  margin-right: 2px;
-  margin-top: -5px;
-}
 .egw_fw_ui_sidemenu_listitem {
-  display: block;
-  margin: 4px 0 5px 20px;
+  padding: 0.5em 0;
+  margin: 4px 0 5px 0px;
   position: relative;
-}
-.egw_fw_ui_sidemenu_listitem img {
-  height: 9px;
-  width: 9px;
-  padding: 0px;
 }
 .egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon {
   height: 9px;
   width: 9p;
   padding: 0px;
+  float: left;
+  background-image: url("../images/bullet.png");
 }
 .egw_fw_ui_sidemenu_listitem input {
   height: 16px;
@@ -3784,17 +3748,21 @@ table.egwGridView_grid tr td:active {
   margin-left: 1px;
 }
 .egw_fw_ui_sidemenu_listitem select {
-  width: 86% !important;
+  max-width: 85% !important;
+}
+.egw_fw_ui_sidemenu_listitem img {
+  height: 9px;
+  width: 9px;
+  padding: 0px;
+  float: right;
 }
 .egw_fw_ui_sidemenu_listitem a {
-  padding: 5px 30px 5px 5px;
+  padding: 5px 0px 5px 5px;
   text-decoration: none;
   min-width: 5em;
-  display: block;
 }
 .egw_fw_ui_sidemenu_listitem a:hover {
   color: #000000;
-  background-color: #679fd2;
 }
 .egw_fw_ui_sidemenu_listitem a:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -3836,6 +3804,11 @@ table.egwGridView_grid tr td:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #ffffff;
+}
+.egw_fw_ui_sidemenu_listitem:hover {
+  color: #000000;
+  background-color: #ffdd73;
+  padding: 0.5em 0;
 }
 .egw_fw_ui_scrollarea {
   overflow: hidden;
@@ -4096,6 +4069,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 .et2_nextmatch input,
 .et2_nextmatch select {
   height: auto;
+  width: auto;
 }
 .et2_nextmatch .nextmatch_header {
   border: none;
@@ -4103,6 +4077,10 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   background-color: #f0f0f0;
   background-size: 80% 10;
   margin-bottom: 3px;
+}
+.et2_nextmatch .nextmatch_header img {
+  height: 16px;
+  width: 16px;
 }
 .et2_nextmatch .nextmatch_header div.et2_hbox_right {
   background: transparent;
@@ -4120,7 +4098,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin-top: -5px;
+  margin-top: 0px;
   margin-right: 1em;
   height: 16px;
   width: 16px;
@@ -4147,7 +4125,9 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   cursor: pointer;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4162,16 +4142,22 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
             */
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
   height: 2em;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown img {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown img {
   height: 16px;
   width: 16px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button {
   height: 3.0ex;
   display: inline-block;
   vertical-align: middle;
@@ -4181,44 +4167,62 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   background-image: none;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button > div,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button > div {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button > div,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button > div,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button > div {
   vertical-align: middle;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button:last-child,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button:last-child {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button:last-child,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button:last-child,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button:last-child {
   padding: 0px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown + ul.ui-menu {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown + ul.ui-menu {
   position: absolute;
   z-index: 2;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul {
   border-color: #bfbfbf;
   background-color: #ffffff;
   color: #000000;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li {
   background-color: #ffffff;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li:hover,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li:hover {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li:hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li:hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li:hover {
   background-color: #f0f0f0;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a {
   height: 40px;
   border: none;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a img,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a img {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a img {
   height: 16px;
   width: 16px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a:hover,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a:hover {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a:hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a:hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a:hover {
   background: none;
   text-indent: -22px;
   margin-left: 21px;

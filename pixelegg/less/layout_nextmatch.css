@@ -364,6 +364,7 @@
 .et2_nextmatch input,
 .et2_nextmatch select {
   height: auto;
+  width: auto;
 }
 .et2_nextmatch .nextmatch_header {
   border: none;
@@ -371,6 +372,10 @@
   background-color: #f0f0f0;
   background-size: 80% 10;
   margin-bottom: 3px;
+}
+.et2_nextmatch .nextmatch_header img {
+  height: 16px;
+  width: 16px;
 }
 .et2_nextmatch .nextmatch_header div.et2_hbox_right {
   background: transparent;
@@ -388,7 +393,7 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin-top: -5px;
+  margin-top: 0px;
   margin-right: 1em;
   height: 16px;
   width: 16px;
@@ -415,7 +420,9 @@
   cursor: pointer;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -430,16 +437,22 @@
             */
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
   height: 2em;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown img {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown img {
   height: 16px;
   width: 16px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button {
   height: 3.0ex;
   display: inline-block;
   vertical-align: middle;
@@ -449,44 +462,62 @@
   background-image: none;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button > div,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button > div {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button > div,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button > div,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button > div {
   vertical-align: middle;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button:last-child,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown button:last-child {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button:last-child,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button:last-child,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button:last-child {
   padding: 0px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown + ul.ui-menu {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown + ul.ui-menu {
   position: absolute;
   z-index: 2;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul {
   border-color: #bfbfbf;
   background-color: #ffffff;
   color: #000000;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li {
   background-color: #ffffff;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li:hover,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li:hover {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li:hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li:hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li:hover {
   background-color: #f0f0f0;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a {
   height: 40px;
   border: none;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a img,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a img {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a img {
   height: 16px;
   width: 16px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a:hover,
-.et2_nextmatch .nextmatch_header div.addressbook-index_favorite ul li a:hover {
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a:hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a:hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a:hover {
   background: none;
   text-indent: -22px;
   margin-left: 21px;

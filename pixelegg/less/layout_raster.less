@@ -67,9 +67,9 @@
 
     }
 
+/*     ###########################################################################################################################################
     /* ###########################################################################################################################################
-    /* ###########################################################################################################################################
-    * Topmenu
+    * Topmenu / Home / Einstellungen / usw..
     /* ###########################################################################################################################################
     */
 
@@ -80,169 +80,52 @@
     #egw_fw_topmenu_info_items {
         display: inline;
     }
-
-    //				// Feld für Menu und User + Hinzufügen
-    //				#egw_fw_topmenu {
-    ////								position: fixed;
-    ////								z-index: 100;
-    //								top: 0px;
-    ////								float: left;
-    ////								width: auto;
-    //								margin: 0em;
-    ////								margin-left: 255px;
-    ////								text-align: right;
-    //								padding-top: 0;
-    //								padding-bottom: 5px;
-    ////								padding-left: 2em;
-    //								width: 100%;
-    ////								display: none;
-    ////								.color-5-gray;
-    ////								.background-color-5-gray;
-    //							    border-bottom-left-radius: 5px;
-    //
-    //								a {
-    //										text-decoration: none;
-    //										color: black;
-    //	        					}
-    //
-    //								// Menu : Home / Einstellungen / usw..
-    //								#egw_fw_topmenu_items {
-    //
-    //														float: left;
-    //														padding-top: 10px;
-    //
-    //														ul {
-    //																padding: 10px;
-    //
-    //																li{
-    //
-    //																		.color-5-gray;
-    //																		padding-right: 1em;
-    //																		padding: 0.5em 1em;
-    //																		.border-color-50-gray;
-    //
-    //																		a {
-    //																			.color-5-gray;
-    //																			height: 30px;
-    //																			padding: 0.2em;
-    //																			}
-    //																		a:hover {
-    //																			.color-5-gray;
-    //																			.border-color-50-gray;
-    //																			}
-    //																	}
-    //
-    //
-    //
-    //																li:hover{
-    ////																	.background-color-15-gray;
-    //																	.border-color-50-gray;
-    //
-    //																}
-    //
-    //
-    //																// Zeichen
-    //																li:first-child{
-    //																			padding-left: 1.5em;
-    //																			padding-right: 4em;
-    //
-    //																			margin-right: 5px;
-    //										   									margin-top: 0px;
-    //										   									margin-left: -28px;
-    //										   									height: 30px;
-    //
-    ////																			// Das Symbol für das Ausklappen
-    ////																			:before {
-    ////																				content: "+";
-    //////																				color: red;
-    ////																				color: @egw_color_1;
-    ////																				font-size: 2em;
-    ////																				.Complete_Button_hinweis;
-    ////																			}
-    //
-    //																		}
-    //
-    //														} // Ende ul
-    //
-    //
-    //
-    //
-    //														select {
-    //																	margin-top: 0;
-    //																}
-    //
-    //													} // Ende items
-    //								} // Ende
-
-
-    // Navigation wird sichtbar
+    
     #egw_fw_topmenu{
-        display:block;
-        -webkit-transition: all 1s linear;
-        -moz-transition: all 1s linear;
-        -o-transition: all 1s linear;
-        -ms-transition: all 1s linear;
-        transition: all 1s linear;
-
-        .color-100-gray;
-
-        //									.background-color-10-gray;
-
-        -webkit-border-bottom-left-radius: none;
-        -moz-border-radius-bottomleft: none;
-        border-bottom-left-radius: none;
-
-
-
+        
         #egw_fw_topmenu_items {
             float: left;
             padding-top: 10px;
             //														height: 30px;
 
-            ul {
-                //															padding: 10px;
-                //															margin-left: 2em;
+                ul {
+                    //															padding: 10px;
+                    //															margin-left: 2em;
 
-                li{
-                    .color-100-gray;
-                    .Button_size_square_32;
-                    padding: 0.3em 0.4em;
-                    .Complete_Button_normal;
+                        li{
+                            .color-100-gray;
+                            .Button_size_square_32;
+                            padding: 0.3em 0.4em;
+                            .Complete_Button_normal;
 
-                    &:hover{.Complete_Button_hover;.color-100-gray;}
+                            &:hover{.Complete_Button_hover;.color-100-gray;}
+                            a {.color-100-gray;}
+                            a:hover {
+                                .color-50-gray;
+                                .border-color-50-gray;
+                                    }
+                            }
 
-                    // Zeichen vor dem Link (klein)
-                    //																:before {
-                    //																	content: "►";
-                    //																	color: @egw_color_1;
-                    //																	font-size: 1em;
-                    //																		}
-                    //
-                    a {.color-100-gray;}
-                    a:hover {
-                        .color-50-gray;
-                        .border-color-50-gray;
-                    }
-                }
-
-                li:first-child{
-                    margin-left: -28px;
-                    :before{border: none;}
-                }
-            } // Ende ul
+                        li:first-child{
+                            margin-left: -28px;
+                            :before{border: none;}
+                        }
+                    } // Ende ul
 
 
         }	// Ende Items
+        
+        
+    } // Ende Topmenu
+    
 
+} // Ende Header
 
-
-
-
-
-    }	// Ende hover
-
-
-}
+	
+/*#################################################
+###################################################
+ Slide Effekt
+###################################################*/
 
 
 #egw_fw_topmenu_slide{
@@ -276,31 +159,74 @@
 
     }
 }
+
+
+
+/*#################################################
+###################################################
+ Add / Print / Logout / 
+    - Name / Date
+###################################################*/
 #egw_fw_topmenu_addons{
-    // Logout
+    
+        // ########################################
+    // quick_add
 
-    #egw_fw_logout {
-        background-image: url(../images/logout.png);
-        background-size: 16px 16px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        display: inline-block;
-        float: right;
-        margin-right: 1em;
-        margin-top: 0px;
-        z-index: 200;
-        .Button_size_square_16;
-        .border_normal;
-        .box_shadow_standard_light;
-        padding: 0.5em;
-        top: 5px;
+    span#quick_add{
         position: fixed;
-        right: 5px;
+        right: 88px;
+        top: 0;
+        z-index: 200;
 
+        padding: 0 0.8em 0.8em 0.5em;
 
-        &:hover {.box_shadow_standard_light_hover;}
+        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
+        select#quick_add_selectbox{
+                                    .border_normal;
+                                    .box_shadow_standard_light;
+                                    height: 30px;
+                                    padding: 0 0 0 10px;
+                                    font-size: 0.9em;
+                                    line-height: 1.1em;
+                                    &:hover {.box_shadow_standard_light_hover;}
+                                    &:focus {.box_shadow_standard_light_inset;}
+                                    option {
+                                        &:first-child{
+                                                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
+                                                    }
+
+                                            }
+                                }
+
     }
+    
+    
+   
+    // Logout
+        #egw_fw_logout {
+                        background-image: url(../images/logout.png);
+                        background-size: 16px 16px;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        cursor: pointer;
+                        display: inline-block;
+                        float: right;
+                        margin-right: 1em;
+                        margin-top: 0px;
+                        z-index: 200;
+                        .Button_size_square_16;
+                        .border_normal;
+                        .box_shadow_standard_light;
+                        padding: 0.5em;
+                        top: 5px;
+                        position: fixed;
+                        right: 5px;
+
+
+                        &:hover {.box_shadow_standard_light_hover;}
+                    }
 
 
 
@@ -330,109 +256,64 @@
         &:focus {.box_shadow_standard_light_inset;}
 
     }
-    /* ###################################################################
-     * Topmenu
-     *
-     * Name + Datum + Hinzufügen
-     *
-     *
-     * */
+    
+    
+    
+ /*Name / Datum / angemeldete User*/
 
     #egw_fw_topmenu_info_items {
 
         padding-right: 20px;
-        float: right;
         white-space: nowrap;
-
-        //								&:hover {.background-color-25-gray;}
-
+        float: right;
+        display: flex;
         .topmenu_info_item {
+                            
+                            // Info Bell
+                            &:nth-child(1) {
+                            }
 
-            //														select{.Complete_Button_select;}
+                            // Name
+                            &:nth-child(2) {
+                                /*float: right;*/
+                                margin-top: 0;
+                                font-size: 1em;
+                                padding-right: 5px;
+                                
+                            }
 
+                            // angemeldete User
+                            &:nth-child(3) {
+                                position: relative;
+                                top: 0px;
+                                  display: inline-block;
+                                  
+                                &:hover {.box_shadow_standard_light_hover;}
+                                &:focus {.box_shadow_standard_light_inset;}
+                                
+                                &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
+                                  
+                            }
 
-            // Info Bell
-            &:nth-child(1) {
+                            // Add
+                            &:nth-child(4) {
 
-            }
+                            }
 
-            // Name
-            &:nth-child(2) {
-                /*float: right;*/
-                margin-top: 0;
-            }
-            // ??
-            &:nth-child(3) {
-
-            }
-            // Add
-            &:nth-child(4) {
-
-            }
-
-
-
-        }
-
-
-
-
+                         }
 
     } // Ende items
 
+} // Ende Addons
 
-
-    // ########################################
-    // quick_add
-
-    span#quick_add{
-        position: fixed;
-        right: 88px;
-        top: 0;
-        z-index: 200;
-        // Button hinzufügen
-        //								.border-radius (0, 0, 25px, 0);
-        //								background-color: @egw_color_2_e;
-        //								border-color: @egw_color_2_a;
-        padding: 0 0.8em 0.8em 0.5em;
-
-        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
-        //								&:hover {background-color: @egw_color_2_a;}
-
-        //.Complete_Button_add;
-
-        select#quick_add_selectbox{
-            //									    .Button_size_square_16;
-            .border_normal;
-            .box_shadow_standard_light;
-            height: 30px;
-            padding: 0 0 0 10px;
-            //									.Complete_Button_select;
-            //									background-color: @egw_color_2_e;
-            font-size: 0.9em;
-            line-height: 1.1em;
-            //									padding: 0;
-            &:hover {.box_shadow_standard_light_hover;}
-            &:focus {.box_shadow_standard_light_inset;}
-            option {
-                &:first-child{
-                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
-
-                }
-
-            }
-        }
-
-    }
-
-
-}
 
 
 /* ################################################################################################################
+ ################################################################################################################
+ ################################################################################################################
  * Sidebar
- * ################################################################################################################
- */
+ * ################################################################################################################*/
+ 
 
 #egw_fw_sidebar {
     position: fixed;
@@ -461,41 +342,29 @@
 
             // Alle Tabs
             .egw_fw_ui_sidemenu_entry_header {
-                cursor: pointer;
+                                                cursor: pointer;
 
-                display: block;
-                height: 30px;
-                margin: 0 0;
-                padding: 4px 5px 5px 15px;
+                                                display: block;
+                                                height: 30px;
+                                                margin: 0 0;
+                                                padding: 4px 5px 5px 15px;
+                                                .background-color-5-gray;
+                                                background-image: none;
+                                                .border-color-10-gray;
 
+                                                .rounded(5px);
+                                                &:hover {  .background-color-15-gray;}
 
-                .background-color-5-gray;
+                                                h1 {
+                                                    font-size: 1em;
+                                                    font-weight: normal;
+                                                    margin: 0 0 10px 0;
+                                                    padding-top: 0.31em;
+                                                    .color-40-gray;
 
-                background-image: none;
+                                                }
 
-                .border-color-10-gray;
-
-                border-radius: 5px 5px 5px 5px;
-                //																									    border-style: solid;
-                //																									    border-width: 0 1px;
-
-                -moz-border-radius:5px;
-                -webkit-border-radius:5px;
-
-                &:hover {
-                    .background-color-15-gray;
-                }
-
-                h1 {
-                    font-size: 1em;
-                    font-weight: normal;
-                    margin: 0 0 10px 0;
-                    padding-top: 0.31em;
-                    .color-40-gray;
-
-                }
-
-            }
+                                            }
 
 
 
@@ -631,13 +500,7 @@
                     }
 
                 }
-                .favorites .sideboxstar{
-                    background-image: url("../images/bullet.png");
-                    //																												background-size: 9px 9px;
-                    background-repeat: no-repeat;
-                    height: 9px;
-                    width: 9px
-                }
+             
             }
 
             .egw_fw_ui_sidemenu_entry_content_bottom {
@@ -715,17 +578,11 @@
     &:hover {
         .background-color-0-gray;
         .border-color-50-gray;
-    }
-    .sidebox-favorites{
-        .favorites div.ui-icon-trash {
-            margin-right: 2px;
-            margin-top: -5px;
-        }
-        .ui-icon {
-            //			background: none;
-        }
-
-    }
+    } 
+     
+    
+    // Favoriten anlegen und löschen            
+    .sidebox-favorites{} // ist in etemplate2.less definiert
 
 
 }
@@ -736,16 +593,22 @@
 // Sub Sub Menu Item
 
 .egw_fw_ui_sidemenu_listitem {
-                    display: block;
-                    //	margin-top: 0em;
-                    margin: 4px 0 5px 20px;
+
+                    padding: 0.5em 0;
+                    margin: 4px 0 5px 0px;
                     position: relative;
 
 
-                    img { height: 9px; width: 9px; padding: 0px;}
+                    
 
+                    // Icon before
                     img.egw_fw_ui_sidemenu_listitem_icon {
-                        height: 9px; width: 9p; padding: 0px;
+                        height: 9px; 
+                        width: 9p; 
+                        padding: 0px;
+                        float: left;
+                        background-image: url("../images/bullet.png");
+                        
                     }
     
                     input {
@@ -759,27 +622,31 @@
                         margin-left: 1px;
                     } // mehrere Benutzer auswählen
 
-                    select { width: 86% !important; }
+                    select { max-width: 85% !important; }
+                    
+                    // Icon rechts der Liste - Auswahl Button
+                    img { 
+                            height: 9px; 
+                            width: 9px; 
+                            padding: 0px;
+                            float: right;
+                    }
+                    
                     // normale Links
-
                     a {
                         // .Complete_Button_text;
-                        padding: 5px 30px 5px 5px;
+                        padding: 5px 0px 5px 5px;
                         text-decoration: none;
                         min-width: 5em;
-                        display: block;
 
+                               &:hover{
+                                       .color-100-gray;
+                                    }
 
-                        &:hover{
-                            .color-100-gray;
-                            background-color: @egw_color_2_e;
+                                    &:active {
+                                        .box_shadow_standard_light_inset;
+                                    }
                         }
-
-                        &:active {
-                            .box_shadow_standard_light_inset;
-                        }
-
-    }
 
 
     div {
@@ -832,6 +699,13 @@
 
 
 
+    // Submenu Item
+    &:hover{
+                                        .color-100-gray;
+                                        background-color: @egw_color_1_e;
+                                        padding: 0.5em 0;
+                                    }
+    
 } // .egw_fw_ui_sidemenu_listitem
 
 
@@ -1260,4 +1134,4 @@ div.et2_container {
         }
     }
 }
-//                                      
+//
