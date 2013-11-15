@@ -438,6 +438,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var uid = app + "::" + _row_ids[i];
 			switch(_type)
 			{
+				/*
+				case "update":
 				case "edit":
 					if(!egw().dataRefreshUID(uid))
 					{
@@ -446,12 +448,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						break id_loop;
 					}
 					break;
+				*/
 				case "delete":
 					// Blank the row
 					egw().dataStoreUID(uid,null);
 					// Stop caring about this ID
 					egw().dataUnregisterUID(uid);
 					break;
+				case "edit":
 				case "add":
 				default:
 					// Trigger refresh
