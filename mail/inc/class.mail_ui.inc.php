@@ -288,7 +288,13 @@ class mail_ui
 		$etpl = new etemplate_new('mail.index');
 
 		// Set tree actions
-		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', array(
+		$tree_actions = array(
+			'all_folders'	=> array(
+				'caption' => 'Show all folders',
+				'checkbox'	=> true,
+				'onExecute' => 'javaScript:app.mail.all_folders',
+				'group'	=> $group++,
+			),
 			'drop_move_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
@@ -327,8 +333,16 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.edit_account',
 				//'enableId' => '^\\d+$',	// only show action on account itself
 			),
-		));
-//error_log(__METHOD__.__LINE__.array2string($content));
+			'edit_acl'	=> array(
+				'caption' => 'Edit folder ACL',
+				'icon'	=> 'configure',
+				'onExecute' => 'javaScript:app.mail.edit_acl',
+			),
+		);
+		
+		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
+		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
+
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);

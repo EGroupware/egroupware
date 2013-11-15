@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column width="100%" />
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" class="message"/>
+				</row>
+				<row>
+					<grid id="grid">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Name"/>
+								<description value="Common ACL"/>
+								<description align="center" value="L"/>
+								<description align="center" value="R"/>
+								<description align="center" value="S"/>
+								<description align="center" value="W"/>
+								<description align="center" value="I"/>
+								<description align="center" value="P"/>
+								<description align="center" value="C"/>
+								<description align="center" value="D"/>
+								<description align="center" value="A"/>
+								<description align="center" value="Recursively"/>
+								<description value="Action"/>
+							</row>
+							<row class="row">
+								<taglist-email allowFreeEntries="true" maxSelection="1" />
+								<menulist>
+									<menupopup id="${row}[]"/>
+								</menulist>
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<checkbox align="center" id="${row}[]" />
+								<hbox orient=",0,0" options="0,0,0,0">
+									<button align="right" statustext="Delete this ACL" label="Delete" id="delete[$row_cont[]]" image="delete"/>
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<hbox>
+						<button statustext="Saves this ACL" label="Save" id="button[save]"/>
+						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+						<button label="Cancel" id="button[cancel]"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

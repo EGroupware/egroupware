@@ -1950,6 +1950,18 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Edit a folder acl for account(s)
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	edit_acl: function(_action, _senders)
+	{
+		var folder_id = _senders[0].id.split('::INBOX/');
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+folder_id[1], '_blank', '640x480');
+	},
+
+	/**
 	 * Edit a mail account
 	 *
 	 * @param _action
