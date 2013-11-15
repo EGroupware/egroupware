@@ -645,7 +645,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					),
 					'group' => $action['group'],
 				);
-				$action_links[] = $prefix.'select_all';
+				$action_links[] = $prefix.'select_all';				
 			}
 			$group = $action['group'];
 
@@ -704,6 +704,16 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$egw_actions[$prefix.$id] = $action;
 
 			if (!$first_level && $n++ == $max_length) break;
+		}
+
+		// Make sure select all is in a group by itself
+		foreach($egw_actions as $id => &$_action)
+		{
+			if($id == $prefix . 'select_all') continue;
+			if($_action['group'] >= $egw_actions[$prefix.'select_all']['group'] )
+			{
+				$egw_actions[$id]['group']+=1;
+			}
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
 		return $egw_actions;
