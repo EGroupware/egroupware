@@ -109,6 +109,29 @@ class etemplate_widget_tree extends etemplate_widget
 	public function beforeSendToClient($cname)
 	{
 		$form_name = self::form_name($cname, $this->id);
+
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+		if (empty($this->attrs['image_path']))
+		{
+			$this->attrs['image_path'] = $webserver_url.'/phpgwapi/templates/default/images/dhtmlxtree/';
+		}
+		// check if we have template-set specific image path
+		$image_path = $this->attrs['image_path'];
+		if ($webserver_url && $webserver_url != '/')
+		{
+			list(,$image_path) = explode($webserver_url, $image_path, 2);
+		}
+		$templated_path = strtr($image_path, array(
+			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
+			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
+		));
+		if (file_exists(EGW_SERVER_ROOT.$templated_path))
+		{
+			$this->attrs['image_path'] = ($webserver_url != '/' ? $webserver_url : '').$templated_path;
+			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path']);
+			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
+		}
+
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		if ($this->attrs['type'])
 		{

@@ -20,7 +20,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Map to serverside available images for users template-set
-	 * 
+	 *
 	 * @access: private, use egw.image(_name, _app)
 	 */
 	var images = {};
@@ -28,7 +28,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 	return {
 		/**
 		 * Set imagemap, called from /phpgwapi/images.php
-		 * 
+		 *
 		 * @param array/object _images
 		 */
 		set_images: function (_images)
@@ -38,7 +38,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 
 		/**
 		 * Get image URL for a given image-name and application
-		 * 
+		 *
 		 * @param string _name image-name without extension
 		 * @param string _app application name, default current app of window
 		 * @return string with URL of image
@@ -58,11 +58,15 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				if(_name.indexOf('/') > 0)
 				{
 					var split = _name.split('/',2);
-					_app = split[0];
-					_name = split[1];
+					// dhtmlxtree and egw_action are subdirs in image dir, not applications
+					if (split[0] !== 'dhtmlxtree' && split[0] !== 'egw_action')
+					{
+						_app = split[0];
+						_name = split[1];
+					}
 				}
 			}
-			
+
 			// own instance specific images in vfs have highest precedence
 			tries['vfs']=_name;
 			if (typeof images['vfs'] != 'undefined' && typeof images['vfs'][_name] != 'undefined')
@@ -89,10 +93,10 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
 			return null;
 		},
-		
+
 		/**
 		 * Get image url for a given mime-type and option file
-		 * 
+		 *
 		 * @param _mime
 		 * @param _path vfs path to generate thumbnails for images
 		 * @param _size defaults to 16 (only supported size currently)
@@ -103,13 +107,13 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			if (typeof _size == 'undefined') _size = 16;
 			if (!_mime) _mime = 'unknown';
 			if (_mime == 'httpd/unix-directory') _mime = 'directory';
-			
+
 			var type  = _mime.toLowerCase().split('/');
 			var image;
-			
+
 			if (type[0] == 'egw' && (image = this.image('navbar',type[1])))
 			{
-				
+
 			}
 			else if (typeof _path == 'string' && type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/))
 			{

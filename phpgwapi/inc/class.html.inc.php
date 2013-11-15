@@ -1190,9 +1190,25 @@ egw_LAB.wait(function() {
 		$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null,$autoLoading=null,$dataMode='JSON',
 		$dragndrop=false)
 	{
-		if(is_null($folderImageDir))
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+		if (empty($folderImageDir))
 		{
-			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images';
+			$folderImageDir = $webserver_url.'/phpgwapi/templates/default/images';
+		}
+		// check if we have template-set specific image path
+		$image_path = $folderImageDir;
+		if ($webserver_url && $webserver_url != '/')
+		{
+			list(,$image_path) = explode($webserver_url, $image_path, 2);
+		}
+		$templated_path = strtr($image_path, array(
+			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
+			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
+		));
+		if (file_exists(EGW_SERVER_ROOT.$templated_path))
+		{
+			$folderImageDir = ($webserver_url != '/' ? $webserver_url : '').$templated_path;
+			//error_log(__METHOD__."() setting templated image-path: $folderImageDir");
 		}
 
 		static $tree_initialised=false;

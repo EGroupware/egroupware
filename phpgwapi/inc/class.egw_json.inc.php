@@ -106,16 +106,10 @@ class egw_json_request
 			case 'etemplate':	// eg. ajax code in an eTemplate widget
 				$menuaction = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
 				break;
-			case 'template':
+			case 'template':	// calling current template / framework object
 				$menuaction = $appName.'.'.$className.'.'.$functionName;
+				$className = get_class($GLOBALS['egw']->framework);
 				list($template) = explode('_', $className);
-				if ($className == 'egw_framework')	// allow to use egw_framework to call framework / template used by user
-				{
-					$template = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-					if (empty($template)) $template = 'idots';
-					$className = $template.'_framework';
-					//error_log(__METHOD__."('$menuaction', ".array($parameters).") --> template='$template', className='$className'");
-				}
 				break;
 		}
 
@@ -132,8 +126,7 @@ class egw_json_request
 
 		if (isset($template))
 		{
-			if (!class_exists($className)) require_once(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$template.'/class.'.$className.'.inc.php');
-			$ajaxClass = new $className;
+			$ajaxClass = $GLOBALS['egw']->framework;
 		}
 		else
 		{
