@@ -598,6 +598,8 @@ var et2_selectbox = et2_inputWidget.extend(
 			if(this.options.empty_label)
 			{
 				this.input.attr("data-placeholder", this.egw().lang(this.options.empty_label));
+				// Remove from list of options, if there
+				this.input.children('[value=""]').remove();
 			}
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
