@@ -609,7 +609,7 @@ class importexport_definitions_ui
 			}
 
 			$content['wizard_content'] = $this->wizard_content_template;
-			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv);
+			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,2);
 		}
 	}
 
