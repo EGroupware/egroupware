@@ -79,7 +79,7 @@ class filemanager_ui
 			// search for plugins with additional filemanager views
 			foreach($GLOBALS['egw']->hooks->process('filemanager_views') as $app => $views)
 			{
-				if ($views) self::$views += $views;
+				if (is_array($views)) self::$views += $views;
 			}
 			self::$views_init = true;
 		}
