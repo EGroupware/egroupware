@@ -1,0 +1,53 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package timesheet
+ * @version $Id$
+ */
+#timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right,
+#timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
+  padding: 0 0em;
+  margin-right: 0em;
+}
+#timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget,
+#timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget {
+  background-color: #0b5fa4;
+  color: #FFF;
+  text-shadow: none;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  height: 35px;
+}
+#timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:before,
+#timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+#timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget .infolog_headertext,
+#timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget .infolog_headertext {
+  color: #FFF !important;
+}
+#timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover,
+#timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_favorite"] img {
+  height: 16px;
+  width: 16px;
+}

@@ -60,7 +60,7 @@
 			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~');"/>
 			<vfs-name label="Path" id="path" options="80" class="address"/>
 			<button label="Go to" id="button[go]" image="key_enter"/>
-			<image src="buttonseparator"/>
+			<image id="tarp" src="buttonseparator"/>
 			<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
 			<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
 			<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>

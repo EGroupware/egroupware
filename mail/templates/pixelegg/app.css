@@ -42,7 +42,51 @@ div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview div#mail-i
   width: 100%;
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate {
-  margin-left: -14px;
+  margin-left: 0px;
+}
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate],
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"] {
+  background-color: #0b5fa4;
+  color: #FFF;
+  text-shadow: none;
+  height: 35px;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  background-image: url("images/write_mail.png") !important;
+  background-position: right center !important;
+  background-repeat: no-repeat;
+  padding-left: 25px;
+  text-align: left;
+  width: 93%;
+}
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:before,
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:hover,
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:focus,
+.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:focus {
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 .egw_fw_ui_category_content span#mail-tree_target {
   max-height: 50%;
@@ -899,17 +943,17 @@ input[type=button] {
 }
 /*
 #divGenTime {
-	background-color:#efefdf;
-	max-height: 10%;
-	position: fixed;
-	bottom: 1px;
-	border: 1px solid red;
-	border-top: 1px solid black;
-	left: 3px;
-	right: 3px;
-	opacity: 1;
-	-moz-opacity:1:
-	filter: Alpha(opacity=100);
+        background-color:#efefdf;
+        max-height: 10%;
+        position: fixed;
+        bottom: 1px;
+        border: 1px solid red;
+        border-top: 1px solid black;
+        left: 3px;
+        right: 3px;
+        opacity: 1;
+        -moz-opacity:1:
+        filter: Alpha(opacity=100);
 }
 */
 .mailDisplayHeaders {
@@ -937,4 +981,3 @@ div.mailComposeBody,
 div.mailPreviewHeaders > * {
   margin-left: 3px;
 }
-/*ENDE                        */
