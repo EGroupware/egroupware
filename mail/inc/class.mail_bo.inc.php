@@ -3327,7 +3327,7 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 							if (count($mimePart->getParts()) > 1)
 							{
 								//cascading multipartAlternative structure, assuming only the first one is to be used
-//								return $this->getMultipartAlternative($_uid, $mimePart, $_htmlMode, $_preserveSeen);
+								return $this->getMultipartAlternative($_uid, $mimePart, $_htmlMode, $_preserveSeen);
 							}
 					}
 			}
@@ -3533,8 +3533,6 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.'->'.$_uid.':'.array2string($_structure).' '.function_backtrace());
 		$bodyPart = array();
 		if (self::$debug) _debug_array(array($_structure,function_backtrace()));
-
-		$partID = $_structure->getMimeId();
 
 		if($_structure->getSubType() == 'html' && !in_array($_htmlMode, array('html_only', 'always_display', 'only_if_no_text')))
 		{
