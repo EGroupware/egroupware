@@ -4645,9 +4645,10 @@ error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id
 	 */
 	public function fetchPartContents($_uid, Horde_Mime_Part $part, $_stream=false, $_preserveSeen=false)
 	{
+		$encoding = null;
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
-			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding=null),
+			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding),
 			array('encoding' => $encoding));
 
 		return $part;
