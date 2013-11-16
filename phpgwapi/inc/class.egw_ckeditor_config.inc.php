@@ -198,6 +198,8 @@ class egw_ckeditor_config
 
 	/**
 	 * Returns the URL of the filebrowser
+	 *
+	 * @param string $start_path start path for file browser
 	 */
 	private static function get_filebrowserBrowseUrl($start_path = '')
 	{
@@ -207,12 +209,17 @@ class egw_ckeditor_config
 
 	/**
 	 * Adds all "easy to write" options to the configuration
+	 *
+	 * @param array& $config array were config get's added to
+	 * @param int|string $height integer height in pixel or string with css unit
+	 * @param boolean|string $expanded_toolbar show toolbar expanded, boolean value, string "false", or string casted to boolean
+	 * @param string $start_path start path for file browser
 	 */
 	private static function add_default_options(&$config, $height, $expanded_toolbar, $start_path)
 	{
 		//Convert the pixel height to an integer value
 		$config['resize_enabled'] = false;
-		$config['height'] = (int)$height;
+		$config['height'] = is_numeric($height) ? (int)$height : $height;
 		//disable encoding as entities needs to set the config value to false, as the default is true with the current ckeditor version
 		$config['entities'] = false;
 		$config['entities_latin'] = false;
