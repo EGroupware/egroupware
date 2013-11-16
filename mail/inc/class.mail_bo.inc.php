@@ -236,40 +236,46 @@ $_restoreSession=false;
 	}
 
 	/**
-	 * validate the given profileId to make sure it is valid for the active user
+	 * Validate given account acc_id to make sure account is valid for current user
 	 *
-	 * @param int $_profileID=0
-	 * @return int validated profileID -> either the profileID given, or a valid one
+	 * Validation checks:
+	 * - non-empty imap-host
+	 * - non-empty imap-username
+	 *
+	 * @param int $_acc_id=0
+	 * @return int validated acc_id -> either acc_id given, or first valid one
 	 */
-	public static function validateProfileID($_profileID=0)
+	public static function validateProfileID($_acc_id=0)
 	{
-		if ($_profileID)
+		if ($_acc_id)
 		{
 			try {
-				$account = emailadmin_account::read($_profileID);
-				if ($account->acc_imap_host)
+				$account = emailadmin_account::read($_acc_id);
+				if ($account->acc_imap_host && $account->acc_imap_username)
 				{
-					return $_profileID;
+					return $_acc_id;
 				}
-				if (self::$debug) error_log(__METHOD__."($_profileID) account NOT valid, no imap-host!");
+				if (self::$debug) error_log(__METHOD__."($_acc_id) account NOT valid, no imap-host!");
 			}
 			catch (egw_exception_not_found $e) {
-				if (self::$debug) error_log(__METHOD__."($_profileID) account NOT found!");
+				unset($e);
+				if (self::$debug) error_log(__METHOD__."($_acc_id) account NOT found!");
 			}
 		}
 		// no account specified or specified account not found or not valid
 		// --> search existing account for first valid one and return that
-		foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $account)
+		foreach(emailadmin_account::search($only_current_user=true, 'acc_imap_host') as $acc_id => $imap_host)
 		{
-			if (!empty($account->acc_imap_host))
+			if (!empty($imap_host) && ($account = emailadmin_account::read($acc_id)) && $account->acc_imap_username)
 			{
-				if (self::$debug && $_profileID) error_log(__METHOD__."($_profileID) using $account->acc_id instead");
-				return $account->acc_id;
+				if (self::$debug && $_acc_id) error_log(__METHOD__."($_acc_id) using $acc_id instead");
+				return $acc_id;
 			}
 		}
-		if (self::$debug) error_log(__METHOD__."($_profileID) NO valid account found!");
-		return $_profileID;
+		if (self::$debug) error_log(__METHOD__."($_acc_id) NO valid account found!");
+		return $_acc_id;
 	}
+
 
 	/**
 	 * Private constructor, use mail_bo::getInstance() instead
@@ -5415,7 +5421,7 @@ error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id
 									'icServer'	=> $this->profileID,
 									'method'	=> 'importMessageToMergeAndSend',
 								);
-								$composeUrl = $GLOBALS['egw']->link('/index.php',$linkData);
+								$composeUrl = egw::link('/index.php',$linkData);
 								//error_log(__METHOD__.__LINE__.' ComposeURL:'.$composeUrl);
 								$GLOBALS['egw_info']['flags']['java_script_thirst'] .= '<script language="JavaScript">'.
 									//"egw_openWindowCentered('$composeUrl','composeAsDraft_".$messageUid."',".$fm_width.",".$fm_height.");".
