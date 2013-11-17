@@ -19,9 +19,9 @@
 
 /**
  * Tag list widget
- * 
+ *
  * A cross between auto complete, selectbox and chosen multiselect
- * 
+ *
  * Uses MagicSuggest library
  * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_selectbox
@@ -46,7 +46,7 @@ var et2_taglist = et2_selectbox.extend(
 		"value": {
 			"type": "any"
 		},
-		
+
 		// These default parameters set it to read the addressbook via the link system
 		"autocomplete_url": {
 			"name": "Autocomplete source",
@@ -60,14 +60,14 @@ var et2_taglist = et2_selectbox.extend(
 			"default": {app:"addressbook"},
 			"description": "Extra parameters passed to autocomplete URL"
 		},
-		
+
 		allowFreeEntries: {
 			"name": "Allow free entries",
 			"type": "boolean",
 			"default": true,
 			"description": "Restricts or allows the user to type in arbitrary entries"
 		},
-		
+
 		"onchange": {
 			"description": "Callback when tags are changed.  Argument is the new selection.",
 		},
@@ -100,26 +100,26 @@ var et2_taglist = et2_selectbox.extend(
 		"rows": { ignore: true},
 		"tags": { ignore: true}
 	},
-	
+
 	// Allows sub-widgets to override options to the library
 	lib_options: {},
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @memberOf et2_selectbox
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		
+
 		// jQuery wrapped DOM node
 		this.div = jQuery("<div></div>");
-		
+
 		// magicSuggest object
 		this.taglist = null;
-		
+
 		this.setDOMNode(this.div[0]);
 	},
-		
+
 	destroy: function() {
 		if(this.div != null)
 		{
@@ -128,17 +128,17 @@ var et2_taglist = et2_selectbox.extend(
 		this._super.apply(this, arguments);
 
 	},
-		
+
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		
+
 		// Initialize magicSuggest here
 		if(this.taglist != null) return;
-		
-		
+
+
 		// MagicSuggest would replaces our div, so add a wrapper instead
 		this.taglist = $j('<div/>').appendTo(this.div);
-		
+
 		var options = jQuery.extend( {
 			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
@@ -155,12 +155,14 @@ var et2_taglist = et2_selectbox.extend(
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
 			maxSelection: this.options.maxSelection,
+			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
+			width: this.options.width,	// propagate width
 			highlight: false	// otherwise renderer have to return strings
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(options);
-		
+
 		this.set_value(this.options.value);
-		
+
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
 			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
@@ -171,17 +173,17 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			$j(this.taglist).on("selectionchange", jQuery.proxy(this.change,this));
 		}
-		
+
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
 		if(typeof this.onclick == 'function')
 		{
 			this.div.unbind("click.et2_baseWidget")
-				.on("click.et2_baseWidget", '.ms-sel-item', jQuery.proxy(function(event) { 
+				.on("click.et2_baseWidget", '.ms-sel-item', jQuery.proxy(function(event) {
 				// Pass the target as expected, but also the data for that tag
 				this.click(/*event.target,*/ $j(event.target).parent().data("json"));
 			},this));
 		}
-		
+
 		// onFocus
 		if (typeof this.onfocus == 'function')
 		{
@@ -192,10 +194,10 @@ var et2_taglist = et2_selectbox.extend(
 		}
 		return true;
 	},
-	
+
 	/**
 	 * convert _options to taglist data [{id:...,label:...},...] format
-	 * 
+	 *
 	 * @param object|array _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
 	 */
 	_options2data: function(_options)
@@ -217,7 +219,7 @@ var et2_taglist = et2_selectbox.extend(
 		}
 		return data;
 	},
-	
+
 	/**
 	 * Set all options from current static select_options list
 	 */
@@ -230,7 +232,7 @@ var et2_taglist = et2_selectbox.extend(
 
 	/**
 	 * Render a single item, taking care of correctly escaping html special chars
-	 * 
+	 *
 	 * @param item
 	 * @returns {String}
 	 */
@@ -249,45 +251,45 @@ var et2_taglist = et2_selectbox.extend(
 			source = this.egw().ajaxUrl(source);
 		}
 		this.options.autocomplete_url = source;
-		
+
 		if(this.taglist == null) return;
 		this.taglist.setData(source);
 	},
-		
+
 	/**
 	 * Set the list of suggested options to a static list.
-	 * 
+	 *
 	 * $param Array _options usual format see _options2data
 	 */
 	set_select_options: function(_options)
 	{
 		this.options.select_options = _options;
-		
+
 		if(this.taglist == null) return;
 		this.taglist.setData(this._options2data(this.options.select_options));
 	},
-		
+
 	set_disabled: function(disabled)
 	{
 		this.options.disabled = disabled;
-		
+
 		if(this.taglist == null) return;
 		disabled ? this.taglist.disable() : this.taglist.enable();
 	},
-	
+
 	/**
 	 * Set value(s) of taglist, add them automatic to select-options, if allowFreeEntries
-	 * 
+	 *
 	 * @param value (array of) ids
 	 */
-	set_value: function(value) 
+	set_value: function(value)
 	{
 		this.options.value = value;
 		if(this.taglist == null) return;
-		
+
 		this.taglist.clear(true);
 		if(!value) return;
-		
+
 		var values = jQuery.isArray(value) ? value : [value];
 		for(var i=0; i < values.length; ++i)
 		{
@@ -307,15 +309,15 @@ var et2_taglist = et2_selectbox.extend(
 						id: v,
 						label: this.options.select_options[v]
 					}
-				}					
+				}
 			}
 		}
-			
-		
+
+
 		this.taglist.addToSelection(values);
 	},
 
-	getValue: function() 
+	getValue: function()
 	{
 		if(this.taglist == null) return null;
 		return this.taglist.getValue();
@@ -348,15 +350,15 @@ var et2_taglist_email = et2_taglist.extend(
 		// Search function limits to 3 anyway
 		minChars: 3
 	},
-	
+
 	// PREG for validation comes from et2_url
 	//EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
-		
+
 	selectionRenderer: function(item)
 	{
-		// We check free entries for valid email, and render as invalid if it's not.  
+		// We check free entries for valid email, and render as invalid if it's not.
 		var valid = item.id != item.label || et2_url.prototype.EMAIL_PREG.test(item.id || '');
-		
+
 		var label = jQuery('<span>').text(item.label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
 		if (!valid) label.addClass('ui-state-error');
