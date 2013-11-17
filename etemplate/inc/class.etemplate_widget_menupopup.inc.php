@@ -84,7 +84,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$value = $value_in = self::get_array($content, $form_name);
 
 			$allowed = self::selOptions($form_name, true);	// true = return array of option-values
-			if (!$this->attrs['multiple']) $allowed[] = '';
+			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
 
 			foreach((array) $value as $val)
 			{
