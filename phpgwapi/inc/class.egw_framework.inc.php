@@ -401,15 +401,15 @@ abstract class egw_framework
 		{
 			if ($config_reg['register_link'])
 			{
-				$reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Not a user yet? Register now').'</a><br/>';
+				$reg_link='&nbsp;<a href="'. egw::link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Not a user yet? Register now').'</a><br/>';
 			}
 			if ($config_reg['lostpassword_link'])
 			{
-				$lostpw_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.registration_ui.lost_password&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a><br/>';
+				$lostpw_link='&nbsp;<a href="'. egw::link('/registration/index.php','menuaction=registration.registration_ui.lost_password&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a><br/>';
 			}
 			if ($config_reg['lostid_link'])
 			{
-				$lostid_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.registration_ui.lost_username&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a><br/>';
+				$lostid_link='&nbsp;<a href="'. egw::link('/registration/index.php','menuaction=registration.registration_ui.lost_username&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a><br/>';
 			}
 
 			/* if at least one option of "registration" is activated display the registration section */
@@ -501,6 +501,9 @@ abstract class egw_framework
 
 		$GLOBALS['egw']->js->set_onload('document.login_form.login.focus();');
 
+		// load jquery for login screen too
+		self::validate_file('jquery', 'jquery');
+
 		$this->render($tmpl->fp('loginout','login_form'),false,false);
 	}
 
@@ -520,6 +523,10 @@ abstract class egw_framework
 			'deny_msg'     => lang('Oops! You caught us in the middle of system maintainance.').
 			'<br />'.lang('Please, check back with us shortly.'),
 		));
+
+		// load jquery for deny-login screen too
+		self::validate_file('jquery', 'jquery');
+
 		$this->render($tmpl->fp('loginout','login_form'),false,false);
 	}
 
