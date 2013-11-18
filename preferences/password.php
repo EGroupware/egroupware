@@ -13,7 +13,7 @@ $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'noheader'   => True,
 		'nonavbar'   => True,
-		'currentapp' => 'password',
+		'currentapp' => 'preferences',
 	)
 );
 include('../header.inc.php');
