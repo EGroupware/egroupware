@@ -10,10 +10,10 @@
 
 $setup_info['filemanager']['name']    = 'filemanager';
 $setup_info['filemanager']['title']   = 'Filemanager';
-$setup_info['filemanager']['version'] = '1.8';
+$setup_info['filemanager']['version'] = '1.9.001';
 $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
-$setup_info['filemanager']['index']   = 'filemanager.filemanager_ui.index';
+$setup_info['filemanager']['index']   = 'filemanager.filemanager_ui.index&ajax=true';
 
 $setup_info['filemanager']['author'] =
 $setup_info['filemanager']['maintainer'] = array(
