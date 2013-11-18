@@ -67,6 +67,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 		$cname =& $params[0];
 		$expand =& $params[1];
 		$old_cname = $params[0];
+		$old_expand = $params[1];
 		if ($this->id) $cname = self::form_name($cname, $this->id, $expand);
 		if ($expand['cname'] !== $cname && $cname)
 		{
@@ -83,6 +84,8 @@ class etemplate_widget_grid extends etemplate_widget_box
 		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
 			//error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
+			$params[0] = $old_cname;
+			$params[1] = $old_expand;
 			return false;	// return
 		}
 		if (method_exists($this, $method_name))
@@ -149,6 +152,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 			$columns_disabled = $backup_columns_disabled;
 		}
 		$params[0] = $old_cname;
+		$params[1] = $old_expand;
 
 		return true;
 	}
