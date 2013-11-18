@@ -49,4 +49,11 @@ egw_LAB.wait(function() {
 		}
 	});
 
+	// Override jdots height calcluation
+	egw_fw.prototype.getIFrameHeight = function()
+	{
+		$header = $j(this.tabsUi.appHeaderContainer);
+		var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight() - this.tabsUi.appHeader.outerHeight();
+		return height;
+	}
 });
