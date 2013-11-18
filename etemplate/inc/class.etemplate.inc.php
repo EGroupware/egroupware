@@ -298,7 +298,7 @@ class etemplate_new extends etemplate_widget_template
 			self::$response->script($GLOBALS['egw_info']['flags']['java_script']);
 			//error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
 		}
-		
+
 		return $content;
 	}
 
@@ -358,7 +358,7 @@ class etemplate_new extends etemplate_widget_template
 	 * Reads an eTemplate from filesystem or DB (not yet supported)
 	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
-	 * @param string $template_set template-set, '' loads the prefered template of the user, 'default' loads the  default one '' in the db
+	 * @param string $template_set=null default try template-set from user and if not found "default"
 	 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
 	 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
 	 * @param string $version version of the eTemplate
@@ -367,7 +367,7 @@ class etemplate_new extends etemplate_widget_template
 	 *
 	 * @ToDo supported customized templates stored in DB
 	 */
-	public function read($name,$template_set='default',$lang='default',$group=0,$version='',$load_via='')
+	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);
