@@ -487,7 +487,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 		$_item['target'] = $_item['urlextra'] = $app_data['target'];
 		$_item['text'] = $_item['label'] = $alt_label ? $alt_label : $app_data['title'];
 		$this->tplsav2->menuitems[] = $_item;
-		$this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
+		$this->tplsav2->icon_or_star = common::image('phpgwapi','bullet');
 	}
 
 	/**
@@ -642,7 +642,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 			return;
 		}
 
-		$var['icon_or_star']='<img class="sideboxstar" src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+		$var['icon_or_star']='<img class="sideboxstar" src="'.common::image('phpgwapi', 'bullet').'" width="9" height="9" alt="ball"/>';
 		$var['target'] = '';
 		if(is_array($item_link))
 		{

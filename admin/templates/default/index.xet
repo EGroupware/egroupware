@@ -43,7 +43,7 @@
 		</grid>
 	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="orange-ball"/>
+		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
 		<description id="msg" class="message"/>
 		<split dock_side="topDock" id="splitter" orientation="h">
 			<nextmatch id="nm" template="admin.index.rows"/>
