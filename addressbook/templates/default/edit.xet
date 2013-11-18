@@ -495,7 +495,7 @@
 				<column width="450"/>
 				<column width="350"/>
 			</columns>
-			<rows>
+			<rows class="dialog-header">
 				<row disabled="!@msg">
 					<htmlarea id="msg" no_lang="1" readonly="true" span="all" class="redItalic"/>
 					<description/>
@@ -623,7 +623,7 @@
 						</groupbox>
 					</vbox>
 				</row>
-				<row disabled="@hidebuttons">
+				<row disabled="@hidebuttons" class="dialog-footer-toolbar">
 					<hbox>
 						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>

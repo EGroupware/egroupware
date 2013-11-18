@@ -625,7 +625,7 @@
 						</groupbox>
 					</vbox>
 				</row>
-				<row disabled="@hidebuttons">
+				<row disabled="@hidebuttons" class="footer-toolbar">
 					<hbox>
 						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
@@ -660,7 +660,7 @@
 						</menulist>
 					</hbox>
 				</row>
-				<row>
+				<row class="footer-toolbar">
 					<hbox span="all">
 						<button label="Search" id="button[search]"/>
 						<button label="Cancel" id="button[cancel]"/>

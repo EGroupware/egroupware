@@ -12,7 +12,7 @@
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
-
+@import (less) "../default/app.css";
 //**********************************
 // iframe
 
@@ -45,7 +45,7 @@ div#addressbook-index{
     // rechte Box
     // ###########################
     div.et2_hbox_right {
-        width: 360px;
+        width: auto;
         margin-right: 1em;
 
 
@@ -66,10 +66,10 @@ div#addressbook-index{
             .color-100-gray;
 
             .Complete_Button_text_icon_before;
-            background-image:url('../../pixelegg/images/erweiterte-suche.png') !important;
+            background-image:url('../../../pixelegg/images/advanced-search.png') !important;
             padding-left: 0px;
-            &:hover{ background-image:url('../../pixelegg/images/erweiterte-suche.png'); .Complete_Button_text_icon_before_hover;}
-            &:focus{ background-image:url('../../pixelegg/images/erweiterte-suche.png'); .Complete_Button_text_icon_before_active;}
+            &:hover{ background-image:url('../../../pixelegg/images/advanced-search.png'); .Complete_Button_text_icon_before_hover;}
+            &:focus{ background-image:url('../../../pixelegg/images/advanced-search.png'); .Complete_Button_text_icon_before_active;}
 
         }
 
@@ -117,7 +117,35 @@ div#addressbook-index{
 
     } // Favoriten
 
+div.filters{
+                .Rectangle_filters;
 
+
+                // 1 Filter
+                select#infolog-index_cat_id {margin-left: 1em;}
+
+                // 2 Filter
+                select#infolog-index_filter {}
+
+                // 3 Filter
+                select#infolog-index_filter2 {}
+
+                // Suchfeld
+                input#infolog-index_search {
+                    height: 20px;
+                    .Complete_Button_input;
+                    &:hover{
+                        .Complete_Button_input_hover;
+                    }
+                    &:focus{
+                        .Complete_Button_input_focus;
+                    }
+                }
+
+
+                // Suchen Button
+                button.et2_button {}
+            }
     // Filter
     .filters{
         #addressbook-index_cat_id{width: 7%;}
@@ -194,6 +222,8 @@ div#addressbook-search{
         top: 5%;
         .box_shadow_standard_light;
     }
+    
+    
     table.addressbook_edit_general{
         //		background: red;
 
@@ -205,6 +235,19 @@ div#addressbook-search{
         table tr td:first-child {width: 60px;}
         table tr td {width: 200px;}
 
+        // Photo
+        img.photo {
+            .Complete_Button_normal;
+            &:hover {.Complete_Button_hover;}
+        }
+        
+        // Photo Upload
+        
+        .uploadphoto {
+            .background-color-10-gray;
+            
+        }
+        
 
         //Name
         input#addressbook-edit_n_fn {width: 200px;}
@@ -251,10 +294,14 @@ div#addressbook-search{
 
 
     // Telefonnummer:
+    
+    div#addressbook-edit_addressbook-editphones {margin-left: 1em;}
+    
     fieldset.phoneGroup {
         border: none;
         margin-bottom: 0;
         margin-top: 12px;
+        margin-left: 1em;
         height: auto;
         .background-color-15-gray;
         .border_radius_button_normal;
@@ -278,6 +325,7 @@ div#addressbook-search{
         border: none;
         margin-bottom: 0;
         margin-top: 10px;
+        margin-left: 1em;
         height: auto;
         .background-color-15-gray;
         .border_radius_button_normal;
