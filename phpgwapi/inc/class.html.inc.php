@@ -1205,7 +1205,7 @@ egw_LAB.wait(function() {
 			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
 			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
 		));
-		if (file_exists(EGW_SERVER_ROOT.$templated_path))
+		if (file_exists(EGW_SERVER_ROOT.$templated_path.'/dhtmlxtree'))
 		{
 			$folderImageDir = ($webserver_url != '/' ? $webserver_url : '').$templated_path;
 			//error_log(__METHOD__."() setting templated image-path: $folderImageDir");
