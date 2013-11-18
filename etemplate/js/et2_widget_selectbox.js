@@ -259,7 +259,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				this.input.attr('multiple', true);
 				this.input.attr('name', this.id + '[]');
 
-				if (this.input[0].options[0].value === '')
+				if (this.input[0].options.length && this.input[0].options[0].value === '')
 				{
 					this.input[0].options[0] = null;
 				}
