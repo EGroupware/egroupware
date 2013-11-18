@@ -40,7 +40,7 @@
 <!-- END remember_me_selection -->
 				<tr>
 					<td align="right">{lang_username}:&nbsp;</td>
-					<td><input name="login" tabindex="4" value="{cookie}" size="30" /></td>
+					<td><input name="login" tabindex="4" value="{cookie}" size="30" autofocus /></td>
 				</tr>
 				<tr>
 					<td align="right">{lang_password}:&nbsp;</td>

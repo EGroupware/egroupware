@@ -373,7 +373,7 @@ abstract class egw_framework
 			}
 			$tmpl->set_var(array(
 				'lang_domain'   => lang('domain'),
-				'select_domain' => html::select('logindomain',$_COOKIE['last_domain'],$domains,true,'tabindex="2"'),
+				'select_domain' => html::select('logindomain',$_COOKIE['last_domain'],$domains,true,'tabindex="2"',0,false),
 			));
 		}
 		else
@@ -464,7 +464,7 @@ abstract class egw_framework
 			$tmpl->set_var(array(
 				'lang_language' => lang('Language'),
 				'select_language' => html::select('lang',$GLOBALS['egw_info']['user']['preferences']['common']['lang'],
-				translation::get_installed_langs(),true,'tabindex="1"'),
+				translation::get_installed_langs(),true,'tabindex="1"',0,false),
 			));
 		}
 		else
@@ -489,7 +489,7 @@ abstract class egw_framework
 				'1week'=> lang('1 Week'),
 				'1month' => lang('1 Month'),
 				'forever' => lang('Forever'),
-			),true,'tabindex="3"'));
+			),true,'tabindex="3"',0,false));
 		}
 		else
 		{
@@ -498,8 +498,6 @@ abstract class egw_framework
 			$tmpl->set_var('remember_me_selection','');
 		}
 		$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
-
-		$GLOBALS['egw']->js->set_onload('document.login_form.login.focus();');
 
 		// load jquery for login screen too
 		self::validate_file('jquery', 'jquery');
