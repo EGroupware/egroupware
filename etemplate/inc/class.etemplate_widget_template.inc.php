@@ -39,13 +39,13 @@ class etemplate_widget_template extends etemplate_widget
 	 * Get instance of template specified by name, template(-set) and version
 	 *
 	 * @param string $name
-	 * @param string $template_set='default'
+	 * @param string $template_set=null default try template-set from user and if not found "default"
 	 * @param string $version=''
 	 * @param string $load_via='' use given template to load $name
 	 * @todo Reading customized templates from database
 	 * @return etemplate_widget_template|boolean false if not found
 	 */
-	public static function instance($name, $template_set='default', $version='', $load_via='')
+	public static function instance($name, $template_set=null, $version='', $load_via='')
 	{
 		$start = microtime(true);
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
@@ -66,7 +66,7 @@ class etemplate_widget_template extends etemplate_widget
 						//error_log(__METHOD__ . "('$name' loaded from cache ($c_name)");
 						return $c_template;
 					}
-					
+
 					$parts = explode('.',$c_name);
 					if($name == $parts[count($parts)-1]) return $c_template;
 				}
@@ -116,24 +116,28 @@ class etemplate_widget_template extends etemplate_widget
 	 * Get path/URL relative to EGroupware install of a template
 	 *
 	 * @param string $name
-	 * @param string $template_set='default'
+	 * @param string $template_set=null default try template-set from user and if not found "default"
 	 * @param string $version=''
 	 * @return string|boolean path of template xml file or false if not found
 	 */
-	public static function relPath($name, $template_set='default', $version='')
+	public static function relPath($name, $template_set=null, $version='')
 	{
 		list($app, $rest) = explode('.', $name, 2);
+
+		if (empty($template_set))
+		{
+			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
 		$path = '/'.$app.'/templates/'.$template_set.'/'.$rest.'.xet';
 
-		if (file_exists(EGW_SERVER_ROOT.$path)) return $path;
-
-		if ($templateSet != 'default')
+		if (!file_exists(EGW_SERVER_ROOT.$path))	// try default
 		{
 			$path = '/'.$app.'/templates/default/'.$rest.'.xet';
 
-			if (file_exists(EGW_SERVER_ROOT.$path)) return $path;
+			if (!file_exists(EGW_SERVER_ROOT.$path)) $path = false;
 		}
-		return false;
+		//error_log(__METHOD__."('$name', '$template_set') returning ".array2string($path));
+		return $path;
 	}
 
 	/**
@@ -150,7 +154,7 @@ class etemplate_widget_template extends etemplate_widget
 		$cname =& $params[0];
 		$old_cname = $params[0];
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
-		
+
 		// Check for template from content, and run over it
 		$expand_name = self::expand_name($this->id, '','','','',self::$request->content);
 		if($this->original_name)
