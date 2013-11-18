@@ -84,6 +84,9 @@ var et2_selectAccount = et2_selectbox.extend(
 		this.dialog = null;
 
 		this._super.call(this, _parent, _attrs);
+
+		// Allow certain widgets inside this one
+		this.supportedWidgetClasses = [et2_link_entry];
 	},
 
 	destroy: function() {
