@@ -56,6 +56,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			"default": et2_no_init,
 			"description": "Specifies the tab order of a widget when the 'tab' button is used for navigating."
 		},
+		background_image: {
+			name: "Add image in front of text",
+			type: "boolean",
+			description: "Adds image in front of text instead of just using an image with text as tooltip",
+			default: false
+		},
 		// No such thing as a required button
 		"needed": {
 			"ignore": true,
@@ -77,7 +83,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		this.btn = null;
 		this.image = null;
 
-		if (this.options.image || this.options.ro_image)
+		if (!this.options.background_image && (this.options.image || this.options.ro_image))
 		{
 			this.image = jQuery(document.createElement("img"))
 				.addClass("et2_button et2_button_icon");
@@ -88,6 +94,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		{
 			this.btn = $j(document.createElement("button"))
 				.addClass("et2_button et2_button_text");
+			if(this.options.background_image)
+			{
+				this.btn.addClass('et2_button_with_image');
+			}
 			this.setDOMNode(this.btn[0]);
 		}
 	},
@@ -119,7 +129,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	 * @param _image
 	 */
 	update_image: function(_image) {
-		if(!this.isInTree() || this.image == null) return;
+		if(!this.isInTree() || !this.options.background_image && this.image == null) return;
 		
 		if (typeof _image == 'undefined') 
 			_image = this.options.readonly ? this.options.ro_image : this.options.image;
@@ -137,19 +147,26 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			var src = this.egw().image(_image);
 			if(src)
 			{
-				this.image.attr("src", src);
 				found_image = true;
 			}
-			// allow url's too
 			else if (_image[0] == '/' || _image.substr(0,4) == 'http')
 			{
-				this.image.attr('src', _image);
+				src= image;
 				found_image = true;
+			}
+			if(this.image != null)
+			{
+				this.image.attr("src", src);
+			}
+			else if (this.options.background_image)
+			{
+				this.btn.css("background-image","url("+src+")");
 			}
 		}
 		if(!found_image)
 		{
 			this.set_label(this.label);
+			this.btn.css("background-image","");
 		}
 	},
 
