@@ -51,7 +51,7 @@ var et2_taglist = et2_selectbox.extend(
 		"autocomplete_url": {
 			"name": "Autocomplete source",
 			"type": "string",
-			"default": "etemplate_widget_taglist::ajax_search::etemplate",
+			"default": "etemplate_widget_taglist.ajax_search.etemplate",
 			"description": "Menuaction (app.class.function) for autocomplete data source.  Must return actual JSON, and nothing more."
 		},
 		"autocomplete_params": {
@@ -140,7 +140,7 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist = $j('<div/>').appendTo(this.div);
 
 		var options = jQuery.extend( {
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.egw().getAppName() + '.'+this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			method: 'GET',
 			displayField: "label",
@@ -336,7 +336,7 @@ var et2_taglist_email = et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
-			"default": "etemplate_widget_taglist::ajax_email::etemplate",
+			"default": "home.etemplate_widget_taglist.ajax_email.etemplate",
 		},
 		"autocomplete_params": {
 			"default": {},
