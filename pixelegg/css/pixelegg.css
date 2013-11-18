@@ -1316,7 +1316,6 @@ option:checked {
 ----------------------------------*/
 .ui-widget {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
   font-size: 1.1em;
 }
 .ui-widget .ui-widget {
@@ -1327,7 +1326,6 @@ option:checked {
 .ui-widget textarea,
 .ui-widget button {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
   font-size: 1em;
 }
 .ui-widget-content {
@@ -1406,6 +1404,7 @@ option:checked {
   border-bottom: solid 1px 1px;
   border-color: #bfbfbf;
   background: #ffc200;
+  background-image: none;
   font-weight: bold;
   color: #808080;
 }
@@ -1788,7 +1787,7 @@ button[id*="edit"],
 input[type="submit"][id="edit"]:hover,
 input[type="button"][id="edit"]:hover,
 button[id*="edit"]:hover {
-  background-image: url('../images/bearbeiten.png');
+  background-image: url('../images/edit.png');
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -1818,7 +1817,7 @@ button[id*="copy"]:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/kopieren.png');
+  background-image: url('../images/copy.png');
 }
 input[type="submit"][id*="cancel"],
 input[type="button"][id*="cancel"],
@@ -1837,7 +1836,7 @@ button[id*="cancel"]:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/abbruch.png');
+  background-image: url('../images/cancel.png');
 }
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
@@ -1853,7 +1852,7 @@ button[id*="delete"] {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/loeschen.png');
+  background-image: url('../images/delete.png');
   margin-left: 3em;
 }
 input[type="submit"][id*="delete"]:hover,
@@ -1870,7 +1869,7 @@ button[id*="delete"]:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/loeschen.png');
+  background-image: url('../images/delete.png');
   background-color: red !important;
 }
 input[type="submit"][id*="apply"],
@@ -1890,7 +1889,7 @@ button[id*="apply"]:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/uebernehmen.png');
+  background-image: url('../images/apply.png');
 }
 input[type="submit"][id*="save"],
 input[type="button"][id*="save"],
@@ -1909,7 +1908,7 @@ button[id*="save"]:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/speichern.png');
+  background-image: url('../images/save.png');
 }
 input[type="submit"][id*="search"],
 input[type="button"][id*="search"],
@@ -1925,7 +1924,7 @@ button[id*="search"] {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/erweiterte-suche.png');
+  background-image: url('../images/advanced-search.png');
 }
 input[type="submit"][id*="search"]:hover,
 input[type="button"][id*="search"]:hover,
@@ -1933,7 +1932,7 @@ button[id*="search"]:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-image: url('../images/erweiterte-suche.png');
+  background-image: url('../images/advanced-search.png');
 }
 input[type="submit"][id*="search"]:focus,
 input[type="button"][id*="search"]:focus,
@@ -1954,7 +1953,7 @@ button.button_ok {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/speichern.png');
+  background-image: url('../images/save.png');
 }
 button.button_ok:hover {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1968,7 +1967,7 @@ button.button_ok:hover {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/speichern.png');
+  background-image: url('../images/save.png');
 }
 button#infolog-index_legacy_actions {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1982,13 +1981,13 @@ button#infolog-index_legacy_actions {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/bearbeiten.png');
+  background-image: url('../images/edit.png');
 }
 button#infolog-index_legacy_actions:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-image: url('../images/bearbeiten.png');
+  background-image: url('../images/edit.png');
 }
 button#infolog-index_legacy_actions:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2228,12 +2227,11 @@ body {
   padding: 0px !important;
   width: 100% !important;
   height: 100% !important;
+  font-size: 87.5%;
 }
 body,
-td,
 textarea {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
 }
 #egw_fw_basecontainer {
   position: fixed;
@@ -2242,7 +2240,6 @@ textarea {
   padding: 0px;
   margin: 0px;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
   background-color: #fafafa;
 }
 input {
@@ -2346,6 +2343,7 @@ h6 {
   line-height: 1.5em;
   margin: 1.5em 0 0;
 }
+/*table {font-size: 16px;}*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select {
     padding-right: 18px;
@@ -2412,7 +2410,6 @@ div.selectbox-wrapper ul li {
   appearance: none;
   cursor: pointer;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
   font-size: 1.2em;
   font-weight: normal;
   height: 30px;
@@ -2985,17 +2982,17 @@ table.egwGridView_outer thead tr th.optcol .selectcols {
   border-radius: 3px;
   right: 15px;
   border: 1px solid;
-  background-image: url(../images/selectcols.png);
+  background-image: url(../images/selectcols_small.png);
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 16px 16px;
+  background-size: 9px 9px;
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   margin: 0;
   padding: 0;
 }
-table.egwGridView_outer thead tr th.optcol .selectcols:active {
+table.egwGridView_outer thead tr th.optcol .selectcols:hover {
   background-color: #b3b3b3 !important;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -3004,12 +3001,16 @@ table.egwGridView_outer thead tr th.optcol .selectcols:active {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background-image: url(../images/slideup.png);
+  background-image: url(../images/selectcols.png);
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: 19px 19px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
 }
 table.egwGridView_grid {
-  font-size: 1.4em;
+  font-size: 0.95em;
   background-color: #ffffff;
   border-spacing: 0px 1px;
   width: 100%;
@@ -3038,25 +3039,22 @@ table.egwGridView_grid tbody tr.focused {
 }
 table.egwGridView_grid tr {
   border-bottom: 1px solid;
-  border-color: #f0f0f0;
+  border-color: #808080;
 }
 table.egwGridView_grid tr:hover {
-  background-color: #f0f0f0;
+  background-color: #0c5da5;
 }
 table.egwGridView_grid tr:active {
-  background-color: #d9d9d9;
+  background-color: #0c5da5;
 }
 table.egwGridView_grid tr td {
   border-left: 0px;
   border-right: 0px;
   padding: 0.3em 0 1em 0.3em;
-  /*legacy*/
-}
-table.egwGridView_grid tr td:hover {
-  background-color: #679fd2;
+  /*&:hover {background-color: @egw_color_2_e;} legacy*/
 }
 table.egwGridView_grid tr td:active {
-  background-color: #0c5da5;
+  /*background-color: @egw_color_2_a;*/
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -3214,6 +3212,84 @@ table.egwGridView_grid tr td:active {
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+/*Supersized*/
+* {
+  margin: 0;
+  padding: 0;
+}
+img {
+  border: medium none;
+}
+#supersized-loader {
+  background: url("../images/progress.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
+  height: 60px;
+  left: 50%;
+  margin: -30px 0 0 -30px;
+  position: absolute;
+  text-indent: -999em;
+  top: 50%;
+  width: 60px;
+  z-index: 0;
+}
+#supersized {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -999;
+}
+#supersized img {
+  border: medium none;
+  display: none;
+  height: auto;
+  outline: medium none;
+  position: relative;
+  width: auto;
+}
+#supersized.speed img {
+  image-rendering: -moz-crisp-edges;
+}
+#supersized.quality img {
+  image-rendering: optimizequality;
+}
+#supersized li {
+  background: none repeat scroll 0 0 #111111;
+  display: block;
+  height: 100%;
+  left: 0;
+  list-style: none outside none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -30;
+}
+#supersized a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+#supersized li.prevslide {
+  z-index: -20;
+}
+#supersized li.activeslide {
+  z-index: -10;
+}
+#supersized li.image-loading {
+  background: url("../images/progress.gif") no-repeat scroll center center #111111;
+  height: 100%;
+  width: 100%;
+}
+#supersized li.image-loading img {
+  visibility: hidden;
+}
+#supersized li.prevslide img,
+#supersized li.activeslide img {
+  display: inline;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -3877,7 +3953,6 @@ div#calendar-container div.calendar table {
   padding: 0.3em;
   background-color: #fafafa;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
 }
 div#calendar-container div.calendar table thead .title {
   background-color: #ffc200;
@@ -4262,11 +4337,16 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   cursor: pointer;
   margin-right: 2ex;
   padding: 5px;
+  height: 25px;
+  padding: 0px 0px 0px 3px;
 }
 .filters select:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.filters select option {
+  font-size: 0.9em;
 }
 .filters select#cat_id {
   margin-left: 1em;
@@ -4282,6 +4362,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  height: 25px;
 }
 .filters input:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -4378,6 +4459,63 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   transition: opacity 0.5s ease-out;
   -moz-transition: opacity 0.5s ease-out;
   -webkit-transition: opacity;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * dialog 
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/*Main div*/
+table.dialog-main-view {
+  width: 100%;
+}
+/*Header Part*/
+tr.dialog-header {
+  background-color: #0c5da5;
+  color: #ffffff;
+}
+tr.dialog-header td {
+  padding: 5px;
+}
+tr.dialog-header table.et2_grid {
+  border-top: none;
+}
+tr.dialog-header .et2_label {
+  color: #ffffff;
+}
+/*Main*/
+/*Buttons / Toolbar*/
+.dialog-footer-toolbar {
+  background-color: #679fd2;
+}
+.dialog-footer-toolbar td {
+  padding: 10px;
+}
+.dialog-footer-toolbar button {
+  height: 32px;
+}
+.dialog-footer-toolbar label {
+  border-color: #bfbfbf;
+  width: auto;
+  margin: 0.5em 0em 0.5em 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  background-color: #f0f0f0;
+  padding: 5px 5px 8px 0;
 }
 /*
 	Printing

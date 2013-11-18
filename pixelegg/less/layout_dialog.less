@@ -1,0 +1,67 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * dialog 
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "def_buttons.less";
+@import (reference) "def_content_elements.less";
+@import (reference) "def_design_pattern_color_font_shadow.less";
+@import (reference) "def_messages.less";
+
+
+/*Main div*/
+
+#popupMainDiv {
+   
+    
+}
+
+
+table.dialog-main-view {width: 100%;}
+
+
+/*Header Part*/
+tr.dialog-header{
+    background-color: @egw_color_2_a; 
+    .color-0-gray;
+    
+    td {padding: 5px;}
+    
+    table.et2_grid {border-top: none;}
+    .et2_label {.color-0-gray;}
+               
+               
+}
+
+/*Main*/
+
+
+/*Buttons / Toolbar*/
+
+.dialog-footer-toolbar{ 
+    background-color: @egw_color_2_e;
+    
+    td {padding: 10px;}
+    
+    button { height: 32px;}
+    
+    label {
+        .Complete_Button_input;
+        .border_normal;
+	.box_shadow_standard_light;
+	.color-100-gray;
+        .background-color-10-gray;
+        padding: 5px 5px 8px 0;
+    }
+    
+}
+//

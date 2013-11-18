@@ -3,7 +3,7 @@ egw_LAB.wait(function() {
 		$j('#slidetoggle').click(function(){
 			 
 			
-			  if ($j('#egw_fw_header').css('display') == 'none') {
+			  if ($j('#egw_fw_header').css('display') === 'none') {
 				  $j("#egw_fw_header").slideToggle();
 				  $j("#egw_fw_topmenu_addons").animate({'margin-right': '20px'},1000);
 				  $j("#egw_fw_sidebar").animate({'top':'57px'},1000);
