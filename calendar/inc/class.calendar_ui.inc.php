@@ -569,7 +569,7 @@ class calendar_ui
 			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.calendar_uiviews.month'),
 			//'year' => array('icon'=>'year','text'=>'yearview','menuaction' => 'calendar.calendar_uiviews.year'),
 			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.calendar_uiviews.planner','sortby' => $this->sortby),
-			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview'),
+			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview','ajax'=>'true'),
 		) as $view => $data)
 		{
 			$icon = array_shift($data);
