@@ -99,6 +99,7 @@ class mail_ui
 	 */
 	function __construct()
 	{
+		//$starttime = microtime (true);
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
 			//error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
@@ -143,6 +144,8 @@ class mail_ui
 		}
 		$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);
 	}
 
 	/**
@@ -180,8 +183,9 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		//$starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
-		$sessionFolder = $this->mail_bo->sessionData['maibox'];
+		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
@@ -259,12 +263,12 @@ class mail_ui
 
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
 
-		//$sessionFolder = $this->mail_bo->sessionData['maibox'];// already set and tested this earlier
-		if ($this->mail_bo->folderExists($sessionFolder))
-		{
-			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
+		//$sessionFolder = $this->mail_bo->sessionData['mailbox'];// already set and tested this earlier
+		//if ($this->mail_bo->folderExists($sessionFolder))
+		//{
+			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
 			//$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities: but did that earlier
-		}
+		//}
 		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
 		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 		{
@@ -345,6 +349,9 @@ class mail_ui
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);
+
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -1089,11 +1096,11 @@ unset($query['actions']);
 		$this->mail_bo->restoreSessionData();
 		$maxMessages = 50; // match the hardcoded setting for data retrieval as inital value
 		$previewMessage = $this->mail_bo->sessionData['previewMessage'];
-		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$query['selectedFolder'];
+		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
 		$this->mail_bo->saveSessionData();
 
 		$sRToFetch = null;
-		$_folderName=$query['selectedFolder'];
+		$_folderName=(!empty($query['selectedFolder'])?$query['selectedFolder']:$this->mail_bo->profileID.self::$delimiter.'INBOX');
 		list($_profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
 		if (is_numeric($_profileID))
 		{
@@ -1102,10 +1109,10 @@ unset($query['actions']);
 				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
 				$this->changeProfile($_profileID);
 			}
-			$_folderName = $folderName;
+			$_folderName = (!empty($folderName)?$folderName:'INBOX');
 		}
 		//save selected Folder to sessionData (mailbox)->currentFolder
-		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$_folderName;
+		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
 		$this->mail_bo->saveSessionData();
 
 		$rowsFetched['messages'] = null;
@@ -1201,8 +1208,9 @@ unset($query['actions']);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
-		$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
+
 		return $rowsFetched['messages'];
 	}
 
@@ -3375,7 +3383,7 @@ blockquote[type=cite] {
 	function ajax_compressFolder()
 	{
 		$this->mail_bo->restoreSessionData();
-		$folder = $this->mail_bo->sessionData['maibox'];
+		$folder = $this->mail_bo->sessionData['mailbox'];
 		if ($this->mail_bo->folderExists($folder))
 		{
 			if(!empty($folder)) {

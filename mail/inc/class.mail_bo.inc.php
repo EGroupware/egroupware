@@ -30,7 +30,7 @@ class mail_bo
 	 * @var string
 	 */
 	static $displayCharset;
-
+	static $activeFolderCache;
 	static $folderStatusCache;
 
 	/**
@@ -353,8 +353,9 @@ $_restoreSession=false;
 	 */
 	function restoreSessionData()
 	{
-		$this->sessionData = egw_cache::getCache(egw_cache::SESSION,'mail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
-		self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		$this->sessionData = array();//egw_cache::getCache(egw_cache::SESSION,'mail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
+		self::$activeFolderCache = egw_cache::getCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		if (!empty(self::$activeFolderCache[$this->profileID])) $this->sessionData['mailbox'] = self::$activeFolderCache[$this->profileID];
 	}
 
 	/**
@@ -362,11 +363,13 @@ $_restoreSession=false;
 	 */
 	function saveSessionData()
 	{
-		if (isset(self::$folderStatusCache) && is_array(self::$folderStatusCache))
+		//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)));
+		if (!empty($this->sessionData['mailbox'])) self::$activeFolderCache[$this->profileID]=$this->sessionData['mailbox'];
+		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
 		{
-			egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),self::$folderStatusCache, $expiration=60*60*10);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['maibox'], $expiration=60*60*10);
 		}
-		egw_cache::setCache(egw_cache::SESSION,'mail','session_data',$this->sessionData, $expiration=60*60*1);
+		//egw_cache::setCache(egw_cache::SESSION,'mail','session_data',$this->sessionData, $expiration=60*60*1);
 	}
 
 	/**
@@ -455,18 +458,12 @@ $_restoreSession=false;
 				unset($_specialUseFolders[$_ImapServerId]);
 				self::$specialUseFolders=null;
 			}
-			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-			if (isset(self::$folderStatusCache[$_ImapServerId]))
-			{
-				self::$folderStatusCache[$_ImapServerId]=null;
-			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders,$expiration=60*60*12);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),self::$folderStatusCache,$expiration=60*60*10);
 	}
 
 	/**
@@ -859,11 +856,12 @@ $_restoreSession=false;
 		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
 		$retValue['subscribed'] = false;
+/*
 		if(!$icServer = emailadmin_account::read($this->profileID)) {
 			if (self::$debug) error_log(__METHOD__." no Server found for Folder:".$_folderName);
 			return false;
 		}
-
+*/
 		// does the folder exist???
 		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName])) $folderInfoCache[$_folderName] = $this->icServer->getMailboxes('', $_folderName, true);
 		$folderInfo = $folderInfoCache[$_folderName];
@@ -1259,16 +1257,7 @@ $_restoreSession=false;
 	 */
 	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
 	{
-		//ToDo: FilterSpecific Cache
-		if (is_null(self::$folderStatusCache) || empty(self::$folderStatusCache[$this->profileID]) || empty(self::$folderStatusCache[$this->profileID][$_folderName]))
-		{
-			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-		}
-
-		if($folderStatus = $this->icServer->examineMailbox($_folderName)) {
-			//if (stripos($folderStatus->message,'not connected') !== false); error_log(__METHOD__.__LINE__.$folderStatus->message);
-			//return false;
-		}
+		$folderStatus = $this->icServer->examineMailbox($_folderName);
 		//error_log(__METHOD__.__LINE__.' F:'.$_folderName.' S:'.array2string($folderStatus));
 		//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
 		$try2useCache = true;
@@ -1289,97 +1278,51 @@ $_restoreSession=false;
 			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
 			//error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
 		}
-		if (self::$debug)
-		{
-			error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
-			error_log(__METHOD__.__LINE__.' FolderStatus:'.' Folder:'.$_folderName.' :'.array2string($folderStatus));
-			error_log(__METHOD__.__LINE__.' CachedFolderStatus:'.array2string(self::$folderStatusCache[$this->profileID][$_folderName]));
-		}
-		if($try2useCache && (is_array(self::$folderStatusCache[$this->profileID][$_folderName]) &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['messages']	== $folderStatus['MESSAGES'] &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['deleted']	== $eMailListContainsDeletedMessages[$this->profileID][$_folderName] &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['filter']	=== $_filter &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['sort']	=== $_sort &&
-			//self::$folderStatusCache[0][$_folderName]['reverse'] === $_reverse &&
-			!empty(self::$folderStatusCache[$this->profileID][$_folderName]['sortResult']))
-		) {
-			if (self::$debug) error_log(__METHOD__." USE CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun').' Filter:'.array2string($_filter).function_backtrace());
-			$sortResult = self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'];
+		$try2useCache = false;
+		$filter = $this->createIMAPFilter($_folderName, $_filter);
+		//_debug_array($filter);
 
-		} else {
-			$try2useCache = false;
-			// control HeaderCache
-			if (isset(self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity']) &&
-				self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity'] != $folderStatus['UIDVALIDITY'])
+		if($this->icServer->hasCapability('SORT')) {
+			if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
+			$sortOrder = $this->_getSortString($_sort, $_reverse);
+			if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)) $_reverse=false; // as we reversed the result already
+			if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: $filter");
+			$sortResult = $this->icServer->search($_folderName, $filter, array(
+				'sort' => $sortOrder,));
+			// if there is an PEAR Error, we assume that the server is not capable of sorting
+			if (PEAR::isError($sortResult))
 			{
-				$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-				if (isset($summary[$this->profileID][$_folderName]))
-				{
-					unset($summary[$this->profileID][$_folderName]);
-					egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary, $expiration=60*60*1);
-				}
-			}
-			//error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
-			if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName." Filter:".array2string($_filter).function_backtrace());
-			$filter = $this->createIMAPFilter($_folderName, $_filter);
-			//_debug_array($filter);
-
-			if($this->icServer->hasCapability('SORT')) {
-				if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
-				$sortOrder = $this->_getSortString($_sort, $_reverse);
-				if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)) $_reverse=false; // as we reversed the result already
-				if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: $filter");
+				$resultByUid = false;
+				$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
+				if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
 				$sortResult = $this->icServer->search($_folderName, $filter, array(
-					'sort' => $sortOrder,));
-				// if there is an PEAR Error, we assume that the server is not capable of sorting
+					'sort' => $sortOrder));
 				if (PEAR::isError($sortResult))
 				{
-					$resultByUid = false;
-					$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
-					if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
-					$sortResult = $this->icServer->search($_folderName, $filter, array(
-						'sort' => $sortOrder));
-					if (PEAR::isError($sortResult))
-					{
-						$sortResult = self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'];
-					}
+					$sortResult = self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'];
 				}
-				if (self::$debug) error_log(__METHOD__.print_r($sortResult,true));
-			} else {
-				if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
-				//$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
-				//if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
-				$sortResult = $this->icServer->search($_folderName, $filter, array()/*array(
-					'sort' => $sortOrder)*/);
-				if(is_array($sortResult['match'])) {
-						sort($sortResult['match'], SORT_NUMERIC);
-				}
-				if (self::$debug) error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 			}
-			if ($setSession)
-			{
-				self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity'] = $folderStatus['UIDVALIDITY'];
-				self::$folderStatusCache[$this->profileID][$_folderName]['messages']	= $folderStatus['MESSAGES'];
-				self::$folderStatusCache[$this->profileID][$_folderName]['deleted']	= $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
-				self::$folderStatusCache[$this->profileID][$_folderName]['uidnext']	= $folderStatus['UIDNEXT'];
-				self::$folderStatusCache[$this->profileID][$_folderName]['filter']	= $_filter;
-				self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'] = $sortResult;
-				self::$folderStatusCache[$this->profileID][$_folderName]['sort']	= $_sort;
+			if (self::$debug) error_log(__METHOD__.print_r($sortResult,true));
+		} else {
+			if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
+			//$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
+			//if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
+			$sortResult = $this->icServer->search($_folderName, $filter, array()/*array(
+				'sort' => $sortOrder)*/);
+			if(is_array($sortResult['match'])) {
+					sort($sortResult['match'], SORT_NUMERIC);
 			}
+			if (self::$debug) error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 		}
 		if ($setSession)
 		{
-/*
-			// this indicates, that there should be no UNDELETED Messages in the returned set/subset
-			if (((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
-			{
-				if ($try2useCache == false) self::$folderStatusCache[$this->profileID][$_folderName]['deleted'] = $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
-			}
-*/
-			self::$folderStatusCache[$this->profileID][$_folderName]['reverse'] 	= $_reverse;
-			egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),self::$folderStatusCache,$expiration=60*60*10);
+			self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity'] = $folderStatus['UIDVALIDITY'];
+			self::$folderStatusCache[$this->profileID][$_folderName]['messages']	= $folderStatus['MESSAGES'];
+			self::$folderStatusCache[$this->profileID][$_folderName]['deleted']	= $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
+			self::$folderStatusCache[$this->profileID][$_folderName]['uidnext']	= $folderStatus['UIDNEXT'];
+			self::$folderStatusCache[$this->profileID][$_folderName]['filter']	= $_filter;
+			self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'] = $sortResult;
+			self::$folderStatusCache[$this->profileID][$_folderName]['sort']	= $_sort;
 		}
 		//_debug_array($sortResult['match']->ids);
 		return $sortResult;
@@ -2713,10 +2656,6 @@ $_restoreSession=false;
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
-		if (is_null(self::$folderStatusCache) || empty(self::$folderStatusCache[$this->profileID]) || empty(self::$folderStatusCache[$this->profileID][$_folderName]))
-		{
-			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-		}
 		if(!is_array($_messageUID)) {
 			#return false;
 			if ($_messageUID=='all')
@@ -2827,7 +2766,6 @@ $_restoreSession=false;
 		}
 
 		self::$folderStatusCache[$this->profileID][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
-		egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),self::$folderStatusCache,$expiration=60*60*10);
 
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue
