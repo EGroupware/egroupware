@@ -140,7 +140,7 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist = $j('<div/>').appendTo(this.div);
 
 		var options = jQuery.extend( {
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.egw().getAppName() + '.'+this.options.autocomplete_url,
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			method: 'GET',
 			displayField: "label",
