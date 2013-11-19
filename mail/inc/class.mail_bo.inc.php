@@ -546,7 +546,7 @@ $_restoreSession=false;
 	 */
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
-error_log(__METHOD__."() ".function_backtrace());
+		error_log(__METHOD__."() ".function_backtrace());
 		$this->icServer->disconnect();
 	}
 
@@ -558,7 +558,7 @@ error_log(__METHOD__."() ".function_backtrace());
 	 */
 	function reopen($_foldername)
 	{
-error_log(__METHOD__."('$_foldername') ".function_backtrace());
+		//error_log(__METHOD__.__LINE__."('$_foldername') ".function_backtrace());
 		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
 		// eMails when not in "current-Folder" (folder that is selected by UI)
 		static $folderOpened;
@@ -801,7 +801,6 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 	{
 		$retval = true;
 		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect,false,true))) {
-			if ($folderStatus instanceof PEAR_Error) return false;
 			if (!empty($folderStatus['attributes']) && stripos(array2string($folderStatus['attributes']),'noselect')!==false)
 			{
 				$retval = false;
@@ -845,8 +844,7 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 	 */
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false)
 	{
-error_log(__METHOD__."('$_foldername') ".function_backtrace());
-		if (self::$debug) error_log(__METHOD__." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
+		if (self::$debug) error_log(__METHOD__.__LINE__." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
 		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
 		{
 			return false;
@@ -1281,23 +1279,25 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 		{
 			//$starttime = microtime(true);
 			//$deletedMessages = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('DELETED')),$byUid=true,false);
+			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
 			//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			//$endtime = microtime(true);
 			//$r = ($endtime-$starttime);
-			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
+			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
 			//error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
 		}
 		if (self::$debug)
 		{
-			error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
+			error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
+			error_log(__METHOD__.__LINE__.' FolderStatus:'.' Folder:'.$_folderName.' :'.array2string($folderStatus));
 			error_log(__METHOD__.__LINE__.' CachedFolderStatus:'.array2string(self::$folderStatusCache[$this->profileID][$_folderName]));
 		}
 		if($try2useCache && (is_array(self::$folderStatusCache[$this->profileID][$_folderName]) &&
 			self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
-			self::$folderStatusCache[$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] &&
+			self::$folderStatusCache[$this->profileID][$_folderName]['messages']	== $folderStatus['MESSAGES'] &&
 			self::$folderStatusCache[$this->profileID][$_folderName]['deleted']	== $eMailListContainsDeletedMessages[$this->profileID][$_folderName] &&
 			self::$folderStatusCache[$this->profileID][$_folderName]['uidnext']	=== $folderStatus['UIDNEXT'] &&
 			self::$folderStatusCache[$this->profileID][$_folderName]['filter']	=== $_filter &&
@@ -1361,7 +1361,8 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 			if ($setSession)
 			{
 				self::$folderStatusCache[$this->profileID][$_folderName]['uidValidity'] = $folderStatus['UIDVALIDITY'];
-				self::$folderStatusCache[$this->profileID][$_folderName]['messages']	= $folderStatus['EXISTS'];
+				self::$folderStatusCache[$this->profileID][$_folderName]['messages']	= $folderStatus['MESSAGES'];
+				self::$folderStatusCache[$this->profileID][$_folderName]['deleted']	= $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
 				self::$folderStatusCache[$this->profileID][$_folderName]['uidnext']	= $folderStatus['UIDNEXT'];
 				self::$folderStatusCache[$this->profileID][$_folderName]['filter']	= $_filter;
 				self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'] = $sortResult;
@@ -4295,7 +4296,7 @@ error_log(__METHOD__."('$_foldername') ".function_backtrace());
 	 */
 	function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
 	{
-		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
+		if (self::$debug) error_log( __METHOD__.__LINE__.":$_uid, $_partID");
 
 		if (empty($_folder))
 		{
