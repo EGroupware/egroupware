@@ -3221,12 +3221,17 @@ class mail_bo
 		$partText = $partHTML = null;
 		if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
 
+		$ignore_first_part = true;
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
 			if (self::$debug) echo __METHOD__."($_uid, partID=".$_structure->getMimeId().") $mime_id: $mime_type<br>";
 
-			if (!$mime_id) continue;	// ignore multipart/alternative itself
+			if ($ignore_first_part)
+			{
+				$ignore_first_part = false;
+				continue;	// ignore multipart/alternative itself
+			}
 
 			$mimePart = $_structure->getPart($mime_id);
 
@@ -3340,12 +3345,17 @@ class mail_bo
 		$bodyPart = array();
 		if (self::$debug) _debug_array($_structure);
 
+		$ignore_first_part = true;
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
 			if (self::$debug) echo __METHOD__."($_uid, partID=".$_structure->getMimeId().") $mime_id: $mime_type<br>";
 
-			if (!$mime_id) continue;	// ignore multipart/mixed itself
+			if ($ignore_first_part)
+			{
+				$ignore_first_part = false;
+				continue;	// ignore multipart/mixed itself
+			}
 
 			$part = $_structure->getPart($mime_id);
 
@@ -3355,8 +3365,7 @@ class mail_bo
 					switch($part->getSubType())
 					{
 						case 'alternative':
-							$bodyPart[] = $this->getMultipartAlternative($_uid, $part, $_htmlMode, $_preserveSeen);
-							break;
+							return array($this->getMultipartAlternative($_uid, $part, $_htmlMode, $_preserveSeen));
 
 						case 'mixed':
 						case 'signed':
