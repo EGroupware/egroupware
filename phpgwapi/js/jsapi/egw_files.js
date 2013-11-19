@@ -105,7 +105,10 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				// Get the head node and append the newly created "link" node
 				// to it.
 				var head = _wnd.document.getElementsByTagName('head')[0];
-				head.appendChild(cssnode);
+				if(jQuery('link[href="'+_cssFile+'"]',head).length == 0)
+				{
+					head.appendChild(cssnode);
+				}
 			}
 		}
 	}
