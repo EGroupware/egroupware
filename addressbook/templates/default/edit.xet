@@ -14,13 +14,13 @@
 					<file statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"/>
 				</row>
 				<row>
-					<button align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;"/>
+					<button align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.name" template="" lang="" group="0" version="1.9.001">
-		<grid width="310" height="160" class="editname">
+		<grid width="310" height="250" class="editname">
 			<columns>
 				<column width="20%"/>
 				<column/>
@@ -48,21 +48,22 @@
 				</row>
 				<row>
 					<description/>
-					<button label="Ok" id="button[ok]" onclick="jQuery('table.editname').css('display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;"/>
+					<button label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%" height="286">
+		<grid width="100%" height="286" class="addressbook_edit_general">
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
 				<row valign="top">
-					<image src="accounts"/>
+					<!-- <image src="accounts"/> -->
 					<vbox>
 						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
 						<template id="addressbook.edit.upload"/>
@@ -99,27 +100,26 @@
 					</grid>
 				</row>
 				<row>
-					<image src="home"/>
+				<!-- 	<image src="home"/> -->
 					<description value="Organisation"/>
 					<textbox id="org_name" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="128"/>
 				</row>
 				<row>
-					<description/>
 					<description for="org_unit" value="department"/>
 					<textbox id="org_unit" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="64"/>
 				</row>
 				<row>
-					<image src="gohome"/>
+				<!-- 	<image src="gohome"/> -->
 					<description for="adr_one_street" value="street"/>
 					<textbox id="adr_one_street" size="45" maxlength="64"/>
 				</row>
 				<row>
-					<description/>
+					
 					<description/>
 					<textbox statustext="address line 2" id="adr_one_street2" size="45" maxlength="64"/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description/>
+					
 					<description for="adr_one_locality" value="city"/>
 					<hbox options="0,0">
 						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64"/>
@@ -127,16 +127,20 @@
 					</hbox>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description/>
 					<description for="adr_one_countryname" value="country"/>
 					<hbox options="0,0">
 						<menulist>
 							<menupopup type="select-country" class="countrySelect" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
 						</menulist>
 						<textbox id="adr_one_countryname" class="custom_country"/>
-						<textbox statustext="State" id="adr_one_region" size="19" maxlength="64" class="leftPad5"/>
 					</hbox>
 				</row>
+				
+				<row disabled="@addr_format=city_state_postcode">
+					<description value="Region"/>
+					<textbox statustext="State" id="adr_one_region" size="19" maxlength="64" class="leftPad5"/>
+				</row>
+				
 				<row disabled="!@addr_format=city_state_postcode">
 					<description/>
 					<description value="City"/>
@@ -157,7 +161,7 @@
 					</hbox>
 				</row>
 				<row valign="bottom" height="25">
-					<image src="private.png"/>
+				<!-- 	<image src="private.png"/> -->
 					<description value="Addressbook"/>
 					<menulist>
 						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
@@ -259,7 +263,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="286" overflow="auto">
+		<grid width="100%" height="399" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -484,23 +488,23 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 				</row>
 				<row>
-					<button align="center" label="Ok" id="button[ok]" onclick="jQuery('table.editphones').css('display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all"/>
+					<button align="center" label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editphones').css('display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
-		<grid>
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
+		<grid class="addressbook_edit">
 			<columns>
-				<column width="450"/>
-				<column width="350"/>
+				<column width="c_Left"/>
+				<column width="c_Right"/>
 			</columns>
-			<rows class="dialog-header">
+			<rows>
 				<row disabled="!@msg">
 					<htmlarea id="msg" no_lang="1" readonly="true" span="all" class="redItalic"/>
 					<description/>
 				</row>
-				<row>
+				<row class="dialog-header">
 					<menulist>
 						<menupopup blur="Name" class="fileas" statustext="own sorting" id="fileas_type" no_lang="1"/>
 					</menulist>
@@ -520,17 +524,17 @@
 					</grid>
 				</row>
 				<row valign="top">
-					<tabbox id="tabs" span="all" readonly="false">
+					<tabbox id="addressbook.edit.general|addressbook.edit.cats|addressbook.edit.home|addressbook.edit.details|addressbook.edit.links|addressbook.edit.distribution_list|addressbook.edit.custom|addressbook.edit.custom_private|addressbook.edit.history">
 						<tabs>
-							<tab id="general" label="General" statustext="Name, Address"/>
-							<tab id="cats" label="Categories" statustext="Categories"/>
-							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
-							<tab id="links" label="Links" statustext="Links"/>
-							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-							<tab id="custom" label="Extra" statustext="Custom fields"/>
-							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
-							<tab id="history" label="History"/>
+							<tab id="addressbook.edit.general" label="General" statustext="Name, Address"/>
+							<tab id="addressbook.edit.cats" label="Categories" statustext="Categories"/>
+							<tab id="addressbook.edit.home" label="Private" statustext="Home address, Birthday, ..."/>
+							<tab id="addressbook.edit.details" label="Details" statustext="Categories, Notes, ..."/>
+							<tab id="addressbook.edit.links" label="Links" statustext="Links"/>
+							<tab id="addressbook.edit.distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
+							<tab id="addressbook.edit.custom" label="Extra" statustext="Custom fields"/>
+							<tab id="addressbook.edit.custom_private" label="Extra private" statustext="Private custom fields"/>
+							<tab id="addressbook.edit.history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
@@ -583,7 +587,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button accesskey="m" label="More ..." id="button[more]" onclick="jQuery('table.editphones').css('display','inline'); if (window.showphones) showphones(this.form); return false;"/>
+										<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="jQuery('table.editphones').css('display','inline'); if (window.showphones) showphones(this.form); return false;" image="edit" background_image="1"/>
 										<description/>
 									</row>
 								</rows>
@@ -625,15 +629,16 @@
 				</row>
 				<row disabled="@hidebuttons" class="dialog-footer-toolbar">
 					<hbox>
-						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]"/>
-						<button accesskey="s" label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]" onclick="if($cont[view] || false) return true; self.close(); return false;"/>
+						<button label="Edit" id="button[edit]" class="button_edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="edit" background_image="1"  />
+						<button label="Copy" id="button[copy]" class="button_copy" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="copy" background_image="1"/>
+						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]" image="vcard" background_image="1"/>
+						<button accesskey="s" label="Save" id="button[save]" class="button_save" image="save" background_image="1"/>
+						<button label="Apply" id="button[apply]" class="button_apply" image="apply" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; self.close(); return false;" image="cancel" background_image="1"/>
 						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
+						<button align="left" label="Delete" id="button[delete]" class="button_delete" onclick="return confirm('Are you shure you want to delete this contact?');" tabindex="25" image="delete" background_image="1"/>
 					</hbox>
-					<button align="right" label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" tabindex="25"/>
+					
 				</row>
 			</rows>
 		</grid>
