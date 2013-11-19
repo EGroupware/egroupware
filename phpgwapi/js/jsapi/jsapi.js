@@ -66,7 +66,7 @@ if (typeof window.console == 'undefined')
 egw_seperateJavaScript = function(_html)
 {
 	var html = _html.html;
-	
+
 	var in_pos = html.search(/<script/im);
 	var out_pos = html.search(/<\/script>/im);
 	while (in_pos > -1 && out_pos > -1)
@@ -78,7 +78,7 @@ egw_seperateJavaScript = function(_html)
 		/*js_str = js_str.substring(js_str.search(/>/) + 1);*/
 		_html.js += js_str;
 
-		
+
 		html = html.substring(0, in_pos) + html.substring(out_pos + 9);
 
 		var in_pos = html.search(/<script/im);
@@ -159,7 +159,7 @@ function egw_topWindow()
 }
 
 /**
- * Returns the window object of the current application 
+ * Returns the window object of the current application
  * @param string _app is the name of the application which requests the window object
  */
 function egw_appWindow(_app)
@@ -208,9 +208,9 @@ function egw_getAppName()
 
 /**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
- * 
+ *
  * Default implementation here only reloads window with it's current url with an added msg=_msg attached
- * 
+ *
  * @param string _msg message (already translated) to show, eg. 'Entry deleted'
  * @param string _app application name
  * @param string|int _id=null id of entry to refresh
@@ -224,11 +224,11 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 {
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
-	
+
 	win.egw_message(_msg, _msg_type);
 
 	// if window registered an app_refresh method or overwritten app_refresh, just call it
-	if(typeof win.app_refresh == "function" && typeof win.app_refresh.registered == "undefined" || 
+	if(typeof win.app_refresh == "function" && typeof win.app_refresh.registered == "undefined" ||
 		typeof win.app_refresh != "undefined" && win.app_refresh.registered(_app))
 	{
 		win.app_refresh(_msg, _app, _id, _type);
@@ -236,14 +236,14 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 	}
 
 	// etemplate2 specific to avoid reloading whole page
-	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
+	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication && etemplate2.getByApplication(_app).hasOwnProperty())
 	{
 		var et2 = etemplate2.getByApplication(_app);
 		for(var i = 0; i < et2.length; i++)
 		{
 			et2[i].refresh(_msg,_app,_id,_type);
 		}
-		
+
 		// Refresh target or current app too
 		var et2 = etemplate2.getByApplication(_targetapp || egw_appName);
 		for(var i = 0; i < et2.length; i++)
@@ -254,12 +254,12 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 	}
 
 	var href = win.location.href;
-	
+
 	if (typeof _replace != 'undefined')
 	{
 		href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, typeof _with != 'undefined' ? _with : '');
 	}
-	
+
 	if (href.indexOf('msg=') != -1)
 	{
 		href = href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
@@ -274,7 +274,7 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 
 /**
  * Display an error or regular message
- * 
+ *
  * @param string _msg message to show
  * @param string _type 'error', 'warning' or 'success' (default)
  */
@@ -282,23 +282,23 @@ function egw_message(_msg, _type)
 {
 	if (typeof _type == 'undefined')
 		_type = _msg.match(/error/i) ? 'error' : 'success';
-	
+
 	var framework = egw_getFramework();
 	if (framework && (typeof framework.setMessage != 'undefined'))
 	{
 		framework.setMessage.call(window.framework, _msg, _type);
 		return;
-	}	
+	}
 	// handle message display for non-framework templates, eg. idots or jerryr
 	if (window.egw_message_timer)
 	{
 		window.clearTimeout(window.egw_message_timer);
 		delete window.egw_message_timer;
 	}
-	
+
 	$j('div#divAppboxHeader div').remove();
 	$j('div#divAppboxHeader').prepend($j(document.createElement('div')).text(_msg).addClass(_type+'_message').css('position', 'absolute'));
-	
+
 	if (_type != 'error')	// clear message again after some time, if no error
 	{
 		window.egw_message_timer = window.setTimeout(function() {
@@ -309,7 +309,7 @@ function egw_message(_msg, _type)
 
 /**
  * Update app-header and website-title
- * 
+ *
  * @param _header
  */
 function egw_app_header(_header)
@@ -322,22 +322,22 @@ function egw_app_header(_header)
 
 		framework.setWebsiteTitle.call(window.framework, app, title, _header);
 		return;
-	}	
+	}
 
 	$j('div#divAppboxHeader').text(_header);
-	
+
 	document.title = document.title.replace(/[.*]$/, '['+_header+']');
 }
 
 /**
  * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
- * 
- * Examples: 
+ *
+ * Examples:
  * - egw_open(123,'infolog') or egw_open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
  * - egw_open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
  * - egw_open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
  * - egw_open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
- * 
+ *
  * @param string|int id either just the id or "app:id" if app==""
  * @param string app app-name or empty (app is part of id)
  * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
@@ -427,7 +427,7 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 			ms.style.backgroundColor = "#EEEEEE";
 			label_color = "gray"
 		}
-		
+
 		//Enable/Disable all children input elements
 		for (var i = 0; i <ms.childNodes.length; i++)
 		{
@@ -464,7 +464,7 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 
 	// inject egw object
 	windowID.egw = window.egw;
-	
+
 	// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 	if (_returnID === false)
 	{
@@ -489,7 +489,7 @@ function egw_getWindowLeft()
 		if(is_mozilla) return window.screenX;
 	}
 	catch (e) {}
-	
+
 	return window.screenLeft;
 }
 
@@ -501,7 +501,7 @@ function egw_getWindowTop()
 		if(is_mozilla) return window.screenY;
 	}
 	catch (e) {}
-	
+
 	return window.screenTop-90;
 }
 
@@ -557,12 +557,12 @@ function egw_getWindowOuterHeight()
 		if (is_mozilla) return window.outerHeight;
 	}
 	catch (e) {}
-	
+
 	return egw_getWindowInnerHeight();
 }
 
 // ie selectbox dropdown menu hack. as ie is not able to resize dropdown menus from selectboxes, we
-// read the content of the dropdown menu and present it as popup resized for the user. if the user 
+// read the content of the dropdown menu and present it as popup resized for the user. if the user
 // clicks/seleckts a value, the selection is posted back to the origial selectbox
 function dropdown_menu_hack(el)
 {
@@ -696,7 +696,7 @@ function dropdown_menu_hack(el)
 					this.style.background="#333366";this.style.color="white";
 				}
 				mb.options[i].onmouseout = function(){this.style.background="white";this.style.color="black";}
-				if (mb.options[i].value != 'i-opt-group-lable-i') 
+				if (mb.options[i].value != 'i-opt-group-lable-i')
 				{
 					mb.options[i].onmousedown = function(){selectMenu(this); }
 					mb.options[i].onkeydown = function(){selectMenu(this); }
@@ -795,7 +795,7 @@ function dropdown_menu_hack(el)
 
 /**
  * Dummy link handler, which can be overwritten by templates
- * 
+ *
  * @param _link
  * @param _app
  */
@@ -813,15 +813,15 @@ function egw_link_handler(_link, _app)
 
 /**
  * Call context / open app specific preferences function
- * 
- * @param string name type 'acl', 'prefs', or 'cats' 
+ *
+ * @param string name type 'acl', 'prefs', or 'cats'
  * @param array|object apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
  */
 function egw_preferences(name, apps)
 {
 	var current_app = egw_getAppName();
 	// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
-	if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' || 
+	if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' ||
 		!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
 	{
 		egw_message(egw.lang('Not supported by current application!'), 'warning');
@@ -835,11 +835,11 @@ function egw_preferences(name, apps)
 				url += 'menuaction=preferences.preferences_settings.index';
 				if ($j.inArray(current_app, apps) != -1) url += '&appname='+current_app;
 				break;
-				
+
 			case 'acl':
 				url += 'menuaction=preferences.preferences_acl.index&acl_app='+current_app;
 				break;
-				
+
 			case 'cats':
 				if (typeof apps[current_app] == 'object')
 				{
@@ -860,7 +860,7 @@ function egw_preferences(name, apps)
 
 /**
  * Support functions for uiaccountselection class
- * 
+ *
  * @ToDo: should be removed if uiaccountsel class is no longer in use
  */
 function addOption(id,label,value,do_onchange)
@@ -893,14 +893,14 @@ $j(function(){
 		{
 			var link = selectBox.getAttribute('data-popup-link');
 
-			if (selectBox.multiple || this.id.match(/_popup$/)) 
+			if (selectBox.multiple || this.id.match(/_popup$/))
 			{
 				window.open(link, 'uiaccountsel', 'width=600,height=420,toolbar=no,scrollbars=yes,resizable=yes');
 			}
 			else
 			{
-				selectBox.size = 4; 
-				selectBox.multiple = true; 
+				selectBox.size = 4;
+				selectBox.multiple = true;
 				if (selectBox.options[0].value=='') selectBox.options[0] = null;
 
 				if (!$j(selectBox).hasClass('groupmembers') && !$j(selectBox).hasClass('selectbox'))	// no popup!
@@ -910,7 +910,7 @@ $j(function(){
 				}
 				else
 				{
-					this.style.display = 'none'; 
+					this.style.display = 'none';
 					selectBox.style.width = '100%';
 				}
 			}
