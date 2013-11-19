@@ -171,7 +171,7 @@ class mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
-$_restoreSession=false;
+		//$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID == 0)
 		{
@@ -363,13 +363,12 @@ $_restoreSession=false;
 	 */
 	function saveSessionData()
 	{
-		//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)));
+		error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)));
 		if (!empty($this->sessionData['mailbox'])) self::$activeFolderCache[$this->profileID]=$this->sessionData['mailbox'];
 		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
 		{
-			egw_cache::setCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['maibox'], $expiration=60*60*10);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, $expiration=60*60*10);
 		}
-		//egw_cache::setCache(egw_cache::SESSION,'mail','session_data',$this->sessionData, $expiration=60*60*1);
 	}
 
 	/**
@@ -961,7 +960,7 @@ $_restoreSession=false;
 		if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
 		$reverse = (bool)$_reverse;
 		// get the list of messages to fetch
-		if (self::$debug); $starttime = microtime (true);
+		if (self::$debug) $starttime = microtime (true);
 		$this->reopen($_folderName);
 		if (self::$debug)
 		{
@@ -1180,7 +1179,7 @@ $_restoreSession=false;
 
 				$count++;
 			}
-			if (self::$debug);
+			if (self::$debug)
 			{
 				$endtime = microtime(true) - $starttime;
 				error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
@@ -3435,7 +3434,7 @@ $_restoreSession=false;
 		{
 			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
-
+		//error_log(__METHOD__.__LINE__.array2string($_folder).'/'.$this->icServer->getCurrentMailbox().'/'. $this->sessionData['mailbox']);
 		// querying contents of body part
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);

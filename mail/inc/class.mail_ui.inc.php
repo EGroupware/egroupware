@@ -122,7 +122,7 @@ class mail_ui
 		}
 
 		try {
-			$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
+			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
