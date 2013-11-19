@@ -97,7 +97,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 			//inital call of refresh folderstatus
 			var self = this;
-			window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
+			window.setTimeout(function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);},1000);
 		}
 		if (isDisplay)
 		{
@@ -500,7 +500,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 			return;
 		}
-		//console.log("mail_preview",dataElem);
+		console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
 		this.mail_disablePreviewArea(false);
@@ -551,7 +551,7 @@ app.classes.mail = AppJS.extend(
 		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
 			var self = this;
 			this.mail_doTimedRefresh = window.setInterval(function() {
-				self.mail_refreshFolderStatus.apply(self);
+				self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
 			}, _refreshTimeOut);
 		}
 	},
@@ -562,9 +562,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _nodeID
 	 * @param mode
 	 */
-	mail_refreshFolderStatus: function(_nodeID,mode) {
+	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea) {
 		var nodeToRefresh = 0;
 		var mode2use = "none";
+		if (typeof _refreshGridArea == 'undefined') _refreshGridArea=true;
 		if (_nodeID) nodeToRefresh = _nodeID;
 		if (mode) {
 			if (mode == "forced") {mode2use = mode;}
@@ -576,11 +577,14 @@ app.classes.mail = AppJS.extend(
 			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
 			this.mail_queueRefreshFolderList(activeFolders);
-			this.mail_refreshQuotaDisplay();
-			// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
-			// would solve the refresh issue more accurately
-			//if (mode == "forced") this.mail_refreshMessageGrid();
-			this.mail_refreshMessageGrid();
+			if (_refreshGridArea)
+			{
+				this.mail_refreshQuotaDisplay();
+				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
+				// would solve the refresh issue more accurately
+				//if (mode == "forced") this.mail_refreshMessageGrid();
+				this.mail_refreshMessageGrid();
+			}
 		} catch(e) { } // ignore the error; maybe the template is not loaded yet
 	},
 

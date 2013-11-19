@@ -183,7 +183,7 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
-		//$starttime = microtime (true);
+		$starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
 		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
 		if ($this->mail_bo->folderExists($sessionFolder))
@@ -261,7 +261,10 @@ class mail_ui
 			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 		}
 
+		//$zstarttime = microtime (true);
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
+		//$zendtime = microtime(true) - $zstarttime;
+		//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 
 		//$sessionFolder = $this->mail_bo->sessionData['mailbox'];// already set and tested this earlier
 		//if ($this->mail_bo->folderExists($sessionFolder))
@@ -349,7 +352,7 @@ class mail_ui
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
-		//$endtime = microtime(true) - $starttime;
+		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);
 
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
@@ -549,7 +552,10 @@ class mail_ui
 				}
 			}
 		}
-		$folderObjects = $this->mail_bo->getFolderObjects(true,false,true);
+		//$starttime = microtime(true);
+		$folderObjects = $this->mail_bo->getFolderObjects(true,false,false,true);
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
 		$trashFolder = $this->mail_bo->getTrashFolder();
 		$templateFolder = $this->mail_bo->getTemplateFolder();
 		$draftFolder = $this->mail_bo->getDraftFolder();
@@ -1087,7 +1093,7 @@ class mail_ui
 unset($query['actions']);
 //_debug_array($query);
 //error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
-error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 		$starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
@@ -1209,7 +1215,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
-		error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
+		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 
 		return $rowsFetched['messages'];
 	}

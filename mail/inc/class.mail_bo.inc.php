@@ -1731,7 +1731,7 @@ class mail_bo
 	 */
 	function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false,$_useCacheIfPossible=true)
 	{
-		if (self::$debug) error_log(__METHOD__.__LINE__.' '."subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders");
+		if (self::$debug) error_log(__METHOD__.__LINE__.' ServerID:'.$this->icServer->ImapServerId.", subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders, _useCacheIfPossible:$_useCacheIfPossible");
 		static $folders2return;
 		if ($_subscribedOnly && $_getCounters===false)
 		{
@@ -2048,8 +2048,14 @@ class mail_bo
 		if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
 		//$folders2return = array_merge($autoFolderObjects,$folders);
 		//_debug_array($folders2return); #exit;
-		$folders2return[$this->icServer->ImapServerId] = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders);
-		if ($_subscribedOnly && $_getCounters===false) egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return,$expiration=60*60*1);
+		$folders2return[$this->icServer->ImapServerId] = array_merge((array)$inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
+		if (($_subscribedOnly && $_getCounters===false) ||
+			($_subscribedOnly == false && $_getCounters===false &&
+			isset($this->mailPreferences['showAllFoldersInFolderPane']) &&
+			$this->mailPreferences['showAllFoldersInFolderPane']==1))
+		{
+			egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return,$expiration=60*60*1);
+		}
 		return $folders2return[$this->icServer->ImapServerId];
 	}
 
