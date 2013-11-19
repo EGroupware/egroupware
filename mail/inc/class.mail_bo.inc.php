@@ -363,7 +363,7 @@ class mail_bo
 	 */
 	function saveSessionData()
 	{
-		error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)));
+		//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)));
 		if (!empty($this->sessionData['mailbox'])) self::$activeFolderCache[$this->profileID]=$this->sessionData['mailbox'];
 		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
 		{
@@ -1809,14 +1809,14 @@ class mail_bo
 							if ($foldersNameSpace[$type]['prefix'] == $folderName || $foldersNameSpace[$type]['prefix'] == $folderName.$foldersNameSpace[$type]['delimiter']) continue;
 							//echo __METHOD__."Checking $folderName for existence<br>";
 							if (!self::folderExists($folderName,true)) {
-								echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
-								error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed");
+								//echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
 								if (self::subscribe($folderName, false))
 								{
-									echo " success."."<br>" ;
+									$r = " success.";
 								} else {
-									echo " failed."."<br>";
+									$r = " failed.";
 								}
+								error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed....".$r);
 							}
 						}
 					}

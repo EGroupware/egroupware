@@ -1087,7 +1087,7 @@ class mail_ui
 unset($query['actions']);
 //_debug_array($query);
 //error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
-//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 		$starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
@@ -1208,8 +1208,8 @@ unset($query['actions']);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
-		//$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
+		$endtime = microtime(true) - $starttime;
+		error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
 
 		return $rowsFetched['messages'];
 	}
