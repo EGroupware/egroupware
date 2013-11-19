@@ -110,7 +110,8 @@ class infolog_ui
 		if ($GLOBALS['egw_info']['apps']['projectmanager'])
 		{
 			$pm_config = config::read('projectmanager');
-			$this->duration_format = str_replace(',','',implode('',$pm_config['duration_units']));
+			$this->duration_format = str_replace(',','',implode('', (array)$pm_config['duration_units']));
+			error_log(__METHOD__."() ".__LINE__." duration_format=$this->duration_format, duration_unit=".array2string($pm_config['duration_units']));
 			$this->hours_per_workday = $pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
@@ -388,12 +389,12 @@ class infolog_ui
 				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 			}
 		}
-		
+
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
 		if($parent_first || $query['action'] = 'sp' && is_array($query['action_id'])) $query['total']++;
-		
+
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
 		{
@@ -829,7 +830,7 @@ class infolog_ui
 
 		// Allow saving parent ID into favorites
 		$values['nm']['favorites'] = array('action','action_id');
-		
+
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
 
