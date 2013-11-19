@@ -166,7 +166,10 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		if(!found_image)
 		{
 			this.set_label(this.label);
-			this.btn.css("background-image","");
+			if(this.btn)
+			{
+				this.btn.css("background-image","");
+			}
 		}
 	},
 
