@@ -1,0 +1,25 @@
+/* $Id$ */
+.infolog_headertext { color: black; font-size: 120%; }
+.infolog_lpadding5 { padding-left: 5px; }
+.low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
+.low,.low_done { color:#606060; }
+.normal,.normal_done { color:black }
+.high { color:#cc0000; }
+.high_done { color:#800000; }
+.urgent { color:#ff00ff; }
+.urgent_done { color:#800080; }
+.infolog_overdue { color:#cc0000; font-weight:bold; }
+.private { font-style:italic; }
+.infolog_planned { font-style:italic; }
+table.infolog_fullWidth { width: 100%; }
+td.infolog_infoId:before { content:"#" }
+.infolog_fixedHeight { height: 12px; }
+.noWrap { white-space: nowrap; }
+.infolog_user_filter select { width: 100px; }
+.inputFullWidth input { width: 100%; }
+.infolog_image16 img { height: 16px; }
+tr.infolog_rowHasParent > td:first-child {
+	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
+	background-repeat: no-repeat;
+	background-position: 6px -2px;
+}
