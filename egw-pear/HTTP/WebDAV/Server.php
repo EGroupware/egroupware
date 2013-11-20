@@ -1233,6 +1233,30 @@ class HTTP_WebDAV_Server
 
     // }}}
 
+	/**
+	 * Check or set if we want ot use compression as transfer encoding
+	 *
+	 * If we use compression via zlib.output_compression as transfer encoding,
+	 * we can NOT send Content-Length headers, as the have to reflect size
+	 * AFTER applying compression/transfer encoding.
+	 *
+	 * @param boolean $set=null
+	 * @return boolean true if we use compression, false otherwise
+	 */
+	public static function use_compression($set=null)
+	{
+		static $compression = null;
+		if (isset($set))
+		{
+			ini_set('zlib.output_compression', $compression=(boolean)$set);
+		}
+		elseif (!isset($compression))
+		{
+			$compression = (boolean)ini_get('zlib.output_compression');
+		}
+		//error_log(__METHOD__."(".array2string($set).") returning ".array2string($compression));
+		return $compression;
+	}
 
     // {{{ http_GET()
 
@@ -1262,7 +1286,7 @@ class HTTP_WebDAV_Server
                 // and anyway little sense with with other content like pictures
                 if (substr($options['mimetype'],0,5) != 'text/')
                 {
-                    ini_set('zlib.output_compression',0);
+					self::use_compression(false);
                 }
                 header("Content-type: $options[mimetype]");
 
@@ -1292,9 +1316,9 @@ class HTTP_WebDAV_Server
 
                                 if (isset($range['end'])) {
                                     $size = $range['end']-$range['start']+1;
-                                    $this->http_status("206 partial");
-                                    header("Content-length: $size");
-                                    header("Content-range: $range[start]-$range[end]/"
+                                    $this->http_status("206 Partial content");
+                                    if (!self::use_compression()) header("Content-Length: $size");
+                                    header("Content-Range: bytes $range[start]-$range[end]/"
                                            . (isset($options['size']) ? $options['size'] : "*"));
                                     while ($size && !feof($options['stream'])) {
                                         $buffer = fread($options['stream'], 4096);
@@ -1304,14 +1328,14 @@ class HTTP_WebDAV_Server
                                 } else {
                                     $this->http_status("206 partial");
                                     if (isset($options['size'])) {
-                                        header("Content-length: ".($options['size'] - $range['start']));
-                                        header("Content-range: ".$range['start']."-".$range['end']."/"
+                                        if (!self::use_compression()) header("Content-Length: ".($options['size'] - $range['start']));
+                                        header("Content-Range: bytes ".$range['start']."-".$range['end']."/"
                                                . (isset($options['size']) ? $options['size'] : "*"));
                                     }
                                     fpassthru($options['stream']);
                                 }
                             } else {
-                                header("Content-length: ".$range['last']);
+                                if (!self::use_compression()) header("Content-length: ".$range['last']);
                                 fseek($options['stream'], -$range['last'], SEEK_END);
                                 fpassthru($options['stream']);
                             }
@@ -1342,8 +1366,8 @@ class HTTP_WebDAV_Server
                         }
                     } else {
                         // normal request or stream isn't seekable, return full content
-                        if (isset($options['size'])) {
-                            header("Content-length: ".$options['size']);
+                        if (isset($options['size']) && !self::use_compression()) {
+                            header("Content-Length: ".$options['size']);
                         }
                         fpassthru($options['stream']);
                         return; // no more headers
@@ -1352,7 +1376,7 @@ class HTTP_WebDAV_Server
                     if (is_array($options['data'])) {
                         // reply to partial request
                     } else {
-                        header("Content-length: ".$this->bytes($options['data']));
+                        if (!self::use_compression()) header("Content-Length: ".$this->bytes($options['data']));
                         echo $options['data'];
                     }
                 }
@@ -1476,7 +1500,7 @@ class HTTP_WebDAV_Server
         }
 
         if (isset($options['size'])) {
-            header("Content-length: ".$options['size']);
+            header("Content-Length: ".$options['size']);
         }
 
         if ($status === true)  $status = "200 OK";
@@ -2128,7 +2152,7 @@ class HTTP_WebDAV_Server
 	        }
 	        $content .=  '</'.($this->crrnd?'':'D:')."error>\n";
         }
-        header("Content-length: ".$this->bytes($content));
+        if (!self::use_compression()) header("Content-Length: ".$this->bytes($content));
         if ($content) echo $options['content'];
     }
 
