@@ -4462,6 +4462,7 @@ class mail_bo
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
+					$mailStructureObject->contentTypeMap();
 					$part = $mailStructureObject->getPart($_partID);
 					if ($part->getDisposition()=='attachment')
 					{
@@ -4727,7 +4728,7 @@ class mail_bo
 					}
 					else
 					{
-						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID']));
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],0,false,false));
 						if (isset($attachments[$num]['charset'])) {
 							if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = translation::detect_encoding($attachments[$num]['attachment']);
 							translation::convert($attachments[$num]['attachment'],$attachments[$num]['charset']);

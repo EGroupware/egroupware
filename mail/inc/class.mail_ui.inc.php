@@ -1108,6 +1108,7 @@ unset($query['actions']);
 		$sRToFetch = null;
 		$_folderName=(!empty($query['selectedFolder'])?$query['selectedFolder']:$this->mail_bo->profileID.self::$delimiter.'INBOX');
 		list($_profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
+		if (strpos($folderName,self::$delimiter)!==false) list($app,$_profileID,$folderName) = explode(self::$delimiter,$_folderName,3);
 		if (is_numeric($_profileID))
 		{
 			if ($_profileID && $_profileID != $this->mail_bo->profileID)
