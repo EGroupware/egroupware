@@ -521,16 +521,16 @@ class mail_bo
 		{
 			case 'email';
 				//$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');
-				$retData = $identity->emailAddress.($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = $identity['ident_email'].($fullString===true?' <'.$identity['ident_email'].'>':'');
 				break;
 			case 'nameNemail';
-				$retData = (!empty($identity->realName)?$identity->realName:substr_replace($identity->emailAddress,'',strpos($identity->emailAddress,'@'))).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = (!empty($identity['ident_realname'])?$identity['ident_realname']:substr_replace($identity['ident_email'],'',strpos($identity['ident_email'],'@'))).($fullString===true?' <'.$identity['ident_email'].'>':'');
 				break;
 			case 'orgNemail';
-				$retData = (!empty($identity->organization)?$identity->organization:substr_replace($identity->emailAddress,'',0,strpos($identity->emailAddress,'@')+1)).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = (!empty($identity['ident_org'])?$identity['ident_org']:substr_replace($identity['ident_email'],'',0,strpos($identity['ident_email'],'@')+1)).($fullString===true?' <'.$identity['ident_email'].'>':'');
 				break;
 			default:
-				$retData = $identity->realName.(!empty($identity->organization)?' '.$identity->organization:'').($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = $identity['ident_realname'].(!empty($identity['ident_org'])?' '.$identity['ident_org']:'').($fullString===true?' <'.$identity['ident_email'].'>':'');
 		}
 		return $retData;
 	}
@@ -3968,7 +3968,7 @@ class mail_bo
 								$envelope[$v]=$env->$v->addresses;
 								break;
 							case 'date':
-								$envelope[$v]=$env->$v->date;
+								$envelope[$v]=egw_time::to($env->$v);
 								break;
 							default:
 								$envelope[$v]=$env->$v;

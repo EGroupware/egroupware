@@ -77,14 +77,13 @@ class mail_compose
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->bosignatures	= new mail_signatures();
+		//$this->bosignatures	= new mail_signatures();
 		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
 
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
-		$this->bopreferences =& $this->mail_bo->bopreferences;
-		$this->preferences	=& $this->mail_bo->mailPreferences; // $this->bopreferences->getPreferences();
+		$this->preferences	=& $this->mail_bo->mailPreferences;
 		// we should get away from this $this->preferences->preferences should hold the same info
-		$this->preferencesArray =& $this->preferences->preferences; //$GLOBALS['egw_info']['user']['preferences']['felamimail'];
+		$this->preferencesArray =& $this->preferences; //$GLOBALS['egw_info']['user']['preferences']['felamimail'];
 		//force the default for the forwarding -> asmail
 		if (is_array($this->preferencesArray)) {
 			if (!array_key_exists('message_forwarding',$this->preferencesArray)
@@ -114,8 +113,7 @@ class mail_compose
 			// no icServer Object: something failed big time
 			if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 			/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($this->mail_bo->profileID);
-			$this->bopreferences =& $this->mail_bo->bopreferences;
-			$this->preferences	=& $this->mail_bo->mailPreferences; // $this->bopreferences->getPreferences();
+			$this->preferences	=& $this->mail_bo->mailPreferences;
 			// we should get away from this $this->preferences->preferences should hold the same info
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 		}
@@ -914,7 +912,7 @@ class mail_compose
 */
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
-		$allIdentities = $this->preferences->getIdentity();
+		$allIdentities = $this->getAllIdentities();
 		unset($allIdentities[0]);
 		//_debug_array($allIdentities);
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
@@ -923,18 +921,16 @@ class mail_compose
 		$globalIds = 0;
 		$defaultIds = array();
 		foreach($allIdentities as $key => $singleIdentity) {
-			if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/
-			// there could be up to 2 default IDS. the activeProfile and another on marking the desired Identity to choose
-			if(!empty($singleIdentity->default) && $singleIdentity->default==1)
+			if(empty($defaultIds))
 			{
-				$defaultIds[$singleIdentity->id] = $singleIdentity->id;
-				$selectedSender = $singleIdentity->id;
+				$defaultIds[$singleIdentity['id']] = $singleIdentity['id'];
+				$selectedSender = $singleIdentity['id'];
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
 		// if there are 2 defaultIDs, its most likely, that the user choose to set
 		// the one not being the activeServerProfile to be his default Identity
-		if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
+		//if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
 		$defaultIdentity = 0;
 		$identities = array();
 		foreach($allIdentities as $key => $singleIdentity) {
@@ -964,6 +960,7 @@ class mail_compose
 		}
 
 		// fetch the signature, prepare the select box, ...
+/*
 		$boSignatures = new mail_signatures();
 		$signatures = $boSignatures->getListOfSignatures();
 
@@ -983,8 +980,9 @@ class mail_compose
 		foreach($signatures as $signature) {
 			$selectSignatures[$signature['fm_signatureid']] = lang('Signature').': '.$signature['fm_description'];
 		}
+*/
 		$disableRuler = false;
-		$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $content['signatureID']));
+//		$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $content['signatureID']));
 		if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) &&
 			$this->preferencesArray['disableRulerForSignatureSeparation']) ||
 			empty($signature->fm_signature) || trim($this->convertHTMLToText($signature->fm_signature,true,true)) =='')
@@ -1088,7 +1086,7 @@ class mail_compose
 			'0' => lang('no stationery')
 		);
 		$showStationaries = false;
-		$validStationaries = $bostationery->get_valid_templates();
+//		$validStationaries = $bostationery->get_valid_templates();
 		if (is_array($validStationaries) && count($validStationaries)>0)
 		{
 			$showStationaries = true;
@@ -1575,6 +1573,63 @@ class mail_compose
 	}
 
 	/**
+	 * testIfOneKeyInArrayDoesExistInString - function to be used to fetch a random string and md5 encode that one
+	 * @param array arrayToTestAgainst to test its keys against haystack
+	 * @param string haystack
+	 * @return boolean
+	 */
+	function testIfOneKeyInArrayDoesExistInString($arrayToTestAgainst,$haystack) {
+		foreach ($arrayToTestAgainst as $k => $v)
+		{
+			//error_log(__METHOD__.__LINE__.':'.$k.'<->'.$haystack);
+			if (stripos($haystack,$k)!==false)
+			{
+				//error_log(__METHOD__.__LINE__.':FOUND:'.$k.'<->'.$haystack.function_backtrace());
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * getUserEMailAddresses - function to gather the emailadresses connected to the current mail-account
+	 * @return array - array(email=>realname)
+	 */
+	function getUserEMailAddresses() {
+		$acc = emailadmin_account::read($this->mail_bo->profileID);
+		$identities = $acc->identities();
+
+		$userEMailAdresses = array();
+		
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik);
+			$userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
+		}
+		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
+		return $userEMailAdresses;
+	}
+
+	/**
+	 * getAllIdentities - function to gather the identities connected to the current user
+	 * @return array - array(email=>realname)
+	 */
+	function getAllIdentities() {
+		$acc = emailadmin_account::read($this->mail_bo->profileID);
+		$identities = $acc->identities('all');
+
+		$userEMailAdresses = array();
+		
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik);
+			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+		}
+		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
+		return $userEMailAdresses;
+	}
+
+	/**
 	 * getReplyData - function to gather the replyData and save it with the session, to be used then.
 	 * @param $_mode can be:
 	 * 		single: for a reply to one address
@@ -1589,11 +1644,11 @@ class mail_compose
 	{
 		$foundAddresses = array();
 
-		$mail_bo    = $this->mail_bo;
+		$mail_bo  = $this->mail_bo;
 		$mail_bo->openConnection();
 		$mail_bo->reopen($_folder);
 
-		$userEMailAddresses = $this->preferences->getUserEMailAddresses();
+		$userEMailAddresses = $this->getUserEMailAddresses();
 
 		// get message headers for specified message
 		//print "AAAA: $_folder, $_uid, $_partID<br>";
@@ -1602,38 +1657,27 @@ class mail_compose
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = $headers['MESSAGE_ID'];
-
+		//error_log(__METHOD__.__LINE__.array2string($headers));
 		// check for Reply-To: header and use if available
 		if(!empty($headers['REPLY_TO']) && ($headers['REPLY_TO'] != $headers['FROM'])) {
 			foreach($headers['REPLY_TO'] as $val) {
-				if($val['EMAIL'] == 'NIL') {
-					continue;
-				}
-
-				if(!$foundAddresses[$val['EMAIL']]) {
-					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
-					$address = $this->mail_bo->decode_header($address,true);
-					$oldTo[] = $address;
-					$foundAddresses[$val['EMAIL']] = true;
+				if(!$foundAddresses[$val]) {
+					$oldTo[] = $val;
+					$foundAddresses[$val] = true;
 				}
 			}
-			$oldToAddress	= $headers['REPLY_TO'][0]['EMAIL'];
+			$oldToAddress	= (is_array($headers['REPLY_TO'])?$headers['REPLY_TO'][0]:$headers['REPLY_TO']);
 		} else {
 			foreach($headers['FROM'] as $val) {
-				if($val['EMAIL'] == 'NIL') {
-					continue;
-				}
-				if(!$foundAddresses[$val['EMAIL']]) {
-					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
-					$address = $this->mail_bo->decode_header($address,true);
-					$oldTo[] = $address;
-					$foundAddresses[$val['EMAIL']] = true;
+				if(!$foundAddresses[$val]) {
+					$oldTo[] = $val;
+					$foundAddresses[$val] = true;
 				}
 			}
-			$oldToAddress	= $headers['REPLY_TO'][0]['EMAIL'];
+			$oldToAddress	= (is_array($headers['REPLY_TO'])?$headers['REPLY_TO'][0]:$headers['REPLY_TO']);
 		}
-
-		if($_mode != 'all' || ($_mode == 'all' && !$userEMailAddresses[$oldToAddress]) ) {
+		//error_log(__METHOD__.__LINE__.' OldToAddress:'.$oldToAddress.'#');
+		if($_mode != 'all' || ($_mode == 'all' && !empty($oldToAddress) && !$this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$oldToAddress)) ) {
 			$this->sessionData['to'] = $oldTo;
 		}
 
@@ -1641,19 +1685,14 @@ class mail_compose
 			// reply to any address which is cc, but not to my self
 			#if($headers->cc) {
 				foreach($headers['CC'] as $val) {
-					if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+
+					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
 
-					if($userEMailAddresses[$val['EMAIL']]) {
-						continue;
-					}
-
-					if(!$foundAddresses[$val['EMAIL']]) {
-						$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
-						$address = $this->mail_bo->decode_header($address,true);
-						$this->sessionData['cc'][] = $address;
-						$foundAddresses[$val['EMAIL']] = true;
+					if(!$foundAddresses[$val]) {
+						$this->sessionData['cc'][] = $val;
+						$foundAddresses[$val] = true;
 					}
 				}
 			#}
@@ -1661,38 +1700,28 @@ class mail_compose
 			// reply to any address which is to, but not to my self
 			#if($headers->to) {
 				foreach($headers['TO'] as $val) {
-					if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+
+					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
 
-					if($userEMailAddresses[$val['EMAIL']]) {
-						continue;
-					}
-
-					if(!$foundAddresses[$val['EMAIL']]) {
-						$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
-						$address = $this->mail_bo->decode_header($address,true);
-						$this->sessionData['to'][] = $address;
-						$foundAddresses[$val['EMAIL']] = true;
+					if(!$foundAddresses[$val]) {
+						$this->sessionData['to'][] = $val;
+						$foundAddresses[$val] = true;
 					}
 				}
 			#}
 
 			#if($headers->from) {
 				foreach($headers['FROM'] as $val) {
-					if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+
+					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
-
-					if($userEMailAddresses[$val['EMAIL']]) {
-						continue;
-					}
-
-					if(!$foundAddresses[$val['EMAIL']]) {
-						$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
-						$address = $this->mail_bo->decode_header($address,true);
-						$this->sessionData['to'][] = $address;
-						$foundAddresses[$val['EMAIL']] = true;
+					//error_log(__METHOD__.__LINE__.' '.$val);
+					if(!$foundAddresses[$val]) {
+						$this->sessionData['to'][] = $val;
+						$foundAddresses[$val] = true;
 					}
 				}
 			#}
@@ -1711,12 +1740,12 @@ class mail_compose
 		//_debug_array($bodyParts);
 		$styles = mail_bo::getStyles($bodyParts);
 
-		$fromAddress = mail_bo::htmlspecialchars((($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? str_replace(array('<','>'),array('[',']'),$mail_bo->decode_header($headers['FROM'][0]['RFC822_EMAIL'],true)) : $mail_bo->decode_header($headers['FROM'][0]['EMAIL'],true)));
+		$fromAddress = mail_bo::htmlspecialchars(implode(', ', str_replace(array('<','>'),array('[',']'),$headers['FROM'])));
 
 		$toAddressA = array();
 		$toAddress = '';
 		foreach ($headers['TO'] as $mailheader) {
-			$toAddressA[] =  trim($mail_bo->decode_header((($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL']),true));
+			$toAddressA[] =  $mailheader;
 		}
 		if (count($toAddressA)>0)
 		{
@@ -1726,7 +1755,7 @@ class mail_compose
 		$ccAddressA = array();
 		$ccAddress = '';
 		foreach ($headers['CC'] as $mailheader) {
-			$ccAddressA[] =  trim($mail_bo->decode_header((($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL']),true));
+			$ccAddressA[] =  $mailheader;
 		}
 		if (count($ccAddressA)>0)
 		{
@@ -2418,22 +2447,11 @@ class mail_compose
 	 */
 	function setDefaults($content=array())
 	{
-		if (!isset($content['signatureID']) || empty($content['signatureID']))
-		{
-			if($signatureData = $this->bosignatures->getDefaultSignature()) {
-				if (is_array($signatureData)) {
-					$content['signatureID'] = $signatureData['signatureid'];
-				} else {
-					$content['signatureID'] = $signatureData;
-				}
-			} else {
-				$content['signatureID'] = -1;
-			}
-		}
 		// retrieve the signature accociated with the identity
-		$accountData    = $this->bopreferences->getAccountData($this->preferences,'active');
-		if ((!isset($content['identity']) || empty($content['identity'])) && $accountData['identity']->signature) $content['signatureID'] = $accountData['identity']->signature;
-
+		$id = $this->mail_bo->getIdentitiesWithAccounts($_accountData);
+		$accountData = ($_accountData[$this->mail_bo->profileID]?$_accountData[$this->mail_bo->profileID]:$_accountData[$id]);
+		if ((!isset($content['identity']) || empty($content['identity'])) && $accountData['ident_id']) $content['signatureID'] = $accountData['ident_id'];
+		if (!isset($content['signatureID']) || empty($content['signatureID'])) $content['signatureID'] = $accountData['ident_id'];
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
 		{
 			$content['mimeType'] = 'html';
