@@ -156,7 +156,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.dynheight = new et2_dynheight(this.getInstanceManager().DOMContainer,
-				this.innerDiv, 150);
+				this.innerDiv, 100);
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
