@@ -2103,7 +2103,7 @@ unset($query['actions']);
 		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
 
 		$this->mail_bo->reopen($mailbox);
-		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
+		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
 		$this->mail_bo->closeConnection();
 
 		$GLOBALS['egw']->session->commit_session();

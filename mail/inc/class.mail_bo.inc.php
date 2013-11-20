@@ -4438,10 +4438,12 @@ class mail_bo
 	 * @param int _uid the uid of the message
 	 * @param string _partID the id of the part, which holds the attachment
 	 * @param int _winmail_nr winmail.dat attachment nr.
+	 * @param boolean _returnPart flag to indicate if the attachment is to be returned as horde mime part object
+	 * @param boolean _stream flag to indicate if the attachment is to be fetched or returned as filepointer
 	 *
 	 * @return array
 	 */
-	function getAttachment($_uid, $_partID, $_winmail_nr=0)
+	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false)
 	{
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
@@ -4464,41 +4466,25 @@ class mail_bo
 					if ($part->getDisposition()=='attachment')
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
-error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id]));
-						$structure_encoding = $headerObject['ATTACHMENTS'][$mime_id]['encoding'];
+						
 						$structure_bytes = $part->getBytes();
 						$structure_mime=$mime_type;
 						$structure_partID=$mime_id;
-						$structure_name=$part->getName();
-						$attachment = $_headerObject->getBodyPart($mime_id);
+						$filename=$part->getName();
+						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=false);
+						if ($_returnPart) return $part;
 					}
 				}
 			}
 		}
-		switch ($structure_encoding) {
-			case 'BASE64':
-				// use imap_base64 to decode
-				$attachment = imap_base64($attachment);
-				break;
-			case 'QUOTED-PRINTABLE':
-				// use imap_qprint to decode
-				#$attachment = imap_qprint($attachment);
-				$attachment = quoted_printable_decode($attachment);
-				break;
-			default:
-				// it is either not encoded or we don't know about it
-		}
-		if ($structure_type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
-		{
-			$attachment = translation::convert($attachment,$structure->parameters['CHARSET'],self::$displayCharset);
-		}
 		$ext = mime_magic::mime2ext($structure->type .'/'. $structure->subType);
 		if ($ext && stripos($filename,'.')===false && stripos($filename,$ext)===false) $filename = trim($filename).'.'.$ext;
 		$attachmentData = array(
-			'type'		=> $structure->type .'/'. $structure->subType,
+			'type'		=> $structure_mime,
 			'filename'	=> $filename,
-			'attachment'	=> $attachment
+			'attachment'	=> $part->getContents(array('stream'=>$_stream))
 			);
+/*
 		// try guessing the mimetype, if we get the application/octet-stream
 		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
 		# if the attachment holds a winmail number and is a winmail.dat then we have to handle that.
@@ -4513,6 +4499,7 @@ error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id
 				'attachment' => $wmattach['attachment'],
 			);
 		}
+*/
 		return $attachmentData;
 	}
 

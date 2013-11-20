@@ -500,7 +500,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 			return;
 		}
-		console.log("mail_preview",dataElem);
+		//console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
 		this.mail_disablePreviewArea(false);
