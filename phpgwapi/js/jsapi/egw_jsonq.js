@@ -104,7 +104,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			{
 				// TODO: Passing this to the "home" application looks quite ugly
 				var request = egw.json('home.queue', jobs_to_send, jsonq_callback, this)
-				request.sendRequest();
+				request.sendRequest(true);
 			}
 		}
 	}
