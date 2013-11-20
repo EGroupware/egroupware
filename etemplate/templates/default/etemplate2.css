@@ -104,6 +104,7 @@ div.et2_hbox>div {
 	width: 100%;
 	min-width: 100px;
 	min-height: 100px;
+	height: 100%;
 }
 .splitter-bar-vertical { cursor: ew-resize; width: 5px;}
 .splitter-bar-horizontal { cursor: ns-resize; height: 5px;}

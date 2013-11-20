@@ -67,7 +67,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = $j(document.createElement("div"));
+		this.div = $j(document.createElement("div"))
+			.addClass('et2_split');
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
@@ -79,6 +80,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		// Add something so we can see it - will be replaced if there's children
 		this.left = $j("<div>Top / Left</div>").appendTo(this.div);
 		this.right = $j("<div>Bottom / Right</div>").appendTo(this.div);
+
+		// Deferred object so we can wait for children
+		this.loading = jQuery.Deferred();
 	},
 
 	destroy: function() {
@@ -141,7 +145,10 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		window.setTimeout(function() {
 			self._init_splitter();
 		},1);
-		return true;
+		
+
+		// Not done yet, but widget will let you know
+		return this.loading.promise();
 	},
 
 	/**
@@ -153,7 +160,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		var options = {
 			type:	this.orientation,
 			dock:	this.dock_side,
-			splitterClass: "et2_split"
+			splitterClass: "et2_split",
+			outline: true,
+			eventNamespace: '.et2_split.'+this.id
 		};
 		
 		// Check for position preference, load it in
@@ -174,6 +183,16 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 
 		// Initialize splitter
 		this.div.splitter(options);
+
+		// Start docked?
+		if(options.dock)
+		{
+			if(options.dock == "bottomDock" && options.sizeTop >= this.div.height() ||
+				options.dock == "topDock" && options.sizeTop == 0)
+			{
+				this.dock();
+			}
+		}
 		
 		// Add icon to splitter bar
 		var icon = "ui-icon-grip-"
@@ -189,12 +208,20 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		if(this.id && this.egw().getAppName())
 		{
 			self = this;
-			this.left.next().on("mouseup", function() {
-				// Store current position in preferences
-				var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
-				self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
+			this.left.on("resize"+options.eventNamespace, function(e) {
+				if(e.namespace == options.eventNamespace.substr(1) && !self.isDocked())
+				{
+					// Store current position in preferences
+					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
+					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
+				}
+				self.iterateOver(function(widget) {
+					if(widget != self) widget.resize();
+				},self,et2_IResizeable);
 			});
 		}
+
+		this.loading.resolve();
 	},
 
 	/**
@@ -203,6 +230,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	resize: function() {
 		if(this.dynheight)
 		{
+			var old = {w: this.div.width(), h: this.div.height()};
 			this.dynheight.update(function(w,h) {
 				if(this.orientation == "v")
 				{
@@ -213,14 +241,22 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 				{
 					this.left.width(w);
 					this.right.width(w);
-					if(this.dock_side == "topDock")
-					{
-						this.right.height(h);
+					if(this.isDocked()) {
+						if(this.dock_side == "topDock")
+						{
+							this.right.height(h);
+							this.left.height(0);
+						}
+						else
+						{
+							this.left.height(h);
+							this.right.height(0);
+						}
 					}
-					else
-					{
-						this.left.height(h);
-					}
+				}
+				if(w != old.w || h != old.h)
+				{
+					this.div.trigger('resize.et2_split.'+this.id);
 				}
 			}, this);
 		}
@@ -267,6 +303,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	 * Docking requires the dock attribute to be set.
 	 */
 	dock: function() {
+		if(this.isDocked()) return;
 		this.div.trigger("dock");
 	},
 
@@ -276,6 +313,15 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	 */
 	undock: function() {
 		this.div.trigger("undock");
+	},
+
+	/**
+	 * Determine if the splitter is docked
+	 * @return boolean
+	 */
+	isDocked: function() {
+		var bar = $j('.splitter-bar',this.div);
+		return bar.hasClass('splitter-bar-horizontal-docked') || bar.hasClass('splitter-bar-vertical-docked');
 	},
 
 	/**

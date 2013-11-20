@@ -113,7 +113,7 @@ var splitterCounter = 0;
 			A.css(opts.origin, 0).css(opts.split, pos).css(opts.fixed,  splitter._DF);
 			B.css(opts.origin, pos+bar._DA)
 				.css(opts.split, splitter._DA-bar._DA-pos).css(opts.fixed,  splitter._DF);
-			panes.trigger("resize");
+			panes.trigger("resize"+opts.eventNamespace);
 		}
 		function dimSum(jq, dims) {
 			// Opera returns -1 for missing min/max width, turn into 0
