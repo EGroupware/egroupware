@@ -5,8 +5,8 @@ textarea
 }
 
 .defaultProfile { color:#000000; font-weight:bold !important; }
-	
-			
+
+
 .quoted1 { color:#660066; }
 .quoted2 { color:#007777; }
 .quoted3 { color:#990000; }
@@ -165,21 +165,21 @@ A.sieveRowInActive
 {
 	FONT-SIZE: 11px;
 	height : 14px;
-	padding: 0;	
+	padding: 0;
 	color: Silver;
 }
 
 .bodyDIV {
-	position:absolute; 
-	background-color:white; 
-	top:134px; 
-	bottom:0px; 
-	width:100%; 
+	position:absolute;
+	background-color:white;
+	top:134px;
+	bottom:0px;
+	width:100%;
 	border-top: 1px solid #efefdf;
 }
 
 .bodyDIVAttachment {
-	bottom:80px; 
+	bottom:80px;
 }
 
 #attachmentSpanAllDIV{
@@ -189,24 +189,24 @@ A.sieveRowInActive
 }
 
 #attachmentDIV {
-	position:fixed; 
-	background-color:#efefdf; 
-	bottom:0px; 
+	position:fixed;
+	background-color:#efefdf;
+	bottom:0px;
 	min-height:80px;
-	max-height:239px; 
-	width:100%; 
-	border-top: 1px solid silver; 
+	max-height:239px;
+	width:100%;
+	border-top: 1px solid silver;
 	overflow:auto;
 }
 
 #popupattachmentDIV {
-	position:top; 
-	background-color:#efefdf; 
-	bottom:0px; 
+	position:top;
+	background-color:#efefdf;
+	bottom:0px;
 	min-height:80px;
-	max-height:239px; 
-	width:100%; 
-	border-top: 1px solid silver; 
+	max-height:239px;
+	width:100%;
+	border-top: 1px solid silver;
 	overflow:auto;
 }
 
@@ -214,7 +214,7 @@ pre {
  white-space: pre-wrap; /* Mozilla, since 1999 */
  white-space: -pre-wrap; /* Opera 4-6 */
  white-space: -o-pre-wrap; /* Opera 7 */
- width: 99%; 
+ width: 99%;
 }
 
 /*
@@ -371,7 +371,8 @@ input[type=button] {
 .mailDisplay, #mail-index_mailPreview {
 	overflow: hidden;
 	position: relative;
-	margin-top: 3px;
+	padding-top: 3px;
+	background-color: white;
 }
 #mail-compose_fileselector {
 	width: 245px !important;
@@ -432,7 +433,7 @@ input[type=button] {
 	right: 0;
 }
 #mail-index_previewAttachmentArea {
-	background-color:#efefdf; 
+	background-color:#efefdf;
 	max-height: 3em;
 	max-width: 50%;
 	position: absolute;
@@ -442,7 +443,7 @@ input[type=button] {
 	top: 25px;
 	border: 1px solid red;
 	opacity: 1;
-	-moz-opacity:1:
+	-moz-opacity:1;
 	filter: Alpha(opacity=100);
 	display: inline-block !important;
 }
@@ -482,18 +483,18 @@ input[type=button] {
 	margin:0px;
 }
 .mailDisplayAttachments {
-	background-color:#efefdf; 
+	background-color:#efefdf;
 	height: 121px;
 	position: fixed;
 	bottom: .1em;
 	border: 1px solid red;
 	opacity: 1;
-	-moz-opacity:1:
+	-moz-opacity:1;
 	filter: Alpha(opacity=100);
 }
 /*
 #divGenTime {
-	background-color:#efefdf; 
+	background-color:#efefdf;
 	max-height: 10%;
 	position: fixed;
 	bottom: 1px;
