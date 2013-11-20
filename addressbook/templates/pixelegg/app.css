@@ -9,440 +9,8 @@
  * @package addressbook
  * @version $Id$
  */
-/**
- * EGroupware: CSS with less preprocessor
- *
- * Please do NOT change app.css directly, instead change app.less and compile it!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package addressbook
- * @version $Id$
- */
-div#addressbook-index {
-  min-height: 700px;
-  height: auto !important;
-}
-div#addressbook-index div.et2_hbox_left {
-  padding: 1em;
-}
-div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0.5em;
-  padding: 3px;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  height: 35px;
-  margin-top: 0;
-}
-div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-div#addressbook-index div.et2_hbox_right {
-  width: 360px;
-  margin-right: 1em;
-}
-div#addressbook-index div.et2_hbox_right select.et2_selectbox {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0.5em;
-  padding: 3px;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  height: 35px;
-  margin-left: 5px;
-}
-div#addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-div#addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
-  background-color: #f0f0f0;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/erweiterte-suche.png') !important;
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
-  background-image: url('../images/erweiterte-suche.png');
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
-  background-image: url('../images/erweiterte-suche.png');
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-  background-color: #0b5fa4;
-  color: #FFF;
-  text-shadow: none;
-  height: 35px;
-  background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
-  background-color: #66a1d2 !important;
-  color: #ffc200;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper img {
-  width: 16px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown {
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown button#addressbook-index_favorite img {
-  width: 16px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default,
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-widget-content .ui-state-default,
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-widget-header .ui-state-default {
-  background-color: #bfbfbf;
-  color: #000;
-  background-image: none !important;
-}
-div#addressbook-index .filters #addressbook-index_cat_id {
-  width: 7%;
-}
-div#addressbook-index .filters #addressbook-index_filter {
-  width: 7%;
-}
-div#addressbook-index .filters #addressbook-index_filter2 {
-  width: 10%;
-}
-div#addressbook-index table.egwGridView_outer {
-  width: 99%;
-}
-#egw_fw_sidemenu .egw_fw_ui_category_content table {
-  margin-left: -14px;
-}
-#egw_fw_sidemenu select {
-  margin-top: -5px;
-}
-div#addressbook-edit,
-div#addressbook-search {
-  margin: 0;
-  padding: 0.5em;
-}
-div#addressbook-edit .chzn-container,
-div#addressbook-search .chzn-container {
-  width: 60% !important;
-}
-div#addressbook-edit .et2_tabheader,
-div#addressbook-search .et2_tabheader {
-  margin-top: 0px;
-  background-color: transparent;
-}
-div#addressbook-edit table.editphones,
-div#addressbook-search table.editphones {
-  width: auto !important;
-  top: 5%;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-div#addressbook-edit table.addressbook_edit_general,
-div#addressbook-search table.addressbook_edit_general {
-  border-top: 0px;
-}
-div#addressbook-edit table.addressbook_edit_general tr td:first-child,
-div#addressbook-search table.addressbook_edit_general tr td:first-child {
-  width: 100px;
-}
-div#addressbook-edit table.addressbook_edit_general tr td,
-div#addressbook-search table.addressbook_edit_general tr td {
-  width: 200px;
-}
-div#addressbook-edit table.addressbook_edit_general table tr td:first-child,
-div#addressbook-search table.addressbook_edit_general table tr td:first-child {
-  width: 60px;
-}
-div#addressbook-edit table.addressbook_edit_general table tr td,
-div#addressbook-search table.addressbook_edit_general table tr td {
-  width: 200px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_n_fn,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_n_fn {
-  width: 200px;
-}
-div#addressbook-edit table.addressbook_edit_general table.editname,
-div#addressbook-search table.addressbook_edit_general table.editname {
-  background-color: #f0f0f0;
-  z-index: 10;
-  font-size: 1.5em;
-}
-div#addressbook-edit table.addressbook_edit_general table.editname tr td:first-child,
-div#addressbook-search table.addressbook_edit_general table.editname tr td:first-child {
-  width: 100px !important;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_title,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_title {
-  width: 200px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_role,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_role {
-  width: 200px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_org_name,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_org_name {
-  width: 286px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_org_unit,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_org_unit {
-  width: 286px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_street,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_street,
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_street2,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_street2 {
-  width: 286px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_postalcode,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_postalcode {
-  width: 50px;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_locality,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_locality {
-  width: 225px;
-}
-div#addressbook-edit table.addressbook_edit_general .chzn-container,
-div#addressbook-search table.addressbook_edit_general .chzn-container {
-  width: 300px !important;
-}
-div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_region,
-div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_region {
-  width: 286px;
-}
-div#addressbook-edit table.addressbook_edit_general select.owner,
-div#addressbook-search table.addressbook_edit_general select.owner {
-  width: 300px;
-}
-div#addressbook-edit fieldset.phoneGroup,
-div#addressbook-search fieldset.phoneGroup {
-  border: none;
-  margin-bottom: 0;
-  margin-top: 12px;
-  height: auto;
-  background-color: #d9d9d9;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-edit fieldset.phoneGroup legend,
-div#addressbook-search fieldset.phoneGroup legend {
-  text-transform: uppercase;
-}
-div#addressbook-edit fieldset.phoneGroup * img,
-div#addressbook-search fieldset.phoneGroup * img {
-  display: none !important;
-  width: 20px;
-}
-div#addressbook-edit fieldset.emailGroup,
-div#addressbook-search fieldset.emailGroup {
-  border: none;
-  margin-bottom: 0;
-  margin-top: 10px;
-  height: auto;
-  background-color: #d9d9d9;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-edit fieldset.emailGroup legend,
-div#addressbook-search fieldset.emailGroup legend {
-  text-transform: uppercase;
-}
-div#addressbook-edit fieldset.emailGroup a.et2_url:after,
-div#addressbook-search fieldset.emailGroup a.et2_url:after {
-  content: "\221E";
-  font-size: 1.5em;
-}
-div#addressbook-edit fieldset.emailGroup a.et2_url,
-div#addressbook-search fieldset.emailGroup a.et2_url {
-  margin-left: -40px;
-}
-div#addressbook-edit fieldset.emailGroup a.et2_url.url,
-div#addressbook-search fieldset.emailGroup a.et2_url.url {
-  background-size: 15px 15px;
-  background-image: none;
-}
-div#addressbook-edit fieldset.emailGroup * img,
-div#addressbook-search fieldset.emailGroup * img {
-  display: none !important;
-  width: 20px;
-}
-#addressbook-edit_addressbook-edit-general #addressbook_edit_adr_one_countrycode_chzn {
-  width: 200px !important;
-  padding-top: 1em;
-}
-#addressbook-edit_addressbook-edit-home #addressbook_edit_adr_two_countrycode_chzn {
-  width: 200px !important;
-  padding-top: 1em;
-}
-#addressbook-edit_addressbook-edit-home #addressbook_edit_tz_chzn {
-  width: 15% !important;
-  padding-top: 1em;
-}
-#addressbook-edit_addressbook-edit-links .th,
-#addressbook-search_addressbook-edit-links .th {
-  height: 20px;
-}
-#addressbook-edit_addressbook-edit-links tbody,
-#addressbook-search_addressbook-edit-links tbody {
-  display: table-header-group;
-  vertical-align: top;
-}
-#addressbook-edit_addressbook-edit-distribution_list .th,
-#addressbook-search_addressbook-edit-distribution_list .th {
-  height: 20px;
-}
-#addressbook-edit_addressbook-edit-distribution_list tbody,
-#addressbook-search_addressbook-edit-distribution_list tbody {
-  display: table-header-group;
-  vertical-align: top;
-}
-#addressbook-edit_addressbook-edit-custom .th,
-#addressbook-search_addressbook-edit-custom .th {
-  height: 20px;
-}
-#addressbook-edit_addressbook-edit-custom tbody,
-#addressbook-search_addressbook-edit-custom tbody {
-  display: table-header-group;
-  vertical-align: top;
-}
-#addressbook-edit_addressbook-edit-custom_private .th,
-#addressbook-search_addressbook-edit-custom_private .th {
-  height: 20px;
-}
-#addressbook-edit_addressbook-edit-custom_private tbody,
-#addressbook-search_addressbook-edit-custom_private tbody {
-  display: table-header-group;
-  vertical-align: top;
-}
-#addressbook-edit_addressbook-edit-history .th {
-  height: 20px;
-}
-#addressbook-edit_addressbook-edit-history tbody {
-  display: table-header-group;
-  vertical-align: top;
-}
-button.button_more {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/bearbeiten.png');
-}
-div.addressbook.edit.general table {
-  border-top: 0px;
-}
-div.addressbook.edit.general table tr td img {
-  display: none;
-}
-div.addressbook.edit.general table img:nth-child(1) {
-  display: none;
-}
-div.addressbook.edit.general table img:nth-child(2) {
-  cursor: pointer;
+.cursorHand {
+  cursor: hand;
 }
 .countrySelect select {
   width: 150px;
@@ -454,16 +22,13 @@ div.addressbook.edit.general table img:nth-child(2) {
   content: "#";
 }
 .emailCol div {
-  overflow: hidden;
   width: 100%;
-}
-.redItalic {
-  color: red;
-  font-style: italic;
 }
 .fixedHeight,
 .telNumbers {
-  height: 30px;
+  height: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .telNumbers {
   white-space: nowrap;
@@ -478,21 +43,24 @@ div.addressbook.edit.general table img:nth-child(2) {
 .fileas,
 .owner select,
 .owner {
-  font-weight: bold;
   width: 100%;
+  font-weight: bold;
 }
 .photo img,
 .iphoto img {
   width: 60px;
 }
+.photo img {
+  cursor: hand;
+}
 .uploadphoto {
-  background-color: #FFFFFF;
-  border: 2px solid black;
-  display: none;
-  left: 48px;
-  padding: 4px;
   position: absolute;
   top: 168px;
+  left: 48px;
+  display: none;
+  border: 2px solid black;
+  background-color: #ffffff;
+  padding: 4px;
 }
 .checkAllArrow {
   padding-right: 5px;
@@ -503,25 +71,42 @@ div.addressbook.edit.general table img:nth-child(2) {
 }
 .editphones,
 .editname {
-  background-color: #FFFFFF;
-  border: 2px solid black;
-  display: none;
-  left: 30%;
-  padding: 4px;
   position: absolute;
   top: 10%;
+  left: 30%;
+  display: none;
+  border: 2px solid black;
+  background-color: #ffffff;
+  padding: 4px;
 }
 .editname {
-  left: 137px;
-  top: 160px;
+  top: 97px;
+  left: 173px;
 }
 .windowheader {
-  background-image: url("../../../phpgwapi/templates/idots/images/appbox-header-background.png");
+  background-image: url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
   background-repeat: repeat-x;
-  border-bottom: 1px solid #9C9C9C;
-  border-collapse: collapse;
-  border-spacing: 0;
   height: 20px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  border-bottom: #9c9c9c 1px solid;
+}
+fieldset.phoneGroup {
+  margin-top: 12px;
+  font-size: 110%;
+  height: 140px;
+  border: solid black 2px;
+  margin-bottom: 0px;
+}
+.phoneGroup table {
+  height: 122px;
+}
+fieldset.emailGroup {
+  margin-top: 10px;
+  font-size: 110%;
+  height: 112px;
+  border: solid black 2px;
+  margin-bottom: 0px;
 }
 .emailGroup table {
   height: 87px;
@@ -533,8 +118,8 @@ div.addressbook.edit.general table img:nth-child(2) {
   white-space: nowrap;
 }
 .customfields td {
-  line-height: 12px;
   white-space: nowrap;
+  line-height: 12px;
 }
 .image16 img {
   height: 16px;
@@ -542,6 +127,48 @@ div.addressbook.edit.general table img:nth-child(2) {
 div#addressbook-index {
   min-height: 700px;
   height: auto !important;
+  /*###########################
+ Favoriten dropdown Field
+*/
+  /*definition in layout_nextmatch.less */
+  /*    div#addressbook-index_favorite_wrapper{
+        
+        top: 0px;
+        width: auto;
+
+        img{width: 16px;}
+
+        
+        
+        .et2_dropdown {
+
+                  button#addressbook-index_favorite{
+                                width: 18px;
+                    
+                                img{
+                                        width: 16px; 
+                                        text-align: left;
+                                        position: relative;
+                                        right: 20px;
+                                    }
+                }
+
+
+                .ui-state-default,
+                .ui-widget-content .ui-state-default,
+                .ui-widget-header .ui-state-default {
+                    width: 18px;
+                    .background-color-25-gray;
+                    color: #000;
+                    background-image: none !important;
+
+                }
+
+
+
+        }
+
+    } // Favoriten*/
 }
 div#addressbook-index div.et2_hbox_left {
   padding: 1em;
@@ -609,9 +236,9 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   background-image: url('../../../pixelegg/images/advanced-search.png') !important;
@@ -625,9 +252,9 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -642,9 +269,9 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -652,7 +279,7 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
 div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-  background-color: #0b5fa4;
+  background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
   height: 35px;
@@ -682,48 +309,23 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
   border-radius: 3px;
   border-top-left-radius: 20px;
 }
-div#addressbook-index #addressbook-index_favorite_wrapper img {
-  width: 16px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown {
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown button#addressbook-index_favorite img {
-  width: 16px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default,
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-widget-content .ui-state-default,
-div#addressbook-index #addressbook-index_favorite_wrapper .et2_dropdown .ui-widget-header .ui-state-default {
-  background-color: #bfbfbf;
-  color: #000;
-  background-image: none !important;
-}
 div#addressbook-index div.filters {
-  padding: 0 0 0 1em;
+  padding: 0 0 1em 1em;
   background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
   border-width: 0 0 1px 0;
   border-color: #d9d9d9;
   background-image: none;
+  padding-bottom: 1.5em;
 }
 div#addressbook-index div.filters select#infolog-index_cat_id {
+  width: 10%;
   margin-left: 1em;
+}
+div#addressbook-index div.filters select#infolog-index_filter {
+  width: 10%;
+}
+div#addressbook-index div.filters select#infolog-index_filter2 {
+  width: 10%;
 }
 div#addressbook-index div.filters input#infolog-index_search {
   height: 20px;
@@ -770,6 +372,41 @@ div#addressbook-index table.egwGridView_outer {
 #egw_fw_sidemenu select {
   margin-top: -5px;
 }
+/*State: Address selected*/
+#infolog-index_infolog-index-header_right .et2_box_widget {
+  background-color: #0b5fa4 !important;
+  color: #FFF;
+  text-shadow: none;
+  height: 35px;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  height: 32px;
+  color: #ffffff;
+}
+#infolog-index_infolog-index-header_right .et2_box_widget:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+#infolog-index_infolog-index-header_right .et2_box_widget:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+/*State: address edit*/
 div#addressbook-edit,
 div#addressbook-search {
   margin: 0;
@@ -791,6 +428,11 @@ div#addressbook-search table.editphones {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+div#addressbook-edit table.et2_grid,
+div#addressbook-search table.et2_grid {
+  width: 100%;
+  border-top: 0px;
 }
 div#addressbook-edit table.addressbook_edit_general,
 div#addressbook-search table.addressbook_edit_general {
@@ -830,6 +472,11 @@ div#addressbook-search table.addressbook_edit_general img.photo:hover {
 div#addressbook-edit table.addressbook_edit_general .uploadphoto,
 div#addressbook-search table.addressbook_edit_general .uploadphoto {
   background-color: #f0f0f0;
+  width: auto;
+  border-top: solid 1px #eeeeee;
+  border-left: solid 1px #eeeeee;
+  border-right: solid 1px #eeeeee;
+  border-bottom: solid 1px #eeeeee;
 }
 div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_n_fn,
 div#addressbook-search table.addressbook_edit_general input#addressbook-edit_n_fn {
@@ -1009,9 +656,9 @@ button.button_more {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   background-image: url('../images/bearbeiten.png');

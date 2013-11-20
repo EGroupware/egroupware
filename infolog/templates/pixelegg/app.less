@@ -10,9 +10,9 @@
  * @version $Id$
  */
 
-@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
-@import (reference) "../../../phpgwapi/templates/default/def_content_elements.less";
-@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+@import (less) "../default/app.css";
 
 //********************************************
 // Seitenleiste links
@@ -30,7 +30,8 @@ span#favorite_sidebox_infolog{
                 background-image: none;
 
             }
-            img.sideboxstar{
+            
+        img.sideboxstar{
                 .box-shadow(none);
                 border: 0px;
                 background-size: contain;
@@ -72,21 +73,30 @@ span#favorite_sidebox_infolog{
             div.ui-helper-clearfix,
             div.ui-helper-reset{
 
-                // rechte Box mit add
+           // right Box with add item
 
                 div.et2_hbox_right{
                     padding: 0 0em;
                     margin-right: 0em;
 
                     div.et2_box_widget{
-                        .Complete_Button_add;
-                        //													.Complete_Button_text;
+                    background-color: @egw_color_blue_lighter !important;
+                    color: #FFF;
+                    text-shadow: none;
+                    height: 35px;
+                    background-image: none !important;
+                    .border_radius_button_lefttop;
+
+                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
                         .border_radius_button_lefttop;
                         .box_shadow_standard_light;
-                        height: 35px;
+
+                        height: 39px; // hieght of add-item
+
                         .infolog_headertext{color: #FFF !important;}
 
-                        &:hover {.box_shadow_standard_light_hover;}
+                        &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
 
 
                     }
@@ -135,18 +145,20 @@ span#favorite_sidebox_infolog{
             } //Favoriten
 
 
-            div.filters{
-                .Rectangle_filters;
+            div.filters {
+                        .nm_filters_rectangle;
+                        
+                        padding-bottom: 1.5em;
 
 
                 // 1 Filter
-                select#infolog-index_cat_id {margin-left: 1em;}
+                select#infolog-index_cat_id {width: 10%; margin-left: 1em;}
 
                 // 2 Filter
-                select#infolog-index_filter {}
+                select#infolog-index_filter {width: 10%;}
 
                 // 3 Filter
-                select#infolog-index_filter2 {}
+                select#infolog-index_filter2 {width: 10%;}
 
                 // Suchfeld
                 input#infolog-index_search {
@@ -253,3 +265,5 @@ input.infolog-edit_info_custom_from {}
 td.inputFullWidth{
     input#infolog-edit_info_addr{}
 }
+
+/**/// Ende der APP INfolo

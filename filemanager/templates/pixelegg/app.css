@@ -16,7 +16,7 @@
 /*//******************************************************************
 // iframe*/
 #filemanager-index .et2_file {
-  background-color: #0b5fa4;
+  background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
   height: 35px;

@@ -83,52 +83,65 @@ div#addressbook-index{
 
     } // rechte Box
 
-    // ###########################
-    // Favoriten
+/*###########################
+ Favoriten dropdown Field
+*/
+    
+    /*definition in layout_nextmatch.less */
 
-    #addressbook-index_favorite_wrapper{
+/*    div#addressbook-index_favorite_wrapper{
+        
+        top: 0px;
+        width: auto;
 
         img{width: 16px;}
 
+        
+        
         .et2_dropdown {
 
-            .Complete_Button_Icon_normal;
-            //													.background-color-25-gray;
+                  button#addressbook-index_favorite{
+                                width: 18px;
+                    
+                                img{
+                                        width: 16px; 
+                                        text-align: left;
+                                        position: relative;
+                                        right: 20px;
+                                    }
+                }
 
-            button#addressbook-index_favorite	{
-                img{width: 16px; .Complete_Button_Icon_normal;}
-            }
 
-            button{}
+                .ui-state-default,
+                .ui-widget-content .ui-state-default,
+                .ui-widget-header .ui-state-default {
+                    width: 18px;
+                    .background-color-25-gray;
+                    color: #000;
+                    background-image: none !important;
 
-            .ui-state-default,
-            .ui-widget-content .ui-state-default,
-            .ui-widget-header .ui-state-default {
-
-                .background-color-25-gray;
-                color: #000;
-                background-image: none !important;
-
-            }
+                }
 
 
 
         }
 
-    } // Favoriten
+    } // Favoriten*/
 
-div.filters{
-                .Rectangle_filters;
+            div.filters {
+                        .nm_filters_rectangle;
+                        
+                        padding-bottom: 1.5em;
 
 
                 // 1 Filter
-                select#infolog-index_cat_id {margin-left: 1em;}
+                select#infolog-index_cat_id {width: 10%; margin-left: 1em;}
 
                 // 2 Filter
-                select#infolog-index_filter {}
+                select#infolog-index_filter {width: 10%;}
 
                 // 3 Filter
-                select#infolog-index_filter2 {}
+                select#infolog-index_filter2 {width: 10%;}
 
                 // Suchfeld
                 input#infolog-index_search {
@@ -146,6 +159,9 @@ div.filters{
                 // Suchen Button
                 button.et2_button {}
             }
+            
+            
+            
     // Filter
     .filters{
         #addressbook-index_cat_id{width: 7%;}
@@ -161,8 +177,9 @@ div.filters{
     }
 
 
-    // Einstellungen Listenausgabe
-
+    
+ 
+    
 
 
 } // iframe
@@ -202,6 +219,22 @@ div.filters{
 // Dialog Addressbuch bearbeiten und alle weiteren
 // #####################################################
 
+/*State: Address selected*/
+
+   #infolog-index_infolog-index-header_right{
+       
+       .et2_box_widget{
+                .Complete_Button_add;
+                height: 32px;
+                .color-0-gray; // white
+
+                &:hover {.Complete_Button_add_hover;}
+                }
+        }
+
+        
+/*State: address edit*/        
+
 
 div#addressbook-edit,
 div#addressbook-search{
@@ -222,8 +255,10 @@ div#addressbook-search{
         top: 5%;
         .box_shadow_standard_light;
     }
-    
-    
+        table.et2_grid{
+        width: 100%;
+        border-top: 0px;
+    }
     table.addressbook_edit_general{
         //		background: red;
 
@@ -245,6 +280,8 @@ div#addressbook-search{
         
         .uploadphoto {
             .background-color-10-gray;
+            width: auto;
+            .bordered();
             
         }
         
