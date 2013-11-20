@@ -213,6 +213,14 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 				{
 					this.left.width(w);
 					this.right.width(w);
+					if(this.dock_side == "topDock")
+					{
+						this.right.height(h);
+					}
+					else
+					{
+						this.left.height(h);
+					}
 				}
 			}, this);
 		}
