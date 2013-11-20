@@ -7,7 +7,7 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
  * @version $Id$
  */
@@ -23,12 +23,6 @@
  * #################################################
  */
 
-
-
-
-
-
-
 //IFRAME
 
 .egw_fw_content_browser_iframe,
@@ -40,8 +34,8 @@
 }
 
 .egwGridView_scrollarea {
-	width: 100%;
-	overflow: auto;
+    width: 100%;
+    overflow: auto;
 }
 #egw_fw_header{
 
@@ -66,11 +60,10 @@
         }
 
     }
-
-/*     ###########################################################################################################################################
-    /* ###########################################################################################################################################
-    * Topmenu / Home / Einstellungen / usw..
-    /* ###########################################################################################################################################
+    /*     ###########################################################################################################################################
+        /* ###########################################################################################################################################
+        * Topmenu / Home / Einstellungen / usw..
+        /* ###########################################################################################################################################
     */
 
     #egw_fw_topmenu ul,
@@ -80,48 +73,48 @@
     #egw_fw_topmenu_info_items {
         display: inline;
     }
-    
+
     #egw_fw_topmenu{
-        
+
         #egw_fw_topmenu_items {
             float: left;
             padding-top: 10px;
             //														height: 30px;
 
-                ul {
-                    //															padding: 10px;
-                    //															margin-left: 2em;
+            ul {
+                //															padding: 10px;
+                //															margin-left: 2em;
 
-                        li{
-                            .color-100-gray;
-                            .Button_size_square_32;
-                            padding: 0.3em 0.4em;
-                            .Complete_Button_normal;
+                li{
+                    .color-100-gray;
+                    .Button_size_square_32;
+                    padding: 0.3em 0.4em;
+                    .Complete_Button_normal;
 
-                            &:hover{.Complete_Button_hover;.color-100-gray;}
-                            a {.color-100-gray;}
-                            a:hover {
-                                .color-50-gray;
-                                .border-color-50-gray;
-                                    }
-                            }
+                    &:hover{.Complete_Button_hover;.color-100-gray;}
+                    a {.color-100-gray;}
+                    a:hover {
+                        .color-50-gray;
+                        .border-color-50-gray;
+                    }
+                }
 
-                        li:first-child{
-                            margin-left: -28px;
-                            :before{border: none;}
-                        }
-                    } // Ende ul
+                li:first-child{
+                    margin-left: 10px;
+                    :before{border: none;}
+                }
+            } // Ende ul
 
 
         }	// Ende Items
-        
-        
+
+
     } // Ende Topmenu
-    
+
 
 } // Ende Header
 
-	
+
 /*#################################################
 ###################################################
  Slide Effekt
@@ -133,32 +126,39 @@
     width: auto;
     text-align: center;
     height: 15px;
-    float:left;
+    float: left;
     position: fixed;
-    left: 196px;
-
-    .slidedown{
-        background-image: url("../images/slidedown.png");
+    left: 194px;
+    
+}
+#egw_fw_topmenu_slide.slidedown{
+        background-image: url("../images/list.png");
         background-position: center center;
         height: 15px;
         width: 15px;
         display: block;
-        margin-left: 40px;
-        margin-top: 0px;
-        //					z-index: 100;
-        //float:right;
+        margin-left: 5px;
+        margin-top: 10px;
+        background-size: 15px 15px;
+        float: left;
+        position: relative;
+        left: -5px;
     }
-    .slideup{
+#egw_fw_topmenu_slide.slideup{
         background-image: url("../images/slideup.png");
         background-position: center center;
         height: 15px;
         width: 15px;
         display: block;
-        margin-top: 10px;
+        margin-top: -55px;
         margin-left: 40px;
 
     }
-}
+    #slidetoggle{
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
 
 
 
@@ -168,65 +168,66 @@
     - Name / Date
 ###################################################*/
 #egw_fw_topmenu_addons{
-    
-        // ########################################
+
+    // ########################################
     // quick_add
 
     span#quick_add{
+        .Complete_Button_add;
         position: fixed;
         right: 88px;
         top: 0;
         z-index: 200;
 
         padding: 0 0.8em 0.8em 0.5em;
-
+        
         &:before {content: "+";font-size: 2em;color: @egw_color_1;}
 
         select#quick_add_selectbox{
-                                    .border_normal;
-                                    .box_shadow_standard_light;
-                                    height: 30px;
-                                    padding: 0 0 0 10px;
-                                    font-size: 0.9em;
-                                    line-height: 1.1em;
-                                    &:hover {.box_shadow_standard_light_hover;}
-                                    &:focus {.box_shadow_standard_light_inset;}
-                                    option {
-                                        &:first-child{
-                                                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+            .border_normal;
+            .box_shadow_standard_light;
+            height: 30px;
+            padding: 0 0 0 10px;
+            font-size: 0.9em;
+            line-height: 1.1em;
+            &:hover {.box_shadow_standard_light_hover;}
+            &:focus {.box_shadow_standard_light_inset;}
+/*            option {
+                &:first-child{
+                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
 
-                                                    }
+                }*/
 
-                                            }
-                                }
+            }
+        }
 
     }
-    
-    
-   
+
+
+
     // Logout
-        #egw_fw_logout {
-                        background-image: url(../images/logout.png);
-                        background-size: 16px 16px;
-                        background-position: center center;
-                        background-repeat: no-repeat;
-                        cursor: pointer;
-                        display: inline-block;
-                        float: right;
-                        margin-right: 1em;
-                        margin-top: 0px;
-                        z-index: 200;
-                        .Button_size_square_16;
-                        .border_normal;
-                        .box_shadow_standard_light;
-                        padding: 0.5em;
-                        top: 5px;
-                        position: fixed;
-                        right: 5px;
+    #egw_fw_logout {
+        background-image: url(../images/logout.png);
+        background-size: 16px 16px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+        margin-right: 1em;
+        margin-top: 0px;
+        z-index: 200;
+        .Button_size_square_16;
+        .border_normal;
+        .box_shadow_standard_light;
+        padding: 0.5em;
+        top: 5px;
+        position: fixed;
+        right: 5px;
 
 
-                        &:hover {.box_shadow_standard_light_hover;}
-                    }
+        &:hover {.box_shadow_standard_light_hover;}
+    }
 
 
 
@@ -248,7 +249,6 @@
         .box_shadow_standard_light;
         padding: 0.5em;
         top: 5px;
-        //													position: relative;
         right: 45px;
         z-index: 200;
         &:hover {.box_shadow_standard_light_hover;}
@@ -256,10 +256,10 @@
         &:focus {.box_shadow_standard_light_inset;}
 
     }
-    
-    
-    
- /*Name / Datum / angemeldete User*/
+
+
+
+    /*Name / Datum / angemeldete User*/
 
     #egw_fw_topmenu_info_items {
 
@@ -268,43 +268,44 @@
         float: right;
         display: flex;
         .topmenu_info_item {
-                            
-                            // Info Bell
-                            &:nth-child(1) {
-                            }
 
-                            // Name
-                            &:nth-child(2) {
-                                /*float: right;*/
-                                margin-top: 0;
-                                font-size: 1em;
-                                padding-right: 5px;
-                                
-                            }
+            // Info Bell
+            &:nth-child(1) {
+            }
 
-                            // angemeldete User
-                            &:nth-child(3) {
-                                position: relative;
-                                top: 0px;
-                                  display: inline-block;
-                                  
-                                &:hover {.box_shadow_standard_light_hover;}
-                                &:focus {.box_shadow_standard_light_inset;}
-                                
-                                &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
-                                  
-                            }
+            // Name
+            &:nth-child(2) {
+                /*float: right;*/
+                margin-top: 0;
+                font-size: 1em;
+                padding-right: 5px;
 
-                            // Add
-                            &:nth-child(4) {
+            }
 
-                            }
+            // angemeldete User
+            &:nth-child(3) {
+                position: relative;
+                top: 0px;
+                display: inline-block;
 
-                         }
+                &:hover {.box_shadow_standard_light_hover;}
+                &:focus {.box_shadow_standard_light_inset;}
 
-    } // Ende items
+                &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
 
-} // Ende Addons
+            }
+
+            // Add
+            &:nth-child(4) {
+
+            }
+
+        }
+
+    } 
+    // Ende items
+
+
 
 
 
@@ -313,7 +314,7 @@
  ################################################################################################################
  * Sidebar
  * ################################################################################################################*/
- 
+
 
 #egw_fw_sidebar {
     position: fixed;
@@ -342,29 +343,29 @@
 
             // Alle Tabs
             .egw_fw_ui_sidemenu_entry_header {
-                                                cursor: pointer;
+                cursor: pointer;
 
-                                                display: block;
-                                                height: 30px;
-                                                margin: 0 0;
-                                                padding: 4px 5px 5px 15px;
-                                                .background-color-5-gray;
-                                                background-image: none;
-                                                .border-color-10-gray;
+                display: block;
+                height: 30px;
+                margin: 0 0;
+                padding: 4px 5px 5px 15px;
+                .background-color-5-gray;
+                background-image: none;
+                .border-color-10-gray;
 
-                                                .rounded(5px);
-                                                &:hover {  .background-color-15-gray;}
+                .rounded(5px);
+                &:hover {  .background-color-15-gray;}
 
-                                                h1 {
-                                                    font-size: 1em;
-                                                    font-weight: normal;
-                                                    margin: 0 0 10px 0;
-                                                    padding-top: 0.31em;
-                                                    .color-40-gray;
+                h1 {
+                    font-size: 1em;
+                    font-weight: normal;
+                    margin: 0 0 10px 0;
+                    padding-top: 0.31em;
+                    .color-40-gray;
 
-                                                }
+                }
 
-                                            }
+            }
 
 
 
@@ -500,7 +501,7 @@
                     }
 
                 }
-             
+
             }
 
             .egw_fw_ui_sidemenu_entry_content_bottom {
@@ -579,8 +580,8 @@
         .background-color-0-gray;
         .border-color-50-gray;
     } 
-     
-    
+
+
     // Favoriten anlegen und löschen            
     .sidebox-favorites{} // ist in etemplate2.less definiert
 
@@ -594,59 +595,59 @@
 
 .egw_fw_ui_sidemenu_listitem {
 
-                    padding: 0.5em 0;
-                    margin: 4px 0 5px 0px;
-                    position: relative;
+    padding: 0.5em 0;
+    margin: 4px 0 5px 0px;
+    position: relative;
 
 
-                    
 
-                    // Icon before
-                    img.egw_fw_ui_sidemenu_listitem_icon {
-                        height: 9px; 
-                        width: 9p; 
-                        padding: 0px;
-                        float: left;
-                        background-image: url("../images/bullet.png");
-                        
-                    }
-    
-                    input {
-                        height: 16px;
-                        width: 81% !important;
-                    }
 
-                    input[type="image"] {
-                        height: 10px; 
-                        width: 10px !important; 
-                        margin-left: 1px;
-                    } // mehrere Benutzer auswählen
+    // Icon before
+    img.egw_fw_ui_sidemenu_listitem_icon {
+        height: 9px; 
+        width: 9p; 
+        padding: 0px;
+        float: left;
+        background-image: url("../images/bullet.png");
 
-                    select { max-width: 85% !important; }
-                    
-                    // Icon rechts der Liste - Auswahl Button
-                    img { 
-                            height: 9px; 
-                            width: 9px; 
-                            padding: 0px;
-                            float: right;
-                    }
-                    
-                    // normale Links
-                    a {
-                        // .Complete_Button_text;
-                        padding: 5px 0px 5px 5px;
-                        text-decoration: none;
-                        min-width: 5em;
+    }
 
-                               &:hover{
-                                       .color-100-gray;
-                                    }
+    input {
+        height: 16px;
+        width: 81% !important;
+    }
 
-                                    &:active {
-                                        .box_shadow_standard_light_inset;
-                                    }
-                        }
+    input[type="image"] {
+        height: 10px; 
+        width: 10px !important; 
+        margin-left: 1px;
+    } // mehrere Benutzer auswählen
+
+    select { max-width: 85% !important; }
+
+    // Icon rechts der Liste - Auswahl Button
+    img { 
+        height: 9px; 
+        width: 9px; 
+        padding: 0px;
+        float: right;
+    }
+
+    // normale Links
+    a {
+        // .Complete_Button_text;
+        padding: 5px 0px 5px 5px;
+        text-decoration: none;
+        min-width: 5em;
+
+        &:hover{
+            .color-100-gray;
+        }
+
+        &:active {
+            .box_shadow_standard_light_inset;
+        }
+    }
 
 
     div {
@@ -701,11 +702,11 @@
 
     // Submenu Item
     &:hover{
-                                        .color-100-gray;
-                                        background-color: @egw_color_1_e;
-                                        padding: 0.5em 0;
-                                    }
-    
+        .color-100-gray;
+        background-color: @egw_color_1_e;
+        padding: 0.5em 0;
+    }
+
 } // .egw_fw_ui_sidemenu_listitem
 
 
@@ -839,8 +840,8 @@ div#calendar-container {
                     .weekend {}
                 }
                 // hover tr
-                 tr.rowhilite td{background-color: @egw_color_1_a;}
-               
+                tr.rowhilite td{background-color: @egw_color_1_a;}
+
             }
 
 
@@ -1125,13 +1126,13 @@ div.et2_container {
                                 table.et2_grid {.background-color-0-gray;}
 
                             }
-                            
+
                         }
                     }
                 }
-                    
+
             }
         }
     }
 }
-//
+// 

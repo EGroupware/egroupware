@@ -38,7 +38,7 @@
 					</div>
 			</div>	
 			
-			<div id="egw_fw_topmenu_slide"><span id="slidetoggle" class="slideup"></span></div>
+			
 			<div id="egw_fw_topmenu_addons">
 					<div id="egw_fw_topmenu_info_items">{topmenu_info_items}</div>
 						<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
@@ -50,7 +50,7 @@
 			</div>
 			<div id="egw_fw_main">
 				
-				<div id="egw_fw_tabs">
+				<div id="egw_fw_tabs"><div id="egw_fw_topmenu_slide" class="slideup"><span id="slidetoggle"></span></div>
 					
 				</div>
 			

@@ -48,7 +48,7 @@
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 .Complete_Button_add {
-  background-color: #0b5fa4;
+  background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
   height: 35px;
@@ -245,9 +245,9 @@
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
 }
@@ -258,9 +258,9 @@
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -274,9 +274,9 @@
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
   width: auto;
   height: 32px;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -345,16 +345,12 @@
 * Nextmatch widget
 */
 .et2_nextmatch .nextmatch_header > .filters {
-  padding: 0 0 0 1em;
+  border: none !important;
+  background-image: none !important;
   background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
 }
 .et2_nextmatch {
-  /* Left & right headers*/
+  background-color: #f0f0f0;
   /* Favorites */
 }
 .et2_nextmatch div > .header {
@@ -367,8 +363,8 @@
   width: auto;
 }
 .et2_nextmatch .nextmatch_header {
-  border: none;
-  background-image: none;
+  border: none !important;
+  background-image: none !important;
   background-color: #f0f0f0;
   background-size: 80% 10;
   margin-bottom: 3px;
@@ -412,12 +408,8 @@
 .et2_nextmatch .nextmatch_header .header_count {
   position: relative;
   top: 7px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #f0f0f0;
-  border-color: #808080;
-  cursor: pointer;
+  width: 50px;
+  font-size: 0.8em;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper,
@@ -440,14 +432,32 @@
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
-  height: 2em;
+  /*linke Seite Bild*/
 }
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown img {
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default {
+  background-image: none;
+  width: auto;
+}
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default img {
   height: 16px;
   width: 16px;
+  text-align: left;
+  position: relative;
+  right: 20px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button,
@@ -527,20 +537,29 @@
   margin-top: 8px;
   vertical-align: middle;
 }
+/*#########################################################
+#
+# Filterleiste
+#
+#########################################################*/
 .filters {
-  padding: 0 0 0 1em;
+  padding: 0 0 1em 1em;
   background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
   border-width: 0 0 1px 0;
   border-color: #d9d9d9;
   background-image: none;
   width: 80%;
+  margin-bottom: 1em;
 }
 .filters img.et2_button_icon {
   float: right;
   position: relative;
   top: 0px;
+}
+.filters select,
+.filters input,
+.filters button {
+  height: 20px;
 }
 .filters select {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -557,7 +576,6 @@
   cursor: pointer;
   margin-right: 2ex;
   padding: 5px;
-  height: 25px;
   padding: 0px 0px 0px 3px;
 }
 .filters select:hover {
@@ -582,7 +600,6 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  height: 25px;
 }
 .filters input:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -608,6 +625,8 @@
   cursor: pointer;
   padding: 3px;
   margin-left: 5px;
+  background-image: none;
+  width: auto;
 }
 .filters button:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);

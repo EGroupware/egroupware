@@ -407,7 +407,7 @@ action buttons, left aligned for "extra" controls
 .loading {
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('images/ajax-loader.gif');
+  background-image: url('../images/ajax-loader.gif');
 }
 /**
  * File upload
@@ -815,19 +815,20 @@ div.message.floating {
   margin-top: -20px;
   border: none;
 }
-.nextmatch_header .header_count {
-  padding: 0px 20px;
-  margin: 6px 20px 0px;
-  border: 1px solid #E0E0E0;
-  float: right;
-  font-size: 150%;
-  text-align: center;
-}
+/*.nextmatch_header .header_count {
+    padding: 0px 20px;
+    margin: 6px 20px 0px;
+    border: 1px solid #E0E0E0;
+    float:right;
+    font-size: 150%;
+    text-align: center
+}*/
 .nextmatch_header > .filters {
   padding-left: 5px;
 }
 .nextmatch_header > .filters select {
   margin-right: 2ex;
+  width: 15%;
 }
 .nextmatch_header .et2_button_icon {
   vertical-align: middle;
@@ -840,14 +841,14 @@ div.message.floating {
   background-image: none;
   margin-bottom: 3px;
 }
-.et2_nextmatch .nextmatch_header > .filters {
-  border: 1px solid silver;
-  background-color: #E0E0E0;
-  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
-  background-position: center;
-  background-repeat: repeat-x;
-  margin-bottom: 3px;
-}
+/*.et2_nextmatch .nextmatch_header > .filters {
+    border: 1px solid silver;
+    background-color: #E0E0E0;
+    background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+    background-position: center;
+    background-repeat: repeat-x;
+    margin-bottom: 3px;
+}*/
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
   margin-top: 6px;
@@ -1386,6 +1387,7 @@ option:checked {
   border-bottom: solid 1px 1px;
   border-color: #f0f0f0;
   background: #ffc200;
+  background-image: none !important;
   color: #000000;
 }
 .ui-state-hover a,
@@ -1455,6 +1457,24 @@ option:checked {
 .ui-icon-closethick {
   color: #ffffff;
   background-color: #ff0000;
+}
+span.ui-icon-search {
+  background-image: url(../images/search.png) !important;
+  background-position: 0px;
+  background-size: 10px 10px;
+}
+/*###########################################*/
+/*Dialog: edit row*/
+.ui-widget-content .et2_selectbox button.et2_button_text,
+.ui-widget-content .et2_selectbox select.et2_selectbox {
+  height: 20px;
+}
+.ui-widget-content .et2_selectbox button {
+  background-image: none;
+}
+.ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
+  background-color: #ffc200;
+  font-weight: normal;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -1686,399 +1706,7 @@ option:checked {
 /**
  * layout_*.less files are Pixelegg template specific
  */
-/**
- * EGroupware: CSS with less preprocessor
- *
- * Definitions for apps
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
- * @version $Id$
- * 
- * definitions of globally used items (buttons, fields, tables)
- * 
- */
-input[type="submit"],
-input[type="button"],
-input[type="reset"],
-button,
-.egwbutton {
-  background-color: #B9D5E3;
-  border: 1px outset #B9D5E3;
-  color: #004E7D;
-}
-.et2_button_text,
-input[type="button"] {
-  background-color: #f0f0f0;
-  color: #b3b3b3;
-  margin: 5px;
-  padding: 3px;
-  border-radius: 20px 3px 3px 3px;
-  -webkit-border-radius: 20px 3px 3px 3px;
-  -moz-border-radius: 20px 3px 3px 3px;
-}
-.et2_button_text :before,
-input[type="button"] :before {
-  content: "►";
-  color: red;
-  font-size: 50px;
-}
-/**##################################################################################################
- * Button widget - text only, and icon
- *
- * ##################################################################################################
- */
-.et2_button_text,
-input[type=button] {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #f0f0f0;
-  border-color: #808080;
-  cursor: pointer;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-.et2_button_text:hover,
-input[type=button]:hover {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  text-align: center;
-  cursor: pointer;
-  background-color: #b3b3b3 !important;
-}
-.et2_button_text:active,
-input[type=button]:active {
-  color: #000000;
-}
-.et2_button_text:focus,
-input[type=button]:focus {
-  color: #000000;
-}
-/* Button Hinzufügen */
-#add.et2_button {
-  background-color: #0b5fa4;
-  color: #FFF;
-  text-shadow: none;
-  height: 35px;
-  background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-#add.et2_button:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-input[type="submit"][id="edit"],
-input[type="button"][id="edit"],
-button[id*="edit"],
-input[type="submit"][id="edit"]:hover,
-input[type="button"][id="edit"]:hover,
-button[id*="edit"]:hover {
-  background-image: url('../images/edit.png');
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-}
-input[type="submit"][id*="copy"],
-input[type="button"][id*="copy"],
-button[id*="copy"],
-input[type="submit"][id*="copy"]:hover,
-input[type="button"][id*="copy"]:hover,
-button[id*="copy"]:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/copy.png');
-}
-input[type="submit"][id*="cancel"],
-input[type="button"][id*="cancel"],
-button[id*="cancel"],
-input[type="submit"][id*="cancel"]:hover,
-input[type="button"][id*="cancel"]:hover,
-button[id*="cancel"]:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/cancel.png');
-}
-input[type="submit"][id*="delete"],
-input[type="button"][id*="delete"],
-button[id*="delete"] {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/delete.png');
-  margin-left: 3em;
-}
-input[type="submit"][id*="delete"]:hover,
-input[type="button"][id*="delete"]:hover,
-button[id*="delete"]:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/delete.png');
-  background-color: red !important;
-}
-input[type="submit"][id*="apply"],
-input[type="button"][id*="apply"],
-button[id*="apply"],
-input[type="submit"][id*="apply"]:hover,
-input[type="button"][id*="apply"]:hover,
-button[id*="apply"]:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/apply.png');
-}
-input[type="submit"][id*="save"],
-input[type="button"][id*="save"],
-button[id*="save"],
-input[type="submit"][id*="save"]:hover,
-input[type="button"][id*="save"]:hover,
-button[id*="save"]:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/save.png');
-}
-input[type="submit"][id*="search"],
-input[type="button"][id*="search"],
-button[id*="search"] {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/advanced-search.png');
-}
-input[type="submit"][id*="search"]:hover,
-input[type="button"][id*="search"]:hover,
-button[id*="search"]:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-image: url('../images/advanced-search.png');
-}
-input[type="submit"][id*="search"]:focus,
-input[type="button"][id*="search"]:focus,
-button[id*="search"]:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-button.button_ok {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/save.png');
-}
-button.button_ok:hover {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/save.png');
-}
-button#infolog-index_legacy_actions {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url('../images/edit.png');
-}
-button#infolog-index_legacy_actions:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-image: url('../images/edit.png');
-}
-button#infolog-index_legacy_actions:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-button[id*="note"] {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-}
-button[id*="note"]:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-button[id*="note"]:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-button#mail-compose_button[send],
-button#mail-compose_button[id*="send"],
-.mail-compose_button {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url(../../mail/templates/default/images/mail_send.png) !important;
-  height: 26px;
-  padding: 0 3px 0 0;
-  background-color: #d9d9d9;
-}
-button#mail-compose_button[send]:hover,
-button#mail-compose_button[id*="send"]:hover,
-.mail-compose_button:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-button#mail-compose_button[send]:focus,
-button#mail-compose_button[id*="send"]:focus,
-.mail-compose_button:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-button[id*="add_alarm"] {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-image: url("../images/k_alarm.png") !important;
-  height: 26px;
-  padding: 0 3px 0 0;
-  background-color: #d9d9d9;
-}
-button[id*="add_alarm"]:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  height: 26px;
-}
-button[id*="add_alarm"]:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  height: 26px;
-}
+/*@import "../less/layout_buttons_global.less";*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -2346,7 +1974,11 @@ h6 {
 /*table {font-size: 16px;}*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select {
-    padding-right: 18px;
+    padding-right: 20px !important;
+    -webkit-appearance: none;
+    margin: 0;
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: 20px auto;
   }
 }
 select {
@@ -2659,7 +2291,7 @@ td.lettersearch {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background-image: url(images/ajax-loader.gif);
+  background-image: url(../images/ajax-loader.gif);
   background-repeat: no-repeat;
   background-position: center;
   float: right;
@@ -2881,6 +2513,59 @@ a.textSidebox {
   bottom: 4px;
   text-align: center;
   width: 99%;
+}
+button {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+  /*    background-repeat: no-repeat;
+    background-position: 6px center;
+    background-size: 20px auto;*/
+}
+button:hover {
+  background-color: #b3b3b3 !important;
+}
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
+button[id*="delete"] {
+  background-image: url('../images/delete.png');
+  margin-left: 3em;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+input[type="submit"][id*="delete"]:hover,
+input[type="button"][id*="delete"]:hover,
+button[id*="delete"]:hover {
+  background-image: url('../images/delete.png');
+  background-color: red !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -3300,7 +2985,7 @@ img {
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
  * @version $Id$
  */
@@ -3324,9 +3009,9 @@ img {
   width: 100%;
   float: left;
   /*     ###########################################################################################################################################
-    /* ###########################################################################################################################################
-    * Topmenu / Home / Einstellungen / usw..
-    /* ###########################################################################################################################################
+        /* ###########################################################################################################################################
+        * Topmenu / Home / Einstellungen / usw..
+        /* ###########################################################################################################################################
     */
 }
 #egw_fw_header #egw_divLogo {
@@ -3379,7 +3064,7 @@ img {
   border-color: #808080;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child {
-  margin-left: -28px;
+  margin-left: 10px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child :before {
   border: none;
@@ -3394,40 +3079,62 @@ img {
   height: 15px;
   float: left;
   position: fixed;
-  left: 196px;
+  left: 194px;
 }
-#egw_fw_topmenu_slide .slidedown {
-  background-image: url("../images/slidedown.png");
+#egw_fw_topmenu_slide.slidedown {
+  background-image: url("../images/list.png");
   background-position: center center;
   height: 15px;
   width: 15px;
   display: block;
-  margin-left: 40px;
-  margin-top: 0px;
+  margin-left: 5px;
+  margin-top: 10px;
+  background-size: 15px 15px;
+  float: left;
+  position: relative;
+  left: -5px;
 }
-#egw_fw_topmenu_slide .slideup {
+#egw_fw_topmenu_slide.slideup {
   background-image: url("../images/slideup.png");
   background-position: center center;
   height: 15px;
   width: 15px;
   display: block;
-  margin-top: 10px;
+  margin-top: -55px;
   margin-left: 40px;
+}
+#slidetoggle {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 /*#################################################
 ###################################################
  Add / Print / Logout / 
     - Name / Date
 ###################################################*/
-#egw_fw_topmenu_addons {
-  /*Name / Datum / angemeldete User*/
-}
 #egw_fw_topmenu_addons span#quick_add {
+  background-color: #0b5fa4 !important;
+  color: #FFF;
+  text-shadow: none;
+  height: 35px;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
   position: fixed;
   right: 88px;
   top: 0;
   z-index: 200;
   padding: 0 0.8em 0.8em 0.5em;
+}
+#egw_fw_topmenu_addons span#quick_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
 }
 #egw_fw_topmenu_addons span#quick_add:before {
   content: "+";
@@ -3443,6 +3150,11 @@ img {
   padding: 0 0 0 10px;
   font-size: 0.9em;
   line-height: 1.1em;
+  /*            option {
+                &:first-child{
+                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
+                }*/
 }
 #egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -3454,12 +3166,7 @@ img {
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox option:first-child:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-#egw_fw_topmenu_addons #egw_fw_logout {
+#egw_fw_logout {
   background-image: url(../images/logout.png);
   background-size: 16px 16px;
   background-position: center center;
@@ -3481,12 +3188,12 @@ img {
   position: fixed;
   right: 5px;
 }
-#egw_fw_topmenu_addons #egw_fw_logout:hover {
+#egw_fw_logout:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
-#egw_fw_topmenu_addons #egw_fw_print {
+#egw_fw_print {
   background-image: url(../images/print.png);
   background-size: 16px 16px;
   background-position: center center;
@@ -3508,44 +3215,45 @@ img {
   right: 45px;
   z-index: 200;
 }
-#egw_fw_topmenu_addons #egw_fw_print:hover {
+#egw_fw_print:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
-#egw_fw_topmenu_addons #egw_fw_print:focus {
+#egw_fw_print:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items {
+/*Name / Datum / angemeldete User*/
+#egw_fw_topmenu_info_items {
   padding-right: 20px;
   white-space: nowrap;
   float: right;
   display: flex;
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(2) {
+#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(2) {
   /*float: right;*/
   margin-top: 0;
   font-size: 1em;
   padding-right: 5px;
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3) {
+#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3) {
   position: relative;
   top: 0px;
   display: inline-block;
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):hover {
+#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):focus {
+#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
-#egw_fw_topmenu_addons #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):before {
+#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):before {
   content: "| ";
   font-size: 1em;
   color: #0c5da5;
@@ -4125,16 +3833,12 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 * Nextmatch widget
 */
 .et2_nextmatch .nextmatch_header > .filters {
-  padding: 0 0 0 1em;
+  border: none !important;
+  background-image: none !important;
   background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
 }
 .et2_nextmatch {
-  /* Left & right headers*/
+  background-color: #f0f0f0;
   /* Favorites */
 }
 .et2_nextmatch div > .header {
@@ -4147,8 +3851,8 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   width: auto;
 }
 .et2_nextmatch .nextmatch_header {
-  border: none;
-  background-image: none;
+  border: none !important;
+  background-image: none !important;
   background-color: #f0f0f0;
   background-size: 80% 10;
   margin-bottom: 3px;
@@ -4192,12 +3896,8 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 .et2_nextmatch .nextmatch_header .header_count {
   position: relative;
   top: 7px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #f0f0f0;
-  border-color: #808080;
-  cursor: pointer;
+  width: 50px;
+  font-size: 0.8em;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper,
@@ -4220,14 +3920,32 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
-  height: 2em;
+  /*linke Seite Bild*/
 }
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown img,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown img {
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left,
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default {
+  background-image: none;
+  width: auto;
+}
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left img,
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default img,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default img {
   height: 16px;
   width: 16px;
+  text-align: left;
+  position: relative;
+  right: 20px;
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button,
@@ -4307,20 +4025,29 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   margin-top: 8px;
   vertical-align: middle;
 }
+/*#########################################################
+#
+# Filterleiste
+#
+#########################################################*/
 .filters {
-  padding: 0 0 0 1em;
+  padding: 0 0 1em 1em;
   background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
   border-width: 0 0 1px 0;
   border-color: #d9d9d9;
   background-image: none;
   width: 80%;
+  margin-bottom: 1em;
 }
 .filters img.et2_button_icon {
   float: right;
   position: relative;
   top: 0px;
+}
+.filters select,
+.filters input,
+.filters button {
+  height: 20px;
 }
 .filters select {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4337,7 +4064,6 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   cursor: pointer;
   margin-right: 2ex;
   padding: 5px;
-  height: 25px;
   padding: 0px 0px 0px 3px;
 }
 .filters select:hover {
@@ -4362,7 +4088,6 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  height: 25px;
 }
 .filters input:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -4388,6 +4113,8 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   cursor: pointer;
   padding: 3px;
   margin-left: 5px;
+  background-image: none;
+  width: auto;
 }
 .filters button:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -4473,6 +4200,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
  * @package pixelegg
  * @version $Id$
  */
+/*@import (reference) "def_content_elements.less";*/
 /*Main div*/
 table.dialog-main-view {
   width: 100%;

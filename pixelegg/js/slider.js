@@ -3,7 +3,7 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Wolfgang Ott <wolfgang.ott@pixelegg.de>
  * @package pixelegg
  * @version $Id: class.pixelegg_framework.inc.php 2741 2013-11-14 13:53:24Z ralfbecker $
  */
@@ -13,20 +13,22 @@ function show_pixelegg_header(_toggle, _delay)
 	$j("#egw_fw_header").slideToggle();
 	$j("#egw_fw_topmenu_addons").animate({'margin-right': '20px'},_delay);
 	$j("#egw_fw_sidebar").animate({'top':'57px'},_delay);
-	$j(_toggle).removeClass("slidedown");
-	$j(_toggle).addClass("slideup");
+        $j("#egw_fw_tabs").animate({'margin-top':'0px'},_delay);
+	$j(_toggle).parent().removeClass("slidedown");
+	$j(_toggle).parent().addClass("slideup");
 }
 
 function hide_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
-	$j("#egw_fw_sidebar").animate({'top':'12px'},_delay);
+	$j("#egw_fw_sidebar").animate({'top':'0px'},_delay);
 	$j("#egw_fw_topmenu_info_items").show();
 	$j("#egw_fw_logout").show();
 	$j("#egw_fw_print").show();
-	$j("#egw_fw_topmenu_addons").animate({'margin-right': '250px'},_delay);
-	$j(_toggle).removeClass("slideup");
-	$j(_toggle).addClass("slidedown");
+        $j("#egw_fw_tabs").animate({'margin-top':'-13px'},_delay);
+	$j("#egw_fw_topmenu_addons").animate({'margin-right': '270px'},_delay);
+	$j(_toggle).parent().removeClass("slideup");
+	$j(_toggle).parent().addClass("slidedown");
 }
 
 egw_LAB.wait(function() {

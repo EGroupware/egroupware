@@ -97,7 +97,7 @@ select {
 
 	&:hover{.Complete_Button_select_hover;}
 	&:focus{.Complete_Button_select_focus;}
-
+        &.after{}
 }
 
 
@@ -149,10 +149,19 @@ h6 {
 
 /////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    select {padding-right:18px}
+    select {
+    padding-right: 20px !important;
+    -webkit-appearance:none;
+    margin:0;
+    background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: 20px auto;
+    }
 }
 
-select {position:relative}
+select {
+    position:relative;
+
+}
 select:after {
     content:'<>';
     font:11px "Consolas", monospace;
@@ -488,7 +497,7 @@ td.lettersearch {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
-	background-image:url(images/ajax-loader.gif);
+	background-image:url(../images/ajax-loader.gif);
 	background-repeat: no-repeat;
 	background-position: center;
 	float: right;
@@ -787,3 +796,36 @@ a.textSidebox
 	text-align:center;
 	width:99%;
 }
+
+// Button global for all and everything:
+button{
+    .Complete_Button_normal;
+    .Complete_Button_text_icon_before;
+/*    background-repeat: no-repeat;
+    background-position: 6px center;
+    background-size: 20px auto;*/
+    &:hover{.background-color-30-gray;}
+}
+
+// #####################################################
+// Button löschen
+
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
+button[id*="delete"]  {
+	
+	background-image:url('../images/delete.png');
+	margin-left: 3em;
+        .Complete_Button_text_icon_before;
+
+}
+input[type="submit"][id*="delete"]:hover,
+input[type="button"][id*="delete"]:hover,
+button[id*="delete"]:hover {
+	
+	background-image:url('../images/delete.png');
+	background-color: red !important;
+        .Complete_Button_text_icon_before;
+}
+
+// hier ist das ENDE_ELEMENTS    
