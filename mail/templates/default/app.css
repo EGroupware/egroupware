@@ -371,7 +371,6 @@ input[type=button] {
 .mailDisplay, #mail-index_mailPreview {
 	overflow: hidden;
 	position: relative;
-	padding-top: 3px;
 	background-color: white;
 }
 #mail-compose_fileselector {
