@@ -367,7 +367,7 @@ abstract class groupdav_handler
 
 			if (($ret = $this->get($options, $id ? $id : $this->new_id, $user)) && !empty($options['data']))
 			{
-				header('Content-Length: '.$this->groupdav->bytes($options['data']));
+				if (!$this->groupdav->use_compression()) header('Content-Length: '.$this->groupdav->bytes($options['data']));
 				header('Content-Type: '.$options['mimetype']);
 				echo $options['data'];
 			}
