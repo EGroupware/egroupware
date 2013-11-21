@@ -196,7 +196,7 @@
 							<vbox>
 								<description value="Change responsible" class="promptheader"/>
 								<description value="Select users or groups"/>
-								<listbox type="select-account" id="responsible" rows="5" options="both" class="action_popup-content"/>
+								<listbox type="select-account" id="responsible" rows="5" account_type="both" class="action_popup-content"/>
 								<hbox>
 									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
