@@ -669,9 +669,12 @@ class infolog_ui
 					{
 						$popup =& $values;
 					}
-
 					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action']);
-					if(is_array($popup[$multi_action]))
+					if($multi_action == 'link')
+					{
+						$popup[$multi_action] = $popup['link']['app'] . ':'.$popup['link']['id'];
+					}
+					else if(is_array($popup[$multi_action]))
 					{
 						$popup[$multi_action] = implode(',',$popup[$multi_action]);
 					}
