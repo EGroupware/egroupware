@@ -1855,7 +1855,7 @@ class mail_compose
 	{
 		$mail_bo	= $this->mail_bo;
 		$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
-		$activeMailProfile = $this->preferences->getIdentity($this->mail_bo->profileID, true);
+		$activeMailProfile = array();//$this->preferences->getIdentity($this->mail_bo->profileID, true);
 		$_mailObject->IsSMTP();
 		$_mailObject->CharSet	= $this->displayCharset;
 		// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
@@ -2184,8 +2184,8 @@ class mail_compose
 		   	$messageIsDraft = true;
 		}
 		#error_log(print_r($this->preferences,true));
-		$identity = $this->preferences->getIdentity((int)$this->sessionData['identity'],true);
-		$signature = $this->bosignatures->getSignature((int)$this->sessionData['signatureID']);
+		$identity = array();//$this->preferences->getIdentity((int)$this->sessionData['identity'],true);
+		$signature = array();//$this->bosignatures->getSignature((int)$this->sessionData['signatureID']);
 		//error_log($this->sessionData['identity']);
 		//error_log(print_r($identity,true));
 		// create the messages
@@ -2196,8 +2196,8 @@ class mail_compose
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
 
-		$ogServer = $this->preferences->getOutgoingServer($this->mail_bo->profileID);
-		#_debug_array($ogServer);
+		$ogServer = $this->mail_bo->ogServer;
+		//_debug_array($ogServer);
 		$mail->Host 	= $ogServer->host;
 		$mail->Port	= $ogServer->port;
 		// SMTP Auth??

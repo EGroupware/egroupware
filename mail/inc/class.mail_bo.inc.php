@@ -4607,12 +4607,21 @@ class mail_bo
 	 */
 	function appendMessage($_folderName, $_header, $_body, $_flags)
 	{
+		//error_log(__METHOD__.__LINE__."$_folderName, $_header, $_body, $_flags");
 		$header = ltrim(str_replace("\n","\r\n",$_header));
 		$body   = str_replace("\n","\r\n",$_body);
-		$messageid = $this->icServer->appendMessage("$header"."$body", $_folderName, $_flags);
-		if ( PEAR::isError($messageid)) {
-			if (self::$debug) error_log("Could not append Message:".print_r($messageid->message,true));
-			throw new egw_exception_wrong_userinput(lang("Could not append Message:".array2string($messageid->message)));
+		if (!is_array($_flags) && stripos($_flags,',')!==false) $_flags=explode(',',$_flags);
+		if (!is_array($_flags)) $_flags = (array) $_flags;
+		try
+		{
+			$dataNflags = array();
+			$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$header"."$body")), 'flags'=>array($_flags));
+			$messageid = $this->icServer->append($_folderName,$dataNflags);
+		}
+		catch (Exception $e)
+		{
+			if (self::$debug) error_log("Could not append Message:".$e->getMessage());
+			throw new egw_exception_wrong_userinput(lang("Could not append Message:".$e->getMessage));
 			//return false;
 		}
 		//error_log(__METHOD__.__LINE__.' appended UID:'.$messageid);
