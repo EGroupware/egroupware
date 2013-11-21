@@ -279,9 +279,9 @@
 				</row>
 				<row>
 					<hbox span="3">
-						<button statustext="Saves this entry" label="Save" id="button[save]"/>
-						<button statustext="Apply the changes" label="Apply" id="button[apply]"/>
-						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();"/>
+						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
+						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>
 						</menulist>
@@ -289,7 +289,7 @@
 					<description/>
 					<hbox span="2">
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
-						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
+						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');" image="delete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
