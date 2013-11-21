@@ -1881,6 +1881,25 @@ class mail_compose
 			$_mailObject->AddCustomHeader('Organization: '. $_identity['ident_org']);
 		}
 
+		// Expand any mailing lists
+		foreach(array('to','cc','bcc') as $field)
+		{
+			foreach((array)$_formData[$field] as $field_key => $address)
+			{
+				if(is_int($address))
+				{
+					// List was selected, expand to addresses
+					unset($_formData[$field][$field_key]);
+					$list = $GLOBALS['egw']->contacts->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
+					// Just add email addresses, they'll be checked below
+					foreach($list as $email)
+					{
+						$_formData[$field][] = $email['email'] ? $email['email'] : $email['email_home'];
+					}
+				}
+			}
+		}
+		
 		foreach((array)$_formData['to'] as $address) {
 			$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address), '');
 			foreach((array)$address_array as $addressObject) {
@@ -2527,6 +2546,8 @@ class mail_compose
 	public static function ajax_searchAddress($_searchStringLength=2) {
 		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
 		$_searchString = trim($_REQUEST['query']);
+		$include_lists = (boolean)$_REQUEST['include_lists'];
+
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength) {
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
 			if (method_exists($GLOBALS['egw']->contacts,'search')) {
@@ -2597,8 +2618,29 @@ class mail_compose
 					if ($i > 10) break;	// we check for # of results here, as we might have empty email addresses
 				}
 			}
-
 		}
+
+		// Add up to 5 matching mailing lists
+		if($include_lists)
+		{
+			$lists = array_filter(
+				$GLOBALS['egw']->contacts->get_lists(EGW_ACL_READ),
+				function($element) use($_searchString) {
+					return (stripos($element, $_searchString) >= 0);
+				}
+			);
+			$list_count = 0;
+			foreach($lists as $key => $list_name)
+			{
+				$results[] = array(
+					'id'	=> $key,
+					'name'	=> $list_name,
+					'label'	=> $list_name
+				);
+				if($list_count++ > 5) break;
+			}
+		}
+
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);

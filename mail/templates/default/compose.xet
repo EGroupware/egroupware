@@ -36,15 +36,15 @@
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="To"/>
-				<taglist-email id="to" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="to" width="88%" onclick="app.mail.address_click" include_lists="true"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Cc"/>
-				<taglist-email id="cc" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="cc" width="88%" onclick="app.mail.address_click" include_lists="true"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Bcc"/>
-				<taglist-email id="bcc" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="bcc" width="88%" onclick="app.mail.address_click" include_lists="true"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Reply To"/>
