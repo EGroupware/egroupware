@@ -807,7 +807,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				}
 			}
 			// Allow some special extras for objects by passing the whole thing - value might not be key
-			if(typeof _options[key] == 'object' && typeof _options[key].value != 'undefined' && _options[key].value != key)
+			if(typeof _options[key] == 'object' && _options[key] != null && typeof _options[key].value != 'undefined' && _options[key].value != key)
 			{
 				// Use value, not key, so it goes into the right place
 				this.optionValues[_options[key].value] = _options[key];
