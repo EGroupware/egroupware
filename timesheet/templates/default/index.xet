@@ -71,7 +71,7 @@
 						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('timesheet.index.rows').toggleAllSelected(); return false;" image="check"/>
 					</hbox>
 				</row>
-				<row class="$row_cont[class]">
+				<row class="$row_cont[cat_id] $row_cont[class]">
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
 					<vbox options="0,0">
 						<link id="${row}[ts_link]" no_lang="1"/>
