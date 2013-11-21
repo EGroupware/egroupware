@@ -494,11 +494,11 @@ var et2_nextmatch_rowProvider = Class.extend(
 					// TODO
 
 					var cat = this.categories[cat_id] || null;
-					for(var i = 0; cat == null && this.categories && i < this.categories.length; i++)
+					for(var j = 0; cat == null && this.categories && j < this.categories.length; j++)
 					{
-						if(this.categories[i] && this.categories[i].value && this.categories[i].value == cat_id)
+						if(this.categories[j] && this.categories[j].value && this.categories[j].value == cat_id)
 						{
-							cat = this.categories[i];
+							cat = this.categories[j];
 						}
 					}
 					// Create class
