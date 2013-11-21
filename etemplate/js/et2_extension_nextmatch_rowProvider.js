@@ -493,10 +493,17 @@ var et2_nextmatch_rowProvider = Class.extend(
 					// Check for existing class
 					// TODO
 
-					// Create class
-					if(this.categories && this.categories[cat_id] && this.categories[cat_id].color)
+					var cat = this.categories[cat_id] || null;
+					for(var i = 0; cat == null && this.categories && i < this.categories.length; i++)
 					{
-						var cat = this.categories[cat_id];
+						if(this.categories[i] && this.categories[i].value && this.categories[i].value == cat_id)
+						{
+							cat = this.categories[i];
+						}
+					}
+					// Create class
+					if(cat && cat.color)
+					{
 						this._rootWidget.egw().css('.'+cat_class, "background-color: " + cat.color + ";");
 						classes += ' '+cat_class;
 					}
