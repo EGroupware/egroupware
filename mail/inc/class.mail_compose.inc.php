@@ -1855,14 +1855,17 @@ class mail_compose
 	{
 		$mail_bo	= $this->mail_bo;
 		$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
-		$activeMailProfile = array();//$this->preferences->getIdentity($this->mail_bo->profileID, true);
+		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
 		$_mailObject->IsSMTP();
 		$_mailObject->CharSet	= $this->displayCharset;
 		// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
 		// sending in the name of someone else
-		if ($_identity->id != $activeMailProfile->id && strtolower($activeMailProfile->emailAddress) != strtolower($_identity->emailAddress)) error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile->emailAddress.' with ID:'.$activeMailProfile->id.'. Identitiy to use for sending:'.array2string($_identity));
-		$_mailObject->Sender  = ($_identity->id<0 && $activeMailProfile->id < 0 ? $_identity->emailAddress : $activeMailProfile->emailAddress);
-		$_mailObject->From 	= $_identity->emailAddress;
+		if ($_identity['ident_id'] != $activeMailProfile['ident_id'] && !empty($_identity['ident_email']) && strtolower($activeMailProfile['ident_email']) != strtolower($_identity['ident_email']))
+		{
+			error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_identity));
+		}
+		$_mailObject->Sender  = (!empty($_identity['ident_email'])? $_identity['ident_email'] : $activeMailProfile['ident_email']);
+		$_mailObject->From 	= $_identity['ident_email'];
 		$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
@@ -1871,11 +1874,11 @@ class mail_compose
 			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
 		}
 		if($_formData['disposition']) {
-			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity->emailAddress);
+			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity['ident_email']);
 		}
 		if(!empty($_identity->organization) && (mail_bo::$mailConfig['how2displayIdentities'] == '' || mail_bo::$mailConfig['how2displayIdentities'] == 'orgNemail')) {
 			#$_mailObject->AddCustomHeader('Organization: '. $mail_bo->encodeHeader($_identity->organization, 'q'));
-			$_mailObject->AddCustomHeader('Organization: '. $_identity->organization);
+			$_mailObject->AddCustomHeader('Organization: '. $_identity['ident_org']);
 		}
 
 		foreach((array)$_formData['to'] as $address) {

@@ -491,14 +491,15 @@ class mail_bo
 		$allAccountData = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
 		if ($allAccountData) {
 			$rememberFirst=$selectedFound=null;
-			foreach ($allAccountData as $tmpkey => $prof)
+			foreach ($allAccountData as $tmpkey => $icServers)
 			{
 				if (is_null($rememberFirst)) $rememberFirst = $tmpkey;
 				if ($tmpkey == $selectedID) $selectedFound=true;
-				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers[$tmpkey]->acc_imap_host));
-				$host = $icServers[$tmpkey]->acc_imap_host;
+				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers->acc_imap_host));
+				$host = $icServers->acc_imap_host;
 				if (empty($host)) continue;
-				$identities[$icServers[$tmpkey]->acc_id] = $icServers[$tmpkey]->ident_realname.' '.$icServers[$tmpkey]->ident_org.' <'.$icServers[$tmpkey]->ident_email.'>';
+				$identities[$icServers->acc_id] = $icServers['ident_realname'].' '.$icServers['ident_org'].' <'.$icServers['ident_email'].'>';
+				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
 			}
 		}
 
@@ -542,7 +543,7 @@ class mail_bo
 	 */
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
-		error_log(__METHOD__."() ".function_backtrace());
+		//error_log(__METHOD__."() ".function_backtrace());
 		$this->icServer->disconnect();
 	}
 
@@ -2491,7 +2492,7 @@ class mail_bo
 	 */
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
-		error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
 		$msglist = '';
 		$oldMailbox = '';
 		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
@@ -2793,22 +2794,36 @@ class mail_bo
 		$msglist = '';
 
 		$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
-		$retUid = $this->icServer->copyMessages($_foldername, $_messageUID, (!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']), true, $returnUIDs);
-		if ( PEAR::isError($retUid) ) {
-			error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! PEAR::Error:".array2string($retUid->message));
-			throw new egw_exception("Copying to Folder $_foldername failed! PEAR::Error:".array2string($retUid->message));
+		if(!is_array($_messageUID) || count($_messageUID) === 0)
+		{
+			if ($_messageUID=='all')
+			{
+				$uidsToMove= null;
+			}
+			else
+			{
+				if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+				return false;
+			}
+		}
+		else
+		{
+			$uidsToMove = new Horde_Imap_Client_Ids();
+			$uidsToMove->add($_messageUID);
+		}
+
+		try
+		{
+			$retUid = $this->icServer->copy((!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']), $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
+		}
+		catch (exception $e)
+		{
+			error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! Error:".$e->getMessage());
+			throw new egw_exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
 			return false;
 		}
 		if ($deleteAfterMove === true)
 		{
-			$retValue = $this->icServer->deleteMessages($_messageUID, true);
-			if ( PEAR::isError($retValue))
-			{
-				error_log(__METHOD__.__LINE__."Delete After Move PEAR::Error:".array2string($retValue->message));
-				throw new egw_exception("Delete After Move PEAR::Error:".array2string($retValue->message));
-				return false;
-			}
-
 			if($deleteOptions != "mark_as_deleted")
 			{
 				$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);

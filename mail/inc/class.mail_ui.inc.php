@@ -573,7 +573,7 @@ class mail_ui
 			if ($_profileID && $acc_id != $_profileID) continue;
 
 			$oA = array('id' => $acc_id,
-				'text' => $identity_name,
+				'text' => htmlspecialchars($identity_name),
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 				'im0' => 'thunderbird.png',
 				'im1' => 'thunderbird.png',
