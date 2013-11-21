@@ -344,6 +344,12 @@ var et2_taglist_email = et2_taglist.extend(
 		allowFreeEntries: {
 			"default": true,
 			ignore: true
+		},
+		include_lists: {
+			name: "Include lists",
+			description:"Include mailing lists in search results",
+			default: false,
+			type: "boolean"
 		}
 	},
 	lib_options: {
@@ -351,6 +357,15 @@ var et2_taglist_email = et2_taglist.extend(
 		minChars: 3
 	},
 
+	init: function() {
+		this._super.apply(this, arguments);
+
+		if(this.options.include_lists)
+		{
+			this.options.autocomplete_params.include_lists = true;
+		}
+	},
+	
 	// PREG for validation comes from et2_url
 	//EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
 
