@@ -178,6 +178,13 @@
 			}
 			else
 			{
+				if(popup || window.opener)
+				{
+					// Resize popup when et2 load is done
+					jQuery(node).one("load",function() {
+						window.resizeTo(jQuery(document).width()+10,jQuery(document).height()+60);
+					});
+				}
 				var et2 = new etemplate2(node, window.egw_appName+".etemplate_new.ajax_process_content.etemplate");
 				et2.load(data.name,data.url,data.data,callback);
 			}
