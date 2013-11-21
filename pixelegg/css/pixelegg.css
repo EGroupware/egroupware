@@ -301,6 +301,9 @@ input[type=button]:focus {
   list-style-image: none;
   list-style-type: none;
 }
+.et2_selectbox .ui-multiselect-checkboxes li:hover {
+  background-color: #ffc200 !important;
+}
 .et2_selectbox .ui-multiselect-checkboxes ul {
   margin: 0px auto;
   padding-left: 0px;
@@ -1281,7 +1284,6 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
   overflow-x: hidden;
 }
-/*sadfs*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1386,9 +1388,10 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #f0f0f0;
-  background: #ffc200;
+  background: #ffc200 !important;
   background-image: none !important;
   color: #000000;
+  font-weight: normal !important;
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
@@ -3468,6 +3471,17 @@ img {
   padding-left: 0;
   padding-right: 10px;
   float: left;
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  /* Firefox 10+, Firefox on Android */
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
 }
 #egw_fw_sidebar #egw_fw_splitter {
   position: absolute;
@@ -3921,6 +3935,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
   /*linke Seite Bild*/
+  /*right Button*/
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
@@ -3978,6 +3993,20 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   position: absolute;
   z-index: 2;
 }
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-corner-right {
+  background-image: url("../images/fav_filter_normal.png");
+}
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-state-hover {
+  /*background-image: none;*/
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-image: url("../images/fav_filter_normal.png") !important;
+}
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul,
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul,
@@ -4030,6 +4059,18 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 # Filterleiste
 #
 #########################################################*/
+.et2_nextmatch .nextmatch_header > .filters {
+  background-image: none !important;
+  border: medium none !important;
+  background: yellow !important;
+  padding: 0 0 1em 1em;
+  background-color: #d9d9d9 !important;
+  vertical-align: top;
+  border-width: 0 0 1px 0;
+  border-color: #d9d9d9;
+  width: 80%;
+  margin-bottom: 1em;
+}
 .filters {
   padding: 0 0 1em 1em;
   background-color: #f0f0f0;
@@ -4038,6 +4079,7 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
   background-image: none;
   width: 80%;
   margin-bottom: 1em;
+  /*Suchen Button*/
 }
 .filters img.et2_button_icon {
   float: right;

@@ -433,6 +433,7 @@
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
   /*linke Seite Bild*/
+  /*right Button*/
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
@@ -490,6 +491,20 @@
   position: absolute;
   z-index: 2;
 }
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-corner-right {
+  background-image: url("../images/fav_filter_normal.png");
+}
+.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
+.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-state-hover {
+  /*background-image: none;*/
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-image: url("../images/fav_filter_normal.png") !important;
+}
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul,
 .et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul,
 .et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul,
@@ -542,6 +557,18 @@
 # Filterleiste
 #
 #########################################################*/
+.et2_nextmatch .nextmatch_header > .filters {
+  background-image: none !important;
+  border: medium none !important;
+  background: yellow !important;
+  padding: 0 0 1em 1em;
+  background-color: #d9d9d9 !important;
+  vertical-align: top;
+  border-width: 0 0 1px 0;
+  border-color: #d9d9d9;
+  width: 80%;
+  margin-bottom: 1em;
+}
 .filters {
   padding: 0 0 1em 1em;
   background-color: #f0f0f0;
@@ -550,6 +577,7 @@
   background-image: none;
   width: 80%;
   margin-bottom: 1em;
+  /*Suchen Button*/
 }
 .filters img.et2_button_icon {
   float: right;

@@ -12,9 +12,9 @@ var dg_H = $j(window).height();
 var dg_W = $j(window).width();
 $j('#wrap').css({'height':dg_H,'width':dg_W});
     function anim() {
-    $j("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(1500);
-    $j("#wrap img").first().fadeIn(1500);
-    setTimeout(anim, 3000);
+    $j("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(3500);
+    $j("#wrap img").first().fadeIn(3500);
+    setTimeout(anim, 7000);
     }
 anim();
 $j(window).resize(function(){window.location.href=window.location.href});
