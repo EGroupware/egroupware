@@ -13,7 +13,25 @@
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 
-// iframe
+
+/*##############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################
+*/
+
 
 div#mail-index{
 
@@ -38,7 +56,7 @@ div#mail-index{
 
     // alles
 
-    div#mail-index_mailSplitter{
+    div#mail-index_mail{
 
         margin: 0 1% 0 0 !important;
 
@@ -55,7 +73,7 @@ div#mail-index{
                 // Filter
                 div.filters{
                     // Fläche
-                    .Rectangle_filters;
+                    
 
 
                     select#mail-index_filter{
@@ -206,6 +224,26 @@ div#mail-index{
     }
 
 } // Ende Sidebox
+
+/*###########################################
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+
 
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1027,7 +1065,7 @@ input[type=button] {
     right: 0;
 }
 
-// Toolbar der Email
+ /*Toolbar der Email*/
 
 #mail-index_toolbar {
     padding: 0px;
@@ -1035,9 +1073,12 @@ input[type=button] {
     margin: 5px 5px 0 0;
     border: none;
 
+    
+    /* Elemente */
     button {
         background: none;
         background-image: none;
+        padding: 0px !important;
 
         .Complete_Button_Icon_normal;
 
@@ -1061,16 +1102,6 @@ input[type=button] {
 }
 
 
-//#mail-index_toolbar > button > span {
-//	padding: .2em .4em;
-//}
-//#mail-index_toolbar > button > span > img {
-//	width: 16px;
-//	padding: 0px;
-//	height: 16px !important;
-//}
-
-
 
 // Anhänge an Email
 
@@ -1083,8 +1114,8 @@ input[type=button] {
     overflow:scroll;
     overflow-x:hidden;
     right: 7px;
-    top: 37px;
-    .border-color-10-gray;
+    top: 45px;
+    border-color: @gray-10;
     .border_normal;
     opacity: 1;
     -moz-opacity:1;
@@ -1096,7 +1127,6 @@ input[type=button] {
 #mail-index_previewAttachmentArea.noContent {
     border:0px !important;
 }
-
 
 
 

@@ -127,48 +127,6 @@ fieldset.emailGroup {
 div#addressbook-index {
   min-height: 700px;
   height: auto !important;
-  /*###########################
- Favoriten dropdown Field
-*/
-  /*definition in layout_nextmatch.less */
-  /*    div#addressbook-index_favorite_wrapper{
-        
-        top: 0px;
-        width: auto;
-
-        img{width: 16px;}
-
-        
-        
-        .et2_dropdown {
-
-                  button#addressbook-index_favorite{
-                                width: 18px;
-                    
-                                img{
-                                        width: 16px; 
-                                        text-align: left;
-                                        position: relative;
-                                        right: 20px;
-                                    }
-                }
-
-
-                .ui-state-default,
-                .ui-widget-content .ui-state-default,
-                .ui-widget-header .ui-state-default {
-                    width: 18px;
-                    .background-color-25-gray;
-                    color: #000;
-                    background-image: none !important;
-
-                }
-
-
-
-        }
-
-    } // Favoriten*/
 }
 div#addressbook-index div.et2_hbox_left {
   padding: 1em;
@@ -223,7 +181,7 @@ div#addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -309,14 +267,6 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
   border-radius: 3px;
   border-top-left-radius: 20px;
 }
-div#addressbook-index div.filters {
-  padding: 0 0 1em 1em;
-  background-color: #f0f0f0;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
-  padding-bottom: 1.5em;
-}
 div#addressbook-index div.filters select#infolog-index_cat_id {
   width: 10%;
   margin-left: 1em;
@@ -326,33 +276,6 @@ div#addressbook-index div.filters select#infolog-index_filter {
 }
 div#addressbook-index div.filters select#infolog-index_filter2 {
   width: 10%;
-}
-div#addressbook-index div.filters input#infolog-index_search {
-  height: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div#addressbook-index div.filters input#infolog-index_search:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-div#addressbook-index div.filters input#infolog-index_search:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 div#addressbook-index .filters #addressbook-index_cat_id {
   width: 7%;
@@ -372,7 +295,10 @@ div#addressbook-index table.egwGridView_outer {
 #egw_fw_sidemenu select {
   margin-top: -5px;
 }
+/* ##################################################### */
+/* ##################################################### */
 /*State: Address selected*/
+/*ADD AREA*/
 #infolog-index_infolog-index-header_right .et2_box_widget {
   background-color: #0b5fa4 !important;
   color: #FFF;
@@ -385,8 +311,9 @@ div#addressbook-index table.egwGridView_outer {
   -moz-border-radius-topleft: 20px;
   border-radius: 3px;
   border-top-left-radius: 20px;
-  height: 32px;
+  height: auto;
   color: #ffffff;
+  font-size: 0.9em;
 }
 #infolog-index_infolog-index-header_right .et2_box_widget:before {
   content: "+";
@@ -405,6 +332,14 @@ div#addressbook-index table.egwGridView_outer {
   -moz-border-radius-topleft: 20px;
   border-radius: 3px;
   border-top-left-radius: 20px;
+}
+#infolog-index_infolog-index-header_right .et2_box_widget span.et2_label {
+  color: #ffffff;
+  font-size: 0.9em;
+  padding-right: 11px;
+}
+#infolog-index_infolog-index-header_right .et2_box_widget img.et2_button {
+  margin-top: -15px;
 }
 /*State: address edit*/
 div#addressbook-edit,
@@ -554,6 +489,20 @@ div#addressbook-edit fieldset.phoneGroup legend,
 div#addressbook-search fieldset.phoneGroup legend {
   text-transform: uppercase;
 }
+div#addressbook-edit fieldset.phoneGroup .fixedHeight,
+div#addressbook-search fieldset.phoneGroup .fixedHeight,
+div#addressbook-edit fieldset.phoneGroup .telNumbers,
+div#addressbook-search fieldset.phoneGroup .telNumbers {
+  height: auto;
+}
+div#addressbook-edit fieldset.phoneGroup .telNumbers,
+div#addressbook-search fieldset.phoneGroup .telNumbers {
+  white-space: nowrap;
+}
+div#addressbook-edit fieldset.phoneGroup td.telNumbers input,
+div#addressbook-search fieldset.phoneGroup td.telNumbers input {
+  width: 90%;
+}
 div#addressbook-edit fieldset.phoneGroup * img,
 div#addressbook-search fieldset.phoneGroup * img {
   display: none !important;
@@ -588,6 +537,10 @@ div#addressbook-edit fieldset.emailGroup a.et2_url.url,
 div#addressbook-search fieldset.emailGroup a.et2_url.url {
   background-size: 15px 15px;
   background-image: none;
+}
+div#addressbook-edit fieldset.emailGroup td input,
+div#addressbook-search fieldset.emailGroup td input {
+  width: 90%;
 }
 div#addressbook-edit fieldset.emailGroup * img,
 div#addressbook-search fieldset.emailGroup * img {
@@ -692,13 +645,6 @@ div.addressbook.edit.general table img:nth-child(2) {
   color: red;
   font-style: italic;
 }
-.fixedHeight,
-.telNumbers {
-  height: 30px;
-}
-.telNumbers {
-  white-space: nowrap;
-}
 .leftPad5 {
   padding-left: 5px;
 }
@@ -717,13 +663,17 @@ div.addressbook.edit.general table img:nth-child(2) {
   width: 60px;
 }
 .uploadphoto {
-  background-color: #FFFFFF;
+  background-color: #cdcdcd;
   border: 2px solid black;
   display: none;
   left: 48px;
   padding: 4px;
   position: absolute;
   top: 168px;
+}
+table.uploadphoto {
+  width: 360px !important;
+  background-color: #cdcdcd !important;
 }
 .checkAllArrow {
   padding-right: 5px;

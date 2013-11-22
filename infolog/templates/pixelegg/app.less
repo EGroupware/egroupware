@@ -21,14 +21,10 @@
 
 span#favorite_sidebox_infolog{
 
-
-
     .favorites{
-
         li {
             a div.ui-icon-heart{
                 background-image: none;
-
             }
             
         img.sideboxstar{
@@ -40,17 +36,32 @@ span#favorite_sidebox_infolog{
 
     }
 
-
-
 }
 
-// #############################################################################
+/* #############################################################################
 // iframe
+// Rahmen + padding**/
 
-// Rahmen + padding
+/*############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################
+*/
 
 .egw_fw_content_browser_div{
-    //	.box_shadow_dialog;
+    	
 }
 
 
@@ -59,8 +70,6 @@ span#favorite_sidebox_infolog{
     height: auto !important;
 
     table.et2_grid {border-top: 0px;}
-
-
 
     #infolog-index_nm{
         min-height: 900px;
@@ -73,6 +82,9 @@ span#favorite_sidebox_infolog{
             div.ui-helper-clearfix,
             div.ui-helper-reset{
 
+                
+                
+           // ################################################################     
            // right Box with add item
 
                 div.et2_hbox_right{
@@ -80,25 +92,25 @@ span#favorite_sidebox_infolog{
                     margin-right: 0em;
 
                     div.et2_box_widget{
-                    background-color: @egw_color_blue_lighter !important;
-                    color: #FFF;
-                    text-shadow: none;
-                    height: 35px;
-                    background-image: none !important;
-                    .border_radius_button_lefttop;
-
-                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
-
+                        background-color: @egw_color_blue_lighter !important;
+                        color: #FFF;
+                        text-shadow: none;
+                        height: 35px;
+                        background-image: none !important;
                         .border_radius_button_lefttop;
-                        .box_shadow_standard_light;
 
-                        height: 39px; // hieght of add-item
+                        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
 
-                        .infolog_headertext{color: #FFF !important;}
+                            .border_radius_button_lefttop;
+                            .box_shadow_standard_light;
 
-                        &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+                            height: 39px; // hieght of add-item
 
+                            .infolog_headertext{color: #FFF !important;}
 
+                            &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+
+                         
                     }
                 }
 
@@ -116,7 +128,7 @@ span#favorite_sidebox_infolog{
                 // Liste
                 ul#infolog-index_favorite_menu{
 
-                    .border-color-25-gray;
+                    border-color: @gray-30;
                     .background-color-0-gray;
                     .color-100-gray;
                     li{
@@ -146,11 +158,7 @@ span#favorite_sidebox_infolog{
 
 
             div.filters {
-                        .nm_filters_rectangle;
-                        
-                        padding-bottom: 1.5em;
-
-
+                      
                 // 1 Filter
                 select#infolog-index_cat_id {width: 10%; margin-left: 1em;}
 
@@ -162,14 +170,14 @@ span#favorite_sidebox_infolog{
 
                 // Suchfeld
                 input#infolog-index_search {
-                    height: 20px;
-                    .Complete_Button_input;
+
+/*                    .Complete_Button_input;
                     &:hover{
                         .Complete_Button_input_hover;
                     }
                     &:focus{
                         .Complete_Button_input_focus;
-                    }
+                    }*/
                 }
 
 
@@ -219,11 +227,31 @@ span#favorite_sidebox_infolog{
 // #############################################################################
 // Dialog infolog
 
-// Input beschränken
+/*###########################################
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+
+/*Input beschränken*/
 
 #infolog-edit{
-    width: 800px;
-    padding: 5px;
+    margin: 0;
+    padding: 0.5em;
+    
     input{ max-width: 300px; }
 
     .et2_tabheader{

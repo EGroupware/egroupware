@@ -9,7 +9,7 @@
  * @package infolog
  * @version $Id$
  */
-/* $Id: app.css 44587 2013-11-18 19:57:38Z ralfbecker $ */
+/* $Id: app.css 44607 2013-11-19 22:02:37Z ralfbecker $ */
 .infolog_headertext {
   color: black;
   font-size: 120%;
@@ -93,6 +93,26 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   border: 0px;
   background-size: contain;
 }
+/* #############################################################################
+// iframe
+// Rahmen + padding**/
+/*############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################
+*/
 #infolog-index {
   height: auto !important;
 }
@@ -143,7 +163,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   background-color: #66a1d2 !important;
 }
 #infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu {
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   background-color: #ffffff;
   color: #000000;
 }
@@ -162,14 +182,6 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   margin-left: 21px;
   height: 25px;
 }
-#infolog-index #infolog-index_nm .nextmatch_header div.filters {
-  padding: 0 0 1em 1em;
-  background-color: #f0f0f0;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
-  padding-bottom: 1.5em;
-}
 #infolog-index #infolog-index_nm .nextmatch_header div.filters select#infolog-index_cat_id {
   width: 10%;
   margin-left: 1em;
@@ -181,31 +193,13 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   width: 10%;
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.filters input#infolog-index_search {
-  height: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.filters input#infolog-index_search:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.filters input#infolog-index_search:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  /*                    .Complete_Button_input;
+                    &:hover{
+                        .Complete_Button_input_hover;
+                    }
+                    &:focus{
+                        .Complete_Button_input_focus;
+                    }*/
 }
 #infolog-index #infolog-index_nm table.egwGridView_outer thead tr th.optcol .selectcols {
   margin-top: 1.5%;
@@ -221,9 +215,28 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   height: 16px;
   width: 16px;
 }
+/*###########################################
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+/*Input beschränken*/
 #infolog-edit {
-  width: 800px;
-  padding: 5px;
+  margin: 0;
+  padding: 0.5em;
 }
 #infolog-edit input {
   max-width: 300px;

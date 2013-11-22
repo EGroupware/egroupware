@@ -80,59 +80,17 @@ div#addressbook-index{
             &:hover {.Complete_Button_add_hover;}
 
         }
+        
+        
+
+        
+        
 
     } // rechte Box
 
-/*###########################
- Favoriten dropdown Field
-*/
-    
-    /*definition in layout_nextmatch.less */
 
-/*    div#addressbook-index_favorite_wrapper{
-        
-        top: 0px;
-        width: auto;
-
-        img{width: 16px;}
-
-        
-        
-        .et2_dropdown {
-
-                  button#addressbook-index_favorite{
-                                width: 18px;
-                    
-                                img{
-                                        width: 16px; 
-                                        text-align: left;
-                                        position: relative;
-                                        right: 20px;
-                                    }
-                }
-
-
-                .ui-state-default,
-                .ui-widget-content .ui-state-default,
-                .ui-widget-header .ui-state-default {
-                    width: 18px;
-                    .background-color-25-gray;
-                    color: #000;
-                    background-image: none !important;
-
-                }
-
-
-
-        }
-
-    } // Favoriten*/
 
             div.filters {
-                        .nm_filters_rectangle;
-                        
-                        padding-bottom: 1.5em;
-
 
                 // 1 Filter
                 select#infolog-index_cat_id {width: 10%; margin-left: 1em;}
@@ -145,15 +103,7 @@ div#addressbook-index{
 
                 // Suchfeld
                 input#infolog-index_search {
-                    height: 20px;
-                    .Complete_Button_input;
-                    &:hover{
-                        .Complete_Button_input_hover;
-                    }
-                    &:focus{
-                        .Complete_Button_input_focus;
-                    }
-                }
+                  }
 
 
                 // Suchen Button
@@ -202,11 +152,6 @@ div#addressbook-index{
     // Bilder für Favoriten
 
     img.sideboxstar {
-        //	   background-image: url("../../../phpgwapi/templates/idots/images/orange-ball.png");
-        //				background-repeat: no-repeat;
-        //			    display: inline-block;
-        //			    margin: 0 1px;
-        //			    padding: 1px;
 
     }
 
@@ -215,24 +160,36 @@ div#addressbook-index{
 }
 
 
+/* ##################################################### */
+
 
 // Dialog Addressbuch bearbeiten und alle weiteren
-// #####################################################
+
+
+/* ##################################################### */
 
 /*State: Address selected*/
 
+
+/*ADD AREA*/
    #infolog-index_infolog-index-header_right{
        
        .et2_box_widget{
                 .Complete_Button_add;
-                height: 32px;
+                height: auto;
                 .color-0-gray; // white
-
+                font-size: 0.9em;
+                
                 &:hover {.Complete_Button_add_hover;}
+                
+                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
+                img.et2_button {margin-top: -15px;}
+                
                 }
-        }
+ }
 
-        
+
+ 
 /*State: address edit*/        
 
 
@@ -344,6 +301,19 @@ div#addressbook-search{
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
 
+        // Phonenumber Input Fields
+        .fixedHeight, .telNumbers {
+            height: auto;
+        }
+        .telNumbers {
+            white-space: nowrap;
+        }
+
+        td.telNumbers{
+
+            input {width: 90%; }
+
+        }
 
 
 
@@ -376,7 +346,10 @@ div#addressbook-search{
         a.et2_url {margin-left: -40px;}
         a.et2_url.url {background-size: 15px 15px; background-image: none;}
 
-
+        td {
+            input {width: 90%;}
+        }
+        
     }
 
     fieldset.emailGroup * img {display: none !important; width: 20px;} // Bilder ausblenden
@@ -524,13 +497,12 @@ div.addressbook.edit.general{
     color: red;
     font-style: italic;
 }
-.fixedHeight, .telNumbers {
-    height: 30px;
 
-}
-.telNumbers {
-    white-space: nowrap;
-}
+
+
+
+
+
 .leftPad5 {
     padding-left: 5px;
 }
@@ -546,8 +518,10 @@ div.addressbook.edit.general{
 }
 .photo img {
 }
+
+// Dialog Upload photo
 .uploadphoto {
-    background-color: #FFFFFF;
+    background-color: @gray-20;
     border: 2px solid black;
     display: none;
     left: 48px;
@@ -555,6 +529,13 @@ div.addressbook.edit.general{
     position: absolute;
     top: 168px;
 }
+
+table.uploadphoto {width: 360px !important; background-color: @gray-20 !important;}
+
+
+
+
+
 .checkAllArrow {
     padding-right: 5px;
 }

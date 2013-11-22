@@ -174,7 +174,7 @@
 					<description/>
 					<description/>
 				</row>
-				<row height="28">
+				<row height="28" class="dialog-header">
 					<description value="Type" for="info_type"/>
 					<hbox options="0,0">
 						<menulist>
@@ -183,7 +183,7 @@
 					</hbox>
 					<textbox type="integer" id="info_number" readonly="true" span="2" class="infolog_infoId"/>
 				</row>
-				<row class="row" valign="top">
+				<row class="row dialog-header" valign="top">
 					<description value="Contact" for="info_from"/>
 					<vbox options="0,0" span="2">
 						<hbox options="0,0">
@@ -195,7 +195,7 @@
 					<description value="Phone/Email" for="info_addr"/>
 					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="inputFullWidth"/>
 				</row>
-				<row class="row">
+				<row class="row dialog-header">
 					<description value="Category" for="info_cat"/>
 					<menulist span="2">
 						<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
@@ -204,7 +204,7 @@
 					<description value="Parent" font_style="1"/>
 					<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap searchParent"/>
 				</row>
-				<row class="row">
+				<row class="row dialog-header">
 					<description value="Subject" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all" tabindex="1"/>
 				</row>
@@ -231,7 +231,7 @@
 				<row class="th" disabled="1">
 					<description value="Dates, Status, Access" span="all"/>
 				</row>
-				<row>
+				<row class="dialog-operators">
 					<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" options=",2"/>
 					<description/>
@@ -239,7 +239,7 @@
 					<description value="Enddate" for="info_enddate"/>
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
 				</row>
-				<row class="row">
+				<row class="row dialog-operators">
 					<description value="Status" for="info_status"/>
 					<menulist>
 						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
@@ -251,7 +251,7 @@
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 				</row>
-				<row class="row">
+				<row class="row dialog-operators">
 					<description value="Date completed" for="info_datecompleted"/>
 					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					<description/>
@@ -259,7 +259,7 @@
 					<description value="Private" for="info_access"/>
 					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 				</row>
-				<row class="row" disabled="!@info_owner">
+				<row class="row dialog-operators" disabled="!@info_owner">
 					<description value="Owner"/>
 					<vbox options="0,0">
 						<menulist>
@@ -277,7 +277,7 @@
 						<date-time id="info_datemodified" readonly="true"/>
 					</vbox>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<hbox span="3">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>

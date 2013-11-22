@@ -14,7 +14,7 @@
 					<file id="upload_photo" class="photo" statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width."/>
 				</row>
 				<row>
-					<button label="Ok" align="center" onclick="jQuery('table.uploadphoto').css('display','none'); return false;"/>
+					<button label="Ok" image="check" background_image="1" align="center" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" />
 				</row>
 			</rows>
 		</grid>
@@ -486,7 +486,7 @@
 					<radio options="tel_other,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 				</row>
 				<row>
-					<button label="Ok" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center"/>
+					<button label="Ok" image="more" background_image="1" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center"/>
 				</row>
 			</rows>
 		</grid>
@@ -585,7 +585,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button label="More ..." onclick="set_style_by_class('table','editphones','display','inline'); if (window.showphones) showphones(this.form); return false;" accesskey="m"/>
+										<button label="More ..." onclick="set_style_by_class('table','editphones','display','inline'); if (window.showphones) showphones(this.form); return false;" accesskey="m" image="more" background_image="1"/>
 										<description/>
 									</row>
 								</rows>
@@ -625,14 +625,14 @@
 						</groupbox>
 					</vbox>
 				</row>
-				<row disabled="@hidebuttons" class="footer-toolbar">
+				<row disabled="@hidebuttons" class="dialog-footer-toolbar">
 					<hbox>
-						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-						<button label="vCard" id="button[vcard]" statustext="download this contact as vCard file"/>
-						<button label="Save" id="button[save]" accesskey="s"/>
-						<button label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;"/>
+						<button label="Edit" image="edit" background_image="1" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Copy" image="copy" background_image="1" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="vCard" image="vcard" background_image="1" id="button[vcard]" statustext="download this contact as vCard file"/>
+						<button label="Save" image="save" background_image="1" id="button[save]" accesskey="s"/>
+						<button label="Apply" image="appy" background_image="1" id="button[apply]"/>
+						<button label="Cancel" image="cancel" background_image="1" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;"/>
 					</hbox>
 					<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right" tabindex="25"/>
 				</row>
@@ -650,7 +650,7 @@
 					<template id="addressbook.edit"/>
 					<description/>
 				</row>
-				<row>
+				<row class="dialog-operators">
 					<hbox span="all">
 						<menulist>
 							<menupopup label="Operator" id="operator" no_lang="1"/>
@@ -660,10 +660,10 @@
 						</menulist>
 					</hbox>
 				</row>
-				<row class="footer-toolbar">
+				<row class="dialog-footer-toolbar">
 					<hbox span="all">
-						<button label="Search" id="button[search]"/>
-						<button label="Cancel" id="button[cancel]"/>
+						<button label="Search" id="button[search]" image="search" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

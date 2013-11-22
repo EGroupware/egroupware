@@ -629,7 +629,7 @@
 				</row>
 				<row disabled="@hidebuttons" class="dialog-footer-toolbar">
 					<hbox>
-						<button label="Edit" id="button[edit]" class="button_edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="edit" background_image="1"  />
+						<button label="Edit" id="button[edit]" class="button_edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="edit" background_image="1"/>
 						<button label="Copy" id="button[copy]" class="button_copy" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="copy" background_image="1"/>
 						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]" image="vcard" background_image="1"/>
 						<button accesskey="s" label="Save" id="button[save]" class="button_save" image="save" background_image="1"/>
