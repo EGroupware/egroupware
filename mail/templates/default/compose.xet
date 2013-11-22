@@ -71,12 +71,9 @@
 			</hbox>
 			<groupbox class="mailSignature">
 				<menulist>
-					<menupopup id="signatureID" onchange="app.mail.submitOnChange"/>
+					<menupopup id="signatureid" onchange="app.mail.submitOnChange"/>
 				</menulist>
-				<description value="Stationery"/>
-				<menulist>
-					<menupopup id="stationeryID"/>
-				</menulist>
+				<description value=" "/>
 				<description value="Editor type"/>
 				<menulist>
 					<menupopup id="mimeType" onchange="app.mail.submitOnChange"/>

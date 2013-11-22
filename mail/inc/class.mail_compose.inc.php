@@ -112,7 +112,7 @@ class mail_compose
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$this->mail_bo->profileID.':'.function_backtrace());
 			// no icServer Object: something failed big time
 			if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-			/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($this->mail_bo->profileID);
+			$this->mail_bo->openConnection($this->mail_bo->profileID);
 			$this->preferences	=& $this->mail_bo->mailPreferences;
 			// we should get away from this $this->preferences->preferences should hold the same info
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
@@ -149,7 +149,7 @@ class mail_compose
 			}
 		}
 		$formData['priority'] 	= $this->stripSlashes($_POST['priority']);
-		$formData['signatureID'] = (int)$_POST['signatureID'];
+		$formData['signatureid'] = (int)$_POST['signatureid'];
 		$formData['stationeryID'] = $_POST['stationeryID'];
 		$formData['mimeType']	= $this->stripSlashes($_POST['mimeType']);
 		if ($formData['mimeType'] == 'html' && html::htmlarea_availible()===false)
@@ -242,7 +242,7 @@ class mail_compose
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
-
+		$_contenHasSigID = array_key_exists('signatureid',$_content);
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
@@ -402,7 +402,6 @@ class mail_compose
 				}
 				// saving as draft, does not mean closing the message
 				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-				if (!$this->mail_bo->icServer->_connected) $this->mail_bo->openConnection($this->mail_bo->profileID);
 				if ($this->mail_bo->getMessageHeader($messageUid))
 				{
 					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
@@ -464,10 +463,10 @@ class mail_compose
 		unset($_content['mail_plaintext']);
 
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
-		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
+		// identity and signatureid; this might trigger that the signature in mail body may have to be altered
 		if ( !empty($content['body']) &&
 			(!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity']) ||
-			(!empty($composeCache['signatureID']) && !empty($_content['signatureID']) && $_content['signatureID'] != $composeCache['signatureID'])
+			(!empty($composeCache['signatureid']) && !empty($_content['signatureid']) && $_content['signatureid'] != $composeCache['signatureid'])
 		)
 		{
 			$buttonClicked = true;
@@ -475,33 +474,49 @@ class mail_compose
 
 			if (!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity'])
 			{
-				$Identities = $this->preferences->getIdentity($_content['identity']);
-				//error_log(__METHOD__.__LINE__.array2string($Identities->signature));
-				if ($Identities->signature)
+				$Identities = emailadmin_account::read_identity($_content['identity'],true);
+				//error_log(__METHOD__.__LINE__.array2string($Identities));
+				if ($Identities['ident_id'])
 				{
-					$newSig = $Identities->signature;
+					$newSig = $Identities['ident_id'];
 				}
 				else
 				{
-					$newSig = $this->bosignatures->getDefaultSignature();
-					if ($newSig === false) $newSig = -1;
+					$newSig = $this->getDefaultIdentity();
+					if ($newSig === false) $newSig = -2;
 				}
 			}
-			$_oldSig = $composeCache['signatureID'];
-			$_signatureID = ($newSig?$newSig:$_content['signatureID']);
+			$_oldSig = $composeCache['signatureid'];
+			$_signatureid = ($newSig?$newSig:$_content['signatureid']);
 			$_currentMode = $_content['mimeType'];
-			if ($_oldSig != $_signatureID)
+			if ($_oldSig != $_signatureid)
 			{
-				if($this->_debug); error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureID.'#'.$content['body']);
+				if($this->_debug) error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureid.'#'.$content['body']);
 				// prepare signatures, the selected sig may be used on top of the body
-				$oldSignature = $this->bosignatures->getSignature($_oldSig);
-				//error_log(__METHOD__.__LINE__.'Old:'.array2string($oldSignature).'#');
-				$oldSigText = $oldSignature->fm_signature;
-				$signature = $this->bosignatures->getSignature($_signatureID);
-				//error_log(__METHOD__.__LINE__.'New:'.array2string($signature).'#');
-				$sigText = $signature->fm_signature;
-				error_log(__METHOD__.'Old:'.$oldSigText.'#');
-				error_log(__METHOD__.'New:'.$sigText.'#');
+				try
+				{
+					$oldSignature = emailadmin_account::read_identity($_oldSig,true);
+					//error_log(__METHOD__.__LINE__.'Old:'.array2string($oldSignature).'#');
+					$oldSigText = $oldSignature['ident_signature'];
+				}
+				catch (Exception $e)
+				{
+					$oldSignature=array();
+					$oldSigText = null;
+				}
+				try
+				{
+					$signature = emailadmin_account::read_identity($_signatureid,true);
+					//error_log(__METHOD__.__LINE__.'New:'.array2string($signature).'#');
+					$sigText = $signature['ident_signature'];
+				}
+				catch (Exception $e)
+				{
+					$signature=array();
+					$sigText = null;
+				}
+				//error_log(__METHOD__.'Old:'.$oldSigText.'#');
+				//error_log(__METHOD__.'New:'.$sigText.'#');
 				if ($_currentMode == 'plain')
 				{
 					$oldSigText = $this->convertHTMLToText($oldSigText,true,true);
@@ -509,9 +524,9 @@ class mail_compose
 					if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
 				}
 
-				$oldSigText = mail_bo::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//$oldSigText = mail_bo::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
-				$sigText = mail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//$sigText = mail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				//error_log(__METHOD__.'new+:'.$sigText.'#');
 				$_htmlConfig = mail_bo::$htmLawed_config;
 				mail_bo::$htmLawed_config['comment'] = 2;
@@ -534,7 +549,7 @@ class mail_compose
 					//error_log(__METHOD__."() preg_replace('$reg', '$rep', '$in', -1)='".$content['body']."', replaced=$replaced");
 					if ($replaced)
 					{
-						$content['signatureID'] = $_content['signatureID'] = $presetSig = $_signatureID;
+						$content['signatureid'] = $_content['signatureid'] = $presetSig = $_signatureid;
 						$found = false; // this way we skip further replacement efforts
 					}
 					else
@@ -569,7 +584,7 @@ class mail_compose
 				}
 				else
 				{
-					$content['signatureID'] = $_content['signatureID'] = $presetSig = $_signatureID;
+					$content['signatureid'] = $_content['signatureid'] = $presetSig = $_signatureid;
 				}
 				if ($styles)
 				{
@@ -891,8 +906,8 @@ class mail_compose
 		{
 			$presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 		}
-		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['signatureID'])) $presetSig = (int)$content['signatureID'];
-		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
+		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['signatureid'])) $presetSig = (int)$content['signatureid'];
+		//if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
 		$presetId = NULL;
 		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['identity'])) $presetId = (int)$content['identity'];
 
@@ -913,7 +928,11 @@ class mail_compose
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
 		$allIdentities = $this->getAllIdentities();
-		unset($allIdentities[0]);
+		$acc = emailadmin_account::read($this->mail_bo->profileID);
+		$selectSignatures = array(
+			'-2' => lang('no signature')
+		);
+		//unset($allIdentities[0]);
 		//_debug_array($allIdentities);
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 		// not set? -> use default, means full display of all available data
@@ -921,10 +940,10 @@ class mail_compose
 		$globalIds = 0;
 		$defaultIds = array();
 		foreach($allIdentities as $key => $singleIdentity) {
-			if(empty($defaultIds))
+			if(empty($defaultIds)&& $singleIdentity['ident_id']==$acc['ident_id'])
 			{
-				$defaultIds[$singleIdentity['id']] = $singleIdentity['id'];
-				$selectedSender = $singleIdentity['id'];
+				$defaultIds[$singleIdentity['ident_id']] = $singleIdentity['ident_id'];
+				$selectedSender = $singleIdentity['ident_id'];
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
@@ -934,7 +953,7 @@ class mail_compose
 		$defaultIdentity = 0;
 		$identities = array();
 		foreach($allIdentities as $key => $singleIdentity) {
-			//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
+			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
 			$iS = mail_bo::generateIdentityString($singleIdentity);
 			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
 			{
@@ -942,50 +961,48 @@ class mail_compose
 			}
 			else
 			{
-				$id_prepend = '('.$singleIdentity->id.') ';
+				$id_prepend = '('.$singleIdentity['ident_id'].') ';
 			}
+			$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,50));
+			$sigDesc = $buff?$buff:lang('none');
+
+			if ($sigDesc == lang('none')) $sigDesc = $singleIdentity['ident_realname'].($singleIdentity['ident_org']?' ('.$singleIdentity['ident_org'].')':'');
+			$selectSignatures[$singleIdentity['ident_id']] = lang('Signature').': '.$id_prepend.$sigDesc;
+
 			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
 			if (array_search($id_prepend.$iS,$identities)===false)
 			{
-				$identities[$singleIdentity->id] = $id_prepend.$iS;
-				$sel_options['identity'][$singleIdentity->id] = $id_prepend.$iS;
+				$identities[$singleIdentity['ident_id']] = $id_prepend.$iS;
+				$sel_options['identity'][$singleIdentity['ident_id']] = $id_prepend.$iS;
 			}
-			if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
+			if(in_array($singleIdentity['ident_id'],$defaultIds) && $defaultIdentity==0)
 			{
 				//_debug_array($singleIdentity);
-				$defaultIdentity = $singleIdentity->id;
+				$defaultIdentity = $singleIdentity['ident_id'];
 				//$defaultIdentity = $key;
-				if (empty($content['signatureID'])) $content['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $content['signatureID']);
+				if (empty($content['signatureid'])) $content['signatureid'] = (!empty($singleIdentity['ident_signature']) ? $singleIdentity['ident_id'] : $content['signatureid']);
 			}
 		}
 
 		// fetch the signature, prepare the select box, ...
-/*
-		$boSignatures = new mail_signatures();
-		$signatures = $boSignatures->getListOfSignatures();
-
-		if (empty($content['signatureID'])) {
-			if ($signatureData = $boSignatures->getDefaultSignature()) {
-				if (is_array($signatureData)) {
-					$content['signatureID'] = $signatureData['signatureid'];
-				} else {
-					$content['signatureID'] =$signatureData;
-				}
-			}
+		if (empty($content['signatureid'])) {
+			$content['signatureid'] = $acc['ident_id'];
 		}
 
-		$selectSignatures = array(
-			'-2' => lang('no signature')
-		);
-		foreach($signatures as $signature) {
-			$selectSignatures[$signature['fm_signatureid']] = lang('Signature').': '.$signature['fm_description'];
-		}
-*/
 		$disableRuler = false;
-//		$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $content['signatureID']));
+		//_debug_array(($presetSig ? $presetSig : $content['signatureid']));
+		try
+		{
+			$signature = emailadmin_account::read_identity(($presetSig ? $presetSig : $content['signatureid']),true);
+		}
+		catch (Exception $e)
+		{
+			//PROBABLY NOT FOUND
+			$signature=array();
+		}
 		if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) &&
 			$this->preferencesArray['disableRulerForSignatureSeparation']) ||
-			empty($signature->fm_signature) || trim($this->convertHTMLToText($signature->fm_signature,true,true)) =='')
+			empty($signature['ident_signature']) || trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='')
 		{
 			$disableRuler = true;
 		}
@@ -1007,7 +1024,7 @@ class mail_compose
 		)
 		{
 			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:true);
-			$sigText = mail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			$sigText = mail_bo::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if ($content['mimeType'] == 'html')
 			{
 				$sigTextStartsWithBlockElement = ($disableRuler?false:true);
@@ -1074,19 +1091,21 @@ class mail_compose
 		} else {
 			$ishtml=0;
 		}
-
 		// signature stuff set earlier
-		$sel_options['signatureID'] = $selectSignatures;
-		$content['signatureID'] = ($presetSig ? $presetSig : $content['signatureID']);
+		//_debug_array($selectSignatures);
+		$sel_options['signatureid'] = $selectSignatures;
+		$content['signatureid'] = ($presetSig ? $presetSig : $content['signatureid']);
+		//_debug_array($sel_options['signatureid'][$content['signatureid']]);
 		// end signature stuff
 
-		// stationery stuff
+		// stationery stuff; completely abandoned with the new database structure
+/*
 		$bostationery = new emailadmin_bostationery();
 		$selectStationeries = array(
 			'0' => lang('no stationery')
 		);
 		$showStationaries = false;
-//		$validStationaries = $bostationery->get_valid_templates();
+		$validStationaries = $bostationery->get_valid_templates();
 		if (is_array($validStationaries) && count($validStationaries)>0)
 		{
 			$showStationaries = true;
@@ -1096,6 +1115,7 @@ class mail_compose
 		$sel_options['stationeryID'] = $selectStationeries;
 		// if ID of signature Select Box is set, we allow for changing the sig onChange of the signatueSelect
 		$content['stationeryID']  =  ($presetStationery ? $presetStationery : 0);
+*/
 		// end stationery stuff
 		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
@@ -1124,6 +1144,8 @@ class mail_compose
 
 		if ($_content)
 		{
+			//input array of _content had no signature information but was seeded later, and content has a valid setting
+			if (!$_contenHasSigID && $content['signatureid'] && array_key_exists('signatureid',$_content)) unset($_content['signatureid']);
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
@@ -1351,11 +1373,13 @@ class mail_compose
 			}
 		}
 		if (!empty($addHeadInfo['X-SIGNATURE'])) {
-			$this->sessionData['signatureID'] = $addHeadInfo['X-SIGNATURE'];
+			$this->sessionData['signatureid'] = $addHeadInfo['X-SIGNATURE'];
 		}
+		/*
 		if (!empty($addHeadInfo['X-STATIONERY'])) {
 			$this->sessionData['stationeryID'] = $addHeadInfo['X-STATIONERY'];
 		}
+		*/
 		if (!empty($addHeadInfo['X-IDENTITY'])) {
 			$this->sessionData['identity'] = $addHeadInfo['X-IDENTITY'];
 		}
@@ -1627,6 +1651,21 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
 		return $userEMailAdresses;
+	}
+
+	/**
+	 * getDefaultIdentity - function to gather the default identitiy connected to the current mailaccount
+	 * @return int - id of the identity
+	 */
+	function getDefaultIdentity() {
+		// retrieve the signature accociated with the identity
+		$id = $this->mail_bo->getIdentitiesWithAccounts($_accountData);
+		$acc = emailadmin_account::read($this->mail_bo->profileID);
+		$accountDataIT = ($_accountData[$this->mail_bo->profileID]?$acc->identities($this->mail_bo->profileID,true,'ident_id'):$acc->identities($_accountData[$id],true,'ident_id'));
+		foreach($accountDataIT as $it => $accountData)
+		{
+			return $accountData['ident_id'];
+		}
 	}
 
 	/**
@@ -1985,26 +2024,26 @@ class mail_compose
 			$_mailObject->IsHTML(true);
 			if(!empty($signature)) {
 				#$_mailObject->Body    = array($_formData['body'], $_signature['signature']);
-				if($_formData['stationeryID']) {
-					$bostationery = new felamimail_bostationery();
-					$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body'],$signature);
-				} else {
+				//if($_formData['stationeryID']) {
+				//	$bostationery = new felamimail_bostationery();
+				//	$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body'],$signature);
+				//} else {
 					$_mailObject->Body = $_formData['body'] .
 						($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
 						$signature;
-				}
+				//}
 				$_mailObject->AltBody = $this->convertHTMLToText($_formData['body'],true,true).
 					($disableRuler ?"\r\n":"\r\n-- \r\n").
 					$this->convertHTMLToText($signature,true,true);
 				#print "<pre>$_mailObject->AltBody</pre>";
 				#print htmlentities($_signature['signature']);
 			} else {
-				if($_formData['stationeryID']) {
-					$bostationery = new felamimail_bostationery();
-					$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body']);
-				} else {
+				//if($_formData['stationeryID']) {
+				//	$bostationery = new felamimail_bostationery();
+				//	$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body']);
+				//} else {
 					$_mailObject->Body	= $_formData['body'];
-				}
+				//}
 				$_mailObject->AltBody	= $this->convertHTMLToText($_formData['body'],true,true);
 			}
 			// convert URL Images to inline images - if possible
@@ -2096,11 +2135,18 @@ class mail_compose
 		// preserve the bcc and if possible the save to folder information
 		$this->sessionData['folder']    = $_formData['folder'];
 		$this->sessionData['bcc']   = $_formData['bcc'];
-		$this->sessionData['signatureID'] = $_formData['signatureID'];
-		$this->sessionData['stationeryID'] = $_formData['stationeryID'];
+		$this->sessionData['signatureid'] = $_formData['signatureid'];
+		//$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 		$this->sessionData['identity']  = $_formData['identity'];
 		$this->sessionData['attachments']  = $_formData['attachments'];
-		$identity = $this->preferences->getIdentity((int)$this->sessionData['identity'],true);
+		try
+		{
+			$identity = emailadmin_account::read_identity($this->sessionData['identity'],true);
+		}
+		catch (Exception $e)
+		{
+			$identity=array();
+		}
 
 		$flags = '\\Seen \\Draft';
 		$BCCmail = '';
@@ -2120,8 +2166,8 @@ class mail_compose
 			$folders = implode('|',array_unique($this->sessionData['folder']));
 			$mail->AddCustomHeader("X-Mailfolder: $folders");
 		}
-		$mail->AddCustomHeader('X-Signature: '.$this->sessionData['signatureID']);
-		$mail->AddCustomHeader('X-Stationery: '.$this->sessionData['stationeryID']);
+		$mail->AddCustomHeader('X-Signature: '.$this->sessionData['signatureid']);
+		//$mail->AddCustomHeader('X-Stationery: '.$this->sessionData['stationeryID']);
 		$mail->AddCustomHeader('X-Identity: '.(int)$this->sessionData['identity']);
 		// decide where to save the message (default to draft folder, if we find nothing else)
 		// if the current folder is in draft or template folder save it there
@@ -2180,8 +2226,8 @@ class mail_compose
 		$this->sessionData['subject']	= trim($_formData['subject']);
 		$this->sessionData['body']	= $_formData['body'];
 		$this->sessionData['priority']	= $_formData['priority'];
-		$this->sessionData['signatureID'] = $_formData['signatureID'];
-		$this->sessionData['stationeryID'] = $_formData['stationeryID'];
+		$this->sessionData['signatureid'] = $_formData['signatureid'];
+		//$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 		$this->sessionData['disposition'] = $_formData['disposition'];
 		$this->sessionData['mimeType']	= $_formData['mimeType'];
 		$this->sessionData['to_infolog'] = $_formData['to_infolog'];
@@ -2206,8 +2252,22 @@ class mail_compose
 		   	$messageIsDraft = true;
 		}
 		#error_log(print_r($this->preferences,true));
-		$identity = array();//$this->preferences->getIdentity((int)$this->sessionData['identity'],true);
-		$signature = array();//$this->bosignatures->getSignature((int)$this->sessionData['signatureID']);
+		try
+		{
+			$identity = emailadmin_account::read_identity($this->sessionData['identity'],true);
+		}
+		catch (Exception $e)
+		{
+			$identity=array();
+		}
+		try
+		{
+			$signature = emailadmin_account::read_identity((int)$this->sessionData['signatureid'],true);
+		}
+		catch (Exception $e)
+		{
+			$signature=array();
+		}
 		//error_log($this->sessionData['identity']);
 		//error_log(print_r($identity,true));
 		// create the messages
@@ -2470,10 +2530,9 @@ class mail_compose
 	function setDefaults($content=array())
 	{
 		// retrieve the signature accociated with the identity
-		$id = $this->mail_bo->getIdentitiesWithAccounts($_accountData);
-		$accountData = ($_accountData[$this->mail_bo->profileID]?$_accountData[$this->mail_bo->profileID]:$_accountData[$id]);
-		if ((!isset($content['identity']) || empty($content['identity'])) && $accountData['ident_id']) $content['signatureID'] = $accountData['ident_id'];
-		if (!isset($content['signatureID']) || empty($content['signatureID'])) $content['signatureID'] = $accountData['ident_id'];
+		$id = $this->getDefaultIdentity();
+		if ((!isset($content['identity']) || empty($content['identity'])) && $id) $content['signatureid'] = $id;
+		if (!isset($content['signatureid']) || empty($content['signatureid'])) $content['signatureid'] = $id;
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
 		{
 			$content['mimeType'] = 'html';
@@ -2500,7 +2559,7 @@ class mail_compose
 		if (strlen($_searchString)>=$_searchStringLength && isset($this->mail_bo->icServer))
 		{
 			//error_log(__METHOD__.__LINE__.':'.$this->mail_bo->icServer->ImapServerId);
-			if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($this->mail_bo->icServer->ImapServerId);
+			$this->mail_bo->openConnection($this->mail_bo->icServer->ImapServerId);
 			//error_log(__METHOD__.__LINE__.array2string($_searchString).'<->'.$searchString);
 			$folderObjects = $this->mail_bo->getFolderObjects(true,false,true,$useCacheIfPossible);
 			if (count($folderObjects)<=1) {

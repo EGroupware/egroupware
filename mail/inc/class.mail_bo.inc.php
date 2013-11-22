@@ -2196,7 +2196,7 @@ class mail_bo
 	function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
 	{
 		static $types = array(
-			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder','acc_folder_draft'=>'Drafts'),
+			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'acc_folder_draft','autoFolderName'=>'Drafts'),
 			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
 			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
 			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
@@ -2209,7 +2209,7 @@ class mail_bo
 		if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
 
 		//highest precedence
-		$_folderName = $this->ic_server->$types[$_type]['profileKey'];
+		$_folderName = $this->icServer->$types[$_type]['profileKey'];
 		//check prefs next
 		if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
 		// does the folder exist???
