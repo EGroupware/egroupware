@@ -87,6 +87,7 @@ div.et2_hbox_al_right {
 div.et2_hbox_right {
   float: right;
   clear: right;
+  background: transparent;
 }
 div.et2_hbox > div {
   display: inline-block;
@@ -659,7 +660,7 @@ ul.et2_link_string {
   color: #000000;
   border-width: 1px 1px 0px 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #505050;
 }
 .et2_tabflag.active:hover {
   color: #000000;
@@ -668,7 +669,7 @@ ul.et2_link_string {
 .et2_tabs {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #505050;
   padding: 5px;
   overflow-y: auto;
   background-color: #ffffff;
@@ -677,7 +678,7 @@ ul.et2_link_string {
   border-radius: 3px;
 }
 .et2_tabheader {
-  background-color: #bfbfbf;
+  background-color: #cdcdcd;
   background-position: bottom;
   background-repeat: repeat-x;
   padding-left: 0em;
@@ -809,32 +810,192 @@ div.message.floating {
 }
 /**
  * Nextmatch widget
- */
+*/
 .et2_nextmatch {
-  /*	background-color: silver;*/
+  background-color: #f0f0f0;
 }
 /* Left & right headers*/
 .et2_nextmatch > div > .header {
   margin-top: -20px;
   border: none;
 }
-/*.nextmatch_header .header_count {
-    padding: 0px 20px;
-    margin: 6px 20px 0px;
-    border: 1px solid #E0E0E0;
-    float:right;
-    font-size: 150%;
-    text-align: center
-}*/
+/* images*/
+.et2_nextmatch > img {
+  height: 16px;
+  width: 16px;
+}
+.nextmatch_header .header_count {
+  padding: 0px 20px;
+  margin: 6px 20px 0px;
+  border: 1px solid #E0E0E0;
+  float: right;
+  font-size: 0.8em;
+  text-align: center;
+  position: relative;
+  top: 7px;
+  /*width: 50px;*/
+}
+/*################################################################
+*
+* Filters
+*
+################################################################*/
 .nextmatch_header > .filters {
-  padding-left: 5px;
+  width: 80%;
+  margin-bottom: 4px;
+  padding: 0;
+  background-color: #b4b4b4;
+  border: none !important;
+  border-color: #000000;
+  background-image: none !important;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.nextmatch_header > .filters select,
+.nextmatch_header > .filters input,
+.nextmatch_header > .filters button {
+  height: 25px;
+  padding: 0px 0px 0px 3px;
+  margin: 0;
 }
 .nextmatch_header > .filters select {
+  max-width: 15% !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0.5em;
+  padding: 3px;
+  outline: none;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  margin-right: 2ex;
+  /*Dialog - Addressbook - View */
+}
+.nextmatch_header > .filters select:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.nextmatch_header > .filters select #infolog-index_cat_id,
+.nextmatch_header > .filters select #infolog-index_filter {
+  width: 50% !important;
+}
+.nextmatch_header > .filters > select > option {
+  font-size: 0.9em;
+}
+.nextmatch_header > .filters button.et2_button {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: 3em;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  background-color: #ffd44d;
+  color: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 3px;
+  margin-left: 5px;
+  background-image: none;
+  width: auto;
+}
+.nextmatch_header > .filters button.et2_button:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  background-color: #ffd40f !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  background-color: #679fd2 !important;
+}
+.nextmatch_header > .filters button.et2_button:active {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  background-color: #ffd44d;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.nextmatch_header > .filters button.et2_button:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+.nextmatch_header > .filters input {
   margin-right: 2ex;
   width: 15%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.nextmatch_header > .filters input:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.nextmatch_header > .filters input:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 .nextmatch_header .et2_button_icon {
   vertical-align: middle;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-top: 0px;
+  margin-right: 1em;
+  height: 16px;
+  width: 16px;
+  padding: 2px;
+}
+.nextmatch_header .et2_button_icon .et2_button_icon:hover {
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .nextmatch_header > .filters .et2_button_icon {
   margin-top: 8px;
@@ -844,14 +1005,119 @@ div.message.floating {
   background-image: none;
   margin-bottom: 3px;
 }
-/*.et2_nextmatch .nextmatch_header > .filters {
-    border: 1px solid silver;
-    background-color: #E0E0E0;
-    background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
-    background-position: center;
-    background-repeat: repeat-x;
-    margin-bottom: 3px;
-}*/
+.et2_nextmatch .nextmatch_header > .filters {
+  border: 1px solid silver;
+  background-color: #E0E0E0;
+  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+  background-position: center;
+  background-repeat: repeat-x;
+  margin-bottom: 3px;
+}
+/*################################################################
+*
+* Favorites
+*
+################################################################*/
+.nextmatch_header div[id$=favorite_wrapper] {
+  margin-top: 6px;
+  vertical-align: middle;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #bfbfbf;
+}
+/**
+    * Drop down button
+    */
+.et2_dropdown {
+  /*left Button*/
+  /*right Button*/
+  /* hover */
+}
+.et2_dropdown button {
+  height: 3.0ex;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -2px;
+  padding: 0px 1ex;
+  background-color: #ffffff;
+  background-image: none;
+  width: 50px;
+}
+.et2_dropdown button > div {
+  vertical-align: middle;
+}
+.et2_dropdown button:last-child {
+  padding: 0px;
+}
+.et2_dropdown + ul.ui-menu {
+  position: absolute;
+  z-index: 2;
+}
+.et2_dropdown button.ui-corner-left,
+.et2_dropdown button.ui-state-default {
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-size: 10px 10px;
+}
+.et2_dropdown button.ui-corner-left img,
+.et2_dropdown button.ui-state-default img {
+  height: 16px;
+  width: 16px;
+  text-align: left;
+  position: relative;
+  right: 18px;
+  top: 3px;
+}
+.et2_dropdown button.ui-corner-right {
+  background-image: url("../images/fav_filter_normal.png");
+  background-repeat: no-repeat !important;
+  background-size: 10px 10px;
+}
+.et2_dropdown button.ui-state-hover {
+  background-color: #b4b4b4 !important;
+  background-image: url("../images/fav_filter_normal.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px !important;
+  background-position: 10px center !important;
+}
+.et2_dropdown button.ui-state-hover > img {
+  position: absolute;
+  top: 70000px;
+}
+/*    // Liste
+    ul{
+
+        border-color: @gray-30;
+        .background-color-0-gray;
+        .color-100-gray;
+        li{
+            .background-color-0-gray;
+
+            &:hover {.background-color-10-gray;}
+            a {
+
+                height: 40px;
+                border: none;
+
+                img {height: 16px; width: 16px;}
+            }
+
+            a:hover {
+                background: none;
+                text-indent: -22px;
+                margin-left: 21px;
+                height: 40px;
+
+            }
+        }
+        li#blank {}
+        li#add { }
+
+    }*/
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
   margin-top: 6px;
@@ -958,7 +1224,7 @@ div.message.floating {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   background: transparent !important;
   font-weight: bold;
   color: #000000;
@@ -1348,7 +1614,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   color: #ffffff;
   font-weight: bold;
   background-image: none;
@@ -1366,7 +1632,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   background: transparent;
   font-weight: bold;
   color: #999999;
@@ -1387,7 +1653,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   background: #ffc200 !important;
   background-image: none !important;
   color: #000000;
@@ -1407,7 +1673,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #bfbfbf;
+  border-color: #cdcdcd;
   background: #ffc200;
   background-image: none;
   font-weight: bold;
@@ -1428,7 +1694,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #b4b4b4;
   background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
   color: #808080;
 }
@@ -1444,7 +1710,7 @@ option:checked {
   border-left: solid 1px 1px;
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   color: #b3b3b3;
 }
 .ui-state-error a,
@@ -1748,7 +2014,7 @@ span.ui-icon-search {
 .chzn-container-active .chzn-choices li.search-field input {
   color: #111 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -1767,7 +2033,7 @@ span.ui-icon-search {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -1798,13 +2064,13 @@ span.ui-icon-search {
 .egw_fw_ui_app_header_container {
   border-width: 9px 0px 0px 9px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   background-color: #bfbfbf;
 }
 .egw_fw_ui_app_header_container .egw_fw_ui_app_header {
   border-width: 0px 0px 0px 0px;
   border-style: solid;
-  border-color: #D5DDE6;
+  border-color: #e6e6e6;
   -webkit-border-radius: 3px;
   -webkit-border-top-right-radius: 20px;
   -moz-border-radius: 3px;
@@ -1875,7 +2141,7 @@ textarea {
 }
 input {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -1894,7 +2160,7 @@ input:focus {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -1932,7 +2198,7 @@ select:focus {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -2060,7 +2326,7 @@ div.selectbox-wrapper ul li {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -2176,7 +2442,7 @@ button {
   padding: 0.2em 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #d9d9d9;
+  border-color: #cdcdcd;
 }
 select {
   font-size: 100%;
@@ -2267,8 +2533,8 @@ td.lettersearch {
   background-image: none;
 }
 /*.nextmatch_header table {
-	border: none !important;
-	width: 99% !important;
+        border: none !important;
+        width: 99% !important;
 }*/
 .egw_fw_ui_sidemenu_marker {
   display: block;
@@ -2523,15 +2789,6 @@ button {
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
-  /*    background-repeat: no-repeat;
-    background-position: 6px center;
-    background-size: 20px auto;*/
 }
 button:hover {
   background-color: #b3b3b3 !important;
@@ -2556,7 +2813,7 @@ button[id*="delete"] {
 input[type="submit"][id*="delete"]:hover,
 input[type="button"][id*="delete"]:hover,
 button[id*="delete"]:hover {
-  background-image: url('../images/delete.png');
+  background-image: url('../images/delete-hover.png') !important;
   background-color: red !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2569,6 +2826,23 @@ button[id*="delete"]:hover {
   background-size: 20px auto !important;
   width: auto;
   height: 32px;
+  color: #ffffff;
+}
+/*Button mit Bildern*/
+button.et2_button_with_image {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+  background-repeat: no-repeat !important;
+  background-position: 6px center;
+  background-size: 20px auto;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -2590,8 +2864,8 @@ button[id*="delete"]:hover {
  */
 /* TABLE STYLE */
 table.et2_grid {
-  border-top: 3px solid;
-  border-color: #f0f0f0;
+  /*	border-top: 3px solid;
+	border-color: @gray-10;*/
 }
 .innerContainer {
   overflow: hidden;
@@ -2603,7 +2877,7 @@ table.et2_grid {
   padding: 2px;
   border-width: 0;
   border-style: solid;
-  border-color: #d9d9d9;
+  border-color: #b4b4b4;
   border-left: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -2626,7 +2900,7 @@ table.egwGridView_outer thead tr th {
   padding: 2px;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   border-left: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -2668,7 +2942,7 @@ table.egwGridView_outer thead tr th.optcol .selectcols {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  right: 15px;
+  right: 5px;
   border: 1px solid;
   background-image: url(../images/selectcols_small.png);
   background-position: center center;
@@ -2707,7 +2981,7 @@ table.egwGridView_grid img {
   width: 16px;
 }
 table.egwGridView_grid tbody {
-  border-bottom: 1px solid #e4e7ea;
+  border-bottom: 1px solid #000000;
   padding: 2px 3px 2px 4px;
   margin: 0;
   vertical-align: top;
@@ -2723,11 +2997,11 @@ table.egwGridView_grid tbody tr.focused {
   -pie-background: linear-gradient(#ffb76b, #ff7f04);
   behavior: url(/PIE.htc);
   background-color: #bfbfbf;
-  background: #679fd2 !important;
+  background: #408dd2 !important;
 }
 table.egwGridView_grid tr {
   border-bottom: 1px solid;
-  border-color: #808080;
+  border-color: #828282;
 }
 table.egwGridView_grid tr:hover {
   background-color: #0c5da5;
@@ -2864,7 +3138,7 @@ table.egwGridView_grid tr td:active {
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2883,7 +3157,7 @@ table.egwGridView_grid tr td:active {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -2896,7 +3170,7 @@ table.egwGridView_grid tr td:active {
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -3064,7 +3338,7 @@ img {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   color: #808080;
-  border-color: #808080;
+  border-color: #828282;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child {
   margin-left: 10px;
@@ -3262,8 +3536,6 @@ img {
   color: #0c5da5;
 }
 /* ################################################################################################################
- ################################################################################################################
- ################################################################################################################
  * Sidebar
  * ################################################################################################################*/
 #egw_fw_sidebar {
@@ -3296,7 +3568,7 @@ img {
   padding: 4px 5px 5px 15px;
   background-color: #fafafa;
   background-image: none;
-  border-color: #f0f0f0;
+  border-color: #e6e6e6;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -3371,7 +3643,7 @@ img {
   -moz-background-clip: padding-box;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   border-style: solid;
   border-width: 0px;
   margin: 0 0 2em 0;
@@ -3395,14 +3667,14 @@ img {
   -moz-background-clip: padding-box;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
   margin: 10px 5px 0px 5px;
   padding: 0.5em 1em;
   cursor: pointer;
-  border-color: #bfbfbf;
-  background-color: #d9d9d9;
+  border-color: #b4b4b4;
+  background-color: #828282;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 3px;
   -webkit-border-bottom-left-radius: 3px;
@@ -3462,7 +3734,7 @@ img {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_bottom {
   border-width: 0px;
-  border-color: black;
+  border-color: #ffffff;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_icon {
   display: inline-block;
@@ -3522,7 +3794,7 @@ img {
 }
 .egw_fw_ui_category_content:hover {
   background-color: #ffffff;
-  border-color: #808080;
+  border-color: #828282;
 }
 .egw_fw_ui_sidemenu_listitem {
   padding: 0.5em 0;
@@ -3572,7 +3844,7 @@ img {
   -moz-border-radius: 3px;
   border-radius: 3px;
   background-color: #f0f0f0;
-  border-color: #808080;
+  border-color: #828282;
   cursor: pointer;
   width: 72% !important;
 }
@@ -3811,7 +4083,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main .egw_fw_ui_tab_content {
   border-width: 0px 9px 0px 9px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
 }
 #egw_fw_main .egw_fw_ui_tab_content div:nth-child(1) iframe {
   height: 100%;
@@ -3830,368 +4102,7 @@ div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
   background-color: #ffffff;
 }
-/**
- * EGroupware: Stylite Pixelegg template
- *
- * Nextmatch
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package pixelegg
- * @version $Id$
- */
-/**
-* Nextmatch widget
-*/
-.et2_nextmatch .nextmatch_header > .filters {
-  border: none !important;
-  background-image: none !important;
-  background-color: #f0f0f0;
-}
-.et2_nextmatch {
-  background-color: #f0f0f0;
-  /* Favorites */
-}
-.et2_nextmatch div > .header {
-  margin-top: -20px;
-  border: none;
-}
-.et2_nextmatch input,
-.et2_nextmatch select {
-  height: auto;
-  width: auto;
-}
-.et2_nextmatch .nextmatch_header {
-  border: none !important;
-  background-image: none !important;
-  background-color: #f0f0f0;
-  background-size: 80% 10;
-  margin-bottom: 3px;
-}
-.et2_nextmatch .nextmatch_header img {
-  height: 16px;
-  width: 16px;
-}
-.et2_nextmatch .nextmatch_header div.et2_hbox_right {
-  background: transparent;
-}
-.et2_nextmatch .nextmatch_header div.et2_hbox_right table.et2_grid {
-  background: transparent;
-}
-.et2_nextmatch .nextmatch_header .et2_button_icon {
-  vertical-align: middle;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-top: 0px;
-  margin-right: 1em;
-  height: 16px;
-  width: 16px;
-  padding: 2px;
-}
-.et2_nextmatch .nextmatch_header .et2_button_icon:hover {
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-.et2_nextmatch .nextmatch_header .header_count {
-  position: relative;
-  top: 7px;
-  width: 50px;
-  font-size: 0.8em;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #bfbfbf;
-  position: relative;
-  top: 5px;
-  /**
-            * Drop down button
-            */
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown {
-  /*linke Seite Bild*/
-  /*right Button*/
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left,
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default {
-  background-image: none;
-  width: auto;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button#ui-corner-left img,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button#ui-corner-left img,
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown .ui-state-default img,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown .ui-state-default img,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown .ui-state-default img,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown .ui-state-default img {
-  height: 16px;
-  width: 16px;
-  text-align: left;
-  position: relative;
-  right: 20px;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button {
-  height: 3.0ex;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: -2px;
-  padding: 0px 1ex;
-  background-color: #ffffff;
-  background-image: none;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button > div,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button > div,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button > div,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button > div {
-  vertical-align: middle;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button:last-child,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button:last-child,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button:last-child,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button:last-child {
-  padding: 0px;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown + ul.ui-menu,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown + ul.ui-menu {
-  position: absolute;
-  z-index: 2;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-corner-right,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-corner-right {
-  background-image: url("../images/fav_filter_normal.png");
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper .et2_dropdown button.ui-state-hover,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper .et2_dropdown button.ui-state-hover {
-  /*background-image: none;*/
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  background-image: url("../images/fav_filter_normal.png") !important;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul {
-  border-color: #bfbfbf;
-  background-color: #ffffff;
-  color: #000000;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li {
-  background-color: #ffffff;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li:hover,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li:hover,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li:hover,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li:hover {
-  background-color: #f0f0f0;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a {
-  height: 40px;
-  border: none;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a img,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a img,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a img,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a img {
-  height: 16px;
-  width: 16px;
-}
-.et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper ul li a:hover,
-.et2_nextmatch .nextmatch_header div#addressbook-index_favorite_wrapper ul li a:hover,
-.et2_nextmatch .nextmatch_header div#timesheet-index_favorite_wrapper ul li a:hover,
-.et2_nextmatch .nextmatch_header div#projectmanager-list_favorite_wrapper ul li a:hover {
-  background: none;
-  text-indent: -22px;
-  margin-left: 21px;
-  height: 40px;
-}
-.et2_nextmatch div#favorite_wrapper {
-  margin-top: 8px;
-  vertical-align: middle;
-}
-/*#########################################################
-#
-# Filterleiste
-#
-#########################################################*/
-.et2_nextmatch .nextmatch_header > .filters {
-  background-image: none !important;
-  border: medium none !important;
-  background: yellow !important;
-  padding: 0 0 1em 1em;
-  background-color: #d9d9d9 !important;
-  vertical-align: top;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  width: 80%;
-  margin-bottom: 1em;
-}
-.filters {
-  padding: 0 0 1em 1em;
-  background-color: #f0f0f0;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
-  width: 80%;
-  margin-bottom: 1em;
-  /*Suchen Button*/
-}
-.filters img.et2_button_icon {
-  float: right;
-  position: relative;
-  top: 0px;
-}
-.filters select,
-.filters input,
-.filters button {
-  height: 20px;
-}
-.filters select {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0.5em;
-  padding: 3px;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  margin-right: 2ex;
-  padding: 5px;
-  padding: 0px 0px 0px 3px;
-}
-.filters select:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-.filters select option {
-  font-size: 0.9em;
-}
-.filters select#cat_id {
-  margin-left: 1em;
-}
-.filters input {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 0.5em 0em 0.5em 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-.filters input:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-}
-.filters button {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: 3em;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  background-color: #ffd44d;
-  color: #FFFFFF;
-  text-decoration: none;
-  cursor: pointer;
-  padding: 3px;
-  margin-left: 5px;
-  background-image: none;
-  width: auto;
-}
-.filters button:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #ffd40f !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  background-color: #ffd40f;
-}
-.filters button:active {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #ffd44d;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-.filters button:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bfbfbf;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-}
+/*@import "../less/layout_nextmatch.less";*/
 /**
  * Less-file for egroupware
  * Definitionen Layout
@@ -4243,37 +4154,66 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
  * @version $Id$
  */
 /*@import (reference) "def_content_elements.less";*/
+/*###########################################
+#                                           #
+#     dialog-header                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#    main + tabs                            #
+#                                           #
+#                                           #
+#############################################
+#   dialog-operators                        #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
 /*Main div*/
 table.dialog-main-view {
   width: 100%;
 }
 /*Header Part*/
-tr.dialog-header {
+.dialog-header {
   background-color: #0c5da5;
   color: #ffffff;
 }
-tr.dialog-header td {
+.dialog-header td {
   padding: 5px;
 }
-tr.dialog-header table.et2_grid {
+.dialog-header table.et2_grid {
   border-top: none;
 }
-tr.dialog-header .et2_label {
+.dialog-header .et2_label {
   color: #ffffff;
 }
 /*Main*/
+/* Operators */
+.dialog-operators {
+  background-color: #b4b4b4;
+  border-top: 2px solid #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
+}
+.dialog-operators td {
+  padding: 2px;
+}
 /*Buttons / Toolbar*/
 .dialog-footer-toolbar {
   background-color: #679fd2;
 }
 .dialog-footer-toolbar td {
-  padding: 10px;
+  padding: 0px 5px;
 }
 .dialog-footer-toolbar button {
   height: 32px;
 }
-.dialog-footer-toolbar label {
-  border-color: #bfbfbf;
+.dialog-footer-toolbar label.et2_label {
+  border-color: #b4b4b4;
   width: auto;
   margin: 0.5em 0em 0.5em 0;
   -webkit-border-radius: 3px;
@@ -4285,7 +4225,9 @@ tr.dialog-header .et2_label {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000000;
   background-color: #f0f0f0;
-  padding: 5px 5px 8px 0;
+  padding: 6px 5px 6px 0;
+  position: relative;
+  top: 0px;
 }
 /*
 	Printing

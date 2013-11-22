@@ -69,6 +69,7 @@ div.et2_hbox_al_right {
 div.et2_hbox_right {
     float: right;
     clear: right;
+    background: transparent;
 }
 div.et2_hbox>div {
     display: inline-block;
@@ -310,9 +311,9 @@ button.et2_button_text:focus, input[type=button]:focus {
     //	max-width: 85%;
 
     &:hover {background-color: @color-hint !important;}
-    
-    
-    
+
+
+
 }
 .et2_selectbox .ui-multiselect-checkboxes ul {
     margin: 0px auto;
@@ -704,7 +705,7 @@ ul.et2_link_string {
     .color-100-gray;
     border-width: 1px 1px 0px 1px;
     border-style: solid;
-    .border-color-25-gray;
+    border-color: @gray-70;
     &:hover {
         .color-100-gray;
         //			border: 1px solid gray;
@@ -715,21 +716,22 @@ ul.et2_link_string {
 .et2_tabs {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
-    .border-color-25-gray;
+    border-color: @gray-70;
     padding: 5px;
     overflow-y: auto;
-    .background-color-dialog-container;
+    background-color: @gray-0;
     .border_radius_button_normal;
 }
 
 
 .et2_tabheader {
-    .background-color-25-gray;
+    background-color: @gray-20;
     background-position: bottom;
     background-repeat: repeat-x;
     padding-left: 0em;
     border-bottom: 1px solid #bfbfbf; 
     margin: 0 2px;
+
     :first-child {
         margin-left: 0.3em;	
     }
@@ -740,6 +742,7 @@ ul.et2_link_string {
 /**
  * VFS widget(s)
  */
+
 ul.et2_vfs {
     padding-left: 0px;
     margin: 1px;
@@ -757,7 +760,7 @@ ul.et2_vfs {
 [required] {
     background-color: @egw_color_1_a;
     input{
-        //		border-color: #FFFFD0;
+
     }
 }
 .invalid {
@@ -872,10 +875,11 @@ div.message.floating {
 
 /**
  * Nextmatch widget
- */
+*/
+
 
 .et2_nextmatch {
-    /*	background-color: silver;*/
+    .background-color-10-gray;
 }
 
 /* Left & right headers*/
@@ -884,24 +888,127 @@ div.message.floating {
     border: none;
 }
 
-/*.nextmatch_header .header_count {
+/* images*/
+.et2_nextmatch > img {height: 16px; width: 16px;}
+
+// little rectangle
+.nextmatch_header .header_count {
     padding: 0px 20px;
     margin: 6px 20px 0px;
     border: 1px solid #E0E0E0;
     float:right;
-    font-size: 150%;
-    text-align: center
-}*/
+    font-size: 0.8em;
+    text-align: center;
+    position: relative;
+    top: 7px;
+    /*width: 50px;*/
+}
+
+/*################################################################
+*
+* Filters
+*
+################################################################*/
+
 .nextmatch_header > .filters {
-    padding-left: 5px;
+
+    width: 80%;
+    margin-bottom: 4px;
+    padding: 0;
+    background-color: @gray-30;
+    border: none !important;
+    border-color: @gray-100;
+    background-image: none !important; 
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 } 
+
+.nextmatch_header > .filters {
+    select,
+    input,
+    button {
+        height: 25px;
+        padding: 0px 0px 0px 3px;
+        margin: 0;
+    }
+}
+
+
+// Select Field
 .nextmatch_header > .filters select {
     margin-right: 2ex;
-    width: 15%;
+    max-width: 15% !important;
+    .Complete_Button_select;
+    margin-right: 2ex;
+
+    &:hover{
+        .Complete_Button_select_hover;
+    }
+    
+     /*Dialog - Addressbook - View */
+      #infolog-index_cat_id,
+      #infolog-index_filter {width: 50% !important;}
+    
+    
+
 }
+// Select -> Option
+.nextmatch_header > .filters > select > option {font-size: 0.9em;}
+
+
+
+
+// Search Field
+.nextmatch_header > .filters button.et2_button {
+    .Complete_Button_search_action;
+    background-image: none;
+    width: auto;
+
+    &:hover{
+        .Complete_Button_search_action_hover;
+        background-color: @egw_color_2_e !important;
+    }
+
+    &:active {
+        .Complete_Button_search_action_active;
+    }
+
+    &:focus {
+        .Complete_Button_input_focus;
+    }
+
+}
+
+
+
+
+// Input Field
+.nextmatch_header > .filters input {
+    margin-right: 2ex;
+    width: 15%;
+    .Complete_Button_input;
+    &:hover{
+        .Complete_Button_input_hover;
+    }
+    &:focus{
+        .Complete_Button_input_focus;
+    }
+}
+
+
 .nextmatch_header .et2_button_icon {
     vertical-align: middle;
+    .Complete_Button_Icon_normal;
+    margin-top: 0px;
+    margin-right: 1em;
+    height: 16px;
+    width: 16px;
+    padding: 2px;
+
+    .et2_button_icon:hover{.Complete_Button_Icon_hover ;}
 }
+
+
 .nextmatch_header > .filters .et2_button_icon {
     margin-top: 8px;
 }
@@ -912,14 +1019,136 @@ div.message.floating {
     margin-bottom: 3px;
     //	margin-right: 3px;
 }
-/*.et2_nextmatch .nextmatch_header > .filters {
+.et2_nextmatch .nextmatch_header > .filters {
     border: 1px solid silver;
     background-color: #E0E0E0;
     background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
     background-position: center;
     background-repeat: repeat-x;
     margin-bottom: 3px;
-}*/
+}
+
+/*################################################################
+*
+* Favorites
+*
+################################################################*/
+
+.nextmatch_header div[id$=favorite_wrapper] {
+    margin-top: 6px;
+    vertical-align: middle;
+
+    .box_shadow_standard_light;
+    .border_radius_button_normal;
+    .background-color-25-gray;
+
+
+}
+
+   /**
+    * Drop down button
+    */
+    .et2_dropdown{
+
+        button {
+            height: 3.0ex;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: -2px;
+            padding: 0px 1ex;
+            .background-color-0-gray;
+            background-image: none;
+            width: 50px;
+
+        }
+        button > div {
+            vertical-align: middle;
+        }
+        button:last-child {
+            padding: 0px
+        }
+        + ul.ui-menu {
+            position: absolute;
+            z-index: 2;
+        }
+        
+        /*left Button*/
+        button.ui-corner-left,
+        button.ui-state-default{
+            background-image: none !important;
+            background-repeat: no-repeat !important;
+            background-size: 10px 10px;
+          
+            img {
+                height: 16px; 
+                width: 16px;
+                text-align: left;
+                position: relative;
+                right: 18px;
+                top: 3px;
+            }
+            
+        }        
+        
+       
+        /*right Button*/
+        button.ui-corner-right { 
+            background-image: url("../images/fav_filter_normal.png");
+            background-repeat: no-repeat !important;
+            background-size: 10px 10px;
+        }
+        
+       /* hover */
+        button.ui-state-hover {
+            background-color: @gray-30 !important;
+            background-image: url("../images/fav_filter_normal.png") !important;
+            background-repeat: no-repeat !important;
+            background-size: 16px 16px !important;
+            background-position: 10px center !important;
+                    }
+            
+         button.ui-state-hover > img {
+            position: absolute; 
+            top: 70000px;
+        }
+
+        
+
+
+    } // dropdown
+
+/*    // Liste
+    ul{
+
+        border-color: @gray-30;
+        .background-color-0-gray;
+        .color-100-gray;
+        li{
+            .background-color-0-gray;
+
+            &:hover {.background-color-10-gray;}
+            a {
+
+                height: 40px;
+                border: none;
+
+                img {height: 16px; width: 16px;}
+            }
+
+            a:hover {
+                background: none;
+                text-indent: -22px;
+                margin-left: 21px;
+                height: 40px;
+
+            }
+        }
+        li#blank {}
+        li#add { }
+
+    }*/
+
+
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
     margin-top: 6px;
@@ -970,15 +1199,15 @@ div.message.floating {
         float:right;
         display:none;
     }
-  
+
     // List Icon 
     .sideboxstar{
-                    background-image: url("../images/bullet.png");
-                    background-repeat: no-repeat;
-                    height: 9px;
-                    width: 9px
-                }
-    
+        background-image: url("../images/bullet.png");
+        background-repeat: no-repeat;
+        height: 9px;
+        width: 9px
+    }
+
 }
 
 
@@ -1033,7 +1262,7 @@ div.message.floating {
     .ui-widget-content .ui-state-focus,
     .ui-widget-header .ui-state-focus {
         .bordered(1px, 1px, 1px,1px);
-        .border-color-10-gray;
+        border-color: @gray-10;
         background: transparent !important;
         font-weight: bold;
         .color-100-gray;
@@ -1056,29 +1285,29 @@ div.message.floating {
     .ui-menu {
 
         .ui-menu-item {
-            
-            
-                        &:hover {background-color: @egw_color_1_e;}
 
-                        a {
-                                line-height: inherit;
-                                padding: 2px 0px;
-                                padding-left: 0 !important;
 
-                                &:hover {text-decoration: underline; 
-                                       /*.Complete_Button_Icon_hover ;*/
-                                }
+            &:hover {background-color: @egw_color_1_e;}
 
-                                img { height: 14px; 
-                                      width: 14px;
-                                }
-                            }
+            a {
+                line-height: inherit;
+                padding: 2px 0px;
+                padding-left: 0 !important;
 
-                    }
+                &:hover {text-decoration: underline; 
+                         /*.Complete_Button_Icon_hover ;*/
+                }
+
+                img { height: 14px; 
+                      width: 14px;
+                }
+            }
+
+        }
     }
-    
-    
-    
+
+
+
     div.ui-icon-heart{
         position: relative;
         float: left;
@@ -1313,98 +1542,98 @@ div.et2_progress > div {
     padding: 6px;
 }
 .et2_itempicker_app_select li.selected {
-  border: 1px solid #b6b6b6;
-  border-right: 1px solid transparent;
-  background-color: #f9f9f9;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+    border: 1px solid #b6b6b6;
+    border-right: 1px solid transparent;
+    background-color: #f9f9f9;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 .et2_itempicker_search {
-  display: inline-block;
-  margin: 1em;
-  margin-bottom: 0;
-  margin-right: 0;
-  width: 67%;
-  padding: 0.2em;
+    display: inline-block;
+    margin: 1em;
+    margin-bottom: 0;
+    margin-right: 0;
+    width: 67%;
+    padding: 0.2em;
 }
 .et2_itempicker_clear {
-  position: relative;
-  top: 3px;
-  left: -20px;
+    position: relative;
+    top: 3px;
+    left: -20px;
 }
 .et2_itempicker_button_action {
-  position: absolute;
-  margin: 1em;
-  top: 0;
-  right: 0;
+    position: absolute;
+    margin: 1em;
+    top: 0;
+    right: 0;
 }
 .et2_itempicker_itemlist {
-  display: block;
-  border: 1px solid #b6b6b6;
-  margin: 1em;
-  margin-bottom: 0;
-  padding: 0;
-  height: 67%;
-  background-color: #ffffff;
-  overflow: auto;
+    display: block;
+    border: 1px solid #b6b6b6;
+    margin: 1em;
+    margin-bottom: 0;
+    padding: 0;
+    height: 67%;
+    background-color: #ffffff;
+    overflow: auto;
 }
 .et2_itempicker_itemlist ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 .et2_itempicker_itemlist li {
-  display: block;
-  margin: 0;
-  padding: 4px;
-  color: #284d8a;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    display: block;
+    margin: 0;
+    padding: 4px;
+    color: #284d8a;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .et2_itempicker_itemlist li.row_on {
-  background-color: #f2f9fe;
+    background-color: #f2f9fe;
 }
 .et2_itempicker_itemlist li.selected {
-  color: #ffffff;
-  background-color: #3875d7;
+    color: #ffffff;
+    background-color: #3875d7;
 }
 /**
  * et2_dialog: EGroupware left aligns all buttons, but [Delete]
  */
 div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-  float: left;
+    float: left;
 }
 div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
-  float: left;
-  margin-right: 1em;
+    float: left;
+    margin-right: 1em;
 }
 .et2_prompt #message {
-  white-space: pre-wrap;
-  padding-bottom: 10px;
+    white-space: pre-wrap;
+    padding-bottom: 10px;
 }
 .et2_prompt #value {
-  width: 100%;
+    width: 100%;
 }
 /**
 * et2_taglist
 */
 .ms-ctn,
 .ms-res-ctn {
-  /* It doesn't really work smaller than this */
-  min-width: 150px;
+    /* It doesn't really work smaller than this */
+    min-width: 150px;
 }
 
 
 .ms-ctn .loading {
-  position: relative;
-  margin: 0px auto -16px auto;
-  top: 5px;
+    position: relative;
+    margin: 0px auto -16px auto;
+    top: 5px;
 }
 .ms-res-ctn {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 //
