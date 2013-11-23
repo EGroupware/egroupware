@@ -1928,6 +1928,7 @@ class calendar_ical extends calendar_boupdate
 			'recur_exception'	=> 'recur_exception',
 			'title'				=> 'title',
 			'alarm'				=> 'alarm',
+			'whole_day'			=> 'whole_day',
 		);
 
 		$defaultFields['basic'] = $defaultFields['minimal'] + array(
@@ -2111,6 +2112,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					default:
 						$this->supportedFields = $defaultFields['full'];
+						unset($this->supportedFields['whole_day']);
 				}
 				break;
 
@@ -2397,7 +2399,10 @@ class calendar_ical extends calendar_boupdate
 			switch ($attributes['name'])
 			{
 				case 'X-MICROSOFT-CDO-ALLDAYEVENT':
-					$event['whole_day'] = (isset($attributes['value'])?strtoupper($attributes['value'])=='TRUE':true);
+					if (isset($supportedFields['whole_day']))
+					{
+						$event['whole_day'] = (isset($attributes['value'])?strtoupper($attributes['value'])=='TRUE':true);
+					}
 					break;
 				case 'AALARM':
 				case 'DALARM':
@@ -2914,6 +2919,7 @@ class calendar_ical extends calendar_boupdate
 				case 'recur_data':
 				case 'recur_exception':
 				case 'recur_count':
+				case 'whole_day':
 					// not handled here
 					break;
 
