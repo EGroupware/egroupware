@@ -11,9 +11,13 @@
 function show_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
-	$j("#egw_fw_topmenu_addons").animate({'margin-right': '20px'},_delay);
-	$j("#egw_fw_sidebar").animate({'top':'57px'},_delay);
+        
+	$j("#egw_fw_topmenu_info_items").animate({"margin-right": "20px","bottom": "","padding-right" : "0"},_delay);
+	$j("#egw_fw_topmenu_info_items").css("position", "relative");
+	
+    $j("#egw_fw_sidebar").animate({'top':'57px'},_delay);
         $j("#egw_fw_tabs").animate({'margin-top':'0px'},_delay);
+        $j(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% -3000px");
 	$j(_toggle).parent().removeClass("slidedown");
 	$j(_toggle).parent().addClass("slideup");
 }
@@ -25,8 +29,19 @@ function hide_pixelegg_header(_toggle, _delay)
 	$j("#egw_fw_topmenu_info_items").show();
 	$j("#egw_fw_logout").show();
 	$j("#egw_fw_print").show();
-        $j("#egw_fw_tabs").animate({'margin-top':'-13px'},_delay);
-	$j("#egw_fw_topmenu_addons").animate({'margin-right': '270px'},_delay);
+//        $j("#egw_fw_tabs").animate({'margin-top':'-13px'},_delay);
+	$j("#egw_fw_topmenu_info_items").animate({
+			"bottom": "3px",
+                        "right": "5px",
+			"display": "flex",
+			"padding-right" : "20px",
+			"text-align": "right",
+			"white-space": "nowrap",
+			},_delay);
+	$j(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% 50%");
+      
+	$j("#egw_fw_topmenu_info_items").css("position", "fixed");
+	$j("#egw_fw_topmenu_info_items").css("z-index", "1000");
 	$j(_toggle).parent().removeClass("slideup");
 	$j(_toggle).parent().addClass("slidedown");
 }
@@ -49,6 +64,7 @@ egw_LAB.wait(function() {
 		if (egw.preference('pixelegg_header_hidden')) {
 			hide_pixelegg_header($j('#slidetoggle'),0);
 		}
+         
 	});
 
 	// Override jdots height calcluation
@@ -57,5 +73,18 @@ egw_LAB.wait(function() {
 		$header = $j(this.tabsUi.appHeaderContainer);
 		var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight() - this.tabsUi.appHeader.outerHeight();
 		return height;
-	}
+	};
 });
+
+
+
+/* #egw_fw_topmenu_info_items {
+    bottom: 0;
+    display: flex;
+    float: right;
+    padding-right: 20px;
+    position: fixed;
+    text-align: right;
+    white-space: nowrap;
+    z-index: 1000;
+} */

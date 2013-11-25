@@ -108,7 +108,7 @@
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -127,7 +127,7 @@
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
@@ -140,7 +140,7 @@
   outline: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);

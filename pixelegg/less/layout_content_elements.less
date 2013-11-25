@@ -42,7 +42,8 @@ body{
     padding: 0px !important;
     width: 100% !important;
     height: 100% !important;
-    font-size: 87.5%;
+    font-size: 80.5%;
+    
 }
 
 body, 
@@ -59,7 +60,6 @@ textarea {
     margin: 0px;
 
     .basefontfamily;
-    //						font-size: 8pt;
 
     .background-color-5-gray ;
 }
@@ -506,7 +506,7 @@ td.lettersearch {
 
 
 
-
+/*############################*/
 
 /* traditional */
 
@@ -528,7 +528,7 @@ input,button,select
 {
     border: solid 1px #bbbbbb;
     padding: 0.2em;
-    font-size: 1.1em;
+    font-size: 0.9em;
 }
 
 input[type=submit],input[type=button],input[type=reset],button,.egwbutton
@@ -802,15 +802,15 @@ a.textSidebox
 button{
     .Complete_Button_normal;
 
-    &:hover{.background-color-30-gray;}
+    &:hover{ background-color: @gray-30;}
 }
 
-// #####################################################
-// Button löschen
+/* #####################################################*/
+ /*Button löschen*/
 
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
-button[id*="delete"]  {
+button[id*="delete"]{
 
     background-image:url('../images/delete.png');
     margin-left: 3em;
@@ -831,6 +831,13 @@ button[id*="delete"]:hover {
 }
 
 
+
+/* #####################################################*/
+ /*Button abbruch / cancel */
+button#cancel:hover {background-color: red !important; color: @gray-0; }
+
+
+/* #####################################################*/
  /*Button mit Bildern*/
 button.et2_button_with_image{ 
         .Complete_Button_text_icon_before;
@@ -840,5 +847,9 @@ button.et2_button_with_image{
     
 }
 
-
-// 
+/* #####################################################*/
+/*Button hinzufügen*/
+button.add {
+    .Complete_Button_add ;
+}
+//

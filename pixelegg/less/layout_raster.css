@@ -660,7 +660,10 @@
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
   cursor: pointer;
-  background-image: none;
+  background-image: url("../images/header_active.png");
+  background-position: 95% -3000px;
+  background-repeat: no-repeat;
+  /*background-image: none;*/
   background-color: #f0f0f0;
   border-radius: 27px 0px 0 0;
   border-top: 1px solid #C6CED6;
@@ -1163,17 +1166,4 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main .egw_fw_ui_tab_content div:nth-child(1) iframe {
   height: 100%;
   min-height: 99%;
-}
-div.et2_container {
-  padding: 0;
-}
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select,
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
-  height: 20px;
-  padding: 0;
-  margin: 0px;
-  font-size: 0.95em;
-}
-div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
-  background-color: #ffffff;
 }

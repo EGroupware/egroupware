@@ -80,8 +80,9 @@ div.et2_hbox>div {
  */
 .et2_placeholder {
     display: inline-block;
-    border: 1px solid cornflowerblue;
-    background-color: #FCFCFC;
+    /*border: 1px solid cornflowerblue;*/
+    .border_normal;
+    background-color: @gray-10;;
     padding: 3px;
     margin: 1px;
 }
@@ -99,7 +100,7 @@ div.et2_hbox>div {
 .et2_placeholder .et2_attr {
     display: block;
     font-size: 8pt;
-    color: #3030A0;
+    color: @gray-100;
     margin: 2px 0 2px 0;
 }
 
@@ -134,7 +135,7 @@ div.et2_hbox>div {
  * Label widget, and labels for other widgets
  */
 .et2_label {
-    color: #101050;
+    color: @gray-90;
 }
 #msg,.message {
     color: red;
@@ -177,20 +178,19 @@ a.et2_url.url {
     text-shadow: 1px 1px #E0E0E0;
 }
 
+ /*in Nextmatch definiert*/
+.et2_button_text, input[type=button] {
+/*	background-color: #E0E0E0;
+	background-image: url(images/gradient01.png);
+	background-position: center;
+	background-repeat: repeat-x;
 
-// in Nextmatch definiert
-//.et2_button_text, input[type=button] {
-//	background-color: #E0E0E0;
-//	background-image: url(images/gradient01.png);
-//	background-position: center;
-//	background-repeat: repeat-x;
-//
-//	margin: 5px;
-//	padding: 3px;
-//
-//	border: 1px solid silver;
-//	color: #101010;
-//}
+	margin: 5px;
+	padding: 3px;
+
+	border: 1px solid silver;
+	color: #101010;*/
+}
 
 
 
@@ -202,17 +202,18 @@ a.et2_url.url {
     height: 16px;
 }
 button.et2_button_text:hover, input[type=button]:hover {
-    color: #050505;
-    border: 1px solid gray;
-    background-color: #D0D0EE;
+    color: @gray-0;
+    border: 1px solid @gray-20;
+    background-color: @gray-30;
 }
 button.et2_button_text:active, input[type=button]:active {
-    background-image: url(images/gradient02.png);
-    background-color: #D0D0E0;
+    background-image: none !important;
+    background-color: @gray-50;
+    color: @gray-0;
 }
 button.et2_button_text:focus, input[type=button]:focus {
-    border: 1px solid #2c3d6f;
-    color: #202d52;
+    border: 1px solid @gray-40;
+    color: @gray-0;
     outline: none;
 }
 
@@ -384,7 +385,7 @@ span.et2_date span {
     background-position: center;
     background-repeat: no-repeat;
 
-    color: #101010;
+    color: @gray-0;
     cursor: pointer;
     padding-top: 3px;
     padding-left: 22px;
@@ -600,7 +601,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 
 .et2_link {
     cursor: pointer;
-    color: #003075;
+    color: @egw_color_2_a;
     text-decoration: none;
 }
 .et2_link:hover {
@@ -647,7 +648,7 @@ ul.et2_link_string {
     position: fixed;
     border: 1px solid #897f51;
     padding: 3px;
-    background-color: #FDF9DB;
+    background-color: @color-hint;
     max-width: 300px;
     color: black;
 }
@@ -759,6 +760,7 @@ ul.et2_vfs {
 */
 [required] {
     background-color: @egw_color_1_a;
+    .border-radius (3px, 3px ,3px ,3px );
     input{
 
     }
@@ -772,7 +774,7 @@ ul.et2_vfs {
     -moz-box-shadow: 0 0 6px #DDDDDD;
     background-color: #FFFE36;
     border: 1px solid #E1E16D;
-    color: #000000;
+    color: @color-warning;
     display: none;
     font-size: 11px;
     height: 15px;
@@ -788,7 +790,7 @@ ul.et2_vfs {
 
 hr {
     border-style: none;
-    border-top: 1px solid silver;
+    border-top: 1px solid @gray-10;
     height: 1px;
     margin: 10px 0px 10px 0px;
 }
@@ -803,6 +805,8 @@ table.et2_grid {
 
 .et2_grid td {
     /*	border: 1px dashed silver;*/
+    
+    .gray {padding: 1em; background-color: @color-hint}
 }
 /**
  * Sortable grid
@@ -897,7 +901,7 @@ div.message.floating {
     margin: 6px 20px 0px;
     border: 1px solid #E0E0E0;
     float:right;
-    font-size: 0.8em;
+    font-size: 11px;
     text-align: center;
     position: relative;
     top: 7px;
@@ -1020,9 +1024,9 @@ div.message.floating {
     //	margin-right: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
-    border: 1px solid silver;
-    background-color: #E0E0E0;
-    background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+    border: 1px solid @gray-10;
+    background-color: @gray-20;
+    background-image: url(../images/header_overlay.png);
     background-position: center;
     background-repeat: repeat-x;
     margin-bottom: 3px;
@@ -1084,7 +1088,7 @@ div.message.floating {
                 width: 16px;
                 text-align: left;
                 position: relative;
-                right: 18px;
+                right: 8px;
                 top: 3px;
             }
             
