@@ -193,6 +193,12 @@ input[type=button]:focus {
   color: #202d52;
   outline: none;
 }
+button.et2_button_with_image {
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-position-x:	3px;
+}
+
 /**
  * Drop down button
  */

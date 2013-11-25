@@ -94,10 +94,6 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		{
 			this.btn = $j(document.createElement("button"))
 				.addClass("et2_button et2_button_text");
-			if(this.options.background_image)
-			{
-				this.btn.addClass('et2_button_with_image');
-			}
 			this.setDOMNode(this.btn[0]);
 		}
 	},
@@ -154,13 +150,17 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 				src= image;
 				found_image = true;
 			}
-			if(this.image != null)
+			if(found_image)
 			{
-				this.image.attr("src", src);
-			}
-			else if (this.options.background_image)
-			{
-				this.btn.css("background-image","url("+src+")");
+				if(this.image != null)
+				{
+					this.image.attr("src", src);
+				}
+				else if (this.options.background_image)
+				{
+					this.btn.css("background-image","url("+src+")");
+					this.btn.addClass('et2_button_with_image');
+				}
 			}
 		}
 		if(!found_image)
@@ -169,6 +169,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			if(this.btn)
 			{
 				this.btn.css("background-image","");
+				this.btn.removeClass('et2_button_with_image');
 			}
 		}
 	},
