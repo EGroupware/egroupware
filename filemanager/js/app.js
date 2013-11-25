@@ -229,6 +229,7 @@ app.classes.filemanager = AppJS.extend(
 							widget.remove_file(_data.uploaded[file].name);
 						}
 					}
+					opener.egw_refresh('','filemanager',null,null,'filemanager');
 				}, app.filemanager, true, this
 		).sendRequest(true);
 		return true;
