@@ -108,7 +108,7 @@ div.calendar {
   background-color: #ffffff;
   color: #000;
   border: 1px solid;
-  border-color: #808080;
+  border-color: #828282;
   padding: 1px;
 }
 .calendar thead .active {
@@ -268,9 +268,10 @@ div.calendar {
 div#calendar-edit {
   width: 870px;
   padding: 5px;
+  /*###########################################*/
 }
 div#calendar-edit label.et2_label {
-  padding: 0 2px;
+  /*padding: 0 2px;*/
 }
 div#calendar-edit .chzn-container {
   padding-top: 1em;
@@ -293,14 +294,19 @@ div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid #calendar-
   float: left;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid button#calendar-edit_freetime {
-  background-image: url('../images/search.png') !important;
+  background-image: url('images/add.png') !important;
+}
+div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid .et2_checkbox,
+div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid input#calendar-edit_whole_day {
+  margin-left: 5px important;
+  border-left: 10px solid red;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid .et2_date {
   float: left;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general #calendar-edit_category {
   border: 1px solid;
-  border-color: #bfbfbf;
+  border-color: #b4b4b4;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -336,6 +342,9 @@ div#calendar-edit #calendar-edit_calendar-edit-custom tbody {
 div#calendar-edit #calendar-edit_calendar-edit-links tbody {
   display: table;
   width: 100%;
+}
+div#calendar-edit #calendar-edit_calendar-edit-links span.et2_label {
+  padding: 1em;
 }
 div#calendar-edit #calendar-edit_calendar-edit-alarms tbody {
   display: table;
@@ -927,12 +936,6 @@ tr.prefRow > td {
   right: 55%;
   display: none;
   width: 33%;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #f0f0f0;
-  border-color: #808080;
-  cursor: pointer;
   background-color: #ffc200;
 }
 tr.prefRow:hover .prefHelp {

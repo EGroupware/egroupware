@@ -27,7 +27,7 @@
 					</row>
 					<row>
 						<description/>
-						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search"/>
+						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
 					</row>
 					<row class="row">
 						<description for="location" value="Location" width="0"/>
@@ -92,7 +92,7 @@
 					<menulist>
 						<menupopup class="selectRole" id="role"/>
 					</menulist>
-					<button align="center" label="Add" id="add"/>
+					<button align="center" label="Add" id="add" image="add" background_image="1"/>
 					<description/>
 				</row>
 				<row class="th">
@@ -201,7 +201,7 @@
 			</columns>
 			<rows>
 				<row class="th" disabled="@view">
-					<description value="Create new links" span="all"/>
+					<description value="Create new links" span="all" class="gray"/>
 				</row>
 				<row class="row" disabled="@view">
 					<link-to id="link_to" span="all"/>
@@ -298,8 +298,8 @@
 			<vbox class="prompt">
 				<description value="Do you want to keep the series exceptions in your calendar?"/>
 				<hbox align="center">
-					<button statustext="All exceptions are converted into single events." label="Keep exceptions" id="button[delete_keep_exceptions]"/>
-					<button statustext="The exceptions are deleted together with the series." label="Delete exceptions" id="button[delete_exceptions]"/>
+					<button statustext="All exceptions are converted into single events." label="Keep exceptions" id="button[delete_keep_exceptions]" image="keep" background_image="1"/>
+					<button statustext="The exceptions are deleted together with the series." label="Delete exceptions" id="button[delete_exceptions]" image="delete" background_image="1"/>
 					<buttononly label="Cancel" onclick="jQuery(document.getElementById('calendar-edit_calendar-delete_series')).hide();"/>
 				</hbox>
 			</vbox>
@@ -320,7 +320,7 @@
 					<description/>
 					<description/>
 				</row>
-				<row class="th" height="28">
+				<row class="th dialog-header" height="28">
 					<description value="Title"/>
 					<hbox needed="1" options="0,0" span="all">
 						<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1"/>
@@ -351,7 +351,7 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row disabled="!@owner">
+				<row disabled="!@owner" class="dialog-operators">
 					<description value="Owner"/>
 					<menulist>
 						<menupopup type="select-account" id="owner" readonly="true"/>
@@ -361,17 +361,17 @@
 						<menupopup type="select-account" align="right" class="noBreak" label="by" id="modifier" readonly="true"/>
 					</menulist>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<hbox span="3">
-						<button statustext="saves the changes made" label="Save" id="button[save]"/>
-						<button statustext="apply the changes" label="Apply" id="button[apply]"/>
-						<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();"/>
+						<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
+						<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 						</menulist>
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 					</hbox>
-					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="return app.calendar.delete_btn($cont[query_delete_exceptions]);"/>
+					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="return app.calendar.delete_btn($cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 				</row>
 				<row >
 					<template id="calendar.delete_series" span="all" />

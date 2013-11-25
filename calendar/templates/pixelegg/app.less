@@ -137,7 +137,7 @@ div.calendar { position: relative; }
             .background-color-0-gray;
             color: #000;
             border: 1px solid;
-            .border-color-50-gray;
+            border-color: @gray-50;
             padding: 1px;
         }
 
@@ -354,7 +354,7 @@ div#calendar-edit{
     width: 870px;
     padding: 5px;
     label.et2_label{
-        padding: 0 2px;
+        /*padding: 0 2px;*/
     }
     .chzn-container {
         padding-top: 1em;
@@ -364,6 +364,7 @@ div#calendar-edit{
         background-color: transparent;
     }
 
+    /*###########################################*/
     // Tab General
     #calendar-edit_calendar-edit-general{
         display: block;
@@ -382,7 +383,12 @@ div#calendar-edit{
 
             // Terminsuche
 
-            button#calendar-edit_freetime {background-image: url('../images/search.png') !important;}
+            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}
+            
+            
+            // hole day
+            .et2_checkbox,
+            input#calendar-edit_whole_day {margin-left: 5px important; border-left: 10px solid red;}
 
             .et2_date{
                 float: left;
@@ -391,7 +397,7 @@ div#calendar-edit{
         }
         #calendar-edit_category{
             border: 1px solid;
-            .border-color-25-gray;
+            border-color: @gray-30;
             .border_radius_button_normal;
         }
 
@@ -463,8 +469,9 @@ div#calendar-edit{
         tbody{
             display: table;
             width: 100%;
-
         }
+        
+       span.et2_label {padding:  1em;} 
     }
 
     // Alarme
@@ -473,18 +480,6 @@ div#calendar-edit{
         tbody{
             display: table;
             width: 100%;
-
-            // hinzufügen
-
-            //			button {
-            //
-            //					.Complete_Button_add;
-            //					height: 28px;
-            //					padding: 0px !important;
-            //					margin: 0px;
-            //					&:hover {.Complete_Button_add_hover;}
-            //
-            //					}
         }
     }
 
@@ -1085,14 +1080,7 @@ tr.prefRow > td {
     right: 55%;
     display: none;
     width: 33%;
-    //	background-color: lightyellow;
-
-    .Complete_Button_text;
-    //	border: 1px solid black;
-    //	border-radius: 10px;
-    //	padding: 5px;
-    //	margin-top: 5px;
-    .background-color-Context-Help;
+    background-color: @color-hint;
 
 }
 tr.prefRow:hover .prefHelp {
@@ -1116,4 +1104,4 @@ tr.prefRow:hover .prefHelp {
     padding-bottom: 5px;
 }
 
-//
+//                                                                                                                            

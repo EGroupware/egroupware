@@ -31,7 +31,7 @@
 				</row>
 				<row>
 					<description/>
-					<button label="Download" id="download"/>
+					<button label="Download" id="download" image="download" background_image="1"/>
 				</row>
 				<row>
 					<description span="all"/>

@@ -181,7 +181,7 @@
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
 					</hbox>
-					<textbox type="integer" id="info_number" readonly="true" span="2" class="infolog_infoId"/>
+					<textbox type="integer" id="info_number" readonly="true" span="4" class="infolog_infoId"/>
 				</row>
 				<row class="row dialog-header" valign="top">
 					<description value="Contact" for="info_from"/>
@@ -278,7 +278,7 @@
 					</vbox>
 				</row>
 				<row class="dialog-footer-toolbar">
-					<hbox span="3">
+					<hbox span="2">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
@@ -287,8 +287,9 @@
 						</menulist>
 					</hbox>
 					<description/>
-					<hbox span="2">
-						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
+                                        
+					<hbox span="3">
+						<checkbox label="Do not notify of these changes" id="no_notifications" span="3"/>
 						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');" image="delete" background_image="1"/>
 					</hbox>
 				</row>

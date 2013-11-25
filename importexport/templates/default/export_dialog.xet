@@ -153,16 +153,16 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row class="save_definition">
+				<row class="save_definition dialog-operators high">
 					<checkbox label="Save as definition" id="save_as_definition"/>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<hbox span="all">
 						<hbox>
-							<button label="Export" id="export"/>
-							<button label="Preview" id="preview" onclick="app.importexport.export_preview"/>
+							<button label="Export" id="export" image="export" background_image="1"/>
+							<button label="Preview" id="preview" onclick="app.importexport.export_preview" image="prieview" background_image="1"/>
 						</hbox>
-						<button align="right" label="Cancel" id="cancel" onclick="window.close(); return false;"/>
+						<button class="cancel" align="right" label="Cancel" id="cancel" onclick="window.close(); return false;" image="cancel" background_image="1"/>
 					</hbox>
 				</row>
 				<row>
