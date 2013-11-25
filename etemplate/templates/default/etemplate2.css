@@ -639,6 +639,11 @@ ul.et2_link_string {
   background-position: bottom;
   background-repeat: repeat-x;
 }
+
+.et2_taglist_ro ul {
+	margin: 0px;
+	padding: 0px;
+}
 /**
  * VFS widget(s)
  */

@@ -383,6 +383,34 @@ var et2_taglist_email = et2_taglist.extend(
 });
 et2_register_widget(et2_taglist_email, ["taglist-email"]);
 
+/**
+ * et2_taglist_ro is the readonly implementation of the taglist.
+ *
+ * @augments et2_selectbox
+ */
+var et2_taglist_ro = et2_selectbox_ro.extend(
+{
+	/**
+	 * Constructor
+	 *
+	 * @memberOf et2_selectbox_ro
+	 */
+	init: function() {
+		this._super.apply(this, arguments);
+		this.span = jQuery('<div><ul /></div>')
+			.addClass('et2_taglist_ro');
+		this.setDOMNode(this.span[0]);
+		this.span = $j('ul',this.span)
+			.addClass('ms-sel-ctn');
+	},
+
+	set_value: function(_value) {
+		this._super.apply(this, arguments);
+		$j('li',this.span).addClass('ms-sel-item');
+	}
+});
+et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro" ]);
+
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
 if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.1.css");

@@ -807,15 +807,11 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				}
 			}
 			// Allow some special extras for objects by passing the whole thing - value might not be key
-			if(typeof _options[key] == 'object' && _options[key] != null && typeof _options[key].value != 'undefined' && _options[key].value != key)
-			{
-				// Use value, not key, so it goes into the right place
-				this.optionValues[_options[key].value] = _options[key];
+			var option_id = _options[key].value || _options[key].id || key;
+			if(option_id != key) {
+				egw.debug('log', 'Options not indexed.  TODO: what is up?', this);
 			}
-			else
-			{
-				this.optionValues[key] = _options[key];
-			}
+			this.optionValues[option_id] = _options[key];
 		}
 	},
 
@@ -842,7 +838,9 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 						// Not a valid option
 						continue;
 					}
-					this.span.append("<li>"+option+"</li>");
+					$j("<li>"+option+"</li>")
+						.attr('data-value', _value[i])
+						.appendTo(this.span);
 				}
 			}
 			return;
