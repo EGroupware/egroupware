@@ -78,7 +78,7 @@ function etemplate2(_container, _menuaction)
 {
 	if (typeof _menuaction == "undefined")
 	{
-		_menuaction = "etemplate_new::ajax_process_content";
+		_menuaction = "home.etemplate_new.ajax_process_content.etemplate";
 	}
 
 	// Copy the given parameters
@@ -724,7 +724,7 @@ function etemplate2_handle_load(_type, _response)
 			var node = document.getElementById(data.DOMNodeID);
 			if(node)
 			{
-				var et2 = new etemplate2(node, "etemplate_new::ajax_process_content");
+				var et2 = new etemplate2(node);
 				et2.load(data.name, data.url, data.data);
 				return true;
 			}
