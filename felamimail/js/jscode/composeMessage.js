@@ -796,30 +796,9 @@ function fm_blink_currentInputField() {
 }
 
 function fm_compose_sendEMail() {
-	var addressTable = document.getElementById('addressRows').rows;
-	var addressSet = false;
-	var subjectSet = true;
-	var doubleCheck = false;
 	justClickedSend = true;
-	for (i=0; i<addressTable.length; i++) {
-		if(addressTable.item(i).cells[2].firstChild.value != '') {
-			addressSet = true;
-		}
-	}
-	// check subject
-	var subject = document.getElementById('fm_compose_subject');
-	if(subject.value == '') {
-		subjectSet = false;
-	}
-	// check to infolog/ to tracker. Only one can be checked.
-	var toinfolog = document.getElementById('to_infolog');
-	var totracker = document.getElementById('to_tracker');
-	if ((toinfolog != null && toinfolog.checked==true) && (totracker != null && totracker.checked==true))
-	{
-		doubleCheck = true;
-	}
-
-	if(addressSet == true && subjectSet == true && doubleCheck == false) {
+	
+	if(check_data()) {
 		// if we submit the form, we do not want to execute the onunload stuff
 		justSavedAsDraftManually = false;
 		document.getElementById('saveAsDraft').value=0;

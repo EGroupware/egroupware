@@ -27,8 +27,9 @@
 	{
 		// check recipient(s)
 		var tos = document.getElementsByName('address[]');
+		var dests = document.getElementsByName('destination[]');
 		for(i=0; i < tos.length; ++i) {
-			if (tos[i].value != '') break;
+			if (dests[i].value != 'replyto' && tos[i].value != '') break;
 		}
 		if (i >= tos.length) {
 			alert("{lang_no_recipient}");
