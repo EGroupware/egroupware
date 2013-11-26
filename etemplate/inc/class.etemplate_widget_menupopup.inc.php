@@ -202,7 +202,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			if(is_array($label))
 			{
 				self::fix_encoded_options($label, false);
-				if ($use_array_of_objects) $label['value'] = $value;
+				if ($use_array_of_objects && !array_key_exists('value', $label)) $label['value'] = $value;
 			}
 			else
 			{
