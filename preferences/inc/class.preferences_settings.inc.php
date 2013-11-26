@@ -470,6 +470,8 @@ class preferences_settings
 	{
 		$this->appname = $appname == 'common' ? 'preferences' : $appname;
 
+		// Set framework here to make sure we get the right settings for user's [newly] selected template
+		$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw']->preferences->data['common']['template_set'];
 		translation::add_app($this->appname);
 		if($this->appname != 'preferences')
 		{
