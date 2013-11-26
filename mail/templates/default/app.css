@@ -455,11 +455,11 @@ input[type=button] {
 	display: block;
 	display: -moz-inline-stack;
 	display: -moz-box;
-	width: 99%;
+	/*width: 99%;*/
 	overflow: hidden;
 	overflow-y: auto;
-	left: 3px;
-	right: 3px;
+	left: 8px;
+	right: 8px;
 }
 .mailDisplayContainer {
 	position: fixed;
@@ -506,8 +506,13 @@ input[type=button] {
 	filter: Alpha(opacity=100);
 }
 */
+div.mail-display > div:first-parent > div.first-parent 
+{
+	height: 99%;
+}
 .mailDisplayHeaders {
 	overflow: hidden;
+	right: 8px;
 }
 .mailDisplayHeaderSection {
 	position: absolute;
@@ -520,6 +525,9 @@ div.mailDisplayHeaders > div:first-parent {
 div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailPreviewHeaders > span:first-child {
 	width: 7em;
 	display: inline-block;
+}
+#mail-display_toolbar {
+	display: inline-flex;
 }
 div.mailComposeHeaders > span:first-child {
 	width: 8em;

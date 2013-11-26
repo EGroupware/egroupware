@@ -60,8 +60,6 @@ class mail_compose
 	var $attachments;	// Array of attachments
 	var $preferences;	// the prefenrences(emailserver, username, ...)
 	var $preferencesArray;
-	var $bopreferences;
-	var $bosignatures;
 	var $displayCharset;
 	var $composeID;
 	var $sessionData;
@@ -77,7 +75,6 @@ class mail_compose
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		//$this->bosignatures	= new mail_signatures();
 		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
 
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
@@ -1098,25 +1095,6 @@ class mail_compose
 		//_debug_array($sel_options['signatureid'][$content['signatureid']]);
 		// end signature stuff
 
-		// stationery stuff; completely abandoned with the new database structure
-/*
-		$bostationery = new emailadmin_bostationery();
-		$selectStationeries = array(
-			'0' => lang('no stationery')
-		);
-		$showStationaries = false;
-		$validStationaries = $bostationery->get_valid_templates();
-		if (is_array($validStationaries) && count($validStationaries)>0)
-		{
-			$showStationaries = true;
-			$selectStationeries += $validStationaries;
-		}
-		//_debug_array($selectStationeries);
-		$sel_options['stationeryID'] = $selectStationeries;
-		// if ID of signature Select Box is set, we allow for changing the sig onChange of the signatueSelect
-		$content['stationeryID']  =  ($presetStationery ? $presetStationery : 0);
-*/
-		// end stationery stuff
 		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;

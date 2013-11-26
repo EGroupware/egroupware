@@ -814,40 +814,9 @@ class mail_hooks
 					egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
 					"','_blank',640,480,'yes')",
 			);
-			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
-				$linkData = array (
-					'menuaction' => 'mail.mail_uipreferences.index',
-				);
-				$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
-
-			}
-
-			if($preferences->ea_user_defined_signatures) {
-				$linkData = array (
-					'menuaction' => 'mail.mail_signatures.index',
-				);
-				$file['Manage Signatures'] = egw::link('/index.php',$linkData);
-			}
 
 			if ($preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
 
-/*
-			if(empty($preferences['prefpreventmanagefolders']) || $preferences['prefpreventmanagefolders'] == 0) {
-				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'mail.uipreferences.listFolder'));
-			}
-			if (is_object($preferences)) $ogServer = $preferences->getOutgoingServer(0);
-			if(($ogServer instanceof emailadmin_smtp)) {
-				if($ogServer->editForwardingAddress)
-				{
-					$linkData = array
-						(
-							'menuaction'    => 'mail.uipreferences.editForwardingAddress',
-						);
-					//if(empty($preferences['prefpreventforwarding']) || $preferences['prefpreventforwarding'] == 0)
-					$file['Forwarding']     = egw::link('/index.php',$linkData);
-				}
-			}
-*/
 			display_sidebox($appname,$menu_title,$file);
 			unset($file);
 

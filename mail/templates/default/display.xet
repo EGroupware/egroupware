@@ -3,7 +3,7 @@
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<vbox class="mailDisplay mailDisplayHeaderSection" width="100%">
+		<vbox class="mailDisplay mailDisplayHeaderSection" >
 			<toolbar id="toolbar"/>
 			<hbox class="mailDisplayHeaders" disabled="!@FROM" width="100%">
 				<description value="From"/>

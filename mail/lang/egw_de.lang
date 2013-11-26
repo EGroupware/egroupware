@@ -1,0 +1,15 @@
+%1 attachments	mail	de	%1 Anhänge
+%1 is not writable by you!	mail	de	%1 ist nicht schreibbar für Sie
+(no subject)	mail	de	(Kein Betreff)
+(not connected)	mail	de	(nicht verbunden)
+(select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von EMails durch anklicken der Zeile)
+(with checkbox enforced)	mail	de	(mit Checkbox)
+acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
+acl rights retrived successfully!	mail	de	Zugriffskontrollrechte erfolgreich gelesen!
+activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
+add to addressbook	mail	de	zum Adressbuch hinzuügen
+all available info	admin	de	alle verfügbaren Informationen
+all of	mail	de	alle
+allow external images	mail	de	Erlaube Bilder von externen Bildquellen
+allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML EMails
+allways a new window	mail	de	immer in einem neuen Fenster
