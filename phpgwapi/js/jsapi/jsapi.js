@@ -236,7 +236,7 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 	}
 
 	// etemplate2 specific to avoid reloading whole page
-	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication && etemplate2.getByApplication(_app).hasOwnProperty())
+	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
 	{
 		var et2 = etemplate2.getByApplication(_app);
 		for(var i = 0; i < et2.length; i++)
