@@ -362,8 +362,6 @@ class preferences_settings
 							break;
 					}
 				}
-				// need to call fix_encoded_options manually, as id is not matching because of autorepeat
-				etemplate_widget_menupopup::fix_encoded_options($setting['values']);
 				$sel_options[$setting['name']] = $setting['values'];
 			}
 			if ($type == 'user')
