@@ -694,6 +694,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				else
 				{
 					$action['data']['nm_action'] = 'location';
+					if(!$action['target'] && strpos($action['url'],'menuaction') > 0)
+					{
+						// It would be better if app set target, but we'll auto-detect if not
+						list(,$menuaction) = explode('=',$action['url']);
+						list($app) = explode('.',$menuaction);
+						$action['data']['target'] = $app;
+					}
 				}
 			}
 			if ($action['egw_open'])
