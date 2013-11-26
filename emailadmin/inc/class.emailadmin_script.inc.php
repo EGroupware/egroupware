@@ -552,7 +552,7 @@ class emailadmin_script {
 				if ($supportsbody && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
 				$newscriptfoot .= "\n";
 				$pcount = $pcount+2;
-				error_log(__CLASS__."::".__METHOD__.__LINE__.array2string($newscriptfoot));
+				//error_log(__CLASS__."::".__METHOD__.__LINE__.array2string($newscriptfoot));
 			}
 		}
 
