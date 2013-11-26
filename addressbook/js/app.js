@@ -62,6 +62,12 @@ app.classes.addressbook = AppJS.extend(
 		{
 			this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
 			this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
+
+			// Instanciate infolog JS too - wrong app, so it won't be done automatically
+			if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
+			{
+				window.app.infolog = new window.app.classes.infolog();
+			}
 		}
 
 		jQuery('select[id*="adr_one_countrycode"]').each(function() {
@@ -234,7 +240,7 @@ app.classes.addressbook = AppJS.extend(
 	show_custom_country: function(selectbox)
 	{
 		if(!selectbox) return;
-		var custom_field_name = selectbox.name.replace("countrycode", "countryname");
+		var custom_field_name = selectbox.id.replace("countrycode", "countryname");
 		var custom_field = document.getElementById(custom_field_name);
 		if(custom_field && selectbox.value == "-custom-") {
 			custom_field.style.display = "inline";
