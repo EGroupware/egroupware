@@ -69,11 +69,33 @@ function SubmitForm(a)
 						{lang_if_mail_header}
 					</td>
 					<td>
-						<input class="input_text" TYPE="text" NAME="field" SIZE="20" value="{value_field}"> 
+						<input class="input_text" TYPE="text" NAME="field" SIZE="20" value="{value_field}">
 						{lang_contains}<sup><small>(*)</small></sup>
 						<input class="input_text" TYPE="text" NAME="field_val" SIZE="30" value="{value_field_val}">
 					</td>
 				</tr>
+				<!-- BEGIN BodyTransform -->
+				<tr CLASS="sieveRowActive">
+					<td>
+						{lang_if_mail_body_transform}
+					</td>
+					<td>
+						{bodytransform_select}
+						{lang_contains}
+						<input class="input_text" TYPE="text" NAME="field_bodytransform" SIZE="30" value="{value_field_bodytransform}">
+					</td>
+				</tr>
+				<tr CLASS="sieveRowActive">
+					<td>
+						{lang_if_mail_body_content}
+					</td>
+					<td>
+						{ctype_select}
+						/
+						<input class="input_text" placeholder="{lang_placeholder_ctype_val}" TYPE="text" NAME="field_ctype_val" SIZE="20" value="{value_ctype_val}">
+					</td>
+				</tr>
+				<!-- END BodyTransform -->
 			</table>
 (*) <small>{lang_wildcards_can_be_used}</small>
 	</fieldset>

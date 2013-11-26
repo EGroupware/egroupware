@@ -60,7 +60,7 @@
 			$this->displayCharset	= $GLOBALS['egw']->translation->charset();
 
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
- 			$this->botranslation	=& $GLOBALS['egw']->translation;
+			$this->botranslation	=& $GLOBALS['egw']->translation;
 
 			$profileID = 0;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
@@ -189,6 +189,28 @@
 				if ($started) $complete .= $andor;
 				$complete .= "message " . $xthan . $rule['size'] . "KB'";
 				$started = 1;
+			}
+			if (!empty($rule['field_bodytransform']))
+			{
+				if ($started) $newruletext .= ", ";
+				$btransform	= " :raw ";
+				$match = ' :contains';
+				if ($rule['bodytransform'])	$btransform = " :text ";
+				if (preg_match("/\*|\?/", $rule['field_bodytransform'])) $match = ':matches';
+				if ($rule['regexp']) $match = ':regex';
+				$complete .= " body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
+				$started = 1;
+
+			}
+			if ($rule['ctype']!= '0' && !empty($rule['ctype']))
+			{
+				if ($started) $newruletext .= ", ";
+				$btransform_ctype = emailadmin_script::$btransform_ctype_array[$rule['ctype']];
+				$ctype_subtype = "";
+				if ($rule['field_ctype_val']) $ctype_subtype = "/";
+				$complete .= " body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
+				$started = 1;
+				//error_log(__CLASS__."::".__METHOD__.array2string(emailadmin_script::$btransform_ctype_array));
 			}
 			if (!$rule['unconditional']) $complete .= ' '.lang('THEN').' ';
 			if (preg_match("/folder/i",$rule['action']))
@@ -331,8 +353,13 @@
 			$msg = html::purify($msg);
 			// initialize the template
 			$this->t->set_file(array("filterForm" => "sieveEditForm.tpl"));
+			$this->t->set_block('filterForm','BodyTransform');
+			$this->t->set_var('ctype_select', html::select('ctype', $_ruleData['ctype'], emailadmin_script::$btransform_ctype_array,true));
+			$this->t->set_var('bodytransform_select', html::select('bodytransform', $_ruleData['bodytransform'], array("raw", "text",),true));
 			$this->t->set_block('filterForm','main');
 			$this->t->set_var('message',$msg);
+			$objSieve = new emailadmin_sieve($this->bosieve);
+			if (!in_array('body', $objSieve->_capability['extensions']) && !in_array('BODY', $objSieve->_capability['extensions'])) $this->t->set_var('BodyTransform','');
 			$linkData = array
 			(
 				'menuaction'	=> 'felamimail.uisieve.editRule',
@@ -362,6 +389,8 @@
 				$this->t->set_var('value_subject',htmlspecialchars($_ruleData['subject'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('gthan_selected'.intval($_ruleData['gthan']),'selected');
 				$this->t->set_var('value_size',$_ruleData['size']);
+				$this->t->set_var('value_field_bodytransform',htmlspecialchars($_ruleData['field_bodytransform'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
+				$this->t->set_var('value_ctype_val',htmlspecialchars($_ruleData['field_ctype_val'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('value_field',htmlspecialchars($_ruleData['field'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('value_field_val',htmlspecialchars($_ruleData['field_val'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('checked_action_'.$_ruleData['action'],'checked');
@@ -423,6 +452,11 @@
 				$newRule['size']	= intval(get_var('size',array('POST')));
 				$newRule['continue']	= get_var('continue',array('POST'));
 				$newRule['gthan']	= intval(get_var('gthan',array('POST')));
+				$newRule['bodytransform']	= intval(get_var('bodytransform',array('POST')));
+				$newRule['field_bodytransform']	= get_var('field_bodytransform',array('POST'));
+				$newRule['ctype']	= intval(get_var('ctype',array('POST')));
+				$newRule['field_ctype_val']	= get_var('field_ctype_val',array('POST'));
+				$newRule['ctype']	= intval(get_var('ctype',array('POST')));
 				$newRule['anyof']	= intval(get_var('anyof',array('POST')));
 				$newRule['keep']	= get_var('keep',array('POST'));
 				$newRule['regexp']	= get_var('regexp',array('POST'));
@@ -466,7 +500,7 @@
 						$newRule[action]	= 'discard';
 						break;
 				}
-				if($newRule['action'] && !($_POST['cancel'])) {
+				if($newRule['action']) {
 
 					$this->rules[$ruleID] = $newRule;
 
@@ -477,7 +511,7 @@
 					}
 
 					$this->saveSessionData();
-				} else if(!$newRule['action']) {
+				} else {
 					$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 					$error++;
 				}
@@ -496,18 +530,7 @@
 				{
 					$ruleID = get_var('ruleID',Array('GET'));
 					$ruleData = $this->rules[$ruleID];
-					if (!empty($this->rules[$ruleID]['bodytransform']) ||
-						!empty($this->rules[$ruleID]['field_bodytransform']) ||
-						!empty($this->rules[$ruleID]['ctype']) ||
-						!empty($this->rules[$ruleID]['field_ctype_val']))
-					{
-						$msg = lang("Warrning:This rule that you are trying to modify, is created by trunk version mail/felamimail app, any modification with old felamimail may cause destroying the rule");
-					}
-					else
-					{
-						$msg='';
-					}
-					$this->displayRule($ruleID, $ruleData, $msg);
+					$this->displayRule($ruleID, $ruleData);
 				}
 				else
 				{
@@ -879,14 +902,7 @@
 					{
 						$this->t->set_var('ruleCSS','sieveRowInActive');
 					}
-					$this->t->set_var('msg','');
-					if (!empty($this->rules[$ruleID]['bodytransform']) ||
-						!empty($this->rules[$ruleID]['field_bodytransform']) ||
-						!empty($this->rules[$ruleID]['ctype']) ||
-						!empty($this->rules[$ruleID]['field_ctype_val']))
-					{
-						$this->t->set_var('ruleCSS','NewSieveRule');
-					}
+					
 					$this->t->set_var('filter_text',htmlspecialchars($this->buildRule($rule),ENT_QUOTES,$GLOBALS['egw']->translation->charset()));
 					$this->t->set_var('ruleID',$ruleID);
 
@@ -1070,8 +1086,11 @@
 			$this->t->set_var("lang_if_message_size",lang('if message size'));
 			$this->t->set_var("lang_less_than",lang('less than'));
 			$this->t->set_var("lang_greater_than",lang('greater than'));
+			$this->t->set_var("lang_placeholder_ctype_val",lang('for eg.:mpeg'));
 			$this->t->set_var("lang_kilobytes",lang('kilobytes'));
 			$this->t->set_var("lang_if_mail_header",lang('if mail header'));
+			$this->t->set_var("lang_if_mail_body_transform",lang('if mail body message type'));
+			$this->t->set_var("lang_if_mail_body_content",lang('if mail body content / attachment type'));
 			$this->t->set_var("lang_file_into",lang('file into'));
 			$this->t->set_var("lang_forward_to_address",lang('forward to address'));
 			$this->t->set_var("lang_send_reject_message",lang('send a reject message'));
