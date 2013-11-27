@@ -7,6 +7,7 @@ always show html emails	mail	zh-tw	都用HTML顯示郵件
 any of	mail	zh-tw	任意的
 any status	mail	zh-tw	任意狀態
 by date	mail	zh-tw	按日期
+compose	mail	zh-tw	建立
 compress folder	mail	zh-tw	壓縮資料夾
 contains	mail	zh-tw	包含
 date(newest first)	mail	zh-tw	日期(新的在前)
@@ -67,6 +68,7 @@ refresh time in minutes	mail	zh-tw	重新整理的分鐘數
 reject with	mail	zh-tw	拒絕
 remove immediately	mail	zh-tw	立刻移除
 replied	mail	zh-tw	已回信
+replyto	mail	zh-tw	回覆到
 row order style	mail	zh-tw	列順序風格
 save all	mail	zh-tw	儲存全部
 sent folder	mail	zh-tw	寄件備份

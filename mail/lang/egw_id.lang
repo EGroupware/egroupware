@@ -6,6 +6,7 @@ all of	mail	id	semua
 any of	mail	id	sembarang
 any status	mail	id	status apapun
 by date	mail	id	menurut tanggal
+compose	mail	id	Tulis
 compress folder	mail	id	Mampatkan folder
 contains	mail	id	mengandung
 date(newest first)	mail	id	Tanggal (terbaru)
@@ -14,6 +15,7 @@ default sorting order	mail	id	Pengurutan bawaan
 deleted	mail	id	terhapus
 discard	mail	id	buang
 draft folder	mail	id	draft folder
+drafts	mail	id	Drafts
 emailaddress	admin	id	alamat email
 empty trash	mail	id	kosongkan trash
 error saving %1!	mail	id	Error menyimpan %1!
@@ -37,6 +39,7 @@ if	mail	id	IF
 imap server	mail	id	IMAP Server
 importance	mail	id	Importance
 inbox	mail	id	INBOX
+junk	mail	id	Junk
 later	mail	id	Later
 less than	mail	id	kurang dari
 mail settings	mail	id	Pengaturan Mail
@@ -55,8 +58,10 @@ quicksearch	mail	id	Cari cepat
 reject with	mail	id	tolak dengan
 remove immediately	mail	id	Buang segera
 replied	mail	id	dibalas
+replyto	mail	id	ReplyTo
 save all	mail	id	Simpan semuanya
 sender	mail	id	Pengirim
+sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
 signature	mail	id	Tandatangan
 size(...->0)	mail	id	Ukuran (...->0)
@@ -66,8 +71,10 @@ sort order	mail	id	Sort Order
 subject(a->z)	mail	id	Subyek (A->Z)
 subject(z->a)	mail	id	Subyek (Z->A)
 template folder	mail	id	Folder Templat
+templates	mail	id	Templat
 text/plain	mail	id	text/plain
 then	mail	id	THEN
+trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
 unread	mail	id	Tak dibaca
 urgent	mail	id	mendesak

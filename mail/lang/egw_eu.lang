@@ -4,6 +4,7 @@ all of	mail	eu	guztiak
 allways a new window	mail	eu	beti leiho berri bat
 always show html emails	mail	eu	Betik erakutsi HTML  formatuan emailak
 any of	mail	eu	batekin
+compose	mail	eu	Idatzi
 compress folder	mail	eu	Karpeta konprimatu
 contains	mail	eu	dauka
 date(newest first)	mail	eu	Data (berriak lehenik)
@@ -52,6 +53,7 @@ quicksearch	mail	eu	Bilaketa azkarra
 refresh time in minutes	mail	eu	Eguneratze denbora tartea minututan
 remove immediately	mail	eu	ezabatu bat batean
 replied	mail	eu	erantzunda
+replyto	mail	eu	Erantzun
 save all	mail	eu	Gorde dena
 sent folder	mail	eu	Bidalitakoen karpeta
 signature	mail	eu	Sinadura

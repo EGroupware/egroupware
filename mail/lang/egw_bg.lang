@@ -8,6 +8,7 @@ always show html emails	mail	bg	Винаги показва HTML съобщен�
 any of	mail	bg	някой от
 any status	mail	bg	без значение
 by date	mail	bg	по дата
+compose	mail	bg	Ново съобщение
 compress folder	mail	bg	Компресиране на папката
 contains	mail	bg	съдържа
 date(newest first)	mail	bg	По дата (първо най-новите)
@@ -30,6 +31,7 @@ don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
 draft folder	mail	bg	папка "Чернови"
+drafts	mail	bg	Чернови
 email notification update failed	mail	bg	Актуализацията на e-mail известието беше неуспешна.
 emailaddress	admin	bg	e-mail адрес
 empty trash	mail	bg	изпразване на кошчето
@@ -54,6 +56,7 @@ html	mail	bg	HTML
 if	mail	bg	АКО
 imap server	mail	bg	IMAP сървър
 inbox	mail	bg	Входящи
+junk	mail	bg	Нежелани
 less than	mail	bg	по-малко от
 mail settings	mail	bg	Настройки на пощата
 mark as deleted	mail	bg	Маркирай като изтрито
@@ -81,7 +84,9 @@ refresh time in minutes	mail	bg	Време на опресняване в мин
 reject with	mail	bg	откажи с
 remove immediately	mail	bg	Премахни незабавно
 replied	mail	bg	изпратен отговор
+replyto	mail	bg	Отговор До
 row order style	mail	bg	Стил на изгледа
+sent	mail	bg	Изпратени
 sent folder	mail	bg	Папка "Изпратени"
 sieve script name	mail	bg	име на sieve скрипт
 signature	mail	bg	Подпис
@@ -92,8 +97,10 @@ start new messages with mime type plain/text or html?	mail	bg	Започва н�
 subject(a->z)	mail	bg	Тема (A->Z)
 subject(z->a)	mail	bg	Тема (Z->A)
 template folder	mail	bg	Папка "Шаблони"
+templates	mail	bg	Шаблони
 text/plain	mail	bg	текст
 then	mail	bg	ТОГАВА
+trash	mail	bg	Кошче
 trash folder	mail	bg	Папка "Кошче"
 unread	mail	bg	Непрочетено
 urgent	mail	bg	спешно

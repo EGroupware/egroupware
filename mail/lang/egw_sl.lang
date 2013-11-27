@@ -9,6 +9,7 @@ always show html emails	mail	sl	Vedno prikaži HTML sporočila
 any of	mail	sl	Katerikoli od
 any status	mail	sl	Katerikoli status
 by date	mail	sl	Po datumu
+compose	mail	sl	Novo sporočilo
 compress folder	mail	sl	Stisni mapo
 contains	mail	sl	Vsebuje
 date(newest first)	mail	sl	Datum (najprej novejši)
@@ -35,6 +36,7 @@ don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
 don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
 don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
 draft folder	mail	sl	Mapa Osnutki
+drafts	mail	sl	Osnutki
 email notification update failed	mail	sl	Posodobitev obvestila elektronske pošte ni uspelo
 emailaddress	admin	sl	Poštni naslov
 empty trash	mail	sl	Izprazni smeti
@@ -62,6 +64,7 @@ html	mail	sl	HTML
 if	mail	sl	IF
 imap server	mail	sl	Strežnik IMAP
 inbox	mail	sl	Prejeto
+junk	mail	sl	Smeti
 later	mail	sl	Pozneje
 less than	mail	sl	Manj kot
 mail settings	mail	sl	E-poštne nastavitve
@@ -94,9 +97,11 @@ refresh time in minutes	mail	sl	Osvežitveni čas v minutah
 reject with	mail	sl	Zavrni z
 remove immediately	mail	sl	Takoj odstrani
 replied	mail	sl	Odgovorjeno
+replyto	mail	sl	Odgovori na
 row order style	mail	sl	Slog zaporednih vrstic
 save all	mail	sl	Shrani vse
 save as	mail	sl	Shrani kot
+sent	mail	sl	Poslano
 sent folder	mail	sl	Mapa s poslanimi
 sieve script name	mail	sl	Ime skripte sieve
 signature	mail	sl	Podpis
@@ -108,10 +113,12 @@ start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporo
 subject(a->z)	mail	sl	Zadeva (A->Z)
 subject(z->a)	mail	sl	Zadeva (Z->A)
 template folder	mail	sl	Mapa s predlogami
+templates	mail	sl	Predloge
 text/plain	mail	sl	Navadno besedilo
 the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati tega sporočila.
 then	mail	sl	THEN
 there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
+trash	mail	sl	Koš
 trash folder	mail	sl	Mapa Koš
 unread	mail	sl	Neprebrano
 urgent	mail	sl	Nujno

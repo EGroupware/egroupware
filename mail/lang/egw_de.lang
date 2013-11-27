@@ -173,6 +173,7 @@ reject with	mail	de	zurückweisen mit
 remove immediately	mail	de	sofort löschen
 replied	mail	de	beantwortet
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
+replyto	mail	de	Antwort an
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 restrict acl management	admin	de	ACL Verwaltung beschränken
 row order style	mail	de	Spaltenanordnung

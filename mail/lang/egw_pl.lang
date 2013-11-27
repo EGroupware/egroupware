@@ -9,6 +9,7 @@ always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 by date	mail	pl	Według daty
+compose	mail	pl	Utwórz
 compress folder	mail	pl	Kompaktuj folder
 contains	mail	pl	zawiera
 date(newest first)	mail	pl	Data (od najnowszych)
@@ -35,6 +36,7 @@ don't use sent	mail	pl	Nie używaj Wysłanych
 don't use template folder	mail	pl	Nie używaj folderu szablonów
 don't use trash	mail	pl	Nie używaj Kosza
 draft folder	mail	pl	folder szkiców
+drafts	mail	pl	Szkice
 email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
 emailaddress	admin	pl	adres_email
 empty trash	mail	pl	opróżnij kosz
@@ -64,6 +66,7 @@ if	mail	pl	JEŻELI
 imap server	mail	pl	Serwer IMAP
 importance	mail	pl	ważność
 inbox	mail	pl	ODEBRANE
+junk	mail	pl	Śmieci
 later	mail	pl	Później
 less than	mail	pl	mniej niż
 mail settings	mail	pl	Ustawienia email
@@ -97,9 +100,11 @@ refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
 remove immediately	mail	pl	usuń natychmiast
 replied	mail	pl	odpowiedziano
+replyto	mail	pl	Odpowiedz
 row order style	mail	pl	styl porządku wierszy
 save all	mail	pl	Zapisz wszystko
 sender	mail	pl	nadawca
+sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
 sieve script name	mail	pl	Nazwa skryptu sita ('sieve')
 signature	mail	pl	Sygnaturka
@@ -111,10 +116,12 @@ start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości m
 subject(a->z)	mail	pl	Temat (A->Z)
 subject(z->a)	mail	pl	Temat (Z->A)
 template folder	mail	pl	Katalog szablnów
+templates	mail	pl	Szablony
 text/plain	mail	pl	zwykły tekst
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
 then	mail	pl	WTEDY
 there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
+trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
 unread	mail	pl	nieprzeczytane
 urgent	mail	pl	pilne

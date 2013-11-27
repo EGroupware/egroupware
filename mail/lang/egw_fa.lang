@@ -4,6 +4,7 @@ all of	mail	fa	همه
 allways a new window	mail	fa	همیشه پنجره جدید
 always show html emails	mail	fa	همیشه رایانامه های زنگام را نمایش بده
 any of	mail	fa	هرکدام از
+compose	mail	fa	نامه جدید
 compress folder	mail	fa	فشرده سازی پوشه
 contains	mail	fa	شامل است
 date(newest first)	mail	fa	تاریخ (جدیدها اول)
@@ -54,6 +55,7 @@ quicksearch	mail	fa	جستجوی سریع
 refresh time in minutes	mail	fa	زمان بازخوانی به دقیقه
 remove immediately	mail	fa	فورا حذف شود
 replied	mail	fa	پاسخ داده شده
+replyto	mail	fa	پاسخ به
 save all	mail	fa	ذخیره کردن همه
 sent folder	mail	fa	پوشه ارسال شده
 signature	mail	fa	امضاء

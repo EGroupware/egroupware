@@ -7,6 +7,7 @@ always show html emails	mail	el	Να εμφανίζονται πάντοτε τ�
 any of	mail	el	οποιοδήποτε
 any status	mail	el	οποιαδήποτε κατάσταση
 by date	mail	el	Βάσει ημερομηνίας
+compose	mail	el	Συνθέτω
 compress folder	mail	el	Φάκελος συμπίεσης
 contains	mail	el	περιέχει
 date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
@@ -64,6 +65,7 @@ refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
 reject with	mail	el	απόρριψη με
 remove immediately	mail	el	Άμεση μετακίνηση
 replied	mail	el	απαντήθηκε
+replyto	mail	el	Απάντησηστο
 row order style	mail	el	Στυλ ταξινόμησης σειράς
 save all	mail	el	Αποθήκευση όλων
 sent folder	mail	el	Φάκελος σταλθέντων

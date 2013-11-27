@@ -11,6 +11,7 @@ any status	mail	it	Qualsiasi stato
 attach users vcard at compose to every new mail	mail	it	allega la VCard dell'utente ogni volta che componi un nuovo messaggio
 available personal email-accounts/profiles	mail	it	Account email/Profili personali disponibili
 by date	mail	it	Per data
+compose	mail	it	Componi
 compress folder	mail	it	Comprimi cartella
 connection status	mail	it	Stato della connessione
 contains	mail	it	contiene
@@ -43,6 +44,7 @@ don't use sent	mail	it	Non usare Posta Inviata
 don't use template folder	mail	it	Non usare la cartella Modelli
 don't use trash	mail	it	Non usare il Cestino
 draft folder	mail	it	Cartella Bozze
+drafts	mail	it	Bozze
 email notification update failed	mail	it	L'aggiornamento della notifica email è fallita!
 emailaddress	admin	it	Indirizzo email
 empty trash	mail	it	svuota cestino
@@ -81,6 +83,7 @@ importance	mail	it	Importanza
 inbox	mail	it	Posta in arrivo
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	it	Inserisci la firma all'inizio del nuovo messaggio quando ne componi uno
 job	mail	it	compito
+junk	mail	it	Spazzatura
 later	mail	it	Più tardi
 less than	mail	it	meno di
 mail settings	mail	it	Impostazioni Mail
@@ -118,6 +121,7 @@ refresh time in minutes	mail	it	Tempo di aggiornamento in minuti
 reject with	mail	it	Rifiuta con
 remove immediately	mail	it	Rimuovi immediatamente
 replied	mail	it	risposto
+replyto	mail	it	Rispondi A
 required pear class mail/mimedecode.php not found.	mail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata
 row order style	mail	it	Stile dell'ordinameno per righe
 save all	mail	it	Salva tutti
@@ -127,6 +131,7 @@ saving of message %1 succeeded. check folder %2.	mail	it	Salvataggio del messagg
 selected	mail	it	selezionato
 send message and move to send folder (if configured)	mail	it	Invia messaggio e spostalo nella cartella della posta inviata
 sender	mail	it	Mittente
+sent	mail	it	Inviata
 sent folder	mail	it	Cartella Posta Inviata
 show test connection section and control the level of info displayed?	mail	it	Mostrare la sezione di Test della connessione e controllare il livello delle informazioni mostrate
 sieve connection status	mail	it	Salva lo stato della connessione
@@ -142,6 +147,7 @@ subject(a->z)	mail	it	Oggetto (A->Z)
 subject(z->a)	mail	it	Oggetto (Z->A)
 successfully connected	mail	it	Connesso con successo
 template folder	mail	it	Cartella dei modelli
+templates	mail	it	Modelli
 test connection	mail	it	Prova connessione attiva
 test connection and display basic information about the selected profile	mail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
 text/plain	mail	it	Text/plain
@@ -149,6 +155,7 @@ the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a i
 then	mail	it	DI
 there is no imap server configured.	mail	it	Non c'è alcun server IMAP configurato!
 to do	mail	it	da fare
+trash	mail	it	Cestino
 trash folder	mail	it	Cestino
 trying to recover from session data	mail	it	Prova di recupero dai dati di sessione
 unread	mail	it	da leggere

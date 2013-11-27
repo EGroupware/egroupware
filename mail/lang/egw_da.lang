@@ -1,6 +1,7 @@
 (no subject)	mail	da	(ingen emne)
 add to addressbook	mail	da	tilføj til adressebog
 always show html emails	mail	da	Vis altid HTML e-mails
+compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
 contains	mail	da	indeholder
 date(newest first)	mail	da	Dato (nyeste først)
@@ -42,6 +43,7 @@ quicksearch	mail	da	Hurtig søg.
 refresh time in minutes	mail	da	Opdaterings interval i minutter
 remove immediately	mail	da	Fjern nu
 replied	mail	da	Besvaret
+replyto	mail	da	Besvar Til
 save all	mail	da	Gem alle
 sent folder	mail	da	Sendt Mappe
 signature	mail	da	Signatur

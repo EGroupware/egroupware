@@ -12,6 +12,7 @@ any status	mail	sk	Všetko
 attach users vcard at compose to every new mail	mail	sk	Priložiť používateľovu vizitku VCard pri tvorbe každej novej správy
 available personal email-accounts/profiles	mail	sk	Dostupné osobné e-mailové účty/profily
 by date	mail	sk	podľa dátumu
+compose	mail	sk	Nová správa
 compress folder	mail	sk	Zhutniť priečinok
 connection status	mail	sk	Stav pripojenia
 contains	mail	sk	obsahuje
@@ -44,6 +45,7 @@ don't use sent	mail	sk	Nepoužívať [Odoslana pošta]
 don't use template folder	mail	sk	Nepoužívať [Šablóny]
 don't use trash	mail	sk	Nepoužívať [Odpadkový kôš]
 draft folder	mail	sk	Priečinok návrhov
+drafts	mail	sk	Návrhy
 email notification update failed	mail	sk	Aktualizácia potvrdenia e-mailu zlyhala
 emailaddress	admin	sk	E-mailová adresa
 empty trash	mail	sk	Vyprázdniť Odpadkový kôš
@@ -82,6 +84,7 @@ importance	mail	sk	Dôležitosť
 inbox	mail	sk	Doručená pošta
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	sk	vložiť podpis na vrch novej správy (alebo odpovede) pri otvorení okna pre úpravu (nemusí sa vám podariť meniť podpisy)
 job	mail	sk	úloha
+junk	mail	sk	Spam
 later	mail	sk	neskôr
 less than	mail	sk	menej než
 mail	mail	sk	E-mail
@@ -120,6 +123,7 @@ refresh time in minutes	mail	sk	Čas obnovovania (v minútach)
 reject with	mail	sk	Odmietnuť ako
 remove immediately	mail	sk	Odstrániť ihneď
 replied	mail	sk	Zodpovedané
+replyto	mail	sk	Odpovedať (komu)
 required pear class mail/mimedecode.php not found.	mail	sk	Nenašla sa požadovaná trieda PEAR Mail / mimeDecode.php
 row order style	mail	sk	Štýl usporiadania riadkov
 save all	mail	sk	Uložiť všetko
@@ -130,6 +134,7 @@ saving of message %1 succeeded. check folder %2.	mail	sk	Ukladanie správy %1 sa
 selected	mail	sk	vybrané
 send message and move to send folder (if configured)	mail	sk	Odoslať správu a presunúť ju do priečinka Odoslanej pošty
 sender	mail	sk	Odosielateľ
+sent	mail	sk	Odoslaná pošta
 sent folder	mail	sk	Priečinok Odoslaná pošta
 show test connection section and control the level of info displayed?	mail	sk	Zobraziť sekciu Test pripojenia a ovládanie úrovne zobrazovaných informácií?
 sieve connection status	mail	sk	Stav spojenia Sieve
@@ -144,6 +149,7 @@ subject(a->z)	mail	sk	Predmet (A->Z)
 subject(z->a)	mail	sk	Predmet (Z->A)
 successfully connected	mail	sk	Pripojenie úspešné
 template folder	mail	sk	Priečinok Šablóny
+templates	mail	sk	Šablóny
 test connection	mail	sk	Testovať aktívne pripojenie
 test connection and display basic information about the selected profile	mail	sk	Testovať pripojenie a zobraziť základné informácie o vybranom profile
 text/plain	mail	sk	Čistý text
@@ -151,6 +157,7 @@ the mimeparser can not parse this message.	mail	sk	Analyzátor MIME nedokázal s
 then	mail	sk	TAK
 there is no imap server configured.	mail	sk	Nie je nastavený žiadny IMAP server.
 to do	mail	sk	úloha
+trash	mail	sk	Odpadkový kôš
 trash folder	mail	sk	Priečinok Odpadkový kôš
 trying to recover from session data	mail	sk	Pokušam sa obnoviť z údajov relácie
 unread	mail	sk	Neprečítané

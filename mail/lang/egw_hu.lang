@@ -9,6 +9,7 @@ always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
 by date	mail	hu	dátum szerint
+compose	mail	hu	Szerkeszt
 compress folder	mail	hu	Mappa tömörítése
 contains	mail	hu	tartalmaz
 date(newest first)	mail	hu	Dátum (újak elsőnek)
@@ -35,6 +36,7 @@ don't use sent	mail	hu	Ne használja a 'Elküldött' mappát
 don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
 don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
 draft folder	mail	hu	vázlat mappa
+drafts	mail	hu	Piszkozatok
 email notification update failed	mail	hu	e-mail értesítő frissítés mező
 emailaddress	admin	hu	E-Mail cím
 empty trash	mail	hu	Szemetes ürítése
@@ -62,6 +64,7 @@ if	mail	hu	HA
 imap server	mail	hu	IMAP szerver
 importance	mail	hu	Fontosság
 inbox	mail	hu	Bejövő
+junk	mail	hu	Spam
 later	mail	hu	Később
 less than	mail	hu	kisebb mint
 mail settings	mail	hu	eMail beállítások
@@ -93,9 +96,11 @@ refresh time in minutes	mail	hu	Frissítési időintervallum percben
 reject with	mail	hu	elutasítás
 remove immediately	mail	hu	Azonnali eltávolítás
 replied	mail	hu	megválaszolt
+replyto	mail	hu	Válasz
 row order style	mail	hu	sorok rendezése
 save all	mail	hu	Összes mentése
 sender	mail	hu	Feladó
+sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
 sieve script name	mail	hu	sieve szűrő szkript neve
 signature	mail	hu	Aláírás
@@ -106,10 +111,12 @@ start new messages with mime type plain/text or html?	mail	hu	Új üzenet írás
 subject(a->z)	mail	hu	Tárgy (A->Z)
 subject(z->a)	mail	hu	Tárgy (Z->A)
 template folder	mail	hu	Sablonok mappa
+templates	mail	hu	Sablonok
 text/plain	mail	hu	szöveg
 the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
 then	mail	hu	AKKOR
 there is no imap server configured.	mail	hu	Nincs IMAP szerver beállítva.
+trash	mail	hu	Törölt üzenetek
 trash folder	mail	hu	"Szemetes" mappa
 unread	mail	hu	Olvasatlan
 urgent	mail	hu	sürgős

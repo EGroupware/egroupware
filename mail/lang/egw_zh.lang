@@ -8,6 +8,7 @@ always show html emails	mail	zh	总是显示HTML邮件
 any of	mail	zh	任何
 any status	mail	zh	任何状态
 by date	mail	zh	以日期
+compose	mail	zh	撰写
 compress folder	mail	zh	压缩文件夹
 contains	mail	zh	包含
 date(newest first)	mail	zh	日期 (最近邮件优先)
@@ -70,6 +71,7 @@ refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
 remove immediately	mail	zh	立刻删除
 replied	mail	zh	已回复
+replyto	mail	zh	回复到
 row order style	mail	zh	行排序类型
 save all	mail	zh	保存所有
 sent folder	mail	zh	发件夹

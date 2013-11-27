@@ -1,6 +1,7 @@
 (no subject)	mail	hr	(nema teme)
 add to addressbook	mail	hr	dodaj u adrersar
 always show html emails	mail	hr	Uvijek prikaži HTML e-mailove
+compose	mail	hr	Pisanje nove poruke
 compress folder	mail	hr	Smanjii mapu
 contains	mail	hr	sadrži
 date(newest first)	mail	hr	po datumu (noviji prvo)
@@ -42,6 +43,7 @@ quicksearch	mail	hr	Brza pretraga
 refresh time in minutes	mail	hr	Obnovi vrijeme u minutama
 remove immediately	mail	hr	Obriši odmah
 replied	mail	hr	odgovoreno
+replyto	mail	hr	Odgovori
 save all	mail	hr	Spremi sve
 sent folder	mail	hr	Mapa poslano
 signature	mail	hr	Potpis

@@ -4,6 +4,7 @@ all of	mail	pt	todos de
 allways a new window	mail	pt	Sempre numa nova janela
 always show html emails	mail	pt	Exibir sempre mensagens HTML
 any of	mail	pt	algum de
+compose	mail	pt	Compor
 compress folder	mail	pt	Comprimir pasta
 contains	mail	pt	Contém
 date(newest first)	mail	pt	Data (+ recente primeiro)
@@ -53,6 +54,7 @@ quicksearch	mail	pt	Pesquisa simples
 refresh time in minutes	mail	pt	Actualizar (em minutos)
 remove immediately	mail	pt	Eliminar imediatamente
 replied	mail	pt	respondido
+replyto	mail	pt	Responder a
 save all	mail	pt	Guardar tudo
 sent folder	mail	pt	Pasta Enviados
 signature	mail	pt	Assinatura

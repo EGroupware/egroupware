@@ -4,6 +4,7 @@ all of	mail	no	alle av
 allways a new window	mail	no	altid et nytt vindu
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
+compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
 contains	mail	no	inneholder
 date(newest first)	mail	no	Dato (nyeste først)
@@ -53,6 +54,7 @@ quicksearch	mail	no	Hurtigsøk
 refresh time in minutes	mail	no	Oppdateringstid i minutter
 remove immediately	mail	no	Fjern umiddelbart
 replied	mail	no	svart
+replyto	mail	no	SvarTil
 save all	mail	no	Lagre alle
 sent folder	mail	no	Sendt Mappe
 signature	mail	no	Signatur

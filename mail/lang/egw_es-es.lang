@@ -9,6 +9,7 @@ always show html emails	mail	es-es	Mostrar siempre los correos HTML
 any of	mail	es-es	cualquiera de
 any status	mail	es-es	cualquier estado
 by date	mail	es-es	por fecha
+compose	mail	es-es	Redactar
 compress folder	mail	es-es	Comprimir carpeta
 contains	mail	es-es	contiene
 date(newest first)	mail	es-es	Fecha (la más reciente primero)
@@ -35,6 +36,7 @@ don't use sent	mail	es-es	No usar Enviados
 don't use template folder	mail	es-es	No usar la carpeta de plantillas
 don't use trash	mail	es-es	No usar Papelera
 draft folder	mail	es-es	Carpeta borradores
+drafts	mail	es-es	Borradores
 email notification update failed	mail	es-es	falló la actualización de la notificación de correo electrónico
 emailaddress	admin	es-es	dirección de correo electrónico
 empty trash	mail	es-es	Vaciar papelera
@@ -64,6 +66,7 @@ imap server	mail	es-es	Servidor IMAP
 importance	mail	es-es	Importancia
 inbox	mail	es-es	Bandeja de entrada
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	es-es	inserte la firma en la parte superior del mensaje al abrir el diálogo de redactar (quizás no pueda cambiar la firma)
+junk	mail	es-es	Basura
 later	mail	es-es	Más tarde
 less than	mail	es-es	menor que
 mail settings	mail	es-es	Configuración del correo electrónico
@@ -96,10 +99,12 @@ refresh time in minutes	mail	es-es	Tiempo de refresco en minutos
 reject with	mail	es-es	rechazar con
 remove immediately	mail	es-es	Eliminar inmediatamente
 replied	mail	es-es	respondido
+replyto	mail	es-es	Responder A
 row order style	mail	es-es	estilo de ordenar filas
 save all	mail	es-es	Guardar todo
 save as	mail	es-es	Guardar como
 sender	mail	es-es	Remitente
+sent	mail	es-es	Enviados
 sent folder	mail	es-es	Carpeta de enviados
 sieve script name	mail	es-es	nombre del script sieve
 signature	mail	es-es	Firma
@@ -111,10 +116,12 @@ start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuev
 subject(a->z)	mail	es-es	Asunto (A->Z)
 subject(z->a)	mail	es-es	Asunto (Z->A)
 template folder	mail	es-es	Carpeta de plantillas
+templates	mail	es-es	Plantillas
 text/plain	mail	es-es	text/plain
 the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje
 then	mail	es-es	ENTONCES
 there is no imap server configured.	mail	es-es	No se ha configurado un servidor IMAP.
+trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
 unread	mail	es-es	No leído
 urgent	mail	es-es	urgente

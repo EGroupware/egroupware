@@ -17,6 +17,7 @@ attach vcard	mail	fr	Attacher la vcard
 available personal email-accounts/profiles	mail	fr	Profils et comptes emails personnels disponibles
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
+compose	mail	fr	Composer
 compress folder	mail	fr	Compresser le dossier
 configuration settings	mail	fr	Paramètres de configuration
 confirm attach message	mail	fr	Confirmer l'attachement au message
@@ -52,6 +53,7 @@ don't use sent	mail	fr	Ne pas utiliser Eléments envoyés
 don't use template folder	mail	fr	Ne pas utiliser le dossier des modèles
 don't use trash	mail	fr	Ne pas utiliser la Corbeille
 draft folder	mail	fr	dossier brouillon
+drafts	mail	fr	Projets
 email notification update failed	mail	fr	la mise à jour de la notification par email a échoué
 emailaddress	admin	fr	adresse email
 emailadmin: profilemanagement	mail	fr	eMailAdmin : gestion des profils
@@ -85,6 +87,7 @@ imap server	mail	fr	Serveur IMAP
 imap timeout	mail	fr	Timeout IMAP
 importance	mail	fr	Importance
 inbox	mail	fr	Boîte de réception
+junk	mail	fr	Junk
 later	mail	fr	Plus tard
 less than	mail	fr	Moins que
 mail settings	mail	fr	Réglages email
@@ -121,12 +124,14 @@ refresh time in minutes	mail	fr	Temps de rafraîchissement en minutes
 reject with	mail	fr	rejecter avec
 remove immediately	mail	fr	Enlever immédiatement
 replied	mail	fr	Répondu
+replyto	mail	fr	Répondre A
 row order style	mail	fr	style d'ordonnancement de ligne
 save all	mail	fr	Enregistrer tout
 save as	mail	fr	Enregistrer comme
 selected	mail	fr	sélectionné
 send message and move to send folder (if configured)	mail	fr	Envoyer le message et le déplacer vers le dossier des messages envoyés
 sender	mail	fr	Emetteur
+sent	mail	fr	Envoyer
 sent folder	mail	fr	Dossier contenant les messages envoyés
 sieve	mail	fr	sieve
 sieve connection status	mail	fr	Statut de connexion à Sieve
@@ -142,6 +147,7 @@ subject(a->z)	mail	fr	Sujet (A->Z)
 subject(z->a)	mail	fr	Sujet (Z->A)
 successfully connected	mail	fr	Connecté avec succès !
 template folder	mail	fr	Dossier de modèles
+templates	mail	fr	Templates
 test connection	mail	fr	Tester la connexion active
 test connection and display basic information about the selected profile	mail	fr	Tester la connexion et afficher des informations de base sur le profil sélectionné
 text/plain	mail	fr	text/plain
@@ -150,6 +156,7 @@ then	mail	fr	ALORS
 there is no imap server configured.	mail	fr	Il n'y a pas de serveur IMAP configuré.
 timeout on connections to your imap server	mail	fr	Timout sur les connexion à votre serveur IMAP
 to do	mail	fr	à faire
+trash	mail	fr	Corbeille
 trash folder	mail	fr	Dossier Corbeille
 unread	mail	fr	Non-lu
 urgent	mail	fr	Urgent

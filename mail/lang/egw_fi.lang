@@ -9,6 +9,7 @@ always show html emails	mail	fi	Näytä aina HTML sähköpostit
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
 by date	mail	fi	Päivämäärän mukaan
+compose	mail	fi	Kirjoita viesti
 compress folder	mail	fi	Tiivistä kansio
 contains	mail	fi	Sisältää
 date(newest first)	mail	fi	Päivämäärä - uusin ensin
@@ -36,6 +37,7 @@ don't use sent	mail	fi	Älä käytä Lähetetyt -kansiota
 don't use template folder	mail	fi	Älä käytä Mallipohjat -kansiota
 don't use trash	mail	fi	Älä käytä Roskakori -kansiota
 draft folder	mail	fi	Luonnokset -kansio
+drafts	mail	fi	Luonnokset
 email notification update failed	mail	fi	Sähköpostin huomautusviestipäivitys epäonnistui
 emailaddress	admin	fi	Sähköpostiosoite
 empty trash	mail	fi	Tyhjennä roskakori
@@ -70,6 +72,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	fi
 importance	mail	fi	Tärkeys
 inbox	mail	fi	Saapuneet
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fi	Aseta allekirjoitus oman viestisi alapuolelle vastatessasi sähköpostiin.
+junk	mail	fi	Roskaposti
 later	mail	fi	Jälkeen
 less than	mail	fi	Vähemmän kuin
 mail	mail	fi	Lähetä sähköpostilla
@@ -103,12 +106,14 @@ refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
 remove immediately	mail	fi	Poista heti
 replied	mail	fi	Vastattu
+replyto	mail	fi	Vastaanottaja
 row order style	mail	fi	Rivijärjestyksen muotoilu
 save all	mail	fi	Tallenna kaikki
 save as	mail	fi	Tallenna nimellä
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä Lähetetyt kansioon
 sender	mail	fi	Lähettäjä
+sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
 sieve script name	mail	fi	SIEVE skriptin nimi
 signature	mail	fi	Allekirjoitus
@@ -120,10 +125,12 @@ start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa u
 subject(a->z)	mail	fi	Aiheet A > Z
 subject(z->a)	mail	fi	Aiheet Z > A
 template folder	mail	fi	Mallipohjat -kansio
+templates	mail	fi	Mallipohjat
 text/plain	mail	fi	Pelkkä teksti
 the mimeparser can not parse this message.	mail	fi	Mimeparseri ei voi jäsentää tätä viestiä
 then	mail	fi	TAI
 there is no imap server configured.	mail	fi	IMAP palvelinta ei ole konfiguroitu
+trash	mail	fi	Roskakori
 trash folder	mail	fi	Roskakori -kansio
 unread	mail	fi	Lukematon
 urgent	mail	fi	Tärkeä

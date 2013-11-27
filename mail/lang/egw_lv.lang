@@ -1,6 +1,7 @@
 (no subject)	mail	lv	(nav temata)
 add to addressbook	mail	lv	pievienot adrešu grāmatai
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
+compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
 contains	mail	lv	satur
 date(newest first)	mail	lv	Datums (jaunākais pirmais)
@@ -41,6 +42,7 @@ quicksearch	mail	lv	Ātrā meklēšana
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
 remove immediately	mail	lv	Pārvietot nekavējoties
 replied	mail	lv	atbildēts
+replyto	mail	lv	Atbildēt
 save all	mail	lv	Saglabāt visus
 sent folder	mail	lv	Mape nosūtīts
 signature	mail	lv	Paraksts

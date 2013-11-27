@@ -12,6 +12,7 @@ any status	mail	nl	iedere status
 attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij, elke nieuwe mail
 available personal email-accounts/profiles	mail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
 by date	mail	nl	op datum
+compose	mail	nl	Schrijf nieuw bericht
 compress folder	mail	nl	Comprimeer map
 connection status	mail	nl	Status van de verbinding
 contains	mail	nl	bevat
@@ -35,6 +36,7 @@ don't use sent	mail	nl	'Verzonden' niet gebruiken
 don't use template folder	mail	nl	Sjablonenfolder niet gebruiken
 don't use trash	mail	nl	'Prullenmand' niet gebruiken
 draft folder	mail	nl	conceptenfolder
+drafts	mail	nl	Concepten
 email notification update failed	mail	nl	email melding kon niet worden bijgewerkt
 emailaddress	admin	nl	emailadres
 empty trash	mail	nl	Prullenmand legen
@@ -68,6 +70,7 @@ imap server	mail	nl	IMAP server
 importance	mail	nl	Belangrijk
 inbox	mail	nl	POSTVAK IN
 job	mail	nl	Taak
+junk	mail	nl	Junk
 later	mail	nl	later
 less than	mail	nl	minder dan
 mail settings	mail	nl	Mail instellingen
@@ -101,11 +104,13 @@ refresh time in minutes	mail	nl	Ververstijd in minuten
 reject with	mail	nl	weiger met
 remove immediately	mail	nl	Meteen verwijderen
 replied	mail	nl	gereageerd
+replyto	mail	nl	Reageer aan
 row order style	mail	nl	rijvolgorde stijl
 save all	mail	nl	Bewaar alle
 saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1.Controleer folder %2
 selected	mail	nl	Geselecteerd
 sender	mail	nl	Afzender
+sent	mail	nl	Verzonden
 sent folder	mail	nl	Verzondenmap
 sieve connection status	mail	nl	Status Sieve connectie
 sieve script name	mail	nl	sieve script naam
@@ -119,12 +124,14 @@ subject(a->z)	mail	nl	Onderwerp (A->Z)
 subject(z->a)	mail	nl	Onderwerp (Z->A)
 successfully connected	mail	nl	Succesvol verbonden
 template folder	mail	nl	Sjabloon folder
+templates	mail	nl	Sjablonen
 test connection	mail	nl	Test actieve connectie
 text/plain	mail	nl	text/plain
 the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
 then	mail	nl	DAN
 there is no imap server configured.	mail	nl	Er is geen Imap server geconfigureerd
 to do	mail	nl	te doen
+trash	mail	nl	Prullenbak
 trash folder	mail	nl	Prullenbak
 trying to recover from session data	mail	nl	probeer  vanaf sessie data te herstellen.
 unread	mail	nl	ongelezen

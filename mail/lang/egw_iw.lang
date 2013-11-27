@@ -1,6 +1,7 @@
 (no subject)	mail	iw	(ללא נושא)
 add to addressbook	mail	iw	הוסף לספר כתובות
 always show html emails	mail	iw	HTML תמיד להציג דואר אלקטרוני
+compose	mail	iw	חדש
 compress folder	mail	iw	קבץ תיקיה
 contains	mail	iw	מכיל
 date(newest first)	mail	iw	(תאריך (חדשים תחילה
@@ -41,6 +42,7 @@ quicksearch	mail	iw	חיפוש מהיר
 refresh time in minutes	mail	iw	זמן רענון בדקות
 remove immediately	mail	iw	הסר מיד
 replied	mail	iw	הישיב
+replyto	mail	iw	השב ל
 save all	mail	iw	שמור הכל
 sent folder	mail	iw	תיקיית נשלחו
 signature	mail	iw	חתימה

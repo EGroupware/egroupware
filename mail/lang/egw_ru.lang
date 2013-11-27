@@ -17,6 +17,7 @@ attach vcard	mail	ru	Вложить vCard (визитку)
 available personal email-accounts/profiles	mail	ru	доступные личные адреса эл.почты/Профили
 but check shared folders	mail	ru	Не проверены папки, к которым дан доступ
 by date	mail	ru	По дате
+compose	mail	ru	Новое письмо
 compress folder	mail	ru	Сжать папку
 configuration settings	mail	ru	Установки конфигурации
 confirm attach message	mail	ru	Подтвердить вложение сообщения
@@ -55,6 +56,7 @@ don't use sent	mail	ru	Не использовать папку Sent (Отпра
 don't use template folder	mail	ru	Не использовать папку шаблонов
 don't use trash	mail	ru	Не использовать Trash (Корзина)
 draft folder	mail	ru	Каталог черновиков
+drafts	mail	ru	Черновики
 effective only if server supports acl at all	admin	ru	Действует, если сервер поддерживает ACL
 email notification update failed	mail	ru	Неудачное обновление уведомления по почте
 emailaddress	admin	ru	Адрес электронной почты
@@ -101,6 +103,7 @@ importance	mail	ru	Значение
 inbox	mail	ru	Входящие (INBOX)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ru	Вставить подпись в начало нового сообщения  при открытии диалогового окна "создать"(или "ответить")
 job	mail	ru	работа
+junk	mail	ru	Спам
 later	mail	ru	отложить
 less than	mail	ru	Меньше чем
 mail	mail	ru	Почта
@@ -149,6 +152,7 @@ reject with	mail	ru	Отклонить с
 remove immediately	mail	ru	Удалить немедленно
 replied	mail	ru	Был ответ
 reply message type	mail	ru	Тип сообщения-ответа
+replyto	mail	ru	Ответить
 required pear class mail/mimedecode.php not found.	mail	ru	Необходимый PEAR class Mail / mimeDecode.php не найден.
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
@@ -160,6 +164,7 @@ saving of message %1 succeeded. check folder %2.	mail	ru	Сохранение с
 selected	mail	ru	Выбранный
 send message and move to send folder (if configured)	mail	ru	Отправить сообщение и переместить в папку Отправленные
 sender	mail	ru	Отправитель
+sent	mail	ru	Отправлено
 sent folder	mail	ru	Отправленные
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 show all folders	mail	ru	Отображать все каталоги
@@ -181,6 +186,7 @@ subject(a->z)	mail	ru	Тема (А->Я)
 subject(z->a)	mail	ru	Тема (Я->А)
 successfully connected	mail	ru	Соединено успешно
 template folder	mail	ru	Папка шаблонов
+templates	mail	ru	Шаблоны
 test connection	mail	ru	Проверка подключения
 test connection and display basic information about the selected profile	mail	ru	Проверить соединение и показать основную информацию о выбранном профиле
 text/plain	mail	ru	Простой текст
@@ -190,6 +196,7 @@ then	mail	ru	Тогда
 there is no imap server configured.	mail	ru	Нет настроенного сервера IMAP.
 timeout on connections to your imap server	mail	ru	Истекло время соединения с IMAP сервером
 to do	mail	ru	Сделать
+trash	mail	ru	Корзина
 trash folder	mail	ru	Папка Корзина
 trust servers seen / unseen info	mail	ru	Доверять информации серверов SEEN/UNSEEN
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	ru	Доверять информации серверов SEEN/UNSEEN при восстановлении состояния каталога. При выборе "Нет", происходит независимая инициализация поиска UNSEEN-сообщений и их анализ на предмет доверия соответствующим серверам

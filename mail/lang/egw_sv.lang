@@ -6,6 +6,7 @@ always show html emails	mail	sv	Visa alltid HTML e-post
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
 by date	mail	sv	Enligt datum
+compose	mail	sv	Skriv
 compress folder	mail	sv	Komprimera katalog
 contains	mail	sv	Innehåller
 date(newest first)	mail	sv	Datum (nyaste först)
@@ -65,6 +66,7 @@ refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
 remove immediately	mail	sv	Radera omedelbart
 replied	mail	sv	Svarade
+replyto	mail	sv	Svara till
 row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
 sent folder	mail	sv	Skickat katalog

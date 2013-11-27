@@ -9,6 +9,7 @@ always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
 any of	mail	cs	kterýkoli z
 any status	mail	cs	jakýkoli status
 by date	mail	cs	datumem
+compose	mail	cs	Nová zpráva
 compress folder	mail	cs	Komprimovat složku
 contains	mail	cs	obsahuje
 date(newest first)	mail	cs	Datum (od nejnovějšího)
@@ -35,6 +36,7 @@ don't use sent	mail	cs	Nepoužívat Odeslané
 don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
 draft folder	mail	cs	Rozepsané
+drafts	mail	cs	Rozepsané
 email notification update failed	mail	cs	aktualizace e-mailových upozornění se nezdařila
 emailaddress	admin	cs	e-mailová adresa
 empty trash	mail	cs	Vyprázdnit koš
@@ -63,6 +65,7 @@ if	mail	cs	POKUD
 imap server	mail	cs	IMAP Server
 importance	mail	cs	Důležitost
 inbox	mail	cs	INBOX
+junk	mail	cs	Spam
 later	mail	cs	Později
 less than	mail	cs	menší než
 mail settings	mail	cs	Nastavení pošty
@@ -95,9 +98,11 @@ refresh time in minutes	mail	cs	Čas obnovování v minutách
 reject with	mail	cs	zamítnout s
 remove immediately	mail	cs	Odstranit okamžitě
 replied	mail	cs	odpovězené
+replyto	mail	cs	Odpovědět (komu)
 row order style	mail	cs	Způsob řazení řádků
 save all	mail	cs	Uložit vše
 sender	mail	cs	Odesílatel
+sent	mail	cs	Odeslané
 sent folder	mail	cs	Odeslané
 sieve script name	mail	cs	Jméno sieve skriptu
 signature	mail	cs	Podpis
@@ -109,10 +114,12 @@ start new messages with mime type plain/text or html?	mail	cs	Začínat psaní n
 subject(a->z)	mail	cs	Předmět (A->Z)
 subject(z->a)	mail	cs	Předmět (Z->A)
 template folder	mail	cs	Složka šablon
+templates	mail	cs	Šablony
 text/plain	mail	cs	prostý text
 the mimeparser can not parse this message.	mail	cs	Mimeparser nemůže zpracovat tuto zprávu.
 then	mail	cs	POTOM
 there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
+trash	mail	cs	Koš
 trash folder	mail	cs	Koš
 unread	mail	cs	nepřečtené
 urgent	mail	cs	Naléhavé

@@ -8,6 +8,7 @@ always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
 by date	mail	pt-br	por data
+compose	mail	pt-br	Compor
 compress folder	mail	pt-br	Compactar pasta
 contains	mail	pt-br	contém
 date(newest first)	mail	pt-br	Data (mais novas primeiro)
@@ -29,6 +30,7 @@ don't use sent	mail	pt-br	Não usar pasta Mensagens Enviadas
 don't use template folder	mail	pt-br	Não usar pasta Modelos
 don't use trash	mail	pt-br	Não usar pasta Lixeira
 draft folder	mail	pt-br	Pasta Rascunho
+drafts	mail	pt-br	Rascunhos
 email notification update failed	mail	pt-br	Atualização do email de notificação falhou
 emailaddress	admin	pt-br	endereço de e-mail
 empty trash	mail	pt-br	Esvaziar Lixeira
@@ -53,6 +55,7 @@ html	mail	pt-br	Html
 if	mail	pt-br	SE
 imap server	mail	pt-br	Servidor IMAP
 inbox	mail	pt-br	Caixa de Entrada
+junk	mail	pt-br	Spam
 later	mail	pt-br	Depois
 less than	mail	pt-br	menor que
 mail settings	mail	pt-br	Configurações de E-Mail
@@ -82,7 +85,9 @@ refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
 reject with	mail	pt-br	rejeitar com
 remove immediately	mail	pt-br	Remover imediatamente
 replied	mail	pt-br	Respondido
+replyto	mail	pt-br	Responde a
 row order style	mail	pt-br	estilo da ordem de linha
+sent	mail	pt-br	Enviado
 sent folder	mail	pt-br	Pasta Enviadas
 sieve script name	mail	pt-br	nome do script sieve
 signature	mail	pt-br	Assinatura
@@ -94,9 +99,11 @@ start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas m
 subject(a->z)	mail	pt-br	Assunto (A->Z)
 subject(z->a)	mail	pt-br	Assunto (Z->A)
 template folder	mail	pt-br	Pasta Modelos
+templates	mail	pt-br	Modelos
 text/plain	mail	pt-br	texto/plano
 the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
 then	mail	pt-br	ENTÃO
+trash	mail	pt-br	Lixeira
 trash folder	mail	pt-br	Pasta Lixeira
 unread	mail	pt-br	Não lido
 urgent	mail	pt-br	urgente
