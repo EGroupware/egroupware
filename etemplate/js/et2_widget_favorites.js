@@ -337,11 +337,11 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				// Still no sidebox - might be loaded via ajax later, so we'll do this on first mouse over
 				$j('body').on('mouseover','#'+this.options.sidebox_target,
 					jQuery.proxy(function(e) {
+						$j('body').off(e);
 						// Set up handlers & such
 						this._init_sidebox();
 						// It will still have the plain HTML, so re-create the contents
 						this.init_filters(this);
-						$j('body').off(e);
 					},this)
 				);
 			}
