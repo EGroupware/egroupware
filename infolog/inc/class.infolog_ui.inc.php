@@ -711,11 +711,17 @@ class infolog_ui
 		{
 			$nm = egw_cache::getSession('infolog', $this->called_by.'session_data');
 			unset($nm['rows']);
-			if ($values === 'reset_action_view' || $_GET['ajax'] === 'true')
+			if ($values === 'reset_action_view')
 			{
-				$nm['action'] = $action = '';
-				$nm['action_id'] = $action_id = 0;
-				$nm['action_title'] = $action_title = '';
+				$action = '';
+				$action_id = 0;
+				$action_title = '';
+			}
+			if($_GET['ajax'] === 'true')
+			{
+				$nm['action'] = '';
+				$nm['action_id'] = 0;
+				$nm['action_title'] = '';
 				// check if action-view reset filter and restore it
 				if (($filter = egw_cache::getSession('infolog', 'filter_reset_from')))
 				{
@@ -880,6 +886,8 @@ class infolog_ui
 		else
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
+			// Avoid DOM conflicts
+			$this->tmpl->set_dom_id("{$this->tmpl->name}-$action-$action_id");
 		}
 		// add scrollbar to long description, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '');

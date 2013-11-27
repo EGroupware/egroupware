@@ -309,4 +309,36 @@ app.classes.infolog = AppJS.extend(
 	{
 		egw.open('','infolog','add');
 	},
+
+	/**
+	 * Opens a new edit dialog with some extra url parameters pulled from
+	 * standard locations.  Done with a function instead of hardcoding so
+	 * the values can be updated if user changes them in UI.
+	 *
+	 * @param _type string Type of infolog entry
+	 * @param _action string Special action for new infolog entry
+	 * @param _action_id string ID for special action
+	 */
+	add_with_extras: function(_type, _action, _action_id)
+	{
+		var nm = this.et2.getWidgetById('nm');
+		var nm_value = nm.getValue() || {};
+
+		var extras = {
+			type: _type || nm_value.filter || null,
+			cat_id: nm_value.cat_id || null,
+			action: _action || null,
+			action_id: _action_id != '0' ? _action_id : null || null
+		};
+
+		// Remove any missing values
+		for(var key in extras)
+		{
+			if(extras[key] == null)
+			{
+				delete extras[key];
+			}
+		}
+		egw.open('','infolog','add',extras);
+	}
 });
