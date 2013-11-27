@@ -126,17 +126,19 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		}
 
 		// Filter fields
-                if($this->attrs['field-names'])
-                {
-                        if($this->attrs['field-names'][0] == '!') {
-                                $negate_field_filter = true;
-                                $this->attrs['field-names'] = substr($this->attrs['field_names'],1);
-                        }
-                        $field_filter = explode(',', $this->attrs['field_names']);
-                }
+		if($this->attrs['field-names'])
+		{
+				if($this->attrs['field-names'][0] == '!') {
+						$negate_field_filter = true;
+						$this->attrs['field-names'] = substr($this->attrs['field_names'],1);
+				}
+				$field_filter = explode(',', $this->attrs['field_names']);
+		}
 		$fields = $customfields;
 
-		$use_private = self::expand_name($this->attrs['use-private'],0,0);
+		$use_private = self::expand_name($this->attrs['use-private'],0,0,'','',self::$cont);
+		$this->attrs['sub-type'] = self::expand_name($this->attrs['sub-type'],0,0,'','',self::$cont);
+
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed

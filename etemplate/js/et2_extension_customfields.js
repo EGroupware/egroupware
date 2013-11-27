@@ -46,10 +46,14 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			"default": "",
 			"type": "any", // String or array
 			"description": "Filter displayed custom fields by their 'type2' attribute"
+		},
+		'private': {
+			ignore: true,
+			type: 'boolean'
 		}
 	},
 
-	legacyOptions: ["type_filter"], // Field restriction & private done server-side
+	legacyOptions: ["type_filter","private"], // Field restriction & private done server-side
 
 	prefix: '#',
 
