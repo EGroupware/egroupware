@@ -28,16 +28,16 @@ class mail_compose
 	 * class vars for destination, priorities, mimeTypes
 	 */
 	static $destinations = array(
-		'to' 		=> 'to',
-		'cc'		=> 'cc',
-		'bcc'		=> 'bcc',
-		'replyto'	=> 'replyto',
-		'folder'	=> 'folder'
+		'to' 		=> 'to',  // lang('to')
+		'cc'		=> 'cc',  // lang('cc')
+		'bcc'		=> 'bcc', // lang('bcc')
+		'replyto'	=> 'replyto', // lang('replyto')
+		'folder'	=> 'folder'  // lang('folder')
 	);
 	static $priorities = array(
-		1=>"high",
-		3=>"normal",
-		5=>"low"
+		1=>"high", // lang('high')
+		3=>"normal", // lang('normal')
+		5=>"low"  // lang('low')
 	);
 	static $mimeTypes = array(
 		"plain"=>"plain",
@@ -237,7 +237,7 @@ class mail_compose
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
-		//lang('compose') // needed to be found by translationtools
+		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 		$_contenHasSigID = array_key_exists('signatureid',$_content);

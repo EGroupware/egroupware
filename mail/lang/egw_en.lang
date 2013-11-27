@@ -186,6 +186,7 @@ reject with	mail	en	reject with
 remove immediately	mail	en	remove immediately
 replied	mail	en	replied
 reply message type	mail	en	Reply message type
+replyto	mail	en	replyto
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 restrict acl management	admin	en	restrict acl management
 row order style	mail	en	row order style

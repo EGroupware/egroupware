@@ -712,7 +712,6 @@ class mail_hooks
 
 		$file = Array(
 			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail')),
-			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
 		);
 		display_section($appname,$title,$file);
 	}
@@ -864,7 +863,6 @@ class mail_hooks
 		{
 			$file = Array(
 				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-				'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
