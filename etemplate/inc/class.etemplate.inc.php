@@ -159,7 +159,7 @@ class etemplate_new extends etemplate_widget_template
 		);
 
 		// Info required to load the etemplate client-side
-		$dom_id = str_replace('.','-',$this->name);
+		$dom_id = str_replace('.','-',$this->dom_id);
 		$load_array = array(
 			'name' => $this->name,
 			'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'?'.filemtime(EGW_SERVER_ROOT.$this->rel_path),
@@ -198,6 +198,7 @@ class etemplate_new extends etemplate_widget_template
 				//error_log("Ajax " . __LINE__);
 				$GLOBALS['egw']->framework->response->generic("data", array('<div id="'.$dom_id.'" class="et2_container"></div>'));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array);
+				self::$request = null;
 				return;
 			}
 			else if (!$header)
@@ -355,6 +356,12 @@ class etemplate_new extends etemplate_widget_template
 	public $laod_via;
 
 	/**
+	 *
+	 * @var string If the template needs a div named other than the template name, this is it
+	 */
+	protected $dom_id;
+
+	/**
 	 * Reads an eTemplate from filesystem or DB (not yet supported)
 	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
@@ -373,9 +380,20 @@ class etemplate_new extends etemplate_widget_template
 			$this->version=$version, $this->laod_via = $load_via);
 		//error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
 
+		$this->dom_id = $name;
+
 		return (boolean)$this->rel_path;
 	}
 
+	/**
+	 * Set the DOM ID for the etemplate div.  If not set, it will be generated from the template name.
+	 *
+	 * @param string $new_id
+	 */
+	public function set_dom_id($new_id)
+	{
+		$this->dom_id = $new_id;
+	}
 	/**
 	 * Get template data as array
 	 *
