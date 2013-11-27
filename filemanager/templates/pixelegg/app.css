@@ -19,7 +19,7 @@
   background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
-  height: 35px;
+  /*    height: auto;*/
   background-image: none !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
@@ -32,7 +32,7 @@
 }
 #filemanager-index .et2_file:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
 }
 #filemanager-index .et2_file:before {
@@ -60,3 +60,18 @@
 }
 /*// Dialog filemanager 
 // #####################################################*/
+#filemanager-select .dialog-header .et2_button_icon {
+  height: auto;
+  width: 24px;
+}
+#filemanager-select #filemanager-select_apps {
+  background-color: #d9d9d9;
+}
+#filemanager-select #filemanager-select_apps .et2_button_icon {
+  height: auto;
+  width: 24px;
+  padding: 10px;
+}
+#filemanager-select #filemanager-select_dir {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}

@@ -13,7 +13,16 @@
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 
-
+#popupMainDiv{
+	padding: 5px;
+	.et2_grid{
+		tr{
+			td{
+			padding: 5px 0;
+			}
+		}
+	}
+}
 /*##############################################
 #            #                               #
 #            #                               #
@@ -22,7 +31,7 @@
 #            #                               #
 #            #                               #
 #            #                               #
-#            #       iframge                 #
+#            #       iframe                  #
 #            #                               #
 #            #                               #
 #            #                               #
@@ -56,7 +65,7 @@ div#mail-index{
 
     // alles
 
-    div#mail-index_mail{
+
 
         margin: 0 1% 0 0 !important;
 
@@ -124,7 +133,7 @@ div#mail-index{
         // Ansicht der Emails
         div#mail-index_mailPreview{
             padding: 3px;
-            margin: 5px 0;
+            margin: 0;
             .background-color-25-gray;
             // From
             div#mail-index_mailPreviewHeadersFrom{
@@ -170,7 +179,7 @@ div#mail-index{
         } // Ende: Ansicht der Emails
 
 
-    } // Ende alles
+
 
 } // iframe
 
@@ -1119,9 +1128,11 @@ input[type=button] {
     .border_normal;
     opacity: 1;
     -moz-opacity:1;
+    z-index: 100;
     //	filter: Alpha(opacity=100);
 
     img {width: 16px; height: 16px;}
+    td{padding: 2px;}
 
 }
 #mail-index_previewAttachmentArea.noContent {
@@ -1139,6 +1150,7 @@ input[type=button] {
     overflow-y: auto;
     left: 3px;
     right: 3px;
+    z-index: 100;
 }
 .mailDisplayContainer {
     position: fixed;
@@ -1194,4 +1206,12 @@ div.mailComposeHeaders > span:first-child {
 }
 div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > * {
     margin-left: 3px;}
+    
+#mail-importMessage{
+	.et2_button_icon{
+        			height: auto;
+        			width: 24px;
+        		}
+	}
+	
 //

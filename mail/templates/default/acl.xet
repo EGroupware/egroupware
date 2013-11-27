@@ -67,9 +67,9 @@
 				</row>
 				<row>
 					<hbox>
-						<button statustext="Saves this ACL" label="Save" id="button[save]"/>
-						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]"/>
+						<button statustext="Saves this ACL" label="Save" id="button[save]" image="save" background_image="1"/>
+						<button statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

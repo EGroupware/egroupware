@@ -122,13 +122,13 @@
 					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
 					<description/>
 				</row>
-				<row class="th" height="28">
+				<row class="th dialog-header" height="28">
 					<description value="User" for="ts_owner"/>
 					<menulist span="all">
 						<menupopup id="ts_owner" no_lang="1"/>
 					</menulist>
 				</row>
-				<row class="row">
+				<row class="row dialog-header">
 					<description value="Project" for="ts_project"/>
 					<grid spacing="1" padding="1">
 						<columns>
@@ -144,7 +144,7 @@
 						</rows>
 					</grid>
 				</row>
-				<row class="row" disabled="@ts_viewtype">
+				<row class="row dialog-header" disabled="@ts_viewtype">
 					<description value="Unitprice" for="ts_unitprice"/>
 					<grid>
 						<columns>
@@ -186,18 +186,18 @@
 						</menulist>
 					</hbox>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<hbox orient="0" span="2">
 						<hbox>
-							<button statustext="Edit this entry" label="Edit" id="button[edit]"/>
-							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]"/>
-							<button statustext="Saves the changes made" label="Save" id="button[save]"/>
-							<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
-							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();"/>
+							<button statustext="Edit this entry" label="Edit" id="button[edit]" image="edit" background_image="1"/>
+							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
+							<button statustext="Saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
+							<button statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 							<html id="js"/>
 						</hbox>
-						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');"/>
-						<button align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]"/>
+						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');" image="delete" background_image="1"/>
+						<button align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

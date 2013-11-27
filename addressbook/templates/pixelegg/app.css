@@ -124,10 +124,6 @@ fieldset.emailGroup {
 .image16 img {
   height: 16px;
 }
-div#addressbook-index {
-  min-height: 700px;
-  height: auto !important;
-}
 div#addressbook-index div.et2_hbox_left {
   padding: 1em;
 }
@@ -240,7 +236,7 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
   background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
-  height: 35px;
+  /*    height: auto;*/
   background-image: none !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
@@ -251,7 +247,7 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
 }
 div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
 }
 div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
@@ -303,7 +299,7 @@ div#addressbook-index table.egwGridView_outer {
   background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
-  height: 35px;
+  /*    height: auto;*/
   background-image: none !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
@@ -317,7 +313,7 @@ div#addressbook-index table.egwGridView_outer {
 }
 #infolog-index_infolog-index-header_right .et2_box_widget:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
 }
 #infolog-index_infolog-index-header_right .et2_box_widget:hover {

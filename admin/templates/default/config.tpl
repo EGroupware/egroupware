@@ -355,8 +355,8 @@
   </tr>
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" name="submit" value="{lang_submit}">
-      <input type="submit" name="cancel" value="{lang_cancel}">
+      <input type="submit" name="submit" value="{lang_submit}" class="et2_button et2_button_text">
+      <input type="submit" name="cancel" value="{lang_cancel}" class="et2_button et2_button_text">
 		  <br>
     </td>
   </tr>

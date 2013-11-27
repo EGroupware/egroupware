@@ -51,3 +51,9 @@
   height: 16px;
   width: 16px;
 }
+#timesheet-edit #timesheet-edit_tabs {
+  padding: 0 3px;
+}
+#timesheet-edit #timesheet-edit_tabs .et2_tabheader {
+  background: none;
+}

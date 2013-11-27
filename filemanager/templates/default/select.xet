@@ -28,7 +28,7 @@
 							<column/>
 						</columns>
 						<rows>
-							<row>
+							<row class="dialog-header">
 								<hbox>
 									<html id="js"/>
 									<button label="Up" id="button[up]" image="goup"/>
@@ -70,10 +70,10 @@
 									<file id="file_upload"/>
 								</groupbox>
 							</row>
-							<row>
+							<row class="dialog-footer-toolbar">
 								<hbox align="right">
-									<button label="@label" id="button[ok]"/>
-									<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+									<button label="@label" id="button[ok]" image="save" background_image="1"/>
+									<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 								</hbox>
 							</row>
 						</rows>

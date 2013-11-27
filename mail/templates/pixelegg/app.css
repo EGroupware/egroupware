@@ -9,6 +9,12 @@
  * @package mail
  * @version $Id$
  */
+#popupMainDiv {
+  padding: 5px;
+}
+#popupMainDiv .et2_grid tr td {
+  padding: 5px 0;
+}
 /*##############################################
 #            #                               #
 #            #                               #
@@ -17,7 +23,7 @@
 #            #                               #
 #            #                               #
 #            #                               #
-#            #       iframge                 #
+#            #       iframe                  #
 #            #                               #
 #            #                               #
 #            #                               #
@@ -26,27 +32,27 @@
 #            #                               #
 ##############################################
 */
-div#mail-index div#mail-index_mail {
+div#mail-index {
   margin: 0 1% 0 0 !important;
 }
-div#mail-index div#mail-index_mail div#mail-index_nm tr.mail td img {
+div#mail-index div#mail-index_nm tr.mail td img {
   height: 16px;
 }
-div#mail-index div#mail-index_mail div#mail-index_mailPreview {
+div#mail-index div#mail-index_mailPreview {
   padding: 3px;
-  margin: 5px 0;
+  margin: 0;
   background-color: #bfbfbf;
 }
-div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mailPreviewHeadersFrom {
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersFrom {
   width: 50%;
 }
-div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
   width: 50%;
 }
-div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
   width: 50%;
 }
-div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 100%;
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate {
@@ -57,7 +63,7 @@ div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mai
   background-color: #0b5fa4 !important;
   color: #FFF;
   text-shadow: none;
-  height: 35px;
+  /*    height: auto;*/
   background-image: none !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
@@ -75,7 +81,7 @@ div#mail-index div#mail-index_mail div#mail-index_mailPreview div#mail-index_mai
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:before,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:hover,
@@ -943,10 +949,14 @@ input[type=button] {
   border: 1px solid rgba(0, 0, 0, 0.15);
   opacity: 1;
   -moz-opacity: 1;
+  z-index: 100;
 }
 #mail-index_previewAttachmentArea img {
   width: 16px;
   height: 16px;
+}
+#mail-index_previewAttachmentArea td {
+  padding: 2px;
 }
 #mail-index_previewAttachmentArea.noContent {
   border: 0px !important;
@@ -961,6 +971,7 @@ input[type=button] {
   overflow-y: auto;
   left: 3px;
   right: 3px;
+  z-index: 100;
 }
 .mailDisplayContainer {
   position: fixed;
@@ -1009,4 +1020,8 @@ div.mailComposeHeaders > span:first-child,
 div.mailComposeBody,
 div.mailPreviewHeaders > * {
   margin-left: 3px;
+}
+#mail-importMessage .et2_button_icon {
+  height: auto;
+  width: 24px;
 }
