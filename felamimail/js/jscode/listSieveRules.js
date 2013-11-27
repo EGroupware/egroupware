@@ -6,8 +6,8 @@ var ruleEditWindowTimeout=500;
 //var searchesPending=0;
 
 function fm_sieve_displayRuleEditWindow(_displayRuleEditWindowURL) {
-	//ruleEditWindow = egw_openWindowCentered(_displayRuleEditWindowURL,'fm_sieve_ruleEditWindow','730','510',window.outerWidth/2,window.outerHeight/2);	
-	ruleEditWindow = egw_openWindowCentered(_displayRuleEditWindowURL,'fm_sieve_ruleEditWindow','730','510');	
+	//ruleEditWindow = egw_openWindowCentered(_displayRuleEditWindowURL,'fm_sieve_ruleEditWindow','730','510',window.outerWidth/2,window.outerHeight/2);
+	ruleEditWindow = egw_openWindowCentered(_displayRuleEditWindowURL,'fm_sieve_ruleEditWindow','730','610');
 	if(ruleEditWindowTimer) {
 		window.clearTimeout(ruleEditWindowTimer);
 	}
