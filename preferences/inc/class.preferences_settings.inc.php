@@ -370,7 +370,8 @@ class preferences_settings
 					$GLOBALS['egw']->preferences->group[$appname][$setting['name']] :
 					$GLOBALS['egw']->preferences->default[$appname][$setting['name']];
 
-				if (isset($setting['values']) && !is_array($default) && (string)$setting['values'][$default] !== '')
+				if (isset($setting['values']) && !is_array($default) &&
+					(string)$setting['values'][$default] !== '' && (string)$default !== '')
 				{
 					if(is_array($setting['values'][$default]))
 					{
