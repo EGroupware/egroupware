@@ -1,3 +1,9 @@
+/**
+ * Give space to both contact view & infolog list
+ */
+.et2_container {height: 50%}
+.et2_container:only-child,#addressbook-index  {height: 100%}
+
 .cursorHand { cursor: hand; }
 .countrySelect select { width: 150px; }
 .custom_country input {display: none; }
