@@ -3981,7 +3981,22 @@ class mail_bo
 							case 'cc':
 							case 'bcc':
 							case 'sender':
+								//error_log(__METHOD__.__LINE__.array2string($env->$v->addresses));
 								$envelope[$v]=$env->$v->addresses;
+								$address = array();
+								foreach ($envelope[$v] as $k => $ad)
+								{
+									if (stripos($ad,'@')===false)
+									{
+										$remember=$k;
+									}
+									else
+									{
+										$address[] = (!is_null($remember)?$envelope[$v][$remember].' ':'').$ad;
+										$remember=null;
+									}
+								}
+								$envelope[$v] = $address;
 								break;
 							case 'date':
 								$envelope[$v]=egw_time::to($env->$v);

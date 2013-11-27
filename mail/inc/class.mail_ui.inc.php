@@ -1589,7 +1589,6 @@ unset($query['actions']);
 		}
 		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true);
-
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;

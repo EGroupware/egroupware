@@ -89,7 +89,7 @@ force plain text	mail	de	erzwinge Text
 forward as attachment	mail	de	weiterleiten als Anhang
 forward inline	mail	de	Inline weiterleiten
 forward to	mail	de	weiterleiten an
-from	mail	de	von
+from	mail	de	Von
 from(a->z)	mail	de	Von (A->Z)
 from(z->a)	mail	de	Von (Z->A)
 general settings	mail	de	Allgemeine Einstellungen
