@@ -82,7 +82,7 @@ div.et2_hbox>div {
     display: inline-block;
     /*border: 1px solid cornflowerblue;*/
     .border_normal;
-    background-color: @gray-10;;
+    background-color: @gray-10;
     padding: 3px;
     margin: 1px;
 }
@@ -112,6 +112,7 @@ div.et2_hbox>div {
     min-width: 100px;
     min-height: 100px;
 }
+.splitter-bar{z-index: 1000;}
 .splitter-bar-vertical { cursor: ew-resize; width: 5px;}
 .splitter-bar-horizontal { cursor: ns-resize; height: 5px;}
 /* Hide iframes so moving works */
@@ -136,6 +137,7 @@ div.et2_hbox>div {
  */
 .et2_label {
     color: @gray-90;
+    float: left;
 }
 #msg,.message {
     color: red;
@@ -896,6 +898,7 @@ div.message.floating {
 .et2_nextmatch > img {height: 16px; width: 16px;}
 
 // little rectangle
+
 .nextmatch_header .header_count {
     padding: 0px 20px;
     margin: 6px 20px 0px;
@@ -939,6 +942,7 @@ div.message.floating {
 
 
 // Select Field
+
 .nextmatch_header > .filters select {
     margin-right: 2ex;
     max-width: 15% !important;
@@ -957,12 +961,14 @@ div.message.floating {
 
 }
 // Select -> Option
+
 .nextmatch_header > .filters > select > option {font-size: 0.9em;}
 
 
 
 
 // Search Field
+
 .nextmatch_header > .filters button.et2_button {
     .Complete_Button_search_action;
     background-image: none;
@@ -987,6 +993,7 @@ div.message.floating {
 
 
 // Input Field
+
 .nextmatch_header > .filters input {
     margin-right: 2ex;
     width: 15%;
@@ -1062,7 +1069,7 @@ div.message.floating {
             padding: 0px 1ex;
             .background-color-0-gray;
             background-image: none;
-            width: 50px;
+//            width: 50px;
 
         }
         button > div {
@@ -1105,8 +1112,8 @@ div.message.floating {
        /* hover */
         button.ui-state-hover {
             background-color: @gray-30 !important;
-            background-image: url("../images/fav_filter_normal.png") !important;
-            background-repeat: no-repeat !important;
+//            background-image: url("../images/fav_filter_normal.png") !important;
+//            background-repeat: no-repeat !important;
             background-size: 16px 16px !important;
             background-position: 10px center !important;
                     }
