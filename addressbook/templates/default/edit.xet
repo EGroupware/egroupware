@@ -524,17 +524,17 @@
 					</grid>
 				</row>
 				<row valign="top">
-					<tabbox id="addressbook.edit.general|addressbook.edit.cats|addressbook.edit.home|addressbook.edit.details|addressbook.edit.links|addressbook.edit.distribution_list|addressbook.edit.custom|addressbook.edit.custom_private|addressbook.edit.history">
+					<tabbox id="tabs">
 						<tabs>
-							<tab id="addressbook.edit.general" label="General" statustext="Name, Address"/>
-							<tab id="addressbook.edit.cats" label="Categories" statustext="Categories"/>
-							<tab id="addressbook.edit.home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="addressbook.edit.details" label="Details" statustext="Categories, Notes, ..."/>
-							<tab id="addressbook.edit.links" label="Links" statustext="Links"/>
-							<tab id="addressbook.edit.distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-							<tab id="addressbook.edit.custom" label="Extra" statustext="Custom fields"/>
-							<tab id="addressbook.edit.custom_private" label="Extra private" statustext="Private custom fields"/>
-							<tab id="addressbook.edit.history" label="History"/>
+							<tab id="general" label="General" statustext="Name, Address"/>
+							<tab id="cats" label="Categories" statustext="Categories"/>
+							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
+							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
+							<tab id="links" label="Links" statustext="Links"/>
+							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
+							<tab id="custom" label="Extra" statustext="Custom fields"/>
+							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
+							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
