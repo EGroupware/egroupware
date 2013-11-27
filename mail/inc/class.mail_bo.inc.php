@@ -134,6 +134,7 @@ class mail_bo
 	 * the folder will not be automatically created. This is controlled in mail_bo->getFolderObjects
 	 * so changing names here, must include a change of keywords there as well. Since these
 	 * foldernames are subject to translation, keep that in mind too, if you change names here.
+	 * lang('Drafts'), lang('Templates'), lang('Sent'), lang('Trash'), lang('Junk'), lang('Outbox')
 	 * ActiveSync:
 	 *  Outbox is needed by Nokia Clients to be able to send Mails
 	 * @var array

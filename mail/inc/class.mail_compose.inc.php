@@ -227,7 +227,7 @@ class mail_compose
 
 	/**
 	 * function compose
-	 * 	this function is used to fill the compose dialog with the content provided by session data
+	 * 	this function is used to fill the compose dialog with the content provided by $_content
 	 *
 	 * @var _content				array the etemplate content array
 	 * @var msg					string a possible message to be passed and displayed to the userinterface
@@ -237,6 +237,7 @@ class mail_compose
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
+		//lang('compose') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 		$_contenHasSigID = array_key_exists('signatureid',$_content);

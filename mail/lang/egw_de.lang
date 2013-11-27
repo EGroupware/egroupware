@@ -21,6 +21,7 @@ attach vcard	mail	de	vCard hinzufügen
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
+compose	mail	de	Verfassen
 compress folder	mail	de	Ordner komprimieren
 configuration settings	mail	de	Einstellungen der Konfiguration
 confirm attach message	mail	de	Bestätigung beim Anhängen von Mails
@@ -29,11 +30,14 @@ connection status	mail	de	Verbindungsstatus
 contains	mail	de	beinhaltet
 convert mail to item and attach its attachments to this item (standard)	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge hinzu (Standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge, sowie die Original Nachricht, als message/rfc (.eml) Datei hinzu.
+copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 deleted	mail	de	gelöscht
+deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
+deleted!	mail	de	gelöscht!
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 discard	mail	de	verwerfen
 display messages in multiple windows	mail	de	Nachrichten in mehreren Fenstern anzeigen
@@ -59,6 +63,7 @@ don't use sent	mail	de	Keinen gesendeten E-Mails speichern
 don't use template folder	mail	de	Keinen Vorlagen Ordner verwenden
 don't use trash	mail	de	Keinen Papierkorb verwenden
 draft folder	mail	de	Entwurfs Ordner
+drafts	mail	de	Entwürfe
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
 email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
 emailaddress	admin	de	E-Mail-Adresse
@@ -106,6 +111,7 @@ importance	mail	de	Wichtigkeit
 inbox	mail	de	Posteingang
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
+junk	mail	de	Spammails
 later	mail	de	später
 less than	mail	de	kleiner als
 mail	mail	de	E-Mail
@@ -113,8 +119,14 @@ mail settings	mail	de	E-Mail-Einstellungen
 mark as deleted	mail	de	als gelöscht markieren
 matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
+message body	mail	de	Nachricht
+message preview area	mail	de	Vorschaubereich
+message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
+message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
+message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to trash	mail	de	in den Papierkorb verschieben
+moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 never display html emails	mail	de	niemals anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
@@ -134,9 +146,12 @@ on	mail	de	am
 one address is not valid	mail	de	Eine Adresse ist ungültig
 only one window	mail	de	nur ein einziges Fenster
 only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet Ordner
+open in html mode	mail	de	In HTML Modus öffnen
+open in text mode	mail	de	In Text Modus öffnen
 organisation	admin	de	Organisation
 organization	mail	de	Organisation
 original message	mail	de	ursprüngliche Nachricht
+outbox	mail	de	Postausgang
 please configure access to an existing individual imap account.	mail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
@@ -150,7 +165,10 @@ printview	mail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
+quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
 refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
+refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
+refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert
 reject with	mail	de	zurückweisen mit
 remove immediately	mail	de	sofort löschen
 replied	mail	de	beantwortet
@@ -166,6 +184,7 @@ saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht
 selected	mail	de	ausgewählt
 send message and move to send folder (if configured)	mail	de	Versende Nachricht, und kopiere diese in den konfigurierten Gesendet Ordner
 sender	mail	de	Absender
+sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 show all folders	mail	de	Darstellung sämtlicher E-Mail Ordner
@@ -187,6 +206,7 @@ subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 successfully connected	mail	de	erfolgreich verbunden
 template folder	mail	de	Vorlagen Ordner
+templates	mail	de	Vorlagen
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
 text/plain	mail	de	text/plain
@@ -196,6 +216,7 @@ then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP Server Konfiguriert
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
+trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
 trust servers seen / unseen info	mail	de	Abruf des Ungelesen/gelesen Status des Mailservers
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	de	EGroupware verwendet die Statusinformationen Ihres E-Mail Servers. Wählen Sie hier nur "Nein", wenn die Anzahl der ungelesenen E-Mails nicht stimmt. Die Eigenermittlung der Anzahl der ungelesenen E-Mails wirkt sich negativ auf die Performance des E-Mail-Moduls aus.

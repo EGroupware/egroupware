@@ -645,7 +645,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_setFolderStatus: function(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		for (var i in _status) ftree.setLabel(i,_status[i]);//alert(i +'->'+_status[i]);
+		for (var i in _status) {
+			ftree.setLabel(i,_status[i]);
+			//alert(i +'->'+_status[i]);
+		}
 	},
 
 	/**

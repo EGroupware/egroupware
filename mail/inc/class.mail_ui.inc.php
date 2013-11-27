@@ -595,7 +595,7 @@ class mail_ui
 			//_debug_array($fS);
 			//error_log(__METHOD__.__LINE__.array2string($fS));
 			$fFP = $folderParts = explode($obj->delimiter, $key);
-
+			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
 			//get rightmost folderpart
 			$shortName = array_pop($folderParts);
 

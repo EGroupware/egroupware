@@ -23,6 +23,7 @@ available personal email-accounts/profiles	mail	en	available personal EMail-Acco
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 changed profile	mail	en	changed profile
+compose	mail	en	compose
 compress folder	mail	en	compress folder
 configuration settings	mail	en	Configuration settings
 confirm attach message	mail	en	Confirm attach message
@@ -66,6 +67,7 @@ don't use sent	mail	en	Don't use Sent
 don't use template folder	mail	en	Don't use template folder
 don't use trash	mail	en	Don't use Trash
 draft folder	mail	en	draft folder
+drafts	mail	en	Drafts
 effective only if server supports acl at all	admin	en	effective only if server supports ACL at all
 email notification successfully updated!	mail	en	email notification successfully updated!
 email notification update failed	mail	en	email notification update failed
@@ -121,6 +123,7 @@ in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2,
 inbox	mail	en	INBOX
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
+junk	mail	en	Junk
 later	mail	en	later
 less than	mail	en	less than
 mail	mail	en	mail
@@ -160,6 +163,7 @@ open in text mode	mail	en	Open in Text mode
 organisation	admin	en	organisation
 organization	mail	en	organization
 original message	mail	en	original message
+outbox	mail	en	Outbox
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.
 please select a address	mail	en	Please select a address
@@ -195,6 +199,7 @@ saving the rule failed:	mail	en	Saving the rule failed:
 selected	mail	en	selected
 send message and move to send folder (if configured)	mail	en	send message and move to send folder (if configured)
 sender	mail	en	sender
+sent	mail	en	Sent
 sent folder	mail	en	sent folder
 server supports special-use folders	mail	en	Server supports Special-Use Folders
 serverside filterrules (sieve) are not activated	mail	en	Serverside Filterrules (Sieve) are not activated
@@ -219,6 +224,7 @@ subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
+templates	mail	en	Templates
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
 text/plain	mail	en	text/plain
@@ -229,6 +235,7 @@ then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
+trash	mail	en	Trash
 trash folder	mail	en	trash folder
 trust servers seen / unseen info	mail	en	trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
