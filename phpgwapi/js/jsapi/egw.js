@@ -159,17 +159,13 @@
 			// Initialize application js
 			var callback = null;
 			// Only initialize once
-			if(typeof app[window.egw_appName] == "function")
+			if(typeof app[window.egw_appName] == "object")
 			{
-				(function() { new app[window.egw_appName]();}).call();
+				callback = function(et2) {app[window.egw_appName].et2_ready(et2);};
 			}
 			else
 			{
 				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName);
-			}
-			if(typeof app[window.egw_appName] == "object")
-			{
-				callback = function(et2) {app[window.egw_appName].et2_ready(et2);};
 			}
 			var node = document.getElementById(data.DOMNodeID);
 			if(!node)
