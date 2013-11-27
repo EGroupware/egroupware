@@ -568,6 +568,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			this.multiOptions.find("li:has(input:checked)").prependTo(this.multiOptions);
 		}
+		this.value = _value;
 	},
 
 	/**
