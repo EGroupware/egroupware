@@ -174,8 +174,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			self::fix_encoded_options(self::$request->sel_options[$options]);
 
-			// Turn on search, if there's a lot of rows
-			if(count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
+			// Turn on search, if there's a lot of rows (unless explicitly set)
+			if(!array_key_exists('search',$this->attrs) && count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
 			{
 				self::setElementAttribute($form_name, "search", true);
 			}
