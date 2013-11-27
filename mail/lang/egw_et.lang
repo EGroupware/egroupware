@@ -1,0 +1,44 @@
+all of	mail	et	kõik välja
+always show html emails	mail	et	Alati näita HTML emaile
+any status	mail	et	kõik staatused
+by date	mail	et	Kuupäeva järgi
+contains	mail	et	sisaldab
+date(newest first)	mail	et	Kuupäev (uuemad enne)
+date(oldest first)	mail	et	Kuupäev (vanemad enne)
+default sorting order	mail	et	Vaikimisi sorteerimise järjekord
+deleted	mail	et	kustutatud
+discard	mail	et	unusta
+display messages in multiple windows	mail	et	Näita kirju mitmes aknas
+display of html emails	mail	et	Näita HTML emaile
+display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
+displaying html messages is disabled	mail	et	html kirjade näitamine on välja lülitatud
+does not contain	mail	et	ei sisalda
+don't use sent	mail	et	Ära kasuta Sent
+don't use trash	mail	et	Ära kasuta Trash
+empty trash	mail	et	tühjenda prügi
+file into	mail	et	faili info
+folder settings	mail	et	Kausta setingud
+html	mail	et	Html
+if	mail	et	KUI
+imap server	mail	et	IMAP Server
+later	mail	et	Hiljem
+less than	mail	et	vähem kui
+mail settings	mail	et	Mail settingud
+mark as deleted	mail	et	Märgi kui kustutatud
+move to trash	mail	et	Liiguta trash-i
+never display html emails	mail	et	Ära näita kunagi HTML emaile
+no signature	mail	et	pole signatuuri
+on	mail	et	:
+only one window	mail	et	ainult üks aken
+organisation	admin	et	Organisatsioon
+please select a address	mail	et	Palun vali aadress
+quicksearch	mail	et	Kiirotsing
+refresh time in minutes	mail	et	Värkendamise aeg minutites
+remove immediately	mail	et	Eemalda koheselt!
+replied	mail	et	vastatud
+size(...->0)	mail	et	Suurus (...->0)
+size(0->...)	mail	et	Suurus (0->...)
+small view	mail	et	väike vaade
+trash folder	mail	et	Trash Kaust
+unread	mail	et	lugematta
+urgent	mail	et	kiire

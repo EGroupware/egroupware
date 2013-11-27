@@ -1,0 +1,106 @@
+(no subject)	mail	pt-br	(sem assunto)
+activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
+add to addressbook	mail	pt-br	Adicionar aos Contatos
+all of	mail	pt-br	Todos
+allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allways a new window	mail	pt-br	sempre uma nova janela
+always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
+any of	mail	pt-br	qualquer
+any status	mail	pt-br	qualquer status
+by date	mail	pt-br	por data
+compress folder	mail	pt-br	Compactar pasta
+contains	mail	pt-br	contém
+date(newest first)	mail	pt-br	Data (mais novas primeiro)
+date(oldest first)	mail	pt-br	Data (mais antigas primeiro)
+default sorting order	mail	pt-br	Ordem padrão de classificação
+deleted	mail	pt-br	removido
+discard	mail	pt-br	descartar
+display messages in multiple windows	mail	pt-br	Exibir mensagens em múltiplas janelas
+display of html emails	mail	pt-br	Exibir emails em HTML
+display only when no plain text is available	mail	pt-br	Exibir somente quando não possuir versão em texto plano disponível
+displaying html messages is disabled	mail	pt-br	a exibição de mensagens HTML está desativada
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt-br	Você deseja ser perguntado para confirmação ao mover mensagens para outra pasta?
+does not contain	mail	pt-br	não contém
+does not exist on imap server.	mail	pt-br	não existe no Servidor IMAP.
+does not match	mail	pt-br	Não coincide
+does not match regexp	mail	pt-br	não coincide com a expressão usada
+don't use draft folder	mail	pt-br	Não usar pasta Rascunhos
+don't use sent	mail	pt-br	Não usar pasta Mensagens Enviadas
+don't use template folder	mail	pt-br	Não usar pasta Modelos
+don't use trash	mail	pt-br	Não usar pasta Lixeira
+draft folder	mail	pt-br	Pasta Rascunho
+email notification update failed	mail	pt-br	Atualização do email de notificação falhou
+emailaddress	admin	pt-br	endereço de e-mail
+empty trash	mail	pt-br	Esvaziar Lixeira
+error:	mail	pt-br	Erro:
+error: could not save message as draft	mail	pt-br	Erro: Não foi possível salvar a mensagem como Rascunho
+event details follow	mail	pt-br	Seguem detalhes do evento
+felamimail	admin	pt-br	eMail
+file into	mail	pt-br	Arquivar em
+filemanager	mail	pt-br	Gerenciador de Arquivos
+flagged	mail	pt-br	sinalizado
+folder	mail	pt-br	pasta
+folder settings	mail	pt-br	Configurações da Pasta
+forward as attachment	mail	pt-br	encaminhar como anexo
+forward inline	mail	pt-br	encaminhar no corpo da mensagem
+forward to	mail	pt-br	encaminhar para
+from	mail	pt-br	De
+from(a->z)	mail	pt-br	de (A->Z)
+from(z->a)	mail	pt-br	de (Z->A)
+greater than	mail	pt-br	maior que
+how to forward messages	mail	pt-br	como encaminhar mensagens
+html	mail	pt-br	Html
+if	mail	pt-br	SE
+imap server	mail	pt-br	Servidor IMAP
+inbox	mail	pt-br	Caixa de Entrada
+later	mail	pt-br	Depois
+less than	mail	pt-br	menor que
+mail settings	mail	pt-br	Configurações de E-Mail
+mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
+matches	mail	pt-br	coincidentes
+matches regexp	mail	pt-br	coincidentes com a expressão
+move selected to	mail	pt-br	mover selecionados para
+move to trash	mail	pt-br	Mover para a lixeira
+never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt-br	Nenhum endereço em PARA/CC/CCO informado e nenhuma pasta para salvar mensagens definida.
+no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
+no recipient address given!	mail	pt-br	Nenhum endereço informado!
+no signature	mail	pt-br	sem assinatura
+no subject given!	mail	pt-br	Nenhum assunto informado!
+on	mail	pt-br	em
+one address is not valid	mail	pt-br	Um endereço não é válido
+only one window	mail	pt-br	Somente uma janela
+organisation	admin	pt-br	Organização
+organization	mail	pt-br	organização
+original message	mail	pt-br	mensagem original
+please select a address	mail	pt-br	Por favor, selecione um endereço
+please select the number of days to wait between responses	mail	pt-br	Por favor, selecione o número de dias para aguardar entre respostas.
+please supply the message to send with auto-responses	mail	pt-br	Por favor, informe a mensagem para enviar como auto-resposta.
+printview	mail	pt-br	visualização da impressão
+quicksearch	mail	pt-br	Pesquia rápida
+refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
+reject with	mail	pt-br	rejeitar com
+remove immediately	mail	pt-br	Remover imediatamente
+replied	mail	pt-br	Respondido
+row order style	mail	pt-br	estilo da ordem de linha
+sent folder	mail	pt-br	Pasta Enviadas
+sieve script name	mail	pt-br	nome do script sieve
+signature	mail	pt-br	Assinatura
+size(...->0)	mail	pt-br	Tamanho (...->0)
+size(0->...)	mail	pt-br	Tamanho (0->...)
+small view	mail	pt-br	Visão resumida
+sort order	mail	pt-br	Ordem de classificação
+start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas mensagens com mime type plain/text ou html ?
+subject(a->z)	mail	pt-br	Assunto (A->Z)
+subject(z->a)	mail	pt-br	Assunto (Z->A)
+template folder	mail	pt-br	Pasta Modelos
+text/plain	mail	pt-br	texto/plano
+the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
+then	mail	pt-br	ENTÃO
+trash folder	mail	pt-br	Pasta Lixeira
+unread	mail	pt-br	Não lido
+urgent	mail	pt-br	urgente
+vacation notice	admin	pt-br	Notícia de ausência
+vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final !
+when deleting messages	mail	pt-br	Ao remover mensagens
+wrote	mail	pt-br	escreveu

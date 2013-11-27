@@ -1,0 +1,104 @@
+(no subject)	mail	bg	(без тема)
+activating by date requires a start- and end-date!	mail	bg	Активиране по дата изисква начална И крайна дата!
+add to addressbook	mail	bg	добави към Адресния указател
+all of	mail	bg	всички
+allow images from external sources in html emails	mail	bg	Показване на изображения от външни източници в HTML съобщения?
+allways a new window	mail	bg	винаги в нов прозорец
+always show html emails	mail	bg	Винаги показва HTML съобщения
+any of	mail	bg	някой от
+any status	mail	bg	без значение
+by date	mail	bg	по дата
+compress folder	mail	bg	Компресиране на папката
+contains	mail	bg	съдържа
+date(newest first)	mail	bg	По дата (първо най-новите)
+date(oldest first)	mail	bg	По дата (първо най-старите)
+default sorting order	mail	bg	Подреждане по подразбиране
+deleted	mail	bg	изтрит
+discard	mail	bg	изоставяне
+display messages in multiple windows	mail	bg	показване на съобщенията в отделни прозорци
+display of html emails	mail	bg	Показване на HTML съобщения
+display only when no plain text is available	mail	bg	Показва само, когато няма текст
+displaying html messages is disabled	mail	bg	Показването на HTML съобщения е забранено!
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	bg	Потвърждение преди преместване на избрани съобщения в друга папка?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	bg	Желаете ли да забраните управлението на папките (създаване, права на достъп И абонамент)?
+does not contain	mail	bg	не съдържа
+does not exist on imap server.	mail	bg	не съществува на IMAP сървъра.
+does not match	mail	bg	не съвпада с
+does not match regexp	mail	bg	не съвпада с рег. израз
+don't use draft folder	mail	bg	Не използвай "Чернови"
+don't use sent	mail	bg	Не използвай "Изпратени"
+don't use template folder	mail	bg	Не използвай папка "Шаблони"
+don't use trash	mail	bg	Не използвай "Кошче"
+draft folder	mail	bg	папка "Чернови"
+email notification update failed	mail	bg	Актуализацията на e-mail известието беше неуспешна.
+emailaddress	admin	bg	e-mail адрес
+empty trash	mail	bg	изпразване на кошчето
+error:	mail	bg	Грешка:
+error: could not save message as draft	mail	bg	Грешка: неуспешно запазване на съобщнието като Чернова
+event details follow	mail	bg	Следват подробности за събитието
+felamimail	admin	bg	Електронна поща
+file into	mail	bg	файл в
+filemanager	mail	bg	Файл мениджър
+flagged	mail	bg	с флагче
+folder	mail	bg	папка
+folder settings	mail	bg	Настройки на папката
+forward as attachment	mail	bg	препращане като приложение
+forward inline	mail	bg	препращане в съобщението
+forward to	mail	bg	препрати до
+from	mail	bg	От
+from(a->z)	mail	bg	Подател (A->Z)
+from(z->a)	mail	bg	Подател (Z->A)
+greater than	mail	bg	по-голямо от
+how to forward messages	mail	bg	как да се препращат съобщенията
+html	mail	bg	HTML
+if	mail	bg	АКО
+imap server	mail	bg	IMAP сървър
+inbox	mail	bg	Входящи
+less than	mail	bg	по-малко от
+mail settings	mail	bg	Настройки на пощата
+mark as deleted	mail	bg	Маркирай като изтрито
+matches	mail	bg	съвпада с
+matches regexp	mail	bg	съвпада с рег. израз
+move selected to	mail	bg	премести избраните в
+move to trash	mail	bg	Премести в Кошчето
+never display html emails	mail	bg	Не показва HTML съобщения
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.
+no plain text part found	mail	bg	липсва текстова част
+no recipient address given!	mail	bg	Не е посочен адрес на получател!
+no signature	mail	bg	няма подпис
+no subject given!	mail	bg	Не е посочена Тема!
+on	mail	bg	на
+only one window	mail	bg	само в един прозорец
+organisation	admin	bg	организация
+organization	mail	bg	организация
+original message	mail	bg	оригинално съобщение
+please select a address	mail	bg	Моля, изберете адрес
+please select the number of days to wait between responses	mail	bg	Моля, изберете брой дни за изчакване между отговорите
+please supply the message to send with auto-responses	mail	bg	Моля, въведете съобщение за изпращане като Автоматичен отговор
+printview	mail	bg	изглед за печат
+quicksearch	mail	bg	Бързо търсене
+refresh time in minutes	mail	bg	Време на опресняване в минути
+reject with	mail	bg	откажи с
+remove immediately	mail	bg	Премахни незабавно
+replied	mail	bg	изпратен отговор
+row order style	mail	bg	Стил на изгледа
+sent folder	mail	bg	Папка "Изпратени"
+sieve script name	mail	bg	име на sieve скрипт
+signature	mail	bg	Подпис
+size(...->0)	mail	bg	Размер (...->0)
+size(0->...)	mail	bg	Размер (0->...)
+small view	mail	bg	умален изглед
+start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
+subject(a->z)	mail	bg	Тема (A->Z)
+subject(z->a)	mail	bg	Тема (Z->A)
+template folder	mail	bg	Папка "Шаблони"
+text/plain	mail	bg	текст
+then	mail	bg	ТОГАВА
+trash folder	mail	bg	Папка "Кошче"
+unread	mail	bg	Непрочетено
+urgent	mail	bg	спешно
+vacation notice	admin	bg	ваканционна бележка
+vacation start-date must be before the end-date!	mail	bg	Началото на ваканцията трябва да е ПРЕДИ края!
+when deleting messages	mail	bg	При изтриване на съобщения
+which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват.
+wrote	mail	bg	написа

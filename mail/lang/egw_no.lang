@@ -1,0 +1,71 @@
+(no subject)	mail	no	(uten emne)
+add to addressbook	mail	no	legg til i adressebok
+all of	mail	no	alle av
+allways a new window	mail	no	altid et nytt vindu
+always show html emails	mail	no	Vis alltid HTML meldinger
+any of	mail	no	noen av
+compress folder	mail	no	Komprimer mappe
+contains	mail	no	inneholder
+date(newest first)	mail	no	Dato (nyeste først)
+date(oldest first)	mail	no	Dato (eldste først)
+default sorting order	mail	no	Standard sortering
+deleted	mail	no	slettet
+display of html emails	mail	no	Visning av HTML e-post
+display only when no plain text is available	mail	no	Vis bare når ingen normal tekst er tilgjengelig
+does not contain	mail	no	inneholder ikke
+does not match	mail	no	stemmer ikke
+does not match regexp	mail	no	stemmer ikke med regexp
+don't use sent	mail	no	Ikke bruk Sendt
+don't use trash	mail	no	Ikke bruk Søppelkurv
+empty trash	mail	no	tøm søppelkurv
+event details follow	mail	no	Hendelses Detaljer Følger
+felamimail	admin	no	E-post
+file into	mail	no	fil til
+filemanager	mail	no	Filhåndterer
+flagged	mail	no	flagget
+folder	mail	no	Mappe
+folder settings	mail	no	Mappeinnstillinger
+from	mail	no	Fra
+from(a->z)	mail	no	Fra (A -> Å)
+from(z->a)	mail	no	Fra (Å -> A)
+greater than	mail	no	Større enn
+html	mail	no	Html
+if	mail	no	Dersom
+imap server	mail	no	IMAP Tjener
+inbox	mail	no	Innboks
+less than	mail	no	mindre enn
+mail settings	mail	no	Epost innstillinger
+mark as deleted	mail	no	Merk som slettet
+matches	mail	no	treff
+matches regexp	mail	no	treffer regexp
+move selected to	mail	no	flytt valgt til
+move to trash	mail	no	Flytt til søppelkurv
+never display html emails	mail	no	Vis aldri HTML e-post
+on	mail	no	på
+one address is not valid	mail	no	En av adressene er ikke gyldig
+only one window	mail	no	Bare et vindu
+organisation	admin	no	Organisasjon
+organization	mail	no	organisasjon
+please select a address	mail	no	Vennligst velg en adresse
+please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
+please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
+quicksearch	mail	no	Hurtigsøk
+refresh time in minutes	mail	no	Oppdateringstid i minutter
+remove immediately	mail	no	Fjern umiddelbart
+replied	mail	no	svart
+save all	mail	no	Lagre alle
+sent folder	mail	no	Sendt Mappe
+signature	mail	no	Signatur
+size(...->0)	mail	no	Størrelse (...->0)
+size(0->...)	mail	no	Størrelse (0->...)
+small view	mail	no	liten visning
+sort order	mail	no	Sortering
+subject(a->z)	mail	no	Emne (A->Å)
+subject(z->a)	mail	no	Emne (Å->A)
+then	mail	no	DA
+trash folder	mail	no	Søppelmappe
+unread	mail	no	Ulest
+urgent	mail	no	haster
+vacation notice	admin	no	Ferie melding
+when deleting messages	mail	no	Når du sletter meldinger
+wrote	mail	no	skrev

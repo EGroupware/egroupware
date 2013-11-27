@@ -1,0 +1,127 @@
+%1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
+(no subject)	mail	pl	(bez tematu)
+activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
+add to addressbook	mail	pl	dodaj do książki adresowej
+all of	mail	pl	wszystkie z
+allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
+allways a new window	mail	pl	zawsze w nowym oknie
+always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
+any of	mail	pl	dowolny z
+any status	mail	pl	dowolny status
+by date	mail	pl	Według daty
+compress folder	mail	pl	Kompaktuj folder
+contains	mail	pl	zawiera
+date(newest first)	mail	pl	Data (od najnowszych)
+date(oldest first)	mail	pl	Data (od najstarszych)
+default sorting order	mail	pl	Domyślny porządek sortowania
+deleted	mail	pl	skasowany
+discard	mail	pl	odrzuć
+display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach
+display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
+display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
+displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	pl	Czy chcesz być pytany o potwierdzenie przed przeniesieniem wybranej wiadomości do innego folderu?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu przekazywania wiadomości poprzez ustawienia poczty (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli SITO jest włączone)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	pl	Czy chcesz zapobiec zarządzaniu folderami (tworzenie, prawa dostępu i subskrypcja)?
+does not contain	mail	pl	nie zawiera
+does not exist on imap server.	mail	pl	nie istnije na serwerze IMAP
+does not match	mail	pl	nie pasuje
+does not match regexp	mail	pl	nie pasuje do wzorca
+don't use draft folder	mail	pl	Nie używaj folderu szkiców
+don't use sent	mail	pl	Nie używaj Wysłanych
+don't use template folder	mail	pl	Nie używaj folderu szablonów
+don't use trash	mail	pl	Nie używaj Kosza
+draft folder	mail	pl	folder szkiców
+email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
+emailaddress	admin	pl	adres_email
+empty trash	mail	pl	opróżnij kosz
+error saving %1!	mail	pl	Błąd zapisu %1!
+error:	mail	pl	Błąd:
+error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiadomości jako Szkic
+error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
+error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
+event details follow	mail	pl	Detale Wydarzenia Następują
+felamimail	admin	pl	FelaMiMail
+file into	mail	pl	informacja o pliku
+file rejected, no %2. is:%1	mail	pl	Plik odrzucony. Jest %1 nie %2.
+filemanager	mail	pl	Pliki
+flagged	mail	pl	oflagowano
+folder	mail	pl	Katalog
+folder settings	mail	pl	Ustawienia foldera
+forward as attachment	mail	pl	Prześlij dalej jako załącznik
+forward inline	mail	pl	Prześlij dalej w wiadomości
+forward to	mail	pl	Prześlij do
+from	mail	pl	Z
+from(a->z)	mail	pl	Od (A->Z)
+from(z->a)	mail	pl	Od (Z->A)
+greater than	mail	pl	większe niż
+how to forward messages	mail	pl	sposób przekazywania wiadomości
+html	mail	pl	HTML
+if	mail	pl	JEŻELI
+imap server	mail	pl	Serwer IMAP
+importance	mail	pl	ważność
+inbox	mail	pl	ODEBRANE
+later	mail	pl	Później
+less than	mail	pl	mniej niż
+mail settings	mail	pl	Ustawienia email
+mark as deleted	mail	pl	Zaznacz jako usunietą
+matches	mail	pl	pasuje do
+matches regexp	mail	pl	pasuje do wyrażenia regularnego
+move selected to	mail	pl	przenieś wiadomości do
+move to trash	mail	pl	przenieś do kosza
+never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
+no folders	mail	pl	brak folderów
+no plain text part found	mail	pl	brak części 'czystym' tekstem
+no recipient address given!	mail	pl	Nie podano adresu docelowego!
+no signature	mail	pl	brak podpisu
+no subject given!	mail	pl	Nie podano tematu!
+none, create all	mail	pl	żaden, utwórz wszystko
+on	mail	pl	na
+one address is not valid	mail	pl	Jeden adres nie jest poprawny
+only one window	mail	pl	tylko jedno okno
+organisation	admin	pl	organizacja
+organization	mail	pl	instytucja
+original message	mail	pl	wiadomość oryginalna
+please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
+please select a address	mail	pl	Proszę wybrać adres
+please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
+please supply the message to send with auto-responses	mail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
+printview	mail	pl	wydrukuj widok
+processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
+quicksearch	mail	pl	Szybkie wyszukiwanie
+refresh time in minutes	mail	pl	Czas odświeżania w minutach
+reject with	mail	pl	odrzuć z
+remove immediately	mail	pl	usuń natychmiast
+replied	mail	pl	odpowiedziano
+row order style	mail	pl	styl porządku wierszy
+save all	mail	pl	Zapisz wszystko
+sender	mail	pl	nadawca
+sent folder	mail	pl	Folder Wysłane
+sieve script name	mail	pl	Nazwa skryptu sita ('sieve')
+signature	mail	pl	Sygnaturka
+size(...->0)	mail	pl	Rozmiar (...->0)
+size(0->...)	mail	pl	Rozmiar (0->...)
+small view	mail	pl	widok uproszczony
+sort order	mail	pl	Porządek sortowania
+start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?
+subject(a->z)	mail	pl	Temat (A->Z)
+subject(z->a)	mail	pl	Temat (Z->A)
+template folder	mail	pl	Katalog szablnów
+text/plain	mail	pl	zwykły tekst
+the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
+then	mail	pl	WTEDY
+there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
+trash folder	mail	pl	Folder Kosza
+unread	mail	pl	nieprzeczytane
+urgent	mail	pl	pilne
+vacation notice	admin	pl	powiadomienie urlopowe
+vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
+when deleting messages	mail	pl	Gdy usuwasz wiadomość
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
+which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
+wrote	mail	pl	zapisano
+yes, offer copy option	mail	pl	tak, oferuj opcję kopii

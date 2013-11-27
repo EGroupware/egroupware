@@ -1,0 +1,75 @@
+%1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
+(no subject)	mail	id	(tanpa subyek)
+activating by date requires a start- and end-date!	mail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
+add to addressbook	mail	id	Tambahkan ke buku alamat
+all of	mail	id	semua
+any of	mail	id	sembarang
+any status	mail	id	status apapun
+by date	mail	id	menurut tanggal
+compress folder	mail	id	Mampatkan folder
+contains	mail	id	mengandung
+date(newest first)	mail	id	Tanggal (terbaru)
+date(oldest first)	mail	id	Tanggal (terkuno)
+default sorting order	mail	id	Pengurutan bawaan
+deleted	mail	id	terhapus
+discard	mail	id	buang
+draft folder	mail	id	draft folder
+emailaddress	admin	id	alamat email
+empty trash	mail	id	kosongkan trash
+error saving %1!	mail	id	Error menyimpan %1!
+error:	mail	id	Error:
+event details follow	mail	id	Berikut adalah detil Kegiatan
+felamimail	admin	id	eMail
+file into	mail	id	file into
+filemanager	mail	id	Manajer berkas
+flagged	mail	id	ditandai
+folder	mail	id	folder
+folder settings	mail	id	Pengaturan Folder
+forward as attachment	mail	id	forward as attachment
+forward inline	mail	id	forward inline
+forward to	mail	id	forward to
+from	mail	id	Dari
+from(a->z)	mail	id	Dari (A->Z)
+from(z->a)	mail	id	Dari (Z->A)
+greater than	mail	id	lebih dari
+html	mail	id	HTML
+if	mail	id	IF
+imap server	mail	id	IMAP Server
+importance	mail	id	Importance
+inbox	mail	id	INBOX
+later	mail	id	Later
+less than	mail	id	kurang dari
+mail settings	mail	id	Pengaturan Mail
+mark as deleted	mail	id	Tandai sbg terhapus
+matches	mail	id	kecocokan
+matches regexp	mail	id	cocok regexp
+no folders	mail	id	tiada folder
+no signature	mail	id	tiada tandatangan
+no subject given!	mail	id	tiada subyek diisikan!
+on	mail	id	pada
+organisation	admin	id	Organisasi
+organization	mail	id	organisasi
+original message	mail	id	pesan asal
+printview	mail	id	lihat cetakan
+quicksearch	mail	id	Cari cepat
+reject with	mail	id	tolak dengan
+remove immediately	mail	id	Buang segera
+replied	mail	id	dibalas
+save all	mail	id	Simpan semuanya
+sender	mail	id	Pengirim
+sent folder	mail	id	Sent Folder
+signature	mail	id	Tandatangan
+size(...->0)	mail	id	Ukuran (...->0)
+size(0->...)	mail	id	Ukuran (0->...)
+small view	mail	id	small view
+sort order	mail	id	Sort Order
+subject(a->z)	mail	id	Subyek (A->Z)
+subject(z->a)	mail	id	Subyek (Z->A)
+template folder	mail	id	Folder Templat
+text/plain	mail	id	text/plain
+then	mail	id	THEN
+trash folder	mail	id	Trash Folder
+unread	mail	id	Tak dibaca
+urgent	mail	id	mendesak
+vacation notice	admin	id	vacation notice
+wrote	mail	id	menulis

@@ -1,0 +1,85 @@
+(no subject)	mail	sv	(ingen rubrik)
+add to addressbook	mail	sv	Lägg till i Adressbok
+all of	mail	sv	Alla
+allways a new window	mail	sv	Alltid nytt fönster
+always show html emails	mail	sv	Visa alltid HTML e-post
+any of	mail	sv	Någon av
+any status	mail	sv	Alla status
+by date	mail	sv	Enligt datum
+compress folder	mail	sv	Komprimera katalog
+contains	mail	sv	Innehåller
+date(newest first)	mail	sv	Datum (nyaste först)
+date(oldest first)	mail	sv	Datum (äldsta först)
+default sorting order	mail	sv	Standard sorterings ordning
+deleted	mail	sv	Raderad
+discard	mail	sv	Ignorera
+display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster
+display of html emails	mail	sv	Visning av HTML e-post
+display only when no plain text is available	mail	sv	Visa endast när textformat inte är tillgängligt
+displaying html messages is disabled	mail	sv	Cisa HTML meddelanden är inaktiverat
+does not contain	mail	sv	Innehåller inte
+does not match	mail	sv	Matchar inte
+does not match regexp	mail	sv	Matchar inte regexp
+don't use draft folder	mail	sv	Använd inte Utkast
+don't use sent	mail	sv	Använd inte Skickat
+don't use trash	mail	sv	Använd inte Borttaget
+draft folder	mail	sv	Utkast katalog
+emailaddress	admin	sv	E-post adress
+empty trash	mail	sv	Töm Borttaget
+event details follow	mail	sv	Händelse detaljer följer
+felamimail	admin	sv	FelaMiMail
+file into	mail	sv	Flytta till
+filemanager	mail	sv	Filhanterare
+flagged	mail	sv	Flaggad
+folder	mail	sv	Katalog
+folder settings	mail	sv	Katalog alternativ
+forward to	mail	sv	Vidarebefodra till
+from	mail	sv	Från
+from(a->z)	mail	sv	Från (A->Ö)
+from(z->a)	mail	sv	Från (Ö->A)
+greater than	mail	sv	Större än
+html	mail	sv	Html
+if	mail	sv	OM
+imap server	mail	sv	IMAP Server
+inbox	mail	sv	Inkorg
+later	mail	sv	Senare
+less than	mail	sv	Mindre än
+mail settings	mail	sv	E-post alternativ
+mark as deleted	mail	sv	Markera som raderad
+matches	mail	sv	Matchar
+matches regexp	mail	sv	Matchar regexp
+move selected to	mail	sv	Flytta valda till
+move to trash	mail	sv	Flytta till Borttaget
+never display html emails	mail	sv	Visa inte HTML meddelanden
+no plain text part found	mail	sv	Hittade inget textfält
+on	mail	sv	På
+one address is not valid	mail	sv	En adress är ogiltig
+only one window	mail	sv	Endast ett fönster
+organisation	admin	sv	Organisation
+organization	mail	sv	Organisation
+please select a address	mail	sv	Välj adress
+please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
+please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
+quicksearch	mail	sv	Snabbsök
+refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
+reject with	mail	sv	Avvisa med
+remove immediately	mail	sv	Radera omedelbart
+replied	mail	sv	Svarade
+row order style	mail	sv	Rad sortering
+save all	mail	sv	Spara alla
+sent folder	mail	sv	Skickat katalog
+sieve script name	mail	sv	Sieve skript namn
+signature	mail	sv	Signatur
+size(...->0)	mail	sv	Storlek (...->0)
+size(0->...)	mail	sv	Storlek (0->...)
+small view	mail	sv	Liten vy
+subject(a->z)	mail	sv	Ämne (A->Ö)
+subject(z->a)	mail	sv	Ämne (Ö->A)
+the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet
+then	mail	sv	SEN
+trash folder	mail	sv	Borttaget
+unread	mail	sv	Oläst
+urgent	mail	sv	Brådskande
+vacation notice	admin	sv	Frånvaro meddelande
+when deleting messages	mail	sv	Vid meddelande radering
+wrote	mail	sv	Skrev

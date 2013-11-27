@@ -1,0 +1,57 @@
+(no subject)	mail	iw	(ללא נושא)
+add to addressbook	mail	iw	הוסף לספר כתובות
+always show html emails	mail	iw	HTML תמיד להציג דואר אלקטרוני
+compress folder	mail	iw	קבץ תיקיה
+contains	mail	iw	מכיל
+date(newest first)	mail	iw	(תאריך (חדשים תחילה
+date(oldest first)	mail	iw	(תאריך (ישנים תחילה
+default sorting order	mail	iw	סדר מיון מחדלי
+deleted	mail	iw	נמחקו
+display of html emails	mail	iw	HTML הצגת דואר
+display only when no plain text is available	mail	iw	הצג רק כאשר טקסט פשוט לא זמין
+does not contain	mail	iw	אינו מכיל
+does not match	mail	iw	אינו תואם
+does not match regexp	mail	iw	regexp אינו תואם
+don't use sent	mail	iw	לא להשתמש בתיקית פריטים שנשלחו
+don't use trash	mail	iw	לא להשתמש בתיקית אשפה
+empty trash	mail	iw	רוקן אשפה
+event details follow	mail	iw	פרטי האירוע בהמשך
+file into	mail	iw	תייק בתוך
+filemanager	mail	iw	מנהל הקבצים
+flagged	mail	iw	מדוגל
+folder	mail	iw	מחיצה
+folder settings	mail	iw	הגדרות תיקיה
+from	mail	iw	מאת
+from(a->z)	mail	iw	(מאת (א ->ת
+from(z->a)	mail	iw	(מאת (ת->א
+if	mail	iw	אם
+imap server	mail	iw	שרת IMAP
+inbox	mail	iw	תיבת דואר נכנס
+mail settings	mail	iw	הגדרות דואר
+mark as deleted	mail	iw	סמן כמחוק
+matches	mail	iw	התאמות
+matches regexp	mail	iw	התאמות regexp
+move selected to	mail	iw	הזז הודעות אל
+move to trash	mail	iw	הזז לאשפה
+never display html emails	mail	iw	לעולם לא להציג הודעות HTML
+on	mail	iw	-ב
+organisation	admin	iw	אירגון
+organization	mail	iw	אירגון
+quicksearch	mail	iw	חיפוש מהיר
+refresh time in minutes	mail	iw	זמן רענון בדקות
+remove immediately	mail	iw	הסר מיד
+replied	mail	iw	הישיב
+save all	mail	iw	שמור הכל
+sent folder	mail	iw	תיקיית נשלחו
+signature	mail	iw	חתימה
+size(...->0)	mail	iw	גודל (...->0)
+size(0->...)	mail	iw	גודל (0->...)
+small view	mail	iw	תצוגה קטנה
+sort order	mail	iw	סדר אתר
+subject(a->z)	mail	iw	נושא (א -> ת)
+subject(z->a)	mail	iw	נושא (ת -> א)
+trash folder	mail	iw	תיקיית אשפה
+unread	mail	iw	לא נקרא
+urgent	mail	iw	דחוף
+when deleting messages	mail	iw	בשעת מחיקת הדעות
+wrote	mail	iw	כתב

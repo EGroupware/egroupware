@@ -1,0 +1,72 @@
+(no subject)	mail	pt	(sem assunto)
+add to addressbook	mail	pt	adicionar ao livro de endereços
+all of	mail	pt	todos de
+allways a new window	mail	pt	Sempre numa nova janela
+always show html emails	mail	pt	Exibir sempre mensagens HTML
+any of	mail	pt	algum de
+compress folder	mail	pt	Comprimir pasta
+contains	mail	pt	Contém
+date(newest first)	mail	pt	Data (+ recente primeiro)
+date(oldest first)	mail	pt	Data (+ antiga primeiro)
+default sorting order	mail	pt	Ordenar por (por omissão)
+deleted	mail	pt	eliminado/a
+display messages in multiple windows	mail	pt	Apresentar mensagens
+display of html emails	mail	pt	Apresentar mensagens em HTML
+display only when no plain text is available	mail	pt	Apresentar apenas quando a versão de texto não estiver disponível
+does not contain	mail	pt	não contém
+does not match	mail	pt	não coincide
+does not match regexp	mail	pt	regexp não coincide
+don't use sent	mail	pt	Não utilizar a pasta Enviados
+don't use trash	mail	pt	Não utilizar a pasta Lixo
+empty trash	mail	pt	Esvaziar o Lixo
+event details follow	mail	pt	Seguem detalhes do evento
+felamimail	admin	pt	FelaMiMail
+file into	mail	pt	Ficheiro em
+filemanager	mail	pt	Gestor de ficheiros
+flagged	mail	pt	marcado
+folder	mail	pt	Pasta
+folder settings	mail	pt	Definições das pastas
+from	mail	pt	De
+from(a->z)	mail	pt	De (A->Z)
+from(z->a)	mail	pt	De (Z->A)
+greater than	mail	pt	maior que
+html	mail	pt	HTML
+if	mail	pt	Se
+imap server	mail	pt	Servidor IMAP
+less than	mail	pt	menos de
+mail settings	mail	pt	Configurações do correio electrónico
+mark as deleted	mail	pt	Marcar como apagada
+matches	mail	pt	Coincide
+matches regexp	mail	pt	Coincide com regexp
+move selected to	mail	pt	Mover mensagens seleccionadas para
+move to trash	mail	pt	Mover para o lixo
+never display html emails	mail	pt	Nunca apresentar mensagens HTML
+on	mail	pt	em
+one address is not valid	mail	pt	Um endereço não é válido
+only one window	mail	pt	Apenas numa janela
+organisation	admin	pt	empresa
+organization	mail	pt	empresa
+please select a address	mail	pt	Por favor, seleccione um endereço
+please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
+please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
+quicksearch	mail	pt	Pesquisa simples
+refresh time in minutes	mail	pt	Actualizar (em minutos)
+remove immediately	mail	pt	Eliminar imediatamente
+replied	mail	pt	respondido
+save all	mail	pt	Guardar tudo
+sent folder	mail	pt	Pasta Enviados
+signature	mail	pt	Assinatura
+size(...->0)	mail	pt	Tamanho (...->0)
+size(0->...)	mail	pt	Tamanho (0->...)
+small view	mail	pt	Sumário
+sort order	mail	pt	Ordenar
+subject(a->z)	mail	pt	Assunto (A->Z)
+subject(z->a)	mail	pt	Assunto (Z-->A)
+the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
+then	mail	pt	então
+trash folder	mail	pt	Pasta Lixo
+unread	mail	pt	Não lida
+urgent	mail	pt	urgente
+vacation notice	admin	pt	aviso de ausência
+when deleting messages	mail	pt	Ao eliminar mensagens
+wrote	mail	pt	Escreveu

@@ -1,0 +1,59 @@
+(no subject)	mail	da	(ingen emne)
+add to addressbook	mail	da	tilføj til adressebog
+always show html emails	mail	da	Vis altid HTML e-mails
+compress folder	mail	da	Komprimere mappe
+contains	mail	da	indeholder
+date(newest first)	mail	da	Dato (nyeste først)
+date(oldest first)	mail	da	Dato (ældste først)
+default sorting order	mail	da	Standart soterings rækkefølge
+deleted	mail	da	slettet
+display of html emails	mail	da	Vis HTML i emails
+display only when no plain text is available	mail	da	Vis kun når ren tekst version er tilgængelig
+does not contain	mail	da	indeholder ikke
+does not match	mail	da	passer ikke sammen
+does not match regexp	mail	da	passer ikke til regexp
+don't use sent	mail	da	Brug ikke Sendt
+don't use trash	mail	da	Brug ikke skraldespand
+empty trash	mail	da	tøm skraldespanden
+event details follow	mail	da	Hændelses detajler følger
+felamimail	admin	da	FelaMiMail
+file into	mail	da	akivere til
+filemanager	mail	da	Filhåndtering
+flagged	mail	da	Flag sat
+folder	mail	da	Bibliotek
+folder settings	mail	da	Mappe indstillinger
+from	mail	da	Fra
+from(a->z)	mail	da	Fra (A->Z)
+from(z->a)	mail	da	Fra (Z->A)
+html	mail	da	HTML
+if	mail	da	HVIS
+imap server	mail	da	IMAP Server
+inbox	mail	da	Indbakke
+mail settings	mail	da	Post indstillinger
+mark as deleted	mail	da	Marker som slettet
+matches	mail	da	resultater
+matches regexp	mail	da	resultater regexp
+move selected to	mail	da	flyt valgte til
+move to trash	mail	da	Flyt til skraldespanden
+never display html emails	mail	da	Vis aldrig HTML emails
+organisation	admin	da	Organisation
+organization	mail	da	organisation
+quicksearch	mail	da	Hurtig søg.
+refresh time in minutes	mail	da	Opdaterings interval i minutter
+remove immediately	mail	da	Fjern nu
+replied	mail	da	Besvaret
+save all	mail	da	Gem alle
+sent folder	mail	da	Sendt Mappe
+signature	mail	da	Signatur
+size(...->0)	mail	da	Størrelse (...->0)
+size(0->...)	mail	da	Størrelse (0->...)
+small view	mail	da	Lille overblik
+sort order	mail	da	Soterings rækkefølge
+subject(a->z)	mail	da	Emne (A->Z)
+subject(z->a)	mail	da	Emne (Z->A)
+then	mail	da	SÅ
+trash folder	mail	da	Skraldespands mappen
+unread	mail	da	ulæst
+urgent	mail	da	haster
+when deleting messages	mail	da	Når meddelser slettes
+wrote	mail	da	skrev

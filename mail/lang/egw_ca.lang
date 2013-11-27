@@ -1,0 +1,73 @@
+(no subject)	mail	ca	(Sense assumpte)
+add to addressbook	mail	ca	Afegir a la llibreta d'adreces
+all of	mail	ca	tots
+allways a new window	mail	ca	sempre en una finestra nova
+always show html emails	mail	ca	Mostra sempre els correus HTML
+any of	mail	ca	algun
+by date	mail	ca	En data
+compress folder	mail	ca	Comprimir carpeta
+contains	mail	ca	conté
+date(newest first)	mail	ca	Data (la més recent primer)
+date(oldest first)	mail	ca	Data (la més antiga primer)
+default sorting order	mail	ca	Mode d'ordenació predeterminat
+deleted	mail	ca	eliminat
+display messages in multiple windows	mail	ca	mostra missatges en múltiples pantalles
+display of html emails	mail	ca	Mostrar els missatges HTML
+display only when no plain text is available	mail	ca	Mostrar només quan no hi ha text simple disponible
+does not contain	mail	ca	No conté
+does not match	mail	ca	No coincideix amb
+does not match regexp	mail	ca	No coincideix amb l'expressió
+don't use sent	mail	ca	No utilitzar Enviats
+don't use trash	mail	ca	No utilitzar Paperera
+empty trash	mail	ca	Buidar paperera
+event details follow	mail	ca	Segueixen els detalls de la cita
+felamimail	admin	ca	FelaMiMail
+file into	mail	ca	Informació del fitxer
+filemanager	mail	ca	Administrador d'Arxius
+flagged	mail	ca	marcat
+folder	mail	ca	Carpeta
+folder settings	mail	ca	Opcions de la carpeta
+from	mail	ca	De
+from(a->z)	mail	ca	De (A-> Z)
+from(z->a)	mail	ca	De (Z-> A)
+greater than	mail	ca	major que
+html	mail	ca	Html
+if	mail	ca	SI
+imap server	mail	ca	Servidor IMAP
+inbox	mail	ca	Entrada
+less than	mail	ca	menor que
+mail settings	mail	ca	Configuracions de Correu
+mark as deleted	mail	ca	Marcar com a esborrat
+matches	mail	ca	coincideix
+matches regexp	mail	ca	coincideix amb l'expressió
+move selected to	mail	ca	moure els seleccionats a
+move to trash	mail	ca	Moure a la paperera
+never display html emails	mail	ca	No mostrar mai els correus HTML
+on	mail	ca	en
+one address is not valid	mail	ca	Una adreça no és vàlida
+only one window	mail	ca	només una finestra
+organisation	admin	ca	Organització
+organization	mail	ca	Organització
+please select a address	mail	ca	Si us plau, seleccioneu una adreça
+please select the number of days to wait between responses	mail	ca	Si us plau, seleccioneu el número de dies a esperar entre respostes
+please supply the message to send with auto-responses	mail	ca	Si us plau, indiqueu el missatge a enviar amb auto-respostes
+quicksearch	mail	ca	Cerca ràpida
+refresh time in minutes	mail	ca	Temps de refresc en minuts
+remove immediately	mail	ca	Eliminar inmediatament
+replied	mail	ca	respost
+save all	mail	ca	Desar tot
+sent folder	mail	ca	Carpeta d'enviats
+signature	mail	ca	Signatura
+size(...->0)	mail	ca	Mida (...->0)
+size(0->...)	mail	ca	Mida (0->...)
+small view	mail	ca	Vista reduïda
+sort order	mail	ca	Forma de ordenación
+subject(a->z)	mail	ca	Assumpte (A->Z)
+subject(z->a)	mail	ca	Assumpte (Z->A)
+then	mail	ca	ALESHORES
+trash folder	mail	ca	Carpeta Paperera
+unread	mail	ca	No llegit
+urgent	mail	ca	urgent
+vacation notice	admin	ca	notificació de vacances
+when deleting messages	mail	ca	En esborrar missatges
+wrote	mail	ca	ha escrit

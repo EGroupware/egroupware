@@ -1,0 +1,135 @@
+%1 is not writable by you!	mail	nl	%1 is NIET voor uw schrijfbaar
+(no subject)	mail	nl	(geen onderwerp)
+(with checkbox enforced)	mail	nl	(met checkbox geforceerd)
+activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
+add to addressbook	mail	nl	Aan adresboek toevoegen
+all of	mail	nl	alles van
+allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan
+allways a new window	mail	nl	altijd in een nieuw venster
+always show html emails	mail	nl	Altijd HTML-emails weergeven
+any of	mail	nl	iedere van
+any status	mail	nl	iedere status
+attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij, elke nieuwe mail
+available personal email-accounts/profiles	mail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
+by date	mail	nl	op datum
+compress folder	mail	nl	Comprimeer map
+connection status	mail	nl	Status van de verbinding
+contains	mail	nl	bevat
+date(newest first)	mail	nl	Datum (nieuwste eerst)
+date(oldest first)	mail	nl	Datum (oudste eerst)
+default sorting order	mail	nl	Standaard volgorde
+deleted	mail	nl	verwijderd
+discard	mail	nl	negeer
+display messages in multiple windows	mail	nl	berichten in meerdere vensters weergeven
+display of html emails	mail	nl	Weergave van HTML-emails
+display only when no plain text is available	mail	nl	Alleen weergeven als platte tekst niet beschikbaar is.
+displaying html messages is disabled	mail	nl	weergeven van html berichten is uitgeschakeld
+displaying plain messages is disabled	mail	nl	Weergeven standaard vericht is uitgeschakeld
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	nl	Wilt u een bevestigingsvraag krijgen voordat de geselecteerde berichten naar een andere folder worden verplaatst?
+does not contain	mail	nl	bevat niet
+does not exist on imap server.	mail	nl	bestaat niet op IMAP server.
+does not match	mail	nl	komt niet overeen met
+does not match regexp	mail	nl	komt niet overeen met regexp
+don't use draft folder	mail	nl	Concepten folder niet gebruiken
+don't use sent	mail	nl	'Verzonden' niet gebruiken
+don't use template folder	mail	nl	Sjablonenfolder niet gebruiken
+don't use trash	mail	nl	'Prullenmand' niet gebruiken
+draft folder	mail	nl	conceptenfolder
+email notification update failed	mail	nl	email melding kon niet worden bijgewerkt
+emailaddress	admin	nl	emailadres
+empty trash	mail	nl	Prullenmand legen
+error saving %1!	mail	nl	Fout bij bewaren %1
+error:	mail	nl	Fout:
+error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opgeslagen als Concept
+error: could not save rule	mail	nl	Fout: Kon regel niet bewaren
+error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden
+error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond
+event details follow	mail	nl	Afspraak details volgen
+felamimail	admin	nl	FelaMiMail
+file into	mail	nl	bestand naar
+file rejected, no %2. is:%1	mail	nl	Bestand geweigerd, geen %2.is:%1
+filemanager	mail	nl	Bestandsbeheer
+flagged	mail	nl	gemarkeerd
+folder	mail	nl	folder
+folder settings	mail	nl	Map instellingen
+force html	mail	nl	Forceer HTML
+force plain text	mail	nl	Forceer platte tekst
+forward as attachment	mail	nl	doorsturen als bijlage
+forward inline	mail	nl	doorsturen in het bericht
+forward to	mail	nl	doorsturen naar
+from	mail	nl	Van
+from(a->z)	mail	nl	Van (A->Z)
+from(z->a)	mail	nl	Van (Z->A)
+greater than	mail	nl	groter dan
+how to forward messages	mail	nl	hoe berichten doorgestuurd moeten worden
+html	mail	nl	HTML
+if	mail	nl	ALS
+imap server	mail	nl	IMAP server
+importance	mail	nl	Belangrijk
+inbox	mail	nl	POSTVAK IN
+job	mail	nl	Taak
+later	mail	nl	later
+less than	mail	nl	minder dan
+mail settings	mail	nl	Mail instellingen
+mark as deleted	mail	nl	Markeer als verwijderd
+matches	mail	nl	komt overeen met
+matches regexp	mail	nl	komt overeen met regexp
+move selected to	mail	nl	verplaats geselecteeerde
+move to trash	mail	nl	Verplaatsen naar prullenmand
+never display html emails	mail	nl	Nooit HTML-emails weergeven
+no (valid) send folder set in preferences	mail	nl	Geen (geldige) Verzonden map in voorkeuren
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	nl	Geen adres in AAN/CC/BCC opgegeven en geen map aangegeven waar bericht opgeslagen moet worden.
+no folders	mail	nl	geen folders
+no plain text part found	mail	nl	geen platte tekst onderdeel gevonden
+no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
+no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
+no signature	mail	nl	geen ondertekening
+no subject given!	mail	nl	Geen onderwerp opgegeven!
+none, create all	mail	nl	geen, maak ze allemaal
+on	mail	nl	op
+one address is not valid	mail	nl	Een adres is ongeldig
+only one window	mail	nl	uitsluitend één venster
+organisation	admin	nl	organisatie
+organization	mail	nl	Organisatie
+original message	mail	nl	originele bericht
+please select a address	mail	nl	Kies s.v.p. een adres
+please select the number of days to wait between responses	mail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
+please supply the message to send with auto-responses	mail	nl	Vul s.v.p. het bericht in dat met de automatisch antwoorden meegezonden moet worden
+printview	mail	nl	afdrukweergave
+quicksearch	mail	nl	Snelzoeken
+refresh time in minutes	mail	nl	Ververstijd in minuten
+reject with	mail	nl	weiger met
+remove immediately	mail	nl	Meteen verwijderen
+replied	mail	nl	gereageerd
+row order style	mail	nl	rijvolgorde stijl
+save all	mail	nl	Bewaar alle
+saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1.Controleer folder %2
+selected	mail	nl	Geselecteerd
+sender	mail	nl	Afzender
+sent folder	mail	nl	Verzondenmap
+sieve connection status	mail	nl	Status Sieve connectie
+sieve script name	mail	nl	sieve script naam
+signature	mail	nl	Ondertekening
+size(...->0)	mail	nl	Grootte (...->0)
+size(0->...)	mail	nl	Grootte 0->...)
+small view	mail	nl	kleine weergave
+sort order	mail	nl	Volgorde
+start new messages with mime type plain/text or html?	mail	nl	begin nieuwe berichten met mime type, plain/text of html?
+subject(a->z)	mail	nl	Onderwerp (A->Z)
+subject(z->a)	mail	nl	Onderwerp (Z->A)
+successfully connected	mail	nl	Succesvol verbonden
+template folder	mail	nl	Sjabloon folder
+test connection	mail	nl	Test actieve connectie
+text/plain	mail	nl	text/plain
+the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
+then	mail	nl	DAN
+there is no imap server configured.	mail	nl	Er is geen Imap server geconfigureerd
+to do	mail	nl	te doen
+trash folder	mail	nl	Prullenbak
+trying to recover from session data	mail	nl	probeer  vanaf sessie data te herstellen.
+unread	mail	nl	ongelezen
+urgent	mail	nl	belangrijk
+vacation notice	admin	nl	afwezigheidsbericht
+vacation start-date must be before the end-date!	mail	nl	Afwezigheidbericht startdatum moet VOOR de einddatum liggen!
+when deleting messages	mail	nl	Bij het verwijderen van berichten
+wrote	mail	nl	schreef

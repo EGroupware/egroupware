@@ -1,0 +1,124 @@
+%1 is not writable by you!	mail	sl	Nimate pravice pisanja v %1!
+(no subject)	mail	sl	(brez zadeve)
+activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
+add to addressbook	mail	sl	Dodaj v adresar
+all of	mail	sl	Vse od
+allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML
+allways a new window	mail	sl	Vedno novo okno
+always show html emails	mail	sl	Vedno prikaži HTML sporočila
+any of	mail	sl	Katerikoli od
+any status	mail	sl	Katerikoli status
+by date	mail	sl	Po datumu
+compress folder	mail	sl	Stisni mapo
+contains	mail	sl	Vsebuje
+date(newest first)	mail	sl	Datum (najprej novejši)
+date(oldest first)	mail	sl	Datum (najprej starejši)
+default sorting order	mail	sl	Privzet način razvrščanja
+deleted	mail	sl	Zbrisano
+discard	mail	sl	Zavrzi
+display messages in multiple windows	mail	sl	Prikaži sporočila v več oknih
+display of html emails	mail	sl	Prikazovanje HTML sporočil
+display only when no plain text is available	mail	sl	Prikaži le, ko ni na voljo navadnega besedila
+displaying html messages is disabled	mail	sl	Prikazovanje sporočil HTML je onemogočeno
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	sl	Želite biti vprašani za potrditev pred premikanjem izbranih sporočil v drugo mapo?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje posredovanja sporočil v nastavitvah (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje pravil filtrov (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestil po pošti na drugi e-naslov, če pride sporočilo (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestila o odsotnosti/dopustu (tudi če je SIEVE omogočen)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	sl	Želite preprečiti upravljanje map (ustvarjanje, pravice dostopa in naročila)?
+does not contain	mail	sl	Ne vsebuje
+does not exist on imap server.	mail	sl	Ne obstaja na strežniku IMAP.
+does not match	mail	sl	Se ne ujema
+does not match regexp	mail	sl	Se ne ujema z regularnim izrazom
+don't use draft folder	mail	sl	Ne uporabljaj mape Osnutki
+don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
+don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
+don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
+draft folder	mail	sl	Mapa Osnutki
+email notification update failed	mail	sl	Posodobitev obvestila elektronske pošte ni uspelo
+emailaddress	admin	sl	Poštni naslov
+empty trash	mail	sl	Izprazni smeti
+error saving %1!	mail	sl	Napaka pri shranjevanju %1!
+error:	mail	sl	Napaka:
+error: could not save message as draft	mail	sl	Napaka: ne morem shraniti sporočila kot osnutek
+error: could not save rule	mail	sl	Napaka: ne morem shraniti pravila
+error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporočila.
+event details follow	mail	sl	Sledijo podrobnosti dogodka
+felamimail	admin	sl	E-pošta
+file into	mail	sl	Shrani v
+filemanager	mail	sl	Dokumenti
+flagged	mail	sl	Označen
+folder	mail	sl	Mapa
+folder settings	mail	sl	Nastavitve mape
+forward as attachment	mail	sl	Posreduj kot prilogo
+forward inline	mail	sl	Posreduj v sporočilu
+forward to	mail	sl	Posreduj
+from	mail	sl	Od
+from(a->z)	mail	sl	Pošiljatelj (A->Z)
+from(z->a)	mail	sl	Pošiljatelj (Z->A)
+greater than	mail	sl	Večje kakor
+how to forward messages	mail	sl	Kako naj se posreduje sporočilo
+html	mail	sl	HTML
+if	mail	sl	IF
+imap server	mail	sl	Strežnik IMAP
+inbox	mail	sl	Prejeto
+later	mail	sl	Pozneje
+less than	mail	sl	Manj kot
+mail settings	mail	sl	E-poštne nastavitve
+mark as deleted	mail	sl	Označi kot izbrisano
+matches	mail	sl	Se ujema z
+matches regexp	mail	sl	Se ujema z regularnim izrazom
+move selected to	mail	sl	Premakni označeno v
+move to trash	mail	sl	Premakni v smeti
+never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sl	Ni bil podan niti naslov Za/Kp/Skp niti mapa, kamor naj bi se sporočilo shranilo.
+no folders	mail	sl	Brez mapo
+no plain text part found	mail	sl	Ni najdenega čistega besedila
+no recipient address given!	mail	sl	Ni nobenega nsalove prejemnika!
+no signature	mail	sl	Brez podpisa
+no subject given!	mail	sl	Ni zadeve!
+none, create all	mail	sl	Prazno, ustvari vse
+on	mail	sl	Vključeno
+one address is not valid	mail	sl	En naslov ni veljaven
+only one window	mail	sl	Le eno okno
+organisation	admin	sl	Organizacija
+organization	mail	sl	Organizacija
+original message	mail	sl	Izvirno sporočilo
+please configure access to an existing individual imap account.	mail	sl	nastavite dostop do obstoječega računa IMAP.
+please select a address	mail	sl	Izberite naslov
+please select the number of days to wait between responses	mail	sl	Izberite koliko dni naj počakam med odgovori
+please supply the message to send with auto-responses	mail	sl	Vpišite sporočilo, ki se bo poslalo pri samodejnem odgovoru
+printview	mail	sl	Predogled tiskanja
+quicksearch	mail	sl	Hitro iskanje
+refresh time in minutes	mail	sl	Osvežitveni čas v minutah
+reject with	mail	sl	Zavrni z
+remove immediately	mail	sl	Takoj odstrani
+replied	mail	sl	Odgovorjeno
+row order style	mail	sl	Slog zaporednih vrstic
+save all	mail	sl	Shrani vse
+save as	mail	sl	Shrani kot
+sent folder	mail	sl	Mapa s poslanimi
+sieve script name	mail	sl	Ime skripte sieve
+signature	mail	sl	Podpis
+size(...->0)	mail	sl	Velikost (... -> 0)
+size(0->...)	mail	sl	Velikost (0 -> ...)
+small view	mail	sl	Skrčen pogled
+sort order	mail	sl	Način sortiranja
+start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporočilo kot navadno besedilo ali kot HTML?
+subject(a->z)	mail	sl	Zadeva (A->Z)
+subject(z->a)	mail	sl	Zadeva (Z->A)
+template folder	mail	sl	Mapa s predlogami
+text/plain	mail	sl	Navadno besedilo
+the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati tega sporočila.
+then	mail	sl	THEN
+there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
+trash folder	mail	sl	Mapa Koš
+unread	mail	sl	Neprebrano
+urgent	mail	sl	Nujno
+vacation notice	admin	sl	Obvestilo o odsotnosti
+vacation start-date must be before the end-date!	mail	sl	Začetni datum počitnic mora biti pred končnim
+when deleting messages	mail	sl	Ob brisanju sporočil
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
+which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
+wrote	mail	sl	Je napisal
+yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
