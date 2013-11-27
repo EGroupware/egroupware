@@ -44,7 +44,7 @@
 		// check to infolog/ to tracker. Only one can be checked.
 		var toinfolog = document.getElementById('to_infolog');
 		var totracker = document.getElementById('to_tracker');
-		if (toinfolog.checked==true && totracker.checked==true)
+		if ((toinfolog != null && toinfolog.checked==true) && (totracker != null && totracker.checked==true))
 		{
 			alert("{lang_infolog_tracker_not_both}");
 			return false;
