@@ -238,17 +238,11 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		var link = et2_url.prototype.get_link(this._type, _value);
 
-		if(!link && this.getDOMNode().nodeName == "A") 
+		if(!link) 
 		{
-			this.span = $j(document.createElement("span"));
 			this.span.text(_value);
-			this.setDOMNode(this.span[0]);
+			this.span.removeAttr("href");
 			return;
-		}
-		else if (this.getDOMNode().nodeName != "A" && link)
-		{
-			this.span = $j(document.createElement("a"));
-			this.setDOMNode(this.span[0]);
 		}
 		this.span.text(_value);
 		switch(this._type) {
