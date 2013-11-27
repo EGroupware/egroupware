@@ -363,10 +363,14 @@ class addressbook_hooks
 			'title' => 'addressbook.addressbook_bo.link_title',
 			'titles' => 'addressbook.addressbook_bo.link_titles',
 			'view' => array(
-				'menuaction' => 'addressbook.addressbook_ui.view'
+				'menuaction' => 'addressbook.addressbook_ui.view',
+				'ajax' => 'true'
 			),
 			'view_id' => 'contact_id',
-			'view_list'	=>	'addressbook.addressbook_ui.index',
+			'list'	=>	array(
+				'menuaction' => 'addressbook.addressbook_ui.index',
+				'ajax' => 'true'
+			 ),
 			'edit' => array(
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
@@ -386,7 +390,8 @@ class addressbook_hooks
 				'addressbook-email' => array(
 					'query' => 'addressbook.addressbook_bo.link_query_email',
 					'view' => array(
-						'menuaction' => 'addressbook.addressbook_ui.view'
+						'menuaction' => 'addressbook.addressbook_ui.view',
+						'ajax' => 'true'
 					),
 					'view_id' => 'contact_id',
 				),

@@ -345,7 +345,7 @@ class addressbook_ui extends addressbook_bo
 					'caption' => 'View',
 					'default' => true,
 					'allowOnMultiple' => false,
-					'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id',
+					'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id&ajax=true',
 					'popup' => egw_link::get_registry('addressbook', 'view_popup'),
 					'group' => $group=1,
 				),
@@ -2096,7 +2096,7 @@ window.egw_LAB.wait(function() {
 					egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
 
 				case 'cancel':
-					egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');
+					egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index&ajax=true');
 
 				case 'delete':
 					egw::redirect_link('/index.php',array(
@@ -2113,6 +2113,7 @@ window.egw_LAB.wait(function() {
 				egw::redirect_link('/index.php',array(
 					'menuaction' => 'addressbook.addressbook_ui.index',
 					'msg' => $content,
+					'ajax' => 'true'
 				));
 			}
 		}
@@ -2209,9 +2210,7 @@ window.egw_LAB.wait(function() {
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 		// Load JS for infolog actions
-		egw_framework::validate_file('.','index','infolog');
-		// Load egw_action stuff for infolog, required before etemplate::exec() because it loads stuff into HTML header
-		nextmatch_widget::init_egw_actions();
+		egw_framework::validate_file('.','app','infolog');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
