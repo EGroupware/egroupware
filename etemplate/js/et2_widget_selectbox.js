@@ -808,7 +808,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				}
 			}
 			// Allow some special extras for objects by passing the whole thing - value might not be key
-			var option_id = _options[key].value || _options[key].id || key;
+			var option_id = _options[key] == null ? key : _options[key].value || _options[key].id || key;
 			if(option_id != key) {
 				egw.debug('log', 'Options not indexed.  TODO: what is up?', this);
 			}
