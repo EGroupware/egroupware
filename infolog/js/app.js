@@ -315,30 +315,27 @@ app.classes.infolog = AppJS.extend(
 	 * standard locations.  Done with a function instead of hardcoding so
 	 * the values can be updated if user changes them in UI.
 	 *
+	 * @param {et2_widget} widget Originating/calling widget
 	 * @param _type string Type of infolog entry
 	 * @param _action string Special action for new infolog entry
 	 * @param _action_id string ID for special action
 	 */
-	add_with_extras: function(_type, _action, _action_id)
+	add_with_extras: function(widget,_type, _action, _action_id)
 	{
-		var nm = this.et2.getWidgetById('nm');
+		// We use widget.getRoot() instead of this.et2 for the case when the
+		// addressbook tab is viewing a contact + infolog list, there's 2 infolog
+		// etemplates
+		var nm = widget.getRoot().getWidgetById('nm');
 		var nm_value = nm.getValue() || {};
 
+		// It's important that all these keys are here, they override the link
+		// registry.
 		var extras = {
-			type: _type || nm_value.filter || null,
-			cat_id: nm_value.cat_id || null,
-			action: _action || null,
-			action_id: _action_id != '0' ? _action_id : null || null
+			type: _type || nm_value.filter || "",
+			cat_id: nm_value.cat_id || "",
+			action: _action || "",
+			action_id: _action_id != '0' ? _action_id : "" || ""
 		};
-
-		// Remove any missing values
-		for(var key in extras)
-		{
-			if(extras[key] == null)
-			{
-				delete extras[key];
-			}
-		}
 		egw.open('','infolog','add',extras);
 	}
 });

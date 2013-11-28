@@ -1610,10 +1610,9 @@ class infolog_ui
 					if ($content['info_contact'])
 					{
 						$old_link_id = (int)$content['info_link_id'];
-						list($app,$id) = is_array($content['info_contact']) ? $content['info_contact'] : explode(':',$content['info_contact'], 2);
-						// eTemplate2 returns the array all ready
-						if(!$app && is_array($content['info_contact']))
+						if(is_array($content['info_contact']))
 						{
+							// eTemplate2 returns the array all ready
 							$app = $content['info_contact']['app'];
 							$id = $content['info_contact']['id'];
 						}

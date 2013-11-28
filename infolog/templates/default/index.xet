@@ -8,9 +8,9 @@
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
 		<hbox>
 			<description value="Add:" class="infolog_headertext"/>
-			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="app.infolog.add_with_extras('task','$cont[action]','$cont[action_id]');" image="task"/>
-			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="app.infolog.add_with_extras('phone','$cont[action]','$cont[action_id]');" image="phone"/>
-			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="app.infolog.add_with_extras('note','$cont[action]','$cont[action_id]');" image="note"/>
+			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');" image="task"/>
+			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="app.infolog.add_with_extras(widget,'phone','$cont[action]','$cont[action_id]');" image="phone"/>
+			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="app.infolog.add_with_extras(widget,'note','$cont[action]','$cont[action_id]');" image="note"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
