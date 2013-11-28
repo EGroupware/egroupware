@@ -151,6 +151,13 @@
 			window.app[appname] = new window.app.classes[appname]();
 		}
 
+		// set sidebox for tabed templates
+		var sidebox = egw_script.getAttribute('data-setSidebox');
+		if (window.framework && sidebox)
+		{
+			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
+		}
+
 		// load et2
 		var data = egw_script.getAttribute('data-etemplate');
 		if (data)
