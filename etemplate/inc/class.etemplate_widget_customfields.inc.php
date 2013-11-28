@@ -142,7 +142,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed
-			if ((string)$this->attrs['use-private'] !== '' && (boolean)$field['private'] != (boolean)$use_private)
+			if ((string)$use_private !== '' && (boolean)$field['private'] != (boolean)$use_private)
 			{
 				unset($fields[$key]);
 			}
