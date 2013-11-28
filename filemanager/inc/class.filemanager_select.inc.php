@@ -46,6 +46,8 @@ class filemanager_select
 	 */
 	function __construct()
 	{
+		// tell framework felamimail needs eval and inline javascript :(
+		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
 		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 		if (get_magic_quotes_gpc() && $_GET)
 		{
@@ -198,7 +200,7 @@ class filemanager_select
 							htmlspecialchars($download_url)."',".
 							"'');\nwindow.close();";
 					}
-					if(egw_json_response::isJSONResponse())
+					if(egw_json_response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
 					{
 						$response = egw_json_response::get();
 						if($js)
