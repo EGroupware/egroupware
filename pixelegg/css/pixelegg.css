@@ -126,31 +126,6 @@ div.et2_hbox > div {
   min-width: 100px;
   min-height: 100px;
 }
-.splitter-bar {
-  z-index: 1000;
-}
-.splitter-bar-vertical {
-  cursor: ew-resize;
-  width: 5px;
-}
-.splitter-bar-horizontal {
-  cursor: ns-resize;
-  height: 5px;
-}
-/* Hide iframes so moving works */
-.splitter-iframe-hide {
-  display: none;
-}
-.et2_split div.splitter-bar-vertical div.ui-icon {
-  position: absolute;
-  margin-left: -5px;
-  top: 45%;
-}
-.et2_split div.splitter-bar-horizontal div.ui-icon {
-  position: absolute;
-  margin-top: -6px;
-  left: 47%;
-}
 /* Make sure there's no overflow, or hidden bits still appear */
 * > .et2_split {
   overflow: hidden;
@@ -160,7 +135,6 @@ div.et2_hbox > div {
  */
 .et2_label {
   color: #1e1e1e;
-  float: left;
 }
 #msg,
 .message {
@@ -1099,7 +1073,6 @@ div.message.floating {
 .et2_dropdown button.ui-state-default {
   background-image: none !important;
   background-repeat: no-repeat !important;
-  background-size: 10px 10px;
 }
 .et2_dropdown button.ui-corner-left img,
 .et2_dropdown button.ui-state-default img {
@@ -1109,11 +1082,6 @@ div.message.floating {
   position: relative;
   right: 8px;
   top: 3px;
-}
-.et2_dropdown button.ui-corner-right {
-  background-image: url("../images/fav_filter_normal.png");
-  background-repeat: no-repeat !important;
-  background-size: 10px 10px;
 }
 .et2_dropdown button.ui-state-hover {
   background-color: #b4b4b4 !important;
@@ -3111,7 +3079,7 @@ table.egwGridView_grid tr:hover {
 table.egwGridView_grid tr td {
   border-left: 0px;
   border-right: 0px;
-  padding: 0.3em 0 1em 0.3em;
+  padding: 0.3em 0 0.3em 0.3em;
   border-bottom: 1px solid;
   color: #bfbfbf;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
@@ -3122,6 +3090,9 @@ table.egwGridView_grid tr td:active {
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #ffffff;
+}
+table.egwGridView_grid tr td span {
+  color: #505050;
 }
 .nextmatch_header .selectcols {
   background: none;
@@ -4188,10 +4159,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   border-width: 0px 9px 0px 9px;
   border-style: solid;
   border-color: #b4b4b4;
-}
-#egw_fw_main .egw_fw_ui_tab_content div:nth-child(1) iframe {
-  height: 100%;
-  min-height: 99%;
 }
 /*@import "../less/layout_nextmatch.less";*/
 /**
