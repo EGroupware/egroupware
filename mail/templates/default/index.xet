@@ -25,7 +25,7 @@
 					<nextmatch-sortheader align="center" label="size" id="size"/>
 				</row>
 				<row class="$row_cont[class]">
-					<description id="${row}[uid]" readonly="true"/>
+					<description id="${row}[uid]" no_lang="1" readonly="true"/>
 					<description span="1" class="status_img"/>
 					<html id="${row}[attachments]"/>
 					<description id="${row}[subject]" no_lang="1"/>
