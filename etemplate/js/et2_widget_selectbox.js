@@ -299,7 +299,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			option.attr("title", _title);
 		}
-		if(_label == this.options.empty_label || this.options.empty_label == "" && _value == "")
+		if(_label == this.options.empty_label || this.options.empty_label == "" && _value === "")
 		{
 			// Make sure empty / all option is first
 			option.prependTo(this.input);
