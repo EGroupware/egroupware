@@ -286,6 +286,9 @@ div#addressbook-index div.filters select#infolog-index_filter2 {
 div#addressbook-index table.egwGridView_outer {
   width: 99%;
 }
+.et2_container {
+  height: auto;
+}
 #egw_fw_sidemenu .egw_fw_ui_category_content table {
   margin-left: -14px;
 }
@@ -716,4 +719,8 @@ table.uploadphoto {
 }
 .image16 img {
   height: 16px;
+}
+.fixedHeight,
+.telNumbers {
+  height: auto;
 }
