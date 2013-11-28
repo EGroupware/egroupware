@@ -193,13 +193,6 @@ input[type=button]:focus {
   color: #202d52;
   outline: none;
 }
-button.et2_button_with_image {
-	padding-left: 20px;
-	background-repeat: no-repeat;
-	background-position-x:	3px;
-	background-size: 16px;
-}
-
 /**
  * Drop down button
  */
@@ -639,11 +632,6 @@ ul.et2_link_string {
   background-image: url(images/tab_header_bg.png);
   background-position: bottom;
   background-repeat: repeat-x;
-}
-
-.et2_taglist_ro ul {
-	margin: 0px;
-	padding: 0px;
 }
 /**
  * VFS widget(s)

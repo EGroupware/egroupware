@@ -9,6 +9,16 @@
  * @package addressbook
  * @version $Id$
  */
+/**
+ * Give space to both contact view & infolog list
+ */
+.et2_container {
+  height: 50%;
+}
+.et2_container:only-child,
+#addressbook-index {
+  height: 100%;
+}
 .cursorHand {
   cursor: hand;
 }
@@ -271,15 +281,6 @@ div#addressbook-index div.filters select#infolog-index_filter {
   width: 10%;
 }
 div#addressbook-index div.filters select#infolog-index_filter2 {
-  width: 10%;
-}
-div#addressbook-index .filters #addressbook-index_cat_id {
-  width: 7%;
-}
-div#addressbook-index .filters #addressbook-index_filter {
-  width: 7%;
-}
-div#addressbook-index .filters #addressbook-index_filter2 {
   width: 10%;
 }
 div#addressbook-index table.egwGridView_outer {
