@@ -128,7 +128,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = new et2_dynheight(this.egw().window,
+		this.dynheight = new et2_dynheight(this.div.parent(),
 				this.innerDiv, 250
 		);
 
