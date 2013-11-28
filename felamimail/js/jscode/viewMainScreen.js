@@ -706,12 +706,12 @@ function onNodeSelect(_nodeID) {
 			if (typeof egw_appWindow('felamimail').donotclick_folders == 'undefined')
 			{
 				//alert('donotclick folders not defined here');
-				var donotclick_folders=[];
-				donotclick_folders.push('--topfolder--');
+				egw_appWindow('felamimail').donotclick_folders=[];
+				egw_appWindow('felamimail').donotclick_folders.push('--topfolder--');
 			}
 			for (var i=0; i<egw_appWindow('felamimail').donotclick_folders.length; i++)
 			{
-				//alert('node selected:'+_nodeID+'<->'+donotclick_folders[i]+'#');
+				//alert('node selected:'+_nodeID+'<->'+egw_appWindow('felamimail').donotclick_folders[i]+'#');
 				if (_nodeID==egw_appWindow('felamimail').donotclick_folders[i]) _nodeID = 'INBOX';
 			}
 			mail_resetMessageSelect();
