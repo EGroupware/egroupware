@@ -418,9 +418,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			for (var key in localStorage)
 			{
 				var parts = key.split("::");
-				if (parts[0] === _prefix && localStorage[key].data)
+				if (parts.shift() === _prefix && localStorage[key].data)
 				{
-					result.push(parts[1]);
+
+					result.push(parts.join('::'));
 				}
 			}
 
@@ -501,9 +502,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				var nextmatchId = registeredCallbacks[_uid][0].widgetId;
 				var uid = _uid.split("::");
 				var context = {
-					"prefix":uid[0]
+					"prefix":uid.shift()
 				};
-				uid = uid[uid.length - 1];
+				uid = uid.join("::");
 
 				this.dataFetch(_execId, {'refresh':uid}, {}, nextmatchId,false, context, [uid]);
 				return true;
