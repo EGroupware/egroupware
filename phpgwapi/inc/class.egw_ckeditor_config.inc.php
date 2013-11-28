@@ -188,7 +188,7 @@ class egw_ckeditor_config
 
 			//Check whether the skin actually exists, if not, switch to a default
 			if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
-				$skin = "kama";
+				$skin = "moono"; //this is the basic skin for ckeditor
 
 			self::$skin = $skin;
 		}
