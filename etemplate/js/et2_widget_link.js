@@ -666,7 +666,8 @@ var et2_link_entry = et2_inputWidget.extend(
 				{
 					// Clear
 					self.search.autocomplete("close");
-					self.set_value("");
+					self.set_value({app: self.options.only_app || self.options.value.app || null, id: null});
+					self.search.val("");
 					self.search.trigger("change");
 				}
 				self.search.focus();
