@@ -70,7 +70,7 @@ function get_app_dirs()
 		if (!is_dir($path) || in_array($dir, array('debian','home','doc','..','.svn')) || !is_dir($path.'/setup')) continue;
 		$app_dirs[$dir == '.' ? 'egroupware' : $dir] = $dir;
 	}
-	error_log(__METHOD__."() returning ".print_r($app_dirs, true));
+	//error_log(__METHOD__."() returning ".print_r($app_dirs, true));
 	return $app_dirs;
 }
 
