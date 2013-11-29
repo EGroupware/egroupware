@@ -1593,6 +1593,7 @@ class infolog_bo
 					// acl, when called for tracking -> get_signature -> merge to resolve possible
 					// infolog specific placeholders in infolog_egw_record
 					self::$ignore_acl = true;
+					$info = $this->read($info['info_id'], false, 'server',true);
 					$this->tracking->send_notification($info,null,$email,$user,$pref);
 					self::$ignore_acl = false;
 
