@@ -263,7 +263,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="399" overflow="auto">
+		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
