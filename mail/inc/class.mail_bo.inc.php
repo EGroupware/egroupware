@@ -1109,6 +1109,24 @@ class mail_bo
 				$headerObject['FROM'] = $_headerObject->getEnvelope()->from->addresses;
 				$headerObject['TO'] = $_headerObject->getEnvelope()->to->addresses;
 				$headerObject['CC'] = $_headerObject->getEnvelope()->cc->addresses;
+				foreach (array('FROM','TO','CC') as $_k => $key)
+				{
+					$address = array();
+					foreach ($headerObject[$key] as $k => $ad)
+					{
+						if (stripos($ad,'@')===false)
+						{
+							$remember=$k;
+						}
+						else
+						{
+							$address[] = (!is_null($remember)?$headerObject[$key][$remember].' ':'').$ad;
+							$remember=null;
+						}
+					}
+					$headerObject[$key] = $address;
+
+				}
 				$headerObject['FLAGS'] = $_headerObject->getFlags();
 				$mailStructureObject = $_headerObject->getStructure();
 				//error_log(__METHOD__.__LINE__.array2string($headerObject));
