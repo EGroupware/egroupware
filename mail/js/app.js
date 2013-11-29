@@ -1964,6 +1964,24 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	*
+	*
+	*/
+	acl_delete_btn: function(_egw,_widget)
+	{
+		var that = this;
+		var buttonId = _widget.id;
+		var callbackAclDeleteDialog = function (button_id)
+		{
+			if (button_id == et2_dialog.YES_BUTTON )
+			{
+				that.et2._inst.submit(buttonId);
+			}
+		}
+		et2_dialog.show_dialog(callbackAclDeleteDialog, this.egw.lang("Do you really want to remove all rights from this account"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+	},
+
+	/**
 	 * Edit a folder acl for account(s)
 	 *
 	 * @param _action

@@ -54,7 +54,7 @@
 						<checkbox align="center" id="${row}[acl_a]" />
 						<checkbox align="center" id="${row}[acl_recursive]"/>
 						<hbox orient=",0,0">
-							<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="return app.mail.acl_delete_btn();"/>
+							<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="app.mail.acl_delete_btn"/>
 						</hbox>
 					</row>
 				</rows>
