@@ -14,7 +14,7 @@
 /**
  * eTemplate checkbox widget
  *
- * Multiple checkbox widgets can have the same name ending in [], in which case an array with the set_val's of the checked boxes get returned.
+ * Multiple checkbox widgets can have the same name ending in [], in which case an array with the selected_value's of the checked boxes get returned.
  */
 class etemplate_widget_checkbox extends etemplate_widget
 {
@@ -24,8 +24,8 @@ class etemplate_widget_checkbox extends etemplate_widget
 	 * @var string|array
 	 */
 	protected $legacy_options = array(
-		'checkbox' => 'set_val,unset_val,ro_true,ro_false',
-		'radio' => 'set_val,ro_true,ro_false',
+		'checkbox' => 'selected_value,unselected_value,ro_true,ro_false',
+		'radio' => 'set_value,ro_true,ro_false',
 	);
 
 	/**
@@ -58,35 +58,36 @@ class etemplate_widget_checkbox extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
+			$value_attr = $this->type == 'radio' ? 'set_value' : 'selected_value';
 			// defaults for set and unset values
-			if (!$this->attrs['set_val'] && !$this->attrs['unset_val'])
+			if (!$this->attrs[$value_attr] && !$this->attrs['unselected_value'])
 			{
-				$set_val = true;
-				$unset_val = false;
+				$selected_value = true;
+				$unselected_value = false;
 			}
 			else
 			{
 				// Expand any content stuff
-				$set_val = self::expand_name($this->attrs['set_val'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
-				$unset_val = self::expand_name($this->attrs['unset_val'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				$unselected_value = self::expand_name($this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
 			}
-			if (in_array((string)$set_val, (array)$value))
+			if (in_array((string)$selected_value, (array)$value))
 			{
 				if ($multiple)
 				{
 					if (!isset($valid)) $valid = array();
-					$valid[] = $set_val;
+					$valid[] = $selected_value;
 				}
 				else
 				{
-					$valid = $set_val;
+					$valid = $selected_value;
 				}
 			}
 			elseif ($this->type == 'radio')
 			{
 				if (!isset($valid)) $valid = '';	// do not overwrite value of an other radio-button of the same group (identical name)!
 			}
-			else	// if checkbox is not checked, html returns nothing: eTemplate returns unset_val (default false)
+			else	// if checkbox is not checked, html returns nothing: eTemplate returns unselected_value (default false)
 			{
 				if ($multiple)
 				{
@@ -95,11 +96,11 @@ class etemplate_widget_checkbox extends etemplate_widget
 				elseif ($value === 'true')
 				{
 					// 'true' != true
-					$valid = $set_val;
+					$valid = $selected_value;
 				}
 				else
 				{
-					$valid = $unset_val;
+					$valid = $unselected_value;
 				}
 			}
 			//error_log(__METHOD__.'() '.$form_name.($multiple?'[]':'').': '.array2string($value).' --> '.array2string($valid));
