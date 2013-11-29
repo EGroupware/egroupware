@@ -1073,7 +1073,7 @@ class etemplate_old extends boetemplate
 		}
 		$form_name = self::form_name($cname,$name);
 
-		if (!is_object($name) && (string)$name !== '')
+		if (!is_object($name) && (string)$name !== '' && is_array($content))
 		{
 			$value = $this->get_array($content,$name);
 		}
