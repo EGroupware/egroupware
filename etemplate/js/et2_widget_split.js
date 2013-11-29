@@ -184,6 +184,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		// Initialize splitter
 		this.div.splitter(options);
 
+		this.div.trigger('resize',[options.sizeTop || options.sizeLeft || 0]);
+		
 		// Start docked?
 		if(options.dock)
 		{
