@@ -1016,9 +1016,9 @@ class so_sql
 		if (is_array($start)) list($start,$num_rows) = $start;
 
 		// fix GROUP BY clause to contain all non-aggregate selected columns
-		if ($order_by && stripos($order_by,'GROUP BY') !== false && $this->db->Type != 'mysql')
+		if ($order_by && stripos($order_by,'GROUP BY') !== false)
 		{
-			$order_by = $this->fix_group_by_columns($order_by, $colums);
+			$order_by = $this->fix_group_by_columns($order_by, $colums, $this->table_name, $this->autoinc_id);
 		}
 		elseif ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
 		{
@@ -1124,11 +1124,14 @@ class so_sql
 	 *
 	 * @param string $group_by [GROUP BY ...[HAVING ...]][ORDER BY ...]
 	 * @param string|array $columns better provide an array as exploding by comma can lead to error with functions containing one
+	 * @param string $table_name table-name
+	 * @param string $autoinc_id id-column
 	 * @return string
 	 */
-	public function fix_group_by_columns($group_by, &$columns)
+	public static function fix_group_by_columns($group_by, &$columns, $table_name, $autoinc_id)
 	{
-		if (!preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
+		$matches = null;
+		if ($GLOBALS['egw']->db->Type == 'mysql' || !preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
 		{
 			return $group_by;	// nothing to do
 		}
@@ -1144,11 +1147,11 @@ class so_sql
 			if ($col == '*')
 			{
 				// MySQL does NOT allow to GROUP BY table.*
-				$col = $columns[$n] = $this->table_name.'.'.($this->db->Type == 'mysql' ? $this->autoinc_id : '*');
+			$col = $columns[$n] = $table_name.'.'.($GLOBALS['egw']->db->Type == 'mysql' ? $autoinc_id : '*');
 				++$changes;
 			}
 			// only check columns and non-aggregate functions
-			if (strpos($col, '(') === false || !preg_match('/(COUNT|MIN|MAX|AVG|SUM|BIT_[A-Z]+|STD[A-Z_]*|VAR[A-Z_]*)\(/i', $col))
+			if (strpos($col, '(') === false || !preg_match('/(COUNT|MIN|MAX|AVG|SUM|BIT_[A-Z]+|STD[A-Z_]*|VAR[A-Z_]*|ARRAY_AGG)\(/i', $col))
 			{
 				if (($pos = stripos($col, 'DISTINCT ')) !== false)
 				{
@@ -1161,7 +1164,7 @@ class so_sql
 				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
 				{
 					// instead of aliased primary key, we have to use original column incl. table-name as alias is ambigues
-					$group_by_cols[] = $col == $this->table_name.'.'.$this->autoinc_id ? $col : $alias;
+					$group_by_cols[] = $col == $table_name.'.'.$autoinc_id ? $col : $alias;
 					//error_log(__METHOD__."() col=$col, alias=$alias --> group_by_cols=".array2string($group_by_cols));
 					++$changes;
 				}
