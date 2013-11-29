@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2007-13 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -35,21 +35,43 @@ switch ($args[0])
 		do_merge($args);
 		break;
 
-	default:
-		$d = opendir($dir=dirname(__FILE__));
-
-		while (($file = readdir($d)) !== false)
+	case 'up':
+		if (count($args) == 1)	// run an svn up over all modules
 		{
-			$path = $dir . '/'. $file;
-			if (!is_dir($path) || in_array($file,array('debian','home','doc','..','.svn'))) continue;
+			$cmd = 'svn up '.implode(' ', get_app_dirs());
+			echo $cmd."\n";
+			system($cmd);
+			break;
+		}
+		// fall through
+	default:
+		foreach(get_app_dirs as $module => $dir)
+		{
+			chdir(__DIR__ . '/'. $dir);
 
-			chdir($path);
-
-			$args_m = str_replace('$module',$file == '.' ? 'egroupware' : $file,implode(' ',$args));
-			echo "$file: svn $args_m\n";
+			$args_m = str_replace('$module', $module, implode(' ',$args));
+			echo "$module: svn $args_m\n";
 			system('svn '.$args_m);
 		}
 		break;
+}
+
+/**
+ * Get all EGroupware application directories including "."
+ *
+ * @return array module => relativ path pairs, "egroupware" => ".", "addressbook" => "addressbook", ...
+ */
+function get_app_dirs()
+{
+	$app_dirs = array();
+	foreach(scandir(__DIR__) as $dir)
+	{
+		$path = __DIR__ . '/'. $dir;
+		if (!is_dir($path) || in_array($dir, array('debian','home','doc','..','.svn')) || !is_dir($path.'/setup')) continue;
+		$app_dirs[$dir == '.' ? 'egroupware' : $dir] = $dir;
+	}
+	//error_log(__METHOD__."() returning ".print_r($app_dirs, true));
+	return $app_dirs;
 }
 
 function do_merge(array $args)
@@ -64,19 +86,24 @@ function do_merge(array $args)
 	// get xml log
 	$cmd = "svn log --verbose --xml ".implode(' ',$args);
 	//echo $cmd;
-	exec($cmd, $output, $err);
-	$output = implode("\n",$output);
+	$output_arr = $err = null;
+	exec($cmd, $output_arr, $err);
+	$output = implode("\n", $output_arr);
 	if ($err) throw new Exception("'$cmd' returned $err\n$output");
 	$log = new SimpleXMLElement($output);
 	$modules = $messages = array();
 	foreach($log->logentry as $logentry)
 	{
-		foreach($logentry->attributes() as $name => $rev) if ($name == 'revision') break;
+		foreach($logentry->attributes() as $name => $rev)
+		{
+			if ($name == 'revision') break;
+		}
 		echo "r$rev: ".$logentry->msg."\n";
 		$messages['r'.$rev] = (string)$logentry->msg;
 		foreach($logentry->paths->path as $path)
 		{
 			//echo "\t".$path."\n";
+			$matches = null;
 			if (preg_match('#(/trunk/|/branches/[^/]+/)([^/]+)/#',$path,$matches))
 			{
 				if (!in_array($matches[2],$modules)) $modules[] = $matches[2];
