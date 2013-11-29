@@ -62,11 +62,11 @@
 							<table width="100%" cellspacing="0" cellpadding="0">
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home/index.php">{user_login}</a></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home/index.php">{user_login}</a></td>
 								</tr>
 <!-- BEGIN loged_in -->
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
 								</tr>
 
 								<tr class="divSideboxEntry">
@@ -74,17 +74,17 @@
 								</tr>
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
 								</tr>
 <!-- END loged_in -->
 								<tr class="divSideboxEntry">
 									<td colspan="2" class="textSidebox">&nbsp;</td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
 								</tr>
 							</table>
 						</div>
