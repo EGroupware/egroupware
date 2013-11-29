@@ -369,7 +369,7 @@
 				<row class="th" height="20">
 					<description value="Custom fields"/>
 				</row>
-				<row height="100%">
+				<row valign="top" height="100%">
 					<customfields options="$cont[tid],$cont[no_private_cfs]"/>
 				</row>
 			</rows>
@@ -384,7 +384,7 @@
 				<row class="th" height="20">
 					<description value="Custom fields"/>
 				</row>
-				<row height="100%">
+				<row valign="top" height="100%">
 					<customfields id="private_cfs" options="$cont[tid],1"/>
 				</row>
 			</rows>
