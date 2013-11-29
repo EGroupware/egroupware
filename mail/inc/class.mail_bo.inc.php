@@ -334,8 +334,8 @@ class mail_bo
 		$mail = mail_bo::getInstance(false, $_profile_id,false);
 		//_debug_array( $_profile_id);
 		//$mail->mailPreferences = $mail->bopreferences->getPreferences($_profile_id,1);
-		$this->icServer = emailadmin_account::read($_profile_id)->imapServer();
-		$this->ogServer = emailadmin_account::read($_profile_id)->smtpServer();
+		$mail->icServer = emailadmin_account::read($_profile_id)->imapServer();
+		$mail->ogServer = emailadmin_account::read($_profile_id)->smtpServer();
 		return $mail;
 	}
 
@@ -4498,7 +4498,7 @@ class mail_bo
 					if ($part->getDisposition()=='attachment')
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
-						
+
 						$structure_bytes = $part->getBytes();
 						$structure_mime=$mime_type;
 						$structure_partID=$mime_id;
