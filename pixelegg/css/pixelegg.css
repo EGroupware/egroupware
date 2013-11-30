@@ -671,12 +671,12 @@ ul.et2_link_string {
   border-radius: 3px;
 }
 .et2_tabheader {
-  background-color: #cdcdcd;
   background-position: bottom;
   background-repeat: repeat-x;
   padding-left: 0em;
   border-bottom: 1px solid #bfbfbf;
   margin: 0 2px;
+  background-image: none;
 }
 .et2_tabheader :first-child {
   margin-left: 0.3em;
@@ -2178,6 +2178,7 @@ input {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif !important;
 }
 input:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
