@@ -64,9 +64,9 @@
 			<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
 			<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
 			<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>
-			<buttononly id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
-			<buttononly id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
-			<buttononly id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
+			<buttononly label="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
+			<buttononly label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
+			<buttononly label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
 			<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 			<file statustext="Select file to upload in current directory" id="upload" drop_target ="divAppbox"/>
 		</hbox>
