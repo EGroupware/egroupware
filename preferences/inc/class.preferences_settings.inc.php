@@ -63,12 +63,12 @@ class preferences_settings
 			if ($content['button'])
 			{
 				list($button) = each($content['button']);
+				$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
 				switch($button)
 				{
 					case 'save':
 					case 'apply':
 						// ToDo: save preferences
-						$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
 						list($type,$account_id) = explode(':', $content['old_type']);
 						// merge prefs of all tabs together again
 						$prefs = array();
@@ -91,6 +91,21 @@ class preferences_settings
 							$msg_type = 'success';
 							$msg = lang('Preferences saved.');
 						}
+				}
+				if(in_array($button, array('save','cancel')))
+				{
+					if($appname != 'common')
+					{
+						egw_framework::redirect_link(
+							egw_framework::link('/index.php'),
+							egw_link::get_registry($appname, 'index')
+						);
+					}
+					else
+					{
+						egw_framework::window_close();
+					}
+					return;
 				}
 			}
 			$appname = $content['appname'] ? $content['appname'] : 'common';

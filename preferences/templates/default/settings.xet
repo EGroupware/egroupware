@@ -36,6 +36,8 @@
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
 		</tabbox>
+		<button label="Save" id="button[save]"/>
 		<button label="Apply" id="button[apply]"/>
+		<button label="Cancel" id="button[cancel]"/>
 	</template>
 </overlay>
