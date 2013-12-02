@@ -53,7 +53,7 @@
 					</row>
 				</rows>
 			</grid>
-			<button statustext="Add an additional condition" label="add" id="button[add]" onclick="xajax_eT_wrapper(this); return false;"/>
+			<button statustext="Add an additional condition" label="add" id="button[add]"/>
 		</vbox>
 		<styles>
 			.condition_help {
