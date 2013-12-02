@@ -129,6 +129,9 @@ class mail_acl
 						{
 							$msg .= lang("The Folder %1 's ACLs saved!", $content['mailbox']);
 						}
+						//Add new row at the end
+						if ($content['grid'][count($content['grid'])]['acc_id'])
+							array_push($content['grid'], array('acc_id'=>''));
 
 						$preserv ['mailbox'] = $content['mailbox'];
 
@@ -147,16 +150,13 @@ class mail_acl
 					common::egw_exit();
 					break;
 				case 'delete':
-					if ($content)
-					{
-
-						//$content['grid'] = $this->remove_acl($content,$msg);
+						$msg = "delete";
+						$content['grid'] = $this->remove_acl($content,$msg);
 						egw_framework::refresh_opener($msg, 'mail', 'update');
-					}
 			}
 		}
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
-
+		
 		$content['msg'] = $msg;
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
 	}
@@ -235,11 +235,12 @@ class mail_acl
 	function remove_acl($content,$msg)
 	{
 		$row_num = array_keys($content['grid']['delete'],"pressed");
+		$row_num = $row_num[0];
 		$identifier = $content['grid'][$row_num]['acc_id'][0];
 		//$this->deleteACL($content['mailbox'], $identifier,$content['grid'][$row_num]['recursively'] );
 		unset($content['grid'][$row_num]);
 		unset($content['grid']['delete']);
-		return array_values($content['grid']);
+		return array_combine(range(1, count($content['grid'])), array_values($content['grid']));
 	}
 
 	/**
