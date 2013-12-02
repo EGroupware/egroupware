@@ -124,14 +124,17 @@
 						if($content['dry-run'])
 						{
 							$preview = $this->preview($plugin, $file, $definition_obj);
-							$template->setElementAttribute('preview', 'value', $preview);
-							if(trim($this->message) == '') return;
+							if(trim($this->message) == '')
+							{
+								$template->setElementAttribute('preview', 'value', $preview);
+								return;
+							}
 						}
 						else
 						{
 							importexport_helper_functions::$dry_run = false;
+							$count = $plugin->import($file, $definition_obj);
 						}
-						$count = $plugin->import($file, $definition_obj);
 					}
 					else
 					{
