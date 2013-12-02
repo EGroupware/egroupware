@@ -58,7 +58,7 @@
 		<hbox span="all">
 			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..');"/>
 			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~');"/>
-			<vfs-name label="Path" id="path" options="80" class="address"/>
+			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~');} return false;" options="80" class="address"/>
 			<button label="Go to" id="button[go]" image="key_enter"/>
 			<image id="tarp" src="buttonseparator"/>
 			<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>

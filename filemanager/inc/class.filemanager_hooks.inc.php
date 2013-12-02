@@ -33,6 +33,15 @@ class filemanager_hooks
 	 */
 	static function sidebox_menu($args)
 	{
+		// Magic etemplate2 favorites menu (from nextmatch widget)
+		display_sidebox(self::$appname,lang('Favorites'),array(
+			array(
+				'no_lang' => true,
+				'text'=> etemplate_widget_nextmatch::favorite_list(self::$appname,'filemanager.filemanager_ui.get_rows'),
+				'link'=>false,
+				'icon' => false
+			)
+		));
 		$location = is_array($args) ? $args['location'] : $args;
 		$rootpath = '/';
 		$basepath = '/home';
