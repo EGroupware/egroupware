@@ -200,7 +200,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 	if(console.groupCollapsed)
 	{
-		egw.window.console.groupCollapsed("Loading %s", _name);
+		egw.window.console.groupCollapsed("Loading %s into ", _name, this.DOMContainer);
 	}
 
 	// require necessary translations from server, if not already loaded
@@ -747,7 +747,14 @@ function etemplate2_handle_load(_type, _response)
 function etemplate2_handle_validation_error(_type, _response)
 {
 	// Display validation errors
-	//$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
+	for(var id in _response.data)
+	{
+		var widget = this.widgetContainer.getWidgetById(id);
+		if(widget)
+		{
+			widget.showMessage(_response.data[id],'validation_error');
+		}
+	}
 	egw().debug("warn","Validation errors", _response.data);
 }
 /**
