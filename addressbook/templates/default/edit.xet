@@ -77,7 +77,7 @@
 						<rows>
 							<row>
 								<description value="Name"/>
-								<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="-36" span="2" class="cursorHand"/>
+								<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="2" tabindex="-1" class="cursorHand"/>
 							</row>
 							<row>
 								<description/>
