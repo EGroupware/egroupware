@@ -252,7 +252,8 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			case "url-phone":
 				if(typeof link == 'function')
 				{
-					this.span.click(this, link);
+					this.span.off('click.et2_url');
+					this.span.on('click.et2_url', link);
 					this.span.attr("href", "#");
 				}
 				else if (link)
@@ -263,7 +264,8 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			case "url-email":
 				if(typeof link == 'function')
 				{
-					this.span.click(this, link);
+					this.span.off('click.et2_url');
+					this.span.on('click.et2_url', link);
 					this.span.removeAttr("href");
 				}
 				else
