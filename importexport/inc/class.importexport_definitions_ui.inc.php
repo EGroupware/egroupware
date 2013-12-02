@@ -263,7 +263,8 @@ class importexport_definitions_ui
 			'export' => array(
 				'caption' => 'Export',
 				'group' => $group,
-				'icon' => 'filesave'
+				'icon' => 'filesave',
+				'postSubmit' => true
 			),
 			'delete' => array(
 				'caption' => 'Delete',
