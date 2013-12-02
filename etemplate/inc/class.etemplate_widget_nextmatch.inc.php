@@ -943,9 +943,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$filters[substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
 		}
+		// Get link for if there is no nextmatch - this is a fallback
+		$registry = egw_link::get_registry($app,'list');
+		if(!$registry) $registry = egw_link::get_registry($app,'index');
 		foreach($filters as $name => $filter)
 		{
-			$href = egw::link('/index.php', (array)egw_link::get_registry($app,'list') + array('favorite'=>$name),$app);
+			$href = egw::link('/index.php', (array)$registry + array('favorite'=>$name),$app);
 			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
 			$html .= "<a href=\"$href\" class='ui-corner-all' tabindex='-1'>";
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
