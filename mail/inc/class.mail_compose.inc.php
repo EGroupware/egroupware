@@ -1111,6 +1111,7 @@ class mail_compose
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
 				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
+				unset($content[strtolower($destination)]);
 				foreach((array)$address_array as $addressObject) {
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);

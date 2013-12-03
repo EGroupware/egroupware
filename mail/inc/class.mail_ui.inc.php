@@ -142,6 +142,7 @@ class mail_ui
 					'msg' => $e->getMessage()//.' ('.get_class($e).': '.$e->getCode().')',
 				));
 		}
+
 		$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
 		//$endtime = microtime(true) - $starttime;
@@ -186,9 +187,11 @@ class mail_ui
 		$starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
 		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
+		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+			$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
 		}
 		//_debug_array($content);
 		if (!is_array($content))
@@ -209,7 +212,7 @@ class mail_ui
 					'start'          =>	0,		// IO position in list
 					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-					'default_cols'   => 'status,attachments,subject,fromaddress,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
@@ -1211,7 +1214,7 @@ unset($query['actions']);
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','toaddress','fromaddress','date','size','modified');
+		$cols = array('row_id','uid','status','attachments','subject','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
@@ -1482,10 +1485,18 @@ unset($query['actions']);
 				$data["toaddress"] = $header['to_address'];//mail_bo::htmlentities($header['to_address'],$this->charset);
 			}
 
+			if (in_array("additionaltoaddress", $cols))
+			{
+				$data['additionaltoaddress'] = json_encode($header['additional_to_addresses']);
+			}
 			//fromaddress
 			if (in_array("fromaddress", $cols))
 			{
 				$data["fromaddress"] = $header['sender_address'];//mail_bo::htmlentities($header['sender_address'],$this->charset);
+			}
+			if (in_array("ccaddress", $cols))
+			{
+				$data['ccaddress'] = json_encode($header['cc_addresses']);
 			}
 			if (in_array("date", $cols))
 			{
@@ -3239,6 +3250,11 @@ blockquote[type=cite] {
 						}
 					}
 				}
+			}
+			if ($folderName==$this->mail_bo->sessionData['mailbox'])
+			{
+				$this->mail_bo->sessionData['mailbox']=$newFolderName;
+				$this->mail_bo->saveSessionData();
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($oA)

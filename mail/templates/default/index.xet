@@ -52,6 +52,7 @@
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
 					<url-email id="previewToAddress" readonly="true"/>
+					<buttononly class="et2_button ui-button mail_DisplayNone" label="Show all Adresses ..." value="showAllAddresses" id="button[showAllAddresses]" image="foldertree_nolines_plus" onclick="app.mail.mail_showAllAddresses(app.mail.mail_currentlyFocussed)"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>

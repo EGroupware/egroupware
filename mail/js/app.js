@@ -495,6 +495,7 @@ app.classes.mail = AppJS.extend(
 			this.et2.getWidgetById('previewToAddress').set_value("");
 			this.et2.getWidgetById('previewDate').set_value("");
 			this.et2.getWidgetById('previewSubject').set_value("");
+			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
 			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
@@ -510,6 +511,16 @@ app.classes.mail = AppJS.extend(
 		this.et2.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
 		this.et2.getWidgetById('previewDate').set_value(dataElem.data.date);
 		this.et2.getWidgetById('previewSubject').set_value(subject);
+		if (dataElem.data.additionaltoaddress=="null") dataElem.data.additionaltoaddress='';
+		if (dataElem.data.ccaddress=='null') dataElem.data.ccaddress='';
+		if ((dataElem.data.additionaltoaddress.length+dataElem.data.ccaddress.length)<1)
+		{
+			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
+		}
+		else
+		{
+			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button');
+		}
 		if (dataElem.data.attachmentsBlock.length<1)
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
@@ -527,6 +538,29 @@ app.classes.mail = AppJS.extend(
 		this.mail_removeRowClass(messages,'unseen');
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
+	},
+
+	/**
+	 * mail_showAllAddresses
+	 * requires: mainWindow, one mail selected for preview
+	 */
+	mail_showAllAddresses: function(_id) {
+		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",additionaltoaddress:"",ccaddress:"",date:"",subject:""}};
+		dataElem = egw.dataGetUIDdata(_id);
+		console.log(_id,dataElem);
+		var buttons = [
+			{text: this.egw.lang("Close"), id:"close"}
+		];
+		et2_dialog.show_dialog(function(_button_id)
+		{
+			switch(_button_id)
+			{
+				case 'close':
+				default:
+					break;
+			}
+		},this.egw.lang("text one"),
+		dataElem.data.subject, {}, buttons, et2_dialog.WARNING_MESSAGE);
 	},
 
 	mail_setMailBody: function(content) {

@@ -1195,6 +1195,16 @@ class mail_bo
 						}
 					}
 				}
+				if(is_array($headerObject['CC']) && $headerObject['CC'][0]) {
+					$ki=0;
+					foreach($headerObject['CC'] as $k => $add)
+					{
+						//error_log(__METHOD__.__LINE__."-> $k:".array2string($add));
+						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki]['address'] = self::decode_header($add);
+						//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
+						$ki++;
+					}
+				}
 				//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]));
 
 				$count++;
@@ -1886,7 +1896,7 @@ class mail_bo
 					$allMailboxes = array();
 					foreach ((array)$allMailBoxesExtSorted as $mbx) {
 						//echo $mbx['MAILBOX']."<br>";
-						if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"])) {
+						if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"]) || in_array('\haschildren',$mbx["ATTRIBUTES"])) {
 							unset($buff);
 							//$buff = $this->icServer->getMailboxes($mbx['MAILBOX'].$delimiter,0,false);
 							if (!in_array($mbx['MAILBOX'],$allMailboxes)) $buff = self::getMailBoxesRecursive($mbx['MAILBOX'],$delimiter,$foldersNameSpace[$type]['prefix'],1);
@@ -2180,26 +2190,27 @@ class mail_bo
 		//get that mailbox in question
 		$mbx = $this->icServer->getMailboxes($_mailbox,1,true);
 		#_debug_array($mbx);
-		if (is_array($mbx[0]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[0]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[0]["ATTRIBUTES"]))) {
+//error_log(__METHOD__.__LINE__.' Delimiter:'.array2string($delimiter));
+//error_log(__METHOD__.__LINE__.array2string($mbx));
+		if (is_array($mbx[0]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[0]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[0]["ATTRIBUTES"]) || in_array('\haschildren',$mbx[0]["ATTRIBUTES"]))) {
 			// if there are children fetch them
 			//echo $mbx[0]['MAILBOX']."<br>";
 			unset($buff);
 			$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'].($mbx[0]['MAILBOX'] == $prefix ? '':$delimiter),2,false);
 			//$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'],2,false);
 			//_debug_array($buff);
-			if( PEAR::isError($buff) ) {
-				if (self::$debug) error_log(__METHOD__." Error while retrieving Mailboxes for:".$mbx[0]['MAILBOX'].$delimiter.".");
-				return array();
-			} else {
-				$allMailboxes = array();
-				foreach ($buff as $mbxname) {
-					$mbxname = preg_replace('~'.($delimiter == '.' ? "\\".$delimiter:$delimiter).'+~s',$delimiter,$mbxname);
-					#echo "About to recur in level $reclevel:".$mbxname."<br>";
-					if ( $mbxname != $mbx[0]['MAILBOX'] && $mbxname != $prefix  && $mbxname != $mbx[0]['MAILBOX'].$delimiter) $allMailboxes = array_merge($allMailboxes, self::getMailBoxesRecursive($mbxname, $delimiter, $prefix, $reclevel));
+			$allMailboxes = array();
+			foreach ($buff as $mbxname) {
+//error_log(__METHOD__.__LINE__.array2string($mbxname));
+				$mbxname = preg_replace('~'.($delimiter == '.' ? "\\".$delimiter:$delimiter).'+~s',$delimiter,$mbxname['MAILBOX']);
+				#echo "About to recur in level $reclevel:".$mbxname."<br>";
+				if ( $mbxname != $mbx[0]['MAILBOX'] && $mbxname != $prefix  && $mbxname != $mbx[0]['MAILBOX'].$delimiter)
+				{
+					$allMailboxes = array_merge($allMailboxes, self::getMailBoxesRecursive($mbxname, $delimiter, $prefix, $reclevel));
 				}
-				if (!(in_array('\NoSelect',$mbx[0]["ATTRIBUTES"]) || in_array('\Noselect',$mbx[0]["ATTRIBUTES"]))) $allMailboxes[] = $mbx[0]['MAILBOX'];
-				return $allMailboxes;
 			}
+			if (!(in_array('\NoSelect',$mbx[0]["ATTRIBUTES"]) || in_array('\Noselect',$mbx[0]["ATTRIBUTES"]) || in_array('\noselect',$mbx[0]["ATTRIBUTES"]))) $allMailboxes[] = $mbx[0]['MAILBOX'];
+			return $allMailboxes;
 		} else {
 			return array($_mailbox);
 		}
