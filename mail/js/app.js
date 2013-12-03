@@ -551,16 +551,15 @@ app.classes.mail = AppJS.extend(
 		var buttons = [
 			{text: this.egw.lang("Close"), id:"close"}
 		];
-		et2_dialog.show_dialog(function(_button_id)
-		{
-			switch(_button_id)
-			{
-				case 'close':
-				default:
-					break;
-			}
-		},this.egw.lang("text one"),
-		dataElem.data.subject, {}, buttons, et2_dialog.WARNING_MESSAGE);
+		var dialog = et2_createWidget("dialog",{
+			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+			callback: function(button_id, value) {},
+			buttons: buttons,
+			title: dataElem.data.subject,
+			template:"/egroupware/mail/templates/default/displayAllAdresses.xet",
+			value: { content: {displayallAdresses:[{type:this.egw.lang('to'),address:JSON.parse(dataElem.data.additionaltoaddress)[0]}]}, sel_options: {}}
+		});
+
 	},
 
 	mail_setMailBody: function(content) {

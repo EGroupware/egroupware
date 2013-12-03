@@ -1189,7 +1189,7 @@ class mail_bo
 						{
 							if ($k==0) continue;
 							//error_log(__METHOD__.__LINE__."-> $k:".array2string($add));
-							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add);
+							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = self::decode_header($add);
 							//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 							$ki++;
 						}
@@ -1200,7 +1200,7 @@ class mail_bo
 					foreach($headerObject['CC'] as $k => $add)
 					{
 						//error_log(__METHOD__.__LINE__."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki]['address'] = self::decode_header($add);
+						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add);
 						//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
