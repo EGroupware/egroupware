@@ -251,9 +251,8 @@ var et2_tree = et2_inputWidget.extend(
 				}
 				// Item color - not working
 				if(options[key].data && typeof options[key].data.color !== 'undefined' && options[key].data.color)
-				this.autoloading_url = url;
 				{
-					options[key].style += "background-color ='"+options[key].data.color+"';";
+					options[key].style = options[key].style || "" + "background-color ='"+options[key].data.color+"';";
 				} 
 
 				// Tooltip
