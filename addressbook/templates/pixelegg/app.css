@@ -19,6 +19,10 @@
 #addressbook-index {
   height: 100%;
 }
+/* Give enough (static) width to edit dialog tabs, or it will auto-size and flex */
+#addressbook-edit .et2_tabbox {
+  min-width: 535px;
+}
 .cursorHand {
   cursor: hand;
 }
@@ -288,12 +292,6 @@ div#addressbook-index table.egwGridView_outer {
 }
 .et2_container {
   height: auto;
-}
-#egw_fw_sidemenu .egw_fw_ui_category_content table {
-  margin-left: -14px;
-}
-#egw_fw_sidemenu select {
-  margin-top: -5px;
 }
 /* ##################################################### */
 /* ##################################################### */
