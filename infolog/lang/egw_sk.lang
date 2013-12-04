@@ -175,6 +175,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	s
 enter a textual description of the log-entry	infolog	sk	Zadajte text popisujúci tento záznam
 enter the query pattern	infolog	sk	Zadajte výraz pre vyhľadávanie
 entry and all files	infolog	sk	Záznam a všetky súbory
+error: importing the ical	infolog	sk	Chyba: import iCal-u
 error: saving the entry	infolog	sk	Chyba pri ukladaní záznamu
 error: the entry has been updated since you opened it for editing!	infolog	sk	Chyba: odkedy ste záznam otvorili pre úpravy, bol medzitým aktualizovaný!
 execute a further action for this entry	infolog	sk	Vykonať ďalšiu akciu pre túto položku
@@ -251,6 +252,7 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	sk	Umiestnenie
 longer textual description	infolog	sk	Dlhší opisný text
 low	infolog	sk	Nízka
+manage mapping	infolog	sk	Správa mapovania
 max length of the input [, length of the inputfield (optional)]	infolog	sk	maximálna dĺžka vstupu [, dĺžka vstupného poľa (voliteľné)]
 modifier	infolog	sk	Upravil
 modifierer	infolog	sk	Upravil

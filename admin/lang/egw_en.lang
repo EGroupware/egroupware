@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 access to other data	admin	en	%1 access to other data
+%1 acl entries deleted.	admin	en	%1 ACL entries deleted.
 %1 acl records of not (longer) existing accounts deleted.	admin	en	%1 ACL records of not longer existing accounts deleted.
 %1 categories of not (longer) existing accounts deleted.	admin	en	%1 categories of not (longer) existing accounts deleted.
 %1 category(s) %2	admin	en	%1 category(s) %2
@@ -36,8 +37,14 @@ account list	admin	en	Account list
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account preferences
 account-id's have to be integers!	admin	en	Account ID's have to be integers!
+acl added.	admin	en	ACL added.
+acl deleted.	admin	en	ACL deleted.
+acl entry deleted.	admin	en	ACL entry deleted.
+acl entry not found!	admin	en	ACL entry not found!
 acl manager	admin	en	ACL manager
 acl rights	common	en	ACL rights
+acl updated	admin	en	ACL updated
+acl updated.	admin	en	ACL updated.
 action	admin	en	Action
 actions	admin	en	Actions
 activate	admin	en	Activate
@@ -281,6 +288,7 @@ enter your http proxy server port	admin	en	Enter your HTTP proxy server port
 enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	en	Enter your SMTP server port
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
+error changing the password for % !!!	admin	en	Error changing the password for % !!!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
 error deleting log entry!	admin	en	Error deleting log entry!
 error saving	admin	en	Error saving!
@@ -475,6 +483,7 @@ percent of users that logged out	admin	en	Percent of users that logged out
 percent this user has logged out	admin	en	Percent this user has logged out
 permission denied	admin	en	Permission denied
 permission denied !!!	admin	en	Permission denied!
+permission denied!!!	admin	en	Permission denied!!!
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 personal: eg. within a family	admin	en	Personal: eg. within a family
@@ -623,8 +632,8 @@ uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
-use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code
+use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
 use theme	admin	en	Use theme
 user accounts	admin	en	User accounts
 user csv export	admin	en	User CSV export

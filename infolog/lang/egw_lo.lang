@@ -20,6 +20,7 @@ edit this entry	infolog	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
 empty for all	infolog	lo	ບ່ອນວ່າງສຳລັບທັງໝົດ
 end	infolog	lo	ສິ້ນສຸດ
 enddate	infolog	lo	ວັນສຸດທ້າຍ
+error: importing the ical	infolog	lo	ຂໍ້ຜິດພາດ: ການນໍາເຂົ້າ iCal
 error: the entry has been updated since you opened it for editing!	infolog	lo	ຂໍ້ຜິດພາດ: ຂໍ້ມູນ/ລາຍການ ໄດ້ຮັບການປັບປຸງຕັ້ງແຕ່ຕອນທ່ານເປີດສໍາລັບການແກ້ໄຂ!!!
 execute a further action for this entry	infolog	lo	ການຈັດການ/ການປະຕິບັດ ການດໍາເນີນການເພີ່ມເຕີມສໍາລັບລາຍການນີ້
 existing links	infolog	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ

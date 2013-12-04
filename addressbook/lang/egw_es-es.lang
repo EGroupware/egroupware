@@ -110,6 +110,7 @@ contacts and account contact-data to sql	admin	es-es	contactos y datos del conta
 contacts to ldap	admin	es-es	Contactos en LDAP
 contacts to ldap, account contact-data to sql	admin	es-es	Contactos en LDAP, datos del contacto y la cuenta en SQL
 contains	addressbook	es-es	contiene
+copied	addressbook	es-es	copiado
 copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
 copy a contact and edit the copy	addressbook	es-es	Copiar un contacto y editar la copia
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	es-es	Copiar sus cambios en el portapapeles, %1recargar la entrada%2 y mezclarlos.

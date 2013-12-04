@@ -18,6 +18,7 @@ acl manager	admin	pt	Administração de regras de acesso
 acl rights	common	pt	Permissões de acesso
 action	admin	pt	Acção
 actions	admin	pt	Acções
+activate	admin	pt	Activar
 activate wysiwyg-editor	admin	pt	Activar editor WYSIWYG
 add a category	admin	pt	Adicionar uma categoria
 add a group	admin	pt	Adicionar um grupo
@@ -206,6 +207,7 @@ error! no appname found	admin	pt	Erro! Nenhum nome de aplicação encontrado
 error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outro erro !!!
 expires	admin	pt	Expira
 explanation of ldapman	admin	pt	Até ao momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e necessita de schemas CORE e QMAIL (OID7914). Para mais informações sobre a utilização e configuração deste sistema, consulte o ficheiro README.Idapman na pasta de documentos de ADMIN.
+failed to change password.	admin	pt	Não foi possível alterar a senha.
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
 false	admin	pt	Falso
 field '%1' already exists !!!	admin	pt	O campo '%1' já existe !!!

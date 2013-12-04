@@ -822,7 +822,6 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	sk	Ak ch
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu EGroupware: %1, ale nemáte na to oprávnenia.
 your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
 your message has been sent	common	sk	Vaša správa bola odoslaná
-your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	sk	Vaše heslo nespĺňa požiadavky na kvalitu hesla.<br> Musíte splniť %1 kritérium %1. Splnili ste iba %2 kritériá. <br>Vaše heslo nesplnilo nasledovné kritériá:
 your password is about to expire in %1 days, you may change your password now	common	sk	Vaše heslo vyprší do %1 dní, môžete si ho už zmeniť.
 your search returned %1 matchs	common	sk	našiel som %1 záznamov
 your search returned 1 match	common	sk	našiel som 1 záznam

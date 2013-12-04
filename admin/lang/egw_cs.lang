@@ -27,6 +27,7 @@ acl manager	admin	cs	Správce ACL
 acl rights	common	cs	ACL práva
 action	admin	cs	Akce
 actions	admin	cs	Akce
+activate	admin	cs	Aktivovat
 activate wysiwyg-editor	admin	cs	aktivovat WYSIWYG editor
 add a category	admin	cs	přidat kategorii
 add a group	admin	cs	přidat skupinu
@@ -211,8 +212,8 @@ email account active	admin	cs	e-mailový účet aktivní
 email address	admin	cs	e-mailová adresa
 enable	admin	cs	povolit
 enable debug-messages	admin	cs	Povolit debugovací zprávy
-enable the soap service	admin	cs	Povolit službu soap
 enable spellcheck in rich text editor	admin	cs	Povolit kontrolu pravopisu v richtext editoru?
+enable the soap service	admin	cs	Povolit službu soap
 enable the xmlrpc service	admin	cs	Povolit službu xmlrpc
 enabled - hidden from navbar	admin	cs	Povoleno - Skryto z navigační lišty
 enabled - popup window	admin	cs	Povoleno - Překryvné okno
@@ -240,7 +241,6 @@ enter your http proxy server port	admin	cs	Zadejte port Vašeho HTTP proxy serve
 enter your smtp server hostname or ip address	admin	cs	Zadejte doménové jméno nebo IP adresu Vašeho SMTP serveru
 enter your smtp server port	admin	cs	Zadejte port Vašeho SMTP serveru
 error canceling timer, maybe there's none set !!!	admin	cs	Chyba při ukočení časovače, patrně není žádný nastaven !!!
-error changing the password for % !!!	admin	cs	Chyba při změně hesla pro % !!!
 error changing the password for %1 !!!	admin	cs	Chyba při změně hesla pro 1% !!!
 error deleting log entry!	admin	cs	Chyba při mazání záznamu v logu!
 error saving	admin	cs	Chyba při ukládání
@@ -252,6 +252,7 @@ error! no appname found	admin	cs	Chyba! Název aplikace nenalezen
 error: %1 not found or other error !!!	admin	cs	Chyba: %1 nenalezen nebo jiná chyba !!!
 expires	admin	cs	Vyprší
 explanation of ldapman	admin	cs	Tento modul byl zatím testován pro Postfix,LDAP,Courier-IMAP a potřebuje schémata CORE a QMAIL (OID7914). Více informací k používání a konfiguraci tohoto systému naleznete v souboru README.ldapman ve podsložce doc složky admin.
+failed to change password.	admin	cs	Nepodařilo se změnit heslo.
 fallback (after each pageview)	admin	cs	náhradní režim (po každém zobrazení stránky)
 false	admin	cs	ne
 field '%1' already exists !!!	admin	cs	Položka '%1' již existuje !!!

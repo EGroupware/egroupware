@@ -276,7 +276,6 @@ however, the application may still work	setup	zh	但是此应用程序仍然可�
 if no acl records for user or any group the user is a member of	setup	zh	如果用户没有 ACL 记录或者是不属于任何组，则将该用户视为
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	zh	如果已经开启安全模式，eGroupWare 不能在运行时改变某些设置，也不能加载任何尚未加载的模块。
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh	如果应用程序没定义任何表, 可使用"升级"功能修正此问题
-if using ads (active directory) authentication	setup	zh	如果使用 ADS (Active Directory) 认证
 if using ldap	setup	zh	如果使用 LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh	如果您使用LDAP, 您希望能管理主目录和登录shell的属性吗？
 if you did not receive any errors, your applications have been	setup	zh	如果您没有看到任何错误信息，您的应用程序已经

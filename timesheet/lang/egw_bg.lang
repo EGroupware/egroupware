@@ -26,8 +26,10 @@ export to openoffice spreadsheet	timesheet	bg	Експорт в OpenOffice ел�
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Графика Ви в CSV-файл (стойности, разделени със запетая). Може да изберете друг разделител чрез таб Опции.
 field must not be empty !!!	timesheet	bg	Полето трябва да бъде попълнено !!!
 full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
+general fields:	timesheet	bg	Общи полета:
 global categories	timesheet	bg	Глобални категории
 history	timesheet	bg	История
+history logging	admin	bg	Запис на история
 id	timesheet	bg	ИД
 last modified	timesheet	bg	Последно измемение
 last month	timesheet	bg	Миналия месец

@@ -104,6 +104,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	d
 enter a textual description of the log-entry	infolog	da	skriv en tekst-beskrivelse af log-indtastningen
 enter the query pattern	infolog	da	Indtast forspørgelses mønster
 entry and all files	infolog	da	Indtastning og alle filer
+error: importing the ical	infolog	da	Fejl: I at importere iCal'en
 error: saving the entry	infolog	da	fejl ved: gemme indtastning
 error: the entry has been updated since you opened it for editing!	infolog	da	Fejl: Dette emne er opdateret siden du åbnede det for redigering
 existing links	infolog	da	Nuværende links

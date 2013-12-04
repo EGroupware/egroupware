@@ -14,6 +14,7 @@ acl manager	admin	da	ACL Håndtering
 acl rights	common	da	ACL rettigheder
 action	admin	da	Handling
 actions	admin	da	Handling
+activate	admin	da	Aktivere
 add a category	admin	da	tilføj en kategori
 add a group	admin	da	tilføj en gruppe
 add a new account.	admin	da	tilføj en ny konto
@@ -182,6 +183,7 @@ error canceling timer, maybe there's none set !!!	admin	da	Fejl ved annullering 
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	da	Fejl ved indstillingen af timeren, forkert syntaks eller måske kører den allerede!!!
 error: %1 not found or other error !!!	admin	da	Fejl: %1 ikke fundet eller en anden fejl!!!
 expires	admin	da	Udløber
+failed to change password.	admin	da	Det lykkedes ikke at ændre adgangskoden.
 file space	admin	da	Fil plads
 file space must be an integer	admin	da	Fil plads skal være et helt tal
 for the times above	admin	da	for tider over

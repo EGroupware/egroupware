@@ -15,6 +15,7 @@ acl manager	admin	lv	ACL pārvaldnieks
 acl rights	common	lv	ACL tiesības
 action	admin	lv	Darbība
 actions	admin	lv	Darbības
+activate	admin	lv	Aktivizēt
 activate wysiwyg-editor	admin	lv	aktivizēt WYSIWYG redaktoru
 add a category	admin	lv	pievienot kategoriju
 add a group	admin	lv	pievienot grupu
@@ -188,6 +189,7 @@ error canceling timer, maybe there's none set !!!	admin	lv	Kļūdas atceļot tai
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lv	Kļūda uzstādot taimeri, kļūdaina sintakse vai, iespējams, kāds jau ir palaists!!!
 error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita kļūda!!!
 expires	admin	lv	Beigas
+failed to change password.	admin	lv	Neizdevād nomainīt paroli.
 fallback (after each pageview)	admin	lv	atkāpšanās (pēc katras lapas apskates)
 false	admin	lv	Nepatiess
 file space	admin	lv	Failu kartotēkas lielums

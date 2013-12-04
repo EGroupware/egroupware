@@ -145,6 +145,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	s
 enter a textual description of the log-entry	infolog	sl	Vpišite opis vnosa v dnevnik
 enter the query pattern	infolog	sl	Vnesite vzorec poizvedbe
 entry and all files	infolog	sl	Zapis in vse datoteke
+error: importing the ical	infolog	sl	Napaka: pri uvozu v iCal
 error: saving the entry	infolog	sl	Napaka pri shranjevanju vnosa
 error: the entry has been updated since you opened it for editing!	infolog	sl	Napaka: vnos je bil spremenjen odkar ste ga odprli za urejanje!
 execute a further action for this entry	infolog	sl	Izvede dodatna dejanja za ta vnos
@@ -199,6 +200,7 @@ list no subs/childs	infolog	sl	Seznam nima podrejenih seznamov
 location	infolog	sl	Lokacija
 longer textual description	infolog	sl	Daljši opis
 low	infolog	sl	Nizko
+manage mapping	infolog	sl	Upravljaj mapiranje
 max length of the input [, length of the inputfield (optional)]	infolog	sl	Največja dolžina vhoda [dolžina vhodnega polja (neobvezno)]
 name must not be empty !!!	infolog	sl	Ime ne sme biti prazno!!!
 name of current user, all other contact fields are valid too	infolog	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika

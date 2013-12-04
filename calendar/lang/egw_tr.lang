@@ -24,6 +24,7 @@ calendar preferences	calendar	tr	Takvim Seçenekleri
 calendar settings	admin	tr	Takvim Ayarlarý
 calendar-fieldname	calendar	tr	Takvim-Alan Adý
 canceled	calendar	tr	Ýptal Edildi
+charset of file	calendar	tr	Dosya Karakter Kümesi (char-set)
 countries	calendar	tr	Ülkeler
 country	calendar	tr	Ülke
 csv-fieldname	calendar	tr	CSV-Alan adý
@@ -76,6 +77,7 @@ hours	calendar	tr	saat
 ical / rfc2445	calendar	tr	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	tr	Seçilirse, haftasonuna gelen tatiller/bayramlar ilk pazartesine ötelenir.
 ignore conflict	calendar	tr	çakýþma Yoksay
+import	calendar	tr	?thal Et
 import csv-file	common	tr	CSV Dosyasý Ýthal Et
 interval	calendar	tr	Ara
 last	calendar	tr	son
@@ -165,6 +167,7 @@ to many might exceed your execution-time-limit	calendar	tr	çok fazla, çalýþtýrma
 to-firstname	calendar	tr	Alýcý-Ýsim
 to-fullname	calendar	tr	Alýcý-Ýsim ve Soyad
 to-lastname	calendar	tr	Alýcý-Soyad
+translation	calendar	tr	Tercüme
 tue	calendar	tr	Sal
 updated	calendar	tr	Güncelle
 use end date	calendar	tr	Bitiþ tarihi kullan

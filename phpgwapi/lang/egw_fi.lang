@@ -832,7 +832,6 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	fi	Salli
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
-your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	fi	Salasanasi ei ole riittävän vahva. Sen pitää täyttää vähintään %1 kriteeriä, mutta salasanasi täytti ainoastaan %2 kriteeriä.<br>Salasanasi ei ollut riittävän vahva:
 your password is about to expire in %1 days, you may change your password now	common	fi	Salasanasi täytyy vaihtaa %1 päivän kuluessa!
 your search returned %1 matchs	common	fi	Haku palautti %1 osumaa
 your search returned 1 match	common	fi	Haku palautti yhden osuman

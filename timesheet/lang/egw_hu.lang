@@ -28,8 +28,10 @@ existing links	timesheet	hu	Meglévő hivatkozások
 export to openoffice spreadsheet	timesheet	hu	Exportálás OpenOffice Táblázatkezelő formátumban
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
+general fields:	timesheet	hu	Általános mezők:
 global categories	timesheet	hu	Globális kategóriák
 history	timesheet	hu	Történet
+history logging	admin	hu	Történet követése (log)
 id	timesheet	hu	Azonosító
 last modified	timesheet	hu	Utolsó módosítás
 last month	timesheet	hu	Korábbi hónap

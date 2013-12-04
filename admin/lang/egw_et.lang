@@ -9,6 +9,7 @@ account preferences	admin	et	Konto eelistused
 acl manager	admin	et	ACL Manageerija
 acl rights	common	et	ACL Õigused
 actions	admin	et	Tegevused
+activate	admin	et	Aktiveeri
 add a category	admin	et	lisa kategooria
 add a group	admin	et	lisa grupp
 add a new account.	admin	et	Lisa uus konto

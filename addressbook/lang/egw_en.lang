@@ -147,6 +147,7 @@ csv-filename	addressbook	en	CSV file name
 custom	addressbook	en	Custom
 custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contact form
 custom fields	addressbook	en	Custom fields
+data exchange settings	addressbook	en	Data exchange settings
 debug output in browser	addressbook	en	Debug output in browser
 default	addressbook	en	Default
 default address format	addressbook	en	Default address format
@@ -188,6 +189,7 @@ edit extra account-data in the addressbook	admin	en	Edit extra account data in t
 edit phonenumbers -	addressbook	en	Edit phone numbers -
 either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
+email (private)	addressbook	en	email (private)
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data.
 empty	admin	en	Empty
 empty for all	addressbook	en	Empty for all
@@ -215,10 +217,14 @@ export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+exports contacts from your addressbook into a vcard file.	addressbook	en	Exports contacts from your Addressbook into a vCard File.
 extra	addressbook	en	Extra
+extra encodings	addressbook	en	Extra encodings
 extra private	addressbook	en	Extra private
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	Failed to change %1 organization member(s), insufficient rights!
+favorites	addressbook	en	Favorites
 fax	addressbook	en	Fax
+fax (private)	addressbook	en	fax (private)
 fax number	common	en	Fax number
 field %1 has been added !	addressbook	en	Field %1 has been added!
 field %1 has been updated !	addressbook	en	Field %1 has been updated!
@@ -234,6 +240,7 @@ freebusy uri	addressbook	en	FreeBusy URI
 full name	addressbook	en	Full name
 general	admin	en	General
 general fields:	addressbook	en	General fields:
+general settings	addressbook	en	General settings
 geo	addressbook	en	GEO
 global categories	addressbook	en	Global categories
 grant addressbook access	common	en	Grant address book access
@@ -253,6 +260,7 @@ home state	addressbook	en	Home state
 home street	addressbook	en	Home street
 home zip code	addressbook	en	Home ZIP code
 how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
+html link to the current record	addressbook	en	HTML link to the current record
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	If accounts are already in LDAP
 ignore first line	addressbook	en	Ignore first line
@@ -312,6 +320,7 @@ migration finished	addressbook	en	Migration finished
 migration to ldap	admin	en	Migration to LDAP
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile phone
+mobile phone (private)	addressbook	en	mobile phone (private)
 modem phone	addressbook	en	Modem phone
 more ...	addressbook	en	More ...
 move to addressbook	addressbook	en	Move to address book
@@ -418,6 +427,7 @@ that field name has been used already !	addressbook	en	The field name has been u
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
+the following document-types are supported:	addressbook	en	The following document-types are supported:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
@@ -435,12 +445,16 @@ two of: %1	addressbook	en	Two of: %1
 type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.
+unable to delete	addressbook	en	unable to delete
+unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
 unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 update fields by edited organisations?	admin	en	Fields to update of edited organizations
 updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
+url (business)	addressbook	en	url (business)
+url (private)	addressbook	en	url (private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
 use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
 use an extra category tab?	addressbook	en	Use an extra tab for categories

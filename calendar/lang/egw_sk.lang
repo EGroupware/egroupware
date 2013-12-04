@@ -6,6 +6,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	načítalo sa %1 záznamov (zatiaľ neboli naimportované, vraťte sa a ODznačte Test importu)
 %1 weeks	calendar	sk	%1 týždňov
 (%1 events in %2 seconds)	calendar	sk	(%1 udalostí za %2 sekundy)
+(empty = use global limit, no = no export at all)	admin	sk	(prázdne = použiť globálny limit, nie = žiadny export)
 , exceptions preserved	calendar	sk	, výnimky uchované
 , stati of participants reset	calendar	sk	, stanovisko účastníkov vynulované
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>V Kalendári sa používajú sviatky, ktoré platia vo Vašej krajine. Tá je nastavená na %1. Môžete ju zmeniť vo vašom %2.<br />Sviatky sa %3 automaticky inštalujú z %4. Môžete to zmeniť v %5.
@@ -85,6 +86,7 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	sk	Predseda
 change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
+charset of file	calendar	sk	Znaková sada súboru
 check all	calendar	sk	Označiť všetko
 choose a category	calendar	sk	Vyberte kategóriu
 close the window	calendar	sk	Zavrieť okno
@@ -182,16 +184,22 @@ event details follow	calendar	sk	Podrobnosti o udalosti:
 event saved	calendar	sk	Udalosť bola uložená
 event will occupy the whole day	calendar	sk	Udalosť zaberie celý deň
 every user can invite other users and groups	admin	sk	Každý používateľ môže pozývať ostatných používateľov a skupiny
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exception	calendar	sk	Výnimka
 exception created - you can now edit or delete it	calendar	sk	Výnimka bola vytvorená -teraz ju môžete upraviť alebo zmazať
 exceptions	calendar	sk	Výnimky
 execute a further action for this entry	calendar	sk	Vykonať ďalšiu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 exists	calendar	sk	Existuje
+export definition to use for nextmatch export	calendar	sk	Exportná definícia pre použitie v exporte
 exports events from your calendar in ical format.	calendar	sk	Exportuje udalosti z vášho Kalendára vo formáte iCal.
 exports events from your calendar into a csv file.	calendar	sk	Exportuje udalosti z vášho Kalendára do súboru CSV.
 extended	calendar	sk	Rozšírené
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sk	Rozšírený formát obsahuje všetky podrobnosti o udalosti. Formát iCal sa dá importovať do niektorých ďalších kalendárnych aplikácií.
+favorites	calendar	sk	Obľúbené
 fieldseparator	calendar	sk	Oddeľovač polí
 filemanager	calendar	sk	Správca súborov
 filename	calendar	sk	Názov súboru
@@ -213,6 +221,7 @@ freetime search	calendar	sk	Vyhľadanie voľného času
 fri	calendar	sk	Pi
 full description	calendar	sk	Opis
 fullname of person to notify	calendar	sk	Celé meno upozorňovanej osoby
+general fields:	calendar	sk	Všeobecné polia:
 global categories	calendar	sk	Globálne kategórie
 global public and group public	calendar	sk	Verejná - globálne i pre skupinu
 global public only	calendar	sk	Iba globálne verejná
@@ -251,7 +260,11 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	sk	Ak sa líši deň začiatku
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sk	Ak tu nezadáte heslo, informácia sa sprístupní každému kto pozná URL adresu!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	sk	Ak vyberiete interval (mesiac, týždeň apod) namiesto zoznamu položiek, budú dostupné tieto prídavné polia.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	sk	Ak zadáte priečinok, plnú vfs cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify an export definition, it will be used when you export	calendar	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch.
 ignore conflict	calendar	sk	Ignorovať konflikt
+import	calendar	sk	Import
 import csv-file	common	sk	Importovať CSV súbor
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sk	Importuje udalosti do vášho Kalendára zo súboru CSV. CSV znamená 'Comma Separated Values' čiže čiarkami oddelené hodnoty. Avšak v karte možností si môžete vybrať aj iné oddeľovače.
 imports events into your calendar from an ical file.	calendar	sk	Naimportuje udalosti zo súboru iCal do vášho kalendára.
@@ -267,19 +280,24 @@ it can not read timezones from sqlite database %1!	calendar	sk	Nemožno čítať
 keep exceptions	calendar	sk	Ponechať výnimky
 keep the series unchanged.	calendar	sk	Ponechať sériu bez zmeny.
 last	calendar	sk	Posledné
+last changed	calendar	sk	Naposledy zmenené
 lastname of person to notify	calendar	sk	Priezvisko upozorňovanej osoby
 length of the time interval	calendar	sk	Dĺžka časového intervalu
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	sk	Obmedziť počet riadkov popisu v zobrazení zoznamu (predvolené 5, 0 znamená bez obmedzenia)
 link	calendar	sk	Odkaz na udalosť
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
+links and attached files	calendar	sk	Odkazy a priložené súbory
+links to specified application.  example: {{links/infolog}}	calendar	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 links, attachments	calendar	sk	Odkazy, prílohy
+list of files linked to the current record	calendar	sk	Zoznam súborov priložených k súčasnému záznamu
 listview	calendar	sk	Zoznam udalostí
 location	calendar	sk	Miesto konania
 location to autoload from	admin	sk	Umiestnenie zdroja pre automatické nahrávanie
 location, start- and endtimes, ...	calendar	sk	Miesto konania, časy začiatku a konca,...
 mail all participants	calendar	sk	Oboslať všetkých účastníkov
 make freebusy information available to not loged in persons?	calendar	sk	Sprístupniť informácie o zaneprázdnení všetkým, aj neprihláseným osobám?
+manage mapping	calendar	sk	Správa mapovania
 max. number of entries to show (leave empty for no restriction)	calendar	sk	Maximálny počet položiek, ktorý sa má zobraziť (ak nechcete obmedziť, ponechajte prázdne)
 maximum available quantity of %1 exceeded!	calendar	sk	Prekročená najvyššie povolené množstvo %1!
 meeting request	calendar	sk	Požiadavka na stretnutie
@@ -307,6 +325,7 @@ no meeting requests	calendar	sk	Nenašli sa žiadne požiadavky na stretnutie
 no owner selected	calendar	sk	Nebol vybraný vlastník.
 no recurrence	calendar	sk	Bez opakovaní
 no response	calendar	sk	Bez odozvy
+no rights to export more than %1 entries!	calendar	sk	Nemáte právo exportovať viac než %1 položiek!
 non blocking	calendar	sk	Neblokujúce
 not	calendar	sk	nie
 not rejected	calendar	sk	Neodmietnuté
@@ -322,6 +341,7 @@ number of records to read (%1)	calendar	sk	Počet záznamov k načítaniu (%1)
 number of weeks to show	calendar	sk	Počet zobrazených týždňov
 observance rule	calendar	sk	Pravidlo zachovania
 occurence	calendar	sk	Výskyt
+old fixed definition	calendar	sk	Stará pevná definícia
 old startdate	calendar	sk	Starý dátum začiatku
 olddate	calendar	sk	Pôvodný dátum
 on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 vašu požiadavku na stretnutie plánované na %4
@@ -405,7 +425,6 @@ select resources	calendar	sk	Vybrať zdroje
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	sk	Vyberte si, či sa pri posune udalosti má vynulovať stanovisko účastníkov na neznáme.
 select who should get the alarm	calendar	sk	Vybrať kto dostane pripomienku
 selected range	calendar	sk	Vybraný rozsah
-send meetingrequest to all participants	calendar	sk	Poslať požiadavku na stretnutie všetkým účastníkom
 send meetingrequest to all participants after the event is saved	calendar	sk	Po uložení udalosti, poslať požiadavku na stretnutie všetkým účastníkom
 series deleted	calendar	sk	Séria odstránená
 set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte iba pre jednorázové a nepravidelné udalosti.
@@ -459,7 +478,9 @@ tag to mark positions for address labels	calendar	sk	Značka pre vyznačenie poz
 tentative	calendar	sk	Predbežne prijaté
 test import (show importable records <u>only</u> in browser)	calendar	sk	Otestovať import (importované záznamy sa zobrazia <u>len</u> v prehliadači)
 the apple ical apps use this color to display events from this calendar.	calendar	sk	Aplikácie Apple iCal používajú túto farbu na zobrazenie udalostí z tohto kalendára
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the exceptions are deleted together with the series.	calendar	sk	Výnimky boli odstránené spolu so sériou.
+the following document-types are supported:	calendar	sk	Podporované sú nasledovné typy dokumentov:
 the original series will be terminated today and a new series be created.	calendar	sk	Pôvodná séria bude dneškom ukončená a vytvorí sa nová séria.
 the resource you selected is already overbooked:	calendar	sk	Tento zdroj je už rezervovaný:
 this day is shown as first day in the week or month view.	calendar	sk	Tento deň sa zobrazuje ako prvý v týždennom či mesačnom pohľade.
@@ -492,11 +513,13 @@ timezone of event exports	calendar	sk	Časové pásmo exportov udalosti
 timezone of event ical file import/export	calendar	sk	Časové pásmo pre import/export udalosti do súboru iCal
 timezones updated to version %1 (%2 records updated).	calendar	sk	Časové pásma boli aktualizované na verziu %1 (%2 záznamov aktualizovaných).
 title of the event	calendar	sk	Názov udalosti
+titles of any entries linked to the current record, excluding attached files	calendar	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
 to many might exceed your execution-time-limit	calendar	sk	piveľa môže prekročiť váš limit času spustenia
 to-firstname	calendar	sk	Ku krstnému menu
 to-fullname	calendar	sk	K plnému menu
 to-lastname	calendar	sk	K priezvisku
 tomorrow	calendar	sk	Zajtra
+translation	calendar	sk	Preklad
 tue	calendar	sk	Ut
 two weeks	calendar	sk	dva týždne
 type of planner	calendar	sk	Typ plánovača

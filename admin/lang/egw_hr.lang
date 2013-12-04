@@ -15,6 +15,7 @@ acl manager	admin	hr	ACL Uređivanje
 acl rights	common	hr	ACL Prava
 action	admin	hr	Akcija (radnja)
 actions	admin	hr	Akcije
+activate	admin	hr	Aktiviraj
 activate wysiwyg-editor	admin	hr	aktivacija WYSIWYG-uređivača
 add a category	admin	hr	dodaj kategoriju
 add a group	admin	hr	dodaj grupu
@@ -187,6 +188,7 @@ error canceling timer, maybe there's none set !!!	admin	hr	Greška prilikom otka
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	hr	Error setting timer, wrong syntax or maybe there's one already running !!!
 error: %1 not found or other error !!!	admin	hr	GREŠKA: %1 nije nađeno ili neka druga greška !!!
 expires	admin	hr	Istječe
+failed to change password.	admin	hr	Nisam mogao promijeniti zaporku.
 fallback (after each pageview)	admin	hr	fallback (after each pageview)
 false	admin	hr	False
 file space	admin	hr	File space

@@ -44,6 +44,7 @@ calendar settings	admin	pt	Configurações do calendário
 calendar-fieldname	calendar	pt	calendário-Nome do campo
 can't add alarms in the past !!!	calendar	pt	Não é possível adicionar avisos no passado !!!
 canceled	calendar	pt	Cancelado
+charset of file	calendar	pt	Charset do ficheiro
 check all	calendar	pt	Marcar todas
 choose a category	calendar	pt	Escolher uma categoria
 close the window	calendar	pt	Fechar janela
@@ -157,10 +158,12 @@ ical successful imported	calendar	pt	iCal importado com sucesso
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	pt	Se os feriados surgirem num fim de semana são transferidos para a segunda-feira seguinte.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pt	Se não definir uma senha aqui, a informação estará acessível a todos as pessoas que saibam a URL!!!
 ignore conflict	calendar	pt	Ignorar conflito
+import	calendar	pt	Importar
 import csv-file	common	pt	Importar ficheiro CSV
 interval	calendar	pt	Intervalo
 invalid email-address "%1" for user %2	calendar	pt	Endereço de correio electrónico "%1" inválido para o utilizador %2
 last	calendar	pt	Último
+last changed	calendar	pt	Última alteração
 lastname of person to notify	calendar	pt	Apelido da pessoa a avisar
 length of the time interval	calendar	pt	Duração do intervalo
 link	calendar	pt	Ligação
@@ -290,6 +293,7 @@ timeframe	calendar	pt	Prazo
 timeframe to search	calendar	pt	Prazo para pesquisar
 title of the event	calendar	pt	Título do evento
 to many might exceed your execution-time-limit	calendar	pt	em demasia pode exceder o seu tempo limite de execução
+translation	calendar	pt	Tradução
 tue	calendar	pt	Ter
 two weeks	calendar	pt	duas semanas
 updated	calendar	pt	Actualizado

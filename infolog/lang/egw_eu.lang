@@ -93,6 +93,7 @@ enddate	infolog	eu	Amaiera data
 enter a textual description of the log-entry	infolog	eu	Sarreraren deskribapen testu bat sartu
 enter the query pattern	infolog	eu	Bilaketa patroia sartu
 entry and all files	infolog	eu	Sarrera eta fitxategi guztiak
+error: importing the ical	infolog	eu	Errorea: ¡Cal fitxategia inportatzerakoan
 error: saving the entry	infolog	eu	Errorea: sarrera gordetzerakoan
 existing links	infolog	eu	Loturak
 fax	infolog	eu	Fax

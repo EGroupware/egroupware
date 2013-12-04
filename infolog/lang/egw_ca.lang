@@ -120,6 +120,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	c
 enter a textual description of the log-entry	infolog	ca	entreu un text descriptiu de l'entrada
 enter the query pattern	infolog	ca	entreu el patró de recerca
 entry and all files	infolog	ca	Entrada i tots els arxius
+error: importing the ical	infolog	ca	Error important el iCal
 error: saving the entry	infolog	ca	Error guardant l'entrada
 error: the entry has been updated since you opened it for editing!	infolog	ca	Error: l'entrada ha estat actualitzada des de que l'has obert per editar-la!
 execute a further action for this entry	infolog	ca	Executa una nova acció per aquesta entrada

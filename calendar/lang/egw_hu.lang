@@ -55,6 +55,7 @@ can't add alarms in the past !!!	calendar	hu	A múltban riasztást nem lehet lé
 can't aquire lock!	calendar	hu	Nem zárolható!
 canceled	calendar	hu	Törölve
 change history	calendar	hu	Történet módosítása
+charset of file	calendar	hu	Állomány karakterkészlete
 check all	calendar	hu	Összes kijelölese
 choose a category	calendar	hu	Válasszon kategóriát
 close the window	calendar	hu	Ablak bezárás
@@ -136,6 +137,7 @@ execute a further action for this entry	calendar	hu	További művelet végrehajt
 existing links	calendar	hu	Meglévő hivatkozások
 extended	calendar	hu	Kibővített
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hu	Kibővített frissítések mindig tartalmazzák a komplett esemény-jellemzőket.
+favorites	calendar	hu	Kedvencek
 fieldseparator	calendar	hu	Mező elválasztó
 filemanager	calendar	hu	Filekezelő
 filename	calendar	hu	Állománynév
@@ -154,6 +156,7 @@ freetime search	calendar	hu	Szabadidő keresés
 fri	calendar	hu	Pé
 full description	calendar	hu	Teljes leírás
 fullname of person to notify	calendar	hu	A személy teljes neve az értesítéshez
+general fields:	calendar	hu	Általános mezők:
 global categories	calendar	hu	Globális kategóriák
 global public and group public	calendar	hu	Globális publikus és csoport publikus
 global public only	calendar	hu	Csak globális publikus
@@ -184,12 +187,14 @@ ical successful imported	calendar	hu	iCal sikeresen importálva
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	hu	Bejelölés esetén ha az ünnepnap hétvégére esik, akkor azt áthelyezi az azt követő Hétfőre.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	hu	Ha nem állít be jelszót, akkor az információ bárki számára elérhető lesz, aki ismeri az URL-t!!!
 ignore conflict	calendar	hu	Átfedés figyelmen kivül hagyása
+import	calendar	hu	Import
 import csv-file	common	hu	CSV-Állomány Import
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	hu	Naptárbejegyzések importálása egy CSV állományból. CSB jelntése 'Comma Separated Values'. Lehetősége lesz kiválasztani egyéb elválasztó karaktert is az Opciókban.
 interval	calendar	hu	Időtartam
 invalid email-address "%1" for user %2	calendar	hu	%2 felhasználó %1 email címe érvénytelen
 invitations	calendar	hu	Meghívók
 last	calendar	hu	utolsó
+last changed	calendar	hu	Utolsó változás
 lastname of person to notify	calendar	hu	A személy keresztneve
 length of the time interval	calendar	hu	Az időtartam hossza
 link	calendar	hu	Hivatkozás
@@ -335,6 +340,7 @@ timeframe to search	calendar	hu	Kereséshez időkeret
 timezone	calendar	hu	Időzóna
 title of the event	calendar	hu	Esemény címe
 to many might exceed your execution-time-limit	calendar	hu	Futtatási időkorlát túllépés
+translation	calendar	hu	Fordítás
 tue	calendar	hu	Ke
 two weeks	calendar	hu	két hét
 updated	calendar	hu	Frissítve

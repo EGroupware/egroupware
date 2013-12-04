@@ -50,6 +50,7 @@ calendar settings	admin	zh-tw	設定行事曆
 calendar-fieldname	calendar	zh-tw	行事曆欄位名稱
 can't add alarms in the past !!!	calendar	zh-tw	無法新增過去的警告！
 canceled	calendar	zh-tw	取消
+charset of file	calendar	zh-tw	檔案字元編碼設定
 check all	calendar	zh-tw	全選
 choose a category	calendar	zh-tw	選擇一個類別
 close the window	calendar	zh-tw	關閉視窗
@@ -142,6 +143,7 @@ freetime search	calendar	zh-tw	時間空檔查詢
 fri	calendar	zh-tw	五
 full description	calendar	zh-tw	完整敘述
 fullname of person to notify	calendar	zh-tw	需要通知的全名
+general fields:	calendar	zh-tw	一般欄位：
 global categories	calendar	zh-tw	全域類別
 global public and group public	calendar	zh-tw	全區公用及群組公用
 global public only	calendar	zh-tw	全區公用
@@ -170,11 +172,13 @@ ical successful imported	calendar	zh-tw	iCal 匯入成功
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	zh-tw	如果選擇的假日剛好是週末，系統會自動移到星期一。
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zh-tw	如果您在此並未設定密碼，知道網址的人就能夠讀取。
 ignore conflict	calendar	zh-tw	忽略重疊的約會
+import	calendar	zh-tw	匯入
 import csv-file	common	zh-tw	匯入CSV逗點分隔檔案
 insert in document	calendar	zh-tw	插入文件
 interval	calendar	zh-tw	間隔
 invalid email-address "%1" for user %2	calendar	zh-tw	錯誤的信箱 "%1" 於使用者 %2
 last	calendar	zh-tw	最後
+last changed	calendar	zh-tw	最後修改
 lastname of person to notify	calendar	zh-tw	要提醒的人名(姓)
 length of the time interval	calendar	zh-tw	時間間隔的長度
 link	calendar	zh-tw	連結
@@ -187,6 +191,7 @@ location to autoload from	admin	zh-tw	自動讀取的位置
 location, start- and endtimes, ...	calendar	zh-tw	位置，開始與結束時間等
 mail all participants	calendar	zh-tw	發信給所有參與人
 make freebusy information available to not loged in persons?	calendar	zh-tw	將行程資訊開放給未登入的人？
+manage mapping	calendar	zh-tw	管理對應
 minutes	calendar	zh-tw	分鐘
 modified	calendar	zh-tw	修改日期
 mon	calendar	zh-tw	一
@@ -310,6 +315,7 @@ timeframe to search	calendar	zh-tw	搜尋的時段
 timezone	calendar	zh-tw	時區
 title of the event	calendar	zh-tw	事件標題
 to many might exceed your execution-time-limit	calendar	zh-tw	處理太多資料可能會超過系統允許的處理時間
+translation	calendar	zh-tw	轉換
 tue	calendar	zh-tw	二
 two weeks	calendar	zh-tw	兩週
 updated	calendar	zh-tw	更新日期

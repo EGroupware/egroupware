@@ -176,6 +176,7 @@ error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소�
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!!!
 error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!!!
 expires	admin	ko	만료
+failed to change password.	admin	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
 false	admin	ko	거짓
 file space	admin	ko	파일 용량

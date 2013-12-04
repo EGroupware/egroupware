@@ -27,6 +27,7 @@ acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
 action	admin	nl	Actie
 actions	admin	nl	Acties
+activate	admin	nl	Activeren
 activate wysiwyg-editor	admin	nl	WYSIWYG-editor inschakelen
 add a category	admin	nl	Een categorie toevoegen
 add a group	admin	nl	Een goep toevoegen
@@ -203,8 +204,8 @@ email account active	admin	nl	emailaccount actief
 email address	admin	nl	emailadres
 enable	admin	nl	inschakelen
 enable debug-messages	admin	nl	Debugberichten activeren
-enable the soap service	admin	nl	De SOAP service inschakelen
 enable spellcheck in rich text editor	admin	nl	Schakel de spellingcontrole in de Rich Text Editor in?
+enable the soap service	admin	nl	De SOAP service inschakelen
 enable the xmlrpc service	admin	nl	De XML-RPC service inschakelen
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
 enabled - popup window	admin	nl	Ingeschakeld - Popup Window
@@ -232,7 +233,6 @@ enter your http proxy server port	admin	nl	Voer uw HTTP-proxy-serverpoort in
 enter your smtp server hostname or ip address	admin	nl	Uw SMTP server host of IP
 enter your smtp server port	admin	nl	Uw SMTP port
 error canceling timer, maybe there's none set !!!	admin	nl	Fout bij het annuleren van de timer, misschien is er geen timer ingesteld!
-error changing the password for % !!!	admin	nl	Fout bij wijzigen van wachtwoord voor % !!!
 error changing the password for %1 !!!	admin	nl	Fout bij wijzigen van wachtwoord voor %1 !!!
 error saving	admin	nl	Fout bij opslaan
 error saving account!	admin	nl	Fout bij opslaan van account!
@@ -243,6 +243,7 @@ error! no appname found	admin	nl	Fout! geen appname gevonden
 error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een ander fout!
 expires	admin	nl	Verloopt
 explanation of ldapman	admin	nl	Deze module is getest voor POSTFIX, LDAP, Courier-IMAP en vereist de schema's CORE en QMAIL (OID7914). Meer details over het gebruik en configureren van dit systeem is te vinden in README.ldapman in de doc map van ADMIN.
+failed to change password.	admin	nl	Wachtwoord kan niet worden gewijzigd.
 fallback (after each pageview)	admin	nl	terugval (na iedere paginaweergave)
 false	admin	nl	onwaar
 field '%1' already exists !!!	admin	nl	Veld '%1' bestaat al !!!

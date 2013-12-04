@@ -18,6 +18,7 @@ acl manager	admin	ca	Gestió de LCA
 acl rights	common	ca	Permisos de LCA
 action	admin	ca	Acció
 actions	admin	ca	Accions
+activate	admin	ca	Activar
 activate wysiwyg-editor	admin	ca	Activar l'editor WYSIWYG
 add a category	admin	ca	Afegir una categoria
 add a group	admin	ca	Afegir un grup
@@ -210,6 +211,7 @@ error! no appname found	admin	ca	Error! No s'ha trobat appname
 error: %1 not found or other error !!!	admin	ca	Error: no s'ha trobat %1 o bé un altre error
 expires	admin	ca	Caduca
 explanation of ldapman	admin	ca	Aquest mòdul ha estat provat per POSTFIX,LDAP,Courier-IMAP i necessita els esquemes CORE i QMAIL (OID7914). Més detalls de com utilitzar i configurar aquest sistema es pot trobar a README.ldapman dins la carpeta doc d'ADMIN.
+failed to change password.	admin	ca	Error al canviar la contrasenya.
 fallback (after each pageview)	admin	ca	Activar després d'error (després de veure cada pàgina)
 false	admin	ca	Fals
 field '%1' already exists !!!	admin	ca	El camp '%1' ja existeix !!!

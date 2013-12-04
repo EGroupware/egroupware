@@ -43,6 +43,7 @@ holiday	calendar	ja	休日
 holidays	calendar	ja	休日一覧
 ical / rfc2445	calendar	ja	iCal / rfc2445
 ignore conflict	calendar	ja	無視
+import	calendar	ja	インポート
 import csv-file	common	ja	CSVファイルをインポート
 interval	calendar	ja	間隔
 location	calendar	ja	場所
@@ -82,6 +83,7 @@ submit to repository	calendar	ja	転送
 sun	calendar	ja	日
 tentative	calendar	ja	仮承諾
 thu	calendar	ja	木
+translation	calendar	ja	翻訳
 tue	calendar	ja	火
 two weeks	calendar	ja	２週間
 use end date	calendar	ja	終了日指定

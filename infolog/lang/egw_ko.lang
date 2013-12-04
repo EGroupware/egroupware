@@ -75,6 +75,7 @@ end	infolog	ko	종료
 enddate	infolog	ko	만기일
 enddate can not be before startdate	infolog	ko	만기일은 시작일보다 앞설수 없습니다.
 enter the query pattern	infolog	ko	질의 패턴 입력
+error: importing the ical	infolog	ko	오류: ical 불러오기 오류
 error: saving the entry	infolog	ko	오류: 엔트리 저장
 error: the entry has been updated since you opened it for editing!	infolog	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
 existing links	infolog	ko	기존 링크

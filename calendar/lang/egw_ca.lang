@@ -49,6 +49,7 @@ calendar settings	admin	ca	Calendari - Valors establerts
 calendar-fieldname	calendar	ca	Calendari - Nom de camp
 can't add alarms in the past !!!	calendar	ca	No se poden activar alarmes en el passat !!!
 canceled	calendar	ca	Cancel·lat
+charset of file	calendar	ca	Joc de caràcters de l'arxiu
 check all	calendar	ca	Comprova-ho tot
 choose a category	calendar	ca	Tria una categoria
 close the window	calendar	ca	Tanca la finestra
@@ -167,10 +168,12 @@ ical successful imported	calendar	ca	iCal importat correctament
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	ca	Si els festius marcats cauen en cap de setmana, passen al dilluns següent.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	ca	Si no poses una contrasenya aquí, la informació estarà disponible per a qualsevol que conegui la URL!!!
 ignore conflict	calendar	ca	Ignorar conflicte
+import	calendar	ca	Importar
 import csv-file	common	ca	Importar arxiu CSV
 interval	calendar	ca	Intérval
 invalid email-address "%1" for user %2	calendar	ca	Adreça de correu invàlida "%1" de l'usuari %2
 last	calendar	ca	darrer
+last changed	calendar	ca	Darrer canvi
 lastname of person to notify	calendar	ca	Cognom de la persona a la que notificar
 length of the time interval	calendar	ca	Llargada de l'interval de temps
 link	calendar	ca	Enlace
@@ -304,6 +307,7 @@ timeframe to search	calendar	ca	Període de temps a cercar
 timezone	calendar	ca	Zona horària
 title of the event	calendar	ca	Títol de la cita
 to many might exceed your execution-time-limit	calendar	ca	Quan temps es pot excedir del límit d'execució
+translation	calendar	ca	Traducció
 tue	calendar	ca	Dt
 two weeks	calendar	ca	dues setmanes
 updated	calendar	ca	Actualitzat

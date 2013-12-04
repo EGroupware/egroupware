@@ -26,6 +26,7 @@ acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
 actions	admin	pt-br	Ações
+activate	admin	pt-br	Ativar
 activate wysiwyg-editor	admin	pt-br	ativar editor WYSIWYG
 add a category	admin	pt-br	adicionar uma categoria
 add a group	admin	pt-br	adicionar um grupo
@@ -201,8 +202,8 @@ email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
 enable	admin	pt-br	habilitado
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
-enable the soap service	admin	pt-br	Habilitar o serviço soap
 enable spellcheck in rich text editor	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
+enable the soap service	admin	pt-br	Habilitar o serviço soap
 enable the xmlrpc service	admin	pt-br	Habilitar o serviço xmlrpc
 enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegação
 enabled - popup window	admin	pt-br	Habilitar Janelas instantâneas
@@ -230,7 +231,6 @@ enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy H
 enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
 enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum está configurado !!!
-error changing the password for % !!!	admin	pt-br	Erro alterando a senha para % !!!
 error changing the password for %1 !!!	admin	pt-br	Erro alterando a senha para %1 !!!
 error saving	admin	pt-br	Erro salvando
 error saving account!	admin	pt-br	Erro salvando conta!
@@ -241,6 +241,7 @@ error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
 expires	admin	pt-br	Expira
 explanation of ldapman	admin	pt-br	Até o momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
+failed to change password.	admin	pt-br	Erro ao moudar a senha.
 fallback (after each pageview)	admin	pt-br	recuperar (após cada página visualizada)
 false	admin	pt-br	falso
 field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe !!!

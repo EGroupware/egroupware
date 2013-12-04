@@ -119,6 +119,7 @@ contacts and account contact-data to sql	admin	fi	Yhteystiedot ja käyttäjätil
 contacts to ldap	admin	fi	Yhteystiedot LDAP:iin
 contacts to ldap, account contact-data to sql	admin	fi	Yhteystiedot LDAP:iin, käyttäjätilien yhteystiedot SQL:ään
 contains	addressbook	fi	Sisältää
+copied	addressbook	fi	Kopioitu
 copied by %1, from record #%2.	addressbook	fi	Kopioinut: %1 tietueesta #%2.
 copy a contact and edit the copy	addressbook	fi	Kopioi yhteystieto ja muokkaa kopiota
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	fi	Kopioi muutokset leikepöydälle, %1päivitä tietue%2 ja sulauta ne.

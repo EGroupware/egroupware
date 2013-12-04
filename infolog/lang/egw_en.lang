@@ -46,11 +46,13 @@ add sub	infolog	en	Add sub
 add timesheet entry	infolog	en	Add timesheet entry
 add:	infolog	en	Add:
 added	infolog	en	Added
+addressbook placeholders available	infolog	en	Addressbook placeholders available
 all	infolog	en	All
 all links and attachments	infolog	en	All links and attachments
 all projects	infolog	en	All projects
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
+application mail expected but got: %1	infolog	en	Application mail expected but got: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!!!
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	Archive
@@ -120,6 +122,7 @@ custom from	infolog	en	Custom from
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Custom fields
+data exchange settings	infolog	en	Data exchange settings
 date completed	infolog	en	Date completed
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed. Leave empty to have it automatically set if status is done or billed.
 datecreated	infolog	en	Date created
@@ -160,6 +163,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	en	Rec
 don't show infolog	infolog	en	DON'T show InfoLog
 done	common	en	Done
 download	infolog	en	Download
+download url for links	infolog	en	Download url for links
 due %1	infolog	en	Due %1
 duration	infolog	en	Duration
 e-mail:	infolog	en	Email:
@@ -180,13 +184,16 @@ enter a textual description of the log-entry	infolog	en	Enter text description o
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
 error: importing the ical	infolog	en	Error: importing the iCal
+error: no mail (mailbox / uid) given!	infolog	en	Error: no mail (Mailbox / UID) given!
 error: saving the entry	infolog	en	Error saving the entry!
 error: the entry has been updated since you opened it for editing!	infolog	en	Error: the entry has been updated since you opened it for editing!
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	Exists
+export definition to use for nextmatch export	infolog	en	Export definition to use for nextmatch export
 exports in ical format.	infolog	en	Exports in iCal format.
 exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into a CSV file.
+favorites	infolog	en	Favorites
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty!
 fields to exclude when copying an infolog:	infolog	en	Fields to exclude when copying an infolog:
@@ -198,6 +205,8 @@ for infolog type %1, %2 is required	infolog	en	For infolog type %1, %2 is requir
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	en	For serial letter use this tag. Place the content you want to repeat between two tags.
 for which types should this field be used	infolog	en	For which types should this field be used
 from	infolog	en	From
+general fields:	infolog	en	General fields:
+general settings	infolog	en	General settings
 global categories	infolog	en	Global categories
 group owner for	infolog	en	Group owner for
 high	infolog	en	High
@@ -206,6 +215,7 @@ history logging	infolog	en	History logging
 history logging and deleting of items	infolog	en	History logging and deleting of items
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	en	How wide should the description area be. This value is numeric e.g. 60.
+html link to the current record	infolog	en	HTML link to the current record
 id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
@@ -254,9 +264,12 @@ limit width of description column ((effective only if lines limit is set), 0 for
 link	infolog	en	Link
 linked to %1	infolog	en	Linked to %1
 links	infolog	en	Links
+links and attached files	infolog	en	Links and attached files
 links of this entry	infolog	en	Links of this entry
+links wrapped in an href tag with download link	infolog	en	Links wrapped in an HREF tag with download link
 list all categories	infolog	en	List all categories
 list no subs/childs	infolog	en	List no subs/childs
+list of files linked to the current record	infolog	en	List of files linked to the current record
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	en	Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)
 location	infolog	en	Location
 longer textual description	infolog	en	Longer text description
@@ -419,6 +432,7 @@ start a new search, cancel this link	infolog	en	Start a new search, cancel this 
 startdate	infolog	en	Start date
 startdate enddate	infolog	en	Start date, Due date
 startdate for new entries	infolog	en	Start date for new entries
+startdate must be before enddate!!!	infolog	en	Startdate must be before Enddate!!!
 starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Start record
 status	infolog	en	Status
@@ -434,12 +448,14 @@ task	infolog	en	ToDo
 tasks of	infolog	en	Tasks of
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test import . Show importable records <u>only</u> in browser.
+the following document-types are supported:	infolog	en	The following document-types are supported:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally,<= 10 chars, changing it makes existing data unavailable.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the text displayed to the user	infolog	en	The text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	Default filter when entering the application. Filters limit the entries to show in the actual view.
 til when should the todo or phonecall be finished	infolog	en	When should the ToDo or Phone call be finished
 times	infolog	en	Times
+titles of any entries linked to the current record, excluding attached files	infolog	en	Titles of any entries linked to the current record, excluding attached files
 to many might exceed your execution-time-limit	infolog	en	Too many might exceed your execution time limit
 to what should the startdate of new entries be set.	infolog	en	To what should the start date of new entries be set.
 today	infolog	en	Today

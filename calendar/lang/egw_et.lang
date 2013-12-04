@@ -119,9 +119,11 @@ ical file	calendar	et	iCal fail
 ical import	calendar	et	iCal Import
 ical successful imported	calendar	et	iCal täielikult imporditud
 ignore conflict	calendar	et	Ignoreeri conflikti
+import	calendar	et	Import
 interval	calendar	et	Interval
 invalid email-address "%1" for user %2	calendar	et	Vigane e-mail "%1" kasutajale %2
 last	calendar	et	Viimane
+last changed	calendar	et	Viimati vahetatud
 lastname of person to notify	calendar	et	Perekonnanimi persoonist kellele teatatakse
 link	calendar	et	Link
 links	calendar	et	Lingid
@@ -188,6 +190,7 @@ thu	calendar	et	Nel
 timeframe	calendar	et	Ajavahemik
 timeframe to search	calendar	et	Ajavahemik otsingus
 title of the event	calendar	et	Sündmuse pealkiri
+translation	calendar	et	Tõlkimine
 tue	calendar	et	Tei
 two weeks	calendar	et	kaks nädalat
 updated	calendar	et	Uuendatud

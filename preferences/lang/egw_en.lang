@@ -31,6 +31,9 @@ default font size	preferences	en	Default font size
 default preferences	preferences	en	Default preferences
 default theme	preferences	en	Default theme
 delete categories	preferences	en	Delete categories
+deny following groups access to acl (grant access)	admin	en	Deny following groups access to ACL (grant access)
+deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
+deny following groups access to preferences	admin	en	Deny following groups access to preferences
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
 display thumbnails for linked images	preferences	en	Display thumbnails for linked images
 div	preferences	en	div
@@ -74,6 +77,8 @@ look & feel	preferences	en	Look & feel
 lowercase letters	preferences	en	lowercase letters
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
+moono color theme	preferences	en	Moono color theme
+moono theme	preferences	en	Moono theme
 no default	preferences	en	No default
 no user-selection at all	common	en	No user selection at all
 note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
@@ -93,6 +98,7 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	en	Select your time zone.
 please, select a new theme	preferences	en	Select a new theme
 popup with search	preferences	en	Popup with search
+preferences saved.	preferences	en	Preferences saved.
 pt: points (1/72 inch)	preferences	en	pt: points (1/72 inch)
 px: display pixels	preferences	en	px: display pixels
 re-enter your password	preferences	en	Re-enter your password

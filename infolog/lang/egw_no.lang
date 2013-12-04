@@ -113,6 +113,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	n
 enter a textual description of the log-entry	infolog	no	skriv inn ordrett beskrivelse på innslaget
 enter the query pattern	infolog	no	Skriv inn søkemønster
 entry and all files	infolog	no	Innslag og alle filer
+error: importing the ical	infolog	no	Feil: Ved import av iCal
 error: saving the entry	infolog	no	Feil: ved lagring av forekomst
 error: the entry has been updated since you opened it for editing!	infolog	no	Feil: Denne forekomsten er endret siden du åpnet den for redigering!
 existing links	infolog	no	Eksisterende lenker

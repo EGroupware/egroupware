@@ -112,6 +112,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	z
 enter a textual description of the log-entry	infolog	zh	输入该事项的具体内容
 enter the query pattern	infolog	zh	输入查询模式
 entry and all files	infolog	zh	条目及所有文件
+error: importing the ical	infolog	zh	错误：导入 iCal
 error: the entry has been updated since you opened it for editing!	infolog	zh	错误：条目自从您打开编辑以来已经更新！
 execute a further action for this entry	infolog	zh	为这一输入执行进一步的操作
 existing links	infolog	zh	现有关联
@@ -154,6 +155,7 @@ list no subs/childs	infolog	zh	不显示子事项
 location	infolog	zh	位置
 longer textual description	infolog	zh	设定事项的具体内容
 low	infolog	zh	低
+manage mapping	infolog	zh	管理匹配
 max length of the input [, length of the inputfield (optional)]	infolog	zh	输入文本的最大长度[,文本框的宽度]
 modifier	infolog	zh	修改人
 name must not be empty !!!	infolog	zh	名称不能为空!!!

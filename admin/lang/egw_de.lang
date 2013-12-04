@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 access to other data	admin	de	Zugriff von %1 auf Daten von anderen
+%1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
 %1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
@@ -36,8 +37,14 @@ account list	admin	de	Benutzerkonten anzeigen
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
 account-id's have to be integers!	admin	de	Konten-ID`s müssen vom Typ Integer (Zahl) sein!
+acl added.	admin	de	ACL hinzugefügt.
+acl deleted.	admin	de	ACL gelöscht.
+acl entry deleted.	admin	de	ACL Eintrag gelöscht.
+acl entry not found!	admin	de	ACL Eintrag nicht gefunden
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
+acl updated	admin	de	ACL aktualisiert
+acl updated.	admin	de	ACL aktualisiert
 action	admin	de	Befehl
 actions	admin	de	Befehle
 activate	admin	de	Aktivieren
@@ -281,6 +288,7 @@ enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job !!!
+error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !!!
 error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error saving	admin	de	Fehler beim Speichern
@@ -474,7 +482,8 @@ peer servers	admin	de	Server-Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
 percent this user has logged out	admin	de	Prozentsatz, wie oft sich dieser Benutzer abgemeldet hat
 permission denied	admin	de	Zugriff verweigert
-permission denied !!!	admin	de	Zugriff verweigert !!!
+permission denied !!!	admin	de	Zugriff verweigert !
+permission denied!!!	admin	de	Zugriff verweigert !!!
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 personal: eg. within a family	admin	de	Persönlich: z.B. innerhalb einer Familie

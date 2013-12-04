@@ -16,6 +16,7 @@ acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
 action	admin	id	Tindakan
 actions	admin	id	Tindakan
+activate	admin	id	Aktifkan
 activate wysiwyg-editor	admin	id	mengaktifkan WYSIWYG-editor
 add a category	admin	id	tambah kategori
 add a group	admin	id	tambah kelompok
@@ -137,6 +138,7 @@ enable debug-messages	admin	id	Enable debug-messages
 error saving	admin	id	Error menyimpan
 error saving account!	admin	id	Error menyimpan akoun!
 expires	admin	id	Kadaluarsa
+failed to change password.	admin	id	Gagal mengubah password.
 false	admin	id	false
 file space	admin	id	File space
 forward only	admin	id	Hanya Forward

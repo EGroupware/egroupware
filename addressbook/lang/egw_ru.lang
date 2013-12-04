@@ -124,6 +124,7 @@ contacts and account contact-data to sql	admin	ru	Контакты и конта
 contacts to ldap	admin	ru	Контакты в LDAP
 contacts to ldap, account contact-data to sql	admin	ru	Контакты в LDAP, данные контакта для учётной записи в SQL
 contains	addressbook	ru	Содержит
+copied	addressbook	ru	Скопировано
 copied by %1, from record #%2.	addressbook	ru	Скопировано %1, из записи #%2
 copy a contact and edit the copy	addressbook	ru	Копировать контакт и редактировать копию
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	ru	Скопируйте сделанные изменения в буфер обмена, %1перезагрузите запись%2 и объедините их

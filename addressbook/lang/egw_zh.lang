@@ -96,6 +96,7 @@ contacts and account contact-data to ldap	admin	zh	联系人和帐户联系数�
 contacts to ldap	admin	zh	联系人到 LDAP
 contacts to ldap, account contact-data to sql	admin	zh	联系人到 LDAP，账户联系数据到 SQL
 contains	addressbook	zh	包含
+copied	addressbook	zh	已复制
 copied by %1, from record #%2.	addressbook	zh	由%1从纪录 #%2复制。
 copy a contact and edit the copy	addressbook	zh	复制联系人并编辑副本
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	zh	复制您的改变到剪贴板，%1重新载入条目%2并合并它们。

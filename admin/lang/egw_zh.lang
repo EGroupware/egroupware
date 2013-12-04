@@ -26,6 +26,7 @@ acl manager	admin	zh	ACL管理器
 acl rights	common	zh	ACL权限
 action	admin	zh	操作
 actions	admin	zh	操作
+activate	admin	zh	激活
 activate wysiwyg-editor	admin	zh	激活所见即所得编辑器
 add a category	admin	zh	添加类别
 add a group	admin	zh	添加组
@@ -202,7 +203,6 @@ email address	admin	zh	邮件地址
 enable	admin	zh	启用
 enable debug-messages	admin	zh	启用调试信息
 enable the soap service	admin	zh	启用 SOAP 服务
-enable the spellcheck in the ritch text editor ?	admin	zh	在 FCKeditor 文本编辑器中使用拼写检查？
 enable the xmlrpc service	admin	zh	启用 XML-RPC 服务
 enabled - hidden from navbar	admin	zh	从导航栏中隐藏
 enabled - popup window	admin	zh	启用弹出窗口
@@ -230,7 +230,6 @@ enter your http proxy server port	admin	zh	请输入HTTP代理服务器的端口
 enter your smtp server hostname or ip address	admin	zh	输入SMTP服务器的主机名或IP地址
 enter your smtp server port	admin	zh	输入SMTP服务器的端口号
 error canceling timer, maybe there's none set !!!	admin	zh	取消定时器时出错，也许那里并未设定！
-error changing the password for % !!!	admin	zh	为%更改密码错误！
 error changing the password for %1 !!!	admin	zh	为%1更改密码错误！
 error saving	admin	zh	保存错误
 error saving account!	admin	zh	保存帐户错误！
@@ -241,6 +240,7 @@ error! no appname found	admin	zh	错误！找不到应用程序名称
 error: %1 not found or other error !!!	admin	zh	错误: 无法找到%1或其他原因！
 expires	admin	zh	期限
 explanation of ldapman	admin	zh	这一模块已经在 POSTFIX,LDAP,Courier-IMAP 测试通过且需要 Schemas CORE 和 QMAIL(OID7914)支持。更多的关于该系统的使用和设置细节可以在管理员(ADMIN)文档文件夹中的 Readme.ldapman 找到。
+failed to change password.	admin	zh	更改密码失败。请联系系统管理员。
 fallback (after each pageview)	admin	zh	后退 (在每个页面请求后)
 false	admin	zh	错误的
 field '%1' already exists !!!	admin	zh	字段域 '%1' 已经存在！

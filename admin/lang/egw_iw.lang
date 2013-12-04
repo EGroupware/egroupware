@@ -15,6 +15,7 @@ acl manager	admin	iw	מנהל רשימות גישה
 acl rights	common	iw	הרשאות רשימות גישה
 action	admin	iw	פעולה
 actions	admin	iw	פעולות
+activate	admin	iw	הפעל
 activate wysiwyg-editor	admin	iw	WYSIWYG הפעל עורך
 add a category	admin	iw	הוסף קטגוריה
 add a group	admin	iw	הוסף קבוצה
@@ -187,6 +188,7 @@ error canceling timer, maybe there's none set !!!	admin	iw	!שגיאה בכיו�
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	iw	!שגיאה בכיוון הטיימר, תחביר שגוי או שכבר רץ טיימר אחד
 error: %1 not found or other error !!!	admin	iw	!שגיאה: %1 לא נמצא או שגיאה אחרת
 expires	admin	iw	פג תוקף
+failed to change password.	admin	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 fallback (after each pageview)	admin	iw	(נקודת החזרה (לאחר כל תצוגת עמוד
 false	admin	iw	לא נכון
 file space	admin	iw	מקום לקבצים

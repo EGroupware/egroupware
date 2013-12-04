@@ -160,6 +160,7 @@ links	infolog	id	Tautan
 list all categories	infolog	id	Daftar semua kategori
 location	infolog	id	Lokasi
 low	infolog	id	rendah
+manage mapping	infolog	id	Mengelola pemetaan
 new %1	infolog	id	Baru %1
 new %1 created by %2 at %3	infolog	id	Baru %1 dibikin oleh %2 pada %3
 new name	infolog	id	nama baru

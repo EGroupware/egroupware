@@ -6,6 +6,7 @@ birthday	common	lo	ວັນເກີດ
 birthdays	common	lo	ວັນຄ້າຍວັນເກີດ
 charset for the csv export	addressbook	lo	ລະຫັດຕົວອັກສອນສໍາຫຼັບການສົ່ງອອກ  CSV
 check all	addressbook	lo	ກວດສອບທັງໝົດ
+copied	addressbook	lo	ໄດ້ສໍາເນົາ
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	lo	ຄັດລອກການປ່ຽນແປງຂອງທ່ານໄປຄຼິບບອດ,%1ໂຫຼດຄືນການບັນທຶກ/ຂໍ້ມູນ %2 ແລະ ລວມມັນເຂົ້າກັນ
 country	common	lo	ປະເທດ
 create new links	addressbook	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່

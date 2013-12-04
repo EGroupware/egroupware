@@ -119,6 +119,7 @@ contacts and account contact-data to sql	admin	sk	kontakty a kontaktné údaje �
 contacts to ldap	admin	sk	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	sk	kontakty do LDAP, kontaktné údaje účtu do SQL
 contains	addressbook	sk	obsahuje
+copied	addressbook	sk	skopírované
 copied by %1, from record #%2.	addressbook	sk	Skopíroval %1 od záznamu č.%2
 copy a contact and edit the copy	addressbook	sk	Kopírovať kontakt a upraviť kópiu
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	sk	Kopírovať vaše zmeny do schránky, %1znovunačítať položku%2 a zlúčiť ich.

@@ -5,6 +5,7 @@
 %1 records imported	calendar	id	%1 rekaman diimpor
 %1 weeks	calendar	id	%1 minggu
 (%1 events in %2 seconds)	calendar	id	(%1 kegiatan dalam %2 detik)
+(empty = use global limit, no = no export at all)	admin	id	(empty = gunakan pembatasan global, no = tidak ada ekspor sama sekali)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	id	<b>Mohon dicatat</b>: Kalender menggunakan Hari Raya untuk negara anda, yaitu %1. Anda dapat mengubahnya pada %2 anda.<br />Hari Raya %3 diinstal otomatis dari %4. Anda dapat mengubahnya pada %5.
 a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking</em> tidak akan konflik dengan kegiatan lainnya
 accept	calendar	id	diterima
@@ -63,6 +64,7 @@ category %1 removed because of missing rights	calendar	id	Kategori %1 dibuang ka
 category acl	common	id	Kategori ACL
 chair	calendar	id	Pimpinan
 change history	calendar	id	Riwayat pengubahan
+charset of file	calendar	id	Charset of file
 check all	calendar	id	Contreng semua
 choose a category	calendar	id	Pilih kategori
 close the window	calendar	id	Tutup jendela
@@ -121,6 +123,7 @@ exception	calendar	id	Pengecualian
 exceptions	calendar	id	Pengecualian
 existing links	calendar	id	Tautan yang ada
 extended	calendar	id	Extended
+favorites	calendar	id	Favorit
 fieldseparator	calendar	id	Pemisah field
 filemanager	calendar	id	Manajer berkas
 filename	calendar	id	Nama berkas
@@ -134,6 +137,7 @@ freebusy	common	id	Senggang/Sibuk
 freetime search	calendar	id	Mencari waktu Senggang
 fri	calendar	id	Jum
 full description	calendar	id	Uraian lengkap
+general fields:	calendar	id	Field Umum:
 global categories	calendar	id	Kategori Global
 group invitation	calendar	id	Undangan secara Kelompok
 group planner	calendar	id	Group planner
@@ -154,6 +158,7 @@ ical file	calendar	id	Berkas iCal
 ical import	calendar	id	Impor iCal
 ical successful imported	calendar	id	iCal sukses diimpor
 ignore conflict	calendar	id	Abaikan konflik
+import	calendar	id	Impor
 import csv-file	common	id	Impor berkas-CSV
 insert in document	calendar	id	Sisipkan dalam dokumen
 interval	calendar	id	Interval
@@ -161,6 +166,7 @@ invalid email-address "%1" for user %2	calendar	id	alamat email "%1" untuk pengg
 invitations	calendar	id	Undangan
 invite	calendar	id	Undang
 last	calendar	id	Akhir
+last changed	calendar	id	Pengubahan terakhir
 link	calendar	id	Tautan
 link to view the event	calendar	id	Tautan untuk melihat kegiatan
 links	calendar	id	Tautan
@@ -169,6 +175,7 @@ listview	calendar	id	Tampilan Daftar
 location	calendar	id	Lokasi
 location, start- and endtimes, ...	calendar	id	Lokasi, Waktu memulai dan berakhir, ...
 mail all participants	calendar	id	Surati semua peserta
+manage mapping	calendar	id	Mengelola pemetaan
 minutes	calendar	id	Menit
 modified	calendar	id	Diubah
 mon	calendar	id	Sen
@@ -261,6 +268,7 @@ timeframe to search	calendar	id	Kerangka waktu untuk pencarian
 timezone	calendar	id	Zona waktu
 title of the event	calendar	id	Judul kegiatan
 tomorrow	calendar	id	Esok
+translation	calendar	id	Terjemahan
 tue	calendar	id	Sel
 two weeks	calendar	id	Dua minggu
 update timezones	common	id	Perbarui zonawaktu

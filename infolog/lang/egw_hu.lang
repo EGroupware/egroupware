@@ -149,6 +149,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	h
 enter a textual description of the log-entry	infolog	hu	bejegyzés szöveges leírásának megadása
 enter the query pattern	infolog	hu	Lekérdező minta megadása
 entry and all files	infolog	hu	Bejegyzés és minden állomány
+error: importing the ical	infolog	hu	Hiba az iCal importálásakor
 error: saving the entry	infolog	hu	Hiba a bejegyzés mentésekor
 error: the entry has been updated since you opened it for editing!	infolog	hu	Hiba: a bejegyzés megváltozott azóta, hogy megnyitotta szerkesztésre! Másvalaki frissítette.
 execute a further action for this entry	infolog	hu	További művelet végrehajtása ezen a bejegyzésen

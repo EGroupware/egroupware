@@ -146,6 +146,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	n
 enter a textual description of the log-entry	infolog	nl	Voer een textuele beschrijving in van de infolog
 enter the query pattern	infolog	nl	Geef een zoek patroon
 entry and all files	infolog	nl	Infolog en alle bestanden
+error: importing the ical	infolog	nl	Fout: importing van de iCal
 error: saving the entry	infolog	nl	Fout: bij opslaan van de infolog
 error: the entry has been updated since you opened it for editing!	infolog	nl	Fout: de infolog is gewijzigd sinds dat u het opende voor bewerking!
 execute a further action for this entry	infolog	nl	Voer een vervolg actie uit voor dit record
@@ -202,6 +203,7 @@ list no subs/childs	infolog	nl	Sub's niet weergeven
 location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
+manage mapping	infolog	nl	Beheer de mappings
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
 modifierer	infolog	nl	Gewijzigd door
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!

@@ -43,6 +43,7 @@ calendar settings	admin	da	Kalender Indstillinger
 calendar-fieldname	calendar	da	Kalender-feltnavn
 can't add alarms in the past !!!	calendar	da	Kan ikke tilføje alarmer bagud !!!
 canceled	calendar	da	Annulleret
+charset of file	calendar	da	Karakterset for fil
 choose a category	calendar	da	Vælg en kategori
 close the window	calendar	da	Luk vindue
 compose a mail to all participants after the event is saved	calendar	da	send en mail til alle deltagere efter aftale er gemt
@@ -156,10 +157,12 @@ ical successful imported	calendar	da	iCal importeret
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	da	Hvis valgt, vil helligdage i weekender bliver vis den efterfølgende mandag.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	da	Hvis du ikke sætter et password her, vil alle der kender denne URL have adgang til informationen
 ignore conflict	calendar	da	Ignorér konflikt
+import	calendar	da	Importer
 import csv-file	common	da	Importer CSV-fil
 interval	calendar	da	Interval
 invalid email-address "%1" for user %2	calendar	da	Forkert Email-adresse "%1" for bruger %2
 last	calendar	da	sidste
+last changed	calendar	da	Sidst ændret
 lastname of person to notify	calendar	da	Efternavn på person der skal påmindes
 length of the time interval	calendar	da	Tidsintervallets længde
 link	calendar	da	Link
@@ -286,6 +289,7 @@ timeframe	calendar	da	Tidsramme
 timeframe to search	calendar	da	Tidsramme for søgning
 title of the event	calendar	da	Titlen på handlingen
 to many might exceed your execution-time-limit	calendar	da	for mange vil måske overstige din eksekvere tids begrænsning
+translation	calendar	da	Oversættelse
 tue	calendar	da	Tir
 two weeks	calendar	da	to uger
 updated	calendar	da	Opdateret

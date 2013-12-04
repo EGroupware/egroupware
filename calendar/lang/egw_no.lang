@@ -44,6 +44,7 @@ calendar settings	admin	no	Kalender Innstillinger
 calendar-fieldname	calendar	no	Kalender-Feltnavn
 can't add alarms in the past !!!	calendar	no	Kan ikke legge til alarmer for passerte hendelser!
 canceled	calendar	no	Annullert
+charset of file	calendar	no	Karaktersett for filen
 check all	calendar	no	Kontroller alle
 choose a category	calendar	no	Velg en kategori
 close the window	calendar	no	Lukk vinduet
@@ -154,10 +155,12 @@ ical successful imported	calendar	no	iCal ble importert
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	no	Hvis merket ferie faller på en helg, blir den tatt mandagen etter.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	no	Dersom du ikke setter et passord her vil informasjonen være tilgjengelig for alle som kjenner nettadressen !
 ignore conflict	calendar	no	Ignorer konflikt
+import	calendar	no	Importer
 import csv-file	common	no	Importer CSV-Fil
 interval	calendar	no	Intervall
 invalid email-address "%1" for user %2	calendar	no	Feil e-mailadresse "%1" for bruker %2
 last	calendar	no	siste
+last changed	calendar	no	Sist endret
 lastname of person to notify	calendar	no	Etternavn til person som skal varsles
 link	calendar	no	Lenke
 link to view the event	calendar	no	Lenke til hendelse
@@ -286,6 +289,7 @@ timeframe	calendar	no	Tidsrom
 timeframe to search	calendar	no	Tidrom for søk
 title of the event	calendar	no	Tittel på oppføringen
 to many might exceed your execution-time-limit	calendar	no	for mange vil muligens overskride din eksekverings-tidsgrense
+translation	calendar	no	Oversetting
 tue	calendar	no	Tir
 two weeks	calendar	no	To uker
 updated	calendar	no	Oppdatert

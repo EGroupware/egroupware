@@ -43,6 +43,7 @@ calendar settings	admin	eu	Lehentasunak egutegian
 calendar-fieldname	calendar	eu	Egutegia-Eremuaren izena
 can't add alarms in the past !!!	calendar	eu	Alarmak ezin dira iraganean gehitu!
 canceled	calendar	eu	Ezeztatu
+charset of file	calendar	eu	Fitxategiaren Karaktere bilduma
 check all	calendar	eu	Guztia hautatu
 close the window	calendar	eu	Itxi leihoa
 compose a mail to all participants after the event is saved	calendar	eu	Partehartzaile guztie bidaltzeko posta bat sortu gertakaria gorde ondoren
@@ -152,10 +153,12 @@ ical successful imported	calendar	eu	¡Cal fitxategia arazorik gabe inportatu da
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	eu	Jai egunak astebukaeretan erortzen badira ondorengo astelehena jai bihurtuko da.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	eu	Hemen pasahitza ez baduzu ezartzen, zure URLa dakien edonork izango du sarrera zure egutegiko ordu libre/lanpetu ikuspegira.
 ignore conflict	calendar	eu	Gatazka alde batera utzi
+import	calendar	eu	Inportatu
 import csv-file	common	eu	Inportatu CSV fitxategia
 interval	calendar	eu	Tartea
 invalid email-address "%1" for user %2	calendar	eu	%1 erabiltzailearen helbide elektronikoa ez da %2 erabiltzailearentzat baliogarria
 last	calendar	eu	azkena
+last changed	calendar	eu	Azken aldaketa
 lastname of person to notify	calendar	eu	Abisua eman behar zaion pertsonaren abizena
 length of the time interval	calendar	eu	Denbora tartearen luzera
 link	calendar	eu	Lotura
@@ -284,6 +287,7 @@ timeframe	calendar	eu	Denbora marjina
 timeframe to search	calendar	eu	Bilaketarako denbora marjina
 title of the event	calendar	eu	Gertakariaren izenburua
 to many might exceed your execution-time-limit	calendar	eu	egiteko epe muga
+translation	calendar	eu	Itzulpena
 tue	calendar	eu	Asteartea
 two weeks	calendar	eu	bi aste
 updated	calendar	eu	Gaurkoatua

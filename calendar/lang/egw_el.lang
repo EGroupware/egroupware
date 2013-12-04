@@ -48,6 +48,7 @@ calendar settings	admin	el	Ρυθμίσεις ημερολογίου
 calendar-fieldname	calendar	el	Ημερολόγιο - Ονομα πεδίου
 can't add alarms in the past !!!	calendar	el	Δεν επιτρέπεται η προσθήκη ειδοποιήσεων στο παρελθόν
 canceled	calendar	el	Ακυρώθηκε
+charset of file	calendar	el	Κωδικοσελίδα αρχείου
 check all	calendar	el	Έλεγχος όλων
 choose a category	calendar	el	Επιλέξτε μία κατηγορία
 close the window	calendar	el	Κλείστε το παράθυρο
@@ -138,6 +139,7 @@ freetime search	calendar	el	Αναζήτηση ελέυθερου χρόνου
 fri	calendar	el	Παρ
 full description	calendar	el	Πλήρης περιγραφή
 fullname of person to notify	calendar	el	Πλήρες όνομα του ατόμου να ειδοποιηθεί
+general fields:	calendar	el	Γενικά πεδία:
 global categories	calendar	el	Παγκόσμιες κατηγορίες
 global public and group public	calendar	el	γενικού κοινού και ομαδικού κοινού
 global public only	calendar	el	γενικού κοινού μόνο
@@ -165,10 +167,12 @@ ical successful imported	calendar	el	iCal επιτυχής εισαγωγή
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	el	Αν τσεκαρισμένες αργείες πέφτουν Σαββατοκύριακο, λογαριάζονται στη Δευτέρα που ακολουθεί
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	el	Αν δεν ορίσετε έναν κωδικό εδώ, η πληροφορία είναι διαθέσιμη σε όλους, που γνωρίζουν το URL!!!
 ignore conflict	calendar	el	Αγνόηση σύμπτωσης
+import	calendar	el	Εισαγωγή
 import csv-file	common	el	Εισαγωγή CSV-Αρχείου
 interval	calendar	el	Διάστημα
 invalid email-address "%1" for user %2	calendar	el	Άκυρη διεύθυνση email "%1" για το χρήστη %2
 last	calendar	el	τελευταίο
+last changed	calendar	el	Τελευταία αλλαγή
 lastname of person to notify	calendar	el	Επίθετο του ατόμου για ειδοποίηση
 length of the time interval	calendar	el	Διάρκεια του χρονικού διαστήματος
 link	calendar	el	Σύνδεσμος
@@ -299,6 +303,7 @@ timeframe to search	calendar	el	Χρονικό όριο κατά την αναζ
 timezone	calendar	el	Ζώνη ώρας
 title of the event	calendar	el	Τίτλος του γεγονότος
 to many might exceed your execution-time-limit	calendar	el	Πάρα πολλοί.Κίνδυνος υπέρβασης του χρονικού ορίου εκτέλεσης
+translation	calendar	el	Μετάφραση
 tue	calendar	el	Τρί
 two weeks	calendar	el	δύο εβδομάδες
 updated	calendar	el	Ενημερώθηκε

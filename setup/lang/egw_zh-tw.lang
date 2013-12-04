@@ -265,7 +265,6 @@ however, the application may still work	setup	zh-tw	不過這個應用程式也�
 if no acl records for user or any group the user is a member of	setup	zh-tw	如果使用者沒有任何權限設定或是不屬於任何群組，則將該使用者的群組視為
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	zh-tw	如果您是在安全模式，eGroupWare無法改變這樣的設定或是執行程式，或是讀取還未載入的模組。
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh-tw	如果應用程式沒有任何定義好的資料表，可使用「升級」功能修正此問題。
-if using ads (active directory) authentication	setup	zh-tw	如果使用ADS(Active Directory)認證
 if using ldap	setup	zh-tw	如果使用LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh-tw	如果您使用 LDAP，您希望能管理使用者的家目錄及登入環境變數嗎？
 if you did not receive any errors, your applications have been	setup	zh-tw	如果您沒有看到任何錯誤訊息，您的應用程式已經

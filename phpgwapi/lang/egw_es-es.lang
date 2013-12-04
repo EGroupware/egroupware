@@ -786,7 +786,6 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de eGroupWare %1, pero no tiene permiso para acceder a esta aplicación.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado
-your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	es-es	Su contraseña no cumple la fortaleza requerida.<br>Debe cumplir %1 criterios. Sólo ha cumplido %2 criterios.<br>Su contraseña falló en los siguientes criterios:
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
 your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
 your session could not be verified.	login	es-es	Su sesión no pudo ser verificada.

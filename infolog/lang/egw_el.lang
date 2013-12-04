@@ -131,6 +131,7 @@ enter a custom contact, leave empty if linked entry should be used	infolog	el	ε
 enter a custom phone/email, leave empty if linked entry should be used	infolog	el	είσοδος σε ένα προσαρμοσμένο τηλέφωνο/email, να μένει κενό αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
 enter a textual description of the log-entry	infolog	el	Πληκτρολογήστε μία περιγραφή κειμένου για την καταχώρηση
 enter the query pattern	infolog	el	Enter the query pattern
+error: importing the ical	infolog	el	Σφάλμα: στην εισαγωγή του iCal
 error: saving the entry	infolog	el	Σφάλμα: κατά την αποθήκευση της καταχώρησης
 error: the entry has been updated since you opened it for editing!	infolog	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
 execute a further action for this entry	infolog	el	Εκτελέστε περαιτέρω ενέργεια για αυτήν την καταχώρηση

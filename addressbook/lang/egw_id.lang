@@ -85,6 +85,7 @@ contact saved	addressbook	id	Kontak disimpan
 contact settings	admin	id	Pengaturan Kontak
 contactform	addressbook	id	Formulir kontak
 contains	addressbook	id	mengandung
+copied	addressbook	id	disalin
 copied by %1, from record #%2.	addressbook	id	Disalin oleh %1, dari rekaman #%2.
 country	common	id	Negara
 create new links	addressbook	id	Bikin tautan baru

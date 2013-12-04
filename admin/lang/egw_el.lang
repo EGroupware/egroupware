@@ -17,6 +17,7 @@ acl manager	admin	el	Διαχειριστής ACL
 acl rights	common	el	Δικαιώματα ACL
 action	admin	el	Ενέργεια
 actions	admin	el	Ενέργειες
+activate	admin	el	Ενεργοποίηση
 activate wysiwyg-editor	admin	el	ενεργοποίηση WYSIWYG
 add a category	admin	el	πρόσθεσε μία κατηγορία
 add a group	admin	el	πρόσθεσε μί Ομάδα

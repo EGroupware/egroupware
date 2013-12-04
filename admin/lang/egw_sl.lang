@@ -19,6 +19,7 @@ acl manager	admin	sl	Upravljalec ACL
 acl rights	common	sl	Pravice ACL
 action	admin	sl	Dejanje
 actions	admin	sl	Dejanja
+activate	admin	sl	Aktiviraj
 activate wysiwyg-editor	admin	sl	Aktiviraj WYSIWYG urejevalnik
 add a category	admin	sl	Dodaj kategorijo
 add a group	admin	sl	Dodaj skupino
@@ -216,6 +217,7 @@ error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga n
 exists	admin	sl	Obstaja
 expires	admin	sl	Preteče
 explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
+failed to change password.	admin	sl	Napaka pri spreminjanju gesla.
 fallback (after each pageview)	admin	sl	Rezervni (po prikazu vsake strani)
 false	admin	sl	Ne
 field '%1' already exists !!!	admin	sl	Polje '%1' že obstaja

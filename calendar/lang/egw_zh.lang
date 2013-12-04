@@ -52,6 +52,7 @@ calendar settings	admin	zh	日历设置
 calendar-fieldname	calendar	zh	日历-字段名
 can't add alarms in the past !!!	calendar	zh	不能在过去添加闹铃！
 canceled	calendar	zh	取消
+charset of file	calendar	zh	文件的字符集
 check all	calendar	zh	全选
 choose a category	calendar	zh	选择分类
 close the window	calendar	zh	关闭窗口
@@ -143,6 +144,7 @@ freetime search	calendar	zh	空闲时间搜寻
 fri	calendar	zh	五
 full description	calendar	zh	完整描述
 fullname of person to notify	calendar	zh	被通知者的全名
+general fields:	calendar	zh	通用字段：
 global categories	calendar	zh	全局分类
 global public and group public	calendar	zh	全局公用及群组公用
 global public only	calendar	zh	全局公用
@@ -171,12 +173,14 @@ ical successful imported	calendar	zh	iCal 导入成功
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	zh	周末指定的节日将在下周一生效。
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zh	如果您在此未设置密码，知道网址的任何人都可读取此信息。
 ignore conflict	calendar	zh	忽略冲突
+import	calendar	zh	导入
 import csv-file	common	zh	导入CSV文件
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	zh	从CSV文件导入事件到日历中。CSV方法'以逗号分隔的值'。不过在选项选项卡，你仍可以选择其他分隔符。
 insert in document	calendar	zh	插入文件
 interval	calendar	zh	间隔
 invalid email-address "%1" for user %2	calendar	zh	用户 %2 错误的邮箱 "%1"
 last	calendar	zh	最后的
+last changed	calendar	zh	最近修改记录
 lastname of person to notify	calendar	zh	被通知人的 姓
 length of the time interval	calendar	zh	间隔时间长度
 link	calendar	zh	链接
@@ -189,6 +193,7 @@ location to autoload from	admin	zh	自动导入位置
 location, start- and endtimes, ...	calendar	zh	位置、开始- 和结束时间，...
 mail all participants	calendar	zh	发邮件给所有参与者
 make freebusy information available to not loged in persons?	calendar	zh	将可用的空闲/繁忙信息开放给未注册的人？
+manage mapping	calendar	zh	管理匹配
 minutes	calendar	zh	分钟
 modified	calendar	zh	更改
 modifier	calendar	zh	修改人
@@ -318,6 +323,7 @@ timeframe to search	calendar	zh	搜索的时段
 timezone	calendar	zh	时区
 title of the event	calendar	zh	事件标题
 to many might exceed your execution-time-limit	calendar	zh	对许多也许超出了您的执行时间极限
+translation	calendar	zh	翻译
 tue	calendar	zh	二
 two weeks	calendar	zh	两周
 updated	calendar	zh	更新日期

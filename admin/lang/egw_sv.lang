@@ -18,6 +18,7 @@ acl manager	admin	sv	ACL hantering
 acl rights	common	sv	ACL behörigheter
 action	admin	sv	Åtgärd
 actions	admin	sv	Åtgärder
+activate	admin	sv	Aktivera
 activate wysiwyg-editor	admin	sv	Aktivera WYSIWYG-editor
 add a category	admin	sv	Lägg till kategori
 add a group	admin	sv	Lägg till grupp
@@ -208,6 +209,7 @@ error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!!
 expires	admin	sv	Förfaller
 explanation of ldapman	admin	sv	Denna modul har hittils testats för POSTFIX, LDAP, Courier-IMAP och behöver schema för Core och QMAIL (OID7914). Ytterligare detaljer gällande användning och konfiguration av detta system kan du finna i README.ldapman i dokumentkatalogen under ADMIN.
+failed to change password.	admin	sv	Kunde inte ändra lösenordet.
 fallback (after each pageview)	admin	sv	fallback (efter varje sidvisning)
 false	admin	sv	Falskt
 field '%1' already exists !!!	admin	sv	Fält '%1' finns redan!

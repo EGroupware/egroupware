@@ -147,6 +147,7 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
+data exchange settings	addressbook	de	Einstellungen Datenaustausch
 debug output in browser	addressbook	de	Debug - Ausgabe in Browser
 default	addressbook	de	Standard
 default address format	addressbook	de	Vorgabe für Format der Adresse
@@ -188,6 +189,7 @@ edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten i
 edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
 either the configured email addesses are wrong or the mail configuration.	addressbook	de	Entweder die konfigurierte E-Mail Adresse ist falsch oder die E-Mail Konfiguration.
 email & internet	addressbook	de	E-Mail & Internet
+email (private)	addressbook	de	E-Mail privat
 email addresses (comma separated) to send the contact data	addressbook	de	E-Mail Adressen (Komma getrennt) zum Senden der Kontaktdaten
 empty	admin	de	leere
 empty for all	addressbook	de	leer für alle
@@ -215,10 +217,14 @@ export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
 exports contacts from your addressbook into a csv file.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
+exports contacts from your addressbook into a vcard file.	addressbook	de	Exportiert Kontakte aus dem Adressbuch in eine vCard-Datei.
 extra	addressbook	de	Extra
+extra encodings	addressbook	de	Extra Encoding
 extra private	addressbook	de	Extra Privat
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
+favorites	addressbook	de	Favoriten
 fax	addressbook	de	Telefax
+fax (private)	addressbook	de	Telefax privat
 fax number	common	de	Telefaxnummer
 field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
 field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
@@ -234,6 +240,7 @@ freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
 general	admin	de	Allgemein
 general fields:	addressbook	de	Allgemeine Felder:
+general settings	addressbook	de	Allgemeine Einstellungen
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
@@ -253,6 +260,7 @@ home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export	admin	de	Wie viele Kontakte sollen Nicht-Adminstratoren exportieren können?
+html link to the current record	addressbook	de	HTML-Link zum aktuellen Datensatz
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 ignore first line	addressbook	de	Erste Zeile ignorieren
@@ -312,6 +320,7 @@ migration finished	addressbook	de	Migration beendet
 migration to ldap	admin	de	Migration nach LDAP
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
+mobile phone (private)	addressbook	de	Mobiltelefon privat
 modem phone	addressbook	de	Modem
 more ...	addressbook	de	Mehr ...
 move to addressbook	addressbook	de	In Adressbuch verschieben
@@ -418,6 +427,7 @@ that field name has been used already !	addressbook	de	Dieser Feldname wird bere
 the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für dieses Adressbuch.
 the anonymous user needs add rights for it!	addressbook	de	Der Anonymous Benutzer benötigt Hinzufügen Rechte dafür!
 the anonymous user needs read it!	addressbook	de	Der Anonymous Benutzer muss dies lesen können
+the following document-types are supported:	addressbook	de	Folende Dateitypen werden unterstützt:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	de	Die zip Erweiterung (Extension) wird benötigt, um Daten in eine OpenOffice oder MsOffice Dokument einzufügen.
 there was an error saving your data :-(	addressbook	de	Beim Speichern Ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Dieses Modul ist ein Kontaktformular, welches direkt in das Adressbuch speichert.
@@ -435,12 +445,16 @@ two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	de	Umwandelung von "%1" zu Benutzer ID nicht möglich. Einstellung des Plug-ins (%2) wird für diesen Benutzer verwendet.
+unable to delete	addressbook	de	Löschen nicht möglich
+unable to import into %1, using %2	addressbook	de	Import in %1 nicht möglich wenn %2 verwendet wird
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
+url (business)	addressbook	de	URL geschäftlich
+url (private)	addressbook	de	URL privat
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
 use addressbooks "own sorting" attribute	addressbook	de	Verwende die Einstellung "eigene Sortierung"
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?

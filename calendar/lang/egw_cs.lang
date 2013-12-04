@@ -3,6 +3,7 @@
 %1 records imported	calendar	cs	%1 záznamů importováno
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	cs	%1 záznamů načteno (zatím nebyly importovány, můžete se vrátit zpět a odškrtnout Testovat Import)
 %1 weeks	calendar	cs	%1 týdnů
+(empty = use global limit, no = no export at all)	admin	cs	(prázdné = použít globální limit, ne = žádný export)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	cs	<b>Upozornění</b>: Kalendář používá svátky Vaší země, aktuálně je nastavena %1. Můžete jí změnit v sekci %2.<br />Svátky jsou %3 automaticky instalovány z %4. Můžete je změnit v sekci %5.
 a non blocking event will not conflict with other events	calendar	cs	Neblokující událost nebude v konfliktu s jinými událostmi
 accept	calendar	cs	přijmout
@@ -62,6 +63,7 @@ category acl	common	cs	ACL kategorie
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	cs	ACL kategorie ovlivňuje jen přiřazování kategorie k události nebo změnu stavu účastníka. Nemění viditelnost události.
 chair	calendar	cs	Předseda
 change history	calendar	cs	Historie změn
+charset of file	calendar	cs	Znaková sada souboru
 check all	calendar	cs	Označit vše
 choose a category	calendar	cs	Vybrat kategorii
 close the window	calendar	cs	Zavřít okno
@@ -149,6 +151,7 @@ execute a further action for this entry	calendar	cs	Spustit další akci pro ten
 existing links	calendar	cs	Stávající odkazy
 extended	calendar	cs	Rozšířený
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	cs	Rozšířené aktualizace vždy zahrnují kompletní detaily události. iCal soubory lze importovat do jiných kalendářů.
+favorites	calendar	cs	Oblíbené
 fieldseparator	calendar	cs	Oddělovač položek
 filemanager	calendar	cs	Správce souborů
 filename	calendar	cs	Jméno souboru
@@ -168,6 +171,7 @@ freetime search	calendar	cs	Hledání volného času
 fri	calendar	cs	Pá
 full description	calendar	cs	Celý popis
 fullname of person to notify	calendar	cs	Celé jméno osoby, která má být upozorněna
+general fields:	calendar	cs	Obecné položky:
 global categories	calendar	cs	Globální kategorie
 global public and group public	calendar	cs	veřejné globálně i pro skupinu
 global public only	calendar	cs	veřejné jen globálně
@@ -199,6 +203,7 @@ ical successful imported	calendar	cs	iCal úspěšně naimportován
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	cs	Pokud zaškrtnete, jsou svátky připadající na víkend automaticky přesunuty na následující pondělí.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	cs	Pokud zde nenastavíte heslo, bude informace dostupná každému, kdo zná adresu (URL)!!!
 ignore conflict	calendar	cs	Ignorovat konflikt
+import	calendar	cs	Importovat
 import csv-file	common	cs	Importovat CSV soubor
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	cs	Importuje události z CSV souboru do Vašeho kalendáře. CSV znamená 'hodnoty oddělené čárkou'.  Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 insert in document	calendar	cs	Vložit do dokumentu
@@ -207,6 +212,7 @@ invalid email-address "%1" for user %2	calendar	cs	Neplatná e-mailová adresa "
 invitations	calendar	cs	Pozvánky
 invite	calendar	cs	Pozvat
 last	calendar	cs	Poslední
+last changed	calendar	cs	Naposledy změněno
 lastname of person to notify	calendar	cs	Příjmení osoby, která má být upozorněna
 length of the time interval	calendar	cs	Délka časového intervalu
 link	calendar	cs	Odkaz na událost
@@ -219,6 +225,7 @@ location to autoload from	admin	cs	Automaticky nahrát z umístění
 location, start- and endtimes, ...	calendar	cs	Umístění, počáteční a koncové časy...
 mail all participants	calendar	cs	obeslat všechny účastníky
 make freebusy information available to not loged in persons?	calendar	cs	Povolit zobrazení stavu volný/zaneprázdněn nepřihlášeným osobám?
+manage mapping	calendar	cs	Spravovat mapování
 minutes	calendar	cs	Minut
 modified	calendar	cs	Změněno
 mon	calendar	cs	Po
@@ -386,6 +393,7 @@ to-firstname	calendar	cs	Na křestní jméno
 to-fullname	calendar	cs	Na celé jméno
 to-lastname	calendar	cs	Na příjmení
 tomorrow	calendar	cs	Zítra
+translation	calendar	cs	Překlad
 tue	calendar	cs	Út
 two weeks	calendar	cs	dva týdny
 update timezones	common	cs	Aktualizovat časová pásma

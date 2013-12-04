@@ -60,6 +60,7 @@ category acl	common	sv	Kategori-ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	sv	Kategori-ACL begränsar bara inlagning av nya kategorier till en händelse samt ändra status för en deltagare. Det påverkar INTE synligheten av händelsen!
 chair	calendar	sv	Ägare
 change history	calendar	sv	Ändra historien
+charset of file	calendar	sv	Teckenuppsättning för filen
 check all	calendar	sv	Markera alla
 choose a category	calendar	sv	Välj kategori
 close the window	calendar	sv	Stäng fönstret
@@ -192,6 +193,7 @@ ical successful imported	calendar	sv	iCal importerad
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	sv	Markerade helgdagar som infaller under veckoslut tas ut efterföljande måndag.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sv	Om du inte sätter ett lösenord här, är informationen tillgänglig för alla som kan hitta sidan!!
 ignore conflict	calendar	sv	Ignorera schema konflikt
+import	calendar	sv	Importera
 import csv-file	common	sv	Importera CSV fil
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sv	Importerar händelser in i din kalender från en CSV-fil. CSV betyder 'Kommaavgränsade värden', men du kan välja en annan avgränsare i tabben Inställningar.
 interval	calendar	sv	Intervall
@@ -199,6 +201,7 @@ invalid email-address "%1" for user %2	calendar	sv	Ogiltig e-postadress "%1" fö
 invitations	calendar	sv	Inbjudningar
 invite	calendar	sv	Bjuda in
 last	calendar	sv	Senaste
+last changed	calendar	sv	Senaste ändring
 lastname of person to notify	calendar	sv	Efternamn på person att meddela
 length of the time interval	calendar	sv	Tidsintervall längd
 link	calendar	sv	Länk
@@ -375,6 +378,7 @@ to-firstname	calendar	sv	till förnamn
 to-fullname	calendar	sv	till fullt namn
 to-lastname	calendar	sv	till efternamn
 tomorrow	calendar	sv	imorgon
+translation	calendar	sv	Översättning
 tue	calendar	sv	Tis
 two weeks	calendar	sv	Två veckor
 update timezones	common	sv	Uppdatera tidzoner

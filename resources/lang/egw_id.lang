@@ -31,6 +31,7 @@ general	resources	id	Umum
 general informations about resource	resources	id	Informasi umum mengenai sumberdaya
 gernal resource	resources	id	sumberdaya umum
 global categories	resources	id	Kategori Global
+history logging	admin	id	Catatan riwayat
 hours	resources	id	jam
 information about storage	resources	id	Informasi mengenai penyimpanan
 informations about the location of resource	resources	id	Informasi mengenai lokasi penyimpanan

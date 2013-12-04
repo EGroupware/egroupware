@@ -44,6 +44,7 @@ calendar settings	admin	fa	تنظیمات تقویم
 calendar-fieldname	calendar	fa	نام فیلد-تقویم
 can't add alarms in the past !!!	calendar	fa	هشدار در گذشته نمی تواند اضافه شود!!!
 canceled	calendar	fa	لغو شد
+charset of file	calendar	fa	UTF-8
 check all	calendar	fa	چک کردن همه
 choose a category	calendar	fa	دسته را انتخاب کنید
 close the window	calendar	fa	بستن پنجره
@@ -157,10 +158,12 @@ ical successful imported	calendar	fa	iCal با موفقیت وارد شد
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fa	اگر فعال شود تعطیلاتی که به آخر هفته می رسند، به شنبه بعد منتقل می گردند
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fa	اگر شما اینجا گذرواژه ای تنظیم نکنید، اطلاعات برای همه موجود خواهد بود، آنهائی که نشانی را بلدند
 ignore conflict	calendar	fa	نادیده گرفتن همپوشانی
+import	calendar	fa	وارد کردن
 import csv-file	common	fa	وارد کردن پرونده CSV
 interval	calendar	fa	وقفه
 invalid email-address "%1" for user %2	calendar	fa	نشانی نامه الکترونیکی "%1" نامعتبر است برای کاربر  %2
 last	calendar	fa	آخرین
+last changed	calendar	fa	آخرین تغییرات
 lastname of person to notify	calendar	fa	نام خانوادگی شخص برای یادآوری
 length of the time interval	calendar	fa	طول بازه زمانی
 link	calendar	fa	پیوند شود
@@ -290,6 +293,7 @@ timeframe	calendar	fa	بازه زمانی
 timeframe to search	calendar	fa	چهارچوب زمانی برای جستجو
 title of the event	calendar	fa	عنوان رویداد
 to many might exceed your execution-time-limit	calendar	fa	خیلی زیاد که شود ممکن است به حد اجرای برنامه برسد(execution-time-limit)
+translation	calendar	fa	ترجمه
 tue	calendar	fa	سه شنبه
 two weeks	calendar	fa	دو هفته
 updated	calendar	fa	بهنگام شد

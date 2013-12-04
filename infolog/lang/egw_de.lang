@@ -46,11 +46,13 @@ add sub	infolog	de	neuen Untereintrag anlegen
 add timesheet entry	infolog	de	Stundenzettel Eintrag hinzufügen
 add:	infolog	de	Hinzufügen:
 added	infolog	de	Hinzugefügt
+addressbook placeholders available	infolog	de	Adressbuch-Platzhalter verfügbar
 all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
 all projects	infolog	de	Alle Projekte
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, z.B. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
+application mail expected but got: %1	infolog	de	Mail-Applikation erwartet aber %1 erhalten
 apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze !!
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
@@ -120,6 +122,7 @@ custom from	infolog	de	Benutzerdefinierter  Kontakt
 custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
 customfields	infolog	de	Benutzerdefinierte Felder
+data exchange settings	infolog	de	Einstellungen Datenaustausch
 date completed	infolog	de	Erledigt am
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	de	Fertigstellungsdatum (leer lassen um es automatisch zu setzen wenn der Status erledigt oder abgerechnet ist)
 datecreated	infolog	de	Erstellt am
@@ -186,7 +189,8 @@ execute a further action for this entry	infolog	de	Eine weitere Aktion für dies
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 exports in ical format.	infolog	de	Export im iCal Format.
-exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in einen CSV Datei.
+exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei.
+favorites	infolog	de	Favoriten
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
 fields to exclude when copying an infolog:	infolog	de	Felder die ausgeschlossen werden beim Kopieren eines InfoLogs:
@@ -198,6 +202,8 @@ for infolog type %1, %2 is required	infolog	de	Für den InfoLog Typ %1,%2 wird b
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	de	Für Serienbriefe benutzen Sie folgenden Platzhalter. Fügen die den Inhalt zwischen diese beiden Platzhalter ein.
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
+general fields:	infolog	de	Allgemeine Felder:
+general settings	infolog	de	Allgemeine Einstellungen:
 global categories	infolog	de	Globale Kategorien
 group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
@@ -206,6 +212,7 @@ history logging	infolog	de	Protokollierung der Historie
 history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen.
+html link to the current record	infolog	de	HTML-Link zum aktuellen Datensatz
 id	infolog	de	Id
 id#	infolog	de	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
@@ -254,9 +261,11 @@ limit width of description column ((effective only if lines limit is set), 0 for
 link	infolog	de	Verknüpfung
 linked to %1	infolog	de	Verknüpft mit %1
 links	infolog	de	Verknüpfungen
+links and attached files	infolog	de	Verknüpfungen und Dateianhänge
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 list all categories	infolog	de	Alle Kategorien anzeigen
 list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+list of files linked to the current record	infolog	de	Liste der Dateien die mit dem aktuellen Datensatz verknüpft sind
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
 location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
@@ -419,6 +428,7 @@ start a new search, cancel this link	infolog	de	eine neue Suche starten, diese V
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Fälligkeitsdatum
 startdate for new entries	infolog	de	Startdatum für neue Einträge
+startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Enddatum liegen!!!
 starting %1	infolog	de	%1 startet
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
@@ -434,12 +444,14 @@ task	infolog	de	Aufgabe
 tasks of	infolog	de	Aufgaben von
 template	infolog	de	Vorlage
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+the following document-types are supported:	infolog	de	Folgende Dateitypen werden unterstützt:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
 times	infolog	de	Zeiten
+titles of any entries linked to the current record, excluding attached files	infolog	de	Liste aller Einträge die mit dem aktuellen Datensatz verknüpft sind, mit Ausnahme von Dateianhängen.
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
 to what should the startdate of new entries be set.	infolog	de	Auf was soll das Startdatum von neuen Einträgen gesetzt werden.
 today	infolog	de	Heute

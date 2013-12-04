@@ -17,6 +17,7 @@ acl manager	admin	fa	مدیریت حقوق دسترسی
 acl rights	common	fa	حقوق دسترسی
 action	admin	fa	عمل
 actions	admin	fa	اعمال
+activate	admin	fa	فعال سازی
 activate wysiwyg-editor	admin	fa	فعالسازی ویرایشگر WYSIWYG
 add a category	admin	fa	افزودن دسته
 add a group	admin	fa	افزودن گروه
@@ -192,6 +193,7 @@ enter your smtp server port	admin	fa	درگاه کارگزار رایانامه 
 error! no appname found	admin	fa	خطا! نام کاربرد پیدا نشد
 error: %1 not found or other error !!!	admin	fa	خطا!!!: %1 پیدا نشد یا خطائی دیگر
 expires	admin	fa	انقضاء
+failed to change password.	admin	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
 fallback (after each pageview)	admin	fa	بازگشتنی(پس از نمایش هر صفحه)
 false	admin	fa	نادرست
 field '%1' already exists !!!	admin	fa	فیلد '%1'  وجود دارد!!!

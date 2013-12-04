@@ -63,6 +63,7 @@ load sample file	importexport	fi	Lataa esimerkkitiedosto
 manage mapping	importexport	fi	Valitse kentät
 next	importexport	fi	Seuraava
 next run	importexport	fi	Suoritetaan seuraavan kerran
+no notifications	importexport	fi	Ei huomautusviestejä
 no records selected	importexport	fi	Tietueita ei ole valittu
 old fixed definition	preferences	fi	Vanha, korjattu määritelmä
 please select file to import	importexport	fi	Talitse tiedosto
@@ -90,6 +91,7 @@ try	importexport	fi	Yritä
 unable to schedule	importexport	fi	Virhe ajastettaessa
 update categories	importexport	fi	Päivitä kategoriat
 use default	importexport	fi	Käytä oletusta
+use field from csv if possible	importexport	fi	CSV tiedoston kenttään merkitty
 user preference	importexport	fi	Käyttäjäasetukset
 user template folder	importexport	fi	Käyttäjän mallipohjakansio
 users allowed to create their own definitions	importexport	fi	Käyttäjien sallitaan luoda omia tuonti | vienti oletusasetuksia

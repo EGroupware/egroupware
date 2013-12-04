@@ -284,9 +284,9 @@ etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 %2 nach %3!
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 failed to create required directory "%1"!	admin	de	Anlegen des benötigten Verzeichnisses "%1" fehlgeschlagen!
+failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 %2 nach %3!
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer

@@ -21,6 +21,7 @@ acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
 action	admin	hu	Művelet
 actions	admin	hu	Műveletek
+activate	admin	hu	Aktivál
 activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő engedélyezése
 add a category	admin	hu	kategória hozzáadása
 add a group	admin	hu	csoport hozzáadása
@@ -220,6 +221,7 @@ error! no appname found	admin	hu	Hiba!! Alkalmazásnév nem található.
 error: %1 not found or other error !!!	admin	hu	Hiba: %1 nem található vagy egyéb hiba !!!
 expires	admin	hu	Lejár
 explanation of ldapman	admin	hu	Ez a modul eddig a következőkkel lett tesztelve: Postfix, Ldap, Courier-IMAP és a szükséges sémák: CORE és QMAIL (OID7914). További részleteket találhat a használatról és beállításról a README.ldapman fájlban az ADMIN dokumentum mappájában.
+failed to change password.	admin	hu	Sikertelen jelszó változtatás.
 fallback (after each pageview)	admin	hu	visszatérés (minden oldalnézet után)
 field '%1' already exists !!!	admin	hu	'%1' mező már létezik!
 file space	admin	hu	Fájl space

@@ -172,6 +172,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	e
 enter a textual description of the log-entry	infolog	es-es	Introduzca un texto descriptivo de la entrada
 enter the query pattern	infolog	es-es	Introduzca el patrón de búsqueda
 entry and all files	infolog	es-es	Entrada y todos los archivos
+error: importing the ical	infolog	es-es	Error al importar el fichero iCal
 error: saving the entry	infolog	es-es	Error al guardar la entrada
 error: the entry has been updated since you opened it for editing!	infolog	es-es	Error: ¡La entrada ha sido actualizada desde que la abrió para editar!
 execute a further action for this entry	infolog	es-es	Ejecutar una acción más para esta entrada
@@ -245,6 +246,7 @@ list no subs/childs	infolog	es-es	No listar subs/hijos
 location	infolog	es-es	Ubicación
 longer textual description	infolog	es-es	descripción larga de la entrada
 low	infolog	es-es	baja
+manage mapping	infolog	es-es	Administrar los mapeos
 max length of the input [, length of the inputfield (optional)]	infolog	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 modifier	infolog	es-es	Modificador
 modifierer	infolog	es-es	Modificador

@@ -114,6 +114,7 @@ contacts and account contact-data to sql	admin	pl	Kontakty i dane osobiste konta
 contacts to ldap	admin	pl	kontakty do LDAP'a
 contacts to ldap, account contact-data to sql	admin	pl	kontakty do LDAP'a, dane kont do SQL'a
 contains	addressbook	pl	zawiera
+copied	addressbook	pl	skopiowano
 copied by %1, from record #%2.	addressbook	pl	Skopiowane przez %1, z rekordu # %2
 copy a contact and edit the copy	addressbook	pl	Skopiuj kontakt i edytuj kopię
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pl	Skopiuj zmiany do schowka, %1przeładuj wpis%2 i zastosuj je.

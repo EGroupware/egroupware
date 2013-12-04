@@ -130,6 +130,7 @@ contacts and account contact-data to sql	admin	fr	Contacts et dépôt des donné
 contacts to ldap	admin	fr	Contacts vers LDAP
 contacts to ldap, account contact-data to sql	admin	fr	Contacts vers LDAP, dépôt des données des comptes vers SQL
 contains	addressbook	fr	contient
+copied	addressbook	fr	Copié
 copied by %1, from record #%2.	addressbook	fr	Copié par %1 depuis l'enregistrement n°%2.
 copy a contact and edit the copy	addressbook	fr	Copier un contact et modifier la copie
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	fr	Copie vos changements vers le presse-papiers, %1recharger l'entrée%2 et les fusionne.

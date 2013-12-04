@@ -23,6 +23,7 @@ calendar preferences	calendar	uk	Параметри Календарю
 calendar settings	admin	uk	Установки Календарю
 calendar-fieldname	calendar	uk	Календар - Ім'я поля
 canceled	calendar	uk	Відмінено
+charset of file	calendar	uk	Кодування файлу
 countries	calendar	uk	Країни
 country	calendar	uk	Країна
 create new links	calendar	uk	Створити нові посилання
@@ -76,9 +77,11 @@ hours	calendar	uk	години
 ical / rfc2445	calendar	uk	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	uk	Якщо відмічені свята припадають на вихідні, то наступний понеділок теж вихідний.
 ignore conflict	calendar	uk	Ігнорувати конфлікт
+import	calendar	uk	Імпорт
 import csv-file	common	uk	Імпортувати CSV-файл
 interval	calendar	uk	Інтервал
 last	calendar	uk	Останній
+last changed	calendar	uk	Востаннє змінено
 lastname of person to notify	calendar	uk	Прізвище людини для повідомлення
 link	calendar	uk	Посилання
 links	calendar	uk	Посилання
@@ -162,6 +165,7 @@ thu	calendar	uk	Чт
 title of the event	calendar	uk	Назва події
 to many might exceed your execution-time-limit	calendar	uk	Надто багато може перевершити Ваш ліміт часу
 to-firstname	calendar	uk	--To-Firstname--
+translation	calendar	uk	Переклад
 tue	calendar	uk	Вт
 updated	calendar	uk	Змінено
 use end date	calendar	uk	Використати дату закінчення

@@ -4,6 +4,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; możesz się cofnąć i odznaczyć Import Testowy)
 %1 weeks	calendar	pl	%1 tygodni
 (%1 events in %2 seconds)	calendar	pl	(%1 zdarzeń w %2 sekund)
+(empty = use global limit, no = no export at all)	admin	pl	(puste = użyj limitu globalnego, no = bez eksportu)
 , exceptions preserved	calendar	pl	, wyjątków zachowano
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pl	<b>Zauważ</b>: Kalendarz używa listy dni świątecznych dla Twojego kraju, tj. dla %1. Możesz zmienić to zachowanie w Twoim %2.<br />Dni świąteczne są %3 automatycznie instalowane z %4. Możesz zmienić to w %5.
 a non blocking event will not conflict with other events	calendar	pl	Termin nie blokujący nie będzie w konflikcie z innymi terminami kalendarza
@@ -66,6 +67,7 @@ category acl	common	pl	ACL kategorii
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	pl	ACL kategorii ograniczają tylko dodawanie kategorii do zdarzenia lub zmianę statusu uczestnika. Nie zmienia to widoczności zdarzenia!
 chair	calendar	pl	Stanowiko
 change history	calendar	pl	Zmień historię
+charset of file	calendar	pl	strona kodowa pliku
 check all	calendar	pl	Sprawdź wszystko
 choose a category	calendar	pl	Wybierz kategorię
 close the window	calendar	pl	Zamknij okno
@@ -156,6 +158,7 @@ existing links	calendar	pl	Istniejące odnośniki
 exists	calendar	pl	istnieje
 extended	calendar	pl	Rozszerzone
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pl	Rozszerzone uaktualnienia zawsze zawierają kompletne dane o wpisach. iCal-e mogą być importowane przez różne inne programy - kalendarze.
+favorites	calendar	pl	Ulubione
 fieldseparator	calendar	pl	Odzielnik pola
 filemanager	calendar	pl	Pliki
 filename	calendar	pl	Nazwa pliku
@@ -175,6 +178,7 @@ freetime search	calendar	pl	Wyszukiwanie wolnego czasu
 fri	calendar	pl	Pt
 full description	calendar	pl	Pełny opis
 fullname of person to notify	calendar	pl	Imię i nazwisko osoby do powiadomienia
+general fields:	calendar	pl	Pola ogólne:
 global categories	calendar	pl	Kategorie globalne
 global public and group public	calendar	pl	Publiczne dla grupy i globalnie
 global public only	calendar	pl	Tylko globalnie publiczne
@@ -207,6 +211,7 @@ ical successful imported	calendar	pl	iCal został poprawnie zaimportowany
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	pl	Jeżeli zaznaczone święta przypadają na weekend, zostaną przeniesione na nadchodzący poniedziałek.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pl	Jeżeli nie ustanowisz hasła w tym miejscu, informacja będzie dostępna dla każdego, kto zna adres odnośnika!
 ignore conflict	calendar	pl	Ignoruj konflikt
+import	calendar	pl	Importuj
 import csv-file	common	pl	Importuj plik CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	pl	Importuj zdarzenia do kalendarza z pliku CSV.
 insert	calendar	pl	wstaw
@@ -217,6 +222,7 @@ invitations	calendar	pl	Zaproszenia
 invite	calendar	pl	Zaproś
 it can not read timezones from sqlite database %1!	calendar	pl	NIE może odczytać stref czasowych z bazy sqlite %1!
 last	calendar	pl	ostatni
+last changed	calendar	pl	Ostatnia zmiana
 lastname of person to notify	calendar	pl	Nazwisko osoby, którą należy powiadomić
 length of the time interval	calendar	pl	Długość odcinka czasu
 link	calendar	pl	Link do zdarzenia
@@ -229,6 +235,7 @@ location to autoload from	admin	pl	Lokalizacja do automatycznego załadowania z
 location, start- and endtimes, ...	calendar	pl	Lokalizacja, czas rozpoczęcia i zakończenia
 mail all participants	calendar	pl	wyślij do wszystkich uczestników
 make freebusy information available to not loged in persons?	calendar	pl	Czy udostępnić informację wolny-zajęty dla gości (osób nie zalogowanych)?
+manage mapping	calendar	pl	Zarządzaj mapowaniem
 max. number of entries to show (leave empty for no restriction)	calendar	pl	Ile maksymalnie wpisów pokazać (puste - bez ograniczenia)
 minutes	calendar	pl	minuty
 modified	calendar	pl	Zmodyfikowany
@@ -412,6 +419,7 @@ to-firstname	calendar	pl	Do imienia
 to-fullname	calendar	pl	Do pełnej nazwy
 to-lastname	calendar	pl	Do nazwiska
 tomorrow	calendar	pl	Jutro
+translation	calendar	pl	Tłumaczenie
 tue	calendar	pl	Wto
 two weeks	calendar	pl	dwa tygodnie
 update timezones	common	pl	Aktualizuj strefy czasowe

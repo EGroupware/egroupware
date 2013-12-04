@@ -26,6 +26,7 @@ calendar preferences	calendar	lv	Kalendāra izvēles
 calendar settings	admin	lv	Kalendāra uzstādījumi
 calendar-fieldname	calendar	lv	Kalendāra lauka nosaukums
 canceled	calendar	lv	Atcelts
+charset of file	calendar	lv	faila kodējums
 check all	calendar	lv	Parbaudīt visu
 choose a category	calendar	lv	Izvēlies sadaļu
 countries	calendar	lv	Valstis
@@ -76,9 +77,11 @@ holidays	calendar	lv	Brīvdienas
 hours	calendar	lv	stundas
 ical / rfc2445	calendar	lv	iCal / rfc2445
 ignore conflict	calendar	lv	Ignorēt pretrunu
+import	calendar	lv	Importēt
 import csv-file	common	lv	Importēt CSV datni
 interval	calendar	lv	Intervāls
 last	calendar	lv	pēdējais
+last changed	calendar	lv	Pēdējo reizi mainīts
 lastname of person to notify	calendar	lv	Personas, kurai jāpaziņō, uzvārds
 link	calendar	lv	Saite
 link to view the event	calendar	lv	Saistīt, lai parādītu notikumu
@@ -165,6 +168,7 @@ to many might exceed your execution-time-limit	calendar	lv	pārāk daudz, var p�
 to-firstname	calendar	lv	Kam-Vārds
 to-fullname	calendar	lv	Kam- Pilnais vārds
 to-lastname	calendar	lv	Kam- Uzvārds
+translation	calendar	lv	Tulkojums
 tue	calendar	lv	Otrdiena
 two weeks	calendar	lv	divas nedēļas
 updated	calendar	lv	Atjaunināts

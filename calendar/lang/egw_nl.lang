@@ -2,6 +2,7 @@
 %1 records imported	calendar	nl	%1 records geïmporteerd
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 %1 weeks	calendar	nl	%1 weken
+(empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	nl	<b>Let op</b>: de agenda gebruikt de vrije dagen van uw land dat staat ingesteld op %1. U kunt dit wijzigen in uw %2.<br />Vrije dagen worden %3 automatisch geinstalleerd vanaf %4. U kunt dit wijzigen in %5.
 a non blocking event will not conflict with other events	calendar	nl	Een niet-blokkerende gebeurtenis zal geen conflicten met andere gebeurtenissen geven
 accept	calendar	nl	Accepteren
@@ -55,6 +56,7 @@ can't add alarms in the past !!!	calendar	nl	Herinneringen kunnen niet in het ve
 can't aquire lock!	calendar	nl	Kan geen lock plaatsen!
 canceled	calendar	nl	Geannuleerd
 change history	calendar	nl	Historie van wijzigingen
+charset of file	calendar	nl	Karakterset van bestand
 check all	calendar	nl	Markeer alles
 choose a category	calendar	nl	Kies een categorie
 close the window	calendar	nl	Venster sluiten
@@ -156,6 +158,7 @@ freetime search	calendar	nl	Beschikbare tijd opzoeken
 fri	calendar	nl	Vri
 full description	calendar	nl	Volledige omschrijving
 fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
+general fields:	calendar	nl	Algemene velden:
 global categories	calendar	nl	Globale categoriën
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
@@ -185,12 +188,14 @@ ical successful imported	calendar	nl	iCal goed geimporteerd
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen feestdagen die vallen in het weekend, genomen worden op de maandag daarna.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	nl	Indien u hier geen wachtwoord instelt, is de informatie beschikbaar voor iedereen die de URL kent!!!
 ignore conflict	calendar	nl	Conflict negeren
+import	calendar	nl	Importeren
 import csv-file	common	nl	CSV-bstand importeren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	nl	Importeer gebeurtenissen in uw agenda vanuit een CSV bestand. CSV betekent 'Komma gescheiden velden'. Maar in het Opties tabblad kunt u ook andere scheidingstekens kiezen.
 insert in document	calendar	nl	Invoegen in document
 interval	calendar	nl	Interval
 invalid email-address "%1" for user %2	calendar	nl	Ongeldig emailadres "%1" voor gebruiker %2
 last	calendar	nl	laatste
+last changed	calendar	nl	Laatst gewijzigd
 lastname of person to notify	calendar	nl	Achternaam van persoon om te op de hoogte te brengen
 length of the time interval	calendar	nl	Lengte van het tijdsinterval
 link	calendar	nl	Link
@@ -203,6 +208,7 @@ location to autoload from	admin	nl	Plaats om van te laden
 location, start- and endtimes, ...	calendar	nl	Plaats, begin- en eindtijden
 mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not loged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor niet ingelogde personen?
+manage mapping	calendar	nl	Beheer de mappings
 minutes	calendar	nl	minuten
 modified	calendar	nl	Gewijzigd
 mon	calendar	nl	Maa
@@ -335,6 +341,7 @@ timeframe to search	calendar	nl	Tijdskader om te zoeken
 timezone	calendar	nl	Tijdszone
 title of the event	calendar	nl	Titel van afspraak
 to many might exceed your execution-time-limit	calendar	nl	te veel kan mogelijk uw uitvoertijd van dit programme overschrijden
+translation	calendar	nl	Vertaling
 tue	calendar	nl	Din
 two weeks	calendar	nl	twee weken
 updated	calendar	nl	Bijgewerkt

@@ -28,6 +28,7 @@ acl manager	admin	pl	Meneder ACL
 acl rights	common	pl	Prawa ACL
 action	admin	pl	Czynność
 actions	admin	pl	Polecenia
+activate	admin	pl	Aktywuj
 activate wysiwyg-editor	admin	pl	włącz edytor WYSIWYG
 add a category	admin	pl	dodaj kategorie
 add a group	admin	pl	dodaj grupę użytkowników
@@ -212,8 +213,8 @@ email account active	admin	pl	konto poczty aktywne
 email address	admin	pl	adres email
 enable	admin	pl	włącz
 enable debug-messages	admin	pl	Wyświetlaj komunikaty trybu debug
-enable the soap service	admin	pl	Włącz serwis SOAP
 enable spellcheck in rich text editor	admin	pl	Włączyć sprawdzanie pisowni w edytorze tekstowym ?
+enable the soap service	admin	pl	Włącz serwis SOAP
 enable the xmlrpc service	admin	pl	Włącz serwis XMLRPC
 enabled - hidden from navbar	admin	pl	Aktywna - ukryta w menu
 enabled - popup window	admin	pl	Aktywna - Okno Popup
@@ -241,7 +242,6 @@ enter your http proxy server port	admin	pl	Domyślny port serwera HTTP proxy
 enter your smtp server hostname or ip address	admin	pl	Podaj nazwę hosta serwera SMTP lub adres IP
 enter your smtp server port	admin	pl	Podaj port serwera SMTP
 error canceling timer, maybe there's none set !!!	admin	pl	Błąd podczas wylączania timera, może żaden nie jest ustawiony !!!!
-error changing the password for % !!!	admin	pl	Błąd podczas zmiany hasła dla %1 !!!
 error changing the password for %1 !!!	admin	pl	Błąd podczas zmiany hasła dla %1 !!!
 error deleting log entry!	admin	pl	Błąd podczas usuwania wpisu dziennika!
 error saving	admin	pl	Błąd przy zapisie
@@ -254,6 +254,7 @@ error: %1 not found or other error !!!	admin	pl	Błąd: %1 nie znaleziony lub in
 exists	admin	pl	istnieje
 expires	admin	pl	Ważne do
 explanation of ldapman	admin	pl	Ten moduł został przetestowany na Postfix+LDAP+Cyrus-IMAP i potrzebuje schematów CORE i QMAIL (OID7914). Więcej na temat konfiguracji takiego systemu można znaleźć w README.ldapman w katalogu doc ADMIN'a.
+failed to change password.	admin	pl	Zmiana hasła nieudana.
 fallback (after each pageview)	admin	pl	powrót (po każdym pokazaniu strony)
 false	admin	pl	fałsz
 field '%1' already exists !!!	admin	pl	Pole '%1' już istnieje !!!

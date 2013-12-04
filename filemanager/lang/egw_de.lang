@@ -44,6 +44,7 @@ comment	filemanager	de	Kommentar
 copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy	filemanager	de	Kopieren
+copy into folder	filemanager	de	Kopieren in Ordner
 copy to	filemanager	de	Kopieren nach
 copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
@@ -102,9 +103,9 @@ failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 favorites	filemanager	de	Favoriten
 file	filemanager	de	Datei
+file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
-file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file deleted.	filemanager	de	Datei gelöscht.
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
@@ -146,6 +147,7 @@ modified	filemanager	de	verändert
 modified between	filemanager	de	verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
 move	filemanager	de	verschieben
+move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder können Sie hier auch verwenden.
@@ -193,7 +195,9 @@ select file to upload in current directory	filemanager	de	Datei zum hochladen in
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
 show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü
+show link "users and groups" in side box menu?	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
 show link "users and groups*" in side box menu?*	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
+show link "your home directory" in side box menu?	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe

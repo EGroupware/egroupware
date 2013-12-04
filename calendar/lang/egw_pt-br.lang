@@ -54,6 +54,7 @@ calendar-fieldname	calendar	pt-br	Agenda-Nome do Campo
 can't add alarms in the past !!!	calendar	pt-br	Não é possível incluir alarmes no passado !!
 can't aquire lock!	calendar	pt-br	Não foi possível acesso exclusivo ao registro!
 canceled	calendar	pt-br	Cancelado
+charset of file	calendar	pt-br	Charset do arquivo
 check all	calendar	pt-br	Verificar todos
 choose a category	calendar	pt-br	Escolha uma categoria
 close the window	calendar	pt-br	Fechar a janela
@@ -148,6 +149,7 @@ freetime search	calendar	pt-br	Procurar disponibilidade
 fri	calendar	pt-br	Sex
 full description	calendar	pt-br	Descrição  Completa
 fullname of person to notify	calendar	pt-br	Nome completo da pessoa a ser notificada
+general fields:	calendar	pt-br	Campos gerais:
 global categories	calendar	pt-br	Categorias Globais
 global public and group public	calendar	pt-br	Público global e Grupo público
 global public only	calendar	pt-br	Público global somente
@@ -177,12 +179,14 @@ ical successful imported	calendar	pt-br	iCal importado com sucesso
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	pt-br	Se os feriados coincidirem com o fim de semana, serão transferidos para a próxima segunda-feira.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pt-br	Se você não configurar uma senha aqui a informação ficará disponível para qualquer um que souber a URL!
 ignore conflict	calendar	pt-br	Ignorar conflito
+import	calendar	pt-br	Importar
 import csv-file	common	pt-br	Importar arquivo-CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	pt-br	Importa eventos em sua Agenda de um arquivo CSV. CSV significa 'Comma Separated Values' ou 'Valores Separados por Vírgulas'. Entretanto na Aba de opções você pode escolher outros separadores.
 insert in document	calendar	pt-br	Inserir em documento
 interval	calendar	pt-br	Intervalo
 invalid email-address "%1" for user %2	calendar	pt-br	E-mail %1 inválido para o usuário %2
 last	calendar	pt-br	Último
+last changed	calendar	pt-br	Última alteração
 lastname of person to notify	calendar	pt-br	Sobrenome da pessoa a ser notificada
 length of the time interval	calendar	pt-br	Duração do tempo de intervalo
 link	calendar	pt-br	Link
@@ -195,6 +199,7 @@ location to autoload from	admin	pt-br	Local de onde carregar automaticamente
 location, start- and endtimes, ...	calendar	pt-br	Local, Horários de início e término, ...
 mail all participants	calendar	pt-br	Enviar e-mail para todos os participantes
 make freebusy information available to not loged in persons?	calendar	pt-br	Mostrar informação de disponibilidade para pessoas não logadas?
+manage mapping	calendar	pt-br	Gerenciar mapeamento
 minutes	calendar	pt-br	minutos
 modified	calendar	pt-br	Modificado
 mon	calendar	pt-br	Seg
@@ -324,6 +329,7 @@ timeframe to search	calendar	pt-br	Período a pesquisar
 timezone	calendar	pt-br	Zona de horário
 title of the event	calendar	pt-br	Título do evento
 to many might exceed your execution-time-limit	calendar	pt-br	muitos podem exceder seu tempo limite de execução
+translation	calendar	pt-br	Tradução
 tue	calendar	pt-br	Ter
 two weeks	calendar	pt-br	duas semanas
 updated	calendar	pt-br	Atualizado

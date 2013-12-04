@@ -32,6 +32,7 @@ acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL -oikeudet
 action	admin	fi	Toimenpide
 actions	admin	fi	Toimenpiteet
+activate	admin	fi	Aktivoi
 activate wysiwyg-editor	admin	fi	Käytä WYSIWYG-toimitinta
 add a category	admin	fi	Lisää kategoria
 add a group	admin	fi	Lisää ryhmä
@@ -220,8 +221,8 @@ email account active	admin	fi	Sähköpostilin aktivointi
 email address	admin	fi	Sähköpostiosoite
 enable	admin	fi	Ota käyttöön
 enable debug-messages	admin	fi	Näytä virheenjäljitysviestit
-enable the soap service	admin	fi	Salli SOAP palvelut
 enable spellcheck in rich text editor	admin	fi	Salli oikolukuohjelma Rich text editorissa.
+enable the soap service	admin	fi	Salli SOAP palvelut
 enable the xmlrpc service	admin	fi	Salli XMLRPC palvelut
 enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
 enabled - popup window	admin	fi	Käytössä - Ponnahdusikkuna
@@ -251,7 +252,6 @@ enter your http proxy server port	admin	fi	Anna HTTP-välityspalvelimen portti
 enter your smtp server hostname or ip address	admin	fi	Anna SMTP -palvelimen nimi tai IP-osoite
 enter your smtp server port	admin	fi	Anna SMTP -palvelimen portti
 error canceling timer, maybe there's none set !!!	admin	fi	Virhe poistettaessa ajastusta, ehkä sitä ei edes ole asetettu !!!
-error changing the password for % !!!	admin	fi	Virhe salasanaa vaihdettaessa %1 !!
 error changing the password for %1 !!!	admin	fi	Virhe salasanaa vaihdettaessa %1 !!
 error deleting log entry!	admin	fi	Virhe poistettaessa lokitietuetta %1 !!
 error saving	admin	fi	Virhe tallennettaessa!
@@ -267,6 +267,7 @@ explanation of ldapman	admin	fi	Tämä moduuli on toistaiseksi testattu POSTFIX:
 exports groups into a csv file.	admin	fi	Vie ryhmiä CSV tiedostoon
 exports users into a csv file.	admin	fi	Vie käyttäjätilejä CSV tiedostoon
 failed to change password for account "%1"!	admin	fi	Käyttäjätilin %1 salasanan vaihto epäonnistui!
+failed to change password.	admin	fi	Salasanan vaihto ei onnistunut.
 fallback (after each pageview)	admin	fi	fallback (tarkista sivuhaun yhteydessä)
 false	admin	fi	false
 field '%1' already exists !!!	admin	fi	Kenttä'%1' on jo olemassa !!!
@@ -274,7 +275,6 @@ file space	admin	fi	Tallennustila
 file space must be an integer	admin	fi	Tallennustila on oltava kokonaisluku
 for the times above	admin	fi	Näinä aikoina
 for the times below (empty values count as '*', all empty = every minute)	admin	fi	Yläpuolella määritettyinä aikoina (tyhjä tarkoittaa '*', kaikki tyhjää = joka minuutti)
-force password strength (1-5, default empty: no check against rules for a strong password)?	admin	fi	Salasanan vahvuus 1-5. Oletus tyhjä= ei tarkisteta salasanan vahvuutta
 force selectbox	admin	fi	Pakota valitsemaan
 force users to change their password regularily?(empty for no,number for after that number of days	admin	fi	Kuinka usein käyttäjien on vaihdettava salasana? Tyhjä=ei koskaan, muutoin asteta päivien lukumäärä.
 forward also to	admin	fi	Välitä eteenpäin myös

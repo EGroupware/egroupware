@@ -103,6 +103,7 @@ contacts and account contact-data to sql	admin	bg	контактите и дан
 contacts to ldap	admin	bg	контакти към LDAP
 contacts to ldap, account contact-data to sql	admin	bg	контактите към LDAP, данните за акаунтите към SQL
 contains	addressbook	bg	съдържа
+copied	addressbook	bg	копиран(и)
 copied by %1, from record #%2.	addressbook	bg	Копиран от %1, от запис #%2.
 copy a contact and edit the copy	addressbook	bg	Копиране на контакт и редактиране на копието
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	bg	Копирайте измеменията в клипборда, %1презаредете записа%2 и ги обединете.

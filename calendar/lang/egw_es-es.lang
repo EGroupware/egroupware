@@ -6,6 +6,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
 %1 weeks	calendar	es-es	%1 semanas
 (%1 events in %2 seconds)	calendar	es-es	(%1 eventos en %2 segundos)
+(empty = use global limit, no = no export at all)	admin	es-es	(vacío = usar limite global; no = no exportar nada)
 , exceptions preserved	calendar	es-es	, excepciones preservadas
 , stati of participants reset	calendar	es-es	, estados de los participantes restablecidos
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta lo siguiente</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
@@ -73,6 +74,7 @@ category acl	common	es-es	ACL de la categoría
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	es-es	La ACL de la categoría sólo restringe añadir una categoría a un evento o cambiar el estado de un participante. ¡Esto NO cambia la visibilidad de un evento!
 chair	calendar	es-es	Silla
 change history	calendar	es-es	Cambiar historial
+charset of file	calendar	es-es	Juego de caracteres del fichero
 check all	calendar	es-es	Marcar todo
 choose a category	calendar	es-es	Elija una categoría
 close the window	calendar	es-es	Cerrar la ventana
@@ -163,14 +165,20 @@ event details follow	calendar	es-es	A continuación, los detalles del evento
 event saved	calendar	es-es	Evento guardado
 event will occupy the whole day	calendar	es-es	El evento ocupará todo el día
 every user can invite other users and groups	admin	es-es	Cada usuario puede invitar a otros usuarios y grupos
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 exception	calendar	es-es	Excepción
 exception created - you can now edit or delete it	calendar	es-es	Se ha creado la excepción. Ahora puede editarla o borrarla.
 exceptions	calendar	es-es	Excepciones
 execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
 exists	calendar	es-es	Existe
+export definition to use for nextmatch export	calendar	es-es	Exportar la definición a usar para exportar nextmatch
 extended	calendar	es-es	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	es-es	Las actualizaciones extendidas incluyen todos los detalles de los eventos. Los de tipo iCal pueden importarse mediante otras aplicaciones de tipo calendario.
+favorites	calendar	es-es	Favoritos
 fieldseparator	calendar	es-es	Separador de campos
 filemanager	calendar	es-es	Administrador de archivos
 filename	calendar	es-es	Nombre de fichero
@@ -192,6 +200,7 @@ freetime search	calendar	es-es	Buscar en el tiempo libre
 fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar
+general fields:	calendar	es-es	Campos generales:
 global categories	calendar	es-es	Categorías globales
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
@@ -226,7 +235,10 @@ ical successful imported	calendar	es-es	El fichero iCal se importó correctament
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	es-es	Si los festivos marcados caen en fin de semana, se toman el lunes siguiente.
 if start day differs	calendar	es-es	Si el día de inicio difiere
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	es-es	¡Si no pone aquí una contraseña, la información está disponible para todos los que conozcan la URL!
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+if you specify an export definition, it will be used when you export	calendar	es-es	Si especifica una definición de exportación, se usará al exportar
 ignore conflict	calendar	es-es	Ignorar conflicto
+import	calendar	es-es	Importar
 import csv-file	common	es-es	Importar fichero CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	es-es	Importa eventos en su calendario desde un fichero CSV. CSV significa 'Valores Separados por Comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
 initially year aligned	calendar	es-es	inicialmente alineado al año
@@ -240,6 +252,7 @@ invite	calendar	es-es	invitar
 keep exceptions	calendar	es-es	Mantener excepciones
 keep the series unchanged.	calendar	es-es	Mantener la serie sin cambiar.
 last	calendar	es-es	último
+last changed	calendar	es-es	Último cambio
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	es-es	Limitar el número de líneas de la descripción en la vista de la lista (predeterminado: 5; 0 para ilimitadas)
@@ -253,6 +266,7 @@ location to autoload from	admin	es-es	Lugar desde donde cargar automáticamente
 location, start- and endtimes, ...	calendar	es-es	Ubicación, hora de inicio y final...
 mail all participants	calendar	es-es	Enviar correo a todos los participantes
 make freebusy information available to not loged in persons?	calendar	es-es	¿Poner la información del tiempo disponible a las personas que no inicien sesión?
+manage mapping	calendar	es-es	Administrar los mapeos
 max. number of entries to show (leave empty for no restriction)	calendar	es-es	Número máximo de entradas a mostrar (dejar en blanco para no restricciones)
 minutes	calendar	es-es	minutos
 modified	calendar	es-es	Modificado
@@ -412,7 +426,9 @@ sun	calendar	es-es	Dom
 tag to mark positions for address labels	calendar	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the exceptions are deleted together with the series.	calendar	es-es	Las excepciones se borran junto con las series.
+the following document-types are supported:	calendar	es-es	Los siguientes tipos de documentos están soportados:
 the original series will be terminated today and a new series be created.	calendar	es-es	La serie original terminará hoy y se creará una serie nueva.
 the resource you selected is already overbooked:	calendar	es-es	El recurso que ha seleccionado ya está reservado:
 this day is shown as first day in the week or month view.	calendar	es-es	Este día se mostrará como el primer día en las vistas de semana o de mes.
@@ -449,6 +465,7 @@ to-firstname	calendar	es-es	Para nombre
 to-fullname	calendar	es-es	Para nombre completo
 to-lastname	calendar	es-es	Para apellido
 tomorrow	calendar	es-es	Mañana
+translation	calendar	es-es	Traducción
 tue	calendar	es-es	Mar
 two weeks	calendar	es-es	dos semanas
 type of planner	calendar	es-es	Tipo de planificador

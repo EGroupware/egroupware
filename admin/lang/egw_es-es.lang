@@ -35,6 +35,7 @@ acl manager	admin	es-es	Manejo de LCA
 acl rights	common	es-es	Permisos de LCA
 action	admin	es-es	Acción
 actions	admin	es-es	Acciones
+activate	admin	es-es	Activar
 activate wysiwyg-editor	admin	es-es	activar editor WYSIWYG
 add a category	admin	es-es	añadir una categoría
 add a group	admin	es-es	añadir un grupo
@@ -236,8 +237,8 @@ email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
 enable	admin	es-es	Activar
 enable debug-messages	admin	es-es	Activar mensajes de depuración
-enable the soap service	admin	es-es	Activar el servicio soap
 enable spellcheck in rich text editor	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
+enable the soap service	admin	es-es	Activar el servicio soap
 enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
 enabled - popup window	admin	es-es	Habilitado - Ventana emergente
@@ -267,7 +268,6 @@ enter your http proxy server port	admin	es-es	Introduzca el puerto de su servido
 enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor SMTP (nombre o IP)
 enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
-error changing the password for % !!!	admin	es-es	¡Error al cambiar la contraseña para %!
 error changing the password for %1 !!!	admin	es-es	¡Error al cambiar la contraseña para %1!
 error deleting log entry!	admin	es-es	¡Error al borrar la entrada del log!
 error saving	admin	es-es	Error al guardar
@@ -283,6 +283,7 @@ explanation of ldapman	admin	es-es	Este módulo ha sido probado en POSTFIX, LDAP
 exports groups into a csv file.	admin	es-es	Exportar los grupos en un fichero CSV.
 exports users into a csv file.	admin	es-es	Exporta los usuarios en un fichero CSV.
 failed to change password for account "%1"!	admin	es-es	¡Fallo al cambiar la contraseña para la cuenta "%1"!
+failed to change password.	admin	es-es	Fallo al cambiar la contraseña.
 fallback (after each pageview)	admin	es-es	retardo (después de ver cada página)
 false	admin	es-es	falso
 field '%1' already exists !!!	admin	es-es	¡El campo '%1' ya existe!
@@ -290,7 +291,6 @@ file space	admin	es-es	Espacio del fichero
 file space must be an integer	admin	es-es	El espacio del fichero debe ser un entero
 for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (los valores vacíos cuentan como '*', todos vacío = cada minuto)
-force password strength (1-5, default empty: no check against rules for a strong password)?	admin	es-es	¿Forzar robustez de la contraseña (1-5, vacío: no comprobar reglas para comprobar la debilidad)?
 force selectbox	admin	es-es	Forzar cuadro de selección
 force users to change their password regularily?(empty for no,number for after that number of days	admin	es-es	¿Forzar a que los usuarios cambien su contraseña regularmente (en blanco es no, o un número para ese número de días)?
 forward also to	admin	es-es	reenviar también a

@@ -152,6 +152,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	c
 enter a textual description of the log-entry	infolog	cs	zadejte textový popis záznamu
 enter the query pattern	infolog	cs	Zadejte výraz pro vyhledávání
 entry and all files	infolog	cs	Záznam a všechny soubory
+error: importing the ical	infolog	cs	Chyba při importu iCal
 error: saving the entry	infolog	cs	Chyba při ukládání záznamu
 error: the entry has been updated since you opened it for editing!	infolog	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený pro editaci!
 execute a further action for this entry	infolog	cs	Spustit další akci pro tento záznam
@@ -211,6 +212,7 @@ list no subs/childs	infolog	cs	Vypsat bez Podpoložek/Potomků
 location	infolog	cs	Umístění
 longer textual description	infolog	cs	delší textový popis
 low	infolog	cs	Nízká
+manage mapping	infolog	cs	Spravovat mapování
 max length of the input [, length of the inputfield (optional)]	infolog	cs	maximální délka vstupu (volitelné)
 modifierer	infolog	cs	Modifikátor
 name must not be empty !!!	infolog	cs	Název nemůže být prázdný !!!

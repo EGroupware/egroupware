@@ -206,8 +206,8 @@ either install id and config password needed or the remote hash!	admin	lo	ບໍ
 email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
 email address	admin	lo	ທີ່ຢູ່ email
 enable debug-messages	admin	lo	ເປິດການໃຊ້ debug-messages
-enable the soap service	admin	lo	ເປິດການໃຊ້ບໍລິການ soap
 enable spellcheck in rich text editor	admin	lo	ເປິດການໃຊ້ການກວດແກ້ຄໍໍາສັບ?
+enable the soap service	admin	lo	ເປິດການໃຊ້ບໍລິການ soap
 enable the xmlrpc service	admin	lo	ເປິດການໃຊ້ບໍລິການ xmlrpc
 enabled - hidden from navbar	admin	lo	ໄດ້ເປິດໃຊ້ Hidden ຈາກ navbar
 enabled - popup window	admin	lo	ໄດ້ເປິດໃຊ້ Popup Window
@@ -235,7 +235,6 @@ enter your http proxy server port	admin	lo	ພິມຄ່າເລີ່ມຕ�
 enter your smtp server hostname or ip address	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ຊື່ໂຮສ ຫຼື ທີ່ຢູ່ IP ຂອງທ່ານ
 enter your smtp server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ພອດ ຂອງທ່ານ
 error canceling timer, maybe there's none set !!!	admin	lo	ການຕັ້ງເວລາຍົກເລີກພົບຂໍ້ຜິດພາດ, ອາດຈະຍັງບໍ່ມີການຕັ້ງຄ້າ !!!
-error changing the password for % !!!	admin	lo	ການປ່ຽນລະຫັດຜ່ານພົບຂໍ້ຜິດພາດ ສໍາລັບ % !!!
 error changing the password for %1 !!!	admin	lo	ການປ່ຽນລະຫັດຜ່ານພົບຂໍ້ຜິດພາດ ສໍາລັບ %1 !!!
 error deleting log entry!	admin	lo	ການລຶບລາຍການບັນທຶກຂໍ້ຜິດພາດ!
 error saving	admin	lo	ການບັນທຶກຂໍ້ຜິດພາດ
@@ -248,6 +247,7 @@ error: %1 not found or other error !!!	admin	lo	ພົບຂໍ້ຜິດພ�
 exists	admin	lo	ມີຢູ່ແລ້ວ
 expires	admin	lo	ໝົດອາຍຸ
 explanation of ldapman	admin	lo	moduleນີ້ໄດ້ຮັບການທົດສອບເພື່ອ POSTFIX, LDAP, Courier-IMAP ແລະຈະຕ້ອງມີ schemas CORE ແລະ QMAIL(OID7914). ສ່ວນລາຍລະອຽດເພີ່ມເຕີມກ່ຽວກັບການນໍາໃຊ້ແລະກໍາໜົດຄ່າຂອງລະບົບນີ້ສາມາດພົບໄດ້ທີ່ README.Idapman in doc folder of ADMIN.
+failed to change password.	admin	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
 fallback (after each pageview)	admin	lo	ທາງເລືອກ(ຫຼັງຈາກການສະແດງໃນແຕ່ລະໜ້າ)
 false	admin	lo	ຜິດ/ບໍ່ຜ່ານ
 field '%1' already exists !!!	admin	lo	Field '%1' ມີຢູ່ແລ້ວ !!!

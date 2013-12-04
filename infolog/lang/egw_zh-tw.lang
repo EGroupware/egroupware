@@ -143,6 +143,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	z
 enter a textual description of the log-entry	infolog	zh-tw	輸入事件紀錄的原始描述
 enter the query pattern	infolog	zh-tw	輸入查詢的方式
 entry and all files	infolog	zh-tw	事件與所有檔案
+error: importing the ical	infolog	zh-tw	錯誤： 匯入 iCal 資料時
 error: saving the entry	infolog	zh-tw	錯誤： 儲存資料時
 error: the entry has been updated since you opened it for editing!	infolog	zh-tw	錯誤： 在您開始編輯後這個資料已經被其他人更新了！
 execute a further action for this entry	infolog	zh-tw	在這筆資料執行其他操作
@@ -195,6 +196,7 @@ list no subs/childs	infolog	zh-tw	不要列出附屬資訊
 location	infolog	zh-tw	位置
 longer textual description	infolog	zh-tw	較長的原文描述
 low	infolog	zh-tw	低
+manage mapping	infolog	zh-tw	管理對應
 max length of the input [, length of the inputfield (optional)]	infolog	zh-tw	最大輸入長度[, 輸入欄位長度 (選填)]
 name must not be empty !!!	infolog	zh-tw	名稱不能空白！
 name of current user, all other contact fields are valid too	infolog	zh-tw	目前使用者的名稱，所有其他聯絡人欄位也是正確的

@@ -18,6 +18,7 @@ acl manager	admin	zh-tw	ACL管理者
 acl rights	common	zh-tw	ACL權限
 action	admin	zh-tw	動作
 actions	admin	zh-tw	動作
+activate	admin	zh-tw	啟用
 activate wysiwyg-editor	admin	zh-tw	啟用所見即所得編輯器
 add a category	admin	zh-tw	新增類別
 add a group	admin	zh-tw	新增群組
@@ -212,6 +213,7 @@ error! no appname found	admin	zh-tw	錯誤！找不到應用程式名稱
 error: %1 not found or other error !!!	admin	zh-tw	錯誤：找不到%1或是其他錯誤！
 expires	admin	zh-tw	過期
 explanation of ldapman	admin	zh-tw	這個模組已經在 POSTFIX,LDAP,Courier-IMAP 測試過且需要核心與 QMAIL (OID7914)概要。更多細節可以參考 ADMIN 資料夾中的 README.ldapman 。
+failed to change password.	admin	zh-tw	密碼變更錯誤，請聯絡管理員
 fallback (after each pageview)	admin	zh-tw	回到主頁(在每次瀏覽頁面後)
 false	admin	zh-tw	錯誤
 field '%1' already exists !!!	admin	zh-tw	欄位 '%1' 已經存在！

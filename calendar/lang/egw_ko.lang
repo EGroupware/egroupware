@@ -37,6 +37,7 @@ calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
 calendar-fieldname	calendar	ko	일정-필드이름
 canceled	calendar	ko	취소됨
+charset of file	calendar	ko	파일의 문자셋
 close the window	calendar	ko	창닫기
 compose a mail to all participants after the event is saved	calendar	ko	이벤트 저장후 모든 참석자에게 메일작성
 copy of:	calendar	ko	사본:
@@ -127,9 +128,11 @@ ical / rfc2445	calendar	ko	iCal / rfc2445
 ical successful imported	calendar	ko	iCal 불러오기 성공
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	ko	만약 주말에 공휴일이 있다면, 월요일로 공휴일 설정.
 ignore conflict	calendar	ko	겹치는 일정 무시하기
+import	calendar	ko	가져오기
 import csv-file	common	ko	컴마구분-파일 가져오기
 interval	calendar	ko	간격
 last	calendar	ko	마지막
+last changed	calendar	ko	마지막 변경
 lastname of person to notify	calendar	ko	알림 메세징 할 사람의 성
 link	calendar	ko	링크
 link to view the event	calendar	ko	이벤트 보기로 링크
@@ -243,6 +246,7 @@ three month	calendar	ko	분기
 thu	calendar	ko	목요일
 title of the event	calendar	ko	이벤트 제목
 to many might exceed your execution-time-limit	calendar	ko	너무 많을 경우 최대실행시간(execution-time-limit)를 초과하게 됩니다
+translation	calendar	ko	번역
 tue	calendar	ko	화요일
 two weeks	calendar	ko	보름
 updated	calendar	ko	갱신됨

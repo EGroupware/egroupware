@@ -31,8 +31,10 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
+general fields:	timesheet	pt-br	Campos gerais:
 global categories	timesheet	pt-br	Categorias Globais
 history	timesheet	pt-br	Histórico
+history logging	admin	pt-br	Registro de histórico
 id	timesheet	pt-br	ID
 ignore	timesheet	pt-br	Ignorar
 last modified	timesheet	pt-br	Modificado por último

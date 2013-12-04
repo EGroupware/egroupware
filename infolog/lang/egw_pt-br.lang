@@ -145,6 +145,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	p
 enter a textual description of the log-entry	infolog	pt-br	Digitar uma descrição para este novo registro
 enter the query pattern	infolog	pt-br	Digite o argumento da consulta
 entry and all files	infolog	pt-br	Este e todos os arquivos
+error: importing the ical	infolog	pt-br	Erro importanto o iCal
 error: saving the entry	infolog	pt-br	Erro salvando o registro
 error: the entry has been updated since you opened it for editing!	infolog	pt-br	Erro: o registro foi atualizado desde sua abertura, por você, para edição!
 execute a further action for this entry	infolog	pt-br	Executar uma outra ação para este registro
@@ -199,6 +200,7 @@ list no subs/childs	infolog	pt-br	não listar subs/filhos
 location	infolog	pt-br	Local
 longer textual description	infolog	pt-br	descrição detalhada
 low	infolog	pt-br	baixo
+manage mapping	infolog	pt-br	Gerenciar mapeamento
 max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
 modifierer	infolog	pt-br	Modificador
 name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!

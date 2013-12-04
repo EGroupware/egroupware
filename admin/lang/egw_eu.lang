@@ -15,6 +15,7 @@ acl manager	admin	eu	ACL administratzailea
 acl rights	common	eu	ACL sarbidea
 action	admin	eu	Ekin
 actions	admin	eu	Ekintzak
+activate	admin	eu	Aktibatu
 activate wysiwyg-editor	admin	eu	WYSIWYG editorea aktibatu
 add a category	admin	eu	kategoria bat gehitu
 add a group	admin	eu	talde bat gehitu
@@ -154,6 +155,7 @@ enter your http proxy server port	admin	eu	Sar ezazu zure HTTP proxi zerbitzaria
 enter your smtp server hostname or ip address	admin	eu	Sartu zure SMTP zerbitzariaren ostalari-izena (hostname) edo IP helbidea
 enter your smtp server port	admin	eu	Sar ezazu SMTP zerbitzariaren ataka
 error: %1 not found or other error !!!	admin	eu	Errorea: ez da %1 aurkitu edo beste errore bat
+failed to change password.	admin	eu	Akatsa pasahitza aldatzerakoan.
 fallback (after each pageview)	admin	eu	Atzerapena (orri bakoitza ikusi ondoren)
 file space	admin	eu	Fitxategiaren espazioa
 file space must be an integer	admin	eu	Fitxategiaren espazioa oso bat izan behar da

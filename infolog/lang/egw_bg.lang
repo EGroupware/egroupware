@@ -142,6 +142,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	b
 enter a textual description of the log-entry	infolog	bg	въведете текстово описание за Log-записа
 enter the query pattern	infolog	bg	Въведете низ за запитване
 entry and all files	infolog	bg	Записа и всички файлове
+error: importing the ical	infolog	bg	Грешка при импорт на iCal
 error: saving the entry	infolog	bg	Грешка при запис
 error: the entry has been updated since you opened it for editing!	infolog	bg	Грешка: записът е бил обновен, след като сте го отворили за редакция!
 execute a further action for this entry	infolog	bg	Изпълни допълнително за това събитие
@@ -195,6 +196,7 @@ list no subs/childs	infolog	bg	Покажи без Под-
 location	infolog	bg	Местонахождение
 longer textual description	infolog	bg	по-дълго текстово описание
 low	infolog	bg	нисък
+manage mapping	infolog	bg	Управление на съответствията
 max length of the input [, length of the inputfield (optional)]	infolog	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
 name must not be empty !!!	infolog	bg	Името трябва да бъде попълнено!!!
 name of current user, all other contact fields are valid too	infolog	bg	Име на текущия потребител, останалите полета на контакта също са валидни

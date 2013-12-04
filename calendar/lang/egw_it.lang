@@ -19,6 +19,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	it	Azioni
 actions...	calendar	it	Azioni
 add alarm	calendar	it	Aggiungi Allarme
+add current view as favorite	calendar	it	Aggiungi questa visualizzazione come preferita
 add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
 added by synchronisation	calendar	it	Aggiunto da sincronizzazione
@@ -85,6 +86,7 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	it	Presiede
 change history	calendar	it	Cambia storico
 change your status	calendar	it	Cambia stato
+charset of file	calendar	it	Set di Caratteri del file
 check all	calendar	it	Controlla tutti
 choose a category	calendar	it	Seleziona una categoria
 close the window	calendar	it	Chiudi la finestra
@@ -192,6 +194,7 @@ exports events from your calendar in ical format.	calendar	it	Esporta eventi dal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
 extended	calendar	it	Esteso
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	it	Gli update estesi contengono tutti i dettagli degli eventi. Gli iCal possono essere importanti da certe applicazioni.
+favorites	calendar	it	Preferiti
 fieldseparator	calendar	it	Separatore
 filemanager	calendar	it	Filemanager
 filename	calendar	it	Nome file
@@ -251,7 +254,9 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	it	Se la data di avvio differisce
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	it	Se selezioni un intervallo (mese, settimana, ecc.) al posto di un elenco di voci, questi campi extra sono disponibili.
+if you specify an export definition, it will be used when you export	calendar	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 ignore conflict	calendar	it	Ignora Conflitto
+import	calendar	it	Importa
 import csv-file	common	it	Importa File-CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	it	Importa eventi nella tua agenda da un file CSV. CSV sta per valori separati da virgola. Comunque puoi scegliere anche altri separatori dalle Opzioni.
 imports events into your calendar from an ical file.	calendar	it	Importa eventi da un file iCal nel tuo calendario.
@@ -267,6 +272,7 @@ it can not read timezones from sqlite database %1!	calendar	it	Non può leggere 
 keep exceptions	calendar	it	Mantieni le eccezioni
 keep the series unchanged.	calendar	it	Mantieni la serie
 last	calendar	it	Ultimo
+last changed	calendar	it	Ultima modifica
 lastname of person to notify	calendar	it	Cognome della persona da avvisare
 length of the time interval	calendar	it	Lunghezza dell'intervallo di tempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	it	Limita il numero delle righe di descrizione nella vista ad elenco (predefinito 5, 0 per nessun limite).
@@ -280,6 +286,7 @@ location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
 location, start- and endtimes, ...	calendar	it	Luogo, Inizio e Fine, ...
 mail all participants	calendar	it	Invia email a tutti i partecipanti
 make freebusy information available to not loged in persons?	calendar	it	Rendere disponibili le informazioni libero/occupato alle persone non loggate?
+manage mapping	calendar	it	Gestisci la mappatura
 max. number of entries to show (leave empty for no restriction)	calendar	it	Numeto massimo di inserimenti da mostrare (lascia vuoto per nessuna restrizione)
 maximum available quantity of %1 exceeded!	calendar	it	Quantità massima di %1 ecceduta!
 meeting request	calendar	it	Richiesta meeting
@@ -495,6 +502,7 @@ to-firstname	calendar	it	A Nome
 to-fullname	calendar	it	A nome completo
 to-lastname	calendar	it	A Cognome
 tomorrow	calendar	it	Domani
+translation	calendar	it	Traduzione
 tue	calendar	it	Mar
 two weeks	calendar	it	due settimane
 type of planner	calendar	it	Tipologia pianificatore

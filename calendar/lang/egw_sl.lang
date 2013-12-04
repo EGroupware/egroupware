@@ -2,6 +2,7 @@
 %1 records imported	calendar	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sl	%1 zapisov prebranih (niso še uvoženi, lahko greste nazaj in pregledate test uvoza)
 %1 weeks	calendar	sl	%1 tednov
+(empty = use global limit, no = no export at all)	admin	sl	(prazno = uporabi globalno omejitev, ne = izvoz ni dovoljen)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sl	<b>Opomba</b>: Koledar uporablja podatek o praznikih v vaši državi na podlagi področnih nastavitev, ki so nastavljene na %1. To lahko spremenite v %2.<br /> Podatki o praznikih se %3 samodejno namestijo z %4. To lahko spremenite v %5.
 a non blocking event will not conflict with other events	calendar	sl	Ne-blokirajoči dogodek ne bo v sporu z drugimi dogodki
 accept	calendar	sl	Sprejmi
@@ -12,6 +13,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	sl	Dejanja
 actions...	calendar	sl	Dejanja ...
 add alarm	calendar	sl	Dodaj opomnik
+add current view as favorite	calendar	sl	Dodaj trenutni pogled med priljubljene
 add timesheet entry	calendar	sl	Dodaj vnos timeheet
 added	calendar	sl	Dodano
 added by synchronisation	calendar	sl	Dodano s sinhronizacijo
@@ -71,6 +73,7 @@ category acl	common	sl	ACL kategorije
 chair	calendar	sl	Vodja
 change history	calendar	sl	Spremembe
 change your status	calendar	sl	Spremeni status
+charset of file	calendar	sl	Kodna tabela datoteke
 check all	calendar	sl	Preveri vse
 choose a category	calendar	sl	Izberite kategorijo
 close the window	calendar	sl	Zapri okno
@@ -161,6 +164,7 @@ existing links	calendar	sl	Obstoječe povezave
 exists	calendar	sl	Obstaja
 extended	calendar	sl	Razširjen
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sl	Razširjeni popravki vedno vključujejo popolne podrobnosti o dogodku. iCal-ovi dogodki se lahko uvozijo preko drugih aplikacij koledarja.
+favorites	calendar	sl	Priljubljene
 fieldseparator	calendar	sl	Ločilo polj
 filemanager	calendar	sl	Dokumenti
 filename	calendar	sl	Ime datoteke
@@ -180,6 +184,7 @@ freetime search	calendar	sl	Iskanje prostega termina
 fri	calendar	sl	Pet
 full description	calendar	sl	Polni opis
 fullname of person to notify	calendar	sl	Polno ime osebe, ki jo obveščamo
+general fields:	calendar	sl	Splošna polja:
 global categories	calendar	sl	Globalne kategorije
 global public and group public	calendar	sl	Globalna in skupinska publika
 global public only	calendar	sl	Samo globalna publika
@@ -210,6 +215,7 @@ ical successful imported	calendar	sl	iCal je bil uspešno uvožen
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	sl	Če je označeno, se praznik s konca tedna prenese na ponedeljek.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sl	Če tukaj ne vnesete gesla, bo informacija na voljo vsem, ki poznajo URL!
 ignore conflict	calendar	sl	Prezri navzkrižje
+import	calendar	sl	Uvoz
 import csv-file	common	sl	Uvozi CSV datoteko
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sl	Uvozi dogodke v vaš koledar iz datoteke CSV. CSV pomeni 'vrednosti, ločene z vejico'. Na zavihku Možnosti lahko izberete drugo ločilo polj.
 insert	calendar	sl	Vstavi
@@ -219,6 +225,7 @@ invalid email-address "%1" for user %2	calendar	sl	Nepravilen elektronski naslov
 invitations	calendar	sl	Povabila
 invite	calendar	sl	Povabi
 last	calendar	sl	Zadnji
+last changed	calendar	sl	Zadnjič spremenjeno
 lastname of person to notify	calendar	sl	Priimek osebe, ki jo obveščamo
 length of the time interval	calendar	sl	Dolžina časovnega intervala
 link	calendar	sl	Poveži na dogodek
@@ -231,6 +238,7 @@ location to autoload from	admin	sl	Lokacija za samodejni prenos iz
 location, start- and endtimes, ...	calendar	sl	Lokacija, čas začetka in konca ...
 mail all participants	calendar	sl	Pošlji e-sporočilo vsem udeleženvem
 make freebusy information available to not loged in persons?	calendar	sl	Določim informacijo prost/zaseden na voljo tudi za neprijavljene uporabnike?
+manage mapping	calendar	sl	Upravljaj mapiranje
 merge document...	calendar	sl	Spoji dokumente ...
 minutes	calendar	sl	minut
 modified	calendar	sl	Spremenjeno
@@ -376,6 +384,7 @@ timezone	calendar	sl	Časovni pas
 title of the event	calendar	sl	Naslov dogodka
 to many might exceed your execution-time-limit	calendar	sl	Preveč lahko preseže čas izvajanja programa
 tomorrow	calendar	sl	Jutri
+translation	calendar	sl	Prevod
 tue	calendar	sl	Tor
 two weeks	calendar	sl	Dva tedna
 updated	calendar	sl	Podosodobljeno

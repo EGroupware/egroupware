@@ -23,6 +23,7 @@ calendar preferences	calendar	hr	Postavke kalendara
 calendar settings	admin	hr	Postavke kalendara
 calendar-fieldname	calendar	hr	Kalendar - Ime polja
 canceled	calendar	hr	Otkazano
+charset of file	calendar	hr	Kodna straioca datoteke
 countries	calendar	hr	Zemlje
 country	calendar	hr	Zemlja
 create new links	calendar	hr	Create new links
@@ -81,9 +82,11 @@ hours	calendar	hr	sati
 ical / rfc2445	calendar	hr	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	hr	ukoliko izabrani, praznici koji padaju na subotu ili nedjelju, primjenjuju se na slijedeći ponedjeljak.
 ignore conflict	calendar	hr	Zanemari sukob
+import	calendar	hr	Uvezi
 import csv-file	common	hr	Uvezi CSV-File
 interval	calendar	hr	Interval
 last	calendar	hr	poslijednji
+last changed	calendar	hr	Zadnja promjena
 lastname of person to notify	calendar	hr	Prezime osobe za obavijestiti
 link	calendar	hr	Link
 link to view the event	calendar	hr	Link to view the event
@@ -176,6 +179,7 @@ to many might exceed your execution-time-limit	calendar	hr	to many might exceed 
 to-firstname	calendar	hr	Prema - Imenu
 to-fullname	calendar	hr	Prema - Imenu i prezimenu
 to-lastname	calendar	hr	Prema - Prezimenu
+translation	calendar	hr	Prijevod
 tue	calendar	hr	Uto
 two weeks	calendar	hr	two weeks
 updated	calendar	hr	Updated

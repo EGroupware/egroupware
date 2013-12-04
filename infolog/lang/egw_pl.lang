@@ -122,6 +122,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	p
 enter a textual description of the log-entry	infolog	pl	wprowadź tekstowy opis logu wpisu
 enter the query pattern	infolog	pl	Wprowadź wzorzec zapytania
 entry and all files	infolog	pl	Wejście i wszystkie pliki
+error: importing the ical	infolog	pl	Błąd przy importowaniu iCal
 error: saving the entry	infolog	pl	Błąd przy zapisywaniu zadania
 error: the entry has been updated since you opened it for editing!	infolog	pl	Błąd: zadanie zostało zaktualizowane odkąd otworzyłeś je do edycji!
 execute a further action for this entry	infolog	pl	Wykonaj dalszą akcję dla tego wpisu
@@ -176,6 +177,7 @@ list no subs/childs	infolog	pl	Nie wyświetlaj podrzędnych
 location	infolog	pl	Lokalizacja
 longer textual description	infolog	pl	dłuższy opis tekstowy
 low	infolog	pl	niski
+manage mapping	infolog	pl	Zarządzaj mapowaniem
 max length of the input [, length of the inputfield (optional)]	infolog	pl	maksymalna długość wprowadzanego tekstu [, długość pola (opcjonalnie)]
 name must not be empty !!!	infolog	pl	Nazwa nie może być pusta!!!
 name of current user, all other contact fields are valid too	infolog	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe

@@ -103,6 +103,7 @@ contacts and account contact-data to sql	admin	pt-br	contatos e dados da conta d
 contacts to ldap	admin	pt-br	contatos para LDAP
 contacts to ldap, account contact-data to sql	admin	pt-br	contatos para LDAP, dados da conta de contatos para SQL
 contains	addressbook	pt-br	contém
+copied	addressbook	pt-br	copiado
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
 copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a cópia
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.

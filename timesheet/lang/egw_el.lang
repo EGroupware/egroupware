@@ -13,8 +13,10 @@ edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρ
 end	timesheet	el	Τέλος
 existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
 field must not be empty !!!	timesheet	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
+general fields:	timesheet	el	Γενικά πεδία:
 global categories	timesheet	el	Παγκόσμιες κατηγορίες
 history	timesheet	el	Ιστορικό
+history logging	admin	el	Ιστορικό εισόδων
 id	timesheet	el	Id
 last modified	timesheet	el	Τελευταία τροποποίηση
 leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκευση

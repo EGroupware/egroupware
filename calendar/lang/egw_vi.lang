@@ -20,6 +20,7 @@ calendar preferences	calendar	vi	Các tùy ch&#7885;n L&#7883;ch
 calendar settings	admin	vi	Các thi&#7871;t l&#7853;p L&#7883;ch
 calendar-fieldname	calendar	vi	L&#7883;ch-Tên tr&#432;&#7901;ng
 canceled	calendar	vi	H&#7911;y b&#7887;
+charset of file	calendar	vi	Charset c&#7911;a t&#7853;p tin
 countries	calendar	vi	Các qu&#7889;c gia
 country	calendar	vi	Qu&#7889;c gia
 csv-fieldname	calendar	vi	CSV-Tên tr&#432;&#7901;ng
@@ -71,6 +72,7 @@ hours	calendar	vi	gi&#7901;
 ical / rfc2445	calendar	vi	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	vi	N&#7871;u ngày ngh&#7881; l&#7877; r&#417;i vào cu&#7889;i tu&#7847;n, nó s&#7869; &#273;&#432;&#7907;c tính sang ngày th&#7913; Hai tu&#7847;n sau.
 ignore conflict	calendar	vi	B&#7887; qua s&#7921; ch&#7891;ng chéo
+import	calendar	vi	Nh&#7853;p
 import csv-file	common	vi	Nh&#7853;p t&#7853;p tin CSV
 interval	calendar	vi	&#272;&#7883;nh th&#7901;i
 last	calendar	vi	cu&#7889;i
@@ -159,6 +161,7 @@ to many might exceed your execution-time-limit	calendar	vi	quá nhi&#7873;u, có
 to-firstname	calendar	vi	&#272;&#7871;n-Tên
 to-fullname	calendar	vi	&#272;&#7871;n-Tên &#273;&#7847;y &#273;&#7911;
 to-lastname	calendar	vi	&#272;&#7871;n-H&#7885;
+translation	calendar	vi	D&#7883;ch
 tue	calendar	vi	Ba
 updated	calendar	vi	&#272;ã c&#7853;p nh&#7853;t
 use end date	calendar	vi	Dùng ngày k&#7871;t thúc

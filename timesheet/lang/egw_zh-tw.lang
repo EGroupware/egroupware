@@ -28,8 +28,10 @@ error saving the entry!!!	timesheet	zh-tw	資料儲存時發生錯誤！
 existing links	timesheet	zh-tw	已經存在的連結
 field must not be empty !!!	timesheet	zh-tw	欄位不能空白！
 full: use only projectmanager	admin	zh-tw	完整： 只使用 ProjectManager
+general fields:	timesheet	zh-tw	一般欄位：
 global categories	timesheet	zh-tw	全域類別
 history	timesheet	zh-tw	記錄
+history logging	admin	zh-tw	歷史記錄
 id	timesheet	zh-tw	編號
 last modified	timesheet	zh-tw	最後更新
 last month	timesheet	zh-tw	上個月

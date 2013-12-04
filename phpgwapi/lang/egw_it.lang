@@ -819,7 +819,6 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi 
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
-your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	it	La tua password non soddisfa i criteri di sicurezza impostati dall'amministratore.<br> Deve soddisfare %1 criteri mentre la tua soddisfa solo %2<br> I seguenti criteri non sono stati soddisfatti:
 your password is about to expire in %1 days, you may change your password now	common	it	La tua password scade in %1 giorni, puoi cambiare la tua password adesso.
 your search returned %1 matchs	common	it	la tua ricerca ha restituito %1 risultati
 your search returned 1 match	common	it	la tua ricerca ha restituito 1 risultato

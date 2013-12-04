@@ -34,8 +34,10 @@ existing links	timesheet	id	Tautan yang ada
 export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
+general fields:	timesheet	id	Field Umum:
 global categories	timesheet	id	Kategori Global
 history	timesheet	id	Riwayat
+history logging	admin	id	Catatan riwayat
 id	timesheet	id	ID
 ignore	timesheet	id	Ignore
 last modified	timesheet	id	Pengubahan terakhir

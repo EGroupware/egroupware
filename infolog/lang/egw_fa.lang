@@ -115,6 +115,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	f
 enter a textual description of the log-entry	infolog	fa	یک شرح متنی برای ورودی ثبت  وارد کنید
 enter the query pattern	infolog	fa	یک الگوی پرس و جو وارد کنید
 entry and all files	infolog	fa	ورودی و همه پرونده ها
+error: importing the ical	infolog	fa	خطا: وارد کردن iCal
 error: saving the entry	infolog	fa	خطا: ذخیره ورودی
 error: the entry has been updated since you opened it for editing!	infolog	fa	خطا: ورودی درحال بهنگام سازی است در زمانی که شما دارید ویرایش یا بازش می کنید
 existing links	infolog	fa	اتصالهای موجود

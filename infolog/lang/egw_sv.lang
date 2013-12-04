@@ -120,6 +120,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	s
 enter a textual description of the log-entry	infolog	sv	Skriv beskrivning av uppgiften
 enter the query pattern	infolog	sv	Söksträng
 entry and all files	infolog	sv	Post och alla filer
+error: importing the ical	infolog	sv	Fel: vid import av iCal
 error: saving the entry	infolog	sv	Kunde inte spara posten
 error: the entry has been updated since you opened it for editing!	infolog	sv	Posten har ändrats sedan du öppnade den för skrivning!
 execute a further action for this entry	infolog	sv	Utför fler åtgärder för posten

@@ -25,6 +25,7 @@ calendar preferences	calendar	iw	העדיפויות לוח שנה
 calendar settings	admin	iw	הגדרות לוח שנה
 calendar-fieldname	calendar	iw	לוח שנה - שם שדה
 canceled	calendar	iw	מבוטל
+charset of file	calendar	iw	סט תווים של הקובץ
 choose a category	calendar	iw	בחר קטגוריה
 countries	calendar	iw	ארצות
 country	calendar	iw	ארץ
@@ -82,9 +83,11 @@ holidays	calendar	iw	חגים
 hours	calendar	iw	שעות
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	iw	.אם מסומן, חגים החלים בסופי שבוע, מעוברים ליום השני של אחריו
 ignore conflict	calendar	iw	תתעלם מהתנגשות
+import	calendar	iw	ייבא
 import csv-file	common	iw	CSV ייצאו קובץ
 interval	calendar	iw	אינטרול
 last	calendar	iw	אחרון
+last changed	calendar	iw	שונה לאחרונה
 lastname of person to notify	calendar	iw	שם משפחה של נמען ההודעה
 link	calendar	iw	קישור
 link to view the event	calendar	iw	קישור לתצוגת האירוע
@@ -178,6 +181,7 @@ to many might exceed your execution-time-limit	calendar	iw	יותר מידי ע�
 to-firstname	calendar	iw	אל-שם פרטי
 to-fullname	calendar	iw	אל-שם מלא
 to-lastname	calendar	iw	אל-שם משפחה
+translation	calendar	iw	תרגום
 tue	calendar	iw	שלי
 two weeks	calendar	iw	שבועיים
 updated	calendar	iw	מעודכן

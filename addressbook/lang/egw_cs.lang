@@ -109,6 +109,7 @@ contacts and account contact-data to sql	admin	cs	kontakty a kontaktní data už
 contacts to ldap	admin	cs	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	cs	kontakty do LDAP, kontaktní data uživatelských účtů do SQL
 contains	addressbook	cs	obsahuje
+copied	addressbook	cs	zkopírováno
 copied by %1, from record #%2.	addressbook	cs	Zkopírováno %1, ze záznamu #%2.
 copy a contact and edit the copy	addressbook	cs	Kopírovat kontakt a editovat kopii
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	cs	Zkopírujte Vaše změny do schránky (clipboardu), %1znovu načtěte záznam%2 a změny slučte.

@@ -140,6 +140,7 @@ execute a further action for this entry	calendar	lo	ການຈັດການ/
 existing links	calendar	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
 exists	calendar	lo	ມີຢູ່ແລ້ວ
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	lo	ການຕໍ່/ການຂະຫຍາຍການປັບປຸງລ້ວນແຕ່ປະກອບດ້ວຍລາຍລະອຽດເຫດການທີ່ສໍາເລັດຮຽບຮ້ອຍແລ້ວ. iCal's ສາມາດນໍາເຂົ້າໂດຍຮູບແບບປະຕິທິນອື່ນ
+favorites	calendar	lo	ລາຍການທີ່ມັກ
 fieldseparator	calendar	lo	ການແຍກຟີລ
 filemanager	calendar	lo	ຕົວຈັດການຟາຍ
 filename	calendar	lo	ຊື່ຟາຍ

@@ -16,6 +16,7 @@ acl manager	admin	no	ACL leder
 acl rights	common	no	ACL rettigheter
 action	admin	no	Handling
 actions	admin	no	Funksjoner
+activate	admin	no	Aktiviser
 activate wysiwyg-editor	admin	no	aktiver WYSIWYD-editor
 add a category	admin	no	legg til kategori
 add a group	admin	no	legg til gruppe
@@ -195,6 +196,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	no	Feil: Fant ikke %1, eller annen feil
 expires	admin	no	Går ut
 explanation of ldapman	admin	no	Denne modulen er så langt testet med POSTFIX, LDAP, Courier.IMAP og trenger skjemaene CORE og QMAIL (OID7914).  Flere detaljer om bruk og konfigurasjon av system finner du i README.ldapman som er plassert i dok.mappen på Admin.
+failed to change password.	admin	no	Passordet kunne ikke endres.
 fallback (after each pageview)	admin	no	tilbakefall (etter hver sidevisning)
 false	admin	no	Falsk
 file space	admin	no	Filstørrelse

@@ -75,6 +75,7 @@ lock expired on previous run	importexport	sk	Zámok vypršal pri predchádzajúc
 manage mapping	importexport	sk	Správa mapovania
 next	importexport	sk	Ďalšie
 next run	importexport	sk	Ďalší prechod
+no notifications	importexport	sk	Rôzne
 no records selected	importexport	sk	Neboli vybrané žiadne záznamy
 none found	importexport	sk	Nenašlo sa
 old fixed definition	preferences	sk	Stará pevná definícia
@@ -108,6 +109,7 @@ unable to delete	importexport	sk	Nedá sa odstrániť
 unable to schedule	importexport	sk	Nedá sa plánovať.
 update categories	importexport	sk	Aktualizovať kategórie
 use default	importexport	sk	Použiť predvolené
+use field from csv if possible	importexport	sk	Použiť pole z CSV ak je možné
 user preference	importexport	sk	Používateľská voľba
 user template folder	importexport	sk	Použiť priečinok šablón
 users allowed to create their own definitions	importexport	sk	Používatelia si smú vytvoriť svoje vlastné definície

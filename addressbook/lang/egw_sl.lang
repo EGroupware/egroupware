@@ -119,6 +119,7 @@ contacts and account contact-data to sql	admin	sl	Stiki in kontaktni podatki ra�
 contacts to ldap	admin	sl	Stiki v LDAP
 contacts to ldap, account contact-data to sql	admin	sl	Stik v LDAP, kontaktni podatki računa v LDAP
 contains	addressbook	sl	Vsebuje
+copied	addressbook	sl	Kopirano
 copied by %1, from record #%2.	addressbook	sl	Kopirano iz zapisa %2 v zapis %1.
 copy a contact and edit the copy	addressbook	sl	Kopiraj stik in uredi kopijo
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	sl	Kopira spremembe v odložišče, %1 ponovno naloži vnos %2 in ju spoji.

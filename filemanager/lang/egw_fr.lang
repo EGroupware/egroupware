@@ -74,7 +74,6 @@ directory successfully created.	filemanager	fr	Répertoire créé avec succès !
 directory with documents to insert entries	filemanager	fr	Répertoire avec les documents pour insérer les entrées
 display and modification of content	filemanager	fr	Affichage et modification de contenu
 display of content	filemanager	fr	Affichage de contenu
-do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?	filemanager	fr	Voulez-vous écraser le fichier existant <b>%1</b> dans le répertoire <b>%2</b> ?
 do you want to overwrite the existing file %1?	filemanager	fr	Voulez-vous écraser le fichier existant %1 ?
 download	filemanager	fr	Downloader
 edit comments	filemanager	fr	Modifier les commentaires
@@ -98,7 +97,6 @@ favorites	filemanager	fr	Favoris
 file	filemanager	fr	Fichier
 file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	fr	Le fichier %1 est peut-être trop volumineux.
-file <b>%1</b> already exists	filemanager	fr	Le fichier <b>%1</b> existe déjà
 file deleted.	filemanager	fr	Fichier supprimé
 file names cannot contain "%1"	filemanager	fr	Les noms de fichier ne peuvent contenir "%1"
 file or directory not found!	filemanager	fr	Fichier ou répertoire non trouvé !

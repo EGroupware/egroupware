@@ -92,6 +92,7 @@ contacts and account contact-data to ldap	admin	hu	kapcsolatok és felhasználó
 contacts to ldap	admin	hu	kapcsolatok LDAP-ba
 contacts to ldap, account contact-data to sql	admin	hu	kapcsolatok LDAP-ba, felhasználók kapcsolat adatai SQL-be
 contains	addressbook	hu	tartalmaz
+copied	addressbook	hu	másolva
 copied by %1, from record #%2.	addressbook	hu	%1 másolta a #%2 bejegyzéstől
 copy a contact and edit the copy	addressbook	hu	Kapcsolat másolása és a másolat szerkesztése
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	hu	Másold a módosításokat a vágólapra, %1frissítsd az oldalat%2 és fűzd hozzá.

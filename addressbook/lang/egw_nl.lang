@@ -105,6 +105,7 @@ contacts and account contact-data to sql	admin	nl	contacten en account contactge
 contacts to ldap	admin	nl	contacten naar LDAP
 contacts to ldap, account contact-data to sql	admin	nl	contacten naar LDAP, account contactgegevens naar SQL
 contains	addressbook	nl	bevat
+copied	addressbook	nl	gekopieerd
 copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2.
 copy a contact and edit the copy	addressbook	nl	Kopieer een contact en bewerk de kopie
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	nl	Kopieer je wijzigingen naar het klembord, %1 herlaad het record %2 en voeg ze samen.

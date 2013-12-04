@@ -115,6 +115,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	p
 enter a textual description of the log-entry	infolog	pt	Insira uma descrição textual do registo de acesso
 enter the query pattern	infolog	pt	Insira o padrão da query
 entry and all files	infolog	pt	Registo e todos os ficheiros
+error: importing the ical	infolog	pt	Erro ao importar o iCal
 error: saving the entry	infolog	pt	Erro ao guardar o registo
 error: the entry has been updated since you opened it for editing!	infolog	pt	Erro: o registo foi actualizado desde que começou a editar!
 existing links	infolog	pt	Ligações existentes

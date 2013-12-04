@@ -21,6 +21,7 @@
 13 (ntp)	setup	fr	13 (ntp)
 80 (http)	setup	fr	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	fr	<b>jeu de caractères à utiliser</b> (prendre utf-8 si vous prévoyez d'utiliser des langues avec différents jeux de caractères) :
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	fr	===> groupe différent  '%1' avec ce gidNumber %2, les appartenances ne sont PAS appliquées !
 [header-password],[header-user],[new-password],[new-user]	setup	fr	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour manage-header !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour configurer le domaine '%1(%2)' !!!
@@ -331,6 +332,7 @@ if using ads (active directory)	setup	fr	Si vous utilisez l'authentification ADS
 if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
 if using ldap	setup	fr	Si vous utilisez LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire d'accueil et shell de connexion?
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	fr	Si vous ne pouvez accéder qu'à la racine, choisir <b>Database</b> pour stocker les contenus des fichiers ET utiliser le même chemin que les fichiers temporaires
 if you did not receive any errors, your applications have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos applications ont été
 if you did not receive any errors, your tables have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos tables ont été
 if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si vous exécutez ceci pour la première fois, n'oubliez pas  de faire manuellement %1 !!!
@@ -464,6 +466,7 @@ pem certificate	setup	fr	Certificat PEM
 persistent connections	setup	fr	Connexions persistantes
 php client	setup	fr	php Client
 php proxy	setup	fr	php Proxy
+php session handler enabled in php.ini	setup	fr	"PHP session handler" autorisé dans php.ini
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure egroupware for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
@@ -539,6 +542,7 @@ select which user(s) will have admin privileges	setup	fr	Choisissez quel(s) util
 select your old version	setup	fr	Choisissez votre ancienne version
 selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
+session handler class used.	setup	fr	Classe "Session handler" utilisée
 set	setup	fr	définir
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractères en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
@@ -572,6 +576,10 @@ step %1 - db backup and restore	setup	fr	Etape %1 - Sauvegarde et récupération
 step %1 - language management	setup	fr	Etape %1 - Gestion des langues
 step %1 - simple application management	setup	fr	Etape %1 - Gestion simplifiée des applications
 succesfully uploaded file %1	setup	fr	Fichier %1 uploadé avec succès
+successful connected to %1 database %2 on %3 using user %4.	setup	fr	Connexion à la base %1 réussie %2 sur %3 avec l'utilisateur %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	fr	Connexion à %1 réussi sur %3 et base de données créée %2 pour l'utilisateur %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	fr	Connexion au serveur LDAP réussi sur %1 et structure nécessaire %2 créée/vérifiée.
+successful connected to ldap server on %1 using dn %2.	setup	fr	Connexion au serveur LDAP réussie sur le serveur %1 avec le DN %2.
 supported node types:	setup	fr	Types de nœuds supportés :
 table change messages	setup	fr	Messages de modifications de table
 tables dropped	setup	fr	tables supprimées
@@ -594,7 +602,9 @@ the json extension is required by egroupware for ajax.	setup	fr	L'extension json
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	fr	L'extention ldap est nécessaire si vous utilisez ldap pour le stockage des comptes ou contacts, pour vous authentifier sur un annuaire ldap ou active directory. Cela n'est pas nécessaire pour une installation SQL standard.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	L'extension mbstring est nécessaire pour le support complet d'unicode (utf-8) ou des autres jeux de caractères multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	Le paramètre mbstring.func_overload = 7 est requis pour supporter pleinement unicode (utf-8) ou d'autres jeux de caractères multibyte.
-the session extension is needed to use php sessions (db-sessions work without).	setup	fr	L'extension de session est requis pour utiliser les sessions php (les sessions db fonctionnent sans)
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	fr	L'extension mcrypt est utiliisée pour stocker l'état des formulaires eTemplate sur le client, ce qui est la méthode préférée.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	fr	L'extension PDO avec un driver spécifique à la base de données est requis par le VFS (système de fichier virtuel) !
+the session extension is needed to use php sessions (db-sessions work without).	setup	fr	L'extension "session" est requise pour utiliser les sessions php (les sessions db fonctionnent sans)
 the session extension is required!	setup	fr	L'extension session est nécessaire !
 the table definition was correct, and the tables were installed	setup	fr	La définition de la table était correcte, et les tables ont été installées
 the tables	setup	fr	les tables
@@ -607,7 +617,7 @@ this has to be outside the webservers document-root!!!	setup	fr	Ceci doit figure
 this might take a while, please wait ...	setup	fr	Cela peu prendre un certain temps, veuillez patienter ...
 this program lets you backup your database, schedule a backup or restore it.	setup	fr	Ce programme vous permet de sauvegarder votre base de données, planifier une sauvegarde ou la restaurer.
 this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractères.
-this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer les différentes langues dans eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée aléatoirement.
 this stage is completed<br />	setup	fr	Cette étape est complétée<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	fr	Ceci va créer un premier utilisateur eGroupWare ou réinitialiser le mot de passe et les droits administrateur d'un utilisateur existant
@@ -616,9 +626,9 @@ to allow password authentification add the following line to your pg_hba.conf (a
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	fr	Pour modifier le jeu de caractères: sauvegardez votre base de données, désinstallez toutes les applications et réinstallez la sauvegarde avec "convertir la sauvegarde vers le jeu de caractères sélectionné"
 to setup 1 admin account and 3 demo accounts.	setup	fr	pour créer 1 compte administrateur et 3 comptes demo.
 top	setup	fr	top
-translations added	setup	fr	Traductions ajoutées
-translations removed	setup	fr	Traductions enlevées
-translations upgraded	setup	fr	Traductions mises à jour
+translations added	setup	fr	Traductions ajoutées.
+translations removed	setup	fr	Traductions enlevées.
+translations upgraded	setup	fr	Traductions mises à jour.
 true	setup	fr	Vrai
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez eGroupWare à la main.
 two weeks	setup	fr	deux semaines
