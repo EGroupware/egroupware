@@ -1937,6 +1937,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					// Filter now
 					header.nextmatch.applyFilters(value[header.nextmatch.id]);
 				}
+				// In case this gets bound twice, it's important to return
+				return true;
 			};
 
 			// Set activeFilters to current value
