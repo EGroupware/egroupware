@@ -547,17 +547,34 @@ app.classes.mail = AppJS.extend(
 	mail_showAllAddresses: function(_id) {
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",additionaltoaddress:"",ccaddress:"",date:"",subject:""}};
 		dataElem = egw.dataGetUIDdata(_id);
-		console.log(_id,dataElem);
+		//console.log(_id,dataElem);
 		var buttons = [
 			{text: this.egw.lang("Close"), id:"close"}
 		];
+		var allAddresses = [{type:this.egw.lang('from'),address:dataElem.data.fromaddress}];
+		allAddresses.push({type:this.egw.lang('to'),address:dataElem.data.toaddress})
+		var parsedTo = [];
+		if (dataElem.data.additionaltoaddress.length>0) parsedTo=JSON.parse(dataElem.data.additionaltoaddress);
+//console.log(_id,parsedTo);
+		for (i=0;i<parsedTo.length;i++)
+		{
+			allAddresses.push({type:'',address:parsedTo[i]});
+		}
+		var parsedCC = [];
+		if (dataElem.data.ccaddress.length>0) parsedCC=JSON.parse(dataElem.data.ccaddress);
+//console.log(_id,parsedCC);
+		for (i=0;i<parsedCC.length;i++)
+		{
+			allAddresses.push({type:(i==0?this.egw.lang('cc'):''),address:parsedCC[i]});
+		}
 		var dialog = et2_createWidget("dialog",{
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: function(button_id, value) {},
 			buttons: buttons,
+			modal: false,
 			title: dataElem.data.subject,
 			template:"/egroupware/mail/templates/default/displayAllAdresses.xet",
-			value: { content: {displayallAdresses:[{type:this.egw.lang('to'),address:JSON.parse(dataElem.data.additionaltoaddress)[0]}]}, sel_options: {}}
+			value: { content: {displayallAdresses:allAddresses}, sel_options: {}}
 		});
 
 	},

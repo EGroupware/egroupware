@@ -2,17 +2,20 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.displayAllAdresses" template="" lang="" group="0" version="1.9.001">
-		<grid disabled="@no_griddata" id="displayallAdresses">
-		  <columns>
-		   <column width="10%" />
-		   <column width="80%" />
-		  </columns>
-		  <rows>
-		   <row >
-			<description id="${row}[type]" />
-			<url-email align="right" id="${row}[address]" readonly='true'/>
-		   </row>
-		  </rows>
-		</grid>
+		<description value="All Adresses:" />
+		<vbox class="maildisplayAllAdresses">
+			<grid disabled="@no_griddata" id="displayallAdresses">
+			  <columns>
+			   <column width="10%" />
+			   <column width="80%" />
+			  </columns>
+			  <rows>
+			   <row >
+				<description id="${row}[type]" />
+				<url-email align="left" id="${row}[address]" readonly='true'/>
+			   </row>
+			  </rows>
+			</grid>
+		</vbox>
 	</template>
 </overlay>

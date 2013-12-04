@@ -373,6 +373,11 @@ input[type=button] {
 	position: relative;
 	background-color: white;
 }
+.maildisplayAllAdresses {
+	max-height: 245px !important;
+	overflow:scroll;
+	overflow-x:hidden;
+}
 #mail-compose_fileselector {
 	width: 245px !important;
 }
