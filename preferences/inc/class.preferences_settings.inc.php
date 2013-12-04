@@ -96,10 +96,12 @@ class preferences_settings
 				{
 					if($appname != 'common')
 					{
-						egw_framework::redirect_link(
-							egw_framework::link('/index.php'),
-							egw_link::get_registry($appname, 'index')
-						);
+						$extra = egw_link::get_registry($appname, 'list');
+						if(!$extra)
+						{
+							$extra = egw_link::get_registry($appname,'view_list');
+						}
+						egw_framework::redirect_link(egw_framework::link('/index.php'),$extra);
 					}
 					else
 					{
