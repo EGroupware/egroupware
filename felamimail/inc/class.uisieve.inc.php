@@ -1135,7 +1135,7 @@
 			$this->t->set_var("lang_if_mail_body_content",lang('if mail body content / attachment type'));
 			$this->t->set_var("lang_file_into",lang('file into'));
 			$this->t->set_var("lang_forward_to_address",lang('forward to addresses'));
-			$this->t->set_var("lang_forward_to_address_notice",lang('Multiple addresses need to be seprated by comma.'));
+			$this->t->set_var("lang_forward_to_address_notice",lang('Multiple addresses need to be seprated by comma. And also, please consider that forward to multiple addresses would not work if number of addresses exceeds of limit, which in must mail servers is 4 by default, please contact your mail server administrator if you need more!'));
 			$this->t->set_var("lang_send_reject_message",lang('send a reject message'));
 			$this->t->set_var("lang_discard_message",lang('discard message'));
 			$this->t->set_var("lang_select_folder",lang('select folder'));
