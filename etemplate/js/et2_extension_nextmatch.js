@@ -454,6 +454,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					egw().dataStoreUID(uid,null);
 					// Stop caring about this ID
 					egw().dataUnregisterUID(uid);
+					// Update the count
+					this.options.settings.total -= 1;
+					// This triggers an invalidate, which may update the grid in needed
+					this.dataview.grid.setTotalCount(this.options.settings.total);
 					break;
 				case "edit":
 				case "add":
