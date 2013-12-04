@@ -81,7 +81,7 @@ function SubmitForm(a)
 					</td>
 					<td>
 						{bodytransform_select}
-						{lang_contains}
+						{lang_contains}<sup><small>(*)</small></sup>
 						<input class="input_text" TYPE="text" NAME="field_bodytransform" SIZE="30" value="{value_field_bodytransform}">
 					</td>
 				</tr>
@@ -112,7 +112,7 @@ function SubmitForm(a)
 			</tr>
 			<tr CLASS="sieveRowActive">
 				<td>
-					<input TYPE="radio" NAME="action" VALUE="address" id="action_address" {checked_action_address} {action_address_disabled}> <label for="action_address">{lang_forward_to_address}:</label>
+					<input TYPE="radio" NAME="action" VALUE="address" id="action_address" {checked_action_address} {action_address_disabled}> <label for="action_address">{lang_forward_to_address}:<sup><small>(*)</small></sup></label>
 				</td>
 				<td>
 					<input class="input_text" TYPE="text" NAME="address" style="width:250px;" onchange="document.getElementById('action_address').checked = true;" SIZE="40" value="{value_address}" {address_value_disabled}>
@@ -133,6 +133,7 @@ function SubmitForm(a)
 				<td>&nbsp;</td>
 			</tr>
 		</table>
+		(*) <small>{lang_forward_to_address_notice}</small>
 	</fieldset>
 	<fieldset style="width:680px;" class="row_on"><legend>{lang_extended}</legend>
 		<table WIDTH="100%" CELLPADDING="2" CELLSPACING="1" style="border: 1px solid silver;">

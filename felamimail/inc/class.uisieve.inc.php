@@ -320,6 +320,39 @@
 				return false;
 			}
 		}
+		/**
+		 * Check if passed email address(s) is valid
+		 *
+		 * @param type $addresses
+		 *
+		 *@return boolean Returns TRUE in case of succes and FALSE in case of failure
+		 */
+		function email_validation($addresses)
+		{
+			if(is_array($addresses))
+			{
+				$regexp="/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
+				foreach ($addresses as $addr)
+				{
+					if (!preg_match($regexp,$addr))
+					{
+						$this->errorStack['addresses'] = lang('One address is not valid').'!';
+					}
+				}
+			}
+			else
+			{
+				$this->errorStack['addresses'] = lang('Please select a address').'!';
+			}
+			if (!empty($this->errorStack['addresses']))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
 
 		function display_app_header() {
 			if(preg_match('/^(vacation|filter)$/',get_var('editmode',array('GET'))))
@@ -335,6 +368,7 @@
 				$GLOBALS['egw']->js->set_onunload('opener.fm_sieve_cancelReload();');
 			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
+
 			$GLOBALS['egw']->common->egw_header();
 
 			switch($_GET['menuaction']) {
@@ -487,7 +521,15 @@
 							$preferences->preferences['prefpreventforwarding'] == 0 )
 						{
 							$newRule['action']	= 'address';
-							$newRule['action_arg']	= get_var('address',array('POST'));
+
+							if ($this->email_validation(preg_split('/, ?/',get_var('address',array('POST')))))
+							{
+								$newRule['action_arg']	= get_var('address',array('POST'));
+							}
+							else
+							{
+								$msg .= lang($this->errorStack['addresses']);
+							}
 						}
 						else
 						{
@@ -902,7 +944,7 @@
 					{
 						$this->t->set_var('ruleCSS','sieveRowInActive');
 					}
-					
+
 					$this->t->set_var('filter_text',htmlspecialchars($this->buildRule($rule),ENT_QUOTES,$GLOBALS['egw']->translation->charset()));
 					$this->t->set_var('ruleID',$ruleID);
 
@@ -1092,7 +1134,8 @@
 			$this->t->set_var("lang_if_mail_body_transform",lang('if mail body message type'));
 			$this->t->set_var("lang_if_mail_body_content",lang('if mail body content / attachment type'));
 			$this->t->set_var("lang_file_into",lang('file into'));
-			$this->t->set_var("lang_forward_to_address",lang('forward to address'));
+			$this->t->set_var("lang_forward_to_address",lang('forward to addresses'));
+			$this->t->set_var("lang_forward_to_address_notice",lang('Multiple addresses need to be seprated by comma.'));
 			$this->t->set_var("lang_send_reject_message",lang('send a reject message'));
 			$this->t->set_var("lang_discard_message",lang('discard message'));
 			$this->t->set_var("lang_select_folder",lang('select folder'));

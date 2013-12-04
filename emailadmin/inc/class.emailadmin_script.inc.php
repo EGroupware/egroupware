@@ -387,7 +387,10 @@ class emailadmin_script {
 						$rejectused = 1;
 				}
 				if (preg_match("/address/i",$rule['action'])) {
-						$newruletext .= "redirect \"" . $rule['action_arg'] . "\";";
+						foreach(preg_split('/, ?/',$rule['action_arg']) as $addr)
+						{
+							$newruletext .= "\tredirect \"".trim($addr)."\";\n";
+						}
 				}
 				if (preg_match("/discard/i",$rule['action'])) {
 						$newruletext .= "discard;";
