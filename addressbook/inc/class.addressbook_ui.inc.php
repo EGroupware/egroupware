@@ -1723,6 +1723,7 @@ window.egw_LAB.wait(function() {
 						if ($GLOBALS['egw']->currentapp == 'addressbook')
 						{
 							egw_framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], 'delete' );
+							egw_framework::window_close();
 						}
 						else
 						{
