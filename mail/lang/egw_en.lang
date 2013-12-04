@@ -8,6 +8,7 @@ acl rights retrive failed, seems there are no rights set!	mail	en	ACL rights ret
 acl rights retrived successfully!	mail	en	ACL rights retrived successfully!
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
 add to addressbook	mail	en	add to addressbook
+all adresses:	mail	en	All Adresses:
 all available info	admin	en	all available info
 all of	mail	en	all of
 allow external images	mail	en	Allow external images
@@ -90,6 +91,7 @@ file into	mail	en	file into
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
 filemanager	mail	en	Filemanager
 flagged	mail	en	flagged
+flagged / unflagged	mail	en	Flagged / Unflagged
 flagged %1 messages as %2 in %3	mail	en	flagged %1 messages as %2 in %3
 folder	mail	en	folder
 folder settings	mail	en	Folder settings
@@ -179,10 +181,12 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	en	Process
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 quicksearch	mail	en	quicksearch
 quota not provided by server	mail	en	Quota not provided by server
+read / unread	mail	en	Read / Unread
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
 reject with	mail	en	reject with
+remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately
 replied	mail	en	replied
 reply message type	mail	en	Reply message type
@@ -204,6 +208,8 @@ sent	mail	en	Sent
 sent folder	mail	en	sent folder
 server supports special-use folders	mail	en	Server supports Special-Use Folders
 serverside filterrules (sieve) are not activated	mail	en	Serverside Filterrules (Sieve) are not activated
+set / remove flags	mail	en	Set / Remove Flags
+set / remove labels	mail	en	Set / Remove Labels
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
