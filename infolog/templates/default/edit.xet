@@ -26,9 +26,6 @@
 				<row class="row" disabled="@status_only">
 					<link-to id="link_to" span="all"/>
 				</row>
-				<row>
-					<link-add id="link_to" span="all"/>
-				</row>
 				<row class="th">
 					<description value="Existing links" span="all"/>
 				</row>
