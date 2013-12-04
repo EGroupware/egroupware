@@ -392,7 +392,7 @@ etemplate2.prototype.submit = function(button, async)
 		// I'm just not sure how.
 		if(button && !values.button)
 		{
-			values.button = button.id;
+			values.button = {};
 			var path = button.getPath();
 			var target = values;
 			for(var i = 0; i < path.length; i++)
@@ -400,7 +400,7 @@ etemplate2.prototype.submit = function(button, async)
 				if(!values[path[i]]) values[path[i]] = {};
 				target = values[path[i]];
 			}
-			if(target != values)
+			if(target != values || button.id.indexOf('[') != -1 && path.length == 0)
 			{
 				var indexes = button.id.split('[');
 				if (indexes.length > 1)
@@ -420,6 +420,10 @@ etemplate2.prototype.submit = function(button, async)
 					if(!target[idx] || target[idx]['$row_cont']) target[idx] = i < indexes.length -1 ? {} : true;
 					target = target[idx];
 				}
+			}
+			else if (typeof values.button == 'undefined')
+			{
+				values.button = button.id;
 			}
 		}
 
