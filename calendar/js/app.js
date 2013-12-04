@@ -487,5 +487,59 @@ app.classes.calendar = AppJS.extend(
 			}
 		},this.egw.lang("Do you want to edit this event as an exception or the whole series?"),
 		this.egw.lang("This event is part of a series"), {}, buttons, et2_dialog.WARNING_MESSAGE);
+	},
+
+	/**
+	 * Return state object defining current view
+	 *
+	 * Called by favorites to query current state.
+	 *
+	 * @return {object} description
+	 */
+	getState: function()
+	{
+		var egw_script_tag = document.getElementById('egw_script_id');
+		var state = egw_script_tag.getAttribute('data-calendar-state');
+
+		return state ? JSON.parse(state) : this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Set a state previously returned by getState
+	 *
+	 * Called by favorites to set a state saved as favorite.
+	 *
+	 * @param {object} state containing "name" attribute to be used as "favorite" GET parameter to a nextmatch
+	 */
+	setState: function(state)
+	{
+		// requested state is a listview and we are currently in a list-view
+		if (state.view == 'listview' && view.name && this.et2 && this.et2.getWidgetById('nm'))
+		{
+			return this._super.apply(this, arguments);	// call default implementation
+		}
+
+		// old calendar state handling on server-side (incl. switching to and from listview)
+		var menuaction = 'calendar.calendar_uiviews.index';
+		if (state.view == 'listview')
+		{
+			menuaction = 'calendar.calendar_uilist.index';
+			if (state.name)
+			{
+				state.favorite = state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			}
+		}
+		for(name in state)
+		{
+			var value = state[name];
+			switch(name)
+			{
+				case 'owner':	// prepend an owner 0, to reset all owners and not just set given resource type
+					value = '0,'+owner;
+					break;
+			}
+			menuaction += '&'+name+'='+encodeURIComponent(value)
+		}
+		this.egw.open_link(menuaction);
 	}
 });

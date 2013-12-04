@@ -414,6 +414,9 @@ class calendar_ui
 					$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
 					$GLOBALS['egw']->preferences->save_repository(false,'user',true);
 				}
+				// store state in request for clientside favorites to use
+				// remove date and other states never stored in a favorite
+				egw_framework::set_extra('calendar', 'state', array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false)));
 			}
 		}
 	}

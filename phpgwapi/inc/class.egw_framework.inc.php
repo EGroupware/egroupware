@@ -296,6 +296,20 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Allow app to store arbitray values in egw script tag
+	 *
+	 * Attribute name will be "data-$app-$name" and value will be json serialized, if not scalar.
+	 *
+	 * @param string $app
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public static function set_extra($app, $name, $value)
+	{
+		self::$extra[$app.'-'.$name] = $value;
+	}
+
+	/**
 	 * Allow eg. ajax to query content set via refresh_opener or window_close
 	 *
 	 * @return array content of egw_framework::$extra
