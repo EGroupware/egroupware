@@ -1174,7 +1174,7 @@ div.message.floating {
   line-height: 1.5em;
 }
 .sidebox-favorites ul.favorites li img {
-  margin-right: 1ex;
+  margin: 0px 5px;
   height: 16px;
   padding: 3px;
   background-color: #f0f0f0;
@@ -1201,6 +1201,8 @@ div.message.floating {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  background-size: 16px 16px;
+  background-position: center;
 }
 .sidebox-favorites ul.favorites li img.sideboxstar:hover {
   height: 16px;
@@ -1256,8 +1258,8 @@ div.message.floating {
   /*.Complete_Button_Icon_hover ;*/
 }
 .sidebox-favorites .ui-menu .ui-menu-item a img {
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
 }
 .sidebox-favorites div.ui-icon-heart {
   position: relative;
@@ -3907,11 +3909,33 @@ img {
   position: relative;
 }
 .egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon {
-  height: 9px;
-  width: 9p;
+  height: 16px;
+  width: 16px;
   padding: 0px;
+  margin: 0px 5px;
   float: left;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   background-image: url("../images/bullet.png");
+  background-size: 16px 16px;
+  background-position: center;
+}
+.egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon:hover {
+  height: 16px;
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .egw_fw_ui_sidemenu_listitem input {
   height: 16px;

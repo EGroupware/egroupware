@@ -614,12 +614,16 @@
 
     // Icon before
     img.egw_fw_ui_sidemenu_listitem_icon {
-        height: 9px; 
-        width: 9p; 
+        height: 16px; 
+        width: 16px; 
         padding: 0px;
+        margin: 0px 5px;
         float: left;
+        .Complete_Button_Icon_normal;
         background-image: url("../images/bullet.png");
-
+		background-size: 16px 16px;
+		background-position: center;
+		 &:hover {height: 16px; .Complete_Button_Icon_hover ;}
     }
 
     input {
