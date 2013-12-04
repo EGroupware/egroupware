@@ -52,6 +52,7 @@ please select the number of days to wait between responses	mail	no	Vennligst vel
 please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
 quicksearch	mail	no	Hurtigsøk
 refresh time in minutes	mail	no	Oppdateringstid i minutter
+remove all	mail	no	Fjern alle
 remove immediately	mail	no	Fjern umiddelbart
 replied	mail	no	svart
 replyto	mail	no	SvarTil

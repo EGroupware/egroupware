@@ -53,6 +53,7 @@ please select the number of days to wait between responses	mail	fa	لطفا تع
 please supply the message to send with auto-responses	mail	fa	لطفا پیامی را برای ارسال پاسخ خودکار تعیین کنید
 quicksearch	mail	fa	جستجوی سریع
 refresh time in minutes	mail	fa	زمان بازخوانی به دقیقه
+remove all	mail	fa	حذف همه
 remove immediately	mail	fa	فورا حذف شود
 replied	mail	fa	پاسخ داده شده
 replyto	mail	fa	پاسخ به

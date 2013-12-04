@@ -64,6 +64,7 @@ please supply the message to send with auto-responses	mail	sv	Meddelande att ski
 quicksearch	mail	sv	Snabbsök
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
+remove all	mail	sv	Radera samtliga
 remove immediately	mail	sv	Radera omedelbart
 replied	mail	sv	Svarade
 replyto	mail	sv	Svara till

@@ -69,6 +69,7 @@ please supply the message to send with auto-responses	mail	zh	请提供要自动
 quicksearch	mail	zh	快速搜索
 refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
+remove all	mail	zh	全部删除
 remove immediately	mail	zh	立刻删除
 replied	mail	zh	已回复
 replyto	mail	zh	回复到

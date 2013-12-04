@@ -149,6 +149,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 quicksearch	mail	ru	Быстрый поиск
 refresh time in minutes	mail	ru	Время обновления в минутах
 reject with	mail	ru	Отклонить с
+remove all	mail	ru	Удалить все
 remove immediately	mail	ru	Удалить немедленно
 replied	mail	ru	Был ответ
 reply message type	mail	ru	Тип сообщения-ответа

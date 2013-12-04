@@ -66,6 +66,7 @@ please supply the message to send with auto-responses	mail	zh-tw	請提供要自
 quicksearch	mail	zh-tw	快速搜尋
 refresh time in minutes	mail	zh-tw	重新整理的分鐘數
 reject with	mail	zh-tw	拒絕
+remove all	mail	zh-tw	全部移除
 remove immediately	mail	zh-tw	立刻移除
 replied	mail	zh-tw	已回信
 replyto	mail	zh-tw	回覆到

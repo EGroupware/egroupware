@@ -34,6 +34,7 @@ organisation	admin	et	Organisatsioon
 please select a address	mail	et	Palun vali aadress
 quicksearch	mail	et	Kiirotsing
 refresh time in minutes	mail	et	Värkendamise aeg minutites
+remove all	mail	et	Eemalda Kõik
 remove immediately	mail	et	Eemalda koheselt!
 replied	mail	et	vastatud
 size(...->0)	mail	et	Suurus (...->0)

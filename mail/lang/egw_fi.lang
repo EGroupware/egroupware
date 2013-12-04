@@ -104,6 +104,7 @@ printview	mail	fi	Tulostuksen esikatselu
 quicksearch	mail	fi	Pikahaku
 refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
+remove all	mail	fi	Poista kaikki
 remove immediately	mail	fi	Poista heti
 replied	mail	fi	Vastattu
 replyto	mail	fi	Vastaanottaja

@@ -121,6 +121,7 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	sk	Spracov
 quicksearch	mail	sk	Rýchle hľadanie
 refresh time in minutes	mail	sk	Čas obnovovania (v minútach)
 reject with	mail	sk	Odmietnuť ako
+remove all	mail	sk	Odstrániť všetko
 remove immediately	mail	sk	Odstrániť ihneď
 replied	mail	sk	Zodpovedané
 replyto	mail	sk	Odpovedať (komu)

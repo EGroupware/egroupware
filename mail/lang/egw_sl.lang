@@ -95,6 +95,7 @@ printview	mail	sl	Predogled tiskanja
 quicksearch	mail	sl	Hitro iskanje
 refresh time in minutes	mail	sl	Osvežitveni čas v minutah
 reject with	mail	sl	Zavrni z
+remove all	mail	sl	Odstrani vse
 remove immediately	mail	sl	Takoj odstrani
 replied	mail	sl	Odgovorjeno
 replyto	mail	sl	Odgovori na

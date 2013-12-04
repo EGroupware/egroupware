@@ -170,6 +170,7 @@ refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
 refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert
 reject with	mail	de	zurückweisen mit
+remove all	mail	de	Alle Entfernen
 remove immediately	mail	de	sofort löschen
 replied	mail	de	beantwortet
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten

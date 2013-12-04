@@ -96,6 +96,7 @@ printview	mail	cs	tiskový náhled
 quicksearch	mail	cs	Rychlé hledání
 refresh time in minutes	mail	cs	Čas obnovování v minutách
 reject with	mail	cs	zamítnout s
+remove all	mail	cs	Odstranit vše
 remove immediately	mail	cs	Odstranit okamžitě
 replied	mail	cs	odpovězené
 replyto	mail	cs	Odpovědět (komu)

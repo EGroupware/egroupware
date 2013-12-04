@@ -54,6 +54,7 @@ please select the number of days to wait between responses	mail	ca	Si us plau, s
 please supply the message to send with auto-responses	mail	ca	Si us plau, indiqueu el missatge a enviar amb auto-respostes
 quicksearch	mail	ca	Cerca ràpida
 refresh time in minutes	mail	ca	Temps de refresc en minuts
+remove all	mail	ca	Esborrar tot
 remove immediately	mail	ca	Eliminar inmediatament
 replied	mail	ca	respost
 replyto	mail	ca	Respondre A

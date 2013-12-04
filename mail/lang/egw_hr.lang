@@ -41,6 +41,7 @@ organisation	admin	hr	organizacija
 organization	mail	hr	organization
 quicksearch	mail	hr	Brza pretraga
 refresh time in minutes	mail	hr	Obnovi vrijeme u minutama
+remove all	mail	hr	Remove All
 remove immediately	mail	hr	Obriši odmah
 replied	mail	hr	odgovoreno
 replyto	mail	hr	Odgovori

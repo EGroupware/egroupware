@@ -52,6 +52,7 @@ please select the number of days to wait between responses	mail	pt	Por favor, se
 please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
 quicksearch	mail	pt	Pesquisa simples
 refresh time in minutes	mail	pt	Actualizar (em minutos)
+remove all	mail	pt	Remover todas
 remove immediately	mail	pt	Eliminar imediatamente
 replied	mail	pt	respondido
 replyto	mail	pt	Responder a

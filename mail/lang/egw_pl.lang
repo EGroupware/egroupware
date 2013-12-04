@@ -98,6 +98,7 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwa
 quicksearch	mail	pl	Szybkie wyszukiwanie
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
+remove all	mail	pl	Usuń wszystko
 remove immediately	mail	pl	usuń natychmiast
 replied	mail	pl	odpowiedziano
 replyto	mail	pl	Odpowiedz
