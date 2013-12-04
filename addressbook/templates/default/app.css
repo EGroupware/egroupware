@@ -1,8 +1,9 @@
 /**
  * Give space to both contact view & infolog list
  */
-.et2_container {height: 50%}
-.et2_container:only-child,#addressbook-index  {height: 100%}
+#addressbook-index  {height: 100%}
+#addressbook-edit { height: 390px; min-height: 390px;}
+.et2_container[id^="infolog-index-addressbook"] {min-height: 250px}
 
 /* Give enough (static) width to edit dialog tabs, or it will auto-size and flex */
 #addressbook-edit .et2_tabbox {min-width: 535px;}
@@ -15,8 +16,8 @@
 .telNumbers { white-space: nowrap; }
 .leftPad5 { padding-left: 5px; }
 .bold { font-weight: bold; }
-.fileas select,.fileas,.owner select,.owner { 
-  width: 100%; 
+.fileas select,.fileas,.owner select,.owner {
+  width: 100%;
   font-weight: bold;
 }
 .photo img, .iphoto img {
@@ -25,27 +26,27 @@
 .photo img {
   cursor: hand;
 }
-.uploadphoto{ 
+.uploadphoto{
   position: absolute;
   top: 168px;
   left: 48px;
   display:none;
   border: 2px solid black;
   background-color: #ffffff;
-  padding: 4px; 
+  padding: 4px;
 }
 .checkAllArrow { padding-right: 5px; }
 .typeIcon { height: 16px; width: 16px; }
-.editphones,.editname{ 
+.editphones,.editname{
   position: absolute;
   top: 10%;
   left: 30%;
   display:none;
   border: 2px solid black;
   background-color: #ffffff;
-  padding: 4px; 
+  padding: 4px;
 }
-.editname{ 
+.editname{
   top: 97px;
   left: 173px;
 }
@@ -55,7 +56,7 @@
   height: 20px;
   border-spacing: 0px;
   border-collapse:collapse;
-  border-bottom: #9c9c9c 1px solid; 
+  border-bottom: #9c9c9c 1px solid;
 }
 fieldset.phoneGroup {
   margin-top: 12px;
