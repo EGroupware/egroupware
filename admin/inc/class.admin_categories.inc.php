@@ -265,7 +265,7 @@ class admin_categories
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
 
-		$tmpl = new etemplate('admin.categories.edit');
+		$tmpl = new etemplate_new('admin.categories.edit');
 		$tmpl->exec($this->edit_link,$content,$sel_options,$readonlys,$content+array(
 			'old_parent' => $content['old_parent'] ? $content['old_parent'] : $content['parent'], 'appname' => $appname
 		),2);
@@ -535,7 +535,7 @@ class admin_categories
 			$readonlys['nm']['rows']['app'] = true;
 		}
 
-		$tmpl = new etemplate('admin.categories.index');
+		$tmpl = new etemplate_new('admin.categories.index');
 
 		if($tmpl instanceof etemplate_widget_template)
 		{
