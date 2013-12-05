@@ -47,7 +47,7 @@
 					<hbox align="right">
 						<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[$row_cont[path]]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
 						<buttononly align="center" id="mail[$row_cont[path]]" onclick="open_mail('$row_cont[path]'); return false;" options="mail_post_to"/>
-						<button align="center" statustext="Delete this file or directory" label="Delete" id="delete[$row_cont[path]]" onclick="return confirm('Delete this file or directory');" image="delete"/>
+						<button align="center" statustext="Delete this file or directory" label="Delete" id="delete[$row_cont[path]]" onclick="et2_dialog.confirm(widget,'Delete this file or directory','Delete')" image="delete"/>
 						<checkbox align="right" id="checked[]" options="&quot;$row_cont[path]&quot;"/>
 					</hbox>
 				</row>
