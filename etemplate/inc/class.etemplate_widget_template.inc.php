@@ -187,7 +187,9 @@ class etemplate_widget_template extends etemplate_widget
 			else
 			{
 				// no mtime postfix, as our WebDAV treats ? literal and not ignore them like Apache for static files!
-				$url = egw::link(egw_vfs::download_url($path));
+				$url = egw_vfs::download_url($path);
+
+				if ($url[0] == '/') $url = egw::link($url);
 			}
 		}
 		//error_log(__METHOD__."('$path') returning $url");
