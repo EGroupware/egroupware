@@ -166,6 +166,8 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Ver
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
+read	mail	de	gelesen
+read / unread	mail	de	Gelesen / Ungelesen
 refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
 refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert

@@ -181,6 +181,7 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	en	Process
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 quicksearch	mail	en	quicksearch
 quota not provided by server	mail	en	Quota not provided by server
+read	mail	en	read
 read / unread	mail	en	Read / Unread
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
