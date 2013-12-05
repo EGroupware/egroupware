@@ -40,7 +40,7 @@
 					<hbox options="0" class="noPrint" orient="0">
 						<button image="view" label="View" id="view[$row_cont[id]]" statustext="Show the contacts of this organisation"/>
 						<button image="new" label="Add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;org=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="add[$row_cont[id]]" statustext="Add a contact to this organisation"/>
-						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this organisation including ALL its contacts" onclick="return confirm('Delete this organisation including ALL its contacts');"/>
+						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this organisation including ALL its contacts" onclick="et2_dialog.confirm(widget,'Delete this organisation including ALL its contacts','Delete');"/>
 						<button image="infolog" label="InfoLog" id="infolog[$row_cont[id]]" statustext="Show InfoLog entries for this organisation"/>
 						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
 					</hbox>

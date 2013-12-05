@@ -79,27 +79,6 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 * Creat a dialog for delete action in edit popup window.
-	 *
-	 * @param _action
-	 * @param _senders
-	 *
-	 */
-	delete_contact: function(_action, _senders)
-	{
-		var that = this;
-		var buttonId = _senders.id;
-		var callbackDeleteDialog = function (button_id)
-		{
-			if (button_id == et2_dialog.YES_BUTTON )
-			{
-				that.et2._inst.submit(buttonId);
-			}
-		}
-		et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to delete this contact?"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
-	},
-
-	/**
 	 * Add appointment or show calendar for selected contacts, call default nm_action after some checks
 	 *
 	 * @param _action

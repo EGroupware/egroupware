@@ -70,7 +70,7 @@
 					</box>
 					<hbox options="0" class="noPrint">
 						<button label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" image="edit"/>
-						<button statustext="Delete this contact" label="Delete" id="delete[$row_cont[id]]" onclick="return confirm('Delete this contact');" image="delete"/>
+						<button statustext="Delete this contact" label="Delete" id="delete[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this contact','Delete')" image="delete"/>
 						<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[id]"/>
 					</hbox>
 				</row>
