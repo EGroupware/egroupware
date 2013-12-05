@@ -1883,6 +1883,11 @@ class mail_bo
 						continue;
 					}
 					$allMailBoxesExtSorted = array();
+					if (!is_array($allMailboxesExt))
+					{
+						error_log(__METHOD__.__LINE__.' Expected Array but got:'.array2string($allMailboxesExt));
+						$allMailboxesExt=array();
+					}
 					foreach ($allMailboxesExt as $mbx) {
 						//echo __METHOD__;_debug_array($mbx);
 						//error_log(__METHOD__.__LINE__.array2string($mbx));

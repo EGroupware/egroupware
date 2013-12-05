@@ -193,6 +193,7 @@ class mail_ui
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
 			$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
 		}
+		//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
 		//_debug_array($content);
 		if (!is_array($content))
 		{
@@ -222,6 +223,7 @@ class mail_ui
 				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
 		}
+		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['csv_fields'] = false;
 		if ($msg)
 		{
@@ -933,7 +935,7 @@ class mail_ui
 				),
 			),
 			'mark' => array(
-				'caption' => 'Mark as',
+				'caption' => 'Set / Remove Flags',
 				'icon' => 'read_small',
 				'group' => ++$group,
 				'children' => array(
@@ -942,7 +944,7 @@ class mail_ui
 					// Iconset Homepage: http://led24.de/iconset
 					// License: CC Attribution 3.0
 					'setLabel' => array(
-						'caption' => 'Set Label',
+						'caption' => 'Set / Remove Labels',
 						'icon' => 'tag_message',
 						'group' => ++$group,
 						'children' => array(
@@ -971,9 +973,16 @@ class mail_ui
 								'icon' => 'mail_label5',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
+							'unlabel' => array(
+								'group' => ++$group,
+								'caption' => "<font color='#ff0000'>".lang('remove all')."</font>",
+								'icon' => 'mail_label',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
 						),
 					),
 					// modified icons from http://creativecommons.org/licenses/by-sa/3.0/
+/*
 					'unsetLabel' => array(
 						'caption' => 'Remove Label',
 						'icon' => 'untag_message',
@@ -1006,15 +1015,17 @@ class mail_ui
 							),
 						),
 					),
+*/
 					'flagged' => array(
 						'group' => ++$group,
-						'caption' => 'Flagged',
+						'caption' => 'Flagged / Unflagged',
 						'icon' => 'unread_flagged_small',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'disableClass' => 'flagged',
 						//'enabled' => "javaScript:mail_disabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
 					),
+/*
 					'unflagged' => array(
 						'group' => $group,
 						'caption' => 'Unflagged',
@@ -1024,14 +1035,16 @@ class mail_ui
 						//'enabled' => "javaScript:mail_enabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
 					),
+*/
 					'read' => array(
 						'group' => $group,
-						'caption' => 'Read',
+						'caption' => 'Read / Unread',
 						'icon' => 'read_small',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'enableClass' => 'unseen',
 						//'enabled' => "javaScript:mail_enabledByClass",
 					),
+/*
 					'unread' => array(
 						'group' => $group,
 						'caption' => 'Unread',
@@ -1040,6 +1053,7 @@ class mail_ui
 						//'disableClass' => 'unseen',
 						//'enabled' => "javaScript:mail_disabledByClass",
 					),
+*/
 					'undelete' => array(
 						'group' => $group,
 						'caption' => 'Undelete',
@@ -1275,7 +1289,7 @@ unset($query['actions']);
 		$dateToday = date("Y-m-d");
 		$rv = array();
 		$actions = self::get_actions();
-		foreach(array('composeasnew','reply','reply_all','forward','flagged','unflagged','delete','print','infolog','tracker','save','header') as $a => $act)
+		foreach(array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','header') as $a => $act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
 			switch ($act)
@@ -1290,8 +1304,18 @@ unset($query['actions']);
 					$actionsenabled[$act]=$actions['view']['children'][$act];
 					break;
 				case 'flagged':
-				case 'unflagged':
-					$actionsenabled[$act]=$actions['mark']['children'][$act];
+					$actionsenabled[$act]=$actions['mark']['children'][$act]=array(
+						'group' => $group,
+						'caption' => 'Flagged',
+						'icon' => 'unread_flagged_small',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
+					);
+					$actionsenabled['unflagged']=$actions['mark']['children']['unflagged']=array(
+						'group' => $group,
+						'caption' => 'Unflagged',
+						'icon' => 'read_flagged_small',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
+					);
 					break;
 				default:
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
@@ -1511,6 +1535,18 @@ unset($query['actions']);
 				$data["size"] = $header['size']; /// size
 
 			$data["class"] = implode(' ', $css_styles);
+			if ($header['seen']) $data["flags"]['seen'] = 'seen';
+			foreach ($css_styles as $k => $flag) {
+				if ($flag!='mail')
+				{
+					if ($flag=='labelone') {$data["flags"]['label1'] = 'label1';}
+					elseif ($flag=='labeltwo') {$data["flags"]['label2'] = 'label2';}
+					elseif ($flag=='labelthree') {$data["flags"]['label3'] = 'label3';}
+					elseif ($flag=='labelfour') {$data["flags"]['label4'] = 'label4';}
+					elseif ($flag=='labelfive') {$data["flags"]['label5'] = 'label5';}
+					else $data["flags"][$flag] = $flag;
+				}
+			}
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['toolbaractions'] = json_encode($actionsenabled);
@@ -3460,7 +3496,7 @@ blockquote[type=cite] {
 		}
 */
 		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),$_flag,$folder),'mail');
+		$response->call('egw_refresh',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),lang($_flag),$folder),'mail');
 	}
 
 	/**

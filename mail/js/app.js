@@ -1082,19 +1082,25 @@ app.classes.mail = AppJS.extend(
 		{
 			msg = this.mail_getFormData(_elems);
 			if (_action.id.substring(0,2)=='un') {
+				//old style, probably only available for undelete (no toggle)
 				this.mail_removeRowClass(_elems,_action.id.substring(2));
+				this.mail_setRowClass(_elems,_action.id);
+				this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 			}
 			else
 			{
-				this.mail_removeRowClass(_elems,'un'+_action.id);
+				var dataElem = egw.dataGetUIDdata(msg.msg[0]);
+				var flags = dataElem.data.flags;
+				this.mail_removeRowClass(_elems,(flags[_action.id]?'un':'')+_action.id);
+				this.mail_setRowClass(_elems,(flags[_action.id]?'':'un')+_action.id);
+				this.mail_flagMessages((flags[_action.id]?'un':'')+_action.id,msg,(do_nmactions?false:true),false);
+				this.mail_refreshMessageGrid((do_nmactions?false:true));
 			}
-			this.mail_setRowClass(_elems,_action.id);
 		}
 		else
 		{
-			//mail_parentRefreshListRowStyle(msg,_action.id);
+			this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 		}
-		this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 		this.mail_refreshFolderStatus();
 	},
 
@@ -1104,13 +1110,14 @@ app.classes.mail = AppJS.extend(
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flagMessages: function(_flag, _elems,_isPopup)
+	mail_flagMessages: function(_flag, _elems,_isPopup,_refreshGrid)
 	{
-		console.log(_flag, _elems);
+		//console.log('mail_flagMessages',_flag, _elems);
+		if (typeof _refreshGrid == 'undefined') _refreshGrid=true;
 		app.mail.app_refresh(this.egw.lang('flag messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
 			.sendRequest();
-		this.mail_refreshMessageGrid(_isPopup);
+		if (_refreshGrid) this.mail_refreshMessageGrid(_isPopup);
 	},
 
 	/**
@@ -1633,11 +1640,11 @@ app.classes.mail = AppJS.extend(
 			var aO = nm.controller._objectManager.selectedChildren;
 			for (var i = 0; i < _actionObjects['msg'].length; i++)
 			{
-				for (var i = 0; i < aO.length; i++)
+				for (var k = 0; k < aO.length; k++)
 				{
-					if (aO[i].id==_actionObjects['msg'][i])
+					if (aO[k].id==_actionObjects['msg'][i])
 					{
-						var dataElem = $j(aO[i].iface.getDOMNode());
+						var dataElem = $j(aO[k].iface.getDOMNode());
 						dataElem.removeClass(_class);
 
 					}
