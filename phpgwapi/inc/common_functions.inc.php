@@ -756,20 +756,21 @@ function &CreateObject($class)
 
 	if (!class_exists($classname))
 	{
-		if (!file_exists(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+		static $replace = array(
+			'datetime'    => 'egw_datetime',
+			'uitimesheet' => 'timesheet_ui',
+			'uiinfolog'   => 'infolog_ui',
+			'uiprojectmanager'  => 'projectmanager_ui',
+			'uiprojectelements' => 'projectmanager_elements_ui',
+			'uiroles'           => 'projectmanager_roles_ui',
+			'uimilestones'      => 'projectmanager_milestones_ui',
+			'uipricelist'       => 'projectmanager_pricelist_ui',
+			'bowiki'            => 'wiki_bo',
+			'uicategories'      => 'admin_categories',
+			'defaultimap'		=> 'emailadmin_oldimap',
+		);
+		if (!file_exists(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php') || isset($replace[$classname]))
 		{
-			static $replace = array(
-				'datetime'    => 'egw_datetime',
-				'uitimesheet' => 'timesheet_ui',
-				'uiinfolog'   => 'infolog_ui',
-				'uiprojectmanager'  => 'projectmanager_ui',
-				'uiprojectelements' => 'projectmanager_elements_ui',
-				'uiroles'           => 'projectmanager_roles_ui',
-				'uimilestones'      => 'projectmanager_milestones_ui',
-				'uipricelist'       => 'projectmanager_pricelist_ui',
-				'bowiki'            => 'wiki_bo',
-				'uicategories'      => 'admin_categories',
-			);
 			if (isset($replace[$classname]))
 			{
 				//throw new Exception(__METHOD__."('$class') old classname '$classname' used in menuaction=$_GET[menuaction]!");
