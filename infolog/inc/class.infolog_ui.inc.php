@@ -1540,7 +1540,7 @@ class infolog_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
 
-		$this->tmpl->exec('infolog.infolog_ui.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
+		$this->tmpl->exec('infolog.infolog_ui.delete',$values,array(),$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
 	}
 
 	/**
