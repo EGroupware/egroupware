@@ -122,7 +122,7 @@ class mail_hooks
 
 			$mail_bo = mail_bo::getInstance(true,$profileID);
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
-			if($mail_bo->openConnection($profileID)) {
+			if($profileID && $mail_bo->openConnection($profileID)) {
 				$folderObjects = $mail_bo->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
 					#_debug_array($folderData);
