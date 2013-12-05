@@ -76,17 +76,6 @@
    </tr>
 
    <tr class="row_on">
-    <td>{lang_Image_type_selection_order}:</td>
-    <td>
-     <select name="newsettings[image_type]">
-      <option value="">GIF-&gt;JPG-&gt;PNG</option>
-      <option value="1"{selected_image_type_1}>PNG-&gt;JPG-&gt;GIF</option>
-      <option value="2"{selected_image_type_2}>PNG-&gt;JPG</option>
-     </select>
-    </td>
-   </tr>
-
-   <tr class="row_on">
     <td>{lang_Complete_path_to_aspell_program}:</td>
     <td>
      <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">
@@ -510,7 +499,7 @@
 			<option value="">{lang_No}</option>
 			<option value="tls"{selected_ads_connection_tls}>TLS</option>
 			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
-     	</select>	
+     	</select>
      </td>
    </tr>
    <tr class="row_on">

@@ -817,7 +817,7 @@ class common
 	 * Scan filesystem for images of all apps
 	 *
 	 * For each application and image-name (without extension) one full path is returned.
-	 * The path takes template-set and image-type-priority ($GLOBALS['egw_info']['server']['image_type']) into account.
+	 * The path takes template-set and image-type-priority (now fixed to: png, jpg, gif, ico) into account.
 	 *
 	 * VFS image directory is treated like an application named 'vfs'.
 	 *
@@ -836,16 +836,8 @@ class common
 		}
 		$starttime = microtime(true);
 
-		if (!$GLOBALS['egw_info']['server']['image_type'])
-		{
-			// priority: GIF->JPG->PNG
-			$img_types = array('gif','jpg','png','ico');
-		}
-		else
-		{
-			// priority: : PNG->JPG->GIF
-			$img_types = array('png','jpg','gif','ico');
-		}
+		// priority: : PNG->JPG->GIF
+		$img_types = array('png','jpg','gif','ico');
 		$map = array();
 		foreach(scandir(EGW_SERVER_ROOT) as $app)
 		{

@@ -159,7 +159,6 @@ foreach(array(
 
 foreach(array(
 	'sessions_checkip' => 'True',
-	'image_type'       => '1',
 	'asyncservice'     => 'fallback',
 	'install_id'       => md5(microtime(true).common::randomstring(15)),
 ) as $name => $value)
