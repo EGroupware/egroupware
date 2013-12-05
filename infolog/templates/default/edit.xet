@@ -287,7 +287,7 @@
                                         
 					<hbox span="3">
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="3"/>
-						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');" image="delete" background_image="1"/>
+						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
