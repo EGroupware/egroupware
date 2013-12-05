@@ -786,6 +786,18 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 							Math.min(cidx + ccnt - 1, 
 								cidx + (vbot - elemRange.top) / avg));
 
+					// Initial resize while the grid is hidden will give NaN
+					// This is an important optimisation, as it is involved in not
+					// loading all rows, so we override in that case so
+					// there are more than the 2-3 that fit in the min height.
+					if(isNaN(idxStart) && isSpacer) idxStart = cidx-1;
+					if(isNaN(idxEnd) && isSpacer && this._scrollHeight > 0 && elemRange.bottom == 0)
+					{
+						idxEnd = Math.min(ccnt,cidx + Math.ceil(
+							(this._viewRange.bottom - container._top) / this._orgAvgHeight
+						));
+					}
+
 					// Call the data callback
 					if (this._callback)
 					{
