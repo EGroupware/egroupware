@@ -56,7 +56,7 @@ class mail_acl
 	 */
 	function __construct()
 	{
-		$this->mail_bo = mail_bo::getInstance(false, (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']);
+		$this->mail_bo = mail_bo::getInstance(false, $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']);
 
 	}
 
@@ -66,17 +66,17 @@ class mail_acl
 	 * @param string $msg
 	 * @param array $content
 	 *
-	 * @todo delete action / recursive action/
 	 */
 	function edit(array $content=null ,$msg='')
 	{
 
 		$tmpl = new etemplate_new('mail.acl');
-		$preserv['mailbox'] = $mailbox = base64_decode($_GET['mailbox']);
+		$mailbox = base64_decode($_GET['mailbox']);
 		if (!is_array($content))
 		{
 			if (!empty($mailbox))
 			{
+				$content['mailbox'] = $mailbox;
 				$acl = (array)$this->retrive_acl($mailbox, $msg);
 				$n = 1;
 				foreach ($acl as $keys => $value)
@@ -133,8 +133,6 @@ class mail_acl
 						if ($content['grid'][count($content['grid'])]['acc_id'])
 							array_push($content['grid'], array('acc_id'=>''));
 
-						$preserv ['mailbox'] = $content['mailbox'];
-
 					}
 					else
 					{
@@ -163,7 +161,8 @@ class mail_acl
 			}
 		}
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
-		$content['mailbox'] = $preserv['mailbox'];
+
+		$preserv ['mailbox'] = $content['mailbox'];
 		$content['msg'] = $msg;
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
 	}

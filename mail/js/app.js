@@ -2028,7 +2028,7 @@ app.classes.mail = AppJS.extend(
 				that.et2._inst.submit(buttonId);
 			}
 		}
-		et2_dialog.show_dialog(callbackAclDeleteDialog, this.egw.lang("Do you really want to remove all rights from this account"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+		di =et2_dialog.show_dialog(callbackAclDeleteDialog, this.egw.lang("Do you really want to remove all rights from this account"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 	},
 
 	/**
@@ -2039,8 +2039,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	edit_acl: function(_action, _senders)
 	{
-		var folder_id = _senders[0].id.split('::INBOX/');
-		this.egw.open_link('mail.mail_acl.edit&mailbox='+folder_id[1], '_blank', '640x480');
+		var folder_id = _senders[0].id.split('::');
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder_id[1]), '_blank', '640x480');
 	},
 
 	/**
