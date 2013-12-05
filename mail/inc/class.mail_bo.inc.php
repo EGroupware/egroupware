@@ -170,7 +170,7 @@ class mail_bo
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 	 * @return mail_bo
 	 */
-	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
+	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true)
 	{
 		//$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
@@ -261,7 +261,7 @@ class mail_bo
 				}
 				if (self::$debug) error_log(__METHOD__."($_acc_id) account NOT valid, no imap-host!");
 			}
-			catch (egw_exception_not_found $e) {
+			catch (Exception $e) {
 				unset($e);
 				if (self::$debug) error_log(__METHOD__."($_acc_id) account NOT found!");
 			}

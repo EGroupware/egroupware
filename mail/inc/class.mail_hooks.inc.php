@@ -119,9 +119,15 @@ class mail_hooks
 			$profileID = 0;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+			try
+			{
+				$mail_bo = mail_bo::getInstance(true,$profileID);
+				$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
+			} catch (Exception $ex) {
+				error_log(__METHOD__."()" . $ex->getMessage());
+				$profileID = null;
+			}
 
-			$mail_bo = mail_bo::getInstance(true,$profileID);
-			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 			if($profileID && $mail_bo->openConnection($profileID)) {
 				$folderObjects = $mail_bo->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
@@ -732,9 +738,15 @@ class mail_hooks
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		try
+		{
+			$mail_bo = mail_bo::getInstance(true,$profileID);
+			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
+		} catch (Exception $ex) {
+			error_log(__METHOD__."()" . $ex->getMessage());
+			$profileID = null;
+		}
 
-		$mail_bo = mail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		$preferences =& $mail_bo->mailPreferences;
 		$serverCounter = $sieveEnabledServerCounter = 0;
 		if (count($preferences->ic_server)) {
