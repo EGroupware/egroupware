@@ -206,7 +206,7 @@ class mail_bo
 			egw_cache::setSession('mail','activeProfileID',$_profileID);
 		}
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
-		if (!isset(self::$instances[$_profileID]) || $_restoreSession===false)
+		if ($_profileID && (!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
 			self::$instances[$_profileID] = new mail_bo('utf-8',$_restoreSession,$_profileID);
 		}
@@ -225,8 +225,11 @@ class mail_bo
 				$newprofileID = emailadmin_bo::getUserDefaultAccID();
 				// try loading the default profile for the user
 				error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; '.$e->getMessage().' Trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
-				self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
-				$_profileID = $newprofileID;
+				if ($newprofileID)
+				{
+					self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
+					$_profileID = $newprofileID;
+				}
 			}
 		}
 		self::$instances[$_profileID]->profileID = $_profileID;
