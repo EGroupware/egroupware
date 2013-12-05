@@ -15,6 +15,7 @@ allow external images	mail	en	Allow external images
 allow images from external sources in html emails	mail	en	allow images from external sources in html emails
 allways a new window	mail	en	allways a new window
 always show html emails	mail	en	always show html emails
+an error happend while trying to remove acl rights from the account %1.	mail	en	An error happend while trying to remove ACL rights from the account %1.
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
 any status	mail	en	any status
@@ -35,6 +36,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	en	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment
 copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
 could not append message:	mail	en	Could not append Message:
+could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
 date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
@@ -79,6 +81,7 @@ empty trash	mail	en	empty trash
 enabled!	mail	en	enabled!
 error saving %1!	mail	en	Error saving %1!
 error:	mail	en	Error:
+error: could not save acl	mail	en	Error: Could not save ACL
 error: could not save message as draft	mail	en	Error: Could not save Message as Draft
 error: could not save rule	mail	en	Error: Could not save rule
 error: could not send message.	mail	en	Error: Could not send Message.
@@ -91,8 +94,8 @@ file into	mail	en	file into
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
 filemanager	mail	en	Filemanager
 flagged	mail	en	flagged
-flagged / unflagged	mail	en	Flagged / Unflagged
 flagged %1 messages as %2 in %3	mail	en	flagged %1 messages as %2 in %3
+flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	folder
 folder settings	mail	en	Folder settings
 force html	mail	en	force html
@@ -183,6 +186,7 @@ quicksearch	mail	en	quicksearch
 quota not provided by server	mail	en	Quota not provided by server
 read	mail	en	read
 read / unread	mail	en	Read / Unread
+reason!	mail	en	reason!
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
@@ -236,6 +240,9 @@ templates	mail	en	Templates
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
 text/plain	mail	en	text/plain
+the %1 's acl removed from the %2!	mail	en	The %1 's acl removed from the %2!
+the %1 's acl, including its subfolders, removed from the %2!	mail	en	The %1 's acl, including its subfolders, removed from the %2!
+the folder %1 's acls saved!	mail	en	The Folder %1 's ACLs saved!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
