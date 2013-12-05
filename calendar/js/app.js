@@ -498,10 +498,15 @@ app.classes.calendar = AppJS.extend(
 	 */
 	getState: function()
 	{
+		// we are currently in list-view
+		if (this.et2 && this.et2.getWidgetById('nm'))
+		{
+			return this._super.apply(this, arguments);	// call default implementation
+		}
 		var egw_script_tag = document.getElementById('egw_script_id');
 		var state = egw_script_tag.getAttribute('data-calendar-state');
 
-		return state ? JSON.parse(state) : this._super.apply(this, arguments);
+		return state ? JSON.parse(state) : null;
 	},
 
 	/**
@@ -521,12 +526,12 @@ app.classes.calendar = AppJS.extend(
 
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
-		if (state.view == 'listview')
+		if (typeof state.view == 'undefined' || state.view == 'listview')
 		{
 			menuaction = 'calendar.calendar_uilist.index';
 			if (state.name)
 			{
-				state.favorite = state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+				state = {favorite: state.name.replace(/[^A-Za-z0-9-_]/g, '_')};
 			}
 		}
 		for(name in state)
