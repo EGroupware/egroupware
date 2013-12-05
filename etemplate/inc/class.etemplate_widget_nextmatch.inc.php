@@ -948,9 +948,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if(!$registry) $registry = egw_link::get_registry($app,'index');
 		foreach($filters as $name => $filter)
 		{
-			$href = egw::link('/index.php', (array)$registry + array('favorite'=>$name),$app);
+			$href = "javascript:app.$app.setState(" . json_encode($filter['filter']) . ');';
 			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
-			$html .= "<a href=\"$href\" class='ui-corner-all' tabindex='-1'>";
+			$html .= "<a href='$href' class='ui-corner-all' tabindex='-1'>";
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'] .($filter['group'] != false ? " ♦" :"");
 			$html .= "</a></li>\n";
@@ -969,7 +969,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param $app Current application, needed to save preference
 	 * @param $name String Name of the favorite
 	 * @param $action String add or delete
-	 * @param $group int|String ID of the group to create the favorite for, or All for all users
+	 * @param $group int|String ID of the group to create the favorite for, or 'all' for all users
 	 * @param $filters Array of key => value pairs for the filter
 	 *
 	 * @return boolean Success

@@ -177,6 +177,81 @@ var AppJS = Class.extend(
 				nm.getInstanceManager().submit();
 			}
 		}
-	}
+	},
 
+	/**
+	 * Set the application's state to the given state.
+	 *
+	 * While not pretending to implement the history API, it is patterned similarly
+	 * @link http://www.whatwg.org/specs/web-apps/current-work/multipage/history.html
+	 *
+	 * The default implementation works with the favorites to apply filters to a nextmatch.
+	 *
+	 *
+	 * @param {object} state description
+	 */
+	setState: function(state)
+	{
+		// State should be an object, not a string, but we'll try
+		if(typeof state == "string")
+		{
+			if(state.indexOf('{') != -1 || state =='null')
+			{
+				state = JSON.parse(state);
+			}
+		}
+		if(typeof state != "object")
+		{
+			egw.debug('error', 'Unable to set state to %o, needs to be an object',state);
+			return;
+		}
+		if(state == null)
+		{
+			state = {};
+		}
+
+		// Try and find a nextmatch widget, and set its filters
+		var nextmatched = false;
+		var et2 = etemplate2.getByApplication(this.appname);
+		for(var i = 0; i < et2.length; i++)
+		{
+			et2[i].widgetContainer.iterateOver(function(_widget) {
+				// Apply
+				_widget.activeFilters = state;
+				_widget.applyFilters();
+				nextmatched = true;
+			}, this, et2_nextmatch);
+		}
+
+		// No nextmatch?  Try a redirect to list
+		if(!nextmatched)
+		{
+			egw.open('',this.appname,'list',{'state': state},this.appname);
+		}
+	},
+
+	/**
+	 * Retrieve the current state of the application for future restoration
+	 *
+	 * The state can be anything, as long as it's an object.  The contents are
+	 * application specific.  The default implementation finds a nextmatch and
+	 * returns its value.
+	 *
+	 * @return {object} Value of a nextmatch
+	 */
+	getState: function()
+	{
+		var state = {};
+
+		// Try and find a nextmatch widget, and set its filters
+		var et2 = etemplate2.getByApplication(this.appname);
+		for(var i = 0; i < et2.length; i++)
+		{
+			et2.widgetContainer.iterateOver(function(_widget) {
+				state = _widget.getValue();
+			}, this, et2_nextmatch);
+		}
+
+		return state;
+	}
 });
