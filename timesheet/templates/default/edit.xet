@@ -196,7 +196,7 @@
 							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 							<html id="js"/>
 						</hbox>
-						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');" image="delete" background_image="1"/>
+						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
 						<button align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete" background_image="1"/>
 					</hbox>
 				</row>

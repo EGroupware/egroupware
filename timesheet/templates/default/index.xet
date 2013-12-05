@@ -96,7 +96,7 @@
 						<button statustext="View this entry" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="view"/>
 						<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="edit"/>
 						<button label="Insert in document" id="document[$row_cont[ts_id]]" image="etemplate/merge" class="image16"/>
-						<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[ts_id]]" onclick="return confirm('Delete this entry');" image="delete"/>
+						<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[ts_id]]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete"/>
 						<checkbox statustext="Select multiple timeshhets for a further action" id="checked[]" options="$row_cont[ts_id]"/>
 					</hbox>
 				</row>

@@ -51,7 +51,7 @@
 													<menupopup id="${row}[parent]" options="please select"/>
 												</menulist>
 												<checkbox id="${row}[admin]" statustext="Only Admin can change this Status"/>
-												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="return confirm('Delete this status');"/>
+												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"/>
 											</row>
 										</rows>
 									</grid>
