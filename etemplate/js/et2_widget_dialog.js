@@ -19,7 +19,7 @@
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
  *
- * It is possible to have a custom dialog by using a template, but you can also use 
+ * It is possible to have a custom dialog by using a template, but you can also use
  * the static method et2_dialog.show_dialog().  At its simplest, you can just use:
  * <code>
  *	et2_dialog.show_dialog(false, "Operation completed");
@@ -46,7 +46,7 @@
  *		et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE
  *	);
  * </code>
- *		
+ *
  *
  * The parameters for the above are all optional, except callback and message:
  *	callback - function called when the dialog closes, or false/null.
@@ -59,7 +59,7 @@
  *	dialog_type - et2_dialog *_MESSAGE constant
  *	icon - URL of icon
  *
- * Note that these methods will _not_ block program flow while waiting for user input.  
+ * Note that these methods will _not_ block program flow while waiting for user input.
  * The user's input will be provided to the callback.
  *
  * You can also use the standard et2_createWidget() to create a custom dialog using an etemplate, even setting all
@@ -79,7 +79,7 @@
  *				// Do what you like, but don't forget this line:
  *				$j(this).dialog("close")
  *			}, class="ui-state-error"},
- *	
+ *
  *		],
  *		title: 'Why would you want to do this?',
  *		template:"/egroupware/addressbook/templates/default/edit.xet",
@@ -90,7 +90,7 @@
  * @see http://api.jqueryui.com/dialog/
  */
 var et2_dialog = et2_widget.extend({
-	
+
 
 	attributes: {
 		callback: {
@@ -201,7 +201,7 @@ var et2_dialog = et2_widget.extend({
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_dialog
 	 */
 	init: function() {
@@ -333,14 +333,14 @@ var et2_dialog = et2_widget.extend({
 			}
 			this.options.buttons = buttons;
 		}
-		
+
 		// If dialog already created, update buttons
 		if(this.div.data('ui-dialog'))
 		{
 			this.div.dialog("option", "buttons", buttons);
-		
+
 			// Focus default button so enter works
-			$j('.ui-dialog-buttonpane button[default]',this.div.parent()).focus(); 
+			$j('.ui-dialog-buttonpane button[default]',this.div.parent()).focus();
 		}
 	},
 
@@ -403,7 +403,7 @@ var et2_dialog = et2_widget.extend({
 			title: this.options.title,
 			open: function() {
 				// Focus default button so enter works
-				$j(this).parents('.ui-dialog-buttonpane button[default]').focus(); 
+				$j(this).parents('.ui-dialog-buttonpane button[default]').focus();
 			},
 			close: jQuery.proxy(function() {this.destroy();},this)
 		});
@@ -412,13 +412,13 @@ var et2_dialog = et2_widget.extend({
 et2_register_widget(et2_dialog, ["dialog"]);
 
 // Static class stuff
-jQuery.extend(et2_dialog, 
+jQuery.extend(et2_dialog,
 /** @lends et2_dialog */
 {
 	// Some class constants //
 
 	/**
-	 * Types 
+	 * Types
 	 * @constant
 	 */
 	PLAIN_MESSAGE: 0,
@@ -462,7 +462,7 @@ jQuery.extend(et2_dialog,
 			value: _value
 		});
 	},
-	
+
 	/**
 	 * Show a prompt dialog
 	 *
@@ -472,7 +472,7 @@ jQuery.extend(et2_dialog,
 	 * @param String _value for prompt, passed to callback as 2. parameter
 	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
 	 */
-	show_prompt: function(_callback, _message, _title, _value, _buttons) 
+	show_prompt: function(_callback, _message, _title, _value, _buttons)
 	{
 		var callback = _callback;
 		// Just pass them along, widget handles defaults & missing
@@ -494,5 +494,33 @@ jQuery.extend(et2_dialog,
 			template: egw.webserverUrl+'/etemplate/templates/default/prompt.xet',
 			class: "et2_prompt"
 		});
-	}
+	},
+
+	/**
+	 * Method to build a confirmation dialog only with
+	 * YES OR NO buttons and submit content back to server
+	 *
+	 * @param {widget} _senders widget that has been clicked
+	 * @param {String} _dialogMsg message shows in dialog box
+	 * @param {String} _titleMsg message shows as a title of the dialog box
+	 *
+	 * @description submit the form contents including the button that has been pressed
+	 */
+	confirm: function(_senders,_dialogMsg, _titleMsg)
+	{
+		var senders = _senders;
+		var buttonId = _senders.id;
+		var dialogMsg = (typeof _dialogMsg !="undefined") ? _dialogMsg : '';
+		var titleMsg = (typeof _titleMsg !="undefined") ? _titleMsg : '';
+
+		var callbackDialog = function (button_id)
+		{
+			if (button_id == et2_dialog.YES_BUTTON )
+			{
+				senders.getRoot().getInstanceManager().submit(buttonId);
+			}
+		}
+		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg),egw.lang(titleMsg), {},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE);
+	},
+
 });
