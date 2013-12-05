@@ -552,7 +552,16 @@ class calendar_ui
 		{
 			$base_hidden_vars['keywords'] = $_POST['keywords'];
 		}
-
+		// Magic etemplate2 favorites menu (from nextmatch widget)
+		display_sidebox('calendar',lang('Favorites'),array(
+			array(
+				'no_lang' => true,
+				'text'=> egw_framework::favorite_list('calendar',false),
+				'link'=>false,
+				'icon' => false
+			)
+		));
+		
 		$n = 0;	// index for file-array
 
 		$planner_days_for_view = false;
