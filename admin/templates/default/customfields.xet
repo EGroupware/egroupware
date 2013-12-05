@@ -18,7 +18,7 @@
 					<menulist>
 						<menupopup id="types" no_lang="1" onchange="1"/>
 					</menulist>
-					<button label="Delete" id="delete" onclick="return confirm('WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.');"/>
+					<button label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.','Delete')"/>
 					<textbox blur="new name" id="name"/>
 					<button label="Create" id="create"/>
 				</row>

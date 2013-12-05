@@ -47,8 +47,8 @@
 					<description id="${row}[session_action]"/>
 					<description statustext="$row_cont[user_agent]" id="{$row}[user_agent]" class="userAgent"/>
 					<hbox align="center" options="0,0">
-						<button statustext="Delete this log entry" label="Delete" id="delete[$row_cont[sessionid]]" onclick="return confirm('Delete this log entry');" image="delete"/>
-						<button label="Kill" id="kill[$row_cont[sessionid]]" onclick="return confirm('Are you sure you want to kill this session ?');" image="close"/>
+						<button statustext="Delete this log entry" label="Delete" id="delete[$row_cont[sessionid]]" onclick="et2_dialog.confirm(widget,'Delete this log entry','Delete');" image="delete"/>
+						<button label="Kill" id="kill[$row_cont[sessionid]]" onclick="et2_dialog.confirm(widget,'Are you sure you want to kill this session ?','Kill');" image="close"/>
 						<checkbox align="right" id="selected[]" options="$row_cont[sessionid]"/>
 					</hbox>
 				</row>
@@ -75,8 +75,8 @@
 						<textbox type="float" label=": %s %" id="percent" precision="1" readonly="true"/>
 					</hbox>
 					<hbox align="right">
-						<button statustext="Delete selected entries" label="Delete" id="delete" onclick="return confirm('Delete the selected entries');" image="delete"/>
-						<button label="Kill" id="kill" onclick="return confirm('Are you sure you want to kill this session ?');" image="close"/>
+						<button statustext="Delete selected entries" label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Delete the selected entries','Delete')" image="delete"/>
+						<button label="Kill" id="kill" onclick="et2_dialog.confirm(widget,'Are you sure you want to kill this session ?','Kill')" image="close"/>
 						<buttononly label="Select all" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="arrow_ltr"/>
 					</hbox>
 				</row>

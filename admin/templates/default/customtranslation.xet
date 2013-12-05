@@ -18,7 +18,7 @@
 				<row>
 					<textbox id="${row}[phrase]" size="64"/>
 					<textbox id="${row}[translation]" size="64"/>
-					<button align="center" label="Delete" id="delete[$row]" onclick="return confirm('Delete');" image="delete"/>
+					<button align="center" label="Delete" id="delete[$row]" onclick="et2_dialog.confirm(widget,'Delete','Delete')" image="delete"/>
 				</row>
 			</rows>
 		</grid>

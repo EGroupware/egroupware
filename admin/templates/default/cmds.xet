@@ -45,7 +45,7 @@
 					</vbox>
 					<date-time id="${row}[modified]" readonly="true"/>
 					<url-email id="${row}[modifier]" readonly="true" options=",,,$row_cont[modifier_email]"/>
-					<button image="delete" label="Cancel" id="delete[$row_cont[id]]" statustext="Cancel this scheduled command" onclick="return confirm('Cancel this scheduled command');"/>
+					<button image="delete" label="Cancel" id="delete[$row_cont[id]]" statustext="Cancel this scheduled command" onclick="et2_dialog.confirm(widget,'Cancel this scheduled command','Cancel');"/>
 				</row>
 			</rows>
 		</grid>
