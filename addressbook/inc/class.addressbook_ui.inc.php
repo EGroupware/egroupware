@@ -2137,6 +2137,7 @@ window.egw_LAB.wait(function() {
 		{
 			$content['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$content['cat_id']);
 		}
+		$content['cat_id_tree'] = $content['cat_id'];
 
 		$content['view'] = true;
 		$content['link_to'] = array(
