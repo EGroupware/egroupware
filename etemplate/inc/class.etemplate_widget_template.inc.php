@@ -88,7 +88,7 @@ class etemplate_widget_template extends etemplate_widget
 			return false;
 		}
 		$reader = new XMLReader();
-		if (!$reader->open(EGW_SERVER_ROOT.$path)) return false;
+		if (!$reader->open(self::rel2path($path))) return false;
 
 		while($reader->read())
 		{
@@ -112,13 +112,15 @@ class etemplate_widget_template extends etemplate_widget
 		return false;
 	}
 
+	const VFS_TEMPLATE_PATH = '/etemplates';
+
 	/**
-	 * Get path/URL relative to EGroupware install of a template
+	 * Get path/URL relative to EGroupware install of a template of full vfs url
 	 *
 	 * @param string $name
 	 * @param string $template_set=null default try template-set from user and if not found "default"
 	 * @param string $version=''
-	 * @return string|boolean path of template xml file or false if not found
+	 * @return string path of template xml file or null if not found
 	 */
 	public static function relPath($name, $template_set=null, $version='')
 	{
@@ -128,16 +130,68 @@ class etemplate_widget_template extends etemplate_widget
 		{
 			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 		}
-		$path = '/'.$app.'/templates/'.$template_set.'/'.$rest.'.xet';
+		$template_path = '/'.$app.'/templates/'.$template_set.'/'.$rest.'.xet';
+		$default_path = '/'.$app.'/templates/default/'.$rest.'.xet';
 
-		if (!file_exists(EGW_SERVER_ROOT.$path))	// try default
+		foreach(array(egw_vfs::PREFIX.self::VFS_TEMPLATE_PATH, EGW_SERVER_ROOT) as $prefix)
 		{
-			$path = '/'.$app.'/templates/default/'.$rest.'.xet';
-
-			if (!file_exists(EGW_SERVER_ROOT.$path)) $path = false;
+			if (file_exists($prefix.$template_path))
+			{
+				$path = $template_path;
+				break;
+			}
+			if (file_exists($prefix.$default_path))
+			{
+				$path = $default_path;
+				break;
+			}
+		}
+		// for a vfs template path we keep the prefix, to be able to distinquish between real filesystem and vfs
+		if (isset($path) && $prefix !== EGW_SERVER_ROOT)
+		{
+			$path = $prefix.$path;
 		}
 		//error_log(__METHOD__."('$name', '$template_set') returning ".array2string($path));
 		return $path;
+	}
+
+	/**
+	 * Convert relative template path from relPath to an absolute path
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public static function rel2path($path)
+	{
+		if ($path[0] === '/')
+		{
+			$path = EGW_SERVER_ROOT.$path;
+		}
+		return $path;
+	}
+
+	/**
+	 * Convert relative template path from relPath to an url incl. cache-buster modification time postfix
+	 *
+	 * @param string $path
+	 * @return string url
+	 */
+	public static function rel2url($path)
+	{
+		if ($path)
+		{
+			if ($path[0] === '/')
+			{
+				$url = $GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.filemtime(self::rel2path($path));
+			}
+			else
+			{
+				// no mtime postfix, as our WebDAV treats ? literal and not ignore them like Apache for static files!
+				$url = egw::link(egw_vfs::download_url($path));
+			}
+		}
+		//error_log(__METHOD__."('$path') returning $url");
+		return $url;
 	}
 
 	/**
@@ -175,6 +229,7 @@ class etemplate_widget_template extends etemplate_widget
 	}
 }
 
+/*
 if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_widget_template')
 {
 	$name = isset($_GET['name']) ? $_GET['name'] : 'timesheet.edit';
@@ -187,3 +242,4 @@ if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_widget_template')
 	header('Content-Type: text/xml');
 	echo $template->toXml();
 }
+*/

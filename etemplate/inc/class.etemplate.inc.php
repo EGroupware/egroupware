@@ -162,7 +162,7 @@ class etemplate_new extends etemplate_widget_template
 		$dom_id = str_replace('.','-',$this->dom_id);
 		$load_array = array(
 			'name' => $this->name,
-			'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'?'.filemtime(EGW_SERVER_ROOT.$this->rel_path),
+			'url' => etemplate_widget_template::rel2url($this->rel_path),
 			'data' => $data,
 			'DOMNodeID' => $dom_id,
 		);
