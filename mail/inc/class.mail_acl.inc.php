@@ -72,7 +72,7 @@ class mail_acl
 	{
 
 		$tmpl = new etemplate_new('mail.acl');
-		$preserv['mailbox'] = $mailbox = $_GET['mailbox'];
+		$preserv['mailbox'] = $mailbox = base64_decode($_GET['mailbox']);
 		if (!is_array($content))
 		{
 			if (!empty($mailbox))
@@ -88,7 +88,7 @@ class mail_acl
 						$content['grid'][$n]['acl_'. $right] = true;
 					}
 					$acl_abbrvs = implode('',$value);
-					//$acl_c =
+
 					if (array_key_exists($acl_abbrvs, $this->aclRightsAbbrvs))
 					{
 						$content['grid'][$n]['acl'] = $acl_abbrvs;
@@ -150,13 +150,20 @@ class mail_acl
 					common::egw_exit();
 					break;
 				case 'delete':
-						$msg = "delete";
-						$content['grid'] = $this->remove_acl($content,$msg);
-						egw_framework::refresh_opener($msg, 'mail', 'update');
+					$aclRvmCnt = $this->remove_acl($content, $msg);
+					if (is_array($aclRvmCnt))
+					{
+						$content['grid'] = $aclRvmCnt;
+					}
+					else
+					{
+						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is there");
+					}
+					egw_framework::refresh_opener($msg, 'mail', 'update');
 			}
 		}
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
-		
+		$content['mailbox'] = $preserv['mailbox'];
 		$content['msg'] = $msg;
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
 	}
@@ -169,7 +176,6 @@ class mail_acl
 	 *		the mailbox including all its subfolders will be considered.
 	 * @param string $msg Message
 	 *
-	 * @todo need to consider recursively update
 	 * @todo rights 'c' and 'd' should be fixed
 	 */
 	function update_acl ($content, &$msg)
@@ -178,10 +184,11 @@ class mail_acl
 
 		foreach ($content['grid'] as $keys => $value)
 		{
+			$recursive = $value['acl_recursive'];
 			unset($value['acc_id']);
 			unset($value['acl_recursive']);
 			unset($value['acl']);
-			$i=0;
+
 			$options = array();
 			foreach ($value as $key => $val)
 			{
@@ -193,13 +200,13 @@ class mail_acl
 			}
 			if (!empty($content['grid'][$keys]['acc_id'][0]))
 			{
-				$this->setACL($content['mailbox'], $content['grid'][$keys]['acc_id'][0],$options );
+				$this->setACL($content['mailbox'], $content['grid'][$keys]['acc_id'][0], $options,$recursive);
 			}
 			else
 			{
 				if($keys !== count($content['grid']))
 				{
-					array_push($validator, $keys) ;
+					array_push($validator, $keys);
 					$msg = lang("Could not save the ACL! Because some names are empty!");
 				}
 			}
@@ -226,21 +233,41 @@ class mail_acl
 
 	/**
 	 * remove_acl
+	 * This method take content of acl rights, and will delete the one from ACL IMAP,
+	 * for selected folder and/or its subfolders
 	 *
 	 * @param Array $content content array of popup window
 	 * @param string $msg message
 	 *
-	 * @todo need to be completed
+	 * @return Array An array as new content for grid
 	 */
-	function remove_acl($content,$msg)
+	function remove_acl($content, &$msg)
 	{
 		$row_num = array_keys($content['grid']['delete'],"pressed");
 		$row_num = $row_num[0];
+		$recursive = $content['grid'][$row_num]['acl_recursive'];
 		$identifier = $content['grid'][$row_num]['acc_id'][0];
-		//$this->deleteACL($content['mailbox'], $identifier,$content['grid'][$row_num]['recursively'] );
-		unset($content['grid'][$row_num]);
-		unset($content['grid']['delete']);
-		return array_combine(range(1, count($content['grid'])), array_values($content['grid']));
+
+		if(($res = $this->deleteACL($content['mailbox'], $identifier,$recursive)))
+		{
+			unset($content['grid'][$row_num]);
+			unset($content['grid']['delete']);
+			if ($recursive)
+			{
+				$msg = lang("The %1 's acl, including its subfolders, removed from the %2!",$content['mailbox'],$identifier);
+			}
+			else
+			{
+				$msg = lang("The %1 's acl removed from the %2!",$content['mailbox'],$identifier);
+			}
+
+			return array_combine(range(1, count($content['grid'])), array_values($content['grid']));
+		}
+		else
+		{
+			$msg = lang("An error happend while trying to remove ACL rights from the account %1.",$identifier);
+			return false;
+		}
 	}
 
 	/**
@@ -251,21 +278,54 @@ class mail_acl
 	 * @param Boolean $recursive boolean flag FALSE|TRUE. If it is FALSE, only the folder take in to account, but in case of TRUE
 	 *		the mailbox including all its subfolders will be considered.
 	 *
-	 * @todo need to considetr recursive action
+	 * @return Boolean FALSE in case of any exceptions and TRUE in case of success
 	 */
 	function deleteACL ($mailbox, $identifier, $recursive)
 	{
-		try
+		if ($recursive)
 		{
-			$this->mail_bo->icServer->deleteACL($mailbox, $identifier);
-			return true;
+			$folders = $this->getSubfolders($mailbox);
 		}
-		catch (Exception $e)
+		else
 		{
-			error_log(__METHOD__. "Could not delete ACL rights of folder " . $mailbox . " for account ". $identifier ." because of " .$e->getMessage());
-			return false;
+			$folders = explode(' ',$mailbox);
 		}
+		foreach($folders as $sbFolders)
+		{
+			try
+			{
+				$this->mail_bo->icServer->deleteACL($sbFolders, $identifier);
+			}
+			catch (Exception $e)
+			{
+				error_log(__METHOD__. "Could not delete ACL rights of folder " . $mailbox . " for account ". $identifier ." because of " .$e->getMessage());
+				return false;
+			}
+		}
+		return true;
+	}
 
+	/**
+	 * Get subfolders of a mailbox
+	 *
+	 * @param string $mailbox structural folder name
+	 *
+	 * @return Array an array including all subfolders of given mailbox| returns an empty array in case of no subfolders
+	 *
+	 */
+	function getSubfolders($mailbox)
+	{
+		$delimiter = $this->mail_bo->getHierarchyDelimiter();
+		$nameSpace = $this->mail_bo->_getNameSpaces();
+		$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $mailbox);
+		if (($subFolders = $this->mail_bo->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
+		{
+			return $subFolders;
+		}
+		else
+		{
+			return array();
+		}
 	}
 
 	/**
@@ -279,21 +339,32 @@ class mail_acl
 	 * @param Boolean $recursive boolean flag FALSE|TRUE. If it is FALSE, only the folder take in to account, but in case of TRUE
 	 *		the mailbox including all its subfolders will be considered.
 	 * @param String $msg message
-	 * @return Boolean FALSE in case of any exceptions and if TRUE in case of success,
+	 * @return Boolean FALSE in case of any exceptions and TRUE in case of success,
 	 *
 	 */
-	function setACL($mailbox, $identifier,$options)
+	function setACL($mailbox, $identifier,$options, $recursive)
 	{
-		try
+		if ($recursive)
 		{
-			$this->mail_bo->icServer->setACL($mailbox,$identifier,$options);
-			return true;
+			$folders = $this->getSubfolders($mailbox);
 		}
-		catch (Exception $e)
+		else
 		{
-			error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . " because of " .$e->getMessage());
-			return false;
+			$folders = explode(' ',$mailbox);
 		}
+		foreach($folders as $sbFolders)
+		{
+			try
+			{
+				$this->mail_bo->icServer->setACL($sbFolders,$identifier,$options);
+			}
+			catch (Exception $e)
+			{
+				error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . " because of " .$e->getMessage());
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
