@@ -533,6 +533,11 @@ var AppJS = Class.extend(
 						// Remove line from list
 						line.slideUp("slow", function() { });
 					}
+					else
+					{
+						// Something went wrong server side
+						line.removeClass('loading').addClass('ui-state-error');
+					}
 				},
 				$j(trash).parentsUntil("li").parent(),
 				true,
