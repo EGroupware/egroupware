@@ -1,8 +1,16 @@
 /**
- * CSS for new eTemplate filemanager UI
+ * EGroupware - CSS Styles used by filemanager app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
  */
 
-.address input { font-size: 140%; font-weight: bold; }
+/**
+ * CSS for new eTemplate filemanager UI
+ */
 .mimeHuge img { width: 64px; height: 64px; }
 .fileName input { font-weight: bold; width: 100%; }
 .comment textarea { width: 100%; height: 35px; }
@@ -11,6 +19,36 @@
 .pathSelection { font-weight: bold; }
 .pathSelection a { font-weight: bold; font-size: 120%; }
 .pathSelectionContainer { width: 640px; overflow: auto; }
+/**
+ * Get path input to take all remaining width
+ */
+#filemanager-index_filemanager-index-header_left {
+	width: 100%;
+}
+div.filemanager_navigation {
+	position: relative;
+	width: 100%;
+}
+div.filemanager_navigation > * {
+	vertical-align: middle;
+}
+#filemanager-index_buttons {
+	float: right;
+}
+#filemanager-index_buttons > * {
+	vertical-align: middle;
+	padding-left: 3px;
+}
+div.filemanager_navigation > label {
+	position: absolute;
+	left: 50px;
+	right: 560px;
+	padding-top: 3px;
+	font-size: 140%;
+}
+div.filemanager_navigation > label > input {
+	width: 100%;
+}
 
 /**
  * Select file dialog
@@ -19,7 +57,6 @@
 .selectPathContainer { width: 470px; overflow: auto; }
 .selectName input { width: 100%; }
 .selectMime select { width: 100%; }
-/*.selectIcon img { height: 16px; }*/
 .displayNone input, input.displayNone { display: none; }
 .selectFiles td div { border-style: groove; }
 .selectFiles div { max-height: 400px; overflow:auto;}
