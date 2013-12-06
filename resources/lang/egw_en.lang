@@ -1,8 +1,15 @@
+%1 accessories now resources	resources	en	%1 accessories now resources
+%1 accessories restored	resources	en	%1 accessories restored
+%1 resource(s) %2	resources	en	%1 resource(s) %2
+%1 resource(s) %2, %3 failed	resources	en	%1 resource(s) %2, %3 failed
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	en	%1 resource(s) %2, %3 failed because of insufficent rights !!!
 accessories	resources	en	Accessories
 accessories of	resources	en	Accessories of
 accessories:	resources	en	Accessories:
+accessory of	resources	en	Accessory of
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
+add group to event participants	resources	en	Add group to event participants
 add resource	resources	en	Add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
@@ -12,6 +19,7 @@ book resource	resources	en	Book resource
 book selected resources	resources	en	Book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
+booked	resources	en	booked
 buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
 buyable	resources	en	Buyable
@@ -21,16 +29,26 @@ check all	resources	en	Check all
 choose categories admin	resources	en	Choose categories admin
 clear selection	resources	en	Clear selection
 configure access permissions	admin	en	Configure ACL
+confirmation email text	resources	en	Confirmation email text
+confirmed addressbook.	resources	en	Confirmed addressbook.
+conflict	resources	en	conflict
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
+custom etemplate for the contactform	resources	en	Custom eTemplate for the contactform
+custom fields	resources	en	Custom Fields
+days	resources	en	days
 delete selected resources	resources	en	Delete selected resources
 delete this entry	resources	en	Delete this entry
+deleted	resources	en	deleted
 description (short)	resources	en	Short description
 direct booking permissions	resources	en	Direct booking permissions
 don't use vfs (this will need a symlink --> see readme)	resources	en	Don't use vfs (this will need a symlink --> see README)
 edit this entry	resources	en	Edit this entry
+event start	resources	en	Event start
 existing links	resources	en	Existing links
 exists	resources	en	Exists
+expiry	resources	en	expiry
+export definition to use for nextmatch export	resources	en	Export definition to use for nextmatch export
 export definitition to use for nextmatch export	resources	en	Export definition to use for nextmatch export
 exports a list of resources to a csv file.	resources	en	Exports a list of resources to a CSV file.
 general	resources	en	General
@@ -68,6 +86,7 @@ name:	resources	en	Name:
 new accessory	resources	en	New accessory
 new resource	resources	en	New Resource
 no description available	resources	en	No description available.
+no matches	resources	en	no matches
 no resources selected	resources	en	No resources selected.
 notify your administrator to correct this situation	resources	en	Notify your administrator.
 picture	resources	en	Picture
@@ -75,6 +94,7 @@ picture source	resources	en	Picture source
 picture type is not supported, sorry!	resources	en	Picture type is not supported, sorry!
 pictures or resource	resources	en	Pictures or resource
 planer	resources	en	Planner
+please choose a different time:	resources	en	Please choose a different time:
 prevent deleting	admin	en	Prevent deleting
 prize	resources	en	Prize
 prizeing information for booking or buying	resources	en	Prizing information for booking or buying
@@ -83,7 +103,12 @@ quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
 read calendar permissions	resources	en	Read calendar permissions
 read permissions	resources	en	Read permissions
+registration confirmed %1	resources	en	Registration confirmed %1
 related links	resources	en	Related links
+remove accessories before changing accessory of	resources	en	Remove accessories before changing Accessory of
+require confirmation	resources	en	Require confirmation
+reserve	resources	en	Reserve
+resource	resources	en	Resource
 resource id	resources	en	Resource ID
 resources	common	en	Resources
 resources and accessories	resources	en	Resources and Accessories
@@ -91,6 +116,7 @@ resources csv export	resources	en	Resources CSV export
 resources csv import	resources	en	Resources CSV import
 resources list	resources	en	Resources list
 responsible:	resources	en	Responsible:
+restored	resources	en	restored
 saves entry and exits	resources	en	Save entry and exit
 select a category	resources	en	Select a category
 select resource	resources	en	Select resource
@@ -99,13 +125,18 @@ select/deselect all	resources	en	Select/deselect all
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
 show calendar of resource	resources	en	Show calendar of resource
+simple reservation of a single item	resources	en	Simple reservation of a single item
 something went wrong by deleting resource	resources	en	Error deleting resource!
 something went wrong by saving resource	resources	en	Error saving resource!
 storage	resources	en	Storage
 storage information	resources	en	Storage
 storage information:	resources	en	Storage information:
+the anonymous user needs add rights for it!	resources	en	The anonymous user needs add rights for it!
 the calendar of this resource	resources	en	Calendar of the resource
 this module displays the resources app	resources	en	This module displays the resources app
+too many matches	resources	en	too many matches
+unable to link to %1 "%2"	resources	en	Unable to link to %1 "%2"
+unable to process confirmation.	resources	en	Unable to process confirmation.
 use general resources icon	resources	en	Use general resources icon
 use own picture	resources	en	Use own picture
 use the category's icon	resources	en	Use the category icon
@@ -119,6 +150,8 @@ web-site for this resource	resources	en	Website for this resource
 where to find this resource?	resources	en	Location information
 which category does this resource belong to?	resources	en	Category of the resource
 write permissions	resources	en	Write permissions
+yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
+yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not permitted to delete this resource!	resources	en	You are not permitted to delete this resource!
 you are not permitted to edit this resource!	resources	en	You are not permitted to edit this resource!
 you are not permitted to get information about this resource!	resources	en	You are not permitted to get information about this resource!

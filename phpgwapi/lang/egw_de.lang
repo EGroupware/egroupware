@@ -284,6 +284,7 @@ etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
+failed to change password.	common	de	Ändern des Passworts fehlgeschlagen.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 failed to create required directory "%1"!	admin	de	Anlegen des benötigten Verzeichnisses "%1" fehlgeschlagen!
 failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 %2 nach %3!
@@ -448,6 +449,7 @@ logout	common	de	Abmelden
 lost login id	common	de	Anmeldenamen vergessen
 lost password	common	de	Anmeldepasswort vergessen
 low	common	de	Niedrig
+lowercase letters	common	de	Kleinbuchstaben
 lowest	common	de	Niedrigste
 luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
@@ -532,6 +534,7 @@ notifications	common	de	Benachrichtigungen
 notify window	common	de	Benachrichtigungsfenster
 notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administrator um diese Situation zu lösen
 november	common	de	November
+numbers	common	de	Nummern
 october	common	de	Oktober
 off	groupdav	de	Aus
 ok	common	de	OK
@@ -564,6 +567,8 @@ paraguay	common	de	PARAGUAY
 parcel	common	de	Paket
 parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
+password contains only %1 of required %2 character classes: no %3	common	de	Passwort enthält nur %1 von erforderlichen %2 Zeichengruppen: Kein %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	de	Passwort enthält mit "%1" einen Teil ihres Benutzer- oder vollen Namens (3 oder mehr Zeichen)
 password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
 password must contain at least %1 lowercase letters	common	de	Das Passwort muss mindestens %1 Kleinbuchstaben enthalten
@@ -661,6 +666,7 @@ search accounts	common	de	Benutzer suchen
 search or select accounts	common	de	Suchen und auswählen von Benutzern
 second	common	de	Sekunden
 section	common	de	Sektion
+securest	common	de	sicherste
 select	common	de	Auswählen
 select "%1", if your client does not support multiple addressbooks.	groupdav	de	"%1" auswählen, wenn der Client nur ein einziges Adressbuch unterstützt.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, z.B. für das OS X oder iOS Adressbuch.
@@ -684,6 +690,7 @@ serbia	common	de	SERBIEN
 server %1 has been added	common	de	Server %1 wurde zugefügt
 server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
 server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
+server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
 set user as only responsible user, but keeping groups	groupdav	de	setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
@@ -722,6 +729,7 @@ south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 space	common	de	Space
 spain	common	de	SPANIEN
+special characters	common	de	Sonderzeichen
 sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startverzeichnis für Bildsuche des Editors für formatierten Text im EGroupware VFS (Dateimanager).
@@ -804,6 +812,7 @@ update the clock per minute or per second	common	de	Uhr pro Minute oder pro Seku
 upload	common	de	Hochladen
 upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
 upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
+uppercase letters	common	de	Grossbuchstaben
 url	common	de	Webseite
 uruguay	common	de	URUGUAY
 use button to search for	common	de	benutze Knopf zum suchen nach
@@ -866,8 +875,10 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	de	Ihr Passwort hat nicht die benötigte Qualität von %1 Zeichenklassen und Mindestanzahl von %2 Zeichen.
+your password does not have required strength:	common	de	Ihr Passwort hat nicht die erforderliche Stärke:
 your password failed the following criteria:	common	de	Ihr Passwort entspricht nicht den folgenden Kriterien:
 your password is about to expire in %1 days, you may change your password now	common	de	Ihr Passwort läuft in %1 Tagen ab. Sie können nun hier Ihr Passwort ändern, oder warten bis Sie es ändern müssen.
+your password might not match the password policy.	common	de	Ihr Passwort könnte den Richtlinien nicht entsprechen.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.

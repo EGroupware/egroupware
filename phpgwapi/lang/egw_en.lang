@@ -284,9 +284,10 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	Exact
-failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
+failed to change password.	common	en	Failed to change password.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
 failed to create required directory "%1"!	admin	en	Failed to create required directory "%1"!
+failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	Fax number
@@ -448,6 +449,7 @@ logout	common	en	Logout
 lost login id	common	en	Lost login ID
 lost password	common	en	Lost password
 low	common	en	Low
+lowercase letters	common	en	lowercase letters
 lowest	common	en	Lowest
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
@@ -532,6 +534,7 @@ notifications	common	en	Notifications
 notify window	common	en	Notify window
 notify your administrator to correct this situation	common	en	Notify your Administrator to correct this.
 november	common	en	November
+numbers	common	en	numbers
 october	common	en	October
 off	groupdav	en	Off
 ok	common	en	OK
@@ -564,6 +567,8 @@ paraguay	common	en	PARAGUAY
 parcel	common	en	Parcel
 parent category	common	en	Parent category
 password	common	en	Password
+password contains only %1 of required %2 character classes: no %3	common	en	password contains only %1 of required %2 character classes: no %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	en	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
 password could not be changed	common	en	Password could not be changed!
 password has been updated	common	en	Password has been updated.
 password must contain at least %1 lowercase letters	common	en	Password must contain at least %1 lower case letters.
@@ -661,6 +666,7 @@ search accounts	common	en	Search accounts
 search or select accounts	common	en	Search or select accounts
 second	common	en	Second
 section	common	en	Section
+securest	common	en	securest
 select	common	en	Select
 select "%1", if your client does not support multiple addressbooks.	groupdav	en	Select "%1", if your client does not support multiple addressbooks.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	en	Select "%1", if your client support groups, eg. OS X or iOS addressbook.
@@ -684,6 +690,7 @@ serbia	common	en	Serbia
 server %1 has been added	common	en	Server %1 has been added.
 server answered. processing response...	common	en	Server answered. Processing response...
 server contacted. waiting for response...	common	en	Server contacted. Waiting for response...
+server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
 set user as only responsible user, but keeping groups	groupdav	en	set user as only responsible user, but keeping groups
@@ -722,6 +729,7 @@ south africa	common	en	SOUTH AFRICA
 south georgia and the south sandwich islands	common	en	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 space	common	en	Space
 spain	common	en	SPAIN
+special characters	common	en	special characters
 sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	en	Start directory for image browser of rich text editor in EGroupware File Manager
@@ -804,6 +812,7 @@ update the clock per minute or per second	common	en	Update the clock per minute 
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writable by web server.
 upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the web server!
+uppercase letters	common	en	uppercase letters
 url	common	en	URL
 uruguay	common	en	URUGUAY
 use button to search for	common	en	Use button to search for
@@ -866,8 +875,10 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	en	Your password does not have required strength of %1 character classes and minimum length of %2 characters.
+your password does not have required strength:	common	en	Your password does not have required strength:
 your password failed the following criteria:	common	en	Your password failed the following criteria:
 your password is about to expire in %1 days, you may change your password now	common	en	Your password is about to expire in %1 days, you may change your password now.
+your password might not match the password policy.	common	en	Your password might not match the password policy.
 your search returned %1 matchs	common	en	Search returned %1 matches
 your search returned 1 match	common	en	Search returned 1 match
 your session could not be verified.	login	en	Your session could not be verified.

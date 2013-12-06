@@ -35,11 +35,17 @@ entry deleted	timesheet	en	Entry deleted.
 entry saved	timesheet	en	Entry saved.
 error deleting the entry!!!	timesheet	en	Error deleting the entry!
 error saving the entry!!!	timesheet	en	Error saving the entry!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 existing links	timesheet	en	Existing links
 exists	timesheet	en	Exists
+export definition to use for nextmatch export	timesheet	en	Export definition to use for nextmatch export
 export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from Time Sheet into a CSV file
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from Time Sheet into a CSV file. CSV means 'Comma Separated Values'. In the options Tab you can also choose other separators.
+favorites	timesheet	en	Favorites
 field must not be empty !!!	timesheet	en	Field must not be empty!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 full: use only projectmanager	admin	en	Full: use only Project Manager
@@ -47,7 +53,11 @@ general fields:	timesheet	en	General fields:
 global categories	timesheet	en	Global categories
 history	timesheet	en	History
 history logging	admin	en	History logging
+html link to the current record	timesheet	en	HTML link to the current record
 id	timesheet	en	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 ignore	timesheet	en	Ignore
 import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the Time Sheet from a CSV file
@@ -62,6 +72,10 @@ leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length<br>Rows
 links	timesheet	en	Links
+links and attached files	timesheet	en	Links and attached files
+links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application.  Example: {{links/infolog}}
+list of files linked to the current record	timesheet	en	List of files linked to the current record
+manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
 modified	timesheet	en	Modified
 modify status	timesheet	en	Modify status
@@ -73,6 +87,7 @@ no project	timesheet	en	No project
 no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	Number of row for a multi-line input field or line of a multi select box
+old fixed definition	timesheet	en	Old fixed definition
 only admin	timesheet	en	Only admin
 only admin can edit this status	timesheet	en	Only admins can edit timesheets with this status
 or endtime	timesheet	en	or end time
@@ -80,10 +95,12 @@ order	timesheet	en	Order
 parent	timesheet	en	Parent
 permission denied!!!	timesheet	en	Permission denied!
 permissions error - %1 could not %2	timesheet	en	Permissions error - %1 could not %2
+prevent deleting	admin	en	Prevent deleting
 price	timesheet	en	Price
 project fields	timesheet	en	Project fields
 projectmanager integration	admin	en	Project Manager integration
 quantity	timesheet	en	Quantity
+recovered	timesheet	en	recovered
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 save & new	timesheet	en	Save & New
 saves the changes made	timesheet	en	Saves the changes made
@@ -108,6 +125,8 @@ status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
 sum %1:	timesheet	en	Sum %1:
 tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
+the following document-types are supported:	timesheet	en	The following document-types are supported:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	The name used internally, <= 20 chars, changing it makes existing data unavailable
 the text displayed to the user	timesheet	en	Text displayed to the user
 this month	timesheet	en	This month
@@ -124,11 +143,14 @@ timesheet openoffice export	timesheet	en	TimeSheet OpenOffice export
 timesheet status-%1 '%2' added.	timesheet	en	TimeSheet status-%1 '%2' added.
 timesheet-%1 '%2' updated.	timesheet	en	TimeSheet-%1 '%2' updated.
 timesheet-%1 deleted.	timesheet	en	TimeSheet-%1 deleted.
+titles of any entries linked to the current record, excluding attached files	timesheet	en	Titles of any entries linked to the current record, excluding attached files
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	en	Unable to convert "%1" to account ID. Using plugin setting (%2) for %3.
 unitprice	timesheet	en	Unit price
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
+yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
+yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 yesterday	timesheet	en	Yesterday
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	en	Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update.

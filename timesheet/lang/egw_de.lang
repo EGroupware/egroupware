@@ -35,11 +35,17 @@ entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	de	Beispiel: {{IF n_prefix~Herr~sehr geehrter Herr~sehr geehrte Frau}} - wenn im Feld 'n_prefix' 'Herr' steht wird 'sehr geehrter Herr' geschrieben, ansonsten 'sehr geehrte Frau'.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Herr Dr. Müller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	de	Beispiel: {{NELF role}} - wenn das Feld 'role' nicht leer ist wird der Inhalt des Feldes in eine neue Zeile geschrieben
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	de	Beispiel: {{NELFNV role}} - wenn das Feld 'role' nicht leer ist erfolgt ein Zeilenumbruch ohne den Inhalt des Feldes
 existing links	timesheet	de	Bestehende Verknüpfungen
 exists	timesheet	de	vorhanden sein
+export definition to use for nextmatch export	timesheet	de	Exportdefinition für den nextmatch Export
 export to openoffice spreadsheet	timesheet	de	zu Open Office exportieren
 exports entries from your timesheet into a csv file.	timesheet	de	Exportiert Einträge des Stundenzettel Moduls in eine CSV Datei.
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV Datei. CSV bedeutet, Komma getrennte Werte. In dem Options-Tab können Sie andere Trennzeichen festlegen.
+favorites	timesheet	de	Favoriten
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	de	Für den Seriendruck, wählen die diesen Platzhalter. Fügen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Platzhaltern ein.
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
@@ -47,7 +53,11 @@ general fields:	timesheet	de	Das Löschen von Einträgen verhindern
 global categories	timesheet	de	Globale Kategorien
 history	timesheet	de	Historie
 history logging	admin	de	Protokollierung der Historie
+html link to the current record	timesheet	de	HTML-Verknüpfung zum aktuellen Eintrag
 id	timesheet	de	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	de	Wenn Sie hier das Verzeichnis (vollständiger Pfad im virtuellen Dateisystem vfs) angeben, zeigt %1 eine Aktion für jedes Dokument. Diese Aktion erlaubt es das angegebene Dokument herunterzuladen mit den %1 Daten eingefügt.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	de	Wenn Sie hier das Verzeichnis (vollständiger Pfad im virtuellen Dateisystem vfs) angeben, zeigt %1 ein einzelnes Dokument-Symbol für jeden Eintrag. Dieses Symbol erlaubt es das angegebene Dokument herunterzuladen mit den %1 Daten eingefügt.
+if you specify an export definition, it will be used when you export	timesheet	de	Wenn Sie eine Exportdefinition angeben wird diese beim Export angewendet.
 ignore	timesheet	de	Ignorieren
 import options	timesheet	de	Import Optionen
 imports entries into the timesheet from a csv file.	timesheet	de	Importiert Einträge für den Stundenzettel aus einer CSV Datei.
@@ -62,6 +72,9 @@ leave it empty for a full week	timesheet	de	Leer lassen für eine volle Woche
 leaves without saveing	timesheet	de	beenden ohne speichern
 length<br>rows	timesheet	de	Länge<br>Reihe
 links	timesheet	de	Verknüpfungen
+links and attached files	timesheet	de	Verknüpfungen und angehangene Dateien
+links to specified application.  example: {{links/infolog}}	timesheet	de	Verknüpfung zu Anwendungen. Beispiel: {{links/infolog}}
+list of files linked to the current record	timesheet	de	Liste der zum aktuellen Eintrag verknüpften Dateien.
 max length of the input [, length of the inputfield (optional)]	timesheet	de	maximale Länge der Eingabe[,Länge des Eingabefeldes (optional)]
 modified	timesheet	de	Geändert
 modify status	timesheet	de	Status ändern
@@ -80,10 +93,12 @@ order	timesheet	de	Reihenfolge
 parent	timesheet	de	Übergeordnet
 permission denied!!!	timesheet	de	Zugriff verweigert!!!
 permissions error - %1 could not %2	timesheet	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
+prevent deleting	admin	de	Verhindert Löschung
 price	timesheet	de	Preis
 project fields	timesheet	de	Fehler der Projektverwaltung
 projectmanager integration	admin	de	Integration des Projektmanagers
 quantity	timesheet	de	Menge
+recovered	timesheet	de	wiederhergestellt
 replacements for inserting entries into documents	timesheet	de	Platzhalter für das Einfügen in Dokumente
 save & new	timesheet	de	Speichern & Neu
 saves the changes made	timesheet	de	Speichert die Änderungen
@@ -108,6 +123,8 @@ status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert
 sum %1:	timesheet	de	Summe %1:
 tag to mark positions for address labels	timesheet	de	Platzhalter, um die Position der Adresslabels festzulegen
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	de	Das Dokument kann Platzhalter wie {{%3}} beinhalten, die mit den entsprechenden Inhalten ersetzt werden (%1Liste der Platzhalter%2).
+the following document-types are supported:	timesheet	de	Die folgenden Dokumenttypen werden unterstützt:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	de	Dieser Name wird nur intern benutzt (<= 20 Zeichen), Änderungen führen dazu, das bestehende Daten nicht mehr angezeigt werden können.
 the text displayed to the user	timesheet	de	der Text wird dem Benutzer angezeigt
 this month	timesheet	de	Diesen Monat
@@ -124,11 +141,14 @@ timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Open Off
 timesheet status-%1 '%2' added.	timesheet	de	Stundenzettel Status %1 '%2' hinzugefügt.
 timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht
+titles of any entries linked to the current record, excluding attached files	timesheet	de	Titel der zum aktuellen Eintrag verknüpften Einträge, ausgenommen angehangene Dateien.
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	de	Das System konnte "%1" nicht in die Benutzer-ID umwandeln. Verwenden Sie besser die Einstellung (%2) für %3.
 unitprice	timesheet	de	Preis pro Einheit
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	de	Verwenden Sie diesen Platzhalter für den den Seriendruck. Fügen Sie den Inhalt, der wiederholt werden soll, zwischen zwei Platzhaltern ein.
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
+yes, only admins can purge deleted items	admin	de	Ja, nur Administatoren dürfen gelöschte Einträge endgültig löschen
+yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	de	Ihre Datenbank ist NICHT aktuell (%1 statt %2), bitte rufen sie %3setup%4 auf um die Datenbank zu aktualisieren.

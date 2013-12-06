@@ -36,6 +36,7 @@ alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Be
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
 all days	etemplate	de	alle Tage
 all operations save the template!	etemplate	de	alle Operation speichern das Template!
+all users	etemplate	de	Alle Benutzer
 allowed file type: %1	etemplate	de	Erlaubter Dateityp: %1
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
@@ -153,6 +154,7 @@ editable templates - delete template	etemplate	de	eTemplates - Löschen
 editable templates - editor	etemplate	de	eTemplates - Bearbeiten
 editable templates - search	etemplate	de	eTemplates - Suchen
 editable templates - show template	etemplate	de	eTemplates - Anzeigen
+element role title	etemplate	de	Element Rolle Titel
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
@@ -218,6 +220,8 @@ hour	etemplate	de	Stunde
 hours	etemplate	de	Stunden
 how many entries should the list show	etemplate	de	Wie viele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
+html link to the current record	etemplate	de	HTML-Link zum aktuellen Eintrag.
+id	etemplate	de	Id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
@@ -293,6 +297,7 @@ nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+no filters	etemplate	de	Keine Filter
 no matches found	etemplate	de	Keine Treffer gefunden
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!

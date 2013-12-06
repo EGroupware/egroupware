@@ -36,6 +36,7 @@ alignment of label and input-field in table-cell	etemplate	en	Alignment of label
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table cell
 all days	etemplate	en	All days
 all operations save the template!	etemplate	en	All operations save the template!
+all users	etemplate	en	All users
 allowed file type: %1	etemplate	en	Allowed file type: %1
 am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	An indexed column speeds up query using that column, cost space on the disk!
@@ -153,6 +154,7 @@ editable templates - delete template	etemplate	en	Editable Templates - Delete te
 editable templates - editor	etemplate	en	Editable Templates - Editor
 editable templates - search	etemplate	en	Editable Templates - Search
 editable templates - show template	etemplate	en	Editable Templates - Show template
+element role title	etemplate	en	Element role title
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 enable javascript onchange submit	etemplate	en	Enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	Enter '' for an empty default, nothing means no default
@@ -220,6 +222,7 @@ hours	etemplate	en	Hours
 how many entries should the list show	etemplate	en	How many entries should the list show
 html	etemplate	en	HTML
 html link to the current record	etemplate	en	HTML link to the current record
+id	etemplate	en	id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	If field is disabled an empty table cell is displayed
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
