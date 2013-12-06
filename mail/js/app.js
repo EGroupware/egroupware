@@ -1078,22 +1078,64 @@ app.classes.mail = AppJS.extend(
 
 		//alert(_action.id+' - '+_elems[0].id);
 		//console.log(_action, _elems);
+		var classToProcess = _action.id;
+		if (_action.id=='read') classToProcess='seen';
+		else if (_action.id=='label1') classToProcess='labelone';
+		else if (_action.id=='label2') classToProcess='labeltwo';
+		else if (_action.id=='label3') classToProcess='labelthree';
+		else if (_action.id=='label4') classToProcess='labelfour';
+		else if (_action.id=='label5') classToProcess='labelfive';
+
 		if (do_nmactions)
 		{
 			msg = this.mail_getFormData(_elems);
 			if (_action.id.substring(0,2)=='un') {
-				//old style, probably only available for undelete (no toggle)
-				this.mail_removeRowClass(_elems,_action.id.substring(2));
-				this.mail_setRowClass(_elems,_action.id);
-				this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+				//old style, only available for undelete and unlabel (no toggle)
+				if ( _action.id=='unlabel') // this means all labels should be removed
+				{
+					var labels = ['labelone','labeltwo','labelthree','labelfour','labelfive'];
+					for (i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
+					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+				}
+				else
+				{
+					this.mail_removeRowClass(_elems,_action.id.substring(2));
+					this.mail_setRowClass(_elems,_action.id);
+					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+				}
 			}
 			else
 			{
-				var dataElem = egw.dataGetUIDdata(msg.msg[0]);
-				var flags = dataElem.data.flags;
-				this.mail_removeRowClass(_elems,(flags[_action.id]?'un':'')+_action.id);
-				this.mail_setRowClass(_elems,(flags[_action.id]?'':'un')+_action.id);
-				this.mail_flagMessages((flags[_action.id]?'un':'')+_action.id,msg,(do_nmactions?false:true),false);
+				var msg_set = {msg:[]};
+				var msg_unset = {msg:[]};
+				var dataElem;
+				var flags;
+				for (i=0; i<msg.msg.length; i++)
+				{
+					dataElem = egw.dataGetUIDdata(msg.msg[i]);
+					flags = dataElem.data.flags;
+					// since we toggle we need to unset the ones already set, and set the ones not set
+					if (flags[_action.id])
+					{
+						msg_unset['msg'].push(msg.msg[i]);
+					}
+					else
+					{
+						msg_set['msg'].push(msg.msg[i]);
+					}
+				}
+				if (msg_unset['msg'] && msg_unset['msg'].length)
+				{
+					this.mail_removeRowClass(msg_unset,classToProcess);
+					this.mail_setRowClass(msg_unset,'un'+classToProcess);
+					this.mail_flagMessages('un'+_action.id,msg_unset,(do_nmactions?false:true),false);
+				}
+				if (msg_set['msg'] && msg_set['msg'].length)
+				{
+					this.mail_removeRowClass(msg_set,'un'+classToProcess);
+					this.mail_setRowClass(msg_set,classToProcess);
+					this.mail_flagMessages(_action.id,msg_set,(do_nmactions?false:true),false);
+				}
 				this.mail_refreshMessageGrid((do_nmactions?false:true));
 			}
 		}
@@ -1602,13 +1644,33 @@ app.classes.mail = AppJS.extend(
 	mail_setRowClass: function(_actionObjects,_class) {
 		if (typeof _class == 'undefined') return false;
 
-		for (var i = 0; i < _actionObjects.length; i++)
+		if (typeof _actionObjects['msg'] == 'undefined')
 		{
-			if (_actionObjects[i].id.length>0)
+			for (var i = 0; i < _actionObjects.length; i++)
 			{
-				var dataElem = $j(_actionObjects[i].iface.getDOMNode());
-				dataElem.addClass(_class);
+				if (_actionObjects[i].id.length>0)
+				{
+					var dataElem = $j(_actionObjects[i].iface.getDOMNode());
+					dataElem.addClass(_class);
 
+				}
+			}
+		}
+		else
+		{
+			var nm = this.et2.getWidgetById(this.nm_index);
+			var aO = nm.controller._objectManager.selectedChildren;
+			for (var i = 0; i < _actionObjects['msg'].length; i++)
+			{
+				for (var k = 0; k < aO.length; k++)
+				{
+					if (aO[k].id==_actionObjects['msg'][i])
+					{
+						var dataElem = $j(aO[k].iface.getDOMNode());
+						dataElem.addClass(_class);
+
+					}
+				}
 			}
 		}
 	},

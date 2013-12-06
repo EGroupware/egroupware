@@ -952,32 +952,38 @@ class mail_ui
 								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
 								'icon' => 'mail_label1',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
 							),
 							'label2' => array(
 								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
 								'icon' => 'mail_label2',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_2, true, true),
 							),
 							'label3' => array(
 								'caption' => "<font color='#008000'>".lang('personal')."</font>",
 								'icon' => 'mail_label3',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_3, true, true),
 							),
 							'label4' => array(
 								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
 								'icon' => 'mail_label4',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_4, true, true),
 							),
 							'label5' => array(
 								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
 								'icon' => 'mail_label5',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_5, true, true),
 							),
 							'unlabel' => array(
 								'group' => ++$group,
 								'caption' => "<font color='#ff0000'>".lang('remove all')."</font>",
 								'icon' => 'mail_label',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_0, true, true),
 							),
 						),
 					),
@@ -1043,6 +1049,8 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'enableClass' => 'unseen',
 						//'enabled' => "javaScript:mail_enabledByClass",
+						'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
+
 					),
 /*
 					'unread' => array(
@@ -1535,7 +1543,8 @@ unset($query['actions']);
 				$data["size"] = $header['size']; /// size
 
 			$data["class"] = implode(' ', $css_styles);
-			if ($header['seen']) $data["flags"]['seen'] = 'seen';
+			//translate style-classes back to flags
+			if ($header['seen']) $data["flags"]['read'] = 'read';
 			foreach ($css_styles as $k => $flag) {
 				if ($flag!='mail')
 				{
@@ -1544,6 +1553,7 @@ unset($query['actions']);
 					elseif ($flag=='labelthree') {$data["flags"]['label3'] = 'label3';}
 					elseif ($flag=='labelfour') {$data["flags"]['label4'] = 'label4';}
 					elseif ($flag=='labelfive') {$data["flags"]['label5'] = 'label5';}
+					elseif ($flag=='unseen') {$data["flags"]['unread'] = 'unread';}
 					else $data["flags"][$flag] = $flag;
 				}
 			}
