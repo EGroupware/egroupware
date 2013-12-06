@@ -129,9 +129,6 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 
 		var self = this;
 
-		// Initialize sidebox
-		this._init_sidebox();
-
 		// Add a listener on the radio buttons to set default filter
 		$j(this.menu).on("click","input:radio", function(event){
 			// Don't do the menu
@@ -185,12 +182,6 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			}
 			this.popup.dialog("destroy");
 			this.popup = null;
-		}
-		if(this.sidebox_target.length)
-		{
-			this.sidebox_target
-				.off()
-				.empty();
 		}
 		this._super.apply(this, arguments);
 	},
@@ -301,6 +292,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		$j("input[value='"+ this.preferred +"']:radio", this.menu).attr("checked",true);
 
 		// Clone for sidebox
+		/*
 		if(this.sidebox_target.length)
 		{
 			this.sidebox_target.empty();
@@ -314,52 +306,8 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				.find("input:checked").replaceWith("<div class='ui-icon ui-icon-heart'/>");
 			sidebox_clone
 				.find("input").replaceWith("<img class='sideboxstar'/>");
-
 		}
-	},
-
-	/**
-	 * Find sidebox, if not found yet, and register handlers
-	 */
-	_init_sidebox: function()
-	{
-		// Sometimes the sidebox is not loaded when the template is created (jdots)
-		if(this.options && (!this.sidebox_target || this.sidebox_target.length == 0))
-		{
-			this.sidebox_target = $j("#"+this.options.sidebox_target);
-			if(this.sidebox_target.length == 0 && egw_getFramework() != null)
-			{
-				var egw_fw = egw_getFramework();
-				this.sidebox_target = $j("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
-			}
-			if(this.sidebox_target.length == 0)
-			{
-				// Still no sidebox - might be loaded via ajax later, so we'll do this on first mouse over
-				$j('body').on('mouseover','#'+this.options.sidebox_target,
-					jQuery.proxy(function(e) {
-						$j('body').off(e);
-						// Set up handlers & such
-						this._init_sidebox();
-						// It will still have the plain HTML, so re-create the contents
-						this.init_filters(this);
-					},this)
-				);
-			}
-		}
-		if(this.sidebox_target.length)
-		{
-			var self = this;
-			this.sidebox_target
-				.off()
-				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
-				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
-				.on("click","div.ui-icon-trash", this, this.delete_favorite)
-				.addClass("ui-helper-clearfix");
-			this.sidebox_target.on("click","li",function() {
-				self.set_value($j(this).attr("data-id"));
-				self.change(this);
-			});
-		}
+		*/
 	},
 
 	set_nm_filters: function(filters)
