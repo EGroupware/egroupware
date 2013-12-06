@@ -1808,7 +1808,7 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		if(!$registry) $registry = egw_link::get_registry($app,'index');
 		foreach($filters as $name => $filter)
 		{
-			$href = "javascript:app.$app.setState(" . json_encode($filter['filter']) . ');';
+			$href = "javascript:app.$app.setState(" . json_encode($filter) . ');';
 			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
 			$html .= "<a href='$href' class='ui-corner-all' tabindex='-1'>";
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".

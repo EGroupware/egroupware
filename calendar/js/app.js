@@ -518,8 +518,16 @@ app.classes.calendar = AppJS.extend(
 	 */
 	setState: function(state)
 	{
+		// State should be an object, not a string, but we'll parse
+		if(typeof state == "string")
+		{
+			if(state.indexOf('{') != -1 || state =='null')
+			{
+				state = JSON.parse(state);
+			}
+		}
 		// requested state is a listview and we are currently in a list-view
-		if (state.view == 'listview' && view.name && this.et2 && this.et2.getWidgetById('nm'))
+		if (state.state.view == 'listview' && state.name && this.et2 && this.et2.getWidgetById('nm'))
 		{
 			return this._super.apply(this, arguments);	// call default implementation
 		}
@@ -528,7 +536,7 @@ app.classes.calendar = AppJS.extend(
 		var menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.view == 'undefined' || state.view == 'listview')
 		{
-			menuaction = 'calendar.calendar_uilist.index';
+			menuaction = 'calendar.calendar_uilist.listview';
 			if (state.name)
 			{
 				state = {favorite: state.name.replace(/[^A-Za-z0-9-_]/g, '_')};

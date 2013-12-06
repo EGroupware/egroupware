@@ -188,11 +188,13 @@ var AppJS = Class.extend(
 	 * The default implementation works with the favorites to apply filters to a nextmatch.
 	 *
 	 *
-	 * @param {object} state description
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.  
+	 * @param {type} name description
 	 */
 	setState: function(state)
 	{
-		// State should be an object, not a string, but we'll try
+		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
 		{
 			if(state.indexOf('{') != -1 || state =='null')
@@ -383,13 +385,12 @@ var AppJS = Class.extend(
 				// Add to the list
 				name.val(name.val().replace(/(<([^>]+)>)/ig,""));
 				var safe_name = name.val().replace(/[^A-Za-z0-9-_]/g,"_");
-				self.stored_filters[safe_name] = {
+				var favorite = {
 					name: name.val(),
 					group: (typeof self.favorite_popup.group != "undefined" &&
 						self.favorite_popup.group.get_value() ? self.favorite_popup.group.get_value() : false),
 					state: self.favorite_popup.state
 				};
-				self.init_filters(self);
 
 				var favorite_pref = favorite_prefix+safe_name;
 
