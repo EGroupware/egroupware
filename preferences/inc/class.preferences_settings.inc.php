@@ -46,7 +46,8 @@ class preferences_settings
 		$tpl = new etemplate_new('preferences.settings');
 		if (!is_array($content))
 		{
-			$appname = isset($_GET['appname']) && $_GET['appname'] != 'preferences' ? $_GET['appname'] : 'common';
+			$appname = isset($_GET['appname']) && $_GET['appname'] != 'preferences' &&
+				isset($GLOBALS['egw_info']['user']['apps'][$_GET['appname']]) ? $_GET['appname'] : 'common';
 			$type = 'user';
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
@@ -56,6 +57,7 @@ class preferences_settings
 				$account_id = (int)$_GET['account_id'];
 				$type = $_GET['account_id'] < 0 ? 'group' : 'user';
 			}
+			$content['current_app'] = isset($GLOBALS['egw_info']['user']['apps'][$_GET['current_app']]) ? $_GET['current_app'] : $appname;
 		}
 		else
 		{
@@ -92,22 +94,23 @@ class preferences_settings
 							$msg = lang('Preferences saved.');
 						}
 				}
-				if(in_array($button, array('save','cancel')))
+				if (in_array($button, array('save','cancel')))
 				{
-					if($appname != 'common')
+					if ($content['current_app'] && ($app_data = $GLOBALS['egw_info']['user']['apps'][$content['current_app']]))
 					{
-						$extra = egw_link::get_registry($appname, 'list');
-						if(!$extra)
+						if ($app_data['index'])
 						{
-							$extra = egw_link::get_registry($appname,'view_list');
+							egw::redirect_link('/index.php', 'menuaction='.$app_data['index']);
 						}
-						egw_framework::redirect_link(egw_framework::link('/index.php'),$extra);
+						else
+						{
+							egw::redirect_link('/'.$content['current_app'].'/index.php');
+						}
 					}
 					else
 					{
-						egw_framework::window_close();
+						egw::redirect_link('/index.php');
 					}
-					return;
 				}
 			}
 			$appname = $content['appname'] ? $content['appname'] : 'common';
@@ -126,6 +129,10 @@ class preferences_settings
 		{
 			$old_tab = $content['tabs'];
 		}
+		// we need to run under calling app, to be able to restore it to it's index page after
+		$GLOBALS['egw_info']['flags']['currentapp'] = $preserve['current_app'] = $content['current_app'];
+		egw_framework::includeCSS('preferences','app');
+
 		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
 		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
 		$preserve['type'] = $preserve['old_type'] = $content['type'];
@@ -137,13 +144,6 @@ class preferences_settings
 			$attribute = $type == 'group' ? 'user' : $type;
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
 				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
-		}
-		// get sidebox menu of given app
-		if ($appname != 'common')
-		{
-			$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
-			// need to include our css
-			egw_framework::includeCSS('preferences','app');
 		}
 		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 

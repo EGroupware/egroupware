@@ -854,7 +854,7 @@ function egw_preferences(name, apps)
 				}
 				break;
 		}
-		egw_link_handler(egw_webserverUrl+url, current_app);
+		egw_link_handler(egw_webserverUrl+url+'&current_app='+current_app, current_app);
 	}
 }
 

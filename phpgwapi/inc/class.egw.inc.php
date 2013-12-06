@@ -455,11 +455,12 @@ class egw extends egw_minimal
 	 *
 	 * @param string	$string	The url the link is for
 	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
-	static function redirect_link($url, $extravars='')
+	static function redirect_link($url, $extravars='', $link_app=null)
 	{
-		return $GLOBALS['egw']->framework->redirect_link($url, $extravars);
+		return $GLOBALS['egw']->framework->redirect_link($url, $extravars, $link_app);
 	}
 
 	/**
