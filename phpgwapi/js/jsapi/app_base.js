@@ -84,6 +84,10 @@ var AppJS = Class.extend(
 		window.app[this.appname] = this;
 
 		this.egw = egw(this.appname, window);
+
+		// Initialize sidebox - ID set server side
+		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
+		this._init_sidebox(sidebox);
 	},
 
 	/**
@@ -190,7 +194,6 @@ var AppJS = Class.extend(
 	 *
 	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
 	 *	Only state is required, and its contents are application specific.  
-	 * @param {type} name description
 	 */
 	setState: function(state)
 	{
@@ -219,16 +222,18 @@ var AppJS = Class.extend(
 		{
 			et2[i].widgetContainer.iterateOver(function(_widget) {
 				// Apply
-				_widget.activeFilters = state;
+				_widget.activeFilters = state.state || state.filter || {};
 				_widget.applyFilters();
 				nextmatched = true;
 			}, this, et2_nextmatch);
 		}
 
 		// No nextmatch?  Try a redirect to list
-		if(!nextmatched)
+		if(!nextmatched && state.name)
 		{
-			egw.open('',this.appname,'list',{'state': state},this.appname);
+			// 'blank' is the special name for no filters, send that instead of the nice translated name
+			var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
 		}
 	},
 
@@ -238,8 +243,11 @@ var AppJS = Class.extend(
 	 * The state can be anything, as long as it's an object.  The contents are
 	 * application specific.  The default implementation finds a nextmatch and
 	 * returns its value.
+	 * The return value of this function cannot be passed directly to setState(),
+	 * since setState is expecting an additional wrapper, eg:
+	 * {name: 'something', state: getState()}
 	 *
-	 * @return {object} Value of a nextmatch
+	 * @return {object} Application specific map representing the current state
 	 */
 	getState: function()
 	{
@@ -255,6 +263,26 @@ var AppJS = Class.extend(
 		}
 
 		return state;
+	},
+
+	/**
+	 * Initializes actions and handlers on sidebox (delete)
+	 */
+	_init_sidebox: function(sidebox)
+	{
+		if(sidebox.length)
+		{
+			var self = this;
+			this.sidebox = sidebox;
+			sidebox
+				.off()
+				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
+				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
+				.on("click","div.ui-icon-trash", this, this.delete_favorite)
+				.addClass("ui-helper-clearfix");
+			return true;
+		}
+		return false;
 	},
 
 	add_favorite: function()
@@ -372,6 +400,7 @@ var AppJS = Class.extend(
 				no_lang: true,
 				parent_node: this.appname+'_favorites_popup_admin'
 			},this.et2 || null);
+			this.favorite_popup.group.loadingFinished();
 
 		}
 
@@ -418,9 +447,28 @@ var AppJS = Class.extend(
 						state:self.favorite_popup.state
 					});
 				}
-				delete self.favorite_popup.state;
+
+				// Add to list immediately
+				var state = {
+					name: name.val(),
+					group: false,
+					state:self.favorite_popup.state
+				};
+				if(self.sidebox)
+				{
+					var html = "<li data-id='"+safe_name+"' class='ui-menu-item' role='menuitem'>\n";
+					html += "<a href='#' class='ui-corner-all' tabindex='-1'>";
+					html += "<div class='" + 'sideboxstar' + "'></div>"+
+						name.val() /*+(filter['group'] != false ? " ♦" :"")*/;
+					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
+					html += "</a></li>\n";
+					$j(html).on('click.favorites',jQuery.proxy(function() {app[self.appname].setState(this);},state))
+						.insertBefore($j('li',self.sidebox).last());
+					self._init_sidebox(self.sidebox);
+				}
 			}
 			// Reset form
+			delete self.favorite_popup.state;
 			name.val("");
 			$j("#filters",self.favorite_popup).empty();
 
@@ -438,5 +486,48 @@ var AppJS = Class.extend(
 			close: function() {
 			}
 		});
+	},
+
+	/**
+	 * Delete a favorite from the list and update preferences
+	 * Registered as a handler on the delete icons
+	 */
+	delete_favorite: function(event)
+	{
+		// Don't do the menu
+		event.stopImmediatePropagation();
+
+		var app = event.data;
+		var line = $j(this).parentsUntil("li").parent();
+		var name = line.attr("data-id");
+		var trash = this;
+		$j(line).addClass('loading');
+
+		// Make sure first
+		var do_delete = function(button_id)
+		{
+			if(button_id != et2_dialog.YES_BUTTON) return;
+
+			// Hide the trash
+			$j(trash).hide();
+
+			// Delete preference server side
+			var request = egw.json(app.appname + ".egw_framework.ajax_set_favorite.template",
+				[app.appname, name, "delete", '', ''],
+				function(result) {
+					if(result)
+					{
+						// Remove line from list
+						line.slideUp("slow", function() { });
+					}
+				},
+				$j(trash).parentsUntil("li").parent(),
+				true,
+				$j(trash).parentsUntil("li").parent()
+			);
+			request.sendRequest(true);
+		}
+		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " +name +"?"),
+			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 	},
 });

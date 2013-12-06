@@ -1781,13 +1781,14 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		$filters = array(
 			'blank' => array(
 				'name' => lang('No filters'),
-				'filters' => array(),
+				'filter' => array(),
 				'group' => true
 			)
 		);
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
 		if(!$default_filter) $default_filter = "blank";
 
+		$is_admin = $GLOBALS['egw_info']['user']['apps']['admin'];
 		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
 		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
 		{
@@ -1809,10 +1810,12 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		foreach($filters as $name => $filter)
 		{
 			$href = "javascript:app.$app.setState(" . json_encode($filter) . ');';
-			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
+			$html .= "<li data-id='$name' class='ui-menu-item' role='menuitem'>\n";
 			$html .= "<a href='$href' class='ui-corner-all' tabindex='-1'>";
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'] .($filter['group'] != false ? " ♦" :"");
+			$html .= ($filter['group'] != false && !$is_admin || $name == 'blank' ? "" :
+				"<div class='ui-icon ui-icon-trash' title='" . lang('Delete') . "'></div>");
 			$html .= "</a></li>\n";
 		}
 

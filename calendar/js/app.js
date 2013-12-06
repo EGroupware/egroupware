@@ -498,15 +498,18 @@ app.classes.calendar = AppJS.extend(
 	 */
 	getState: function()
 	{
-		// we are currently in list-view
-		if (this.et2 && this.et2.getWidgetById('nm'))
-		{
-			return this._super.apply(this, arguments);	// call default implementation
-		}
 		var egw_script_tag = document.getElementById('egw_script_id');
 		var state = egw_script_tag.getAttribute('data-calendar-state');
 
-		return state ? JSON.parse(state) : null;
+		state = state ? JSON.parse(state) : {};
+
+		// we are currently in list-view
+		if (this.et2 && this.et2.getWidgetById('nm'))
+		{
+			jQuery.extend(state, this._super.apply(this, arguments));	// call default implementation
+		}
+
+		return state;
 	},
 
 	/**
