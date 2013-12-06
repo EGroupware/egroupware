@@ -87,6 +87,11 @@ var AppJS = Class.extend(
 
 		// Initialize sidebox - ID set server side
 		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
+		if(sidebox.length == 0 && egw_getFramework() != null)
+		{
+			var egw_fw = egw_getFramework();
+			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+		}
 		this._init_sidebox(sidebox);
 	},
 
@@ -193,7 +198,9 @@ var AppJS = Class.extend(
 	 *
 	 *
 	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
-	 *	Only state is required, and its contents are application specific.  
+	 *	Only state is required, and its contents are application specific.
+	 *
+	 * @return {boolean} false - Returns false to stop event propagation
 	 */
 	setState: function(state)
 	{
@@ -215,6 +222,12 @@ var AppJS = Class.extend(
 			state = {};
 		}
 
+		// Check for egw.open() parameters
+		if(state.state && state.state.id && state.state.app)
+		{
+			return egw.open(state.state,undefined,undefined,{},'_self');
+		}
+
 		// Try and find a nextmatch widget, and set its filters
 		var nextmatched = false;
 		var et2 = etemplate2.getByApplication(this.appname);
@@ -226,15 +239,15 @@ var AppJS = Class.extend(
 				_widget.applyFilters();
 				nextmatched = true;
 			}, this, et2_nextmatch);
+			if(nextmatched) return false;
 		}
 
-		// No nextmatch?  Try a redirect to list
-		if(!nextmatched && state.name)
-		{
-			// 'blank' is the special name for no filters, send that instead of the nice translated name
-			var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
-			egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
-		}
+		// Try a redirect to list
+		// 'blank' is the special name for no filters, send that instead of the nice translated name
+		var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+		egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
+		
+		return false
 	},
 
 	/**

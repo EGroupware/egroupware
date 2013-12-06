@@ -144,6 +144,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				{
 					app = id_data.app;
 					id = id_data.id;
+					if(typeof id_data.type != 'undefined')
+					{
+						type = id_data.type;
+					}
 				}
 			}
 			else if (app != 'file')
