@@ -418,4 +418,72 @@ app.classes.addressbook = AppJS.extend(
 		//Not implemented
 	},
 
+	/**
+	 * Retrieve the current state of the application for future restoration
+	 *
+	 * Overridden from parent to handle viewing a contact.  In this case state
+	 * will be {contact_id: #}
+	 *
+	 * @return {object} Application specific map representing the current state
+	 */
+	getState: function()
+	{
+		// Most likely we're in the list view
+		var state = this._super.apply(this, arguments);
+
+		if(jQuery.isEmptyObject(state))
+		{
+			// Not in a list view.  Try to find contact ID
+			var etemplates = etemplate2.getByApplication('addressbook');
+			for(var i = 0; i < etemplates.length; i++)
+			{
+				var content = etemplates[i].widgetContainer.getArrayMgr("content");
+				if(content && content.getEntry('id'))
+				{
+					state = {app: 'addressbook', id: content.getEntry('id'), type: 'view'};
+					break;
+				}
+			}
+		}
+
+		return state;
+	},
+
+	/**
+	 * Set the application's state to the given state.
+	 *
+	 * Overridden from parent to stop the contact view's infolog nextmatch from
+	 * being changed.
+	 *
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.
+	 *
+	 * @return {boolean} false - Returns false to stop event propagation
+	 */
+	setState: function(state)
+	{
+		var current_state = this.getState();
+		
+		// State should be an object, not a string, but we'll parse
+		if(typeof state == "string")
+		{
+			if(state.indexOf('{') != -1 || state =='null')
+			{
+				state = JSON.parse(state);
+			}
+		}
+
+
+		// Redirect from view to list - parent would do this, but infolog nextmatch stops it
+		if(current_state.app && current_state.id && (typeof state.state == 'undefined' || typeof state.state.app == 'undefined'))
+		{
+			// Redirect to list
+			// 'blank' is the special name for no filters, send that instead of the nice translated name
+			var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
+			return false;
+		}
+		return this._super.apply(this, arguments);
+	}
+
 });
