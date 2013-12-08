@@ -22,10 +22,10 @@
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput
  * interface. When derriving from this class, call setDOMNode with an input
  * DOMNode.
- * 
+ *
  * @augments et2_valueWidget
  */
-var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener], 
+var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 {
 	attributes: {
 		"needed": {
@@ -62,7 +62,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_inputWidget
 	 */
 	init: function() {
@@ -117,7 +117,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		}
 
 		this._super.apply(this,arguments);
-		
+
 //		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
 //		$j(this.getInputNode()).validator();
 	},
@@ -132,7 +132,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	change: function(_node) {
 		var messages = [];
 		var valid = this.isValid(messages);
-		
+
 		// Passing false will clear any set messages
 		this.set_validation_error(valid ? false : messages);
 
@@ -143,7 +143,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 				// Make sure function gets a reference to the widget
 				var args = Array.prototype.slice.call(arguments);
 				if(args.indexOf(this) == -1) args.push(this);
-				
+
 				return this.onchange.apply(this, args);
 			} else {
 				return (et2_compileLegacyJS(this.options.onchange, this, _node))();
@@ -151,15 +151,15 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		}
 		return valid;
 	},
-	
-	focus: function(_node) 
+
+	focus: function(_node)
 	{
 		if(typeof this.options.onfocus == 'function')
 		{
 			// Make sure function gets a reference to the widget
 			var args = Array.prototype.slice.call(arguments);
 			if(args.indexOf(this) == -1) args.push(this);
-				
+
 			return this.options.onfocus.apply(this, args);
 		}
 	},
@@ -180,7 +180,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 	set_id: function(_value) {
 		this.id = _value;
-		this.dom_id = _value ? this.getInstanceManager().uniqueId+'_'+this.id : _value;
+		this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId+'_'+this.id : _value;
 
 		// Set the id of the _input_ node (in contrast to the default
 		// implementation, which sets the base node)
@@ -227,7 +227,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 			{
 				this.showMessage(_value, "validation_error");
 				$j(node).addClass("invalid");
-				
+
 				// If on a tab, switch to that tab so user can see it
 				var widget = this;
 				var tab = this;
@@ -278,10 +278,10 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	resetDirty: function() {
 		this._oldValue = this.getValue();
 	},
-		
+
 	isValid: function(messages) {
 		var ok = true;
-		
+
 		// Check for required
 		if(this.options && this.options.needed && !this.options.readonly && (this.getValue() == null || this.getValue().valueOf() == ''))
 		{
@@ -294,14 +294,14 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	/**
 	 * Called whenever the template gets submitted. We return false if the widget
 	 * is not valid, which cancels the submission.
-	 * 
+	 *
 	 * @param _values contains the values which will be sent to the server.
 	 * 	Listeners may change these values before they get submitted.
 	 */
 	submit: function(_values) {
 		var messages = [];
 		var valid = this.isValid(messages);
-		
+
 		// Passing false will clear any set messages
 		this.set_validation_error(valid ? false : messages);
 		return valid;
