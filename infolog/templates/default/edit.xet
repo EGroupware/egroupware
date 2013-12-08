@@ -155,12 +155,12 @@
 	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
 			<columns>
-				<column width="103"/>
-				<column width="100"/>
-				<column/>
-				<column width="60"/>
-				<column width="90"/>
-				<column/>
+				<column width="10%"/>
+				<column width="40%"/>
+				<column width="1%"/>
+				<column width="5%"/>
+				<column width="10%"/>
+				<column width="34%"/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
@@ -172,13 +172,13 @@
 					<description/>
 				</row>
 				<row height="28" class="dialog-header">
-					<description value="Type" for="info_type"/>
-					<hbox options="0,0">
+					<description value="Type" for="info_type" vertical-align="center"/>
+					<hbox options="0,0" span="4">
 						<menulist>
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
 					</hbox>
-					<textbox type="integer" id="info_number" readonly="true" span="4" class="infolog_infoId"/>
+					<textbox type="integer" id="info_number" readonly="true" span="2" class="infolog_infoId"/>
 				</row>
 				<row class="row dialog-header" valign="top">
 					<description value="Contact" for="info_from"/>
@@ -190,7 +190,7 @@
 					</vbox>
 					<checkbox statustext="Check to specify custom contact" id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';"/>
 					<description value="Phone/Email" for="info_addr"/>
-					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="inputFullWidth"/>
+					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="_inputFullWidth"/>
 				</row>
 				<row class="row dialog-header">
 					<description value="Category" for="info_cat"/>

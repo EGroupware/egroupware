@@ -13,8 +13,46 @@
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 @import (less) "../default/app.css";
-//**********************************
+/* #############################################################################
 // iframe
+// Rahmen + padding**/
+
+/*############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################
+*/
+/**
+ * Give space to both contact view & infolog list
+ */
+#addressbook-index {
+  height: 100%;
+}
+#addressbook-edit {
+  height: auto;
+  min-height: 390px;
+}
+
+
+
+
+
+.et2_container[id^="infolog-index-addressbook"] {
+  min-height: 250px;
+}
+
 
 div#addressbook-index{
 //    min-height: 700px;
@@ -80,9 +118,6 @@ div#addressbook-index{
             &:hover {.Complete_Button_add_hover;}
 
         }
-        
-        
-
         
         
 
@@ -160,15 +195,52 @@ div#addressbook-index{
 }
 
 
-/* ##################################################### */
+// #############################################################################
+// Dialog addressbook
+
+/*###########################################
+#                                           #
+#       dialog-header                       #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
 
 
-// Dialog Addressbuch bearbeiten und alle weiteren
+
+#addressbook-edit_addressbook-edit-general {
+    
+    
+    
+    table.addressbook_edit_general {
+        width:80%;
+        height:286px;
+    }
+      
+} 
 
 
-/* ##################################################### */
 
+
+ /*#######################################################*/
+ /*#######################################################*/
+ /*#######################################################*/
 /*State: Address selected*/
+
+
+
+
 
 
 /*ADD AREA*/
@@ -189,10 +261,64 @@ div#addressbook-index{
  }
 
 
- 
-/*State: address edit*/        
+
+ /*#######################################################*/
+ /*#######################################################*/
+ /*#######################################################*/
+/* State: address edit min*/        
 
 
+
+/*#######################################################*/
+/* Tab Generell */
+
+/*Layout*/
+
+#addressbook-edit .et2_tabbox {max-width: 100%;     min-width: 530px;}
+
+#addressbook-edit .et2_tabs {height: 380px;}
+
+table.et2_grid .addressbook_edit_general {width: 80% !important;}
+
+
+/*##################
+#                #
+#                #
+#  Picture       #
+#                #
+#                #
+##################*/
+/*Div Image*/
+div.addressbook_edit_general_picture {
+    float: right;
+    
+    
+    img {width: 180% !important; max-width: 100px !important; height: auto !important; margin-right: 70px; }
+    
+    /*Picture*/
+
+// Photo
+        img.photo {
+            .Complete_Button_normal;
+            &:hover {.Complete_Button_hover;}
+        }
+        
+// Photo Upload - POPUP
+        
+        table.uploadphoto {
+            .background-color-10-gray;
+            width: auto;
+            .bordered(1px, 1px, 1px, 0); 
+            left: 243px;
+            top: 189px;
+        }
+    
+    
+    
+}
+
+
+/*Search*/
 div#addressbook-edit,
 div#addressbook-search{
 
@@ -212,74 +338,65 @@ div#addressbook-search{
         top: 5%;
         .box_shadow_standard_light;
     }
-        table.et2_grid{
+    
+    table.et2_grid{
         width: 100%;
         border-top: 0px;
+        
+        img {width: 16px; height: 16px;}
+        
     }
+    
+    
     table.addressbook_edit_general{
         //		background: red;
 
         border-top: 0px;
 
-        tr td:first-child {width: 100px;}
-        tr td {width: 200px;}
+        tr td:first-child {width: 20%;}
+        tr td {width: auto;}
 
         table tr td:first-child {width: 60px;}
         table tr td {width: 200px;}
 
-        // Photo
-        img.photo {
-            .Complete_Button_normal;
-            &:hover {.Complete_Button_hover;}
-        }
-        
-        // Photo Upload
-        
-        .uploadphoto {
-            .background-color-10-gray;
-            width: auto;
-            .bordered();
-            
-        }
-        
 
         //Name
-        input#addressbook-edit_n_fn {width: 200px;}
+        input#addressbook-edit_n_fn {width: 95%;}
 
-        // Name bearbeiten
+        
+        /*POPUP*/
+         /* edit Name */
         table.editname {
             .background-color-10-gray;
-            //					position: relative;
-            //					top: -20px;
             z-index: 10;
-            font-size: 1.5em;
+            font-size: 1em;
 
-            tr td:first-child {width: 100px !important;}
+            tr td:first-child {width: 40% !important;font-weight: bold; padding: 3px 0;}
         }
 
 
         //Titel
-        input#addressbook-edit_title {width: 200px;}
+        input#addressbook-edit_title {width: 95%;}
         //Role
-        input#addressbook-edit_role {width: 200px;}
+        input#addressbook-edit_role {width: 95%;}
 
         //Organisation
-        input#addressbook-edit_org_name  {width: 286px;}
+        input#addressbook-edit_org_name  {width: 95%;}
         //unit
-        input#addressbook-edit_org_unit {width: 286px;}
+        input#addressbook-edit_org_unit {width: 95%;}
         // Street
         input#addressbook-edit_adr_one_street,
-        input#addressbook-edit_adr_one_street2 {width: 286px;}
+        input#addressbook-edit_adr_one_street2 {width: 95%;}
 
         // PLZ + Ort
-        input#addressbook-edit_adr_one_postalcode {width: 50px;}
-        input#addressbook-edit_adr_one_locality {width: 225px;}
+        input#addressbook-edit_adr_one_postalcode {width: 10%;}
+        input#addressbook-edit_adr_one_locality {width: 83%;}
 
         // Choosen Adresse
-        .chzn-container { width: 300px !important;}
+        .chzn-container { width: 95% !important;}
 
         //region
-        input#addressbook-edit_adr_one_region {width: 286px;}
+        input#addressbook-edit_adr_one_region {width: 95%;}
 
 
         //Owner
@@ -367,6 +484,10 @@ div#addressbook-search{
     }
 }
 
+
+
+
+
 // ################### Tab 2 / Kategorien ########################
 //
 // addressbook-edit_addressbook.edit.cats
@@ -374,7 +495,19 @@ div#addressbook-search{
 
 //div#addressbook-edit_addressbook~\.edit~\.cats {background-color: red;}
 
+div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
+
 // ################## Tab 3 / Privat #############################
+// Privat
+
+#addressbook-edit_addressbook-edit-custom_private,
+#addressbook-search_addressbook-edit-custom_private{
+    .th{ height: 20px;}
+    tbody{
+        display: table-header-group;
+        vertical-align: top;
+    }
+}
 
 #addressbook-edit_addressbook-edit-home{
 
@@ -396,6 +529,11 @@ div#addressbook-search{
     }
 
 }
+ /*################## Tab 4 Details ###############################*/
+
+
+
+ /*################## Tab 5  Verknüpfungen ###############################*/
 // Verknüpfungen
 
 #addressbook-edit_addressbook-edit-links,
@@ -406,7 +544,20 @@ div#addressbook-search{
         vertical-align: top;
     }
 }
+ div#addressbook-edit_addressbook-edit-links {
+     /*overflow-y: scroll;*/
+     
+     /*neue verknüpfung erstellen - div*/
+     div#addressbook-edit_link_to {width: 100% !important;}
+     
+     table#addressbook-edit_link_to {overflow-y: scroll;}
+ }
 
+
+
+ /*################## Tab 6  Verteilerlisten ###############################*/
+
+/*seems to be ok*/
 // Verteilerliste
 
 #addressbook-edit_addressbook-edit-distribution_list,
@@ -417,9 +568,9 @@ div#addressbook-search{
         vertical-align: top;
     }
 }
-
+ /*################## Tab 7 Extra ###############################*/
+/*seems to be ok*/
 // Extra
-
 #addressbook-edit_addressbook-edit-custom,
 #addressbook-search_addressbook-edit-custom{
     .th{ height: 20px;}
@@ -428,19 +579,10 @@ div#addressbook-search{
         vertical-align: top;
     }
 }
-
-// Privat
-
-#addressbook-edit_addressbook-edit-custom_private,
-#addressbook-search_addressbook-edit-custom_private{
-    .th{ height: 20px;}
-    tbody{
-        display: table-header-group;
-        vertical-align: top;
-    }
-}
-
-// History
+ /*################## Tab 8 Extra Privat###############################*/
+/*seems to be ok*/
+ /*################## Tab 9 History ###############################*/
+ // History
 
 #addressbook-edit_addressbook-edit-history{
     .th{ height: 20px;}
@@ -450,14 +592,59 @@ div#addressbook-search{
     }
 }
 
+ #addressbook-edit_addressbook-edit-history{
+     
+     .et2_historylog{
 
-// ################## Tab 4 Details ###############################
+         div:first-child {height: auto !important;}
+         
+         table.egwGridView_outer {
+             
+             th.optcol {
+                 
+                 span.selectcols {position: relative !important;}
+                 
+             }
+             
+         }
+         
+     }
+     
+ }
+
+
+
+
+
+
+
+
+
+/*################################################################
+################################################################*/
+
+
+
 // mehr...Phonebuch
 
 button.button_more {
     .Complete_Button_text_icon_before;
     background-image:url('../images/bearbeiten.png');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // #####################################################
 // Adresse editieren
 

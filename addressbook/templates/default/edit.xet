@@ -28,23 +28,23 @@
 			<rows>
 				<row>
 					<description for="n_prefix" value="prefix"/>
-					<textbox id="n_prefix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="35" maxlength="64"/>
+					<textbox id="n_prefix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_given" value="first name"/>
-					<textbox id="n_given" onchange="app.addressbook.check_value(this,'$cont[id]');" size="35" maxlength="64"/>
+					<textbox id="n_given" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_middle" value="middle name"/>
-					<textbox id="n_middle" onchange="app.addressbook.check_value(this,'$cont[id]');" size="35" maxlength="64"/>
+					<textbox id="n_middle" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_family" value="last name"/>
-					<textbox id="n_family" onchange="app.addressbook.check_value(this,'$cont[id]');" size="35" maxlength="64"/>
+					<textbox id="n_family" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_suffix" value="suffix"/>
-					<textbox id="n_suffix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="35" maxlength="64"/>
+					<textbox id="n_suffix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
@@ -53,56 +53,46 @@
 			</rows>
 		</grid>
 	</template>
+        
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%" height="286" class="addressbook_edit_general">
+            
+                                                    <!-- <image src="accounts"/> -->
+					<vbox class="addressbook_edit_general_picture">
+						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+						<template id="addressbook.edit.upload"/>
+					</vbox>
+		<grid  class="addressbook_edit_general">
 			<columns>
-				<column/>
+				<column />
 				<column/>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
-				<row valign="top">
-					<!-- <image src="accounts"/> -->
-					<vbox>
-						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-						<template id="addressbook.edit.upload"/>
-					</vbox>
-					<grid>
-						<columns>
-							<column/>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description value="Name"/>
-								<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="2" tabindex="-1" class="cursorHand"/>
-							</row>
-							<row>
-								<description/>
-								<template id="addressbook.edit.name"/>
-								<description/>
-								<description/>
-							</row>
-							<row>
-								<description for="title" value="Title"/>
-								<textbox id="title" size="36" maxlength="64" span="2"/>
-								<description/>
-							</row>
-							<row>
-								<description for="role" value="Role"/>
-								<textbox id="role" size="20" maxlength="64"/>
-								<textbox label="Room" id="room" size="5"/>
-								<description/>
-							</row>
-						</rows>
-					</grid>
+				<row>
+					<description value="Name"/>
+					<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="3" tabindex="-1" class="cursorHand"/>
+				</row>
+				<row>
+					<description/>
+					<template id="addressbook.edit.name"/>
+
+				</row>
+                                <row>
+					<description for="title" value="Title"/>
+					<textbox id="title" size="36" maxlength="64" span="2"/>
+					
+				</row>
+				<row>
+					<description for="role" value="Role"/>
+					<textbox id="role" size="20" maxlength="64"/>
+					<textbox label="Room" id="room" size="5"/>
+					
 				</row>
 				<row>
 				<!-- 	<image src="home"/> -->
 					<description value="Organisation"/>
-					<textbox id="org_name" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="128"/>
+					<textbox id="org_name" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="128" colspan="3"/>
 				</row>
 				<row>
 					<description for="org_unit" value="department"/>
@@ -170,6 +160,9 @@
 			</rows>
 		</grid>
 	</template>
+        
+        
+        
 	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="286" overflow="auto">
 			<columns>
@@ -316,6 +309,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
+            
 		<grid width="100%" height="286" overflow="auto">
 			<columns>
 				<column/>
@@ -504,6 +498,7 @@
 					<htmlarea id="msg" no_lang="1" readonly="true" span="all" class="redItalic"/>
 					<description/>
 				</row>
+                                
 				<row class="dialog-header">
 					<menulist>
 						<menupopup blur="Name" class="fileas" statustext="own sorting" id="fileas_type" no_lang="1"/>

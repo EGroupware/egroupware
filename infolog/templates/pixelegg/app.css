@@ -215,7 +215,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 }
 /*###########################################
 #                                           #
-#                                           #
+#       dialog-header                       #
 #############################################
 #                                           #
 #                                           #
@@ -247,5 +247,11 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 }
 .infolog_fixedHeight {
   height: auto;
+}
+.searchParent input.ui-autocomplete-input {
+  width: 95% !important;
+}
+input#infolog-edit_info_subject {
+  width: 98% !important;
 }
 /**/

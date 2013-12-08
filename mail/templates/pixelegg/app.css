@@ -54,6 +54,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate 
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 100%;
 }
+.egw_fw_ui_category_content {
+  /*new mail in FOlder*/
+}
 .egw_fw_ui_category_content #mail-index_buttonmailcreate {
   margin-left: 0px;
 }
@@ -107,6 +110,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 .egw_fw_ui_category_content .dtree {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+}
+.egw_fw_ui_category_content span.standartTreeRow b {
+  color: #0c5da5;
 }
 /*###########################################
 #                                           #
