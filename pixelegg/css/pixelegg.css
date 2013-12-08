@@ -38,6 +38,1147 @@
  * Stefan Reinhardt
  */
 /**
+ * Styles for etemplate2 widgets
+ *
+ * @version: $Id$
+ */
+/**
+ * Top level
+ */
+.et2_container {
+  /*margin: 10px;
+	border: 1px solid gray;*/
+  padding: 0px;
+  background-color: white;
+  height: 99%;
+}
+.et2_container > div:not([class]) {
+  height: 100%;
+}
+/**
+ * Basic rules
+ */
+input,
+button,
+select {
+  margin: 1px;
+  padding: 0px;
+}
+/**
+ * VBox widget
+ */
+div.et2_vbox > * {
+  display: block;
+}
+/**
+ * HBox widget
+ */
+div.et2_hbox div.et2_hbox {
+  display: inline;
+}
+div.et2_hbox {
+  white-space: nowrap;
+}
+div.et2_hbox > * {
+  text-align: left;
+}
+div.et2_hbox_left {
+  float: left;
+}
+div.et2_hbox_al_center {
+  text-align: center;
+}
+div.et2_hbox_al_right {
+  text-align: right;
+}
+div.et2_hbox_right {
+  float: right;
+  clear: right;
+}
+div.et2_hbox > div {
+  display: inline-block;
+}
+/**
+ * Placeholder widget - used for un-implemented widgets
+ */
+.et2_placeholder {
+  display: inline-block;
+  border: 1px solid cornflowerblue;
+  background-color: #FCFCFC;
+  padding: 3px;
+  margin: 1px;
+}
+.et2_placeholder .et2_caption {
+  display: block;
+  font-size: 8pt;
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  color: #2E2E2E;
+  cursor: pointer;
+  text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
+}
+.et2_placeholder .et2_attr {
+  display: block;
+  font-size: 8pt;
+  color: #3030A0;
+  margin: 2px 0 2px 0;
+}
+/**
+ * Splitter widget - split pane
+ */
+.et2_split {
+  width: 100%;
+  min-width: 100px;
+  min-height: 100px;
+}
+.splitter-bar-vertical {
+  cursor: ew-resize;
+  width: 5px;
+}
+.splitter-bar-horizontal {
+  cursor: ns-resize;
+  height: 5px;
+}
+/* Hide iframes so moving works */
+.splitter-iframe-hide {
+  display: none;
+}
+.et2_split div.splitter-bar-vertical div.ui-icon {
+  position: absolute;
+  margin-left: -5px;
+  top: 45%;
+}
+.et2_split div.splitter-bar-horizontal div.ui-icon {
+  position: absolute;
+  margin-top: -6px;
+  left: 47%;
+}
+/* Make sure there's no overflow, or hidden bits still appear */
+* > .et2_split {
+  overflow: hidden;
+}
+/**
+ * Label widget, and labels for other widgets
+ */
+.et2_label {
+  color: #101050;
+}
+#msg,
+.message {
+  color: red;
+  font-style: italic;
+}
+input.et2_url {
+  margin-right: 6px;
+  padding-right: 8px;
+}
+a.et2_url {
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin: -4px;
+  padding: 2px;
+  padding-left: 16px;
+  margin-left: -10px;
+}
+a.et2_url.email {
+  background-image: url(images/email.png);
+}
+a.et2_url.phone {
+  background-image: url(images/phone.png);
+}
+a.et2_url.url {
+  background-image: url(images/url.png);
+}
+/**
+ * Button widget - text only, and icon
+ */
+.et2_button {
+  cursor: pointer;
+  text-align: center;
+  font-size: 9pt;
+  text-shadow: 1px 1px #E0E0E0;
+}
+.et2_button_text,
+input[type=button] {
+  background-color: #E0E0E0;
+  background-image: url(images/gradient01.png);
+  background-position: center;
+  background-repeat: repeat-x;
+  margin: 5px;
+  padding: 3px;
+  border: 1px solid silver;
+  color: #101010;
+}
+.et2_button_icon {
+  border: none;
+  background: transparent;
+  padding: 0px;
+}
+button.et2_button_text:hover,
+input[type=button]:hover {
+  color: #050505;
+  border: 1px solid gray;
+  background-color: #D0D0EE;
+}
+button.et2_button_text:active,
+input[type=button]:active {
+  background-image: url(images/gradient02.png);
+  background-color: #D0D0E0;
+}
+button.et2_button_text:focus,
+input[type=button]:focus {
+  border: 1px solid #2c3d6f;
+  color: #202d52;
+  outline: none;
+}
+button.et2_button_with_image {
+  padding-left: 20px;
+  background-repeat: no-repeat;
+  background-position: 5% center;
+  background-size: 16px;
+}
+/**
+ * Drop down button
+ */
+.et2_dropdown button {
+  height: 3.0ex;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -2px;
+  padding: 0px 1ex;
+}
+.et2_dropdown button > div {
+  vertical-align: middle;
+}
+.et2_dropdown button:last-child {
+  padding: 0px;
+}
+.et2_dropdown + ul.ui-menu {
+  position: absolute;
+  z-index: 2;
+}
+/**
+ * Color picker widget
+ */
+.et2_color {
+  padding: .5ex;
+  height: 2ex;
+  width: 2ex;
+  border: 1px solid silver;
+}
+/**
+ * Text box
+ */
+.et2_textbox {
+  resize: none;
+}
+.et2_textbox_ro {
+  white-space: pre-wrap;
+}
+.et2_bold {
+  font-weight: bold;
+}
+.et2_italic {
+  font-style: italic;
+}
+/**
+ * Multi-select widget
+ */
+.et2_selectbox .ui-widget-header {
+  padding: 0px 6px 0px 6px;
+  text-align: center;
+}
+.et2_selectbox .ui-widget-header ul {
+  float: left;
+  margin-left: -5px;
+  text-align: left;
+}
+.et2_selectbox .ui-widget-header li {
+  float: left;
+  padding-top: 0px;
+}
+.et2_selectbox .ui-widget-header li > span.ui-icon {
+  float: left;
+  margin-top: -2px;
+}
+.et2_selectbox .ui-widget-header li > div.et2_link_entry {
+  /* Shrink search box to same size as header */
+  margin-top: -2px;
+  margin-bottom: -2px;
+  margin-right: 1ex;
+}
+.et2_selectbox .ui-widget-header li > div.et2_link_entry input {
+  height: 14px;
+}
+.et2_selectbox .ui-multiselect-checkboxes {
+  overflow-y: scroll;
+  position: relative;
+  text-align: left;
+}
+.et2_selectbox .ui-multiselect-checkboxes li {
+  margin: 0px;
+  clear: both;
+  padding-left: 26px;
+  padding-right: 3px;
+  text-decoration: none;
+  list-style-image: none;
+  list-style-type: none;
+  text-indent: -26px;
+}
+.et2_selectbox .ui-multiselect-checkboxes ul {
+  margin: 0px auto;
+  padding-left: 0px;
+  clear: both;
+  text-decoration: none;
+  list-style-image: none;
+  list-style-type: none;
+}
+.et2_selectbox .ui-multiselect-checkboxes ul > label {
+  border-bottom: 1px solid black;
+}
+.et2_selectbox .ui-multiselect-checkboxes label {
+  display: block;
+  border: 1px solid transparent;
+}
+.et2_selectbox input[type="checkbox"] {
+  margin: 3px;
+}
+.et2_selectbox .ui-multiselect-checkboxes img {
+  float: right;
+  height: 1.8em;
+}
+.et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
+  visibility: hidden;
+  padding: 0px;
+}
+.et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
+  visibility: visible;
+}
+/* Read-only multi-select */
+ul.et2_selectbox {
+  margin: 0px;
+  padding: 0px;
+}
+.et2_selectbox li {
+  text-decoration: none;
+  list-style-image: none;
+  list-style-type: none;
+}
+/**
+ * Select account dialog
+ */
+/**
+ * Date / Time widgets
+ */
+span.et2_date {
+  min-width: 130px;
+}
+span.et2_date input.et2_date {
+  min-width: 16.5ex;
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: contain;
+}
+span.et2_date input.et2_time {
+  min-width: 6ex;
+}
+span.et2_date span {
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #101010;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-left: 22px;
+  text-align: center;
+  font-size: 9pt;
+}
+/**
+ * Dialog widget
+ * It uses jQueryUI, so this is just our little bits - icon on left
+ */
+.ui-dialog-content .dialog_icon {
+  margin-right: 2ex;
+  vertical-align: middle;
+}
+.ui-dialog-content {
+  vertical-align: middle;
+}
+/* These change button alignment, but it seems the standard is right-aligned for
+action buttons, left aligned for "extra" controls
+.ui-dialog .ui-dialog-buttonpane {
+	text-align: left;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float: none;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	float: none;
+}
+*/
+/** 
+ * Diff widget
+ */
+.diff thead,
+.author {
+  display: none;
+}
+.diff .ui-icon {
+  margin-top: -16px;
+  float: right;
+}
+/** Display a loading icon **/
+.loading {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('images/ajax-loader.gif');
+}
+/**
+ * File upload
+ */
+.et2_file .progress {
+  width: 300px;
+  max-height: 6em;
+  overflow: auto;
+  margin-left: 20px;
+}
+.et2_file .progress span.progressBar {
+  height: 5px;
+  width: 150px;
+  max-width: 150px;
+  display: inline;
+}
+/* Remove icon displayed when hovering */
+.et2_file .progress li div.remove {
+  display: none;
+  cursor: pointer;
+  margin: 0px;
+}
+.et2_file .progress li:hover div.remove {
+  width: 16px;
+  height: 16px;
+  float: right;
+  display: block;
+  background-image: url("images/close.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.et2_file .progress p {
+  background-color: green;
+  height: 5px;
+  margin: 0px;
+}
+/* Hide progress bar when completed */
+.et2_file .progress li.success > span.progressBar {
+  display: none;
+}
+/**
+ * Autocomplete - used in link widget
+ * Restricting result size
+ */
+.ui-autocomplete {
+  max-height: 20ex;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+/**
+ * Autocomplete in dialogs - fix so they go over/out of the dialog
+ */
+.ui-dialog * ul.ui-autocomplete {
+  position: fixed;
+}
+/**
+ * Link wiget(s)
+ */
+/* Link entry - x button*/
+div.et2_link_entry {
+  white-space: nowrap;
+}
+div.et2_link_entry:after {
+  display: inline-block;
+  content: ".";
+  height: 0;
+  visibility: hidden;
+  margin: -20px;
+}
+/* Special layout for inside nm grid */
+.et2_nextmatch div.et2_link_entry {
+  padding-right: 4px;
+}
+.et2_nextmatch .et2_link_entry:after {
+  margin: -12px;
+}
+div.et2_link_entry select {
+  width: 39%;
+}
+div.et2_link_entry input.ui-autocomplete-input {
+  width: 61%;
+  padding-bottom: 1px;
+}
+.et2_link_entry.no_app input.ui-autocomplete-input {
+  width: 100%;
+}
+.et2_link_entry.no_app select {
+  display: none;
+}
+.et2_link_entry .ui-icon-close {
+  display: inline-block;
+  background-color: inherit;
+  border: none;
+  position: relative;
+  top: 3px;
+  left: -18px;
+  cursor: pointer;
+  margin-top: -3px;
+}
+/* Link to */
+.et2_link_to {
+  width: 350px;
+  overflow-x: show;
+}
+.et2_link_to button {
+  display: inline;
+  float: right;
+  height: 5ex;
+}
+.et2_link_to span.status {
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  width: 22px;
+  height: 22px;
+  display: block;
+  float: right;
+}
+.et2_link_to span.status.success {
+  background-image: url(images/tick.png);
+}
+.et2_link_to span.status.error {
+  background-image: url(images/error.png);
+}
+.et2_link_to .progress {
+  max-height: 12em;
+  overflow-y: scroll;
+}
+.et2_link_to .progress > .success input {
+  width: 100%;
+  margin-right: -20px;
+  /* Leave room for remove icon */
+}
+.et2_link_to .progress li {
+  list-style: none;
+  padding-bottom: 1px;
+  padding-top: 0px;
+}
+.et2_link_to .progress li.success span.ui-icon-comment {
+  display: none;
+  float: right;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.et2_link_to .progress li:hover.success span.ui-icon-comment {
+  display: inline;
+}
+.et2_link_to .et2_button_icon {
+  float: left;
+  width: 22px;
+}
+.et2_link {
+  cursor: pointer;
+  color: #003075;
+  text-decoration: none;
+}
+.et2_link:hover {
+  text-decoration: underline;
+}
+ul.et2_link_string {
+  list-style-type: none;
+  display: inline;
+  padding: 0px;
+}
+.et2_link_string li {
+  display: inline;
+}
+.et2_link_string li:not(:last-child):after {
+  content: ', ';
+}
+.et2_link_list {
+  border-collapse: collapse;
+}
+.et2_link_list tr {
+  cursor: pointer;
+}
+.et2_link_list td.remark {
+  font-style: italic;
+}
+.et2_link_list td div.delete {
+  visibility: hidden;
+  background-image: url("images/close.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0px;
+}
+.et2_link_list .icon img,
+.et2_link_list .icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+.et2_link_list tr:hover div.delete {
+  visibility: visible;
+}
+.egw_tooltip {
+  position: fixed;
+  border: 1px solid #897f51;
+  padding: 3px;
+  background-color: #FDF9DB;
+  max-width: 300px;
+  color: black;
+}
+/**
+ * Tabs widget
+ */
+.et2_tabflag {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid silver;
+  background-color: #E0E0E0;
+  background-image: url(images/gradient01.png);
+  background-position: center;
+  background-repeat: repeat-x;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.et2_tabflag:hover {
+  color: #050505;
+  border: 1px solid gray;
+  background-color: #D0D0EE;
+}
+.et2_tabflag:active {
+  background-image: url(images/gradient02.png);
+  background-color: #D0D0E0;
+}
+.et2_tabs {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: silver;
+  padding: 5px;
+  overflow-y: auto;
+}
+.et2_tabflag.active {
+  border-bottom: 1px solid white;
+  background-color: white;
+  background-image: none;
+}
+.et2_tabheader {
+  background-image: url(images/tab_header_bg.png);
+  background-position: bottom;
+  background-repeat: repeat-x;
+}
+.et2_taglist_ro ul {
+  margin: 0px;
+  padding: 0px;
+}
+/**
+ * VFS widget(s)
+ */
+ul.et2_vfs {
+  padding-left: 0px;
+  margin: 1px;
+}
+.et2_vfs li.vfsFilename {
+  display: inline;
+}
+.et2_vfs li.vfsFilename:not(:last-child):after {
+  padding: 0.25ex;
+}
+/**
+* Validation
+*/
+[required] {
+  background-color: #ffffd0;
+}
+.invalid {
+  border: 1px solid #a6261d;
+  background-color: #faecec;
+}
+.error {
+  -moz-border-radius: 0 4px 4px 0;
+  -moz-box-shadow: 0 0 6px #DDDDDD;
+  background-color: #FFFE36;
+  border: 1px solid #E1E16D;
+  color: #000000;
+  display: none;
+  font-size: 11px;
+  height: 15px;
+  padding: 4px 10px;
+}
+.error p {
+  margin: 0;
+}
+/**
+ * hrule widget
+ */
+hr {
+  border-style: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  margin: 10px 0px 10px 0px;
+}
+/**
+ * grid widget
+ */
+table.et2_grid {
+  border-collapse: collapse;
+}
+.et2_grid td {
+  /*	border: 1px dashed silver;*/
+}
+/**
+ * Sortable grid
+ */
+table.et2_grid tbody.ui-sortable > tr:not(.th) {
+  cursor: ns-resize;
+}
+/**
+ * Create some spacing for widgets inside labels
+ */
+label input,
+label span,
+label div,
+label select,
+label textarea {
+  margin-left: 1ex;
+  margin-right: 1ex;
+}
+/**
+ * Message styles
+ */
+/* Style used for a generic message (such as success messages or validation errors) */
+div.message {
+  display: block;
+  border: 1px solid gray;
+  padding: 3px 3px 3px 22px;
+  margin: 5px 0px 5px 0px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  clear: left;
+  max-width: 500px;
+}
+div.message.floating {
+  display: inline-block;
+  margin: 0px 5px 0px 5px;
+}
+.message.validation_error {
+  color: #a93030;
+  font-style: italic;
+  background-color: #f3d4d0;
+  border-color: #a93030;
+  background-image: url(images/error.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+.message.success {
+  font-style: normal;
+  background-color: #e5f3d0;
+  color: #98a930;
+  border-color: #9ea930;
+  background-image: url(images/tick.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+.message.hint {
+  font-style: normal;
+  background-color: #d9e2ed;
+  border-color: #56729a;
+  color: #56729a;
+  background-image: url(images/hint.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+/**
+ * Nextmatch widget
+ */
+.et2_nextmatch {
+  /*	background-color: silver;*/
+}
+/* Left & right headers*/
+.et2_nextmatch > div > .header {
+  margin-top: -20px;
+  border: none;
+}
+.nextmatch_header .header_count {
+  padding: 0px 20px;
+  margin: 6px 20px 0px;
+  border: 1px solid #E0E0E0;
+  float: right;
+  font-size: 150%;
+  text-align: center;
+}
+.nextmatch_header > .filters {
+  padding-left: 5px;
+}
+.nextmatch_header > .filters select {
+  margin-right: 2ex;
+}
+.nextmatch_header .et2_button_icon {
+  vertical-align: middle;
+}
+.nextmatch_header > .filters .et2_button_icon {
+  margin-top: 8px;
+}
+.et2_nextmatch .nextmatch_header {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  margin-bottom: 3px;
+}
+.et2_nextmatch .nextmatch_header > .filters {
+  border: 1px solid silver;
+  background-color: #E0E0E0;
+  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+  background-position: center;
+  background-repeat: repeat-x;
+  margin-bottom: 3px;
+}
+/* Favorites */
+.nextmatch_header div[id$=favorite_wrapper] {
+  margin-top: 6px;
+  vertical-align: middle;
+}
+#nm_favorites_popup_filters .filter_id,
+#nm_favorites_popup_filters .filter_value {
+  width: 45%;
+  display: inline-block;
+}
+.nextmatch_header ul.favorites {
+  min-width: 20ex;
+}
+.nextmatch_header .favorites li .ui-menu .ui-menu-item a {
+  text-indent: -22px;
+  margin-left: 21px;
+}
+.nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
+  margin-left: 20px;
+}
+.favorites li span.ui-state-active {
+  border: none;
+}
+.favorites input,
+.favorites img {
+  margin-right: 1ex;
+}
+.favorites div.ui-icon-trash {
+  position: relative;
+  float: right;
+  display: none;
+}
+.favorites li:hover div.ui-icon {
+  display: inline-block;
+}
+.favorites .sideboxstar {
+  height: 9px;
+  display: inline-block;
+  padding: 0px 4px;
+  margin: 0px 5px;
+  /* TODO: This is template specific */
+  background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
+}
+.sidebox-favorites ul.favorites {
+  width: 99%;
+  padding: 0px;
+  border: none;
+  background: white;
+}
+.sidebox-favorites .ui-menu .ui-menu-item a {
+  line-height: inherit;
+  padding: 2px 0px;
+}
+.sidebox-favorites .ui-menu .ui-menu-item a:hover {
+  text-decoration: underline;
+}
+.sidebox-favorites .favorites div.ui-icon-heart {
+  position: relative;
+  float: left;
+  display: inline-block;
+  margin: -3px 1px 0px 1px;
+}
+.sidebox-favorites .favorites div.ui-icon-trash {
+  margin-top: -5px;
+  margin-right: 2px;
+}
+.nextmatch_sortheader {
+  color: #003075;
+  cursor: pointer;
+  padding-right: 10px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.nextmatch_sortheader:hover {
+  text-decoration: underline;
+}
+.nextmatch_sortheader.asc {
+  font-weight: bold;
+  background-image: url(images/up.png);
+}
+.nextmatch_sortheader.desc {
+  font-weight: bold;
+  background-image: url(images/down.png);
+}
+.nextmatch_resize_helper {
+  border-right: 1px dotted gray;
+  min-height: 100%;
+  background-color: gray;
+  opacity: 0.5;
+}
+/**
+ * Grid / nextmatch Hierarchy 
+ */
+/* Make sure arrow & cell content don't overlap */
+.egwGridView_grid span.arrow {
+  margin: 6px -12px 4px 4px;
+  float: left;
+  position: relative;
+}
+.egwGridView_grid span.arrow ~ div.innerContainer {
+  display: inline-block;
+}
+/* Indent the sub-grid */
+.egwGridView_grid .egwGridView_grid {
+  margin-left: 10px;
+  border-left: 1px solid silver;
+}
+/** 
+ * This class' margin-right is used to line up columns at each indent level
+ * Classes level_# are created programmatically with margin-right * depth
+ * Margin-right = -(indent + border)
+ */
+.indentation {
+  margin-right: -11px;
+}
+/* End of hierarchy */
+/* Mangled link-to widget inside a nextmatch - used for DnD uploads */
+.et2_nextmatch * .et2_link_to {
+  position: fixed;
+  left: 0px;
+  background-color: white;
+  border: 1px gray;
+  padding: 5px;
+}
+.et2_clickable {
+  cursor: pointer;
+}
+/**
+ * et2_portlet
+ */
+div.et2_portlet {
+  min-width: 100px;
+}
+.et2_portlet .ui-widget-header {
+  margin: 0em;
+  padding-bottom: 4px;
+  padding-left: 0.2em;
+}
+.et2_portlet .ui-widget-header span.ui-icon {
+  display: inline-block;
+  float: right;
+}
+.et2_portlet .ui-widget-header span.ui-icon.ui-icon-gear {
+  display: inline-block;
+  float: left;
+}
+/**
+ * et2_progress
+ */
+div.et2_progress {
+  display: inline-block;
+  border: 1px solid black;
+  background-color: white;
+  width: 30px;
+  padding: 1px;
+  margin: 2px;
+  text-align: left;
+}
+div.et2_progress > div {
+  background-color: #D00000;
+  height: 5px;
+}
+.egwResizeOverlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 99999;
+  cursor: ew-resize;
+}
+.egwResizeHelper {
+  position: absolute;
+  display: block;
+  z-index: 99998;
+  opacity: 0.5;
+  background-color: #829cbc;
+  cursor: ew-resize;
+}
+/**
+ * Indent grid sublevels
+ */
+.et2_nextmatch .subentry.level_1 div.et2_vbox {
+  margin-left: 2.5em;
+}
+.et2_nextmatch .subentry.level_2 div.et2_vbox {
+  margin-left: 5em;
+}
+.et2_nextmatch .subentry.level_3 div.et2_vbox {
+  margin-left: 7.5em;
+}
+/**
+ * itempicker widget
+ */
+.et2_itempicker {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 256px;
+}
+.et2_itempicker_left {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  overflow: hidden;
+}
+.et2_itempicker_right {
+  display: block;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 49px;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #b6b6b6;
+  background-color: #f9f9f9;
+}
+.et2_itempicker_right_container {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.et2_itempicker_app_select {
+  list-style-type: none;
+  padding: 0;
+}
+.et2_itempicker_app_select li {
+  display: block;
+  margin: 0;
+  padding: 6px;
+}
+.et2_itempicker_app_select li.selected {
+  border: 1px solid #b6b6b6;
+  border-right: 1px solid transparent;
+  background-color: #f9f9f9;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.et2_itempicker_search {
+  display: inline-block;
+  margin: 1em;
+  margin-bottom: 0;
+  margin-right: 0;
+  width: 67%;
+  padding: 0.2em;
+}
+.et2_itempicker_clear {
+  position: relative;
+  top: 3px;
+  left: -20px;
+}
+.et2_itempicker_button_action {
+  position: absolute;
+  margin: 1em;
+  top: 0;
+  right: 0;
+}
+.et2_itempicker_itemlist {
+  display: block;
+  border: 1px solid #b6b6b6;
+  margin: 1em;
+  margin-bottom: 0;
+  padding: 0;
+  height: 67%;
+  background-color: #ffffff;
+  overflow: auto;
+}
+.et2_itempicker_itemlist ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.et2_itempicker_itemlist li {
+  display: block;
+  margin: 0;
+  padding: 4px;
+  color: #284d8a;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.et2_itempicker_itemlist li.row_on {
+  background-color: #f2f9fe;
+}
+.et2_itempicker_itemlist li.selected {
+  color: #ffffff;
+  background-color: #3875d7;
+}
+/**
+ * et2_dialog: EGroupware left aligns all buttons, but [Delete]
+ */
+div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+  float: left;
+}
+div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
+  float: left;
+  margin-right: 1em;
+}
+.et2_prompt #message {
+  white-space: pre-wrap;
+  padding-bottom: 10px;
+}
+.et2_prompt #value {
+  width: 100%;
+}
+/**
+* et2_taglist
+*/
+.ms-ctn,
+.ms-res-ctn {
+  /* It doesn't really work smaller than this */
+  min-width: 150px;
+}
+.ms-ctn .loading {
+  position: relative;
+  margin: 0px auto -16px auto;
+  top: 5px;
+}
+.ms-res-ctn {
+  overflow-x: hidden;
+}
+/**
  * Top level
  */
 .et2_container {
@@ -322,7 +1463,8 @@ input[type=button]:focus {
   height: 1.8em;
 }
 .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
-  visibility: hidden;
+  /*visibility: hidden;*/
+  background-image: url(../images/close.png);
   padding: 0px;
 }
 .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
@@ -409,6 +1551,9 @@ action buttons, left aligned for "extra" controls
 /**
  * File upload
  */
+div.et2_file input {
+  background-color: #ffc200;
+}
 .et2_file .progress {
   width: 300px;
   max-height: 6em;
@@ -581,20 +1726,27 @@ ul.et2_link_string {
 .et2_link_list tr {
   cursor: pointer;
 }
+.et2_link_list tr:hover {
+  background-color: #679fd2;
+}
+.et2_link_list tr:active {
+  background-color: #ffc200;
+}
 .et2_link_list td.remark {
   font-style: italic;
 }
 .et2_link_list td div.delete {
   visibility: hidden;
-  background-image: url("images/close.png");
+  background-image: url("../images/close.png");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
   padding: 0px;
 }
 .et2_link_list .icon img,
 .et2_link_list .icon {
-  width: 16px;
-  height: 16px;
+  width: 14px !important;
+  height: 14px !important;
   display: inline-block;
 }
 .et2_link_list tr:hover div.delete {
@@ -616,6 +1768,7 @@ ul.et2_link_string {
   margin: 1em 3px -1px 0;
   padding: 4px;
   cursor: pointer;
+  font-size: 0.8em;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
@@ -899,6 +2052,9 @@ div.message.floating {
 .nextmatch_header > .filters > select > option {
   font-size: 0.9em;
 }
+.nextmatch_header > .filters input[type=search] {
+  background-color: #ffd44d;
+}
 .nextmatch_header > .filters button.et2_button {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-color: #b4b4b4;
@@ -907,44 +2063,37 @@ div.message.floating {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   width: 3em;
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-right-radius: 20px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topright: 20px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #ffd44d;
-  color: #FFFFFF;
+  color: #ffd44d;
   text-decoration: none;
   cursor: pointer;
   padding: 3px;
   margin-left: 5px;
-  background-image: none;
-  width: auto;
+  background-image: url("../images/search.png");
+  background-position: center 0;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .nextmatch_header > .filters button.et2_button:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #ffd40f !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
+  /*        .Complete_Button_search_action_hover;*/
   background-color: #679fd2 !important;
+  /*hide arrow*/
+  color: #679fd2 !important;
 }
 .nextmatch_header > .filters button.et2_button:active {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #ffd44d;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
+  /*hide background image*/
+  /*show arrow*/
+  background: -webkit-gradient(linear, 0 0, 0 bottom, #d8d8d8, #a3a3a3), -moz-linear-gradient(#d8d8d8, #a3a3a3), -o-linear-gradient(#d8d8d8, #a3a3a3), linear-gradient(#d8d8d8, #a3a3a3);
+  -pie-background: linear-gradient(#d8d8d8, #a3a3a3);
+  behavior: url(/PIE.htc);
 }
 .nextmatch_header > .filters button.et2_button:focus {
   outline: 0;
@@ -1079,7 +2228,7 @@ div.message.floating {
   width: 16px;
   text-align: left;
   position: relative;
-  right: 8px;
+  right: 1px;
   top: 3px;
 }
 .et2_dropdown button.ui-state-hover {
@@ -2907,6 +4056,7 @@ button.add:before {
   content: "+";
   font-size: 1.5em;
   color: #ffc200;
+  line-height: 1.1em;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -2958,10 +4108,27 @@ table.egwGridView_outer {
   font-size: 0.9em;
 }
 table.egwGridView_outer thead {
-  background-color: #fafafa;
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+  /* IE6-9 */
 }
 table.egwGridView_outer thead tr th {
-  background-color: #d9d9d9;
+  /*.background-color-50-gray;*/
+  background: transparent;
+  background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
   font-weight: normal;
   padding: 2px;
   border-width: 1px;
@@ -2971,9 +4138,9 @@ table.egwGridView_outer thead tr th {
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
   border-bottom: 0px solid transparent;
-  background-image: none;
-  background-position: center;
-  background-repeat: repeat-x;
+  /*                background-image: none;
+                background-position: center;
+                background-repeat: repeat-x;*/
   vertical-align: top;
 }
 table.egwGridView_outer thead tr th:hover {
@@ -3038,8 +4205,10 @@ table.egwGridView_outer thead tr th.optcol .selectcols:hover {
   height: 20px;
 }
 table.egwGridView_outer tbody td.frame {
+  border: 1px solid #000000;
   /*BUG*/
 }
+/*########################################################*/
 table.egwGridView_grid {
   font-size: 1.15em;
   background-color: #ffffff;
@@ -3056,23 +4225,18 @@ table.egwGridView_grid tbody {
   vertical-align: top;
 }
 table.egwGridView_grid tbody tr.selected {
-  background: -webkit-gradient(linear, 0 0, 0 bottom, #ffb76b, #ff7f04), -moz-linear-gradient(#ffb76b, #ff7f04), -o-linear-gradient(#ffb76b, #ff7f04), linear-gradient(#ffb76b, #ff7f04);
-  -pie-background: linear-gradient(#ffb76b, #ff7f04);
-  behavior: url(/PIE.htc);
-  background: #ffdd73 !important;
+  background: rgba(255, 221, 115, 0.2) !important;
+  /*.bw-gradient;*/
 }
 table.egwGridView_grid tbody tr.focused {
-  background: -webkit-gradient(linear, 0 0, 0 bottom, #ffb76b, #ff7f04), -moz-linear-gradient(#ffb76b, #ff7f04), -o-linear-gradient(#ffb76b, #ff7f04), linear-gradient(#ffb76b, #ff7f04);
-  -pie-background: linear-gradient(#ffb76b, #ff7f04);
-  behavior: url(/PIE.htc);
-  background: #ffc200 !important;
+  background: rgba(255, 194, 0, 0.5) !important;
 }
 table.egwGridView_grid tr {
   border-bottom: 1px solid;
   border-color: #828282;
 }
 table.egwGridView_grid tr:hover {
-  background: #679fd2 !important;
+  background: rgba(103, 159, 210, 0.4) !important;
 }
 table.egwGridView_grid tr td {
   border-left: 0px;
@@ -3279,6 +4443,9 @@ table.egwGridView_grid span.arrow.loading {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 /*Supersized*/
+#wrap {
+  background-color: white !important;
+}
 * {
   margin: 0;
   padding: 0;
@@ -3509,17 +4676,19 @@ img {
   right: 88px;
   top: 0;
   z-index: 200;
-  padding: 0 0.8em 0.5em 0.5em;
+  padding: 6px 0.8em 6px 0.5em;
 }
 #egw_fw_topmenu_addons span#quick_add:before {
   content: "+";
   font-size: 1.5em;
   color: #ffc200;
+  line-height: 1.1em;
 }
 #egw_fw_topmenu_addons span#quick_add:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
+  line-height: 1.1em;
 }
 #egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3572,6 +4741,11 @@ img {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#egw_fw_logout:focus {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_print {
   background-image: url(../images/print.png);
@@ -3649,6 +4823,7 @@ img {
   bottom: 20px;
   width: 225px;
   background-color: #fafafa;
+  /*#################################*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu {
   position: absolute;
@@ -3754,11 +4929,13 @@ img {
   border-style: solid;
   border-width: 0px;
   margin: 0 0 2em 0;
+  /*letztes Element*/
+  /*######################*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content > div:nth-of-type(1) {
   padding: 5px 0.3em 1.5em 0.3em;
   margin: 0 0 10px 0;
-  background-color: #bfbfbf;
+  background-color: #b3b3b3 !important;
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 27px;
@@ -3775,6 +4952,25 @@ img {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border-color: #b4b4b4;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+  /*                   color:#ff0000; 
+                   background-color: yellow !important;*/
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 15px;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 15px;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
   margin: 10px 5px 0px 5px;
@@ -3806,15 +5002,35 @@ img {
   background-repeat: no-repeat;
   background-position: left center;
 }
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:last-child {
+  color: #ff0000;
+  background-color: yellow !important;
+}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:hover {
-  background-color: #b3b3b3 !important;
+  background-color: #999999;
   padding: 0.5em 1em;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
   border-bottom-width: 0px;
-  margin-top: 0px;
-  background-color: #808080;
+  margin-top: 4px;
+  background-color: #0c5da5;
+  /*.background-color-50-gray;*/
   color: #f2f2f2;
+  -webkit-border-top-right-radius: 3px !important;
+  -webkit-border-bottom-right-radius: 3px !important;
+  -webkit-border-bottom-left-radius: 3px !important;
+  -webkit-border-top-left-radius: 3px !important;
+  -moz-border-radius-topright: 3px !important;
+  -moz-border-radius-bottomright: 3px !important;
+  -moz-border-radius-bottomleft: 3px !important;
+  -moz-border-radius-topleft: 3px !important;
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+  border-top-left-radius: 3px !important;
+  -moz-background-clip: padding-box !important;
+  -webkit-background-clip: padding-box !important;
+  background-clip: padding-box !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
   background-image: url(../images/arrow_down.png);
@@ -3864,9 +5080,9 @@ img {
 }
 #egw_fw_sidebar #egw_fw_splitter {
   position: absolute;
-  background-color: #bfbfbf;
+  background-color: #b3b3b3 !important;
   width: 5px;
-  top: 61px;
+  top: 60px;
   bottom: 3px;
   right: 0px;
 }
@@ -3877,6 +5093,7 @@ img {
   background-image: url(../images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #b3b3b3 !important;
   position: absolute;
   width: 5px;
   height: 100%;
@@ -4046,6 +5263,7 @@ img {
 }
 .egw_fw_content_browser_div {
   display: block;
+  overflow: auto;
   /*	background-color: RGB(240, 240, 255);*/
 }
 .egw_fw_content_browser_div_loading {
@@ -4176,8 +5394,8 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
   border-width: 1px 1px 0px 1px !important;
-  padding: 2px 10px 3px 10px !important;
-  background-color: #bfbfbf;
+  padding: 1px 10px 3px 10px !important;
+  background-color: #b3b3b3 !important;
   background-image: none !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
@@ -4236,7 +5454,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   padding: 3px;
   background-color: #bfbfbf;
   clear: both;
-  opacity: 0.1;
+  opacity: 1;
   z-index: 100;
   color: #828282;
 }
@@ -4247,7 +5465,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   content: "Und wir waren auch dabei....pixelegg";
 }
 #egw_fw_footer:hover {
-  opacity: 1;
+  opacity: 0.1;
   transition: opacity 0.5s ease-out;
   -moz-transition: opacity 0.5s ease-out;
   -webkit-transition: opacity;
@@ -4342,13 +5560,14 @@ table.dialog-main-view {
   background-color: #0c5da5 !important;
 }
 .dialog-header td {
-  padding: 5px;
+  padding: 0px;
 }
 .dialog-header table.et2_grid {
   border-top: none;
 }
 .dialog-header .et2_label {
   color: #ffffff;
+  vertical-align: bottom;
 }
 /*Main*/
 .dialog-main-timeframe div {

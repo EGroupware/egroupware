@@ -6,9 +6,9 @@
  * Stefan Reinhardt
  */
 
-@import (reference) "def_design_pattern_color_font_shadow.less";
-@import (reference) "def_buttons.less";
-
+@import (reference) "./def_design_pattern_color_font_shadow.less";
+@import (reference) "./def_buttons.less";
+@import (less) "../../etemplate/templates/default/etemplate2.css";
 
 /**
  * Top level
@@ -346,7 +346,8 @@ button.et2_button_text:focus, input[type=button]:focus {
 }
 
 .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
-    visibility: hidden;
+    /*visibility: hidden;*/
+     background-image: url(../images/close.png);
     padding: 0px;
 }
 .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
@@ -441,6 +442,9 @@ action buttons, left aligned for "extra" controls
 /**
  * File upload
  */
+
+div.et2_file input {background-color: @egw_color_1_a;}
+
 .et2_file .progress {
     width: 300px;
     max-height: 6em;
@@ -625,20 +629,26 @@ ul.et2_link_string {
 }
 .et2_link_list tr {
     cursor: pointer;
+    
+    &:hover {background-color: @color_hover_row;}
+     &:active {background-color: @color_active_row;}
+    
+     
 }
 .et2_link_list td.remark {
     font-style: italic;
 }
 .et2_link_list td div.delete {
     visibility: hidden;
-    background-image: url("images/close.png");
+    background-image: url("../images/close.png");
     background-position: center;
     background-repeat: no-repeat;
+    background-size: contain;
     padding: 0px;
 }
 .et2_link_list .icon img, .et2_link_list .icon {
-    width: 16px;
-    height: 16px;
+    width: 14px !important;
+    height: 14px !important;
     display: inline-block;
 }
 .et2_link_list tr:hover div.delete {
@@ -664,6 +674,7 @@ ul.et2_link_string {
     margin: 1em 3px -1px 0;
     padding: 4px;
     cursor: pointer;
+    font-size: 0.8em;
     .border-radius(3px,0,0,3px);
     //	.bordered (@egw_color_2_c, @egw_color_2_c, #bfbfbf, @egw_color_2_c);
 
@@ -969,18 +980,24 @@ div.message.floating {
 
 // Search Field
 
+.nextmatch_header > .filters input[type=search] { .background-color-search;}
+
 .nextmatch_header > .filters button.et2_button {
     .Complete_Button_search_action;
-    background-image: none;
-    width: auto;
+
 
     &:hover{
-        .Complete_Button_search_action_hover;
+        .box_shadow_standard_light_hover;
+/*        .Complete_Button_search_action_hover;*/
         background-color: @egw_color_2_e !important;
+        /*hide arrow*/
+        color: @egw_color_2_e !important;
     }
 
     &:active {
-        .Complete_Button_search_action_active;
+        /*hide background image*/
+        /*show arrow*/
+        .background_verlauf_diagonal_gray;
     }
 
     &:focus {
@@ -1095,7 +1112,7 @@ div.message.floating {
                 width: 16px;
                 text-align: left;
                 position: relative;
-                right: 8px;
+                right: 1px;
                 top: 3px;
             }
             
@@ -1649,4 +1666,4 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
     overflow-x: hidden;
 }
-//
+//                     

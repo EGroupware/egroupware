@@ -53,7 +53,7 @@
     background-image: none !important;
     .border_radius_button_lefttop;
 
-    &:before {content: "+";font-size: 1.5em;color: @egw_color_1;}
+    &:before {content: "+";font-size: 1.5em;color: @egw_color_1; line-height: 1.1em;}
 }
 
 .Complete_Button_add_hover {
@@ -146,20 +146,24 @@
     width: 3em;
     //	height: 2.5em;
     //	margin: 0.5em 1em 0.5em 1;
-    .border_radius_button_lefttop;
-
+    .border_radius_button_righttop;
     .background-color-search;
 
-    color: #FFFFFF;
+    color: lighten(@egw_color_1, 15%);
     text-decoration: none;
 
     cursor: pointer;
     padding: 3px;
     margin-left: 5px;
+    
+    background-image: url("../images/search.png");
+    background-position: center 0;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 
-.Complete_Button_search_action_hover{
+/*.Complete_Button_search_action_hover{
     .box_shadow_standard_light_hover;
     background-color: @yellow !important;
     .border_radius_button_lefttop;
@@ -178,7 +182,7 @@
 .Complete_Button_search_action_reset{
     .Complete_Button_search_action;
     .background_verlauf_diagonal_gray;
-}
+}*/
 
 
 // Buchstaben
