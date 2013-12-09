@@ -31,8 +31,8 @@ class mail_acl
 		'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
 		'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
 		'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
-		'cdilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
-		'acdilprsw'	=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
+		'ilprws'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
+		'akxeilprwts'=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
 		'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
 	);
 
@@ -81,13 +81,18 @@ class mail_acl
 				$n = 1;
 				foreach ($acl as $keys => $value)
 				{
+					$virtuals = array_pop(array_values((array)$value));
+					$rights = array_shift(array_values((array)$value));
 
-					$value = array_shift(array_values((array)$value));
-					foreach ($value as $right)
+					foreach ($rights as $right)
 					{
 						$content['grid'][$n]['acl_'. $right] = true;
 					}
-					$acl_abbrvs = implode('',$value);
+					$virtualD = array('e','t');
+					$content['grid'][$n]['acl_c'] = array_diff($virtuals['c'],array_intersect($rights,$virtuals['c']))? false: true; //c=kx more information rfc4314, Obsolote Rights
+					$content['grid'][$n]['acl_d'] = array_diff($virtualD,array_intersect($rights,$virtuals['d']))? false: true; //d=et more information rfc4314, Obsolote Rights
+
+					$acl_abbrvs = implode('',$rights);
 
 					if (array_key_exists($acl_abbrvs, $this->aclRightsAbbrvs))
 					{
@@ -161,7 +166,7 @@ class mail_acl
 			}
 		}
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
-
+		$readonlys['grid']['delete[1]'] = true;
 		$preserv ['mailbox'] = $content['mailbox'];
 		$content['msg'] = $msg;
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
@@ -194,6 +199,8 @@ class mail_acl
 				if ($value[$key] == true)
 				{
 					$right = explode("acl_" ,$key);
+					if ($right[1] === 'c') $right[1] = 'kx'; // c = kx , rfc 4314
+					if ($right[1] === 'd') $right[1] = 'et'; // d = et , rfc 4314
 					$options['rights'] .=  $right[1];
 				}
 			}
