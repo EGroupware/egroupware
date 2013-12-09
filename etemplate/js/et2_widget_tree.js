@@ -316,6 +316,7 @@ var et2_tree = et2_inputWidget.extend(
 		else
 		{
 			this.input.selectItem(this.value, false);	// false = do not trigger onSelect
+			this.input.focusItem(this.value);
 			this.input.openItem(this.value);
 		}
 	},
@@ -465,6 +466,28 @@ var et2_tree = et2_inputWidget.extend(
 		this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}), 
 			function() { self._dhtmlxtree_json_callback(JSON.parse(this.response), _id);}
 		);
+	},
+
+	/**
+	 * focus the item, and scrolls it into view
+	 *
+	 * @param _id ID of the node
+	 * @return void
+	 */
+	focusItem: function(_id) {
+		if(this.input == null) return null;
+		this.input.focusItem(_id);
+	},
+
+	/**
+	 * hasChildren
+	 *
+	 * @param _id ID of the node
+	 * @return the number of childelements
+	 */
+	hasChildren: function(_id) {
+		if(this.input == null) return null;
+		return this.input.hasChildren(_id);
 	},
 
 	/**
