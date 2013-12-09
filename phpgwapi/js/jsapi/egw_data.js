@@ -338,8 +338,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 					}, 100);
 				}
 
-				// Push the uid onto the queue
-				queue[hash].uids.push(_uid.split("::").pop());
+				// Push the uid onto the queue, removing the prefix
+				var parts = _uid.split("::");
+				parts.shift();
+				queue[hash].uids.push(parts.join('::'));
 			}
 			else
 			{
