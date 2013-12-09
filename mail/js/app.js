@@ -38,6 +38,19 @@ app.classes.mail = AppJS.extend(
 	mail_isMainWindow: true,
 
 	/**
+	 * abbrevations for common access rights
+	 * @array
+	 *
+	 */
+	aclCommonRights:['lrs','lprs','ilprs',	'ilprws', 'akxeilprwts', 'custom'],
+	/**
+	 * Demonstrates ACL rights
+	 * @array
+	 *
+	 */
+	aclRights:['l','r','s','w','i','p','c','d','a'],
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -2086,22 +2099,58 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	* Select the right combination of the rights for radio buttons from the selected common right
 	*
+	* @param {widget} widget common right selectBox
 	*
 	*/
-	acl_delete_btn: function(_egw,_widget)
+	acl_common_rights_selector: function(widget)
 	{
-		var that = this;
-		var buttonId = _widget.id;
-		var callbackAclDeleteDialog = function (button_id)
+		var rowId = widget.id.replace(/[^0-9.]+/g, '');
+		var rights = (widget.value == "custom")?[]:(widget.value == "akxeilprwts")? widget.value.replace(/[k,x,t,e]/g,"cd").split(""):widget.value.split("");
+		for (var i=0;i<this.aclRights.length;i++)
 		{
-			if (button_id == et2_dialog.YES_BUTTON )
-			{
-				that.et2._inst.submit(buttonId);
-			}
+			rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+			rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
 		}
-		di =et2_dialog.show_dialog(callbackAclDeleteDialog, this.egw.lang("Do you really want to remove all rights from this account"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 	},
+
+	/**
+	*
+	* Choose the right common right option for common ACL selecBox
+	*
+	* @param {widget} widget radioButton rights
+	*
+	*/
+   acl_common_rights: function(widget)
+   {
+
+	   var rowId = widget.id.replace(/[^0-9.]+/g, '');
+	   var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
+	   var rights = '';
+	   
+	   for (var i=0;i<this.aclRights.length;i++)
+	   {
+		   rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+		   if (rightsWidget.get_value() == "true")
+			   rights += this.aclRights[i];
+
+	   }
+
+	   for (var i=0;i<this.aclCommonRights.length;i++)
+	   {
+		   if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
+			   rights = this.aclCommonRights[i];
+	   }
+	   if (jQuery.inArray(rights,this.aclCommonRights ) == -1)
+	   {
+		   aclCommonWidget.set_value('custom');
+	   }
+	   else
+	   {
+		   aclCommonWidget.set_value(rights);
+	   }
+   },
 
 	/**
 	 * Edit a folder acl for account(s)

@@ -44,17 +44,17 @@
 					<row class="row">
 						<taglist-email id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" />
 						<menulist>
-							<menupopup id="${row}[acl]"  onchange="1"/>
+							<menupopup id="${row}[acl]"  onchange="app.mail.acl_common_rights_selector"/>
 						</menulist>
-						<checkbox align="center" id="${row}[acl_l]" />
-						<checkbox align="center" id="${row}[acl_r]" />
-						<checkbox align="center" id="${row}[acl_s]" />
-						<checkbox align="center" id="${row}[acl_w]" />
-						<checkbox align="center" id="${row}[acl_i]" />
-						<checkbox align="center" id="${row}[acl_p]" />
-						<checkbox align="center" id="${row}[acl_c]" />
-						<checkbox align="center" id="${row}[acl_d]" />
-						<checkbox align="center" id="${row}[acl_a]" />
+						<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"/>
+						<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
 						<checkbox align="center" id="${row}[acl_recursive]"/>
 						<hbox orient=",0,0">
 							<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
