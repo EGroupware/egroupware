@@ -586,7 +586,7 @@ app.classes.mail = AppJS.extend(
 			buttons: buttons,
 			modal: false,
 			title: dataElem.data.subject,
-			template:"/egroupware/mail/templates/default/displayAllAdresses.xet",
+			template:egw.webserverUrl+"/mail/templates/default/displayAllAdresses.xet",
 			value: { content: {displayallAdresses:allAddresses}, sel_options: {}}
 		});
 
