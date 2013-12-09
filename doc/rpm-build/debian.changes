@@ -1,3 +1,13 @@
+egroupware-epl (11.1.20131209-1) hardy; urgency=low
+
+  * CalDAV/CardDAV: do NOT use Content-Length header, if zlib.output_compression is enabled, fixes problems with iOS7 eg. eTask app
+  * eMail/SIEVE: finalization of providing the ability of testing the content of the mail in Server Side Mail Filtering (if the CAPABILITY required to do so is reported)
+  * eMail: fix problem regarding lost control/warning when no recipient and/or no subject is provided on submit
+  * API/CKEditor: update to CKEditor 4.3 (compatibility issues with IE10/11)
+  * Infolog/Notification: when notifying asyncronously , make sure possible customfields are read, as search does not supply these
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 09 Dec 2013 13:51:47 +0100
+
 egroupware-epl (11.1.20131105-1) hardy; urgency=low
 
   * jQuery: update to version 1.10.2 to improve IE10 experience
