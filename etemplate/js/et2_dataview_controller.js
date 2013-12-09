@@ -167,6 +167,9 @@ var et2_dataview_controller = Class.extend({
 		// Clear the grid
 		this._grid.clear();
 
+		// Clear the queue
+		this._queue = {};
+
 		// Update the data
 		this.update();
 	},
@@ -762,6 +765,10 @@ var et2_dataview_controller = Class.extend({
 		// Make sure _response.order.length is not longer than the requested
 		// count, if a specific count was requested
 		var order = this.count != 0 ? _response.order.splice(0, this.count) : _response.order;
+
+		// Remove from queue, or it will not be fetched again
+		for(var i = this.start; i < this.start + order.length; i++)
+			delete this.self._queue[i];
 
 		// Get the current index map for the updated region
 		var idxMap = this.self._getIndexMapping(this.start, order.length);
