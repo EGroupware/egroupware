@@ -997,6 +997,13 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_changeProfile: function(folder,_widget) {
 	//	alert(folder);
+		var nm = _widget.getRoot().getWidgetById(this.nm_index);
+		if(nm)
+		{
+			nm.activeFilters['selectedFolder'] = folder;
+			// Changing dataset entirely, force a reset
+			nm.controller.reset();
+		}
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder])
 			.sendRequest();
 		this.mail_refreshMessageGrid();
