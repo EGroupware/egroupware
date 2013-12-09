@@ -4575,8 +4575,8 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__."$_folderName, $_header, $_body, $_flags");
 		$header = ltrim(str_replace("\n","\r\n",$_header));
 		$body   = str_replace("\n","\r\n",$_body);
-		if (!is_array($_flags) && stripos($_flags,',')!==false) $_flags=explode(',',$_flags);
-		if (!is_array($_flags)) $_flags = (array) $_flags;
+		//if (!is_array($_flags) && stripos($_flags,',')!==false) $_flags=explode(',',$_flags);
+		//if (!is_array($_flags)) $_flags = (array) $_flags;
 		try
 		{
 			$dataNflags = array();

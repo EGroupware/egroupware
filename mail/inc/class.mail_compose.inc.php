@@ -240,7 +240,7 @@ class mail_compose
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
-		$_contenHasSigID = array_key_exists('signatureid',$_content);
+		$_contenHasSigID = array_key_exists('signatureid',(array)$_content);
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
@@ -349,20 +349,44 @@ class mail_compose
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
-			try
-			{
-				$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
-				$success = $this->send($_content);
-				if ($success==false)
-				{
-					$sendOK=false;
-					$message = $this->errorInfo;
-				}
-			}
-			catch (egw_exception_wrong_userinput $e)
+			$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
+			/*
+			perform some simple checks, before trying to send on:
+			$_content['to'];$_content['cc'];$_content['bcc'];
+			trim($_content['subject']);
+			trim(strip_tags(str_replace('&nbsp;','',$_content['body'])));
+			*/
+			if (strlen(trim(strip_tags(str_replace('&nbsp;','',$_content['body']))))==0 && count($_content['attachments'])==0)
 			{
 				$sendOK = false;
-				$message = $e->getMessage();
+				$_content['msg'] = $message = lang("no message body supplied");
+			}
+			if ($sendOK && strlen(trim($_content['subject']))==0)
+			{
+				$sendOK = false;
+				$_content['msg'] = $message = lang("no subject supplied");
+			}
+			if ($sendOK && empty($_content['to']) && empty($_content['cc']) && empty($_content['bcc']))
+			{
+				$sendOK = false;
+				$_content['msg'] = $message = lang("no adress, to send this mail to, supplied");
+			}
+			if ($sendOK)
+			{
+				try
+				{
+					$success = $this->send($_content);
+					if ($success==false)
+					{
+						$sendOK=false;
+						$message = $this->errorInfo;
+					}
+				}
+				catch (egw_exception_wrong_userinput $e)
+				{
+					$sendOK = false;
+					$message = $e->getMessage();
+				}
 			}
 			if ($activeProfile != $composeProfile)
 			{

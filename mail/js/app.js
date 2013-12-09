@@ -637,6 +637,9 @@ app.classes.mail = AppJS.extend(
 				//if (mode == "forced") this.mail_refreshMessageGrid();
 				this.mail_refreshMessageGrid();
 			}
+			//the two lines below are not working yet.
+			//var no =tree_wdg.getSelectedNode();
+			//tree_wdg.focusItem(no.id);
 		} catch(e) { } // ignore the error; maybe the template is not loaded yet
 	},
 

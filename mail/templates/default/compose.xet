@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-		<html id="msg"/>
+		<html id="msg" class="message"/>
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Identity"/>

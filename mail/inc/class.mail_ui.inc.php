@@ -1312,13 +1312,13 @@ unset($query['actions']);
 					$actionsenabled[$act]=$actions['view']['children'][$act];
 					break;
 				case 'flagged':
-					$actionsenabled[$act]=$actions['mark']['children'][$act]=array(
+					$actionsenabled[$act]=array(
 						'group' => $group,
 						'caption' => 'Flagged',
 						'icon' => 'unread_flagged_small',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 					);
-					$actionsenabled['unflagged']=$actions['mark']['children']['unflagged']=array(
+					$actionsenabled['unflagged']=array(
 						'group' => $group,
 						'caption' => 'Unflagged',
 						'icon' => 'read_flagged_small',
@@ -1725,6 +1725,18 @@ unset($query['actions']);
 		unset($actionsenabled['mark']['children']['read']);
 		unset($actionsenabled['mark']['children']['unread']);
 		unset($actionsenabled['mark']['children']['undelete']);
+		$actionsenabled['mark']['children']['flagged']=array(
+			'group' => $actionsenabled['mark']['children']['flagged']['group'],
+			'caption' => 'Flagged',
+			'icon' => 'unread_flagged_small',
+			'onExecute' => 'javaScript:app.mail.mail_flag',
+		);
+		$actionsenabled['mark']['children']['unflagged']=array(
+			'group' => $actionsenabled['mark']['children']['flagged']['group'],
+			'caption' => 'Unflagged',
+			'icon' => 'read_flagged_small',
+			'onExecute' => 'javaScript:app.mail.mail_flag',
+		);
 		$cAN = $actionsenabled['composeasnew'];
 		unset($actionsenabled['composeasnew']);
 		$actionsenabled = array_reverse($actionsenabled,true);
