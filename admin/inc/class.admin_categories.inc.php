@@ -161,11 +161,12 @@ class admin_categories
 						!$content['parent'] && self::$acl_add))
 					{
 						$content['id'] = $cats->add($content);
+						$msg = lang('Category saved.');
 						if ($button == 'save')
 						{
+							egw_framework::refresh_opener($msg, 'admin', $content['id']);
 							egw_framework::window_close();
 						}
-						$msg = lang('Category saved.');
 					}
 					else
 					{
