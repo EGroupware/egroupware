@@ -820,6 +820,7 @@ function egw_link_handler(_link, _app)
 function egw_preferences(name, apps)
 {
 	var current_app = egw_getAppName();
+	var query = {};
 	// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
 	if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' ||
 		!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
@@ -828,16 +829,17 @@ function egw_preferences(name, apps)
 	}
 	else
 	{
-		var url = '/index.php?';
+		var url = '/index.php';
 		switch(name)
 		{
 			case 'prefs':
-				url += 'menuaction=preferences.preferences_settings.index';
-				if ($j.inArray(current_app, apps) != -1) url += '&appname='+current_app;
+				query.menuaction ='preferences.preferences_settings.index';
+				if ($j.inArray(current_app, apps) != -1) query.appname=current_app;
 				break;
 
 			case 'acl':
-				url += 'menuaction=preferences.preferences_acl.index&acl_app='+current_app;
+				query.menuaction='preferences.preferences_acl.index';
+				query.acl_app=current_app;
 				break;
 
 			case 'cats':
@@ -845,16 +847,19 @@ function egw_preferences(name, apps)
 				{
 					for(var key in apps[current_app])
 					{
-						url += key+'='+encodeURIComponent(apps[current_app][key])+'&';
+						query[key] = encodeURIComponent(apps[current_app][key]);
 					}
 				}
 				else
 				{
-					url += 'menuaction=preferences.preferences_categories_ui.index&cats_app='+current_app;
+					query.menuaction='preferences.preferences_categories_ui.index';
+					query.cats_app=current_app;
+					query.ajax=true;
 				}
 				break;
 		}
-		egw_link_handler(egw_webserverUrl+url+'&current_app='+current_app, current_app);
+		query.current_app = current_app;
+		egw_link_handler(egw.link(url, query), current_app);
 	}
 }
 
