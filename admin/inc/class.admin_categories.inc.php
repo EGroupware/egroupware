@@ -143,6 +143,7 @@ class admin_categories
 			{
 				case 'save':
 				case 'apply':
+					if(is_array($content['owner'])) $content['owner'] = implode(',',$content['owner']);
 					if($content['owner'] == '') $content['owner'] = 0;
 					if ($content['id'] && self::$acl_edit)
 					{
@@ -160,6 +161,10 @@ class admin_categories
 						!$content['parent'] && self::$acl_add))
 					{
 						$content['id'] = $cats->add($content);
+						if ($button == 'save')
+						{
+							egw_framework::window_close();
+						}
 						$msg = lang('Category saved.');
 					}
 					else
@@ -174,6 +179,9 @@ class admin_categories
 					{
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
+						egw_framework::refresh_opener($msg, $appname, $content['id']);
+						egw_framework::window_close();
+						return;
 					}
 					else
 					{
@@ -182,18 +190,7 @@ class admin_categories
 					}
 					break;
 			}
-			$link = egw::link('/index.php',array(
-				'menuaction' => $this->list_link,
-				'appname' => $appname,
-				'msg' => $msg,
-			));
-			$js = "window.opener.location='$link';";
-			if ($button == 'save' || $button == 'delete')
-			{
-				echo "<html><head><script>\n$js;\nwindow.close();\n</script></head></html>\n";
-				common::egw_exit();
-			}
-			if (!empty($js)) $GLOBALS['egw']->js->set_onload($js);
+			egw_framework::refresh_opener($msg, $appname, $content['id']);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -255,12 +252,7 @@ class admin_categories
 		}
 
 		egw_framework::validate_file('.','global_categories','admin');
-		egw_framework::set_onload('$j(document).ready(function() {
-			cat_original_owner = [' . ($content['owner'] ? $content['owner'] : ($content['id'] ? '0' : '')) .'];
-			permission_prompt = \'' . lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:').'\';
-			change_icon();
-		});');
-
+		
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);

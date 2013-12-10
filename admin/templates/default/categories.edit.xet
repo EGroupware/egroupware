@@ -87,7 +87,7 @@
 					<description value="Icon" for="data[icon]"/>
 					<hbox options="0,0">
 						<menulist>
-							<menupopup id="data[icon]" onchange="change_icon(this);" options="None"/>
+							<menupopup id="data[icon]" onchange="change_icon(widget);" options="None"/>
 						</menulist>
 						<image src="icon_url" id="icon_url" class="leftPad5"/>
 					</hbox>
@@ -108,12 +108,12 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Save" id="button[save]" onclick="return check_owner(form::name('owner'));"/>
-						<button label="Apply" id="button[apply]" onclick="return check_owner(form::name('owner'));"/>
+						<button label="Save" id="button[save]" onclick="return check_owner(widget,form::name('owner'));"/>
+						<button label="Apply" id="button[apply]" onclick="return check_owner(widget,form::name('owner'));"/>
 					</hbox>
 					<hbox>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
-						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="set_style_by_class('tr','confirmSubs','visibility','$cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block');"/>
+						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Are you sure you want to delete this category ?'); return false;"/>
 					</hbox>
 				</row>
 			</rows>

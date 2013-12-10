@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="admin.categories.index.right" template="" lang="" group="0" version="1.9.001">
+		<hbox>
+			<buttononly align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=$cont[add_link]&amp;cat_id=&amp;appname=$cont[nm][appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+		</hbox>
+	</template>
 	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
@@ -66,14 +71,10 @@
 					<description/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="admin.categories.index.rows" span="all"/>
+					<description/>
 				</row>
 				<row>
-					<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=$cont[add_link]&amp;cat_id=&amp;appname=$cont[nm][appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
-					<hbox align="right" span="all">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('admin.categories.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('admin.categories.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
-					</hbox>
+					<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_right="admin.categories.index.right"/>
 				</row>
 			</rows>
 		</grid>
