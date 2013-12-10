@@ -590,6 +590,7 @@ class mail_bo
 		$mailbox=null;
 		if($this->folderExists($this->sessionData['mailbox'])) $mailbox = $this->sessionData['mailbox'];
 		if (empty($mailbox)) $mailbox = $this->icServer->getCurrentMailbox();
+/*
 		if (isset(emailadmin_imap::$supports_keywords[$_icServerID]))
 		{
 			$this->icServer->openMailbox($mailbox);
@@ -598,6 +599,10 @@ class mail_bo
 		{
 			$this->icServer->examineMailbox($mailbox);
 		}
+*/
+		// the above should detect if there is a known information about supporting KEYWORDS
+		// but does not work as expected :-(
+		$this->icServer->examineMailbox($mailbox);
 		//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
 

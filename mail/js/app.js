@@ -1861,7 +1861,7 @@ app.classes.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		reallyDelete = confirm(this.egw.lang("Do you really want to DELETE Folder %1 ? \r\nAll messages in the folder will be lost",OldFolderName));
+		reallyDelete = confirm(this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" \r\n"+(ftree.hasChildren(_senders[0].iface.id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")));
 		if (reallyDelete)
 		{
 			app.mail.app_refresh(this.egw.lang("Deleting Folder %1",OldFolderName, 'mail'));

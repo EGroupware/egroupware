@@ -187,11 +187,11 @@ class mail_ui
 		$starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
 		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
-		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
+		//$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
-			$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
+			//$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
 		}
 		//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
 		//_debug_array($content);
@@ -213,7 +213,8 @@ class mail_ui
 					'start'          =>	0,		// IO position in list
 					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-					'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					//'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
@@ -223,7 +224,8 @@ class mail_ui
 				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
 		}
-		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+		//$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['csv_fields'] = false;
 		if ($msg)
 		{
@@ -948,42 +950,47 @@ class mail_ui
 						'icon' => 'tag_message',
 						'group' => ++$group,
 						'children' => array(
-							'label1' => array(
-								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
-								'icon' => 'mail_label1',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
-							),
-							'label2' => array(
-								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
-								'icon' => 'mail_label2',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_2, true, true),
-							),
-							'label3' => array(
-								'caption' => "<font color='#008000'>".lang('personal')."</font>",
-								'icon' => 'mail_label3',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_3, true, true),
-							),
-							'label4' => array(
-								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
-								'icon' => 'mail_label4',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_4, true, true),
-							),
-							'label5' => array(
-								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
-								'icon' => 'mail_label5',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_5, true, true),
-							),
 							'unlabel' => array(
 								'group' => ++$group,
 								'caption' => "<font color='#ff0000'>".lang('remove all')."</font>",
 								'icon' => 'mail_label',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
 								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_0, true, true),
+							),
+							'label1' => array(
+								'group' => ++$group,
+								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
+								'icon' => 'mail_label1',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
+							),
+							'label2' => array(
+								'group' => $group,
+								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
+								'icon' => 'mail_label2',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_2, true, true),
+							),
+							'label3' => array(
+								'group' => $group,
+								'caption' => "<font color='#008000'>".lang('personal')."</font>",
+								'icon' => 'mail_label3',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_3, true, true),
+							),
+							'label4' => array(
+								'group' => $group,
+								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
+								'icon' => 'mail_label4',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_4, true, true),
+							),
+							'label5' => array(
+								'group' => $group,
+								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
+								'icon' => 'mail_label5',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_5, true, true),
 							),
 						),
 					),
@@ -1146,11 +1153,17 @@ unset($query['actions']);
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
 		$this->mail_bo->saveSessionData();
+		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
+		if ($this->mail_bo->folderExists($_folderName))
+		{
+			$toSchema = $this->mail_bo->isDraftFolder($_folderName)||$this->mail_bo->isSentFolder($_folderName)||$this->mail_bo->isTemplateFolder($_folderName);
+		}
 
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
-		$sort = $query['order'];
+		//error_log(__METHOD__.__LINE__.$query['order']);
+		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
 		if (!empty($query['search']))
 		{
 			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
@@ -1236,9 +1249,9 @@ unset($query['actions']);
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
+		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
-		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
+		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
@@ -1560,6 +1573,7 @@ unset($query['actions']);
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['toolbaractions'] = json_encode($actionsenabled);
+			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
@@ -3330,6 +3344,9 @@ blockquote[type=cite] {
 	 */
 	function ajax_deleteFolder($_folderName)
 	{
+		//lang("Do you really want to DELETE Folder %1 ?",OldFolderName);
+		//lang("All subfolders will be deleted too, and all messages in all affected folders will be lost");
+		//lang("All messages in the folder will be lost");
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
 		$success = false;
 		if ($_folderName)

@@ -11,6 +11,7 @@
 				<column width="95"/>
 				<column width="120"/>
 				<column width="120"/>
+				<column width="120"/>
 				<column width="50"/>
 			</columns>
 			<rows>
@@ -20,6 +21,7 @@
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
 					<nextmatch-sortheader align="center" label="date" id="date"/>
+					<nextmatch-sortheader label="emailaddress" id="address"/>
 					<nextmatch-sortheader label="to" id="toaddress"/>
 					<nextmatch-sortheader label="from" id="fromaddress"/>
 					<nextmatch-sortheader align="center" label="size" id="size"/>
@@ -30,6 +32,7 @@
 					<html id="${row}[attachments]"/>
 					<description id="${row}[subject]" no_lang="1"/>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
+					<url-email id="${row}[address]" readonly="true"/>
 					<url-email id="${row}[toaddress]" readonly="true"/>
 					<url-email id="${row}[fromaddress]" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
