@@ -997,16 +997,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_changeProfile: function(folder,_widget) {
 	//	alert(folder);
-		var nm = _widget.getRoot().getWidgetById(this.nm_index);
-		if(nm)
-		{
-			nm.activeFilters['selectedFolder'] = folder;
-			// Changing dataset entirely, force a reset
-			nm.controller.reset();
-		}
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder])
 			.sendRequest();
-		this.mail_refreshMessageGrid();
 
 		return true;
 	},
@@ -1026,12 +1018,8 @@ app.classes.mail = AppJS.extend(
 			if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
 			{
 				rv = this.mail_changeProfile(folder,_widget);
-				if (rv)
-				{
-					return rv;
-				}
 			}
-			if (_widget.event_args.length==2)
+			else if (_widget.event_args.length==2)
 			{
 				folder = _widget.event_args[1];
 				_widget.set_value(folder);
@@ -1042,27 +1030,28 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var nm = _widget.getRoot().getWidgetById(this.nm_index);
-		nm.activeFilters["selectedFolder"] = folder;
-		//nm.applyFilters();// its done in refrefreshMessageGrid
-		var msg = _widget.getRoot().getWidgetById('msg');
-		if (msg)
+		if(nm)
 		{
-			window.clearInterval(this.doStatus);
-			displayname = _widget.getSelectedLabel();
-			inBraket = displayname.search(/\(/);
-			if (inBraket!=-1)
-			{
-				outBraket = displayname.search(/\)/);
-				if (outBraket!=-1)
-				{
-					displayname = displayname.replace(/\((.*?)\)/,"");
-					displayname = displayname.replace(/<b>/,"");
-					displayname = displayname.replace(/<\/b>/,"");
-				}
-			}
-			myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
-			app.mail.app_refresh(myMsg, 'mail');
+			nm.activeFilters['selectedFolder'] = folder;
+			// Changing dataset entirely, force a reset
+			nm.controller.reset();
 		}
+		window.clearInterval(this.doStatus);
+		displayname = _widget.getSelectedLabel();
+		inBraket = displayname.search(/\(/);
+		if (inBraket!=-1)
+		{
+			outBraket = displayname.search(/\)/);
+			if (outBraket!=-1)
+			{
+				displayname = displayname.replace(/\((.*?)\)/,"");
+				displayname = displayname.replace(/<b>/,"");
+				displayname = displayname.replace(/<\/b>/,"");
+			}
+		}
+		myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
+		egw_message(myMsg);
+		
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_refreshQuotaDisplay(server[0]);
