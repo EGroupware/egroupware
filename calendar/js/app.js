@@ -529,11 +529,6 @@ app.classes.calendar = AppJS.extend(
 				state = JSON.parse(state);
 			}
 		}
-		// requested state is a listview and we are currently in a list-view
-		if (state.state.view == 'listview' && state.name && this.et2 && this.et2.getWidgetById('nm'))
-		{
-			return this._super.apply(this, arguments);	// call default implementation
-		}
 
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
