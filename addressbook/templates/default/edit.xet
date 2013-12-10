@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
+<!-- $Id$ -->
 <overlay>
 	<template id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004">
 		<grid class="uploadphoto">
@@ -518,8 +519,8 @@
 						</rows>
 					</grid>
 				</row>
-				<row valign="top">
-					<tabbox id="tabs">
+				<row valign="top" class="addressbook_edit_left_tr">
+					<tabbox id="tabs" class="addressbook_edit_left_td">
 						<tabs>
 							<tab id="general" label="General" statustext="Name, Address"/>
 							<tab id="cats" label="Categories" statustext="Categories"/>
@@ -543,7 +544,7 @@
 							<template id="addressbook.edit.history"/>
 						</tabpanels>
 					</tabbox>
-					<vbox>
+					<vbox class="addressbook_edit_right_td">
 						<template id="addressbook.editphones"/>
 						<groupbox class="phoneGroup">
 							<caption label="Phone Numbers"/>

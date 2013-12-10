@@ -49,6 +49,8 @@
 
 
 
+
+
 .et2_container[id^="infolog-index-addressbook"] {
   min-height: 250px;
 }
@@ -238,7 +240,32 @@ div#addressbook-index{
  /*#######################################################*/
 /*State: Address selected*/
 
+/*Layout*/
+/*##############################
+#                #             #
+#                #  Phone      #
+#  Address       #             #
+#                #  Email      #
+#                #             #
+################################ */
 
+
+td.addressbook_edit_left_td {
+    min-width: 500px; 
+    max-width: 100%;
+
+    .et2_tabs {
+        
+        .et2_tabcntr {    
+            min-width: 500px; 
+            max-width: 100%;
+        }
+        
+    }
+
+
+}
+td.addressbook_edit_right_td {min-width: 300px; max-width: 100%;}
 
 
 
@@ -269,16 +296,14 @@ div#addressbook-index{
 
 
 
-/*#######################################################*/
-/* Tab Generell */
-
-/*Layout*/
-
 #addressbook-edit .et2_tabbox {max-width: 100%;     min-width: 530px;}
 
-#addressbook-edit .et2_tabs {height: 380px;}
+#addressbook-edit .et2_tabs {height: 380px; min-width: 530px;}
 
 table.et2_grid .addressbook_edit_general {width: 80% !important;}
+
+/*#######################################################*/
+/* Tab Generell */
 
 
 /*##################
@@ -293,7 +318,11 @@ div.addressbook_edit_general_picture {
     float: right;
     
     
-    img {width: 180% !important; max-width: 100px !important; height: auto !important; margin-right: 70px; }
+    img {width: 180% !important; 
+         max-width: 100px !important; 
+         height: auto !important; 
+         margin-right: 70px; 
+    }
     
     /*Picture*/
 
@@ -308,7 +337,7 @@ div.addressbook_edit_general_picture {
         table.uploadphoto {
             .background-color-10-gray;
             width: auto;
-            .bordered(1px, 1px, 1px, 0); 
+            .bordered(@gray-10, @gray-10, @gray-10, @gray-10); 
             left: 243px;
             top: 189px;
         }
@@ -581,24 +610,32 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
 }
  /*################## Tab 8 Extra Privat###############################*/
 /*seems to be ok*/
+
+
+
  /*################## Tab 9 History ###############################*/
  // History
 
-#addressbook-edit_addressbook-edit-history{
+ #addressbook-edit_addressbook-edit-history{
+     
     .th{ height: 20px;}
     tbody{
         display: table-header-group;
         vertical-align: top;
+    }  
+    
+    table.et2_grid {
     }
-}
-
- #addressbook-edit_addressbook-edit-history{
-     
-     .et2_historylog{
+    
+    
+     .et2_historylog,
+     #addressbook-edit_history{
 
          div:first-child {height: auto !important;}
          
+         
          table.egwGridView_outer {
+
              
              th.optcol {
                  
