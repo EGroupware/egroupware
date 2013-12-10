@@ -315,7 +315,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 */
 	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, &$value=null)
 	{
-		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = explode(',',$legacy_options);
+		// Have to do this explicitly, since legacy options is not defined on class level
+		$legacy_options = explode(',',$legacy_options);
+		foreach($legacy_options as &$field)
+		{
+			$field = self::expand_name($field, 0, 0,'','',self::$cont);
+		}
+		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = $legacy_options;
 
 		$no_lang = false;
 		$options = array();
@@ -391,6 +397,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$categories = new categories($type5,$type3);
 				}
 				// Allow text for global
+				error_log("Type: " .$type);
                                 $type = ($type && strlen($type) > 1 ? $type : !$type);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
 				foreach((array)$categories->return_sorted_array(0,False,'','','',$type,(int)$type4,true) as $cat)
