@@ -209,6 +209,11 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			{
 				var name = pref_name.substr(this.favorite_prefix.length);
 				stored_filters[name] = preferences[pref_name];
+				// Keep older favorites working - they used to store nm filters in 'filters',not state
+				if(preferences[pref_name].filters)
+				{
+					stored_filters[pref_name].state = preferences[pref_name].filters
+				}
 			}
 		}
 		if(typeof stored_filters == "undefined" || !stored_filters)
@@ -241,7 +246,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			$j(trash).hide();
 
 			// Delete preference server side
-			var request = egw.json(header.egw().getAppName() + ".etemplate_widget_nextmatch.ajax_set_favorite.etemplate",
+			var request = egw.json(header.egw().getAppName() + ".etemplate_widget_nextmatch.ajax_set_favorite.template",
 				[header.app, name, "delete", header.stored_filters[name].group ? header.stored_filters[name].group : '', ''],
 				function(result) {
 					if(result)
@@ -471,7 +476,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 					name: name.val(),
 					group: (typeof self.popup.group != "undefined" &&
 						self.popup.group.get_value() ? self.popup.group.get_value() : false),
-					filter: self.popup.current_filters
+					state: self.popup.current_filters
 				};
 				self.init_filters(self);
 
@@ -481,7 +486,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				if(typeof self.popup.group != "undefined" && self.popup.group.getValue() != '')
 				{
 					// Admin stuff - save preference server side
-					var request = egw.json("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
+					var request = egw.json("home.egw_framework.ajax_set_favorite.template",
 						[
 							self.options.app,
 							name.val(),
@@ -499,7 +504,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 					self.egw().set_preference(self.options.app,favorite_pref,{
 						name: name.val(),
 						group: false,
-						filter:self.popup.current_filters
+						state:self.popup.current_filters
 					});
 				}
 				delete self.popup.current_filters;
