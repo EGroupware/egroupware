@@ -16,6 +16,9 @@ function check_owner(button) {
 	{
 		owner = [owner];
 	}
+	// No owner probably means selectbox is read-only, so no need to check
+	if(owner == null) return true;
+	
 	var all_users = owner.indexOf('0') >= 0;
 
 	// If they checked all users, uncheck the others
