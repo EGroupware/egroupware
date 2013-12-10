@@ -179,7 +179,8 @@ class admin_categories
 					{
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
-						egw_framework::refresh_opener($msg, $appname, $content['id']);
+						// Refresh internally looks for template name, which starts with 'admin'
+						egw_framework::refresh_opener($msg, 'admin', $content['id']);
 						egw_framework::window_close();
 						return;
 					}
@@ -190,7 +191,8 @@ class admin_categories
 					}
 					break;
 			}
-			egw_framework::refresh_opener($msg, $appname, $content['id']);
+			// Refresh internally looks for template name, which starts with 'admin'
+			egw_framework::refresh_opener($msg, 'admin', $content['id']);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -426,6 +428,7 @@ class admin_categories
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'no_search'      => !self::$acl_search,
 					'row_id'         => 'id',
+					'dataStorePrefix' => 'categories' // Avoid conflict with user list when in admin
 				);
 				$content['nm']['filter'] = $this->appname == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
