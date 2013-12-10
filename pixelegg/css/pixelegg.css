@@ -1314,19 +1314,6 @@ a.et2_url.url {
   text-shadow: 1px 1px #E0E0E0;
 }
 /*in Nextmatch definiert*/
-.et2_button_text,
-input[type=button] {
-  /*	background-color: #E0E0E0;
-	background-image: url(images/gradient01.png);
-	background-position: center;
-	background-repeat: repeat-x;
-
-	margin: 5px;
-	padding: 3px;
-
-	border: 1px solid silver;
-	color: #101010;*/
-}
 .et2_button_icon {
   border: none;
   background: transparent;
@@ -1335,7 +1322,7 @@ input[type=button] {
 }
 button.et2_button_text:hover,
 input[type=button]:hover {
-  color: #ffffff;
+  color: #1e1e1e;
   border: 1px solid #cdcdcd;
   background-color: #b4b4b4;
 }
@@ -3976,6 +3963,7 @@ button {
 }
 button:hover {
   background-color: #b4b4b4;
+  color: #1e1e1e;
 }
 /* #####################################################*/
 /*Button löschen*/
