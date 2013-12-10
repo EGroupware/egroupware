@@ -397,8 +397,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$categories = new categories($type5,$type3);
 				}
 				// Allow text for global
-				error_log("Type: " .$type);
-                                $type = ($type && strlen($type) > 1 ? $type : !$type);
+				$type = ($type && strlen($type) > 1 ? $type : !$type);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
 				foreach((array)$categories->return_sorted_array(0,False,'','','',$type,(int)$type4,true) as $cat)
 				{
