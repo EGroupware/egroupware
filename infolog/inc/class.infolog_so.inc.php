@@ -399,6 +399,8 @@ class infolog_so
 		{
 			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 		}
+		// Cast back to integer
+		$this->data['info_id_parent'] = (int)$this->data['info_id_parent'];
 		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__) as $row)
 		{
 			$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
