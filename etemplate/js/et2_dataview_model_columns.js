@@ -429,7 +429,11 @@ var et2_dataview_columns = Class.extend({
 			// Pick the first relative column and use it
 			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
 			{
-				if(this.columns[columnIndex].visibility == ET2_COL_VISIBILITY_INVISIBLE) continue;
+				if(this.columns[columnIndex].visibility == ET2_COL_VISIBILITY_INVISIBLE ||
+					this.columnWidths[columnIndex] <= 0)
+				{
+					continue;
+				}
 
 				var col = this.columns[columnIndex];
 				if(col.relativeWidth || !col.fixedWidth)
