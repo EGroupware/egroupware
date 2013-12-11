@@ -734,10 +734,10 @@ var et2_link_entry = et2_inputWidget.extend(
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == 'string')
+		if(typeof _value == 'string' || typeof _value == 'number')
 		{
-			if(_value.indexOf(",") > 0) _value = _value.replace(",",":");
-			if(_value.indexOf(":") >= 0)
+			if(typeof _value == 'string' && _value.indexOf(",") > 0) _value = _value.replace(",",":");
+			if(typeof _value == 'string' && _value.indexOf(":") >= 0)
 			{
 				var split = et2_csvSplit(_value, 2,":");
 
