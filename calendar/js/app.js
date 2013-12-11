@@ -34,6 +34,12 @@ app.classes.calendar = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
+		
+		// make calendar object available, even if not running in top window, as sidebox does
+		if (window.top !== window && typeof window.top.app.calendar == 'undefined')
+		{
+			window.top.app.calendar = this;
+		}
 	},
 
 	/**
@@ -43,6 +49,12 @@ app.classes.calendar = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
+
+		// remove top window reference
+		if (window.top !== window && window.top.app.calendar === this)
+		{
+				delete window.top.app.calendar;
+		}
 	},
 
 	/**
@@ -532,25 +544,25 @@ app.classes.calendar = AppJS.extend(
 
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
-		if (typeof state.view == 'undefined' || state.view == 'listview')
+		if (typeof state.state != 'undefined' && state.state.view == 'undefined' || state.state.view == 'listview')
 		{
 			menuaction = 'calendar.calendar_uilist.listview';
 			if (state.name)
 			{
-				state = {favorite: state.name.replace(/[^A-Za-z0-9-_]/g, '_')};
+				state.state = {favorite: state.name.replace(/[^A-Za-z0-9-_]/g, '_')};
 			}
 		}
-		for(name in state)
+		var query = jQuery.extend({menuaction: menuaction},state.state||{});
+		
+		// prepend an owner 0, to reset all owners and not just set given resource type
+		if(typeof query.owner != 'undefined')
 		{
-			var value = state[name];
-			switch(name)
-			{
-				case 'owner':	// prepend an owner 0, to reset all owners and not just set given resource type
-					value = '0,'+owner;
-					break;
-			}
-			menuaction += '&'+name+'='+encodeURIComponent(value)
+			query.owner = '0,'+ query.owner;
 		}
-		this.egw.open_link(menuaction);
+
+		this.egw.open_link(this.egw.link('/',query), 'calendar');
+
+		// Stop the normal bubbling if this is called on click
+		return false;
 	}
 });
