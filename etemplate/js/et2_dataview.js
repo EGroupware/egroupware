@@ -299,7 +299,6 @@ var et2_dataview = Class.extend({
 				// Update the visibility of the column
 				this.egw.css("." + col.tdClass, 
 					"display: table-cell; " + 
-					((vis_col == total_cnt) ? "border-right-width: 0 " : "border-right-width: 1px ") +
 					"!important;");
 
 				// Ugly browser dependant code - each browser seems to treat the 
