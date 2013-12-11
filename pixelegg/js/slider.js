@@ -71,7 +71,12 @@ egw_LAB.wait(function() {
 	egw_fw.prototype.getIFrameHeight = function()
 	{
 		$header = $j(this.tabsUi.appHeaderContainer);
-		var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight() - this.tabsUi.appHeader.outerHeight();
+		var content = $j(this.tabsUi.activeTab.contentDiv);
+		//var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight() - this.tabsUi.appHeader.outerHeight();
+		var height = $j(this.sidemenuDiv).height()
+			- $header.outerHeight() - $j(this.tabsUi.contHeaderDiv).outerHeight() - (content.outerHeight(true) - content.height())
+			// Not sure where this comes from...
+			+ 5;
 		return height;
 	};
 });
