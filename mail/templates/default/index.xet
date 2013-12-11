@@ -21,7 +21,7 @@
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
 					<nextmatch-sortheader align="center" label="date" id="date"/>
-					<nextmatch-sortheader label="emailaddress" id="address"/>
+					<nextmatch-sortheader label="mail-address" id="address"/>
 					<nextmatch-sortheader label="to" id="toaddress"/>
 					<nextmatch-sortheader label="from" id="fromaddress"/>
 					<nextmatch-sortheader align="center" label="size" id="size"/>
