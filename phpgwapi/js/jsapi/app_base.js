@@ -247,7 +247,7 @@ var AppJS = Class.extend(
 		// 'blank' is the special name for no filters, send that instead of the nice translated name
 		var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 		egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
-		
+
 		return false
 	},
 
@@ -365,6 +365,9 @@ var AppJS = Class.extend(
 		// Popup
 		this.favorite_popup.dialog("open");
 		console.log(this);
+
+		// Stop the normal bubbling if this is called on click
+		return false;
 	},
 
 	/**
