@@ -193,6 +193,10 @@ class mail_ui
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
 			//$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
 		}
+		else
+		{
+			$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
+		}
 		//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
 		//_debug_array($content);
 		if (!is_array($content))
@@ -1152,13 +1156,16 @@ unset($query['actions']);
 		}
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
-		$this->mail_bo->saveSessionData();
 		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
 		if ($this->mail_bo->folderExists($_folderName))
 		{
 			$toSchema = $this->mail_bo->isDraftFolder($_folderName)||$this->mail_bo->isSentFolder($_folderName)||$this->mail_bo->isTemplateFolder($_folderName);
 		}
-
+		else
+		{
+			$query['selectedFolder']=$this->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
+		}
+		$this->mail_bo->saveSessionData();
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -3172,7 +3179,8 @@ blockquote[type=cite] {
 		{
 			$created = false;
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_parentFolderName);
-			$_newName = translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
+			//the conversion is handeled by horde, frontend interaction is all utf-8
+			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);//translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			list($profileID,$parentFolderName) = explode(self::$delimiter,$decodedFolderName,2);
 			if (is_numeric($profileID))
@@ -3366,24 +3374,57 @@ blockquote[type=cite] {
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
 					$oA = array();
+					$subFolders = array();
 					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
 					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
 					{
 						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
-						$msg = lang("refused to delete folder with subfolders");
+						//$msg = lang("refused to delete folder with subfolders");
+						$delimiter = $this->mail_bo->getHierarchyDelimiter();
+						$nameSpace = $this->mail_bo->_getNameSpaces();
+						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
+						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
+						//error_log(__METHOD__.__LINE__.'->'."$folderName, $delimiter, $prefix");
+						foreach ($subFolders as $k => $f)
+						{
+							if (!isset($ftD[substr_count($f,$delimiter)])) $ftD[substr_count($f,$delimiter)]=array();
+							$ftD[substr_count($f,$delimiter)][]=$f;
+						}
+						krsort($ftD,SORT_NUMERIC);//sort per level
+						//we iterate per level of depth of the subtree, deepest nesting is to be deleted first, and then up the tree
+						foreach($ftD as $k => $lc)//collection per level
+						{
+							foreach($lc as $i => $f)//folders contained in that level
+							{
+								try
+								{
+									//error_log(__METHOD__.__LINE__.array2string($f).'<->'.$folderName);
+									$this->mail_bo->deleteFolder($f);
+									$success = true;
+									if ($f==$folderName) $oA[$_folderName] = $oldFolderInfo['shortDisplayName'];
+								}
+								catch (Exception $e)
+								{
+									$msg .= ($msg?' ':'').lang("Failed to delete %1. Server responded:",$f).$e->getMessage();
+									$success = false;
+								}
+							}
+						}
 					}
 					else
 					{
-						$success = $this->mail_bo->deleteFolder($folderName);
-						if (PEAR::isError($success))
+						try
 						{
-							$msg = $success->message;
-							$success = false;
-						}
-						else
-						{
+							$this->mail_bo->deleteFolder($folderName);
+							$success = true;
 							$oA[$_folderName] = $oldFolderInfo['shortDisplayName'];
+						}
+						catch (Exception $e)
+						{
+							$msg = $e->getMessage();
+							$success = false;
 						}
 					}
 				}
@@ -3395,6 +3436,19 @@ blockquote[type=cite] {
 			$response = egw_json_response::get();
 			if ($success)
 			{
+				$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				if (isset($folders2return[$this->mail_bo->profileID]))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($folders2return[$this->mail_bo->profileID]));
+					if (empty($subFolders)) $subFolders = array($folderName);
+					//error_log(__METHOD__.__LINE__.array2string($subFolders));
+					foreach($subFolders as $i => $f)
+					{
+						//error_log(__METHOD__.__LINE__.$f.'->'.array2string($folders2return[$this->mail_bo->profileID][$f]));
+						if (isset($folders2return[$this->mail_bo->profileID][$f])) unset($folders2return[$this->mail_bo->profileID][$f]);
+					}
+				}
+				egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 				//error_log(__METHOD__.__LINE__.array2string($oA));
 				$response->call('app.mail.mail_removeLeaf',$oA,'mail');
 			}
@@ -3412,6 +3466,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_changeProfile($icServerID)
 	{
+		//lang('Connect to Profile %1',$icServerID);
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);

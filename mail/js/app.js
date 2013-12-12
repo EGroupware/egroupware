@@ -997,6 +997,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_changeProfile: function(folder,_widget) {
 	//	alert(folder);
+		egw_message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel()));
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder])
 			.sendRequest();
 
@@ -1013,11 +1014,13 @@ app.classes.mail = AppJS.extend(
 		var server = folder.split('::');
 		app.mail.app_refresh(this.egw.lang('change folder')+'...', 'mail');
 		var img = _widget.getSelectedNode().images[0]; // fetch first image
+		var profileChange = false;
 		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
 		{
 			if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
 			{
 				rv = this.mail_changeProfile(folder,_widget);
+				profileChange = true;
 			}
 			else if (_widget.event_args.length==2)
 			{
@@ -1050,7 +1053,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
-		egw_message(myMsg);
+		if (profileChange == false) egw_message(myMsg);
 		
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
@@ -1850,13 +1853,29 @@ app.classes.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		reallyDelete = confirm(this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" \r\n"+(ftree.hasChildren(_senders[0].iface.id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")));
-		if (reallyDelete)
-		{
-			app.mail.app_refresh(this.egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
-			egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id])
-				.sendRequest(true);
-		}
+		var buttons = [
+			{text: this.egw.lang("Yes"), id: "delete", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"},
+		];
+		var dialog = et2_dialog.show_dialog(function(_button_id, _value) {
+			var senders = this.my_data.data;
+			switch (_button_id)
+			{
+				case "delete":
+					egw.json('mail.mail_ui.ajax_deleteFolder',[senders[0].iface.id])
+						.sendRequest(true);
+					return;
+				case "cancel":
+			}
+		},
+		this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" "+(ftree.hasChildren(_senders[0].iface.id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")),
+		this.egw.lang("DELETE Folder %1 ?",OldFolderName),
+		OldFolderName, buttons);
+		// setting required data for callback in as my_data
+		dialog.my_data = {
+			data: _senders,
+		};
+
 	},
 
 	/**

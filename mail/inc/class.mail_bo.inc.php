@@ -1648,8 +1648,8 @@ class mail_bo
 	function createFolder($_parent, $_folderName, $_subscribe=false)
 	{
 		if (self::$debug) error_log(__METHOD__.__LINE__."->"."$_parent, $_folderName, $_subscribe");
-		$parent		= $this->_encodeFolderName($_parent);
-		$folderName	= $this->_encodeFolderName($_folderName);
+		$parent		= $_parent;//$this->_encodeFolderName($_parent);
+		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -1718,13 +1718,15 @@ class mail_bo
 	 */
 	function deleteFolder($_folderName)
 	{
-		$folderName = $this->_encodeFolderName($_folderName);
-
-		$this->icServer->subscribeMailbox($folderName,false);
-		$rv = $this->icServer->deleteMailbox($folderName);
-		if ( PEAR::isError($rv) ) {
-			if (self::$debug) error_log(__METHOD__." failed for $folderName with error: ".print_r($rv->message,true));
-			return $rv;
+		//$folderName = $this->_encodeFolderName($_folderName);
+		try
+		{
+			$this->icServer->subscribeMailbox($_folderName,false);
+			$this->icServer->deleteMailbox($_folderName);
+		}
+		catch (Exception $e)
+		{
+			throw new egw_exception("Deleting Folder $_foldername failed! Error:".$e->getMessage());;
 		}
 
 		return true;
@@ -1734,15 +1736,23 @@ class mail_bo
 	{
 		if (self::$debug) error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName);
 		if($_status === true) {
-			$rv = $this->icServer->subscribeMailbox($_folderName);
-			if ( PEAR::isError($rv)) {
-				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
+			try
+			{
+				$rv = $this->icServer->subscribeMailbox($_folderName);
+			}
+			catch (Exception $e)
+			{
+				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$e->getMessage);
 				return false;
 			}
 		} else {
-			$rv = $this->icServer->subscribeMailbox($_folderName,false);
-			if ( PEAR::isError($rv)) {
-				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
+			try
+			{
+				$rv = $this->icServer->subscribeMailbox($_folderName,false);
+			}
+			catch (Exception $e)
+			{
+				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$e->getMessage);
 				return false;
 			}
 		}
@@ -1774,7 +1784,7 @@ class mail_bo
 			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
-				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
+				//error_log(__METHOD__.__LINE__.' using Cached folderObjects'.array2string($folders2return[$this->icServer->ImapServerId]));
 				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
@@ -1881,15 +1891,12 @@ class mail_bo
 							}
 						}
 					}
-					if( PEAR::isError($allMailboxesExt) ) {
-						#echo __METHOD__;_debug_array($allMailboxesExt);
-						continue;
-					}
 					$allMailBoxesExtSorted = array();
 					if (!is_array($allMailboxesExt))
 					{
-						error_log(__METHOD__.__LINE__.' Expected Array but got:'.array2string($allMailboxesExt));
-						$allMailboxesExt=array();
+						//error_log(__METHOD__.__LINE__.' Expected Array but got:'.array2string($allMailboxesExt). 'Type:'.$type.' Prefix:'.$foldersNameSpace[$type]['prefix']);
+						continue;
+						//$allMailboxesExt=array();
 					}
 					foreach ($allMailboxesExt as $mbx) {
 						//echo __METHOD__;_debug_array($mbx);
