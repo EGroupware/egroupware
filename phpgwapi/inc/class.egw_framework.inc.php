@@ -984,7 +984,7 @@ abstract class egw_framework
 	public function _get_css()
 	{
 		$app_css = '';
-		
+
 		// Load these first
 		// Cascade should go:
 		//  Libs < etemplate2 < framework/theme < app < print (?)
@@ -1802,11 +1802,14 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		{
 			if(strpos($pref_name, $pref_prefix) === 0)
 			{
-				if(!is_array($pref))
+				if(!is_array($pref))	// old favorite
 				{
-					$GLOBALS['egw']->preferences->delete($app,$pref_name);
-					$GLOBALS['egw']->preferences->save_repository(false);
-					continue;
+					if (!($pref = unserialize($pref))) continue;
+					$pref = array(
+						'name' => substr($pref_name,strlen($pref_prefix)),
+						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
+						'state' => $pref,
+					);
 				}
 				$filters[substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
