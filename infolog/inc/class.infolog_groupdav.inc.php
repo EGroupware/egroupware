@@ -397,9 +397,9 @@ class infolog_groupdav extends groupdav_handler
 					{
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
-						$filters[] = 'info_datemodified>'.(int)$sync_token;
-						$filters['filter'] .= '+deleted';	// to return deleted entries too
-						$filters['order'] = 'info_datemodified ASC';	// return oldest modifications first
+						$cal_filters[] = 'info_datemodified>'.(int)$sync_token;
+						$cal_filters['filter'] .= '+deleted';	// to return deleted entries too
+						$cal_filters['order'] = 'info_datemodified ASC';	// return oldest modifications first
 					}
 					break;
 				case 'sync-level':
