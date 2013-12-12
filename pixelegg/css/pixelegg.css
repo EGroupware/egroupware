@@ -4071,7 +4071,7 @@ table.et2_grid {
 }
 .innerContainer {
   overflow: hidden;
-  padding: 0.2em;
+  padding: 0;
 }
 .egwGridView_grid tr.th > td,
 .nextmatch_header {
@@ -4118,17 +4118,17 @@ table.egwGridView_outer thead tr th {
   background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
   font-weight: normal;
-  padding: 2px;
-  border-width: 1px;
-  border-style: solid;
+  padding: 0px;
+  /*                border-width: 1px;
+                border-style: solid;*/
   border-color: #b4b4b4;
   border-left: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
   border-bottom: 0px solid transparent;
   /*                background-image: none;
-                background-position: center;
-                background-repeat: repeat-x;*/
+                                background-position: center;
+                                background-repeat: repeat-x;*/
   vertical-align: top;
 }
 table.egwGridView_outer thead tr th:hover {
@@ -4144,53 +4144,39 @@ table.egwGridView_outer thead tr th:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid silver;
 }
 table.egwGridView_outer thead tr th.optcol {
   padding: 0;
   text-align: center;
   background-image: none;
+  /*width: 32px !important;*/
 }
 table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: #d9d9d9;
+  background-color: #ffc200;
 }
-table.egwGridView_outer thead tr th.optcol .selectcols {
-  position: fixed;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  right: 5px;
-  border: 1px solid;
-  background-image: url(../images/selectcols_small.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 9px 9px;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0;
-  padding: 0;
-}
-table.egwGridView_outer thead tr th.optcol .selectcols:hover {
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-image: url(../images/selectcols.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 19px 19px;
-  display: inline-block;
+table.egwGridView_outer thead tr th.optcol span.selectcols {
   width: 20px;
-  height: 20px;
+  height: 9px;
+  /*                    .Complete_Button_normal;
+                                        .Complete_Button_Icon_normal;
+                    
+                                        border: 1px solid @gray-30 !important;*/
+  background-image: url(../images/selectcols_small.png);
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  display: inline-block;
+}
+table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
+  /*.Complete_Button_Icon_hover;*/
+  background-color: #ffc200;
+  /*                        background-image: url(../images/selectcols.png);
+                                                background-position: center center;
+                                                background-repeat: no-repeat;
+                                                background-size: 19px 19px;
+                                                display: inline-block;
+                                                width: 20px;
+                                                height: 20px;*/
 }
 table.egwGridView_outer tbody td.frame {
   border: 1px solid #000000;
@@ -4202,13 +4188,14 @@ table.egwGridView_grid {
   background-color: #ffffff;
   border-spacing: 0px 1px;
   width: 100%;
+  /*subentry*/
 }
 table.egwGridView_grid img {
   height: 16px;
 }
 table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;
-  padding: 2px 3px 2px 4px;
+  /*padding: 2px 3px 2px 4px;*/
   margin: 0;
   vertical-align: top;
 }
@@ -4229,7 +4216,7 @@ table.egwGridView_grid tr:hover {
 table.egwGridView_grid tr td {
   border-left: 0px;
   border-right: 0px;
-  padding: 0.3em 0 0.3em 0.3em;
+  /*padding: 0.3em 0 0.3em 0.3em;*/
   border-bottom: 1px solid;
   color: #bfbfbf;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
@@ -4252,6 +4239,12 @@ table.egwGridView_grid tr td table.customfields tbody tr {
 }
 table.egwGridView_grid tr td table.customfields tbody tr td {
   border-bottom: 0px;
+}
+table.egwGridView_grid tr.subentry {
+  background: rgba(255, 221, 115, 0.2) !important;
+}
+table.egwGridView_grid tr.subentry:hover {
+  background: #ffdd73 !important;
 }
 table.egwGridView_grid span.arrow {
   -moz-user-select: none;
@@ -5069,7 +5062,7 @@ img {
 #egw_fw_sidebar #egw_fw_splitter {
   position: absolute;
   background-color: #b3b3b3 !important;
-  width: 5px;
+  width: 4px;
   top: 60px;
   bottom: 3px;
   right: 0px;
@@ -5083,7 +5076,7 @@ img {
   background-repeat: no-repeat;
   background-color: #b3b3b3 !important;
   position: absolute;
-  width: 5px;
+  /*            width: 95px;*/
   height: 100%;
   cursor: col-resize;
 }
@@ -5251,7 +5244,7 @@ img {
 }
 .egw_fw_content_browser_div {
   display: block;
-  overflow: auto;
+  /*overflow: auto;*/
   /*	background-color: RGB(240, 240, 255);*/
 }
 .egw_fw_content_browser_div_loading {
@@ -5416,9 +5409,16 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: transparent;
 }
 #egw_fw_main .egw_fw_ui_tab_content {
-  border-width: 0px 9px 0px 9px;
-  border-style: solid;
-  border-color: #b4b4b4;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  /*            border-width: 0px 5px 0px 1px;
+            border-style: solid;
+            border-color: @gray-30;*/
+}
+#egw_fw_main .egw_fw_ui_tab_content > div {
+  width: 100%;
+  padding: 0 0 0 0;
 }
 /*@import "../less/layout_nextmatch.less";*/
 /**
@@ -5556,6 +5556,21 @@ table.dialog-main-view {
 .dialog-header .et2_label {
   color: #ffffff;
   vertical-align: bottom;
+}
+.dialog-header td.space span img {
+  background: #ffffff;
+  border: 5px solid #ffffff;
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  /* Firefox 10+, Firefox on Android */
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
 }
 /*Main*/
 .dialog-main-timeframe div {

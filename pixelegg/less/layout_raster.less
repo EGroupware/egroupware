@@ -561,7 +561,7 @@
         position: absolute;
         //								background-color: RGB(200, 200, 255);
         .background-color-30-gray;
-        width: 5px;
+        width: 4px;
         top: 60px;
         bottom: 3px;
         right: 0px;
@@ -574,7 +574,7 @@
             background-repeat: no-repeat;
             .background-color-30-gray;
             position: absolute;
-            width: 5px;
+/*            width: 95px;*/
             height: 100%;
             cursor: col-resize;
         }
@@ -806,7 +806,7 @@
 
 .egw_fw_content_browser_div {
     display: block;
-   overflow: auto;
+   /*overflow: auto;*/
     /*	background-color: RGB(240, 240, 255);*/
 }
 
@@ -1085,23 +1085,23 @@ div#calendar-container {
 
     .egw_fw_ui_tab_content {
 
-        border-width: 0px 9px 0px 9px;
-        border-style: solid;
-        border-color: @gray-30;
+        
+        width: 100%;
+        padding: 0;
+        margin: 0;
+/*            border-width: 0px 5px 0px 1px;
+            border-style: solid;
+            border-color: @gray-30;*/
 
-        //					background-color: white;
-        //					width: 99.5%;
+        
+        > div {
+            width: 100%;
+            padding: 0 0 0 0;
 
-//        div:nth-child(1) {
-//            //						height: 100%;
-//            //						min-height: 400px;
-//
-//            iframe{
-//                height: 100%;
-//                min-height: 99%;
-//            }
-//
-//        }
+
+            
+        };
+        
     }
 
 

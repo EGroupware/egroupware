@@ -12,7 +12,8 @@
  * @version $Id$
  */
 
-@import "def_buttons.less";
+@import (reference) "def_design_pattern_color_font_shadow.less";
+@import (reference) "def_buttons.less";
 
 /** #####################################################################################
  * et2
@@ -36,7 +37,7 @@ table.et2_grid {
 
 .innerContainer{
     overflow:hidden;
-    padding: 0.2em;
+    padding: 0;
 }
 // Table Head in Listen
 
@@ -74,37 +75,37 @@ table.egwGridView_outer{
 
     thead {
         /*.background-color-5-gray;*/
-background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* IE10+ */
-background: linear-gradient(to bottom,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf',GradientType=0 ); /* IE6-9 */
+        background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf',GradientType=0 ); /* IE6-9 */
 
-    
+
         tr {
             //			.background-color-5-gray;
 
             th {
                 /*.background-color-50-gray;*/
-                
+
                 background: transparent;
-                        .gradient();
+                .gradient();
 
                 font-weight: normal;
-                padding: 2px;
-                border-width: 1px;
-                border-style: solid;
+                padding: 0px;
+/*                border-width: 1px;
+                border-style: solid;*/
                 border-color: @gray-30;
                 border-left: 0px solid transparent;
                 border-top: 0px solid transparent;
                 border-right: 0px solid transparent;
                 border-bottom: 0px solid transparent;
 
-/*                background-image: none;
-                background-position: center;
-                background-repeat: repeat-x;*/
+                /*                background-image: none;
+                                background-position: center;
+                                background-repeat: repeat-x;*/
                 vertical-align: top;
 
 
@@ -122,10 +123,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', e
                 &:active {
                     .background-color-15-gray;
                     .box_shadow_standard_light_inset;
-                    //							border-left: 1px solid gray;
-                    //							border-top: 1px solid gray;
-                    //							border-right: 1px solid silver;
-                    //							border-bottom: 1px solid silver;
+                    border-bottom: 1px solid silver;
                 }
 
 
@@ -137,57 +135,53 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', e
                 padding: 0;
                 text-align: center;
                 background-image: none;
-                //								width: 32px;
+                /*width: 32px !important;*/
 
                 &:hover{
-                    background-color: #d9d9d9;
+                    background-color: @color-hint;
                 }
 
-                .selectcols {
-
-                    position: fixed;
-                    //									.Complete_Button_normal;
-                    .Complete_Button_Icon_normal;
-                    right: 5px;
-                    border: 1px solid;
-                    //									background-color: yellow;
+                span.selectcols {
+                    width: 20px;
+                    height: 9px;
+                    /*                    .Complete_Button_normal;
+                                        .Complete_Button_Icon_normal;
+                    
+                                        border: 1px solid @gray-30 !important;*/
+                    //background-color: yellow;
                     background-image: url(../images/selectcols_small.png);
-                    background-position: center center;
                     background-repeat: no-repeat;
-                    background-size: 9px 9px;
+                    background-size: 10px 10px;
                     display: inline-block;
-                    width: 10px;
-                    height: 10px;
-                    margin: 0;
-                    padding: 0;
-                    //									vertical-align: middle;
+
 
                     &:hover{
-                        .Complete_Button_Icon_hover;
-                        background-image: url(../images/selectcols.png);
-                        background-position: center center;
-                        background-repeat: no-repeat;
-                        background-size: 19px 19px;
-                        display: inline-block;
-                        width: 20px;
-                        height: 20px;
+                        /*.Complete_Button_Icon_hover;*/
+                        background-color: @color-hint;
+                        /*                        background-image: url(../images/selectcols.png);
+                                                background-position: center center;
+                                                background-repeat: no-repeat;
+                                                background-size: 19px 19px;
+                                                display: inline-block;
+                                                width: 20px;
+                                                height: 20px;*/
                     }
 
                 }
             }
         }
     }
-    
+
     tbody {
-        
+
         td.frame {
-            
+
             border: 1px solid @gray-100;
-            
-             /*BUG*/
-//            div.egwGridView_scrollarea {min-height: 500px !important;}
+
+            /*BUG*/
+            //            div.egwGridView_scrollarea {min-height: 500px !important;}
+        }
     }
-}
 
 }
 
@@ -209,7 +203,7 @@ table.egwGridView_grid{
 
     tbody {
         border-bottom: 1px solid @lightgray;
-        padding: 2px 3px 2px 4px;
+        /*padding: 2px 3px 2px 4px;*/
         margin: 0;
         vertical-align: top;
 
@@ -217,7 +211,7 @@ table.egwGridView_grid{
         // Reihen ohne Border left und right
 
         tr.selected{
-            
+
             background: fade(@color_selected_row, 20%) !important;
             /*.bw-gradient;*/ 
         }
@@ -226,7 +220,7 @@ table.egwGridView_grid{
         tr.focused{
 
             background: fade(@color_active_row, 50%) !important;
-            
+
         }
     }
 
@@ -244,60 +238,72 @@ table.egwGridView_grid{
             border-left: 0px;
             border-right: 0px;
 
-            padding: 0.3em 0 0.3em 0.3em;
-			border-bottom: 1px solid;
-			color: #bfbfbf;
+            /*padding: 0.3em 0 0.3em 0.3em;*/
+            border-bottom: 1px solid;
+            color: #bfbfbf;
             /*&:hover {background-color: @egw_color_2_e;} legacy*/
-			
+
             &:active {
                 /*background-color: @egw_color_2_a;*/
                 .box_shadow_standard_light_inset;
                 .color-0-gray;
             }
-			span{
-				color: @gray-70;
-			}
-			table.customfields{
-				tbody{
-					border-bottom: 0px; 
-					tr{
-						border-bottom: 0px;
-						td{
-							border-bottom: 0px;
-						}
-					}
-					
-			}
-			
-			}
+            span{
+                color: @gray-70;
+            }
+            table.customfields{
+                tbody{
+                    border-bottom: 0px; 
+                    tr{
+                        border-bottom: 0px;
+                        td{
+                            border-bottom: 0px;
+                        }
+                    }
+
+                }
+
+            }
         }
     }
-
-span.arrow {
-    -moz-user-select: none;
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 8px;
-    margin-right: 2px;
-    vertical-align: middle;
-    width: 8px;
+    
+    
+    /*subentry*/
+    
+    tr.subentry {
+        background: fade(@color_selected_row, 20%) !important;  
+        
+        &:hover {background: @color_selected_row !important;}
     }
     
-span.arrow.opened {
-		    background-image: url("../images/egw_action/arrows.png");
-		    background-position: -8px 0;
-		    cursor: pointer;
-		}
-		span.arrow.closed {
-		    background-image: url("../images/egw_action/arrows.png");
-		    background-position: 0 0;
-		    cursor: pointer;
-		}
-		span.arrow.loading {
-		    background-image: url("../egw_action/ajax-loader.gif");
-		    background-position: 0 0;
-		    cursor: pointer;
-		}
+
+    span.arrow {
+        -moz-user-select: none;
+        background-repeat: no-repeat;
+        display: inline-block;
+        height: 8px;
+        margin-right: 2px;
+        vertical-align: middle;
+        width: 8px;
+    }
+
+    span.arrow.opened {
+        background-image: url("../images/egw_action/arrows.png");
+        background-position: -8px 0;
+        cursor: pointer;
+    }
+    span.arrow.closed {
+        background-image: url("../images/egw_action/arrows.png");
+        background-position: 0 0;
+        cursor: pointer;
+    }
+    span.arrow.loading {
+        background-image: url("../egw_action/ajax-loader.gif");
+        background-position: 0 0;
+        cursor: pointer;
+    }
+
+
 
 
 

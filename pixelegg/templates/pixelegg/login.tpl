@@ -86,15 +86,20 @@
 </div>
 
 <div id="wrap">
-
-
-<img class="bgfade" src="pixelegg/images/login/background-image-1.jpg" alt="STYLITE" title="isle" >
-<img class="bgfade" src="pixelegg/images/login/background-image-2.jpg" alt="EGROUPWARE" title="isle" >
-         
+<img class="bgfade" src="pixelegg/images/login/background-image-1.jpg" alt="STYLITE" title="STYLITE">
+<img class="bgfade" src="pixelegg/images/login/background-image-2.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+<img class="bgfade" src="pixelegg/images/login/background-image-3.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+<img class="bgfade" src="pixelegg/images/login/bg_1.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+<img class="bgfade" src="pixelegg/images/login/bg_2.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+<img class="bgfade" src="pixelegg/images/login/bg_3.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+<img class="bgfade" src="pixelegg/images/login/raster.jpg" alt="EGROUPWARE" title="EGROUPWARE">
 </div>
-<!-- //
+
+                    
+                    <!-- //
 
 {*<img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/default.jpg" alt="default" title="default" >
 <img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/house_tree.jpg" alt="house_tree" title="house_tree">
 <img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/garden.jpg" alt="garden" title="garden" >
 <img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/isle.jpg" alt="isle" title="isle" >*} -->
+
