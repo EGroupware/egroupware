@@ -57,14 +57,18 @@
         
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
             
-                                                    <!-- <image src="accounts"/> -->
-					<vbox class="addressbook_edit_general_picture">
-						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-						<template id="addressbook.edit.upload"/>
-					</vbox>
+                                      <!-- <image src="accounts"/> -->
+					
 		<grid  class="addressbook_edit_general">
+		<columns>
+				<column width="80%" class="addressbook_edit_general_left"/>
+				<column width="20%" class="addressbook_edit_general_right"/>
+		</columns>
+		<rows>
+		<row>
+		<grid width="auto">
 			<columns>
-				<column />
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -73,13 +77,15 @@
 				<row>
 					<description value="Name"/>
 					<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="3" tabindex="-1" class="cursorHand"/>
+					
 				</row>
 				<row>
 					<description/>
 					<template id="addressbook.edit.name"/>
-
+					
 				</row>
-                                <row>
+				
+                <row>
 					<description for="title" value="Title"/>
 					<textbox id="title" size="36" maxlength="64" span="2"/>
 					
@@ -159,7 +165,15 @@
 					</menulist>
 				</row>
 			</rows>
+			
 		</grid>
+			<hbox class="addressbook_edit_general_picture">
+						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+						<template id="addressbook.edit.upload"/>
+					</hbox>
+		</row>
+		</rows>
+	</grid>		
 	</template>
         
         
@@ -238,7 +252,7 @@
 						<textbox id="adr_two_countryname" class="custom_country"/>
 					</hbox>
 				</row>
-				<row height="30">
+				<row height="30" class="add_bday_timezone">
 					<image src="gear"/>
 					<description for="bday" value="Birthday"/>
 					<hbox options="0,0">

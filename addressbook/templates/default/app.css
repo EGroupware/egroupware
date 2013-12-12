@@ -93,3 +93,10 @@ fieldset.emailGroup {
 .image16 img {
   height: 16px;
 }
+
+/* changes from pixelegg 11/12/13 - upload foto in right column */
+#addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
+widtH: 20%;
+vertical-align: top;
+text-align: center;
+}

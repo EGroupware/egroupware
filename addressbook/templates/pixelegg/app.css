@@ -144,23 +144,22 @@ fieldset.emailGroup {
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
-/*############################################
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #       iframge                 #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-##############################################
-*/
+/*################## iframe ####################*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #      Addressbook              #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            ############################### #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #       infolog                 #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*##############################################*/
 /**
  * Give space to both contact view & infolog list
  */
@@ -170,9 +169,6 @@ fieldset.emailGroup {
 #addressbook-edit {
   height: auto;
   min-height: 390px;
-}
-.et2_container[id^="infolog-index-addressbook"] {
-  min-height: 250px;
 }
 div#addressbook-index div.et2_hbox_left {
   padding: 1em;
@@ -327,8 +323,60 @@ div#addressbook-index div.filters select#infolog-index_filter2 {
 div#addressbook-index table.egwGridView_outer {
   width: 99%;
 }
-.et2_container {
+/*##################################################################*/
+/*Infolog*/
+.et2_container[id^="infolog-index-addressbook"] {
   height: auto;
+  min-height: 250px;
+  /*ADD*/
+  /*        div.et2_hbox,       
+        div.et2_box_widget*/
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] {
+  background-color: #0b5fa4 !important;
+  color: #FFF;
+  text-shadow: none;
+  /*    height: auto;*/
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  height: auto;
+  color: #ffffff;
+  font-size: 0.9em;
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:before {
+  content: "+";
+  font-size: 1.5em;
+  color: #ffc200;
+  line-height: 1.1em;
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:before {
+  padding-left: 5px;
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] span.et2_label {
+  color: #ffffff;
+  font-size: 0.9em;
+  padding-right: 11px;
+}
+.et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] img.et2_button {
+  margin-top: -15px;
 }
 /*###########################################
 #                                           #
@@ -349,8 +397,13 @@ div#addressbook-index table.egwGridView_outer {
 #                                           #
 ##############################################*/
 #addressbook-edit_addressbook-edit-general table.addressbook_edit_general {
-  width: 80%;
+  width: 100%;
   height: 286px;
+}
+#addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
+  widtH: 20%;
+  vertical-align: top;
+  text-align: center;
 }
 /*#######################################################*/
 /*#######################################################*/
@@ -363,80 +416,45 @@ div#addressbook-index table.egwGridView_outer {
 #  Address       #             #
 #                #  Email      #
 #                #             #
+#    left        #  right      #
 ################################ */
 td.addressbook_edit_left_td {
   min-width: 500px;
   max-width: 100%;
-}
-td.addressbook_edit_left_td .et2_tabs .et2_tabcntr {
-  min-width: 500px;
-  max-width: 100%;
+  width: 70%;
 }
 td.addressbook_edit_right_td {
   min-width: 300px;
   max-width: 100%;
+  width: 30%;
 }
-/*ADD AREA*/
-#infolog-index_infolog-index-header_right .et2_box_widget {
-  background-color: #0b5fa4 !important;
-  color: #FFF;
-  text-shadow: none;
-  /*    height: auto;*/
-  background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  height: auto;
-  color: #ffffff;
-  font-size: 0.9em;
+.egw_fw_ui_tab_content #addressbook-edit .et2_tabs {
+  max-height: 25em;
 }
-#infolog-index_infolog-index-header_right .et2_box_widget:before {
-  content: "+";
-  font-size: 1.5em;
-  color: #ffc200;
-  line-height: 1.1em;
+/* popup window */
+#popupMainDiv #addressbook-edit .et2_tabs {
+  height: 400px;
 }
-#infolog-index_infolog-index-header_right .et2_box_widget:hover {
-  background-color: #66a1d2 !important;
-  color: #ffc200;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-}
-#infolog-index_infolog-index-header_right .et2_box_widget span.et2_label {
-  color: #ffffff;
-  font-size: 0.9em;
-  padding-right: 11px;
-}
-#infolog-index_infolog-index-header_right .et2_box_widget img.et2_button {
-  margin-top: -15px;
-}
-/*#######################################################*/
-/*#######################################################*/
-/*#######################################################*/
-/* State: address edit min*/
-#addressbook-edit .et2_tabbox {
-  max-width: 100%;
-  min-width: 530px;
-}
-#addressbook-edit .et2_tabs {
-  height: 380px;
-  min-width: 530px;
-}
-table.et2_grid .addressbook_edit_general {
-  width: 80% !important;
-}
+/*############ tabbox##############################################*/
+/*# et2_tabheader # et2_tabheader # et2_tabheader # et2_tabheader #*/
+/*#################################################################*/
+/*#                                                               #*/
+/*#                                                               #*/
+/*#                                                               #*/
+/*#               et2_tabs                                        #*/
+/*#                                                               #*/
+/*#                                                               #*/
+/*#################################################################*/
+/*#addressbook-edit .et2_tabbox {
+    max-width: 100%;     
+    min-width: 530px;
+    width: 550px
+}*/
 /*#######################################################*/
 /* Tab Generell */
+.leftPad5 {
+  padding-left: 0px;
+}
 /*##################
 #                #
 #                #
@@ -446,14 +464,12 @@ table.et2_grid .addressbook_edit_general {
 ##################*/
 /*Div Image*/
 div.addressbook_edit_general_picture {
-  float: right;
   /*Picture*/
 }
 div.addressbook_edit_general_picture img {
   width: 180% !important;
   max-width: 100px !important;
   height: auto !important;
-  margin-right: 70px;
 }
 div.addressbook_edit_general_picture img.photo {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -685,13 +701,23 @@ div#addressbook-edit_addressbook-edit-cats {
   display: table-header-group;
   vertical-align: top;
 }
+#addressbook-edit_addressbook-edit-home {
+  /*Birthday + Timezone*/
+  /*row*/
+}
 #addressbook-edit_addressbook-edit-home #addressbook_edit_adr_two_countrycode_chzn {
   width: 200px !important;
-  padding-top: 1em;
+  padding-top: 0em;
 }
-#addressbook-edit_addressbook-edit-home #addressbook_edit_tz_chzn {
+#addressbook-edit_addressbook-edit-home .add_bday_timezone {
+  /*Birthday Label*/
+}
+#addressbook-edit_addressbook-edit-home .add_bday_timezone #addressbook_edit_tz_chzn {
   width: 15% !important;
-  padding-top: 1em;
+  padding-top: 0em;
+}
+#addressbook-edit_addressbook-edit-home .add_bday_timezone label.et2_label {
+  padding-left: 1em;
 }
 /*################## Tab 4 Details ###############################*/
 /*################## Tab 5  Verknüpfungen ###############################*/
@@ -798,9 +824,6 @@ div.addressbook.edit.general table img:nth-child(2) {
 .redItalic {
   color: red;
   font-style: italic;
-}
-.leftPad5 {
-  padding-left: 5px;
 }
 .bold {
   font-weight: bold;

@@ -17,26 +17,30 @@
 // iframe
 // Rahmen + padding**/
 
-/*############################################
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #       iframge                 #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-#            #                               #
-##############################################
-*/
+/*################## iframe ####################*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #      Addressbook              #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            ############################### #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #       infolog                 #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*##############################################*/
+
+
 /**
  * Give space to both contact view & infolog list
  */
+
+
+
 #addressbook-index {
   height: 100%;
 }
@@ -45,15 +49,6 @@
   min-height: 390px;
 }
 
-
-
-
-
-
-
-.et2_container[id^="infolog-index-addressbook"] {
-  min-height: 250px;
-}
 
 
 div#addressbook-index{
@@ -171,7 +166,35 @@ div#addressbook-index{
 
 } // iframe
 
-.et2_container {height: auto;}
+
+/*##################################################################*/
+
+/*Infolog*/ 
+
+.et2_container[id^="infolog-index-addressbook"] {
+    
+    height: auto;
+    min-height: 250px; 
+        /*ADD*/
+/*        div.et2_hbox,       
+        div.et2_box_widget*/
+        .et2_hbox_right[id*="_infolog-index-header_right"]{
+                .Complete_Button_add;
+                height: auto;
+                .color-0-gray; // white
+                font-size: 0.9em;
+                
+                &:before {padding-left: 5px;}
+                &:hover {.Complete_Button_add_hover;}
+                
+                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
+                img.et2_button {margin-top: -15px;}
+                
+                }
+ }
+    
+    
+
 
 
 //******************************************************************
@@ -226,9 +249,17 @@ div#addressbook-index{
     
     
     table.addressbook_edit_general {
-        width:80%;
+        width:100%;
         height:286px;
+    td.addressbook_edit_general_right {
+    	widtH: 20%;
+		vertical-align: top;
+		text-align: center;
+    	
     }
+    
+    }
+    
       
 } 
 
@@ -247,63 +278,62 @@ div#addressbook-index{
 #  Address       #             #
 #                #  Email      #
 #                #             #
+#    left        #  right      #
 ################################ */
 
 
 td.addressbook_edit_left_td {
     min-width: 500px; 
     max-width: 100%;
-
-    .et2_tabs {
-        
-        .et2_tabcntr {    
-            min-width: 500px; 
-            max-width: 100%;
-        }
-        
-    }
-
-
+    width: 70%;
 }
-td.addressbook_edit_right_td {min-width: 300px; max-width: 100%;}
+
+td.addressbook_edit_right_td {
+    min-width: 300px; 
+    max-width: 100%;
+    width: 30%;
+}
 
 
 
+.egw_fw_ui_tab_content #addressbook-edit .et2_tabs {
+    max-height: 25em; 
+}
 
-/*ADD AREA*/
-   #infolog-index_infolog-index-header_right{
-       
-       .et2_box_widget{
-                .Complete_Button_add;
-                height: auto;
-                .color-0-gray; // white
-                font-size: 0.9em;
-                
-                &:hover {.Complete_Button_add_hover;}
-                
-                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
-                img.et2_button {margin-top: -15px;}
-                
-                }
- }
+/* popup window */
+#popupMainDiv #addressbook-edit .et2_tabs {
+    height: 400px; 
+}
+
+    
+
+/*############ tabbox##############################################*/
+/*# et2_tabheader # et2_tabheader # et2_tabheader # et2_tabheader #*/
+/*#################################################################*/
+/*#                                                               #*/ 
+/*#                                                               #*/ 
+/*#                                                               #*/ 
+/*#               et2_tabs                                        #*/ 
+/*#                                                               #*/ 
+/*#                                                               #*/ 
+/*#################################################################*/
+
+/*#addressbook-edit .et2_tabbox {
+    max-width: 100%;     
+    min-width: 530px;
+    width: 550px
+}*/
 
 
 
- /*#######################################################*/
- /*#######################################################*/
- /*#######################################################*/
-/* State: address edit min*/        
-
-
-
-#addressbook-edit .et2_tabbox {max-width: 100%;     min-width: 530px;}
-
-#addressbook-edit .et2_tabs {height: 380px; min-width: 530px;}
-
-table.et2_grid .addressbook_edit_general {width: 80% !important;}
+//table.et2_grid .addressbook_edit_general {width: 80% !important;}
 
 /*#######################################################*/
 /* Tab Generell */
+
+.leftPad5 {
+ padding-left: 0px;
+}
 
 
 /*##################
@@ -315,13 +345,17 @@ table.et2_grid .addressbook_edit_general {width: 80% !important;}
 ##################*/
 /*Div Image*/
 div.addressbook_edit_general_picture {
-    float: right;
+//        float: right;
+//         width: 180% !important; 
+//         max-width: 100px !important; 
+//         height: auto !important; 
+//         margin-right: 10px; 
     
     
-    img {width: 180% !important; 
-         max-width: 100px !important; 
-         height: auto !important; 
-         margin-right: 70px; 
+    img {
+            width: 180% !important; 
+            max-width: 100px !important; 
+            height: auto !important; 
     }
     
     /*Picture*/
@@ -548,14 +582,27 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
     #addressbook_edit_adr_two_countrycode_chzn{
         width: 200px !important;
         //		background-color: red !important;
-        padding-top: 1em;
+        padding-top: 0em;
     }
 
-    // Timezone
-    #addressbook_edit_tz_chzn{
-        width: 15% !important;
-        padding-top: 1em;
+    
+    /*Birthday + Timezone*/
+    /*row*/
+    .add_bday_timezone {
+        
+        
+        // Timezone
+        #addressbook_edit_tz_chzn{
+                width: 15% !important;
+                padding-top: 0em;
+            }
+        
+        
+        /*Birthday Label*/
+        label.et2_label {padding-left: 1em;}        
     }
+    
+    
 
 }
  /*################## Tab 4 Details ###############################*/
@@ -723,13 +770,6 @@ div.addressbook.edit.general{
 }
 
 
-
-
-
-
-.leftPad5 {
-    padding-left: 5px;
-}
 .bold {
     font-weight: bold;
 }
@@ -816,4 +856,4 @@ table.uploadphoto {width: 360px !important; background-color: @gray-20 !importan
 
 
 
-// Ende Addressbuch
+// Ende Addressbuch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
