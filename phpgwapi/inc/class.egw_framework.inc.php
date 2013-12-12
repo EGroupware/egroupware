@@ -1811,7 +1811,7 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		{
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
 			$html .= "<li data-id='$name' class='ui-menu-item' role='menuitem'>\n";
-			$html .= "<a href='$href' class='ui-corner-all' tabindex='-1'>";
+			$html .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'] .($filter['group'] != false ? " ♦" :"");
 			$html .= ($filter['group'] != false && !$is_admin || $name == 'blank' ? "" :
@@ -1822,7 +1822,7 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		// If were're here, the app supports favorites, so add a 'Add' link too
 		$html .= "<li class='ui-menu-item' role='menuitem'><a href='javascript:app.$app.add_favorite()' class='ui-corner-all'>";
 		$html .= html::image($app, 'new') . lang('Add current'). '</a></li>';
-		
+
 		$html .= '</ul></span>';
 
 		return $html;
