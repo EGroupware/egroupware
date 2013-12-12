@@ -645,7 +645,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					),
 					'group' => $action['group'],
 				);
-				$action_links[] = $prefix.'select_all';				
+				$action_links[] = $prefix.'select_all';
 			}
 			$group = $action['group'];
 
@@ -899,132 +899,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		unset($value['nm_col_preference']);
 
 		$validated[$form_name] = $value;
-	}
-
-
-	/**
-	 * Include favorites when generating the page server-side
-	 *
-	 * Use this function in your sidebox (or anywhere else, I suppose) to
-	 * get the favorite list when a nextmatch is _not_ on the page.  If
-	 * a nextmatch is on the page, it will update / replace this list.
-	 *
-	 * @param $app String Current application, needed to find preferences
-	 * @param $default String Preference name for default favorite
-	 *
-	 * @return String HTML fragment for the list
-	 */
-	public static function favorite_list($app, $default)
-	{
-		if(!$app) return '';
-		$target = 'favorite_sidebox_'.$app;
-		$pref_prefix = 'favorite_';
-		$filters = array(
-			'blank' => array(
-				'name' => lang('No filters'),
-				'filters' => array(),
-				'group' => true
-			)
-		);
-		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
-		if(!$default_filter) $default_filter = "blank";
-
-		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
-		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
-		{
-			if(strpos($pref_name, $pref_prefix) === 0)
-			{
-				if(!is_array($pref))
-				{
-					$GLOBALS['egw']->preferences->delete($app,$pref_name);
-					$GLOBALS['egw']->preferences->save_repository(false);
-					continue;
-				}
-				$filters[substr($pref_name,strlen($pref_prefix))] = $pref;
-			}
-		}
-		// Get link for if there is no nextmatch - this is a fallback
-		$registry = egw_link::get_registry($app,'list');
-		if(!$registry) $registry = egw_link::get_registry($app,'index');
-		foreach($filters as $name => $filter)
-		{
-			$href = "javascript:app.$app.setState(" . json_encode($filter['filter']) . ');';
-			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
-			$html .= "<a href='$href' class='ui-corner-all' tabindex='-1'>";
-			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
-				$filter['name'] .($filter['group'] != false ? " ♦" :"");
-			$html .= "</a></li>\n";
-
-		}
-
-		$html .= '</ul></span>';
-		return $html;
-	}
-
-	/**
-	 * Create or delete a favorite for multiple users
-	 *
-	 * Need to be an admin or it will just do nothing quietly
-	 *
-	 * @param $app Current application, needed to save preference
-	 * @param $name String Name of the favorite
-	 * @param $action String add or delete
-	 * @param $group int|String ID of the group to create the favorite for, or 'all' for all users
-	 * @param $filters Array of key => value pairs for the filter
-	 *
-	 * @return boolean Success
-	 */
-	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
-	{
-		// Only use alphanumeric for preference name, so it can be used directly as DOM ID
-		$name = strip_tags($name);
-		$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
-
-		if($group && $GLOBALS['egw_info']['apps']['admin'])
-		{
-			$prefs = new preferences(is_numeric($group) ? $group: $GLOBALS['egw_info']['user']['account_id']);
-		}
-		else
-		{
-			$prefs = $GLOBALS['egw']->preferences;
-			$type = 'user';
-		}
-		$prefs->read_repository();
-		$type = $group == "all" ? "default" : "user";
-		if($action == "add")
-		{
-			$filters = array(
-				// This is the name as user entered it, minus tags
-				'name' => $name,
-				'group' => $group ? $group : false,
-				'filter' => $filters
-			);
-			$result = $prefs->add($app,$pref_name,$filters,$type);
-			$prefs->save_repository(false,$type);
-
-			// Update preferences client side, or it could disappear
-			$pref = $GLOBALS['egw']->preferences->read_repository(false);
-			$pref = $pref[$app];
-                        if(!$pref) $pref = Array();
-                        egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
-
-			egw_json_response::get()->data(isset($result[$app][$pref_name]));
-			return isset($result[$app][$pref_name]);
-		}
-		else if ($action == "delete")
-		{
-			$result = $prefs->delete($app,$pref_name, $type);
-			$prefs->save_repository(false,$type);
-
-			// Update preferences client side, or it could come back
-			$pref = $GLOBALS['egw']->preferences->read_repository(false);
-			$pref = $pref[$app];
-			if(!$pref) $pref = Array();
-			egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
-
-			egw_json_response::get()->data(!isset($result[$app][$pref_name]));
-			return !isset($result[$app][$pref_name]);
-		}
 	}
 
 	/**

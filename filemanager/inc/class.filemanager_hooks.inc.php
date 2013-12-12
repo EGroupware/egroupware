@@ -37,7 +37,7 @@ class filemanager_hooks
 		display_sidebox(self::$appname,lang('Favorites'),array(
 			array(
 				'no_lang' => true,
-				'text'=> etemplate_widget_nextmatch::favorite_list(self::$appname,'filemanager.filemanager_ui.get_rows'),
+				'text'=> egw_framework::favorite_list(self::$appname,'filemanager.filemanager_ui.get_rows'),
 				'link'=>false,
 				'icon' => false
 			)
