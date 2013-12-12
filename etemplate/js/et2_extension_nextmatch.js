@@ -475,7 +475,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * @return Object { ids: [UIDs], inverted: boolean}
 	 */
 	getSelection: function() {
-		var selected = this.controller._selectionMgr.getSelected();
+		var selected = this.controller && this.controller._selectionMgr ? this.controller._selectionMgr.getSelected() : null;
 		if(typeof selected == "object" && selected != null)
 		{
 			return selected;
