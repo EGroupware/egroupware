@@ -23,21 +23,21 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Link registry
-	 * 
+	 *
 	 * @access: private, use egw.open() or egw.set_link_registry()
 	 */
 	var link_registry = null;
 
 	/**
 	 * Local cache for link-titles
-	 * 
+	 *
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 */
 	var title_cache = {};
 
 	/**
 	 * Queue for link_title requests
-	 * 
+	 *
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 * @var object _app._id.[{callback: _callback, context: _context}[, ...]]
 	 */
@@ -71,7 +71,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				return false;
 			}
 			var reg = link_registry[_app];
-			
+
 			// some defaults (we set them directly in the registry, to do this only once)
 			if (typeof reg[_name] == 'undefined')
 			{
@@ -82,7 +82,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 						break;
 					case 'icon':
 						var app_data = this.app(_app);
-						if (typeof app_data != 'undefined' && 
+						if (typeof app_data != 'undefined' &&
 							typeof app_data.icon != 'undefined' && app_data.icon != null)
 						{
 							reg.icon = (typeof app_data.icon_app != 'undefined' ? app_data.icon_app : _app)+'/'+app_data.icon;
@@ -101,7 +101,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			return typeof reg[_name] == 'undefined' ? false : reg[_name];
 		},
-		
+
 		/**
 		 * Get mime-type information from app-registry
 		 *
@@ -123,7 +123,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			return null;
 		},
-		
+
 		/**
 		 * Get handler (link-data) for given path and mime-type
 		 *
@@ -178,7 +178,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			return data;
 		},
-		
+
 		/**
 		 * Get list of link-aware apps the user has rights to use
 		 *
@@ -191,9 +191,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			for (var type in link_registry)
 			{
 				var reg = link_registry[type];
-				
+
 				if (typeof _must_support != 'undefined' && _must_support && typeof reg[_must_support] == 'undefined') continue;
-				
+
 				var app_sub = type.split('-');
 				if (this.app(app_sub[0]))
 				{
@@ -201,9 +201,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				}
 			}
 			// sort labels (caseinsensitive) alphabetic
-			apps = apps.sort(function(_a,_b) { 
-				var al = _a.label.toUpperCase(); 
-				var bl = _b.label.toUpperCase(); 
+			apps = apps.sort(function(_a,_b) {
+				var al = _a.label.toUpperCase();
+				var bl = _b.label.toUpperCase();
 				return al == bl ? 0 : (al > bl ? 1 : -1);
 			});
 			// create sorted associative array / object
@@ -217,7 +217,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 		/**
 		 * Set link registry
-		 * 
+		 *
 		 * @param object _registry whole registry or entries for just one app
 		 * @param string _app
 		 */
@@ -232,7 +232,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				link_registry[_app] = _registry;
 			}
 		},
-		
+
 		/**
 		 * Generate a url which supports url or cookies based sessions
 		 *
@@ -256,7 +256,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			{
 				_url = this.webserverUrl + _url;
 			}
-	
+
 			var vars = {};
 			/* not sure we still need to support that
 			// add session params if not using cookies
@@ -266,7 +266,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				$vars['kp3'] = $GLOBALS['egw']->session->kp3;
 				$vars['domain'] = $GLOBALS['egw']->session->account_domain;
 			}*/
-	
+
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
 			var url_othervars = _url.split('?',2);
 			_url = url_othervars[0];
@@ -281,7 +281,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				if (!_extravars) _extravars = '';
 				if (othervars) _extravars += (_extravars?'&':'')+othervars;
 			}
-	
+
 			// parse extravars string into the vars array
 			if (_extravars)
 			{
@@ -304,17 +304,17 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 					}
 				}
 			}
-	
+
 			// if there are vars, we add them urlencoded to the url
 			var query = [];
-			
+
 			// If ajax flag is there, it must be the last one
 			var ajax = vars.ajax || false;
 			delete vars.ajax;
 
 			for(var name in vars)
 			{
-				var val = vars[name];
+				var val = vars[name] || '';	// fix error for eg. null, which is an object!
 				if (typeof val == 'object')
 				{
 					for(var i=0; i < val.length; ++i)
@@ -338,7 +338,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 		/**
 		 * Query a title of _app/_id
-		 * 
+		 *
 		 * @param string _app
 		 * @param string|int _id
 		 * @param function _callback optinal callback, required if for responses from the server
@@ -377,10 +377,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				title_uid = this.jsonq(_app+'.etemplate_widget_link.ajax_link_titles.etemplate',[{}], this.link_title_callback, this, this.link_title_before_send);
 			}
 		},
-		
+
 		/**
 		 * Callback to add all current title requests
-		 * 
+		 *
 		 * @param array of parameters, only first parameter is used
 		 */
 		link_title_before_send: function(_params)
@@ -399,10 +399,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			title_uid = null;	// allow next request to jsonq
 		},
-		
+
 		/**
 		 * Callback for server response
-		 * 
+		 *
 		 * @param object _response _app => _id => title
 		 */
 		link_title_callback: function(_response)
@@ -413,7 +413,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			for(var app in _response)
 			{
-				if (typeof title_cache[app] != 'object') 
+				if (typeof title_cache[app] != 'object')
 				{
 					title_cache[app] = {};
 				}
@@ -435,10 +435,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				}
 			}
 		},
-		
+
 		/**
 		 * Create quick add selectbox
-		 * 
+		 *
 		 * @param _parent parent to create selectbox in
 		 * @returns
 		 */
@@ -449,7 +449,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 			var select = jQuery(document.createElement('select')).attr('id', 'quick_add_selectbox');
 			jQuery(typeof _parent == 'string' ? '#'+_parent : _parent).append(select);
-			
+
 			var self = this;
 			// bind change handler
 			select.change(function(){
