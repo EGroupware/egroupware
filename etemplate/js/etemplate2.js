@@ -256,6 +256,14 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		var _load = function() {
 			egw.debug("log", "Loading template...");
 
+			// Add into indexed list - do this before, so anything looking can find it,
+			// even if it's not loaded
+			if(typeof etemplate2._byTemplate[_name] == "undefined")
+			{
+				etemplate2._byTemplate[_name] = [];
+			}
+			etemplate2._byTemplate[_name].push(this);
+
 			// Read the XML structure of the requested template
 			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
 
@@ -267,13 +275,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
-
-			// Add into indexed list
-			if(typeof etemplate2._byTemplate[_name] == "undefined")
-			{
-				etemplate2._byTemplate[_name] = [];
-			}
-			etemplate2._byTemplate[_name].push(this);
 
 			if(console.groupEnd)
 			{
