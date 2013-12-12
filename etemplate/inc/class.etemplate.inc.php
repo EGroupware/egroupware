@@ -197,7 +197,7 @@ class etemplate_new extends etemplate_widget_template
 			{
 				//error_log("Ajax " . __LINE__);
 				$GLOBALS['egw']->framework->response->generic("data", array('<div id="'.$dom_id.'" class="et2_container"></div>'));
-				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array);
+				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+egw_framework::get_extra());
 				self::$request = null;
 				return;
 			}

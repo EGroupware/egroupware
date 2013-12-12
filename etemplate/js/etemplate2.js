@@ -708,9 +708,9 @@ function etemplate2_handle_load(_type, _response)
 	}
 
 	// handle framework.setSidebox calls
-	if (window.framework && jQuery.isArray(data['setSidebox']))
+	if (window.framework && jQuery.isArray(data.setSidebox))
 	{
-		window.framework.setSidebox.apply(window, JSON.parse(data['setSidebox']));
+		window.framework.setSidebox.apply(window.framework, data.setSidebox);
 	}
 
 	// regular et2 re-load
