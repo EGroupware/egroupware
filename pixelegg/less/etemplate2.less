@@ -10,6 +10,10 @@
 @import (reference) "./def_buttons.less";
 @import (less) "../../etemplate/templates/default/etemplate2.css";
 
+
+
+@media all {
+
 /**
  * Top level
  */
@@ -928,55 +932,60 @@ div.message.floating {
     border: none !important;
     border-color: @gray-100;
     background-image: none !important; 
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    height: 37px;
+    .border-radius (15px, 3px, 0px, 0px);
+    
+    .et2_label {
+        
+        font-size: 0.9em;
+        padding: 0.2em;
+        
+        
+        select {
+            .Complete_Button_select;
+            margin-left: 2px; 
+            margin-right: 1px;
+            margin-top: 6px;
+            
+            font-size: 1.2em;
+            max-width: 14% !important;
+            height: 25px;
+            /*top: 8px;*/
+            /*padding: 5px 0px 0px 3px;*/
+            
+
+            &:hover{
+                .Complete_Button_select_hover;
+            }
+            
+            &:after {}
+
+             /*Dialog - Addressbook - View */
+              #infolog-index_cat_id,
+              #infolog-index_filter {width: 50% !important;}
+
+        }
+         
+    } 
 } 
 
-.nextmatch_header > .filters {
-    select,
-    input,
-    button {
-        height: 25px;
-        padding: 0px 0px 0px 3px;
-        margin: 0;
-    }
-}
-
-
-// Select Field
-
-.nextmatch_header > .filters select {
-    margin-right: 2ex;
-    max-width: 15% !important;
-    .Complete_Button_select;
-    margin-right: 2ex;
-
-    &:hover{
-        .Complete_Button_select_hover;
-    }
-    
-     /*Dialog - Addressbook - View */
-      #infolog-index_cat_id,
-      #infolog-index_filter {width: 50% !important;}
-    
-    
-
-}
+        
 // Select -> Option
-
 .nextmatch_header > .filters > select > option {font-size: 0.9em;}
 
 
-
-
 // Search Field
-
-.nextmatch_header > .filters input[type=search] { .background-color-search;}
+.nextmatch_header > .filters input[type=search] { 
+    .background-color-search;
+    color: black;
+    /*height: 25px;*/
+    float: left;
+}
 
 .nextmatch_header > .filters button.et2_button {
     .Complete_Button_search_action;
-
-
+    float: left;
+    
     &:hover{
         .box_shadow_standard_light_hover;
 /*        .Complete_Button_search_action_hover;*/
@@ -1046,6 +1055,23 @@ div.message.floating {
     background-repeat: repeat-x;
     margin-bottom: 3px;
 }
+
+/*################################################################
+*
+* Kategorien
+*
+################################################################*/
+
+/*ADD Button*/
+#admin-categories-index_add {
+    
+    .Complete_Button_add;
+    
+    &:hover {.Complete_Button_add_hover};
+    
+}
+
+ #admin-categories-index_filter {top: 8px;}
 
 /*################################################################
 *
@@ -1136,36 +1162,6 @@ div.message.floating {
 
     } // dropdown
 
-/*    // Liste
-    ul{
-
-        border-color: @gray-30;
-        .background-color-0-gray;
-        .color-100-gray;
-        li{
-            .background-color-0-gray;
-
-            &:hover {.background-color-10-gray;}
-            a {
-
-                height: 40px;
-                border: none;
-
-                img {height: 16px; width: 16px;}
-            }
-
-            a:hover {
-                background: none;
-                text-indent: -22px;
-                margin-left: 21px;
-                height: 40px;
-
-            }
-        }
-        li#blank {}
-        li#add { }
-
-    }*/
 
 
 /* Favorites */
@@ -1657,4 +1653,24 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
     overflow-x: hidden;
 }
-//                     
+
+
+} // Ende Media all
+
+/*#################################### Media Queries #####################################################*/
+
+@media only screen and (min-width: 980px) and (max-width: 1279px) {
+
+    .nextmatch_header > .filters select {  margin: 0px;}   
+    
+}
+
+@media only screen and (min-width: 760px) and (max-width: 979px) {
+
+}
+
+@media only screen and (min-width: 320px)  and (max-width: 759px) {
+
+}
+
+//                                                                                                                                                                                                                                                                                                                                                                                   

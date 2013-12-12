@@ -18,24 +18,6 @@
  *
  *
  */
-#login-bg {
-  background-image: url("../images/login/jp-mountain-blue-sun.jpg") !important;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  height: 120%;
-  position: fixed;
-  width: 120%;
-  z-index: -1;
-}
-#login-bg img {
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  min-height: 50%;
-  min-width: 50%;
-  right: 0;
-  top: 0;
-}
 #loginMainDiv {
   padding: 0px;
   min-height: 720px;
@@ -55,16 +37,43 @@
   top: 1px;
 }
 #loginMainDiv div#centerBox {
+  margin: 0 auto;
+  width: 444px;
+  background-color: #ffc200;
   z-index: 100;
-  padding-left: 40%;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-top-left-radius: 25px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -moz-border-radius-topleft: 25px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 25px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-top: solid 1px #0c5da5;
+  border-left: solid 1px #0c5da5;
+  border-right: solid 1px #0c5da5;
+  border-bottom: solid 1px #0c5da5;
 }
 #loginMainDiv div#centerBox #loginScreenMessage {
-  position: relative;
-  top: 400px;
+  margin: 1em;
 }
 #loginMainDiv div#centerBox #loginCdMessage {
-  margin-bottom: 1em;
-  margin-left: 40%;
+  margin: 1em;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  color: red;
+  text-align: center;
 }
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
@@ -72,6 +81,9 @@
   color: #ffc200;
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
+}
+#loginMainDiv div#centerBox form {
+  margin: 1em;
 }
 #loginMainDiv div#centerBox form table.divLoginbox {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);

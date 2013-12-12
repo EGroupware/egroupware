@@ -8,6 +8,7 @@
  * @version $Id: class.pixelegg_framework.inc.php 2741 2013-11-14 13:53:24Z ralfbecker $
  */
 
+//open
 function show_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
@@ -22,6 +23,7 @@ function show_pixelegg_header(_toggle, _delay)
 	$j(_toggle).parent().addClass("slideup");
 }
 
+//closed
 function hide_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
@@ -29,7 +31,7 @@ function hide_pixelegg_header(_toggle, _delay)
 	$j("#egw_fw_topmenu_info_items").show();
 	$j("#egw_fw_logout").show();
 	$j("#egw_fw_print").show();
-//        $j("#egw_fw_tabs").animate({'margin-top':'-13px'},_delay);
+        $j("#egw_fw_tabs").animate({'margin-top':'1px'},_delay);
 	$j("#egw_fw_topmenu_info_items").animate({
 			"bottom": "3px",
                         "right": "5px",

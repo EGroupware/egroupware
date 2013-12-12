@@ -12,7 +12,7 @@
  * @version $Id$
  */
 
-@import "def_buttons.less";
+@import (reference) "def_buttons.less";
 
 //############## Layout ########################################################################################
 
@@ -271,6 +271,7 @@
         white-space: nowrap;
         float: right;
         display: flex;
+        height: 16px;
         .topmenu_info_item {
 
             // Info Bell
@@ -563,7 +564,7 @@
         position: absolute;
         //								background-color: RGB(200, 200, 255);
         .background-color-30-gray;
-        width: 4px;
+        width: 5px;
         top: 60px;
         bottom: 3px;
         right: 0px;
@@ -576,7 +577,7 @@
             background-repeat: no-repeat;
             .background-color-30-gray;
             position: absolute;
-/*            width: 95px;*/
+            width: 5px;
             height: 100%;
             cursor: col-resize;
         }
@@ -599,7 +600,6 @@
     border-top-width: 0;
     border-left: 0px solid;
     border-bottom: 0px solid;
-
     margin-left: 4px;
     margin-top: 0px;
     padding-bottom: 5px;
@@ -607,13 +607,19 @@
     padding-top: 14px;
     margin-right: 5px;
     min-height: 50px;
-    img { height: 16px; width: 16px}
+    img { height: 16px; width: 16px;vertical-align: middle;}
     &:hover {
         .background-color-0-gray;
         border-color: @gray-50;
     } 
-
-
+    input#uical_select_owner_multiple{
+    	height: 16px; 
+    	width: 16px;
+    	vertical-align: middle;
+    }
+	select#calendar_filter{
+		margin-top: 4px;
+	}
     // Favoriten anlegen und löschen            
     .sidebox-favorites{} // ist in etemplate2.less definiert
 
@@ -923,31 +929,23 @@ div#calendar-container {
         // ############################################################
         // Tabnavigation
         // Statusmeldung
-        // definiert in def_messages.less
+        // definiert in layout_messages.less
         // .egw_fw_ui_app_header_container {	}
 
 
 
-        // ############################################################
+        // ######################tabs header ##########################
         // #      #      #     #     #     #     #     #     #     ####
         // #      #      #     #     #     #     #     #     #     ####
-        // #      #      #     #     #     #     #     #     #     ####
+        // #  tab header #     #     #     #     #     #     #     ####
         // #      #      #     #     #     #     #     #     #     ####
         // ############################################################
         // Div um Tabs
 
         .egw_fw_ui_tabs_header {
-            .border-radius(5px,0, 0, 5px);
-            margin: 0;
 
-            -moz-border-radius-topright: 5px;
-            -webkit-border-top-right-radius: 5px;
-            -moz-border-radius-topleft: 5px;
-            -webkit-border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-
-
+            margin: -1px 0 0 0;
+            
             padding: 0px 5px 0px 5px;
 
             background-position: bottom;
@@ -988,12 +986,14 @@ div#calendar-container {
                 padding-right: 0;
                 position: relative;
 
-                -moz-border-radius-topright:3px;
+               .border-radius(5px,0, 0, 5px);
+                
+/*                -moz-border-radius-topright:3px;
                 -webkit-border-top-right-radius:3px;
                 -moz-border-radius-topleft:3px;
                 -webkit-border-top-left-radius:3px;
                 border-top-right-radius:3px;
-                border-top-left-radius:3px;
+                border-top-left-radius:3px;*/
 
                 .background-color-5-gray;
                 display: inline-block;
@@ -1089,11 +1089,9 @@ div#calendar-container {
 
         
         width: 100%;
-        padding: 0;
+        padding: 0px;
         margin: 0;
-/*            border-width: 0px 5px 0px 1px;
-            border-style: solid;
-            border-color: @gray-30;*/
+        overflow: auto;
 
         
         > div {
