@@ -481,9 +481,29 @@ var AppJS = Class.extend(
 						name.val() /*+(filter['group'] != false ? " ♦" :"")*/;
 					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
 					html += "</a></li>\n";
-					$j(html).on('click.favorites',jQuery.proxy(function() {app[self.appname].setState(this);},state))
+					$j(html).on('click.favorites',jQuery.proxy(function(event) {
+							// Don't apply on delete
+							if($j(event.target).hasClass('ui-icon-trash'))
+							{
+								return;
+							}
+							app[self.appname].setState(this);
+						},state))
 						.insertBefore($j('li',self.sidebox).last());
 					self._init_sidebox(self.sidebox);
+				}
+
+				// Try to update nextmatch favorites too
+				if(etemplate2 && etemplate2.getByApplication)
+				{
+					var et2 = etemplate2.getByApplication(self.appname);
+					for(var i = 0; i < et2.length; i++)
+					{
+						et2[i].widgetContainer.iterateOver(function(_widget) {
+							var faves = _widget.load_favorites(self.appname);
+							_widget.init_filters(_widget,faves);
+						}, self, et2_favorites);
+					}
 				}
 			}
 			// Reset form
@@ -505,6 +525,8 @@ var AppJS = Class.extend(
 			close: function() {
 			}
 		});
+
+		return false;
 	},
 
 	/**
@@ -517,17 +539,18 @@ var AppJS = Class.extend(
 		event.stopImmediatePropagation();
 
 		var app = event.data;
-		var line = $j(this).parentsUntil("li").parent();
+		var id = $j(this).parentsUntil('li').parent().attr("data-id");
+		var line = $j('li[data-id="'+id+'"]',app.sidebox);
 		var name = line.first().text();
 		var trash = this;
-		$j(line).addClass('loading');
+		line.addClass('loading');
 
 		// Make sure first
 		var do_delete = function(button_id)
 		{
 			if(button_id != et2_dialog.YES_BUTTON)
 			{
-				$j(line).removeClass('loading');
+				line.removeClass('loading');
 				return;
 			}
 
@@ -536,12 +559,27 @@ var AppJS = Class.extend(
 
 			// Delete preference server side
 			var request = egw.json(app.appname + ".egw_framework.ajax_set_favorite.template",
-				[app.appname, name, "delete", '', ''],
+				[app.appname, id, "delete", '', ''],
 				function(result) {
 					if(result)
 					{
 						// Remove line from list
 						line.slideUp("slow", function() { });
+						
+						// Try to update nextmatch favorites too
+						if(etemplate2 && etemplate2.getByApplication)
+						{
+							var safe_name = name.replace(/[^A-Za-z0-9-_]/g,"_");
+							var et2 = etemplate2.getByApplication(app.appname);
+							for(var i = 0; i < et2.length; i++)
+							{
+								et2[i].widgetContainer.iterateOver(function(_widget) {
+									var faves = _widget.load_favorites(app.appname);
+									delete faves[safe_name];
+									_widget.init_filters(_widget,faves);
+								}, app, et2_favorites);
+							}
+						}
 					}
 					else
 					{
@@ -557,5 +595,7 @@ var AppJS = Class.extend(
 		}
 		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " +name +"?"),
 			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
-	},
+
+		return false;
+	}
 });

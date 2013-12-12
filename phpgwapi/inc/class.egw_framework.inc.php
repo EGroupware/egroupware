@@ -1789,7 +1789,10 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		$filters = array(
 			'blank' => array(
 				'name' => lang('No filters'),
+				// Old
 				'filter' => array(),
+				// New
+				'state' => array(),
 				'group' => true
 			)
 		);
