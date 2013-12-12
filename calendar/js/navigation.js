@@ -37,11 +37,40 @@
 	}
 
 	/**
+	 * Load template specific app.css file in top window too as sidebox needs it
+	 * 
+	 * @returns {Boolean}
+	 */
+	function load_top_app_css()
+	{
+		var calendar_window = egw_appWindow('calendar');
+		// include template specific app.css
+		var link_tags = calendar_window.document.getElementsByTagName('link');
+		var cal_app_css = /\/calendar\/templates\/[^/]+\/app.css/;
+		for(var i=0; i < link_tags.length; i++)
+		// include template specific app.css
+			{
+			var href = link_tags[i].href;
+			if (cal_app_css.test(href))
+			{
+				//alert('loading into top window: '+href);
+				egw(calendar_window.top).includeCSS(href);
+				return true;
+			}
+		}
+		// try loading a little later, due to async loading app.css might not already loaded
+		window.setTimeout(load_top_app_css, 100);
+		return false;
+	}
+
+	/**
 	 * Initialisation after DOM *and* jQuery is loaded
 	 */
 	egw_LAB.wait(function() {
 		$j(function(){
 			var calendar_window = egw_appWindow('calendar');
+			// include template specific app.css
+			load_top_app_css();
 			// change handlers setting a certain url, eg. view
 			$j('#calendar_view').change(function(){
 				calendar_window.location = egw_webserverUrl+'/index.php?'+this.value;
