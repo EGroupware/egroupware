@@ -508,7 +508,8 @@ class calendar_ui
 		return array(
 			'text' => $select,
 			'no_lang' => True,
-			'link' => False
+			'link' => False,
+			'icon' => false,
 		);
 	}
 
@@ -696,6 +697,7 @@ class calendar_ui
 				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
 			'no_lang' => True,
 			'link' => False,
+			'icon' => false,
 		);
 		// Minicalendar
 		$link = array();
@@ -751,7 +753,8 @@ class calendar_ui
 		$file[++$n] =  array(
 			'text' => $select,
 			'no_lang' => True,
-			'link' => False
+			'link' => False,
+			'icon' => false,
 		);
 
 
@@ -804,7 +807,8 @@ class calendar_ui
 					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '99%' : '86%').';"'.
 					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
 				'no_lang' => True,
-				'link' => False
+				'link' => False,
+				'icon' => false,
 			);
 		}
 
@@ -833,7 +837,8 @@ class calendar_ui
 				$file[] = array(
 					'text' => $select,
 					'no_lang' => True,
-					'link' => False
+					'link' => False,
+					'icon' => false,
 				);
 			}
 		}
