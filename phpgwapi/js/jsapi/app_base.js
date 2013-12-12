@@ -520,7 +520,11 @@ var AppJS = Class.extend(
 		// Make sure first
 		var do_delete = function(button_id)
 		{
-			if(button_id != et2_dialog.YES_BUTTON) return;
+			if(button_id != et2_dialog.YES_BUTTON)
+			{
+				$j(line).removeClass('loading');
+				return;
+			}
 
 			// Hide the trash
 			$j(trash).hide();
