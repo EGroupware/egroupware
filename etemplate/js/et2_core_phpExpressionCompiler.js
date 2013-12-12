@@ -329,7 +329,7 @@
 					"]";
 			}
 
-			return '(typeof _'+_variable.variable+' != "undefined" && typeof '+result + '!="undefined" ? ' + result + ':"")';
+			return '(typeof _'+_variable.variable+' != "undefined" && typeof '+result + '!="undefined" && ' + result + ' != null ? ' + result + ':"")';
 		}
 
 		_throwCompilerErr("Variable $" + _variable.variable + " is not defined.");
