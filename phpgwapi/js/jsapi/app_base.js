@@ -299,14 +299,23 @@ var AppJS = Class.extend(
 		return false;
 	},
 
-	add_favorite: function()
+	/**
+	 * Add a new favorite
+	 *
+	 * Fetches the current state from the application, then opens a dialog to get the
+	 * name and other settings.  If user proceeds, the favorite is saved, and if possible
+	 * the sidebox is directly updated to include the new favorite
+	 *
+	 * @param {object} [state] State settings to be merged into the application state
+	 */
+	add_favorite: function(state)
 	{
 		if(typeof this.favorite_popup == "undefined")
 		{
 			this._create_favorite_popup();
 		}
 		// Get current state
-		this.favorite_popup.state = this.getState();
+		this.favorite_popup.state = jQuery.extend({}, this.getState(), state||{});
 /*
 		// Add in extras
 		for(var extra in this.options.filters)
@@ -327,13 +336,6 @@ var AppJS = Class.extend(
 			}
 		}
 */
-		// Remove some internal values
-		delete this.favorite_popup.state[this.id];
-		if(this.favorite_popup.group != undefined)
-		{
-			delete this.favorite_popup.state[this.favorite_popup.group.id];
-		}
-
 		// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
 		this.favorite_popup.state = jQuery.extend(true,{},this.favorite_popup.state);
 
@@ -513,7 +515,7 @@ var AppJS = Class.extend(
 
 		var app = event.data;
 		var line = $j(this).parentsUntil("li").parent();
-		var name = line.attr("data-id");
+		var name = line.first().text();
 		var trash = this;
 		$j(line).addClass('loading');
 
