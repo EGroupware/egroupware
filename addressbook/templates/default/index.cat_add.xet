@@ -18,9 +18,9 @@
 				</row>
 				<row>
 					<hbox span="all">
-						<button label="add" id="cat_add"/>
-						<button label="delete" id="cat_delete"/>
-						<button label="cancel" id="cat_cancel" onclick="window.close();"/>
+						<button label="add" id="cat_add"/ image="add" background_image="1">
+						<button label="delete" id="cat_delete" image="delete" background_image="1"/>
+						<button label="cancel" id="cat_cancel" onclick="window.close();" image="cancel" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

@@ -1,5 +1,7 @@
 /**
  * EGroupware: CSS with less preprocessor
+
+ * FILEMANAGER
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
@@ -9,12 +11,143 @@
  * @package filemanager
  * @version $Id$
  */
+/**
+ * EGroupware - CSS Styles used by filemanager app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+/**
+ * CSS for new eTemplate filemanager UI
+ */
+.mimeHuge img {
+  width: 64px;
+  height: 64px;
+}
+.fileName input {
+  font-weight: bold;
+  width: 100%;
+}
+.comment textarea {
+  width: 100%;
+  height: 35px;
+}
+.previewImage img {
+  max-width: 430px;
+  max-height: 275px;
+  border: 1px solid black;
+}
+.pathSelection {
+  font-weight: bold;
+}
+.pathSelection a {
+  font-weight: bold;
+  font-size: 120%;
+}
+.pathSelectionContainer {
+  width: 640px;
+  overflow: auto;
+}
+/**
+ * Get path input to take all remaining width
+ */
+#filemanager-index_filemanager-index-header_left {
+  width: 100%;
+}
+div.filemanager_navigation {
+  position: relative;
+  width: 100%;
+}
+div.filemanager_navigation > * {
+  vertical-align: middle;
+}
+#filemanager-index_buttons {
+  float: right;
+}
+#filemanager-index_buttons > * {
+  vertical-align: middle;
+  padding-left: 3px;
+}
+div.filemanager_navigation > label {
+  position: absolute;
+  left: 50px;
+  right: 560px;
+  padding-top: 3px;
+  font-size: 140%;
+}
+div.filemanager_navigation > label > input {
+  width: 100%;
+}
+/**
+ * Select file dialog
+ */
+.selectPath {
+  font-weight: bold;
+  width: 98%;
+}
+.selectPathContainer {
+  width: 470px;
+  overflow: auto;
+}
+.selectName input {
+  width: 100%;
+}
+.selectMime select {
+  width: 100%;
+}
+.displayNone input,
+input.displayNone {
+  display: none;
+}
+.selectFiles td div {
+  border-style: groove;
+}
+.selectFiles div {
+  max-height: 400px;
+  overflow: auto;
+}
 /*/*****************************************************************
 // sidebar
 
 */
 /*//******************************************************************
 // iframe*/
+div.filemanager_navigation {
+  position: relative;
+  width: 100%;
+}
+div.filemanager_navigation img {
+  width: 24px;
+  height: 24px;
+}
+div.filemanager_navigation > label {
+  float: left;
+  /*position: absolute;*/
+  left: 55px;
+  right: 625px;
+  /*padding-top: 3px;*/
+  font-size: 140%;
+  top: -9px;
+}
+/*Buttons / Tarp / FileUpload*/
+#filemanager-index_buttons {
+  float: right;
+  left: 0px;
+  right: 30%;
+  position: relative;
+  top: -26px;
+}
+#filemanager-index_buttons > * {
+  padding-left: 3px;
+  vertical-align: middle;
+  margin-right: 0.2em;
+}
+div.filemanager_navigation > label > input {
+  width: 100%;
+}
 #filemanager-index .et2_file {
   background-color: #0b5fa4 !important;
   color: #FFF;
@@ -34,6 +167,7 @@
   content: "+";
   font-size: 1.5em;
   color: #ffc200;
+  line-height: 1.1em;
 }
 #filemanager-index .et2_file:before {
   font-size: 1em;
@@ -60,9 +194,30 @@
 }
 /*// Dialog filemanager 
 // #####################################################*/
+#filemanager-select {
+  padding: 0px 8px 0 0;
+}
 #filemanager-select .dialog-header .et2_button_icon {
+  margin: 4px 4px 0 4px;
+  border-top: solid 1px #ffffff;
+  border-left: solid 1px #ffffff;
+  border-right: solid 1px #ffffff;
+  border-bottom: solid 1px #ffffff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ffffff;
   height: auto;
   width: 24px;
+}
+#filemanager-select .dialog-header .selectPathContainer {
+  overflow: auto;
+  width: 470px;
+  margin-top: 0px;
+  height: 32px;
+}
+#filemanager-select .dialog-header .selectPathContainer input {
+  height: 20px;
 }
 #filemanager-select #filemanager-select_apps {
   background-color: #d9d9d9;
@@ -72,6 +227,16 @@
   width: 24px;
   padding: 10px;
 }
-#filemanager-select #filemanager-select_dir {
+#filemanager-select table#filemanager-select_dir {
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+#filemanager-select table#filemanager-select_dir tr:nth-child(even) {
+  background: #e6e6e6;
+}
+#filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
+  background: #cdcdcd;
+}
+#filemanager-select .vfsMimeIcon {
+  width: 16px;
+  height: 16px;
 }

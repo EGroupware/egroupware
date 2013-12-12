@@ -1,5 +1,7 @@
 /**
  * EGroupware: CSS with less preprocessor
+
+ * ADDRESSBOOK
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
@@ -13,6 +15,11 @@
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 @import (less) "../default/app.css";
+
+
+@media all {
+
+
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
@@ -47,6 +54,7 @@
 #addressbook-edit {
   height: auto;
   min-height: 390px;
+  overflow:    auto;
 }
 
 
@@ -60,7 +68,7 @@ div#addressbook-index{
     // ##########################
     div.et2_hbox_left{
 
-        padding: 1em;
+        padding: 4px 0px;
         // Org View
         select#addressbook-index_org_view{
             .Complete_Button_select;
@@ -173,14 +181,15 @@ div#addressbook-index{
 
 .et2_container[id^="infolog-index-addressbook"] {
     
-    height: auto;
-    min-height: 250px; 
+    /*height: auto;*/
+    padding: 1em;
+    /*min-height: 250px;*/ 
         /*ADD*/
 /*        div.et2_hbox,       
         div.et2_box_widget*/
         .et2_hbox_right[id*="_infolog-index-header_right"]{
                 .Complete_Button_add;
-                height: auto;
+                /*height: auto;*/
                 .color-0-gray; // white
                 font-size: 0.9em;
                 
@@ -298,6 +307,7 @@ td.addressbook_edit_right_td {
 
 .egw_fw_ui_tab_content #addressbook-edit .et2_tabs {
     max-height: 25em; 
+    height: 296px;
 }
 
 /* popup window */
@@ -485,16 +495,16 @@ div#addressbook-search{
         .fixedHeight, .telNumbers {
             height: auto;
         }
-        .telNumbers {
-            white-space: nowrap;
+
+
+        table.et2_grid td.telNumbers{
+            width: 155px;
+            input { width: 140px !important; }
+            
         }
 
-        td.telNumbers{
-
-            input {width: 90%; }
-
-        }
-
+        // Radio Box
+        input.et2_radiobox {};
 
 
     }
@@ -517,18 +527,47 @@ div#addressbook-search{
         .background-color-15-gray;
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
-
-        a.et2_url:after {
-            content: "\221E";
-            font-size: 1.5em;
-
-        }
-        a.et2_url {margin-left: -40px;}
-        a.et2_url.url {background-size: 15px 15px; background-image: none;}
-
+        
+        
+        table.et2_grid {margin-left: -7px;}
+        
         td {
-            input {width: 90%;}
+            input {width: 82%;}
+         
+            
+         // image after Link   
+         a.et2_url {
+            margin-left: 5px;
+            
+            &:hover {.Complete_Button_Icon_hover;}
+         }
+         
+/*         a.et2_url:after {
+            content: "\221E";
+            font-size: 1.2em;
+        }*/
+        
+        a.et2_url.url {
+            .Complete_Button_Icon_normal;
+            background-size: 16px 16px; 
+            background-image: url('images/url.png');
         }
+        
+        a.et2_url.email {
+            .Complete_Button_Icon_normal;
+            background-size: 16px 16px; 
+            background-image: url('images/email.png');
+        }
+        
+
+            
+            
+        }     
+        
+
+
+
+
         
     }
 
@@ -618,15 +657,56 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
     tbody{
         display: table-header-group;
         vertical-align: top;
+         
     }
+    
+    tr:first {
+        td {height: 150px;}
+    }
+    
 }
  div#addressbook-edit_addressbook-edit-links {
      /*overflow-y: scroll;*/
      
+     
+     table.et2_grid {
+         
+         tr:first td {height: 150px;}
+         
+     }
+     
      /*neue verknüpfung erstellen - div*/
-     div#addressbook-edit_link_to {width: 100% !important;}
+     div#addressbook-edit_link_to {
+         width: 100% !important;
+     
+         
+        // 1. with Addressbook
+         div#addressbook-edit_link_to_link_entry{ margin: 1em;}
+         
+         
+         // 2. Icon
+         img.et2_button_icon { 
+             .Complete_Button_Icon_normal;
+             float: left; 
+             margin: 0.5em 2em;
+             padding: 0.5em;
+             height: 32px;
+             width: 32px;
+             
+             &:hover {.Complete_Button_Icon_hover;}
+             &:active {.Complete_Button_Icon_active;}
+         }
+         
+         
+         // Upload
+         div.et2_file {}
+     
+     }
      
      table#addressbook-edit_link_to {overflow-y: scroll;}
+     
+
+     
  }
 
 
@@ -643,6 +723,9 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
         display: table-header-group;
         vertical-align: top;
     }
+    
+
+    
 }
  /*################## Tab 7 Extra ###############################*/
 /*seems to be ok*/
@@ -713,7 +796,7 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
 
 button.button_more {
     .Complete_Button_text_icon_before;
-    background-image:url('../images/bearbeiten.png');
+    background-image:url('../images/edit.png');
 }
 
 
@@ -855,5 +938,23 @@ table.uploadphoto {width: 360px !important; background-color: @gray-20 !importan
 
 
 
+} // Ende Media all
 
-// Ende Addressbuch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+/*#################################### Media Queries #####################################################*/
+
+@media only screen and (min-width: 980px) and (max-width: 1279px) {
+
+    .nextmatch_header > .filters select {  margin: 0px;}   
+    
+}
+
+@media only screen and (min-width: 760px) and (max-width: 979px) {
+
+}
+
+@media only screen and (min-width: 320px)  and (max-width: 759px) {
+
+}
+
+
+//

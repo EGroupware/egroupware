@@ -48,6 +48,10 @@ img.sideboxstar:hover {
   height: 16px;
   width: 16px;
 }
+.calendar_calEventBodySmall img {
+  height: 16px;
+  width: 16px;
+}
 /* calender view*/
 /*defind in layout_raster.less , because frame*/
 span#start {

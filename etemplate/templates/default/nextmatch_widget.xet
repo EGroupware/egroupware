@@ -31,7 +31,7 @@
 						<menupopup align="center" statustext="@filter2_help" label="@filter2_label" id="filter2" onchange="@filter2_onchange"/>
 					</menulist>
 					<textbox align="right" blur="Search" statustext="a pattern to be searched for" id="search" onchange="1" size="12" validator=",search"/>
-					<button statustext="to start the search" label="&gt;" id="start_search"/>
+					<button statustext="to start the search" label="&gt;" id="start_search stefan"/>
 					<menulist class="nm_num_rows">
 						<menupopup statustext="How many entries should the list show" id="num_rows" no_lang="1" onchange="1"/>
 					</menulist>

@@ -325,7 +325,7 @@
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
             
-		<grid width="100%" height="286" overflow="auto">
+		<grid width="100%"  overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -565,7 +565,7 @@
 							<grid>
 								<columns>
 									<column width="20"/>
-									<column width="120"/>
+									<column width="90"/>
 									<column/>
 									<column/>
 								</columns>
@@ -608,7 +608,7 @@
 							<grid>
 								<columns>
 									<column width="20"/>
-									<column width="120"/>
+									<column width="90"/>
 									<column/>
 								</columns>
 								<rows>
@@ -653,4 +653,4 @@
 			</rows>
 		</grid>
 	</template>
-</overlay>
+</overlay>               
