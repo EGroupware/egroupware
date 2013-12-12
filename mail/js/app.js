@@ -1799,15 +1799,34 @@ app.classes.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		NewFolderName = prompt(this.egw.lang("Add a new Folder to %1:",OldFolderName));
-		if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
-		//alert(NewFolderName);
-		if (NewFolderName && NewFolderName.length>0)
-		{
-			app.mail.app_refresh(this.egw.lang("Adding Folder %1 to %2",NewFolderName, OldFolderName, 'mail'));
-			egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName])
-				.sendRequest(true);
-		}
+		var buttons = [
+			{text: this.egw.lang("Add"), id: "add", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"},
+		];
+		var dialog = et2_dialog.show_prompt(function(_button_id, _value) {
+			var senders = this.my_data.data;
+			var NewFolderName = null;
+			if (_value.length>0) NewFolderName = _value;
+			//alert(NewFolderName);
+			if (NewFolderName && NewFolderName.length>0)
+			{
+				switch (_button_id)
+				{
+					case "add":
+						egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName])
+							.sendRequest(true);
+						return;
+					case "cancel":
+				}
+			}
+		},
+		this.egw.lang("Enter the name for the new Folder:"),
+		this.egw.lang("Add a new Folder to %1:",OldFolderName),
+		'', buttons);
+		// setting required data for callback in as my_data
+		dialog.my_data = {
+			data: _senders,
+		};
 	},
 
 	/**

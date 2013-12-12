@@ -3174,6 +3174,8 @@ blockquote[type=cite] {
 	 */
 	function ajax_addFolder($_parentFolderName, $_newName)
 	{
+//		lang("Enter the name for the new Folder:");
+//		lang("Add a new Folder to %1:",$OldFolderName);
 		//error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
 		if ($_parentFolderName)
 		{
@@ -3229,7 +3231,9 @@ blockquote[type=cite] {
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		//lang("Rename Folder %1 to:",$OldFolderName);
+		//lang("Rename Folder %1 ?",$OldFolderName);
+		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
