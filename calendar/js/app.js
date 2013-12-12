@@ -34,7 +34,7 @@ app.classes.calendar = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
-		
+
 		// make calendar object available, even if not running in top window, as sidebox does
 		if (window.top !== window && typeof window.top.app.calendar == 'undefined')
 		{
@@ -547,20 +547,21 @@ app.classes.calendar = AppJS.extend(
 		if (typeof state.state != 'undefined' && state.state.view == 'undefined' || state.state.view == 'listview')
 		{
 			menuaction = 'calendar.calendar_uilist.listview';
+			state.state.ajax = 'true';
 			if (state.name)
 			{
-				state.state = {favorite: state.name.replace(/[^A-Za-z0-9-_]/g, '_')};
+				state.state.favorite = state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 			}
 		}
 		var query = jQuery.extend({menuaction: menuaction},state.state||{});
-		
+
 		// prepend an owner 0, to reset all owners and not just set given resource type
 		if(typeof query.owner != 'undefined')
 		{
 			query.owner = '0,'+ query.owner;
 		}
 
-		this.egw.open_link(this.egw.link('/',query), 'calendar');
+		this.egw.open_link(this.egw.link('/index.php',query), 'calendar');
 
 		// Stop the normal bubbling if this is called on click
 		return false;

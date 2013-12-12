@@ -272,7 +272,16 @@ class calendar_ui
 		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))
 		{
-			$set_states = substr($_GET['menuaction'],0,9) == 'calendar.' ? $_REQUEST : array();
+			// ajax-exec call has get-parameter in some json
+			if (isset($_REQUEST['json_data']) && ($json_data = json_decode($_REQUEST['json_data'], true)) &&
+				!empty($json_data['request']['parameters'][0]))
+			{
+				parse_str(substr($json_data['request']['parameters'][0], 10), $set_states);	// cut off "/index.php?"
+			}
+			else
+			{
+				$set_states = substr($_GET['menuaction'],0,9) == 'calendar.' ? $_REQUEST : array();
+			}
 		}
 		if (!$states['date'] && $states['year'] && $states['month'] && $states['day'])
 		{
@@ -561,7 +570,7 @@ class calendar_ui
 				'icon' => false
 			)
 		));
-		
+
 		$n = 0;	// index for file-array
 
 		$planner_days_for_view = false;
