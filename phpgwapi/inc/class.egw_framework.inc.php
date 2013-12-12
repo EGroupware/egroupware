@@ -984,6 +984,19 @@ abstract class egw_framework
 	public function _get_css()
 	{
 		$app_css = '';
+		
+		// Load these first
+		// Cascade should go:
+		//  Libs < etemplate2 < framework/theme < app < print (?)
+		// Enhanced selectboxes (et1)
+		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
+
+		// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
+		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
+
+		// eTemplate2 - load in top so sidebox has styles too
+		self::includeCSS('/etemplate/templates/default/etemplate2.css');
+
 		if(isset($_GET['menuaction']))
 		{
 			list($app,$class,$method) = explode('.',$_GET['menuaction']);
@@ -1009,11 +1022,6 @@ abstract class egw_framework
 			$print_css = '/phpgwapi/templates/idots/print.css';
 		}
 
-		// Enhanced selectboxes (et1)
-		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
-
-		// eTemplate2 - load in top so sidebox has styles too
-		self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
 		// search for app specific css file
 		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
