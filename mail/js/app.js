@@ -1826,15 +1826,34 @@ app.classes.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		NewFolderName = prompt(this.egw.lang("Rename Folder %1 to:",OldFolderName));
-		if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
-		//alert(NewFolderName);
-		if (NewFolderName && NewFolderName.length>0)
-		{
-			app.mail.app_refresh(this.egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
-			egw.json('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName])
-				.sendRequest(true);
-		}
+		var buttons = [
+			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"},
+		];
+		var dialog = et2_dialog.show_prompt(function(_button_id, _value) {
+			var senders = this.my_data.data;
+			var NewFolderName = null;
+			if (_value.length>0) NewFolderName = _value;
+			//alert(NewFolderName);
+			if (NewFolderName && NewFolderName.length>0)
+			{
+				switch (_button_id)
+				{
+					case "rename":
+						egw.json('mail.mail_ui.ajax_renameFolder',[senders[0].iface.id, NewFolderName])
+							.sendRequest(true);
+						return;
+					case "cancel":
+				}
+			}
+		},
+		this.egw.lang("Rename Folder %1 to:",OldFolderName),
+		this.egw.lang("Rename Folder %1 ?",OldFolderName),
+		OldFolderName, buttons);
+		// setting required data for callback in as my_data
+		dialog.my_data = {
+			data: _senders,
+		};
 	},
 
 	/**

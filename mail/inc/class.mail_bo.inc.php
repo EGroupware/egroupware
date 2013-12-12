@@ -1688,9 +1688,9 @@ class mail_bo
 	 */
 	function renameFolder($_oldFolderName, $_parent, $_folderName)
 	{
-		$oldFolderName	= $this->_encodeFolderName($_oldFolderName);
-		$parent		= $this->_encodeFolderName($_parent);
-		$folderName	= $this->_encodeFolderName($_folderName);
+		$oldFolderName	= $_oldFolderName;//$this->_encodeFolderName($_oldFolderName);
+		$parent		= $_parent;//$this->_encodeFolderName($_parent);
+		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -1699,10 +1699,13 @@ class mail_bo
 			$newFolderName = $parent . $HierarchyDelimiter . $folderName;
 		}
 		if (self::$debug) error_log("create folder: $newFolderName");
-		$rv = $this->icServer->renameMailbox($oldFolderName, $newFolderName);
-		if ( PEAR::isError($rv) ) {
-			if (self::$debug) error_log(__METHOD__." failed for $oldFolderName, $newFolderName with error: ".print_r($rv->message,true));
-			return false;
+		try
+		{
+			$rv = $this->icServer->renameMailbox($oldFolderName, $newFolderName);
+		}
+		catch (Exception $e)
+		{
+			throw new egw_exception(__METHOD__." failed for $oldFolderName (rename to: $newFolderName) with error:".$e->getMessage());;
 		}
 
 		return $newFolderName;

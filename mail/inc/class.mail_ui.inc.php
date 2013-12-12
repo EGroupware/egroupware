@@ -3229,11 +3229,11 @@ blockquote[type=cite] {
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-			$_newName = translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
+			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
@@ -3275,11 +3275,21 @@ blockquote[type=cite] {
 					}
 
 					$this->mail_bo->reopen('INBOX');
-					if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
-						$this->mail_bo->resetFolderObjectCache($profileID);
-						//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
-						$rv = $this->mail_bo->subscribe($newFolderName, true);
-						$rv = $this->mail_bo->subscribe($folderName, false);
+					$success = false;
+					try
+					{
+						if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
+							$this->mail_bo->resetFolderObjectCache($profileID);
+							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
+							$rv = $this->mail_bo->subscribe($newFolderName, true);
+							$rv = $this->mail_bo->subscribe($folderName, false);
+							$success = true;
+						}
+					}
+					catch (Exception $e)
+					{
+						$newFolderName=$folderName;
+						$msg = $e->getMessage();
 					}
 					$this->mail_bo->reopen($newFolderName);
 					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
@@ -3337,10 +3347,14 @@ blockquote[type=cite] {
 				$this->mail_bo->saveSessionData();
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
-			if ($oA)
+			if ($oA && $success)
 			{
 				$response = egw_json_response::get();
 				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+			}
+			else
+			{
+				$response->call('egw_refresh',lang('failed to rename %1 ! Reason: %2',$oldFolderName,$msg),'mail');
 			}
 		}
 	}
