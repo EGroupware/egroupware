@@ -17,15 +17,19 @@
 class etemplate_widget_tabbox extends etemplate_widget
 {
 	/**
-         * Fill additional tabs
-         *
-         * @param string $cname
-         */
-        public function beforeSendToClient($cname)
-        {
+	 * Fill additional tabs
+	 *
+	 * @param string $cname
+	 */
+	public function beforeSendToClient($cname)
+	{
 		if($this->attrs['tabs'])
 		{
-			$this->children[1]->children = array();
+			// add_tabs toggles replacing or adding to existing tabs
+			if(!$this->attrs['add_tabs'])
+			{
+				$this->children[1]->children = array();
+			}
 			foreach($this->attrs['tabs'] as $tab)
 			{
 				if($tab['id'])
@@ -68,7 +72,12 @@ class etemplate_widget_tabbox extends etemplate_widget
 			}
 
 			// Make sure additional tabs are processed
-			$this->children[1]->children = array();
+
+			// add_tabs toggles replacing or adding to existing tabs
+			if(!$this->attrs['add_tabs'])
+			{
+				$this->children[1]->children = array();
+			}
 			foreach($this->attrs['tabs'] as $tab)
 			{
 				if($tab['id'] && $content[$tab['id']])
@@ -81,6 +90,12 @@ class etemplate_widget_tabbox extends etemplate_widget
 					$tab_valid =& self::get_array($validated, $tab['id'], true);
 					$tab_valid = $content[$tab['id']];
 					*/
+				}
+				else
+				{
+					$template= clone etemplate_widget_template::instance($tab['template']);
+					$this->children[1]->children[] = $template;
+					unset($template);
 				}
 			}
 			$valid = $value;
