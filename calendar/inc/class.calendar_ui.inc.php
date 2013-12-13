@@ -679,7 +679,7 @@ class calendar_ui
 			),
 			array(
 				'text' => lang('listview'),
-				'value' => 'menuaction=calendar.calendar_uilist.listview',
+				'value' => 'menuaction=calendar.calendar_uilist.listview&ajax=true',
 				'selected' => $this->view == 'listview',
 			),
 		) as $data)
@@ -694,7 +694,7 @@ class calendar_ui
 		$file[++$n] = array(
 			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 97.5%;"'.
 				' placeholder="'.$blur.'" title="'.lang('Search').'">',
-				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
+				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview','ajax'=>'true')),
 			'no_lang' => True,
 			'link' => False,
 			'icon' => false,
@@ -798,7 +798,7 @@ class calendar_ui
 			$current_view_url = egw::link('/index.php',array(
 				'menuaction' => $this->view_menuaction,
 				'date' => $this->date,
-			),false);
+			)+($this->view == 'listview' ? array('ajax' => 'true') : array()),false);
 			$file[] = array(
 				'text' => "
 <script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".

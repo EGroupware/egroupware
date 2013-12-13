@@ -32,13 +32,15 @@
 		}
 		if (owner) {
 			if (typeof no_reset == 'unknown') no_reset = false;
-			egw_appWindow('calendar').location=url+'&owner='+(no_reset?'':'0,')+owner;
+			url += '&owner='+(no_reset?'':'0,')+owner;
+			if (url.match('&ajax=true')) url = url.replace('&ajax=true', '')+'&ajax=true';
+			egw_link_handler(url, 'calendar');
 		}
 	}
 
 	/**
 	 * Load template specific app.css file in top window too as sidebox needs it
-	 * 
+	 *
 	 * @returns {Boolean}
 	 */
 	function load_top_app_css()
@@ -73,7 +75,7 @@
 			load_top_app_css();
 			// change handlers setting a certain url, eg. view
 			$j('#calendar_view').change(function(){
-				calendar_window.location = egw_webserverUrl+'/index.php?'+this.value;
+				egw_link_handler(egw_webserverUrl+'/index.php?'+this.value, 'calendar');
 			});
 			// calendar owner selection change
 			$j('#uical_select_owner,#uical_select_resource').change(function(e){
@@ -87,8 +89,9 @@
 			$j('#calendar_merge,#calendar_filter,#calendar_cat_id').change(function(){
 				var val = $j(this).val();
 				if ($j.isArray(val)) val = val.join(',');
-				calendar_window.location = current_view_url+
-					(current_view_url.search.length ? '&' : '?')+this.name+'='+val;
+				var url = current_view_url+(current_view_url.search.length ? '&' : '?')+this.name+'='+val;
+				if (url.match('&ajax=true')) url = url.replace('&ajax=true', '')+'&ajax=true';
+				egw_link_handler(url, 'calendar');
 				if (this.name == 'merge') this.value='';
 			});
 			// click handler to switch selectbox to multiple
