@@ -40,6 +40,8 @@ app.classes.calendar = AppJS.extend(
 		{
 			window.top.app.calendar = this;
 		}
+		//Drag_n_Drop
+		this.drag_n_drop();
 	},
 
 	/**
@@ -101,7 +103,141 @@ app.classes.calendar = AppJS.extend(
 			this.set_enddate_visibility();
 		}
 	},
+	/**
+	 * Drag and Drop
+	 *
+	 *
+	 */
+	drag_n_drop: function()
+	{
+		var that = this;
 
+		//Draggable
+		jQuery("div[id^='drag_']").draggable(
+		{
+			stack: jQuery("div[id^='drag_']"),
+			revert: "invalid",
+			delay: 50,
+
+			cursorAt:{top:0,left:0},
+			containment: ".egw_fw_content_browser_iframe",
+			scroll: true,
+			opacity: .6,
+
+			stop: function(ui,event){
+				event.helper.width(oldWidth);
+				event.helper[0].innerHTML = oldInnerHTML;
+			},
+			drag:function(ui, event){
+				//that.dragEvent();
+			},
+			start: function(ui, event){
+				oldInnerHTML = event.helper[0].innerHTML;
+				oldWidth = event.helper.width();
+				event.helper.width(jQuery("#calColumn").width());
+			},
+
+		});
+
+
+		//Droppable
+		jQuery("div[id^='drop_']").droppable(
+			{
+				accept:function(dg){
+
+					var id = dg[0].getAttribute('id');
+					var calOwner = id.substring(id.lastIndexOf("_O")+2,id.lastIndexOf("_C"));
+					var dpOwner = this.getAttribute('data-owner');
+					if (dpOwner == null) dpOwner = calOwner;
+					if (dg[0].getAttribute('id').match(/drag/g) && calOwner == dpOwner)
+					{
+						return true;
+					}
+					else
+					{
+						return false
+					}
+
+				},
+				tolerance:'pointer',
+
+				drop:function(id, event){
+					var dgId = event.draggable[0].getAttribute('id');
+					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
+					var dpOwner = id.target.getAttribute('data-owner');
+					if (dpOwner == null) dpOwner = dgOwner;
+					if (dpOwner == dgOwner )
+					{
+						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")));
+					}
+					else
+					{
+
+					}
+
+				},
+				over:function(ui, event){
+					var timeDemo = ui.target.id.substring(ui.target.id.lastIndexOf("T")+1,ui.target.id.lastIndexOf("_O"));
+					var dgId = event.draggable[0].getAttribute('id');
+					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
+					var dpOwner = ui.target.getAttribute('data-owner');
+					if (dpOwner == null) dpOwner = dgOwner;
+					if (dpOwner == dgOwner )
+					{
+						event.helper[0].innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+timeDemo+'</div>'
+					}
+					else
+					{
+						event.helper[0].innerHTML = '<div style="background-color: red; height: 100%; width: 100%; text-align: center;">' + 'Forbidden' + '</div>';
+					}
+
+				},
+
+			});
+
+		//onClick Handler for calendar cells
+		jQuery("div.calendar_calAddEvent").click(function(ev)
+		{
+			var timestamp = ev.target.getAttribute('data-date').split("|");
+			var owner = ev.target.getAttribute('id').split("_");
+
+			var ownerNum = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
+			var date = timestamp[0];
+			var hour = timestamp[1];
+			var minute = timestamp[2];
+			if (ownerNum == 0)
+			{
+				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute,'_blank','700x700');
+			}
+			else
+			{
+				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerNum,'_blank','700x700');
+			}
+		});
+
+	},
+
+	/**
+	 * DropEvent
+	 *
+	 * @param {string} _id dragged event id
+	 * @param {array} _date array of date,hour, and minute of dropped cell
+	 *
+	 */
+	dropEvent : function(_id, _date)
+	{
+		var eventId = _id.substring(_id.lastIndexOf("drag_")+5,_id.lastIndexOf("_O"));
+		var calOwner = _id.substring(_id.lastIndexOf("_O")+2,_id.lastIndexOf("_C"));
+		var eventOwner = _id.substring(_id.lastIndexOf("_C")+2,_id.lastIndexOf(""));
+		var date = _date;
+		xajax_doXMLHTTP(
+				'calendar.calendar_ajax.moveEvent',
+				eventId,
+				calOwner,
+				date,
+				eventOwner
+			);
+	},
 	/**
 	 * open the freetime search popup
 	 *

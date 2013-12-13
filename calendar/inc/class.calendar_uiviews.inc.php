@@ -102,12 +102,6 @@ class calendar_uiviews extends calendar_ui
 	 */
 	var $use_time_grid=true;
 
-	/**
-	 * Dragdrop Object
-	 *
-	 * @var dragdrop;
-	 */
-	var $dragdrop;
 
 	/**
 	 * Can we display the whole day in a timeGrid of the size of the workday and just scroll to workday start
@@ -179,13 +173,7 @@ class calendar_uiviews extends calendar_ui
 
 		$this->check_owners_access();
 
-		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
-		{
-			$this->dragdrop = new dragdrop();
-			// if the object would auto-disable itself unset object
-			// to avoid unneccesary dragdrop calls later
-			if(!$this->dragdrop->validateBrowser()) $this->dragdrop = false;
-		}
+
 	}
 
 
@@ -701,8 +689,6 @@ class calendar_uiviews extends calendar_ui
 			echo $content;
 		}
 
-		// make wz_dragdrop elements work
-		if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 		return $content;
 	}
@@ -890,8 +876,6 @@ class calendar_uiviews extends calendar_ui
 			echo $content;
 		}
 
-		// make wz_dragdrop elements work
-		if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 		return $content;
 	}
@@ -993,15 +977,12 @@ class calendar_uiviews extends calendar_ui
 			{
 				echo $cols[0];
 			}
-			// make wz_dragdrop elements work
-			if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
+
 		}
 		else
 		{
 			$content = $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
 
-			// make wz_dragdrop elements work
-			if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 			return $content;
 		}
@@ -1412,7 +1393,7 @@ class calendar_uiviews extends calendar_ui
 		if ($this->use_time_grid)
 		{
 			// drag and drop: check if the current user has EDIT permissions on the grid
-			if(is_object($this->dragdrop))
+			if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
 			{
 				if($owner)
 				{
@@ -1443,19 +1424,15 @@ class calendar_uiviews extends calendar_ui
 					'%;" class="calendar_calAddEvent"';
 				if ($this->allowEdit)
 				{
-					$html .= ' onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
+					$html .= ' data-date=' .$linkData['date'].'|'.$linkData['hour'].'|'.$linkData['minute'];
+				}
+				if($dropPermission && $owner)
+				{
+					$html .= ' data-owner ='.$owner;
+
 				}
 				$html .= '></div>'."\n";
-				if(is_object($this->dragdrop) && $dropPermission)
-				{
-					$this->dragdrop->addDroppable(
-						$droppableID,
-						array(
-							'datetime'=>$droppableDateTime,
-							'owner'=>$owner ? $owner : $this->user,
-						)
-					);
-				}
+
 			}
 		}
 
@@ -1822,7 +1799,7 @@ class calendar_uiviews extends calendar_ui
 			);
 		}
 
-		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+		$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
 		$ttip_options = array(
 			'BorderWidth' => 0,		// as we use our round borders
@@ -1866,7 +1843,7 @@ class calendar_uiviews extends calendar_ui
 
 		// ATM we do not support whole day events or recurring events for dragdrop
 		$dd_emulation = "";
-		if (is_object($this->dragdrop) &&
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'] &&
 			$this->use_time_grid &&
 			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
@@ -1874,23 +1851,12 @@ class calendar_uiviews extends calendar_ui
 				!$event['whole_day'] &&
 				!$event['recur_type'])
 			{
-				// register event as draggable
-				$this->dragdrop->addDraggable(
-						$draggableID,
-						array(
-							'eventId'=>$event['id'],
-							'eventOwner'=>$event['owner'],
-							'calendarOwner'=>$owner,
-							'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
-							'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
-						),
-						'calendar.dragDropFunctions.dragEvent',
-						'calendar.dragDropFunctions.dropEvent',
-						'top center 2'
-				);
+				$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 			}
 			else
 			{
+				$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+
 				// If a event isn't drag-dropable, the drag drop event handling has to be fully disabled
 				// for that object. Clicking on it - however - should still bring it to the foreground.
 				$dd_emulation = ' onmousedown="dd.z++; this.style.zIndex = dd.z; event.cancelBubble=true;"'
