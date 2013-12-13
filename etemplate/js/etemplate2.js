@@ -250,7 +250,10 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		if(_data) {
 			this.etemplate_exec_id = _data.etemplate_exec_id;
 			// set app_header
-			window.egw_app_header(_data.app_header);
+			if (typeof _data.app_header == 'string')
+			{
+				window.egw_app_header(_data.app_header);
+			}
 		}
 
 		var _load = function() {
@@ -686,10 +689,17 @@ function etemplate2_handle_load(_type, _response)
 		}
 	}
 
-	// handle egw_framework::message()
-	if (jQuery.isArray(data['message']))
+	// need to set app_header before message, as message temp. replaces app_header
+	if (typeof data.data.app_header == 'string')
 	{
-		window.egw_message.apply(window, data['message']);
+		window.egw_app_header(data.data.app_header);
+		delete data.data.app_header;
+	}
+
+	// handle egw_framework::message()
+	if (jQuery.isArray(data.message))
+	{
+		window.egw_message.apply(window, data.message);
 	}
 
 	// handle egw_framework::window_close(), this will terminate execution
