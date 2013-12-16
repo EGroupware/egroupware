@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20131216-1) hardy; urgency=low
+
+  * CalDAV/InfoLog: fixed not working sync-collection report, eg. used by eM client
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 16 Dec 2013 09:51:48 +0100
+
 egroupware-epl (11.1.20131209-1) hardy; urgency=low
 
   * CalDAV/CardDAV: do NOT use Content-Length header, if zlib.output_compression is enabled, fixes problems with iOS7 eg. eTask app
