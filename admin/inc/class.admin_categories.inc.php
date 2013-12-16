@@ -162,16 +162,16 @@ class admin_categories
 					{
 						$content['id'] = $cats->add($content);
 						$msg = lang('Category saved.');
-						if ($button == 'save')
-						{
-							egw_framework::refresh_opener($msg, 'admin', $content['id']);
-							egw_framework::window_close();
-						}
 					}
 					else
 					{
 						$msg = lang('Permission denied!');
 						unset($button);
+					}
+					if ($button == 'save')
+					{
+						egw_framework::refresh_opener($msg, 'admin', $content['id']);
+						egw_framework::window_close();
 					}
 					break;
 
