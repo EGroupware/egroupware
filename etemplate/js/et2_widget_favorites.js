@@ -292,13 +292,6 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				}
 			}
 
-			// Remove some internal values
-			delete current_filters[this.id];
-			if(this.popup.group != undefined)
-			{
-				delete current_filters[this.popup.group.id];
-			}
-
 			// Call framework
 			app[this.options.app].add_favorite(current_filters);
 
@@ -313,6 +306,8 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			return this._super.apply(filter_name);
 		}
 
+		if(filter_name == 'add') return false;
+		
 		app[this.options.app].setState(this.stored_filters[filter_name]);
 		return false;
 	},
