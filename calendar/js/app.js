@@ -137,7 +137,23 @@ app.classes.calendar = AppJS.extend(
 				event.helper.width(jQuery("#calColumn").width());
 			},
 
-		});
+		}).resizable({
+				handles: "s",
+				start:function(ui,event){
+
+				},
+				stop:function(ui,event){
+					var resizeHelper = ui.target.getAttribute('data-resize');
+					var dataResize = resizeHelper.split("|");
+					var time = dataResize[1].split(":");
+					var dropDate = dataResize[0]+"T"+time[0]+time[1];
+
+					var drop = jQuery("div[id^='drop_"+dropDate+"']");
+					var newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
+					that.dropEvent(this.getAttribute('id'),dropDate,newDuration);
+				},
+
+			});;
 
 
 		//Droppable
@@ -168,7 +184,7 @@ app.classes.calendar = AppJS.extend(
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner == dgOwner )
 					{
-						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")));
+						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")),null);
 					}
 					else
 					{
@@ -222,9 +238,10 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * @param {string} _id dragged event id
 	 * @param {array} _date array of date,hour, and minute of dropped cell
+	 * @param {string} _duration description
 	 *
 	 */
-	dropEvent : function(_id, _date)
+	dropEvent : function(_id, _date, _duration)
 	{
 		var eventId = _id.substring(_id.lastIndexOf("drag_")+5,_id.lastIndexOf("_O"));
 		var calOwner = _id.substring(_id.lastIndexOf("_O")+2,_id.lastIndexOf("_C"));
@@ -235,7 +252,8 @@ app.classes.calendar = AppJS.extend(
 				eventId,
 				calOwner,
 				date,
-				eventOwner
+				eventOwner,
+				_duration
 			);
 	},
 	/**

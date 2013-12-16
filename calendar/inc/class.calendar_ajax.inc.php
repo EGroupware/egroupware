@@ -34,9 +34,10 @@ class calendar_ajax {
 	 * @param string $calendarOwner the owner of the calendar the event is in
 	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
 	 * @param string $targetOwner the owner of the target calendar
+	 * @param string $durationT the duration to support resizable calendar event
 	 * @return string XML response if no error occurs
 	 */
-	function moveEvent($eventId,$calendarOwner,$targetDateTime,$targetOwner)
+	function moveEvent($eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
 	{
 		// we do not allow dragging into another users calendar ATM
 		if(!$calendarOwner == $targetOwner)
@@ -45,7 +46,14 @@ class calendar_ajax {
 		}
 
 		$old_event=$event=$this->calendar->read($eventId);
-		$duration=$event['end']-$event['start'];
+		if (!$durationT)
+		{
+			$duration=$event['end']-$event['start'];
+		}
+		else
+		{
+			$duration = $durationT;
+		}
 
 		$event['start'] = $this->calendar->date2ts($targetDateTime);
 		$event['end'] = $event['start']+$duration;
@@ -65,7 +73,7 @@ class calendar_ajax {
 					case 'startday':
 						if ($sameday) break;
 					default:
-						$status_reset_to_unknown = true;	
+						$status_reset_to_unknown = true;
 						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
 						// todo: report reset status to user
 				}

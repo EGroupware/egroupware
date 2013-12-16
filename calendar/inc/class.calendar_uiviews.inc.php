@@ -1864,8 +1864,8 @@ class calendar_uiviews extends calendar_ui
 					.'onmousemove="event.cancelBubble=true;"';
 			}
 		}
-
-		$html = $indent.'<div id="'.$draggableID.'" class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
+		$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'];
+		$html = $indent.'<div id="'.$draggableID.'" data-resize="'.$resizableHelper.' " class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
 			$dd_emulation.'>'.$prefix_icon."\n".$ie_fix.$html."\n".
