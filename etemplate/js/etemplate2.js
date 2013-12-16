@@ -690,7 +690,7 @@ function etemplate2_handle_load(_type, _response)
 	}
 
 	// need to set app_header before message, as message temp. replaces app_header
-	if (typeof data.data.app_header == 'string')
+	if (typeof data.data == 'object' && typeof data.data.app_header == 'string')
 	{
 		window.egw_app_header(data.data.app_header);
 		delete data.data.app_header;
@@ -723,7 +723,7 @@ function etemplate2_handle_load(_type, _response)
 	{
 		window.framework.setSidebox.apply(window.framework, data.setSidebox);
 	}
-
+	
 	// regular et2 re-load
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
