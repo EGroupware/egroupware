@@ -2136,7 +2136,7 @@ unset($query['actions']);
 		} else {
 		}
 		$quota['class'] = $quotaBG;
-		$quota['text'] = $quotaText;
+		$quota['text'] = lang('Quota: %1',$quotaText);
 		$quota['percent'] = (string)round(($_usage*100)/$_limit);//($_usage/$_limit*100);
 		return $quota;
 	}
