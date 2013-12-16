@@ -340,7 +340,7 @@ fieldset.emailGroup {
     padding: 1em;
     /*min-height: 250px;*/
     /*ADD*/
-    /*        div.et2_hbox,       
+    /*        div.et2_hbox,
         div.et2_box_widget*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] {
@@ -416,8 +416,9 @@ fieldset.emailGroup {
     vertical-align: top;
     text-align: center;
   }
-  /*#######################################################*/
-  /*#######################################################*/
+  #addressbook-edit tr.dialog-footer-toolbar label.et2_label {
+    top: 0px !important;
+  }
   /*#######################################################*/
   /*State: Address selected*/
   /*Layout*/
@@ -458,7 +459,7 @@ fieldset.emailGroup {
   /*#                                                               #*/
   /*#################################################################*/
   /*#addressbook-edit .et2_tabbox {
-    max-width: 100%;     
+    max-width: 100%;
     min-width: 530px;
     width: 550px
 }*/

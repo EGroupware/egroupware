@@ -13,12 +13,12 @@
   padding-left: 0px !important;
 }
 img.sideboxstar {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -45,12 +45,12 @@ img.sideboxstar:hover {
   border: none;
 }
 .calendar_calDayColHeader img {
-  height: 16px;
   width: 16px;
+  height: 16px;
 }
 .calendar_calEventBodySmall img {
-  height: 16px;
   width: 16px;
+  height: 16px;
 }
 /* calender view*/
 /*defind in layout_raster.less , because frame*/
@@ -269,19 +269,54 @@ div.calendar {
   background-color: #000;
   color: #0f0;
 }
+/*###########################################
+#                                           #
+#       dialog-header                       #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
 div#calendar-edit {
-  width: 870px;
+  width: 99%;
   padding: 5px;
+  /*###########################################*/
+  /*###########################################*/
+  /*Tab Beschreibung*/
+  /*###########################################*/
+  /*###########################################*/
+  /*###########################################*/
+  /*###########################################*/
   /*###########################################*/
 }
 div#calendar-edit label.et2_label {
   /*padding: 0 2px;*/
 }
 div#calendar-edit .chzn-container {
-  padding-top: 1em;
+  padding-top: 0;
 }
 div#calendar-edit .et2_tabheader {
   background-color: transparent;
+}
+div#calendar-edit .et2_tabcntr {
+  height: 299px;
+  overflow: auto;
+}
+div#calendar-edit .et2_tabcntr table.et2_grid tr:nth-child(even) {
+  background: #e6e6e6;
+}
+div#calendar-edit .et2_tabcntr table.et2_grid tr:nth-child(odd) {
+  background: #ffffff;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general {
   display: block;
@@ -289,16 +324,14 @@ div#calendar-edit #calendar-edit_calendar-edit-general {
   width: 100%;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid {
-  width: auto !important;
+  width: 72% !important;
+  /*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid td {
   padding: 4px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid #calendar-edit_duration {
   float: left;
-}
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid button#calendar-edit_freetime {
-  background-image: url('images/add.png') !important;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid .et2_checkbox,
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid input#calendar-edit_whole_day {
@@ -315,6 +348,9 @@ div#calendar-edit #calendar-edit_calendar-edit-general #calendar-edit_category {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+div#calendar-edit #calendar-edit_calendar-edit-participants tr.optional {
+  background-color: rgba(255, 194, 0, 0.1);
+}
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody {
   display: table;
   width: 100%;
@@ -324,7 +360,38 @@ div#calendar-edit #calendar-edit_calendar-edit-participants tbody td {
   padding-top: 3px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-search {
-  background-size: 16px 16px;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-size: 24px 24px;
+  width: 24px;
+  height: 24px;
+  margin-left: 1em;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-search:hover {
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-searchactive {
+  background-color: #808080;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-edit_resource {
   margin: 5px 0 10px 0;
@@ -347,12 +414,23 @@ div#calendar-edit #calendar-edit_calendar-edit-links tbody {
   display: table;
   width: 100%;
 }
+div#calendar-edit #calendar-edit_calendar-edit-links tbody .et2_link_to {
+  width: auto !important;
+}
 div#calendar-edit #calendar-edit_calendar-edit-links span.et2_label {
   padding: 1em;
 }
 div#calendar-edit #calendar-edit_calendar-edit-alarms tbody {
   display: table;
   width: 100%;
+}
+div#calendar-edit #calendar-edit_calendar-edit-alarms tbody label.et2_label {
+  white-space: nowrap;
+  padding: 0 5px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-alarms tbody tr.add_alarm_action {
+  background-color: rgba(255, 194, 0, 0.1);
+  margin-bottom: 1em;
 }
 div#calendar-edit #calendar-edit_calendar-edit-history {
   max-width: 800px;
@@ -642,6 +720,10 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
   position: absolute;
   right: 0px;
   top: 0px;
+  background-color: #e6e6e6;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
 .calendar_calEventIcons img {
   height: 16px;
@@ -683,12 +765,15 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 }
 .calendar_calDayTodos .calendar_calDayTodosHeader a img {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
-  height: 16px;
   width: 16px;
+  height: 16px;
 }
 .calendar_calDayTodos .calendar_calDayTodosHeader a img:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -699,6 +784,48 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 .calendar_calDayTodos .calendar_calDayTodosTable {
   overflow: auto;
   max-height: 400px;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table tr:nth-child(even) {
+  background: #e6e6e6;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table tr:nth-child(odd) {
+  background: #ffffff;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table td {
+  padding: 3px;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table td img {
+  width: 12px;
+  height: 12px;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table td img:hover {
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.calendar_calDayTodos .calendar_calDayTodosTable table td img:active {
+  background-color: #808080;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  background-color: #00ab00 !important;
 }
 .calendar_calDayTodos {
   width: 250px;
@@ -780,11 +907,15 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 .calendar_plannerMonthScale {
   font-weight: bold;
 }
+.calendar_plannerMonthScale a img {
+  width: 16px;
+  height: 16px;
+}
 .calendar_plannerDayScale img,
 .calendar_plannerWeekScale img,
 .calendar_plannerMonthScale img,
 .calendar_plannerDayOfMonthScale img {
-  vertical-align: middle;
+  vertical-align: text-top;
 }
 /* calendar_plannerRowHeader contains the user or category name of the calendar_plannerRowWidget
  */
@@ -856,9 +987,15 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 }
 .calendar_plannerEvent img,
 .calendar_plannerEventPrivate img {
-  padding-top: 2px;
-  width: 16px;
-  height: 16px;
+  padding-top: 0px;
+  padding: 2px;
+  width: 12px;
+  height: 12px;
+  margin: 3px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #e6e6e6;
 }
 .calendar_plannerEvent:hover {
   cursor: pointer;
@@ -896,9 +1033,12 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
   border-spacing: 0px;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
 }
 #delete_series {

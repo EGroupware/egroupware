@@ -81,6 +81,9 @@ div.filemanager_navigation > label {
 div.filemanager_navigation > label > input {
   width: 100%;
 }
+input#filemanager-index_upload {
+  width: 315px;
+}
 /**
  * Select file dialog
  */

@@ -257,8 +257,26 @@ input#infolog-edit_info_subject {
 /*#############################################*/
 /*Tabs    */
 /*Beschreibung*/
-/*Verknüpfung*/
-/*Delegation*/
+/*Verknüpfung ************************************/
+#infolog-edit_infolog-edit-links {
+  /*neue verknüpfung erstellen - div*/
+  /*img.et2_button_icon defined in etemplate2.less*/
+}
+#infolog-edit_infolog-edit-links div#addressbook-edit_link_to {
+  width: 100% !important;
+}
+#infolog-edit_infolog-edit-links div.et2_file {
+  float: left;
+  margin-left: 121px;
+  margin-top: -46px;
+}
+#infolog-edit_infolog-edit-links table#infolog-edit_link_to {
+  overflow-y: scroll;
+}
+/*Delegation ************************************/
+#infolog-edit_infolog-edit-delegation .inputFullWidth input {
+  width: 96%;
+}
 /*Projektmanager*/
 #infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
   width: auto;

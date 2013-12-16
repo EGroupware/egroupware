@@ -180,7 +180,7 @@
 					</hbox>
 					<textbox type="integer" id="info_number" readonly="true" span="2" class="infolog_infoId"/>
 				</row>
-				<row class="row dialog-header" valign="top">
+				<row class="row dialog-header2" valign="top">
 					<description value="Contact" for="info_from"/>
 					<vbox options="0,0" span="2">
 						<hbox options="0,0">
@@ -192,7 +192,7 @@
 					<description value="Phone/Email" for="info_addr"/>
 					<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="30" maxlength="255" class="_inputFullWidth"/>
 				</row>
-				<row class="row dialog-header">
+				<row class="row dialog-header3">
 					<description value="Category" for="info_cat"/>
 					<menulist span="2">
 						<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
@@ -201,7 +201,7 @@
 					<description value="Parent" font_style="1"/>
 					<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap searchParent"/>
 				</row>
-				<row class="row dialog-header">
+				<row class="row dialog-header4">
 					<description value="Subject" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" class="inputFullWidth" size="80" maxlength="255" needed="true" span="all" tabindex="1"/>
 				</row>
