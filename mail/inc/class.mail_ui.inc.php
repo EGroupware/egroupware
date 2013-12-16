@@ -1539,7 +1539,7 @@ unset($query['actions']);
 
 			if (in_array("additionaltoaddress", $cols))
 			{
-				$data['additionaltoaddress'] = json_encode($header['additional_to_addresses']);
+				$data['additionaltoaddress'] = $header['additional_to_addresses'];
 			}
 			//fromaddress
 			if (in_array("fromaddress", $cols))
@@ -1548,7 +1548,7 @@ unset($query['actions']);
 			}
 			if (in_array("ccaddress", $cols))
 			{
-				$data['ccaddress'] = json_encode($header['cc_addresses']);
+				$data['ccaddress'] = $header['cc_addresses'];
 			}
 			if (in_array("date", $cols))
 			{
