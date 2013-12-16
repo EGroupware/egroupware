@@ -830,7 +830,7 @@ class filemanager_ui
 	 */
 	function file(array $content=null,$msg='')
 	{
-		$tpl = new etemplate('filemanager.file');
+		$tpl = new etemplate_new('filemanager.file');
 
 		if (!is_array($content))
 		{
@@ -890,6 +890,12 @@ class filemanager_ui
 			$path =& $content['path'];
 
 			list($button) = @each($content['button']); unset($content['button']);
+			if(!$button && $content['sudo'])
+			{
+				// Button to stop sudo is not in button namespace
+				$button = 'sudo';
+				unset($content['sudo']);
+			}
 			// need to check 'setup' button (submit button in sudo popup), as some browsers (eg. chrome) also fill the hidden field
 			if ($button == 'sudo' && egw_vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
 			{
@@ -1163,43 +1169,26 @@ class filemanager_ui
 		}
 		if (egw_vfs::$is_root)
 		{
-			$sudo_button =& $tpl->get_widget_by_name('sudo');
-			$sudo_button = etemplate::empty_cell('button','button[sudo]',array(
-				'label' => 'Logout',
-				'help'  => 'Log out as superuser',
-				'align' => 'right',
-			));
+			$tpl->setElementAttribute('sudo', 'label', 'Logout');
+			$tpl->setElementAttribute('sudo', 'help','Log out as superuser');
+			// Need a more complex submit because button type is buttononly, which doesn't submit
+			$tpl->setElementAttribute('sudo', 'onclick','widget.getInstanceManager().submit(widget)');
+
 		}
 		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
-			if(method_exists($tpl,'get_widget_by_name'))
-			{
-				$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
-			}
-			else	// et2
-			{
-				// add to existing tabs in template
-				$tpl->setElementAttribute('tabs', 'add_tabs', true);
+			// add to existing tabs in template
+			$tpl->setElementAttribute('tabs', 'add_tabs', true);
 
-				$tabs =& $tpl->getElementAttribute('tabs','tabs');
-				$tabs = array();
-			}
+			$tabs =& $tpl->getElementAttribute('tabs','tabs');
+			$tabs = array();
 
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
-				if(method_exists($tpl,'get_widget_by_name'))
-				{
-					$tabs['name'] .= '|'.$extra_tab['name'];
-					$tabs['label'] .= '|'.$extra_tab['label'];
-					$tabs['help'] .= '|'.$extra_tab['help'];
-				}
-				else
-				{
-					$tabs[] = array(
-						'label' =>	$extra_tab['label'],
-						'template' =>	$extra_tab['name']
-					);
-				}
+				$tabs[] = array(
+					'label' =>	$extra_tab['label'],
+					'template' =>	$extra_tab['name']
+				);
 				if ($extra_tab['data'] && is_array($extra_tab['data']))
 				{
 					$content = array_merge($content, $extra_tab['data']);
