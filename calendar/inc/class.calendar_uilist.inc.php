@@ -160,6 +160,7 @@ class calendar_uilist extends calendar_ui
 				'filter_onchange' => "app.calendar.filter_change",
 				'header_left'     => 'calendar.list.dates',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
+				'favorites'       => true
 			);
 		}
 		$content['nm']['actions'] = $this->get_actions();
