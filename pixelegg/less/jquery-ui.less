@@ -13,6 +13,7 @@
  */
 
 @import (reference) "def_design_pattern_color_font_shadow.less";
+@import (reference) "def_buttons.less";
 
 // calender
 
@@ -49,7 +50,7 @@ option:checked {background-color: @egw_color_1_e;}
     font-size: 1em;
 }
 .ui-widget-content {
-    .bordered (@color-hint,@color-hint,@color-hint,@color-hint);
+    /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
 
     //	border: 1px solid #a6c9e2;
     //	background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
@@ -215,16 +216,17 @@ span.ui-icon-search{
 
 .ui-dialog-buttonset{ 
 
-    button {
-        background-color: @gray-20 !important;
-        &:hover{ background-color: @gray-30 !important;}        
+    button{
+        .Complete_Button_normal;
+
+        &:hover{ background-color: @gray-30; color: @gray-90;}
     }
 
     button.ui-button-text-only {background-color: @gray-20 !important; 
                                 background: inherit; 
                                 color: @gray-100 !important; 
                                 font-weight: normal !important;
-                                
+
                                 &:hover{ background-color: @gray-30 !important;}
     }
 }

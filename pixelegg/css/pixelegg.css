@@ -1278,11 +1278,11 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   .et2_label {
     color: #1e1e1e;
   }
-  #msg,
-  .message {
+  /*defined in layout_messages.less*/
+  /*#msg,.message {
     color: red;
     font-style: italic;
-  }
+}*/
   input.et2_url {
     margin-right: 6px;
     padding-right: 8px;
@@ -1312,7 +1312,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
     cursor: pointer;
     text-align: center;
     font-size: 9pt;
-    text-shadow: 1px 1px #E0E0E0;
+    text-shadow: 0px 0px;
   }
   /*in Nextmatch definiert*/
   .et2_button_icon {
@@ -1329,7 +1329,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   }
   button.et2_button_text:active,
   input[type=button]:active {
-    background-image: none !important;
+    /*background-image: none !important;*/
     background-color: #828282;
     color: #ffffff;
   }
@@ -1570,7 +1570,7 @@ action buttons, left aligned for "extra" controls
     background-repeat: no-repeat;
   }
   .et2_file .progress p {
-    background-color: green;
+    background-color: #ffdd73;
     height: 5px;
     margin: 0px;
   }
@@ -1686,8 +1686,39 @@ action buttons, left aligned for "extra" controls
     display: inline;
   }
   .et2_link_to .et2_button_icon {
+    background-color: #f0f0f0;
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     float: left;
-    width: 22px;
+    margin: 0.5em 2em;
+    padding: 0.5em;
+    width: 32px;
+    height: 32px;
+  }
+  .et2_link_to .et2_button_icon:hover {
+    background-color: #b3b3b3 !important;
+    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .et2_link_to .et2_button_icon:active {
+    background-color: #808080;
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
   .et2_link {
     cursor: pointer;
@@ -1896,6 +1927,9 @@ action buttons, left aligned for "extra" controls
     padding: 1em;
     background-color: #ffc200;
   }
+  .et2_grid td .gray span {
+    background-color: transparent;
+  }
   /**
  * Sortable grid
  */
@@ -1974,8 +2008,8 @@ action buttons, left aligned for "extra" controls
   }
   /* images*/
   .et2_nextmatch > img {
-    height: 16px;
     width: 16px;
+    height: 16px;
   }
   .nextmatch_header .header_count {
     padding: 0px 20px;
@@ -2019,28 +2053,16 @@ action buttons, left aligned for "extra" controls
     background-clip: padding-box;
   }
   .nextmatch_header > .filters .et2_label {
-    font-size: 0.9em;
+    /*        font-size: 0.9em;*/
     padding: 0.2em;
   }
   .nextmatch_header > .filters .et2_label select {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    width: auto;
-    margin: 5px 0em 5px 5px;
-    padding: 3px;
-    outline: none;
-    display: inline-block;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    cursor: pointer;
+    /*.Complete_Button_select;*/
     margin-left: 2px;
     margin-right: 1px;
-    margin-top: 6px;
-    font-size: 1.2em;
+    margin-top: 8px;
     max-width: 14% !important;
-    height: 25px;
+    /*height: 25px;*/
     /*top: 8px;*/
     /*padding: 5px 0px 0px 3px;*/
     /*Dialog - Addressbook - View */
@@ -2066,9 +2088,9 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header > .filters button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-color: #b4b4b4;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     width: 45px;
     height: 27px;
     -webkit-border-radius: 3px;
@@ -2119,9 +2141,9 @@ action buttons, left aligned for "extra" controls
     width: 15%;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-color: #b4b4b4;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     width: auto;
     margin: 0.5em 0em 0.5em 0;
     -webkit-border-radius: 3px;
@@ -2145,17 +2167,17 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header .et2_button_icon {
     vertical-align: middle;
     background-color: #f0f0f0;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     margin-top: 0px;
     margin-right: 1em;
-    height: 16px;
     width: 16px;
+    height: 16px;
     padding: 2px;
   }
   .nextmatch_header .et2_button_icon .et2_button_icon:hover {
@@ -2233,9 +2255,9 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header div[id$=favorite_wrapper] {
     margin-top: 6px;
     vertical-align: middle;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -2275,8 +2297,8 @@ action buttons, left aligned for "extra" controls
   }
   .et2_dropdown button.ui-corner-left img,
   .et2_dropdown button.ui-state-default img {
-    height: 16px;
     width: 16px;
+    height: 16px;
     text-align: left;
     position: relative;
     right: 1px;
@@ -2318,8 +2340,8 @@ action buttons, left aligned for "extra" controls
   }
   .favorites img {
     margin-right: 1ex;
-    height: 16px;
     width: 16px;
+    height: 16px;
   }
   .favorites div.ui-icon-trash {
     position: relative;
@@ -2329,8 +2351,8 @@ action buttons, left aligned for "extra" controls
   .favorites .sideboxstar {
     background-image: url("../images/bullet.png");
     background-repeat: no-repeat;
-    height: 9px;
-    width: 9px;
+    width: 12px;
+    height: 12px;
   }
   .sidebox-favorites ul.favorites {
     width: 99%;
@@ -2348,9 +2370,9 @@ action buttons, left aligned for "extra" controls
     height: 16px;
     padding: 3px;
     background-color: #f0f0f0;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -2364,9 +2386,9 @@ action buttons, left aligned for "extra" controls
     margin-right: 1ex;
     height: 16px;
     background-color: #f0f0f0;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -2428,8 +2450,8 @@ action buttons, left aligned for "extra" controls
     /*.Complete_Button_Icon_hover ;*/
   }
   .sidebox-favorites .ui-menu .ui-menu-item a img {
-    height: 16px;
     width: 16px;
+    height: 16px;
   }
   .sidebox-favorites div.ui-icon-heart {
     position: relative;
@@ -2550,7 +2572,7 @@ action buttons, left aligned for "extra" controls
     text-align: left;
   }
   div.et2_progress > div {
-    background-color: #D00000;
+    background-color: #ffdd73;
     height: 5px;
   }
   .egwResizeOverlay {
@@ -2721,6 +2743,14 @@ action buttons, left aligned for "extra" controls
   .ms-res-ctn {
     overflow-x: hidden;
   }
+  /**
+ * et2_textbox
+ */
+  textarea,
+  textarea.description {
+    background-color: rgba(255, 194, 0, 0.1);
+    padding: 0.3em 0 0 0.3em;
+  }
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
@@ -2776,10 +2806,7 @@ option:checked {
   font-size: 1em;
 }
 .ui-widget-content {
-  border-top: solid 1px #ffc200;
-  border-left: solid 1px #ffc200;
-  border-right: solid 1px #ffc200;
-  border-bottom: solid 1px #ffc200;
+  /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
   background-image: none;
   color: #808080 !important;
   background: white;
@@ -2928,10 +2955,18 @@ span.ui-icon-search {
   background-color: #679fd2;
 }
 .ui-dialog-buttonset button {
-  background-color: #cdcdcd !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
 }
 .ui-dialog-buttonset button:hover {
-  background-color: #b4b4b4 !important;
+  background-color: #b4b4b4;
+  color: #1e1e1e;
 }
 .ui-dialog-buttonset button.ui-button-text-only {
   background-color: #cdcdcd !important;
@@ -3222,9 +3257,9 @@ span.ui-icon-search {
   color: #111 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-color: #b4b4b4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
   margin: 0.5em 0em 0.5em 0;
   -webkit-border-radius: 3px;
@@ -3268,6 +3303,12 @@ span.ui-icon-search {
  * @package phpgwapi
  * @version $Id$
  */
+#msg,
+.message {
+  color: red;
+  font-style: italic;
+  background: #ffffff;
+}
 .egw_fw_ui_app_header_container {
   border-width: 9px 0px 0px 9px;
   border-style: solid;
@@ -3298,6 +3339,15 @@ span.ui-icon-search {
 }
 .colselection.ui-widget-content {
   width: 33%;
+}
+/*Calendar ##############*/
+td.message span.message {
+  height: 35px;
+  border-bottom: 2px solid #e6e6e6;
+  color: white;
+  background: red;
+  height: auto;
+  width: 100%;
 }
 /**
  * EGroupware: CSS with less preprocessor
@@ -3349,9 +3399,9 @@ textarea {
 input {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-color: #b4b4b4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
   margin: 0.5em 0em 0.5em 0;
   -webkit-border-radius: 3px;
@@ -3374,28 +3424,12 @@ input:focus {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 select {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  width: auto;
-  margin: 5px 0em 5px 5px;
+  /*.Complete_Button_select;*/
   padding: 3px;
   margin: 0;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  -webkit-box-shadow: 0 3px 0 #cccccc, 0 -1px #ffffff inset;
-  -moz-box-shadow: 0 3px 0 #cccccc, 0 -1px #ffffff inset;
-  box-shadow: 0 3px 0 #cccccc, 0 -1px #ffffff inset;
-  background: #f8f8f8;
-  color: #888;
-  border: none;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
 }
 select:hover {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -3449,15 +3483,6 @@ h6 {
   margin: 1.5em 0 0;
 }
 /*table {font-size: 16px;}*/
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  select {
-    padding-right: 20px !important;
-    -webkit-appearance: none;
-    margin: 0;
-    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-    background-size: 20px auto;
-  }
-}
 select {
   position: relative;
 }
@@ -3506,9 +3531,9 @@ div.selectbox-wrapper ul li {
   cursor: pointer;
 }
 .sbHolder {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
   margin: 5px 0em 5px 5px;
   padding: 3px;
@@ -3713,9 +3738,9 @@ a.textSidebox,
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.15);
   text-align: center;
   cursor: pointer;
@@ -3728,9 +3753,9 @@ a.textSidebox,
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.15);
   text-align: center;
   cursor: pointer;
@@ -3997,9 +4022,12 @@ a.textSidebox {
 }
 button {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
 }
 button:hover {
@@ -4014,9 +4042,12 @@ button[id*="delete"] {
   background-image: url('../images/delete.png');
   margin-left: 3em;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   padding-left: 30px !important;
   background-position: 6px center !important;
@@ -4031,9 +4062,12 @@ button[id*="delete"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: red !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   padding-left: 30px !important;
   background-position: 6px center !important;
@@ -4042,6 +4076,51 @@ button[id*="delete"]:hover {
   width: auto;
   height: 32px;
   color: #ffffff;
+}
+/* #####################################################
+ *  Button edit + save + apply + copy = positive action   */
+button[id*="save"]:active {
+  background-color: #00ab00;
+}
+button[id*="apply"]:active {
+  background-color: #00ab00;
+}
+button[id*="copy"]:active {
+  background-color: #00ab00;
+}
+button[id*="edit_button[edit]"]:active {
+  background-color: #00ab00;
+}
+button#filemanager-select_button[ok]:active {
+  background-color: #00ab00;
+}
+/*ui-widget*/
+button#series:active {
+  background-color: #00ab00 !important;
+}
+button#exception:active {
+  background-color: #00ab00 !important;
+}
+/*calendar series add*/
+#calendar-edit_add {
+  /*    .Complete_Button_add;
+    &:hover {.Complete_Button_add_hover;} */
+}
+#calendar-edit_add:active {
+  background-color: #00ab00 !important;
+}
+/*calendar search freetime*/
+#calendar-edit_freetime:active {
+  background-color: #00ab00 !important;
+}
+/*calendar search freetime*/
+button[id*="edit_button[add_alarm]"]:active {
+  background-color: #00ab00 !important;
+}
+/* #####################################################*/
+/*Button cancel */
+button[id*="cancel"]:active {
+  background-color: #ffc200;
 }
 /* #####################################################*/
 /*Button abbruch / cancel */
@@ -4053,9 +4132,12 @@ button#cancel:hover {
 /*Button mit Bildern*/
 button.et2_button_with_image {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   padding-left: 30px !important;
   background-position: 6px center !important;
@@ -4086,6 +4168,15 @@ button.add:before {
   font-size: 1.5em;
   color: #ffc200;
   line-height: 1.1em;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select {
+    padding-right: 20px !important;
+    -webkit-appearance: none;
+    margin: 0;
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: 20px auto;
+  }
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -4229,6 +4320,12 @@ table.egwGridView_grid tbody {
   /*padding: 2px 3px 2px 4px;*/
   margin: 0;
   vertical-align: top;
+}
+table.egwGridView_grid tbody tr:nth-child(even) {
+  background: #e6e6e6;
+}
+table.egwGridView_grid tbody tr:nth-child(odd) {
+  background: #ffffff;
 }
 table.egwGridView_grid tbody tr.selected {
   background: rgba(255, 221, 115, 0.2) !important;
@@ -4395,9 +4492,9 @@ table.egwGridView_grid span.arrow.loading {
   margin: 1em;
 }
 #loginMainDiv div#centerBox form table.divLoginbox {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
   -moz-border-radius: 3px;
@@ -4409,9 +4506,9 @@ table.egwGridView_grid span.arrow.loading {
   padding: 0.5em;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
   margin: 5px 0em 5px 5px;
   padding: 3px;
@@ -4430,9 +4527,9 @@ table.egwGridView_grid span.arrow.loading {
 #loginMainDiv div#centerBox form table.divLoginbox input {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-color: #b4b4b4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
   margin: 0.5em 0em 0.5em 0;
   -webkit-border-radius: 3px;
@@ -4609,14 +4706,27 @@ img {
   float: left;
   padding-top: 10px;
 }
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul {
+  /*Home*/
+  /*Setup*/
+  /*access*/
+  /*category*/
+  /*password*/
+  /*help*/
+  /*Search*/
+  /*logout*/
+}
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li {
   width: 32px;
   height: 32px;
   padding: 0.3em 0.4em;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:hover {
@@ -4626,18 +4736,73 @@ img {
   background-color: inherit !important;
   color: #000000;
 }
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
+  text-decoration: none;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   color: #808080;
   border-color: #828282;
+  text-decoration: none !important;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child {
   margin-left: 10px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child :before {
   border: none;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/home.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(2) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/setup.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(3) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/access.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(4) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/category.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(5) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/password.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(6) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/help.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(7) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/search.png);
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:nth-child(8) a:before {
+  padding-right: 5px;
+  content: url(../images/topmenu_items/logout.png);
+  width: 16px;
+  height: 16px;
 }
 /*#################################################
 ###################################################
@@ -4715,9 +4880,9 @@ img {
 }
 #egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   height: 30px;
   padding: 0 0 0 10px;
   font-size: 0.9em;
@@ -4752,9 +4917,9 @@ img {
   width: 16px;
   height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   padding: 0.5em;
   top: 5px;
   position: fixed;
@@ -4764,6 +4929,11 @@ img {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#egw_fw_logout:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_logout:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4784,9 +4954,9 @@ img {
   width: 16px;
   height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   padding: 0.5em;
   top: 5px;
   right: 45px;
@@ -4796,6 +4966,11 @@ img {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#egw_fw_print:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_print:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4863,21 +5038,25 @@ img {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv {
   background-color: #fafafa;
 }
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header {
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv div.ui-sortable div {
+  padding: 3px 0 1px 3px;
   cursor: pointer;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header {
   display: block;
-  height: 30px;
   margin: 0 0;
-  padding: 4px 5px 5px 15px;
-  background-color: #fafafa;
-  background-image: none;
-  border-color: #e6e6e6;
+  /*padding: 0px 5px 5px 10px;*/
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:hover {
+  background-color: #d9d9d9;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:hover {
-  background-color: #d9d9d9;
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header h1 {
   font-size: 1em;
@@ -5164,28 +5343,11 @@ img {
   padding: 0px;
   margin: 0px 5px;
   float: left;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.Complete_Button_Icon_normal;*/
   background-image: url("../images/bullet.png");
   background-size: 16px 16px;
   background-position: center;
-}
-.egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon:hover {
-  height: 16px;
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
 }
 .egw_fw_ui_sidemenu_listitem input {
   height: 16px;
@@ -5524,26 +5686,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
  * @version $Id$
  */
 /*@import (reference) "def_content_elements.less";*/
-/*###########################################
-#                                           #
-#     dialog-header                         #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#    main + tabs                            #
-#                                           #
-#                                           #
-#############################################
-#   dialog-operators                        #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
 div.et2_container {
   padding: 0;
 }
@@ -5574,8 +5716,11 @@ div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker {
   background-image: url("../images/datepopup.png");
+}
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
+  cursor: pointer;
 }
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
   background-color: #ffffff;
@@ -5588,26 +5733,47 @@ div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2
 table.dialog-main-view {
   width: 100%;
 }
-/*Header Part*/
+/*###########################################
+#                                           #
+#     dialog-header                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#    main + tabs                            #
+#                                           #
+#                                           #
+#############################################
+#   dialog-operators                        #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+/**********    Header Part ********************/
 .dialog-header {
   background-color: #0c5da5;
   color: #ffffff;
 }
-.dialog-header .th {
-  background-color: #0c5da5 !important;
-}
-.dialog-header tr {
-  height: 30px;
-}
-.dialog-header td {
-  padding: 0px;
-}
 .dialog-header table.et2_grid {
   border-top: none;
+}
+.dialog-header table.et2_grid .th {
+  background-color: #0c5da5 !important;
+}
+.dialog-header table.et2_grid tr {
+  height: 30px;
+}
+.dialog-header table.et2_grid td {
+  padding: 0px 0px 0px 3px;
 }
 .dialog-header .et2_label {
   color: #ffffff;
   vertical-align: bottom;
+  padding: 0px 0px 0px 3px !important;
 }
 .dialog-header td.space span img {
   background: #ffffff;
@@ -5624,11 +5790,25 @@ table.dialog-main-view {
   filter: gray;
   /* IE 6-9 */
 }
-/*Main*/
+tr.dialog-header2,
+tr.dialog-header3,
+tr.dialog-header4 {
+  background-color: #679fd2 !important;
+  border-top: 2px solid #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
+}
+tr.dialog-header2 .et2_label,
+tr.dialog-header3 .et2_label,
+tr.dialog-header4 .et2_label {
+  color: #ffffff;
+  vertical-align: bottom;
+  padding: 0px 0px 0px 3px !important;
+}
+/************* Main  **********************************/
 .dialog-main-timeframe div {
   min-height: 100px;
 }
-/* Operators */
+/**********    Operators *******************************/
 .dialog-operators {
   background-color: #b4b4b4;
   border-top: 2px solid #e6e6e6;
@@ -5637,6 +5817,7 @@ table.dialog-main-view {
 .dialog-operators td {
   padding: 2px;
 }
+/**********    Footer  *******************************/
 /*Buttons / Toolbar*/
 .dialog-footer-toolbar {
   background-color: #679fd2;
@@ -5647,6 +5828,9 @@ table.dialog-main-view {
 .dialog-footer-toolbar button {
   height: 32px;
 }
+.dialog-footer-toolbar .et2_selectbox {
+  height: 32px;
+}
 .dialog-footer-toolbar label.et2_label {
   border-color: #b4b4b4;
   width: auto;
@@ -5655,14 +5839,17 @@ table.dialog-main-view {
   -moz-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   color: #000000;
   background-color: #f0f0f0;
   padding: 6px 5px 6px 0;
-  /*        position: relative;
-        top: 11px;*/
+  position: relative;
+  top: 11px;
+}
+.dialog-footer-toolbar input.et2_checkbox {
+  top: 0px;
 }
 /*
 	Printing

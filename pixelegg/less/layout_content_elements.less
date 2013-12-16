@@ -77,23 +77,10 @@ input {
 
 select {
 
-    .Complete_Button_select;
+    /*.Complete_Button_select;*/
     padding:3px;
     margin: 0;
     .rounded (4px);
-    //	.drop-shadow( 0, 3px, 0, 191, 191, 191, 0.1, inset);
-    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    background: #f8f8f8;
-    color:#888;
-    border:none;
-    outline:none;
-    display: inline-block;
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-    cursor:pointer;
 
     &:hover{.Complete_Button_select_hover;}
     &:focus{.Complete_Button_select_focus;}
@@ -147,16 +134,7 @@ h6 {
 /*table {font-size: 16px;}*/
 
 
-/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    select {
-        padding-right: 20px !important;
-        -webkit-appearance:none;
-        margin:0;
-        background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-        background-size: 20px auto;
-    }
-}
+
 
 select {
     position:relative;
@@ -381,6 +359,8 @@ a:hover,a:active
     color:@link-color-active;
     text-decoration: underline;
 }
+
+
 
 .divLoginboxHeader,
 .divSideboxHeader,
@@ -820,19 +800,71 @@ button[id*="delete"]{
 
 }
 
-// Hover
+            // Hover
 
-input[type="submit"][id*="delete"]:hover,
-input[type="button"][id*="delete"]:hover,
-button[id*="delete"]:hover {
+            input[type="submit"][id*="delete"]:hover,
+            input[type="button"][id*="delete"]:hover,
+            button[id*="delete"]:hover {
 
-    background-image:url('../images/delete-hover.png') !important;
-    background-color: red !important;
-    .Complete_Button_text_icon_before;
-    color: @gray-0;
+                background-image:url('../images/delete-hover.png') !important;
+                background-color: red !important;
+                .Complete_Button_text_icon_before;
+                color: @gray-0;
+            }
+
+/* #####################################################
+ *  Button edit + save + apply + copy = positive action   */
+ 
+button[id*="save"] {
+    &:active {background-color: @color-positive-action;}
+}
+button[id*="apply"]{
+    &:active {background-color: @color-positive-action;}
+}
+button[id*="copy"]{  
+    &:active {background-color: @color-positive-action;}
+    }
+    
+button[id*="edit_button[edit]"]{
+    &:active {background-color: @color-positive-action;}
 }
 
+button#filemanager-select_button[ok]{
+    &:active {background-color: @color-positive-action;}
+}
 
+/*ui-widget*/
+button#series {
+    &:active {background-color: @color-positive-action !important;}
+}
+button#exception {
+    &:active {background-color: @color-positive-action !important;}
+}
+
+/*calendar series add*/
+#calendar-edit_add {
+    &:active {background-color: @color-positive-action !important;}
+/*    .Complete_Button_add;
+    &:hover {.Complete_Button_add_hover;} */
+}
+/*calendar search freetime*/
+#calendar-edit_freetime{
+    &:active {background-color: @color-positive-action !important;}
+}
+/*calendar search freetime*/
+button[id*="edit_button[add_alarm]"]{
+    &:active {background-color: @color-positive-action !important;}
+}
+/* #####################################################*/
+ /*Button cancel */
+ 
+button[id*="cancel"] {
+
+    &:active {background-color: @color-hint;}
+
+}
+ 
+ 
 
 /* #####################################################*/
  /*Button abbruch / cancel */
@@ -854,4 +886,20 @@ button.et2_button_with_image{
 button.add {
     .Complete_Button_add ;
 }
+
+
+
+
+/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {
+        padding-right: 20px !important;
+        -webkit-appearance:none;
+        margin:0;
+        background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+        background-size: 20px auto;
+    }
+}
+//
+//
 //

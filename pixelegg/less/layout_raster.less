@@ -81,11 +81,9 @@
         #egw_fw_topmenu_items {
             float: left;
             padding-top: 10px;
-            //														height: 30px;
 
             ul {
-                //															padding: 10px;
-                //															margin-left: 2em;
+
 
                 li{
                     .color-100-gray;
@@ -94,17 +92,87 @@
                     .Complete_Button_normal;
 
                     &:hover{.Complete_Button_hover;.color-100-gray;}
-                    a {.color-100-gray;}
+                    &:active {.Complete_Button_active;}
+                    
+                    
+                    a {.color-100-gray; text-decoration: none; }
+                    
                     a:hover {
                         .color-50-gray;
                         border-color: @gray-50;
+                        text-decoration: none !important;
+                        
                     }
                 }
 
+                /*Home*/
                 li:first-child{
                     margin-left: 10px;
                     :before{border: none;}
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/home.png);
+                        .dimension_width_height_s;
+                    }
+                    
                 }
+                
+                /*Setup*/
+                li:nth-child(2){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/setup.png);
+                        .dimension_width_height_s;
+                    }    
+                } 
+                /*access*/
+                 li:nth-child(3){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/access.png);
+                        .dimension_width_height_s;
+                    }    
+                }               
+                /*category*/
+                 li:nth-child(4){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/category.png);
+                        .dimension_width_height_s;
+                    }    
+                }               
+                /*password*/
+                 li:nth-child(5){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/password.png);
+                        .dimension_width_height_s;
+                    }    
+                }               
+                /*help*/
+                 li:nth-child(6){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/help.png);
+                        .dimension_width_height_s;
+                    }    
+                }               
+                /*Search*/
+                 li:nth-child(7){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/search.png);
+                        .dimension_width_height_s;
+                    }    
+                }               
+                /*logout*/
+                li:nth-child(8){
+                    a:before {
+                        padding-right: 5px;
+                        content: url(../images/topmenu_items/logout.png);
+                        .dimension_width_height_s;
+                    }    
+                }                
             } // Ende ul
 
 
@@ -229,7 +297,7 @@
 
 
         &:hover {.box_shadow_standard_light_hover;}
-        
+        &:active {.Complete_Button_active;}
          &:focus {.box_shadow_standard_light_inset;}
     }
 
@@ -256,7 +324,7 @@
         right: 45px;
         z-index: 200;
         &:hover {.box_shadow_standard_light_hover;}
-
+        &:active {.Complete_Button_active;}
         &:focus {.box_shadow_standard_light_inset;}
 
     }
@@ -346,19 +414,32 @@
 
 
             // Alle Tabs
+            div.ui-sortable {
+                
+                div {
+                    padding: 3px 0 1px 3px;
+                    cursor: pointer;
+                
+ 
+                
+                }
+                
+            }
+            
             .egw_fw_ui_sidemenu_entry_header {
-                cursor: pointer;
+                
 
                 display: block;
-                height: 30px;
                 margin: 0 0;
-                padding: 4px 5px 5px 15px;
-                .background-color-5-gray;
-                background-image: none;
-                border-color: @gray-10;
+                /*padding: 0px 5px 5px 10px;*/
 
-                .rounded(5px);
-                &:hover {  .background-color-15-gray;}
+               &:hover {  
+                    .background-color-15-gray;
+                    .rounded(5px);
+                    }
+                    
+               &:active {.box_shadow_standard_light_inset;}
+
 
                 h1 {
                     font-size: 1em;
@@ -647,11 +728,11 @@
         padding: 0px;
         margin: 0px 5px;
         float: left;
-        .Complete_Button_Icon_normal;
+        /*.Complete_Button_Icon_normal;*/
         background-image: url("../images/bullet.png");
 		background-size: 16px 16px;
 		background-position: center;
-		 &:hover {height: 16px; .Complete_Button_Icon_hover ;}
+		 /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
     }
 
     input {

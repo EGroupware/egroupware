@@ -1,4 +1,4 @@
-/**
+ /**
  * EGroupware: CSS with less preprocessor
  *
  * Definitions for colors, fonts, borders and box shadow
@@ -120,8 +120,18 @@
 // soll EGROUPWARE FARBE GEBEN
 /*@active_button_border_bottom : @egw_color_2_d;*/ 
 
-// Hint / 
+// Hint / or have to do / must field
 @color-hint : @egw_color_1_a;
+
+/*optional / can field*/
+@color-optional : fade(@egw_color_1_a, 10%);
+
+
+
+/*Listenausgabe*/   
+
+@color-even : @gray-10;
+@color-odd :  @gray-10 + 222; 
 
 // aktiverte Zeilen in allen APP mit Listenausgabe
 @color_active_row : @egw_color_1_a;
@@ -132,6 +142,9 @@
 // Mouse over
 @color_hover_row : @egw_color_2_e;
 
+ /*Button edit + save + apply + copy = positive action         */
+@color-positive-action : #00AB00;
+
 
 // Search Button
 
@@ -141,7 +154,9 @@
 
 .background-table-cal-head { background-color : @egw_color_1_a;}
 
+@color-progress : @egw_color_1_e;
 
+/*#####################################################################*/
 // Schriften
 
 .basefontfamily{
@@ -152,8 +167,8 @@
 }
 
 
-
-// Radius
+/*#####################################################################*/
+/* Radius*/
 
 .border_radius_button_lefttop {
     -webkit-border-radius: 3px;
@@ -184,9 +199,9 @@
 // auf hellem Hintergrund
 
 .box_shadow_standard_light {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow:  1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -306,6 +321,8 @@
     /* Opera 9+, IE 9+ */
     opacity: 0.5;
 }
+
+
 // #############################
 //  Button Größen
 
@@ -329,6 +346,88 @@
     width: auto;
     height: 32px;
 }
+
+
+  /*Icon Buttons   ##################  */ 
+
+/* ##############
+ #  big Icon    #
+ #              #
+ #  32 x 32     #
+ #              #
+ #              #
+ ################*/
+
+.dimension_width_height_xl{
+    
+    width: 32px;
+    height: 32px;
+}
+
+/* ###########
+ # medium    # 
+ # Icon      #
+ #           #
+ #  24 x 24  #
+ #           #
+ #############*/
+
+.dimension_width_height_m{
+    
+    width: 24px;
+    height: 24px;
+}
+
+/* ########
+ # small  # 
+ # Icon   #
+ # 16x16  #
+ ##########*/
+
+.dimension_width_height_s{
+    
+    width: 16px;
+    height: 16px;
+}
+
+/* ####
+   #xs#
+   ####*/
+.dimension_width_height_xs{
+    
+    width: 12px;
+    height: 12px;
+}
+
+/* only Buttons   ##################  */ 
+
+/* ##########################
+ #  big Button              #
+ #                          #
+ #                          #
+ #                          #
+ #  N x 32                  #
+ ############################*/
+
+.dimension_height_xl{ height: 32px; }
+
+/* ##########################
+ #  medium Button           #
+ #                          #
+ #  N x 24                  #
+ ############################*/
+
+.dimension_height_m{ height: 24px; }
+
+/* ##########################
+ #  small Button           #
+ #                          #
+ #  N x 16                  #
+ ############################*/
+
+.dimension_height_s{ height: 16px; }
+
+
 
 // Rahmen für Schaltflächen
 
@@ -520,4 +619,4 @@
 }
 
 
-//
+//        

@@ -143,10 +143,12 @@ div.et2_hbox>div {
     color: @gray-90;
 //    float: left;
 }
-#msg,.message {
+
+ /*defined in layout_messages.less*/ 
+/*#msg,.message {
     color: red;
     font-style: italic;
-}
+}*/
 input.et2_url {
     margin-right: 6px;
     padding-right: 8px;
@@ -181,7 +183,7 @@ a.et2_url.url {
 
     font-size: 9pt;
 
-    text-shadow: 1px 1px #E0E0E0;
+    text-shadow: 0px 0px;
 }
 
  /*in Nextmatch definiert*/
@@ -196,7 +198,7 @@ a.et2_url.url {
     background: transparent;
     padding: 0px;
 //    width: 16px;
-    height: 16px;
+    .dimension_height_s;
 }
 button.et2_button_text:hover, input[type=button]:hover {
     color: @gray-90;
@@ -204,7 +206,7 @@ button.et2_button_text:hover, input[type=button]:hover {
     background-color: @gray-30;
 }
 button.et2_button_text:active, input[type=button]:active {
-    background-image: none !important;
+    /*background-image: none !important;*/
     background-color: @gray-50;
     color: @gray-0;
 }
@@ -462,8 +464,7 @@ div.et2_file input {background-color: @egw_color_1_a;}
 }
 
 .et2_file .progress li:hover div.remove {
-    width: 16px;
-    height: 16px;
+    .dimension_width_height_s;
     float: right;
     display: block;
     background-image: url("images/close.png");
@@ -472,7 +473,7 @@ div.et2_file input {background-color: @egw_color_1_a;}
 }
 
 .et2_file .progress p {
-    background-color: green;
+    background-color: @color-progress;
     height:5px;
     margin: 0px;
 }
@@ -483,7 +484,6 @@ div.et2_file input {background-color: @egw_color_1_a;}
 .et2_file .progress li.success > span.progressBar {
     display: none;
 }
-
 
 /**
  * Autocomplete - used in link widget
@@ -596,8 +596,14 @@ div.et2_link_entry input.ui-autocomplete-input {
     display: inline;
 }
 .et2_link_to .et2_button_icon {
-    float: left;
-    width: 22px;
+            .Complete_Button_Icon_normal;
+            float: left;
+            margin: 0.5em 2em;
+            padding: 0.5em;
+            .dimension_width_height_xl;
+
+            &:hover {.Complete_Button_Icon_hover;}
+            &:active {.Complete_Button_Icon_active;}
 }
 
 .et2_link {
@@ -814,7 +820,10 @@ table.et2_grid {
 .et2_grid td {
     /*	border: 1px dashed silver;*/
     
-    .gray {padding: 1em; background-color: @color-hint}
+    .gray {
+        padding: 1em; background-color: @color-hint;
+        span {background-color: transparent;}
+        }
 }
 /**
  * Sortable grid
@@ -901,7 +910,7 @@ div.message.floating {
 }
 
 /* images*/
-.et2_nextmatch > img {height: 16px; width: 16px;}
+.et2_nextmatch > img {.dimension_width_height_s;}
 
 // little rectangle
 
@@ -937,19 +946,18 @@ div.message.floating {
     
     .et2_label {
         
-        font-size: 0.9em;
+/*        font-size: 0.9em;*/
         padding: 0.2em;
         
         
         select {
-            .Complete_Button_select;
+            /*.Complete_Button_select;*/
             margin-left: 2px; 
             margin-right: 1px;
-            margin-top: 6px;
+            margin-top: 8px;
             
-            font-size: 1.2em;
             max-width: 14% !important;
-            height: 25px;
+            /*height: 25px;*/
             /*top: 8px;*/
             /*padding: 5px 0px 0px 3px;*/
             
@@ -1029,8 +1037,7 @@ div.message.floating {
     .Complete_Button_Icon_normal;
     margin-top: 0px;
     margin-right: 1em;
-    height: 16px;
-    width: 16px;
+    .dimension_width_height_s;
     padding: 2px;
 
     .et2_button_icon:hover{.Complete_Button_Icon_hover ;}
@@ -1125,8 +1132,7 @@ div.message.floating {
 //            background-size: 10px 10px;
           
             img {
-                height: 16px; 
-                width: 16px;
+                .dimension_width_height_s;
                 text-align: left;
                 position: relative;
                 right: 1px;
@@ -1206,7 +1212,8 @@ div.message.floating {
     input {margin-right: 1ex;}
 
     img {
-        margin-right: 1ex; height: 16px; width: 16px;
+        margin-right: 1ex; 
+        .dimension_width_height_s;
     }
 
     div.ui-icon-trash {
@@ -1219,8 +1226,7 @@ div.message.floating {
     .sideboxstar{
         background-image: url("../images/bullet.png");
         background-repeat: no-repeat;
-        height: 9px;
-        width: 9px
+        .dimension_width_height_xs;
     }
 
 }
@@ -1245,24 +1251,24 @@ div.message.floating {
             img {
 //                margin-right: 1ex; 
                 margin: 0px 5px;
-                height: 16px; 
+                .dimension_height_s;
                 padding: 3px;
                 .Complete_Button_Icon_normal;
 
 
                 &:hover {
-                    height: 16px; 
+                    .dimension_height_s; 
                     /*.Complete_Button_Icon_hover ;*/
                 }
             }
 
             img.sideboxstar {
                 margin-right: 1ex; 
-                height: 16px; 
+                .dimension_height_s; 
                 .Complete_Button_Icon_normal;
 				background-size: 16px 16px;
 				background-position: center;
-                &:hover {height: 16px; .Complete_Button_Icon_hover ;}
+                &:hover {.dimension_height_s; .Complete_Button_Icon_hover ;}
 
             }
 
@@ -1315,8 +1321,7 @@ div.message.floating {
                          /*.Complete_Button_Icon_hover ;*/
                 }
 
-                img { height: 16px; 
-                      width: 16px;
+                img { .dimension_width_height_s ;
                 }
             }
 
@@ -1333,11 +1338,6 @@ div.message.floating {
         background-image: none;
     }	
     div.ui-icon-trash{
-        //								margin-top: -5px;
-        //					 			margin-right: 2px;
-
-
-        //								background: transparent;
 
         background-image:url(../images/delete.png);
         background-size: 16px 16px;
@@ -1469,7 +1469,7 @@ div.et2_progress {
     text-align: left;
 }
 div.et2_progress > div {
-    background-color: #D00000;
+    background-color: @color-progress;
     height: 5px;
 }
 
@@ -1654,6 +1654,15 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
     overflow-x: hidden;
 }
 
+/**
+ * et2_textbox
+ */
+
+textarea,
+textarea.description {
+    background-color: @color-optional;
+    padding: 0.3em 0 0 0.3em;
+}
 
 } // Ende Media all
 
@@ -1673,4 +1682,5 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 
 }
 
-//                                                                                                                                                                                                                                                                                                                                                                                   
+//
+//
