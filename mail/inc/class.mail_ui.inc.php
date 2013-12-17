@@ -349,6 +349,13 @@ class mail_ui
 				'caption' => 'Mail filter',
 				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.edit_sieve',
+				'group'	=> $group++,
+			),
+			'vacation' => array(
+				'caption' => 'Vacation notice',
+				'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.edit_vacation',
+				'group'	=> $group++,
 			),
 			'edit_account' => array(
 				'caption' => 'Edit account',
@@ -366,7 +373,11 @@ class mail_ui
 		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
-		if (!$this->mail_bo->icServer->acc_sieve_enabled) unset($tree_actions['sieve']);
+		if (!$this->mail_bo->icServer->acc_sieve_enabled)
+		{
+			unset($tree_actions['sieve']);
+			unset($tree_actions['vacation']);
+		}
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';

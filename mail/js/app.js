@@ -2184,7 +2184,7 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	sieve_egw_refresh: function(_execid,_msg)
+	sieve_refresh: function(_execid,_msg)
 	{
 		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id,_msg],null,this.et2_obj,true);
 		console.log(request);
@@ -2252,6 +2252,16 @@ app.classes.mail = AppJS.extend(
    {
 	   this.egw.open_link('mail.mail_sieve.index');
    },
+
+   /**
+	*
+	* @todo get the account id and open the relevant vacation, ATM alway open vacation rules which is set in preferences
+	*/
+   edit_vacation: function()
+   {
+	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
+   },
+
 	/**
 	 * Edit a folder acl for account(s)
 	 *
