@@ -73,9 +73,9 @@ class mail_sieve
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->mailbo	= mail_bo::getInstance(true, $profileID);
+		$this->mailbo	= mail_bo::getInstance(false, $profileID, false, $oldIMAPObject=true);
 
-		if (is_object($this->mailbo->mailPreferences))
+/*		if (is_object($this->mailbo->mailPreferences))
 		{
 			// account select box
 			$selectedID = $this->mailbo->getIdentitiesWithAccounts($identities);
@@ -90,6 +90,7 @@ class mail_sieve
 
 			}
 		}
+*/
 		$this->mailPreferences  =& $this->mailbo->mailPreferences;
 		$this->mailConfig	= config::read('mail');
 
@@ -466,14 +467,15 @@ class mail_sieve
 
 		}
 
-		$allIdentities = $preferences->getIdentity();
+		$allIdentities = $this->mailbo->getAllIdentities();
+		$defaultIdentity = $this->mailbo->getDefaultIdentity();
 		foreach($allIdentities as $key => $singleIdentity)
 		{
-			if((empty($vacation))&& $singleIdentity->default === true)
+			if((empty($vacation))&& !empty($singleIdentity['ident_email']) && $singleIdentity['ident_email']==$allIdentities[$defaultIdentity]['ident_email'])
 			{
-				$selectedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
+				$selectedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
 			}
-			$predefinedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
+			$predefinedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
 		}
 		asort($predefinedAddresses);
 
@@ -1076,8 +1078,8 @@ class mail_sieve
 				}
 			}
 
-			//error_log(__METHOD__. array2string($rules));
-			//_debug_array($rules);
+			//error_log(__METHOD__. array2string($rows));
+			//_debug_array($rows);
 		}else
 		{
 			//error_log(__METHOD__.'There are no rules or something is went wrong at getRules()!');

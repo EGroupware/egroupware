@@ -504,7 +504,7 @@ class mail_compose
 				}
 				else
 				{
-					$newSig = $this->getDefaultIdentity();
+					$newSig = $this->mail_bo->getDefaultIdentity();
 					if ($newSig === false) $newSig = -2;
 				}
 			}
@@ -949,7 +949,7 @@ class mail_compose
 */
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
-		$allIdentities = $this->getAllIdentities();
+		$allIdentities = $this->mail_bo->getAllIdentities();
 		$acc = emailadmin_account::read($this->mail_bo->profileID);
 		$selectSignatures = array(
 			'-2' => lang('no signature')
@@ -1362,10 +1362,6 @@ class mail_compose
 		$mail_bo->openConnection();
 		$mail_bo->reopen($_folder);
 
-		// the array $userEMailAddresses was used for filtering out emailaddresses that are owned by the user, for draft data we should not do this
-		//$userEMailAddresses = $this->preferences->getUserEMailAddresses();
-		//error_log(__METHOD__.__LINE__.array2string($userEMailAddresses));
-
 		// get message headers for specified message
 		#$headers	= $mail_bo->getMessageHeader($_folder, $_uid);
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
@@ -1620,59 +1616,6 @@ class mail_compose
 	}
 
 	/**
-	 * getUserEMailAddresses - function to gather the emailadresses connected to the current mail-account
-	 * @return array - array(email=>realname)
-	 */
-	function getUserEMailAddresses() {
-		$acc = emailadmin_account::read($this->mail_bo->profileID);
-		$identities = $acc->identities();
-
-		$userEMailAdresses = array();
-		
-		foreach($identities as $ik => $ident) {
-			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
-			$identity = emailadmin_account::read_identity($ik);
-			$userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
-		}
-		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
-		return $userEMailAdresses;
-	}
-
-	/**
-	 * getAllIdentities - function to gather the identities connected to the current user
-	 * @return array - array(email=>realname)
-	 */
-	function getAllIdentities() {
-		$acc = emailadmin_account::read($this->mail_bo->profileID);
-		$identities = $acc->identities('all');
-
-		$userEMailAdresses = array();
-		
-		foreach($identities as $ik => $ident) {
-			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
-			$identity = emailadmin_account::read_identity($ik);
-			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
-		}
-		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
-		return $userEMailAdresses;
-	}
-
-	/**
-	 * getDefaultIdentity - function to gather the default identitiy connected to the current mailaccount
-	 * @return int - id of the identity
-	 */
-	function getDefaultIdentity() {
-		// retrieve the signature accociated with the identity
-		$id = $this->mail_bo->getIdentitiesWithAccounts($_accountData);
-		$acc = emailadmin_account::read($this->mail_bo->profileID);
-		$accountDataIT = ($_accountData[$this->mail_bo->profileID]?$acc->identities($this->mail_bo->profileID,true,'ident_id'):$acc->identities($_accountData[$id],true,'ident_id'));
-		foreach($accountDataIT as $it => $accountData)
-		{
-			return $accountData['ident_id'];
-		}
-	}
-
-	/**
 	 * getReplyData - function to gather the replyData and save it with the session, to be used then.
 	 * @param $_mode can be:
 	 * 		single: for a reply to one address
@@ -1691,7 +1634,7 @@ class mail_compose
 		$mail_bo->openConnection();
 		$mail_bo->reopen($_folder);
 
-		$userEMailAddresses = $this->getUserEMailAddresses();
+		$userEMailAddresses = $mail_bo->getUserEMailAddresses();
 
 		// get message headers for specified message
 		//print "AAAA: $_folder, $_uid, $_partID<br>";
@@ -2534,7 +2477,7 @@ class mail_compose
 	function setDefaults($content=array())
 	{
 		// retrieve the signature accociated with the identity
-		$id = $this->getDefaultIdentity();
+		$id = $this->mail_bo->getDefaultIdentity();
 		if ((!isset($content['identity']) || empty($content['identity'])) && $id) $content['signatureid'] = $id;
 		if (!isset($content['signatureid']) || empty($content['signatureid'])) $content['signatureid'] = $id;
 		if (!isset($content['mimeType']) || empty($content['mimeType']))

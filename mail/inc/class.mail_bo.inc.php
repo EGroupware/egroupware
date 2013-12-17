@@ -170,7 +170,7 @@ class mail_bo
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 	 * @return mail_bo
 	 */
-	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true)
+	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false)
 	{
 		//$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
@@ -187,6 +187,11 @@ class mail_bo
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
 			if (self::$debug) error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
+		}
+		// no validation or restoreSession for old ImapServer Object, just fetch it and return it
+		if ($_oldImapServerObject===true)
+		{
+			return new mail_bo('utf-8',false,$_profileID,true);
 		}
 		if ($_profileID != 0 && $_validate)
 		{
@@ -287,8 +292,9 @@ class mail_bo
 	 * @param string $_displayCharset='utf-8'
 	 * @param boolean $_restoreSession=true
 	 * @param int $_profileID=0
+	 * @param boolean $_oldImapServerObject=false
 	 */
-	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0)
+	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false)
 	{
 		if (!empty($_displayCharset)) self::$displayCharset = $_displayCharset;
 		if ($_restoreSession)
@@ -312,7 +318,7 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__." ProfileID ".$this->profileID.' called from:'.function_backtrace());
 		$acc = emailadmin_account::read($this->profileID);
 		//error_log(__METHOD__.__LINE__.array2string($acc->imapServer()));
-		$this->icServer = $acc->imapServer();
+		$this->icServer = ($_oldImapServerObject?$acc->oldImapServer():$acc->imapServer());
 		$this->ogServer = $acc->smtpServer();
 		// TODO: merge mailprefs into userprefs, for easy treatment
 		$this->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
@@ -480,6 +486,59 @@ class mail_bo
 		$rv = $this->icServer->hasCapability(strtoupper($_capability));
 		//error_log(__METHOD__.__LINE__." $_capability:".array2string($rv));
 		return $rv;
+	}
+
+	/**
+	 * getUserEMailAddresses - function to gather the emailadresses connected to the current mail-account
+	 * @return array - array(email=>realname)
+	 */
+	function getUserEMailAddresses() {
+		$acc = emailadmin_account::read($this->profileID);
+		$identities = $acc->identities();
+
+		$userEMailAdresses = array();
+		
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik);
+			$userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
+		}
+		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
+		return $userEMailAdresses;
+	}
+
+	/**
+	 * getAllIdentities - function to gather the identities connected to the current user
+	 * @return array - array(email=>realname)
+	 */
+	function getAllIdentities() {
+		$acc = emailadmin_account::read($this->profileID);
+		$identities = $acc->identities('all');
+
+		$userEMailAdresses = array();
+		
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik);
+			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+		}
+		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
+		return $userEMailAdresses;
+	}
+
+	/**
+	 * getDefaultIdentity - function to gather the default identitiy connected to the current mailaccount
+	 * @return int - id of the identity
+	 */
+	function getDefaultIdentity() {
+		// retrieve the signature accociated with the identity
+		$id = $this->getIdentitiesWithAccounts($_accountData);
+		$acc = emailadmin_account::read($this->profileID);
+		$accountDataIT = ($_accountData[$this->profileID]?$acc->identities($this->profileID,true,'ident_id'):$acc->identities($_accountData[$id],true,'ident_id'));
+		foreach($accountDataIT as $it => $accountData)
+		{
+			return $accountData['ident_id'];
+		}
 	}
 
 	/**
