@@ -963,6 +963,7 @@ abstract class egw_framework
 		$apps['about']['name'] = 'about';
 
 		$apps['logout']['title'] = lang('Logout');
+		$apps['logout']['name'] = 'logout';
 		$apps['logout']['url']   = egw::link('/logout.php');
 		$apps['logout']['icon']  = common::image('phpgwapi',Array('logout','nonav'));
 		$apps['logout']['icon_hover']  = common::image_on('phpgwapi',Array('logout','nonav'),'-over');
@@ -1344,6 +1345,7 @@ abstract class egw_framework
 			$apps = $GLOBALS['egw']->hooks->hook_implemented($types[$type]['hook']);
 		}
 		$this->_add_topmenu_item(array(
+			'id' => $type,
 			'name' => 'preferences',
 			'title' => lang($types[$type]['title']),
 			'url' => "javascript:egw_preferences('$type',".json_encode($apps).')',
