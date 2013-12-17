@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
-<!-- $Id$ -->
 <overlay>
 	<template id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004">
 		<grid class="uploadphoto">
@@ -53,8 +52,7 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-        
+	</template>        
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
             
                                       <!-- <image src="accounts"/> -->
@@ -175,9 +173,6 @@
 		</rows>
 	</grid>		
 	</template>
-        
-        
-        
 	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="286" overflow="auto">
 			<columns>
@@ -653,4 +648,4 @@
 			</rows>
 		</grid>
 	</template>
-</overlay>               
+</overlay>
