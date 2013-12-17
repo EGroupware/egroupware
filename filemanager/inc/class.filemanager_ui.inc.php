@@ -449,8 +449,6 @@ class filemanager_ui
 			''  => 'Files from subdirectories',
 		);
 		$tpl->setElementAttribute('nm', 'onfiledrop', 'app.filemanager.filedrop');
-		$tpl->setElementAttribute('nm[upload]', 'onFinish', 'app.filemanager.upload');
-		$tpl->setElementAttribute('nm[upload]', 'multiple', true);
 
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
