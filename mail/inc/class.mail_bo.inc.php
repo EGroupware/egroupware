@@ -534,10 +534,10 @@ class mail_bo
 		// retrieve the signature accociated with the identity
 		$id = $this->getIdentitiesWithAccounts($_accountData);
 		$acc = emailadmin_account::read($this->profileID);
-		$accountDataIT = ($_accountData[$this->profileID]?$acc->identities($this->profileID,true,'ident_id'):$acc->identities($_accountData[$id],true,'ident_id'));
+		$accountDataIT = ($_accountData[$this->profileID]?$acc->identities($this->profileID,false,'ident_id'):$acc->identities($_accountData[$id],false,'ident_id'));
 		foreach($accountDataIT as $it => $accountData)
 		{
-			return $accountData['ident_id'];
+			return $accountData;
 		}
 	}
 
@@ -565,7 +565,6 @@ class mail_bo
 				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
 			}
 		}
-
 		return ($selectedFound?$selectedID:$rememberFirst);
 	}
 

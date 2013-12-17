@@ -54,6 +54,8 @@ class mail_sieve
 
 	var $extraAddr;
 
+	var $currentIdentity;
+
 	/**
 	 * Constructor
 	 *
@@ -75,25 +77,12 @@ class mail_sieve
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		$this->mailbo	= mail_bo::getInstance(false, $profileID, false, $oldIMAPObject=true);
 
-/*		if (is_object($this->mailbo->mailPreferences))
-		{
-			// account select box
-			$selectedID = $this->mailbo->getIdentitiesWithAccounts($identities);
-			// if nothing valid is found return to user defined account definition
-			if (empty($this->mailbo->icServer->host) && count($identities)==0 && $this->mailbo->mailPreferences->userDefinedAccounts)
-			{
-				// redirect to new personal account
-				egw::redirect_link('/index.php',array('menuaction'=>'mail.uipreferences.editAccountData',
-					'accountID'=>"new",
-					'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
-				));
-
-			}
-		}
-*/
 		$this->mailPreferences  =& $this->mailbo->mailPreferences;
 		$this->mailConfig	= config::read('mail');
-
+		$allIdentities = $this->mailbo->getAllIdentities();
+		$defaultIdentity = $this->mailbo->getDefaultIdentity();
+		$this->currentIdentity = $allIdentities[$defaultIdentity];
+		$this->currentIdentity['identity_string'] = mail_bo::generateIdentityString($allIdentities[$defaultIdentity],true);
 		$this->restoreSessionData();
 		$icServer = $this->mailbo->icServer;
 		if(($icServer instanceof defaultimap) && $icServer->enableSieve)
@@ -143,7 +132,7 @@ class mail_sieve
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,$readonlys);
@@ -238,7 +227,7 @@ class mail_sieve
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$eNotitmpl->exec('mail.mail_sieve.editEmailNotification', $content,$sel_options);
@@ -253,7 +242,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.edit template
 		$etmpl = new etemplate_new('mail.sieve.edit');
-		error_log(__METHOD__.'() content before the action ' .array2string($content));
+		//error_log(__METHOD__.'() content before the action ' .array2string($content));
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -391,7 +380,7 @@ class mail_sieve
 
 		);
 		//$preserv = $sel_options;
-		error_log(__METHOD__.'() content'. array2string($content));
+		//error_log(__METHOD__.'() content'. array2string($content));
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
 		$mailCompose = new mail_compose();
 		$sel_options['action_folder_text'] = $mailCompose->ajax_searchFolder(0,true);
@@ -644,7 +633,7 @@ class mail_sieve
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$preserv);
