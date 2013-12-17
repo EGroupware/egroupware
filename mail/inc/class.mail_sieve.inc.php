@@ -350,7 +350,7 @@ class mail_sieve
 						$error++;
 					}
 					//refresh the rules list
-					$this->sieve_egw_refresh($msg);
+					//$this->sieve_egw_refresh($msg);
 					if ($button == "apply") break;
 				//fall through
 
@@ -608,10 +608,12 @@ class mail_sieve
 							{
 								$msg .= implode("\n",$this->errorStack);
 							}
+							egw_framework::refresh_opener($msg, 'mail','edit');
 							if ($button === 'apply') break;
 						}
 					case 'cancel':
-						egw::redirect_link('/mail/index.php');
+						egw_framework::window_close();
+
 				}
 				$vacation = $newVacation;
 
@@ -636,7 +638,7 @@ class mail_sieve
 			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
-		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$preserv);
+		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,array(),2);
 	}
 
 	/**
