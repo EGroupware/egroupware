@@ -149,6 +149,9 @@ app.classes.calendar = AppJS.extend(
 					var dropDate = dataResize[0]+"T"+time[0]+time[1];
 					var calOwner = this.getAttribute('id').substring(this.getAttribute('id').lastIndexOf("_O")+2,this.getAttribute('id').lastIndexOf("_C"));
 
+					if(jQuery("div[id^='drop_"+dropDate+"']")[0].getAttribute('id').match(/_O[0-9]/g) == "_O0")
+						calOwner = 0;
+					
 					var drop = jQuery("div[id^='drop_"+dropDate+"_O"+calOwner+"']");
 					var newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
 					that.dropEvent(this.getAttribute('id'),dropDate,newDuration);
