@@ -82,22 +82,26 @@ class mail_hooks
 			),
 			'view_id'    => 'id',
 			'view_popup' => '870xegw_getWindowOuterHeight()',
+			//'view_popup' => '870x800',
 			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
-			'add_popup'  => '870xegw_getWindowOuterHeight()',
+			//'add_popup'  => '870xegw_getWindowOuterHeight()',
+			'add_popup'  => '870x800',
 			'edit'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
 			'edit_id'    => 'id',
-			'edit_popup'  => '870xegw_getWindowOuterHeight()',
+			//'edit_popup'  => '870xegw_getWindowOuterHeight()',
+			'edit_popup'  => '870x800',
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
 					'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
 					//'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_popup' => '870xegw_getWindowOuterHeight()',
+					//'mime_popup' => '870x800',
 					'mime_url'   => 'formData[file]',
 				),
 			),
@@ -749,25 +753,24 @@ class mail_hooks
 
 		$preferences =& $mail_bo->mailPreferences;
 		$serverCounter = $sieveEnabledServerCounter = 0;
-		if (count($preferences->ic_server)) {
-			foreach ($preferences->ic_server as $tmpkey => $accountData)
+		// account select box
+		$selectedID = $profileID;
+		$allAccountData = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
+		if ($allAccountData) {
+			$rememberFirst=$selectedFound=null;
+			foreach ($allAccountData as $tmpkey => $icServers)
 			{
-				if ($tmpkey==0) continue;
-				$icServer =& $accountData;
-				if (empty($icServer->host)) continue;
-				if ($icServer->enableSieve && $icServer->sievePort) $sieveEnabledServerCounter++;
+				if (is_null($rememberFirst)) $rememberFirst = $tmpkey;
+				if ($tmpkey == $selectedID) $selectedFound=true;
+				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers->acc_imap_host));
+				$host = $icServers->acc_sieve_host;
+				if (empty($host)) continue;
+				if ($icServers->acc_sieve_enabled && $icServers->acc_sieve_port) $sieveEnabledServerCounter++;
 				$serverCounter++;
+				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
 			}
 		}
-		$showMainScreenStuff = false;
-		if (!$showMainScreenStuff)
-		{
-			// action links that are mostly static and dont need any connection and additional classes ...
-			$file += array(
-				'mail'		=> egw::link('/index.php','menuaction=mail.mail_ui.index&ajax=true'),
-			);
-
-		}
+		$file=array();
 		// Destination div for folder tree
 		$file[] = array(
 			'no_lang' => true,
@@ -781,6 +784,17 @@ class mail_hooks
 			'link'=>false,
 			'icon' => false
 		);
+		$showMainScreenStuff = false;
+/*
+		if (!$showMainScreenStuff)
+		{
+			// action links that are mostly static and dont need any connection and additional classes ...
+			$file += array(
+				'mail'		=> egw::link('/index.php','menuaction=mail.mail_ui.index&ajax=true'),
+			);
+
+		}
+*/
 		// empty trash (if available -> move to trash )
 		if($preferences['deleteOptions'] == 'move_to_trash')
 		{
@@ -809,30 +823,23 @@ class mail_hooks
 
 		}
 
+		// create account wizard
+		$file += array(
+			'create new account' => "javascript:egw_openWindowCentered2('" .
+				egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
+				"','_blank',640,480,'yes')",
+		);
+
+		if ($preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
+
 
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
+		unset($file);
+		if ($preferences && $sieveEnabledServerCounter)
 		{
-			#$mailPreferences = ExecMethod('mail.bopreferences.getPreferences');
-			$menu_title = lang('Preferences');	// ToDo: remove Preferences sub-menu from sidebox
-			$file = array();
-
-			// create account wizard
-			$file += array(
-				'create new account' => "javascript:egw_openWindowCentered2('" .
-					egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
-					"','_blank',640,480,'yes')",
-			);
-
-			if ($preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
-
-			display_sidebox($appname,$menu_title,$file);
-			unset($file);
-
 			$menu_title = lang('Sieve');
-			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
 			$linkData = array
 			(
 				'menuaction'	=> 'mail.mail_sieve.index',

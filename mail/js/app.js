@@ -139,7 +139,8 @@ app.classes.mail = AppJS.extend(
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
 			}
 			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
-			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+			//window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
 		}
 		//Vacation By_date filter
 		if (typeof et2.templates['mail.sieve.vacation'] != 'undefined')
@@ -483,7 +484,8 @@ app.classes.mail = AppJS.extend(
 	mail_preview: function(selected, nextmatch) {
 		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
-		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
+		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
+		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",subject:""}};
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
