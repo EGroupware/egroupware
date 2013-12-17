@@ -64,10 +64,10 @@ class mail_sieve
 
 		if(empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName']))
 		{
-			$GLOBALS['egw']->preferences->add('mail','sieveScriptName','mail', 'forced');
+			$GLOBALS['egw']->preferences->add('mail','sieveScriptName','felamimail', 'forced');
 			$GLOBALS['egw']->preferences->save_repository();
 		}
-		$this->scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'mail' ;
+		$this->scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail' ;
 		$this->displayCharset	= $GLOBALS['egw']->translation->charset();
 		$this->botranslation	=& $GLOBALS['egw']->translation;
 		$profileID = 0;

@@ -383,7 +383,7 @@ class mail_ui
 		//$GLOBALS['egw']->framework->sidebox();
 		$preferences	=& $this->mail_bo->mailPreferences;
 
-		if ($preferences->preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
+		if ($preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -406,7 +406,7 @@ class mail_ui
 			_debug_array(array('source'=>$dom,'result'=>array('encoded'=>$encDom,'decoded'=>mail_bo::$idna2->decode($encDom))));
 		}
 */
-		if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
+		if ($preferences['prefcontroltestconnection'] == 'reset') exit;
 
 		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
 		$this->mail_bo->reopen('INBOX');
@@ -415,17 +415,17 @@ class mail_ui
 		$sieveServer = clone $imapServer;
 */
 		if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
-		if ($preferences->preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
+		if ($preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences['prefcontroltestconnection'] == 'nocredentials')
 		{
 			if (!empty($imapServer->password)) $imapServer->password='**********************';
 		}
-		if ($preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
+		if ($preferences['prefcontroltestconnection'] == 'nocredentials')
 		{
 			if (!empty($imapServer->adminUsername)) $imapServer->adminUsername='++++++++++++++++++++++';
 			if (!empty($imapServer->username)) $imapServer->username='++++++++++++++++++++++';
 			if (!empty($imapServer->loginName)) $imapServer->loginName='++++++++++++++++++++++';
 		}
-		if ($preferences->preferences['prefcontroltestconnection'] <> 'basic')
+		if ($preferences['prefcontroltestconnection'] <> 'basic')
 		{
 			_debug_array($imapServer);
 		}
@@ -453,9 +453,11 @@ class mail_ui
 
 		$suF = $this->mail_bo->getSpecialUseFolders();
 		if (is_array($suF) && !empty($suF)) _debug_array(array(lang('Server supports Special-Use Folders')=>$suF));
-/*
+
+		$sievebo	= mail_bo::getInstance(false, $icServerID, false, $oldIMAPObject=true);
+		$sieveServer = $sievebo->icServer;
 		if(($sieveServer instanceof defaultimap) && $sieveServer->enableSieve) {
-			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'mail';
+			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
 			$sieveServer->getScript($scriptName);
 			$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
 			$vacation = $sieveServer->getVacation($sieveServer->scriptName);
@@ -470,9 +472,9 @@ class mail_ui
 				_debug_array(array(lang('Successfully connected'),$rules));
 			}
 		}
-*/
+
 		echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
-		_debug_array($preferences->preferences);
+		_debug_array($preferences);
 		//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
 		//error_log(__METHOD__.__LINE__.' ImapServerObject:'.array2string($imapServer));
 		if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity($icServerID, true);

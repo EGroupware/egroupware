@@ -668,7 +668,7 @@ class mail_hooks
 				'name'   => 'sieveScriptName',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'mail',
+				'forced' => 'felamimail',//old, but since its historic, and we want access to the old rules, ...
 			),
 			'prefcontroltestconnection' => array(
 				'type'   => 'select',

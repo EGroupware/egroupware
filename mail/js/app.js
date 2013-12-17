@@ -522,7 +522,7 @@ app.classes.mail = AppJS.extend(
 		// Leave if we're here and there is nothing selected, too many, or no data
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
-			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
+			if (this.et2.getWidgetById('button[showAllAddresses]')) this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
 			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');

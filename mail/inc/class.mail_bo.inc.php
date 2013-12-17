@@ -821,8 +821,14 @@ class mail_bo
 			if(($this->hasCapability('SPECIAL-USE')))
 			{
 				//error_log(__METHOD__.__LINE__);
-				$ret = $this->icServer->getSpecialUseFolders();
-				if (PEAR::isError($ret))
+				try
+				{
+					$ret = $this->icServer->getSpecialUseFolders();
+				} catch (Exception $e)
+				{
+					$ret=null;
+				}
+				if (empty($ret))
 				{
 					$_specialUseFolders[$this->icServer->ImapServerId]=array();
 				}
@@ -831,11 +837,11 @@ class mail_bo
 					foreach ($ret as $k => $f)
 					{
 						if (isset($f['ATTRIBUTES']) && !empty($f['ATTRIBUTES']) &&
-							!in_array('\\NonExistent',$f['ATTRIBUTES']))
+							!in_array('\\nonexistent',$f['ATTRIBUTES']))
 						{
 							foreach (self::$autoFolders as $i => $n) // array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
 							{
-								if (in_array('\\'.$n,$f['ATTRIBUTES'])) $_specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
+								if (in_array('\\'.strtolower($n),$f['ATTRIBUTES'])) $_specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
 							}
 						}
 					}
