@@ -55,7 +55,16 @@
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
 					<url-email id="previewToAddress" readonly="true"/>
-					<buttononly class="et2_button ui-button mail_DisplayNone" label="Show all Adresses ..." value="showAllAddresses" id="button[showAllAddresses]" image="foldertree_nolines_plus" onclick="app.mail.mail_showAllAddresses(app.mail.mail_currentlyFocussed)"/>
+					<hbox id="additionalToAddress" class="mail_extraEmails" disabled="true">
+					</hbox>
+					<buttononly class="et2_button ui-button mail_DisplayNone" label="Show all Addresses" image="foldertree_nolines_plus" onclick="var addr = widget.getParent().getWidgetById('additionalToAddress'); addr.set_disabled(!addr.disabled);"/>
+				</hbox>
+				<hbox id="mailPreviewHeadersCC" class="mailPreviewHeaders">
+					<description value="CC"/>
+					<url-email id="previewCCAddress" readonly="true"/>
+					<hbox id="additionalCCAddress" class="mail_extraEmails" disabled="true">
+					</hbox>
+					<buttononly class="et2_button ui-button mail_DisplayNone" label="Show all Addresses" image="foldertree_nolines_plus" onclick="var addr = widget.getParent().getWidgetById('additionalCCAddress'); addr.set_disabled(!addr.disabled);"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>

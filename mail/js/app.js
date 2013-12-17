@@ -487,7 +487,7 @@ app.classes.mail = AppJS.extend(
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
-			dataElem = egw.dataGetUIDdata(_id);
+			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
 		}
 		//get_class does not exist yet
 		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
@@ -500,14 +500,26 @@ app.classes.mail = AppJS.extend(
 		{
 			return;
 		}
+
+		// Widget ID:data key map of widgets we can directly set from cached data
+		var data_widgets = {
+			'previewFromAddress':	'fromaddress',
+			'previewToAddress':		'toaddress',
+			'previewDate':			'date',
+			'previewSubject':		'subject'
+		};
+
+		// Set widget values from cached data
+		for(var id in data_widgets)
+		{
+			var widget = this.et2.getWidgetById(id);
+			if(widget == null) continue;
+			widget.set_value(dataElem.data[data_widgets[id]] || "");
+		}
+
+		// Leave if we're here and there is nothing selected, too many, or no data
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
-			this.mail_fetchCurrentlyFocussed();
-			var subject ="";
-			this.et2.getWidgetById('previewFromAddress').set_value("");
-			this.et2.getWidgetById('previewToAddress').set_value("");
-			this.et2.getWidgetById('previewDate').set_value("");
-			this.et2.getWidgetById('previewSubject').set_value("");
 			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
 			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
@@ -516,24 +528,50 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 			return;
 		}
+
+		// Set up additional addresses.  Too bad they weren't all together somewhere.
+		// We add a new URL widget for each, so they get all the UI
+		// list of keys:
+		var additional_addresses = [
+			{data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
+			{data: 'additionalccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'}
+		];
+		for(var j = 0; j < additional_addresses.length; j++)
+		{
+			var field = additional_addresses[j];
+			var additional = dataElem.data[field.data] || [];
+
+			// Disable whole box if there are none
+			var line = this.et2.getWidgetById(field.line);
+			if(line != null) line.set_disabled(additional.length == 0);
+
+			var widget = this.et2.getWidgetById(field.widget);
+			if(widget == null) continue;
+			widget.set_disabled(true);
+			
+			// Remove any existing
+			var children = widget.getChildren();
+			for(var i = children.length-1; i >= 0; i--)
+			{
+				children[i].destroy();
+				widget.removeChild(children[i]);
+			}
+
+			// Add for current record
+			for(var i = 0; i < additional.length; i++)
+			{
+				var value = additional[i];
+				var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
+				email.loadingFinished();
+			}
+
+			// Set up button
+
+		}
+
 		//console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
-		var subject =dataElem.data.subject;
 		this.mail_disablePreviewArea(false);
-		this.et2.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
-		this.et2.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
-		this.et2.getWidgetById('previewDate').set_value(dataElem.data.date);
-		this.et2.getWidgetById('previewSubject').set_value(subject);
-		if (dataElem.data.additionaltoaddress=="null") dataElem.data.additionaltoaddress='';
-		if (dataElem.data.ccaddress=='null') dataElem.data.ccaddress='';
-		if ((dataElem.data.additionaltoaddress.length+dataElem.data.ccaddress.length)<1)
-		{
-			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
-		}
-		else
-		{
-			this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button');
-		}
 		if (dataElem.data.attachmentsBlock.length<1)
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
