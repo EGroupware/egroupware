@@ -345,6 +345,11 @@ class mail_ui
 				'caption' => 'Delete Folder',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			),
+			'sieve' => array(
+				'caption' => 'Mail filter',
+				'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.edit_sieve',
+			),
 			'edit_account' => array(
 				'caption' => 'Edit account',
 				'icon' => 'configure',
@@ -359,6 +364,9 @@ class mail_ui
 		);
 
 		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
+		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
+
+		if (!$this->mail_bo->icServer->acc_sieve_enabled) unset($tree_actions['sieve']);
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';

@@ -550,7 +550,7 @@ app.classes.mail = AppJS.extend(
 			var widget = this.et2.getWidgetById(field.widget);
 			if(widget == null) continue;
 			widget.set_disabled(true);
-			
+
 			// Remove any existing
 			var children = widget.getChildren();
 			for(var i = children.length-1; i >= 0; i--)
@@ -1094,7 +1094,7 @@ app.classes.mail = AppJS.extend(
 		}
 		myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
 		if (profileChange == false) egw_message(myMsg);
-		
+
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_refreshQuotaDisplay(server[0]);
@@ -2221,7 +2221,7 @@ app.classes.mail = AppJS.extend(
 	   var rowId = widget.id.replace(/[^0-9.]+/g, '');
 	   var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
 	   var rights = '';
-	   
+
 	   for (var i=0;i<this.aclRights.length;i++)
 	   {
 		   rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
@@ -2244,7 +2244,14 @@ app.classes.mail = AppJS.extend(
 		   aclCommonWidget.set_value(rights);
 	   }
    },
-
+   /**
+	*
+	* @todo get the account id and open the relevant sieve, ATM alway open sieve rules which is set in preferences
+	*/
+   edit_sieve: function()
+   {
+	   this.egw.open_link('mail.mail_sieve.index');
+   },
 	/**
 	 * Edit a folder acl for account(s)
 	 *
