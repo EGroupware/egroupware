@@ -124,46 +124,56 @@ app.classes.calendar = AppJS.extend(
 			scroll: true,
 			opacity: .6,
 
-			stop: function(ui,event){
+			stop: function(ui,event)
+			{
 				event.helper.width(oldWidth);
 				event.helper[0].innerHTML = oldInnerHTML;
 			},
-			drag:function(ui, event){
+			drag:function(ui, event)
+			{
 				//that.dragEvent();
 			},
-			start: function(ui, event){
+			start: function(ui, event)
+			{
 				oldInnerHTML = event.helper[0].innerHTML;
 				oldWidth = event.helper.width();
 				event.helper.width(jQuery("#calColumn").width());
 			},
 
 		}).resizable({
-				handles: "s",
-				start:function(ui,event){
-
-				},
-				stop:function(ui,event){
+				start:function(ui,event)
+				{
 					var resizeHelper = ui.target.getAttribute('data-resize');
 					var dataResize = resizeHelper.split("|");
 					var time = dataResize[1].split(":");
-					var dropDate = dataResize[0]+"T"+time[0]+time[1];
+					dropDate = dataResize[0]+"T"+time[0]+time[1];
 					var calOwner = this.getAttribute('id').substring(this.getAttribute('id').lastIndexOf("_O")+2,this.getAttribute('id').lastIndexOf("_C"));
-
 					if(jQuery("div[id^='drop_"+dropDate+"']")[0].getAttribute('id').match(/_O[0-9]/g) == "_O0")
 						calOwner = 0;
-					
-					var drop = jQuery("div[id^='drop_"+dropDate+"_O"+calOwner+"']");
-					var newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
+
+					drop = jQuery("div[id^='drop_"+dropDate+"_O"+calOwner+"']");
+				},
+				stop:function(ui,event)
+				{
 					that.dropEvent(this.getAttribute('id'),dropDate,newDuration);
 				},
+				resize:function(ui,event)
+				{
+					var dataResize = ui.target.getAttribute('data-resize').split("|");
+					newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
+					var hours = Math.floor( newDuration / 3600);
+				    var minutes = (newDuration/60) % 60;
 
-			});;
+					this.innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+hours+'h'+minutes+'</div>';
+				}
 
+			});
 
 		//Droppable
 		jQuery("div[id^='drop_']").droppable(
 			{
-				accept:function(dg){
+				accept:function(dg)
+				{
 
 					var id = dg[0].getAttribute('id');
 					var calOwner = id.substring(id.lastIndexOf("_O")+2,id.lastIndexOf("_C"));
@@ -181,7 +191,8 @@ app.classes.calendar = AppJS.extend(
 				},
 				tolerance:'pointer',
 
-				drop:function(id, event){
+				drop:function(id, event)
+				{
 					var dgId = event.draggable[0].getAttribute('id');
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
 					var dpOwner = id.target.getAttribute('data-owner');
@@ -196,7 +207,8 @@ app.classes.calendar = AppJS.extend(
 					}
 
 				},
-				over:function(ui, event){
+				over:function(ui, event)
+				{
 					var timeDemo = ui.target.id.substring(ui.target.id.lastIndexOf("T")+1,ui.target.id.lastIndexOf("_O"));
 					var dgId = event.draggable[0].getAttribute('id');
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
