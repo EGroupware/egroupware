@@ -431,7 +431,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;
-	top: 60px;
+	top: 9em;
 	bottom: 0;
 	left: 3px;
 	right: 0;
@@ -539,4 +539,29 @@ div.mailComposeHeaders > span:first-child {
 }
 div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > * {
 	margin-left: 3px;
+}
+
+div.mailPreviewHeaders div.mail_extraEmails {
+	display: inline-block;
+	max-height: 1em;
+	max-width: 50%;
+	padding: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+div.mailPreviewHeaders div.mail_extraEmails.visible {
+	position: absolute;
+	left: 7em;
+	display: block;
+	max-height: 8em;
+	min-width: 30em;
+	z-index: 1;
+	overflow-y: auto;
+	background-color: white;
+}
+.mail_extraEmails > a {
+	display:inline;
+}
+.mail_extraEmails.visible > a {
+	display: list-item;
 }

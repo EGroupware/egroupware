@@ -110,7 +110,6 @@ app.classes.mail = AppJS.extend(
 			this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 			//inital call of refresh folderstatus
 			var self = this;
-			window.setTimeout(function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);},1000);
 		}
 		if (isDisplay)
 		{
@@ -535,12 +534,12 @@ app.classes.mail = AppJS.extend(
 		// We add a new URL widget for each, so they get all the UI
 		// list of keys:
 		var additional_addresses = [
-			{data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
-			{data: 'additionalccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'}
+			{data: 'toaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
+			{data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'}
 		];
 		for(var j = 0; j < additional_addresses.length; j++)
 		{
-			var field = additional_addresses[j];
+			var field = additional_addresses[j] || [];
 			var additional = dataElem.data[field.data] || [];
 
 			// Disable whole box if there are none
@@ -549,7 +548,7 @@ app.classes.mail = AppJS.extend(
 
 			var widget = this.et2.getWidgetById(field.widget);
 			if(widget == null) continue;
-			widget.set_disabled(true);
+			$j(widget.getDOMNode()).removeClass('visible');
 
 			// Remove any existing
 			var children = widget.getChildren();
@@ -568,7 +567,9 @@ app.classes.mail = AppJS.extend(
 			}
 
 			// Set up button
-
+			line.iterateOver(function(button) {
+				button.set_disabled(additional.length <=1);
+			},this,et2_button);
 		}
 
 		//console.log("mail_preview",dataElem);
@@ -594,42 +595,18 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * mail_showAllAddresses
+	 * showAllAddresses
 	 * requires: mainWindow, one mail selected for preview
 	 */
-	mail_showAllAddresses: function(_id) {
-		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",additionaltoaddress:"",ccaddress:"",date:"",subject:""}};
-		dataElem = egw.dataGetUIDdata(_id);
-		//console.log(_id,dataElem);
-		var buttons = [
-			{text: this.egw.lang("Close"), id:"close"}
-		];
-		var allAddresses = [{type:this.egw.lang('from'),address:dataElem.data.fromaddress}];
-		allAddresses.push({type:this.egw.lang('to'),address:dataElem.data.toaddress})
-		var parsedTo = [];
-		if (dataElem.data.additionaltoaddress.length>0) parsedTo=JSON.parse(dataElem.data.additionaltoaddress);
-//console.log(_id,parsedTo);
-		for (i=0;i<parsedTo.length;i++)
-		{
-			allAddresses.push({type:'',address:parsedTo[i]});
-		}
-		var parsedCC = [];
-		if (dataElem.data.ccaddress.length>0) parsedCC=JSON.parse(dataElem.data.ccaddress);
-//console.log(_id,parsedCC);
-		for (i=0;i<parsedCC.length;i++)
-		{
-			allAddresses.push({type:(i==0?this.egw.lang('cc'):''),address:parsedCC[i]});
-		}
-		var dialog = et2_createWidget("dialog",{
-			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
-			callback: function(button_id, value) {},
-			buttons: buttons,
-			modal: false,
-			title: dataElem.data.subject,
-			template:egw.webserverUrl+"/mail/templates/default/displayAllAdresses.xet",
-			value: { content: {displayallAdresses:allAddresses}, sel_options: {}}
-		});
+	showAllAddresses: function(button) {
+		// Show list as a list
+		var list = jQuery(button).prev();
+		list.toggleClass('visible');
 
+		// Revert if user clicks elsewhere
+		$j('body').one('click', list, function(ev) {
+			ev.data.removeClass('visible');
+		});
 	},
 
 	mail_setMailBody: function(content) {
@@ -655,9 +632,6 @@ app.classes.mail = AppJS.extend(
 		}
 		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
 			var self = this;
-			this.mail_doTimedRefresh = window.setInterval(function() {
-				self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
-			}, _refreshTimeOut);
 		}
 	},
 
