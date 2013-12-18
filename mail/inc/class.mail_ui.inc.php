@@ -3687,59 +3687,20 @@ blockquote[type=cite] {
 	}
 
 	/**
-	 * move messages
-	 *
-	 * @param array _folderName target folder
-	 * @param array _messageList list of UID's
-	 *
-	 * @return xajax response
-	 */
-	function ajax_moveMessages($_folderName, $_messageList)
-	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
-		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-		list($profileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
-
-		if ($_messageList=='all' || !empty($_messageList['msg']))
-		{
-			if ($_messageList=='all')
-			{
-				// we have no folder information
-				$folder=null;
-			}
-			else
-			{
-				$uidA = self::splitRowID($_messageList['msg'][0]);
-				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
-			}
-			foreach($_messageList['msg'] as $rowID)
-			{
-				$hA = self::splitRowID($rowID);
-				$messageList[] = $hA['msgUID'];
-			}
-
-			$this->mail_bo->moveMessages($targetFolder,$messageList,true,$folder);
-			$response = egw_json_response::get();
-			$response->call('egw_refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail');
-		}
-		else
-		{
-			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
-		}
-	}
-
-	/**
 	 * copy messages
 	 *
 	 * @param array _folderName target folder
 	 * @param array _messageList list of UID's
+	 * @param string _copyOrMove method to use copy or move allowed
 	 *
 	 * @return xajax response
 	 */
-	function ajax_copyMessages($_folderName, $_messageList)
+	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy')
 	{
-		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		// only copy or move are supported as method
+		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
 		list($profileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
 
 		if ($_messageList=='all' || !empty($_messageList['msg']))
@@ -3760,9 +3721,9 @@ blockquote[type=cite] {
 				$messageList[] = $hA['msgUID'];
 			}
 
-			$this->mail_bo->moveMessages($targetFolder,$messageList,false,$folder);
+			$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder);
 			$response = egw_json_response::get();
-			$response->call('egw_refresh',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail');
+			$response->call('egw_refresh',($_copyOrMove=='copy'?lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder):lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder)),'mail');
 		}
 		else
 		{

@@ -1776,7 +1776,7 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		egw.json('mail.mail_ui.ajax_moveMessages',[target, messages])
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'])
 			.sendRequest();
 		var nm = this.et2.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
