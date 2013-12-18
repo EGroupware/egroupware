@@ -345,9 +345,18 @@ class mail_ui
 				'caption' => 'Delete Folder',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			),
+			'subscribe' => array(
+				'caption' => 'Subscribe folder',
+				//'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.subscribe_folder',
+			),
+			'unsubscribe' => array(
+				'caption' => 'Unsubscribe folder',
+				//'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
+			),
 			'sieve' => array(
 				'caption' => 'Mail filter',
-				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.edit_sieve',
 				'group'	=> $group++,
 			),
@@ -365,7 +374,7 @@ class mail_ui
 			),
 			'edit_acl'	=> array(
 				'caption' => 'Edit folder ACL',
-				'icon'	=> 'configure',
+				'icon'	=> 'blocks',
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
 		);
