@@ -188,9 +188,9 @@ var et2_tree = et2_inputWidget.extend(
 			{
 				url = '/json.php?menuaction='+url;
 			}
-			if (url.charAt(0) == '/') url = egw.webserverUrl+url;
 			this.autoloading_url = url;
-			widget.input.setXMLAutoLoading(url);
+			
+			widget.input.setXMLAutoLoading(egw.link(url));
 			widget.input.setDataMode('JSON');
 		}
 	},
