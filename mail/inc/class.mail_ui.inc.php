@@ -143,7 +143,7 @@ class mail_ui
 				));
 		}
 
-		//$GLOBALS['egw']->session->commit_session();
+		$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);

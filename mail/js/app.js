@@ -110,6 +110,9 @@ app.classes.mail = AppJS.extend(
 			this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 			//inital call of refresh folderstatus
 			var self = this;
+			window.setTimeout(function() {
+				self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
+			},1000);
 		}
 		if (isDisplay)
 		{
@@ -484,7 +487,7 @@ app.classes.mail = AppJS.extend(
 		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
-		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",subject:""}};
+		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",subject:"",attachmentsBlock:""}};
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
@@ -632,6 +635,9 @@ app.classes.mail = AppJS.extend(
 		}
 		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
 			var self = this;
+			this.mail_doTimedRefresh = window.setInterval(function() {
+				self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
+			},_refreshTimeOut);
 		}
 	},
 
