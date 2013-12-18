@@ -62,7 +62,7 @@
 					<description value="CC"/>
 					<hbox id="additionalCCAddress" class="mail_extraEmails">
 					</hbox>
-					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="var list = jQuery(this).prev(); list.toggleClass('visible');"/>
+					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllAddresses"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>

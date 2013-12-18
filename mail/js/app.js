@@ -508,7 +508,6 @@ app.classes.mail = AppJS.extend(
 		// Widget ID:data key map of widgets we can directly set from cached data
 		var data_widgets = {
 			'previewFromAddress':	'fromaddress',
-			'previewToAddress':		'toaddress',
 			'previewDate':			'date',
 			'previewSubject':		'subject'
 		};
@@ -520,6 +519,7 @@ app.classes.mail = AppJS.extend(
 			if(widget == null) continue;
 			widget.set_value(dataElem.data[data_widgets[id]] || "");
 		}
+
 
 		// Leave if we're here and there is nothing selected, too many, or no data
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
@@ -535,19 +535,24 @@ app.classes.mail = AppJS.extend(
 
 		// Set up additional addresses.  Too bad they weren't all together somewhere.
 		// We add a new URL widget for each, so they get all the UI
+		// TO addresses have the first one split out, not all together
 		// list of keys:
 		var additional_addresses = [
-			{data: 'toaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
+			{data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
 			{data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'}
 		];
 		for(var j = 0; j < additional_addresses.length; j++)
 		{
 			var field = additional_addresses[j] || [];
-			var additional = dataElem.data[field.data] || [];
+			var addresses = dataElem.data[field.data] || [];
+			if(typeof field.data_one != 'undefined')
+			{
+				addresses.unshift(dataElem.data[field.data_one]);
+			}
 
 			// Disable whole box if there are none
 			var line = this.et2.getWidgetById(field.line);
-			if(line != null) line.set_disabled(additional.length == 0);
+			if(line != null) line.set_disabled(addresses.length == 0);
 
 			var widget = this.et2.getWidgetById(field.widget);
 			if(widget == null) continue;
@@ -562,16 +567,16 @@ app.classes.mail = AppJS.extend(
 			}
 
 			// Add for current record
-			for(var i = 0; i < additional.length; i++)
+			for(var i = 0; i < addresses.length; i++)
 			{
-				var value = additional[i];
+				var value = addresses[i];
 				var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
 				email.loadingFinished();
 			}
 
 			// Set up button
 			line.iterateOver(function(button) {
-				button.set_disabled(additional.length <=1);
+				button.set_disabled(addresses.length <=1);
 			},this,et2_button);
 		}
 
