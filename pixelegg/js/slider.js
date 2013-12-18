@@ -13,8 +13,10 @@ function show_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
         
-	$j("#egw_fw_topmenu_info_items").animate({"margin-right": "20px","bottom": "","padding-right" : "0"},_delay);
+	$j("#egw_fw_topmenu_info_items").animate({"margin-right": "20px","bottom": "0px","padding-right" : "0"},_delay);
 	$j("#egw_fw_topmenu_info_items").css("position", "relative");
+        $j("#egw_fw_topmenu_info_items").css("display", "inline-flex");
+        $j("#egw_fw_topmenu_info_items").css("float", "right");
 	
     $j("#egw_fw_sidebar").animate({'top':'57px'},_delay);
         $j("#egw_fw_tabs").animate({'margin-top':'0px'},_delay);
