@@ -1,7 +1,7 @@
 /**
  * EGroupware: CSS with less preprocessor
 
- * ADDRESSBOOK
+ * ADMIN 
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
@@ -27,15 +27,7 @@
 /*################## iframe ####################*/
 /*#            #                               #*/
 /*#            #                               #*/
-/*#            #      Addressbook              #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            ############################### #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #       infolog                 #*/
+/*#            #      ADMIN                    #*/
 /*#            #                               #*/
 /*#            #                               #*/
 /*#            #                               #*/
@@ -46,7 +38,29 @@
  * Give space to both contact view & infolog list
  */
 
-
+iframe#admin-index_iframe{
+    
+    #admin-categories-index{
+        
+        table.et2_grid {
+            
+            #admin-categories-index_nm {
+                
+                div.egwGridView_outer{
+                    
+                    td.frame {
+                        
+                        div.egwGridView_scrollarea { min-height: 500px;}
+                    }
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+}
 
 #addressbook-index {
   height: 100%;
@@ -954,4 +968,4 @@ table.uploadphoto {width: 360px !important; background-color: @gray-20 !importan
 }
 
 
-//
+//                            

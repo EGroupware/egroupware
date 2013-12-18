@@ -1,7 +1,7 @@
 /**
  * EGroupware: CSS with less preprocessor
 
- * ADDRESSBOOK
+ * ADMIN 
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
@@ -12,142 +12,42 @@
  * @version $Id$
  */
 /**
- * Give space to both contact view & infolog list
+ * EGroupware - CSS Styles used by admin app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id: app.css 44587 2013-11-18 19:57:38Z ralfbecker $
  */
-#addressbook-index {
-  height: 100%;
+.admin_tree table,
+.admin_tree tr,
+.admin_tree td {
+  border: none;
 }
-#addressbook-edit {
-  height: 390px;
-  min-height: 390px;
+div#divAppbox {
+  padding: 0;
 }
-.et2_container[id^="infolog-index-addressbook"] {
-  min-height: 250px;
+body {
+  background-image: none;
+  background-color: white;
 }
-/* Give enough (static) width to edit dialog tabs, or it will auto-size and flex */
-#addressbook-edit .et2_tabbox {
-  min-width: 535px;
+/* otherwise it is transparent */
+#admin_iframe {
+  background-color: white;
 }
-.cursorHand {
-  cursor: hand;
+tr.adminAccountInactive .adminStatus {
+  color: red;
 }
-.countrySelect select {
-  width: 150px;
-}
-.custom_country input {
-  display: none;
-}
-.contactid:before {
-  content: "#";
-}
-.emailCol div {
+.adminOverflowEllipsis {
   width: 100%;
-}
-.fixedHeight,
-.telNumbers {
-  height: 12px;
+  white-space: nowrap;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.telNumbers {
-  white-space: nowrap;
-}
-.leftPad5 {
-  padding-left: 5px;
-}
-.bold {
-  font-weight: bold;
-}
-.fileas select,
-.fileas,
-.owner select,
-.owner {
-  width: 100%;
-  font-weight: bold;
-}
-.photo img,
-.iphoto img {
-  width: 60px;
-}
-.photo img {
-  cursor: hand;
-}
-.uploadphoto {
-  position: absolute;
-  top: 168px;
-  left: 48px;
-  display: none;
-  border: 2px solid black;
-  background-color: #ffffff;
-  padding: 4px;
-}
-.checkAllArrow {
-  padding-right: 5px;
-}
-.typeIcon {
-  height: 16px;
+img.admin_aclApp {
   width: 16px;
-}
-.editphones,
-.editname {
-  position: absolute;
-  top: 10%;
-  left: 30%;
-  display: none;
-  border: 2px solid black;
-  background-color: #ffffff;
-  padding: 4px;
-}
-.editname {
-  top: 97px;
-  left: 173px;
-}
-.windowheader {
-  background-image: url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
-  background-repeat: repeat-x;
-  height: 20px;
-  border-spacing: 0px;
-  border-collapse: collapse;
-  border-bottom: #9c9c9c 1px solid;
-}
-fieldset.phoneGroup {
-  margin-top: 12px;
-  font-size: 110%;
-  height: 140px;
-  border: solid black 2px;
-  margin-bottom: 0px;
-}
-.phoneGroup table {
-  height: 122px;
-}
-fieldset.emailGroup {
-  margin-top: 10px;
-  font-size: 110%;
-  height: 112px;
-  border: solid black 2px;
-  margin-bottom: 0px;
-}
-.emailGroup table {
-  height: 87px;
-}
-.space {
-  width: 80px;
-}
-.noWrap {
-  white-space: nowrap;
-}
-.customfields td {
-  white-space: nowrap;
-  line-height: 12px;
-}
-.image16 img {
-  height: 16px;
-}
-/* changes from pixelegg 11/12/13 - upload foto in right column */
-#addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
-  widtH: 20%;
-  vertical-align: top;
-  text-align: center;
 }
 @media all {
   /* #############################################################################
@@ -156,15 +56,7 @@ fieldset.emailGroup {
   /*################## iframe ####################*/
   /*#            #                               #*/
   /*#            #                               #*/
-  /*#            #      Addressbook              #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            ############################### #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            #       infolog                 #*/
+  /*#            #      ADMIN                    #*/
   /*#            #                               #*/
   /*#            #                               #*/
   /*#            #                               #*/
@@ -172,6 +64,9 @@ fieldset.emailGroup {
   /**
  * Give space to both contact view & infolog list
  */
+  iframe#admin-index_iframe #admin-categories-index table.et2_grid #admin-categories-index_nm div.egwGridView_outer td.frame div.egwGridView_scrollarea {
+    min-height: 500px;
+  }
   #addressbook-index {
     height: 100%;
   }
