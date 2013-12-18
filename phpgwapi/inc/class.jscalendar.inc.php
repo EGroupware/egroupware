@@ -174,53 +174,21 @@ function dateChanged(calendar) {
 // clicked you can use the dateClicked property of the calendar:
 // redirect to $url extended with a &date=YYYYMMDD
 '    if (calendar.dateClicked) {
-	egw_appWindow("calendar").location = "'.$url.'&date=" + calendar.date.print("%Y%m%d");
+	egw_link_handler("'.$url.'&date=" + calendar.date.print("%Y%m%d"),"calendar");
 }
 };
 
 function todayClicked(calendar) {
-	var parts = egw_appWindow("calendar").location.search.split("&");
-	var newsearch = "";
-	var hasdate = false;
-
-	/* Assemble the new search string, if the "date" property is found, replace its value
-	   with the current date */
-	for (i = 0; i < parts.length; i++)
-	{
-		var split = parts[i].split("=");
-		if (split[0] && split[0] == "date") {
-			split[1] = "'.egw_time::to('now','Ymd').'";
-			hasdate = true;
-		}
-
-		if (split[1])
-			newsearch += split[0] + "=" + split[1];
-		else
-			newsearch += split[0];
-
-		if (i < parts.length - 1)
-			newsearch += "&"
-	}
-
-	/* If the date property hasn\'t been found, add it to the search string */
-	if (!hasdate) {
-		if (parts.length == 0)
-			newsearch = "?";
-		else
-			newsearch += "&";
-		newsearch += "date='.egw_time::to('now','Ymd').'";
-	}
-
-	egw_appWindow("calendar").location.search = newsearch;
+	egw_link_handler("'.$url.'&date='.egw_time::to('now', 'Ymd').'","calendar");
 }
 
 '.($weekUrl ? '
 function weekClicked(calendar,weekstart) {
-	egw_appWindow("calendar").location = "'.$weekUrl.'&date=" + weekstart.print("%Y%m%d");
+	egw_link_handler("'.$weekUrl.'&date=" + weekstart.print("%Y%m%d"),"calendar");
 }
 ' : '').($monthUrl ? '
 function monthClicked(calendar,monthstart) {
-	egw_appWindow("calendar").location = "'.$monthUrl.'&date=" + monthstart.print("%Y%m%d");
+	egw_link_handler("'.$monthUrl.'&date=" + monthstart.print("%Y%m%d"),"calendar");
 }
 ' : '').'
 

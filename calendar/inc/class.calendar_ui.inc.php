@@ -708,13 +708,14 @@ class calendar_ui
 		{
 			if ($this->view == 'planner' || $this->view == 'listview')
 			{
+				$link_vars['menuaction'] = $this->view_menuaction;	// must be first one
 				switch($view)
 				{
 					case 'day':   $link_vars[$this->view.'_days'] = $this->view == 'planner' ? 1 : ''; break;
 					case 'week':  $link_vars[$this->view.'_days'] = $this->cal_prefs['days_in_weekview'] == 5 ? 5 : 7; break;
 					case 'month': $link_vars[$this->view.'_days'] = 0; break;
 				}
-				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the planner
+				if ($this->view == 'listview') $link_vars['ajax'] = 'true';
 			}
 			elseif(substr($this->view,0,4) == 'week' && $view == 'week')
 			{
