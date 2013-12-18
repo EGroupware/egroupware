@@ -1,13 +1,18 @@
 %1 attachments	mail	de	%1 Anhänge
 %1 is not writable by you!	mail	de	%1 ist nicht schreibbar für Sie
+(leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
 (no subject)	mail	de	(Kein Betreff)
 (not connected)	mail	de	(nicht verbunden)
 (select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von EMails durch anklicken der Zeile)
 (with checkbox enforced)	mail	de	(mit Checkbox)
+account editable by user	mail	de	Benutzer darf dieses Konto bearbeiten
 acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
 acl rights retrived successfully!	mail	de	Zugriffskontrollrechte erfolgreich gelesen!
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
+add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter
+add folder	mail	de	Neuer Ordner..
 add to addressbook	mail	de	zum Adressbuch hinzuügen
+aliases+forwards	mail	de	Aliase+Weiterleitungen
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiederbringlich gelöscht werden.
@@ -32,6 +37,7 @@ compress folder	mail	de	Ordner komprimieren
 configuration settings	mail	de	Einstellungen der Konfiguration
 confirm attach message	mail	de	Bestätigung beim Anhängen von Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
+connect to profile %1	mail	de	Verbunden zu dem Profil :%1
 connection status	mail	de	Verbindungsstatus
 contains	mail	de	beinhaltet
 convert mail to item and attach its attachments to this item (standard)	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge hinzu (Standard)
@@ -39,10 +45,12 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
+create new account	mail	de	E-Mail Konto hinzufügen
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
+delete folder	mail	de	Ordner Löschen
 deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
@@ -74,6 +82,9 @@ don't use template folder	mail	de	Keinen Vorlagen Ordner verwenden
 don't use trash	mail	de	Keinen Papierkorb verwenden
 draft folder	mail	de	Entwurfs Ordner
 drafts	mail	de	Entwürfe
+drafts folder	mail	de	Ordner für Entwürfe
+edit account	mail	de	Konto Einstellungen
+edit folder acl	mail	de	Ordner Berechtigungen bearbeiten
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
 email notification successfully updated!	mail	de	E-mail Benachrichtigungen erfolgreich aktualisiert!
 email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
@@ -82,6 +93,7 @@ emailaddress	admin	de	E-Mail-Adresse
 emailadmin: profilemanagement	mail	de	E-MailAdmin: Profilmanagement
 empty trash	mail	de	Papierkorb leeren
 enabled!	mail	de	aktiviert!
+enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
 error:	mail	de	FEHLER:
 error: could not save acl	mail	de	FEHLER: Zugriffskontrollrechte konnten nicht gespeichert werden
@@ -92,6 +104,8 @@ error: message could not be displayed.	mail	de	FEHLER: Die Nachricht kann nicht 
 event details follow	mail	de	Details zum Termin folgen
 extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
 failed to delete %1 ! reason: %2	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
+failed to delete %1. server responded:	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
+failed to rename %1 ! reason: %2	mail	de	Umbenenne zu %1 fehlgeschlagen! Grund: %2
 felamimail	admin	de	E-Mail
 file into	mail	de	verschiebe nach
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
@@ -117,11 +131,17 @@ how often to check with the server for new mail	mail	de	Aktualisierungsintervall
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
+identity	mail	de	Indentität
+identity+signature	mail	de	Intentität+Signature
 if	mail	de	Wenn
 if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ordner sollen auf der Startseite dargestellt werden (gelesene/ungelesene Nachrichten)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
+imap	mail	de	Posteingang-Server
+imap - incoming mail	mail	de	IMAP - Posteingang-Server
+imap administration	mail	de	Administrator IMAP-Server
 imap server	mail	de	IMAP Server
 imap timeout	mail	de	Zeitüberschreitung des IMAP Servers nach
+import messages	mail	de	E-Mails importieren
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Die Nachricht konnte nicht in dem Ordner %2 abgelegt werden. Grund: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Zielordner %2 existiert nicht.
 import of message %1 failed. destination folder not set.	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Zielordner nicht gesetzt.
@@ -135,6 +155,7 @@ junk	mail	de	Spammails
 later	mail	de	später
 less than	mail	de	kleiner als
 mail	mail	de	E-Mail
+mail filter	mail	de	Filter Regeln
 mail settings	mail	de	E-Mail-Einstellungen
 mail-address	mail	de	Mail-Adresse
 mark as deleted	mail	de	als gelöscht markieren
@@ -148,6 +169,7 @@ message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
+name of account	mail	de	Konten-Bezeichnung
 never display html emails	mail	de	niemals anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
@@ -191,14 +213,19 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Ver
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
+quota: %1	mail	de	Quota: %1
 read	mail	de	gelesen
 read / unread	mail	de	Gelesen / Ungelesen
+reason!	mail	de	Grund!
 refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
 refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert
 reject with	mail	de	zurückweisen mit
 remove all	mail	de	Alle Entfernen
 remove immediately	mail	de	sofort löschen
+rename folder	mail	de	Umbenennen
+rename folder %1 ?	mail	de	Ordner umbenennen zu %1 ?
+rename folder %1 to:	mail	de	Ordner %1 umbenennen zu:
 replied	mail	de	beantwortet
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 replyto	mail	de	Antwort an
@@ -222,7 +249,7 @@ serverside filterrules (sieve) are not activated	mail	de	Serverseitige Filterreg
 set / remove flags	mail	de	Markierungen setzen / entfernen
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
-show all folders	mail	de	Darstellung sämtlicher E-Mail Ordner
+show all folders	mail	de	Darstellung aller E-Mail Ordner
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung des Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
@@ -230,11 +257,13 @@ sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
 sieve script name	mail	de	Stellen Sie den Sieve Skript Namen ein.
+sieve server	mail	de	Sieve Server
 signature	mail	de	Signatur
 signature at top	mail	de	Signatur am Anfang der Nachricht
 size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
+smtp	mail	de	Postausgang-Server
 sort order	mail	de	Sortierreihenfolge
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die Email vom Sender ursprünglich verfasst wurde.
@@ -243,6 +272,7 @@ subject(z->a)	mail	de	Betreff (Z->A)
 successfully connected	mail	de	erfolgreich verbunden
 template folder	mail	de	Vorlagen Ordner
 templates	mail	de	Vorlagen
+templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
 text/plain	mail	de	text/plain
@@ -267,12 +297,14 @@ unread	mail	de	Ungelesen
 urgent	mail	de	dringend
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
+vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	admin	de	Abwesenheitsnotiz
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
 vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisert.
 vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 vacation start-date must be before the end-date!	mail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 vacation update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
+valid for	mail	de	Zugewiesen an
 what do do with html email	mail	de	Wie sollen E-Mails im HTML Format angezeigt werden?
 what order the list columns are in	mail	de	Wählen Sie die Spaltenanordnung in der E-Mail Liste aus.
 what to do when you delete a message	mail	de	Wählen Sie die Methode aus, wenn Sie eine Nachricht löschen. Diese kann entweder direkt gelöscht werden, oder in den Papierkorb verschoben werden.

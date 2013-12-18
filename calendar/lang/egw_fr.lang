@@ -1,4 +1,4 @@
-%1 %2 in %3	calendar	fr	%1 %2 in %3
+%1 %2 in %3	calendar	fr	%1 %2 dans %3
 %1 event(s) %2	calendar	fr	%1 événement(s) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	fr	%1 événement(s) %2, %3 en échec pour droits insuffisants !
 %1 participants removed because of missing invite grants	calendar	fr	%1 participant(s)  supprimé(s) pour manque de confirmation d'invitation.
@@ -30,8 +30,8 @@ after %1	calendar	fr	Après %1
 after current date	calendar	fr	Après la date courante
 age:	calendar	fr	Age :
 alarm	calendar	fr	Alarme
-alarm added	calendar	fr	Alarme ajoutée
-alarm deleted	calendar	fr	Alarme supprimée
+alarm added	calendar	fr	Alarme ajoutée.
+alarm deleted	calendar	fr	Alarme supprimée.
 alarm for %1 at %2 in %3	calendar	fr	Alarme pour %1 à %2 dans %3
 alarm management	calendar	fr	Gestion des alarmes
 alarms	calendar	fr	Alarmes
@@ -114,8 +114,10 @@ csv-filename	calendar	fr	CSV - Nom du fichier
 custom fields	common	fr	Champs personnalisés
 custom_2	common	fr	Libre/Occupé
 daily	calendar	fr	Journalier
+daily tables	calendar	fr	Tableaux journaliers
 data exchange settings	calendar	fr	Paramètres d'échange de données
 day	calendar	fr	Jour
+day of week tables	calendar	fr	Jour des tableaux  hebdomadaires
 days	calendar	fr	jours
 days of the week for a weekly repeated event	calendar	fr	Jours de la semaine pour une répétition hebdomadaire
 days repeated	calendar	fr	Jours répétés
@@ -263,6 +265,8 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	fr	Si le jour de début diffère
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne définissez pas de mot de passe ici, l'information est disponibles pour chaque personne connaissant l'URL!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	fr	Si vous choisissez une étendue (mois, semaine, etc) au lieu d'une liste d'éléments, ces champs supplémentaires sont disponibles.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you specify an export definition, it will be used when you export	calendar	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 ignore conflict	calendar	fr	Ignorer le conflit
 import	calendar	fr	Importer
@@ -433,6 +437,7 @@ series deleted	calendar	fr	La série a été supprimée.
 set a year only for one-time / non-regular holidays.	calendar	fr	Régler sur une année seulement pour les vacances uniques / non-régulières.
 set new events to private	calendar	fr	Régler les nouveaux événements comme privés
 setting lock time calender	admin	fr	Mettre un temps de verrou sur le calendrier (par défaut 1 sec.)
+shall the date parameter be accepted (e.g. from calendar module)?	calendar	fr	Le paramètre de date doit-il être accepté, par exemple, du module calendrier ?
 should new events created as private by default ?	calendar	fr	Les nouveaux événements doivent-ils être créés comme privés par défaut ?
 should the grid be shown in the calendar	calendar	fr	La grille doit-elle être affichée dans le calendrier
 should the number of weeks be shown on top of the calendar	calendar	fr	Le numéro de la semaine doit-il être affichée en haut du calendrier
@@ -516,6 +521,7 @@ timezone of event ical file import/export	calendar	fr	Fuseau horaire des évén�
 timezones aliases updated to version %1 (%2 records updated).	calendar	fr	Alias de fuseaux horaires mis à jour en version %1 (%2 enregistrements mis à jour).
 timezones updated to version %1 (%2 records updated).	calendar	fr	Fuseaux horaires mise à jour à la version %1, %2 enregistrements mis à jour.
 title of the event	calendar	fr	Titre de l'événement
+titles of any entries linked to the current record, excluding attached files	calendar	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to many might exceed your execution-time-limit	calendar	fr	trop pourrait excéder votre limite de temps d'exécution
 to-firstname	calendar	fr	Au prénom
 to-fullname	calendar	fr	Au nom complet
@@ -554,6 +560,7 @@ weeks offset (for multi-column display)	calendar	fr	Décallage de semaines dans 
 weekview	calendar	fr	Vue hebdomadaire
 weekview with weekend	calendar	fr	Vue hebdomadaire avec weekend
 weekview without weekend	calendar	fr	Vue hebdomadaire sans weekend
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	fr	Lorsque ceci est coché, les anniversaires et/ou les jours fériés seront affichés en tant qu'événement dans votre calendrier.  Veuillez noter que cette option concerne uniquement eGroupware, et ne change pas les informations envoyées par iCal et par les autres interfaces de calendrier.
 which view to show on home page	calendar	fr	Quelle vue afficher dans l'accueil ?
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	fr	Nombre minimum d'utilisateur pour afficher la vue journalière et multi-semaine en consolidée.  5 par défaut.
 whole day	calendar	fr	Journée entière
@@ -566,23 +573,23 @@ workdays	calendar	fr	Jour ouvrés
 yearly	calendar	fr	Annuel
 yearly planner	calendar	fr	Planificateur annuel
 years	admin	fr	années
-yearview	calendar	fr	vue annuelle
+yearview	calendar	fr	Vue annuelle
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 you already replied to this invitation with	calendar	fr	Vous avez déjà répondu à cette invitation avec
 you are not allowed to book the resource selected:	calendar	fr	Vous n'est pas autorisé à réserver la ressource sélectionnée :
 you are not invited to that event!	calendar	fr	Vous n'êtes pas invité à cet événement !
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	fr	Vous essayez d'envoyer par email une demande de rendez-vous aux destinataires ci-dessus.  Selon le client de messagerie utilisé, le destinataire pourra éventuellement ne pas voir le message ci-dessous mais seulement la demande de rendez-vous en pièce jointe.
-you can either set a year or a occurence, not both !!!	calendar	fr	Vous pouvez soit régler une année ou une occurrence, pas les deux !!!
+you can either set a year or a occurence, not both !!!	calendar	fr	Vous pouvez soit régler une année ou une occurrence, pas les deux !
 you can only set a year or a occurence !!!	calendar	fr	Vous pouvez uniquement régler une année ou une occurrence !!!
-you do not have permission to read this record!	calendar	fr	Vous n'avez pas les droits de lire cet enregistrement!
+you do not have permission to read this record!	calendar	fr	Vous n'avez pas les droits de lire cet enregistrement !
 you have a meeting scheduled for %1	calendar	fr	Vous avez une réunion planifiée pour %1
 you have been disinvited from the meeting at %1	calendar	fr	Votre invitation au rendez-vous de %1 a été annulée
-you need to select an account, contact or resource first!	calendar	fr	Vous devez d'abord sélectionner un compte, contact ou une ressource !
-you need to select an ical file first	calendar	fr	Vous devez d'abord sélectionner un iCal
-you need to select some events first	calendar	fr	Vous devez d'abord sélectionner des événements
-you need to set either a day or a occurence !!!	calendar	fr	Vous devez régler soit un jour soit une occurrence !!!
+you need to select an account, contact or resource first!	calendar	fr	Vous devez d'abord sélectionner un compte, un contact ou une ressource !
+you need to select an ical file first	calendar	fr	Vous devez d'abord sélectionner un fichier iCal
+you need to select some events first	calendar	fr	Vous devez d'abord sélectionner des événements.
+you need to set either a day or a occurence !!!	calendar	fr	Vous devez définir soit un jour soit une occurrence !
 you requested more than available for the selected resource:	calendar	fr	Vous avez demandé plus que ce qui est disponible pour cette ressource :
 your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planifiée pour %1 a été annulée
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
-your php extension pdo_sqlite is broken!	calendar	fr	Votre extension php pdo_sqlite est corrompue !
+your php extension pdo_sqlite is broken!	calendar	fr	Votre extension php pdo_sqlite ne fonctionne pas !

@@ -1,9 +1,14 @@
+%1 accessories restored	resources	de	%1 Zubehör wiederhergestellt
+%1 resource(s) %2	resources	de	%1 Ressource(n) %2
+%1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 accessories	resources	de	Zubehör
 accessories of	resources	de	Zubehör von
 accessories:	resources	de	Zubehör:
 accessory of	resources	de	Zubehör von
 actions	resources	de	Aktionen
 add accessory	resources	de	Zubehör hinzufügen
+add group to event participants	resources	de	Gruppe zu den Teilnehmern des Termins hinzufügen
 add resource	resources	de	Ressource hinzufügen
 add resources	resources	de	Ressourcen hinzufügen
 administrator	resources	de	Verwalter
@@ -23,8 +28,12 @@ check all	resources	de	Alle auswählen
 choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
 clear selection	resources	de	Auswahl löschen
 configure access permissions	admin	de	Zugangseinstellungen konfigurieren
+confirmation email text	resources	de	Text der Bestätigungsmail
+conflict	resources	de	Konflikt
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Ressource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
+custom etemplate for the contactform	resources	de	Benutzerdefiniertes eTemlate für das Kontaktformular
+custom fields	resources	de	Benutzerdefinierte Felder
 days	resources	de	Tage
 delete selected resources	resources	de	Ausgewählte Ressourcen löschen
 delete this entry	resources	de	Diesen Eintrag löschen
@@ -36,6 +45,7 @@ edit this entry	resources	de	Diesen Eintrag bearbeiten
 existing links	resources	de	Bestehende Verknüpfungen
 exists	resources	de	besteht bereits
 expiry	resources	de	Ablauf
+export definition to use for nextmatch export	resources	de	Exportdefinition für den nextmatch Export
 export definitition to use for nextmatch export	resources	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports a list of resources to a csv file.	resources	de	Exportiert eine Liste der Ressourcen als CSV-Datei
 general	resources	de	Generell
@@ -90,7 +100,9 @@ quantity of resource	resources	de	Stückzahl der Ressource
 quantity:	resources	de	Stückzahl:
 read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
+registration confirmed %1	resources	de	Eintragung bestätigt %1
 related links	resources	de	Siehe auch
+require confirmation	resources	de	Benötigt Bestätigung
 resource	resources	de	Resource
 resource id	resources	de	Ressourcen ID
 resources	common	de	Ressourcen
@@ -113,6 +125,7 @@ something went wrong by saving resource	resources	de	Beim Speichern der Ressourc
 storage	resources	de	Informationen zur Lagerung
 storage information	resources	de	Informationen zur Lagerung
 storage information:	resources	de	Informationen zur Lagerung:
+the anonymous user needs add rights for it!	resources	de	Der anonyme Benutzer benötigt hierfür das Zufügen-Recht!
 the calendar of this resource	resources	de	Kalender der Ressource
 this module displays the resources app	resources	de	Dieses Modul zeigt die Ressourcen Anwendung an
 too many matches	resources	de	Zu viele Treffer
@@ -129,6 +142,8 @@ web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
 which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
 write permissions	resources	de	Schreibberechtigung
+yes, only admins can purge deleted items	admin	de	Ja, nur Administatoren dürfen gelöschte Einträge endgültig löschen
+yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 you are not permitted to delete this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu löschen!
 you are not permitted to edit this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu bearbeiten!
 you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich Informationen über diese Ressource anzuschauen

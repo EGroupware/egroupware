@@ -46,7 +46,7 @@ duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wä
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 edit definition <a href="%1">%2</a> to match your file	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
 edit your file to match the definition:	importexport	de	Bearbeiten Sie Ihre Importdatei, um Ihrem Importprofil zu Entsprechen
-encoding mismatch. expected %1 file, you uploaded %2.<br />n	importexport	de	Nicht übereinstimmendes Encoding.  Erwartet wurde eine %1 Datei, sie luden %2 hoch.<br />\n
+encoding mismatch. expected %1 file, you uploaded %2.<br />n	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
 errors	importexport	de	Fehler
 execute	importexport	de	Ausführen
 expert options	importexport	de	Export Optionen

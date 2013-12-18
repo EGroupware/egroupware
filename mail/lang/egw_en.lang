@@ -1,13 +1,18 @@
 %1 attachments	mail	en	%1 attachments
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
+(leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
 (select mails by clicking on the line, like a checkbox)	mail	en	(select mails by clicking on the line, like a checkbox)
 (with checkbox enforced)	mail	en	(with checkbox enforced)
+account editable by user	mail	en	account editable by user
 acl rights retrive failed, seems there are no rights set!	mail	en	ACL rights retrive failed, seems there are no rights set!
 acl rights retrived successfully!	mail	en	ACL rights retrived successfully!
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
+add a new folder to %1:	mail	en	Add a new Folder to %1:
+add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
+aliases+forwards	mail	en	Aliases+Forwards
 all adresses:	mail	en	All Adresses:
 all available info	admin	en	all available info
 all messages in the folder will be lost	mail	en	All messages in the folder will be lost
@@ -32,6 +37,7 @@ compress folder	mail	en	compress folder
 configuration settings	mail	en	Configuration settings
 confirm attach message	mail	en	Confirm attach message
 confirm move to folder	mail	en	Confirm move to folder
+connect to profile %1	mail	en	Connect to Profile %1
 connection status	mail	en	Connection Status
 contains	mail	en	contains
 convert mail to item and attach its attachments to this item (standard)	mail	en	convert Mail to item and attach its attachments to this item (standard)
@@ -39,10 +45,12 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
 could not append message:	mail	en	Could not append Message:
 could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
+create new account	mail	en	create new account
 date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
+delete folder	mail	en	Delete Folder
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
@@ -74,6 +82,9 @@ don't use template folder	mail	en	Don't use template folder
 don't use trash	mail	en	Don't use Trash
 draft folder	mail	en	draft folder
 drafts	mail	en	Drafts
+drafts folder	mail	en	Drafts folder
+edit account	mail	en	Edit Account
+edit folder acl	mail	en	Edit folder ACL
 effective only if server supports acl at all	admin	en	effective only if server supports ACL at all
 email notification successfully updated!	mail	en	email notification successfully updated!
 email notification update failed	mail	en	email notification update failed
@@ -82,6 +93,7 @@ emailaddress	admin	en	emailaddress
 emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
 empty trash	mail	en	empty trash
 enabled!	mail	en	enabled!
+enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
 error:	mail	en	Error:
 error: could not save acl	mail	en	Error: Could not save ACL
@@ -92,6 +104,8 @@ error: message could not be displayed.	mail	en	ERROR: Message could not be displ
 event details follow	mail	en	Event Details follow
 extra sent folders	mail	en	Extra sent folders
 failed to delete %1 ! reason: %2	mail	en	failed to delete %1 ! Reason: %2
+failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
+failed to rename %1 ! reason: %2	mail	en	failed to rename %1 ! Reason: %2
 felamimail	admin	en	felamimail
 file into	mail	en	file into
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
@@ -117,11 +131,17 @@ how often to check with the server for new mail	mail	en	How often to check with 
 how should the available information on identities be displayed	admin	en	how should the available information on identities be displayed
 how to forward messages	mail	en	how to forward messages
 html	mail	en	html
+identity	mail	en	Identity
+identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
 if shown, which folders should appear on the home page	mail	en	if shown, which folders should appear on the Home page
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	en	If you want to see a preview of a mail by single clicking onto the subject, enable this.
+imap	mail	en	IMAP
+imap - incoming mail	mail	en	IMAP - incoming mail
+imap administration	mail	en	IMAP administration
 imap server	mail	en	IMAP Server
 imap timeout	mail	en	IMAP timeout
+import messages	mail	en	import messages
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Import of message %1 failed. Could not save message to folder %2 due to: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination Folder %2 does not exist.
 import of message %1 failed. destination folder not set.	mail	en	Import of message %1 failed. Destination Folder not set.
@@ -135,6 +155,7 @@ junk	mail	en	Junk
 later	mail	en	later
 less than	mail	en	less than
 mail	mail	en	mail
+mail filter	mail	en	Mail filter
 mail settings	mail	en	Mail settings
 mail-address	mail	en	Mail-Address
 mark as deleted	mail	en	mark as deleted
@@ -148,6 +169,7 @@ message send successfully.	mail	en	Message send successfully.
 move selected to	mail	en	Move selected to
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
+name of account	mail	en	Name of account
 never display html emails	mail	en	never display html emails
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
@@ -191,6 +213,7 @@ processing of file %1 failed. failed to meet basic restrictions.	mail	en	Process
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 quicksearch	mail	en	quicksearch
 quota not provided by server	mail	en	Quota not provided by server
+quota: %1	mail	en	Quota: %1
 read	mail	en	read
 read / unread	mail	en	Read / Unread
 reason!	mail	en	reason!
@@ -200,6 +223,9 @@ refused to delete folder with subfolders	mail	en	refused to delete folder with s
 reject with	mail	en	reject with
 remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately
+rename folder	mail	en	Rename Folder
+rename folder %1 ?	mail	en	Rename Folder %1 ?
+rename folder %1 to:	mail	en	Rename Folder %1 to:
 replied	mail	en	replied
 reply message type	mail	en	Reply message type
 replyto	mail	en	replyto
@@ -231,11 +257,13 @@ sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
 sieve script name	mail	en	sieve script name
+sieve server	mail	en	Sieve server
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
 size(...->0)	mail	en	size(...->0)
 size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view
+smtp	mail	en	SMTP
 sort order	mail	en	Sort order
 start new messages with mime type plain/text or html?	mail	en	start new messages with mime type plain/text or html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with mime type plain/text or html or try to use the displayed format (default)?
@@ -244,6 +272,7 @@ subject(z->a)	mail	en	subject(Z->A)
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
 templates	mail	en	Templates
+templates folder	mail	en	Templates folder
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
 text/plain	mail	en	text/plain
@@ -268,12 +297,14 @@ unread	mail	en	unread
 urgent	mail	en	urgent
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
+vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	admin	en	vacation notice
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation notice sucessfully updated.	mail	en	Vacation notice sucessfully updated.
 vacation notice update failed	mail	en	Vacation notice update failed
 vacation start-date must be before the end-date!	mail	en	Vacation start-date must be BEFORE the end-date!
 vacation update failed	mail	en	vacation update failed
+valid for	mail	en	Valid for
 what do do with html email	mail	en	What do do with html email
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	what to do when you delete a message

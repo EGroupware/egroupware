@@ -306,6 +306,7 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 group	setup	de	Gruppe
+group %1 uses identical id %2 as user %3!	setup	de	Gruppe %1 verwendet die identische ID %2 wie Benutzer %3!
 group memberships will be migrated too.	setup	de	Gruppenmitgliedschaften werden auch migriert.
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 header admin login	setup	de	Login Headerverwaltung

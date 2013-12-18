@@ -31,6 +31,9 @@ default font size	preferences	fr	Taille de police par défaut
 default preferences	preferences	fr	Préférences par défaut
 default theme	preferences	fr	Thème par défaut
 delete categories	preferences	fr	Supprimer les catégories
+deny following groups access to acl (grant access)	admin	fr	Refuser aux groupes suivants l'accès aux ACL (autoriser l'accès)
+deny following groups access to edit categories	admin	fr	Refuser aux groupes suivants de modifier les catégories
+deny following groups access to preferences	admin	fr	Refuser aux groupes suivants l'accès aux préférences
 description can not exceed 255 characters in length !	preferences	fr	La description ne peut pas faire plus de 255 caractères !
 display thumbnails for linked images	preferences	fr	Afficher des miniatures pour les images liées
 div	preferences	fr	div
@@ -74,6 +77,8 @@ look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
+moono color theme	preferences	fr	Couleur de thème Moono
+moono theme	preferences	fr	Thème Moono
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
@@ -93,6 +98,7 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	fr	Chosir votre fuseau horaire
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
+preferences saved.	preferences	fr	Préférences enregistrées.
 pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe

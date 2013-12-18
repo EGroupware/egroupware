@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
+%1 acl entries deleted.	admin	fr	%1 entrées ACL supprimées.
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 droits d'accès de comptes inexistants supprimés.
 %1 categories of not (longer) existing accounts deleted.	admin	fr	%1 catégories de comptes inexistants supprimées
 %1 category(s) %2	admin	fr	%1 catégorie(s) %2
@@ -17,22 +18,31 @@
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
 -  type	admin	fr	- type
-accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et attaque systématique
+access by	admin	fr	Accès par
+access control	admin	fr	Contrôle d'accès
+access to %1 data by others	admin	fr	Accès aux données de %1  par d'autres
+accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et force brute
 account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié!
-account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe en texte
+account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe en texte !
 account %1 %2	admin	fr	Compte %1 %2
 account '%1' deleted.	admin	fr	Compte '%' supprimé.
 account active	admin	fr	Compte actif
-account has been created	common	fr	Le compte a été créé
-account has been deleted	common	fr	Le compte a été supprimé
-account has been updated	common	fr	Le compte a été mis à jour
+account has been created	common	fr	Le compte a été créé.
+account has been deleted	common	fr	Le compte a été supprimé.
+account has been updated	common	fr	Le compte a été mis à jour.
 account id	admin	fr	Compte ID
 account list	admin	fr	Liste des comptes
 account permissions	admin	fr	Permissions de compte
 account preferences	admin	fr	Préférences de compte
 account-id's have to be integers!	admin	fr	Les ID de compte doivent être des entiers!
-acl manager	admin	fr	Gestionnaire des droits d'accès
+acl added.	admin	fr	ACL ajouté.
+acl deleted.	admin	fr	ACL supprimé.
+acl entry deleted.	admin	fr	Entrée ACL supprimée.
+acl entry not found!	admin	fr	Entrée ACL non trouvée !
+acl manager	admin	fr	Gestionnaire des droits d'accès (ACL)
 acl rights	common	fr	Droits d'accès
+acl updated	admin	fr	ACL mis à jour
+acl updated.	admin	fr	ACL mis à jour.
 action	admin	fr	Action
 actions	admin	fr	Actions
 activate	admin	fr	Activer
@@ -76,7 +86,7 @@ anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
 anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
 appearance	admin	fr	Apparence
 application	admin	fr	Application
-application '%1' not found (maybe not installed or misspelled)!	admin	fr	L'application '%1' n'a pas été trouvée. Peut-être non installée ou mal orthographiée !
+application '%1' not found (maybe not installed or misspelled)!	admin	fr	L'application '%1' n'a pas été trouvée. Peut-être est-elle non installée ou mal orthographiée !
 application name	admin	fr	Nom d'application
 application title	admin	fr	Titre d'application
 applications	admin	fr	Applications
@@ -293,6 +303,7 @@ exports users into a csv file.	admin	fr	Exporter les utilisateurs dans un fichie
 failed to change password for account "%1"!	admin	fr	Echec du changement de mot de passe pour le compte "%1" !
 failed to change password.	admin	fr	Erreur lors du changement de mot de passe.
 failed to mount backup directory!	admin	fr	Echec du montage du répertoire Backup !
+failed to save user!	admin	fr	Echec à l'enregistrement de l'utilisateur !
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
 false	admin	fr	Faux
 field '%1' already exists !!!	admin	fr	Le Champ '%1'  existe déjà !
@@ -467,6 +478,7 @@ percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se so
 percent this user has logged out	admin	fr	Pourcentage de déconnexion de cet utilisateur
 permission denied	admin	fr	Permission refusée
 permission denied !!!	admin	fr	Permission refusée !
+permission denied!!!	admin	fr	Permission refusée !!!
 permissions	admin	fr	Permissions
 permissions this group has	admin	fr	Permissions attribuées à ce groupe
 personal: eg. within a family	admin	fr	Personnel : ex. dans une famille
@@ -616,6 +628,7 @@ url of the egroupware installation, eg. http://domain.com/egroupware	admin	fr	UR
 usage	admin	fr	Usage
 use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
 use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
+use secure cookies (transmitted only via https)	admin	fr	Utiliser des cookies sécurisés (transmis seulement par https)
 use theme	admin	fr	Utiliser le thème
 user accounts	admin	fr	Comptes utilisateurs
 user csv export	admin	fr	Export des utilisateurs en CSV
