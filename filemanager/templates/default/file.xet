@@ -259,7 +259,6 @@
 							<tab id="filemanager.file.eacl" label="Extended ACL"/>
 							<tab id="filemanager.file.preview" label="Preview"/>
 							<tab id="filemanager.file.custom" label="Custom fields"/>
-							<tab id="filemanager.file.merge" label="Merge"/>
 						</tabs>
 						<tabpanels>
 							<template id="filemanager.file.general"/>
@@ -267,7 +266,6 @@
 							<template id="filemanager.file.eacl"/>
 							<template id="filemanager.file.preview"/>
 							<template id="filemanager.file.custom"/>
-							<template id="filemanager.file.merge"/>
 						</tabpanels>
 					</tabbox>
 				</row>
