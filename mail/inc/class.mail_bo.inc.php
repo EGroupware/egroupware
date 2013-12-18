@@ -2892,10 +2892,11 @@ class mail_bo
 	 * @param string $currentFolder
 	 * @param boolean $returnUIDs - control wether or not the action called should return the new uids
 	 *						caveat: not all servers do support that
+	 * @param int $_targetProfileID - target profile ID, should only be handed over when target server is differen from source
 	 *
 	 * @return mixed/bool true,false or new uid
 	 */
-	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false)
+	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_targetProfileID = Null)
 	{
 		$msglist = '';
 
@@ -2916,6 +2917,12 @@ class mail_bo
 		{
 			$uidsToMove = new Horde_Imap_Client_Ids();
 			$uidsToMove->add($_messageUID);
+		}
+		if (!is_null($_targetProfileID) && $_targetProfileID !== $this->icServer->ImapServerId)
+		{
+			$target = emailadmin_account::read($_targetProfileID)->imapServer();
+			$_foldername = $target->getMailbox($_foldername);
+			error_log(__METHOD__.__LINE__.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject'.array2string($_foldername));
 		}
 
 		try

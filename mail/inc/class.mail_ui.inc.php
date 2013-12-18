@@ -3701,7 +3701,7 @@ blockquote[type=cite] {
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
-		list($profileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
+		list($targetProfileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
 
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
@@ -3714,6 +3714,7 @@ blockquote[type=cite] {
 			{
 				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				$sourceProfileID = $uidA['profileID'];
 			}
 			foreach($_messageList['msg'] as $rowID)
 			{
@@ -3721,7 +3722,7 @@ blockquote[type=cite] {
 				$messageList[] = $hA['msgUID'];
 			}
 
-			$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder);
+			$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
 			$response = egw_json_response::get();
 			$response->call('egw_refresh',($_copyOrMove=='copy'?lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder):lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder)),'mail');
 		}
