@@ -2918,22 +2918,61 @@ class mail_bo
 			$uidsToMove = new Horde_Imap_Client_Ids();
 			$uidsToMove->add($_messageUID);
 		}
+		$sourceFolder = (!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']);
 		if (!is_null($_targetProfileID) && $_targetProfileID !== $this->icServer->ImapServerId)
 		{
+			$sourceFolder = $this->icServer->getMailbox($sourceFolder);
 			$target = emailadmin_account::read($_targetProfileID)->imapServer();
 			$_foldername = $target->getMailbox($_foldername);
-			error_log(__METHOD__.__LINE__.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject'.array2string($_foldername));
-		}
+			//error_log(__METHOD__.__LINE__.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($_foldername));
+			$uidsToFetch = new Horde_Imap_Client_Ids();
+			$uidsToFetch->add($_messageUID);
 
-		try
-		{
-			$retUid = $this->icServer->copy((!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']), $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
+			$fquery = new Horde_Imap_Client_Fetch_Query();
+			$fquery->fullText();
+			$fquery->flags();
+			$headersNew = $this->icServer->fetch($sourceFolder, $fquery, array(
+				'ids' => $uidsToFetch,
+			));
+			if (is_object($headersNew)) {
+				$c=0;
+				$retUid = new Horde_Imap_Client_Ids();
+				// we copy chunks of 5 to avoid too much memory and/or server stress
+				foreach($headersNew as $id=>$_headerObject) {
+					$c++;
+					$flags = $_headerObject->getFlags(); //unseen status seems to be lost when retrieving the full message
+					//error_log(__METHOD__.__LINE__.array2string($flags));
+					$body = $_headerObject->getFullMsg();
+					$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$body")), 'flags'=>$flags);
+					if ($c==5)
+					{
+						$ret = $target->append($_foldername,$dataNflags);
+						$retUid->add($ret);
+						unset($dataNflags);
+						time_nanosleep(0,500000);// sleep 500 miliseconds
+						$c=0;
+					}
+				}
+				if (isset($dataNflags))
+				{
+					$ret = $target->append($_foldername,$dataNflags);
+					$retUid->add($ret);
+					unset($dataNflags);
+				}
+			}
 		}
-		catch (exception $e)
+		else
 		{
-			error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! Error:".$e->getMessage());
-			throw new egw_exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
-			return false;
+			try
+			{
+				$retUid = $this->icServer->copy($sourceFolder, $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
+			}
+			catch (exception $e)
+			{
+				error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! Error:".$e->getMessage());
+				throw new egw_exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
+				return false;
+			}
 		}
 		if ($deleteAfterMove === true)
 		{
@@ -4252,6 +4291,36 @@ class mail_bo
 			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
 		}
 
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->fullText();
+		if ($_partID != '')
+		{
+			$fquery->structure();
+			$fquery->bodyPart($_partID);
+		}
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				$body = $_headerObject->getFullMsg();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					//_debug_array($mailStructureObject->contentTypeMap());
+					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+					{
+						if ($mime_id==$_partID)
+						{
+							$body = $_headerObject->getBodyPart($mime_id);
+						}
+					}
+				}
+			}
+		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);
 
