@@ -209,7 +209,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		// Save preference when size changed
 		if(this.id && this.egw().getAppName())
 		{
-			self = this;
+			var self = this;
 			this.left.on("resize"+options.eventNamespace, function(e) {
 				if(e.namespace == options.eventNamespace.substr(1) && !self.isDocked())
 				{
