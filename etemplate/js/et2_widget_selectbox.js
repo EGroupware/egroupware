@@ -223,7 +223,7 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.
-		if (jQuery.isEmptyObject(_attrs["select_options"]))
+		if (jQuery.isEmptyObject(_attrs["select_options"]) && this.getArrayMgr('content') != null)
 		{
 			if (content_options) _attrs['select_options'] = content_options;
 			var content_mgr = this.getArrayMgr('content');
