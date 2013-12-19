@@ -395,21 +395,6 @@ class addressbook_ui extends addressbook_bo
 				),
 			);
 		}
-		//Send to email
-		$actions += array(
-			'email' => array(
-				'caption' => lang('Add %1',lang('business email')),
-				'no_lang' => true,
-				'onExecute' => 'javaScript:app.addressbook.addEmail',
-				'group' => ++$group,
-			),
-			'email_home' => array(
-				'caption' => lang('Add %1',lang('home email')),
-				'no_lang' => true,
-				'onExecute' => 'javaScript:app.addressbook.addEmail',
-				'group' => $group,
-			),
-		);
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
 		// categories submenu
@@ -578,7 +563,25 @@ class addressbook_ui extends addressbook_bo
 				'enabled' => !isset($this->org_views[(string) $org_view]),
 			);
 		}
+		//Send to email
+		$actions['email'] = array(
+				'caption' => 'Email',
+				'icon'	=> 'mail/navbar',
+				'group' => $group,
+				'children' => array(
+						'email_business' => array(
+							'caption' => lang('Add %1',lang('business email')),
+							'no_lang' => true,
+							'onExecute' => 'javaScript:app.addressbook.addEmail',
+						),
+						'email_home' => array(
+							'caption' => lang('Add %1',lang('home email')),
+							'no_lang' => true,
+							'onExecute' => 'javaScript:app.addressbook.addEmail',
+						),
+				),
 
+			);
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		$exception = bo_merge::is_export_limit_excepted();
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
