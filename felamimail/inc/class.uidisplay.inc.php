@@ -193,7 +193,7 @@
 			if ($matches[2]==$matches[1]) $linkTextislink = true;
 			$matches[1] = str_replace(' ','%20',$matches[1]);
 			//return ($linkTextislink?' ':'[ ').$matches[1].($linkTextislink?'':' -> '.$matches[2]).($linkTextislink?' ':' ]');
-			return '<a target="'.((stripos($link,$webserverURL) !== false || stripos($link,$fullWebServerUrl) !== false || substr(trim($link),0,1) == '/')?'_top':'_blank').'" href="'.$matches[1].'">'.($linkTextislink?$matches[1]:$matches[2]).'</a>';
+			return '<a target="'.((stripos($matches[1],$webserverURL) !== false || stripos($matches[1],$fullWebServerUrl) !== false || substr(trim($matches[1]),0,1) == '/')?'_top':'_blank').'" href="'.$matches[1].'">'.($linkTextislink?$matches[1]:$matches[2]).'</a>';
 		}
 
 		function parseHREF (&$body) {
