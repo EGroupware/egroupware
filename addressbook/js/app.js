@@ -413,9 +413,34 @@ app.classes.addressbook = AppJS.extend(
 		return false;
 	},
 
-	addEmail: function()
+	/**
+	 * Action function to add the email address (business or home) of the selected
+	 * contacts to a compose email popup window.
+	 *
+	 * Uses the egw API to handle the opening of the popup.
+	 *
+	 * @param {egwAction} action Action user selected.  Should have ID of either
+	 *  'email_business' or 'email_home', from server side definition of actions.
+	 * @param {egwActionObject[]} selected Selected rows
+	 */
+	addEmail: function(action, selected)
 	{
-		//Not implemented
+		// Go through selected & pull email addresses from data
+		var emails = [];
+		for(var i = 0; i < selected.length; i++)
+		{
+			// Pull data from global cache
+			var data = egw.dataGetUIDdata(selected[i].id) || {data:{}};
+			var email = data.data[action.id == 'email_business' ? 'email' : 'email_home'] || '';
+			if(email)
+			{
+				emails.push(email);
+			}
+		}
+
+		// Always open a compose, even if no emails, so user knows it worked
+		egw.open_link('mailto:' + emails.join(','));
+		return false;
 	},
 
 	/**
