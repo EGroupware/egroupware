@@ -42,7 +42,7 @@
 						<description value="With message:"/>
 					</hbox>
 					<vbox>
-						<textbox multiline="true" id="text" width="40%"/>
+						<textbox multiline="true" id="text" width="99%" height="150px"/>
 						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
 				</row>
