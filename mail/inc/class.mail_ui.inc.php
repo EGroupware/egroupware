@@ -548,17 +548,19 @@ class mail_ui
 	 * We currently load all folders of a given profile, tree can also load parts of a tree.
 	 *
 	 * @param string $_GET[id] if of node whos children are requested
+	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 */
-	public function ajax_foldertree($_nodeID = null)
+	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=true)
 	{
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
+		$subscribedOnly = $_subscribedOnly;
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
-		$data = $this->getFolderTree($fetchCounters, $nodeID);
+		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly);
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
@@ -570,6 +572,7 @@ class mail_ui
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param bool $_fetchCounters, wether to fetch extended information on folders
 	 * @param string $_nodeID, nodeID to fetch and return
+	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 * @return array something like that: array('id'=>0,
 	 * 		'item'=>array(
 	 *			'text'=>'INBOX',
@@ -579,7 +582,7 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false, $_nodeID=null)
+	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true)
 	{
 		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
@@ -594,7 +597,7 @@ class mail_ui
 			}
 		}
 		//$starttime = microtime(true);
-		$folderObjects = $this->mail_bo->getFolderObjects(true,false,false,true);
+		$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,true);
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
 		$trashFolder = $this->mail_bo->getTrashFolder();

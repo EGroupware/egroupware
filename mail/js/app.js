@@ -113,6 +113,14 @@ app.classes.mail = AppJS.extend(
 			window.setTimeout(function() {
 				self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
 			},1000);
+			// intention was, to enable drag and drop with the tree
+			// and then somehow hook into the event and do the server side action
+			// does not work here at that time, do not know why, so we go for
+			// the traditional way of a rightclick action on the tree
+			//var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+			//tree_wdg.enableDragAndDrop(true,false);
+			//tree_wdg.setDragBehavior('child',true);
+			//tree_wdg.enableDragAndDropScrolling(true);
 		}
 		if (isDisplay)
 		{
