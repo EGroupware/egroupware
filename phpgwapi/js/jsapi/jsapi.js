@@ -250,6 +250,8 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 		{
 			et2[i].refresh(_msg,_app,_id,_type);
 		}
+		//In case that we have etemplate2 ready but it's empty
+		if (et2.length >= 1)
 		return;
 	}
 
