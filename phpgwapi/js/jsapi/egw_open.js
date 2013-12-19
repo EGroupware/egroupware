@@ -39,9 +39,9 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	function mailto(uri)
 	{
 		// Parse uri into a map
-		var match = uri.match(/^mailto:([^?]+)\??(([^=]+)([^&]+))*$/);
+		var match = uri.match(/^mailto:([^?]+)\??(([^=]+)([^&]+))*$/) || [];
 		var content = {
-			to: match[1]
+			to: match[1] || []
 		}
 		for(var i = 2; i < match.length; i+=2)
 		{
