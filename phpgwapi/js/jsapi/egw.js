@@ -41,7 +41,7 @@
 	var egw_script = document.getElementById('egw_script_id');
 
 	// Flag for if this is opened in a popup
-	var popup = false;
+	var popup = (window.opener != null);
 
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
