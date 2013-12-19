@@ -491,6 +491,39 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * enableDragAndDrop
+	 *
+	 * @param _mode boolean
+	 * @param _rmode boolean
+	 */
+	enableDragAndDrop: function(_mode, _rmode) {
+		if(this.input == null) return null;
+		return this.input.enableDragAndDrop(_mode,_rmode);
+	},
+
+	/**
+	 * setDragBehavior
+	 *
+	 * @param _mode string
+	 * @param _smode boolean
+	 */
+	setDragBehavior: function(_mode, _smode) {
+		if(this.input == null) return null;
+		// only supported by professional edition of dhtmlXTree
+		//return this.input.setDragBehavior(_mode,_smode);
+	},
+
+	/**
+	 * enableDragAndDropScrolling
+	 *
+	 * @param _mode boolean
+	 */
+	enableDragAndDropScrolling: function(_mode) {
+		if(this.input == null) return null;
+		return this.input.enableDragAndDropScrolling(_mode);
+	},
+
+	/**
 	 * Callback for after using dhtmlxtree's AJAX loading
 	 * The tree has visually already been updated at this point, we just need
 	 * to update the internal data.
