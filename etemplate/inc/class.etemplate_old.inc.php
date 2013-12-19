@@ -319,12 +319,14 @@ class etemplate_old extends boetemplate
 			$html .= '</script>';
 		}
 
+		error_log("OUTPUT MODE: $output_mode");
 		if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
 		{
 			if (!@self::$hooked)
 			{
 				if((int) $output_mode != 2)
 				{
+					echo $GLOBALS['egw']->framework->header();
 					echo $GLOBALS['egw']->framework->navbar();	// do header too
 				}
 				else
