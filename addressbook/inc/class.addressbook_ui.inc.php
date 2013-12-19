@@ -307,7 +307,7 @@ class addressbook_ui extends addressbook_bo
 		$sel_options['org_view'] = $this->org_views;
 		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
 
-		$content['nm']['actions'] = $this->get_actions($do_email, $content['nm']['col_filter']['tid'], $content['nm']['org_view']);
+		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid'], $content['nm']['org_view']);
 
 		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
 		{
@@ -330,12 +330,11 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * Get actions / context menu items
 	 *
-	 * @param boolean $do_email=false
 	 * @param string $tid_filter=null
 	 * @param string $org_view=null
 	 * @return array see nextmatch_widget::get_actions()
 	 */
-	private function get_actions($do_email=false, $tid_filter=null, $org_view=null)
+	private function get_actions($tid_filter=null, $org_view=null)
 	{
 		// we have no org view (view of one org has context menu like regular "add contacts" view, as it shows contacts
 		if (!isset($this->org_views[(string) $org_view]))
@@ -396,24 +395,21 @@ class addressbook_ui extends addressbook_bo
 				),
 			);
 		}
-
-		if ($do_email)
-		{
-			$actions += array(
-				'email' => array(
-					'caption' => lang('Add %1',lang('business email')),
-					'no_lang' => true,
-					'onExecute' => 'javaScript:app.addressbook.addEmail',
-					'group' => ++$group,
-				),
-				'email_home' => array(
-					'caption' => lang('Add %1',lang('home email')),
-					'no_lang' => true,
-					'onExecute' => 'javaScript:app.addressbook.addEmail',
-					'group' => $group,
-				),
-			);
-		}
+		//Send to email
+		$actions += array(
+			'email' => array(
+				'caption' => lang('Add %1',lang('business email')),
+				'no_lang' => true,
+				'onExecute' => 'javaScript:app.addressbook.addEmail',
+				'group' => ++$group,
+			),
+			'email_home' => array(
+				'caption' => lang('Add %1',lang('home email')),
+				'no_lang' => true,
+				'onExecute' => 'javaScript:app.addressbook.addEmail',
+				'group' => $group,
+			),
+		);
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
 		// categories submenu
