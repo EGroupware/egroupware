@@ -1609,7 +1609,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().getAppName());
 			}
-			var button = et2_createWidget("buttononly", {"label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
+			var button = et2_createWidget("buttononly", {id: "export", "label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
 			jQuery(button.getDOMNode()).appendTo(this.filters).css("float", "right")
 				.click(this.nextmatch, function(event) {
 					egw_openWindowCentered2( egw.link('/index.php', {
@@ -1629,7 +1629,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
 		
-		this.search_button = et2_createWidget("button", {"label":">"}, this);
+		this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
 		this.search_button.onclick = function(event) {
 			self.nextmatch.activeFilters.search = self.search.getValue();
 			self.nextmatch.applyFilters();
