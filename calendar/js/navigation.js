@@ -48,15 +48,15 @@
 		var calendar_window = egw_appWindow('calendar');
 		// include template specific app.css
 		var link_tags = calendar_window.document.getElementsByTagName('link');
-		var cal_app_css = /\/calendar\/templates\/[^/]+\/app.css/;
+		var cal_app_css = /calendar\/templates\/[^/]+\/app.css/;
 		for(var i=0; i < link_tags.length; i++)
 		// include template specific app.css
-			{
-			var href = link_tags[i].href;
-			if (cal_app_css.test(href))
+		{
+			var href = cal_app_css.exec(link_tags[i].href);
+			if (href)
 			{
 				//alert('loading into top window: '+href);
-				egw(calendar_window.top).includeCSS(href);
+				egw(calendar_window.top).includeCSS(egw_webserverUrl+'/'+href[0]);
 				return true;
 			}
 		}
