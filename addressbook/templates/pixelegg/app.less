@@ -376,11 +376,13 @@ div.addressbook_edit_general_picture {
 // Photo Upload - POPUP
 
         table.uploadphoto {
+            .rounded (3px);
             .background-color-10-gray;
             width: auto;
             .bordered(@gray-100, @gray-100, @gray-100, @gray-100);
             left: 30%;
             top: 289px;
+            
         }
 
 
@@ -867,7 +869,7 @@ div.addressbook.edit.general{
 
 .uploadphoto {
     background-color: @gray-20;
-    border: 2px solid black;
+    border: 1px solid black !important;
     display: none;
     left: 48px;
     padding: 4px;
@@ -875,7 +877,7 @@ div.addressbook.edit.general{
     top: 168px;
 }
 
-table.uploadphoto {width: 360px !important; background-color: @gray-20 !important;}
+table.uploadphoto {width: 360px !important; background-color: @gray-20 !important; .rounded (9px);}
 
 
 

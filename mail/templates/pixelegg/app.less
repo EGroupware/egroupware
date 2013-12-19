@@ -12,7 +12,7 @@
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
-
+@import (less) "../default/app.css";
 #popupMainDiv{
 	padding: 5px;
 	.et2_grid{
@@ -83,27 +83,20 @@ div#mail-index{
                 div.filters{
                     // Fläche
                     
-
+                    select {margin-top: 8px;}
 
                     select#mail-index_filter{
-                        //															height: 35px;
                     }
 
-                    select#mail-index_filter2{
-                        //															height: 35px;
-                    }
+                    select#mail-index_filter2{                    }
 
                     // Suchfeld
                     input#mail-index_search{
-                        //															height: 35px;
-                        //															top: 8px;
-                        //															font-size: 1.5em;
+                        height: 20px !important;
                     }
 
                     // Suchknopf
                     button.et2_button {
-                        //															top: 8px;
-                        //															position: relative;
                     }
 
                 } // Ende Filter
@@ -185,8 +178,23 @@ div#mail-index{
 
 
 
-// #################################################################################
-// Sidebox
+
+/*##############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#   Side     #                               #
+#   bar      #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+############################################## */
 
 .egw_fw_ui_category_content{
 
@@ -234,13 +242,21 @@ div#mail-index{
     }
     
     
-    /*new mail in FOlder*/ 
+    /*new mail in FOlder 
     span.standartTreeRow b {color: @egw_color_2_a;}
     
     
-
+ 
+*/
 } // Ende Sidebox
 
+/* ##################################################################################
+ *       E-Mail Dialog "Compose"
+ *
+ * ##################################################################################
+ */    
+    
+    
 /*###########################################
 #                                           #
 #                                           #
@@ -261,11 +277,7 @@ div#mail-index{
 ##############################################*/
 
 
-/* ##################################################################################
- *       E-Mail Dialog "Compose"
- *
- * ##################################################################################
- */
+
 #mail-compose{
     //	gesamtbreite
     width: 870px;
@@ -1167,32 +1179,7 @@ input[type=button] {
     top: 120px;
     bottom: 100px;
 }
-//.mailDisplayAttachments {
-//	background-color:#efefdf;
-//	max-height: 10%;
-//	position: fixed;
-//	bottom: 26px;
-//	border: 1px solid red;
-//	border-bottom: 0px;
-//	opacity: 1;
-//	-moz-opacity:1;
-////	filter: Alpha(opacity=100);
-//}
-/*
-#divGenTime {
-        background-color:#efefdf;
-        max-height: 10%;
-        position: fixed;
-        bottom: 1px;
-        border: 1px solid red;
-        border-top: 1px solid black;
-        left: 3px;
-        right: 3px;
-        opacity: 1;
-        -moz-opacity:1:
-        filter: Alpha(opacity=100);
-}
-*/
+
 .mailDisplayHeaders {
     overflow: hidden;
 }
@@ -1219,6 +1206,6 @@ div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-c
         			height: auto;
         			width: 24px;
         		}
-	}
-	
-//
+}
+
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

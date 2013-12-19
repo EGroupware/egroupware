@@ -510,6 +510,9 @@ fieldset.emailGroup {
     background-color: inherit !important;
   }
   div.addressbook_edit_general_picture table.uploadphoto {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     background-color: #f0f0f0;
     width: auto;
     border-top: solid 1px #000000;
@@ -952,7 +955,7 @@ fieldset.emailGroup {
   }
   .uploadphoto {
     background-color: #cdcdcd;
-    border: 2px solid black;
+    border: 1px solid black !important;
     display: none;
     left: 48px;
     padding: 4px;
@@ -962,6 +965,9 @@ fieldset.emailGroup {
   table.uploadphoto {
     width: 360px !important;
     background-color: #cdcdcd !important;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
   }
   .checkAllArrow {
     padding-right: 5px;

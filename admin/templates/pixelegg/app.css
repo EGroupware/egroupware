@@ -64,7 +64,10 @@ img.admin_aclApp {
   /**
  * Give space to both contact view & infolog list
  */
-  iframe#admin-index_iframe #admin-categories-index table.et2_grid #admin-categories-index_nm div.egwGridView_outer td.frame div.egwGridView_scrollarea {
+  iframe#admin-index_iframe {
+    background-color: yellow;
+  }
+  iframe#admin-index_iframe .egwGridView_scrollarea {
     min-height: 500px;
   }
   #addressbook-index {
