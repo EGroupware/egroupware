@@ -1393,17 +1393,15 @@ class calendar_uiviews extends calendar_ui
 		if ($this->use_time_grid)
 		{
 			// drag and drop: check if the current user has EDIT permissions on the grid
-			if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
+			if($owner)
 			{
-				if($owner)
-				{
-					$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
-				}
-				else
-				{
-					$dropPermission = true;
-				}
+				$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
 			}
+			else
+			{
+				$dropPermission = true;
+			}
+
 			// adding divs to click on for each row / time-span
 			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1 + $this->extraRows;
 				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
@@ -1843,8 +1841,7 @@ class calendar_uiviews extends calendar_ui
 
 		// ATM we do not support whole day events or recurring events for dragdrop
 		$dd_emulation = "";
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'] &&
-			$this->use_time_grid &&
+		if ($this->use_time_grid &&
 			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			if (!$event['whole_day_on_top'] &&

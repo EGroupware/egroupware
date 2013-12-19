@@ -228,25 +228,6 @@ class preferences_hooks
 				'admin'  => True,
 				'forced' => true,
 			),
-			'enable_dragdrop' => array(
-				'type'   => 'check',
-				'label'  => 'Enable drag and drop functionality (experimental)',
-				'name'   => 'enable_dragdrop',
-				'help'   => 'Enables or disables drag and drop functions in all applications. If the browser does not support '.
-					    'drag and drop, it will be disabled automatically. This feature is experimental at the moment.',
-				'xmlrpc' => False,
-				'admin'  => False,
-				'forced' => true,
-			),
-			'enable_ie_dropdownmenuhack' => array(
-				'type'   => 'check',
-				'label'  => 'Enable selectbox dropdown resizing for IE (experimental)',
-				'name'   => 'enable_ie_dropdownmenuhack',
-				'help'   => 'Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.',
-				'xmlrpc' => False,
-				'admin'  => False,
-				'forced' => false,
-			),
 			array(
 				'type'	=> 'section',
 				'title'	=> 'Formatting & general settings'

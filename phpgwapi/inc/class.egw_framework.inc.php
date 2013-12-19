@@ -1111,12 +1111,6 @@ abstract class egw_framework
 	{
 		$java_script = '';
 
-		// GLOBAL var to tell egroupware wether or not to enable the IE selectBox resize hack
-		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_ie_dropdownmenuhack'] && html::$user_agent == 'msie' && html::$ua_version < 9)
-		{
-			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
-		}
-
 		/* this flag is for all javascript code that has to be put before other jscode.
 		Think of conf vars etc...  (pim@lingewoud.nl) */
 		if (isset($GLOBALS['egw_info']['flags']['java_script_thirst']))

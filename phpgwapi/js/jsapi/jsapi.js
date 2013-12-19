@@ -570,8 +570,13 @@ function dropdown_menu_hack(el)
 {
 	if(el.runtimeStyle)
 	{
-		if(typeof(enable_ie_dropdownmenuhack) !== 'undefined') {
-			if (enable_ie_dropdownmenuhack==1){} else return;
+		if(typeof(enable_ie_dropdownmenuhack) !== 'undefined')
+		{
+			if (enable_ie_dropdownmenuhack==1){
+
+			}
+			else
+				return;
 		} else {
 			return;
 		}
