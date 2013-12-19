@@ -2751,6 +2751,17 @@ action buttons, left aligned for "extra" controls
     background-color: rgba(255, 194, 0, 0.1);
     padding: 0.3em 0 0 0.3em;
   }
+  /*#################################### ADMIN PART #####################################################*/
+  iframe#admin-index_iframe {
+    background-color: yellow;
+  }
+  #admin-categories-index {
+    background-color: green;
+  }
+  #admin-categories-index div.egwGridView_scrollarea {
+    min-height: 500px;
+  }
+  /*#################################### ADMIN PART #####################################################*/
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
@@ -3734,6 +3745,16 @@ a.textSidebox,
   right: 7px;
   top: 7px;
 }
+hr.clearer {
+  clear: both;
+  height: 20px;
+  width: 100%;
+  background-color: #ffc200;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #000000;
+}
 .lettersearch {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -4020,6 +4041,10 @@ a.textSidebox {
   text-align: center;
   width: 99%;
 }
+/*###########################
+#                           #
+#                           #
+############################*/
 button {
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4120,13 +4145,16 @@ button[id*="edit_button[add_alarm]"]:active {
 /* #####################################################*/
 /*Button cancel */
 button[id*="cancel"]:active {
-  background-color: #ffc200;
+  background-color: #ffff00 !important;
 }
 /* #####################################################*/
 /*Button abbruch / cancel */
 button#cancel:hover {
   background-color: red !important;
   color: #ffffff;
+}
+button#cancel:hover:active {
+  background-color: #ffff00 !important;
 }
 /* #####################################################*/
 /*Button mit Bildern*/
@@ -4169,6 +4197,49 @@ button.add:before {
   color: #ffc200;
   line-height: 1.1em;
 }
+button[id*=add] {
+  background-image: url('../images/add.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+button[id*=add]:active {
+  background-color: #00ab00 !important;
+}
+/* et2_box_widget #####################################################*/
+div.et2_box_widget .et2_button_text:last-child {
+  background-image: url('../images/cancel.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+  content: "ID missing";
+}
+div.et2_box_widget .et2_button_text:last-child:active {
+  background-color: #ffff00 !important;
+}
+/*Button Ende #######################################################*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select {
     padding-right: 20px !important;
@@ -4244,6 +4315,14 @@ table.egwGridView_outer thead {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
   /* IE6-9 */
+  /*.background-color-5-gray;*/
+  /*        background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%);  FF3.6+ 
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65)));  Chrome,Safari4+ 
+        background: -webkit-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  Chrome10+,Safari5.1+ 
+        background: -o-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  Opera 11.10+ 
+        background: -ms-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  IE10+ 
+        background: linear-gradient(to bottom,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  W3C 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf',GradientType=0 );  IE6-9 */
 }
 table.egwGridView_outer thead tr th {
   /*.background-color-50-gray;*/
@@ -5766,8 +5845,23 @@ table.dialog-main-view {
 ##############################################*/
 /**********    Header Part ********************/
 .dialog-header {
-  background-color: #408dd2;
-  color: #ffffff;
+  /*background-color: @egw_color_2_d;*/
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+  /* IE6-9 */
+  color: #000000;
 }
 .dialog-header table.et2_grid {
   border-top: none;
@@ -5780,12 +5874,13 @@ table.dialog-main-view {
 }
 .dialog-header table.et2_grid td {
   padding: 0px 0px 0px 3px;
+  color: #000000;
 }
 .dialog-header table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
   float: left;
 }
 .dialog-header .et2_label {
-  color: #ffffff;
+  color: #000000;
   vertical-align: bottom;
   padding: 0px 0px 0px 3px !important;
 }

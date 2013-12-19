@@ -416,6 +416,16 @@ a.textSidebox,
 }
 
 
+hr.clearer {
+    
+    clear: both;
+    height: 20px;
+    width: 100%;
+    background-color: @egw_color_1_a;
+    .rounded (3px);
+    border: 1px solid @gray-100;
+}
+
 //##############################################################################################################
 
 // Lettersearch
@@ -781,6 +791,12 @@ a.textSidebox
 
 // Button global for all and everything:
 
+/*###########################
+#                           #
+#                           #
+############################*/
+
+
 button{
     .Complete_Button_normal;
 
@@ -799,9 +815,7 @@ button[id*="delete"]{
     .Complete_Button_text_icon_before;
 
 }
-
             // Hover
-
             input[type="submit"][id*="delete"]:hover,
             input[type="button"][id*="delete"]:hover,
             button[id*="delete"]:hover {
@@ -860,7 +874,7 @@ button[id*="edit_button[add_alarm]"]{
  
 button[id*="cancel"] {
 
-    &:active {background-color: @color-hint;}
+    &:active{background-color: @color-cancel-action !important;}
 
 }
  
@@ -868,7 +882,10 @@ button[id*="cancel"] {
 
 /* #####################################################*/
  /*Button abbruch / cancel */
-button#cancel:hover {background-color: red !important; color: @gray-0; }
+button#cancel:hover {
+    background-color: red !important; color: @gray-0; 
+     &:active{background-color: @color-cancel-action !important;}
+}
 
 
 /* #####################################################*/
@@ -887,8 +904,26 @@ button.add {
     .Complete_Button_add ;
 }
 
+button[id*=add]{
+                background-image:url('../images/add.png') !important;
+                .Complete_Button_text_icon_before;
+                
+                &:active {background-color: @color-positive-action !important;}
+}
+
+/* et2_box_widget #####################################################*/
+// Cancel Button
+div.et2_box_widget .et2_button_text:last-child {
+    
+                 background-image:url('../images/cancel.png') !important;
+                .Complete_Button_text_icon_before;
+                content: "ID missing";
+                
+                &:active {background-color: @color-cancel-action !important;}
+}
 
 
+/*Button Ende #######################################################*/
 
 /////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {

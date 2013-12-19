@@ -44,4 +44,11 @@ calendar Edit Alarms
 
 Topmenu Items > put some Icons before
 
+/* 17.12.2013 ***************** */
+
+Raster > fixed Tab_header, tab_header
+
+/* 18.12.2013 ***************** */
+
+Admin > fixed height for global categorys
 
