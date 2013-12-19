@@ -180,55 +180,25 @@
 			return count($addresses);
 		}
 
-		function parseHREF (&$body) {
-			#echo __METHOD__."called<br>";
+		static function transform_url2text($matches)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($matches));
 			$webserverURL   = $GLOBALS['egw_info']['server']['webserver_url'];
 			$fullWebServerUrl = (substr(trim($webserverURL),0,1) == '/'?($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
 				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']):$webserverURL);
-			$alnum            = 'a-z0-9';
-			#$domain = "(http(s?):\/\/)*";
-			#$domain            .= "([$alnum]([-$alnum]*[$alnum]+)?)";
-			#$domain = "^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&%\$#\=~])*[^\.\,\)\(\s]$ ";
-			$domain = "(http(s?):\/\/)+([[:alpha:]][-[:alnum:]]*[[:alnum:]])(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])*(\.[[:alpha:]][-[:alnum:]]*[[:alpha:]])+";
-			#$dir = "(/[[:alpha:]][-[:alnum:]]*[[:alnum:]])*";
-			#$trailingslash  = "(\/?)";
-			#$page = "(/[[:alpha:]][-[:alnum:]]*\.[[:alpha:]]{3,5})?";
-			#$getstring = "(\?([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+)
-			#    (&([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+))*)?";
-			#$pattern = "^".$domain.$dir.$trailingslash.$page.$getstring."$";
-			$pattern = "~\<a href=\"".$domain.".*?\"~i";
-			$sbody = $body;
-			$i = 0;
-			while(@preg_match($pattern, $sbody, $regs) && $i <=100) {
-				//_debug_array($regs);
-				$key=$regs[1].$regs[3].$regs[4].$regs[5];
-				$addresses[$key] = $regs[1].$regs[3].$regs[4].$regs[5];
-				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
-				$sbody = substr($sbody, $start);
-				$i++;
-			}
-			$llink='';
-			//_debug_array($addresses);
-			if (is_array($addresses)) ksort($addresses);
-			foreach ((array)$addresses as $text => $link) {
-				if (empty($link)) continue;
-				if ($llink == $link) next($addresses);
-				#echo $text."#<br>";
-				//error_log(__METHOD__.__LINE__."#". $link."#".$webserverURL."#");
-				$link = str_replace("\n","",$link);
-				if (stripos($link,$webserverURL) !== false || stripos($link,$fullWebServerUrl) !== false || substr(trim($link),0,1) == '/')
-				{
-					//$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
-					$comp_uri = "<a target=\"_top\" href=\"".$link;
-				}
-				else
-				{
-					$comp_uri = "<a target=\"_blank\" href=\"".$link;
-				}
-				$body = str_replace('<a href="'.$link, $comp_uri, $body);
-				$llink=$link;
-			}
-			return count($addresses);
+
+			$linkTextislink = false;
+			// this is the actual url
+			$matches[2] = trim(strip_tags($matches[2]));
+			if ($matches[2]==$matches[1]) $linkTextislink = true;
+			$matches[1] = str_replace(' ','%20',$matches[1]);
+			//return ($linkTextislink?' ':'[ ').$matches[1].($linkTextislink?'':' -> '.$matches[2]).($linkTextislink?' ':' ]');
+			return '<a target="'.((stripos($link,$webserverURL) !== false || stripos($link,$fullWebServerUrl) !== false || substr(trim($link),0,1) == '/')?'_top':'_blank').'" href="'.$matches[1].'">'.($linkTextislink?$matches[1]:$matches[2]).'</a>';
+		}
+
+		function parseHREF (&$body) {
+			$body = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','self::transform_url2text',$body,-1,$counts);
+			return $counts;
 		}
 
 		function makeComposeLink($email,$text)
