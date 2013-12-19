@@ -551,18 +551,6 @@ class addressbook_ui extends addressbook_bo
 				),
 			);
 		}
-		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
-		{
-			$actions['filemanager'] = array(
-				'icon' => 'filemanager/navbar',
-				'caption' => 'Filemanager',
-				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
-				'allowOnMultiple' => false,
-				'group' => $group,
-				// disable for for org-views, as it needs contact-ids
-				'enabled' => !isset($this->org_views[(string) $org_view]),
-			);
-		}
 		//Send to email
 		$actions['email'] = array(
 				'caption' => 'Email',
@@ -582,6 +570,19 @@ class addressbook_ui extends addressbook_bo
 				),
 
 			);
+
+		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$actions['filemanager'] = array(
+				'icon' => 'filemanager/navbar',
+				'caption' => 'Filemanager',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'allowOnMultiple' => false,
+				'group' => $group,
+				// disable for for org-views, as it needs contact-ids
+				'enabled' => !isset($this->org_views[(string) $org_view]),
+			);
+		}
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		$exception = bo_merge::is_export_limit_excepted();
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
