@@ -4678,12 +4678,12 @@ class mail_bo
 			$this->fetchPartContents($_uid, $attachment, $_stream);
 		}
 		// set name as filename, if not set
-		if (!$attachment->getDispositionParameter('filename'))
+		if ($attachment && !$attachment->getDispositionParameter('filename'))
 		{
 			$attachment->setDispositionParameter('filename', $attachment->getName());
 		}
 		// guess type, if not set
-		if ($attachment->getType() == 'application/octet-stream')
+		if ($attachment && $attachment->getType() == 'application/octet-stream')
 		{
 			$attachment->setType(mime_magic::filename2mime($attachment->getDispositionParameter('filename')));
 		}
