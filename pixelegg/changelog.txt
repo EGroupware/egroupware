@@ -52,3 +52,14 @@ Raster > fixed Tab_header, tab_header
 
 Admin > fixed height for global categorys
 
+
+/* 19.12.2013 ***************** */
+
+ADDRESSBOOK - all fixed -> ready for testing
+Infolog - all fixed -> ready for testing
+
+Dateimanager - still working on it
+Calendar -> still working on it
+
+
+/* 20.12.2013 ***************** */

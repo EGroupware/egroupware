@@ -99,6 +99,7 @@
 .background-color-5-gray {	background-color : lighten(@gray, 98%);	}
 .background-color-10-gray {	background-color : lighten(@gray, 94%);	}
 .background-color-15-gray {	background-color : lighten(@gray, 85%);	}
+.background-color-20-gray {     background-color : lighten(@gray, 80%);	}
 .background-color-25-gray {     background-color : lighten(@gray, 75%);	}
 .background-color-30-gray {     background-color : lighten(@gray, 70%) !important;	}
 .background-color-40-gray {     background-color : lighten(@gray, 60%);	}
@@ -112,7 +113,6 @@
 // Test Colour for debug
 @yellow : #FFD40F;
 
-
 // Link Colours 
 @link-color : #000000;
 @link-color-active: @link-color*010101;
@@ -124,14 +124,15 @@
 @color-hint : @egw_color_1_a;
 
 /*optional / can field*/
-@color-optional : fade(@egw_color_1_a, 10%);
+@color-optional : lighten(@egw_color_1_a, 25%);
 
 
 
 /*Listenausgabe*/   
 
-@color-even : @gray-10;
-@color-odd :  @gray-10 + 222; 
+@color-even : @gray-0;
+@color-odd : darken(@gray-0, 8%); 
+
 
 // aktiverte Zeilen in allen APP mit Listenausgabe
 @color_active_row : @egw_color_1_a;
@@ -142,17 +143,25 @@
 // Mouse over
 @color_hover_row : @egw_color_2_e;
 
+
+
+
+
  /*Button edit + save + apply + copy = positive action         */
-@color-positive-action : #00AB00;
+@color-positive-action : #00AB00; // green
+@color-positive-action-hover : fade(#00AB00, 2%); // green
+@color-positive-action-active : lighten(#00AB00, 2%); // green
 
-
- /*Button delete  = negative action         */
-@color-negative-action : red;
 
  /*Button  cancel = do nothing action         */
 @color-cancel-action : yellow;
+@color-cancel-action-hover : lighten(yellow, 0%);
+@color-cancel-action-active : lighten(yellow, 15%);
 
-
+ /*Button delete  = negative action         */
+@color-negative-action : red;
+@color-negative-action-hover : lighten(red, 2%);
+@color-negative-action-active : lighten(red, 10%);
 
 
 // Search Button
@@ -234,6 +243,11 @@
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 
+.box_shadow_standard_light_active {
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
 
 // Rahmen für Dialoge
 
@@ -627,4 +641,5 @@
 }
 
 
-//        
+//
+//

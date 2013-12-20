@@ -1453,6 +1453,8 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
     /*visibility: hidden;*/
     background-image: url(../images/close.png);
+    background: #ffffff;
+    margin: 2px;
     padding: 0px;
   }
   .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
@@ -1630,11 +1632,11 @@ action buttons, left aligned for "extra" controls
   }
   .et2_link_entry .ui-icon-close {
     display: inline-block;
-    background-color: inherit;
+    background-color: #ffffff;
     border: none;
     position: relative;
     top: 3px;
-    left: -18px;
+    left: 18px;
     cursor: pointer;
     margin-top: -3px;
   }
@@ -1701,7 +1703,7 @@ action buttons, left aligned for "extra" controls
     height: 32px;
   }
   .et2_link_to .et2_button_icon:hover {
-    background-color: #b3b3b3 !important;
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -1711,7 +1713,7 @@ action buttons, left aligned for "extra" controls
     border-radius: 3px;
   }
   .et2_link_to .et2_button_icon:active {
-    background-color: #808080;
+    background-color: #b3b3b3 !important;
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -2082,8 +2084,9 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header > .filters input[type=search] {
     background-color: #ffd44d;
     color: black;
-    height: 25px;
+    /*height: 25px;*/
     float: left;
+    margin: 5px 0 0 2px;
   }
   .nextmatch_header > .filters button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
@@ -2092,7 +2095,7 @@ action buttons, left aligned for "extra" controls
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     width: 45px;
-    height: 27px;
+    height: 22px;
     -webkit-border-radius: 3px;
     -webkit-border-top-right-radius: 20px;
     -moz-border-radius: 3px;
@@ -2104,7 +2107,7 @@ action buttons, left aligned for "extra" controls
     text-decoration: none;
     cursor: pointer;
     padding: 0px;
-    margin-left: 5px;
+    margin-left: 0px;
     background-image: url("../images/search.png");
     background-position: center 0;
     background-size: contain;
@@ -2121,8 +2124,6 @@ action buttons, left aligned for "extra" controls
     color: #679fd2 !important;
   }
   .nextmatch_header > .filters button.et2_button:active {
-    /*hide background image*/
-    /*show arrow*/
     background: -webkit-gradient(linear, 0 0, 0 bottom, #d8d8d8, #a3a3a3), -moz-linear-gradient(#d8d8d8, #a3a3a3), -o-linear-gradient(#d8d8d8, #a3a3a3), linear-gradient(#d8d8d8, #a3a3a3);
     -pie-background: linear-gradient(#d8d8d8, #a3a3a3);
     behavior: url(/PIE.htc);
@@ -2145,7 +2146,7 @@ action buttons, left aligned for "extra" controls
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     width: auto;
-    margin: 0.5em 0em 0.5em 0;
+    /*margin: 0.5em 0em 0.5em 0;*/
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -2164,7 +2165,8 @@ action buttons, left aligned for "extra" controls
     -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   }
-  .nextmatch_header .et2_button_icon {
+  .nextmatch_header > .filters .et2_button_icon {
+    margin-top: 8px;
     vertical-align: middle;
     background-color: #f0f0f0;
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -2174,14 +2176,13 @@ action buttons, left aligned for "extra" controls
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    margin-top: 0px;
     margin-right: 1em;
     width: 16px;
     height: 16px;
     padding: 2px;
   }
-  .nextmatch_header .et2_button_icon .et2_button_icon:hover {
-    background-color: #b3b3b3 !important;
+  .nextmatch_header > .filters .et2_button_icon:hover {
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -2190,8 +2191,15 @@ action buttons, left aligned for "extra" controls
     -moz-border-radius: 3px;
     border-radius: 3px;
   }
-  .nextmatch_header > .filters .et2_button_icon {
-    margin-top: 8px;
+  .nextmatch_header > .filters .et2_button_icon:active {
+    background-color: #b3b3b3 !important;
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
   .et2_nextmatch .nextmatch_header {
     border: none;
@@ -2398,7 +2406,7 @@ action buttons, left aligned for "extra" controls
   }
   .sidebox-favorites ul.favorites li img.sideboxstar:hover {
     height: 16px;
-    background-color: #b3b3b3 !important;
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -2428,7 +2436,7 @@ action buttons, left aligned for "extra" controls
     padding: 0.5em 1em 0.5em 0;
   }
   .sidebox-favorites .ui-menu-icons .ui-menu-item a:hover {
-    background-color: #b3b3b3 !important;
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -2748,7 +2756,7 @@ action buttons, left aligned for "extra" controls
  */
   textarea,
   textarea.description {
-    background-color: rgba(255, 194, 0, 0.1);
+    background-color: #ffe180;
     padding: 0.3em 0 0 0.3em;
   }
   /*#################################### ADMIN PART #####################################################*/
@@ -2826,15 +2834,30 @@ option:checked {
   color: #999999;
 }
 .ui-widget-header {
-  border-top: solid 1px 1px;
-  border-left: solid 1px 1px;
-  border-right: solid 1px 1px;
-  border-bottom: solid 1px 1px;
-  border-color: #e6e6e6;
-  color: #ffffff;
+  border-top: solid 1px 0px !important;
+  border-left: solid 1px 0px !important;
+  border-right: solid 1px 0px !important;
+  border-bottom: solid 1px 0px !important;
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%) !important;
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65))) !important;
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%) !important;
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%) !important;
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%) !important;
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%) !important;
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0) !important;
+  /* IE6-9 */
+  /*border-color: @gray-10;*/
+  color: #000000;
   font-weight: bold;
   background-image: none;
-  background-color: #0c5da5;
+  border: 0px !important;
 }
 .ui-widget-header a {
   color: #ffffff;
@@ -2937,10 +2960,60 @@ option:checked {
 .ui-widget-header .ui-state-error-text {
   color: #ff0000;
 }
+.ui-icon-close {
+  /*visibility: hidden;*/
+  background-image: url(../images/search.png);
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+  padding: 1px;
+  margin-top: 1px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.ui-icon-close:hover {
+  background-color: #b4b4b4;
+  color: #1e1e1e;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.ui-icon-close:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  background-color: #ffff4d !important;
+}
+span.ui-icon-close {
+  margin-top: 0px;
+  top: 5px !important;
+}
 /*Schliessen x*/
 .ui-icon-closethick {
+  background-image: url(../images/close.png) !important;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-size: contain;
+  background-position: 0 0 !important;
   color: #ffffff;
-  background-color: #ff0000;
+  height: 16px;
+}
+.ui-icon-closethick:hover {
+  background-color: #e6e6e6;
+  color: #1e1e1e;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.ui-icon-closethick:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  background-color: #ffff4d !important;
 }
 span.ui-icon-search {
   background-image: url(../images/search.png) !important;
@@ -2974,6 +3047,12 @@ span.ui-icon-search {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
 }
 .ui-dialog-buttonset button:hover {
   background-color: #b4b4b4;
@@ -3272,7 +3351,7 @@ span.ui-icon-search {
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
-  margin: 0.5em 0em 0.5em 0;
+  /*margin: 0.5em 0em 0.5em 0;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3414,7 +3493,7 @@ input {
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
-  margin: 0.5em 0em 0.5em 0;
+  /*margin: 0.5em 0em 0.5em 0;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -4058,13 +4137,26 @@ button {
 button:hover {
   background-color: #b4b4b4;
   color: #1e1e1e;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
-/* #####################################################*/
-/*Button löschen*/
-input[type="submit"][id*="delete"],
-input[type="button"][id*="delete"],
-button[id*="delete"] {
-  background-image: url('../images/delete.png');
+button:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+}
+/* ########################################################################################
+ * 
+ * Button löschen / delete / => color-negative-action
+ *
+ ######################################################################################## */
+input[type="submit"][id="delete"],
+input[type="button"][id="delete"],
+button[id="delete"],
+button[id="infolog-edit_button[delete]"],
+button[id="addressbook-edit_button[delete]"] {
+  background-image: url('../images/delete.png') !important;
   margin-left: 3em;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4080,12 +4172,39 @@ button[id*="delete"] {
   background-size: 20px auto !important;
   width: auto;
   height: 32px;
+  /*background-color: @color-negative-action !important;*/
+  /*color: @gray-100 !important;*/
 }
-input[type="submit"][id*="delete"]:hover,
-input[type="button"][id*="delete"]:hover,
-button[id*="delete"]:hover {
+input[type="submit"][id="delete"]:hover,
+input[type="button"][id="delete"]:hover,
+button[id="delete"]:hover,
+button[id="infolog-edit_button[delete]"]:hover,
+button[id="addressbook-edit_button[delete]"]:hover {
   background-image: url('../images/delete-hover.png') !important;
-  background-color: red !important;
+  background-color: #ff0a0a !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+  color: #ffffff !important;
+}
+input[type="submit"][id="delete"]:active,
+input[type="button"][id="delete"]:active,
+button[id="delete"]:active,
+button[id="infolog-edit_button[delete]"]:active,
+button[id="addressbook-edit_button[delete]"]:active {
+  background-image: url('../images/delete-hover.png') !important;
+  background-color: #ff3333 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4102,29 +4221,74 @@ button[id*="delete"]:hover {
   height: 32px;
   color: #ffffff;
 }
-/* #####################################################
- *  Button edit + save + apply + copy = positive action   */
+/* ########################################################################################
+ * 
+ * Button edit + save + apply + copy => color-positive-action
+ *
+ ######################################################################################## */
 button[id*="save"]:active {
-  background-color: #00ab00;
+  background-color: #00b500;
 }
 button[id*="apply"]:active {
-  background-color: #00ab00;
+  background-color: #00b500;
 }
 button[id*="copy"]:active {
-  background-color: #00ab00;
+  background-color: #00b500;
 }
 button[id*="edit_button[edit]"]:active {
-  background-color: #00ab00;
+  background-color: #00b500;
 }
 button#filemanager-select_button[ok]:active {
-  background-color: #00ab00;
+  background-color: #00b500;
 }
 /*ui-widget*/
+/*edit series*/
+button#series {
+  background-image: url('../images/edit.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+button#series:hover {
+  background-image: url('../images/edit.png') !important;
+}
 button#series:active {
-  background-color: #00ab00 !important;
+  background-color: #00b500 !important;
+}
+/*edit exception*/
+button#exception {
+  background-image: url('../images/edit.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+button#exception:hover {
+  background-image: url('../images/edit.png') !important;
 }
 button#exception:active {
-  background-color: #00ab00 !important;
+  background-color: #00b500 !important;
 }
 /*calendar series add*/
 #calendar-edit_add {
@@ -4132,33 +4296,35 @@ button#exception:active {
     &:hover {.Complete_Button_add_hover;} */
 }
 #calendar-edit_add:active {
-  background-color: #00ab00 !important;
+  background-color: #00b500 !important;
 }
 /*calendar search freetime*/
 #calendar-edit_freetime:active {
-  background-color: #00ab00 !important;
+  background-color: #00b500 !important;
 }
 /*calendar search freetime*/
 button[id*="edit_button[add_alarm]"]:active {
-  background-color: #00ab00 !important;
+  background-color: #00b500 !important;
 }
-/* #####################################################*/
-/*Button cancel */
-button[id*="cancel"]:active {
-  background-color: #ffff00 !important;
-}
-/* #####################################################*/
-/*Button abbruch / cancel */
+/* ########################################################################################
+ * 
+ * Button cancel /  => color-cancel-action
+ *
+ ######################################################################################## */
+button[id*="cancel"]:hover,
 button#cancel:hover {
-  background-color: red !important;
-  color: #ffffff;
-}
-button#cancel:hover:active {
   background-color: #ffff00 !important;
+  color: #000000;
 }
-/* #####################################################*/
-/*Button mit Bildern*/
-button.et2_button_with_image {
+button[id*="cancel"]:active,
+button#cancel:active {
+  background-color: #ffff4d !important;
+  color: #373737;
+}
+/* et2_box_widget ###*/
+/*div.et2_box_widget .et2_button_text:last-child,*/
+button[id="cancel"] {
+  background-image: url('../images/cancel.png') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4169,15 +4335,29 @@ button.et2_button_with_image {
   color: #000000;
   padding-left: 30px !important;
   background-position: 6px center !important;
+  background-repeat: no-repeat !important;
   background-size: 20px auto !important;
   width: auto;
   height: 32px;
-  background-repeat: no-repeat !important;
-  background-position: 6px center;
-  background-size: 20px auto;
+  content: "ID missing";
 }
-/* #####################################################*/
-/*Button hinzufügen*/
+button[id="cancel"]:hover {
+  background-color: #ffff00 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+button[id="cancel"]:active {
+  background-color: #ffff4d !important;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+/* ########################################################################################
+ * 
+ * Button hinzufügen 
+ *
+ ######################################################################################## */
 button.add {
   background-color: #0b5fa4 !important;
   color: #FFF;
@@ -4197,7 +4377,7 @@ button.add:before {
   color: #ffc200;
   line-height: 1.1em;
 }
-button[id*=add] {
+button[id="add"] {
   background-image: url('../images/add.png') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4214,12 +4394,15 @@ button[id*=add] {
   width: auto;
   height: 32px;
 }
-button[id*=add]:active {
-  background-color: #00ab00 !important;
+button[id="add"]:active {
+  background-color: #00b500 !important;
 }
-/* et2_box_widget #####################################################*/
-div.et2_box_widget .et2_button_text:last-child {
-  background-image: url('../images/cancel.png') !important;
+/* ########################################################################################
+ * 
+ * Button mit Bildern 
+ *
+ ######################################################################################## */
+button.et2_button_with_image {
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -4230,14 +4413,12 @@ div.et2_box_widget .et2_button_text:last-child {
   color: #000000;
   padding-left: 30px !important;
   background-position: 6px center !important;
-  background-repeat: no-repeat !important;
   background-size: 20px auto !important;
   width: auto;
   height: 32px;
-  content: "ID missing";
-}
-div.et2_box_widget .et2_button_text:last-child:active {
-  background-color: #ffff00 !important;
+  background-repeat: no-repeat !important;
+  background-position: 6px center;
+  background-size: 20px auto;
 }
 /*Button Ende #######################################################*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -4402,10 +4583,10 @@ table.egwGridView_grid tbody {
   vertical-align: top;
 }
 table.egwGridView_grid tbody tr:nth-child(even) {
-  background: #e6e6e6;
+  background: #ffffff;
 }
 table.egwGridView_grid tbody tr:nth-child(odd) {
-  background: #ffffff;
+  background: #ebebeb;
 }
 table.egwGridView_grid tbody tr.selected {
   background: rgba(255, 221, 115, 0.2) !important;
@@ -4611,7 +4792,7 @@ table.egwGridView_grid span.arrow.loading {
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
-  margin: 0.5em 0em 0.5em 0;
+  /*margin: 0.5em 0em 0.5em 0;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -5157,19 +5338,32 @@ img {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
   cursor: pointer;
-  background-image: url("../images/header_active.png");
+  /*background-image: url("../images/header_active.png");*/
+  background-image: url("../images/clear.png");
   background-position: 95% -3000px;
   background-repeat: no-repeat;
   /*background-image: none;*/
   background-color: #f0f0f0;
-  border-radius: 27px 0px 0 0;
-  border-top: 1px solid #C6CED6;
-  border-left: 1px solid #C6CED6;
-  margin: 0 0 0 0;
-  -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topleft: 5px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
   -webkit-border-top-left-radius: 27px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 27px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 27px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-top: solid 1px #b4b4b4;
+  border-left: solid 1px #b4b4b4;
+  border-right: solid 1px #b4b4b4;
+  border-bottom: solid 1px #b4b4b4;
+  margin: 0 0 0 0;
   border-bottom: none;
   height: 44px;
 }
@@ -5184,9 +5378,44 @@ img {
   padding-top: 8px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 27px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 27px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 27px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 27px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 27px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 27px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:focus {
   background-image: url("../images/ajax-loader.gif");
@@ -5495,7 +5724,7 @@ img {
 }
 .egw_fw_ui_sidemenu_listitem div a:nth-child(2):hover {
   background-color: #ff0000;
-  background-color: #b3b3b3 !important;
+  background-color: #cccccc;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -5939,20 +6168,15 @@ tr.dialog-header4 .et2_label {
 }
 .dialog-footer-toolbar .et2_selectbox {
   height: 32px;
+  top: 0px;
+  font-size: 1.2em;
 }
 .dialog-footer-toolbar label.et2_label {
-  border-color: #b4b4b4;
-  width: auto;
-  margin: 0.5em 0em 0.5em 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  background-color: #f0f0f0;
+  /*        .Complete_Button_input;
+        .border_normal;
+	.box_shadow_standard_light;
+	.color-100-gray;
+        .background-color-10-gray;*/
   padding: 6px 5px 6px 0;
   position: relative;
   top: 11px;

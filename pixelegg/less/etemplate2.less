@@ -342,9 +342,11 @@ button.et2_button_text:focus, input[type=button]:focus {
     height: 1.8em;
 }
 
-.et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
+.et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close{
     /*visibility: hidden;*/
      background-image: url(../images/close.png);
+     background: @gray-0;
+     margin: 2px;
     padding: 0px;
 }
 .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
@@ -540,11 +542,11 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 .et2_link_entry .ui-icon-close {
     display: inline-block;
-    background-color: inherit;
+    background-color: @gray-0;
     border: none;
     position: relative;
     top: 3px;
-    left: -18px;
+    left: 18px;
     cursor: pointer;
     margin-top: -3px;
 }
@@ -603,7 +605,7 @@ div.et2_link_entry input.ui-autocomplete-input {
             .dimension_width_height_xl;
 
             &:hover {.Complete_Button_Icon_hover;}
-            &:active {.Complete_Button_Icon_active;}
+            &:active {.Complete_Button_Icon_active; }
 }
 
 .et2_link {
@@ -986,8 +988,9 @@ div.message.floating {
 .nextmatch_header > .filters input[type=search] { 
     .background-color-search;
     color: black;
-    height: 25px;
+    /*height: 25px;*/
     float: left;
+    margin: 5px 0 0 2px;
 }
 
 .nextmatch_header > .filters button.et2_button {
@@ -1003,8 +1006,6 @@ div.message.floating {
     }
 
     &:active {
-        /*hide background image*/
-        /*show arrow*/
         .background_verlauf_diagonal_gray;
     }
 
@@ -1023,30 +1024,31 @@ div.message.floating {
     margin-right: 2ex;
     width: 15%;
     .Complete_Button_input;
-    &:hover{
-        .Complete_Button_input_hover;
-    }
-    &:focus{
-        .Complete_Button_input_focus;
-    }
+    &:hover{ .Complete_Button_input_hover;   }
+    &:focus{ .Complete_Button_input_focus;   }
 }
 
 
 .nextmatch_header .et2_button_icon {
+    
+}
+
+// Export Button
+.nextmatch_header > .filters .et2_button_icon {
+    margin-top: 8px;
     vertical-align: middle;
     .Complete_Button_Icon_normal;
-    margin-top: 0px;
     margin-right: 1em;
     .dimension_width_height_s;
     padding: 2px;
 
-    .et2_button_icon:hover{.Complete_Button_Icon_hover ;}
+    &:hover{.Complete_Button_Icon_hover ;}
+    &:active{.Complete_Button_Icon_active ;}
+    
 }
 
 
-.nextmatch_header > .filters .et2_button_icon {
-    margin-top: 8px;
-}
+
 .et2_nextmatch .nextmatch_header {
     border: none;
     background-image: none;

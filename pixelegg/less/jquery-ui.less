@@ -65,14 +65,15 @@ option:checked {background-color: @egw_color_1_e;}
 }
 .ui-widget-header {
     //	border: 1px solid #4297d7;
-    .bordered(1px, 1px, 1px,1px);
-    border-color: @gray-10;
+    .bordered(0px, 0px, 0px,0px) !important;
+    .gradient-thead !important;
+    /*border-color: @gray-10;*/
     //	background: #5c9ccc url(images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) 50% 50% repeat-x;
     //	color: #ffffff;
-    .color-0-gray;
+    color : @gray-100;
     font-weight: bold;
     background-image: none;
-    background-color: @egw_color_2_a;
+    border: 0px !important;
 }
 .ui-widget-header a {
     //	color: #ffffff;
@@ -172,11 +173,45 @@ option:checked {background-color: @egw_color_1_e;}
 }
 
 
+.ui-icon-close{
+    /*visibility: hidden;*/
+     background-image: url(../images/search.png);
+     background-repeat: no-repeat;
+     background-color: @gray-0;
+     background-size: contain;
+     .dimension_width_height_s;
+     margin: 2px;
+    padding: 1px;
+    margin-top: 1px;
+    .rounded (2px);
+    
+    &:hover{ background-color: @gray-30; color: @gray-90;.box_shadow_standard_light_hover;}
+
+    &:active {
+                .box_shadow_standard_light_active !important; 
+                background-color: @color-cancel-action-active !important;
+    }
+}
+
+span.ui-icon-close {margin-top: 0px; top: 5px !important;}
+
 /*Schliessen x*/
 .ui-icon-closethick {
-
+    background-image: url(../images/close.png) !important;
+     background-repeat: no-repeat;
+     background-color: @gray-0;
+     background-size: contain;
+     background-position: 0 0 !important;
     .color-0-gray;
-    background-color: @red;
+    .dimension_height_s;
+     
+      &:hover{ background-color: @gray-10; color: @gray-90; .box_shadow_standard_light_hover;}
+
+    &:active {
+                .box_shadow_standard_light_active !important; 
+                background-color: @color-cancel-action-active !important;
+    }
+    
 }
 
 
@@ -217,7 +252,7 @@ span.ui-icon-search{
 .ui-dialog-buttonset{ 
 
     button{
-        .Complete_Button_normal;
+        .Complete_Button_text_icon_before;
 
         &:hover{ background-color: @gray-30; color: @gray-90;}
     }
@@ -230,6 +265,4 @@ span.ui-icon-search{
                                 &:hover{ background-color: @gray-30 !important;}
     }
 }
-
-
-
+//

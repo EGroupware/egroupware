@@ -800,96 +800,147 @@ a.textSidebox
 button{
     .Complete_Button_normal;
 
-    &:hover{ background-color: @gray-30; color: @gray-90;}
+    &:hover{ background-color: @gray-30; color: @gray-90;.box_shadow_standard_light_hover;}
+
+    &:active {.box_shadow_standard_light_active !important;}
 }
+/* ########################################################################################
+ * 
+ * Button löschen / delete / => color-negative-action
+ *
+ ######################################################################################## */ 
 
-/* #####################################################*/
- /*Button löschen*/
+input[type="submit"][id="delete"],
+input[type="button"][id="delete"],
+button[id="delete"],
+button[id="infolog-edit_button[delete]"],
+button[id="addressbook-edit_button[delete]"]
+{
 
-input[type="submit"][id*="delete"],
-input[type="button"][id*="delete"],
-button[id*="delete"]{
-
-    background-image:url('../images/delete.png');
+    background-image:url('../images/delete.png')!important;
     margin-left: 3em;
     .Complete_Button_text_icon_before;
-
-}
-            // Hover
-            input[type="submit"][id*="delete"]:hover,
-            input[type="button"][id*="delete"]:hover,
-            button[id*="delete"]:hover {
+    /*background-color: @color-negative-action !important;*/
+    /*color: @gray-100 !important;*/
+            
+            &:hover {
 
                 background-image:url('../images/delete-hover.png') !important;
-                background-color: red !important;
+                background-color: @color-negative-action-hover !important;
+                .Complete_Button_text_icon_before;
+                color: @gray-0 !important;;
+            }           
+            &:active {
+
+                background-image:url('../images/delete-hover.png') !important;
+                background-color: @color-negative-action-active !important;
                 .Complete_Button_text_icon_before;
                 color: @gray-0;
-            }
+            }            
+}
 
-/* #####################################################
- *  Button edit + save + apply + copy = positive action   */
+/* ########################################################################################
+ * 
+ * Button edit + save + apply + copy => color-positive-action
+ *
+ ######################################################################################## */            
  
 button[id*="save"] {
-    &:active {background-color: @color-positive-action;}
+    &:active {background-color: @color-positive-action-active;}
 }
 button[id*="apply"]{
-    &:active {background-color: @color-positive-action;}
+    &:active {background-color: @color-positive-action-active;}
 }
 button[id*="copy"]{  
-    &:active {background-color: @color-positive-action;}
-    }
-    
+    &:active {background-color: @color-positive-action-active;}
+   } 
 button[id*="edit_button[edit]"]{
-    &:active {background-color: @color-positive-action;}
+    &:active {background-color: @color-positive-action-active;}
 }
 
 button#filemanager-select_button[ok]{
-    &:active {background-color: @color-positive-action;}
+    &:active {background-color: @color-positive-action-active;}
 }
 
 /*ui-widget*/
+ /*edit series*/
 button#series {
-    &:active {background-color: @color-positive-action !important;}
+    background-image:url('../images/edit.png') !important;
+    .Complete_Button_text_icon_before;
+    &:hover {background-image:url('../images/edit.png') !important;}
+    &:active {background-color: @color-positive-action-active !important;}
 }
+/*edit exception*/
 button#exception {
-    &:active {background-color: @color-positive-action !important;}
+        background-image:url('../images/edit.png') !important;
+    .Complete_Button_text_icon_before;
+    &:hover {background-image:url('../images/edit.png') !important;}
+    &:active {background-color: @color-positive-action-active !important;}
 }
 
 /*calendar series add*/
 #calendar-edit_add {
-    &:active {background-color: @color-positive-action !important;}
+    &:active {background-color: @color-positive-action-active !important;}
 /*    .Complete_Button_add;
     &:hover {.Complete_Button_add_hover;} */
 }
 /*calendar search freetime*/
 #calendar-edit_freetime{
-    &:active {background-color: @color-positive-action !important;}
+    &:active {background-color: @color-positive-action-active !important;}
 }
 /*calendar search freetime*/
 button[id*="edit_button[add_alarm]"]{
-    &:active {background-color: @color-positive-action !important;}
+    &:active {background-color: @color-positive-action-active !important;}
 }
-/* #####################################################*/
- /*Button cancel */
+/* ########################################################################################
+ * 
+ * Button cancel /  => color-cancel-action
+ *
+ ######################################################################################## */
  
-button[id*="cancel"] {
+button[id*="cancel"],
+button#cancel{
 
-    &:active{background-color: @color-cancel-action !important;}
-
-}
- 
- 
-
-/* #####################################################*/
- /*Button abbruch / cancel */
-button#cancel:hover {
-    background-color: red !important; color: @gray-0; 
-     &:active{background-color: @color-cancel-action !important;}
+                &:hover  { background-color: @color-cancel-action-hover !important; color: @gray-100; }
+                &:active { background-color: @color-cancel-action-active !important; color: @gray-80; }
 }
 
 
-/* #####################################################*/
- /*Button mit Bildern*/
+/* et2_box_widget ###*/
+/*div.et2_box_widget .et2_button_text:last-child,*/
+button[id="cancel"]{
+    
+                 background-image:url('../images/cancel.png') !important;
+                .Complete_Button_text_icon_before;
+                content: "ID missing";
+                
+                
+                &:hover {background-color: @color-cancel-action-hover !important; .box_shadow_standard_light_hover;}
+                &:active {background-color: @color-cancel-action-active !important; .box_shadow_standard_light_inset;}
+}
+
+/* ########################################################################################
+ * 
+ * Button hinzufügen 
+ *
+ ######################################################################################## */
+
+button.add {
+    .Complete_Button_add ;
+}
+
+button[id="add"]{
+                background-image:url('../images/add.png') !important;
+                .Complete_Button_text_icon_before;
+                
+                &:active {background-color: @color-positive-action-active !important;}
+}
+
+/* ########################################################################################
+ * 
+ * Button mit Bildern 
+ *
+ ######################################################################################## */
 button.et2_button_with_image{ 
         .Complete_Button_text_icon_before;
         background-repeat: no-repeat !important;
@@ -898,43 +949,18 @@ button.et2_button_with_image{
     
 }
 
-/* #####################################################*/
-/*Button hinzufügen*/
-button.add {
-    .Complete_Button_add ;
-}
-
-button[id*=add]{
-                background-image:url('../images/add.png') !important;
-                .Complete_Button_text_icon_before;
-                
-                &:active {background-color: @color-positive-action !important;}
-}
-
-/* et2_box_widget #####################################################*/
-// Cancel Button
-div.et2_box_widget .et2_button_text:last-child {
-    
-                 background-image:url('../images/cancel.png') !important;
-                .Complete_Button_text_icon_before;
-                content: "ID missing";
-                
-                &:active {background-color: @color-cancel-action !important;}
-}
-
 
 /*Button Ende #######################################################*/
 
 /////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    select {
-        padding-right: 20px !important;
-        -webkit-appearance:none;
-        margin:0;
-        background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-        background-size: 20px auto;
-    }
+            select {
+                padding-right: 20px !important;
+                -webkit-appearance:none;
+                margin:0;
+                background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+                background-size: 20px auto;
+            }
 }
-//
-//
+
 //
