@@ -56,7 +56,8 @@ class mail_acl
 	 */
 	function __construct()
 	{
-		$this->mail_bo = mail_bo::getInstance(false, $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']);
+		$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$this->mail_bo = mail_bo::getInstance(false, $acc_id);
 
 	}
 
@@ -160,7 +161,7 @@ class mail_acl
 					}
 					else
 					{
-						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is there");
+						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is wrong there");
 					}
 					egw_framework::refresh_opener($msg, 'mail', 'update');
 			}
@@ -180,7 +181,6 @@ class mail_acl
 	 *		the mailbox including all its subfolders will be considered.
 	 * @param string $msg Message
 	 *
-	 * @todo rights 'c' and 'd' should be fixed
 	 */
 	function update_acl ($content, &$msg)
 	{
@@ -213,7 +213,7 @@ class mail_acl
 				if($keys !== count($content['grid']))
 				{
 					array_push($validator, $keys);
-					$msg = lang("Could not save the ACL! Because some names are empty!");
+					$msg = lang("Error:Could not save the ACL! Because some names are empty!");
 				}
 			}
 		}

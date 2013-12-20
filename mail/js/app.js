@@ -2262,7 +2262,37 @@ app.classes.mail = AppJS.extend(
 	*/
    all_folders: function(_action)
    {
-	   egw.json('mail.mail_ui.ajax_foldertree',[null,!_action.checked])
+	   var mailbox = _senders[0].id.split('::');
+	   acc_id = mailbox[0];
+	   egw.json('mail.mail_ui.ajax_foldertree',[acc_id,!_action.checked])
+			.sendRequest();
+   },
+
+   /**
+	* Subscribe selected unsubscribed folder
+	*
+	* @param {sender} _senders
+	* @param {action} _action
+	*/
+   subscribe_folder: function(_action,_senders)
+   {
+	   var mailbox = _senders[0].id.split('::');
+	   var folder = mailbox[1], acc_id = mailbox[0];
+	   egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
+			.sendRequest();
+   },
+
+   /**
+	* Unsubscribe selected subscribed folder
+	*
+	* @param {sender} _senders
+	* @param {action} _action
+	*/
+   unsubscribe_folder: function(_action,_senders)
+   {
+	  var mailbox = _senders[0].id.split('::');
+	   var folder = mailbox[1], acc_id = mailbox[0];
+	   egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
    },
 
@@ -2274,8 +2304,9 @@ app.classes.mail = AppJS.extend(
 	 */
 	edit_acl: function(_action, _senders)
 	{
-		var folder_id = _senders[0].id.split('::');
-		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder_id[1]), '_blank', '640x480');
+		var mailbox = _senders[0].id.split('::');
+		var folder = mailbox[1], acc_id = mailbox[0];
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder)+'&acc_id='+acc_id, '_blank', '640x480');
 	},
 
 	/**
