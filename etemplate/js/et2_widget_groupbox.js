@@ -18,14 +18,14 @@
 
 /**
  * Class which implements the groupbox tag
- * 
+ *
  * @augments et2_baseWidget
- */ 
+ */
 var et2_groupbox = et2_baseWidget.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_groupbox
 	 */
 	init: function() {
@@ -46,13 +46,14 @@ var et2_groupbox_legend = et2_baseWidget.extend(
 			"name": "Label",
 			"type": "string",
 			"default": "",
-			"description": "Label for group box"
+			"description": "Label for group box",
+			"translate" : true
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_groupbox_legend
 	 */
 	init: function() {
