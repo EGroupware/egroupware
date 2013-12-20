@@ -51,7 +51,7 @@
 					<taglist-email id="forwards" width="40%" allowFreeEntries="true"/>
 				</row>
 				<row>
-					<description value="Validate selected addresses on submit: "/>
+					<description value="Validate selected addresses on submit:"/>
 					<hbox>
 						<checkbox id="check_mail_sent_to"/>
 					</hbox>
