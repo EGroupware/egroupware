@@ -674,6 +674,7 @@ select	common	en	Select
 select "%1", if your client does not support multiple addressbooks.	groupdav	en	Select "%1", if your client does not support multiple addressbooks.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	en	Select "%1", if your client support groups, eg. OS X or iOS addressbook.
 select action	common	en	Select action
+select all	common	en	Select all
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select category
 select date	common	en	Select date

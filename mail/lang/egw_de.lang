@@ -7,7 +7,7 @@
 (not connected)	mail	de	(nicht verbunden)
 (select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von EMails durch anklicken der Zeile)
 (with checkbox enforced)	mail	de	(mit Checkbox)
-account editable by user	mail	de	Anwender darf dieses Konto selbst bearbeiten
+account editable by user	mail	de	Anwender darf dieses Konto bearbeiten
 acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
 acl rights retrived successfully!	mail	de	Zugriffskontrollrechte erfolgreich gelesen!
 action	mail	de	Aktion
@@ -33,6 +33,7 @@ any of	mail	de	mit einem
 any status	mail	de	Alle Status
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
+authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
@@ -56,6 +57,7 @@ copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
+currently:	mail	de	Aktuell
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
@@ -65,6 +67,7 @@ delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
+disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 disabled!	mail	de	deaktiviert
 discard	mail	de	verwerfen
@@ -105,6 +108,7 @@ email notification update failed! you need to set an email address!	mail	de	Aktu
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-MailAdmin: Profilmanagement
 empty trash	mail	de	Papierkorb leeren
+enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
@@ -128,9 +132,9 @@ file into:	mail	de	verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
 filemanager	mail	de	Dateimanager
 files	mail	de	Anhang
-flagged	mail	de	Markierung
+flagged	mail	de	Markieren
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
-flagged / unflagged	mail	de	Markieren
+flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
@@ -139,7 +143,7 @@ force plain text	mail	de	erzwinge Text
 forward	mail	de	Weiterleiten
 forward as attachment	mail	de	weiterleiten als Anhang
 forward inline	mail	de	Inline weiterleiten
-forward messages:	mail	de	Nachricht weiterleiten an(mehrere Adressen durch Komma trennen):
+forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
 forward to	mail	de	weiterleiten an
 forward to address:	mail	de	weiterleiten an:
 from	mail	de	Von
@@ -150,6 +154,7 @@ get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnt
 greater than	mail	de	größer als
 header lines	mail	de	Kopfzeilen anzeigen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
+hostname or ip	mail	de	Hostname oder IP
 how often to check with the server for new mail	mail	de	Aktualisierungsintervall zum prüfen nach neuen E-Mails.
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
@@ -270,7 +275,7 @@ reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antwort an
 replyto	mail	de	Antwort an
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
-respond to mail sent to:	mail	de	Benachrichtigung für folgende Adressen
+respond to mail sent to:	mail	de	Benachrichtigung für
 restrict acl management	admin	de	ACL Verwaltung beschränken
 row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität der Filterregel
@@ -289,7 +294,7 @@ save:	mail	de	Speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
-select all	mail	de	Alle markieren
+select all	mail	de	Alle Auswählen
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager auswählen
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
@@ -299,7 +304,7 @@ sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
 server supports special-use folders	mail	de	Server unterstützt Funktionsordner
 serverside filterrules (sieve) are not activated	mail	de	Serverseitige Filterregeln (Sieve) sind nicht aktiviert
-set / remove flags	mail	de	Markierungen setzen / entfernen
+set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
@@ -351,13 +356,14 @@ trying to recover from session data	mail	de	Versuch der Wiederherstellung aus de
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	de	Deaktivieren Sie die horizontale Trennlinie zwischen dem Text Ihrer E-Mail und der Signatur.
 unable to fetch vacation!	mail	de	Abwesenheitsnotiz konnte nicht gelesen werden!
 undelete	mail	de	Als gelöscht markiert entfernen
-unflagged	mail	de	Nicht markiert
+unflagged	mail	de	Markierung entfernen
 unread	mail	de	Ungelesen
 unsubscribe folder	mail	de	Abbestellen
 urgent	mail	de	dringend
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
+use username+password from current user	mail	de	verwendet Benutzername+Passwort des angemeldeten Benutzers
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	admin	de	Abwesenheitsnotiz
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)

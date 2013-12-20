@@ -32,6 +32,7 @@ any of	mail	en	any of
 any status	mail	en	any status
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
+authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
@@ -55,6 +56,7 @@ copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
 could not append message:	mail	en	Could not append Message:
 could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
 create new account	mail	en	create new account
+currently:	mail	en	Currently:
 date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
@@ -64,6 +66,7 @@ delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
+disable	mail	en	Disable
 disable ruler for separation of mailbody and signature	mail	en	disable Ruler for separation of mailbody and signature
 disabled!	mail	en	disabled!
 discard	mail	en	discard
@@ -104,6 +107,7 @@ email notification update failed! you need to set an email address!	mail	en	emai
 emailaddress	admin	en	emailaddress
 emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
 empty trash	mail	en	empty trash
+enable	mail	en	Enable
 enabled!	mail	en	enabled!
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
@@ -149,6 +153,7 @@ get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP 
 greater than	mail	en	greater than
 header lines	mail	en	Header lines
 home page folders	mail	en	home page folders
+hostname or ip	mail	en	Hostname or IP
 how often to check with the server for new mail	mail	en	How often to check with the server for new mail
 how should the available information on identities be displayed	admin	en	how should the available information on identities be displayed
 how to forward messages	mail	en	how to forward messages
@@ -357,6 +362,7 @@ urgent	mail	en	urgent
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
+use username+password from current user	mail	en	Use username+password from current user
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	admin	en	vacation notice
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)

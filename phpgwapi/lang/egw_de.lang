@@ -44,7 +44,7 @@ active directory requires ssl or tls to change passwords!	common	de	Active Direc
 add	common	de	Hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
 add category	common	de	Kategorie hinzufügen
-add current	common	de	Aktuelle Ansicht als Favorit hinzufügen
+add current	common	de	Aktuelle Ansicht als Favorit
 add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
 add user to responsibles	groupdav	de	füge Benutzer zu Verantwortlichen hinzu
@@ -674,7 +674,8 @@ select	common	de	Auswählen
 select "%1", if your client does not support multiple addressbooks.	groupdav	de	"%1" auswählen, wenn der Client nur ein einziges Adressbuch unterstützt.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, z.B. für das OS X oder iOS Adressbuch.
 select action	common	de	Befehl auswählen
-select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
+select all	common	de	Alle auswählen
+select all %1 %2 for %3	common	de	Alle auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
