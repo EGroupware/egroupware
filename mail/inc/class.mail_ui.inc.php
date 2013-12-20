@@ -380,13 +380,12 @@ class mail_ui
 		);
 
 		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
-		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
-
 		if (!$this->mail_bo->icServer->acc_sieve_enabled)
 		{
 			unset($tree_actions['sieve']);
 			unset($tree_actions['vacation']);
 		}
+
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
@@ -540,6 +539,30 @@ class mail_ui
 			));
 		}
 		common::egw_footer();
+	}
+
+	/**
+	 * Ajax callback to subscribe / unsubscribe a Mailbox of an account
+	 *
+	 *
+	 * @param int $_acc_id profile Id of selected mailbox
+	 * @param string $_folderName name of mailbox needs to be subcribe or unsubscribed
+	 * @param boolean $_status set true for subscribe and false to unsubscribe
+	 *
+	 */
+	public function ajax_foldersubscription($_acc_id,$_folderName, $_status)
+	{
+		//Change the mail_bo object to related profileId
+		$this->changeProfile($_acc_id);
+
+		if($this->mail_bo->subscribe($_folderName, $_status))
+		{
+			$this->mail_bo->resetFolderObjectCache($_acc_id);
+		}
+		else
+		{
+			error_log(__METHOD__.__LINE__."()". lang('Folder %1 %2 failed!',$_folderName,$_status?'subscribed':'unsubscribed'));
+		}
 	}
 
 	/**
