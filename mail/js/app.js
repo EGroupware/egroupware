@@ -2255,6 +2255,17 @@ app.classes.mail = AppJS.extend(
 	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
    },
 
+   /**
+	* Show/Hide unsubscribed folders
+	*
+	* @param {action} _action selected action from tree context menu
+	*/
+   all_folders: function(_action)
+   {
+	   egw.json('mail.mail_ui.ajax_foldertree',[null,!_action.checked])
+			.sendRequest();
+   },
+
 	/**
 	 * Edit a folder acl for account(s)
 	 *
