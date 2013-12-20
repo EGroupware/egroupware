@@ -65,6 +65,7 @@ add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add peer server	admin	en	Add Peer Server
 add sub-category	admin	en	Add sub category
+add user	admin	en	Add user
 admin email	admin	en	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification.
 admin name	admin	en	Admin name
@@ -518,6 +519,7 @@ return to admin mainscreen	admin	en	Return to admin main screen
 return to view account	admin	en	Return to view account
 route all mails to	admin	en	Route all Mails to
 rpm or debian package	admin	en	RPM or Debian package
+run	admin	en	run
 run asynchronous services	admin	en	Run Asynchronous services
 save the category	admin	en	Save the category.
 save the category and return back to the list	admin	en	Save the category and return back to the list.
@@ -554,6 +556,7 @@ show 'powered by' logo on	admin	en	Show 'powered by' logo on
 show access log	admin	en	Show access log
 show current action	admin	en	Show current action
 show error log	admin	en	Show error log
+show members	admin	en	Show members
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address
 site	admin	en	Site

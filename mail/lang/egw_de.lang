@@ -57,7 +57,7 @@ copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
-currently:	mail	de	Aktuell
+currently:	mail	de	Aktuell:
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
@@ -327,7 +327,7 @@ sort order	mail	de	Sortierreihenfolge
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die Email vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang konfigurieren
-store to folder	mail	de	In folgendem Ordner speichern
+store to folder	mail	de	Ablageordner
 subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren

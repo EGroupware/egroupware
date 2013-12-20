@@ -65,6 +65,7 @@ add new account	admin	de	Neues Benutzerkonto hinzufügen
 add new application	admin	de	Neue Anwendung hinzufügen
 add peer server	admin	de	Server zu Serververbund hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
+add user	admin	de	Neuen Benutzer erstellen
 admin email	admin	de	E-Mail-Administration
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen ('leer' für keine Benachrichtigung)
 admin name	admin	de	Name des Administrators
@@ -554,6 +555,7 @@ show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
 show current action	admin	de	aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
+show members	admin	de	Mitglieder dieser Gruppe anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
 site	admin	de	Site
