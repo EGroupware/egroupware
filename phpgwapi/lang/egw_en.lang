@@ -44,6 +44,7 @@ active directory requires ssl or tls to change passwords!	common	en	Active direc
 add	common	en	Add
 add %1 category for	common	en	Add %1 category for
 add category	common	en	Add category
+add current	common	en	Add current
 add shortcut	common	en	Add shortcut
 add sub	common	en	Add sub
 add user to responsibles	groupdav	en	add user to responsibles
@@ -290,6 +291,7 @@ failed to create required directory "%1"!	admin	en	Failed to create required dir
 failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
+favorite queries	common	en	Favorite queries
 fax number	common	en	Fax number
 features of the editor?	common	en	Features of the editor
 february	common	en	February
@@ -515,6 +517,7 @@ nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
 no entries found, try again ...	common	en	No entries found, try again ...
+no filters	common	en	No filters
 no history for this record	common	en	No history for this record
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
 no subject	common	en	No subject

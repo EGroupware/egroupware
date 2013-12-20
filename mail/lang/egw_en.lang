@@ -23,6 +23,7 @@ all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost
 allow external images	mail	en	Allow external images
 allow images from external sources in html emails	mail	en	allow images from external sources in html emails
+allow users to create further identities	mail	en	allow users to create further identities
 allways a new window	mail	en	allways a new window
 always show html emails	mail	en	always show html emails
 an error happend while trying to remove acl rights from the account %1.	mail	en	An error happend while trying to remove ACL rights from the account %1.
@@ -323,6 +324,7 @@ step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail
 store to folder	mail	en	Store to Folder
 subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
+subscribe folder	mail	en	Subscribe folder
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
 templates	mail	en	Templates
@@ -347,8 +349,10 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	en	Trying to recover from session data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
+undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
+unsubscribe folder	mail	en	Unsubscribe folder
 urgent	mail	en	urgent
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
