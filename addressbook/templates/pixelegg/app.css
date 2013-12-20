@@ -428,6 +428,10 @@ fieldset.emailGroup {
   #addressbook-edit tr.dialog-footer-toolbar label.et2_label {
     top: 0px !important;
   }
+  button[id="addressbook-edit_button[delete]"] {
+    float: right;
+    margin-top: -37px;
+  }
   /*#######################################################*/
   /*State: Address selected*/
   /*Layout*/
@@ -467,11 +471,6 @@ fieldset.emailGroup {
   /*#                                                               #*/
   /*#                                                               #*/
   /*#################################################################*/
-  /*#addressbook-edit .et2_tabbox {
-    max-width: 100%;
-    min-width: 530px;
-    width: 550px
-}*/
   /*#######################################################*/
   /* Tab Generell */
   .leftPad5 {
@@ -661,6 +660,22 @@ fieldset.emailGroup {
   div#addressbook-search fieldset.phoneGroup .telNumbers {
     height: auto;
   }
+  div#addressbook-edit fieldset.phoneGroup table.et2_grid,
+  div#addressbook-search fieldset.phoneGroup table.et2_grid {
+    margin-left: -7px;
+  }
+  div#addressbook-edit fieldset.phoneGroup table.et2_grid tr:nth-child(even),
+  div#addressbook-search fieldset.phoneGroup table.et2_grid tr:nth-child(even) {
+    background: #ffffff;
+  }
+  div#addressbook-edit fieldset.phoneGroup table.et2_grid tr:nth-child(odd),
+  div#addressbook-search fieldset.phoneGroup table.et2_grid tr:nth-child(odd) {
+    background: #ebebeb;
+  }
+  div#addressbook-edit fieldset.phoneGroup table.et2_grid td,
+  div#addressbook-search fieldset.phoneGroup table.et2_grid td {
+    padding: 3px 0px;
+  }
   div#addressbook-edit fieldset.phoneGroup table.et2_grid td.telNumbers,
   div#addressbook-search fieldset.phoneGroup table.et2_grid td.telNumbers {
     width: 155px;
@@ -693,6 +708,18 @@ fieldset.emailGroup {
   div#addressbook-edit fieldset.emailGroup table.et2_grid,
   div#addressbook-search fieldset.emailGroup table.et2_grid {
     margin-left: -7px;
+  }
+  div#addressbook-edit fieldset.emailGroup table.et2_grid tr:nth-child(even),
+  div#addressbook-search fieldset.emailGroup table.et2_grid tr:nth-child(even) {
+    background: #ffffff;
+  }
+  div#addressbook-edit fieldset.emailGroup table.et2_grid tr:nth-child(odd),
+  div#addressbook-search fieldset.emailGroup table.et2_grid tr:nth-child(odd) {
+    background: #ebebeb;
+  }
+  div#addressbook-edit fieldset.emailGroup table.et2_grid td,
+  div#addressbook-search fieldset.emailGroup table.et2_grid td {
+    padding: 3px 0px;
   }
   div#addressbook-edit fieldset.emailGroup td,
   div#addressbook-search fieldset.emailGroup td {
@@ -755,6 +782,35 @@ fieldset.emailGroup {
     width: 200px !important;
     padding-top: 1em;
   }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid {
+    margin-left: 2px;
+    /*            tr:nth-child(even) {background: @color-even;}
+            tr:nth-child(odd) {background:  @color-odd;} */
+  }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid td {
+    padding: 5px 0px 5px 3px;
+  }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid {
+    background-color: #b4b4b4;
+    border-top: solid 1px #b4b4b4;
+    border-left: solid 1px #b4b4b4;
+    border-right: solid 1px #b4b4b4;
+    border-bottom: solid 1px #b4b4b4;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-left: 2px;
+    border-top: 1px solid #b4b4b4 !important;
+  }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid tr:nth-child(even) {
+    background: #ffffff;
+  }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid tr:nth-child(odd) {
+    background: #ebebeb;
+  }
+  #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid td {
+    padding: 5px 0px 5px 3px;
+  }
   div#addressbook-edit_addressbook-edit-cats {
     overflow: scroll;
   }
@@ -786,6 +842,19 @@ fieldset.emailGroup {
     padding-left: 1em;
   }
   /*################## Tab 4 Details ###############################*/
+  #addressbook-edit_addressbook-edit-details table.et2_grid {
+    margin-left: 2px;
+    border-top: 1px solid #b4b4b4 !important;
+  }
+  #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(even) {
+    background: #ffffff;
+  }
+  #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(odd) {
+    background: #ebebeb;
+  }
+  #addressbook-edit_addressbook-edit-details table.et2_grid td {
+    padding: 5px 0px 5px 3px;
+  }
   /*################## Tab 5  Verknüpfungen ###############################*/
   #addressbook-edit_addressbook-edit-links .th,
   #addressbook-search_addressbook-edit-links .th {

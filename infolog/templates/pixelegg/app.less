@@ -106,9 +106,30 @@ span#favorite_sidebox_infolog{
 
                             height: 39px; // hieght of add-item
 
-                            .infolog_headertext{color: #FFF !important;}
+                            .infolog_headertext{color: #FFF !important; font-size: 11px;}
 
-                            &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+                      
+                      &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+                      
+                      
+                      /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
+                      
+                      // IMG
+                        img {
+
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-right: 0.5em;
+                            padding: 2px;
+                            margin-top: -2px;
+                            vertical-align: middle;
+
+                            &:hover{.Complete_Button_Icon_hover ;}
+                            &:active{.Complete_Button_Icon_active ;}
+
+                        }
+                      
+                      
 
                          
                     }

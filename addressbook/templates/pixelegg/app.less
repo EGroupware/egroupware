@@ -274,6 +274,15 @@ div#addressbook-index{
 
 #addressbook-edit tr.dialog-footer-toolbar label.et2_label {top: 0px !important;}
 
+// Button delete
+button[id="addressbook-edit_button[delete]"]{
+       float: right;
+    margin-top: -37px; 
+    
+}
+
+
+
  /*#######################################################*/
 /*State: Address selected*/
 
@@ -324,16 +333,6 @@ td.addressbook_edit_right_td {
 /*#                                                               #*/
 /*#                                                               #*/
 /*#################################################################*/
-
-/*#addressbook-edit .et2_tabbox {
-    max-width: 100%;
-    min-width: 530px;
-    width: 550px
-}*/
-
-
-
-//table.et2_grid .addressbook_edit_general {width: 80% !important;}
 
 /*#######################################################*/
 /* Tab Generell */
@@ -495,7 +494,13 @@ div#addressbook-search{
             height: auto;
         }
 
-
+        table.et2_grid {
+            margin-left: -7px;
+            tr:nth-child(even) {background: @color-even;}
+            tr:nth-child(odd) {background: @color-odd;} 
+            td {padding: 3px 0px;}
+        }
+        
         table.et2_grid td.telNumbers{
             width: 155px;
             input { width: 140px !important; }
@@ -528,7 +533,12 @@ div#addressbook-search{
         legend { text-transform: uppercase;}
 
 
-        table.et2_grid {margin-left: -7px;}
+        table.et2_grid {
+            margin-left: -7px;
+            tr:nth-child(even) {background: @color-even;}
+            tr:nth-child(odd) {background: @color-odd;}   
+            td {padding: 3px 0px;}
+        }
 
         td {
             input {width: 82%;}
@@ -583,6 +593,41 @@ div#addressbook-search{
         //		background-color: red !important;
         padding-top: 1em;
     }
+    
+    td.addressbook_edit_general_left {
+        
+        
+        // table Addressfield
+        table.et2_grid{
+           
+            margin-left: 2px;
+/*            tr:nth-child(even) {background: @color-even;}
+            tr:nth-child(odd) {background:  @color-odd;} */
+            td {padding: 5px 0px 5px 3px;}
+            
+            
+            // Edit Name
+            div#addressbook-edit_addressbook-edit-name{
+                
+                 table.et2_grid{
+                     
+                background-color: @gray-30;
+                .bordered (@gray-30,@gray-30,@gray-30,@gray-30);
+                .rounded (5px);
+                     
+                        margin-left: 2px;
+                        border-top: 1px solid @gray-30 !important;
+                        tr:nth-child(even) {background: @color-even;}
+                        tr:nth-child(odd) {background: @color-odd;} 
+                        td {padding: 5px 0px 5px 3px;}
+                 }
+                
+            }
+            
+        }
+        
+    }
+    
 }
 
 
@@ -645,7 +690,20 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
 }
  /*################## Tab 4 Details ###############################*/
 
-
+ #addressbook-edit_addressbook-edit-details {
+     
+                      table.et2_grid{
+                        margin-left: 2px;
+                        border-top: 1px solid @gray-30 !important;
+                        tr:nth-child(even) {background: @color-even;}
+                        tr:nth-child(odd) {background: @color-odd;} 
+                        td {padding: 5px 0px 5px 3px;}
+                 }
+     
+     
+     
+     
+ }
 
  /*################## Tab 5  Verknüpfungen ###############################*/
 // Verknüpfungen
@@ -956,4 +1014,4 @@ table.uploadphoto {width: 360px !important; background-color: @gray-20 !importan
 }
 
 
-//
+//                   

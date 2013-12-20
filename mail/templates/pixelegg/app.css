@@ -589,10 +589,10 @@ div#mail-index {
   margin: 0 1% 0 0 !important;
 }
 div#mail-index div#mail-index_nm div.nextmatch_header div.filters select {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 div#mail-index div#mail-index_nm div.nextmatch_header div.filters input#mail-index_search {
-  height: 20px !important;
+  /*height: 20px !important;*/
 }
 div#mail-index div#mail-index_nm tr.mail td img {
   height: 16px;
@@ -1493,7 +1493,7 @@ input[type=button] {
   border-radius: 3px;
 }
 #mail-index_toolbar button:hover {
-  background-color: #b3b3b3 !important;
+  background-color: #cccccc;
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -1503,7 +1503,7 @@ input[type=button] {
   border-radius: 3px;
 }
 #mail-index_toolbar button:active {
-  background-color: #808080;
+  background-color: #b3b3b3 !important;
   border: 1px solid rgba(0, 0, 0, 0.9);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
