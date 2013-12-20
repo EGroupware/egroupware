@@ -653,10 +653,10 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius-topleft: 20px;
   border-radius: 3px;
   border-top-left-radius: 20px;
-  background-image: url("images/write_mail.png") !important;
+  background-image: url("images/write_mail_lighter.png") !important;
   background-position: right center !important;
   background-repeat: no-repeat;
-  background-size: 24px 24px;
+  background-size: 20px 20px;
   padding-left: 25px;
   text-align: left;
   width: 93%;
@@ -718,6 +718,24 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose {
   width: 870px;
   padding: 5px;
+}
+#mail-compose .mailComposeHeaders:first-child {
+  /*background-color: @gray-0;*/
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+  /* IE6-9 */
 }
 #mail-compose .mail-compose_toolbar img {
   width: 22px;
@@ -889,6 +907,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mailComposeHeadersSection span {
   width: 8em;
   font-size: 0.8em;
+  text-align: right;
+  padding-left: 5px;
 }
 #mail-compose .mailComposeHeaders div,
 #mail-compose .mailComposeHeadersSection div {

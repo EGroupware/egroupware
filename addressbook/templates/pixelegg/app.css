@@ -173,7 +173,7 @@ fieldset.emailGroup {
  * Give space to both contact view & infolog list
  */
   #addressbook-index {
-    height: 100%;
+    height: 99%;
   }
   #addressbook-edit {
     height: auto;
@@ -348,15 +348,26 @@ fieldset.emailGroup {
     /*height: auto;*/
     padding: 1em;
     /*min-height: 250px;*/
-    /*ADD*/
+    /*ADD Button */
     /*        div.et2_hbox,
         div.et2_box_widget*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] {
+    /*                .Complete_Button_add;
+                height: auto;
+                .color-0-gray; // white
+                font-size: 0.9em;
+
+                &:before {padding-left: 5px;}
+                &:hover {.Complete_Button_add_hover;}
+
+                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
+                img.et2_button {margin-top: -15px;}*/
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget {
     background-color: #0b5fa4 !important;
     color: #FFF;
     text-shadow: none;
-    /*    height: auto;*/
     background-image: none !important;
     -webkit-border-radius: 3px;
     -webkit-border-top-left-radius: 20px;
@@ -364,39 +375,66 @@ fieldset.emailGroup {
     -moz-border-radius-topleft: 20px;
     border-radius: 3px;
     border-top-left-radius: 20px;
-    /*height: auto;*/
-    color: #ffffff;
-    font-size: 0.9em;
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    height: 39px;
+    /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:before {
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:before {
     content: "+";
-    font-size: 1.5em;
+    font-size: 2em;
     color: #ffc200;
-    line-height: 1.1em;
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:before {
-    padding-left: 5px;
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget .infolog_headertext {
+    color: #FFF !important;
+    font-size: 11px;
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:hover {
-    background-color: #66a1d2 !important;
-    color: #ffc200;
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover {
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    background-color: #66a1d2 !important;
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img {
+    background-color: #f0f0f0;
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
     -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
     border-radius: 3px;
-    border-top-left-radius: 20px;
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5em;
+    padding: 2px;
+    margin-top: -2px;
+    vertical-align: middle;
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] span.et2_label {
-    color: #ffffff;
-    font-size: 0.9em;
-    padding-right: 11px;
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:hover {
+    background-color: #cccccc;
+    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] img.et2_button {
-    margin-top: -15px;
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:active {
+    background-color: #b3b3b3 !important;
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  }
+  .et2_container[id^="infolog-index-addressbook"] .egwGridView_scrollarea {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
   }
   /*###########################################
 #                                           #
@@ -738,7 +776,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url:hover,
   div#addressbook-search fieldset.emailGroup td a.et2_url:hover {
-    background-color: #b3b3b3 !important;
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -898,7 +936,7 @@ fieldset.emailGroup {
     width: 32px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:hover {
-    background-color: #b3b3b3 !important;
+    background-color: #cccccc;
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
     box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
@@ -908,7 +946,7 @@ fieldset.emailGroup {
     border-radius: 3px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:active {
-    background-color: #808080;
+    background-color: #b3b3b3 !important;
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

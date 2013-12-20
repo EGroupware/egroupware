@@ -49,7 +49,7 @@
 
 
 #addressbook-index {
-  height: 100%;
+  height: 99%;
 }
 #addressbook-edit {
   height: auto;
@@ -184,12 +184,14 @@ div#addressbook-index{
     /*height: auto;*/
     padding: 1em;
     /*min-height: 250px;*/
-        /*ADD*/
+       
+    
+/*ADD Button */
 /*        div.et2_hbox,
         div.et2_box_widget*/
         .et2_hbox_right[id*="_infolog-index-header_right"]{
-                .Complete_Button_add;
-                /*height: auto;*/
+/*                .Complete_Button_add;
+                height: auto;
                 .color-0-gray; // white
                 font-size: 0.9em;
 
@@ -197,10 +199,57 @@ div#addressbook-index{
                 &:hover {.Complete_Button_add_hover;}
 
                 span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
-                img.et2_button {margin-top: -15px;}
+                img.et2_button {margin-top: -15px;}*/
 
-                }
- }
+         div.et2_box_widget{
+                        background-color: @egw_color_blue_lighter !important;
+                        color: #FFF;
+                        text-shadow: none;
+//                        height: 35px;
+                        background-image: none !important;
+                        .border_radius_button_lefttop;
+
+                        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
+                            .border_radius_button_lefttop;
+                            .box_shadow_standard_light;
+
+                            height: 39px; // hieght of add-item
+
+                            .infolog_headertext{color: #FFF !important; font-size: 11px;}
+
+                      
+                      &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+                      
+                      
+                      /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
+                      
+                      // IMG
+                        img {
+
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-right: 0.5em;
+                            padding: 2px;
+                            margin-top: -2px;
+                            vertical-align: middle;
+
+                            &:hover{.Complete_Button_Icon_hover ;}
+                            &:active{.Complete_Button_Icon_active ;}
+
+                        }
+                    }
+                
+                
+                
+        }
+
+        // Scrollarea in Infolog
+        .egwGridView_scrollarea{ 
+            overflow-y: scroll !important;
+            overflow-x: hidden !important;
+        }
+}
 
 
 
