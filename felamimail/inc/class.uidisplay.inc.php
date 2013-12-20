@@ -180,7 +180,7 @@
 			return count($addresses);
 		}
 
-		static function transform_url2text($matches)
+		static function transform_url2link($matches)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($matches));
 			$webserverURL   = $GLOBALS['egw_info']['server']['webserver_url'];
@@ -190,14 +190,16 @@
 			$linkTextislink = false;
 			// this is the actual url
 			$matches[2] = trim(strip_tags($matches[2]));
-			if ($matches[2]==$matches[1]) $linkTextislink = true;
+			if ($matches[1]===$matches[2]) $linkTextislink = true;
 			$matches[1] = str_replace(' ','%20',$matches[1]);
+//error_log(__METHOD__.__LINE__.array2string($matches[1]));
+//error_log(__METHOD__.__LINE__.array2string($matches[2]));
 			//return ($linkTextislink?' ':'[ ').$matches[1].($linkTextislink?'':' -> '.$matches[2]).($linkTextislink?' ':' ]');
 			return '<a target="'.((stripos($matches[1],$webserverURL) !== false || stripos($matches[1],$fullWebServerUrl) !== false || substr(trim($matches[1]),0,1) == '/')?'_top':'_blank').'" href="'.$matches[1].'">'.($linkTextislink?$matches[1]:$matches[2]).'</a>';
 		}
 
 		function parseHREF (&$body) {
-			$body = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','self::transform_url2text',$body,-1,$counts);
+			$body = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*?)</a>~si','self::transform_url2link',$body,-1,$counts);
 			return $counts;
 		}
 
