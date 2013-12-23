@@ -692,7 +692,7 @@ function etemplate2_handle_load(_type, _response)
 	// need to set app_header before message, as message temp. replaces app_header
 	if (typeof data.data == 'object' && typeof data.data.app_header == 'string')
 	{
-		window.egw_app_header(data.data.app_header);
+		window.egw_app_header(data.data.app_header, data.data.currentapp||null);
 		delete data.data.app_header;
 	}
 

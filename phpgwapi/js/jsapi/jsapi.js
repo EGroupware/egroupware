@@ -313,13 +313,14 @@ function egw_message(_msg, _type)
  * Update app-header and website-title
  *
  * @param _header
+ * @param {_app=null} Application name, if not for the current app
  */
-function egw_app_header(_header)
+function egw_app_header(_header,_app)
 {
 	var framework = egw_getFramework();
 	if (framework && !window.opener)	// not for popups
 	{
-		var app = egw_getAppName();
+		var app = _app || egw_getAppName();
 		var title = document.title.replace(/[.*]$/, '['+_header+']');
 
 		framework.setWebsiteTitle.call(window.framework, app, title, _header);
