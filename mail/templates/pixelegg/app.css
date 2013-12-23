@@ -433,18 +433,16 @@ input[type=button] {
 }
 #mail-index_previewAttachmentArea {
   background-color: #efefdf;
-  max-height: 3em;
+  max-height: 1.6em;
   max-width: 50%;
-  position: absolute;
   overflow: scroll;
   overflow-x: hidden;
-  right: 0;
-  top: 25px;
   border: 1px solid red;
   opacity: 1;
   -moz-opacity: 1;
   filter: alpha(opacity=100);
   display: inline-block !important;
+  vertical-align: text-top;
 }
 #mail-index_previewAttachmentArea.noContent {
   border: 0px !important;
@@ -540,13 +538,13 @@ div.mailPreviewHeaders > * {
 }
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
-  max-height: 1em;
+  max-height: 1.3em;
   max-width: 50%;
-  padding: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div.mailPreviewHeaders div.mail_extraEmails.visible {
+div.mailPreviewHeaders div.mail_extraEmails.visible,
+div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   position: absolute;
   left: 7em;
   display: block;
@@ -558,6 +556,7 @@ div.mailPreviewHeaders div.mail_extraEmails.visible {
 }
 .mail_extraEmails > a {
   display: inline;
+  margin: 5px 5px 0 0;
 }
 .mail_extraEmails.visible > a {
   display: list-item;
@@ -608,7 +607,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
   width: 50%;
 }
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
-  width: 50%;
+  position: absolute;
+  right: 0px;
+  margin: 5px 5px 0 0;
 }
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 100%;
@@ -1486,7 +1487,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
   position: absolute;
   border: 1px solid silver;
-  top: 75px;
+  top: 90px;
   bottom: 0;
   left: 3px;
   right: 0;
@@ -1545,18 +1546,8 @@ input[type=button] {
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
-  max-height: 5%;
-  max-width: 50%;
-  position: absolute;
-  overflow: scroll;
-  overflow-x: hidden;
-  right: 7px;
-  top: 45px;
   border-color: #e6e6e6;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  opacity: 1;
-  -moz-opacity: 1;
-  z-index: 100;
 }
 #mail-index_previewAttachmentArea img {
   width: 16px;

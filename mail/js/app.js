@@ -57,6 +57,16 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
+
+		// Set refresh from preferences
+		this.mail_refreshTimeOut = 1000 * (
+			// Nextmatch setting
+			egw.preference('nextmatch-mail.index.rows-autorefresh','mail') ||
+			// Preference setting copied from felamimail
+			egw.preference('refreshTime','mail') ||
+			0
+		);
+
 		window.register_app_refresh("mail", this.app_refresh);
 	},
 
@@ -541,60 +551,72 @@ app.classes.mail = AppJS.extend(
 			return;
 		}
 
-		// Set up additional addresses.  Too bad they weren't all together somewhere.
-		// We add a new URL widget for each, so they get all the UI
+		// Set up additional content that can be expanded.
+		// We add a new URL widget for each address, so they get all the UI
 		// TO addresses have the first one split out, not all together
 		// list of keys:
-		var additional_addresses = [
-			{data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
-			{data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'}
+		var expand_content = [
+			{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
+			{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
+			{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
 		];
-		for(var j = 0; j < additional_addresses.length; j++)
+		for(var j = 0; j < expand_content.length; j++)
 		{
-			var field = additional_addresses[j] || [];
-			var addresses = dataElem.data[field.data] || [];
+			var field = expand_content[j] || [];
+			var content = dataElem.data[field.data] || [];
 
 			// Add in single address, if there
 			if(typeof field.data_one != 'undefined')
 			{
-				addresses.unshift(dataElem.data[field.data_one]);
+				content.unshift(dataElem.data[field.data_one]);
 				// Unique
-				addresses = addresses.filter(function(value, index, self) {
+				content = content.filter(function(value, index, self) {
 					return self.indexOf(value) === index;
 				});
 			}
 
 			// Disable whole box if there are none
 			var line = this.et2.getWidgetById(field.line);
-			if(line != null) line.set_disabled(addresses.length == 0);
+			if(line != null) line.set_disabled(content.length == 0);
 
 			var widget = this.et2.getWidgetById(field.widget);
 			if(widget == null) continue;
 			$j(widget.getDOMNode()).removeClass('visible');
 
-			// Remove any existing
-			var children = widget.getChildren();
-			for(var i = children.length-1; i >= 0; i--)
+			// Programatically build the child elements
+			if(field.build_children)
 			{
-				children[i].destroy();
-				widget.removeChild(children[i]);
+				// Remove any existing
+				var children = widget.getChildren();
+				for(var i = children.length-1; i >= 0; i--)
+				{
+					children[i].destroy();
+					widget.removeChild(children[i]);
+				}
+
+				// Add for current record
+				for(var i = 0; i < content.length; i++)
+				{
+					var value = content[i];
+					var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
+					email.loadingFinished();
+				}
+			}
+			else
+			{
+				widget.set_value({content: content});
 			}
 
-			// Add for current record
-			for(var i = 0; i < addresses.length; i++)
-			{
-				var value = addresses[i];
-				var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
-				email.loadingFinished();
-			}
-
-			// Set up button
+			// Show or hide button, as needed
 			line.iterateOver(function(button) {
+				// Avoid binding to any child buttons
+				if(button.getParent() != line) return;
 				button.set_disabled(
 					// Disable if only 1 address
-					addresses.length <=1 ||
-					// Disable if all addresses are visible
-					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth
+					content.length <=1 || (
+					// Disable if all content is visible
+					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
+					$j(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
 				);
 			},this,et2_button);
 		}
@@ -602,14 +624,6 @@ app.classes.mail = AppJS.extend(
 		//console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
 		this.mail_disablePreviewArea(false);
-		if (dataElem.data.attachmentsBlock.length<1)
-		{
-			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
-		}
-		else
-		{
-			this.et2.getWidgetById('previewAttachmentArea').set_value({content:dataElem.data.attachmentsBlock});
-		}
 		this.et2.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		//console.log(IframeHandle);
@@ -622,10 +636,16 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * showAllAddresses
+	 * If a preview header is partially hidden, this is the handler for clicking the
+	 * expand button that shows all the content for that header.
+	 * The button must be directly after the widget to be expanded in the template.
+	 * The widget to be expended is set in the event data.
+	 *
 	 * requires: mainWindow, one mail selected for preview
+	 *
+	 * @param {DOMNode} button
 	 */
-	showAllAddresses: function(button) {
+	showAllHeader: function(button) {
 		// Show list as a list
 		var list = jQuery(button).prev();
 		list.toggleClass('visible');
@@ -650,11 +670,10 @@ app.classes.mail = AppJS.extend(
 	mail_startTimerFolderStatusUpdate: function(_refreshTimeOut) {
 		if (typeof _refreshTimeOut == 'undefined')
 		{
-			var minutes = egw.preference('refreshTime','mail');
-			this.mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes
+			_refreshTimeOut = this.mail_refreshTimeOut;
 		}
 		if (this.mail_refreshTimeOut > _refreshTimeOut) _refreshTimeOut = this.mail_refreshTimeOut;
-		if(this.mail_doTimedRefresh) {
+		if(this.mail_doTimedRefresh || _refreshTimeOut == 0) {
 			window.clearTimeout(this.mail_doTimedRefresh);
 		}
 		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds

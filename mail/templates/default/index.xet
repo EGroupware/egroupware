@@ -52,29 +52,28 @@
 					<description value="From"/>
 					<url-email id="previewFromAddress" readonly="true"/>
 				</hbox>
+				<hbox width="100%" id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
+					<description value="Subject"/>
+					<description align="left" id="previewSubject" readonly="true"/>
+				</hbox>
+				<hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
+					<date-time align="left" id="previewDate" readonly="true"/>
+				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
 					<hbox id="additionalToAddress" class="mail_extraEmails">
 					</hbox>
-					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllAddresses"/>
+					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersCC" class="mailPreviewHeaders">
 					<description value="CC"/>
 					<hbox id="additionalCCAddress" class="mail_extraEmails">
 					</hbox>
-					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllAddresses"/>
+					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
-				<hbox width="100%" id="mailPreviewHeadersDate" class="mailPreviewHeaders">
-					<description value="Date"/>
-					<date-time align="left" id="previewDate" readonly="true"/>
-				</hbox>
-				<hbox width="100%" id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
-					<description value="Subject"/>
-					<description align="left" id="previewSubject" readonly="true"/>
-				</hbox>
-				<hbox class="previewAttachmentArea">
-					<!-- <html id="previewAttachmentArea"/> -->
-					<grid disabled="@no_griddata" id="previewAttachmentArea">
+				<hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
+					<description value="Attachments"/>
+					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea">
 					  <columns>
 					   <column disabled="!@showtempname"/>
 					   <column disabled="!@showtempname"/>
@@ -94,7 +93,7 @@
 						<description id="${row}[partID]" />
 						<description id="${row}[type]" />
 						<description id="${row}[winmailFlag]" />
-						<description class="useEllipsis et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
+						<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
 						<description id="${row}[mimetype]" />
 						<description align="right" id="${row}[size]" />
 						<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
@@ -103,6 +102,7 @@
 					   </row>
 					  </rows>
 					</grid>
+					<buttononly class="et2_button ui-button" label="Show all attachments" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
 				<hbox id="mailPreviewIcons">
 					<toolbar id="toolbar"/>

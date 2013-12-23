@@ -438,18 +438,16 @@ input[type=button] {
 }
 #mail-index_previewAttachmentArea {
 	background-color:#efefdf;
-	max-height: 3em;
+	max-height: 1.6em;
 	max-width: 50%;
-	position: absolute;
 	overflow:scroll;
 	overflow-x:hidden;
-	right: 0;
-	top: 25px;
 	border: 1px solid red;
 	opacity: 1;
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
 	display: inline-block !important;
+	vertical-align: text-top;
 }
 #mail-index_previewAttachmentArea.noContent {
 	border:0px !important;
@@ -543,13 +541,13 @@ div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-c
 
 div.mailPreviewHeaders div.mail_extraEmails {
 	display: inline-block;
-	max-height: 1em;
+	max-height: 1.3em;
 	max-width: 50%;
-	padding: 5px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-div.mailPreviewHeaders div.mail_extraEmails.visible {
+div.mailPreviewHeaders div.mail_extraEmails.visible,
+div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	position: absolute;
 	left: 7em;
 	display: block;
@@ -561,6 +559,7 @@ div.mailPreviewHeaders div.mail_extraEmails.visible {
 }
 .mail_extraEmails > a {
 	display:inline;
+	margin: 5px 5px 0 0;
 }
 .mail_extraEmails.visible > a {
 	display: list-item;

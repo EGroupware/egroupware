@@ -140,7 +140,9 @@ div#mail-index{
 
             // Date
             div#mail-index_mailPreviewHeadersDate{
-                width: 50%;
+                position: absolute;
+				right: 0px;
+				margin: 5px 5px 0 0;
             }
 
             // Subject
@@ -1096,7 +1098,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
     position: absolute;
     border: 1px solid silver;
-    top: 75px;
+    top: 90px;
     bottom: 0;
     left: 3px;
     right: 0;
@@ -1145,18 +1147,8 @@ input[type=button] {
 #mail-index_previewAttachmentArea {
     //	background-color:#efefdf;
     .background-color-10-gray;
-    max-height: 5%;
-    max-width: 50%;
-    position: absolute;
-    overflow:scroll;
-    overflow-x:hidden;
-    right: 7px;
-    top: 45px;
     border-color: @gray-10;
     .border_normal;
-    opacity: 1;
-    -moz-opacity:1;
-    z-index: 100;
     //	filter: Alpha(opacity=100);
 
     img {width: 16px; height: 16px;}
