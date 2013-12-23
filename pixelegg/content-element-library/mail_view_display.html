@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+[EGroupware] Content Element Library
+
+Author: Stefan Reinhardt (c) pixelegg
+-->
+<html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+
+
+        <title> [EGroupware] Content Element Library</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="EGroupware" />
+        <meta name="description" content="EGroupware" />
+        <meta name="keywords" content="EGroupware" />
+        <meta name="copyright" content="Stylite AG 2013, see http://www.stylite.de/EPL" />
+        <meta name="language" content="de" />
+        <meta name="author" content="Stylite AG www.stylite.de" />
+
+        <meta name="robots" content="none" />
+        <link rel="icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico" />
+        <link rel="shortcut icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" />
+        <link href="/egroupware2/phpgwapi/js/jscalendar/calendar-blue.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/jquery/chosen/chosen.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/etemplate/templates/default/etemplate2.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/pixelegg/css/pixelegg.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/templates/idots/print.css" type="text/css" rel="StyleSheet" />
+
+        <!--mail-->
+        <link type="text/css" rel="stylesheet" href="/egroupware2/mail/templates/pixelegg/app.css">
+
+        <link type="text/css" rel="stylesheet" href="/egroupware2/pixelegg/content-element-library/css/contentElementLibrary.css">
+
+
+
+    </head>
+    <body>
+        <hr  class="clearer">
+        <div class="headline1">Mail View Compose (Show Mail)</div>
+        
+         <hr id="1" class="clearer">
+         
+          
+         <div id="popupdialog-mail">
+             
+             <div id="popupMainDiv">
+<div class="et2_container" id="mail-display"><div><span id="mail-display_msg"></span><div class="et2_vbox et2_box_widget mailDisplay mailDisplayHeaderSection"><div class="et2_toolbar ui-widget-header ui-corner-all" id="mail-display_toolbar"><button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Compose as new" src="https://sbtest-et2.egroupware.de/egw/pixelegg/images/new.png"></span></button><button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Reply" src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/mail_reply.png"></span></button><button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Reply All" src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/mail_replyall.png"></span></button><span class="ui-state-default"><div id="mail-display_forward_wrapper" name="forward" class="et2_clickable"><div class="et2_dropdown"><button id="mail-display_forward" class="ui-widget ui-corner-left ui-state-default"><img style="display: none;">Forward</button><button class="ui-widget ui-corner-right ui-state-default"><div class="ui-icon ui-icon-triangle-1-s"></div></button></div><ul id="mail-display_forward_menu" style="display: none;" class="ui-menu ui-widget ui-widget-content ui-corner-all" role="menu" tabindex="0"><li data-id="forwardinline" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-7" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/mail_forward.png" class="et2_button_icon">Inline weiterleiten</a></li><li data-id="forwardasattach" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-8" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/mail_forward.png" class="et2_button_icon">weiterleiten als Anhang</a></li></ul></div></span> <button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="InfoLog" src="https://sbtest-et2.egroupware.de/egw/infolog/templates/pixelegg/images/navbar.png"></span></button><button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Verfolgungssystem" src="https://sbtest-et2.egroupware.de/egw/tracker/templates/pixelegg/images/navbar.png"></span></button> <button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Drucken" src="https://sbtest-et2.egroupware.de/egw/pixelegg/images/print.png"></span></button><span class="ui-state-default"><div id="mail-display_save_wrapper" name="save" class="et2_clickable"><div class="et2_dropdown"><button id="mail-display_save" class="ui-widget ui-corner-left ui-state-default"><img style="display: none;">Speichern</button><button class="ui-widget ui-corner-right ui-state-default"><div class="ui-icon ui-icon-triangle-1-s"></div></button></div><ul id="mail-display_save_menu" style="display: none;" class="ui-menu ui-widget ui-widget-content ui-corner-all" role="menu" tabindex="0"><li data-id="save2disk" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-15" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/fileexport.png" class="et2_button_icon">Save message to disk</a></li><li data-id="save2filemanager" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-16" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/filemanager/templates/pixelegg/images/navbar.png" class="et2_button_icon">Save to filemanager</a></li></ul></div></span><span class="ui-state-default"><div id="mail-display_view_wrapper" name="view" class="et2_clickable"><div class="et2_dropdown"><button id="mail-display_view" class="ui-widget ui-corner-left ui-state-default"><img style="display: none;">Anzeigen</button><button class="ui-widget ui-corner-right ui-state-default"><div class="ui-icon ui-icon-triangle-1-s"></div></button></div><ul id="mail-display_view_menu" style="display: none;" class="ui-menu ui-widget ui-widget-content ui-corner-all" role="menu" tabindex="0"><li data-id="header" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-23" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/kmmsgread.png" class="et2_button_icon">Header lines</a></li><li data-id="mailsource" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-24" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/fileexport.png" class="et2_button_icon">Mail Source</a></li><li data-id="openastext" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-25" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/etemplate/templates/default/images/mime16_text.png" class="et2_button_icon">In Text Modus öffnen</a></li><li data-id="openashtml" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-26" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/etemplate/templates/default/images/mime16_text_html.png" class="et2_button_icon">In HTML Modus öffnen</a></li></ul></div></span> <span class="ui-state-default"><div id="mail-display_mark_wrapper" name="mark" class="et2_clickable"><div class="et2_dropdown"><button id="mail-display_mark" class="ui-widget ui-corner-left ui-state-default"><img style="display: none;">Markierungen setzen / entfernen</button><button class="ui-widget ui-corner-right ui-state-default"><div class="ui-icon ui-icon-triangle-1-s"></div></button></div><ul id="mail-display_mark_menu" style="display: none;" class="ui-menu ui-widget ui-widget-content ui-corner-all" role="menu" tabindex="0"><li data-id="flagged" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-33" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/unread_flagged_small.png" class="et2_button_icon">wichtig</a></li><li data-id="unflagged" class="ui-menu-item" role="presentation"><a href="#" id="ui-id-34" class="ui-corner-all" tabindex="-1" role="menuitem"><img src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/read_flagged_small.png" class="et2_button_icon">Unflagged</a></li></ul></div></span> <button class="et2_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text"><img class="et2_button_icon" title="Löschen" src="https://sbtest-et2.egroupware.de/egw/pixelegg/images/delete.png"></span></button> </div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="width: 100%;"><span class="et2_label">Von</span><div class="et2_taglist_ro et2_clickable" id="mail-display_FROM" name="FROM"><ul class="ms-sel-ctn"><li data-value="Stefan Reinhardt &lt;stefan.reinhardt@pixelegg.de&gt;" class="ms-sel-item">Stefan Reinhardt <stefan.reinhardt@pixelegg.de></stefan.reinhardt@pixelegg.de></li></ul></div></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="display: none; width: 100%;"><span class="et2_label">on behalf of</span><div class="et2_taglist_ro et2_clickable" id="mail-display_SENDER" name="SENDER"><ul class="ms-sel-ctn"></ul></div></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="width: 100%;"><span class="et2_label">An</span><div class="et2_taglist_ro et2_clickable" id="mail-display_TO" name="TO"><ul class="ms-sel-ctn"><li data-value="sysop@sbtest-et2.egroupware.de" class="ms-sel-item">sysop@sbtest-et2.egroupware.de</li><li data-value="sb@sbtest-et2.egroupware.de" class="ms-sel-item">sb@sbtest-et2.egroupware.de</li></ul></div></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="display: none; width: 100%;"><span class="et2_label">Kopie</span><div class="et2_taglist_ro et2_clickable" id="mail-display_CC" name="CC"><ul class="ms-sel-ctn"></ul></div></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="display: none; width: 100%;"><span class="et2_label">Blindkopie</span><div class="et2_taglist_ro et2_clickable" id="mail-display_BCC" name="BCC"><ul class="ms-sel-ctn"></ul></div></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="width: 100%;"><span class="et2_label">Datum</span><time class="et2_date_ro et2_label" id="mail-display_mail_displaydate" datetime="2013-12-16 11:41:59">16.12.2013 11:41</time></div><div class="et2_hbox et2_box_widget mailDisplayHeaders" style="width: 100%;"><span class="et2_label">Betreff</span><span class="et2_label" id="mail-display_mail_displaysubject">Mit Anhang</span></div></div><div class="et2_vbox et2_box_widget mailDisplay" style="width: 100%;"><div class="et2_box et2_box_widget mailDisplayContainer mailDisplayContainerFixedHeight" style="top: 150px;"><span id="mail-display_mail_displaybody">
+		<style>
+			body, td, textarea {
+				font-family: Verdana, Arial, Helvetica,sans-serif;
+				font-size: 11px;
+			}
+		</style>
+		<style type="text/css">
+body,html {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+}
+.td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    color: black;
+    background-color: #FFFFFF;
+}
+pre {
+	white-space: pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	width: 99%;
+}
+blockquote[type=cite] {
+	margin: 0;
+	border-left: 2px solid blue;
+	padding-left: 10px;
+	margin-left: 0;
+	color: blue;
+}
+</style>
+<div class="mailDisplayBody">
+ <table width="100%" style="table-layout:fixed"><tbody><tr><td class="td_display">
+  
+  
+    <br>
+    <pre class="moz-signature">-- 
+p-i-x-e-l-e-g-g  informationsdesign
+TYPO3 | DESIGN | INTERNET | HOSTING
+
+Das PLUS f&amp;#159;r Ihre Firma
++ Werbung + Kommunikation
++ Webbasierende L&amp;#154;sungen
++ IT Infrastruktur
+----------------------------------------------------------
+Stefan Reinhardt 
+Diplom Informatiker (FH)
+
+HQ: Wasserstr. 22  / 68519 Viernheim
+Tel: +49(6204) 62 02 34 / Fax: +49(6204) 60 11 00 79
+<a href="http://www.pixelegg.de" class="moz-txt-link-abbreviated">www.pixelegg.de</a>
+----------------------------------------------------------
+FA BENSHEIM / DE 2200279224
+----------------------------------------------------------
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Disclaimer:
+Diese E-Mail enth&amp;#138;lt vertrauliche und/oder rechtlich gesch&amp;#159;tzte Informationen. Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrt&amp;#159;mlich erhalten haben, informieren Sie bitte sofort den Absender und vernichten Sie diese Mail. Das unerlaubte Kopieren sowie die unbefugte Weitergabe dieser Mail ist nicht gestattet. 
+
+This e-mail may contain confidential and/or privileged information. If you are not the intended recipient (or have received this e-mail in error) please notify the sender immediately and destroy this e-mail. Any unauthorised copying, disclosure or distribution of the material in this e-mail is strictly forbidden. 
+</pre>
+  
+
+</td></tr></tbody></table></div><script type="text/javascript">
+			function GoToAnchor(aname)
+			{
+				window.location.hash=aname;
+			}
+		</script></span></div><div class="et2_box et2_box_widget mailDisplayAttachments"><table class="et2_grid" id="mail-display_mail_displayattachments"><tbody><tr><td class="useEllipsis et2_link" style="width: 50%;"><span class="et2_label useEllipsis et2_link et2_clickable" id="mail-display_0[filename]">Bildschirmfoto 2013-12-16 um 11.38.36.jpg</span></td><td style="width: 20%;"><span class="et2_label" id="mail-display_0[mimetype]">JPEG Datei (image/jpeg)</span></td><td align="right" style="width: 11%;"><span class="et2_label" id="mail-display_0[size]">221.2k</span></td><td style="width: 3%;"><img class="et2_button et2_button_icon et2_clickable" id="mail-display_0[save]" src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/fileexport.png" alt="" title=""></td><td style="width: 3%;"><img class="et2_button et2_button_icon et2_clickable" id="mail-display_0[saveAsVFS]" src="https://sbtest-et2.egroupware.de/egw/filemanager/templates/pixelegg/images/navbar.png" alt="" title=""></td><td class="$row_cont[classSaveAllPossiblyDisabled]" style="width: 3%;" colspan="2"><img class="et2_button et2_button_icon mail_DisplayNone et2_clickable" id="mail-display_0[save_all]" src="https://sbtest-et2.egroupware.de/egw/mail/templates/pixelegg/images/save_all.png" alt="" title=""></td></tr></tbody></table></div></div></div></div>
+</div>
+             
+             
+         </div>
+        
+    </body>
+</html>
