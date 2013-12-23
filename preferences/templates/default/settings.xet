@@ -21,12 +21,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="preferences.settings" template="" lang="" group="0" version="1.9.001">
-		<menulist>
-			<menupopup id="type" onchange="1" class="prefType"/>
-		</menulist>
+	<template id="preferences.settings" template="" lang="" group="0" version="1.9.002">
 		<menulist>
 			<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
+		</menulist>
+		<menulist>
+			<menupopup id="type" onchange="1" class="prefType"/>
 		</menulist>
 		<tabbox id="tabs">
 			<tabs>
