@@ -553,9 +553,15 @@ app.classes.mail = AppJS.extend(
 		{
 			var field = additional_addresses[j] || [];
 			var addresses = dataElem.data[field.data] || [];
+
+			// Add in single address, if there
 			if(typeof field.data_one != 'undefined')
 			{
 				addresses.unshift(dataElem.data[field.data_one]);
+				// Unique
+				addresses = addresses.filter(function(value, index, self) {
+					return self.indexOf(value) === index;
+				});
 			}
 
 			// Disable whole box if there are none
@@ -584,7 +590,12 @@ app.classes.mail = AppJS.extend(
 
 			// Set up button
 			line.iterateOver(function(button) {
-				button.set_disabled(addresses.length <=1);
+				button.set_disabled(
+					// Disable if only 1 address
+					addresses.length <=1 ||
+					// Disable if all addresses are visible
+					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth
+				);
 			},this,et2_button);
 		}
 
