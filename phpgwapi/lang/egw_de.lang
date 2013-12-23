@@ -198,7 +198,7 @@ ctrl	common	de	Ctr
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
-current users	common	de	Derzeit angemeldete Benutzer
+current users	common	de	Aktive Benutzersitzungen
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 database error	common	de	Datenbank Fehler
@@ -253,7 +253,7 @@ e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
 eastern european	common	de	Osteuropäische
 ecuador	common	de	EQUADOR
-edit	common	de	Editieren
+edit	common	de	Bearbeiten
 edit %1 category for	common	de	%1 Kategorie editieren für
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
@@ -531,6 +531,7 @@ not	common	de	nicht
 not a user yet? register now	common	de	Noch kein Benutzer? Registrieren Sie sich jetzt
 not assigned	common	de	nicht zugewiesen
 not readable %1 entry of user %2	common	de	Nicht lesbarer %1 Eintrag des Benutzers %2
+not supported by current application!	common	de	Für diese Anwendung nicht möglich!
 note	common	de	Notiz
 notes	common	de	Notizen
 notifications	common	de	Benachrichtigungen

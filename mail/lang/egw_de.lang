@@ -24,13 +24,14 @@ all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML EMails
-allow users to create further identities	mail	de	Anwender dürfen weiterer Identitäten hinzufügen
+allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten hinzufügen
 allways a new window	mail	de	immer in einem neuen Fenster
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 an error happend while trying to remove acl rights from the account %1.	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen.
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
+append	mail	de	hinzufügen
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 authentication	mail	de	Authentifizierung
@@ -163,6 +164,7 @@ identity	mail	de	Indentität
 identity+signature	mail	de	Intentität+Signature
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
+if different from email address	mail	de	falls abweichend zur E-Mail
 if from contains:(*)	mail	de	wenn Von enthält:(*)
 if mail body content / attachment type	mail	de	wenn E-Mail Text enthält /Anhang Type
 if mail body message type	mail	de	wenn E-Mail Type
@@ -244,6 +246,7 @@ please contact your administrator to validate if your server supports serverside
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
 please supply the message to send with auto-responses	mail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
+post	mail	de	versenden
 prevent managing filters	mail	de	Zugriff auf Filterregeln deaktivieren
 prevent managing folders	mail	de	Zugriff auf die Ordnerverwaltung deaktivieren
 prevent managing forwards	mail	de	Zugriff auf E-Mail Weiterleitung deaktivieren
@@ -257,7 +260,9 @@ quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstütz
 quota: %1	mail	de	Quota: %1
 read	mail	de	lesen
 read / unread	mail	de	Gelesen / Ungelesen
+readable	mail	de	Lesen
 reason!	mail	de	Grund!
+recieve notification	mail	de	Empfangsbestätigung anfordern
 recursively	mail	de	Rekursiv
 refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert

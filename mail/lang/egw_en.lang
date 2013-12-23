@@ -30,6 +30,7 @@ an error happend while trying to remove acl rights from the account %1.	mail	en	
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
 any status	mail	en	any status
+append	mail	en	append
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 authentication	mail	en	Authentication
@@ -162,6 +163,7 @@ identity	mail	en	Identity
 identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
 if authentication required	mail	en	if authentication required
+if different from email address	mail	en	if different from EMail address
 if from contains:(*)	mail	en	If from contains:(*)
 if mail body content / attachment type	mail	en	If mail body content / attachment type
 if mail body message type	mail	en	If mail body message type
@@ -243,6 +245,7 @@ please contact your administrator to validate if your server supports serverside
 please select a address	mail	en	Please select a address
 please select the number of days to wait between responses	mail	en	Please select the number of days to wait between responses
 please supply the message to send with auto-responses	mail	en	Please supply the message to send with auto-responses
+post	mail	en	post
 prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
 prevent managing forwards	mail	en	Prevent managing forwards
@@ -256,7 +259,9 @@ quota not provided by server	mail	en	Quota not provided by server
 quota: %1	mail	en	Quota: %1
 read	mail	en	read
 read / unread	mail	en	Read / Unread
+readable	mail	en	readable
 reason!	mail	en	reason!
+recieve notification	mail	en	Recieve notification
 recursively	mail	en	Recursively
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
