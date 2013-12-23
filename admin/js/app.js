@@ -63,10 +63,13 @@ app.classes.admin = AppJS.extend(
 		if (iframe)
 		{
 			var self = this;
-			jQuery(iframe.getDOMNode()).bind('load', function(){
-				self._hide_navbar.call(self);
-				self.splitter.dock();
-			});
+			jQuery(iframe.getDOMNode()).off('load.admin')
+				.bind('load.admin', function(){
+					self._hide_navbar.call(self);
+					self.splitter.dock();
+					self.splitter.resize();
+				}
+			);
 		}
 		this.splitter = this.et2.getWidgetById('splitter');
 	},
