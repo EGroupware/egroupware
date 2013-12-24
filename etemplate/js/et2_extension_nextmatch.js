@@ -991,8 +991,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	_selectColumnsClick: function(e) {
 		var self = this;
 		var columnMgr = this.dataview.getColumnMgr();
+
+		// ID for faking letter selection in column selection
+		var LETTERS = '~search_letter~';
+
 		var columns = {};
 		var columns_selected = [];
+
 		for (var i = 0; i < columnMgr.columns.length; i++)
 		{
 			var col = columnMgr.columns[i];
@@ -1014,6 +1019,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}
 
+		// Letter search
+		if(this.options.settings.lettersearch)
+		{
+			columns[LETTERS] = egw.lang('Search letter');
+			if(this.header.lettersearch.is(':visible')) columns_selected.push(LETTERS);
+		}
+
 		// Build the popup
 		if(!this.selectPopup)
 		{
@@ -1031,7 +1043,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}, this);
 			autoRefresh.set_id("nm_autorefresh");
 			autoRefresh.set_select_options({
-				'': "off",
+				0: "off",
 				30: "30 seconds",
 				60: "1 Minute",
 				300: "5 Minutes"
@@ -1062,6 +1074,22 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 				}
 				var value = select.getValue();
+				
+				// Update & remove letter filter
+				if(self.header.lettersearch)
+				{
+					var show_letters = true;
+					if(value.indexOf(LETTERS) >= 0)
+					{
+						value.splice(value.indexOf(LETTERS),1);
+					}
+					else
+					{
+						show_letters = false;
+					}
+					self._set_lettersearch(show_letters);
+				}
+				
 				var column = 0;
 				for(var i = 0; i < value.length; i++)
 				{
@@ -1142,6 +1170,24 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var s_position = this.div.position();
 		this.selectPopup.css("top", t_position.top)
 			.css("left", s_position.left + this.div.width() - this.selectPopup.width());
+	},
+
+	/**
+	 * Set the letter search preference, and update the UI
+	 * 
+	 * @param {boolean} letters_on
+	 */
+	_set_lettersearch: function(letters_on) {
+		if(letters_on)
+		{
+			this.header.lettersearch.show();
+		}
+		else
+		{
+			this.header.lettersearch.hide();
+		}
+		var lettersearch_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-lettersearch";
+		this.egw().set_preference(this.egw().getAppName(),lettersearch_preference,letters_on);
 	},
 
 	/**
@@ -1674,6 +1720,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			});
 			// Set activeFilters to current value
 			this.nextmatch.activeFilters.searchletter = current_letter;
+		}
+		// Apply letter search preference
+		var lettersearch_preference = "nextmatch-" + this.nextmatch.options.settings.columnselection_pref + "-lettersearch";
+		if(this.lettersearch && !egw.preference(lettersearch_preference,this.nextmatch.egw().getAppName()))
+		{
+			this.lettersearch.hide();
 		}
 	},
 
