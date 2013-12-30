@@ -127,7 +127,7 @@ div#mail-index{
         div#mail-index_mailPreview{
 //            padding: 3px;
             margin: 0;
-            .background-color-25-gray;
+            .background_color_25_gray;
             // From
             div#mail-index_mailPreviewHeadersFrom{
                 width: 50%;
@@ -290,7 +290,7 @@ div#mail-index{
     .mailComposeHeaders:first-child{
         
         /*background-color: @gray-0;*/
-        .gradient-thead;
+        .gradient_thead;
     }
     
 
@@ -299,97 +299,129 @@ div#mail-index{
     //	Toolbar
 
     .mail-compose_toolbar{
-        img{width: 22px;}
+        
+        .dimension_height_l;
+        
+        button.et2_button {
+            .dimension_height_m;
+/*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
+        }
+        
+        img{
+             .dimension_height_s;
+
+        }
+        
+        
         // Button senden -> dev_buttons.less
         .mail-compose_button{
-            margin-right: 15px;
+            margin-right: 15px !important;
             padding: 0 3px 0 0;
+            text-align: left;
+            font-weight: bold;
+            padding-left: 30px;
+            width: 7em;
+
+            background-image: url(images/mail_send.png) !important;
+            background-position: left;
+            background-repeat: no-repeat;
+            background-size: 16px 16px;
 
         }
 
-        // Save
-        img#mail-compose_button[saveAsDraft],
-        .et2_button_icon {
+        // Save + Print
+        img[id="mail-compose_button[saveAsDraftAndPrint]"],
+        img[id="mail-compose_button[saveAsDraft]"]{
             vertical-align: middle;
-            padding: 2px;
+            padding: 3px;
             .Complete_Button_Icon_normal;
-            &:hover {.box_shadow_standard_light_hover; .background-color-15-gray;}
-            &:focus {.box_shadow_standard_light_inset; .background-color-15-gray;}
+            &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+
         }
+
+        
+        
+        
+        // Dateimanager
+        img[id="mail-compose_selectFromVFSForCompose"] {
+            margin-left: 15px !important;
+            vertical-align: middle;
+            padding: 3px;
+            .Complete_Button_Icon_normal;
+            &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+            &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
+        }
+        
 
         // Dateien Upload
         .et2_file,
         .mail-compose_fileselector{
+            
+            
             vertical-align: middle;
-            #mail-compose_uploadForCompose{
+            
+            input#mail-compose_uploadForCompose{
 
-                font-size: 0.7em;
-                .Complete_Button_text_icon_before;
-                background-image: url(images/attach.png) !important;
-                .background-color-5-gray;
-                height: 20px;
-                margin-left: 5px;
-                &:hover {.box_shadow_standard_light_hover; .background-color-15-gray;}
+                        font-size: 0.7em;
+                        .Complete_Button_text_icon_before;
+                        background-image: url(images/attach.png) !important;
+                        .background_color_5_gray;
+                        height: 20px;
+                        margin-left: 5px;
+                        &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
 
-                &:focus {.box_shadow_standard_light_inset; .background-color-15-gray;}
+                        &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
 
-            }
+              }
 
-            div.progress {width: 247px;}
+            div.progress {width: 230px;}
         }
 
         // Speichern als
         span.et2_label {font-size: 0.7em;}
 
-        //als INfolog
-        .mail-compose_infolog{
-            vertical-align: middle;
-            height: 20px;
-            padding: 3px 2px;
-            .Complete_Button_Icon_normal;
-            margin-right: 3px;
-            .et2_button_icon {border: none; box-shadow: none; border-radius: 0px; background-color: transparent;}
+        //als Infolog
+        #mail-compose_to_infolog{
 
+            margin-right: 15px !important;
+            &:hover{
+            .scale;
+            }
         }
         //als Ticket
-        .mail-compose_tracker{
-            vertical-align: middle;
-            height: 20px;
-            padding: 3px 2px;
-            .Complete_Button_Icon_normal;
-            margin-right: 3px;
-            span.et2_label {font-size: 0.7em; height: 20px;}
-            .et2_button_icon {border: none; box-shadow: none; border-radius: 0px; background-color: transparent;}
+        input[id="mail-compose_to_tracker"]{
+
+            margin-right: 10px !important;
+            &:hover {
+               .scale;
+                
+            }
 
         }
 
 
         // Empfangsbenachrichtigung
-        .mail-compose_notification{
-            vertical-align: middle;
-            height: 20px;
-            padding: 3px 2px;
-            .Complete_Button_Icon_normal;
-            margin-right: 3px;
+        #mail-compose_disposition{
+
+            margin-right: 10px !important;
+            &:hover {
+                .scale;
+            }
 
         }
 
         // Priorität
-        .mail-compose_priority{
-            vertical-align: middle;
+        #mail-compose_priority{
+/*            vertical-align: middle;
             height: 20px;
             padding: 3px 2px;
-            .Complete_Button_Icon_normal;
+            .Complete_Button_Icon_normal;*/
             margin-right: 3px;
+            font-size: 0.8em;
 
             span.et2_label {margin-right: 3px;}
 
-            select#mail-compose_priority{
-                box-shadow: none;
-                font-size: 0.8em;
-                border: none;
-
-            }
 
         }
 
@@ -410,7 +442,7 @@ div#mail-index{
         div{ max-width: 770px; 	}
 
         // Automatische Auwahlliste
-        span.ui-state-error {color: @egw_color_2_c;}
+        span.ui-state-error {color: @color_error;}
         div.ms-res-item-active {
             background: @egw_color_2_a;
             span {color: #FFFFFF;}
@@ -429,12 +461,23 @@ div#mail-index{
     // Signature
     fieldset.mailSignature {
         font-size: 0.8em;
+        border: none;
+        margin: 8px 0;
 
         select {}
-        span {margin-left: 8px;}
+        span {margin:0px 8px;}
     }
 
 
+    // Anhang
+    fieldset.mailUploadSection{
+        
+        font-size: 0.8em;
+        border: none;
+        margin: 8px 0;
+        .background_color_15_gray;
+    }
+    
 
 
 } // Ende Dialog
@@ -461,8 +504,8 @@ div#mail-index{
                 //				float: left;
                 .Complete_Button_Icon_normal;
                 height: 20px;
-                &:hover {.box_shadow_standard_light_hover; .background-color-15-gray;}
-                &:focus {.box_shadow_standard_light_inset; .background-color-15-gray;}
+                &:hover {.box_shadow_standard_light_hover; .background_color_15_gray;}
+                &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
             }
             span.ui-state-default{
                 float: left;
@@ -579,7 +622,7 @@ div#mail-index{
 
     .mailDisplayAttachments {
         //	background-color:#efefdf;
-        .background-color-10-gray;
+        .background_color_10_gray;
 
         max-height: 10%;
         position: fixed;
@@ -1146,8 +1189,8 @@ input[type=button] {
 
 #mail-index_previewAttachmentArea {
     //	background-color:#efefdf;
-    .background-color-10-gray;
-    border-color: @gray-10;
+    .background_color_10_gray;
+    border-color: @gray_10;
     .border_normal;
     //	filter: Alpha(opacity=100);
 

@@ -118,30 +118,81 @@ input.displayNone {
 */
 /*//******************************************************************
 // iframe*/
+#filemanager-index_filemanager-index-header_left {
+  float: left;
+  height: 42px;
+  width: 100%;
+}
 div.filemanager_navigation {
   position: relative;
   width: 100%;
 }
 div.filemanager_navigation img {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0.2em;
 }
+div.filemanager_navigation img:hover {
+  background-color: #cccccc;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+div.filemanager_navigation img#filemanager-index_tarp {
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+div.filemanager_navigation img#filemanager-index_tarp:hover {
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: #f0f0f0;
+}
+/*Up img*/
+img#filemanager-index_up {
+  position: relative;
+  top: 5px;
+}
+/*Home img*/
+img#filemanager-index_home {
+  position: relative;
+  top: 5px;
+}
+/*Pfad */
 div.filemanager_navigation > label {
   float: left;
   /*position: absolute;*/
   left: 55px;
-  right: 625px;
+  right: 567px;
   /*padding-top: 3px;*/
   font-size: 140%;
-  top: -9px;
+  top: 0px;
 }
 /*Buttons / Tarp / FileUpload*/
 #filemanager-index_buttons {
-  float: right;
-  left: 0px;
-  right: 30%;
-  position: relative;
-  top: -26px;
+  /*    float: right;
+    left: 0px;
+    right: 30%;
+    position: relative;*/
+  /*top: -26px;*/
+  float: left;
+  position: absolute;
+  right: 0;
 }
 #filemanager-index_buttons > * {
   padding-left: 3px;
@@ -165,6 +216,7 @@ div.filemanager_navigation > label > input {
   border-top-left-radius: 20px;
   color: #fff;
   height: auto;
+  width: 20em;
 }
 #filemanager-index .et2_file:before {
   content: "+";
@@ -190,6 +242,7 @@ div.filemanager_navigation > label > input {
 }
 #filemanager-index .et2_file #filemanager-index_upload {
   border: none;
+  width: 20em;
 }
 #filemanager-index #filemanager-index_tarp {
   width: 32px !important;
@@ -216,7 +269,7 @@ div.filemanager_navigation > label > input {
 #filemanager-select .dialog-header .selectPathContainer {
   overflow: auto;
   width: 470px;
-  margin-top: 0px;
+  margin_top: 0px;
   height: 32px;
 }
 #filemanager-select .dialog-header .selectPathContainer input {
@@ -234,10 +287,10 @@ div.filemanager_navigation > label > input {
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(even) {
-  background: #e6e6e6;
+  background: #ffffff;
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
-  background: #cdcdcd;
+  background: #ebebeb;
 }
 #filemanager-select .vfsMimeIcon {
   width: 16px;

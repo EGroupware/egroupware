@@ -200,9 +200,9 @@ fieldset.emailGroup {
     margin-top: 0;
   }
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right {
     width: auto;
@@ -225,9 +225,9 @@ fieldset.emailGroup {
     margin-left: 5px;
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
     outline: 0;
@@ -248,6 +248,18 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
@@ -267,15 +279,27 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
     width: auto;
     height: 32px;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
     background-image: url('../../../pixelegg/images/advanced-search.png');
@@ -287,15 +311,27 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
     width: auto;
     height: 32px;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
     background-color: #0b5fa4 !important;
@@ -319,9 +355,9 @@ fieldset.emailGroup {
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
     background-color: #66a1d2 !important;
     color: #ffc200;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -webkit-border-radius: 3px;
     -webkit-border-top-left-radius: 20px;
     -moz-border-radius: 3px;
@@ -391,9 +427,9 @@ fieldset.emailGroup {
     font-size: 11px;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     background-color: #66a1d2 !important;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img {
@@ -414,9 +450,9 @@ fieldset.emailGroup {
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:hover {
     background-color: #cccccc;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -468,7 +504,7 @@ fieldset.emailGroup {
   }
   button[id="addressbook-edit_button[delete]"] {
     float: right;
-    margin-top: -37px;
+    margin-top: 5px;
   }
   /*#######################################################*/
   /*State: Address selected*/
@@ -539,11 +575,23 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
   }
   div.addressbook_edit_general_picture img.photo:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     background-color: inherit !important;
   }
   div.addressbook_edit_general_picture table.uploadphoto {
@@ -777,9 +825,9 @@ fieldset.emailGroup {
   div#addressbook-edit fieldset.emailGroup td a.et2_url:hover,
   div#addressbook-search fieldset.emailGroup td a.et2_url:hover {
     background-color: #cccccc;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -937,9 +985,9 @@ fieldset.emailGroup {
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:hover {
     background-color: #cccccc;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -1009,6 +1057,18 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;

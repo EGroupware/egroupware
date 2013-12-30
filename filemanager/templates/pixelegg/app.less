@@ -25,32 +25,74 @@
 /*//******************************************************************
 // iframe*/
 
+#filemanager-index_filemanager-index-header_left {
+    float: left;
+    height: 42px;
+    width: 100%;
+}
+
 div.filemanager_navigation {
     position: relative;
     width: 100%;
 
-    img { width: 24px; height: 24px;}
+    
+    img { 
+        .dimension_width_height_s;
+        .Complete_Button_Icon_normal;
+        padding: 0.2em;
+        
+        &:hover {.Complete_Button_Icon_hover;}
+    }
+    
+    img#filemanager-index_tarp {
+                border: none;                
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+        &:hover {
+                border: none; 
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+                .background_color_10_gray;
+        }
+    }
 
 }
 
+ /*Up img*/
+ img#filemanager-index_up {position: relative; top: 5px;}
+
+  /*Home img*/
+ img#filemanager-index_home {position: relative; top: 5px;}
+
+ 
+ /*Pfad */
 div.filemanager_navigation > label {
     float: left;
     /*position: absolute;*/
     left: 55px;
-    right: 625px;
+    right: 567px;
     /*padding-top: 3px;*/
     font-size: 140%;
-    top: -9px;
+    top: 0px;
 }
+
+
 
 
 /*Buttons / Tarp / FileUpload*/
 #filemanager-index_buttons {
-    float: right;
+/*    float: right;
     left: 0px;
     right: 30%;
-    position: relative;
-    top: -26px;
+    position: relative;*/
+    /*top: -26px;*/
+    
+    float: left;
+    position: absolute;
+    right: 0;
+
 }
 
 #filemanager-index_buttons > * {
@@ -72,11 +114,12 @@ div.filemanager_navigation > label > input {
         &:before{font-size: 1em;}
         color: #fff;
         height: auto;
+        width: 20em;
         &:hover {
             .Complete_Button_add_hover;
         }
 
-        #filemanager-index_upload {border: none;}
+        #filemanager-index_upload {border: none; width: 20em;}
 
 
 
@@ -107,9 +150,9 @@ div.filemanager_navigation > label > input {
     .dialog-header{
         .et2_button_icon{
             margin: 4px 4px 0 4px;
-            .bordered (@gray-0, @gray-0, @gray-0, @gray-0);
+            .bordered (@gray_0, @gray_0, @gray_0, @gray_0);
             .rounded (3px);
-            background-color: @gray-0;
+            background-color: @gray_0;
             height: auto;
             width: 24px;
         }
@@ -117,7 +160,7 @@ div.filemanager_navigation > label > input {
         .selectPathContainer {
             overflow: auto;
             width: 470px;
-            margin-top: 0px;
+            margin_top: 0px;
             height: 32px;
 
             input {height: 20px;}
@@ -125,7 +168,7 @@ div.filemanager_navigation > label > input {
         }
     }
     #filemanager-select_apps{
-        .background-color-15-gray;
+        .background_color_15_gray;
         .et2_button_icon{
             height: auto;
             width: 24px;
@@ -135,8 +178,8 @@ div.filemanager_navigation > label > input {
     table#filemanager-select_dir{
        	.border_normal;
         
-        tr:nth-child(even) {background: @color-even;}
-        tr:nth-child(odd) {background: @color-odd;}
+        tr:nth-child(even) {background: @color_even;}
+        tr:nth-child(odd) {background: @color_odd;}
         
     }
 
