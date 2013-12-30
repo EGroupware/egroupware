@@ -30,7 +30,7 @@
     //								.background-color-0-gray;
     margin: 0;
 
-    body {.background-color-0-gray; }
+    body {.background_color_0_gray; }
 }
 
 .egwGridView_scrollarea {
@@ -51,12 +51,12 @@
         margin-left: -8px;
         text-align: center;
         height: 45px;
-        .background-color-5-gray;
+        .background_color_5_gray;
 
         img {
             height: 40px;
             border: none;
-            .background-color-5-gray;
+            .background_color_5_gray;
         }
 
     }
@@ -81,95 +81,121 @@
         #egw_fw_topmenu_items {
             float: left;
             padding-top: 10px;
-
+            width: 70%;
+            
             ul {
-
-
                 li{
-                    .color-100-gray;
-                    .Button_size_square_32;
+                    .color_100_gray;
+                    /*.Button_size_square_32;*/
                     padding: 0.3em 0.4em;
                     .Complete_Button_normal;
 
-                    &:hover{.Complete_Button_hover;.color-100-gray;}
+                    &:hover{.Complete_Button_hover;.color_100_gray;}
                     &:active {.Complete_Button_active;}
+                    .transition (0.2s, ease-out);
                     
+                    a {
+                        .color_100_gray; 
+                        text-decoration: none; 
                     
-                    a {.color-100-gray; text-decoration: none; }
+                        &:hover {
+                                .color_50_gray;
+                                border-color: @gray_50;
+                                text-decoration: none !important;
+                                 }
+                        }
                     
-                    a:hover {
-                        .color-50-gray;
-                        border-color: @gray-50;
-                        text-decoration: none !important;
-                        
-                    }
                 }
 
                 /*Home*/
                 li:first-child{
-                    margin-left: 10px;
-                    :before{border: none;}
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/home.png);
+                               margin-left: 10px;
+                                :before{border: none;}
+                    }
+                    
+                /*home*/
+                a#topmenu_home {
+                    margin-left: 0px;
+                    &:before {
+                        padding-right: 20px;
+                        content: " ";
+                        background-image: url(../images/topmenu_items/home.png);
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }
                     
                 }
+
                 
-                /*Setup*/
-                li:nth-child(2){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/setup.png);
+                /*Setup / Einstellungen*/
+                a#topmenu_prefs{
+                    margin-left: 0px;
+                    &:before {
+                        padding-right: 20px;
+                        content: "";
+                        background-image: url(../images/topmenu_items/setup.png);
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 } 
-                /*access*/
-                 li:nth-child(3){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/access.png);
+                
+                /*access / Zugriff */
+                 a#topmenu_acl{
+                    &:before {
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
+                        background-image: url(../images/topmenu_items/access.png);
                     }    
                 }               
                 /*category*/
-                 li:nth-child(4){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/category.png);
+                 a#topmenu_cats{
+                    &:before {
+                        background-image: url(../images/topmenu_items/category.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 }               
                 /*password*/
-                 li:nth-child(5){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/password.png);
+                 a#topmenu_preferences{
+                    &:before {
+                        background-image: url(../images/topmenu_items/password.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 }               
                 /*help*/
-                 li:nth-child(6){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/help.png);
+                 a#topmenu_manual{
+                    &:before {
+                        background-image: url(../images/topmenu_items/help.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 }               
                 /*Search*/
-                 li:nth-child(7){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/search.png);
+                 a#topmenu_search{
+                    &:before {
+                        background-image: url(../images/topmenu_items/search.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 }               
                 /*logout*/
-                li:nth-child(8){
-                    a:before {
-                        padding-right: 5px;
-                        content: url(../images/topmenu_items/logout.png);
+                a#topmenu_logout{
+                    &:before {
+                        background-image: url(../images/topmenu_items/logout.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }    
                 }                
@@ -243,37 +269,63 @@
     // quick_add
 
     span#quick_add{
-        .Complete_Button_add;
+        /*.Complete_Button_add;*/
+        .Button_size_square_16;
+        .border_normal;
+        .box_shadow_standard_light;
+        float: right;
         position: fixed;
-        right: 88px;
-        top: 0;
-        z-index: 200;
-
-        padding: 5px 0.8em 6px 0.5em;
-        
-        &:before {content: "+";font-size: 1.5em;color: @egw_color_1; line-height: 1.1em}
+        right: 83px;
+        top: 5px;
+        padding: 0.5em;
+        &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+        &:focus {.box_shadow_standard_light_inset;};
+        .transition (0.2s, ease-out);
 
         select#quick_add_selectbox{
-            .border_normal;
-            .box_shadow_standard_light;
-            height: 26px;
-            padding: 0 0 0 10px;
-            font-size: 0.9em;
-            line-height: 1.1em;
-            &:hover {.box_shadow_standard_light_hover;}
-            &:focus {.box_shadow_standard_light_inset;}
-/*            option {
-                &:first-child{
-                    &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+                                    position: fixed;
+                                    right: 83px;
+                                    /*.border_normal;*/
+                                    /*.box_shadow_standard_light;*/
+                                    /*height: 26px;*/
+                                    padding: 0 0 0 10px;
+                                    font-size: 0.9em;
+                                    /*line-height: 1.1em;*/
+                                    
+                                    visibility: hidden;
+                                    
+                                    transition-property: visibility;
+                                    transition-duration: 0s;
+                                    transition-timing-function: linear;
+                                    transition-delay: 0s;
+                                    }
+                                }
 
-                }*/
 
+    
+
+   /*hover*/
+   span#quick_add:hover {  
+             
+             width: 166px !important;
+            .box_shadow_standard_light_hover;
+   
+             select#quick_add_selectbox {
+                /*.box_shadow_standard_light_hover;*/
+                .box_shadow_none;
+                border: none;
+                position: relative !important;
+                right: 1px !important;
+                top: -5px;
+                z-index: 200;
+                visibility: visible !important;
             }
-        }
-
-    }
-
-
+   
+   }
+  
+ }  
+   
+   
 
     // Logout
     #egw_fw_logout {
@@ -407,7 +459,7 @@
     left: 0px;
     bottom: 20px;
     width: 225px;
-    .background-color-5-gray;
+    .background_color_5_gray;
 
     //Menu
     #egw_fw_sidemenu {
@@ -423,7 +475,7 @@
         //								.background-color-0-gray;
 
         .egw_fw_ui_scrollarea_outerdiv{
-            .background-color-5-gray;
+            .background_color_5_gray;
 
 
             // Alle Tabs
@@ -447,7 +499,7 @@
                 /*padding: 0px 5px 5px 10px;*/
 
                &:hover {  
-                    .background-color-15-gray;
+                    .background_color_15_gray;
                     .rounded(5px);
                     }
                     
@@ -459,7 +511,7 @@
                     font-weight: normal;
                     margin: 0 0 10px 0;
                     padding-top: 0.31em;
-                    .color-40-gray;
+                    .color_40_gray;
 
                 }
 
@@ -478,21 +530,21 @@
                 background-repeat: no-repeat;
                 /*background-image: none;*/
 
-                .background-color-10-gray;
+                .background_color_10_gray;
 
-                .border-radius ( 5px, 0px, 0px, 27px );
+                .border_radius ( 5px, 0px, 0px, 27px );
                 
-                .bordered (@gray-30, @gray-30, @gray-30, @gray-30);
+                .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
 
                 margin: 0 0 0 0;
                 border-bottom: none;
                 height: 44px;
                     img {padding-left: 10px; padding-top: 8px;}
 
-                    h1 {text-transform: uppercase; font-size: 1.4em; .color-100-gray; padding-top: 8px;}
+                    h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: 8px;}
 
-                &:hover {.box_shadow_standard_light_hover; .border-radius ( 5px, 0px, 0px, 27px );}
-                &:active {.box_shadow_standard_light_active; .border-radius ( 5px, 0px, 0px, 27px );}
+                &:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
+                &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
 
                 &:focus {
                     background-image: url("../images/ajax-loader.gif");
@@ -500,7 +552,7 @@
                     background-position: 90% 50%;
                     .Complete_Button_active;
 
-                    .background-color-25-gray;
+                    .background_color_25_gray;
                 }
                 
                 
@@ -514,8 +566,8 @@
             .egw_fw_ui_sidemenu_entry_content {
                 display: block;
                 background-image: none;
-                .border-radius (0, 0, 27px, 0);
-                border-color: @gray-30;
+                .border_radius (0, 0, 27px, 0);
+                border-color: @gray_30;
                 border-style: solid;
                 border-width: 0px;
                 margin: 0 0 2em 0;
@@ -523,16 +575,16 @@
                 > div:nth-of-type(1)  {
                     padding:  5px 0.3em 1.5em 0.3em;
                     margin: 0 0 10px 0;
-                    .background-color-30-gray;
-                    .border-radius (0, 0, 27px, 0);
-                    border-color: @gray-30;
+                    .background_color_30_gray;
+                    .border_radius (0, 0, 27px, 0);
+                    border-color: @gray_30;
                 }
                 
                /*letztes Element*/
                div.egw_fw_ui_category:nth-last-of-type(-n+3) {
 /*                   color:#ff0000; 
                    background-color: yellow !important;*/
-                   .border-radius (0, 0, 15px, 0);
+                   .border_radius (0, 0, 15px, 0);
                } 
 
                 // Schaltflächen
@@ -542,9 +594,12 @@
                     padding: 0.5em 1em;
                     cursor: pointer;
                     //																												border-top: 7px solid;
-                    border-color: @gray-30;
-                    background-color: @gray-50;
-                    .border-radius(3px,3px,3px,3px);
+                    border-color: @gray_30;
+                    background-color: @gray_10;
+                    
+                    /*background-color: @egw_color_2_d;*/
+                    
+                    .border_radius(3px,3px,3px,3px);
 
                     h1 {
                         margin: 5px 0px 3px 5px;
@@ -564,7 +619,7 @@
 
                 // Hover
                 .egw_fw_ui_category:hover {
-                    .background-color-40-gray;
+                    .background_color_40_gray;
                     padding: 0.5em 1em;
                 }
                 
@@ -579,28 +634,29 @@
                     background-color: @egw_color_2_d;
                     
                     /*.background-color-50-gray;*/
-                    .color-5-gray;
-                    .border-radius(3px,3px,3px,3px) !important;
+                    .color_5_gray;
+                    .border_radius(3px,3px,3px,3px) !important;
 
                     h1 {
-                        background-image:url(../images/arrow_down.png);
+                            background-image:url(../images/arrow_down.png);
 
-                        a {
-                            color: #FFF;
+                            a {
+                                color: #FFF;
 
 
-                            img {height: 16px; width: 16px;}
+                                img {height: 16px; width: 16px;}
+                            }
+
+                            a:hover {
+                                padding: 5px 30px 5px 0px;
+                                width: 200px;
+                                .background_color_10_gray;
+                                .color_50_gray;
+                                .Complete_Button_hover;
+                            }
                         }
 
-                        a:hover {
-                            padding: 5px 30px 5px 0px;
-                            width: 200px;
-                            .background-color-10-gray;
-                            .color-50-gray;
-                            .Complete_Button_hover;
-                        }
-                    }
-
+                   &:hover {background-color: @egw_color_2_a; .transition (0.2s, ease-out);}
                 }
 
 
@@ -614,7 +670,7 @@
             }
             .egw_fw_ui_sidemenu_entry_header_bottom {
                 border-width: 0px;
-                border-color: @gray-0;
+                border-color: @gray_0;
             }
 
             .egw_fw_ui_sidemenu_entry_icon {
@@ -647,7 +703,7 @@
     #egw_fw_splitter {
         position: absolute;
         //								background-color: RGB(200, 200, 255);
-        .background-color-30-gray;
+        .background_color_30_gray;
         width: 5px;
         top: 51px;
         bottom: 3px;
@@ -659,7 +715,7 @@
             background-image: url(../images/splitter_vert.png);
             background-position: center;
             background-repeat: no-repeat;
-            .background-color-30-gray;
+            .background_color_30_gray;
             position: absolute;
             width: 5px;
             height: 100%;
@@ -680,7 +736,7 @@
 // Submenu / Unterpunkte in der Seitenleiste
 
 .egw_fw_ui_category_content {
-    .background-color-0-gray;
+    .background_color_0_gray;
     border-top-width: 0;
     border-left: 0px solid;
     border-bottom: 0px solid;
@@ -690,15 +746,17 @@
     padding-left: 0px;
     padding-top: 14px;
     margin-right: 5px;
-    min-height: 50px;
-    img { height: 16px; width: 16px;vertical-align: middle;}
+    /*min-height: 50px;*/
+    
+    img { .dimension_height_s; vertical-align: middle;}
+    
     &:hover {
-        .background-color-0-gray;
-        border-color: @gray-50;
+        .background_color_0_gray;
+        border-color: @gray_50;
     } 
+    
     input#uical_select_owner_multiple{
-    	height: 16px; 
-    	width: 16px;
+        .dimension_height_s;
     	vertical-align: middle;
     }
 	select#calendar_filter{
@@ -718,23 +776,25 @@
 .egw_fw_ui_sidemenu_listitem {
 
     padding: 0.5em 0;
-    margin: 4px 0 5px 0px;
+    margin: 0px 0 5px 0px;
     position: relative;
+    min-height: 16px;
+    background-color: @gray_0;
 
 
 
 
     // Icon before
     img.egw_fw_ui_sidemenu_listitem_icon {
-        height: 16px; 
-        width: 16px; 
+        .dimension_width_height_s;
         padding: 0px;
         margin: 0px 5px;
         float: left;
         /*.Complete_Button_Icon_normal;*/
         background-image: url("../images/bullet.png");
-		background-size: 16px 16px;
-		background-position: center;
+	background-size: .dimension_width_height_s;
+        
+	background-position: center;
 		 /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
     }
 
@@ -767,7 +827,7 @@
         min-width: 5em;
 
         &:hover{
-            .color-100-gray;
+            .color_100_gray;
         }
 
         &:active {
@@ -815,9 +875,9 @@
         }
 
         a:nth-child(2):hover {
-            background-color: @color-warning;
+            background-color: @color_warning;
             .Complete_Button_Icon_hover ;
-            .color-0-gray;
+            .color_0_gray;
             //		width: auto;
         }
 
@@ -828,9 +888,10 @@
 
     // Submenu Item
     &:hover{
-        .color-100-gray;
+        .color_100_gray;
         background-color: @egw_color_1_e;
         padding: 0.5em 0;
+        
     }
 
 } // .egw_fw_ui_sidemenu_listitem
@@ -932,7 +993,7 @@ div#calendar-container {
             color: #000;
             cursor: default;
             padding: 0.3em;
-            .background-color-5-gray;
+            .background_color_5_gray;
             .basefontfamily;
 
             thead {
@@ -1070,7 +1131,7 @@ div#calendar-container {
                 padding-right: 0;
                 position: relative;
 
-               .border-radius(5px,0, 0, 5px);
+               .border_radius(5px,0, 0, 5px);
                 
 
                 /*.background-color-5-gray;*/
@@ -1082,12 +1143,12 @@ div#calendar-container {
                 cursor: pointer;
                 border-width: 1px 1px 0 1px;
                 border-style: solid;
-                border-color: @gray-30;;
+                border-color: @gray_30;;
 
                 background-repeat:repeat-x;
 
                 height: 47px;
-                &:hover {.background-color-30-gray ;}
+                &:hover {.background_color_30_gray ;}
 
                 h1 {font-size: 100%; line-height: 1em; margin-top:0;}
                 
@@ -1105,10 +1166,10 @@ div#calendar-container {
             .egw_fw_ui_tab_header_active {
                 border-width: 1px 1px 0px 1px !important;
                 padding: 0 0 5px !important;
-                .background-color-30-gray ;
+                .background_color_30_gray ;
                 background-image:none !important;
 
-                &:hover {.background-color-25-gray ;}
+                &:hover {.background_color_25_gray ;}
                 
                 
             // aktive Bilder

@@ -50,88 +50,93 @@
 
 //Berechnung der EGW Farben
 
-.background-color-egw-normal  {background-color : @egw_color_1_a !important;}
-.background-color-egw-light   {background-color : @egw_color_1_d;}
-.background-color-egw-lighter {background-color : @egw_color_1_e;}
-.background-color-egw-dark    {background-color : @egw_color_2_a;}
-.background-color-egw-darker  {background-color : @egw_color_2_b;}
+.background_color_egw_normal  {background-color : @egw_color_1_a !important;}
+.background_color_egw_light   {background-color : @egw_color_1_d;}
+.background_color_egw_lighter {background-color : @egw_color_1_e;}
+.background_color_egw_dark    {background-color : @egw_color_2_a;}
+.background_color_egw_darker  {background-color : @egw_color_2_b;}
 
 
 // greyscale
 @gray : #000000; // Base colur is black
 
 /*@gray-100 : #000000;*/
-@gray-100 : #000000;
-@gray-90 : #1E1E1E;
-@gray-80 : #373737;
-@gray-70 : #505050;
-@gray-60 : #696969;
-@gray-50 : #828282;
-@gray-40 : #9B9B9B;
-@gray-30 : #B4B4B4;
-@gray-20 : #CDCDCD;
-@gray-10 : #E6E6E6;
-@gray-0 : #FFFFFF;
+@gray_100 : #000000;
+@gray_90 : #1E1E1E;
+@gray_80 : #373737;
+@gray_70 : #505050;
+@gray_60 : #696969;
+@gray_50 : #828282;
+@gray_40 : #9B9B9B;
+@gray_30 : #B4B4B4;
+@gray_20 : #CDCDCD;
+@gray_10 : #E6E6E6;
+@gray_0 : #FFFFFF;
 
 
-.color-0-gray 	{	color : lighten(@gray, 100%);} // white
+.color_0_gray 	{	color : lighten(@gray, 100%);} // white
 
-.color-5-gray 	{	color : lighten(@gray, 95%);}
-.color-10-gray 	{	color : lighten(@gray, 90%);}
-.color-15-gray  {       color : lighten(@gray, 85%);}
-.color-20-gray 	{	color : lighten(@gray, 80%);}
-.color-25-gray 	{	color : lighten(@gray, 75%);}
-.color-30-gray 	{	color : lighten(@gray, 70%);}
-.color-40-gray 	{	color : lighten(@gray, 60%);}
-.color-50-gray 	{	color : lighten(@gray, 50%);}
-.color-60-gray 	{	color : lighten(@gray, 40%);}
-.color-70-gray 	{	color : lighten(@gray, 30%);}
-.color-80-gray 	{	color : lighten(@gray, 20%);}
-.color-90-gray 	{	color : lighten(@gray, 10%);}
-.color-100-gray {	color : @gray;	} // black
+.color_5_gray 	{	color : lighten(@gray, 95%);}
+.color_10_gray 	{	color : lighten(@gray, 90%);}
+.color_15_gray  {       color : lighten(@gray, 85%);}
+.color_20_gray 	{	color : lighten(@gray, 80%);}
+.color_25_gray 	{	color : lighten(@gray, 75%);}
+.color_30_gray 	{	color : lighten(@gray, 70%);}
+.color_40_gray 	{	color : lighten(@gray, 60%);}
+.color_50_gray 	{	color : lighten(@gray, 50%);}
+.color_60_gray 	{	color : lighten(@gray, 40%);}
+.color_70_gray 	{	color : lighten(@gray, 30%);}
+.color_80_gray 	{	color : lighten(@gray, 20%);}
+.color_90_gray 	{	color : lighten(@gray, 10%);}
+.color_100_gray {	color : @gray;	} // black
 
 @lightgray : @gray*010101;
-/*@darkgrey : .color-90-gray;*/
+/*@darkgrey : .color_90_gray;*/
 
 // grey fpr background
 
-.background-color-0-gray {	background-color : lighten(@gray, 100%);}
-.background-color-5-gray {	background-color : lighten(@gray, 98%);	}
-.background-color-10-gray {	background-color : lighten(@gray, 94%);	}
-.background-color-15-gray {	background-color : lighten(@gray, 85%);	}
-.background-color-20-gray {     background-color : lighten(@gray, 80%);	}
-.background-color-25-gray {     background-color : lighten(@gray, 75%);	}
-.background-color-30-gray {     background-color : lighten(@gray, 70%) !important;	}
-.background-color-40-gray {     background-color : lighten(@gray, 60%);	}
-.background-color-50-gray {	background-color : lighten(@gray, 50%);	}
+.background_color_0_gray {	background-color : lighten(@gray, 100%);}
+.background_color_5_gray {	background-color : lighten(@gray, 98%);	}
+.background_color_10_gray {	background-color : lighten(@gray, 94%);	}
+.background_color_15_gray {	background-color : lighten(@gray, 85%);	}
+.background_color_20_gray {     background-color : lighten(@gray, 80%);	}
+.background_color_25_gray {     background-color : lighten(@gray, 75%);	}
+.background_color_30_gray {     background-color : lighten(@gray, 70%) !important;	}
+.background_color_40_gray {     background-color : lighten(@gray, 60%);	}
+.background_color_50_gray {	background-color : lighten(@gray, 50%);	}
 
 
 // Warning
 @red: #FF0000;
-@color-warning : @red;
+@color_warning : @red;
+
+
+// ERROR
+@color_error : #AE1D00;
+
 
 // Test Colour for debug
 @yellow : #FFD40F;
 
 // Link Colours 
-@link-color : #000000;
-@link-color-active: @link-color*010101;
+@link_color : #000000;
+@link_color_active: @link_color*010101;
 
 // soll EGROUPWARE FARBE GEBEN
 /*@active_button_border_bottom : @egw_color_2_d;*/ 
 
 // Hint / or have to do / must field
-@color-hint : @egw_color_1_a;
+@color_hint : @egw_color_1_a;
 
 /*optional / can field*/
-@color-optional : lighten(@egw_color_1_a, 25%);
+@color_optional : lighten(@egw_color_1_a, 25%);
 
 
 
 /*Listenausgabe*/   
 
-@color-even : @gray-0;
-@color-odd : darken(@gray-0, 8%); 
+@color_even : @gray_0;
+@color_odd : darken(@gray_0, 8%); 
 
 
 // aktiverte Zeilen in allen APP mit Listenausgabe
@@ -148,31 +153,31 @@
 
 
  /*Button edit + save + apply + copy = positive action         */
-@color-positive-action : #00AB00; // green
-@color-positive-action-hover : fade(#00AB00, 2%); // green
-@color-positive-action-active : lighten(#00AB00, 2%); // green
+@color_positive_action : #189800; // green
+@color_positive_action_hover : fade(#189800, 2%); // green
+@color_positive_action_active : lighten(#189800, 2%); // green
 
 
  /*Button  cancel = do nothing action         */
-@color-cancel-action : yellow;
-@color-cancel-action-hover : lighten(yellow, 0%);
-@color-cancel-action-active : lighten(yellow, 15%);
+@color_cancel_action : #F5B301;
+@color_cancel_action_hover : lighten(#F5B301, 0%);
+@color_cancel_action_active : lighten(#F5B301, 15%);
 
  /*Button delete  = negative action         */
-@color-negative-action : red;
-@color-negative-action-hover : lighten(red, 2%);
-@color-negative-action-active : lighten(red, 10%);
+@color_negative_action : #AE1D00;
+@color_negative_action_hover : lighten(#AE1D00, 2%);
+@color_negative_action_active : lighten(#AE1D00, 10%);
 
 
 // Search Button
 
-.background-color-search {background-color : lighten(@egw_color_1, 15%);	}
+.background_color_search {background-color : lighten(@egw_color_1, 15%);	}
 
 // cal Heute
 
-.background-table-cal-head { background-color : @egw_color_1_a;}
+.background_table_cal_head { background-color : @egw_color_1_a;}
 
-@color-progress : @egw_color_1_e;
+@color_progress : @egw_color_1_e;
 
 /*#####################################################################*/
 // Schriften
@@ -214,6 +219,16 @@
 
 
 // Box Shadow
+// none
+.box_shadow_none {
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow:  0px 0px 0px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+
+
+
 // auf hellem Hintergrund
 
 .box_shadow_standard_light {
@@ -226,9 +241,9 @@
 // wird dunkler
 
 .box_shadow_standard_light_hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow:  1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     //				-webkit-box-shadow: none;
     //				-moz-box-shadow:  none;
     //				box-shadow:none;
@@ -432,7 +447,18 @@
  #  N x 32                  #
  ############################*/
 
-.dimension_height_xl{ height: 32px; }
+.dimension_height_xl{ height: 40px; }
+
+
+/* ##########################
+ #  large  Button              #
+ #                          #
+ #                          #
+ #                          #
+ #  N x 32                  #
+ ############################*/
+
+.dimension_height_l{ height: 32px; }
 
 /* ##########################
  #  medium Button           #
@@ -494,7 +520,7 @@
         @start);
     filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
 }
-.bw-gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
+.bw_gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
     background: @color,
         -webkit-gradient(linear,
         left bottom,
@@ -517,7 +543,7 @@
     border-right: solid 1px @right-color;
     border-bottom: solid 1px @bottom-color;
 }
-.drop-shadow(@x-axis: 0, @y-axis: 1px, @blur: 2px, @r:0,  @g:0, @b:0, @alpha: 0.1, @inset:inset) {
+.drop_shadow(@x-axis: 0, @y-axis: 1px, @blur: 2px, @r:0,  @g:0, @b:0, @alpha: 0.1, @inset:inset) {
     -webkit-box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
     -moz-box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
     box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
@@ -527,7 +553,7 @@
     -moz-border-radius: @radius;
     border-radius: @radius;
 }
-.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+.border_radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
     -webkit-border-top-right-radius: @topright;
     -webkit-border-bottom-right-radius: @bottomright;
     -webkit-border-bottom-left-radius: @bottomleft;
@@ -540,7 +566,7 @@
     border-bottom-right-radius: @bottomright;
     border-bottom-left-radius: @bottomleft;
     border-top-left-radius: @topleft;
-    .background-clip(padding-box);
+    /*.background-clip(padding-box);*/
 }
 .opacity(@opacity: 0.5) {
     -moz-opacity: @opacity;
@@ -551,7 +577,7 @@
     -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
     filter: ~"alpha(opacity=@{opperc})";
 }
-.transition-duration(@duration: 0.2s) {
+.transition_duration(@duration: 0.2s) {
     -moz-transition-duration: @duration;
     -webkit-transition-duration: @duration;
     -o-transition-duration: @duration;
@@ -576,23 +602,23 @@
     -o-transition: all @duration @ease;
     transition: all @duration @ease;
 }
-.inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
+.inner_shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
     -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
     -moz-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
     box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
 }
-.box-shadow(@arguments) {
+.box_shadow(@arguments) {
     -webkit-box-shadow: @arguments;
     -moz-box-shadow: @arguments;
     box-shadow: @arguments;
 }
-.box-sizing(@sizing: border-box) {
+.box_sizing(@sizing: border-box) {
     -ms-box-sizing: @sizing;
     -moz-box-sizing: @sizing;
     -webkit-box-sizing: @sizing;
     box-sizing: @sizing;
 }
-.user-select(@argument: none) {
+.user_select(@argument: none) {
     -webkit-user-select: @argument;
     -moz-user-select: @argument;
     -ms-user-select: @argument;
@@ -621,7 +647,7 @@
 .translate(@x:0, @y:0) {
     .transform(translate(@x, @y));
 }
-.background-clip(@argument: padding-box) {
+.background_clip(@argument: padding-box) {
     -moz-background-clip: @argument;
     -webkit-background-clip: @argument;
     background-clip: @argument;
@@ -629,7 +655,7 @@
 
 /* ##################################################### */
 
-.gradient-thead{
+.gradient_thead{
         /*.background-color-5-gray;*/
         background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%); /* FF3.6+ */
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65))); /* Chrome,Safari4+ */

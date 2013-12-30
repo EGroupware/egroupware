@@ -53,9 +53,7 @@
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 25px;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
+  /*.background-clip(padding-box);*/
   border-top: solid 1px #0c5da5;
   border-left: solid 1px #0c5da5;
   border-right: solid 1px #0c5da5;
@@ -86,9 +84,9 @@
   margin: 1em;
 }
 #loginMainDiv div#centerBox form table.divLoginbox {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 20px;
   -moz-border-radius: 3px;
@@ -100,11 +98,11 @@
   padding: 0.5em;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
-  margin: 0.5em 0em 0.5em 0.5em;
+  margin: 5px 0em 5px 5px;
   padding: 3px;
   outline: none;
   display: inline-block;
@@ -121,11 +119,11 @@
 #loginMainDiv div#centerBox form table.divLoginbox input {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-color: #b4b4b4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   width: auto;
-  margin: 0.5em 0em 0.5em 0;
+  /*margin: 0.5em 0em 0.5em 0;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;

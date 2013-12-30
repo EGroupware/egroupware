@@ -35,8 +35,8 @@ html * {
 body{
     background-image:none;
 
-    .background-color-10-gray;
-    .color-100-gray; // Schriftfarbe schwarz
+    .background_color_10_gray;
+    .color_100_gray; // Schriftfarbe schwarz
 
     margin: 0px !important;
     padding: 0px !important;
@@ -61,7 +61,7 @@ textarea {
 
     .basefontfamily;
 
-    .background-color-5-gray ;
+    .background_color_5_gray ;
 }
 
 //##########################
@@ -87,6 +87,8 @@ select {
     &.after{}
 }
 
+
+:hover {.transition (0.2s, ease-out);}
 
 // #############################
 // Schriftformate
@@ -140,7 +142,7 @@ select {
     position:relative;
 
 }
-select:after {
+/*select:after {
     content:'<>';
     font:11px "Consolas", monospace;
     color:#aaa;
@@ -162,7 +164,7 @@ select:before {
     position:absolute;
     pointer-events:none;
     display:block;
-}
+}*/
 
 div.selectbox-wrapper {
 
@@ -225,7 +227,7 @@ div.selectbox-wrapper {
 }
 .sbSelector:link, .sbSelector:visited, .sbSelector:hover{
     //	color: #EBB52D;
-    .color-50-gray;
+    .color_50_gray;
     outline: none;
     text-decoration: none;
 }
@@ -263,7 +265,7 @@ div.selectbox-wrapper {
 
 .sbOptions{
     //	background-color: #212121;
-    .background-color-0-gray;
+    .background_color_0_gray;
     border: solid 1px #515151;
     list-style: none;
     left: -1px;
@@ -288,7 +290,7 @@ div.selectbox-wrapper {
 
     a:link,
         a:visited{
-        .color-100-gray;
+        .color_100_gray;
         text-decoration: none;
     }
     a:hover,
@@ -328,17 +330,17 @@ div.selectbox-wrapper {
 // Links
 
 a:link, a:visited, select, input, textarea {
-    color : @link-color;
+    color : @link_color;
 }
 
 select,input,button
 {
-    .color-100-gray;
+    .color_100_gray;
     font-size:99%;
     padding: 0.2em 0;
     border-width: 1px;
     border-style: solid;
-    border-color: @gray-20;
+    border-color: @gray_20;
 }
 
 select
@@ -349,14 +351,14 @@ select
 a:link,a:visited
 {
     cursor:pointer;
-    color: @link-color;
+    color: @link_color;
     text-decoration: none;
 }
 
 a:hover,a:active
 {
     cursor:pointer;
-    color:@link-color-active;
+    color:@link_color_active;
     text-decoration: underline;
 }
 
@@ -423,7 +425,7 @@ hr.clearer {
     width: 100%;
     background-color: @egw_color_1_a;
     .rounded (3px);
-    border: 1px solid @gray-100;
+    border: 1px solid @gray_100;
 }
 
 //##############################################################################################################
@@ -435,14 +437,14 @@ hr.clearer {
 }
 
 .lettersearch:hover {
-    .background-color-30-gray;
-    .color-0-gray;
+    .background_color_30_gray;
+    .color_0_gray;
 }
 
 
 .lettersearch_active{
     .Complete_Button_lettersearch;
-    .background-color-30-gray;
+    .background_color_30_gray;
     //		background-color: #808080 !important;
     font-weight: bold;
 }
@@ -525,7 +527,7 @@ div{
 }
 input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 {
-    .background-color-10-gray;
+    .background_color_10_gray;
     background-image: none;
     border:  outset 1px #b9d5e3;
     margin:  1px;
@@ -536,7 +538,7 @@ input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 
 input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
 {
-    .background-color-15-gray;
+    .background_color_15_gray;
     background-image: none;
     border:  outset 1px #b9d5e3;
     color:  #004e7d;
@@ -611,9 +613,9 @@ input[type=image]
 .divSideboxHeader
 {
     text-align:center;
-    .background-color-15-gray;
+    .background_color_15_gray;
     padding-top:2px;
-    .color-50-gray;
+    .color_50_gray;
 }
 
 
@@ -798,11 +800,7 @@ a.textSidebox
 
 
 button{
-    .Complete_Button_normal;
-
-    &:hover{ background-color: @gray-30; color: @gray-90;.box_shadow_standard_light_hover;}
-
-    &:active {.box_shadow_standard_light_active !important;}
+ // siehe etemplate2.less
 }
 /* ########################################################################################
  * 
@@ -821,21 +819,21 @@ button[id="addressbook-edit_button[delete]"]
     margin-left: 3em;
     .Complete_Button_text_icon_before;
     /*background-color: @color-negative-action !important;*/
-    /*color: @gray-100 !important;*/
+    /*color: @gray_100 !important;*/
             
             &:hover {
 
                 background-image:url('../images/delete-hover.png') !important;
-                background-color: @color-negative-action-hover !important;
+                background-color: @color_negative_action_hover !important;
                 .Complete_Button_text_icon_before;
-                color: @gray-0 !important;;
+                color: @gray_0 !important;;
             }           
             &:active {
 
                 background-image:url('../images/delete-hover.png') !important;
-                background-color: @color-negative-action-active !important;
+                background-color: @color_negative_action_active !important;
                 .Complete_Button_text_icon_before;
-                color: @gray-0;
+                color: @gray_0;
             }            
 }
 
@@ -846,20 +844,20 @@ button[id="addressbook-edit_button[delete]"]
  ######################################################################################## */            
  
 button[id*="save"] {
-    &:active {background-color: @color-positive-action-active;}
+    &:active {background-color: @color_positive_action_active;}
 }
 button[id*="apply"]{
-    &:active {background-color: @color-positive-action-active;}
+    &:active {background-color: @color_positive_action_active;}
 }
 button[id*="copy"]{  
-    &:active {background-color: @color-positive-action-active;}
+    &:active {background-color: @color_positive_action_active;}
    } 
 button[id*="edit_button[edit]"]{
-    &:active {background-color: @color-positive-action-active;}
+    &:active {background-color: @color_positive_action_active;}
 }
 
 button#filemanager-select_button[ok]{
-    &:active {background-color: @color-positive-action-active;}
+    &:active {background-color: @color_positive_action_active;}
 }
 
 /*ui-widget*/
@@ -868,29 +866,29 @@ button#series {
     background-image:url('../images/edit.png') !important;
     .Complete_Button_text_icon_before;
     &:hover {background-image:url('../images/edit.png') !important;}
-    &:active {background-color: @color-positive-action-active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
 }
 /*edit exception*/
 button#exception {
         background-image:url('../images/edit.png') !important;
     .Complete_Button_text_icon_before;
     &:hover {background-image:url('../images/edit.png') !important;}
-    &:active {background-color: @color-positive-action-active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
 }
 
 /*calendar series add*/
 #calendar-edit_add {
-    &:active {background-color: @color-positive-action-active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
 /*    .Complete_Button_add;
     &:hover {.Complete_Button_add_hover;} */
 }
 /*calendar search freetime*/
 #calendar-edit_freetime{
-    &:active {background-color: @color-positive-action-active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
 }
 /*calendar search freetime*/
 button[id*="edit_button[add_alarm]"]{
-    &:active {background-color: @color-positive-action-active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
 }
 /* ########################################################################################
  * 
@@ -901,13 +899,13 @@ button[id*="edit_button[add_alarm]"]{
 button[id*="cancel"],
 button#cancel{
 
-                &:hover  { background-color: @color-cancel-action-hover !important; color: @gray-100; }
-                &:active { background-color: @color-cancel-action-active !important; color: @gray-80; }
+                &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
+                &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
 }
 
 
 /* et2_box_widget ###*/
-/*div.et2_box_widget .et2_button_text:last-child,*/
+/*div.et2_box_widget .et2_button_text:last_child,*/
 button[id="cancel"]{
     
                  background-image:url('../images/cancel.png') !important;
@@ -915,8 +913,8 @@ button[id="cancel"]{
                 content: "ID missing";
                 
                 
-                &:hover {background-color: @color-cancel-action-hover !important; .box_shadow_standard_light_hover;}
-                &:active {background-color: @color-cancel-action-active !important; .box_shadow_standard_light_inset;}
+                &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
+                &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
 }
 
 /* ########################################################################################
@@ -933,7 +931,7 @@ button[id="add"]{
                 background-image:url('../images/add.png') !important;
                 .Complete_Button_text_icon_before;
                 
-                &:active {background-color: @color-positive-action-active !important;}
+                &:active {background-color: @color_positive_action_active !important;}
 }
 
 /* ########################################################################################
@@ -963,4 +961,4 @@ button.et2_button_with_image{
             }
 }
 
-//
+// 

@@ -86,7 +86,7 @@ div.et2_hbox>div {
     display: inline-block;
     /*border: 1px solid cornflowerblue;*/
     .border_normal;
-    background-color: @gray-10;
+    background-color: @gray_10;
     padding: 3px;
     margin: 1px;
 }
@@ -104,7 +104,7 @@ div.et2_hbox>div {
 .et2_placeholder .et2_attr {
     display: block;
     font-size: 8pt;
-    color: @gray-100;
+    color: @gray_100;
     margin: 2px 0 2px 0;
 }
 
@@ -140,7 +140,7 @@ div.et2_hbox>div {
  * Label widget, and labels for other widgets
  */
 .et2_label {
-    color: @gray-90;
+    color: @gray_90;
 //    float: left;
 }
 
@@ -178,12 +178,12 @@ a.et2_url.url {
  * Button widget - text only, and icon
  */
 .et2_button {
-    cursor: pointer;
+/*    cursor: pointer;
     text-align: center;
 
-    font-size: 9pt;
-
-    text-shadow: 0px 0px;
+    font-size: 9pt;*/
+    text-shadow: 0px 0px !important;
+    .Complete_Button_normal;  
 }
 
  /*in Nextmatch definiert*/
@@ -200,21 +200,38 @@ a.et2_url.url {
 //    width: 16px;
     .dimension_height_s;
 }
-button.et2_button_text:hover, input[type=button]:hover {
-    color: @gray-90;
-    border: 1px solid @gray-20;
-    background-color: @gray-30;
+
+button.et2_button_text, 
+input[type=button] {
+    
+        &:hover{ 
+            /*background-color: @gray_30;*/ 
+            text-shadow: 0px 0px;
+            color: @gray_0;
+            .box_shadow_standard_light_hover;
+            background-color: @color_positive_action_active;
+           }
+
+        &:active {.box_shadow_standard_light_active !important;}
+    
+}
+
+
+/*button.et2_button_text:hover, input[type=button]:hover {
+    color: @gray_90;
+    border: 1px solid @gray_20;
+    background-color: @gray_30;
 }
 button.et2_button_text:active, input[type=button]:active {
-    /*background-image: none !important;*/
-    background-color: @gray-50;
-    color: @gray-0;
+    background-image: none !important;
+    background-color: @gray_50;
+    color: @gray_0;
 }
 button.et2_button_text:focus, input[type=button]:focus {
-    border: 1px solid @gray-40;
-    color: @gray-0;
+    border: 1px solid @gray_40;
+    color: @gray_0;
     outline: none;
-}
+}*/
 
 /**
  * Drop down button
@@ -310,7 +327,7 @@ button.et2_button_text:focus, input[type=button]:focus {
     //	text-indent: -26px;
     //	max-width: 85%;
 
-    &:hover {background-color: @color-hint !important;}
+    &:hover {background-color: @color_hint !important;}
 
 
 
@@ -345,7 +362,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close{
     /*visibility: hidden;*/
      background-image: url(../images/close.png);
-     background: @gray-0;
+     background: @gray_0;
      margin: 2px;
     padding: 0px;
 }
@@ -387,7 +404,7 @@ span.et2_date span {
     background-position: center;
     background-repeat: no-repeat;
 
-    color: @gray-0;
+    color: @gray_0;
     cursor: pointer;
     padding-top: 3px;
     padding-left: 22px;
@@ -475,7 +492,7 @@ div.et2_file input {background-color: @egw_color_1_a;}
 }
 
 .et2_file .progress p {
-    background-color: @color-progress;
+    background-color: @color_progress;
     height:5px;
     margin: 0px;
 }
@@ -542,7 +559,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 .et2_link_entry .ui-icon-close {
     display: inline-block;
-    background-color: @gray-0;
+    background-color: @gray_0;
     border: none;
     position: relative;
     top: 3px;
@@ -663,7 +680,7 @@ ul.et2_link_string {
     position: fixed;
     border: 1px solid #897f51;
     padding: 3px;
-    background-color: @color-hint;
+    background-color: @color_hint;
     max-width: 300px;
     color: black;
 }
@@ -678,12 +695,10 @@ ul.et2_link_string {
     padding: 4px;
     cursor: pointer;
     font-size: 0.8em;
-    .border-radius(3px,0,0,3px);
-    //	.bordered (@egw_color_2_c, @egw_color_2_c, #bfbfbf, @egw_color_2_c);
+    /*.border_radius(3px,0,0,3px);*/
 
-    .background-color-25-gray;
-    //	.border_radius_button_normal;
-    //	.border_normal;
+    .background_color_25_gray;
+    .inner_shadow(1px, 0px, 0px, 0.5); 
     -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);  
     box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
@@ -694,18 +709,13 @@ ul.et2_link_string {
     user-select: none;
 
     &:hover {
-        .color-5-gray;
-        //			border: 1px solid gray;
-        .background-color-25-gray;
+        .color_5_gray;
+        .background_color_25_gray;
     }
 
     &:active{
-        .background-color-0-gray;
-        //			border-width: 3px 1px 0px 0;
-        //			border-style: solid;
-        //			border-spacing: 0px;
-        //			border-color: @active_button_border_bottom;
-        .color-0-gray;
+        .background_color_0_gray;
+        .color_0_gray;
     }
 
 }
@@ -717,14 +727,14 @@ ul.et2_link_string {
     //	border-style: solid;
     border-spacing: 0px;
     //	border-color: @active_button_border_bottom;
-    //	.color-0-gray;
+    //	.color_0_gray;
     background-color: white;
-    .color-100-gray;
+    .color_100_gray;
     border-width: 1px 1px 0px 1px;
     border-style: solid;
-    border-color: @gray-70;
+    border-color: @gray_70;
     &:hover {
-        .color-100-gray;
+        .color_100_gray;
         //			border: 1px solid gray;
         background-color: white;
     }
@@ -733,16 +743,16 @@ ul.et2_link_string {
 .et2_tabs {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
-    border-color: @gray-70;
+    border-color: @gray_70;
     padding: 5px;
     overflow-y: auto;
-    background-color: @gray-0;
+    background-color: @gray_0;
     .border_radius_button_normal;
 }
 
 
 .et2_tabheader {
-//    background-color: @gray-20;
+//    background-color: @gray_20;
     background-position: bottom;
     background-repeat: repeat-x;
     padding-left: 0em;
@@ -776,7 +786,7 @@ ul.et2_vfs {
 */
 [required] {
     background-color: @egw_color_1_a;
-    .border-radius (3px, 3px ,3px ,3px );
+    .border_radius (3px, 3px ,3px ,3px );
     input{
 
     }
@@ -790,7 +800,7 @@ ul.et2_vfs {
     -moz-box-shadow: 0 0 6px #DDDDDD;
     background-color: #FFFE36;
     border: 1px solid #E1E16D;
-    color: @color-warning;
+    color: @color_warning;
     display: none;
     font-size: 11px;
     height: 15px;
@@ -806,7 +816,7 @@ ul.et2_vfs {
 
 hr {
     border-style: none;
-    border-top: 1px solid @gray-10;
+    border-top: 1px solid @gray_10;
     height: 1px;
     margin: 10px 0px 10px 0px;
 }
@@ -823,7 +833,7 @@ table.et2_grid {
     /*	border: 1px dashed silver;*/
     
     .gray {
-        padding: 1em; background-color: @color-hint;
+        padding: 1em; background-color: @color_hint;
         span {background-color: transparent;}
         }
 }
@@ -902,7 +912,7 @@ div.message.floating {
 
 
 .et2_nextmatch {
-    .background-color-10-gray;
+    .background_color_10_gray;
 }
 
 /* Left & right headers*/
@@ -939,12 +949,12 @@ div.message.floating {
     width: 80%;
     margin-bottom: 4px;
     padding: 0;
-    background-color: @gray-30;
+    background-color: @gray_30;
     border: none !important;
-    border-color: @gray-100;
+    border-color: @gray_100;
     background-image: none !important; 
     height: 37px;
-    .border-radius (15px, 3px, 0px, 0px);
+    .border_radius (15px, 3px, 0px, 0px);
     
     .et2_label {
         
@@ -986,7 +996,7 @@ div.message.floating {
 
 // Search Field
 .nextmatch_header > .filters input[type=search] { 
-    .background-color-search;
+    .background_color_search;
     color: black;
     /*height: 25px;*/
     float: left;
@@ -1060,8 +1070,8 @@ div.message.floating {
     //	margin-right: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
-    border: 1px solid @gray-10;
-    background-color: @gray-20;
+    border: 1px solid @gray_10;
+    background-color: @gray_20;
     background-image: url(../images/header_overlay.png);
     background-position: center;
     background-repeat: repeat-x;
@@ -1097,7 +1107,7 @@ div.message.floating {
 
     .box_shadow_standard_light;
     .border_radius_button_normal;
-    .background-color-25-gray;
+    .background_color_25_gray;
 
 
 }
@@ -1113,7 +1123,7 @@ div.message.floating {
             vertical-align: middle;
             margin-right: -2px;
             padding: 0px 1ex;
-            .background-color-0-gray;
+            .background_color_0_gray;
             background-image: none;
 //            width: 50px;
 
@@ -1156,7 +1166,7 @@ div.message.floating {
         
        /* hover */
         button.ui-state-hover {
-            background-color: @gray-30 !important;
+            background-color: @gray_30 !important;
 //            background-image: url("../images/fav_filter_normal.png") !important;
 //            background-repeat: no-repeat !important;
             background-size: 16px 16px !important;
@@ -1250,7 +1260,7 @@ div.message.floating {
 
             padding-left: 0 !important; 
             margin-left: 0px; 
-            line-height: 1.5em;
+            line-height: 2.5em;
 
 
             img {
@@ -1290,10 +1300,10 @@ div.message.floating {
     .ui-widget-content .ui-state-focus,
     .ui-widget-header .ui-state-focus {
         .bordered(1px, 1px, 1px,1px);
-        border-color: @gray-10;
+        border-color: @gray_10;
         background: transparent !important;
         font-weight: bold;
-        .color-100-gray;
+        .color_100_gray;
     }			
 
     .ui-menu-icons {
@@ -1474,7 +1484,7 @@ div.et2_progress {
     text-align: left;
 }
 div.et2_progress > div {
-    background-color: @color-progress;
+    background-color: @color_progress;
     height: 5px;
 }
 
@@ -1665,7 +1675,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 
 textarea,
 textarea.description {
-    background-color: @color-optional;
+    background-color: @color_optional;
     padding: 0.3em 0 0 0.3em;
 }
 
@@ -1729,4 +1739,4 @@ iframe#admin-index_iframe{
 }
 
 //
-//
+//                                                                                                                                                                                                                                                                                                        

@@ -62,4 +62,9 @@ Dateimanager - still working on it
 Calendar -> still working on it
 
 
-/* 20.12.2013 ***************** */
+/* 27.12.2013 ***************** */
+Fix Headernavigation Img before
+Fix Sidemenu Rollover Effekts
+Fix Dateimanager Menu
+
+NEW: Transition Effekt
