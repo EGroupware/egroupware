@@ -2113,6 +2113,9 @@ action buttons, left aligned for "extra" controls
     background-size: contain;
     background-repeat: no-repeat;
     float: left;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .nextmatch_header > .filters button.et2_button:hover {
     -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
