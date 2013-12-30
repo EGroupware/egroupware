@@ -1670,7 +1670,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Search
 		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
 		this.search.input.attr("type", "search");
-		this.search.input.val(settings.search);
+		this.search.input.val(settings.search)
+			.on("keypress", function(event) {
+				if(event.which == 13)
+				{
+					self.nextmatch.applyFilters({search: self.search.getValue()});
+				}
+			});
 
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
