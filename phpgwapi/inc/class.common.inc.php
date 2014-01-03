@@ -822,15 +822,21 @@ class common
 	 * VFS image directory is treated like an application named 'vfs'.
 	 *
 	 * @param string $template_set=null 'default', 'idots', 'jerryr', default is template-set from user prefs
+	 * @param boolean $svg=null prefer svg images, default for all browsers but IE<9
 	 * @return array of application => image-name => full path
 	 */
-	static function image_map($template_set=null)
+	static function image_map($template_set=null, $svg=null)
 	{
 		if (is_null($template_set))
 		{
 			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 		}
-		if (($map = egw_cache::getInstance(__CLASS__, 'image_map_'.$template_set)))
+		if (is_null($svg))
+		{
+			$svg = html::$user_agent !== 'msie' || html::$ua_version >= 9;
+		}
+		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '');
+		if (($map = egw_cache::getInstance(__CLASS__, $cache_name)))
 		{
 			return $map;
 		}
@@ -838,6 +844,10 @@ class common
 
 		// priority: : PNG->JPG->GIF
 		$img_types = array('png','jpg','gif','ico');
+
+		// if we want svg, prepend it to img-types
+		if ($svg) array_unshift ($img_types, 'svg');
+
 		$map = array();
 		foreach(scandir(EGW_SERVER_ROOT) as $app)
 		{
@@ -895,7 +905,7 @@ class common
 			}
 		}
 		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
-		egw_cache::setInstance(__CLASS__, 'image_map_'.$template_set, $map, 86400);	// cache for one day
+		egw_cache::setInstance(__CLASS__, $cache_name, $map, 86400);	// cache for one day
 		//echo "<p>template_set=".array2string($template_set)."</p>\n"; _debug_array($map);
 		return $map;
 	}
@@ -910,10 +920,11 @@ class common
 		{
 			$templates[] = $template_set;
 		}
-		error_log(__METHOD__."() for templates ".array2string($templates));
+		//error_log(__METHOD__."() for templates ".array2string($templates));
 		foreach($templates as $template_set)
 		{
 			egw_cache::unsetInstance(__CLASS__, 'image_map_'.$template_set);
+			egw_cache::unsetInstance(__CLASS__, 'image_map_'.$template_set.'_svg');
 		}
 	}
 

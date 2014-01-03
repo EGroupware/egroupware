@@ -24,7 +24,7 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-$content = common::image_map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null);
+$content = common::image_map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']);
 
 // use an etag over the image mapp
 $etag = '"'.md5(serialize($content)).'"';
