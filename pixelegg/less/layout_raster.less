@@ -420,8 +420,21 @@
         position: relative;
         z-index: 1000;
         margin-right: 20px;
-        display: inline-flex;
+
         float: right;
+        
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        
+        flex-direction: row;
+        justify-content: flex-start;
+        
+        -webkit-flex-direction: row;
+        -webkit-justify-content: flex-start;
+        -ms-flex-direction: row;
+        -ms-justify-content: flex-start;
         
         
         /*postion: bottom*/
@@ -432,6 +445,8 @@
         z-index: 1000;*/
 
         .topmenu_info_item {
+            
+            overflow: visible;
 
             // Info Bell
             &:nth-child(1) {
