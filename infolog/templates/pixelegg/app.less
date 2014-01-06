@@ -28,7 +28,7 @@ span#favorite_sidebox_infolog{
             }
             
         img.sideboxstar{
-                .box-shadow(none);
+                .box_shadow(none);
                 border: 0px;
                 background-size: contain;
             }
@@ -92,25 +92,31 @@ span#favorite_sidebox_infolog{
                     margin-right: 0em;
 
                     div.et2_box_widget{
-                        background-color: @egw_color_blue_lighter !important;
-                        color: #FFF;
-                        text-shadow: none;
-//                        height: 35px;
+                         border: 1px solid rgba(0, 0, 0, 0.15);
+                        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+
+                        text-shadow: none;                      
+                        .dimension_height_l;
                         background-image: none !important;
-                        .border_radius_button_lefttop;
+                        /*.border_radius_button_lefttop;*/
 
                         &:before {content: "+";font-size: 2em;color: @egw_color_1;}
 
-                            .border_radius_button_lefttop;
+/*                            .border_radius_button_lefttop;
                             .box_shadow_standard_light;
 
-                            height: 39px; // hieght of add-item
+                            height: 39px; // hieght of add-item*/
 
-                            .infolog_headertext{color: #FFF !important; font-size: 11px;}
-
-                      
-                      &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
-                      
+                      &:hover {
+                          .box_shadow_standard_light_hover; 
+                          background-color: @egw_color_2_a !important;
+                          .border_radius_button_lefttop;
+                          
+                          
+                          .infolog_headertext {color: #FFF !important;}
+                          
+                      }
+                       .infolog_headertext{ color: #000; font-size: 11px; }
                       
                       /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
                       
@@ -121,7 +127,7 @@ span#favorite_sidebox_infolog{
                             .dimension_width_height_s;
                             margin-right: 0.5em;
                             padding: 2px;
-                            margin-top: -2px;
+                            margin-top: -14px;
                             vertical-align: middle;
 
                             &:hover{.Complete_Button_Icon_hover ;}
@@ -145,9 +151,9 @@ span#favorite_sidebox_infolog{
                 // Liste
                 ul#infolog-index_favorite_menu{
 
-                    border-color: @gray-30;
-                    .background-color-0-gray;
-                    .color-100-gray;
+                    border-color: @gray_30;
+                    .background_color_0_gray;
+                    .color_100_gray;
                     li{
                         a {
 
