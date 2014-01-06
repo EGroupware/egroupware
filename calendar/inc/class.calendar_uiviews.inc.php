@@ -1773,16 +1773,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		else
 		{
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$popup = ' onclick="app.calendar.edit_series(event,'.$event['id'].','.$this->bo->date2string($event['start']).');"';
-			}
-			else
-			{
-				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-
-				$popup = ' onclick="'.$this->popup($view_link).'; return false;"';
-			}
+			// Replaced with jquery click handler due to CSP consern
 		}
 		//_debug_array($event);
 
@@ -1799,24 +1790,6 @@ class calendar_uiviews extends calendar_ui
 
 		$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
-		$ttip_options = array(
-			'BorderWidth' => 0,		// as we use our round borders
-			'Padding'     => 0,
-			'Sticky'      => true,	// make long tooltips scrollable
-			'ClickClose'  => true,
-			'FOLLOWMOUSE' => false,
-			'DELAY'		  => 600,
-			//'FIX'		  => "['".$draggableID."',10,-5]",
-			'SHADOW'	  => false,
-			'WIDTH'		  => -400,
-		);
-		$ie_fix = '';
-        if (html::$user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
-        {
-			$ie_fix = $indent."\t".html::image('calendar','transparent.gif','',
-				html::tooltip($tooltip,False,$ttip_options).
-				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
-        }
 		if ($this->use_time_grid)
 		{
 			if($event['whole_day_on_top'])
@@ -1854,18 +1827,13 @@ class calendar_uiviews extends calendar_ui
 			{
 				$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
-				// If a event isn't drag-dropable, the drag drop event handling has to be fully disabled
-				// for that object. Clicking on it - however - should still bring it to the foreground.
-				$dd_emulation = ' onmousedown="dd.z++; this.style.zIndex = dd.z; event.cancelBubble=true;"'
-					.'onmouseup="event.cancelBubble=true;"'
-					.'onmousemove="event.cancelBubble=true;"';
 			}
 		}
+		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$tooltip));
 		$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'];
-		$html = $indent.'<div id="'.$draggableID.'" data-resize="'.$resizableHelper.' " class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
+		$html = $indent.'<div id="'.$draggableID.'" data-tooltip ="'.$tooltip .'" data-resize="'.$resizableHelper.' " class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
-			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
-			$dd_emulation.'>'.$prefix_icon."\n".$ie_fix.$html."\n".
+			'>'.$prefix_icon."\n".$html."\n".
 			$indent."</div>"."\n";
 
 		return $html;

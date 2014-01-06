@@ -141,6 +141,7 @@ app.classes.calendar = AppJS.extend(
 			},
 
 		}).resizable({
+				//scroll:true,
 				start:function(ui,event)
 				{
 					var resizeHelper = ui.target.getAttribute('data-resize');
@@ -227,6 +228,39 @@ app.classes.calendar = AppJS.extend(
 
 			});
 
+		//onClick Handler for calender entries
+		jQuery("div.calendar_calEvent").on({
+			click:function(ev){
+				var eventId = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
+				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
+				if (ev.currentTarget.id.match(/drag_/g))
+				{
+					egw.open(eventId,'calendar','edit');
+				}
+				else
+				{
+					that.edit_series(event,eventId,startDate);
+				}
+			},
+			mouseover: function(){
+
+				var ttp = jQuery(this).tooltip({
+					items: "[data-tooltip]",
+					content: function()
+					{
+						var elem = jQuery(this);
+						if (elem.is("[data-tooltip]"))
+							return this.getAttribute('data-tooltip') ;
+					},
+					track:true,
+
+				});
+				ttp.tooltip("enable");
+			},
+			mousedown: function(){
+				jQuery(this).tooltip("disable");
+			}
+		});
 		//onClick Handler for calendar cells
 		jQuery("div.calendar_calAddEvent").click(function(ev)
 		{
