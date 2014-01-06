@@ -140,9 +140,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function __construct($set_states=null)
 	{
-		// tell framework calendar needs eval and inline javascript :(
-		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
-
+		
 		parent::__construct(false,$set_states);	// call the parent's constructor
 		$this->extraRowsOriginal = $this->extraRows; //save original extraRows value
 
