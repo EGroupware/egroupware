@@ -3502,6 +3502,147 @@ $success=true;
 	}
 
 	/**
+	 * move folder
+	 *
+	 * @param array _folderName  folder to vove
+	 * @param array _target target folder
+	 *
+	 * @return xajax response
+	 */
+	function ajax_MoveFolder($_folderName, $_target)
+	{
+		error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
+		if ($_folderName)
+		{
+			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$_newLocation = $this->mail_bo->decodeEntityFolderName($_target);
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$oA = array();
+			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			$hasChildren = false;
+			if (is_numeric($profileID))
+			{
+				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$pA = explode($del,$folderName);
+				$namePart = array_pop($pA);
+				$_newName = $namePart;
+				$parentFolder = $_newLocation;
+				if (strtoupper($folderName)!= 'INBOX')
+				{
+					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
+					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
+					{
+						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
+						$delimiter = $this->mail_bo->getHierarchyDelimiter();
+						$nameSpace = $this->mail_bo->_getNameSpaces();
+						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
+						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
+						$fragments = array();
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
+						foreach ($subFolders as $k => $folder)
+						{
+							// we do not monitor failure or success on subfolders
+							if ($folder == $folderName)
+							{
+								unset($subFolders[$k]);
+							}
+							else
+							{
+								$rv = $this->mail_bo->subscribe($folder, false);
+								$fragments[$profileID.self::$delimiter.$folder] = substr($folder,strlen($folderName));
+							}
+						}
+						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($fragments));
+					}
+
+					$this->mail_bo->reopen('INBOX');
+					$success = false;
+					try
+					{
+						if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
+							$this->mail_bo->resetFolderObjectCache($profileID);
+							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
+							$rv = $this->mail_bo->subscribe($newFolderName, true);
+							$rv = $this->mail_bo->subscribe($folderName, false);
+							$success = true;
+						}
+					}
+					catch (Exception $e)
+					{
+						$newFolderName=$folderName;
+						$msg = $e->getMessage();
+					}
+					$this->mail_bo->reopen($newFolderName);
+					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($fS));
+					if ($hasChildren)
+					{
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($newFolderName, $delimiter, $prefix);
+						foreach ($subFolders as $k => $folder)
+						{
+							// we do not monitor failure or success on subfolders
+							if ($folder == $folderName)
+							{
+								unset($subFolders[$k]);
+							}
+							else
+							{
+								$rv = $this->mail_bo->subscribe($folder, true);
+							}
+						}
+						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
+					}
+
+					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
+					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
+					if ($fS['unseen'])
+					{
+						$oA[$_folderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
+					}
+					else
+					{
+						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
+					}
+					foreach((array)$fragments as $oldFolderName => $fragment)
+					{
+						//error_log(__METHOD__.__LINE__.':'.$oldFolderName.'->'.$profileID.self::$delimiter.$newFolderName.$fragment);
+						$oA[$oldFolderName]['id'] = $profileID.self::$delimiter.$newFolderName.$fragment;
+						$oA[$oldFolderName]['olddesc'] = '#skip-user-interaction-message#';
+						$fS = $this->mail_bo->getFolderStatus($newFolderName.$fragment,false);
+						if ($fS['unseen'])
+						{
+							$oA[$oldFolderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
+						}
+						else
+						{
+							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'];
+						}
+					}
+				}
+			}
+			if ($folderName==$this->mail_bo->sessionData['mailbox'])
+			{
+				$this->mail_bo->sessionData['mailbox']=$newFolderName;
+				$this->mail_bo->saveSessionData();
+			}
+			//error_log(__METHOD__.__LINE__.array2string($oA));
+			$response = egw_json_response::get();
+			if ($oA && $success)
+			{
+				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+			}
+			else
+			{
+				$response->call('egw_refresh',lang('failed to move %1 ! Reason: %2',$oldFolderName,$msg),'mail');
+			}
+		}
+	}
+
+	/**
 	 * ajax_deleteFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * @param string $_folderName folder to delete
 	 * @return nothing
@@ -3847,18 +3988,5 @@ $success=true;
 		{
 			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
-	}
-
-	/**
-	 * move folder
-	 *
-	 * @param array _folderName  folder to vove
-	 * @param array _target target folder
-	 *
-	 * @return xajax response
-	 */
-	function ajax_MoveFolder($_folderName, $_target)
-	{
-		error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
 	}
 }
