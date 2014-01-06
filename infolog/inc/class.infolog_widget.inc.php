@@ -106,13 +106,21 @@ class infolog_widget
 
 				switch($type)
 				{
-					case '':	// Sum of the alternatives
+					case '':	// Sum of the alternatives, field-name can be prefixed with a minus to substract it's value
 						$cell['type'] = 'float';
 						$cell['size'] = ',,,%0.2lf';
 						$value = 0.0;
 						foreach(explode(':',$alternatives) as $name)
 						{
-							$value += str_replace(array(' ',','),array('','.'),$this->data[$name]);
+							if ($name[0] === '-')
+							{
+								$val = '-'.$this->data[substr($name, 1)];
+							}
+							else
+							{
+								$val = $this->data[$name];
+							}
+							$value += str_replace(array(' ',','), array('','.'), $val);
 						}
 						$alternatives = '';
 						break;
