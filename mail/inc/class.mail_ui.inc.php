@@ -3566,6 +3566,7 @@ $success=true;
 							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
 							$rv = $this->mail_bo->subscribe($newFolderName, true);
 							$rv = $this->mail_bo->subscribe($folderName, false);
+							$this->mail_bo->resetFolderObjectCache($profileID);
 							$success = true;
 						}
 					}
@@ -3603,14 +3604,17 @@ $success=true;
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			$response = egw_json_response::get();
-			if ($oA && $success)
+			if ($success)
 			{
 				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false);
 				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
-//				$response->call('app.mail.mail_setLeaf',$oA,'mail');
-				$response->call('app.mail.mail_reloadNode',array(
+				$refreshData = array(
 					$profileID.self::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
-					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']),'mail');
+					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
+				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
+				if (strpos($profileID.self::$delimiter.$parentFolder,$profileID.self::$delimiter.$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
+				if (count($refreshData)>1 && strpos($profileID.self::$delimiter.$oldParentFolder,$profileID.self::$delimiter.$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
+				$response->call('app.mail.mail_reloadNode',$refreshData,'mail');
 
 			}
 			else
