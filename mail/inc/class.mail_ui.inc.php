@@ -3511,7 +3511,7 @@ $success=true;
 	 */
 	function ajax_MoveFolder($_folderName, $_target)
 	{
-		error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
+		//error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
@@ -3526,6 +3526,7 @@ $success=true;
 				$pA = explode($del,$folderName);
 				$namePart = array_pop($pA);
 				$_newName = $namePart;
+				$oldParentFolder = implode($del,$pA);
 				$parentFolder = $_newLocation;
 				if (strtoupper($folderName)!= 'INBOX')
 				{
@@ -3551,7 +3552,6 @@ $success=true;
 							else
 							{
 								$rv = $this->mail_bo->subscribe($folder, false);
-								$fragments[$profileID.self::$delimiter.$folder] = substr($folder,strlen($folderName));
 							}
 						}
 						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($fragments));
@@ -3574,12 +3574,12 @@ $success=true;
 						$newFolderName=$folderName;
 						$msg = $e->getMessage();
 					}
-					$this->mail_bo->reopen($newFolderName);
-					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
+					$this->mail_bo->reopen($parentFolder);
+					$fS = $this->mail_bo->getFolderStatus($parentFolder,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
 					if ($hasChildren)
 					{
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($newFolderName, $delimiter, $prefix);
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($parentFolder, $delimiter, $prefix);
 						foreach ($subFolders as $k => $folder)
 						{
 							// we do not monitor failure or success on subfolders
@@ -3594,34 +3594,6 @@ $success=true;
 						}
 						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
 					}
-
-					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
-					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
-					if ($fS['unseen'])
-					{
-						$oA[$_folderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
-
-					}
-					else
-					{
-						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
-					}
-					foreach((array)$fragments as $oldFolderName => $fragment)
-					{
-						//error_log(__METHOD__.__LINE__.':'.$oldFolderName.'->'.$profileID.self::$delimiter.$newFolderName.$fragment);
-						$oA[$oldFolderName]['id'] = $profileID.self::$delimiter.$newFolderName.$fragment;
-						$oA[$oldFolderName]['olddesc'] = '#skip-user-interaction-message#';
-						$fS = $this->mail_bo->getFolderStatus($newFolderName.$fragment,false);
-						if ($fS['unseen'])
-						{
-							$oA[$oldFolderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
-
-						}
-						else
-						{
-							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'];
-						}
-					}
 				}
 			}
 			if ($folderName==$this->mail_bo->sessionData['mailbox'])
@@ -3633,7 +3605,13 @@ $success=true;
 			$response = egw_json_response::get();
 			if ($oA && $success)
 			{
-				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false);
+				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+//				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+				$response->call('app.mail.mail_reloadNode',array(
+					$profileID.self::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
+					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']),'mail');
+
 			}
 			else
 			{
