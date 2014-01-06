@@ -18,8 +18,6 @@
 			{app_css}
 		</style>
 		{java_script}
-		<script src="./pixelegg/js/slider.js" type="text/javascript"></script>
-	
 	</head>
 	<body {body_tags}>
 		{include_wz_tooltip}
@@ -30,15 +28,15 @@
 		<div id="egw_fw_basecontainer">
 			<div id="egw_fw_header">
 				<div id="egw_divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" alt="EGroupware"/></a></div>
-			
+
 				<div id="egw_fw_topmenu">
-						
+
 						<div id="egw_fw_topmenu_items">{topmenu_items}</div>
-						
+
 					</div>
-			</div>	
-			
-			
+			</div>
+
+
 			<div id="egw_fw_topmenu_addons">
 					<div id="egw_fw_topmenu_info_items">{topmenu_info_items}</div>
 						<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
@@ -49,14 +47,14 @@
 				<div id="egw_fw_splitter"></div>
 			</div>
 			<div id="egw_fw_main">
-				
+
 				<div id="egw_fw_tabs"><div id="egw_fw_topmenu_slide" class="slideup"><span id="slidetoggle"></span></div>
-					
+
 				</div>
-			
+
 			</div>
 		</div>
 		<div id="egw_fw_footer">{powered_by}</div>
 
-		
+
 <!-- END framework -->

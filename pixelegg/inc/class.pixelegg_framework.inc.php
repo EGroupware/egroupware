@@ -39,4 +39,22 @@ class pixelegg_framework extends jdots_framework
 	{
 		parent::__construct($template);		// call the constructor of the extended class
 	}
+
+	/**
+	 * Render header
+	 *
+	 * Overwritten to load our slider.js
+	 *
+	 * @param array $extra
+	 * @return type
+	 */
+	function header(array $extra=array())
+	{
+		// load our slider.js, but only if framework requested
+		if (!self::$header_done && $_GET['cd'] === 'yes')
+		{
+			self::validate_file('/pixelegg/js/slider.js');
+		}
+		return parent::header($extra);
+	}
 }
