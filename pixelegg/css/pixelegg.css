@@ -2243,17 +2243,12 @@ action buttons, left aligned for "extra" controls
 ################################################################*/
   /*ADD Button*/
   #admin-categories-index_add {
-    background-color: #0b5fa4 !important;
+    /*background-color: @egw_color_blue_lighter !important;*/
     color: #FFF;
     text-shadow: none;
     /*    height: auto;*/
     background-image: none !important;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
-    border-radius: 3px;
-    border-top-left-radius: 20px;
+    /*.border_radius_button_lefttop;*/
   }
   #admin-categories-index_add:before {
     content: "+";
@@ -4446,17 +4441,12 @@ button[id="cancel"]:active {
  *
  ######################################################################################## */
 button.add {
-  background-color: #0b5fa4 !important;
+  /*background-color: @egw_color_blue_lighter !important;*/
   color: #FFF;
   text-shadow: none;
   /*    height: auto;*/
   background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
+  /*.border_radius_button_lefttop;*/
 }
 button.add:before {
   content: "+";
@@ -5258,25 +5248,71 @@ img {
     - Name / Date
 ###################################################*/
 #egw_fw_topmenu_addons {
-  /*hover*/
+  /*    span#quick_add{
+        .Complete_Button_add;
+        .Button_size_square_16;
+        .border_normal;
+        .box_shadow_standard_light;
+        float: right;
+        position: fixed;
+        right: 83px;
+        top: 5px;
+        padding: 0.5em;
+        &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+        &:focus {.box_shadow_standard_light_inset;};
+        .transition (0.2s, ease-out);
+
+        select#quick_add_selectbox{
+                                    position: fixed;
+                                    right: 83px;
+                                    .border_normal;
+                                    .box_shadow_standard_light;
+                                    height: 26px;
+                                    padding: 0 0 0 10px;
+                                    font-size: 0.9em;
+                                    line-height: 1.1em;
+                                    
+                                    visibility: hidden;
+                                    
+                                    transition-property: visibility;
+                                    transition-duration: 0s;
+                                    transition-timing-function: linear;
+                                    transition-delay: 0s;
+                                    }
+                                }
+
+
+    
+
+   hover
+   span#quick_add:hover {  
+             
+             width: 166px !important;
+            .box_shadow_standard_light_hover;
+   
+             select#quick_add_selectbox {
+                .box_shadow_standard_light_hover;
+                .box_shadow_none;
+                border: none;
+                position: relative !important;
+                right: 1px !important;
+                top: -5px;
+                z-index: 200;
+                visibility: visible !important;
+            }
+   
+   }*/
 }
 #egw_fw_topmenu_addons span#quick_add {
-  /*.Complete_Button_add;*/
-  width: 16px;
-  height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   float: right;
+  padding: 0.5em;
   position: fixed;
   right: 83px;
   top: 5px;
-  padding: 0.5em;
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  width: 16px;
+  height: 16px;
 }
 #egw_fw_topmenu_addons span#quick_add:before {
   content: "+";
@@ -5284,43 +5320,13 @@ img {
   color: #ffc200;
   line-height: 0.6em;
 }
-#egw_fw_topmenu_addons span#quick_add:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-#egw_fw_topmenu_addons span#quick_add select#quick_add_selectbox {
-  position: fixed;
-  right: 83px;
-  /*.border_normal;*/
-  /*.box_shadow_standard_light;*/
-  /*height: 26px;*/
-  padding: 0 0 0 10px;
-  font-size: 0.9em;
-  /*line-height: 1.1em;*/
+#egw_fw_topmenu_addons select#quick_add_selectbox {
   visibility: hidden;
-  transition-property: visibility;
-  transition-duration: 0s;
-  transition-timing-function: linear;
-  transition-delay: 0s;
-}
-#egw_fw_topmenu_addons span#quick_add:hover {
-  width: 166px !important;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-#egw_fw_topmenu_addons span#quick_add:hover select#quick_add_selectbox {
-  /*.box_shadow_standard_light_hover;*/
-  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  border: none;
+  border: medium none;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   position: relative !important;
   right: 1px !important;
   top: -5px;
-  z-index: 200;
-  visibility: visible !important;
 }
 #egw_fw_logout {
   background-image: url(../images/logout.png);

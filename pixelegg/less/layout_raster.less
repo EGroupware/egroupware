@@ -89,6 +89,7 @@
                     /*.Button_size_square_32;*/
                     padding: 0.3em 0.4em;
                     .Complete_Button_normal;
+                    
 
                     &:hover{.Complete_Button_hover;.color_100_gray;}
                     &:active {.Complete_Button_active;}
@@ -267,9 +268,34 @@
 
     // ########################################
     // quick_add
+    
+      span#quick_add {
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+                float: right;
+                padding: 0.5em;
+                position: fixed;
+                right: 83px;
+                top: 5px;
+                .dimension_width_height_s;
+                &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+            }
+            
+            select#quick_add_selectbox {
+                
+                visibility: hidden;
+                border: medium none;
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+                position: relative !important;
+                right: 1px !important;
+                top: -5px;
 
-    span#quick_add{
-        /*.Complete_Button_add;*/
+}
+    
+    
+
+/*    span#quick_add{
+        .Complete_Button_add;
         .Button_size_square_16;
         .border_normal;
         .box_shadow_standard_light;
@@ -285,12 +311,12 @@
         select#quick_add_selectbox{
                                     position: fixed;
                                     right: 83px;
-                                    /*.border_normal;*/
-                                    /*.box_shadow_standard_light;*/
-                                    /*height: 26px;*/
+                                    .border_normal;
+                                    .box_shadow_standard_light;
+                                    height: 26px;
                                     padding: 0 0 0 10px;
                                     font-size: 0.9em;
-                                    /*line-height: 1.1em;*/
+                                    line-height: 1.1em;
                                     
                                     visibility: hidden;
                                     
@@ -304,14 +330,14 @@
 
     
 
-   /*hover*/
+   hover
    span#quick_add:hover {  
              
              width: 166px !important;
             .box_shadow_standard_light_hover;
    
              select#quick_add_selectbox {
-                /*.box_shadow_standard_light_hover;*/
+                .box_shadow_standard_light_hover;
                 .box_shadow_none;
                 border: none;
                 position: relative !important;
@@ -321,7 +347,7 @@
                 visibility: visible !important;
             }
    
-   }
+   }*/
   
  }  
    

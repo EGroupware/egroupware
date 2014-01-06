@@ -386,7 +386,15 @@
 }
 
 
-  /*Icon Buttons   ##################  */ 
+  /*Icon Buttons   ##################  */
+  
+  @mass_xs : 12px;
+  @mass_s  : 16px;
+  @mass_m  : 24px;
+  @mass_l  : 32px;
+  @mass_xl : 40px;
+  @mass_xxl: 48px;
+  
 
 /* ##############
  #  big Icon    #
@@ -395,47 +403,11 @@
  #              #
  #              #
  ################*/
-
-.dimension_width_height_xl{
-    
-    width: 32px;
-    height: 32px;
-}
-
-/* ###########
- # medium    # 
- # Icon      #
- #           #
- #  24 x 24  #
- #           #
- #############*/
-
-.dimension_width_height_m{
-    
-    width: 24px;
-    height: 24px;
-}
-
-/* ########
- # small  # 
- # Icon   #
- # 16x16  #
- ##########*/
-
-.dimension_width_height_s{
-    
-    width: 16px;
-    height: 16px;
-}
-
-/* ####
-   #xs#
-   ####*/
-.dimension_width_height_xs{
-    
-    width: 12px;
-    height: 12px;
-}
+.dimension_width_height_xl{width: @mass_xl; height: @mass_xl;}
+.dimension_width_height_l{width: @mass_l; height: @mass_l;}
+.dimension_width_height_m{width: @mass_m; height: @mass_m;}
+.dimension_width_height_s{width: @mass_s; height: @mass_s;}
+.dimension_width_height_xs{width: @mass_xs; height: @mass_xs;}
 
 /* only Buttons   ##################  */ 
 
@@ -447,34 +419,13 @@
  #  N x 32                  #
  ############################*/
 
-.dimension_height_xl{ height: 40px; }
+.dimension_height_xxl{ height: @mass_xxl;}
+.dimension_height_xl{ height: @mass_xl;}
+.dimension_height_l{ height: @mass_l;}
+.dimension_height_m{ height: @mass_m;}
+.dimension_height_s{ height: @mass_s;}
+.dimension_height_xs{ height: @mass_xs;}
 
-
-/* ##########################
- #  large  Button              #
- #                          #
- #                          #
- #                          #
- #  N x 32                  #
- ############################*/
-
-.dimension_height_l{ height: 32px; }
-
-/* ##########################
- #  medium Button           #
- #                          #
- #  N x 24                  #
- ############################*/
-
-.dimension_height_m{ height: 24px; }
-
-/* ##########################
- #  small Button           #
- #                          #
- #  N x 16                  #
- ############################*/
-
-.dimension_height_s{ height: 16px; }
 
 
 
@@ -668,4 +619,4 @@
 
 
 //
-//
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

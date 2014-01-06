@@ -87,6 +87,49 @@ egw_LAB.wait(function() {
 
 
 
+
+// ADD 
+
+    function addListeners(){
+   
+        if(window.addEventListener) {
+            // ADD
+            document.getElementById('quick_add').addEventListener("mouseover",quick_add_func_over,false);
+            document.getElementById('quick_add').addEventListener("mouseout",quick_add_func_out,false);
+
+            
+    
+        } else if (window.attachEvent){ // Added For Inetenet Explorer versions previous to IE9
+
+            document.getElementById('quick_add').attachEvent("onmouseover",quick_add_func_over);
+            document.getElementById('quick_add').attachEvent("onmouseout",quick_add_func_out);
+    }
+    
+        // Write your functions here
+    
+    function quick_add_func_over(){
+            this.style.transition = "0.2s ease-out 0s";
+            this.style.width = "166px";
+            this.style.borderTopLeftRadius = "20px";
+            this.style.backgroundColor = "#0B5FA4";
+            quick_add_selectbox.style.transition = "0.1s linear 0.2s";
+            quick_add_selectbox.style.visibility = "visible";      
+    }
+    
+    function quick_add_func_out(){
+            this.style.transition = "0.2s ease-out 0s";
+            this.style.width = "16px"; 
+            this.style.borderTopLeftRadius = "0px";
+            this.style.backgroundColor = "transparent";
+            quick_add_selectbox.style.transition = "0s linear 0s";
+            quick_add_selectbox.style.visibility = "hidden"; 
+    }
+    
+
+    
+ }
+    window.onload = addListeners; 
+
 /* #egw_fw_topmenu_info_items {
     bottom: 0;
     display: flex;
