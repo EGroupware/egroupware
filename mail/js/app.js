@@ -1939,6 +1939,57 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * mail_MoveFolder - implementation of the MoveFolder action of right click options on the tree
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	mail_MoveFolder: function(action,_senders) {
+		//console.log(action,_senders);
+		//action.id == 'rename'
+		//_senders.iface.id == target leaf / leaf to edit
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		OldFolderName = ftree.getLabel(_senders[0].iface.id);
+		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
+		OldFolderName = OldFolderName.trim();
+		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		//console.log(OldFolderName);
+		var buttons = [
+			{text: this.egw.lang("Move"), id: "move", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"},
+		];
+		var dialog = et2_createWidget("dialog",{
+			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+			callback: function(_button_id, _value) {
+				var senders = this.my_data.data;
+				var NewFolderName = null;
+				if (typeof _value.folder[0] != 'undefined' && _value.folder[0].length>0) NewFolderName = _value.folder[0];
+				//alert(NewFolderName);
+				if (NewFolderName && NewFolderName.length>0)
+				{
+					switch (_button_id)
+					{
+						case "move":
+							egw.json('mail.mail_ui.ajax_MoveFolder',[senders[0].iface.id, NewFolderName])
+								.sendRequest(true);
+							return;
+						case "cancel":
+					}
+				}
+			},
+			buttons: buttons,
+			title: this.egw.lang("Move Folder %1 ?",OldFolderName),
+			template:egw.webserverUrl+"/mail/templates/default/moveFolder.xet",
+			value: { content: {selectedLeaf:OldFolderName}, sel_options: {}}
+		});
+
+		// setting required data for callback in as my_data
+		dialog.my_data = {
+			data: _senders,
+		};
+	},
+
+	/**
 	 * mail_DeleteFolder - implementation of the DeleteFolder action of right click options on the tree
 	 *
 	 * @param _action
@@ -2289,8 +2340,9 @@ app.classes.mail = AppJS.extend(
 	* Show/Hide unsubscribed folders
 	*
 	* @param {action} _action selected action from tree context menu
+	* @param {sender} _senders
 	*/
-   all_folders: function(_action)
+   all_folders: function(_action,_senders)
    {
 	   var mailbox = _senders[0].id.split('::');
 	   acc_id = mailbox[0];
@@ -2301,8 +2353,8 @@ app.classes.mail = AppJS.extend(
    /**
 	* Subscribe selected unsubscribed folder
 	*
-	* @param {sender} _senders
 	* @param {action} _action
+	* @param {sender} _senders
 	*/
    subscribe_folder: function(_action,_senders)
    {
@@ -2315,8 +2367,8 @@ app.classes.mail = AppJS.extend(
    /**
 	* Unsubscribe selected subscribed folder
 	*
-	* @param {sender} _senders
 	* @param {action} _action
+	* @param {sender} _senders
 	*/
    unsubscribe_folder: function(_action,_senders)
    {

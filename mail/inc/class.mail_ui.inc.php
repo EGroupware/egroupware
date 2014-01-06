@@ -341,6 +341,10 @@ class mail_ui
 				'caption' => 'Rename Folder',
 				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
 			),
+			'move' => array(
+				'caption' => 'Move Folder',
+				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+			),
 			'delete' => array(
 				'caption' => 'Delete Folder',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
@@ -583,8 +587,9 @@ class mail_ui
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
+		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
 		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly);
-		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);
@@ -3280,6 +3285,83 @@ blockquote[type=cite] {
 	}
 
 	/**
+	 * ajax_refreshNode - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * @param string $_folderName folder to refresh
+	 * @param string $_subscribedOnly wether to fetch subscribed or unsubscribed too
+	 * @return nothing
+	 */
+	function ajax_refreshNode($_folderName, $_subscribedOnly)
+	{
+		//lang("Rename Folder %1 to:",$OldFolderName);
+		//lang("Rename Folder %1 ?",$OldFolderName);
+		error_log(__METHOD__.__LINE__.' FolderName:'.array2string($_folderName).' subscribedOnly:'.array2string($_subscribedOnly));
+		if ($_folderName)
+		{
+			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$oA = array();
+			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			$hasChildren = false;
+			error_log(__METHOD__.__LINE__.' FolderName:'.array2string($folderName).' profile:'.array2string($profileID).'<->'.$this->mail_bo->profileID);
+			if (is_numeric($profileID))
+			{
+				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$pA = explode($del,$folderName);
+				array_pop($pA);
+				$parentFolder = implode($del,$pA);
+				$this->mail_bo->resetFolderObjectCache($profileID);
+				//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+$success=true;
+				$delimiter = $this->mail_bo->getHierarchyDelimiter();
+				$nameSpace = $this->mail_bo->_getNameSpaces();
+				$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
+				//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
+				$fragments = array();
+				$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
+				foreach ($subFolders as $k => $folder)
+				{
+					// we do not monitor failure or success on subfolders
+					if ($folder == $folderName)
+					{
+						unset($subFolders[$k]);
+					}
+					else
+					{
+						$id=$profileID.self::$delimiter.$folder;
+						$oA[$id]['id'] = $id;
+						$fS = $this->mail_bo->getFolderStatus($folder,false);
+						if ($fS['unseen'])
+						{
+							$oA[$id]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
+						}
+						else
+						{
+							$oA[$id]['desc'] = $fS['shortDisplayName'];
+						}
+					}
+				}
+			}
+			if ($folderName==$this->mail_bo->sessionData['mailbox'])
+			{
+				$this->mail_bo->sessionData['mailbox']=$folderName;
+				$this->mail_bo->saveSessionData();
+			}
+			error_log(__METHOD__.__LINE__.' '.$folderName.' status of method:'.$success.' ->'.array2string($oA));
+			$response = egw_json_response::get();
+			if ($oA && $success)
+			{
+				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+			}
+			else
+			{
+				$response->call('egw_refresh',lang('failed to refresh %1 ! Reason: %2',$oldFolderName,$msg),'mail');
+			}
+		}
+	}
+
+
+	/**
 	 * ajax_renameFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * @param string $_folderName folder to rename and refresh
 	 * @param string $_newName new foldername
@@ -3407,9 +3489,9 @@ blockquote[type=cite] {
 				$this->mail_bo->saveSessionData();
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
+			$response = egw_json_response::get();
 			if ($oA && $success)
 			{
-				$response = egw_json_response::get();
 				$response->call('app.mail.mail_setLeaf',$oA,'mail');
 			}
 			else
@@ -3767,4 +3849,16 @@ blockquote[type=cite] {
 		}
 	}
 
+	/**
+	 * move folder
+	 *
+	 * @param array _folderName  folder to vove
+	 * @param array _target target folder
+	 *
+	 * @return xajax response
+	 */
+	function ajax_MoveFolder($_folderName, $_target)
+	{
+		error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
+	}
 }
