@@ -695,7 +695,11 @@ class boetemplate extends soetemplate
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
-		if (count($idxs = explode('[', $idx, 2)) > 1)
+		if (empty($idx))
+		{
+			$idxs = array();
+		}
+		elseif (count($idxs = explode('[', $idx, 2)) > 1)
 		{
 			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
 		}

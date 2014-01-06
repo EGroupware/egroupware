@@ -1074,15 +1074,7 @@ class etemplate_old extends boetemplate
 			list($name) = explode('=',$name);
 		}
 		$form_name = self::form_name($cname,$name);
-
-		if (!is_object($name) && (string)$name !== '' && is_array($content))
-		{
-			$value = $this->get_array($content,$name);
-		}
-		else
-		{
-			$value =& $content;
-		}
+		$value = $this->get_array($content,$name);
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
 			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] && (!is_string($name) || $readonlys[$name] !== false) ||
