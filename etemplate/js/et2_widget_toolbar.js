@@ -20,9 +20,9 @@
 
 /**
  * This toolbar gets its contents from its actions
- * 
+ *
  * @augments et2_valueWidget
- */ 
+ */
 var et2_toolbar = et2_DOMWidget.extend(
 {
 	attributes: {
@@ -39,16 +39,16 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_dropdown_button
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.div = $j(document.createElement('div'))
 			.addClass('et2_toolbar ui-widget-header ui-corner-all');
-		
+
 		this.dropdowns = {};
-		
+
 		this._build_menu(this.default_toolbar);
 	},
 
@@ -69,12 +69,12 @@ var et2_toolbar = et2_DOMWidget.extend(
 	{
 		// Clear existing
 		this.div.empty();
-		
+
 		var last_group = false;
 		for(var name in actions)
 		{
 			var action = actions[name];
-			
+
 			// Add in divider
 			if(!last_group) last_group = action.group;
 			if(last_group != action.group)
@@ -82,10 +82,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 				this.div.append(" ");
 				last_group = action.group;
 			}
-			
+
 			// Make sure there's something to display
 			if(!action.caption && !action.icon && !action.iconUrl) continue;
-			
+
 			if(action.children)
 			{
 				this.dropdowns[action.id] = $j(document.createElement('span'))
@@ -148,7 +148,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Make a button based on the given action
 	 */
@@ -158,6 +158,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		};
 		var button = $j(document.createElement('button'))
 			.addClass("et2_button")
+			.attr('id', this.id+'-'+action.id)
 			.appendTo(this.div);
 		if(action.iconUrl)
 		{
@@ -190,7 +191,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 	{
 		this._build_menu(actions);
 	},
-		
+
 	getDOMNode: function(asker)
 	{
 		if(asker != this && asker.id && this.dropdowns[asker.id])
