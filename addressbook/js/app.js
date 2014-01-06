@@ -427,6 +427,7 @@ app.classes.addressbook = AppJS.extend(
 	{
 		// Go through selected & pull email addresses from data
 		var emails = [];
+		var cc ='', bcc ='';
 		for(var i = 0; i < selected.length; i++)
 		{
 			// Pull data from global cache
@@ -437,9 +438,18 @@ app.classes.addressbook = AppJS.extend(
 				emails.push(email);
 			}
 		}
-
+		// Add to Cc
+		if (action.parent.children[0].checked)
+		{
+			cc = '&cc=' + emails.join(',');
+		}
+		// Add to Bcc
+		if (action.parent.children[1].checked)
+		{
+			bcc  = '&bcc=' + emails.join(',');
+		}
 		// Always open a compose, even if no emails, so user knows it worked
-		egw.open_link('mailto:' + emails.join(','));
+		egw.open_link('mailto:' + emails.join(',') + cc + bcc );
 		return false;
 	},
 
@@ -488,7 +498,7 @@ app.classes.addressbook = AppJS.extend(
 	setState: function(state)
 	{
 		var current_state = this.getState();
-		
+
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
 		{

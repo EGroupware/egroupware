@@ -557,6 +557,18 @@ class addressbook_ui extends addressbook_bo
 				'icon'	=> 'mail/navbar',
 				'group' => $group,
 				'children' => array(
+						'add_to_cc' => array(
+							'caption' => lang('Add to %1',lang('CC')),
+							'no_lang' => true,
+							'checkbox'	=> true,
+							'group'	=> $group,
+						),
+						'add_to_bcc' => array(
+							'caption' => lang('Add to %1',lang('BCC')),
+							'no_lang' => true,
+							'checkbox'	=> true,
+							'group'	=> $group,
+						),
 						'email_business' => array(
 							'caption' => lang('Add %1',lang('business email')),
 							'no_lang' => true,
