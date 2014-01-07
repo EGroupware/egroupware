@@ -254,6 +254,10 @@ app.classes.calendar = AppJS.extend(
 					},
 					track:true,
 
+					open: function(event,ui){
+						ui.tooltip.removeClass("ui-tooltip");
+						ui.tooltip.addClass("calendar_uitooltip");
+					}
 				});
 				ttp.tooltip("enable");
 			},
