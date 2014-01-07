@@ -307,7 +307,7 @@ class infolog_bo
 
 		foreach($this->customfields as $name => $field)
 		{
-			if ((!$type || empty($field['type2']) || in_array($type,$field['type2'])) &&
+			if ((!$type || empty($field['type2']) || in_array($type,explode(',',$field['type2']))) &&
 				(!$links || in_array($field['type'],$link_types)))
 			{
 				return True;
