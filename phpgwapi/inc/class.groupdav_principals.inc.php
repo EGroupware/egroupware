@@ -324,13 +324,15 @@ class groupdav_principals extends groupdav_handler
 			$this->groupdav->options = $options2;	// also modify global variable
 
 			// run regular profind to get requested 2.-level properties for each href
-			foreach($expand_prop['val'] as &$prop_val)
+			foreach($expand_prop['val'] as $key => &$prop_val)
 			{
 				list(,$expand_path) = explode($this->groupdav->base_uri, $prop_val['val']);
 				//error_log(__METHOD__."('$path', ..., $user) calling propfind('$expand_path', ".array2string($options2).', '.array2string($prop_val).", $user)");
 				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
 				{
-					throw new egw_exception_assertion_failed('no propfind for '.$expand_path);
+					// do NOT return that path, eg. perms give rights but account_selection="groupmembers" forbids access
+					unset($expand_prop['val'][$key]);
+					continue;
 				}
 				$prop_val = $prop_val['files'][0];
 			}
