@@ -258,6 +258,7 @@ class mail_hooks
 		);
 
 		$saveAsOptions = array(
+			'text_only' => lang('convert only Mail to item (ignore possible attachments)'),
 			'text'   	=> lang('convert Mail to item and attach its attachments to this item (standard)'),
 			'add_raw'   => lang('convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment'),
 		);
