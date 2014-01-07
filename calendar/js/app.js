@@ -123,6 +123,7 @@ app.classes.calendar = AppJS.extend(
 			containment: ".egw_fw_content_browser_iframe",
 			scroll: true,
 			opacity: .6,
+			cursor: "move",
 
 			stop: function(ui,event)
 			{
