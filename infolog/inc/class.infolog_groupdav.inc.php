@@ -783,12 +783,15 @@ class infolog_groupdav extends groupdav_handler
 			'calendar-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))),
-			// rfc 6578 sync-collection report
-			'sync-collection' => HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop('sync-collection',''))))),
 		);
-
+		// only advertice rfc 6578 sync-collection report, if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
+		$config = config::read('infolog');
+		if ($config['history'])
+		{
+			$props['supported-report-set']['sync-collection'] = HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop('sync-collection','')))));
+		}
 		// get timezone of calendar
 		if ($this->groupdav->prop_requested('calendar-timezone'))
 		{

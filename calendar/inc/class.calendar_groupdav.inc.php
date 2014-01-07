@@ -1441,7 +1441,8 @@ class calendar_groupdav extends groupdav_handler
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))))),
 		);
 		// rfc 6578 sync-collection report for everything but outbox
-		if (strpos($path, '/outbox/') === false)
+		// only if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
+		if (strpos($path, '/outbox/') === false && $GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
 			$props['supported-report-set']['sync-collection'] = HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
