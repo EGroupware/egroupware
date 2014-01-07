@@ -33,6 +33,7 @@ any status	mail	en	any status
 append	mail	en	append
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
+attachments	mail	en	Attachments
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
 but check shared folders	mail	en	but check shared folders

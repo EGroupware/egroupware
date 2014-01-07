@@ -150,7 +150,7 @@ description	infolog	de	Beschreibung
 determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
 directory with documents to insert entries	infolog	de	Verzeichnis mit Dokumenten zum Einfügen von InfoLogs
 disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu löschen
-do not notify of these changes	infolog	de	Keine Benachrichtigung senden
+do not notify of these changes	infolog	de	Nicht benachrichtigen
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	Wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
 do you want a notification if items owned by groups you are part of get updated ?	infolog	de	Wollen Sie eine Benachrichtigung erhalten, wenn Einträge einer Benutzergruppe aktualisiert werden, deren Sie angehören?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge Ihnen zugewiesen werden oder zugewiesene Einträge geändert werden?

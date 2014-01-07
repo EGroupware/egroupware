@@ -34,6 +34,7 @@ any status	mail	de	Alle Status
 append	mail	de	hinzufügen
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
+attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
