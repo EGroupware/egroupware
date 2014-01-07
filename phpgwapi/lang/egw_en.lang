@@ -248,7 +248,10 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	exact
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to Contact Server or Invalid Response from Server. Try to relogin. Contact Admin in case of faliure.
+failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required directory "%1" to %2!
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
+failed to create required directory "%1"!	admin	en	Failed to create required directory "%1"!
+failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	fax number
@@ -425,6 +428,7 @@ message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 minute	common	en	minute
+mode of required directory "%1" changed to %2.	admin	en	Mode of required directory "%1" changed to %2.
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
 monday	common	en	Monday
@@ -561,6 +565,9 @@ remove shortcut	common	en	Remove Shortcut
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
+required directory "%1" created.	admin	en	Required directory "%1" created.
+required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required directory "%1" has wrong mode %2 instead of %3!
+required directory "%1" not found!	admin	en	Required directory "%1" not found!
 resource type	common	en	Resource type
 restore failed	common	en	Restore failed
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large

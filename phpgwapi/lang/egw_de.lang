@@ -248,6 +248,7 @@ etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
+failed to change mode of required directory "%1" to %2!	admin	de	Ändern der Zugriffsrechte für benötigtes Verzeichnis "%1" zu %2 fehlgeschlagen!
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
@@ -425,6 +426,7 @@ message	common	de	Nachricht
 mexico	common	de	MEXICO
 micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
 minute	common	de	Minute
+mode of required directory "%1" changed to %2.	admin	de	Zugriffsrechte für benötigtes Verzeichnis "%1" geändert zu %2.
 moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
 monaco	common	de	MONACO
 monday	common	de	Montag
@@ -561,6 +563,9 @@ remove shortcut	common	de	Abkürzung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
+required directory "%1" created.	admin	de	Benötigtes Verzeichnis "%1" angelegt.
+required directory "%1" has wrong mode %2 instead of %3!	admin	de	Benötigtes Verzeichnis "%1" hat falsche Zugriffsrechte %2 statt %3!
+required directory "%1" not found!	admin	de	Benötigtes Verzeichnis "%1" nicht gefunden!
 resource type	common	de	Ressource Typ
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
