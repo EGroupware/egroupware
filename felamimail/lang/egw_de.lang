@@ -88,6 +88,7 @@ connection dropped by imap server.	felamimail	de	Verbindung von IMAP Server been
 connection status	felamimail	de	Verbindungsstatus
 contact not found!	felamimail	de	Kontakt nicht gefunden!
 contains	felamimail	de	enthält
+convert only mail to item (ignore possible attachments)	felamimail	de	konvertiere nur den E-Mail-Text zum Eintrag ohne mögliche Anhänge zu beachten
 convert mail to item and attach its attachments to this item (standard)	felamimail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge hinzu (Standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	felamimail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge, sowie die Original Nachricht, als message/rfc (.eml) Datei hinzu.
 copy or move messages?	felamimail	de	Nachrichten kopieren oder verschieben?

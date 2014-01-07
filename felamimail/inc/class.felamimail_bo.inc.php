@@ -4883,13 +4883,14 @@ class felamimail_bo
 	 * @param mailbox the mailbox, that holds the message
 	 * @param preserveHTML flag to pass through to getdisplayableBody
 	 * @param addHeaderSection flag to be able to supress headersection
+	 * @param includeAttachments flag to be able to supress possible attachments
 	 * @return array/bool with 'mailaddress'=>$mailaddress,
 	 *				'subject'=>$subject,
 	 *				'message'=>$message,
 	 *				'attachments'=>$attachments,
 	 *				'headers'=>$headers,; boolean false on failure
 	 */
-	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true)
+	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true, $includeAttachments=true)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $mailClass->getMessageHeader($uid,$partid,true);
@@ -4909,7 +4910,7 @@ class felamimail_bo
 				}
 			}
 			//error_log(array2string($bodyParts));
-			$attachments = $mailClass->getMessageAttachments($uid,$partid);
+			$attachments = $includeAttachments?$mailClass->getMessageAttachments($uid,$partid):array();
 
 			if ($mailClass->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
 			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];

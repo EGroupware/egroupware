@@ -89,6 +89,7 @@ connection dropped by imap server.	felamimail	en	Connection dropped by IMAP serv
 connection status	felamimail	en	Connection Status
 contact not found!	felamimail	en	Contact not found!
 contains	felamimail	en	Contains
+convert only mail to item (ignore possible attachments)	felamimail	en	convert only Mail to item (ignore possible attachments)
 convert mail to item and attach its attachments to this item (standard)	felamimail	en	Convert message to item and attach its attachments to the item
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	felamimail	en	Convert message to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment
 copy or move messages?	felamimail	en	Copy or move messages
