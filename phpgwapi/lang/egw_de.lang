@@ -285,6 +285,7 @@ etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
+failed to change mode of required directory "%1" to %2!	admin	de	Ändern der Zugriffsrechte für benötigtes Verzeichnis "%1" zu %2 fehlgeschlagen!
 failed to change password.	common	de	Ändern des Passworts fehlgeschlagen.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 failed to create required directory "%1"!	admin	de	Anlegen des benötigten Verzeichnisses "%1" fehlgeschlagen!
@@ -480,6 +481,7 @@ message	common	de	Nachricht
 mexico	common	de	MEXICO
 micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
 minute	common	de	Minute
+mode of required directory "%1" changed to %2.	admin	de	Zugriffsrechte für benötigtes Verzeichnis "%1" geändert zu %2.
 moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
 monaco	common	de	MONACO
 monday	common	de	Montag
@@ -636,6 +638,7 @@ replace with	common	de	Ersetzen durch
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in das Dateiverzeichnis
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
 required directory "%1" created.	admin	de	Benötigtes Verzeichnis "%1" angelegt.
+required directory "%1" has wrong mode %2 instead of %3!	admin	de	Benötigtes Verzeichnis "%1" hat falsche Zugriffsrechte %2 statt %3!
 required directory "%1" not found!	admin	de	Benötigtes Verzeichnis "%1" nicht gefunden!
 resource calendars	groupdav	de	Kalender von Ressourcen
 resource type	common	de	Ressource Typ

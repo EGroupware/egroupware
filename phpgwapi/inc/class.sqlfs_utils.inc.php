@@ -136,7 +136,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		$msgs = array();
 		foreach($dirs as $path => $id)
 		{
-			if (!($stat = self::url_stat($path, STREAM_URL_STAT_LINK)) || ($stat['mode'] & 05) != 05)
+			if (!($stat = self::url_stat($path, STREAM_URL_STAT_LINK)))
 			{
 				if ($check_only)
 				{
@@ -168,6 +168,30 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 					else
 					{
 						$msgs[] = lang('Failed to create required directory "%1"!', $path);
+					}
+				}
+			}
+			// check if directory is at least world readable and executable (r-x), we allow more but not less
+			elseif (($stat['mode'] & 05) != 05)
+			{
+				if ($check_only)
+				{
+					$msgs[] = lang('Required directory "%1" has wrong mode %2 instead of %3!',
+						$path, egw_vfs::int2mode($stat['mode']), egw_vfs::int2mode(05|0x4000));
+				}
+				else
+				{
+					$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mode=:fs_mode WHERE fs_id=:fs_id');
+					if (($ok = $stmt->execute(array(
+						'fs_id' => $id,
+						'fs_mode' => 05,
+					))))
+					{
+						$msgs[] = lang('Mode of required directory "%1" changed to %2.', $path, egw_vfs::int2mode(05|0x4000));
+					}
+					else
+					{
+						$msgs[] = lang('Failed to change mode of required directory "%1" to %2!', $path, egw_vfs::int2mode(05|0x4000));
 					}
 				}
 			}

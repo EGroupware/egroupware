@@ -285,6 +285,7 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	Exact
+failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required directory "%1" to %2!
 failed to change password.	common	en	Failed to change password.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
 failed to create required directory "%1"!	admin	en	Failed to create required directory "%1"!
@@ -480,6 +481,7 @@ message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 minute	common	en	Minute
+mode of required directory "%1" changed to %2.	admin	en	Mode of required directory "%1" changed to %2.
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
 monday	common	en	Monday
@@ -636,6 +638,7 @@ replace with	common	en	Replace with
 requests and full responses to files directory	common	en	Requests and full responses to files directory
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
 required directory "%1" created.	admin	en	Required directory "%1" created.
+required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required directory "%1" has wrong mode %2 instead of %3!
 required directory "%1" not found!	admin	en	Required directory "%1" not found!
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
