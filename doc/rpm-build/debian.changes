@@ -1,3 +1,12 @@
+egroupware-epl (11.1.20140107-1) hardy; urgency=low
+
+  * API/Admin: fixed SQL error on repairing filesystem, if one of required directories has wrong permissions
+  * CalDAV/CardDAV: only advertice sync-collection report, if we track deleted entries (history-logging enabled, not working otherwise)
+  * eMail/Mailhandling: introduce option >mail text only< for better control of import of mails to other apps
+  * CalDAV/Calendar: fixed permanent auth request in iCal, if accountselection is set to "selectbox with groupmembers" and rights granted from group without being a member
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 07 Jan 2014 19:27:35 +0100
+
 egroupware-epl (11.1.20131216-1) hardy; urgency=low
 
   * CalDAV/InfoLog: fixed not working sync-collection report, eg. used by eM client
