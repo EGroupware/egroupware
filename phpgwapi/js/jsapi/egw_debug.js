@@ -22,7 +22,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 * DEBUGLEVEL specifies which messages are printed to the console.
 	 * Decrease the value of EGW_DEBUGLEVEL to get less messages.
 	 */
-	var DEBUGLEVEL = 5;
+	var DEBUGLEVEL = 2;
 
 	/**
 	 * The debug function can be used to send a debug message to the
