@@ -65,7 +65,7 @@
 						<description id="${row}[label]"/>
 					</vbox>
 					<vbox options="0,0">
-						<customfields-types statustext="Type of customfield" id="${row}[type]"/>
+						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
 						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
 					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
