@@ -14,6 +14,58 @@
 @import (reference) "def_design_pattern_color_font_shadow.less";
 @import (reference) "def_buttons.less";
 
+
+
+    /**
+    * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+    * http://cssreset.com
+    */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+    display: block;
+    }
+    body {
+    line-height: 1;
+    }
+    ol, ul {
+    list-style: none;
+    }
+    blockquote, q {
+    quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+    content: '';
+    content: none;
+    }
+    table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+
+
+
+
 /* #######################################################################################
 *
 *
@@ -43,6 +95,7 @@ body{
     width: 100% !important;
     height: 100% !important;
     font-size: 11px;
+    line-height: 1.28;
     
 }
 
@@ -93,23 +146,23 @@ select {
 // #############################
 // Schriftformate
 
-p { font-size: 12px;}
+p { font-size: 1em;}
 
 li {}
 
 
 h1 {
-    font-size: 200%;
-    line-height: 1.2em;
+    font-size: 1.2em;
+    line-height: 1.28em;
     margin: 0.4em 0 0;
 }
 h2 {
-    font-size: 170%;
+    font-size: 1.15em;
     line-height: 1.2em;
     margin: 0.6em 0 0;
 }
 h3 {
-    font-size: 150%;
+    font-size: 1.1em;
     line-height: 0.8571em;
     margin: 0.8571em 0 0;
 }
@@ -142,29 +195,6 @@ select {
     position:relative;
 
 }
-/*select:after {
-    content:'<>';
-    font:11px "Consolas", monospace;
-    color:#aaa;
-    -webkit-transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
-    transform:rotate(90deg);
-    right:8px; top:2px;
-    padding:0 0 2px;
-    border-bottom:1px solid #ddd;
-    position:absolute;
-    pointer-events:none;
-}
-select:before {
-    content:'';
-    right:6px; top:0px;
-    width:20px; height:20px;
-    background:#f8f8f8;
-    position:absolute;
-    pointer-events:none;
-    display:block;
-}*/
 
 div.selectbox-wrapper {
 
@@ -478,7 +508,7 @@ td.lettersearch {
 
     h1{
         display: inline;
-        font-size: 10pt;
+/*        font-size: 10pt;*/
         font-weight: bold;
     }
 }
@@ -513,6 +543,7 @@ form
 img
 {
     border:0;
+    
 }
 
 

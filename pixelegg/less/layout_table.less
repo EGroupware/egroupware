@@ -26,19 +26,13 @@
 // Header der APP Tabellen
 
 table.et2_grid {
-    /*	border-top: 3px solid;
-            border-color: @gray-10;*/
-    //	border-collapse: collapse;
-    //	.background-color-0-gray;
-    //	width: 100% !important;
-    //	display: block;
+
 }
 
 
 .innerContainer{
-    overflow:hidden;
+    overflow:auto;
     /*padding: 0;*/
-    margin: 2px;
 }
 // Table Head in Listen
 
@@ -76,38 +70,22 @@ table.egwGridView_outer{
 
     thead {
         .gradient_thead;
-        /*.background-color-5-gray;*/
-/*        background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%);  FF3.6+ 
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65)));  Chrome,Safari4+ 
-        background: -webkit-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  Chrome10+,Safari5.1+ 
-        background: -o-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  Opera 11.10+ 
-        background: -ms-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  IE10+ 
-        background: linear-gradient(to bottom,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%);  W3C 
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf',GradientType=0 );  IE6-9 */
-        
 
         tr {
-            //			.background-color-5-gray;
 
             th {
-                /*.background-color-50-gray;*/
 
                 background: transparent;
                 .gradient();
 
                 font-weight: normal;
                 padding: 0px;
-/*                border-width: 1px;
-                border-style: solid;*/
                 border-color: @gray_30;
                 border-left: 0px solid transparent;
                 border-top: 0px solid transparent;
                 border-right: 0px solid transparent;
                 border-bottom: 0px solid transparent;
 
-                /*                background-image: none;
-                                background-position: center;
-                                background-repeat: repeat-x;*/
                 vertical-align: top;
                 overflow: auto;
 
@@ -168,10 +146,15 @@ table.egwGridView_outer{
 
         td.frame {
 
-            border: 1px solid @gray_100;
-            padding: 0px 5px;
+            border: 1px solid @gray_10;
+            /*padding: 0px 5px; no need*/
 
         }
+        
+        img {
+            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
+            .Complete_Button_Icon_normal;
+        };
     }
 
 }
@@ -205,15 +188,16 @@ table.egwGridView_grid{
         
 
         tr.selected{
-
-            background: fade(@color_selected_row, 20%) !important;
+            background-image: none;
+            background: fade(@color_selected_row, 20%);
             /*.bw-gradient;*/ 
         }
 
         // is active
         tr.focused{
-
-            background: fade(@color_active_row, 50%) !important;
+            background-image: url(../images/focused_hatching.png);
+            background-repeat: repeat;
+            background-color: fade(@color_active_row, 50%);
 
         }
     }
@@ -224,7 +208,7 @@ table.egwGridView_grid{
         border-color: @gray_50;
 
         // Hover State
-        &:hover {background: fade(@color_hover_row, 40%) !important;}
+        &:hover {background: @color_hover_row !important;}
 
 
 
@@ -316,4 +300,20 @@ table.egwGridView_grid{
     background: none;
 }
 
+
+
+ /*Custom Fields*/
+ table.customfields{
+     
+     tbody tr:nth-child(2n) {background: inherit;}
+     
+     tr {background-color: inherit !important;}
+     
+     td {
+         line-height: 11px;
+         
+         span > div {display: inherit; margin: 0px;}
+     }
+ }
+ 
 //

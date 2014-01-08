@@ -54,19 +54,22 @@
         .background_color_5_gray;
 
         img {
-            height: 40px;
+            width: 209px;
             border: none;
+            position: absolute;
+            top: 0.41em;
+            left: 1em;
             .background_color_5_gray;
         }
 
     }
 
-    
-    
-/*  ###########################################################################################################################################
-    Topmenu / Home / Einstellungen / usw..
-    ###########################################################################################################################################
-*/
+
+
+    /*  ###########################################################################################################################################
+        Topmenu / Home / Einstellungen / usw..
+        ###########################################################################################################################################
+    */
 
     #egw_fw_topmenu ul,
     #egw_fw_topmenu > * > ul > li,
@@ -82,38 +85,38 @@
             float: left;
             padding-top: 10px;
             width: 70%;
-            
+
             ul {
                 li{
                     .color_100_gray;
                     /*.Button_size_square_32;*/
                     padding: 0.3em 0.4em;
                     .Complete_Button_normal;
-                    
+
 
                     &:hover{.Complete_Button_hover;.color_100_gray;}
                     &:active {.Complete_Button_active;}
                     .transition (0.2s, ease-out);
-                    
+
                     a {
                         .color_100_gray; 
                         text-decoration: none; 
-                    
+
                         &:hover {
-                                .color_50_gray;
-                                border-color: @gray_50;
-                                text-decoration: none !important;
-                                 }
+                            .color_50_gray;
+                            border-color: @gray_50;
+                            text-decoration: none !important;
                         }
-                    
+                    }
+
                 }
 
                 /*Home*/
                 li:first-child{
-                               margin-left: 10px;
-                                :before{border: none;}
-                    }
-                    
+                    margin-left: 10px;
+                    :before{border: none;}
+                }
+
                 /*home*/
                 a#topmenu_home {
                     margin-left: 0px;
@@ -124,10 +127,10 @@
                         background-repeat: no-repeat;
                         .dimension_width_height_s;
                     }
-                    
+
                 }
 
-                
+
                 /*Setup / Einstellungen*/
                 a#topmenu_prefs{
                     margin-left: 0px;
@@ -139,9 +142,9 @@
                         .dimension_width_height_s;
                     }    
                 } 
-                
+
                 /*access / Zugriff */
-                 a#topmenu_acl{
+                a#topmenu_acl{
                     &:before {
                         padding-right: 20px;
                         content: "";
@@ -151,7 +154,7 @@
                     }    
                 }               
                 /*category*/
-                 a#topmenu_cats{
+                a#topmenu_cats{
                     &:before {
                         background-image: url(../images/topmenu_items/category.png);
                         padding-right: 20px;
@@ -161,7 +164,7 @@
                     }    
                 }               
                 /*password*/
-                 a#topmenu_preferences{
+                a#topmenu_preferences{
                     &:before {
                         background-image: url(../images/topmenu_items/password.png);
                         padding-right: 20px;
@@ -171,7 +174,7 @@
                     }    
                 }               
                 /*help*/
-                 a#topmenu_manual{
+                a#topmenu_manual{
                     &:before {
                         background-image: url(../images/topmenu_items/help.png);
                         padding-right: 20px;
@@ -181,7 +184,7 @@
                     }    
                 }               
                 /*Search*/
-                 a#topmenu_search{
+                a#topmenu_search{
                     &:before {
                         background-image: url(../images/topmenu_items/search.png);
                         padding-right: 20px;
@@ -226,36 +229,36 @@
     float: left;
     position: fixed;
     left: 194px;
-    
+
 }
 #egw_fw_topmenu_slide.slidedown{
-        background-image: url("../images/list.png");
-        background-position: center center;
-        height: 15px;
-        width: 15px;
-        display: block;
-        margin-left: 5px;
-        margin-top: 10px;
-        background-size: 15px 15px;
-        float: left;
-        position: relative;
-        left: -5px;
-    }
+    background-image: url("../images/list.png");
+    background-position: center center;
+    height: 15px;
+    width: 15px;
+    display: block;
+    margin-left: 5px;
+    margin-top: 10px;
+    background-size: 15px 15px;
+    float: left;
+    position: relative;
+    left: -5px;
+}
 #egw_fw_topmenu_slide.slideup{
-        background-image: url("../images/slideup.png");
-        background-position: center center;
-        height: 15px;
-        width: 15px;
-        display: block;
-        margin-top: -55px;
-        margin-left: 40px;
+    background-image: url("../images/slideup.png");
+    background-position: center center;
+    height: 15px;
+    width: 15px;
+    display: block;
+    margin-top: -55px;
+    margin-left: 40px;
 
-    }
-    #slidetoggle{
-        width: 20px;
-        height: 20px;
-        display: block;
-    }
+}
+#slidetoggle{
+    width: 20px;
+    height: 20px;
+    display: block;
+}
 
 
 
@@ -268,221 +271,221 @@
 
     // ########################################
     // quick_add
-    
-      span#quick_add {
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-                float: right;
-                padding: 0.5em;
-                position: fixed;
-                right: 83px;
-                top: 5px;
-                .dimension_width_height_s;
-                &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
-            }
-            
-            select#quick_add_selectbox {
-                
-                visibility: hidden;
-                border: medium none;
-                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-                position: relative !important;
-                right: 1px !important;
-                top: -5px;
 
-}
-    
-    
-
-/*    span#quick_add{
-        .Complete_Button_add;
-        .Button_size_square_16;
-        .border_normal;
-        .box_shadow_standard_light;
+    span#quick_add {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
         float: right;
+        padding: 0.5em;
         position: fixed;
         right: 83px;
         top: 5px;
-        padding: 0.5em;
+        .dimension_width_height_s;
         &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
-        &:focus {.box_shadow_standard_light_inset;};
-        .transition (0.2s, ease-out);
+    }
 
-        select#quick_add_selectbox{
-                                    position: fixed;
-                                    right: 83px;
-                                    .border_normal;
-                                    .box_shadow_standard_light;
-                                    height: 26px;
-                                    padding: 0 0 0 10px;
-                                    font-size: 0.9em;
-                                    line-height: 1.1em;
-                                    
-                                    visibility: hidden;
-                                    
-                                    transition-property: visibility;
-                                    transition-duration: 0s;
-                                    transition-timing-function: linear;
-                                    transition-delay: 0s;
-                                    }
-                                }
+    select#quick_add_selectbox {
+
+        visibility: hidden;
+        border: medium none;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        position: relative !important;
+        right: 1px !important;
+        top: -5px;
+
+    }
 
 
+
+    /*    span#quick_add{
+            .Complete_Button_add;
+            .Button_size_square_16;
+            .border_normal;
+            .box_shadow_standard_light;
+            float: right;
+            position: fixed;
+            right: 83px;
+            top: 5px;
+            padding: 0.5em;
+            &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+            &:focus {.box_shadow_standard_light_inset;};
+            .transition (0.2s, ease-out);
     
-
-   hover
-   span#quick_add:hover {  
-             
-             width: 166px !important;
-            .box_shadow_standard_light_hover;
-   
-             select#quick_add_selectbox {
+            select#quick_add_selectbox{
+                                        position: fixed;
+                                        right: 83px;
+                                        .border_normal;
+                                        .box_shadow_standard_light;
+                                        height: 26px;
+                                        padding: 0 0 0 10px;
+                                        font-size: 0.9em;
+                                        line-height: 1.1em;
+                                        
+                                        visibility: hidden;
+                                        
+                                        transition-property: visibility;
+                                        transition-duration: 0s;
+                                        transition-timing-function: linear;
+                                        transition-delay: 0s;
+                                        }
+                                    }
+    
+    
+        
+    
+       hover
+       span#quick_add:hover {  
+                 
+                 width: 166px !important;
                 .box_shadow_standard_light_hover;
-                .box_shadow_none;
-                border: none;
-                position: relative !important;
-                right: 1px !important;
-                top: -5px;
-                z-index: 200;
-                visibility: visible !important;
-            }
-   
-   }*/
-  
- }  
-   
-   
+       
+                 select#quick_add_selectbox {
+                    .box_shadow_standard_light_hover;
+                    .box_shadow_none;
+                    border: none;
+                    position: relative !important;
+                    right: 1px !important;
+                    top: -5px;
+                    z-index: 200;
+                    visibility: visible !important;
+                }
+       
+       }*/
 
-    // Logout
-    #egw_fw_logout {
-        background-image: url(../images/logout.png);
-        background-size: 16px 16px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        display: inline-block;
-        float: right;
-        margin-right: 1em;
-        margin-top: 0px;
-        z-index: 200;
-        .Button_size_square_16;
-        .border_normal;
-        .box_shadow_standard_light;
-        padding: 0.5em;
-        top: 5px;
-        position: fixed;
-        right: 5px;
-
-
-        &:hover {.box_shadow_standard_light_hover;}
-        &:active {.Complete_Button_active;}
-         &:focus {.box_shadow_standard_light_inset;}
-    }
+}  
 
 
 
-    // Print
-
-    #egw_fw_print {
-        background-image: url(../images/print.png);
-        background-size: 16px 16px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        cursor: pointer;
-        display: inline-block;
-        float: right;
-        margin-right: 5px;
-        margin-top: 0px;
-        position: fixed;
-        .Button_size_square_16;
-        .border_normal;
-        .box_shadow_standard_light;
-        padding: 0.5em;
-        top: 5px;
-        right: 45px;
-        z-index: 200;
-        &:hover {.box_shadow_standard_light_hover;}
-        &:active {.Complete_Button_active;}
-        &:focus {.box_shadow_standard_light_inset;}
-
-    }
+// Logout
+#egw_fw_logout {
+    background-image: url(../images/logout.png);
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+    margin-top: 0px;
+    z-index: 200;
+    .Button_size_square_16;
+    .border_normal;
+    .box_shadow_standard_light;
+    padding: 0.5em;
+    top: 5px;
+    position: fixed;
+    right: 5px;
 
 
+    &:hover {.box_shadow_standard_light_hover;}
+    &:active {.Complete_Button_active;}
+    &:focus {.box_shadow_standard_light_inset;}
+}
 
-    /*Name / Datum / angemeldete User*/
 
-    #egw_fw_topmenu_info_items {
 
-        /*postion : top*/
-        bottom: 0px;
-        right: 5px;
-        padding-right: 0px;
-        position: relative;
-        z-index: 1000;
-        margin-right: 20px;
+// Print
 
-        float: right;
-        
-        display: flex;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        
-        flex-direction: row;
-        justify-content: flex-start;
-        
-        -webkit-flex-direction: row;
-        -webkit-justify-content: flex-start;
-        -ms-flex-direction: row;
-        -ms-justify-content: flex-start;
-        
-        
-        /*postion: bottom*/
-/*        bottom: 3px;
-        right: 5px;
-        padding-right: 20px;
-        position: fixed;
-        z-index: 1000;*/
+#egw_fw_print {
+    background-image: url(../images/print.png);
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+    margin-top: 0px;
+    position: fixed;
+    .Button_size_square_16;
+    .border_normal;
+    .box_shadow_standard_light;
+    padding: 0.5em;
+    top: 5px;
+    right: 45px;
+    z-index: 200;
+    &:hover {.box_shadow_standard_light_hover;}
+    &:active {.Complete_Button_active;}
+    &:focus {.box_shadow_standard_light_inset;}
 
-        .topmenu_info_item {
-            
-            overflow: visible;
+}
 
-            // Info Bell
-            &:nth-child(1) {
-            }
 
-            // Name
-            &:nth-child(2) {
-                /*float: right;*/
-                margin-top: 0;
-                font-size: 1em;
-                padding-right: 5px;
 
-            }
+/*Name / Datum / angemeldete User*/
 
-            // angemeldete User
-            &:nth-child(3) {
-                position: relative;
-                top: 0px;
-                display: inline-block;
+#egw_fw_topmenu_info_items {
 
-                &:hover {.box_shadow_standard_light_hover;}
-                &:focus {.box_shadow_standard_light_inset;}
+    /*postion : top*/
+    bottom: 0px;
+    right: 5px;
+    padding-right: 0px;
+    position: relative;
+    z-index: 1000;
+    margin-right: 20px;
 
-                &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
+    float: right;
 
-            }
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
 
-            // Add
-            &:nth-child(4) {
+    flex-direction: row;
+    justify-content: flex-start;
 
-            }
+    -webkit-flex-direction: row;
+    -webkit-justify-content: flex-start;
+    -ms-flex-direction: row;
+    -ms-justify-content: flex-start;
+
+
+    /*postion: bottom*/
+    /*        bottom: 3px;
+            right: 5px;
+            padding-right: 20px;
+            position: fixed;
+            z-index: 1000;*/
+
+    .topmenu_info_item {
+
+        overflow: visible;
+
+        // Info Bell
+        &:nth-child(1) {
+        }
+
+        // Name
+        &:nth-child(2) {
+            /*float: right;*/
+            margin-top: 0;
+            font-size: 1em;
+            padding-right: 5px;
 
         }
 
-    } 
-    // Ende items
+        // angemeldete User
+        &:nth-child(3) {
+            position: relative;
+            top: 0px;
+            display: inline-block;
+
+            &:hover {.box_shadow_standard_light_hover;}
+            &:focus {.box_shadow_standard_light_inset;}
+
+            &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
+
+        }
+
+        // Add
+        &:nth-child(4) {
+
+        }
+
+    }
+
+} 
+// Ende items
 
 
 
@@ -521,41 +524,35 @@
 
             // Alle Tabs
             div.ui-sortable {
-                
+
                 div {
                     padding: 3px 0 1px 3px;
                     cursor: pointer;
-                
- 
-                
-                }
-                
-            }
-            
-            .egw_fw_ui_sidemenu_entry_header {
-                
 
+
+
+                }
+
+            }
+
+            .egw_fw_ui_sidemenu_entry_header {
                 display: block;
                 margin: 0 0;
                 /*padding: 0px 5px 5px 10px;*/
 
-               &:hover {  
+                &:hover {  
                     .background_color_15_gray;
                     .rounded(5px);
-                    }
-                    
-               &:active {.box_shadow_standard_light_inset;}
+                }
+
+                &:active {.box_shadow_standard_light_inset;}
 
 
                 h1 {
-                    font-size: 1em;
-                    font-weight: normal;
                     margin: 0 0 10px 0;
                     padding-top: 0.31em;
                     .color_40_gray;
-
                 }
-
             }
 
 
@@ -572,17 +569,15 @@
                 /*background-image: none;*/
 
                 .background_color_10_gray;
-
                 .border_radius ( 5px, 0px, 0px, 27px );
-                
                 .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
 
                 margin: 0 0 0 0;
                 border-bottom: none;
-                height: 44px;
-                    img {padding-left: 10px; padding-top: 8px;}
+                height: 30px;
+                img {padding-left: 9px; padding-top: 6px;}
 
-                    h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: 8px;}
+                h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: .8em;}
 
                 &:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
                 &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
@@ -595,8 +590,8 @@
 
                     .background_color_25_gray;
                 }
-                
-                
+
+
 
                 .egw_fw_ui_ajaxloader {margin-top: -26px;}
 
@@ -620,13 +615,13 @@
                     .border_radius (0, 0, 27px, 0);
                     border-color: @gray_30;
                 }
-                
-               /*letztes Element*/
-               div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-/*                   color:#ff0000; 
-                   background-color: yellow !important;*/
-                   .border_radius (0, 0, 15px, 0);
-               } 
+
+                /*letztes Element*/
+                div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+                    /*                   color:#ff0000; 
+                                       background-color: yellow !important;*/
+                    .border_radius (0, 0, 15px, 0);
+                } 
 
                 // Schaltflächen
                 // Normal
@@ -637,9 +632,9 @@
                     //																												border-top: 7px solid;
                     border-color: @gray_30;
                     background-color: @gray_10;
-                    
+
                     /*background-color: @egw_color_2_d;*/
-                    
+
                     .border_radius(3px,3px,3px,3px);
 
                     h1 {
@@ -650,12 +645,12 @@
                         background-repeat:no-repeat;
                         background-position:left center;
                     }
-                    
+
                     &:last-child {
-                   color:#ff0000; 
-                   background-color: yellow !important;
-               } 
-                    
+                        color:#ff0000; 
+                        background-color: yellow !important;
+                    } 
+
                 }
 
                 // Hover
@@ -663,46 +658,46 @@
                     .background_color_40_gray;
                     padding: 0.5em 1em;
                 }
-                
-  
-                
-                 /*######################*/
+
+
+
+                /*######################*/
                 // Active State
                 .egw_fw_ui_category_active {
                     border-bottom-width: 0px;
                     margin-top: 4px;
-                    
+
                     background-color: @egw_color_2_d;
-                    
+
                     /*.background-color-50-gray;*/
                     .color_5_gray;
                     .border_radius(3px,3px,3px,3px) !important;
 
                     h1 {
-                            background-image:url(../images/arrow_down.png);
+                        background-image:url(../images/arrow_down.png);
 
-                            a {
-                                color: #FFF;
+                        a {
+                            color: #FFF;
 
 
-                                img {height: 16px; width: 16px;}
-                            }
-
-                            a:hover {
-                                padding: 5px 30px 5px 0px;
-                                width: 200px;
-                                .background_color_10_gray;
-                                .color_50_gray;
-                                .Complete_Button_hover;
-                            }
+                            img {height: 16px; width: 16px;}
                         }
 
-                   &:hover {background-color: @egw_color_2_a; .transition (0.2s, ease-out);}
+                        a:hover {
+                            padding: 5px 30px 5px 0px;
+                            width: 200px;
+                            .background_color_10_gray;
+                            .color_50_gray;
+                            .Complete_Button_hover;
+                        }
+                    }
+
+                    &:hover {background-color: @egw_color_2_a; .transition (0.2s, ease-out);}
                 }
 
 
-   
-                
+
+
 
             }
 
@@ -717,28 +712,28 @@
             .egw_fw_ui_sidemenu_entry_icon {
                 display: inline-block;
                 .dimension_height_m;
-                
+
                 padding-left: 0;
                 padding-right: 10px;
                 float: left;
-                
-                /*filter grey*/
-                 filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
 
-                    -webkit-filter: grayscale(100%);
-                    -moz-filter: grayscale(100%);
-                    -ms-filter: grayscale(100%);
-                    -o-filter: grayscale(100%);
-                    filter: grayscale(100%);
-                    /*filter: url(grayscale.svg);  Firefox 4+ */
-                    filter: gray; /* IE 6-9 */
-           }
+                /*filter grey*/
+                filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+
+                -webkit-filter: grayscale(100%);
+                -moz-filter: grayscale(100%);
+                -ms-filter: grayscale(100%);
+                -o-filter: grayscale(100%);
+                filter: grayscale(100%);
+                /*filter: url(grayscale.svg);  Firefox 4+ */
+                filter: gray; /* IE 6-9 */
+            }
         }
 
 
     }
 
-    
+
     /*#################################*/
     // Trenner (Splitter)
     #egw_fw_splitter {
@@ -746,7 +741,7 @@
         //								background-color: RGB(200, 200, 255);
         .background_color_30_gray;
         width: 5px;
-        top: 51px;
+        top: 36px;
         bottom: 3px;
         right: 0px;
 
@@ -788,21 +783,21 @@
     padding-top: 14px;
     margin-right: 5px;
     /*min-height: 50px;*/
-    
+
     img { .dimension_height_s; vertical-align: middle;}
-    
+
     &:hover {
         .background_color_0_gray;
         border-color: @gray_50;
     } 
-    
+
     input#uical_select_owner_multiple{
         .dimension_height_s;
-    	vertical-align: middle;
+        vertical-align: middle;
     }
-	select#calendar_filter{
-		margin-top: 4px;
-	}
+    select#calendar_filter{
+        margin-top: 4px;
+    }
     // Favoriten anlegen und löschen            
     .sidebox-favorites{} // ist in etemplate2.less definiert
 
@@ -833,10 +828,10 @@
         float: left;
         /*.Complete_Button_Icon_normal;*/
         background-image: url("../images/bullet.png");
-	background-size: .dimension_width_height_s;
-        
-	background-position: center;
-		 /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
+        background-size: .dimension_width_height_s;
+
+        background-position: center;
+        /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
     }
 
     input {
@@ -932,7 +927,7 @@
         .color_100_gray;
         background-color: @egw_color_1_e;
         padding: 0.5em 0;
-        
+
     }
 
 } // .egw_fw_ui_sidemenu_listitem
@@ -1000,7 +995,7 @@
 
 .egw_fw_content_browser_div {
     display: block;
-   /*overflow: auto;*/
+    /*overflow: auto;*/
     /*	background-color: RGB(240, 240, 255);*/
 }
 
@@ -1130,18 +1125,19 @@ div#calendar-container {
 
         .egw_fw_ui_tabs_header {
 
-            margin: -1px 0 0 0;
-            
+            margin: 0px 0 0 0;
+
             padding: 0px 1px 0px 1px;
 
             background-position: bottom;
             background-repeat: repeat-x;
             background-color: transparent;
-            
-            height: 48px;
+
+            .dimension_height_l;
 
             h1 {
-                float: left;
+                /*float: left;*/
+                display: inline;
                 width: 100%;
                 text-align: center;
                 -webkit-margin-before: 0;
@@ -1152,6 +1148,7 @@ div#calendar-container {
                 text-align:center;
                 float: none;
                 margin: 0 auto;
+                .dimension_width_height_s;
             }
 
 
@@ -1172,12 +1169,12 @@ div#calendar-container {
                 padding-right: 0;
                 position: relative;
 
-               .border_radius(5px,0, 0, 5px);
-                
+                .border_radius(5px,0, 0, 5px);
+
 
                 /*.background-color-5-gray;*/
                 background: transparent;
-                
+
                 display: inline-block;
                 margin: 3px 5px 0px 0px;
                 /*padding: 2px 10px 2px 10px;*/
@@ -1188,20 +1185,24 @@ div#calendar-container {
 
                 background-repeat:repeat-x;
 
-                height: 47px;
+                .dimension_height_m;
                 &:hover {.background_color_30_gray ;}
 
-                h1 {font-size: 100%; line-height: 1em; margin-top:0;}
-                
+                h1 {
+                    font-size: 100%; 
+                    line-height: 1em; 
+                    margin:0 15px 2px 3px; 
+                    vertical-align: super;
+                }
+
                 // Bilder
                 img.egw_fw_ui_tab_icon {
                     display: inline-block;
-                    .dimension_height_m;
-                    margin-right: 5px;
-                    margin-top: 5px;
+                    .dimension_width_height_s;
+                    margin: 5px 1px 0 1em;
 
-                     }
-                
+                }
+
             }
 
             .egw_fw_ui_tab_header_active {
@@ -1211,17 +1212,21 @@ div#calendar-container {
                 background-image:none !important;
 
                 &:hover {.background_color_25_gray ;}
-                
-                
-            // aktive Bilder
-            img.egw_fw_ui_tab_icon {
-                display: inline-block;
-                .dimension_height_m;
-                margin-right: 5px;
-                margin-top: 5px;
 
-            }
-                
+
+                // aktive Bilder
+                img.egw_fw_ui_tab_icon {
+                    display: inline-block;
+                    .dimension_width_height_s;
+                    -webkit-transform: scale(1.1);
+                    -moz-transform: scale(1.1);
+                    -ms-transform: scale(1.1);
+                    -o-transform: scale(1.1);
+                    transform: scale(1.1);
+                    
+                    
+                }
+
 
             }
 
@@ -1242,7 +1247,7 @@ div#calendar-container {
             display: inline-block;
             width: 16px;
             height: 16px;
-            margin-left: 5px;
+            margin-left: 0px;
             background-repeat: no-repeat;
             background-position: center;
             background-image: url(../images/close_button.png);
@@ -1281,21 +1286,21 @@ div#calendar-container {
 
     .egw_fw_ui_tab_content {
 
-        
+
         width: 100%;
         padding: 0px;
         margin: 0;
         overflow: auto;
 
-        
+
         > div {
             width: 100%;
             padding: 0 0 0 0;
 
 
-            
+
         };
-        
+
     }
 
 
@@ -1304,4 +1309,4 @@ div#calendar-container {
 
 
 // 
-//
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

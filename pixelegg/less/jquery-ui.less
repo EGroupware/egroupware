@@ -100,12 +100,22 @@ option:checked {background-color: @egw_color_1_e;}
     .color_40_gray;
     text-decoration: none;
 }
+
+.ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-widget-content .ui-state-focus{
+    border-color: @gray_10;
+    background: @color_hint;
+    background-image: none !important;
+    .color_100_gray;
+    
+}
+
+
+
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus {
+.ui-widget-header .ui-state-hover{
     .bordered(1px, 1px, 1px,1px);
     border-color: @gray_10;
     //	background: #d0e5f5 url(images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x;
@@ -127,7 +137,6 @@ option:checked {background-color: @egw_color_1_e;}
 .ui-widget-header .ui-state-active {
     .bordered(1px, 1px, 1px,1px);
     border-color: @gray_20;
-    background: @color_hint;
     background-image: none;
     font-weight: bold;
     .color_50_gray;
