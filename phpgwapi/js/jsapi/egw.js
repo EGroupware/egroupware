@@ -86,11 +86,20 @@
 	// check for a framework object
 	if (typeof window.framework == 'undefined')
 	{
-		// try finding it in top or opener's top
-		if (window.opener && typeof window.opener.top.framework != 'undefined')
+		try {
+			// try finding it in top or opener's top
+			if (window.opener && typeof window.opener.top.framework != 'undefined')
+			{
+				window.framework = window.opener.top.framework;
+				if (debug) console.log('found framework object in opener top');
+			}
+		}
+		catch(e) {
+			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
+		if (typeof window.framework != 'undefined')
 		{
-			window.framework = window.opener.top.framework;
-			if (debug) console.log('found framework object in opener top');
+			// set in above try block
 		}
 		else if (window.top && typeof window.top.framework != 'undefined')
 		{
