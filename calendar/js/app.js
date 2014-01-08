@@ -266,6 +266,45 @@ app.classes.calendar = AppJS.extend(
 				jQuery(this).tooltip("disable");
 			}
 		});
+
+		//Click Handler for calendar planner
+		jQuery("div.calendar_plannerEvent").on({
+			click:function(ev){
+				var eventId = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
+				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
+				if (ev.currentTarget.id.match(/drag_/g))
+				{
+					egw.open(eventId,'calendar','edit');
+				}
+				else
+				{
+					that.edit_series(event,eventId,startDate);
+				}
+			},
+			mouseover: function(){
+
+				var ttp = jQuery(this).tooltip({
+					items: "[data-tooltip]",
+					content: function()
+					{
+						var elem = jQuery(this);
+						if (elem.is("[data-tooltip]"))
+							return this.getAttribute('data-tooltip') ;
+					},
+					track:true,
+
+					open: function(event,ui){
+						ui.tooltip.removeClass("ui-tooltip");
+						ui.tooltip.addClass("calendar_uitooltip");
+					}
+				});
+				ttp.tooltip("enable");
+			},
+			mousedown: function(){
+				jQuery(this).tooltip("disable");
+			}
+		});
+
 		//onClick Handler for calendar cells
 		jQuery("div.calendar_calAddEvent").click(function(ev)
 		{

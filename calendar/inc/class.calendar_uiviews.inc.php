@@ -140,7 +140,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function __construct($set_states=null)
 	{
-		
+
 		parent::__construct(false,$set_states);	// call the parent's constructor
 		$this->extraRowsOriginal = $this->extraRows; //save original extraRows value
 
@@ -569,12 +569,13 @@ class calendar_uiviews extends calendar_ui
 								$width = $this->time2pos($event['end_m'] - $event['start_m']);
 								$color = $data['color'] ? $data['color'] : 'gray';
 
+								$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
 								$content .= $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').
+									'" data-tooltip ="'.$tooltip .
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
 									$row_height.'%; top: '.($n * $row_height).'%;'.
 									'background-color: '.$color.';" '.$data['popup'].' '.
-									html::tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).
-									'>'."\n".$data['html'].$indent."</div>\n";
+									'>'."\n".$data['html'].$indent.'" data-tooltip ="'.$tooltip ."</div>\n";
 							}
 						}
 					}
