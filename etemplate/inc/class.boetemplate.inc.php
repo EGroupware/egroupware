@@ -695,7 +695,7 @@ class boetemplate extends soetemplate
 		}
 		if (is_object($idx)) return false;	// given an error in php5.2
 
-		if (empty($idx))
+		if ((string)$idx === '')
 		{
 			$idxs = array();
 		}
