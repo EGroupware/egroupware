@@ -1,6 +1,8 @@
 /**
  * EGroupware: CSS with less preprocessor
  *
+ * INFOLOG
+ * 
  * Please do NOT change app.css directly, instead change app.less and compile it!
  * Pixleegg Template app.css
  * @link http://www.egroupware.org
@@ -114,13 +116,14 @@ span#favorite_sidebox_infolog{
                       
                       // IMG
                         img {
+                            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
                             .Complete_Button_Icon_normal;
                             .dimension_width_height_s;
                             margin-left: 0.5em;
                             padding: 0px;
                             margin-top: 0px;
                             vertical-align: middle;                            
-                            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
+                            
 
                             &:hover{.Complete_Button_Icon_hover ;}
 
@@ -224,11 +227,15 @@ span#favorite_sidebox_infolog{
         // ##################################
         // Listendarstellung
         .egwGridView_outer {}
+        
         table.egwGridView_outer thead tr th.optcol .selectcols{
             margin-top: 1.5%;
         }
 
-        .frame {min-height: 500px; height: 500px;}
+        .frame {
+            min-height: 100%; 
+            height: 60em;
+        }
 
         .egwGridView_scrollarea{
             height: auto;
@@ -242,6 +249,8 @@ span#favorite_sidebox_infolog{
 
         }
 
+        /*ID Infolog*/
+        span.infolog_infoId {background-color: inherit;}
 
     } // #infolog-index_nm
 

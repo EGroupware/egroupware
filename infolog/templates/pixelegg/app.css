@@ -1,6 +1,8 @@
 /**
  * EGroupware: CSS with less preprocessor
  *
+ * INFOLOG
+ * 
  * Please do NOT change app.css directly, instead change app.less and compile it!
  * Pixleegg Template app.css
  * @link http://www.egroupware.org
@@ -121,6 +123,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 }
 #infolog-index #infolog-index_nm {
   /*min-height: 900px;*/
+  /*ID Infolog*/
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right,
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
@@ -154,7 +157,16 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img,
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img {
-  background-color: #f0f0f0;
+  background-color: #0c5da5;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
+  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: linear-gradient(top, #0c5da5, #0c5da5);
+  background-repeat: repeat-x;
+  /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -168,19 +180,10 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   padding: 0px;
   margin-top: 0px;
   vertical-align: middle;
-  background-color: #0c5da5;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
-  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: linear-gradient(top, #0c5da5, #0c5da5);
-  background-repeat: repeat-x;
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img:hover,
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img:hover {
-  background-color: #cccccc;
+  /*.background_color_20_gray;*/
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -292,14 +295,17 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   margin-top: 1.5%;
 }
 #infolog-index #infolog-index_nm .frame {
-  min-height: 500px;
-  height: 500px;
+  min-height: 100%;
+  height: 60em;
 }
 #infolog-index #infolog-index_nm .egwGridView_scrollarea {
   height: auto;
 }
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid img {
   height: 16px;
+}
+#infolog-index #infolog-index_nm span.infolog_infoId {
+  background-color: inherit;
 }
 /*###########################################
 #                                           #

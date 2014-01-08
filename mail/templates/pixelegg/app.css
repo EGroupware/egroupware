@@ -633,10 +633,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 .egw_fw_ui_category_content {
   /*new mail in FOlder 
     span.standartTreeRow b {color: @egw_color_2_a;}
-    
-    
- 
-*/
+  */
+  /*move Mail*/
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate {
   margin-left: 0px;
@@ -686,7 +684,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   max-height: 50%;
 }
 .egw_fw_ui_category_content .dtree {
-  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  font-family: Verdana, Helvetica, Sans-Serif;
+  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+}
+.egw_fw_ui_category_content .draggedOver {
+  background-color: #679fd2;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
