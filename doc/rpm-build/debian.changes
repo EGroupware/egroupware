@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20140108-1) hardy; urgency=low
+
+  * eTemplate: fixed error caused by handling of empty indexes, causing eg. in filemanager-select popup to display in first row / instead of filename
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 08 Jan 2014 10:02:48 +0100
+
 egroupware-epl (11.1.20140107-1) hardy; urgency=low
 
   * API/Admin: fixed SQL error on repairing filesystem, if one of required directories has wrong permissions
