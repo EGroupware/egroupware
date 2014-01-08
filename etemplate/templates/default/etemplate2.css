@@ -916,6 +916,11 @@ div.message.floating {
   margin-left: 10px;
   border-left: 1px solid silver;
 }
+
+/** Initial height used for calculating average heights, before content is loaded */
+.egwGridView_grid > tbody > tr > td > .loading{
+	min-height: 1.6em;
+}
 /** 
  * This class' margin-right is used to line up columns at each indent level
  * Classes level_# are created programmatically with margin-right * depth
