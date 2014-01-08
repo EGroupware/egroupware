@@ -49,13 +49,22 @@
 	// check if egw object was injected by window open
 	if (typeof window.egw == 'undefined')
 	{
-		// try finding it in top or opener's top
-		if (window.opener && typeof window.opener.top.egw != 'undefined')
+		try {
+			// try finding it in top or opener's top
+			if (window.opener && typeof window.opener.top.egw != 'undefined')
+			{
+				window.egw = window.opener.top.egw;
+				if (typeof window.opener.top.framework != 'undefined') window.framework = window.opener.top.framework;
+				popup = true;
+				if (debug) console.log('found egw object in opener');
+			}
+		}
+		catch(e) {
+			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
+		if (typeof window.egw != 'undefined')
 		{
-			window.egw = window.opener.top.egw;
-			if (typeof window.opener.top.framework != 'undefined') window.framework = window.opener.top.framework;
-			popup = true;
-			if (debug) console.log('found egw object in opener');
+			// set in above try block
 		}
 		else if (window.top && typeof window.top.egw != 'undefined')
 		{
