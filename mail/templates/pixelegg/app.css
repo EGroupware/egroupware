@@ -643,17 +643,12 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate],
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"] {
-  background-color: #0b5fa4 !important;
+  /*background-color: @egw_color_blue_lighter !important;*/
   color: #FFF;
   text-shadow: none;
   /*    height: auto;*/
   background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
+  /*.border_radius_button_lefttop;*/
   background-image: url("images/write_mail_lighter.png") !important;
   background-position: right center !important;
   background-repeat: no-repeat;
@@ -678,11 +673,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:focus,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:focus {
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topleft: 10px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
+  border-top-left-radius: 10px;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -765,7 +760,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar img[id="mail-compose_button[saveAsDraft]"] {
   vertical-align: middle;
   padding: 3px;
-  background-color: #f0f0f0;
+  /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -785,7 +780,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin-left: 15px !important;
   vertical-align: middle;
   padding: 3px;
-  background-color: #f0f0f0;
+  /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -954,7 +949,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 /* ##################################################################################
  *       E-Mail Dialog "Ansehen"
- *
+ *          Preview
  * ##################################################################################
  */
 #mail-display {
@@ -964,6 +959,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-display .mailDisplayHeaderSection {
   top: 0;
   position: relative;
+  /*Toolbar*/
 }
 #mail-display .mailDisplayHeaderSection #mail-display_toolbar {
   background-color: #679fd2;
@@ -973,7 +969,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   display: -webkit-box;
 }
 #mail-display .mailDisplayHeaderSection #mail-display_toolbar button {
-  background-color: #f0f0f0;
+  /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -983,17 +979,22 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   border-radius: 3px;
   height: 20px;
 }
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar button:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #d9d9d9;
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-composeasnew"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-reply"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-reply_all"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-forward"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-print"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-save"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-header"]:active {
+  background-color: #1aa200;
 }
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar button:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #d9d9d9;
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-unflagged"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-delete"]:active {
+  background-color: #e12500;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-infolog"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar button[id*="toolbar-tracker"]:active {
+  background-color: .background_color_15_gray;
 }
 #mail-display .mailDisplayHeaderSection #mail-display_toolbar span.ui-state-default {
   float: left;
@@ -1483,6 +1484,23 @@ input[type=button] {
   padding: 0px;
   height: 16px !important;
 }
+#mail-index_mailPreviewIcons {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#mail-index_mailPreviewContainer {
+  position: absolute;
+  border: 1px solid .color_10_gray;
+  top: 80px;
+  bottom: 0;
+  left: 3px;
+  right: 0;
+}
+/*#######################################################*/
+/*# ICON # ICON # ICON # ICON #ICON # ICON# ICON # ICON #*/
+/*#######################################################*/
+/*Toolbar der Email*/
 #mail-display_toolbar {
   padding: 0px;
 }
@@ -1492,22 +1510,8 @@ input[type=button] {
 #mail-display_toolbar > button > span > img {
   width: 16px;
   padding: 0px;
-  height: 16px !important;
+  height: auto;
 }
-#mail-index_mailPreviewIcons {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-#mail-index_mailPreviewContainer {
-  position: absolute;
-  border: 1px solid silver;
-  top: 90px;
-  bottom: 0;
-  left: 3px;
-  right: 0;
-}
-/*Toolbar der Email*/
 #mail-index_toolbar {
   padding: 0px;
   background: none;
@@ -1516,48 +1520,77 @@ input[type=button] {
   /* Elemente */
 }
 #mail-index_toolbar button {
-  background: none;
-  background-image: none;
-  padding: 0px !important;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#mail-index_toolbar button:hover {
-  background-color: #cccccc;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#mail-index_toolbar button:active {
-  background-color: #b3b3b3 !important;
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-#mail-index_toolbar button:focus {
-  border: none;
+  width: 24px !important;
+  height: 24px !important;
+  background-color: #e6e6e6;
+  /*.Complete_Button_Icon_normal;*/
+  /*                &:hover {
+                    .Complete_Button_Icon_hover; 
+                    background-color: @color_positive_action_hover;
+                }*/
+  /*&:focus {border: none;}*/
 }
 #mail-index_toolbar button span {
-  padding: .2em .6em;
+  padding: 0;
 }
 #mail-index_toolbar button span img {
   width: 16px;
+  height: 16px;
   padding: 0px;
-  height: 16px !important;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:focus,
+#mail-index_toolbar button[id*="toolbar-reply"]:focus,
+#mail-index_toolbar button[id*="toolbar-reply_all"]:focus,
+#mail-index_toolbar button[id*="toolbar-forward"]:focus,
+#mail-index_toolbar button[id*="toolbar-flagged"]:focus,
+#mail-index_toolbar button[id*="toolbar-print"]:focus,
+#mail-index_toolbar button[id*="toolbar-save"]:focus,
+#mail-index_toolbar button[id*="toolbar-header"]:focus {
+  background-color: #189800;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:hover,
+#mail-index_toolbar button[id*="toolbar-reply"]:hover,
+#mail-index_toolbar button[id*="toolbar-reply_all"]:hover,
+#mail-index_toolbar button[id*="toolbar-forward"]:hover,
+#mail-index_toolbar button[id*="toolbar-flagged"]:hover,
+#mail-index_toolbar button[id*="toolbar-print"]:hover,
+#mail-index_toolbar button[id*="toolbar-save"]:hover,
+#mail-index_toolbar button[id*="toolbar-header"]:hover {
+  background-color: #189800;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:active,
+#mail-index_toolbar button[id*="toolbar-reply"]:active,
+#mail-index_toolbar button[id*="toolbar-reply_all"]:active,
+#mail-index_toolbar button[id*="toolbar-forward"]:active,
+#mail-index_toolbar button[id*="toolbar-flagged"]:active,
+#mail-index_toolbar button[id*="toolbar-print"]:active,
+#mail-index_toolbar button[id*="toolbar-save"]:active,
+#mail-index_toolbar button[id*="toolbar-header"]:active {
+  background-color: #189800;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:focus,
+#mail-index_toolbar button[id*="toolbar-delete"]:focus {
+  background-color: #ae1d00;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:hover,
+#mail-index_toolbar button[id*="toolbar-delete"]:hover {
+  background-color: #ae1d00;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:active,
+#mail-index_toolbar button[id*="toolbar-delete"]:active {
+  background-color: #ae1d00;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:focus,
+#mail-index_toolbar button[id*="toolbar-tracker"]:focus {
+  background-color: #ffc200;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:hover,
+#mail-index_toolbar button[id*="toolbar-tracker"]:hover {
+  background-color: #ffc200;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:active,
+#mail-index_toolbar button[id*="toolbar-tracker"]:active {
+  background-color: #ffc200;
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;

@@ -89,51 +89,59 @@ span#favorite_sidebox_infolog{
 
                 div.et2_hbox_right{
                     padding: 0 0em;
-                    margin-right: 0em;
+                    margin-right: 0.2em;
 
                     div.et2_box_widget{
-                         border: 1px solid rgba(0, 0, 0, 0.15);
-                        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-
+                        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+                        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
                         text-shadow: none;                      
                         .dimension_height_l;
+                        margin-top: 5px;
                         background-image: none !important;
-                        /*.border_radius_button_lefttop;*/
+                        transition: all 0.5s linear;
+                        -webkit-transition: all 0.5s linear; /* Safari */
+                        
+                         &:before {
+                            content: "+";
+                            font-size: 2em;
+                            color: @egw_color_1; 
+                            line-height: 0.5em;
+                            }
+                            
+                       /*Text ""hinzufügen" "*/
+                       span {display: none;}
 
-                        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+                      
+                      // IMG
+                        img {
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-left: 0.5em;
+                            padding: 0px;
+                            margin-top: 0px;
+                            vertical-align: middle;                            
+                            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
 
-/*                            .border_radius_button_lefttop;
-                            .box_shadow_standard_light;
+                            &:hover{.Complete_Button_Icon_hover ;}
 
-                            height: 39px; // hieght of add-item*/
-
+                            &:active { .Complete_Button_Icon_active ;}
+                        }
+                        
+                        img:last-child {margin-right: 5px;};
+                      
+                        
+                        
+                /*MouseOver*/
                       &:hover {
                           .box_shadow_standard_light_hover; 
                           background-color: @egw_color_2_a !important;
                           .border_radius_button_lefttop;
-                          
-                          
-                          .infolog_headertext {color: #FFF !important;}
-                          
+                          .dimension_height_l;
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+                          /*Text*/
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0.5em; .gradient-vertical (@egw_color_2_a, @egw_color_2_a);} 
                       }
-                       .infolog_headertext{ color: #000; font-size: 11px; }
-                      
-                      /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
-                      
-                      // IMG
-                        img {
-
-                            .Complete_Button_Icon_normal;
-                            .dimension_width_height_s;
-                            margin-right: 0.5em;
-                            padding: 2px;
-                            margin-top: -14px;
-                            vertical-align: middle;
-
-                            &:hover{.Complete_Button_Icon_hover ;}
-                            &:active{.Complete_Button_Icon_active ;}
-
-                        }
                     }
                 }
 

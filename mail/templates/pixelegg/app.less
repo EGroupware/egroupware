@@ -484,7 +484,7 @@ div#mail-index{
 
 /* ##################################################################################
  *       E-Mail Dialog "Ansehen"
- *
+ *          Preview
  * ##################################################################################
  */
 #mail-display{
@@ -494,19 +494,42 @@ div#mail-index{
     .mailDisplayHeaderSection{
         top: 0;
         position: relative;
+        
+        
+        
+        /*Toolbar*/
         #mail-display_toolbar{
             background-color: @egw_color_2_e;
             background-image: none;
             padding: 5px 3px;
             height: 25px;
             display: -webkit-box;
-            button {
-                //				float: left;
+           button {
                 .Complete_Button_Icon_normal;
                 height: 20px;
-                &:hover {.box_shadow_standard_light_hover; .background_color_15_gray;}
-                &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
             }
+            
+            button[id*="toolbar-composeasnew"],
+            button[id*="toolbar-reply"],
+            button[id*="toolbar-reply_all"],
+            button[id*="toolbar-forward"],
+            button[id*="toolbar-print"],
+            button[id*="toolbar-save"],
+            button[id*="toolbar-header"]{
+                &:active {background-color: @color_positive_action_active;}
+            }
+
+            button[id*="toolbar-unflagged"],
+            button[id*="toolbar-delete"]{
+                &:active {background-color: @color_negative_action_active;}
+            }
+            
+            button[id*="toolbar-infolog"],
+            button[id*="toolbar-tracker"]{
+                &:active {background-color: .background_color_15_gray;}
+            }
+            
+            
             span.ui-state-default{
                 float: left;
                 background-image: none;
@@ -1116,17 +1139,7 @@ input[type=button] {
 
 
 
-#mail-display_toolbar {
-    padding: 0px;
-}
-#mail-display_toolbar > button > span {
-    padding: .2em .4em;
-}
-#mail-display_toolbar > button > span > img {
-    width: 16px;
-    padding: 0px;
-    height: 16px !important;
-}
+
 
 
 
@@ -1138,17 +1151,40 @@ input[type=button] {
 
 // Headerbereich grau hinterlegt
 
+
+
+
+
 #mail-index_mailPreviewContainer {
     position: absolute;
-    border: 1px solid silver;
-    top: 90px;
+    border: 1px solid .color_10_gray;
+    top: 80px;
     bottom: 0;
     left: 3px;
     right: 0;
 }
 
- /*Toolbar der Email*/
+/*#######################################################*/
+/*# ICON # ICON # ICON # ICON #ICON # ICON# ICON # ICON #*/
+/*#######################################################*/
 
+
+
+ /*Toolbar der Email*/
+#mail-display_toolbar {
+    padding: 0px;
+}
+#mail-display_toolbar > button > span {
+    padding: .2em .4em;
+}
+#mail-display_toolbar > button > span > img {
+    width: 16px;
+    padding: 0px;
+    height: auto;
+}
+ 
+ 
+ 
 #mail-index_toolbar {
     padding: 0px;
     background: none;
@@ -1157,29 +1193,61 @@ input[type=button] {
 
     
     /* Elemente */
-    button {
-        background: none;
-        background-image: none;
-        padding: 0px !important;
+      
+           button {
+                .dimension_width_height_m !important;
+                background-color: @gray_10;
+                /*.Complete_Button_Icon_normal;*/
+                
+/*                &:hover {
+                    .Complete_Button_Icon_hover; 
+                    background-color: @color_positive_action_hover;
+                }*/
+                
+                /*&:focus {border: none;}*/
+                
+                    span {
+                            padding: 0;
 
-        .Complete_Button_Icon_normal;
+                            img {
+                                .dimension_width_height_s ;
+                                padding: 0px;
 
-        &:hover {.Complete_Button_Icon_hover;}
-        &:active {.Complete_Button_Icon_active;}
-        &:focus {border: none;}
-
-        span {
-            padding: .2em .6em;
-
-            img {
-                width: 16px;
-                padding: 0px;
-                height: 16px !important;
+                            }
+                        }
+             
+                    
+     
+                    
             }
-        }
+            
+            button[id*="toolbar-composeasnew"],
+            button[id*="toolbar-reply"],
+            button[id*="toolbar-reply_all"],
+            button[id*="toolbar-forward"],
+            button[id*="toolbar-flagged"],
+            button[id*="toolbar-print"],
+            button[id*="toolbar-save"],
+            button[id*="toolbar-header"]{
+                &:focus {background-color: @color_positive_action}
+                &:hover {background-color: @color_positive_action}
+                &:active {background-color: @color_positive_action}
+            }
 
-
-    }
+            button[id*="toolbar-unflagged"],
+            button[id*="toolbar-delete"]{
+                &:focus {background-color: @color_negative_action;}
+                &:hover {background-color: @color_negative_action;}
+                &:active {background-color: @color_negative_action;}
+            }
+            
+            button[id*="toolbar-infolog"],
+            button[id*="toolbar-tracker"]{
+                &:focus {background-color: @egw_color_1_a;}
+                &:hover {background-color: @egw_color_1_a;}
+                &:active {background-color: @egw_color_1_a;}
+            }
+    
 
 }
 
@@ -1252,4 +1320,5 @@ div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-c
         		}
 }
 
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+
+//

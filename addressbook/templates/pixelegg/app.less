@@ -216,7 +216,7 @@ div#addressbook-index{
                 span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
                 img.et2_button {margin-top: -15px;}*/
 
-         div.et2_box_widget{
+/*         div.et2_box_widget{
                         background-color: @egw_color_blue_lighter !important;
                         color: #FFF;
                         text-shadow: none;
@@ -237,7 +237,7 @@ div#addressbook-index{
                       &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
                       
                       
-                      /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
+                      img#infolog-index_add[id="task"] {background-color: @gray-0; }
                       
                       // IMG
                         img {
@@ -253,8 +253,62 @@ div#addressbook-index{
                             &:active{.Complete_Button_Icon_active ;}
 
                         }
-                    }
+                    }*/
                 
+                    div.et2_box_widget{
+                        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+                        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+                        text-shadow: none;                      
+                        .dimension_height_l;
+                        margin-top: 5px;
+                        background-image: none !important;
+                        transition: all 0.5s linear;
+                        -webkit-transition: all 0.5s linear; /* Safari */
+                        
+                         &:before {
+                            content: "+";
+                            font-size: 2em;
+                            color: @egw_color_1; 
+                            line-height: 0.5em;
+                            }
+                            
+                       /*Text ""hinzufügen" "*/
+                       span {display: none;}
+
+                      
+                      // IMG
+                        img {
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-left: 0.5em;
+                            padding: 0px;
+                            margin-top: 0px;
+                            vertical-align: middle;                            
+                            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
+
+                            &:hover{.Complete_Button_Icon_hover ;}
+
+                            &:active { .Complete_Button_Icon_active ;}
+                        }
+                        
+                        img:last-child {margin-right: 5px;};
+                      
+                        
+                        
+                /*MouseOver*/
+                      &:hover {
+                          .box_shadow_standard_light_hover; 
+                          background-color: @egw_color_2_a !important;
+                          .border_radius_button_lefttop;
+                          .dimension_height_l;
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+                          /*Text*/
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0.5em; .gradient-vertical (@egw_color_2_a, @egw_color_2_a);} 
+                      }
+                    }  
+
+
                 
                 
         }
@@ -341,7 +395,7 @@ div#addressbook-index{
 // Button delete
 button[id="addressbook-edit_button[delete]"]{
        float: right;
-        margin-top: -36px; 
+        margin-top: 4px; 
     
 }
 

@@ -356,11 +356,11 @@ fieldset.emailGroup {
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
+    -webkit-border-top-left-radius: 10px;
     -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-topleft: 10px;
     border-radius: 3px;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 10px;
   }
   div#addressbook-index div.filters select#infolog-index_cat_id {
     width: 10%;
@@ -396,41 +396,69 @@ fieldset.emailGroup {
 
                 span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
                 img.et2_button {margin-top: -15px;}*/
+    /*         div.et2_box_widget{
+                        background-color: @egw_color_blue_lighter !important;
+                        color: #FFF;
+                        text-shadow: none;
+//                        height: 35px;
+                        background-image: none !important;
+                        .border_radius_button_lefttop;
+
+                        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
+
+                            .border_radius_button_lefttop;
+                            .box_shadow_standard_light;
+
+                            height: 39px; // hieght of add-item
+
+                            .infolog_headertext{color: #FFF !important; font-size: 11px;}
+
+                      
+                      &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
+                      
+                      
+                      img#infolog-index_add[id="task"] {background-color: @gray-0; }
+                      
+                      // IMG
+                        img {
+
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-right: 0.5em;
+                            padding: 2px;
+                            margin-top: -2px;
+                            vertical-align: middle;
+
+                            &:hover{.Complete_Button_Icon_hover ;}
+                            &:active{.Complete_Button_Icon_active ;}
+
+                        }
+                    }*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget {
-    background-color: #0b5fa4 !important;
-    color: #FFF;
+    /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+    /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
     text-shadow: none;
+    height: 32px;
+    margin-top: 5px;
     background-image: none !important;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
-    border-radius: 3px;
-    border-top-left-radius: 20px;
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    height: 39px;
-    /*img#infolog-index_add[id="task"] {background-color: @gray-0; }*/
+    transition: all 0.5s linear;
+    -webkit-transition: all 0.5s linear;
+    /* Safari */
+    /*Text ""hinzufügen" "*/
+    /*MouseOver*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:before {
     content: "+";
     font-size: 2em;
     color: #ffc200;
+    line-height: 0.5em;
   }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget .infolog_headertext {
-    color: #FFF !important;
-    font-size: 11px;
-  }
-  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover {
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    background-color: #66a1d2 !important;
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget span {
+    display: none;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -440,13 +468,22 @@ fieldset.emailGroup {
     border-radius: 3px;
     width: 16px;
     height: 16px;
-    margin-right: 0.5em;
-    padding: 2px;
-    margin-top: -2px;
+    margin-left: 0.5em;
+    padding: 0px;
+    margin-top: 0px;
     vertical-align: middle;
+    background-color: #0c5da5;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
+    background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: linear-gradient(top, #0c5da5, #0c5da5);
+    background-repeat: repeat-x;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:hover {
-    background-color: #cccccc;
+    /*.background_color_20_gray;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -456,7 +493,7 @@ fieldset.emailGroup {
     border-radius: 3px;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:active {
-    background-color: #b3b3b3 !important;
+    /*.background_color_30_gray;*/
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -464,6 +501,50 @@ fieldset.emailGroup {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget img:last-child {
+    margin-right: 5px;
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    background-color: #0c5da5 !important;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
+    height: 32px;
+    /*Text*/
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover:before {
+    content: "";
+    font-size: 1em;
+    padding-left: 5px;
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover span {
+    visibility: hidden;
+    display: none;
+  }
+  .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover img {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
+    margin: 0.5em;
+    background-color: #0c5da5;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
+    background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
+    background-image: linear-gradient(top, #0c5da5, #0c5da5);
+    background-repeat: repeat-x;
   }
   .et2_container[id^="infolog-index-addressbook"] .egwGridView_scrollarea {
     overflow-y: scroll !important;
@@ -501,7 +582,7 @@ fieldset.emailGroup {
   }
   button[id="addressbook-edit_button[delete]"] {
     float: right;
-    margin-top: -36px;
+    margin-top: 4px;
   }
   /*#######################################################*/
   /*State: Address selected*/
@@ -753,7 +834,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.phoneGroup table.et2_grid tr:nth-child(odd),
   div#addressbook-search fieldset.phoneGroup table.et2_grid tr:nth-child(odd) {
-    background: #ebebeb;
+    background: #f7f7f7;
   }
   div#addressbook-edit fieldset.phoneGroup table.et2_grid td,
   div#addressbook-search fieldset.phoneGroup table.et2_grid td {
@@ -798,7 +879,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup table.et2_grid tr:nth-child(odd),
   div#addressbook-search fieldset.emailGroup table.et2_grid tr:nth-child(odd) {
-    background: #ebebeb;
+    background: #f7f7f7;
   }
   div#addressbook-edit fieldset.emailGroup table.et2_grid td,
   div#addressbook-search fieldset.emailGroup table.et2_grid td {
@@ -821,7 +902,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url:hover,
   div#addressbook-search fieldset.emailGroup td a.et2_url:hover {
-    background-color: #cccccc;
+    /*.background_color_20_gray;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -832,7 +913,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url.url,
   div#addressbook-search fieldset.emailGroup td a.et2_url.url {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -845,7 +926,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url.email,
   div#addressbook-search fieldset.emailGroup td a.et2_url.email {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -889,7 +970,7 @@ fieldset.emailGroup {
     background: #ffffff;
   }
   #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid tr:nth-child(odd) {
-    background: #ebebeb;
+    background: #f7f7f7;
   }
   #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid td {
     padding: 5px 0px 5px 3px;
@@ -933,7 +1014,7 @@ fieldset.emailGroup {
     background: #ffffff;
   }
   #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(odd) {
-    background: #ebebeb;
+    background: #f7f7f7;
   }
   #addressbook-edit_addressbook-edit-details table.et2_grid td {
     padding: 5px 0px 5px 3px;
@@ -966,7 +1047,7 @@ fieldset.emailGroup {
     margin: 1em;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -981,7 +1062,7 @@ fieldset.emailGroup {
     width: 32px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:hover {
-    background-color: #cccccc;
+    /*.background_color_20_gray;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -991,7 +1072,7 @@ fieldset.emailGroup {
     border-radius: 3px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:active {
-    background-color: #b3b3b3 !important;
+    /*.background_color_30_gray;*/
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -999,6 +1080,7 @@ fieldset.emailGroup {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
   }
   div#addressbook-edit_addressbook-edit-links table#addressbook-edit_link_to {
     overflow-y: scroll;
