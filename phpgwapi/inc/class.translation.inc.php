@@ -429,6 +429,29 @@ class translation
 	}
 
 	/**
+	 * Get a state / etag for a given app's translations
+	 *
+	 * We currently only use a single state for all none-instance-specific apps depending on lang_ctimes.
+	 *
+	 * @param string $_app
+	 * @param string $_lang
+	 * @return string
+	 */
+	static function etag($_app, $_lang)
+	{
+		if (!in_array($_app, translation::$instance_specific_translations))
+		{
+			$etag = md5(json_encode($GLOBALS['egw_info']['server']['lang_ctimes']));
+		}
+		else
+		{
+			$etag = md5(json_encode(egw_cache::getCache(egw_cache::INSTANCE, __CLASS__, $_app.':'.$_lang)));
+		}
+		error_log(__METHOD__."('$_app', '$_lang') returning '$etag'");
+		return $etag;
+	}
+
+	/**
 	 * Loads translations for an application direct from the lang-file(s)
 	 *
 	 * Never use directly, use add_app(), which employes caching (it has to be public, to act as callback for the cache!).

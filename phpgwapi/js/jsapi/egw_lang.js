@@ -25,7 +25,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Translations
-	 * 
+	 *
 	 * @access: private, use egw.lang() or egw.set_lang_arr()
 	 */
 	var lang_arr = {};
@@ -34,7 +34,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 	return {
 		/**
 		 * Set translation for a given application
-		 * 
+		 *
 		 * @param string _app
 		 * @param object _message message => translation pairs
 		 * @memberOf egw
@@ -46,10 +46,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 				lang_arr[_app] = _messages;
 			}
 		},
-		
+
 		/**
 		 * Translate a given phrase replacing optional placeholders
-		 * 
+		 *
 		 * @param string _msg message to translate
 		 * @param string _arg1 ... _argN
 		 */
@@ -62,7 +62,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 			}
 			var translation = _msg;
 			_msg = _msg.toLowerCase();
-			
+
 			// search apps in given order for a replacement
 			var apps = this.lang_order || ['custom', this.getAppName(), 'etemplate', 'common'];
 			for(var i = 0; i < apps.length; ++i)
@@ -75,9 +75,9 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 				}
 			}
 			if (arguments.length == 1) return translation;
-			
+
 			if (arguments.length == 2) return translation.replace('%1', arguments[1]);
-			
+
 			// to cope with arguments containing '%2' (eg. an urlencoded path like a referer),
 			// we first replace all placeholders '%N' with '|%N|' and then we replace all '|%N|' with arguments[N]
 			translation = translation.replace(/%([0-9]+)/g, '|%$1|');
@@ -116,9 +116,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 			{
 				if (typeof lang_arr[_apps[i].app] === "undefined")
 				{
-					jss.push(this.webserverUrl
-						+ '/phpgwapi/lang.php?app='
-						+ _apps[i].app + '&lang=' + _apps[i].lang);
+					jss.push(this.webserverUrl +
+						'/phpgwapi/lang.php?app=' + _apps[i].app +
+						'&lang=' + _apps[i].lang +
+						'&etag=' + (_apps[i].etag || this.config('lang_ctimes_md5')));
 				}
 				apps.push(_apps[i].app);
 			}
@@ -138,7 +139,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 				{
 					// Require a "ready postpone token"
 					var token = ready.readyWaitFor();
-	
+
 					// Call "readyDone" once all js files have been included.
 					files.includeJS(jss, function () {
 						ready.readyDone(token);

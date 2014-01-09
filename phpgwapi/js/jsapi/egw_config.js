@@ -20,7 +20,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Clientside config
-	 * 
+	 *
 	 * @access: private, use egw.config(_name, _app="phpgwapi")
 	 */
 	var configs = {};
@@ -28,7 +28,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 	return {
 		/**
 		 * Query clientside config
-		 * 
+		 *
 		 * @param string _name name of config variable
 		 * @param string _app default "phpgwapi"
 		 * @return mixed
@@ -37,14 +37,14 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 		{
 			if (typeof _app == 'undefined') _app = 'phpgwapi';
 
-			if (typeof configs[_app] == 'undefined') return null;
-			
-			return configs[_app][_name];
+			if (typeof this.configs[_app] == 'undefined') return null;
+
+			return this.configs[_app][_name];
 		},
-		
+
 		/**
 		 * Set clientside configuration for all apps
-		 * 
+		 *
 		 * @param array/object
 		 */
 		set_configs: function(_configs)

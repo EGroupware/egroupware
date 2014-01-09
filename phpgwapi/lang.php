@@ -30,23 +30,15 @@ $GLOBALS['egw_info'] = array(
 include '../header.inc.php';
 
 // use an etag with app, lang and a hash over the creation-times of all lang-files
-if (!in_array($_GET['app'], translation::$instance_specific_translations))
-{
-	$etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5(serialize($GLOBALS['egw_info']['server']['lang_ctimes'])).'"';
-}
-else
-{
-	translation::add_app($_GET['app'], $_GET['lang']);
-	if (!count(translation::$lang_arr))
-	{
-		translation::add_app($_GET['app'], 'en');
-	}
-	$etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.md5(serialize(translation::$lang_arr));
-}
+$etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.translation::etag($_GET['app'], $_GET['lang']).'"';
+
+// tell browser/caches to cache for one day, we change url on real modifications
+$expires = 864000;	// 10days
 
 // headers to allow caching of one month
 Header('Content-Type: text/javascript; charset=utf-8');
-Header('Cache-Control: public, no-transform');
+Header('Cache-Control: public, no-transform, max-age='.$expires);
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
 Header('Pragma: cache');
 Header('ETag: '.$etag);
 
@@ -57,13 +49,10 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	common::egw_exit();
 }
 
-if (!in_array($_GET['app'], translation::$instance_specific_translations))
+translation::add_app($_GET['app'], $_GET['lang']);
+if (!count(translation::$lang_arr))
 {
-	translation::add_app($_GET['app'], $_GET['lang']);
-	if (!count(translation::$lang_arr))
-	{
-		translation::add_app($_GET['app'], 'en');
-	}
+	translation::add_app($_GET['app'], 'en');
 }
 
 $content = 'egw.set_lang_arr("'.$_GET['app'].'", '.json_encode(translation::$lang_arr).');';

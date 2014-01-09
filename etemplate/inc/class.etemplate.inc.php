@@ -135,14 +135,14 @@ class etemplate_new extends etemplate_widget_template
 		{
 			if (!in_array($l_app, array($currentapp, 'custom')))
 			{
-				$langRequire[$l_app] = array('app' => $l_app, 'lang' => $lang);
+				$langRequire[$l_app] = array('app' => $l_app, 'lang' => $lang, 'etag' => translation::etag($l_app, $lang));
 			}
 		}
 		foreach(array($currentapp, 'custom') as $l_app)
 		{
 			if (isset(translation::$loaded_apps[$l_app]))
 			{
-				$langRequire[$l_app] = array('app' => $l_app, 'lang' => translation::$loaded_apps[$l_app]);
+				$langRequire[$l_app] = array('app' => $l_app, 'lang' => translation::$loaded_apps[$l_app], 'etag' => translation::etag($l_app, translation::$loaded_apps[$l_app]));
 			}
 		}
 

@@ -457,7 +457,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				this.value = '';
 			});
 			// need to load common translations for app-names
-			this.includeJS([this.webserverUrl+'/phpgwapi/lang.php?app=common&lang='+this.preference('lang')], function(){
+			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], function(){
 				select.append(jQuery(document.createElement('option')).attr('value', '').text(self.lang('Add')+' ...'));
 				var apps = self.link_app_list('add');
 				for(var app in apps)
