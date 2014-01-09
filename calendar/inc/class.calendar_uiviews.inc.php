@@ -574,8 +574,8 @@ class calendar_uiviews extends calendar_ui
 									'" data-tooltip ="'.$tooltip .
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
 									$row_height.'%; top: '.($n * $row_height).'%;'.
-									'background-color: '.$color.';" '.$data['popup'].' '.
-									'>'."\n".$data['html'].$indent.'" data-tooltip ="'.$tooltip ."</div>\n";
+									'background-color: '.$color.';" '.'" data-date ="'.$this->bo->date2string($event['start']).' '.
+									'>'."\n".$data['html'].$indent."</div>\n";
 							}
 						}
 					}
@@ -2737,9 +2737,10 @@ class calendar_uiviews extends calendar_ui
 		$width = $this->_planner_pos($event['end'],$start,$end) - $left;
 		$color = $data['color'] ? $data['color'] : 'gray';
 
+		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
 		return $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
-			'%; width: '.$width.'%; background-color: '.$color.';"'.$data['popup'].' '.
-			html::tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).'>'."\n".$data['html'].$indent."</div>\n";
+			'%; width: '.$width.'%; background-color: '.$color.';"'.'data-tooltip="'. $tooltip.'" '.
+			'>'."\n".$data['html'].$indent."</div>\n";
 	}
 
 	/**
