@@ -106,7 +106,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			var manager = this.getArrayMgr("content");
 			if(manager) {
 				var src = manager.getEntry(_attrs["src"]);
-				if (src)
+				if (typeof src != "undefined")
 				{
 					if(typeof src == "object")
 					{
