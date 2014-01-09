@@ -476,9 +476,6 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 	 * changes.
 	 */
 	invalidate: function() {
-		// Clear the "_avgHeight"
-		this._avgHeight = false;
-		this._avgCount = false;
 
 		// Clear any existing "invalidate" timeout
 		if (this._invalidateTimeout)
@@ -489,6 +486,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 		var self = this;
 		var _super = this._super;
 		this._invalidateTimeout = window.setTimeout(function() {
+			// Clear the "_avgHeight"
+			self._avgHeight = false;
+			self._avgCount = false;
 			self._invalidateTimeout = null;
 			self._doInvalidate(_super);
 		}, ET2_GRID_INVALIDATE_TIMEOUT);
