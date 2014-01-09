@@ -677,10 +677,10 @@ app.classes.mail = AppJS.extend(
 			window.clearTimeout(this.mail_doTimedRefresh);
 		}
 		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
-			var self = this;
-			this.mail_doTimedRefresh = window.setInterval(function() {
-				self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
-			},_refreshTimeOut);
+			//var self = this;
+			//this.mail_doTimedRefresh = window.setInterval(function() {
+			//	self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
+			//},_refreshTimeOut);
 		}
 	},
 
@@ -691,6 +691,12 @@ app.classes.mail = AppJS.extend(
 	 * @param mode
 	 */
 	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea) {
+		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
+		{
+			_refreshGridArea = _nodeID[_refreshGridArea];
+			mode = _nodeID[mode];
+			_nodeID = _nodeID[_nodeID];
+		}
 		var nodeToRefresh = 0;
 		var mode2use = "none";
 		if (typeof _refreshGridArea == 'undefined') _refreshGridArea=true;

@@ -276,7 +276,7 @@ class mail_ui
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
 		//$zendtime = microtime(true) - $zstarttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
-
+//$this->mail_bo->fetchUnSubscribedFolders();
 		//$sessionFolder = $this->mail_bo->sessionData['mailbox'];// already set and tested this earlier
 		//if ($this->mail_bo->folderExists($sessionFolder))
 		//{
@@ -697,7 +697,7 @@ class mail_ui
 			}
 			else
 			{
-				$oA['im0'] =  "MailFolderPlain.png"; // one Level
+				$oA['im0'] = "MailFolderPlain.png"; // one Level
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
@@ -1150,6 +1150,13 @@ class mail_ui
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_delete',
 			),
+/*
+			'select_all' => array(
+				'caption' => 'Select all',
+				'group' => ++$group,
+				'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, false, true),
+			),
+*/
 			'drag_mail' => array(
 				'dragType' => array('mail','file'),
 				'type' => 'drag',
@@ -1323,6 +1330,8 @@ unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+		$response = egw_json_response::get();
+		$response->call('app.mail.mail_refreshFolderStatus',array('_nodeID'=>$_profileID.self::$delimiter.$_folderName,'mode'=>null,'_refreshGridArea'=>false),'mail');
 
 		return $rowsFetched['messages'];
 	}
@@ -3528,7 +3537,7 @@ $success=true;
 				$_newName = $namePart;
 				$oldParentFolder = implode($del,$pA);
 				$parentFolder = $_newLocation;
-				if (strtoupper($folderName)!= 'INBOX')
+				if (strtoupper($folderName)!= 'INBOX' && (strlen($parentFolder)>strlen($folderName) && strpos($parentFolder,$folderName)===false))
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
 					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
@@ -3612,8 +3621,8 @@ $success=true;
 					$profileID.self::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
 					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
 				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
-				if (strpos($profileID.self::$delimiter.$parentFolder,$profileID.self::$delimiter.$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
-				if (count($refreshData)>1 && strpos($profileID.self::$delimiter.$oldParentFolder,$profileID.self::$delimiter.$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
+				if (strlen($parentFolder)>strlen($oldParentFolder) && strpos($parentFolder,$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
+				if (count($refreshData)>1 && strlen($oldParentFolder)>strlen($parentFolder) && strpos($oldParentFolder,$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
 				$response->call('app.mail.mail_reloadNode',$refreshData,'mail');
 
 			}

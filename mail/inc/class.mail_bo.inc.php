@@ -978,7 +978,7 @@ class mail_bo
 		{
 			return $retValue;
 		}
-		$subscribedFolders = $this->icServer->listsubscribedMailboxes('', $_folderName);
+		$subscribedFolders = $this->icServer->listSubscribedMailboxes('', $_folderName);
 		if(is_array($subscribedFolders) && count($subscribedFolders) == 1) {
 			$retValue['subscribed'] = true;
 		}
@@ -1828,6 +1828,20 @@ class mail_bo
 	}
 
 	/**
+	 * fetchUnSubscribedFolders: get unsubscribed IMAP folder list
+	 *
+	 * returns an array of unsubscribed IMAP folder names.
+	 *
+	 * @return array with folder names. eg.: 1 => INBOX/TEST
+	 */
+	function fetchUnSubscribedFolders()
+	{
+		$unSubscribedMailboxes = $this->icServer->listUnSubscribedMailboxes();
+		//error_log(__MEtHOD__.__LINE__.array2string($unSubscribedMailboxes));
+		return $unSubscribedMailboxes;
+	}
+
+	/**
 	 * get IMAP folder objects
 	 *
 	 * returns an array of IMAP folder objects. Put INBOX folder in first
@@ -1898,10 +1912,10 @@ class mail_bo
 
 				if(is_array($singleNameSpace)) {
 					// fetch and sort the subscribed folders
-					$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($foldersNameSpace[$type]['prefix']);
+					$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($foldersNameSpace[$type]['prefix']);
 					if (empty($subscribedMailboxes) && $type == 'shared')
 					{
-						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes('',0);
+						$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0);
 					}
 
 					//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
