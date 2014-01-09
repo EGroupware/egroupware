@@ -202,9 +202,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	{
 		egw.window.console.groupCollapsed("Loading %s into ", _name, this.DOMContainer);
 	}
-	if(console.timeStamp)
+	if(console.timeline)
 	{
-		console.timeStamp("Load " + _name + " started");
+		console.timeline(_name);
+	}
+	if(console.profile)
+		console.profile(_name);
 	}
 	var start_time = (new Date).getTime();
 
@@ -288,9 +291,13 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			{
 				egw.window.console.groupEnd();
 			}
-			if(console.timeStamp)
+			if(console.timelineEnd)
 			{
-				console.timeStamp("Load " + _name + " finished");
+				console.timelineEnd(_name);
+			}
+			if(console.profileEnd)
+			{
+				console.profileEnd(_name);
 			}
 			if(deferred.length > 0)
 			{
