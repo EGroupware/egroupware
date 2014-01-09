@@ -574,7 +574,7 @@ class calendar_uiviews extends calendar_ui
 									'" data-tooltip ="'.$tooltip .
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
 									$row_height.'%; top: '.($n * $row_height).'%;'.
-									'background-color: '.$color.';" '.'" data-date ="'.$this->bo->date2string($event['start']).' '.
+									'background-color: '.$color.';" '.'" data-date ="'.$this->bo->date2string($event['start']).'|'.$data['popup'].'" '.
 									'>'."\n".$data['html'].$indent."</div>\n";
 							}
 						}
@@ -1772,7 +1772,14 @@ class calendar_uiviews extends calendar_ui
 		}
 		else
 		{
-			// Replaced with jquery click handler due to CSP consern
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$popup = $event['id']."|r";
+			}
+			else
+			{
+				$popup = $event['id']."|n";
+			}
 		}
 		//_debug_array($event);
 
@@ -2740,7 +2747,7 @@ class calendar_uiviews extends calendar_ui
 		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
 		return $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
 			'%; width: '.$width.'%; background-color: '.$color.';"'.'data-tooltip="'. $tooltip.'" '.
-			'>'."\n".$data['html'].$indent."</div>\n";
+			'" data-date ="'.$this->bo->date2string($event['start']).'|'.$data['popup'].'">'."\n".$data['html'].$indent."</div>\n";
 	}
 
 	/**

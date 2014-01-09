@@ -270,9 +270,10 @@ app.classes.calendar = AppJS.extend(
 		//Click Handler for calendar planner
 		jQuery("div.calendar_plannerEvent").on({
 			click:function(ev){
-				var eventId = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
-				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
-				if (ev.currentTarget.id.match(/drag_/g))
+				var eventId = ev.currentTarget.getAttribute('data-date').split("|")[1];
+				var startDate = ev.currentTarget.getAttribute('data-date').split("|")[0];
+				var recurrFlag = ev.currentTarget.getAttribute('data-date').split("|")[2];
+				if (recurrFlag == "n")
 				{
 					egw.open(eventId,'calendar','edit');
 				}
