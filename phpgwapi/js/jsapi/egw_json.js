@@ -76,7 +76,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		{
 			this.async = async;
 		}
-		
+
 		// Assemble the complete request
 		var request_obj = {
 			'json_data': this.egw.jsonEncode({
@@ -88,7 +88,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 		// Send the request via AJAX using the jquery ajax function
 		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
-		// (causing eg. apply from server with app.$app.method to run in main window instead of popup) 
+		// (causing eg. apply from server with app.$app.method to run in main window instead of popup)
 		(this.egw.window?this.egw.window.$j:$j).ajax({
 			url: this.url,
 			async: this.async,
@@ -120,7 +120,14 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			}
 			if(js_files.length > 0)
 			{
-				this.egw.includeJS(js_files, function() {this.handleResponse(data);}, this);
+				var start_time = (new Date).getTime();
+				this.egw.includeJS(js_files, function() {
+					var end_time = (new Date).getTime();
+					this.handleResponse(data);
+					var gen_time_div = $j('#divGenTime_'+this.egw.appname);
+					if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+					gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
+				}, this);
 				return;
 			}
 			for (var i = 0; i < data.response.length; i++)
@@ -165,13 +172,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * 	not.
 		 * @param _callback specifies the callback function which should be
 		 * 	called, once the request has been sucessfully executed.
-		 * @param _context is the context which will be used for the callback function 
+		 * @param _context is the context which will be used for the callback function
 		 * @param _sender is a parameter being passed to the _callback function
 		 */
 		json: function(_menuaction, _parameters, _callback, _context, _async,
 			_sender)
 		{
-			return new json_request(_menuaction, _parameters, _callback, 
+			return new json_request(_menuaction, _parameters, _callback,
 				_context, _async, _sender, this);
 		},
 
@@ -244,7 +251,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	// Regisert the "alert" plugin
 	json.registerJSONPlugin(function(type, res, req) {
 		//Check whether all needed parameters have been passed and call the alertHandler function
-		if ((typeof res.data.message != 'undefined') && 
+		if ((typeof res.data.message != 'undefined') &&
 			(typeof res.data.details != 'undefined'))
 		{
 			req.alertHandler(
@@ -258,7 +265,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	// Register the "assign" plugin
 	json.registerJSONPlugin(function(type, res, req) {
 		//Check whether all needed parameters have been passed and call the alertHandler function
-		if ((typeof res.data.id != 'undefined') && 
+		if ((typeof res.data.id != 'undefined') &&
 			(typeof res.data.key != 'undefined') &&
 			(typeof res.data.value != 'undefined'))
 		{

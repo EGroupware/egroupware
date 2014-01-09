@@ -39,6 +39,7 @@
 (function(){
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
+	var start_time = (new Date).getTime();
 
 	// Flag for if this is opened in a popup
 	var popup = (window.opener != null);
@@ -151,8 +152,14 @@
 			break;
 		}
 	}
+
 	window.egw_LAB.script(include).wait(function()
 	{
+		var end_time = (new Date).getTime();
+		var gen_time_div = $j('#divGenTime_'+window.egw_appName);
+		if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+		gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
+
 		// Make sure opener knows when we close - start a heartbeat
 		if((popup || window.opener) && window.name != '')
 		{

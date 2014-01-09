@@ -195,8 +195,14 @@ class etemplate_new extends etemplate_widget_template
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
-				//error_log("Ajax " . __LINE__);
-				$GLOBALS['egw']->framework->response->generic("data", array('<div id="'.$dom_id.'" class="et2_container"></div>'));
+				$content = '<div id="'.$dom_id.'" class="et2_container"></div>';
+				// add server-side page-generation times
+				if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
+				{
+					$vars = $GLOBALS['egw']->framework->_get_footer();
+					$content .= "\n".$vars['page_generation_time'];
+				}
+				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+egw_framework::get_extra());
 				self::$request = null;
 				return;

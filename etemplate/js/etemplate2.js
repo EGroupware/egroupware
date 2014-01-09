@@ -207,6 +207,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
 	{
+		var start_time = (new Date).getTime();
+
 		// Appname should be first part of the template name
 		var split = _name.split('.');
 		var appname = split[0];
@@ -311,6 +313,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				}
 
 				$j(this.DOMContainer).trigger('load', this);
+
+				var end_time = (new Date).getTime();
+				var gen_time_div = $j('#divGenTime_'+appname);
+				if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+				gen_time_div.find('.et2RenderTime').remove();
+				gen_time_div.append('<span class="et2RenderTime">'+egw.lang('eT2 rendering took %1s', (end_time-start_time)/1000)+'</span>');
 			},this));
 			};
 
@@ -723,7 +731,7 @@ function etemplate2_handle_load(_type, _response)
 	{
 		window.framework.setSidebox.apply(window.framework, data.setSidebox);
 	}
-	
+
 	// regular et2 re-load
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{

@@ -59,10 +59,23 @@ a:hover,a:active
 	color:#666666;
 }
 
-#divGenTime,#divPoweredBy
+.pageGenTime,#divPoweredBy
 {
 	font-size: 80%;
 	color: #ff0000;
+	text-align: center;
+}
+
+.pageGenTime {
+	margin-top: 1em;
+}
+
+.pageGenTime > span:after {
+	content: ", ";
+}
+
+.pageGenTime > span:last-child:after {
+	content: "";
 }
 
 #divPoweredBy
@@ -84,7 +97,7 @@ a:hover,a:active
 #menu1close {
 	position: absolute;
 	right: 7px;
-	top: 7px;	
+	top: 7px;
 }
 
 /*
@@ -774,7 +787,7 @@ tr.draggedOver td {
 	font-weight: bold;
 }
 td.lettersearch {
-	border-color: #E0E0E0;	
+	border-color: #E0E0E0;
 	background-image: url(../images/gradient22.png);
 }
 

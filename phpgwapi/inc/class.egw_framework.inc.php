@@ -547,7 +547,7 @@ abstract class egw_framework
 	 *
 	 * @return array
 	 */
-	protected function _get_footer()
+	public function _get_footer()
 	{
 		$var = Array(
 			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images',
@@ -558,7 +558,7 @@ abstract class egw_framework
 		{
 			$totaltime = sprintf('%4.2lf',microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']);
 
-			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime);
+			$var['page_generation_time'] = '<div class="pageGenTime" id="divGenTime_'.$GLOBALS['egw_info']['flags']['currentapp'].'"><span>'.lang('Page was generated in %1 seconds',$totaltime);
 			if ($GLOBALS['egw_info']['flags']['session_restore_time'])
 			{
 				$var['page_generation_time'] .= ' '.lang('(session restored in %1 seconds)',
