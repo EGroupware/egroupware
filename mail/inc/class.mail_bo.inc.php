@@ -1572,11 +1572,24 @@ class mail_bo
 				case 'OLD':
 					$imapFilter->flag('RECENT', $set=false);
 					break;
+// operate only on system flags
+//        $systemflags = array(
+//            'ANSWERED', 'DELETED', 'DRAFT', 'FLAGGED', 'RECENT', 'SEEN'
+//        );
 				case 'UNANSWERED':
+					$imapFilter->flag('ANSWERED', $set=false);
+					$queryValid = true;
+					break;
 				case 'UNDELETED':
+					$imapFilter->flag('DELETED', $set=false);
+					$queryValid = true;
+					break;
 				case 'UNFLAGGED':
+					$imapFilter->flag('FLAGGED', $set=false);
+					$queryValid = true;
+					break;
 				case 'UNSEEN':
-					$imapFilter->flag($criteria, $set=false);
+					$imapFilter->flag('SEEN', $set=false);
 					$queryValid = true;
 					break;
 			}
