@@ -96,7 +96,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	/**
 	 * Number of rows to send initially
 	 */
-	const INITIAL_ROWS = 25;
+	const INITIAL_ROWS = 50;
 
 	/**
 	 * Set up what we know on the server side.

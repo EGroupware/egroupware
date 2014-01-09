@@ -185,6 +185,34 @@ var et2_dataview_controller = Class.extend({
 	},
 
 	/**
+	 * Load initial data
+	 *
+	 * @param {string} uid_key Name of the unique row identifier field
+	 * @param {Object} data Key / Value mapping of initial data.
+	 */
+	loadInitialData: function (uid_prefix, uid_key, data) {
+		var idx = 0;
+		for(var key in data)
+		{
+			// Skip any extra keys
+			if(typeof data[key] != "object" || data[key] == null || typeof data[key][uid_key] == "undefined") continue;
+			
+			// Add to row / uid map
+			var entry = this._getIndexEntry(idx++);
+			entry.uid = data[key][uid_key];
+			if(entry.uid.indexOf(uid_prefix) < 0)
+			{
+				entry.uid = uid_prefix + "::" + entry.uid;
+			}
+
+			// Add to data cache so grid will find it
+			egw.dataStoreUID(entry.uid, data[key])
+
+			// Don't try to insert the rows, grid will do that automatically
+		}
+	},
+
+	/**
 	 * Returns the depth of the controller instance.
 	 */
 	getDepth: function () {

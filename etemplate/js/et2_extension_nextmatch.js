@@ -889,6 +889,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				null,
 				this.options.actions
 		);
+
 		// Need to trigger empty row the first time
 		if(total == 0) this.controller._emptyRow();
 
@@ -910,6 +911,24 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.options.settings.total : 0;
 		// This triggers an invalidate, which updates the grid
 		this.dataview.grid.setTotalCount(total);
+		
+		// Insert any data sent from server, so invalidate finds data already
+		if(this.options.settings.rows)
+		{
+			var prefix = this.options.settings.dataStorePrefix;
+			if(!prefix)
+			{
+				prefix = this.options.settings.get_rows.split('.');
+				prefix = prefix[0];
+			}
+			this.controller.loadInitialData(
+				prefix,
+				this.options.settings.row_id,
+				this.options.settings.rows
+			);
+			// Remove, to prevent duplication
+			delete this.options.settings.rows;
+		}
 	},
 
 	_parseGrid: function(_grid) {
