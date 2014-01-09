@@ -207,6 +207,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		console.timeline(_name);
 	}
 	if(console.profile)
+	{
 		console.profile(_name);
 	}
 	var start_time = (new Date).getTime();
