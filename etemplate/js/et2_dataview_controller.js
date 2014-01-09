@@ -199,7 +199,7 @@ var et2_dataview_controller = Class.extend({
 			
 			// Add to row / uid map
 			var entry = this._getIndexEntry(idx++);
-			entry.uid = data[key][uid_key];
+			entry.uid = data[key][uid_key]+"";
 			if(entry.uid.indexOf(uid_prefix) < 0)
 			{
 				entry.uid = uid_prefix + "::" + entry.uid;
