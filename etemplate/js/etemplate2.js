@@ -202,13 +202,16 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	{
 		egw.window.console.groupCollapsed("Loading %s into ", _name, this.DOMContainer);
 	}
+	if(console.timeStamp)
+	{
+		console.timeStamp("Load " + _name + " started");
+	}
+	var start_time = (new Date).getTime();
 
 	// require necessary translations from server, if not already loaded
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
 	{
-		var start_time = (new Date).getTime();
-
 		// Appname should be first part of the template name
 		var split = _name.split('.');
 		var appname = split[0];
@@ -284,6 +287,10 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			if(console.groupEnd)
 			{
 				egw.window.console.groupEnd();
+			}
+			if(console.timeStamp)
+			{
+				console.timeStamp("Load " + _name + " finished");
 			}
 			if(deferred.length > 0)
 			{
