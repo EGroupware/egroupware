@@ -11,15 +11,19 @@
 /**
  * Sidebox navigation for calendar
  *
- * @todo add code from jscalendar->flat(), or better replace it altogether ...
  */
 (function()
 {
 	var script_tag = document.getElementById('calendar-navigation-script');
-	var current_view_url;
+	var current_view_url, link_day_url,link_week_url,link_month_url,flatdate, current_date;
 	if (script_tag)
 	{
 		current_view_url = script_tag.getAttribute('data-current-view-url');
+		link_day_url = script_tag.getAttribute('data-link-day-url');
+		link_week_url = script_tag.getAttribute('data-link-week-url');
+		link_month_url = script_tag.getAttribute('data-link-week-url');
+		flatdate = script_tag.getAttribute('data-date');
+		current_date = script_tag.getAttribute('data-current-date');
 	}
 	function load_cal(url,id,no_reset) {
 		var owner='';
@@ -65,6 +69,47 @@
 		return false;
 	}
 
+	/*
+	 *
+	 * @param {type} calendar
+	 * @returns {undefined}
+	 */
+	function dateChanged(calendar) {
+
+		if (calendar.dateClicked) {
+		egw_link_handler(link_day_url+"&date=" + calendar.date.print("%Y%m%d"),"calendar");
+		}
+	}
+
+	/*
+	 *
+	 * @param {type} calendar
+	 * @returns {undefined}
+	 */
+	function todayClicked(calendar) {
+		egw_link_handler(link_day_url+"&date="+ current_date ,"calendar");
+	}
+
+	/*
+	 *
+	 * @param {type} calendar
+	 * @param {type} weekstart
+	 * @returns {undefined}
+	 */
+	function weekClicked(calendar,weekstart) {
+		egw_link_handler(link_week_url+"&date=" + weekstart.print("%Y%m%d"),"calendar");
+	}
+
+	/*
+	 *
+	 * @param {type} calendar
+	 * @param {type} monthstart
+	 * @returns {undefined}
+	 */
+	function monthClicked(calendar,monthstart) {
+		egw_link_handler(link_month_url+"&date=" + monthstart.print("%Y%m%d"),"calendar");
+	}
+
 	/**
 	 * Initialisation after DOM *and* jQuery is loaded
 	 */
@@ -103,6 +148,17 @@
 					selectBox.multiple=true;
 				}
 			});
+		});
+		Calendar.setup({
+			flat         : "calendar-container",
+			flatCallback : dateChanged,
+			flatWeekCallback : (link_week_url)?weekClicked:'',
+			flatWeekTTip : egw.lang('show this week'),
+			flatMonthCallback : (link_month_url)?monthClicked:'',
+			flatMonthTTip : egw.lang('show this month'),
+			flatTodayCallback : (flatdate)?todayClicked:'',
+			date : (flatdate)?flatdate:'',
+
 		});
 	});
 })();

@@ -732,8 +732,14 @@ class calendar_ui
 			unset($link_vars['date']);	// gets set in jscal
 			$link[$view] = $l = egw::link('/index.php',$link_vars,false);
 		}
-		$jscalendar = $GLOBALS['egw']->jscalendar->flat($link['day'],$this->date,
-			$link['week'],lang('show this week'),$link['month'],lang('show this month'));
+
+		if (($flatdate = $this->date))	// string if format YYYYmmdd or timestamp
+		{
+			$flatdate = is_int($flatdate) ? adodb_date('m/d/Y',$flatdate) :
+			substr($flatdate,4,2).'/'.substr($flatdate,6,2).'/'.substr($flatdate,0,4);
+		}
+		$jscalendar = '<div id="calendar-container"></div>';
+
 		$file[++$n] = array('text' => $jscalendar,'no_lang' => True,'link' => False,'icon' => False);
 
 		// set a baseurl for selectboxes, if we are not running inside calendar (eg. prefs or admin)
@@ -802,7 +808,13 @@ class calendar_ui
 			)+($this->view == 'listview' ? array('ajax' => 'true') : array()),false);
 			$file[] = array(
 				'text' => "
-<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
+					<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\"".
+					" data-link-day-url =\"".htmlspecialchars($link['day']).
+					"\" data-link-week-url=\"".htmlspecialchars($link['week']).
+					"\" data-link-month-url=\"".htmlspecialchars($link['month']).
+					"\" data-date=\"".htmlspecialchars($flatdate).
+					"\" data-current-date=\"".htmlspecialchars(egw_time::to('now', 'Ymd')).
+					"\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
 
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
 					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '99%' : '86%').';"'.
