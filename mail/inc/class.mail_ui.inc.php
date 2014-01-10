@@ -3538,7 +3538,14 @@ $success=true;
 				$_newName = $namePart;
 				$oldParentFolder = implode($del,$pA);
 				$parentFolder = $_newLocation;
-				if (strtoupper($folderName)!= 'INBOX' && (strlen($parentFolder)>strlen($folderName) && strpos($parentFolder,$folderName)===false))
+//error_log(__METHOD__.__LINE__.'->'."$folderName");
+//error_log(__METHOD__.__LINE__.'->'."$parentFolder");
+//error_log(__METHOD__.__LINE__.'->'."$oldParentFolder");
+				if (strtoupper($folderName)!= 'INBOX' &&
+					(($oldParentFolder === $parentFolder) || //$oldParentFolder == $parentFolder means move on same level
+					(($oldParentFolder != $parentFolder &&
+					strlen($parentFolder)>0 && strlen($folderName)>0 &&
+					strpos($parentFolder,$folderName)===false)))) // indicates that we move the older up the tree within its own branch
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
 					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
@@ -3629,7 +3636,7 @@ $success=true;
 			}
 			else
 			{
-				$response->call('egw_refresh',lang('failed to move %1 ! Reason: %2',$oldFolderName,$msg),'mail');
+				$response->call('egw_refresh',lang('failed to move %1 ! Reason: %2',$folderName,$msg),'mail');
 			}
 		}
 	}

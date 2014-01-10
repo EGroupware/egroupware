@@ -624,7 +624,8 @@ app.classes.mail = AppJS.extend(
 		//console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
 		this.mail_disablePreviewArea(false);
-		this.et2.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
+		var toolbaractions = JSON.parse(dataElem.data.toolbaractions);
+		this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		//console.log(IframeHandle);
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
@@ -903,7 +904,7 @@ app.classes.mail = AppJS.extend(
 		//}
 		//this.mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
 		egw_message(_msg,_type);
-		this.mail_setMsg('');//without that applyFilters is not refreshing the index page
+		app.mail.mail_setMsg('');//without that applyFilters is not refreshing the index page
 		if (_app=='mail')
 		{
 			//we may want to trigger some actions, like modifying the grid, disable preview and stuff
