@@ -1604,6 +1604,8 @@ abstract class egw_framework
 		$max_modified = 0;
 		foreach(self::$js_include_mgr->get_included_files($clear_files) as $path)
 		{
+			if ($path == '/phpgwapi/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
+
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
 			if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
