@@ -342,7 +342,6 @@ class mail_bo
 	{
 		$mail = mail_bo::getInstance(false, $_profile_id,false);
 		//_debug_array( $_profile_id);
-		//$mail->mailPreferences = $mail->bopreferences->getPreferences($_profile_id,1);
 		$mail->icServer = emailadmin_account::read($_profile_id)->imapServer();
 		$mail->ogServer = emailadmin_account::read($_profile_id)->smtpServer();
 		return $mail;
@@ -2066,7 +2065,8 @@ class mail_bo
 									$createfolder=false;
 								break;
 							case 'Junk': //] => Spammails
-								if ($this->mailPreferences['junkFolder'] && $this->mailPreferences['junkFolder']=='none')
+								$junkFolder = $this->getJunkFolder();
+								if ($junkFolder && $junkFolder=='none')
 									$createfolder=false;
 								break;
 							case 'Sent': //] => Gesendet
@@ -2342,6 +2342,7 @@ class mail_bo
 			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
 			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
 			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
+			'Junk'=>array('prefName'=>'junkFolder','profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
 		);
 		if (!isset($types[$_type]))
 		{
@@ -2352,8 +2353,9 @@ class mail_bo
 
 		//highest precedence
 		$_folderName = $this->icServer->$types[$_type]['profileKey'];
+		// No folder Prefs any more
 		//check prefs next
-		if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
+		//if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
 		// does the folder exist???
 		if ($_checkexistance && $_folderName !='none' && !self::folderExists($_folderName)) {
 			$_folderName = false;
@@ -2369,6 +2371,16 @@ class mail_bo
 			if (self::folderExists($prefix.$types[$_type]['autoFolderName'])) $_folderName = $prefix.$types[$_type]['autoFolderName'];
 		}
 		return $_folderName;
+	}
+
+	/**
+	 * getDraftFolder wrapper for _getSpecialUseFolder Type Drafts
+	 * @param boolean $_checkexistance, trigger check for existance
+	 * @return mixed string or false
+	 */
+	function getJunkFolder($_checkexistance=TRUE)
+	{
+		return $this->_getSpecialUseFolder('Junk', $_checkexistance);
 	}
 
 	/**
@@ -5954,20 +5966,22 @@ class mail_bo
 	 */
 	function addAccount($_hookValues)
 	{
-		if ($this->mailPreferences) {
-			$icServer = $this->mailPreferences->getIncomingServer($this->profileID);
-			if(($icServer instanceof defaultimap)) {
-				// if not connected, try opening an admin connection
-				if (!$icServer->_connected) $this->openConnection($this->profileID,true);
-				$icServer->addAccount($_hookValues);
-				if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
-			}
+		error_log(__METHOD__.__LINE__.' NOT DONE JET!');
+		//$_profile_id=????
+		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
+		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
 
-			$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-			if(($ogServer instanceof emailadmin_smtp)) {
-				$ogServer->addAccount($_hookValues);
-			}
+/*
+		if(($icServer instanceof defaultimap)) {
+			// if not connected, try opening an admin connection
+			if (!$icServer->_connected) $this->openConnection($this->profileID,true);
+			$icServer->addAccount($_hookValues);
+			if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
 		}
+		if(($ogServer instanceof emailadmin_smtp)) {
+			$ogServer->addAccount($_hookValues);
+		}
+*/
 	}
 
 	/**
@@ -5980,20 +5994,22 @@ class mail_bo
 	 */
 	function deleteAccount($_hookValues)
 	{
-		if ($this->mailPreferences) {
-			$icServer = $this->mailPreferences->getIncomingServer($this->profileID);
-			if(($icServer instanceof defaultimap)) {
-				//try to connect with admin rights, when not connected
-				if (!$icServer->_connected) $this->openConnection($this->profileID,true);
-				$icServer->deleteAccount($_hookValues);
-				if ($icServer->_connected) $this->closeConnection(); // close connection
-			}
-
-			$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-			if(($ogServer instanceof emailadmin_smtp)) {
-				$ogServer->deleteAccount($_hookValues);
-			}
+		error_log(__METHOD__.__LINE__.' NOT DONE JET!');
+		//$_profile_id=????
+		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
+		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
+/*
+		if(($icServer instanceof defaultimap)) {
+			//try to connect with admin rights, when not connected
+			if (!$icServer->_connected) $this->openConnection($this->profileID,true);
+			$icServer->deleteAccount($_hookValues);
+			if ($icServer->_connected) $this->closeConnection(); // close connection
 		}
+
+		if(($ogServer instanceof emailadmin_smtp)) {
+			$ogServer->deleteAccount($_hookValues);
+		}
+*/
 	}
 
 	/**
@@ -6006,14 +6022,18 @@ class mail_bo
 	 */
 	function updateAccount($_hookValues)
 	{
-		if (is_object($this->mailPreferences)) $icServer = $this->mailPreferences->getIncomingServer(0);
+		error_log(__METHOD__.__LINE__.' NOT DONE JET!');
+		//$_profile_id=????
+		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
+		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
+/*
 		if(($icServer instanceof defaultimap)) {
 			$icServer->updateAccount($_hookValues);
 		}
 
-		if (is_object($this->mailPreferences)) $ogServer = $this->mailPreferences->getOutgoingServer(0);
 		if(($ogServer instanceof emailadmin_smtp)) {
 			$ogServer->updateAccount($_hookValues);
 		}
+*/
 	}
 }
