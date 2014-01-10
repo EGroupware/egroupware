@@ -90,7 +90,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				return this.image(_name.replace(/.(png|gif|jpg)$/i,''), _app);
 			}
 			if(matches != null) tries[_app + " (matched)"]= matches;
-			console.log('egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
+			egw.debug("log",'egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
 			return null;
 		},
 
