@@ -42,7 +42,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 	 * Currently selected tab
 	 */
 	selected_index: 0,
-	
+
 	/**
 	 * Construtor
 	 * 
@@ -116,9 +116,12 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 					"id": index_name,
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
+					"widget_options": {},
 					"contentDiv": null,
 					"flagDiv": null,
-					"hidden": hide
+					"hidden": hide,
+					"XMLNode": null,
+					"promise": null
 				});
 			}
 			else
@@ -135,9 +138,8 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 		et2_filteredNodeIterator(tabpanels, function(node, nodeName) {
 			if (i < tabData.length)
 			{
-				// Create the widget corresponding to the given node
-				tabData[i].widget = this.createElementFromNode(node,
-					nodeName);
+				// Store node for later evaluation
+				tabData[i].XMLNode = node;
 			}
 			else
 			{
@@ -194,16 +196,76 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 				tabData.push({
 					"id": tab.id,
 					"label": this.egw().lang(tab.label),
-					"widget": et2_createWidget('template',tab_options,this),
+					"widget": null,
+					"widget_options": tab_options,
 					"contentDiv": null,
 					"flagDiv": null,
-					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false
+					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false,
+					"XMLNode": null,
+					"promise": null
 				});
 			}
 		}
 
 		// Create the tab DOM-Nodes
 		this.createTabs(tabData);
+	},
+
+	/**
+	 * Load is finished, set up tabs to load on their own
+	 */
+	doLoadingFinished: function()
+	{
+		var tab_deferred = jQuery.Deferred();
+		var promises = [];
+		var tabs = this;
+
+		// Specially process the selected index so it shows up right away
+		this._loadTab(this.selected_index,promises);
+		// We can do this and not wind up with 2 because child is a template,
+		// which has special handling
+		this._children[0].loadingFinished();
+		
+		// Apply parent now, which actually puts into the DOM
+		this._super.apply(this, arguments);
+		
+		// Defer parsing & loading of other tabs until later
+		window.setTimeout(function() {
+			for (var i = 0; i < tabs.tabData.length; i++)
+			{
+				tabs._loadTab(i,promises);
+			}
+			jQuery.when(promises).then(function() {
+				tab_deferred.resolve();
+			});
+		},0);
+
+		return tab_deferred.promise();
+	},
+
+	/**
+	 * Load & render a tab's content
+	 */
+	_loadTab: function(index,promises) {
+		var tabData = this.tabData[index];
+		if(!tabData || tabData.loaded) return;
+		if(tabData.XMLNode != null)
+		{
+			tabData.widget = this.createElementFromNode(tabData.XMLNode,tabData.XMLNode.nodeName.toLowerCase());
+			
+			// Release the XML node
+			tabData.XMLNode = null;
+		}
+		else if (tabData.widget_options)
+		{
+			tabData.widget = et2_createWidget('template',tabData.widget_options,this);
+		}
+
+		// Set loaded flag to not do this again, even if not fully done
+		tabData.loaded = true;
+
+		// loadingFinished() will be called either when the promise from doLoadingFinished is resolved,
+		// or during the normal execution
 	},
 
 	/**
