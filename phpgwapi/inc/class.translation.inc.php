@@ -447,7 +447,7 @@ class translation
 		{
 			$etag = md5(json_encode(egw_cache::getCache(egw_cache::INSTANCE, __CLASS__, $_app.':'.$_lang)));
 		}
-		error_log(__METHOD__."('$_app', '$_lang') returning '$etag'");
+		//error_log(__METHOD__."('$_app', '$_lang') returning '$etag'");
 		return $etag;
 	}
 
