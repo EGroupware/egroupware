@@ -220,6 +220,9 @@ app.classes.infolog = AppJS.extend(
 	*/
 	status_changed: function(changed_id, status_id, percent_id, datecompleted_id)
 	{
+		// Make sure this doesn't get executed while template is loading
+		if(this.et2 == null) return;
+		
 		var status = document.getElementById(status_id);
 		var percent = document.getElementById(percent_id);
 		var datecompleted = document.getElementById(datecompleted_id+'[str]');
