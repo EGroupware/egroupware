@@ -2801,6 +2801,7 @@ action buttons, left aligned for "extra" controls
     margin: 0px;
   }
 }
+/*@import "../../phpgwapi/templates/idots/css/traditional.css";*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -2992,7 +2993,8 @@ option:checked {
 }
 .ui-icon-close {
   /*visibility: hidden;*/
-  background-image: url(../images/search.png);
+  /*background-image: url(../images/search.png);*/
+  background-image: url("/egroupware2/pixelegg/images/cancel.png");
   background-repeat: no-repeat;
   background-color: #ffffff;
   background-size: contain;
@@ -4066,12 +4068,26 @@ form {
 img {
   border: 0;
 }
+/*SVG Filter / not for Logo */
+#egw_fw_sidebar img[src$="svg"],
+#egw_fw_main img[src$="svg"],
+#egw_fw_footer img[src$="svg"] {
+  background-color: #0c5da5;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
+  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: linear-gradient(top, #0c5da5, #0c5da5);
+  background-repeat: repeat-x;
+}
 input,
 button,
 select {
   border: solid 1px #bbbbbb;
   padding: 0.2em;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 div {
   color: #000000;
@@ -4770,11 +4786,27 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
 table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
   background-color: #679fd2;
 }
+table.egwGridView_outer tbody {
+  /*Elements inside td*/
+}
 table.egwGridView_outer tbody td.frame {
   border: 1px solid #e6e6e6;
   /*padding: 0px 5px; no need*/
 }
-table.egwGridView_outer tbody img {
+table.egwGridView_outer tbody td .et2_link {
+  margin-left: 0px;
+}
+table.egwGridView_outer tbody td img {
+  /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+table.egwGridView_outer tbody td img[src$="svg"] {
   background-color: #0c5da5;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
@@ -4784,14 +4816,6 @@ table.egwGridView_outer tbody img {
   background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
   background-image: linear-gradient(top, #0c5da5, #0c5da5);
   background-repeat: repeat-x;
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
 }
 /*########################################################*/
 table.egwGridView_grid {
@@ -5689,6 +5713,7 @@ img {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active img {
   padding-left: 9px;
   padding-top: 6px;
+  height: 18px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active h1 {
   text-transform: uppercase;
@@ -5843,7 +5868,7 @@ img {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
   border-bottom-width: 0px;
   margin-top: 4px;
-  background-color: #408dd2;
+  background-color: #0c5da5;
   /*.background-color-50-gray;*/
   color: #f2f2f2;
   -webkit-border-top-right-radius: 3px !important;
@@ -5881,7 +5906,7 @@ img {
   background-color: inherit !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover {
-  background-color: #0c5da5;
+  background-color: #408dd2;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
@@ -6449,14 +6474,14 @@ table.dialog-main-view {
 tr.dialog-header2,
 tr.dialog-header3,
 tr.dialog-header4 {
-  background-color: #679fd2 !important;
+  background-color: #e6e6e6 !important;
   border-top: 2px solid #e6e6e6;
   border-bottom: 2px solid #e6e6e6;
 }
 tr.dialog-header2 .et2_label,
 tr.dialog-header3 .et2_label,
 tr.dialog-header4 .et2_label {
-  color: #ffffff;
+  color: #1a1a1a;
   vertical-align: bottom;
   padding: 0px 0px 0px 3px !important;
 }

@@ -546,7 +546,12 @@ img
     
 }
 
-
+/*SVG Filter / not for Logo */
+#egw_fw_sidebar img[src$="svg"],
+#egw_fw_main img[src$="svg"],
+#egw_fw_footer img[src$="svg"]{
+            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+}
 
 
 
@@ -554,7 +559,7 @@ input,button,select
 {
     border: solid 1px #bbbbbb;
     padding: 0.2em;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 div{
 	color: #000000;

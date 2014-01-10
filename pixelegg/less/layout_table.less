@@ -151,10 +151,22 @@ table.egwGridView_outer{
 
         }
         
-        img {
-            .gradient-vertical (@egw_color_2_a, @egw_color_2_a);
+        
+    /*Elements inside td*/
+        td{
+        
+            .et2_link {margin-left: 0px}
+            
+            img {
             .Complete_Button_Icon_normal;
-        };
+        }
+        img[src$="svg"]  {
+            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+        }
+        
+        
+    }
+    
     }
 
 }
