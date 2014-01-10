@@ -37,9 +37,9 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 		{
 			if (typeof _app == 'undefined') _app = 'phpgwapi';
 
-			if (typeof this.configs == 'undefined' || typeof this.configs[_app] == 'undefined') return null;
+			if (typeof configs[_app] == 'undefined') return null;
 
-			return this.configs[_app][_name];
+			return configs[_app][_name];
 		},
 
 		/**
@@ -49,7 +49,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 		 */
 		set_configs: function(_configs)
 		{
-			this.configs = _configs;
+			configs = _configs;
 		}
 	};
 });
