@@ -341,6 +341,7 @@
       <select name="newsettings[debug_minify]">
          <option value="">{lang_No} - {lang_Default}</option>
          <option value="True"{selected_debug_minify_True}>{lang_Yes}</option>
+         <option value="debug"{selected_debug_minify_debug}>{lang_Debug}</option>
        </select>
     </td>
    </tr>

@@ -1033,19 +1033,19 @@ abstract class egw_framework
 
 		// add all css files from self::includeCSS
 		$max_modified = 0;
-		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
+		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 		if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
-		$css_file = '';
+		$css_files = '';
 		foreach(self::$css_include_files as $n => $path)
 		{
 			foreach(self::resolve_css_includes($path) as $path)
 			{
 				if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
 
-				if ($debug_minify)
+				if ($debug_minify || substr($path, -8) == '/app.css')	// do NOT include app.css, as it changes from app to app
 				{
-					$css_file .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.$mod.'" type="text/css" rel="StyleSheet" />'."\n";
+					$css_files .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.$mod.'" type="text/css" rel="StyleSheet" />'."\n";
 				}
 				else
 				{
@@ -1057,12 +1057,14 @@ abstract class egw_framework
 		{
 			$css = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?';
 			if ($base_path && $base_path != '/') $css .= 'b='.substr($base_path, 1).'&';
-			$css .= 'f='.$css_file . '&'.$max_modified;
-			$css_file = '<link href="'.$css.'" type="text/css" rel="StyleSheet" />'."\n";
+			$css .= 'f='.$css_file .
+				($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
+				'&'.$max_modified;
+			$css_files = '<link href="'.$css.'" type="text/css" rel="StyleSheet" />'."\n".$css_files;
 		}
 		return array(
 			'app_css'   => $app_css,
-			'css_file'  => $css_file,
+			'css_file'  => $css_files,
 		);
 	}
 
@@ -1596,7 +1598,7 @@ abstract class egw_framework
 	static public function get_script_links($return_pathes=false, $clear_files=false)
 	{
 		// RB: disabled minifying (debug=true), 'til I found time to fix it
-		$debug_minify = true;//(bool)$GLOBALS['egw_info']['server']['debug_minify'];
+		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		$files = '';
 		$to_include = $to_minify = array();
 		$max_modified = 0;
@@ -1607,7 +1609,8 @@ abstract class egw_framework
 			if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
 
 			// for now minify does NOT support query parameters, nor php files generating javascript
-			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false)
+			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false ||
+				substr($path, -7) == '/app.js')	// do NOT include app.js, as it changes from app to app
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
 				$to_include[] = $path;
@@ -1622,7 +1625,9 @@ abstract class egw_framework
 			$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 			$path = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
-				'f='.implode(',', $to_minify) . '&'.$max_modified;
+				'f='.implode(',', $to_minify) .
+				($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
+				'&'.$max_modified;
 			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
 			array_unshift($to_include, $path);
 		}
