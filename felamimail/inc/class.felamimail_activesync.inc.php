@@ -907,7 +907,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
 			if ($this->mail->isDraftFolder($folder) && !$this->mail->isTemplateFolder($folder))
 			{
-				$bofelamimail->deleteMessages(array($uid),$folder);
+				$this->mail->deleteMessages(array($uid),$folder);
 			} else {
 				$this->mail->flagMessages("answered", array($uid),$folder);
 				if ($smartdata['task']== "forward")
