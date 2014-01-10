@@ -267,6 +267,10 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 		var _load = function() {
 			egw.debug("log", "Loading template...");
+			if(console.timeStamp)
+			{
+				console.timeStamp("Begin rendering template");
+			}
 
 			// Add into indexed list - do this before, so anything looking can find it,
 			// even if it's not loaded
@@ -291,14 +295,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			if(console.groupEnd)
 			{
 				egw.window.console.groupEnd();
-			}
-			if(console.timelineEnd)
-			{
-				console.timelineEnd(_name);
-			}
-			if(console.profileEnd)
-			{
-				console.profileEnd(_name);
 			}
 			if(deferred.length > 0)
 			{
@@ -329,6 +325,15 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 				$j(this.DOMContainer).trigger('load', this);
 
+				// Profiling
+				if(console.timelineEnd)
+				{
+					console.timelineEnd(_name);
+				}
+				if(console.profileEnd)
+				{
+					console.profileEnd(_name);
+				}
 				var end_time = (new Date).getTime();
 				var gen_time_div = $j('#divGenTime_'+appname);
 				if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
