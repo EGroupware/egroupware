@@ -40,6 +40,7 @@
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
+	if(console.timeline) console.timeline("egw");
 
 	// Flag for if this is opened in a popup
 	var popup = (window.opener != null);
@@ -155,6 +156,7 @@
 
 	window.egw_LAB.script(include).wait(function()
 	{
+		if(console.timelineEnd) console.timelineEnd("egw");
 		var end_time = (new Date).getTime();
 		var gen_time_div = $j('#divGenTime_'+window.egw_appName);
 		if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
@@ -187,7 +189,6 @@
 		var data = egw_script.getAttribute('data-etemplate');
 		if (data)
 		{
-			data = JSON.parse(data) || {};
 			// Initialize application js
 			var callback = null;
 			// Only initialize once
@@ -199,34 +200,41 @@
 			{
 				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName);
 			}
-			var node = document.getElementById(data.DOMNodeID);
-			if(!node)
-			{
-				egw.debug("error", "Could not find target node %s", data.DOMNodeID);
-			}
-			else
-			{
-				if(popup || window.opener)
+			// Wait until DOM loaded before we load the etemplate to make sure the target is there
+			$j(function() {
+				// Re-load data here, as later code may change the variable
+				var data = JSON.parse(egw_script.getAttribute('data-etemplate')) || {};
+				var node = document.getElementById(data.DOMNodeID);
+				if(!node)
 				{
-					// Resize popup when et2 load is done
-					jQuery(node).one("load",function() {
-						window.resizeTo(jQuery(document).width()+10,jQuery(document).height()+70);
-					});
+					egw.debug("error", "Could not find target node %s", data.DOMNodeID);
 				}
-				var et2 = new etemplate2(node, window.egw_appName+".etemplate_new.ajax_process_content.etemplate");
-				et2.load(data.name,data.url,data.data,callback);
+				else
+				{
+					if(popup || window.opener)
+					{
+						// Resize popup when et2 load is done
+						jQuery(node).one("load",function() {
+							window.resizeTo(jQuery(document).width()+10,jQuery(document).height()+70);
+						});
+					}
+					var et2 = new etemplate2(node, window.egw_appName+".etemplate_new.ajax_process_content.etemplate");
+					et2.load(data.name,data.url,data.data,callback);
+				}
+			});
+		}
+		$j(function() {
+			// set app-header
+			if (window.framework && (data = egw_script.getAttribute('data-app-header')))
+			{
+				window.egw_app_header(data);
 			}
-		}
-		// set app-header
-		if (window.framework && (data = egw_script.getAttribute('data-app-header')))
-		{
-			window.egw_app_header(data);
-		}
-		// display a message
-		if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
-		{
-			window.egw_message.apply(window, data);
-		}
+			// display a message
+			if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
+			{
+				window.egw_message.apply(window, data);
+			}
+		});
 	});
 
 	/**
