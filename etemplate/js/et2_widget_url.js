@@ -20,9 +20,9 @@
 
 /**
  * Class which implements the "url" XET-Tag, which covers URLs, email & phone
- * 
+ *
  * @augments et2_textbox
- */ 
+ */
 var et2_url = et2_textbox.extend(
 {
 	attributes: {
@@ -30,9 +30,10 @@ var et2_url = et2_textbox.extend(
 			"ignore": true
 		}
 	},
-	
+
 	// PREG for client-side validation copied from etemplate_widget_url
-	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\"\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
+	// using \042 instead of " to NOT stall minifyer!
+	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
 	/**
 	 * @memberOf et2_url
 	 */
@@ -91,7 +92,7 @@ var et2_url = et2_textbox.extend(
 						{
 							this._button.click(this, _value).addClass("phone").show();
 						}
-						else 
+						else
 						{
 							this._button.attr("href", _value).addClass("phone").show();
 						}
@@ -142,9 +143,9 @@ var et2_url = et2_textbox.extend(
 					(navigator.userAgent.indexOf("iPhone") !== -1 || navigator.userAgent.indexOf("Android") !== -1) &&
 					value.indexOf("tel:") == -1)
 				{
-					 value = "tel:"+value;	
-				} 
-				else if (this.egw().config("call_link")) 
+					 value = "tel:"+value;
+				}
+				else if (this.egw().config("call_link"))
 				{
 					var link = this.egw().config("call_link").replace("%1", value).
 						replace("%u",this.egw().user('account_id')).replace("%t",this.egw().user('account_phone'));
@@ -169,7 +170,7 @@ var et2_url = et2_textbox.extend(
 				{
 					value = "mailto:"+value;
 				}
-				if((this.egw().user('apps').mail || this.egw().user('apps').felamimail) && 
+				if((this.egw().user('apps').mail || this.egw().user('apps').felamimail) &&
 					this.egw().preference('force_mailto','addressbook') == '0' )
 				{
 					return function() {egw.open_link(value);};
@@ -198,7 +199,7 @@ var et2_url = et2_textbox.extend(
 				}
 				break;
 			case "url-email":
-				if(!e.data.EMAIL_PREG.test(value) || 
+				if(!e.data.EMAIL_PREG.test(value) ||
 					// If they use Text <email>, make sure the <> match
 					(value.indexOf("<") > 0 && value.indexOf(">") != value.length-1) ||
 					(value.indexOf(">") > 0 && value.indexOf("<") < 0)
@@ -214,14 +215,14 @@ et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
 /**
  * et2_url_ro is the readonly implementation of the url, email & phone.
  * It renders things as links, when possible
- * 
+ *
  * @augments et2_valueWidget
  */
 var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_url_ro
 	 */
 	init: function() {
@@ -238,7 +239,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		var link = et2_url.prototype.get_link(this._type, _value);
 
-		if(!link) 
+		if(!link)
 		{
 			this.span.text(_value);
 			this.span.removeAttr("href");
