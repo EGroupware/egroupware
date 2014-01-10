@@ -93,9 +93,6 @@ function etemplate2(_container, _menuaction)
 
 	// List of templates (XML) that are known, but not used.  Indexed by id.
 	this.templates = {};
-
-	// Connect to the window resize event
-	$j(window).resize(this, function(e) {e.data.resize();});
 }
 
 /**
@@ -118,6 +115,9 @@ etemplate2.prototype.resize = function()
  */
 etemplate2.prototype.clear = function()
 {
+	// Remove any handlers on window (resize)
+	$j(window).off("."+this.uniqueId);
+	
 	if (this.widgetContainer != null)
 	{
 		// Un-register handler
@@ -289,6 +289,9 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Inform the widget tree that it has been successfully loaded.
 			this.widgetContainer.loadingFinished(deferred);
 
+			// Connect to the window resize event
+			$j(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize();});
+			
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
 
