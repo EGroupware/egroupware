@@ -684,7 +684,7 @@ var et2_selectbox = et2_inputWidget.extend(
 						}
 						else
 						{
-							this._appendOptionElement(key, _options[key][sub],undefined,group);
+							this._appendOptionElement(sub, _options[key][sub],undefined,group);
 						}
 					}
 				}

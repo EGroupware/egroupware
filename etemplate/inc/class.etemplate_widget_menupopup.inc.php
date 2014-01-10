@@ -288,15 +288,26 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$values = array();
 			foreach($options as $key => $val)
 			{
-				if (is_array($val) && isset($val['value']))
+				if (is_array($val))
 				{
-					$values[] = $val['value'];
+					if (isset($val['value']))
+					{
+						$values[] = $val['value'];
+					}
+					else	// optgroup
+					{
+						foreach($val as $k => $v)
+						{
+							$values[] = is_array($v) && isset($v['value']) ? $v['value'] : $k;
+						}
+					}
 				}
 				else
 				{
 					$values[] = $key;
 				}
 			}
+			//error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
 			$options = $values;
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
