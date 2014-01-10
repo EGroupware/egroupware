@@ -115,6 +115,10 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 #            #                               #
 ##############################################
 */
+/*
+.egw_fw_content_browser_div{
+    	
+}*/
 #infolog-index {
   height: auto !important;
 }
@@ -339,6 +343,9 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 #infolog-edit #infolog-edit_history {
   max-width: 785px;
 }
+#infolog-edit div.et2_hbox {
+  white-space: nowrap;
+}
 .infolog_fixedHeight {
   height: auto;
 }
@@ -350,7 +357,10 @@ input#infolog-edit_info_subject {
 }
 /*#############################################*/
 /*Tabs    */
-/*Beschreibung*/
+/*Beschreibung************************************/
+#infolog-edit_infolog-edit-description #infolog-edit_info_des {
+  min-height: 246px;
+}
 /*Verknüpfung ************************************/
 #infolog-edit_infolog-edit-links {
   /*neue verknüpfung erstellen - div*/
