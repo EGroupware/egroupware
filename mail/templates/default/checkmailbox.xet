@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="notifications.checkmailbox" template="" lang="" group="0" version="1.7.001">
+	<template id="mail.checkmailbox" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -29,10 +29,11 @@
 						<description id="${row}[mail_folder]"/>
 					</vbox>
 					<vbox options="0,0">
-						<description id="${row}[mail_subject]" no_lang="1" font_style="b" href="felamimail.uidisplay.display&amp;uid=$row_cont[mail_uid]&amp;mailbox=$row_cont[mail_folder_base64]" extra_link_popup="750x500"/>
+						<!-- description id="${row}[mail_subject]" no_lang="1" font_style="b" href="mail.mail_ui.displayMessage&amp;uid=$row_cont[mail_uid]&amp;mailbox=$row_cont[mail_folder_base64]" extra_link_popup="750x500"/ -->
+						<description id="${row}[mail_subject]" no_lang="1" font_style="b"/>
 					</vbox>
 					<vbox options="0,0">
-						<description id="${row}[mail_from]" no_lang="1"/>
+						<url-email id="${row}[mail_from]" no_lang="1" readonly="true"/>
 					</vbox>
 					<vbox options="0,0">
 						<date-time id="${row}[mail_received]" readonly="true" options=",8"/>

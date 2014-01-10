@@ -111,7 +111,9 @@ class notifications_ajax {
 	 * @return xajax response
 	 */
 	public function get_notifications($browserNotify = false) {
-		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
+		// call a hook for notifications on new mail
+		//if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
+		$GLOBALS['egw']->hooks->process('check_notify');
 
 		// update currentusers
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
@@ -139,106 +141,6 @@ class notifications_ajax {
 				'notify_type' => self::_type
 			),__LINE__,__FILE__,self::_appname);
 		}
-	}
-
-	/**
-	 * checks users mailbox and sends a notification if new mails have arrived
-	 *
-	 * @return boolean true or false
-	 */
-	private function check_mailbox()
-	{
-		//error_log(__METHOD__.__LINE__.array2string($this->preferences[self::_mailappname]['notify_folders']));
-		if(!isset($this->preferences[self::_mailappname]['notify_folders'])||$this->preferences[self::_mailappname]['notify_folders']=='none') {
-			return true; //no pref set for notifying - exit
-		}
-		$notify_folders = explode(',', $this->preferences[self::_mailappname]['notify_folders']);
-		if(count($notify_folders) == 0) {
-			return true; //no folders configured for notifying - exit
-		}
-
-		$activeProfile = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
-		//error_log(__METHOD__.__LINE__.' (user: '.$this->recipient->account_lid.') Active Profile:'.$activeProfile);
-		$bofelamimail = felamimail_bo::getInstance(true, $activeProfile);
-		$activeProfile = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
- 		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
- 		$bufferFMailSession = $bofelamimail->sessionData;
-		if( !$bofelamimail->openConnection($activeProfile) ) {
-			// TODO: This is ugly. Log a bit nicer!
-			$error = $bofelamimail->getErrorMessage();
-			error_log(__METHOD__.__LINE__.' # '.self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
-			if (!empty($error)) error_log(__METHOD__.__LINE__.' # '.$error);
-			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
-			return false; // cannot connect to mailbox
-		}
-
-		$this->restore_session_data();
-
-		$recent_messages = array();
-		$folder_status = array();
-		foreach($notify_folders as $id=>$notify_folder) {
-			if(!is_array($this->session_data['notified_mail_uids'][$notify_folder])) {
-				$this->session_data['notified_mail_uids'][$notify_folder] = array();
-			}
-			$folder_status[$notify_folder] = $bofelamimail->getFolderStatus($notify_folder);
-			$cutoffdate = time();
-			$cutoffdate = $cutoffdate - (60*60*24*14); // last 14 days
-			$_filter = array('status'=>array('UNSEEN','UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
-			//error_log(__METHOD__.__LINE__.' (user: '.$this->recipient->account_lid.') Mailbox:'.$notify_folder.' filter:'.array2string($_filter));
-			// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
-			$headers = $bofelamimail->getHeaders($notify_folder, 1, 999, 0, true, $_filter,null,false);
-			if(is_array($headers['header']) && count($headers['header']) > 0) {
-				foreach($headers['header'] as $id=>$header) {
-					//error_log(__METHOD__.__LINE__.' Found Message:'.$header['uid'].' Subject:'.$header['subject']);
-					// check if unseen mail has already been notified
-				 	if(!in_array($header['uid'], $this->session_data['notified_mail_uids'][$notify_folder])) {
-				 		// got a REAL recent message
-				 		$header['folder'] = $notify_folder;
-				 		$header['folder_display_name'] = $folder_status[$notify_folder]['displayName'];
-				 		$header['folder_base64'] =  base64_encode($notify_folder);
-				 		$recent_messages[] = $header;
-				 	}
-				}
-			}
-		}
-		// restore the felamimail session data, as they are needed by the app itself
-		$bofelamimail->sessionData = $bufferFMailSession;
-		$bofelamimail->saveSessionData();
-		if(count($recent_messages) > 0) {
-			// create notify message
-			$notification_subject = lang("You've got new mail");
-			$values = array();
-			$values[] = array(); // content array starts at index 1
-			foreach($recent_messages as $id=>$recent_message) {
-				$values[] =	array(
-					'mail_uid'				=> $recent_message['uid'],
-					'mail_folder' 			=> $recent_message['folder_display_name'],
-					'mail_folder_base64' 	=> $recent_message['folder_base64'],
-					'mail_subject'			=> $recent_message['subject'],
-					'mail_from'				=> !empty($recent_message['sender_name']) ? $recent_message['sender_name'] : $recent_message['sender_address'],
-					'mail_received'			=> $recent_message['date'],
-				);
-				// save notification status
-				$this->session_data['notified_mail_uids'][$recent_message['folder']][] = $recent_message['uid'];
-			}
-
-			// create etemplate
-			$tpl = new etemplate();
-			$tpl->read('notifications.checkmailbox');
-			$notification_message = $tpl->exec(false, $values, array(), array(), array(), 1);
-
-			// send notification
-			$notification = new notifications();
-			$notification->set_receivers(array($this->recipient->account_id));
-			$notification->set_message($notification_message);
-			$notification->set_sender($this->recipient->account_id);
-			$notification->set_subject($notification_subject);
-			$notification->set_skip_backends(array('email'));
-			$notification->send();
-		}
-
-		$this->save_session_data();
-		return true;
 	}
 
 	/**

@@ -131,7 +131,7 @@ class mail_hooks
 				error_log(__METHOD__."()" . $ex->getMessage());
 				$profileID = null;
 			}
-
+/*
 			if($profileID && $mail_bo->openConnection($profileID)) {
 				$folderObjects = $mail_bo->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
@@ -152,7 +152,7 @@ class mail_hooks
 				}
 				$mail_bo->closeConnection();
 			}
-
+*/
 			$availableAutoFolders['none'] = lang('none, create all');
 			foreach(mail_bo::$autoFolders as $aname) {
 				$availableAutoFolders[$aname] = lang($aname);
@@ -446,16 +446,6 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'mail',
 			),
-			'enablePreViewArea' => array(
-				'type'   => 'select',
-				'label'  => 'Message preview area',
-				'help'   => 'If you want to see a preview of a mail by single clicking onto the subject, enable this.',
-				'name'   => 'enablePreViewArea',
-				'values' => $no_yes_copy,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => '300',
-			),
 			'prefaskformove' => array(
 				'type'   => 'select',
 				'label'  => 'Confirm move to folder',
@@ -476,6 +466,7 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '1',
 			),
+/*
 			'mainscreen_showmail' => array(
 				'type'   => 'select',
 				'label'  => 'show new messages on home page',
@@ -494,57 +485,13 @@ class mail_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
-			'notify_folders' => array(
-				'type'   => 'multiselect',
-				'label'  => 'New mail notification',
-				'help'   => 'notify when new mails arrive in these folders',
-				'name'   => 'notify_folders',
-				'values' => $folderList,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
+*/
 			array(
 				'type'  => 'section',
 				'title' => lang('Folder settings'),
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
-			),
-			'trashFolder' => array(
-				'type'   => 'select',
-				'label'  => lang('trash folder'),
-				'help'   => (isset($trashFolder) && !empty($trashFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$trashFolder):''),
-				'name'   => 'trashFolder',
-				'values' => $trashOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
-			'sentFolder' => array(
-				'type'   => 'select',
-				'label'  => lang('sent folder'),
-				'help'   => (isset($sentFolder) && !empty($sentFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$sentFolder):''),
-				'name'   => 'sentFolder',
-				'values' => $sentOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
-			'draftFolder' => array(
-				'type'   => 'select',
-				'label'  => lang('draft folder'),
-				'help'   => (isset($draftFolder) && !empty($draftFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$draftFolder):''),
-				'name'   => 'draftFolder',
-				'values' => $draftOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
-			'templateFolder' => array(
-				'type'   => 'select',
-				'label'  => lang('template folder'),
-				'help'   => (isset($templateFolder) && !empty($templateFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$templateFolder):''),
-				'name'   => 'templateFolder',
-				'values' => $templateOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
 			),
 			'deleteOptions' => array(
 				'type'   => 'select',
@@ -585,16 +532,6 @@ class mail_hooks
 				'xmlrpc' => True,
 				'default'=> 0,
 				'admin'  => False,
-			),
-			'messages_showassent_0' => array(
-				'type'   => 'multiselect',
-				'label'  => 'Extra sent folders',
-				'help'   => 'which folders (additional to the Sent Folder) should be displayed using the Sent Folder View Schema',
-				'name'   => 'messages_showassent_0',
-				'values' => $folderList,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'none',
 			),
 			array(
 				'type'  => 'section',
@@ -653,24 +590,6 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '0',
 			),
-			'connectionTimeout' => array(
-				'type'   => 'select',
-				'label'  => 'IMAP timeout',
-				'help'   => 'Timeout on connections to your IMAP Server',
-				'name'   => 'connectionTimeout',
-				'values' => $connectionTimeout,
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
-			'sieveScriptName' => array(
-				'type'   => 'input',
-				'label'  => 'sieve script name',
-				'help'   => 'sieve script name',
-				'name'   => 'sieveScriptName',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'felamimail',//old, but since its historic, and we want access to the old rules, ...
-			),
 			'prefcontroltestconnection' => array(
 				'type'   => 'select',
 				'label'  => 'Test connection',
@@ -701,7 +620,7 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'text',
 			),
-			'add_popup' => '600x425',
+			'add_popup' => '870x800',
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;
@@ -886,5 +805,114 @@ class mail_hooks
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
+	}
+
+	/**
+	 * checks users mailbox and sends a notification if new mails have arrived
+	 *
+	 * @return boolean true or false
+	 */
+	static function notification_check_mailbox()
+	{
+		$recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
+
+		$prefs = new preferences($recipient->account_id);
+		$preferences = $prefs->read();
+		// TODO: no possibility to set that at this time; always use INBOX
+		if (empty($preferences['mail']['notify_folders']))$preferences['mail']['notify_folders']='INBOX';
+		//error_log(__METHOD__.__LINE__.array2string($preferences['mail']['notify_folders']));
+		if(!isset($preferences['mail']['notify_folders'])||empty($preferences['mail']['notify_folders'])||$preferences['mail']['notify_folders']=='none') {
+			return true; //no pref set for notifying - exit
+		}
+		$notify_folders = explode(',', $preferences['mail']['notify_folders']);
+		if(count($notify_folders) == 0) {
+			return true; //no folders configured for notifying - exit
+		}
+
+		$activeProfile = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		//error_log(__METHOD__.__LINE__.' (user: '.$recipient->account_lid.') Active Profile:'.$activeProfile);
+		$bomail = mail_bo::getInstance(false, $activeProfile);
+		$activeProfile = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $bomail->profileID;
+ 		// buffer mail sessiondata, as they are needed for information exchange by the app itself
+ 		//$bufferFMailSession = $bomail->sessionData;
+		try
+		{
+			$bomail->openConnection($activeProfile);
+		} catch (Exception $e) {
+			// TODO: This is ugly. Log a bit nicer!
+			$error = $e->getMessage();
+			error_log(__METHOD__.__LINE__.' # '.self::_appname.' (user: '.$recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
+			if (!empty($error)) error_log(__METHOD__.__LINE__.' # '.$error);
+			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
+			return false; // cannot connect to mailbox
+		}
+
+		$notified_mail_uidsCache = egw_cache::getCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
+		//$notified_mail_uidsCache = array();
+		$recent_messages = array();
+		$folder_status = array();
+		foreach($notify_folders as $id=>$notify_folder) {
+			if (empty($notify_folder)) continue;
+			if(!is_array($notified_mail_uidsCache[$activeProfile][$notify_folder])) {
+				$notified_mail_uidsCache[$activeProfile][$notify_folder] = array();
+			}
+			$folder_status[$notify_folder] = $bomail->getFolderStatus($notify_folder);
+			$cutoffdate = time();
+			$cutoffdate = $cutoffdate - (60*60*24*14); // last 14 days
+			$_filter = array('status'=>array('UNSEEN','UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+			//error_log(__METHOD__.__LINE__.' (user: '.$recipient->account_lid.') Mailbox:'.$notify_folder.' filter:'.array2string($_filter));
+			// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
+			$headers = $bomail->getHeaders($notify_folder, 1, 999, 0, true, $_filter,null,false);
+			if(is_array($headers['header']) && count($headers['header']) > 0) {
+				foreach($headers['header'] as $id=>$header) {
+					//error_log(__METHOD__.__LINE__.' Found Message:'.$header['uid'].' Subject:'.$header['subject']);
+					// check if unseen mail has already been notified
+				 	if(!in_array($header['uid'], $notified_mail_uidsCache[$activeProfile][$notify_folder])) {
+				 		// got a REAL recent message
+				 		$header['folder'] = $notify_folder;
+				 		$header['folder_display_name'] = $folder_status[$notify_folder]['displayName'];
+				 		$header['folder_base64'] =  base64_encode($notify_folder);
+				 		$recent_messages[] = $header;
+				 	}
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.' Found Messages for Profile'.$activeProfile.':'.array2string($recent_messages).'<->'.array2string($notified_mail_uidsCache[$activeProfile]));
+		// restore the mail session data, as they are needed by the app itself
+		if(count($recent_messages) > 0) {
+			// create notify message
+			$notification_subject = lang("You've got new mail");
+			$values = array();
+			$values[] = array(); // content array starts at index 1
+			foreach($recent_messages as $id=>$recent_message) {
+				error_log(__METHOD__.__LINE__.' Found Message for Profile '.$activeProfile.':'.array2string($recent_message));
+				$values[] =	array(
+					'mail_uid'				=> $recent_message['uid'],
+					'mail_folder' 			=> $recent_message['folder_display_name'],
+					'mail_folder_base64' 	=> $recent_message['folder_base64'],
+					'mail_subject'			=> $recent_message['subject'],
+					'mail_from'				=> !empty($recent_message['sender_name']) ? $recent_message['sender_name'] : $recent_message['sender_address'],
+					'mail_received'			=> $recent_message['date'],
+				);
+				// save notification status
+				$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = $recent_message['uid'];
+			}
+
+			// create etemplate
+			$tpl = new etemplate_old('mail.checkmailbox');
+			$notification_message = $tpl->exec(false, $values, array(), array(), array(), 1);
+			//error_log(__METHOD__.__LINE__.array2string($notification_message));
+			// send notification
+			$notification = new notifications();
+			$notification->set_receivers(array($recipient->account_id));
+			$notification->set_message($notification_message);
+			//$notification->set_popupmessage($notification_message);
+			$notification->set_sender($recipient->account_id);
+			$notification->set_subject($notification_subject);
+			$notification->set_skip_backends(array('email'));
+			$notification->send();
+		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),$notified_mail_uidsCache, $expiration=60*60*24*2);
+		return true;
 	}
 }
