@@ -1,0 +1,70 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * PREFERENCES
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package preferences
+ * @version $Id$
+ */
+
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+@import (less) "../default/app.css";
+
+/* #############################################################################
+// iframe
+// Rahmen + padding**/
+
+/*############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################*/
+.prefType, .prefApp {
+font-size: 150%;
+display: inline-block;
+padding-bottom: 5px;
+}
+
+#preferences-settings{
+
+/*Preferences APP / left */
+select#preferences-settings_appname{
+    
+    &:before {
+                        padding-right: 20px;
+                        content: "";
+                        background-image: url(./images/setup.png);
+                        background-repeat: no-repeat;
+                        .dimension_width_height_m;
+              }
+    
+    
+}
+
+/*Preferences APP Settings / right*/
+#preferences-settings_type{
+    
+    
+    
+}
+
+
+}
+//

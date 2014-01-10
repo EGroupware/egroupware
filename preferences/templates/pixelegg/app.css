@@ -1,0 +1,105 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * PREFERENCES
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package preferences
+ * @version $Id$
+ */
+/**
+ * EGroupware - CSS Styles used by preferences app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package preferences
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id: app.css 44587 2013-11-18 19:57:38Z ralfbecker $
+ */
+table.prefTable {
+  width: 100%;
+}
+tr.prefRow {
+  position: relative;
+}
+td.prefName {
+  width: 50%;
+}
+tr.prefRow > td {
+  vertical-align: bottom;
+  /* otherwise help will cover bigger prefValue */
+}
+.prefHelp {
+  position: absolute;
+  display: none;
+  width: 98%;
+  background-color: lightyellow;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 5px;
+}
+tr.prefRow:hover .prefHelp {
+  display: block;
+  z-index: 10;
+  /* FF: displays it under next prefName without */
+}
+.prefDefault,
+.prefValue {
+  float: left;
+}
+.prefValue {
+  margin-right: 5px;
+}
+.prefValue textarea,
+textarea.prefValue {
+  width: 99%;
+  height: 5em;
+}
+.prefType,
+.prefApp {
+  font-size: 150%;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+/* #############################################################################
+// iframe
+// Rahmen + padding**/
+/*############################################
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #       iframge                 #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+#            #                               #
+##############################################*/
+.prefType,
+.prefApp {
+  font-size: 150%;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+#preferences-settings {
+  /*Preferences APP / left */
+  /*Preferences APP Settings / right*/
+}
+#preferences-settings select#preferences-settings_appname:before {
+  padding-right: 20px;
+  content: "";
+  background-image: url(images/setup.png);
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+}
