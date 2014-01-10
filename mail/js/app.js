@@ -624,8 +624,8 @@ app.classes.mail = AppJS.extend(
 		//console.log("mail_preview",dataElem);
 		this.mail_selectedMails.push(_id);
 		this.mail_disablePreviewArea(false);
-		var toolbaractions = JSON.parse(dataElem.data.toolbaractions);
-		this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
+		var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.toolbaractions != 'undefined')?JSON.parse(dataElem.data.toolbaractions):undefined);
+		if (toolbaractions) this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		//console.log(IframeHandle);
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
