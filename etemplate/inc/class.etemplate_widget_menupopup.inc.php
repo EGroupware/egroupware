@@ -21,7 +21,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	/**
 	 * If the selectbox has this many rows, give it a search box automatically
 	 */
-	const SEARCH_ROW_LIMIT = 20;
+	const SEARCH_ROW_LIMIT = PHP_INT_MAX; // Automatic disabled, only explicit
 
 	/**
 	 * @var array
