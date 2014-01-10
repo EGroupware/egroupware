@@ -387,37 +387,10 @@ class preferences_settings
 					$GLOBALS['egw']->preferences->group[$appname][$setting['name']] :
 					$GLOBALS['egw']->preferences->default[$appname][$setting['name']];
 
-				if (isset($setting['values']) && !is_array($default) &&
-					(string)$setting['values'][$default] !== '' && (string)$default !== '')
+				// replace default value(s) for selectboxes with selectbox labels
+				if (isset($setting['values']) && is_array($setting['values']))
 				{
-					if(is_array($setting['values'][$default]))
-					{
-						foreach($setting['values'] as $key => $value)
-						{
-							if($value['value'] == $default && $value['label'])
-							{
-								$default = $value['label'];
-								break;
-							}
-						}
-					}
-					else
-					{
-						$default = $setting['values'][$default];
-					}
-				}
-				else if (strpos($default, ',') !== false)
-				{
-					$default = explode(',',$default);
-				}
-				if(is_array($default))
-				{
-					$values = array();
-					foreach($default as $value)
-					{
-						if (isset($setting['values'][$value])) $values[] = $setting['values'][$value];
-					}
-					if ($values) $default = implode(', ', $values);
+					$default = self::get_default_label($default, $setting['values']);
 				}
 				if (is_array($types[$setting['name']]))	// translate the substitution names
 				{
@@ -485,6 +458,49 @@ class preferences_settings
 		//_debug_array($content); exit;
 		//_debug_array($sel_options); //exit;
 		return $content;
+	}
+
+	/**
+	 * Get label for given default value(s)
+	 *
+	 * @param string|array $default default value(s) to get label for
+	 * @param array $values values optional including optgroups
+	 * @param boolean $lang=true
+	 * @return string comma-separated and translated labels
+	 */
+	protected static function get_default_label($default, array $values, $lang=true)
+	{
+		// explode comma-separated multiple default values
+		if (!is_array($default) && !isset($values[$default]) && strpos($default, ',') !== false)
+		{
+			$labels = explode(',', $default);
+		}
+		else
+		{
+			$labels = (array)$default;
+		}
+		foreach($labels as &$def)
+		{
+			if (isset($values[$def]))
+			{
+				$def = is_array($values[$def]) ? $values[$def]['label'] : $values[$def];
+			}
+			else	// value could be in an optgroup
+			{
+				foreach($values as $value)
+				{
+					if (is_array($value) && !isset($value['label']) && isset($value[$def]))
+					{
+						$def = is_array($value[$def]) ? $value[$def]['label'] : $value[$def];
+						break;
+					}
+				}
+			}
+			if ($lang) $def = lang($def);
+		}
+		$label = implode(', ', $labels);
+		//error_log(__METHOD__."(".array2string($default).', '.array2string($values).") returning $label");
+		return $label;
 	}
 
 	/**
