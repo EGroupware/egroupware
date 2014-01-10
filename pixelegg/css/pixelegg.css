@@ -416,7 +416,7 @@ action buttons, left aligned for "extra" controls
 	float: none;
 }
 */
-/** 
+/**
  * Diff widget
  */
 .diff thead,
@@ -888,7 +888,7 @@ div.message.floating {
   padding: 0px 4px;
   margin: 0px 5px;
   /* TODO: This is template specific */
-  background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
+  background-image: url(../../../phpgwapi/templates/default/images/bullet.png);
 }
 .sidebox-favorites ul.favorites {
   width: 99%;
@@ -939,7 +939,7 @@ div.message.floating {
   opacity: 0.5;
 }
 /**
- * Grid / nextmatch Hierarchy 
+ * Grid / nextmatch Hierarchy
  */
 /* Make sure arrow & cell content don't overlap */
 .egwGridView_grid span.arrow {
@@ -959,7 +959,7 @@ div.message.floating {
 .egwGridView_grid > tbody > tr > td > .loading {
   min-height: 1.6em;
 }
-/** 
+/**
  * This class' margin-right is used to line up columns at each indent level
  * Classes level_# are created programmatically with margin-right * depth
  * Margin-right = -(indent + border)
