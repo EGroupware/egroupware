@@ -1962,14 +1962,16 @@ app.classes.mail = AppJS.extend(
 			egw.debug('warn', "Move folder, but no target");
 			return;
 		}
-		// Some UI feedback while the folder is moved
-		$j(destination.iface.getDOMNode()).addClass('loading');
+		// Some UI feedback while the folder is moved - using just the iface DOMNode would
+		// put the load image in every row
+		var load_node = $j(destination.iface.getDOMNode()).closest('td').prev()
+			.addClass('loading');
 
 		for(var i = 0; i < _senders.length; i++)
 		{
 			egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].iface.id, destination.id],
 				// Move is done (successfully or not), remove loading
-				function() {$j(destination.iface.getDOMNode()).removeClass('loading');}
+				function() {load_node.removeClass('loading');}
 			);
 		}
 	},
