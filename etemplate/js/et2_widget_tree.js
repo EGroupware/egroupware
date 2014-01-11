@@ -450,10 +450,12 @@ var et2_tree = et2_inputWidget.extend(
 	 * Updates a leaf of the tree by requesting new information from the server using the
 	 * autoloading attribute.
 	 *
-	 * @param _id ID of the node
+	 * @param {string} _id ID of the node
+	 * @param {Object} [data] If provided, the item is refreshed directly  with
+	 *	the provided data instead of asking the server
 	 * @return void
 	 */
-	refreshItem: function(_id) {
+	refreshItem: function(_id,data) {
 		if(this.input == null) return null;
 		this.input.deleteChildItems(_id);
 		this.input.setDataMode('JSON');
@@ -463,9 +465,18 @@ var et2_tree = et2_inputWidget.extend(
 		*/
 
 		var self = this;
-		this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}), 
-			function() { self._dhtmlxtree_json_callback(JSON.parse(this.response), _id);}
-		);
+		if(typeof data != 'undefined' && data != null)
+		{
+			this.input.loadJSONObject(data,
+				function() { self._dhtmlxtree_json_callback(data, _id);}
+			);
+		}
+		else
+		{
+			this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}),
+				function() { self._dhtmlxtree_json_callback(JSON.parse(this.response), _id);}
+			);
+		}
 	},
 
 	/**
