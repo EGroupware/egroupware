@@ -165,7 +165,7 @@ $min_symlinks['//'.ltrim($sitePrefix, '/')] = dirname(dirname(dirname(__DIR__)))
  * Remove all "use strict" as we have a mixure of strict and non-strict code (mostly externals libs)
  * and javascript is supposed to run quicker without anyway.
  */
-$min_serveOptions['postprocessor'] = function($in){ return str_replace(array('"use strict";', '"use strict"'), '', $in);};
+$min_serveOptions['postprocessor'] = create_function('$in', 'return str_replace(array(\'"use strict";\', \'"use strict"\'), \'\', $in);');
 
 /**
  * If you upload files from Windows to a non-Windows server, Windows may report
