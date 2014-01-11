@@ -33,8 +33,23 @@
 #loginMainDiv #divAppIconBar #divLogo {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2em;
   position: relative;
   top: 1px;
+}
+#loginMainDiv #divAppIconBar #divLogo img {
+  width: 100%;
+}
+#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
+  background-color: #679fd2;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -ms-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#679fd2), to(#679fd2));
+  background-image: -webkit-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -o-linear-gradient(top, #679fd2, #679fd2);
+  background-image: linear-gradient(top, #679fd2, #679fd2);
+  background-repeat: repeat-x;
 }
 #loginMainDiv div#centerBox {
   margin: 0 auto;
@@ -65,18 +80,18 @@
 #loginMainDiv div#centerBox #loginCdMessage {
   margin: 1em;
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topleft: 10px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
+  border-top-left-radius: 10px;
   color: red;
   text-align: center;
 }
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
   font-size: 1.2em;
-  color: #ffc200;
+  color: #679fd2;
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
 }
@@ -88,11 +103,11 @@
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topleft: 10px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
+  border-top-left-radius: 10px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox td {
   padding: 0.5em;
@@ -112,9 +127,9 @@
   cursor: pointer;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -129,9 +144,9 @@
   border-radius: 3px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
   outline: 0;
@@ -155,84 +170,145 @@
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
-/*Supersized*/
 #wrap {
-  background-color: white !important;
+  z-index: -1;
+  margin: 0 auto;
+  background-color: transparent;
 }
-* {
-  margin: 0;
-  padding: 0;
-}
-img {
-  border: medium none;
-}
-#supersized-loader {
-  background: url("../images/progress.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
-  height: 60px;
-  left: 50%;
-  margin: -30px 0 0 -30px;
+#wrap img.bgfade {
   position: absolute;
-  text-indent: -999em;
-  top: 50%;
-  width: 60px;
-  z-index: 0;
+  top: -22%;
+  left: 0%;
+  /*display:block;*/
+  z-index: -1;
+  width: 20%;
 }
-#supersized {
-  display: block;
-  height: 100%;
-  left: 0;
+#wrap div.animation_login {
+  background-image: url(../../images/about.svg), url(../../images/accounts.svg), url(../../images/alarm.svg);
+  background-position: 20px -90px, 30px 80px, 0px 0px;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  animation: animatedLogin 4s linear infinite;
+  height: 190px;
   overflow: hidden;
+  width: 560px;
+}
+@keyframes animatedLogin {
+  from {
+    background-position: 20px 20px, 30px 80px, 0 0;
+  }
+  to {
+    background-position: 300px -90px, 30px 20px, 100% 0;
+  }
+}
+#wrap img[src$="svg"],
+#wrap background-image[url$="svg"] {
+  background-color: #679fd2;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -ms-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#679fd2), to(#679fd2));
+  background-image: -webkit-linear-gradient(top, #679fd2, #679fd2);
+  background-image: -o-linear-gradient(top, #679fd2, #679fd2);
+  background-image: linear-gradient(top, #679fd2, #679fd2);
+  background-repeat: repeat-x;
+}
+#img1,
+#img2,
+#img3,
+#img4 {
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: -999;
+  z-index: -1;
+  animation-name: test;
+  animation-duration: 5s;
+  opacity: 0;
 }
-#supersized img {
-  border: medium none;
-  display: none;
-  height: auto;
-  outline: medium none;
-  position: relative;
-  width: auto;
+#img2 {
+  animation-delay: 5s;
+  -webkit-animation-delay: 5s;
 }
-#supersized.speed img {
-  image-rendering: -moz-crisp-edges;
+#img3 {
+  animation-delay: 10s;
+  -webkit-animation-delay: 10s;
 }
-#supersized.quality img {
-  image-rendering: optimizequality;
+#img4 {
+  animation-delay: 15s;
+  -webkit-animation-delay: 15s;
 }
-#supersized li {
-  background: none repeat scroll 0 0 #111111;
-  display: block;
-  height: 100%;
-  left: 0;
-  list-style: none outside none;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: -30;
+.animated {
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -ms-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 3s;
+  -moz-animation-duration: 3s;
+  -ms-animation-duration: 3s;
+  -o-animation-duration: 3s;
+  animation-duration: 3s;
 }
-#supersized a {
-  display: block;
-  height: 100%;
-  width: 100%;
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -ms-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-duration: 2s;
 }
-#supersized li.prevslide {
-  z-index: -20;
+@-webkit-keyframes test {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
-#supersized li.activeslide {
-  z-index: -10;
+@keyframes test {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
-#supersized li.image-loading {
-  background: url("../images/progress.gif") no-repeat scroll center center #111111;
-  height: 100%;
-  width: 100%;
+@-webkit-keyframes some-animation {
+  from {
+    width: 254px;
+  }
+  to {
+    width: 512px;
+  }
 }
-#supersized li.image-loading img {
-  visibility: hidden;
+@-moz-keyframes some-animation {
+  from {
+    width: 254px;
+  }
+  to {
+    width: 512px;
+  }
 }
-#supersized li.prevslide img,
-#supersized li.activeslide img {
-  display: inline;
+@-ms-keyframes some-animation {
+  from {
+    width: 254px;
+  }
+  to {
+    width: 512px;
+  }
+}
+@-o-keyframes some-animation {
+  from {
+    width: 254px;
+  }
+  to {
+    width: 512px;
+  }
+}
+@keyframes some-animation {
+  from {
+    width: 254px;
+  }
+  to {
+    width: 512px;
+  }
 }

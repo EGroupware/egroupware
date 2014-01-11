@@ -5,19 +5,20 @@
  */
 
 
-egw_LAB.wait(function() { 
-	$j(document).ready(function() {
-				$j('img.bgfade').hide();
-var dg_H = $j(window).height();
-var dg_W = $j(window).width();
-$j('#wrap').css({'height':dg_H,'width':dg_W});
-    function anim() {
-    $j("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(3500);
-    $j("#wrap img").first().fadeIn(3500);
-    setTimeout(anim, 7000);
-    }
-anim();
-$j(window).resize(function(){window.location.href=window.location.href});
-	});
-	
-});
+//egw_LAB.wait(function() { 
+//	$j(document).ready(function() {
+//	$j('img.bgfade').hide();
+////                                var dg_H = $j(window).height();
+////                                var dg_W = $j(window).width();
+////    $j('#wrap').css({'height':dg_H,'width':dg_W});
+//   
+//    function anim() {
+//    $j("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(3500);
+//    $j("#wrap img").first().fadeIn(3500);
+//    setTimeout(anim, 7000);
+//    }
+//anim();
+//$j(window).resize(function(){window.location.href=window.location.href});
+//	});
+//	
+//});

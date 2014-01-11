@@ -1,21 +1,5 @@
 <script src="./pixelegg/js/login.js" type="text/javascript"></script>
-	<style type="text/css">
-		#wrap{
-	position:fixed; 
-	z-index:-1; 
-	top:0; 
-	left:0; 
-	background-color:black
-}
-    #wrap img.bgfade{
-	position:absolute;
-	top:0;
-	display:none;
-	width:100%;
-	height:100%;
-	z-index:-1
-}
-	</style>
+
 
 <div id="loginMainDiv">
     
@@ -86,20 +70,10 @@
 </div>
 
 <div id="wrap">
-<img class="bgfade" src="pixelegg/images/login/background-image-1.jpg" alt="STYLITE" title="STYLITE">
-<img class="bgfade" src="pixelegg/images/login/background-image-2.jpg" alt="EGROUPWARE" title="EGROUPWARE">
-<img class="bgfade" src="pixelegg/images/login/background-image-3.jpg" alt="EGROUPWARE" title="EGROUPWARE">
-<img class="bgfade" src="pixelegg/images/login/bg_1.jpg" alt="EGROUPWARE" title="EGROUPWARE">
-<img class="bgfade" src="pixelegg/images/login/bg_2.jpg" alt="EGROUPWARE" title="EGROUPWARE">
-<img class="bgfade" src="pixelegg/images/login/bg_3.jpg" alt="EGROUPWARE" title="EGROUPWARE">
-<img class="bgfade" src="pixelegg/images/login/raster.jpg" alt="EGROUPWARE" title="EGROUPWARE">
+    
+    <div class="div.animation_login">
+    
+<img id="img1" src="pixelegg/images/about.svg" alt="STYLITE" title="STYLITE">
+<img id="img2" src="pixelegg/images/accounts.svg" alt="EGROUPWARE" title="EGROUPWARE">
+<img id="img3" src="pixelegg/images/alarm.svg" alt="EGROUPWARE" title="EGROUPWARE">
 </div>
-
-                    
-                    <!-- //
-
-{*<img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/default.jpg" alt="default" title="default" >
-<img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/house_tree.jpg" alt="house_tree" title="house_tree">
-<img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/garden.jpg" alt="garden" title="garden" >
-<img class="bgfade" src="http://www.kingsizetheme.com/wp-content/uploads/2013/04/isle.jpg" alt="isle" title="isle" >*} -->
-
