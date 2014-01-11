@@ -36,8 +36,6 @@ class Minify_Logger {
      * @return null
      */
     public static function log($msg, $label = 'Minify') {
-error_log($msg);
-throw new Exception($msg);
         if (! self::$_logger) return;
         self::$_logger->log($msg, $label);
     }

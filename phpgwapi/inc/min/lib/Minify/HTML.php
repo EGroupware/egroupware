@@ -17,6 +17,10 @@
  * @author Stephen Clay <steve@mrclay.org>
  */
 class Minify_HTML {
+    /**
+     * @var boolean
+     */
+    protected $_jsCleanComments = true;
 
     /**
      * "Minify" an HTML page
@@ -37,7 +41,7 @@ class Minify_HTML {
      * @return string
      */
     public static function minify($html, $options = array()) {
-        $min = new Minify_HTML($html, $options);
+        $min = new self($html, $options);
         return $min->process();
     }
 
@@ -55,6 +59,8 @@ class Minify_HTML {
      * 'jsMinifier' : (optional) callback function to process content of SCRIPT
      * elements. Note: the type attribute is ignored.
      *
+     * 'jsCleanComments' : (optional) whether to remove HTML comments beginning and end of script block
+     *
      * 'xhtml' : (optional boolean) should content be treated as XHTML1.0? If
      * unset, minify will sniff for an XHTML doctype.
      *
@@ -71,6 +77,9 @@ class Minify_HTML {
         }
         if (isset($options['jsMinifier'])) {
             $this->_jsMinifier = $options['jsMinifier'];
+        }
+        if (isset($options['jsCleanComments'])) {
+            $this->_jsCleanComments = (bool)$options['jsCleanComments'];
         }
     }
 
@@ -215,7 +224,9 @@ class Minify_HTML {
         $ws2 = ($m[4] === '') ? '' : ' ';
 
         // remove HTML comments (and ending "//" if present)
-        $js = preg_replace('/(?:^\\s*<!--\\s*|\\s*(?:\\/\\/)?\\s*-->\\s*$)/', '', $js);
+        if ($this->_jsCleanComments) {
+            $js = preg_replace('/(?:^\\s*<!--\\s*|\\s*(?:\\/\\/)?\\s*-->\\s*$)/', '', $js);
+        }
 
         // remove CDATA section markers
         $js = $this->_removeCdata($js);
