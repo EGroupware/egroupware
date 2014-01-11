@@ -162,6 +162,12 @@ list($sitePrefix) = explode('/phpgwapi/inc/min/', $_SERVER['REQUEST_URI']);
 $min_symlinks['//'.ltrim($sitePrefix, '/')] = dirname(dirname(dirname(__DIR__)));
 
 /**
+ * Remove all "use strict" as we have a mixure of strict and non-strict code (mostly externals libs)
+ * and javascript is supposed to run quicker without anyway.
+ */
+$min_serveOptions['postprocessor'] = function($in){ return str_replace(array('"use strict";', '"use strict"'), '', $in);};
+
+/**
  * If you upload files from Windows to a non-Windows server, Windows may report
  * incorrect mtimes for the files. This may cause Minify to keep serving stale
  * cache files when source file changes are made too frequently (e.g. more than
