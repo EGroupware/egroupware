@@ -351,7 +351,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
 				}
 				
 				// translate caption
-				if (typeof elem.no_lang == "undefined" || !elem.no_lang)
+				if (elem.caption && (typeof elem.no_lang == "undefined" || !elem.no_lang))
 				{
 					elem.caption = egw.lang(elem.caption);
 					if (typeof elem.hint == "string") elem.hint = egw.lang(elem.hint);
