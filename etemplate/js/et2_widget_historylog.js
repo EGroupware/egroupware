@@ -162,7 +162,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 
 		// Register a resize callback
 		var self = this;
-		$j(window).resize(function() {
+		$j(window).on('resize.' +this.options.value.app + this.options.value.id, function() {
 			self.dynheight.update(function(_w, _h) {
 				self.dataview.resize(_w, _h);
 			});
@@ -173,6 +173,9 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	 * Destroys all 
 	 */
 	destroy: function() {
+		// Unbind 
+		$j(window).off('.' +this.options.value.app + this.options.value.id);
+		
 		// Free the widgets
 		for(var i = 0; i < this.columns.length; i++)
 		{
