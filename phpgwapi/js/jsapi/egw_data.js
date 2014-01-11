@@ -38,8 +38,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
 	function parseServerResponse(_result, _callback, _context)
 	{
-		// Check whether the result is valid -- so "result" has to be an object
-		// consting of "order" and "data"
+		// Check whether the result is valid
+		// This result is not for us, quietly return
+		if(_result && typeof _result.type != 'undefined' && _result.type != 'data') return;
+
+		// "result" has to be an object consting of "order" and "data"
 		if (!(_result && typeof _result.order !== "undefined"
 		    && typeof _result.data !== "undefined"))
 		{
