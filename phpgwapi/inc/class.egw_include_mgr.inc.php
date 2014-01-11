@@ -284,6 +284,8 @@ class egw_include_mgr
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
+			// normalise /./ to /
+			$path = str_replace('/./', '/', $path);
 
 			// Handle the special case, that the file is an url - in this case
 			// we will do no further processing but just include the file

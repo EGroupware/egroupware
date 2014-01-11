@@ -993,7 +993,7 @@ abstract class egw_framework
 		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
 
 		// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
+		self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
 
 		// eTemplate2 - load in top so sidebox has styles too
 		self::includeCSS('/etemplate/templates/default/etemplate2.css');
@@ -1022,7 +1022,6 @@ abstract class egw_framework
 		{
 			$print_css = '/phpgwapi/templates/idots/print.css';
 		}
-
 
 		// search for app specific css file
 		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
@@ -1597,18 +1596,96 @@ abstract class egw_framework
 	 */
 	static public function get_script_links($return_pathes=false, $clear_files=false)
 	{
-		// RB: disabled minifying (debug=true), 'til I found time to fix it
+		$to_include = self::bundle_js_includes(self::$js_include_mgr->get_included_files($clear_files));
+
+		if ($return_pathes)
+		{
+			return $to_include;
+		}
+		$start = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'];
+		$end = '">'."</script>\n";
+		return "\n".$start.implode($end.$start, $to_include).$end;
+	}
+
+	/**
+	 * Devide js-includes in bundles of javascript files to include eg. api or etemplate2, if minifying is enabled
+	 *
+	 * @param array $js_includes files to include with egw relative url
+	 * @return array egw relative urls to include incl. bundels/minify urls, if enabled
+	 */
+	public static function bundle_js_includes(array $js_includes)
+	{
+		if ($GLOBALS['egw_info']['server']['debug_minify'] === 'True')
+		{
+			return $js_includes;	// nothing to do, just return all single files
+		}
+		// get used bundles and cache them on tree-level for 2h
+		$bundles = egw_cache::getTree(__CLASS__, 'bundles', array(__CLASS__, 'get_bundles'), array(), 7200);
+		$bundles_ts = $bundles['.ts'];
+		unset($bundles['.ts']);
+		$file2bundle = array();
+		foreach($bundles as $name => $files)
+		{
+			$file2bundle += array_combine($files, array_fill(0, count($files), $name));
+		}
+
+		$to_include = $included_bundles = array();
+		foreach($js_includes as $file)
+		{
+			if (!isset($to_include[$file]))
+			{
+				if (($bundle = $file2bundle[$file]))
+				{
+					if (!in_array($bundle, $included_bundles))
+					{
+						$max_modified = 0;
+						$to_include = array_merge($to_include, self::bundle_urls($bundles[$bundle], $max_modified));
+						$included_bundles[] = $bundle;
+						// check if bundle-config is more recent then
+						if ($max_modified > $bundles_ts)
+						{
+							// force new bundle config by deleting cached one and call ourself again
+							egw_cache::unsetTree(__CLASS__, 'bundles');
+							return self::bundle_js_includes($js_includes);
+						}
+					}
+				}
+				else
+				{
+					$query = '';
+					list($path, $query) = explode('?', $file, 2);
+					$mod = filemtime(EGW_SERVER_ROOT.$path);
+
+					$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
+				}
+			}
+		}
+		/*_debug_array($js_includes);
+		_debug_array(array_values($to_include));
+		die('STOP');*/
+
+		return array_values($to_include);
+	}
+
+	/**
+	 * Generate bundle url(s) for given js files
+	 *
+	 * @param array $js_includes
+	 * @param int& $max_modified=null on return maximum modification time of bundle
+	 * @return array js-files (can be more then one, if one of given files can not be bundeled)
+	 */
+	protected static function bundle_urls(array $js_includes, &$max_modified=null)
+	{
 		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
-		$files = '';
 		$to_include = $to_minify = array();
 		$max_modified = 0;
-		foreach(self::$js_include_mgr->get_included_files($clear_files) as $path)
+		foreach($js_includes as $path)
 		{
 			if ($path == '/phpgwapi/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
 
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
+			$mod = filemtime(EGW_SERVER_ROOT.$path);
 
 			// for now minify does NOT support query parameters, nor php files generating javascript
 			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false ||
@@ -1619,6 +1696,7 @@ abstract class egw_framework
 			}
 			else
 			{
+				if ($mod > $max_modified) $max_modified = $mod;
 				$to_minify[] = substr($path,1);
 			}
 		}
@@ -1633,23 +1711,48 @@ abstract class egw_framework
 			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
 			array_unshift($to_include, $path);
 		}
-		if ($return_pathes)
-		{
-			return $to_include;
-		}
-		$start = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'];
-		$end = '">'."</script>\n";
-		return "\n".$start.implode($end.$start, $to_include).$end;
+		//error_log(__METHOD__."(".array2string($js_includes).") returning ".array2string($to_include));
+		return $to_include;
+	}
 
-		// using LABjs to load all javascript would require all other script-tags to run in wait() of queue!
-		/*
-		return "\n".$start.'/phpgwapi/js/labjs/LAB.src.js'.$end."\n".
-			'<script type="text/javascript">
-$LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"}).script(
-'.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait();
-</script>
-';
-		*/
+	/**
+	 * Return typical bundes we use:
+	 * - api stuff phpgwapi/js/jsapi/* and it's dependencies incl. jquery
+	 * - etemplate2 stuff not including api bundle, but jquery-ui
+	 *
+	 * @return array bundle-url => array of contained files
+	 */
+	public static function get_bundles()
+	{
+		$inc_mgr = new egw_include_mgr();
+		$bundles = array();
+
+		// generate api bundle
+		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/jsapi.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_json.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/egw.js');
+		$bundles['api'] = $inc_mgr->get_included_files();
+
+		// generate et2 bundle (excluding files in api bundle)
+		//$inc_mgr->include_js_file('/etemplate/js/lib/jsdifflib/difflib.js');	// it does not work with "use strict" therefore included in front
+		$inc_mgr->include_js_file('/etemplate/js/etemplate2.js');
+		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
+
+		// generate jdots bundle, if installed
+		if (file_exists(EGW_SERVER_ROOT.'/jdots'))
+		{
+			$inc_mgr->include_js_file('/jdots/js/egw_fw.js');
+			$inc_mgr->include_js_file('/jdots/js/egw_fw_ui.js');
+			$inc_mgr->include_js_file('/jdots/js/egw_fw_classes.js');
+			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
+		}
+
+		// store timestamp of when bundle-config was created
+		$bundles['.ts'] = time();
+
+		error_log(__METHOD__."() returning ".array2string($bundles));
+		return $bundles;
 	}
 
 	/**
@@ -1725,11 +1828,9 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 
 		// add all js files from egw_framework::validate_file()
 		$files = self::$js_include_mgr->get_included_files();
+		$files = self::bundle_js_includes($files);
 		foreach($files as $path)
 		{
-			$query = '';
-			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 	}
