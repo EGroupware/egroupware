@@ -149,6 +149,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 								res.type, res, this
 							);
 
+							// Call request callback, if provided
+							// Data is special, don't do the callback for it
+							if(this.callback != null && res.type != "data")
+							{
+								this.callback.call(this.context,res);
+							}
+
 						} catch(e) {
 							var msg = e.message ? e.message : e + '';
 							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : ""
