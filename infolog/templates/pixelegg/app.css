@@ -120,7 +120,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
     	
 }*/
 #infolog-index {
-  height: auto !important;
+  /*height: auto !important;*/
 }
 #infolog-index table.et2_grid {
   border-top: 0px;
@@ -299,11 +299,11 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   margin-top: 1.5%;
 }
 #infolog-index #infolog-index_nm .frame {
-  min-height: 100%;
-  height: 60em;
+  /*            min-height: 100%; 
+            height: 60em;*/
 }
 #infolog-index #infolog-index_nm .egwGridView_scrollarea {
-  height: auto;
+  /*height: auto;*/
 }
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid img {
   height: 16px;

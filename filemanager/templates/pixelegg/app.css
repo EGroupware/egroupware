@@ -130,7 +130,7 @@ div.filemanager_navigation {
 div.filemanager_navigation img {
   width: 16px;
   height: 16px;
-  background-color: #f0f0f0;
+  /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -141,7 +141,7 @@ div.filemanager_navigation img {
   padding: 0.2em;
 }
 div.filemanager_navigation img:hover {
-  background-color: #cccccc;
+  /*.background_color_20_gray;*/
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -200,20 +200,15 @@ div.filemanager_navigation > label {
   margin-right: 0.2em;
 }
 div.filemanager_navigation > label > input {
-  width: 100%;
+  width: 90%;
 }
 #filemanager-index .et2_file {
-  background-color: #0b5fa4 !important;
+  /*background-color: @egw_color_blue_lighter !important;*/
   color: #FFF;
   text-shadow: none;
   /*    height: auto;*/
   background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
+  /*.border_radius_button_lefttop;*/
   color: #fff;
   height: auto;
   width: 55%;
@@ -231,11 +226,11 @@ div.filemanager_navigation > label > input {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topleft: 10px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
+  border-top-left-radius: 10px;
 }
 #filemanager-index .et2_file:before {
   font-size: 1.5em;
@@ -249,6 +244,12 @@ div.filemanager_navigation > label > input {
 #filemanager-index #filemanager-index_tarp {
   width: 32px !important;
   height: 32px !important;
+}
+#filemanager-index .filters {
+  vertical-align: center;
+}
+#filemanager-index .filters #filemanager-index_filter {
+  margin-top: 0.5em;
 }
 /*// Dialog filemanager 
 // #####################################################*/
@@ -292,7 +293,7 @@ div.filemanager_navigation > label > input {
   background: #ffffff;
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
-  background: #ebebeb;
+  background: #fafafa;
 }
 #filemanager-select .vfsMimeIcon {
   width: 16px;

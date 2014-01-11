@@ -36,34 +36,99 @@
 #            #                               #
 #            #                               #
 ##############################################*/
+
+/*app.css Stylite*/
+
+table.prefTable {
+	width: 100%;
+}
+tr.prefRow {
+	position: relative;
+}
+td.prefName {
+	width: 50%;
+}
+tr.prefRow > td {
+	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+}
+.prefHelp {
+	position: absolute;
+	display: none;
+	width: 98%;
+	background-color: @color_hint;
+
+	padding: 5px;
+	margin-top: 5px;
+        
+        .border_normal;
+        .box_shadow_standard_light;
+        .rounded (3px);
+        color: @gray_0 !important;
+        
+        
+}
+tr.prefRow:hover .prefHelp {
+	display: block;
+	z-index: 10;	/* FF: displays it under next prefName without */
+}
+.prefDefault, .prefValue {
+	float: left;
+}
+.prefValue {
+	margin-right: 5px;
+}
+.prefValue textarea, textarea.prefValue {
+	width: 99%;
+	height: 5em;
+}
 .prefType, .prefApp {
-font-size: 150%;
-display: inline-block;
-padding-bottom: 5px;
+	font-size: 150%;
+	display: inline-block;
+	padding-bottom: 5px;
 }
 
-#preferences-settings{
+
+
+
+
+
+/*###############################*/
+
+
+
+.prefType, .prefApp {
+    margin: 0.3em;
+    -webkit-appearance:button; padding:10px;
+}
+
+
+
+img[src$="svg"]{
+            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+}
+
+
 
 /*Preferences APP / left */
-select#preferences-settings_appname{
+.prefApp{
     
-    &:before {
-                        padding-right: 20px;
-                        content: "";
-                        background-image: url(./images/setup.png);
-                        background-repeat: no-repeat;
-                        .dimension_width_height_m;
-              }
-    
-    
-}
+                            background-image: url(../pixelegg/images/setup.png);
+                            background-repeat: no-repeat; 
+                            background-position: 93% 50%;
+                            background-size: 16px 16px;
+                            
+                            margin-right: 1em;
+  
 
-/*Preferences APP Settings / right*/
-#preferences-settings_type{
-    
-    
-    
 }
+/*Preferences APP Settings / right*/
+.prefType{
+    
+                            background-image: url(../pixelegg/images/setup.png);
+                            background-repeat: no-repeat; 
+                            background-position: 93% 50%;
+                            background-size: 16px 16px;
+                              
 
 
 }

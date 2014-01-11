@@ -173,11 +173,11 @@ fieldset.emailGroup {
  * Give space to both contact view & infolog list
  */
   #addressbook-index {
-    height: 99%;
+    /*height: 99%;*/
   }
   #addressbook-edit {
-    height: auto;
-    min-height: 390px;
+    /*height: auto;*/
+    /*min-height: 390px;*/
     overflow: auto;
   }
   div#addressbook-index div.et2_hbox_left {
@@ -834,7 +834,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.phoneGroup table.et2_grid tr:nth-child(odd),
   div#addressbook-search fieldset.phoneGroup table.et2_grid tr:nth-child(odd) {
-    background: #f7f7f7;
+    background: #fafafa;
   }
   div#addressbook-edit fieldset.phoneGroup table.et2_grid td,
   div#addressbook-search fieldset.phoneGroup table.et2_grid td {
@@ -879,7 +879,7 @@ fieldset.emailGroup {
   }
   div#addressbook-edit fieldset.emailGroup table.et2_grid tr:nth-child(odd),
   div#addressbook-search fieldset.emailGroup table.et2_grid tr:nth-child(odd) {
-    background: #f7f7f7;
+    background: #fafafa;
   }
   div#addressbook-edit fieldset.emailGroup table.et2_grid td,
   div#addressbook-search fieldset.emailGroup table.et2_grid td {
@@ -970,7 +970,7 @@ fieldset.emailGroup {
     background: #ffffff;
   }
   #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid tr:nth-child(odd) {
-    background: #f7f7f7;
+    background: #fafafa;
   }
   #addressbook-edit_addressbook-edit-general td.addressbook_edit_general_left table.et2_grid div#addressbook-edit_addressbook-edit-name table.et2_grid td {
     padding: 5px 0px 5px 3px;
@@ -1014,7 +1014,7 @@ fieldset.emailGroup {
     background: #ffffff;
   }
   #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(odd) {
-    background: #f7f7f7;
+    background: #fafafa;
   }
   #addressbook-edit_addressbook-edit-details table.et2_grid td {
     padding: 5px 0px 5px 3px;

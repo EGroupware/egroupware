@@ -85,21 +85,89 @@ textarea.prefValue {
 #            #                               #
 #            #                               #
 ##############################################*/
+/*app.css Stylite*/
+table.prefTable {
+  width: 100%;
+}
+tr.prefRow {
+  position: relative;
+}
+td.prefName {
+  width: 50%;
+}
+tr.prefRow > td {
+  vertical-align: bottom;
+  /* otherwise help will cover bigger prefValue */
+}
+.prefHelp {
+  position: absolute;
+  display: none;
+  width: 98%;
+  background-color: #679fd2;
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #ffffff !important;
+}
+tr.prefRow:hover .prefHelp {
+  display: block;
+  z-index: 10;
+  /* FF: displays it under next prefName without */
+}
+.prefDefault,
+.prefValue {
+  float: left;
+}
+.prefValue {
+  margin-right: 5px;
+}
+.prefValue textarea,
+textarea.prefValue {
+  width: 99%;
+  height: 5em;
+}
 .prefType,
 .prefApp {
   font-size: 150%;
   display: inline-block;
   padding-bottom: 5px;
 }
-#preferences-settings {
-  /*Preferences APP / left */
-  /*Preferences APP Settings / right*/
+/*###############################*/
+.prefType,
+.prefApp {
+  margin: 0.3em;
+  -webkit-appearance: button;
+  padding: 10px;
 }
-#preferences-settings select#preferences-settings_appname:before {
-  padding-right: 20px;
-  content: "";
-  background-image: url(images/setup.png);
+img[src$="svg"] {
+  background-color: #0c5da5;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
+  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
+  background-image: linear-gradient(top, #0c5da5, #0c5da5);
+  background-repeat: repeat-x;
+}
+/*Preferences APP / left */
+.prefApp {
+  background-image: url(../pixelegg/images/setup.png);
   background-repeat: no-repeat;
-  width: 24px;
-  height: 24px;
+  background-position: 93% 50%;
+  background-size: 16px 16px;
+  margin-right: 1em;
+}
+/*Preferences APP Settings / right*/
+.prefType {
+  background-image: url(../pixelegg/images/setup.png);
+  background-repeat: no-repeat;
+  background-position: 93% 50%;
+  background-size: 16px 16px;
 }
