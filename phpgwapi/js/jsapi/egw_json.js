@@ -130,10 +130,15 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				}, this);
 				return;
 			}
+
+			// Flag for only data response - don't call callback if only data
+			var only_data = true;
+
 			for (var i = 0; i < data.response.length; i++)
 			{
 				// Get the response object
 				var res = data.response[i];
+				if(typeof res.type == 'string' && res.type != 'data') only_data = false;
 
 				// Check whether a plugin for the given type exists
 				if (typeof plugins[res.type] !== 'undefined')
@@ -148,14 +153,6 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 								plugin.context ? plugin.context : this.context,
 								res.type, res, this
 							);
-
-							// Call request callback, if provided
-							// Data is special, don't do the callback for it
-							if(this.callback != null && res.type != "data")
-							{
-								this.callback.call(this.context,res);
-							}
-
 						} catch(e) {
 							var msg = e.message ? e.message : e + '';
 							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : ""
@@ -163,6 +160,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 						}
 					}
 				}
+			}
+			// Call request callback, if provided
+			if(this.callback != null && !only_data)
+			{
+				this.callback.call(this.context,res);
 			}
 		}
 	}

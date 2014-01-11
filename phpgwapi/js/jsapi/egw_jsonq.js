@@ -44,6 +44,9 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 	function jsonq_callback(_data)
 	{
 		if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
+		
+		// Abort if type is set (multi-response support)
+		if (typeof _data.type != 'undefined') return;
 
 		var json = egw.json('none');
 		for(var uid in _data)
