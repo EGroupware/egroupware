@@ -116,7 +116,10 @@ etemplate2.prototype.resize = function()
 etemplate2.prototype.clear = function()
 {
 	// Remove any handlers on window (resize)
-	$j(window).off("."+this.uniqueId);
+	if(this.uniqueId)
+	{
+		$j(window).off("."+this.uniqueId);
+	}
 	
 	if (this.widgetContainer != null)
 	{
