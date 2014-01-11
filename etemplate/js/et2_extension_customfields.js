@@ -202,6 +202,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					'readonly':	this.options.readonly,
 					'value':	this.options.value[this.prefix+field_name]
 				};
+				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
+				if(attrs.readonly === true) delete attrs.needed;
+				
 				if(this[setup_function]) {
 					var no_skip = this[setup_function].call(this, field_name, field, attrs);
 					if(!no_skip) continue;

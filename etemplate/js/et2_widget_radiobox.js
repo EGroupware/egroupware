@@ -308,9 +308,13 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 				label: _options[key],
 				ro_true: this.options.ro_true,
 				ro_false: this.options.ro_false,
-				readonly: this.options.readonly,
-				needed: this.options.needed
+				readonly: this.options.readonly
 			};
+			// Can't have a required readonly, it will warn & be removed later, so avoid the warning
+			if(attrs.readonly === false)
+			{
+				attrs.needed = this.options.needed;
+			}
 			var radio = et2_createWidget("radio", attrs, this);
 		}
 		this.set_value(this.value);
