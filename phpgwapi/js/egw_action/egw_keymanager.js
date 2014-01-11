@@ -179,6 +179,8 @@ $j(document).ready(function() {
  * Required to catch the context menu
  */
 $j(window).on("contextmenu",document, function(event) {
+	// Check for actual key press
+	if(!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
 	if(!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
 	{
 		// If the key handler successfully passed the key event to some
