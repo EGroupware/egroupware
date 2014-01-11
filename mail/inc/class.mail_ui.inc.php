@@ -332,6 +332,11 @@ class mail_ui
 				'acceptedTypes' => 'mail',
 				'type' => 'drop',
 			),
+			'drop_move_folder' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mailFolder',
+				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+			),
 			// Tree does support this one
 			'add' => array(
 				'caption' => 'Add Folder',
@@ -343,7 +348,8 @@ class mail_ui
 			),
 			'move' => array(
 				'caption' => 'Move Folder',
-				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+				'type' => 'drag',
+				'dragType' => array('mailFolder')
 			),
 			'delete' => array(
 				'caption' => 'Delete Folder',
@@ -3514,10 +3520,10 @@ $success=true;
 	/**
 	 * move folder
 	 *
-	 * @param array _folderName  folder to vove
-	 * @param array _target target folder
+	 * @param string _folderName  folder to vove
+	 * @param string _target target folder
 	 *
-	 * @return xajax response
+	 * @return void
 	 */
 	function ajax_MoveFolder($_folderName, $_target)
 	{
@@ -3529,10 +3535,11 @@ $success=true;
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			list($newProfileID,$_newLocation) = explode(self::$delimiter,$_newLocation,2);
 			$hasChildren = false;
 			if (is_numeric($profileID))
 			{
-				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				if ($profileID != $this->mail_bo->profileID || $profileID != $newProfileID) return; // only current connection
 				$pA = explode($del,$folderName);
 				$namePart = array_pop($pA);
 				$_newName = $namePart;
@@ -3631,7 +3638,13 @@ $success=true;
 				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
 				if (strlen($parentFolder)>strlen($oldParentFolder) && strpos($parentFolder,$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
 				if (count($refreshData)>1 && strlen($oldParentFolder)>strlen($parentFolder) && strpos($oldParentFolder,$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
-				$response->call('app.mail.mail_reloadNode',$refreshData,'mail');
+				
+				// Send full info back in the response
+				foreach($refreshData as $folder => &$name)
+				{
+					$name = $this->getFolderTree(true, $folder, true);
+				}
+				$response->call('app.mail.mail_reloadNode',$refreshData);
 
 			}
 			else

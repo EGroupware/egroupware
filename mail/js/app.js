@@ -840,9 +840,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_reloadNode, function to reload the leaf represented by the given ID
-	 * @param array _status status array with the required data (KEY id, VALUE desc)
-	 *		key is the id of the leaf to delete
-	 *		multiple sets can be passed to mail_deleteLeaf
+	 * @param {Object.<string,string>|Object.<string,Object}}  _status
+	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
 	mail_reloadNode: function(_status) {
 		//console.log('mail_reloadNode',_status);
@@ -851,16 +850,21 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.app_refresh(this.egw.lang("Reloaded Folder %1 ",_status[i], 'mail'));
-			ftree.refreshItem(i);
-			var selectedNodeAfter = ftree.getSelectedNode();
-			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
-			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				var nm = this.et2.getWidgetById(this.nm_index);
-				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
-				nm.applyFilters();
+				this.app_refresh(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i] : _status[i].text), 'mail');
 			}
+			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
+		}
+
+		var selectedNodeAfter = ftree.getSelectedNode();
+
+		// If selected folder changed, refresh nextmatch
+		if (selectedNodeAfter != null && selectedNodeAfter.id!=selectedNode.id)
+		{
+			var nm = this.et2.getWidgetById(this.nm_index);
+			nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
+			nm.applyFilters();
 		}
 	},
 
@@ -1946,54 +1950,28 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * mail_MoveFolder - implementation of the MoveFolder action of right click options on the tree
+	 * mail_MoveFolder - implementation of the MoveFolder action on the tree
 	 *
-	 * @param _action
-	 * @param _senders - the representation of the tree leaf to be manipulated
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _senders - the representation of the tree leaf to be manipulated
+	 * @param {egwActionObject} destination Drop target egwActionObject representing the destination
 	 */
-	mail_MoveFolder: function(action,_senders) {
-		//console.log(action,_senders);
-		//action.id == 'rename'
-		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].iface.id);
-		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
-		OldFolderName = OldFolderName.trim();
-		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
-		//console.log(OldFolderName);
-		var buttons = [
-			{text: this.egw.lang("Move"), id: "move", class: "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"},
-		];
-		var dialog = et2_createWidget("dialog",{
-			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
-			callback: function(_button_id, _value) {
-				var senders = this.my_data.data;
-				var NewFolderName = null;
-				if (typeof _value.folder[0] != 'undefined' && _value.folder[0].length>0) NewFolderName = _value.folder[0];
-				//alert(NewFolderName);
-				if (NewFolderName && NewFolderName.length>0)
-				{
-					switch (_button_id)
-					{
-						case "move":
-							egw.json('mail.mail_ui.ajax_MoveFolder',[senders[0].iface.id, NewFolderName])
-								.sendRequest(true);
-							return;
-						case "cancel":
-					}
-				}
-			},
-			buttons: buttons,
-			title: this.egw.lang("Move Folder %1 ?",OldFolderName),
-			template:egw.webserverUrl+"/mail/templates/default/moveFolder.xet",
-			value: { content: {selectedLeaf:OldFolderName}, sel_options: {}}
-		});
+	mail_MoveFolder: function(_action,_senders,destination) {
+		if(!destination || !destination.id)
+		{
+			egw.debug('warn', "Move folder, but no target");
+			return;
+		}
+		// Some UI feedback while the folder is moved
+		$j(destination.iface.getDOMNode()).addClass('loading');
 
-		// setting required data for callback in as my_data
-		dialog.my_data = {
-			data: _senders,
-		};
+		for(var i = 0; i < _senders.length; i++)
+		{
+			egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].iface.id, destination.id],
+				// Move is done (successfully or not), remove loading
+				function() {$j(destination.iface.getDOMNode()).removeClass('loading');}
+			);
+		}
 	},
 
 	/**
