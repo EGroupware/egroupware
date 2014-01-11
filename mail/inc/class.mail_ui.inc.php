@@ -1334,8 +1334,6 @@ unset($query['actions']);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
-		$response = egw_json_response::get();
-		$response->call('app.mail.mail_refreshFolderStatus',array('_nodeID'=>$_profileID.self::$delimiter.$_folderName,'mode'=>null,'_refreshGridArea'=>false),'mail');
 
 		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
@@ -3238,7 +3236,7 @@ blockquote[type=cite] {
 			if ($oA)
 			{
 				$response = egw_json_response::get();
-				$response->call('app.mail.mail_setFolderStatus',$oA,'mail');
+				$response->call('app.mail.mail_setFolderStatus',$oA);
 			}
 		}
 	}

@@ -75,6 +75,12 @@ app.classes.mail = AppJS.extend(
 	 */
 	destroy: function()
 	{
+		// Unbind from nm refresh
+		var nm = this.et2.getWidgetById('nm');
+		if(nm != null)
+		{
+			$j(nm).off('refresh');
+		}
 		delete this.et2;
 		delete this.et2_obj;
 		// call parent
@@ -117,20 +123,14 @@ app.classes.mail = AppJS.extend(
 		if (isMainView)
 		{
 			this.mail_disablePreviewArea(true);
-			this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
-			//inital call of refresh folderstatus
-			var self = this;
-			window.setTimeout(function() {
-				self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
-			},1000);
-			// intention was, to enable drag and drop with the tree
-			// and then somehow hook into the event and do the server side action
-			// does not work here at that time, do not know why, so we go for
-			// the traditional way of a rightclick action on the tree
-			//var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-			//tree_wdg.enableDragAndDrop(true,false);
-			//tree_wdg.setDragBehavior('child',true);
-			//tree_wdg.enableDragAndDropScrolling(true);
+
+			// Bind to nextmatch refresh to update folder status
+			var nm = this.et2.getWidgetById('nm');
+			if(nm != null)
+			{
+				var self = this;
+				$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
+			}
 		}
 		if (isDisplay)
 		{
