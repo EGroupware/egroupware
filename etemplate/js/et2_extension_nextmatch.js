@@ -417,6 +417,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * 
 	 * @param array|string _row_ids rows to refresh
 	 * @param string _type "edit" (default), "delete" or "add"
+	 *
+	 * @fires refresh
 	 */
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
@@ -424,6 +426,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if (typeof _row_ids == "undefined" || _row_ids === null) 
 		{
 			this.applyFilters();
+			
+			// Trigger an event so app code can act on it
+			$j(this).triggerHandler("refresh",[this]);
+
 			return;
 		}
 
@@ -467,6 +473,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					break id_loop;
 			}
 		}
+		// Trigger an event so app code can act on it
+		$j(this).triggerHandler("refresh",[this]);
 	},
 
 	/**
