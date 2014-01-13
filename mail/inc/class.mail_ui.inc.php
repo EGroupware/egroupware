@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -3293,7 +3293,7 @@ blockquote[type=cite] {
 			{
 				$this->mail_bo->resetFolderObjectCache($profileID);
 				$response = egw_json_response::get();
-				$response->call('app.mail.mail_reloadNode',array($_parentFolderName=>$oldFolderInfo['shortDisplayName']),'mail');
+				$response->call('app.mail.mail_reloadNode',array($_parentFolderName=>$oldFolderInfo['shortDisplayName']));
 			}
 		}
 	}
@@ -3365,7 +3365,7 @@ $success=true;
 			$response = egw_json_response::get();
 			if ($oA && $success)
 			{
-				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+				$response->call('app.mail.mail_setLeaf',$oA);
 			}
 			else
 			{
@@ -3506,7 +3506,7 @@ $success=true;
 			$response = egw_json_response::get();
 			if ($oA && $success)
 			{
-				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+				$response->call('app.mail.mail_setLeaf',$oA);
 			}
 			else
 			{
@@ -3757,7 +3757,7 @@ $success=true;
 				}
 				egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 				//error_log(__METHOD__.__LINE__.array2string($oA));
-				$response->call('app.mail.mail_removeLeaf',$oA,'mail');
+				$response->call('app.mail.mail_removeLeaf',$oA);
 			}
 			else
 			{
@@ -3816,7 +3816,7 @@ $success=true;
 		}
 
 		$response = egw_json_response::get();
-		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content),'mail');
+		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
 	}
 
 	/**
@@ -3897,7 +3897,7 @@ $success=true;
 		}
 */
 		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),lang($_flag),$folder),'mail');
+		$response->call('egw_message',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),lang($_flag),$folder));
 	}
 
 	/**
@@ -3940,12 +3940,12 @@ $success=true;
 			$response = egw_json_response::get();
 			if (empty($error))
 			{
-				$response->call('egw_refresh',lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'mail');
+				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'msg'=>$_messageList['msg']));
 			}
 			else
 			{
 				$error = str_replace('\n',"\n",lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)',$error));
-				$response->call('app.mail.mail_retryForcedDelete',array('response'=>$error,'messageList'=>$_messageList),'mail');
+				$response->call('app.mail.mail_retryForcedDelete',array('response'=>$error,'messageList'=>$_messageList));
 			}
 		}
 		else

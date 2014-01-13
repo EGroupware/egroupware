@@ -2855,6 +2855,7 @@ class mail_bo
 				$ret = $this->icServer->store($folder, array('add'=>array('\\Flagged'), 'ids'=> $uidsToModify));
 				break;
 			case "read":
+			case "seen":
 				$ret = $this->icServer->store($folder, array('add'=>array('\\Seen'), 'ids'=> $uidsToModify));
 				break;
 			case "forwarded":
@@ -2866,6 +2867,7 @@ class mail_bo
 				$ret = $this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
 				break;
 			case "unread":
+			case "unseen":
 				$ret = $this->icServer->store($folder, array('remove'=>array('\\Seen','\\Answered','$Forwarded'), 'ids'=> $uidsToModify));
 				break;
 			case "mdnsent":

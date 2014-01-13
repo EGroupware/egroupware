@@ -3,7 +3,7 @@
  *
  * @link http://www.egroupware.org
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
  * @package mail
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -67,7 +67,7 @@ app.classes.mail = AppJS.extend(
 			0
 		);
 
-		window.register_app_refresh("mail", this.app_refresh);
+		//window.register_app_refresh("mail", this.app_refresh);
 	},
 
 	/**
@@ -800,7 +800,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.app_refresh(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
+			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') egw_message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
@@ -825,7 +825,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.app_refresh(this.egw.lang("Removed Folder %1 ",_status[i], 'mail'));
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') egw_message(this.egw.lang("Removed Folder %1 ",_status[i]));
 			ftree.deleteItem(i,(selectedNode.id==i));
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -852,7 +852,7 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				this.app_refresh(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i] : _status[i].text), 'mail');
+				egw_message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i] : _status[i].text));
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 		}
@@ -895,6 +895,7 @@ app.classes.mail = AppJS.extend(
 	 * @param string|int _id=null id of entry to refresh
 	 * @param string _type=null either 'edit', 'delete', 'add' or null
 	 */
+/*
 	app_refresh: function(_msg, _app, _id, _type)
 	{
 		var bufferExists = false;
@@ -920,6 +921,7 @@ app.classes.mail = AppJS.extend(
 			//this.doStatus = window.setInterval("app.mail.mail_setMsg(myMessageBuffer);", 10000);
 		}
 	},
+*/
 
 	/**
 	 * mail_getMsg - gets the current Message
@@ -977,7 +979,7 @@ app.classes.mail = AppJS.extend(
 		}
 		var msg = this.mail_getFormData(_elems);
 		//alert(_action.id+','+ msg);
-		this.app_refresh(this.egw.lang('delete messages'), 'mail');
+		egw_message(this.egw.lang('delete messages'));
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
@@ -991,11 +993,26 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
-		this.app_refresh(this.egw.lang('delete messages'), 'mail');
+		egw_message(this.egw.lang('delete messages'));
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest();
-		for (var i = 0; i < _msg['msg'].length; i++)  egw.dataDeleteUID(_msg['msg'][i]);
-		this.mail_refreshMessageGrid(_calledFromPopup);
+	},
+
+	/**
+	 * Delete mails show result - called from the backend function for display of deletionmessages
+	 * takes in all arguments
+	 * @param _msg - message list
+	 */
+	mail_deleteMessagesShowResult: function(_msg)
+	{
+		var myMessage = _msg['egw_message'];
+		for (var i = 0; i < _msg['msg'].length; i++)
+		{
+			egw_refresh(myMessage,'mail',_msg['msg'][i].replace(/mail::/,''),'delete');
+			egw.dataDeleteUID(_msg['msg'][i]);
+		}
+		//this.mail_refreshMessageGrid(_calledFromPopup);
+
 		this.mail_preview();
 	},
 
@@ -1016,7 +1033,7 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			this.app_refresh(this.egw.lang('canceled deletion due to userinteraction'), 'mail');
+			egw_message(this.egw.lang('canceled deletion due to userinteraction'));
 			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();
@@ -1048,7 +1065,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_emptyTrash
 	 */
 	mail_emptyTrash: function() {
-		this.app_refresh(this.egw.lang('empty trash'), 'mail');
+		egw_message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash')
 			.sendRequest(true);
 		this.mail_refreshFolderStatus();
@@ -1058,7 +1075,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_compressFolder
 	 */
 	mail_compressFolder: function() {
-		this.app_refresh(this.egw.lang('compress folder'), 'mail');
+		egw_message(this.egw.lang('compress folder'));
 		egw.json('mail.mail_ui.ajax_compressFolder')
 			.sendRequest(true);
 		this.mail_refreshFolderStatus();
@@ -1086,7 +1103,7 @@ app.classes.mail = AppJS.extend(
 	mail_changeFolder: function(folder,_widget) {
 		//alert('change Folder called:'+folder);
 		var server = folder.split('::');
-		this.app_refresh(this.egw.lang('change folder')+'...', 'mail');
+		(this.egw.lang('change folder')+'...', 'mail');
 		var img = _widget.getSelectedNode().images[0]; // fetch first image
 		var profileChange = false;
 		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
@@ -1245,10 +1262,10 @@ app.classes.mail = AppJS.extend(
 	{
 		//console.log('mail_flagMessages',_flag, _elems);
 		if (typeof _refreshGrid == 'undefined') _refreshGrid=true;
-		this.app_refresh(this.egw.lang('flag messages'), 'mail');
+		egw_message(this.egw.lang('flag messages'));
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
 			.sendRequest();
-		if (_refreshGrid) this.mail_refreshMessageGrid(_isPopup);
+		//if (_refreshGrid) this.mail_refreshMessageGrid(_isPopup);
 	},
 
 	/**
