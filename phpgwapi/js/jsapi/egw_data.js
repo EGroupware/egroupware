@@ -40,7 +40,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	{
 		// Check whether the result is valid
 		// This result is not for us, quietly return
-		if(_result && typeof _result.type != 'undefined' && _result.type != 'data') return;
+		if(_result && typeof _result.type != 'undefined') return;
 
 		// "result" has to be an object consting of "order" and "data"
 		if (!(_result && typeof _result.order !== "undefined"
