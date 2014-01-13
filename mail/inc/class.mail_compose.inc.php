@@ -119,7 +119,7 @@ class mail_compose
 /*
 	function action()
 	{
-		$formData['identity']	= (int)$_POST['identity'];
+		$formData['mailaccount']	= (int)$_POST['mailaccount'];
 
 		foreach((array)$_POST['destination'] as $key => $destination) {
 			if(!empty($_POST['address'][$key])) {
@@ -487,16 +487,18 @@ class mail_compose
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
 		// identity and signatureid; this might trigger that the signature in mail body may have to be altered
 		if ( !empty($content['body']) &&
-			(!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity']) ||
+			(!empty($composeCache['mailaccount']) && !empty($_content['mailaccount']) && $_content['mailaccount'] != $composeCache['mailaccount']) ||
 			(!empty($composeCache['signatureid']) && !empty($_content['signatureid']) && $_content['signatureid'] != $composeCache['signatureid'])
 		)
 		{
 			$buttonClicked = true;
 			$suppressSigOnTop = true;
 
-			if (!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity'])
+			if (!empty($composeCache['mailaccount']) && !empty($_content['mailaccount']) && $_content['mailaccount'] != $composeCache['mailaccount'])
 			{
-				$Identities = emailadmin_account::read_identity($_content['identity'],true);
+				$acc = emailadmin_account::read($_content['mailaccount']);
+				//error_log(__METHOD__.__LINE__.array2string($acc));
+				$Identities = emailadmin_account::read_identity($acc['ident_id'],true);
 				//error_log(__METHOD__.__LINE__.array2string($Identities));
 				if ($Identities['ident_id'])
 				{
@@ -931,7 +933,7 @@ class mail_compose
 		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['signatureid'])) $presetSig = (int)$content['signatureid'];
 		//if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
 		$presetId = NULL;
-		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['identity'])) $presetId = (int)$content['identity'];
+		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['mailaccount'])) $presetId = (int)$content['mailaccount'];
 
 /*
 
@@ -950,6 +952,7 @@ class mail_compose
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
 		$allIdentities = $this->mail_bo->getAllIdentities();
+		$selectedMailAccount = ($content['mailaccount']?$content['mailaccount']:$this->mail_bo->profileID);
 		$acc = emailadmin_account::read($this->mail_bo->profileID);
 		$selectSignatures = array(
 			'-2' => lang('no signature')
@@ -961,20 +964,37 @@ class mail_compose
 		if (!isset(mail_bo::$mailConfig['how2displayIdentities'])) mail_bo::$mailConfig['how2displayIdentities'] ='';
 		$globalIds = 0;
 		$defaultIds = array();
+		$identities = array();
 		foreach($allIdentities as $key => $singleIdentity) {
+			if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
+			$iS = mail_bo::generateIdentityString($singleIdentity);
+			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
+			{
+				$id_prepend ='';
+			}
+			else
+			{
+				$id_prepend = '('.$singleIdentity['ident_id'].') ';
+			}
 			if(empty($defaultIds)&& $singleIdentity['ident_id']==$acc['ident_id'])
 			{
 				$defaultIds[$singleIdentity['ident_id']] = $singleIdentity['ident_id'];
-				$selectedSender = $singleIdentity['ident_id'];
+				$selectedSender = $singleIdentity['acc_id'];
+			}
+			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
+			if (array_search($id_prepend.$iS,$identities)===false)
+			{
+				$identities[$singleIdentity['acc_id']] = $id_prepend.$iS;
+				$sel_options['mailaccount'][$singleIdentity['acc_id']] = $id_prepend.$iS;
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
 		// if there are 2 defaultIDs, its most likely, that the user choose to set
 		// the one not being the activeServerProfile to be his default Identity
 		//if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
+		$allSignatures = $this->mail_bo->getAccountIdentities($selectedMailAccount);
 		$defaultIdentity = 0;
-		$identities = array();
-		foreach($allIdentities as $key => $singleIdentity) {
+		foreach($allSignatures as $key => $singleIdentity) {
 			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
 			$iS = mail_bo::generateIdentityString($singleIdentity);
 			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
@@ -991,12 +1011,6 @@ class mail_compose
 			if ($sigDesc == lang('none')) $sigDesc = $singleIdentity['ident_realname'].($singleIdentity['ident_org']?' ('.$singleIdentity['ident_org'].')':'');
 			$selectSignatures[$singleIdentity['ident_id']] = lang('Signature').': '.$id_prepend.$sigDesc;
 
-			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
-			if (array_search($id_prepend.$iS,$identities)===false)
-			{
-				$identities[$singleIdentity['ident_id']] = $id_prepend.$iS;
-				$sel_options['identity'][$singleIdentity['ident_id']] = $id_prepend.$iS;
-			}
 			if(in_array($singleIdentity['ident_id'],$defaultIds) && $defaultIdentity==0)
 			{
 				//_debug_array($singleIdentity);
@@ -1153,12 +1167,12 @@ class mail_compose
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
-			$content['identity'] = (empty($content['identity'])?($selectedSender?$selectedSender:$this->mail_bo->profileID):$content['identity']);
+			$content['mailaccount'] = (empty($content['mailaccount'])?($selectedSender?$selectedSender:$this->mail_bo->profileID):$content['mailaccount']);
 		}
 		else
 		{
-			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['identity'],$selectedSender)));
-			$content['identity'] = ($selectedSender?$selectedSender:$this->mail_bo->profileID);
+			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['mailaccount'],$selectedSender)));
+			$content['mailaccount'] = ($selectedSender?$selectedSender:$this->mail_bo->profileID);
 			//error_log(__METHOD__.__LINE__.$content['body']);
 		}
 		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
@@ -1381,7 +1395,7 @@ class mail_compose
 		}
 		*/
 		if (!empty($addHeadInfo['X-IDENTITY'])) {
-			$this->sessionData['identity'] = $addHeadInfo['X-IDENTITY'];
+			$this->sessionData['mailaccount'] = $addHeadInfo['X-IDENTITY'];
 		}
 		// if the message is located within the draft folder, add it as last drafted version (for possible cleanup on abort))
 		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = array('uid'=>$_uid,'folder'=>$_folder);
@@ -2084,11 +2098,11 @@ class mail_compose
 		$this->sessionData['bcc']   = $_formData['bcc'];
 		$this->sessionData['signatureid'] = $_formData['signatureid'];
 		//$this->sessionData['stationeryID'] = $_formData['stationeryID'];
-		$this->sessionData['identity']  = $_formData['identity'];
+		$this->sessionData['mailaccount']  = $_formData['mailaccount'];
 		$this->sessionData['attachments']  = $_formData['attachments'];
 		try
 		{
-			$identity = emailadmin_account::read_identity($this->sessionData['identity'],true);
+			$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
 		}
 		catch (Exception $e)
 		{
@@ -2115,7 +2129,7 @@ class mail_compose
 		}
 		$mail->AddCustomHeader('X-Signature: '.$this->sessionData['signatureid']);
 		//$mail->AddCustomHeader('X-Stationery: '.$this->sessionData['stationeryID']);
-		$mail->AddCustomHeader('X-Identity: '.(int)$this->sessionData['identity']);
+		$mail->AddCustomHeader('X-Identity: '.(int)$this->sessionData['mailaccount']);
 		// decide where to save the message (default to draft folder, if we find nothing else)
 		// if the current folder is in draft or template folder save it there
 		// if it is called from printview then save it with the draft folder
@@ -2164,7 +2178,7 @@ class mail_compose
 		$mail 		= new egw_mailer();
 		$messageIsDraft	=  false;
 
-		$this->sessionData['identity']	= $_formData['identity'];
+		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
 		$this->sessionData['to']	= $_formData['to'];
 		$this->sessionData['cc']	= $_formData['cc'];
 		$this->sessionData['bcc']	= $_formData['bcc'];
@@ -2201,7 +2215,7 @@ class mail_compose
 		#error_log(print_r($this->preferences,true));
 		try
 		{
-			$identity = emailadmin_account::read_identity($this->sessionData['identity'],true);
+			$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
 		}
 		catch (Exception $e)
 		{
@@ -2215,7 +2229,7 @@ class mail_compose
 		{
 			$signature=array();
 		}
-		//error_log($this->sessionData['identity']);
+		//error_log($this->sessionData['mailaccount']);
 		//error_log(print_r($identity,true));
 		// create the messages
 		$this->createMessage($mail, $_formData, $identity, $signature, true);
@@ -2478,7 +2492,7 @@ class mail_compose
 	{
 		// retrieve the signature accociated with the identity
 		$id = $this->mail_bo->getDefaultIdentity();
-		if ((!isset($content['identity']) || empty($content['identity'])) && $id) $content['signatureid'] = $id;
+		if ((!isset($content['mailaccount']) || empty($content['mailaccount'])) && $id) $content['signatureid'] = $id;
 		if (!isset($content['signatureid']) || empty($content['signatureid'])) $content['signatureid'] = $id;
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
 		{

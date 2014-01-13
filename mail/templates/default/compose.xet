@@ -5,9 +5,9 @@
 		<html id="msg" class="message"/>
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Identity"/>
+				<description value="Mailaccount"/>
 				<menulist>
-					<menupopup id="identity" onchange="app.mail.submitOnChange"/>
+					<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
 				</menulist>
 				<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
 				<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>

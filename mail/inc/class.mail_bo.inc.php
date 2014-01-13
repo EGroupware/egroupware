@@ -520,8 +520,29 @@ class mail_bo
 			foreach($identities as $ik => $ident) {
 				//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
 				$identity = emailadmin_account::read_identity($ik);
-				$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+				//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($identity));
+				$userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
 			}
+		}
+		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
+		return $userEMailAdresses;
+	}
+
+	/**
+	 * getAccountIdentities - function to gather the identities connected to the current mailaccount
+	 * @param int  $acc_id to pass all conected identities back
+	 * @return array - array(email=>realname)
+	 */
+	function getAccountIdentities($acc_id) {
+		$userEMailAdresses = array();
+		$acc = emailadmin_account::read($acc_id);
+		$identities = $acc->identities();
+
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik);
+			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($identity));
+			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
 		return $userEMailAdresses;
@@ -578,6 +599,7 @@ class mail_bo
 	 */
 	static function generateIdentityString($identity, $fullString=true)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($identity));
 		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
 		// not set? -> use default, means full display of all available data
 		if (!isset(self::$mailConfig['how2displayIdentities'])) self::$mailConfig['how2displayIdentities']='';
