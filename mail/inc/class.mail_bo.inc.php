@@ -511,15 +511,17 @@ class mail_bo
 	 * @return array - array(email=>realname)
 	 */
 	function getAllIdentities() {
-		$acc = emailadmin_account::read($this->profileID);
-		$identities = $acc->identities('all');
-
 		$userEMailAdresses = array();
-		
-		foreach($identities as $ik => $ident) {
-			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
-			$identity = emailadmin_account::read_identity($ik);
-			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
+		{
+			$acc = emailadmin_account::read($acc_id);
+			$identities = $acc->identities($acc_id);
+
+			foreach($identities as $ik => $ident) {
+				//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
+				$identity = emailadmin_account::read_identity($ik);
+				$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+			}
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
 		return $userEMailAdresses;
