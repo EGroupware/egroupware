@@ -638,7 +638,7 @@ etemplate2.prototype.getValues = function(_root)
  *
  * @param msg String Message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
  * @param id String|null Application specific entry ID to try to refresh
- * @param type String|null Type of change.  One of 'edit', 'delete', 'add' or null
+ * @param type String|null Type of change.  One of 'update','edit', 'delete', 'add' or null
  *
  * @see jsapi.egw_refresh()
  * @see egw_fw.egw_refresh()

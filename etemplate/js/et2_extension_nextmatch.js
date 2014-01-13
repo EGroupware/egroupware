@@ -411,14 +411,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Refresh given rows for specified change
 	 * 
 	 * Change type parameters allows for quicker refresh then complete server side reload:
-	 * - edit: request just modified data from given rows
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload
 	 * 
-	 * @param array|string _row_ids rows to refresh
-	 * @param string _type "edit" (default), "delete" or "add"
+	 * @param {string[]|string} _row_ids rows to refresh
+	 * @param {?string} _type "update", "edit", "delete" or "add"
 	 *
-	 * @fires refresh
+	 * @see jsapi.egw_refresh()
+	 * @fires refresh from the widget itself
 	 */
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
@@ -444,9 +447,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var uid = app + "::" + _row_ids[i];
 			switch(_type)
 			{
-				/*
 				case "update":
-				case "edit":
 					if(!egw().dataRefreshUID(uid))
 					{
 						// Could not update just that row
@@ -454,7 +455,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						break id_loop;
 					}
 					break;
-				*/
 				case "delete":
 					// Blank the row
 					egw().dataStoreUID(uid,null);

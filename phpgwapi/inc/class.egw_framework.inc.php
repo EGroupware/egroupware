@@ -238,7 +238,13 @@ abstract class egw_framework
 	 * @param string $msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param string $app application name
 	 * @param string|int $id=null id of entry to refresh
-	 * @param string $type=null either 'edit', 'delete', 'add' or null
+	 * @param string $type=null either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * - null: full reload
 	 * @param string $targetapp=null which app's window should be refreshed, default current
 	 * @param string|RegExp $replace=null regular expression to replace in url
 	 * @param string $with=null

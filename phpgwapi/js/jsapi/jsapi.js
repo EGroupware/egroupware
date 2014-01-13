@@ -214,7 +214,12 @@ function egw_getAppName()
  * @param string _msg message (already translated) to show, eg. 'Entry deleted'
  * @param string _app application name
  * @param string|int _id=null id of entry to refresh
- * @param string _type=null either 'edit', 'delete', 'add' or null
+ * @param string _type=null either 'update', 'edit', 'delete', 'add' or null
+ * - update: request just modified data from given rows.  Sorting is not considered,
+ *		so if the sort field is changed, the row will not be moved.
+ * - edit: rows changed, but sorting may be affected.  Requires full reload.
+ * - delete: just delete the given rows clientside (no server interaction neccessary)
+ * - add: requires full reload for proper sorting
  * @param string _targetapp which app's window should be refreshed, default current
  * @param string|RegExp _replace regular expression to replace in url
  * @param string _with
