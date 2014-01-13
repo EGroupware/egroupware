@@ -744,6 +744,7 @@ function etemplate2_handle_load(_type, _response)
 			alert(data['window-close']);
 		}
 		window.close();
+		return true;
 	}
 
 	// handle egw_framework::window_focus()
@@ -841,6 +842,11 @@ function etemplate2_handle_assign(type, res, req)
 		var widget = this.widgetContainer.getWidgetById(res.data.id);
 		if (widget)
 		{
+			if(typeof widget['set_' + res.data.key] != 'function')
+			{
+				egw.debug('warn', "Cannot set %s attribute %s via JSON assign, no set_%s()",res.data.id,res.data.key,res.data.key);
+				return false;
+			}
 			try
 			{
 				widget['set_' + res.data.key].call(widget,res.data.value);
