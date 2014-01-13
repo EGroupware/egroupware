@@ -126,7 +126,7 @@ app.classes.mail = AppJS.extend(
 
 			// Bind to nextmatch refresh to update folder status
 			var nm = this.et2.getWidgetById('nm');
-			if(nm != null)
+			if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 			{
 				var self = this;
 				$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});

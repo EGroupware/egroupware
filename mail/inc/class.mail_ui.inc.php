@@ -184,6 +184,7 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		//error_log(__METHOD__.__LINE__.function_backtrace());
 		$starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
 		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
@@ -273,7 +274,7 @@ class mail_ui
 		}
 
 		//$zstarttime = microtime (true);
-		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
+		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial');
 		//$zendtime = microtime(true) - $zstarttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 //$this->mail_bo->fetchUnSubscribedFolders();
@@ -604,7 +605,8 @@ class mail_ui
 
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
-	 * @param bool $_fetchCounters, wether to fetch extended information on folders
+	 * @param mixed bool/string $_fetchCounters, wether to fetch extended information on folders
+	 *			if set to initial, only for initial level of seen (unfolded) folders
 	 * @param string $_nodeID, nodeID to fetch and return
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 * @return array something like that: array('id'=>0,
@@ -667,9 +669,23 @@ class mail_ui
 
 		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
 		$c = 0;
+		$delimiter = $this->mail_bo->getHierarchyDelimiter();
+		$cmb = $this->mail_bo->icServer->getCurrentMailbox();
+		$cmblevels = explode($delimiter,$cmb);
+		$cmblevelsCt = count($cmblevels);
+		//error_log(__METHOD__.__LINE__.function_backtrace());
 		foreach($folderObjects as $key => $obj)
 		{
-			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
+			//error_log(__METHOD__.__LINE__.array2string($key));
+			$levels = explode($delimiter,$key);
+			$levelCt = count($levels);
+			$fetchCounters = (bool)$_fetchCounters;
+			if ($_fetchCounters==='initial')
+			{
+				if ($levelCt>$cmblevelsCt+1) $fetchCounters=false;
+			}
+			//error_log(__METHOD__.__LINE__.' fc:'.$fetchCounters.'/'.$_fetchCounters.'('.$levelCt.'/'.$cmblevelsCt.')'.' for:'.array2string($key));
+			$fS = $this->mail_bo->getFolderStatus($key,false,($fetchCounters?false:true));
 			//_debug_array($fS);
 			//error_log(__METHOD__.__LINE__.array2string($fS));
 			$fFP = $folderParts = explode($obj->delimiter, $key);
