@@ -21,36 +21,40 @@
  * @augments Class
  */
 egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
-	
-	
+
+
 	/**
 	 * Magic handling for mailto: uris using mail application.
-	 * 
+	 *
 	 * We check for open compose windows and add the address in as specified in
 	 * the URL.  If there are no open compose windows, a new one is opened.  If
 	 * there are more than one open compose window, we prompt for which one to
 	 * use.
-	 * 
+	 *
 	 * The user must have set the 'Open EMail addresses in external mail program' preference
 	 * to No, otherwise the browser will handle it.
-	 * 
+	 *
 	 * @param {String} uri
 	 */
 	function mailto(uri)
 	{
 		// Parse uri into a map
-		var match = uri.match(/^mailto:([^?]+)\??(([^=]+)([^&]+))*$/) || [];
-		var content = {
-			to: match[1] || []
-		}
-		for(var i = 2; i < match.length; i+=2)
+		var match = [], index;
+		var mailto = uri.match(/^mailto:([^?]+)/) || [];
+		var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++)
 		{
-			if(match[i+1])
-			{
-				content[match[i]] = content[match[i+1]];
-			}
+			index = hashes[i].split('=');
+			match.push(index[0]);
+			match[index[0]] = index[1];
 		}
-		
+
+		var content = {
+			to: mailto[1] || [],
+			cc: match['cc']	|| [],
+			bcc: match['bcc'] || [],
+		}
+
 		// Get open compose windows
 		var compose = egw.getOpenWindows("mail", /^compose_/);
 		if(compose.length == 0)
@@ -105,17 +109,17 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			});
 		}
 	}
-	
+
 	return {
 		/**
 		 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
-		 * 
-		 * Examples: 
+		 *
+		 * Examples:
 		 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
 		 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
 		 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
 		 * - egw.open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
-		 * 
+		 *
 		 * @param string|int|object id_data either just the id or if app=="" "app:id" or object with all data
 		 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
 		 * @param string app app-name or empty (app is part of id)
@@ -180,18 +184,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			else
 			{
 				var app_registry = this.link_get_registry(app);
-				
+
 				if (!app || !app_registry)
 				{
 					alert('egw.open() app "'+app+'" NOT defined in link registry!');
-					return;	
+					return;
 				}
 				if (typeof type == 'undefined') type = 'edit';
 				if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
 				if (typeof app_registry[type] == 'undefined')
 				{
 					alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
-					return;	
+					return;
 				}
 				url = '/index.php';
 				params = app_registry[type];
@@ -205,7 +209,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 					params[app_registry.add_app] = app_id[0];
 					params[app_registry.add_id] = app_id[1];
 				}
-				
+
 				if (typeof extra == 'string')
 				{
 					url += '?'+extra;
@@ -218,10 +222,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			}
 			return this.open_link(this.link(url, params), target, popup, target_app);
 		},
-		
+
 		/**
 		 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
-		 * 
+		 *
 		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
 		 * @param string _target optional target / window name
 		 * @param string _popup widthxheight, if a popup should be used
@@ -255,10 +259,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
 				var popup_window = _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
-				
+
 				// Remember which windows are open
 				egw().storeWindow(_target_app, popup_window);
-				
+
 				return popup_window;
 			}
 			else if (typeof _wnd.egw_link_handler == 'function' && (typeof _target == 'undefined' || _target =='_self' || typeof this.link_app_list()[_target] != "undefined"))
