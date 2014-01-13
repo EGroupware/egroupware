@@ -557,27 +557,37 @@ class addressbook_ui extends addressbook_bo
 				'icon'	=> 'mail/navbar',
 				'group' => $group,
 				'children' => array(
-						'add_to_cc' => array(
-							'caption' => lang('Add to %1',lang('CC')),
+						'add_to_to' => array(
+							'caption' => lang('Add to %1',lang('To')),
 							'no_lang' => true,
-							'checkbox'	=> true,
-							'group'	=> $group,
+							'onExecute' => 'javaScript:app.addressbook.addEmail',
+
+						),
+						'add_to_cc' => array(
+							'caption' => lang('Add to %1',lang('Cc')),
+							'no_lang' => true,
+							'onExecute' => 'javaScript:app.addressbook.addEmail',
+
 						),
 						'add_to_bcc' => array(
-							'caption' => lang('Add to %1',lang('BCC')),
+							'caption' => lang('Add to %1',lang('BCc')),
 							'no_lang' => true,
-							'checkbox'	=> true,
-							'group'	=> $group,
+							'onExecute' => 'javaScript:app.addressbook.addEmail',
+
 						),
 						'email_business' => array(
 							'caption' => lang('Add %1',lang('business email')),
 							'no_lang' => true,
-							'onExecute' => 'javaScript:app.addressbook.addEmail',
+							'checkbox' => true,
+							'group'	=> $group,
+							'onExecute' => 'javaScript:app.addressbook.mailCheckMenu',
 						),
 						'email_home' => array(
 							'caption' => lang('Add %1',lang('home email')),
 							'no_lang' => true,
-							'onExecute' => 'javaScript:app.addressbook.addEmail',
+							'checkbox' => true,
+							'group'	=> $group,
+							'onExecute' => 'javaScript:app.addressbook.mailCheckMenu',
 						),
 				),
 

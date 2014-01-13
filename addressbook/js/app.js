@@ -414,6 +414,15 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 *
+	 *
+	 */
+	mailCheckMenu: function(action, selected)
+	{
+
+	},
+
+	/**
 	 * Action function to add the email address (business or home) of the selected
 	 * contacts to a compose email popup window.
 	 *
@@ -427,29 +436,36 @@ app.classes.addressbook = AppJS.extend(
 	{
 		// Go through selected & pull email addresses from data
 		var emails = [];
-		var cc ='', bcc ='';
 		for(var i = 0; i < selected.length; i++)
 		{
 			// Pull data from global cache
 			var data = egw.dataGetUIDdata(selected[i].id) || {data:{}};
-			var email = data.data[action.id == 'email_business' ? 'email' : 'email_home'] || '';
+
+			var email_business = data.data[action.parent.children[3].checked ? 'email_business' : ''];
+			var email = data.data[action.parent.children[4].checked ? 'email' : ''];
+			if(email_business)
+			{
+				emails.push(email_business);
+			}
 			if(email)
 			{
 				emails.push(email);
 			}
 		}
-		// Add to Cc
-		if (action.parent.children[0].checked)
+		switch (action.id)
 		{
-			cc = '&cc=' + emails.join(',');
+			case "add_to_to":
+				egw.open_link('mailto:' + emails.join(','));
+				break;
+			case "add_to_cc":
+				egw.open_link('mailto:' + '?cc='  + emails.join(','));
+				//egw.mailto('mailto:');
+				break;
+			case "add_to_bcc":
+				egw.open_link('mailto:' + '?bcc=' + emails.join(','));
+				break;
 		}
-		// Add to Bcc
-		if (action.parent.children[1].checked)
-		{
-			bcc  = '&bcc=' + emails.join(',');
-		}
-		// Always open a compose, even if no emails, so user knows it worked
-		egw.open_link('mailto:' + emails.join(',') + cc + bcc );
+
 		return false;
 	},
 
