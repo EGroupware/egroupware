@@ -47,8 +47,22 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.div = $j(document.createElement('div'))
 			.addClass('et2_toolbar ui-widget-header ui-corner-all');
 
-		this.dropdowns = {};
+		//actionbox is the div for stored actions
+		this.actionbox = $j(document.createElement('div'))
+				.addClass("et2_toolbar_activeList")
+				.attr('id',this.id +'-'+ 'actionbox');
+		//actionlist is div for active actions
+		this.actionlist = $j(document.createElement('div'))
 
+			.attr('id',this.id +'-'+ 'actionlist');
+
+		this.dropdowns = {};
+		this.preference = {};
+
+		if (typeof this.preference != "undefined")
+		{
+			console.log();
+		}
 		this._build_menu(this.default_toolbar);
 	},
 
@@ -60,6 +74,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		// Remove
 		this.div.empty().remove();
+		this.actionbox.empty().remove();
+		this.actionlist.empty().remove();
 	},
 
 	/**
@@ -69,6 +85,12 @@ var et2_toolbar = et2_DOMWidget.extend(
 	{
 		// Clear existing
 		this.div.empty();
+		this.actionbox.empty();
+		this.actionlist.empty();
+		this.actionbox.append('<h></h>');
+		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
+
+		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
 
 		var last_group = false;
 		for(var name in actions)
@@ -79,7 +101,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			if(!last_group) last_group = action.group;
 			if(last_group != action.group)
 			{
-				this.div.append(" ");
+				this.actionlist.append(" ");
 				last_group = action.group;
 			}
 
@@ -90,7 +112,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			{
 				this.dropdowns[action.id] = $j(document.createElement('span'))
 					.addClass("ui-state-default")
-					.appendTo(this.div);
+					.appendTo(this.actionlist);
 				var children = {};
 				var add_children = function(root, children) {
 					for(var id in root.children)
@@ -147,6 +169,72 @@ var et2_toolbar = et2_DOMWidget.extend(
 				this._make_button(action);
 			}
 		}
+
+		// ************** Drag and Drop feature for toolbar *****
+		this.actionlist.appendTo(this.div);
+		this.actionbox.appendTo(this.div);
+
+		var toolbar =jQuery('#'+this.id+'-'+'actionlist').children(),
+			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
+			menulist = jQuery('#'+this.id+'-'+'menulist');
+
+		toolbar.draggable({
+			cancel:true,
+			//revert:"invalid",
+			containment: "document",
+			cursor: "move",
+			helper: "clone",
+		});
+		menulist.children().draggable({
+			cancel:true,
+			containment:"document",
+			helper:"clone",
+			cursor:"move",
+		});
+		var that = this;
+		toolbox.droppable({
+			accept:toolbar,
+			drop:function (event, ui) {
+					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
+					ui.draggable.appendTo(menulist);
+			},
+			tolerance:"pointer",
+
+			});
+
+		jQuery('#'+this.id+'-'+'actionlist').droppable({
+			tolerance:"pointer",
+			drop:function (event,ui) {
+				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"remove");
+				ui.draggable.appendTo(jQuery('#'+that.id+'-'+'actionlist'));
+			}
+		});
+		toolbox.accordion({
+				heightStyle:"fill",
+			  collapsible: true,
+			  active:'none'
+			});
+	},
+
+	/**
+	 * Add/Or remove an action from prefence
+	 *
+	 * @param {string} _action name of the action which needs to be stored in pereference
+	 * @param {string} _do if set to "add" add the action to preference and "remove" remove one from preference
+	 *
+	 */
+	set_prefered: function(_action,_do)
+	{
+		switch(_do)
+		{
+			case "add":
+				this.preference[_action] = _action;
+				egw.set_preference(this.egw().getAppName(),this.id,this.preference);
+				break;
+			case "remove":
+				delete this.preference[_action];
+				egw.set_preference(this.egw().getAppName(),this.id,this.preference);
+		}
 	},
 
 	/**
@@ -159,7 +247,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var button = $j(document.createElement('button'))
 			.addClass("et2_button")
 			.attr('id', this.id+'-'+action.id)
-			.appendTo(this.div);
+			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:this.actionlist);
 		if(action.iconUrl)
 		{
 			button.prepend("<img src='"+action.iconUrl+"' title='"+action.caption+"' class='et2_button_icon'/>");
