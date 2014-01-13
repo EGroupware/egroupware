@@ -301,14 +301,6 @@ class etemplate_widget
 				{
 					// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
 					$class_name = 'etemplate_widget';
-					// Don't warn about these known missing ones
-					if (!in_array($type, array(
-						'styles', 'menulist', 'tabs', 'tab', 'tabpanels', 'html',
-						'split', 'iframe', 'toolbar', 'caption', 'progress', 'label',
-					)))
-					{
-						trigger_error("Could not find a class for $type, using $class_name", E_USER_NOTICE);
-					}
 				}
 			}
 		}
