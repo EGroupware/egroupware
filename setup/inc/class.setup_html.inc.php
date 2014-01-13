@@ -152,7 +152,7 @@ class setup_html
 		if(basename($_SERVER['SCRIPT_FILENAME']) != 'index.php')
 		{
 			$index_btn = '<a href="index.php" class="link">' . lang('Setup Main Menu') . '</a>';
-			$index_img = '<img src="../phpgwapi/templates/default/images/bullet" />';
+			$index_img = '<img src="../phpgwapi/templates/default/images/bullet.png" />';
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_version',lang('version'));
