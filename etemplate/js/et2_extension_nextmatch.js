@@ -448,7 +448,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			switch(_type)
 			{
 				case "update":
-					if(!egw().dataRefreshUID(uid))
+					if(!this.egw().dataRefreshUID(uid))
 					{
 						// Could not update just that row
 						this.applyFilters();
@@ -457,9 +457,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					break;
 				case "delete":
 					// Blank the row
-					egw().dataStoreUID(uid,null);
+					this.egw().dataStoreUID(uid,null);
 					// Stop caring about this ID
-					egw().dataUnregisterUID(uid);
+					this.egw().dataUnregisterUID(uid);
 					// Update the count
 					this.options.settings.total -= 1;
 					// This triggers an invalidate, which may update the grid in needed
