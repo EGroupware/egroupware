@@ -1639,6 +1639,7 @@ unset($query['actions']);
 
 			$data["class"] = implode(' ', $css_styles);
 			//translate style-classes back to flags
+			$data['flags'] = Array();
 			if ($header['seen']) $data["flags"]['read'] = 'read';
 			foreach ($css_styles as $k => $flag) {
 				if ($flag!='mail')
@@ -1648,7 +1649,7 @@ unset($query['actions']);
 					elseif ($flag=='labelthree') {$data["flags"]['label3'] = 'label3';}
 					elseif ($flag=='labelfour') {$data["flags"]['label4'] = 'label4';}
 					elseif ($flag=='labelfive') {$data["flags"]['label5'] = 'label5';}
-					elseif ($flag=='unseen') {$data["flags"]['unread'] = 'unread';}
+					elseif ($flag=='unseen') {unset($data["flags"]['read']);}
 					else $data["flags"][$flag] = $flag;
 				}
 			}

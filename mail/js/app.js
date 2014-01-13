@@ -622,7 +622,12 @@ app.classes.mail = AppJS.extend(
 		}
 
 		//console.log("mail_preview",dataElem);
-		this.mail_selectedMails.push(_id);
+
+		// Update the internal list of selected mails, if needed
+		if(this.mail_selectedMails.indexOf(_id) < 0)
+		{
+			this.mail_selectedMails.push(_id);
+		}
 		this.mail_disablePreviewArea(false);
 		var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.toolbaractions != 'undefined')?JSON.parse(dataElem.data.toolbaractions):undefined);
 		if (toolbaractions) this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
@@ -631,6 +636,9 @@ app.classes.mail = AppJS.extend(
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
 		var messages = {};
 		messages['msg'] = [_id];
+
+		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
+		dataElem.data.flags.read = 'read';
 		this.mail_removeRowClass(messages,'unseen');
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
@@ -1216,33 +1224,57 @@ app.classes.mail = AppJS.extend(
 				var msg_unset = {msg:[]};
 				var dataElem;
 				var flags;
+				var classes = '';
 				for (i=0; i<msg.msg.length; i++)
 				{
 					dataElem = egw.dataGetUIDdata(msg.msg[i]);
+					if(typeof dataElem.data.flags == 'undefined')
+					{
+						dataElem.data.flags = {};
+					}
 					flags = dataElem.data.flags;
+					classes = dataElem.data.class || "";
+					classes = classes.split(' ');
 					// since we toggle we need to unset the ones already set, and set the ones not set
+					// flags is data, UI is done by class, so update both
+					// Flags are there or not, class names are flag or 'un'+flag
+					if(classes.indexOf(classToProcess) >= 0)
+					{
+						classes.splice(classes.indexOf(classToProcess),1);
+					}
+					if(classes.indexOf('un' + classToProcess) >= 0)
+					{
+						classes.splice(classes.indexOf('un' + classToProcess),1);
+					}
 					if (flags[_action.id])
 					{
 						msg_unset['msg'].push(msg.msg[i]);
+						classes.push('un'+classToProcess);
+						delete flags[_action.id];
 					}
 					else
 					{
 						msg_set['msg'].push(msg.msg[i]);
+						flags[_action.id] = _action.id;
+						classes.push(classToProcess);
 					}
+
+					// Update cache & call callbacks - updates list
+					dataElem.data.class = classes.join(' ');
+					egw.dataStoreUID(msg.msg[i],dataElem.data);
 				}
+
+				// Notify server of changes
 				if (msg_unset['msg'] && msg_unset['msg'].length)
 				{
-					this.mail_removeRowClass(msg_unset,classToProcess);
-					this.mail_setRowClass(msg_unset,'un'+classToProcess);
-					this.mail_flagMessages('un'+_action.id,msg_unset,(do_nmactions?false:true),false);
+					this.mail_flagMessages('un'+_action.id,msg_unset);
 				}
 				if (msg_set['msg'] && msg_set['msg'].length)
 				{
-					this.mail_removeRowClass(msg_set,'un'+classToProcess);
-					this.mail_setRowClass(msg_set,classToProcess);
-					this.mail_flagMessages(_action.id,msg_set,(do_nmactions?false:true),false);
+					this.mail_flagMessages(_action.id,msg_set);
 				}
-				this.mail_refreshMessageGrid((do_nmactions?false:true));
+				// No further update needed
+				return;
 			}
 		}
 		else
@@ -1258,14 +1290,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flagMessages: function(_flag, _elems,_isPopup,_refreshGrid)
+	mail_flagMessages: function(_flag, _elems,_isPopup)
 	{
-		//console.log('mail_flagMessages',_flag, _elems);
-		if (typeof _refreshGrid == 'undefined') _refreshGrid=true;
-		egw_message(this.egw.lang('flag messages'));
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
-			.sendRequest();
-		//if (_refreshGrid) this.mail_refreshMessageGrid(_isPopup);
+			.sendRequest(true);
 	},
 
 	/**
@@ -1764,25 +1792,30 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			var nm = this.et2.getWidgetById(this.nm_index);
-			var aO = nm.controller._objectManager.selectedChildren;
 			for (var i = 0; i < _actionObjects['msg'].length; i++)
 			{
-				for (var k = 0; k < aO.length; k++)
-				{
-					if (aO[k].id==_actionObjects['msg'][i])
-					{
-						var dataElem = $j(aO[k].iface.getDOMNode());
-						dataElem.addClass(_class);
+				var mail_uid = _actionObjects['msg'][i];
 
-					}
+				// Get the record from data cache
+				var dataElem = egw.dataGetUIDdata(mail_uid);
+				if(dataElem == null || typeof dataElem == undefined)
+				{
+					// Unknown ID, nothing to update
+					return;
 				}
+
+				// Update class
+				dataElem.data.class += ' ' + _class;
+
+				// Update record, which updates all listeners (including nextmatch)
+				egw.dataStoreUID(mail_uid,dataElem.data);
 			}
 		}
 	},
 
 	/**
-	 * mail_removeRowClass
+	 * mail_removeRowFlag
+	 * Removes a flag and updates the CSS class.  Updates the UI, but not the server.
 	 *
 	 * @param _actionObjects, the senders, or a messages object
 	 * @param _class, the class to be removed
@@ -1804,18 +1837,28 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			var nm = this.et2.getWidgetById(this.nm_index);
-			var aO = nm.controller._objectManager.selectedChildren;
 			for (var i = 0; i < _actionObjects['msg'].length; i++)
 			{
-				for (var k = 0; k < aO.length; k++)
-				{
-					if (aO[k].id==_actionObjects['msg'][i])
-					{
-						var dataElem = $j(aO[k].iface.getDOMNode());
-						dataElem.removeClass(_class);
+				var mail_uid = _actionObjects['msg'][i];
 
-					}
+				// Get the record from data cache
+				var dataElem = egw.dataGetUIDdata(mail_uid);
+				if(dataElem == null || typeof dataElem == undefined)
+				{
+					// Unknown ID, nothing to update
+					return;
+				}
+
+				// Update class
+				var classes = dataElem.data.class || "";
+				classes = classes.split(' ');
+				if(classes.indexOf(_class) >= 0)
+				{
+					classes.splice(classes.indexOf(_class),1);
+					dataElem.data.class = classes.join(' ');
+
+					// Update record, which updates all listeners (including nextmatch)
+					egw.dataStoreUID(mail_uid,dataElem.data);
 				}
 			}
 		}
