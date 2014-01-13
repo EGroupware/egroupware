@@ -173,8 +173,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	 * Destroys all 
 	 */
 	destroy: function() {
-		// Unbind 
-		$j(window).off('.' +this.options.value.app + this.options.value.id);
+		// Unbind, if bound
+		if(this.options.value && !this.options.value.id)
+		{
+			$j(window).off('.' +this.options.value.app + this.options.value.id);
+		}
 		
 		// Free the widgets
 		for(var i = 0; i < this.columns.length; i++)
