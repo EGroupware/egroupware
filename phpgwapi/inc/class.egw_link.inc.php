@@ -289,6 +289,38 @@ class egw_link extends solink
 		{
 			return False;
 		}
+		if (is_array($app2) && !$id2)
+		{
+			reset($app2);
+			$link_id = True;
+			while ($link_id && list(,$link) = each($app2))
+			{
+				if (!is_array($link))	// check for unlink-marker
+				{
+					//echo "<b>link='$link' is no array</b><br>\n";
+					continue;
+				}
+				if (is_array($id1) || !$id1)		// create link only in $id1 array
+				{
+					self::link($app1, $id1, $link['app'], $link['id'], $link['remark'],$link['owner'],$link['lastmod']);
+					continue;
+				}
+				if ($link['app'] == self::VFS_APPNAME)
+				{
+					$link_id = self::attach_file($app1,$id1,$link['id'],$link['remark']);
+				}
+				else
+				{
+					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
+						$link['remark'],$link['owner'],$link['lastmod']);
+
+					// notify both sides
+					if (!($no_notify&2)) self::notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
+					if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
+				}
+			}
+			return $link_id;
+		}
 		if (is_array($id1) || !$id1)		// create link only in $id1 array
 		{
 			if (!is_array($id1))
@@ -308,33 +340,6 @@ class egw_link extends solink
 			if (self::DEBUG)
 			{
 				_debug_array($id1);
-			}
-			return $link_id;
-		}
-		if (is_array($app2) && !$id2)
-		{
-			reset($app2);
-			$link_id = True;
-			while ($link_id && list(,$link) = each($app2))
-			{
-				if (!is_array($link))	// check for unlink-marker
-				{
-					//echo "<b>link='$link' is no array</b><br>\n";
-					continue;
-				}
-				if ($link['app'] == self::VFS_APPNAME)
-				{
-					$link_id = self::attach_file($app1,$id1,$link['id'],$link['remark']);
-				}
-				else
-				{
-					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
-						$link['remark'],$link['owner'],$link['lastmod']);
-
-					// notify both sides
-					if (!($no_notify&2)) self::notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
-					if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
-				}
 			}
 			return $link_id;
 		}
