@@ -414,15 +414,6 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 *
-	 *
-	 */
-	mailCheckMenu: function(action, selected)
-	{
-
-	},
-
-	/**
 	 * Action function to add the email address (business or home) of the selected
 	 * contacts to a compose email popup window.
 	 *
