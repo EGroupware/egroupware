@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -2352,7 +2352,14 @@ class mail_bo
 		if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
 
 		//highest precedence
-		$_folderName = $this->icServer->$types[$_type]['profileKey'];
+		try
+		{
+			$_folderName = $this->icServer->$types[$_type]['profileKey'];
+		}
+		catch (Exception $e)
+		{
+			$_folderName = false;
+		}
 		// No folder Prefs any more
 		//check prefs next
 		//if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
