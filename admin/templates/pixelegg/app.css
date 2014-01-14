@@ -65,10 +65,8 @@ img.admin_aclApp {
  * Give space to both contact view & infolog list
  */
   iframe#admin-index_iframe {
-    background-color: yellow;
-  }
-  iframe#admin-index_iframe .egwGridView_scrollarea {
-    min-height: 500px;
+    background-color: transparent;
+    /*.egwGridView_scrollarea { min-height: 500px;}*/
   }
   #addressbook-index {
     height: 100%;
@@ -98,9 +96,9 @@ img.admin_aclApp {
     margin-top: 0;
   }
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right {
     width: auto;
@@ -123,9 +121,9 @@ img.admin_aclApp {
     margin-left: 5px;
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
     outline: 0;
@@ -146,6 +144,19 @@ img.admin_aclApp {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
@@ -165,15 +176,28 @@ img.admin_aclApp {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
     width: auto;
     height: 32px;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
     background-image: url('../../../pixelegg/images/advanced-search.png');
@@ -185,28 +209,36 @@ img.admin_aclApp {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
     width: auto;
     height: 32px;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-    background-color: #0b5fa4 !important;
+    /*background-color: @egw_color_blue_lighter !important;*/
     color: #FFF;
     text-shadow: none;
     /*    height: auto;*/
     background-image: none !important;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
-    border-radius: 3px;
-    border-top-left-radius: 20px;
+    /*.border_radius_button_lefttop;*/
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
     content: "+";
@@ -217,15 +249,15 @@ img.admin_aclApp {
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
     background-color: #66a1d2 !important;
     color: #ffc200;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
+    -webkit-border-top-left-radius: 10px;
     -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-topleft: 10px;
     border-radius: 3px;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 10px;
   }
   div#addressbook-index div.filters select#infolog-index_cat_id {
     width: 10%;
@@ -251,17 +283,12 @@ img.admin_aclApp {
         div.et2_box_widget*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] {
-    background-color: #0b5fa4 !important;
+    /*background-color: @egw_color_blue_lighter !important;*/
     color: #FFF;
     text-shadow: none;
     /*    height: auto;*/
     background-image: none !important;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
-    border-radius: 3px;
-    border-top-left-radius: 20px;
+    /*.border_radius_button_lefttop;*/
     /*height: auto;*/
     color: #ffffff;
     font-size: 0.9em;
@@ -278,15 +305,15 @@ img.admin_aclApp {
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"]:hover {
     background-color: #66a1d2 !important;
     color: #ffc200;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 20px;
+    -webkit-border-top-left-radius: 10px;
     -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-topleft: 10px;
     border-radius: 3px;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 10px;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] span.et2_label {
     color: #ffffff;
@@ -400,11 +427,24 @@ img.admin_aclApp {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
   }
   div.addressbook_edit_general_picture img.photo:hover {
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     background-color: inherit !important;
   }
   div.addressbook_edit_general_picture table.uploadphoto {
@@ -606,10 +646,10 @@ img.admin_aclApp {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url:hover,
   div#addressbook-search fieldset.emailGroup td a.et2_url:hover {
-    background-color: #b3b3b3 !important;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -617,7 +657,7 @@ img.admin_aclApp {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url.url,
   div#addressbook-search fieldset.emailGroup td a.et2_url.url {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -630,7 +670,7 @@ img.admin_aclApp {
   }
   div#addressbook-edit fieldset.emailGroup td a.et2_url.email,
   div#addressbook-search fieldset.emailGroup td a.et2_url.email {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -709,7 +749,7 @@ img.admin_aclApp {
     margin: 1em;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon {
-    background-color: #f0f0f0;
+    /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -724,17 +764,17 @@ img.admin_aclApp {
     width: 32px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:hover {
-    background-color: #b3b3b3 !important;
-    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon:active {
-    background-color: #808080;
+    /*.background_color_30_gray;*/
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -742,6 +782,7 @@ img.admin_aclApp {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
   }
   div#addressbook-edit_addressbook-edit-links table#addressbook-edit_link_to {
     overflow-y: scroll;
@@ -797,6 +838,19 @@ img.admin_aclApp {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;

@@ -176,8 +176,8 @@ fieldset.emailGroup {
     /*height: 99%;*/
   }
   #addressbook-edit {
-    /*height: auto;*/
-    /*min-height: 390px;*/
+    height: auto;
+    min-height: 390px;
     overflow: auto;
   }
   div#addressbook-index div.et2_hbox_left {
@@ -248,10 +248,10 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -260,6 +260,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
@@ -279,10 +280,10 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -291,6 +292,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
@@ -311,10 +313,10 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -323,6 +325,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
@@ -653,10 +656,10 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -665,6 +668,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
   }
   div.addressbook_edit_general_picture img.photo:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -1136,10 +1140,10 @@ fieldset.emailGroup {
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -1148,6 +1152,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;

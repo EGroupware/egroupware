@@ -40,9 +40,9 @@
 
 iframe#admin-index_iframe{
     
-     background-color: yellow;
+     background-color: transparent;
      
-     .egwGridView_scrollarea { min-height: 500px;}
+     /*.egwGridView_scrollarea { min-height: 500px;}*/
     
     #admin-categories-index{
         
@@ -53,6 +53,7 @@ iframe#admin-index_iframe{
                 div.egwGridView_outer{
                     
                     td.frame {
+                        
                         
                         
                     }
@@ -127,8 +128,8 @@ div#addressbook-index{
         // erweiterte Suche
         button#addressbook-index_search{
 
-            .background-color-10-gray;
-            .color-100-gray;
+            .background_color_10_gray;
+            .color_100_gray;
 
             .Complete_Button_text_icon_before;
             background-image:url('../../../pixelegg/images/advanced-search.png') !important;
@@ -212,13 +213,13 @@ div#addressbook-index{
         .et2_hbox_right[id*="_infolog-index-header_right"]{
                 .Complete_Button_add;
                 /*height: auto;*/
-                .color-0-gray; // white
+                .color_0_gray; // white
                 font-size: 0.9em;
 
                 &:before {padding-left: 5px;}
                 &:hover {.Complete_Button_add_hover;}
 
-                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
+                span.et2_label {color: @gray_0; font-size: 0.9em;padding-right: 11px;}
                 img.et2_button {margin-top: -15px;}
 
                 }
@@ -398,9 +399,9 @@ div.addressbook_edit_general_picture {
 // Photo Upload - POPUP
 
         table.uploadphoto {
-            .background-color-10-gray;
+            .background_color_10_gray;
             width: auto;
-            .bordered(@gray-100, @gray-100, @gray-100, @gray-100);
+            .bordered(@gray_100, @gray_100, @gray_100, @gray_100);
             left: 30%;
             top: 289px;
         }
@@ -459,7 +460,7 @@ div#addressbook-search{
         /*POPUP*/
          /* edit Name */
         table.editname {
-            .background-color-10-gray;
+            .background_color_10_gray;
             z-index: 10;
             font-size: 1em;
 
@@ -506,7 +507,7 @@ div#addressbook-search{
         margin-top: 12px;
         margin-left: 1em;
         height: auto;
-        .background-color-15-gray;
+        .background_color_15_gray;
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
 
@@ -543,7 +544,7 @@ div#addressbook-search{
         margin-top: 10px;
         margin-left: 1em;
         height: auto;
-        .background-color-15-gray;
+        .background_color_15_gray;
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
 
@@ -888,7 +889,7 @@ div.addressbook.edit.general{
 // Dialog Upload photo
 
 .uploadphoto {
-    background-color: @gray-20;
+    background-color: @gray_20;
     border: 2px solid black;
     display: none;
     left: 48px;
@@ -897,7 +898,7 @@ div.addressbook.edit.general{
     top: 168px;
 }
 
-table.uploadphoto {width: 360px !important; background-color: @gray-20 !important;}
+table.uploadphoto {width: 360px !important; background-color: @gray_20 !important;}
 
 
 
