@@ -160,22 +160,6 @@ class mail_hooks
 
 			$mailConfig = config::read('mail');
 		}
-		$refreshTime = array(
-			'0' => lang('disabled'),
-			'1' => '1',
-			'2' => '2',
-			'3' => '3',
-			'4' => '4',
-			'5' => '5',
-			'6' => '6',
-			'7' => '7',
-			'8' => '8',
-			'9' => '9',
-			'10' => '10',
-			'15' => '15',
-			'20' => '20',
-			'30' => '30'
-		);
 
 		$connectionTimeout = array(
 			'0' => lang('use default timeout (20 seconds)'),
@@ -386,16 +370,6 @@ class mail_hooks
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
-			),
-			'refreshTime' => array(
-				'type'   => 'select',
-				'label'  => 'Refresh time in minutes',
-				'help'   => 'How often to check with the server for new mail',
-				'name'   => 'refreshTime',
-				'values' => $refreshTime,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced'=> 5,
 			),
 			'htmlOptions' => array(
 				'type'   => 'select',
