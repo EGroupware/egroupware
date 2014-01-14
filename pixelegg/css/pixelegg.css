@@ -203,38 +203,7 @@
     padding: 0px;
     height: 16px;
   }
-  button.et2_button_text:hover,
-  input[type=button]:hover {
-    /*background-color: @gray_30;*/
-    text-shadow: 0px 0px;
-    color: #ffffff;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    background-color: #1aa200;
-    background-size: 20px 20px;
-  }
-  button.et2_button_text:active,
-  input[type=button]:active {
-    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  }
-  /*button.et2_button_text:hover, input[type=button]:hover {
-    color: @gray_90;
-    border: 1px solid @gray_20;
-    background-color: @gray_30;
-}
-button.et2_button_text:active, input[type=button]:active {
-    background-image: none !important;
-    background-color: @gray_50;
-    color: @gray_0;
-}
-button.et2_button_text:focus, input[type=button]:focus {
-    border: 1px solid @gray_40;
-    color: @gray_0;
-    outline: none;
-}*/
+  /*look in layout_content_elements*/
   /**
  * Drop down button
  */
@@ -321,7 +290,7 @@ button.et2_button_text:focus, input[type=button]:focus {
     list-style-type: none;
   }
   .et2_selectbox .ui-multiselect-checkboxes li:hover {
-    background-color: #679fd2 !important;
+    background-color: rgba(103, 159, 210, 0.1) !important;
   }
   .et2_selectbox .ui-multiselect-checkboxes ul {
     margin: 0px auto;
@@ -526,16 +495,6 @@ action buttons, left aligned for "extra" controls
   .et2_link_entry.no_app select {
     display: none;
   }
-  .et2_link_entry .ui-icon-close {
-    display: inline-block;
-    background-color: #ffffff;
-    border: none;
-    position: relative;
-    top: 3px;
-    left: 18px;
-    cursor: pointer;
-    margin-top: -3px;
-  }
   /* Link to */
   .et2_link_to {
     width: 350px;
@@ -674,7 +633,7 @@ action buttons, left aligned for "extra" controls
     position: fixed;
     border: 1px solid #897f51;
     padding: 3px;
-    background-color: #679fd2;
+    background-color: rgba(103, 159, 210, 0.1);
     max-width: 300px;
     color: black;
   }
@@ -758,7 +717,7 @@ action buttons, left aligned for "extra" controls
 * Validation
 */
   [required] {
-    background-color: #ffc200;
+    background-color: #ffe9a6;
     -webkit-border-top-right-radius: 3px;
     -webkit-border-bottom-right-radius: 3px;
     -webkit-border-bottom-left-radius: 3px;
@@ -811,7 +770,7 @@ action buttons, left aligned for "extra" controls
   }
   .et2_grid td .gray {
     padding: 1em;
-    background-color: #679fd2;
+    background-color: rgba(103, 159, 210, 0.1);
   }
   .et2_grid td .gray span {
     background-color: transparent;
@@ -969,7 +928,7 @@ action buttons, left aligned for "extra" controls
     /*height: 16.21875px;*/
     float: left;
     margin: 5px 0 0 2px;
-    font-size: 11.2px;
+    font-size: 0.95em;
   }
   .nextmatch_header > .filters button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
@@ -978,7 +937,7 @@ action buttons, left aligned for "extra" controls
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     width: 45px;
-    height: 22px;
+    /*height: 1.6em;*/
     -webkit-border-radius: 3px;
     -webkit-border-top-right-radius: 20px;
     -moz-border-radius: 3px;
@@ -1108,18 +1067,19 @@ action buttons, left aligned for "extra" controls
 ################################################################*/
   /*ADD Button*/
   #admin-categories-index_add {
-    /*background-color: @egw_color_blue_lighter !important;*/
-    color: #FFF;
-    text-shadow: none;
-    /*    height: auto;*/
-    background-image: none !important;
-    /*.border_radius_button_lefttop;*/
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    padding: 0.5em;
   }
   #admin-categories-index_add:before {
     content: "+";
-    font-size: 1.5em;
+    font-size: 2em;
     color: #ffc200;
-    line-height: 1.1em;
+    line-height: 0.6em;
+    padding-left: 0.1em;
+    padding-right: 4em;
   }
   #admin-categories-index_add:hover {
     background-color: #66a1d2 !important;
@@ -1645,9 +1605,6 @@ action buttons, left aligned for "extra" controls
   iframe#admin-index_iframe {
     background-color: yellow;
   }
-  #admin-categories-index {
-    background-color: green;
-  }
   #admin-categories-index div.egwGridView_scrollarea {
     min-height: 500px;
   }
@@ -1771,7 +1728,7 @@ option:checked {
 .ui-widget-header .ui-state-focus,
 .ui-widget-content .ui-state-focus {
   border-color: #e6e6e6;
-  background: #679fd2;
+  background: rgba(103, 159, 210, 0.1);
   background-image: none !important;
   color: #000000;
 }
@@ -1783,7 +1740,7 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #e6e6e6;
-  background: #679fd2;
+  background: rgba(103, 159, 210, 0.1);
   background-image: none !important;
   color: #000000;
 }
@@ -1852,30 +1809,24 @@ option:checked {
 .ui-icon-close {
   /*visibility: hidden;*/
   /*background-image: url(../images/search.png);*/
-  background-image: url("/egroupware2/pixelegg/images/cancel.png");
+  background-image: url("../images/cancel.png");
   background-repeat: no-repeat;
   background-color: #ffffff;
-  background-size: contain;
+  background-size: 12px 12px;
   width: 16px;
   height: 16px;
   margin: 2px;
   padding: 1px;
   margin-top: 1px;
+  background-position: 0px 0px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
 }
 .ui-icon-close:hover {
   background-color: #b4b4b4;
-  color: #1e1e1e;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 .ui-icon-close:active {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
   background-color: #fecc44 !important;
 }
 span.ui-icon-close {
@@ -1920,7 +1871,7 @@ span.ui-icon-search {
   background-image: none;
 }
 .ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
-  background-color: #679fd2;
+  background-color: rgba(103, 159, 210, 0.1);
   font-weight: normal;
 }
 /*###########################################*/
@@ -2304,6 +2255,27 @@ span.ui-icon-search {
  * @package phpgwapi
  * @version $Id$
  */
+#egwpopup {
+  background-color: #fafafa;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-right-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topright: 20px;
+  border-radius: 3px;
+  border-top-right-radius: 20px;
+  border-width: 9px 0px 0px 0px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+}
+#egwpopup input#egwpopup_ok_button,
+#egwpopup button#desktop_perms {
+  width: 24px;
+  height: 24px;
+}
 #msg,
 .message {
   color: red;
@@ -2533,32 +2505,10 @@ textarea {
   background-color: #fafafa;
 }
 input {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  width: auto;
-  /*margin: 0.5em 0em 0.5em 0;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  font-family: Verdana, Helvetica, Sans-Serif !important;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
-}
-input:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-input:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  /*    .Complete_Button_input;
+    .basefontfamily;
+    &:hover{.Complete_Button_input_hover;}
+    &:focus{.Complete_Button_input_focus;}*/
 }
 select {
   /*.Complete_Button_select;*/
@@ -3640,7 +3590,7 @@ button[id="add"]:active {
  */
 /* TABLE STYLE */
 .innerContainer {
-  /*overflow:auto;*/
+  overflow: hidden;
   /*padding: 0;*/
 }
 .egwGridView_grid tr.th > td,
@@ -3681,6 +3631,8 @@ table.egwGridView_outer thead {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
   /* IE6-9 */
+  max-height: 118px;
+  overflow-y: auto;
 }
 table.egwGridView_outer thead tr th {
   background: transparent;
@@ -3718,7 +3670,7 @@ table.egwGridView_outer thead tr th.optcol {
   /*width: 32px !important;*/
 }
 table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: #679fd2;
+  background-color: rgba(103, 159, 210, 0.1);
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
@@ -3730,7 +3682,7 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
   display: inline-block;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
-  background-color: #679fd2;
+  background-color: rgba(103, 159, 210, 0.1);
 }
 table.egwGridView_outer tbody {
   /*Elements inside td*/
@@ -3779,16 +3731,13 @@ table.egwGridView_grid tbody {
   /*padding: 2px 3px 2px 4px;*/
   margin: 0;
   vertical-align: top;
-}
-table.egwGridView_grid tbody tr:nth-child(even) {
-  background: #ffffff;
-}
-table.egwGridView_grid tbody tr:nth-child(odd) {
-  background: #fafafa;
+  /*        tr:nth-child(even) {background: @color_even;}
+        tr:nth-child(odd) {background: @color_odd;}*/
+  /*multiple choise*/
 }
 table.egwGridView_grid tbody tr.selected {
   background-image: none;
-  background: rgba(255, 221, 115, 0.2);
+  background-color: #ffdd73 !important;
   /*.bw-gradient;*/
 }
 table.egwGridView_grid tbody tr.focused {
@@ -3801,7 +3750,7 @@ table.egwGridView_grid tr {
   border-color: #828282;
 }
 table.egwGridView_grid tr:hover {
-  background: rgba(103, 159, 210, 0.2) !important;
+  background: rgba(103, 159, 210, 0.2);
 }
 table.egwGridView_grid tr td {
   border-left: 0px;
@@ -3820,6 +3769,9 @@ table.egwGridView_grid tr td:active {
 }
 table.egwGridView_grid tr td span {
   color: #505050;
+}
+table.egwGridView_grid tr td span[id*="[info_subject]"] {
+  margin-right: 30px;
 }
 table.egwGridView_grid tr td table.customfields tbody {
   border-bottom: 0px;
@@ -3973,7 +3925,7 @@ table.customfields td span > div {
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
   font-size: 1.2em;
-  color: #679fd2;
+  color: rgba(103, 159, 210, 0.1);
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
 }

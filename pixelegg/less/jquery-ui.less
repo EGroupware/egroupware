@@ -185,22 +185,20 @@ option:checked {background-color: @egw_color_1_e;}
 .ui-icon-close{
     /*visibility: hidden;*/
      /*background-image: url(../images/search.png);*/
-     background-image: url("/egroupware2/pixelegg/images/cancel.png");
+     background-image: url("../images/cancel.png");
      background-repeat: no-repeat;
      background-color: @gray_0;
-     background-size: contain;
+     background-size: 12px 12px;
      .dimension_width_height_s;
      margin: 2px;
     padding: 1px;
     margin-top: 1px;
+    background-position: 0px 0px;
     .rounded (2px);
     
-    &:hover{ background-color: @gray_30; color: @gray_90;.box_shadow_standard_light_hover;}
+    &:hover{ background-color: @gray_30;}
 
-    &:active {
-                .box_shadow_standard_light_active !important; 
-                background-color: @color_cancel_action_active !important;
-    }
+    &:active { background-color: @color_cancel_action_active !important;    }
 }
 
 span.ui-icon-close {margin-top: 0px; top: 5px !important;}

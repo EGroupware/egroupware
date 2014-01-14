@@ -532,14 +532,7 @@ div.et2_link_entry input.ui-autocomplete-input {
     display: none;
 }
 .et2_link_entry .ui-icon-close {
-    display: inline-block;
-    background-color: @gray_0;
-    border: none;
-    position: relative;
-    top: 3px;
-    left: 18px;
-    cursor: pointer;
-    margin-top: -3px;
+
 }
 
 /* Link to */
@@ -759,11 +752,9 @@ ul.et2_vfs {
 * Validation
 */
 [required] {
-    background-color: @egw_color_1_a;
+    background-color: lighten(@egw_color_1_e, 10%);
     .border_radius (3px, 3px ,3px ,3px );
-    input{
-
-    }
+    input{    }
 }
 .invalid {
     border: 1px solid #a6261d;
@@ -975,7 +966,7 @@ div.message.floating {
     /*height: 16.21875px;*/
     float: left;
     margin: 5px 0 0 2px;
-    font-size: 11.2px;
+    font-size: 0.95em;
 }
 
 .nextmatch_header > .filters button.et2_button {
@@ -1062,7 +1053,20 @@ div.message.floating {
 /*ADD Button*/
 #admin-categories-index_add {
     
-    .Complete_Button_add;
+    .dimension_width_height_l;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+                padding: 0.5em;
+
+                
+                &:before {
+                        content: "+"; 
+                        font-size: 2em; 
+                        color: @egw_color_1; 
+                        line-height: 0.6em; 
+                        padding-left: 0.1em;
+                        padding-right: 4em;
+                }
     
     &:hover {.Complete_Button_add_hover};
     
@@ -1666,7 +1670,7 @@ iframe#admin-index_iframe{
     // Content Iframe
     #admin-categories-index{
         
-        background-color: green;
+     
         
         div.egwGridView_scrollarea { min-height: 500px;}
         
