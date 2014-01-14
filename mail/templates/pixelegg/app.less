@@ -119,15 +119,20 @@ div#mail-index{
 
         // Splitterbar
         div.splitter-bar,
-        div.splitter-bar-horizontal {}
+        div.splitter-bar-horizontal {
+            background-color: @color_splitter_bar;
+        }
 
 
 
         // Ansicht der Emails
         div#mail-index_mailPreview{
-//            padding: 3px;
+
             margin: 0;
-            .background_color_25_gray;
+            .background_color_5_gray;
+            
+            
+            
             // From
             div#mail-index_mailPreviewHeadersFrom{
                 width: 50%;
@@ -220,14 +225,18 @@ div#mail-index{
                                     padding-left: 25px;
                                     text-align: left;
                                     width: 93%;
+                                    background-color: @egw_color_2_a;
 
                         &:hover {
                                 .box_shadow_standard_light_hover;
-                                     }
+                                .border_radius_button_lefttop ;
+                                }
 
-                        &:focus {
-                                    .border_radius_button_lefttop ;
-                                   .box_shadow_standard_light_inset;
+                        &:active {
+                                background-color: @color_positive_action_active !important;    
+                                .border_radius_button_lefttop ;
+                                .box_shadow_standard_light_inset;
+                                   
                                 }
                     }
         
@@ -1201,14 +1210,11 @@ input[type=button] {
            button {
                 .dimension_width_height_m !important;
                 background-color: @gray_10;
-                /*.Complete_Button_Icon_normal;*/
                 
-/*                &:hover {
-                    .Complete_Button_Icon_hover; 
-                    background-color: @color_positive_action_hover;
-                }*/
-                
-                /*&:focus {border: none;}*/
+                img[src$="svg"]{
+            .gradient_vertical (@gray_10, @gray_100);
+                }                
+
                 
                     span {
                             padding: 0;
@@ -1257,6 +1263,23 @@ input[type=button] {
 
 
 
+/*AN / To*/
+div.mailPreviewHeaders div.mail_extraEmails {
+    display: inline-block;
+    max-height: 1.3em;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    img.et2_button_icon {
+        
+        .dimension_width_height_m;
+        
+    }
+}
+
+
+
 // Anhänge an Email
 
 #mail-index_previewAttachmentArea {
@@ -1264,14 +1287,23 @@ input[type=button] {
     .background_color_10_gray;
     border-color: @gray_10;
     .border_normal;
+    max-height: 2.6em;
     //	filter: Alpha(opacity=100);
 
-    img {width: 16px; height: 16px;}
+    img {.dimension_width_height_s;}
     td{padding: 2px;}
 
 }
 #mail-index_previewAttachmentArea.noContent {
     border:0px !important;
+}
+
+/* Button after field*/
+#mail-index_mailPreviewHeadersAttachments{
+    
+    
+    img.et2_button_icon {.dimension_width_height_m;}
+    
 }
 
 

@@ -584,7 +584,7 @@ fieldset.emailGroup {
     top: 0px !important;
   }
   button[id="addressbook-edit_button[delete]"] {
-    position: absolute;
+    /*position: absolute;*/
     right: 0.5em;
   }
   /*#######################################################*/

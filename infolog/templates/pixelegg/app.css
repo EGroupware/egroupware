@@ -277,14 +277,14 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   height: 25px;
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.filters select#infolog-index_cat_id {
-  width: 10%;
+  /*width: 10%;*/
   margin-left: 1em;
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.filters select#infolog-index_filter {
-  width: 10%;
+  /*width: 10%;*/
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.filters select#infolog-index_filter2 {
-  width: 10%;
+  /*width: 10%;*/
 }
 #infolog-index #infolog-index_nm .nextmatch_header div.filters input#infolog-index_search {
   /*                    .Complete_Button_input;
@@ -348,6 +348,9 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 }
 .infolog_fixedHeight {
   height: auto;
+}
+div#infolog-edit_info_contact input.ui-autocomplete-input {
+  width: 100%;
 }
 .searchParent input.ui-autocomplete-input {
   width: 95% !important;
