@@ -19,7 +19,7 @@
 (function() {
 
 	// Define some constants
-	var RESIZE_BORDER = 7;
+	var RESIZE_BORDER = 12;
 	var RESIZE_MIN_WIDTH = 25;
 	var RESIZE_ADD = 2; // Used to ensure mouse is under the resize element after resizing has finished
 
