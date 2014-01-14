@@ -1318,10 +1318,25 @@ class schema_proc
 		}
 		if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion: MetaPrimaryKeys(%1) = %2",False,$sTableName,$primary);
 
+		$this->GetIndexes($sTableName, $definition);
+		if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion(%1) = %2",False,$sTableName,$definition);
+
+		return $definition;
+	}
+
+	/**
+	 * Query indexes (not primary index) from database
+	 *
+	 * @param string $sTableName
+	 * @param array& $definition=array()
+	 * @return array of arrays with keys 'ix' and 'uc'
+	 */
+	public function GetIndexes($sTableName, array &$definition=array())
+	{
 		if (method_exists($this->dict,'MetaIndexes') &&
 			is_array($indexes = $this->dict->MetaIndexes($sTableName)) && count($indexes))
 		{
-			foreach($indexes as $index)
+			foreach($indexes as $index_name => $index)
 			{
 				if($this->capabilities['name_case'] == 'upper')
 				{
@@ -1334,12 +1349,10 @@ class schema_proc
 				}
 				$kind = $index['unique'] ? 'uc' : 'ix';
 
-				$definition[$kind][] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
+				$definition[$kind][$index_name] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
 			}
+			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes(%1) = %2",False,$sTableName,$indexes);
 		}
-		if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes(%1) = %2",False,$sTableName,$indexes);
-		if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion(%1) = %2",False,$sTableName,$definition);
-
 		return $definition;
 	}
 
