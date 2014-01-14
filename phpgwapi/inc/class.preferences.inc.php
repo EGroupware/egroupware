@@ -677,7 +677,7 @@ class preferences
 	 */
 	function delete_user($accountid)
 	{
-		if ($account_id > 0)
+		if ($accountid > 0)
 		{
 			$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
 		}
@@ -690,7 +690,7 @@ class preferences
 	 */
 	function delete_group($accountid)
 	{
-		if ($account_id < 0)
+		if ($accountid < 0)
 		{
 			$this->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
 		}
