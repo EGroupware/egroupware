@@ -182,10 +182,10 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -194,6 +194,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
   }
   /*in Nextmatch definiert*/
   .et2_button_icon {
@@ -211,6 +212,7 @@
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     background-color: #1aa200;
+    background-size: 20px 20px;
   }
   button.et2_button_text:active,
   input[type=button]:active {
@@ -1935,10 +1937,10 @@ span.ui-icon-search {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -1947,6 +1949,7 @@ span.ui-icon-search {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1966,6 +1969,14 @@ span.ui-icon-search {
 }
 .ui-dialog-buttonset button.ui-button-text-only:hover {
   background-color: #b4b4b4 !important;
+}
+/*###########################################*/
+/*Dialog: calendar edit series*/
+.ui-datepicker {
+  padding: 1em;
+}
+.ui-datepicker .ui-widget-header .ui-icon {
+  background-image: url("images/ui-icons_d8e7f3_256x240.png");
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -2928,6 +2939,8 @@ img {
 #egw_fw_sidebar img[src$="svg"],
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"] {
+  /*path{fill: red;}*/
+  /*stroke: none; fill: #0000ff;*/
   background-color: #0c5da5;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
@@ -2937,6 +2950,11 @@ img {
   background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
   background-image: linear-gradient(top, #0c5da5, #0c5da5);
   background-repeat: repeat-x;
+  /*            &:hover {
+              
+                 path{fill: red;}
+                
+            }*/
 }
 input,
 button,
@@ -3170,6 +3188,82 @@ a.textSidebox {
 #                           #
 #                           #
 ############################*/
+button.et2_button_text background-image[src$="svg"],
+input[type=button] background-image[src$="svg"] {
+  background-color: #b4b4b4;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-repeat: repeat-x;
+}
+button.et2_button_text:hover,
+input[type=button]:hover {
+  /*background-color: @gray_30;*/
+  text-shadow: 0px 0px;
+  color: #ffffff;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  background-color: #1aa200;
+  background-size: 20px 20px;
+}
+button.et2_button_text:active,
+input[type=button]:active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+}
+/* ########################################################################################
+ * 
+ * Button mit Bildern 
+ *
+ ######################################################################################## */
+button.et2_button_with_image {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+  background-repeat: no-repeat !important;
+  background-position: 6px center;
+  background-size: 20px 20px;
+  background-color: #b4b4b4;
+}
+button.et2_button_with_image background-color[url$="svg"] {
+  background-color: #b4b4b4;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-repeat: repeat-x;
+}
 /* ########################################################################################
  * 
  * Button löschen / delete / => color-negative-action
@@ -3190,10 +3284,10 @@ button[id="addressbook-edit_button[delete]"] {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3202,6 +3296,7 @@ button[id="addressbook-edit_button[delete]"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3226,10 +3321,10 @@ button[id="addressbook-edit_button[delete]"]:hover {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3238,6 +3333,7 @@ button[id="addressbook-edit_button[delete]"]:hover {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3261,10 +3357,10 @@ button[id="addressbook-edit_button[delete]"]:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3273,6 +3369,7 @@ button[id="addressbook-edit_button[delete]"]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3286,15 +3383,24 @@ button[id="addressbook-edit_button[delete]"]:active {
  * Button edit + save + apply + copy => color-positive-action
  *
  ######################################################################################## */
-button[id*="save"]:active {
-  background-color: #1aa200;
+button[id*="save"] img[url*="svg"],
+button[id*="apply"] img[url*="svg"],
+button[id*="copy"] img[url*="svg"],
+button[id*="edit_button[edit]"] img[url*="svg"] {
+  background-color: #b4b4b4;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-repeat: repeat-x;
+  fill: red;
 }
-button[id*="apply"]:active {
-  background-color: #1aa200;
-}
-button[id*="copy"]:active {
-  background-color: #1aa200;
-}
+button[id*="save"]:active,
+button[id*="apply"]:active,
+button[id*="copy"]:active,
 button[id*="edit_button[edit]"]:active {
   background-color: #1aa200;
 }
@@ -3304,7 +3410,7 @@ button#filemanager-select_button[ok]:active {
 /*ui-widget*/
 /*edit series*/
 button#series {
-  background-image: url('../images/edit.png') !important;
+  background-image: url('../images/edit.svg') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -3313,10 +3419,10 @@ button#series {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3325,6 +3431,7 @@ button#series {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3333,14 +3440,14 @@ button#series {
   height: 32px;
 }
 button#series:hover {
-  background-image: url('../images/edit.png') !important;
+  background-image: url('../images/edit.svg') !important;
 }
 button#series:active {
   background-color: #1aa200 !important;
 }
 /*edit exception*/
 button#exception {
-  background-image: url('../images/edit.png') !important;
+  background-image: url('../images/edit.svg') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -3349,10 +3456,10 @@ button#exception {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3361,6 +3468,7 @@ button#exception {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3369,7 +3477,7 @@ button#exception {
   height: 32px;
 }
 button#exception:hover {
-  background-image: url('../images/edit.png') !important;
+  background-image: url('../images/edit.svg') !important;
 }
 button#exception:active {
   background-color: #1aa200 !important;
@@ -3417,10 +3525,10 @@ button[id="cancel"] {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3429,6 +3537,7 @@ button[id="cancel"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3478,10 +3587,10 @@ button[id="add"] {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -3490,6 +3599,7 @@ button[id="add"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3499,41 +3609,6 @@ button[id="add"] {
 }
 button[id="add"]:active {
   background-color: #1aa200 !important;
-}
-/* ########################################################################################
- * 
- * Button mit Bildern 
- *
- ######################################################################################## */
-button.et2_button_with_image {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  -webkit-transition-timing-function: linear;
-  -moz-transition-timing-function: linear;
-  -o-transition-timing-function: linear;
-  transition-timing-function: linear;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
-  background-repeat: no-repeat !important;
-  background-position: 6px center;
-  background-size: 20px auto;
 }
 /*Button Ende #######################################################*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -3565,7 +3640,7 @@ button.et2_button_with_image {
  */
 /* TABLE STYLE */
 .innerContainer {
-  overflow: auto;
+  /*overflow:auto;*/
   /*padding: 0;*/
 }
 .egwGridView_grid tr.th > td,
@@ -3982,30 +4057,8 @@ table.customfields td span > div {
   margin: 0 auto;
   background-color: transparent;
 }
-#wrap img.bgfade {
-  position: absolute;
-  top: -22%;
-  left: 0%;
-  /*display:block;*/
-  z-index: -1;
-  width: 20%;
-}
-#wrap div.animation_login {
-  background-image: url(../../images/about.svg), url(../../images/accounts.svg), url(../../images/alarm.svg);
-  background-position: 20px -90px, 30px 80px, 0px 0px;
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  animation: animatedLogin 4s linear infinite;
-  height: 190px;
-  overflow: hidden;
-  width: 560px;
-}
-@keyframes animatedLogin {
-  from {
-    background-position: 20px 20px, 30px 80px, 0 0;
-  }
-  to {
-    background-position: 300px -90px, 30px 20px, 100% 0;
-  }
+#wrap .animation_login {
+  margin-top: 3em;
 }
 #wrap img[src$="svg"],
 #wrap background-image[url$="svg"] {
@@ -4019,6 +4072,7 @@ table.customfields td span > div {
   background-image: linear-gradient(top, #679fd2, #679fd2);
   background-repeat: repeat-x;
 }
+/*4 Bilder*/
 #img1,
 #img2,
 #img3,
@@ -4026,42 +4080,31 @@ table.customfields td span > div {
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 0;
+  top: 10em;
   z-index: -1;
   animation-name: test;
-  animation-duration: 5s;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: test;
+  -webkit-animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
   opacity: 0;
 }
+#img1 {
+  animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+}
 #img2 {
-  animation-delay: 5s;
-  -webkit-animation-delay: 5s;
+  animation-delay: 8s;
+  -webkit-animation-delay: 8s;
 }
 #img3 {
-  animation-delay: 10s;
-  -webkit-animation-delay: 10s;
+  animation-delay: 16s;
+  -webkit-animation-delay: 16s;
 }
 #img4 {
-  animation-delay: 15s;
-  -webkit-animation-delay: 15s;
-}
-.animated {
-  -webkit-animation-fill-mode: both;
-  -moz-animation-fill-mode: both;
-  -ms-animation-fill-mode: both;
-  -o-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation-duration: 3s;
-  -moz-animation-duration: 3s;
-  -ms-animation-duration: 3s;
-  -o-animation-duration: 3s;
-  animation-duration: 3s;
-}
-.animated.hinge {
-  -webkit-animation-duration: 2s;
-  -moz-animation-duration: 2s;
-  -ms-animation-duration: 2s;
-  -o-animation-duration: 2s;
-  animation-duration: 2s;
+  animation-delay: 24s;
+  -webkit-animation-delay: 24s;
 }
 @-webkit-keyframes test {
   0% {
@@ -4069,6 +4112,9 @@ table.customfields td span > div {
   }
   50% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 @keyframes test {
@@ -4078,45 +4124,8 @@ table.customfields td span > div {
   50% {
     opacity: 1;
   }
-}
-@-webkit-keyframes some-animation {
-  from {
-    width: 254px;
-  }
-  to {
-    width: 512px;
-  }
-}
-@-moz-keyframes some-animation {
-  from {
-    width: 254px;
-  }
-  to {
-    width: 512px;
-  }
-}
-@-ms-keyframes some-animation {
-  from {
-    width: 254px;
-  }
-  to {
-    width: 512px;
-  }
-}
-@-o-keyframes some-animation {
-  from {
-    width: 254px;
-  }
-  to {
-    width: 512px;
-  }
-}
-@keyframes some-animation {
-  from {
-    width: 254px;
-  }
-  to {
-    width: 512px;
+  100% {
+    opacity: 0;
   }
 }
 /**
@@ -4207,10 +4216,10 @@ table.customfields td span > div {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
-  -webkit-transition-property: background;
-  -moz-transition-property: background;
-  -o-transition-property: background;
-  transition-property: background;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -4219,6 +4228,8 @@ table.customfields td span > div {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
+  background-color: #cdcdcd;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
@@ -4239,6 +4250,8 @@ table.customfields td span > div {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
   text-decoration: none;
+  height: 16px;
+  font-size: 1.1em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   color: #808080;
@@ -4259,8 +4272,8 @@ table.customfields td span > div {
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
   margin-left: 0px;
@@ -4270,15 +4283,15 @@ table.customfields td span > div {
   content: "";
   background-image: url(../images/topmenu_items/setup.png);
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl:before {
   padding-right: 20px;
   content: "";
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background-image: url(../images/topmenu_items/access.png);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats:before {
@@ -4286,32 +4299,32 @@ table.customfields td span > div {
   padding-right: 20px;
   content: "";
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_preferences:before {
   background-image: url(../images/topmenu_items/password.png);
   padding-right: 20px;
   content: "";
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual:before {
   background-image: url(../images/topmenu_items/help.png);
   padding-right: 20px;
   content: "";
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_search:before {
   background-image: url(../images/topmenu_items/search.png);
   padding-right: 20px;
   content: "";
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout:before {
   background-image: url(../images/topmenu_items/logout.png);
@@ -4626,6 +4639,7 @@ table.customfields td span > div {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header h1 {
   margin: 0 0 10px 0;
   padding-top: 0.31em;
+  padding-left: 3em;
   color: #999999;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active {
@@ -4839,8 +4853,8 @@ table.customfields td span > div {
   color: #FFF;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a img {
-  height: 16px;
   width: 16px;
+  height: 16px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a:hover {
   padding: 5px 30px 5px 0px;
@@ -4870,12 +4884,11 @@ table.customfields td span > div {
   display: inline-block;
   height: 24px;
   padding-left: 0;
-  padding-right: 10px;
+  padding-right: 0px;
   float: left;
   /*filter grey*/
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  /* Firefox 10+, Firefox on Android */
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
@@ -4884,6 +4897,11 @@ table.customfields td span > div {
   /*filter: url(grayscale.svg);  Firefox 4+ */
   filter: gray;
   /* IE 6-9 */
+  /*                path {color: red}
+                
+                svg:hover path {fill: red;}
+                
+                filter: hue-rotate(90deg);*/
 }
 #egw_fw_sidebar #egw_fw_splitter {
   position: absolute;
@@ -5197,7 +5215,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   margin: 5px 1px 0 1em;
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  /* Firefox 10+, Firefox on Android */
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
@@ -5467,6 +5484,9 @@ tr.dialog-header4 .et2_label {
 }
 .dialog-footer-toolbar button {
   height: 32px;
+}
+.dialog-footer-toolbar button[id="addressbook-edit_button[delete]"] {
+  float: right;
 }
 .dialog-footer-toolbar .et2_selectbox {
   height: 32px;

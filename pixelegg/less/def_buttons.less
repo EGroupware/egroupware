@@ -27,10 +27,11 @@
     .rounded (3px);
     color: @gray_100;
     
-        -webkit-transition-property: background;
-       -moz-transition-property: background;
-         -o-transition-property: background;
-            transition-property: background;
+    
+        -webkit-transition-property: background-color;
+       -moz-transition-property: background-color;
+         -o-transition-property: background-color;
+            transition-property: background-color;
     -webkit-transition-duration: 0.5s;
        -moz-transition-duration: 0.5s;
          -o-transition-duration: 0.5s;
@@ -39,7 +40,7 @@
        -moz-transition-timing-function: linear;
          -o-transition-timing-function: linear;
             transition-timing-function: linear;
-    
+    background-color: @gray_30;
     
 }
 
@@ -297,5 +298,16 @@
 
     width: 93%;
 }
+
+
+/*#####################################################
+
+Images svg
+
+#####################################################*/
+
+
+/*delete*/
+img[url*="delete"]{.gradient_vertical (@gray_30, @gray_30);}
 
 //

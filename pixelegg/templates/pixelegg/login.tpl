@@ -20,7 +20,7 @@
                         <input type="hidden" name="account_type" value="u" />
                     </td>
                     <td rowspan="6">
-                        <img src="{template_set}/images/password.png" />
+                        <img src="{template_set}/images/password.svg" />
                     </td>
                 </tr>
                 <!-- BEGIN language_select -->
@@ -71,9 +71,10 @@
 
 <div id="wrap">
     
-    <div class="div.animation_login">
+    <div class="animation_login">
     
 <img id="img1" src="pixelegg/images/about.svg" alt="STYLITE" title="STYLITE">
 <img id="img2" src="pixelegg/images/accounts.svg" alt="EGROUPWARE" title="EGROUPWARE">
 <img id="img3" src="pixelegg/images/alarm.svg" alt="EGROUPWARE" title="EGROUPWARE">
+<img id="img4" src="pixelegg/images/cake.svg" alt="EGROUPWARE" title="EGROUPWARE">
 </div>

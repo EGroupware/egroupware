@@ -92,15 +92,18 @@
                     /*.Button_size_square_32;*/
                     padding: 0.3em 0.4em;
                     .Complete_Button_normal;
+                    background-color: @gray_20;
 
 
-                    &:hover{.Complete_Button_hover;.color_100_gray;}
+                    &:hover{.Complete_Button_hover; .color_100_gray;}
                     &:active {.Complete_Button_active;}
                     .transition (0.2s, ease-out);
 
                     a {
                         .color_100_gray; 
                         text-decoration: none; 
+                        .dimension_height_s;
+                        font-size: 1.1em;
 
                         &:hover {
                             .color_50_gray;
@@ -125,7 +128,7 @@
                         content: " ";
                         background-image: url(../images/topmenu_items/home.png);
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }
 
                 }
@@ -139,7 +142,7 @@
                         content: "";
                         background-image: url(../images/topmenu_items/setup.png);
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }    
                 } 
 
@@ -149,7 +152,7 @@
                         padding-right: 20px;
                         content: "";
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                         background-image: url(../images/topmenu_items/access.png);
                     }    
                 }               
@@ -160,7 +163,7 @@
                         padding-right: 20px;
                         content: "";
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }    
                 }               
                 /*password*/
@@ -170,7 +173,7 @@
                         padding-right: 20px;
                         content: "";
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }    
                 }               
                 /*help*/
@@ -180,7 +183,7 @@
                         padding-right: 20px;
                         content: "";
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }    
                 }               
                 /*Search*/
@@ -190,7 +193,7 @@
                         padding-right: 20px;
                         content: "";
                         background-repeat: no-repeat;
-                        .dimension_width_height_s;
+                        .dimension_width_height_xs;
                     }    
                 }               
                 /*logout*/
@@ -551,6 +554,7 @@
                 h1 {
                     margin: 0 0 10px 0;
                     padding-top: 0.31em;
+                    padding-left: 3em;
                     .color_40_gray;
                 }
             }
@@ -682,7 +686,7 @@
                             color: #FFF;
 
 
-                            img {height: 16px; width: 16px;}
+                            img {.dimension_width_height_s;}
                         }
 
                         a:hover {
@@ -716,11 +720,17 @@
                 .dimension_height_m;
 
                 padding-left: 0;
-                padding-right: 10px;
+                padding-right: 0px;
                 float: left;
 
                 /*filter grey*/
-                .img_filter_gray
+                .img_filter_gray;
+                
+/*                path {color: red}
+                
+                svg:hover path {fill: red;}
+                
+                filter: hue-rotate(90deg);*/
             }
         }
 

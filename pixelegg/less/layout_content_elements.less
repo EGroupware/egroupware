@@ -550,7 +550,16 @@ img
 #egw_fw_sidebar img[src$="svg"],
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"]{
+    
+            /*path{fill: red;}*/
+             /*stroke: none; fill: #0000ff;*/
             .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+            
+/*            &:hover {
+              
+                 path{fill: red;}
+                
+            }*/
 }
 
 
@@ -861,6 +870,40 @@ a.textSidebox
 button{
  // siehe etemplate2.less
 }
+
+button.et2_button_text, 
+input[type=button] {
+    
+        background-image[src$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
+    
+        &:hover{ 
+            /*background-color: @gray_30;*/ 
+            text-shadow: 0px 0px;
+            color: @gray_0;
+            .box_shadow_standard_light_hover;
+            background-color: @color_positive_action_active;
+            background-size: 20px 20px;
+           }
+
+        &:active {.box_shadow_standard_light_active !important;}
+    
+}
+
+/* ########################################################################################
+ * 
+ * Button mit Bildern 
+ *
+ ######################################################################################## */
+button.et2_button_with_image{ 
+        .Complete_Button_text_icon_before;
+        background-repeat: no-repeat !important;
+        background-position: 6px center;
+        background-size: 20px 20px;
+        background-color: @gray_30;
+        background-color[url$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
+    
+}
+
 /* ########################################################################################
  * 
  * Button löschen / delete / => color-negative-action
@@ -902,18 +945,17 @@ button[id="addressbook-edit_button[delete]"]
  *
  ######################################################################################## */            
  
-button[id*="save"] {
-    &:active {background-color: @color_positive_action_active;}
-}
-button[id*="apply"]{
-    &:active {background-color: @color_positive_action_active;}
-}
-button[id*="copy"]{  
-    &:active {background-color: @color_positive_action_active;}
-   } 
+button[id*="save"],
+button[id*="apply"],
+button[id*="copy"],
 button[id*="edit_button[edit]"]{
+    
+    img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
+    
+    
     &:active {background-color: @color_positive_action_active;}
 }
+
 
 button#filemanager-select_button[ok]{
     &:active {background-color: @color_positive_action_active;}
@@ -922,16 +964,16 @@ button#filemanager-select_button[ok]{
 /*ui-widget*/
  /*edit series*/
 button#series {
-    background-image:url('../images/edit.png') !important;
+    background-image:url('../images/edit.svg') !important;
     .Complete_Button_text_icon_before;
-    &:hover {background-image:url('../images/edit.png') !important;}
+    &:hover {background-image:url('../images/edit.svg') !important;}
     &:active {background-color: @color_positive_action_active !important;}
 }
 /*edit exception*/
 button#exception {
-        background-image:url('../images/edit.png') !important;
+        background-image:url('../images/edit.svg') !important;
     .Complete_Button_text_icon_before;
-    &:hover {background-image:url('../images/edit.png') !important;}
+    &:hover {background-image:url('../images/edit.svg') !important;}
     &:active {background-color: @color_positive_action_active !important;}
 }
 
@@ -993,18 +1035,7 @@ button[id="add"]{
                 &:active {background-color: @color_positive_action_active !important;}
 }
 
-/* ########################################################################################
- * 
- * Button mit Bildern 
- *
- ######################################################################################## */
-button.et2_button_with_image{ 
-        .Complete_Button_text_icon_before;
-        background-repeat: no-repeat !important;
-        background-position: 6px center;
-        background-size: 20px auto;
-    
-}
+
 
 
 /*Button Ende #######################################################*/
