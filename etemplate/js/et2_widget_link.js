@@ -235,7 +235,7 @@ var et2_link_to = et2_inputWidget.extend(
 				self.filesUploaded(event);
 
 				// Auto-link uploaded files
-				if(self.options.value.to_id) self.createLink(event);
+				self.createLink(event);
 			}
 		};
 
@@ -326,7 +326,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 			// Server says it's OK, but didn't store - we'll send this again on submit
 			// This happens if you link to something before it's saved to the DB
-			if(typeof success == "object" && success["Array:"])
+			if(typeof success == "object")
 			{
 				// Save as appropriate in value
 				var i = 0;
@@ -334,23 +334,27 @@ var et2_link_to = et2_inputWidget.extend(
 				{
 					this.options.value = {};
 				}
-				if(typeof this.options.value.to_id != "object")
+				this.options.value.to_id = success;
+				for(var link in success)
 				{
-					this.options.value.to_id = [];
-				}
-				i = this.options.value.to_id.length;
-				this.options.value.to_id[i] = success["Array:"].app[0];
-				
-				// Fake it for the UI
-				var fake_data = {
 					// Icon should be in registry
-					icon: egw.link_get_registry(this.options.value.to_id[i].app,'icon'),
-					app: this.options.value.to_id[i].app,
-					id: this.options.value.to_id[i].id,
-					// Make it easy to refer back if user deletes before saving
-					widget: this,
-					value_index: i
-				};
+					if(typeof success[link].icon == 'undefined')
+					{
+						success[link].icon = egw.link_get_registry(success[link].app,'icon');
+						// No icon, try by mime type - different place for un-saved entries
+						if(success[link].icon == false && success[link].id.type)
+						{
+							// Triggers icon by mime type, not thumbnail or app
+							success[link].type = success[link].id.type;
+							success[link].icon = true;
+						}
+					}
+					// Special handling for file - if not existing, we can't ask for title
+					if(success[link].app == 'file' && typeof success[link].title == 'undefined')
+					{
+						success[link].title = success[link].id.name || '';
+					}
+				}
 			}
 
 			// Look for a link-list with the same ID, refresh it
@@ -369,14 +373,31 @@ var et2_link_to = et2_inputWidget.extend(
 				this, et2_link_list
 			);
 			
-			// If there's fake data (entry is not yet saved), updating the list will
-			// not work, so add it in.
-			if(list_widget && fake_data)
+			// If there's an array of data (entry is not yet saved), updating the list will
+			// not work, so add them in explicitly.
+			if(list_widget && success)
 			{
-				egw.link_title(fake_data.app, fake_data.id, function(title) {
-					fake_data.title = title;
-					list_widget._add_link(fake_data);
-				});
+				// Clear list
+				list_widget.set_value(null);
+
+				// Add temp links in
+				for(var link_id in success)
+				{
+					var link = success[link_id];
+					if(typeof link.title == 'undefined')
+					{
+						// Callback to server for title
+						egw.link_title(link.app, link.id, function(title) {
+							link.title = title;
+							list_widget._add_link(link);
+						});
+					}
+					else
+					{
+						// Add direct
+						list_widget._add_link(link);
+					}
+				}
 			}
 		}
 		else

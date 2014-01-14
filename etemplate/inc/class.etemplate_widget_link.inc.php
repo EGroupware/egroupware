@@ -140,7 +140,7 @@ class etemplate_widget_link extends etemplate_widget
 	 */
 	public static function ajax_link($app, $id, Array $links) {
 		// Files need to know full path in tmp directory
-		foreach($links as &$link) {
+		foreach($links as $key => $link) {
 			if($link['app'] == egw_link::VFS_APPNAME) {
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
@@ -151,7 +151,7 @@ class etemplate_widget_link extends etemplate_widget
 					$path = $link['id'].'+';
 				}
 				$link['tmp_name'] = $path;
-				$link['id'] = $link;
+				$links[$key]['id'] = $link;
 			}
 		}
 		$result = egw_link::link($app, $id, $links);
