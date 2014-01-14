@@ -106,6 +106,12 @@ class egw_link extends solink
 	 * appname used for returned attached files (!= 'filemanager'!)
 	 */
 	const VFS_APPNAME = 'file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
+
+	/**
+	 * appname used for linking existing files to VFS
+	 */
+	const VFS_LINK = 'link';
+
 	/**
 	 * Baseurl for the attachments in the vfs
 	 */
@@ -309,6 +315,10 @@ class egw_link extends solink
 				{
 					$link_id = self::attach_file($app1,$id1,$link['id'],$link['remark']);
 				}
+				else if ($link['app'] == self::VFS_LINK)
+				{
+					$link_id = self::link_file($app1,$id1, $link['id'],$link['remark']);
+				}
 				else
 				{
 					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
@@ -343,6 +353,14 @@ class egw_link extends solink
 			}
 			return $link_id;
 		}
+		if ($app1 == self::VFS_LINK)
+		{
+			return self::link_file($app2,$id2,$id1,$remark);
+		}
+		elseif ($app2 == self::VFS_LINK)
+		{
+			return self::link_file($app1,$id1,$id2,$remark);
+		}
 		if ($app1 == self::VFS_APPNAME)
 		{
 			return self::attach_file($app2,$id2,$id1,$remark);
@@ -368,7 +386,7 @@ class egw_link extends solink
 	 */
 	static function temp_link_id($app,$id)
 	{
-		return $app.':'.($app != self::VFS_APPNAME ? $id : $id['name']);
+		return $app.':'.($app != self::VFS_APPNAME && $app != self::VFS_LINK ? $id : $id['name']);
 	}
 
 	/**
@@ -1139,6 +1157,29 @@ class egw_link extends solink
 		return $Ok ? -$Ok['ino'] : false;
 	}
 
+	/**
+	 * Links the entry to an existing file in the VFS
+	 *
+	 * @param string $app appname to link the file to
+	 * @param string $id id in $app
+	 * @param string $file VFS path to link to
+	 * @param string $comment='' comment to add to the link
+	 */
+	static function link_file($app,$id,$file,$comment='')
+	{
+		$app_path = self::vfs_path($app,$id);
+		$ok = true;
+		if (file_exists($app_path) || ($Ok = mkdir($app_path,0,true)))
+		{
+			if (!egw_vfs::stat($file))
+			{
+				error_log(__METHOD__. ' (Link target ' . egw_vfs::decodePath($file) . ' not found!');
+				return false;
+			}
+			$link = egw_vfs::concat($app_path,egw_vfs::basename($file));
+		}
+		return egw_vfs::symlink($file,$link);
+	}
 	/**
 	 * deletes a single or all attached files of an entry (for all there's no acl check, as the entry probably not exists any more!)
 	 *

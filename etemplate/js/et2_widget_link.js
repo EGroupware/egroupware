@@ -190,14 +190,25 @@ var et2_link_to = et2_inputWidget.extend(
 		}
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		$j(this.vfs_select.getDOMNode()).change( function() {
-			self.getRoot().iterateOver(
-				function(widget) {
-					if(widget.id == self.id) {
-						widget._get_links();
-					}
-				},
-				self, et2_link_list
-			);
+			var values = true;
+			// If entry not yet saved, store for linking on server
+			if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
+			{
+				values = self.options.value.to_id || {};
+				var files = self.vfs_select.getValue();
+				for(var i = 0; i < files.length; i++)
+				{
+					values['link:'+files[i]] = {
+						app: 'link',
+						id: files[i],
+						type: 'unknown',
+						icon: 'link',
+						remark: '',
+						title: files[i]
+					};
+				}
+			}
+			self._link_result(values);
 		});
 		
 		// File upload
@@ -329,7 +340,6 @@ var et2_link_to = et2_inputWidget.extend(
 			if(typeof success == "object")
 			{
 				// Save as appropriate in value
-				var i = 0;
 				if(typeof this.options.value != "object")
 				{
 					this.options.value = {};

@@ -225,17 +225,10 @@ class etemplate_widget_link extends etemplate_widget
 	public static function link_existing($app_id, $files)
 	{
 		list($app, $id) = explode(':', $app_id);
-		$app_path = "/apps/$app/$id";
 
 		if(!is_array($files)) $files = array($files);
 		foreach($files as $target) {
-			if (!egw_vfs::stat($target))
-			{
-				return lang('Link target %1 not found!',egw_vfs::decodePath($target));
-				break;
-			}
-			$link = egw_vfs::concat($app_path,egw_vfs::basename($target));
-			egw_vfs::symlink($target,$link);
+			egw_link::link_file($app, $id, $target);
 		}
 	}
 
