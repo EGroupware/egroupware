@@ -312,17 +312,21 @@ app.classes.calendar = AppJS.extend(
 			var timestamp = ev.target.getAttribute('data-date').split("|");
 			var owner = ev.target.getAttribute('id').split("_");
 
-			var ownerNum = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
+			var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
+			if (owner[2].match( /Or/g))
+			{
+				ownerId = 'r' + ownerId;
+			}
 			var date = timestamp[0];
 			var hour = timestamp[1];
 			var minute = timestamp[2];
-			if (ownerNum == 0)
+			if (ownerId == 0)
 			{
 				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute,'_blank','700x700');
 			}
 			else
 			{
-				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerNum,'_blank','700x700');
+				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerId,'_blank','700x700');
 			}
 		});
 
