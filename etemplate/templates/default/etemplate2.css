@@ -454,6 +454,7 @@ action buttons, left aligned for "extra" controls
  */
 /* Link entry - x button*/
 div.et2_link_entry {
+  width: 100%;
   white-space: nowrap;
 }
 div.et2_link_entry:after {

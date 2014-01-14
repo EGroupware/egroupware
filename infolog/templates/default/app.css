@@ -13,6 +13,7 @@
 .infolog_planned { font-style:italic; }
 table.infolog_fullWidth { width: 100%; }
 td.infolog_infoId:before { content:"#" }
+#infolog-edit_info_contact { width: 98%;}
 .infolog_fixedHeight { height: 12px; }
 .noWrap { white-space: nowrap; }
 .infolog_user_filter select { width: 100px; }
