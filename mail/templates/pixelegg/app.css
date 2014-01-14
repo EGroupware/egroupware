@@ -613,7 +613,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
   position: absolute;
   right: 0px;
-  margin: 5px 5px 0 0;
+  margin: 25px 5px 0 0;
 }
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 100%;
@@ -1540,14 +1540,14 @@ input[type=button] {
   background-color: #e6e6e6;
 }
 #mail-index_toolbar button img[src$="svg"] {
-  background-color: #8a8a8a;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZTZlNmU2IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMDAwMDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #e6e6e6, #000000);
-  background-image: -ms-linear-gradient(top, #e6e6e6, #000000);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e6e6), to(#000000));
-  background-image: -webkit-linear-gradient(top, #e6e6e6, #000000);
-  background-image: -o-linear-gradient(top, #e6e6e6, #000000);
-  background-image: linear-gradient(top, #e6e6e6, #000000);
+  background-color: #6c6c6c;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMDAwMDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #000000);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #000000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#000000));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #000000);
+  background-image: -o-linear-gradient(top, #b4b4b4, #000000);
+  background-image: linear-gradient(top, #b4b4b4, #000000);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button span {
