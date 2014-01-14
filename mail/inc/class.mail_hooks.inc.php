@@ -95,14 +95,12 @@ class mail_hooks
 			'edit_id'    => 'id',
 			//'edit_popup'  => '870xegw_getWindowOuterHeight()',
 			'edit_popup'  => '870x800',
-			// register fmail as handler for .eml files
+			// register mail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
-					'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
-					//'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
-					'mime_popup' => '870xegw_getWindowOuterHeight()',
-					//'mime_popup' => '870x800',
+					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_url'   => 'formData[file]',
+					'mime_popup' => '870xegw_getWindowOuterHeight()',
 				),
 			),
         );
