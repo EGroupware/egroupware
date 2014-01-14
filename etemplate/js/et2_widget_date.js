@@ -99,7 +99,7 @@ var et2_date = et2_inputWidget.extend(
 				d.setMonth(date_inst.selectedMonth);
 				d.setDate(date_inst.selectedDay);
 			}
-			if(inst && inst.hour)
+			if(inst && typeof inst.hour != 'undefined')
 			{
 				d.setHours(inst.hour);
 				d.setMinutes(inst.minute);
