@@ -510,7 +510,7 @@ class mail_bo
 	 * getAllIdentities - function to gather the identities connected to the current user
 	 * @return array - array(email=>realname)
 	 */
-	function getAllIdentities() {
+	static function getAllIdentities() {
 		$userEMailAdresses = array();
 		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
 		{

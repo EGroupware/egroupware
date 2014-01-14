@@ -948,7 +948,7 @@ class mail_compose
 */
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
-		$allIdentities = $this->mail_bo->getAllIdentities();
+		$allIdentities = mail_bo::getAllIdentities();
 		$selectedMailAccount = ($content['mailaccount']?$content['mailaccount']:$this->mail_bo->profileID);
 		$acc = emailadmin_account::read($this->mail_bo->profileID);
 		$selectSignatures = array(
@@ -959,13 +959,12 @@ class mail_compose
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 		// not set? -> use default, means full display of all available data
 		if (!isset(mail_bo::$mailConfig['how2displayIdentities'])) mail_bo::$mailConfig['how2displayIdentities'] ='';
-		$globalIds = 0;
 		$defaultIds = array();
 		$identities = array();
 		foreach($allIdentities as $key => $singleIdentity) {
 			if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
 			$iS = mail_bo::generateIdentityString($singleIdentity);
-			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
+			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
 			{
 				$id_prepend ='';
 			}
@@ -994,7 +993,7 @@ class mail_compose
 		foreach($allSignatures as $key => $singleIdentity) {
 			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
 			$iS = mail_bo::generateIdentityString($singleIdentity);
-			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
+			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
 			{
 				$id_prepend ='';
 			}

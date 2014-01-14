@@ -79,7 +79,7 @@ class mail_sieve
 
 		$this->mailPreferences  =& $this->mailbo->mailPreferences;
 		$this->mailConfig	= config::read('mail');
-		$allIdentities = $this->mailbo->getAllIdentities();
+		$allIdentities = mail_bo::getAllIdentities();
 		$defaultIdentity = $this->mailbo->getDefaultIdentity();
 		$this->currentIdentity = $allIdentities[$defaultIdentity];
 		$this->currentIdentity['identity_string'] = mail_bo::generateIdentityString($allIdentities[$defaultIdentity],true);
@@ -456,7 +456,7 @@ class mail_sieve
 
 		}
 
-		$allIdentities = $this->mailbo->getAllIdentities();
+		$allIdentities = mail_bo::getAllIdentities();
 		$defaultIdentity = $this->mailbo->getDefaultIdentity();
 		foreach($allIdentities as $key => $singleIdentity)
 		{
