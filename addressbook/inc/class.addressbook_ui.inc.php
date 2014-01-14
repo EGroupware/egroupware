@@ -897,6 +897,7 @@ window.egw_LAB.wait(function() {
 					'action' => 'addressbook',
 					'action_id' => implode(',',$checked),
 					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',
+					'ajax' => 'true'
 				));
 				break;
 
