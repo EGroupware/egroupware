@@ -129,6 +129,31 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				}
 			}
 			return image;
+		},
+
+		/**
+		 * Create DOM img or svn element depending on url
+		 *
+		 * @param {string} _url source url
+		 * @param {string} _alt alt attribute for img tag
+		 * @returns DOM node
+		 */
+		image_element: function(_url, _alt)
+		{
+			var icon;
+			if (_url.match(/\.svg$/))
+			{
+				icon = document.createElement('object');
+				icon.type = 'image/svg+xml';
+				icon.data = _url;
+			}
+			else
+			{
+				icon = document.createElement('img');
+				icon.src = _url;
+				if (_alt) icon.alt = _alt;
+			}
+			return icon;
 		}
 	}
 });
