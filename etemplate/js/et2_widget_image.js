@@ -20,10 +20,10 @@
 
 /**
  * Class which implements the "image" XET-Tag
- * 
+ *
  * @augments et2_baseWidget
- */ 
-var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"src": {
@@ -62,7 +62,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_image
 	 */
 	init: function() {
@@ -74,7 +74,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		{
 			this.image.attr("alt", this.options.label).attr("title", this.options.label);
 		}
-		if (this.options.href) 
+		if (this.options.href)
 		{
 			this.image.addClass('et2_clickable');
 		}
@@ -84,7 +84,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 		this.setDOMNode(this.image[0]);
 	},
-	
+
 	click: function()
 	{
 		if(this.options.href)
@@ -106,7 +106,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			var manager = this.getArrayMgr("content");
 			if(manager) {
 				var src = manager.getEntry(_attrs["src"]);
-				if (typeof src != "undefined")
+				if (typeof src != "undefined" && src !== null)
 				{
 					if(typeof src == "object")
 					{

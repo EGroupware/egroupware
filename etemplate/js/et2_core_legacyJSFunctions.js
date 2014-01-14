@@ -48,7 +48,7 @@
 			var _cname = widget.getPath() ? widget.getPath().join("[") : false;
 			_val = _val.replace(/form::name\(/g, "'"+widget.getRoot()._inst.uniqueId+"_'+"+(_cname ? "et2_form_name('"+_cname+"'," : '('));
 		}
-	
+
 		if (_val.indexOf('egw::lang(') != -1)
 		{
 			_val = _val.replace(/egw::lang\(/g,'egw.lang(');
@@ -96,7 +96,7 @@
 		// Check whether _code is simply "1" -- if yes replace it accordingly
 		if (_code === '1')
 		{
-			_code = 'widget.getInstanceManager().submit(); return true;';
+			_code = 'widget.getInstanceManager().submit(); return false;';
 		}
 
 		// Check whether some pseudo-variables still reside inside of the code,
