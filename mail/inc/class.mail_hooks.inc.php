@@ -815,7 +815,7 @@ class mail_hooks
 		} catch (Exception $e) {
 			// TODO: This is ugly. Log a bit nicer!
 			$error = $e->getMessage();
-			error_log(__METHOD__.__LINE__.' # '.self::_appname.' (user: '.$recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
+			error_log(__METHOD__.__LINE__.' # '.' (user: '.$recipient->account_lid.'): cannot connect to mailbox with Profile:'.$activeProfile.'. Please check your prefs!');
 			if (!empty($error)) error_log(__METHOD__.__LINE__.' # '.$error);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 			return false; // cannot connect to mailbox
