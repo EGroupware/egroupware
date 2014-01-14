@@ -93,7 +93,7 @@ class etemplate_widget_link extends etemplate_widget
 	public static function ajax_link_search($app, $type, $pattern, $options=array()) {
 		$options['type'] = $type ? $type : $options['type'];
 		$links = egw_link::query($app, $pattern, $options);
-
+		$links = array_combine(array_map(create_function('$k', 'return (string)" ".$k;'), array_keys($links)), $links);
 		$response = egw_json_response::get();
 		$response->data($links);
 	}
