@@ -86,24 +86,27 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	add_cal: function(_action, _senders)
 	{
-		if (!_senders[0].id.match(/^[0-9]+$/))
+		if (!_senders[0].id.match(/^(?:addressbook::)?[0-9]+$/))
 		{
 			// send org-view requests to server
 			_action.data.nm_action = "submit";
+			nm_action(_action, _senders);
 		}
 		else
 		{
-			// call nm_action's popup, but already replace id's in url, because they need to be prefix with a "c"
-			if (_action.data.popup) _action.data.nm_action = "popup";
 			var ids = "";
 			for (var i = 0; i < _senders.length; i++)
 			{
-				ids += "c" + _senders[i].id + ((i < _senders.length - 1) ? "," : "");
+				// Remove UID prefix for just contact_id
+				var id = _senders[i].id.split('::');
+				ids += "c" + id[1] + ((i < _senders.length - 1) ? "," : "");
 			}
-			// we cant just replace $id, as under jdots this can get called multiple times (with already replaced url)!
-			_action.data.url = _action.data.url.replace(/(owner|participants)=(0%2C)?[^&]+/,"$1=$2"+ids);
+			var extra = {};
+			extra[_action.data.url.indexOf('owner') > 0 ? 'owner' : 'participants'] = ids;
+
+			// Use framework to add calendar entry
+			egw.open('','calendar','add',extra);
 		}
-		nm_action(_action, _senders);
 	},
 
 	/**
