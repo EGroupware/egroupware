@@ -207,7 +207,8 @@ var et2_date = et2_inputWidget.extend(
 			// User blanked the box
 			return null;
 		}
-		// Convert to timestamp
+		// Convert to timestamp - no seconds
+		this.date.setSeconds(0,0);
 		return Math.round(this.date.valueOf() / 1000);
 	}
 });
