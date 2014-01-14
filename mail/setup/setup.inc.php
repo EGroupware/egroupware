@@ -17,6 +17,7 @@ $setup_info['mail']['version']     	= '1.9.001';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
+$setup_info['mail']['autoinstall'] = true;	// install automatically on update
 
 $setup_info['mail']['author']		= 'Stylite AG';
 $setup_info['mail']['license']		= 'GPL';
