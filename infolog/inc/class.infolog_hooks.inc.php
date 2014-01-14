@@ -253,15 +253,6 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> 1,	// Yes
 			),
-			'never_hide' => array(
-				'type'   => 'check',
-				'label'  => 'Never hide search and filters',
-				'name'   => 'never_hide',
-				'help'   => 'If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '1',
-			),
 			'limit_des_lines' => array(
 				'type'   => 'input',
 				'size'   => 5,
@@ -271,15 +262,6 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 5,
-			),
-			'limit_des_width' => array(
-				'type'   => 'input',
-				'size'   => 5,
-				'label'  => 'Limit width of description column ((effective only if lines limit is set), 0 for no limit)',
-				'name'   => 'limit_des_width',
-				'help'   => 'How wide should the description area be. This value is numeric and interpreted as em; 60 works reasonably well.',
-				'xmlrpc' => True,
-				'admin'  => False,
 			),
 		);
 		$settings[] = array(

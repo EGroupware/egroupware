@@ -865,9 +865,6 @@ class infolog_ui
 		{
 			foreach (array_keys($values['nm']['col_filter']) as $colfk) if (is_int($colfk)) unset($values['nm']['col_filter']);
 		}
-		$values['nm']['bottom_too'] = True;
-		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ?
-			$this->prefs['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
@@ -893,7 +890,7 @@ class infolog_ui
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '');
 		{
 			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
-				($this->prefs['limit_des_width']?'max-width:'.$this->prefs['limit_des_width'].'em;':'').' max-height: '.
+				' max-height: '.
 				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
 				'em; overflow: auto; }}</style>';
 		}
@@ -1525,10 +1522,7 @@ class infolog_ui
 			'action_id'      => $info_id,
 			'options-filter' => $this->filters,
 			'get_rows'       => 'infolog.infolog_ui.get_rows',
-			'no_filter2'     => True,
-			'never_hide'     => isset($this->prefs['never_hide']) ?
-				$this->prefs['never_hide'] :
-				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15,
+			'no_filter2'     => True
 		);
 		$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
 
