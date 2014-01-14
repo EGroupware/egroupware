@@ -1621,20 +1621,18 @@ abstract class egw_framework
 	 */
 	public static function bundle_js_includes(array $js_includes)
 	{
-		if ($GLOBALS['egw_info']['server']['debug_minify'] === 'True')
-		{
-			return $js_includes;	// nothing to do, just return all single files
-		}
-		// get used bundles and cache them on tree-level for 2h
-		$bundles = egw_cache::getTree(__CLASS__, 'bundles', array(__CLASS__, 'get_bundles'), array(), 7200);
-		$bundles_ts = $bundles['.ts'];
-		unset($bundles['.ts']);
 		$file2bundle = array();
-		foreach($bundles as $name => $files)
+		if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True')
 		{
-			$file2bundle += array_combine($files, array_fill(0, count($files), $name));
+			// get used bundles and cache them on tree-level for 2h
+			$bundles = egw_cache::getTree(__CLASS__, 'bundles', array(__CLASS__, 'get_bundles'), array(), 7200);
+			$bundles_ts = $bundles['.ts'];
+			unset($bundles['.ts']);
+			foreach($bundles as $name => $files)
+			{
+				$file2bundle += array_combine($files, array_fill(0, count($files), $name));
+			}
 		}
-
 		$to_include = $included_bundles = array();
 		foreach($js_includes as $file)
 		{
