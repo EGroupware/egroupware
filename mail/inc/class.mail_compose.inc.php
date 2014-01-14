@@ -939,9 +939,6 @@ class mail_compose
 
 		$this->t->set_var("focusElement",$_focusElement);
 
-		// the editorobject is needed all the time (since we use CKEDITOR
-		$this->t->set_var('refreshTimeOut', 3*60*1000); // 3 minutes till a compose messages will be saved as draft;
-
 */
 
 /*

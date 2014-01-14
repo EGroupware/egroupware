@@ -23,9 +23,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	et2: null,
 	doStatus: null,
-	mail_doTimedRefresh: false,
 
-	mail_refreshTimeOut: 1000*60*3, // initial call
 	mail_queuedFolders: [],
 	mail_queuedFoldersIndex: 0,
 
@@ -57,17 +55,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
-
-		// Set refresh from preferences
-		this.mail_refreshTimeOut = 1000 * (
-			// Nextmatch setting
-			egw.preference('nextmatch-mail.index.rows-autorefresh','mail') ||
-			// Preference setting copied from felamimail
-			egw.preference('refreshTime','mail') ||
-			0
-		);
-
-		//window.register_app_refresh("mail", this.app_refresh);
 	},
 
 	/**
@@ -672,28 +659,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * mail_startTimerFolderStatusUpdate, timer functions, if the counter changes for the current folder
-	 * refresh the message list
-	 * @param timeout
-	 */
-	mail_startTimerFolderStatusUpdate: function(_refreshTimeOut) {
-		if (typeof _refreshTimeOut == 'undefined')
-		{
-			_refreshTimeOut = this.mail_refreshTimeOut;
-		}
-		if (this.mail_refreshTimeOut > _refreshTimeOut) _refreshTimeOut = this.mail_refreshTimeOut;
-		if(this.mail_doTimedRefresh || _refreshTimeOut == 0) {
-			window.clearTimeout(this.mail_doTimedRefresh);
-		}
-		if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
-			//var self = this;
-			//this.mail_doTimedRefresh = window.setInterval(function() {
-			//	self.mail_refreshFolderStatus.call(self,undefined,undefined,true);
-			//},_refreshTimeOut);
-		}
-	},
-
-	/**
 	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
 	 *
 	 * @param _nodeID
@@ -892,44 +857,6 @@ app.classes.mail = AppJS.extend(
 		}
 		nm.applyFilters(); // this should refresh the active folder
 	},
-
-	/**
-	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
-	 *
-	 * Default implementation here only reloads window with it's current url with an added msg=_msg attached
-	 *
-	 * @param string _msg message (already translated) to show, eg. 'Entry deleted'
-	 * @param string _app application name
-	 * @param string|int _id=null id of entry to refresh
-	 * @param string _type=null either 'edit', 'delete', 'add' or null
-	 */
-/*
-	app_refresh: function(_msg, _app, _id, _type)
-	{
-		var bufferExists = false;
-		window.clearInterval(this.doStatus); // whatever message was up to be activated
-		//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-		//myCurrentMsg = mail_getMsg();
-		//if (myCurrentMsg.length) {
-			// clear message after some time
-			myMessageBuffer = ""; //myCurrentMsg;
-			bufferExists = true;
-		//}
-		//this.mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
-		egw_message(_msg,_type);
-		app.mail.mail_setMsg('');//without that applyFilters is not refreshing the index page
-		if (_app=='mail')
-		{
-			//we may want to trigger some actions, like modifying the grid, disable preview and stuff
-
-			// TODO: more actions
-		}
-		if (bufferExists)
-		{
-			//this.doStatus = window.setInterval("app.mail.mail_setMsg(myMessageBuffer);", 10000);
-		}
-	},
-*/
 
 	/**
 	 * mail_getMsg - gets the current Message
@@ -1138,7 +1065,6 @@ app.classes.mail = AppJS.extend(
 			// Changing dataset entirely, force a reset
 			nm.controller.reset();
 		}
-		window.clearInterval(this.doStatus);
 		displayname = _widget.getSelectedLabel();
 		inBraket = displayname.search(/\(/);
 		if (inBraket!=-1)
@@ -1157,7 +1083,6 @@ app.classes.mail = AppJS.extend(
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_refreshQuotaDisplay(server[0]);
-		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
 	},
