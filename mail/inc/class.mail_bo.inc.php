@@ -4484,7 +4484,7 @@ class mail_bo
 		{
 			$_structure = $this->getStructure($_uid, $_partID);
 		}
-
+		if (!$_structure || !$_structure->contentTypeMap()) return array();
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			$part = $_structure->getPart($mime_id);
@@ -5401,8 +5401,10 @@ class mail_bo
 				if (isset($replyTo['replace@import.action']))
 				{
 					$mailObject->ClearReplyTos();
-					$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
-					$mailObject->AddReplyTo(self::$idna2->encode($activeMailProfile->emailAddress),$activeMailProfile->realName);
+					$activeMailProfiles = $this->mail->getAccountIdentities($this->profileID);
+					$activeMailProfile = array_shift($activeMailProfiles);
+
+					$mailObject->AddReplyTo(self::$idna2->encode($activeMailProfile['ident_email']),mail_bo::generateIdentityString($activeMailProfile,false));
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
@@ -5421,9 +5423,10 @@ class mail_bo
 						//error_log(__METHOD__.__LINE__.' ID:'.$val.' Data:'.array2string($contact));
 						$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 						$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-						$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
+						$activeMailProfiles = $this->mail->getAccountIdentities($this->profileID);
+						$activeMailProfile = array_shift($activeMailProfiles);
 						//error_log(__METHOD__.__LINE__.array2string($activeMailProfile));
-						$mailObject->From = $activeMailProfile->emailAddress;
+						$mailObject->From = $activeMailProfile['ident_email'];
 						//$mailObject->From  = $_identity->emailAddress;
 						$mailObject->FromName = $mailObject->EncodeHeader(self::generateIdentityString($activeMailProfile,false));
 
@@ -5450,7 +5453,7 @@ class mail_bo
 						//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
 						if (!empty($AltBody)) $mailObject->AltBody = $bo_merge->merge_string($AltBody, $val, $e, $mailObject->AltBodyContentType, array(), self::$displayCharset);
 
-						$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
+						$ogServer = emailadmin_account::read($_profileID)->smtpServer();
 						#_debug_array($ogServer);
 						$mailObject->Host     = $ogServer->host;
 						$mailObject->Port = $ogServer->port;

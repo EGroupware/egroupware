@@ -458,7 +458,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 		// initialize our mail_bo
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
-		$activeMailProfile = $this->mail->mailPreferences->getIdentity(self::$profileID, true);
+		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
+		$activeMailProfile = array_shift($activeMailProfiles);
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending
@@ -466,9 +467,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$mailObject->CharSet = 'utf-8'; // set charset always to utf-8
 		// default, should this be forced?
 		$mailObject->IsSMTP();
-		$mailObject->Sender  = $activeMailProfile->emailAddress;
-		$mailObject->From 	= $activeMailProfile->emailAddress;
-		$mailObject->FromName = $mailObject->EncodeHeader($activeMailProfile->realName);
+		$mailObject->Sender  = $activeMailProfile['ident_email'];
+		$mailObject->From 	= $activeMailProfile['ident_email'];
+		$mailObject->FromName = $mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false));
 		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
 
 		$mimeParams = array('decode_headers' => true,
@@ -821,7 +822,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$signature = $_signature->fm_signature;
 		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
 			$preferencesArray['disableRulerForSignatureSeparation']) ||
-			empty($signature) || trim($this->mail->convertHTMLToText($signature)) =='')
+			empty($signature) || trim(translation::convertHTMLToText($signature)) =='')
 		{
 			$disableRuler = true;
 		}
@@ -836,13 +837,13 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 		$sigText = $this->mail->merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Signature to use:'.$sigText);
-		$body .= $before.($mailObject->ContentType=='text/html'?$sigText:$this->mail->convertHTMLToText($sigText));
+		$body .= $before.($mailObject->ContentType=='text/html'?$sigText:translation::convertHTMLToText($sigText));
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		// remove carriage-returns from body, set the body of the mailObject
 		if (trim($body) =='' && trim($mailObject->Body)==''/* && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text')); // to avoid failure on empty messages with attachments
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		$mailObject->Body = $body ;//= str_replace("\r\n", "\n", $body); // if there is a <pre> this needs \r\n so DO NOT replace them
-		if ($mailObject->ContentType=='text/html') $mailObject->AltBody = $this->mail->convertHTMLToText($body);
+		if ($mailObject->ContentType=='text/html') $mailObject->AltBody = translation::convertHTMLToText($body);
 
         //advanced debugging
 		if (strtolower($mailObject->CharSet) != 'utf-8')
@@ -922,7 +923,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 
 		$asf = ($send ? true:false); // initalize accordingly
-		if (($smartdata['saveinsentitems']==1 || !isset($smartdata['saveinsentitems'])) && $send==true && $this->mail->mailPreferences->preferences['sendOptions'] != 'send_only')
+		if (($smartdata['saveinsentitems']==1 || !isset($smartdata['saveinsentitems'])) && $send==true && $this->mail->mailPreferences['sendOptions'] != 'send_only')
 		{
 			$asf = false;
 			$sentFolder = $this->mail->getSentFolder();
@@ -1033,9 +1034,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
 			if ($bodypreference === false) {
-				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', '', true);
+				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true);
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
-				$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
+				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				if (stripos($body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
 				// remove all other html
 				$body = strip_tags($body);
@@ -1065,7 +1066,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				if ($this->debugLevel>0) debugLog("airsyncbasebody!");
 				// fetch the body (try to gather data only once)
 				$css ='';
-				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', '', true);
+				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true);
 				if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
@@ -1078,21 +1079,21 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					// plain text Message
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text (HTML, if no text available)');
 					$output->airsyncbasenativebodytype=1;
-					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', '', true); //'only_if_no_text');
+					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true); //'only_if_no_text');
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
 					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 				}
 				// whatever format decode (using the correct encoding)
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__."MIME Body".' Type:'.($output->airsyncbasenativebodytype==2?' html ':' plain ').$body);
-				$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
+				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				// prepare plaintextbody
 				if ($output->airsyncbasenativebodytype == 2)
 				{
-					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', '', true); //'only_if_no_text');
+					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true); //'only_if_no_text');
 					if($bodyStructplain[0]['error']==1)
 					{
-						$plainBody = $this->mail->convertHTMLToText($body,true); // always display with preserved HTML
+						$plainBody = translation::convertHTMLToText($body,true); // always display with preserved HTML
 					}
 					else
 					{
@@ -1571,7 +1572,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL)
 	{
 		if ($this->debugLevel>1) $gstarttime = microtime (true);
-		debugLog(__METHOD__.__LINE__);
+		//debugLog(__METHOD__.__LINE__);
 		$rv_messages = array();
 		// if the message is still available within the class, we use it instead of fetching it again
 		if (is_array($_id) && count($_id)==1 && is_array($this->messages) && isset($this->messages[$_id[0]]) && is_array($this->messages[$_id[0]]))
@@ -1947,7 +1948,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 
 		// this may be a bit rude, it may be sufficient that GetMessageList does not list messages flagged as deleted
-		if ($this->mail->mailPreferences->preferences['deleteOptions'] == 'mark_as_deleted')
+		if ($this->mail->mailPreferences['deleteOptions'] == 'mark_as_deleted')
 		{
 			// ignore mark as deleted -> Expunge!
 			//$this->mail->icServer->expunge(); // do not expunge as GetMessageList does not List messages flagged as deleted
