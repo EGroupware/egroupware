@@ -1403,12 +1403,12 @@ class mail_bo
 		$try2useCache = false;
 		$filter = $this->createIMAPFilter($_folderName, $_filter);
 		//_debug_array($filter);
-
+		//error_log(__METHOD__.__LINE__.array2string($filter));
 		if($this->icServer->hasCapability('SORT')) {
 			if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
 			$sortOrder = $this->_getSortString($_sort, $_reverse);
 			if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)) $_reverse=false; // as we reversed the result already
-			if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: $filter");
+			if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: ".array2string($filter));
 			$sortResult = $this->icServer->search($_folderName, $filter, array(
 				'sort' => $sortOrder,));
 			// if there is an PEAR Error, we assume that the server is not capable of sorting
@@ -1528,10 +1528,11 @@ class mail_bo
 
 		//_debug_array($_criterias);
 		if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
-		if(!is_array($_criterias)) {
-			return $imapFilter->flag('DELETED', $set=false);
+		if(!is_array($_criterias) || $_criterias['status']=='any') {
+			$imapFilter->flag('DELETED', $set=false);
+			return $imapFilter;
 		}
-		#error_log(print_r($_criterias, true));
+		//error_log(__METHOD__.__LINE__.print_r($_criterias, true));
 		$queryValid = false;
 		if(!empty($_criterias['string'])) {
 			$criteria = strtoupper($_criterias['type']);
@@ -1627,7 +1628,8 @@ class mail_bo
 			error_log(__METHOD__.__LINE__.' '.$query_str['query']);
 		}
 		if($queryValid==false) {
-			return $imapFilter->flag('DELETED', $set=false);
+			$imapFilter->flag('DELETED', $set=false);
+			return $imapFilter;
 		} else {
 			return $imapFilter;
 		}
