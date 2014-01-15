@@ -131,6 +131,15 @@
 		{
 			alert(window_close);
 		}
+		// If there's a message & opener, set it
+		if(window.opener && egw_script.getAttribute('data-message'))
+		{
+			var data = {};
+			if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
+			{
+				window.opener.egw_message.apply(window.opener, data);
+			}
+		}
 		window.close();
 	}
 
