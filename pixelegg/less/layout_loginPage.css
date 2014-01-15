@@ -91,7 +91,7 @@
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
   font-size: 1.2em;
-  color: #679fd2;
+  color: rgba(103, 159, 210, 0.1);
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
 }
