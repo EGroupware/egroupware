@@ -111,7 +111,7 @@ class infolog_ui
 		{
 			$pm_config = config::read('projectmanager');
 			$this->duration_format = str_replace(',','',implode('', (array)$pm_config['duration_units']));
-			error_log(__METHOD__."() ".__LINE__." duration_format=$this->duration_format, duration_unit=".array2string($pm_config['duration_units']));
+			//error_log(__METHOD__."() ".__LINE__." duration_format=$this->duration_format, duration_unit=".array2string($pm_config['duration_units']));
 			$this->hours_per_workday = $pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
