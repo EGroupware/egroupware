@@ -57,6 +57,7 @@
 					<description align="left" id="previewSubject" readonly="true"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
+					<description value="Date"/>
 					<date-time align="left" id="previewDate" readonly="true"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
