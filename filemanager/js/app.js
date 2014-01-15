@@ -162,7 +162,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 		   params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
 		}
-		egw.open('', 'felamimail', 'add', params);
+		egw.open('', 'mail', 'add', params);
 	},
 
 	/**
