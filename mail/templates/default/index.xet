@@ -79,8 +79,7 @@
 					   <column disabled="!@showtempname"/>
 					   <column disabled="!@showtempname"/>
 					   <column disabled="!@showtempname"/>
-					   <column width="50%" />
-					   <column width="20%" />
+					   <column width="70%" />
 					   <column width="11%" />
 					   <column width="3%"/>
 					   <column width="3%"/>
@@ -94,7 +93,6 @@
 						<description id="${row}[type]" />
 						<description id="${row}[winmailFlag]" />
 						<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
-						<description id="${row}[mimetype]" />
 						<description align="right" id="${row}[size]" />
 						<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
 						<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>

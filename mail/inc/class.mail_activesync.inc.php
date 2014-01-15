@@ -1023,7 +1023,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			debugLog(__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
 			// initialize the object
 			$output = new SyncMail();
-			$headers = $this->mail->getMessageHeader($id,'',true);
+			$headers = $this->mail->getMessageHeader($id,'',true,true);
 			if (empty($headers))
 			{
 				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.' ServerID:'.self::$profileID.'FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
@@ -1305,7 +1305,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// $output->from = $this->messages[$id]['sender_address']; //$stat['FETCHED_HEADER']['sender_name']
 //error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
 			$output->to = $headers['TO'];
-//error_log(__METHOD__.__LINE__.' From:'.$headers['FROM'].' Charset:'.$this->mail->detect_encoding($headers['FROM']));
+error_log(__METHOD__.__LINE__.' From:'.$headers['FROM']);
 			$output->from = $headers['FROM'];
 			$output->cc = ($headers['CC'] ? $headers['CC']:null);
 			$output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);

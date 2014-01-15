@@ -2758,24 +2758,6 @@ class mail_bo
 				$this->icServer->expunge($_folder);
 				break;
 		}
-		if ($updateCache)
-		{
-			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			$cachemodified = false;
-			if (is_null($_messageUID)) $_messageUID='all';
-			foreach ((array)$_messageUID as $k => $_uid)
-			{
-				if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) || $_uid=='all')
-				{
-					$cachemodified = true;
-					if ($_uid=='all')
-						unset($structure[$this->icServer->ImapServerId][$_folder]);
-					else
-						unset($structure[$this->icServer->ImapServerId][$_folder][$_uid]);
-				}
-			}
-			if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
-		}
 		if($oldMailbox != '') {
 			$this->icServer->openMailbox($oldMailbox);
 		}
@@ -3048,23 +3030,6 @@ class mail_bo
 				return false;
 			}
 		}
-		if ($deleteAfterMove === true)
-		{
-			if($deleteOptions != "mark_as_deleted")
-			{
-				$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-				$cachemodified = false;
-				foreach ((array)$_messageUID as $k => $_uid)
-				{
-					if (isset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
-					{
-						$cachemodified = true;
-						unset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
-					}
-				}
-				if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
-			}
-		}
 
 		//error_log(__METHOD__.__LINE__.array2string($retUid));
 		return ($returnUIDs ? $retUid : true);
@@ -3222,106 +3187,6 @@ class mail_bo
 	/**
 	 * Header and Bodystructure stuff
 	 */
-
-	/**
-	 * _getStructure
-	 * fetch the structure of a mail, represented by uid
-	 * @param string/int $_uid the messageuid,
-	 * @param boolean $byUid=true, is the messageuid given by UID or ID
-	 * @param boolean $_ignoreCache=false, use or disregard cache, when fetching
-	 * @param string $_folder='', if given search within that folder for the given $_uid, else use sessionData['mailbox'], or servers getCurrentMailbox
-	 * @return array  an structured array of information about the mail
-	 */
-	function _getStructure($_uid, $byUid=true, $_ignoreCache=false, $_folder = '')
-	{
-		static $structure;
-		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
-		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-		//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder.'->'.array2string(array_keys($structure)));
-		if (isset($structure[$this->icServer->ImapServerId]) && !empty($structure[$this->icServer->ImapServerId]) &&
-			isset($structure[$this->icServer->ImapServerId][$_folder]) && !empty($structure[$this->icServer->ImapServerId][$_folder]) &&
-			isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) && !empty($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
-		{
-			if ($_ignoreCache===false)
-			{
-				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
-				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
-			}
-		}
-		$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
-		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
-		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
-	}
-
-	/**
-	 * _getSubStructure
-	 * fetch the substructure of a mail, by given structure and partid
-	 * @param array $_structure='', if given use structure for parsing
-	 * @param string/int $_partID the partid,
-	 * @return array  an structured array of information about the mail
-	 */
-	function _getSubStructure($_structure, $_partID)
-	{
-		$tempID = '';
-		$structure = $_structure;
-		if (empty($_partID)) $_partID=1;
-		$imapPartIDs = explode('.',$_partID);
-		#error_log(print_r($structure,true));
-		#error_log(print_r($_partID,true));
-
-		if($_partID != 1) {
-			foreach($imapPartIDs as $imapPartID) {
-				if(!empty($tempID)) {
-					$tempID .= '.';
-				}
-				$tempID .= $imapPartID;
-				#error_log(print_r( "TEMPID: $tempID<br>",true));
-				//_debug_array($structure);
-				if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
-				   count($structure->subParts[$tempID]->subParts) == 1 &&
-				   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
-				   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'ALTERNATIVE' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'RELATED' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT'))
-				{
-					$structure = $structure->subParts[$tempID]->subParts[$tempID];
-				} else {
-					$structure = $structure->subParts[$tempID];
-				}
-			}
-		}
-
-		if($structure->partID != $_partID) {
-			foreach($imapPartIDs as $imapPartID) {
-				if(!empty($tempID)) {
-					$tempID .= '.';
-				}
-				$tempID .= $imapPartID;
-				//print "TEMPID: $tempID<br>";
-				//_debug_array($structure);
-				if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
-				   count($structure->subParts[$tempID]->subParts) == 1 &&
-				   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
-				   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'ALTERNATIVE' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'RELATED' ||
-				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT')) {
-					$structure = $structure->subParts[$tempID]->subParts[$tempID];
-				} else {
-					$structure = $structure->subParts[$tempID];
-				}
-			}
-			if($structure->partID != $_partID) {
-				error_log(__METHOD__."(". __LINE__ .") partID's don't match");
-				return false;
-			}
-		}
-
-		return $structure;
-	}
 
 	/**
 	 * getMimePartCharset - fetches the charset mimepart if it exists
@@ -4369,11 +4234,11 @@ class mail_bo
 		$uidsToFetch->add((array)$_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->fullText();
+		$fquery->fullText(array('peek'=>true));
 		if ($_partID != '')
 		{
 			$fquery->structure();
-			$fquery->bodyPart($_partID);
+			$fquery->bodyPart($_partID,array('peek'=>true));
 		}
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
@@ -4399,11 +4264,11 @@ class mail_bo
 		$uidsToFetch->add((array)$_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->fullText();
+		$fquery->fullText(array('peek'=>true));//always do that as peek -> no seen flag set
 		if ($_partID != '')
 		{
 			$fquery->structure();
-			$fquery->bodyPart($_partID);
+			$fquery->bodyPart($_partID,array('peek'=>true));
 		}
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
@@ -4484,7 +4349,7 @@ class mail_bo
 
 		if (!isset($_structure))
 		{
-			$_structure = $this->getStructure($_uid, $_partID);
+			$_structure = $this->getStructure($_uid, $_partID,null,true);
 		}
 		if (!$_structure || !$_structure->contentTypeMap()) return array();
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
