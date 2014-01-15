@@ -1657,7 +1657,7 @@ class mail_bo
 			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
-				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
+				$rfcAddr = imap_rfc822_parse_adrlist(str_replace(',','\,',$_string),'');
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 				$stringA = array();
 				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
@@ -4090,6 +4090,7 @@ class mail_bo
 			}
 		}
 		$retValue = array_change_key_case($retValue,CASE_UPPER);
+		//error_log(__METHOD__.__LINE__.array2string($retValue));
 		// if SUBJECT is an array, use thelast one, as we assume something with the unfolding for the subject did not work
 		if (is_array($retValue['SUBJECT']))
 		{

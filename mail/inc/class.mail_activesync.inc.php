@@ -1305,7 +1305,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// $output->from = $this->messages[$id]['sender_address']; //$stat['FETCHED_HEADER']['sender_name']
 //error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
 			$output->to = $headers['TO'];
-error_log(__METHOD__.__LINE__.' From:'.$headers['FROM']);
+//error_log(__METHOD__.__LINE__.' From:'.$headers['FROM']);
 			$output->from = $headers['FROM'];
 			$output->cc = ($headers['CC'] ? $headers['CC']:null);
 			$output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
