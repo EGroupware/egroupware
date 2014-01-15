@@ -42,9 +42,10 @@ div.filemanager_navigation > * {
 div.filemanager_navigation > label {
 	position: absolute;
 	left: 50px;
-	right: 560px;
+	right: 565px;
 	padding-top: 3px;
 	font-size: 140%;
+	white-space: nowrap;
 }
 div.filemanager_navigation > label > input {
 	width: 100%;
