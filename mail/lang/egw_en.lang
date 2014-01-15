@@ -128,7 +128,6 @@ extra sent folders	mail	en	Extra sent folders
 failed to delete %1 ! reason: %2	mail	en	failed to delete %1 ! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
 failed to rename %1 ! reason: %2	mail	en	failed to rename %1 ! Reason: %2
-felamimail	admin	en	felamimail
 file into	mail	en	file into
 file into:	mail	en	File into:
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
@@ -195,7 +194,7 @@ keep a copy of the message in your inbox	mail	en	Keep a copy of the message in y
 kilobytes	mail	en	kilobytes
 later	mail	en	later
 less than	mail	en	less than
-mail	mail	en	mail
+mail	mail	en	Mail
 mailaccount	mail	en	Mailaccount
 mail filter	mail	en	Mail filter
 mail settings	mail	en	Mail settings

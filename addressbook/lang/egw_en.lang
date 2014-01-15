@@ -29,8 +29,11 @@ add custom field	addressbook	en	Add custom field
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	en	Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.
 add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
 add or delete categories	addressbook	en	Add or delete categories
+add to bcc	addressbook	en	Add to BCc
+add to cc	addressbook	en	Add to Cc
 add to distribution list	addressbook	en	Add to distribution list
 add to distribution list:	addressbook	en	Add to distribution list:
+add to to	addressbook	en	Add to To
 added	addressbook	en	Added
 added by synchronisation	addressbook	en	Added by synchronisation
 added to distribution list	addressbook	en	Added to distribution list

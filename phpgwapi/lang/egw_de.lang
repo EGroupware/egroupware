@@ -234,8 +234,8 @@ disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
-do not notify	common	de	Nicht benachrichtigen
-do not notify of these changes	common	de	Nicht über diese Änderungen benachrichtigen
+do not notify	common	de	Nicht Benachrichtigung
+do not notify of these changes	common	de	Keine Benachrichtigung
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
 document properties	common	de	Dokument Eigenschaften
@@ -603,6 +603,7 @@ please set your preferences for this application	common	de	Bitte editieren Sie I
 please wait...	common	de	Bitte warten...
 please, check back with us shortly.	common	de	Bitte schauen Sie bald wieder vorbei.
 poland	common	de	POLEN
+popup with search	common	de	weitere Teilnehmer suchen
 portugal	common	de	PORTUGAL
 postal	common	de	Postadresse
 powered by	common	de	Powered by

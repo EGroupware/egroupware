@@ -29,8 +29,11 @@ add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	de	Fügt ein benutzerdefiniertes Feld zum Titel der Verknüpfung eines Kontakts hinzu. Dieser wird in anderen Anwendungen angezeigt. Die Vorgabe ist kein benutzerdefiniertes Feld hinzuzufügen.
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
 add or delete categories	addressbook	de	Kategorien hinzufügen oder löschen
+add to bcc	addressbook	de	Als Blindkopie hinzufügen
+add to cc	addressbook	de	Als Kopie hinzufügen
 add to distribution list	addressbook	de	Zu Verteilerliste hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
+add to to	addressbook	de	Als An hinzufügen
 added	addressbook	de	hinzugefügt
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
 added to distribution list	addressbook	de	hinzugefügt zum Verteiler
@@ -56,7 +59,7 @@ addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all contacts	addressbook	de	Alle Kontakte
-all in one field	addressbook	de	Alle einem einem Adressbuch ausgeben
+all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
 always	addressbook	de	immer

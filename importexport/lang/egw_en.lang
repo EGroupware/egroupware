@@ -119,7 +119,7 @@ target examples: vfs://default/home/user/export.csv or http://server.net/prices.
 target field	importexport	en	Target field
 test only	importexport	en	Test only
 too many matches	importexport	en	too many matches
-translation	importexport	en	Translation
+translation	importexport	en	custom modifocation
 true	importexport	en	True
 try	importexport	en	Try
 unable to delete	importexport	en	Unable to delete
