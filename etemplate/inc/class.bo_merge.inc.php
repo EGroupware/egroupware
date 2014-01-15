@@ -1425,11 +1425,11 @@ abstract class bo_merge
 		{
 			case 'message/rfc822':
 				//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs')=>$content_url ->".function_backtrace());
-				$bofelamimail = felamimail_bo::getInstance();
-				$bofelamimail->openConnection();
+				$mail_bo = mail_bo::getInstance();
+				$mail_bo->openConnection();
 				try
 				{
-					$msgs = $bofelamimail->importMessageToMergeAndSend($this, $content_url, $ids, $_folder='', $importID='');
+					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder='', $importID='');
 				}
 				catch (egw_exception_wrong_userinput $e)
 				{
@@ -1742,10 +1742,7 @@ abstract class bo_merge
 							);
 							if ($file['mime'] == 'message/rfc822')
 							{
-								// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
-								//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
-								// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
-								if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $current_level[$prefix.$file['name']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+								self::document_mail_action($current_level[$prefix.$file['name']], $file);
 							}
 							break;
 
@@ -1776,10 +1773,7 @@ abstract class bo_merge
 					);
 					if ($file['mime'] == 'message/rfc822')
 					{
-						// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
-						//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
-						// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
-						if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $documents[$file['mime']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+						self::document_mail_action($documents[$prefix.$file['name']], $file);
 					}
 				}
 				$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
@@ -1794,10 +1788,7 @@ abstract class bo_merge
 				);
 				if ($file['mime'] == 'message/rfc822')
 				{
-					// does not work on children for some reason, now handled in felamimail_bo::importMessageToMergeAndSend
-					//$documents[$file['mime']]['allowOnMultiple'] = $GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook';
-					// only need confirmation for multiple receipients for addressbook, as for others we can't do it anyway
-					if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook') $documents[$prefix.$file['name']]['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
+					self::document_mail_action($documents[$prefix.$file['name']], $file);
 				}
 			}
 		}
@@ -1811,6 +1802,43 @@ abstract class bo_merge
 			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
 			'group' => $group,
 		);
+	}
+
+	/**
+	 * Set up a document action for an eml (email) document
+	 *
+	 * Email (.eml) documents get special action handling.  They don't send a file
+	 * back to the client like the other documents.  Merging for a single selected
+	 * contact opens a compose window, multiple contacts just sends.
+	 *
+	 * @param Array &$action Action to be modified for mail
+	 * @param Array $file Array of information about the document from egw_vfs::find
+	 * @return void
+	 */
+	private static function document_mail_action(Array &$action, $file)
+	{
+		unset($action['postSubmit']);
+
+		// These parameters trigger compose + merge
+		$extra = array(
+			'from' => 'merge',
+			'document' => $file['path'],
+		);
+		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?') .
+			lang('Popup will close when finished');
+
+		// egw.open() would work, but nextmatch actions only passes 1 ID through
+		//$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
+		//
+		// We use location and send the popup info anyway instead
+		$action['nm_action'] = 'location';
+		$action['popup'] = egw_link::get_registry('mail', 'edit_popup');
+		$action['url'] = egw_link::get_registry('mail', 'edit') + $extra + array(
+			// Mail edit requires ID to have a value before it will look at the other variables
+			egw_link::get_registry('mail', 'edit_id') => 'true',
+			'preset[mailtocontactbyid]' => '$id',
+		);
+		$action['target'] = 'compose_' .$file['path'];
 	}
 
 	/**

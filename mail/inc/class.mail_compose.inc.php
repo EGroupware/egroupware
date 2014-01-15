@@ -716,7 +716,7 @@ class mail_compose
 					$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 					if (method_exists($GLOBALS['egw']->contacts,'search')) {
 
-						$addressArray = split(',',$_REQUEST['preset']['mailtocontactbyid']);
+						$addressArray = explode(',',$_REQUEST['preset']['mailtocontactbyid']);
 						foreach ((array)$addressArray as $id => $addressID)
 						{
 							$addressID = (int) $addressID;
@@ -1249,7 +1249,7 @@ class mail_compose
 	 * @param type $mail_id If composing based on an existing mail, this is the ID of the mail
 	 * @param type $part_id For multi-part mails, indicates which part
 	 * @param type $from Indicates what the mail is based on, and how to extract data.
-	 *	One of 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward'
+	 *	One of 'compose', 'composeasnew', 'reply', 'reply_all', 'forward' or 'merge'
 	 * @param boolean $_focusElement varchar subject, to, body supported
 	 * @param boolean $suppressSigOnTop
 	 * @param boolean $isReply
@@ -1313,6 +1313,56 @@ class mail_compose
 					break;
 				default:
 					error_log('Unhandled compose source: ' . $from);
+			}
+		}
+		else if ($from == 'merge' && $_REQUEST['document'])
+		{
+			/*
+			 * Special merge from everywhere else becase all other apps merge gives
+			 * a document to be downloaded, this either opens a compose dialog or
+			 * just sends emails
+			 */
+			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
+			$document_merge = new addressbook_merge();
+			$this->mail_bo->openConnection();
+			$merge_ids = $_REQUEST['preset']['mailtocontactbyid'] ? $_REQUEST['preset']['mailtocontactbyid'] : $mail_id;
+			$merge_ids = is_array($merge_ids) ? $merge_ids : explode(',',$merge_ids);
+			try
+			{
+				$merged_mail_id = '';
+				$folder = '';
+				if($error = $document_merge->check_document($_REQUEST['document'],''))
+				{
+					$content['msg'] = $error;
+					return $content;
+				}
+
+				// Merge does not work correctly (missing to) if current app is not addressbook
+				$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+
+				// Actually do the merge
+				$results = $this->mail_bo->importMessageToMergeAndSend($document_merge, egw_vfs::PREFIX . $_REQUEST['document'], $merge_ids, $folder, $merged_mail_id);
+
+				// Handle results - one email open compose, more than one just sent
+				if(count($merge_ids) <= 1)
+				{
+					$merged_mail_id = trim($GLOBALS['egw_info']['user']['account_id']).mail_ui::$delimiter.
+						$this->mail_bo->profileID.mail_ui::$delimiter.
+						base64_encode($folder).mail_ui::$delimiter.$merged_mail_id;
+					$content = $this->getComposeFrom($merged_mail_id, $part_id, 'composefromdraft', $_focusElement, $suppressSigOnTop, $isReply);
+				}
+				else
+				{
+					$success = implode(', ',$results['success']);
+					$fail = implode(', ', $results['failed']);
+					if($success) egw_framework::message($success, 'success');
+					egw_framework::window_close($fail);
+				}
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				// if this returns with an exeption, something failed big time
+				$content['msg'] = $e->getMessage();
 			}
 		}
 		return $content;
@@ -1416,6 +1466,11 @@ class mail_compose
 		}
 
 		foreach((array)$headers['TO'] as $val) {
+			if(!is_array($val))
+			{
+				$this->sessionData['to'][] = $val;
+				continue;
+			}
 			if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
 				continue;
 			}

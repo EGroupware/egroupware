@@ -5209,7 +5209,7 @@ class mail_bo
 	 * @param string $importID ID for the imported message, used by attachments to identify them unambiguously
 	 * @return mixed array of messages with success and failed messages or exception
 	 */
-	function importMessageToMergeAndSend(bo_merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, $importID='')
+	function importMessageToMergeAndSend(bo_merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, &$importID='')
 	{
 		$importfailed = false;
 		$processStats = array('success'=>array(),'failed'=>array());
@@ -5291,7 +5291,7 @@ class mail_bo
 						//error_log(__METHOD__.__LINE__.' ID:'.$val.' Data:'.array2string($contact));
 						$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 						$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-						$activeMailProfiles = $this->mail->getAccountIdentities($this->profileID);
+						$activeMailProfiles = $this->getAccountIdentities($this->profileID);
 						$activeMailProfile = array_shift($activeMailProfiles);
 						//error_log(__METHOD__.__LINE__.array2string($activeMailProfile));
 						$mailObject->From = $activeMailProfile['ident_email'];
@@ -5321,7 +5321,7 @@ class mail_bo
 						//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
 						if (!empty($AltBody)) $mailObject->AltBody = $bo_merge->merge_string($AltBody, $val, $e, $mailObject->AltBodyContentType, array(), self::$displayCharset);
 
-						$ogServer = emailadmin_account::read($_profileID)->smtpServer();
+						$ogServer = emailadmin_account::read($this->profileID)->smtpServer();
 						#_debug_array($ogServer);
 						$mailObject->Host     = $ogServer->host;
 						$mailObject->Port = $ogServer->port;
@@ -5424,23 +5424,8 @@ class mail_bo
 							// no send, save successful, and message_uid present
 							if ($savefailed===false && $messageUid && is_null($sendOK))
 							{
+								$importID = $messageUid;
 								$openComposeWindow = true;
-								list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
-								$linkData = array
-								(
-									'menuaction'    => 'felamimail.uicompose.composeFromDraft',
-									'uid'		=> $messageUid,
-									'folder'    => base64_encode($_folder),
-									'icServer'	=> $this->profileID,
-									'method'	=> 'importMessageToMergeAndSend',
-								);
-								$composeUrl = egw::link('/index.php',$linkData);
-								//error_log(__METHOD__.__LINE__.' ComposeURL:'.$composeUrl);
-								$GLOBALS['egw_info']['flags']['java_script_thirst'] .= '<script language="JavaScript">'.
-									//"egw_openWindowCentered('$composeUrl','composeAsDraft_".$messageUid."',".$fm_width.",".$fm_height.");".
-									"window.open('$composeUrl','_blank','dependent=yes,width=".$fm_width.",height=".$fm_height.",toolbar=no,scrollbars=no,status=no');".
-									"</script>";
-								$processStats['success'][] = lang("Saving of message %1 succeeded. Check Folder %2.",$Subject,$_folder);
 							}
 						}
 						else
