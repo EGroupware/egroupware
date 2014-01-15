@@ -74,9 +74,10 @@ div.filemanager_navigation > * {
 div.filemanager_navigation > label {
   position: absolute;
   left: 50px;
-  right: 560px;
+  right: 565px;
   padding-top: 3px;
   font-size: 140%;
+  white-space: nowrap;
 }
 div.filemanager_navigation > label > input {
   width: 100%;
@@ -200,7 +201,7 @@ div.filemanager_navigation > label {
   margin-right: 0.2em;
 }
 div.filemanager_navigation > label > input {
-  width: 90%;
+  width: 85%;
 }
 #filemanager-index .et2_file {
   /*background-color: @egw_color_blue_lighter !important;*/

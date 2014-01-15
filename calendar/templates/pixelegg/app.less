@@ -23,8 +23,14 @@
 
 .egw_fw_ui_category_content{
     padding-left: 0px !important;
-}
+    
+    // Icon before genrell hidden
+    img.egw_fw_ui_sidemenu_listitem_icon {
+                                                display: none;
+                                            }
+    
 
+}
 
 img.sideboxstar {
     .dimension_width_height_xs;
@@ -38,6 +44,8 @@ img.sideboxstar {
         .Complete_Button_Icon_active ; 
         background-color: @color_positive_action_active !important;}
 }
+
+   
 
 .chzn-container {
     max-width: 85% !important;
@@ -199,10 +207,11 @@ div.calendar { position: relative; }
 
         td.selected { /* Cell showing today date */
             font-weight: bold;
-            border: 1px solid #000;
+            border: 0px solid #000;
             padding: 1px 3px 1px 1px;
             background: #fff;
             color: #000;
+            .box_shadow_standard_light_inset;
         }
 
         td.weekend { /* Cells showing weekend days */
