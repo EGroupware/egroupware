@@ -17,6 +17,19 @@
 class etemplate_widget_button extends etemplate_widget
 {
 	/**
+	 * True after submit-validation, if cancel button was pressed
+	 *
+	 * @var boolean
+	 */
+	public static $canceled = false;
+	/**
+	 * True after submit-validation,if a non-cancel button was pressed
+	 *
+	 * @var boolean
+	 */
+	public static $button_pressed = false;
+
+	/**
 	 * Validate buttons
 	 *
 	 * Readonly buttons can NOT be pressed!
@@ -46,14 +59,14 @@ class etemplate_widget_button extends etemplate_widget
 				$valid =& self::get_array($validated, $form_name, true);
 				$valid = is_array($value) ? $value : 'pressed';
 
-				// recored pressed button globally, was in the template object before, not sure self::$request is the right place ...
+				// recorded pressed button globally, was in the template object before, put now as static on this object
 				if ($this->type == 'cancel' || $form_name == 'cancel' || substr($form_name,-10) == '[cancel]')
 				{
-					self::$request->canceled = true;
+					self::$canceled = true;
 				}
 				else
 				{
-					self::$request->button_pressed = true;
+					self::$button_pressed = true;
 				}
 			}
 		}
