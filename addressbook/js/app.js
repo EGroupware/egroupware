@@ -435,8 +435,8 @@ app.classes.addressbook = AppJS.extend(
 			// Pull data from global cache
 			var data = egw.dataGetUIDdata(selected[i].id) || {data:{}};
 
-			var email_business = data.data[action.parent.children[3].checked ? 'email' : ''];
-			var email = data.data[action.parent.children[4].checked ? 'email_home' : ''];
+			var email_business = data.data[action.getManager().getActionById('email_business').checked ? 'email' : ''];
+			var email = data.data[action.getManager().getActionById('email_home').checked ? 'email_home' : ''];
 			if(email_business)
 			{
 				emails.push(email_business);
