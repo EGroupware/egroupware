@@ -509,7 +509,7 @@ egwAction.prototype.execute = function(_senders, _target)
 	if (this.data && (this.data.confirm || this.data.confirm_multiple) && this.onExecute.fcnt != window.nm_action &&
 		typeof et2_dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
 	{
-		var msg = this.data.confirm;
+		var msg = this.data.confirm || '';
 		if (_senders.length > 1)
 		{
 			if (this.data.confirm_multiple) msg = this.data.confirm_multiple;
@@ -521,14 +521,17 @@ egwAction.prototype.execute = function(_senders, _target)
 			}
 		}
 		var self = this;
-		et2_dialog.show_dialog(function(_button)
+		if(msg.trim().length > 0)
 		{
-			if (_button == et2_dialog.YES_BUTTON)
+			et2_dialog.show_dialog(function(_button)
 			{
-				return self.onExecute.exec(self, _senders, _target);
-			}
-		}, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
-		return;
+				if (_button == et2_dialog.YES_BUTTON)
+				{
+					return self.onExecute.exec(self, _senders, _target);
+				}
+			}, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+			return;
+		}
 	}
 	return this.onExecute.exec(this, _senders, _target);
 };
