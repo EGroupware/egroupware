@@ -31,10 +31,10 @@ class resources_ui
 	function __construct()
 	{
 // 		print_r($GLOBALS['egw_info']); die();
-		$this->tmpl	= new etemplate('resources.show');
+		$this->tmpl	= new etemplate_new('resources.show');
 		$this->bo	= new resources_bo();
 // 		$this->calui	= CreateObject('resources.ui_calviews');
-
+//egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
 	}
 
 	/**
@@ -156,32 +156,6 @@ class resources_ui
 		$no_button['back'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
 
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
-			function js_btn_book_selected(form)
-			{
-				resources = '';
-
-				el = form.getElementsByTagName(\"input\");
-				for (var i = 0; i < el.length; i++)
-				{
-					if(el[i].name.substr(el[i].name.length-12,el[i].name.length) == '[checkbox][]' && el[i].checked)
-					{
-						if(resources.length > 0)
-						{
-							resources += ',';
-						}
-						resources += 'r' + el[i].value;
-					}
-				}
-				if(resources.length == 0)
-				{
-					alert('". lang('No resources selected'). "');
-					return false;
-				}
-				return resources;
-			}
-		</script>";
-
 		egw_framework::validate_file('.','resources','resources');
 
 		if($content['nm']['filter2'] > 0)
@@ -257,6 +231,7 @@ class resources_ui
 				'group' => ++$group,
 				'allowOnMultiple' => true,
 				'disableClass' => 'no_view_calendar',
+				'onExecute' => 'javaScript:app.resources.view_calendar',
 			),
 			'book' => array(
 				'caption' => 'Book resource',
@@ -264,14 +239,9 @@ class resources_ui
 				'group' => $group,
 				'allowOnMultiple' => true,
 				'disableClass' => 'no_book',
+				'onExecute' => 'javaScript:app.resources.book',
 			),
-/*
-			'documents' => resources_merge::document_action(
-				$GLOBALS['egw_info']['user']['preferences']['resources']['document_dir'],
-				++$group, 'Insert in document', 'document_',
-				$GLOBALS['egw_info']['user']['preferences']['resources']['default_document']
-			),
-*/
+
 			'delete' => array(
 				'caption' => 'Delete',
 				'group' => ++$group,
@@ -327,35 +297,6 @@ class resources_ui
 
 		switch($action)
 		{
-			case 'view-calendar':
-				$resource_ids = array(0);
-				$url_params = array(
-					'menuaction' => 'calendar.calendar_uiviews.planner',
-					'sortby' => 'user',
-				);
-				foreach($checked as $n => $id)
-				{
-					$resource_ids[] = 'r'.$id;
-				}
-				$url_params['owner'] = implode(',',$resource_ids);
-				$success = count($resource_ids);
-				egw_framework::set_onload('window.location.href = "'.egw::link('/index.php',$url_params,'calendar').'"');
-				$action_msg = lang('view calendar');
-				break;
-			case 'book':
-				$resource_ids = array();
-				$url_params = array(
-					'menuaction' => 'calendar.calendar_uiforms.edit'
-				);
-				foreach($checked as $n => $id)
-				{
-					$resource_ids[] = 'r'.$id;
-				}
-				$url_params['participants'] = implode(',',$resource_ids);
-				$success = count($resource_ids);
-				egw_framework::set_onload("egw_openWindowCentered2('".egw::link('/index.php',$url_params) ."','_blank');");
-				$action_msg = lang('booked');
-				break;
 			case 'restore':
 				$action_msg = lang('restored');
 				foreach($checked as $n=>$id)
@@ -491,8 +432,10 @@ class resources_ui
 						 $acc_count = count($this->bo->get_acc_list($content['res_id']));
 					}
 					$result = $this->bo->save($content);
+
 					if(is_numeric($result))
 					{
+						$msg = lang('Resource %1 saved!',$result);
 						$content['res_id'] = $result;
 						if($acc_count && $content['accessory_of'] != -1)
 						{
@@ -504,24 +447,22 @@ class resources_ui
 					{
 						$msg = $result;
 					}
+
 					break;
 				case 'delete':
 					unset($content['delete']);
 					$msg = $this->bo->delete($content['res_id']);
 					break;
 			}
-			$js = "var win = opener || egw.window; win.egw_refresh('".str_replace("'","\\'",$msg)."','resources',{$content['res_id']}, '" .
-			($button == 'delete' ? 'delete' : 'edit') . "');";
-			if($button != 'apply' && !$msg)
+
+			egw_framework::refresh_opener($msg, 'resources',$content['res_id'],(button == 'delete' ? 'delete' : 'edit'));
+
+			if($button != 'apply')
 			{
-				$js .= 'window.close();';
-				echo "<html><body><script>$js</script></body></html>\n";
+				egw_framework::window_close();
 				$GLOBALS['egw']->common->egw_exit();
 			}
-			else
-			{
-				$GLOBALS['egw_info']['flags']['java_script'] .= "<script>$js</script>";
-			}
+
 		}
 
 		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
@@ -623,144 +564,6 @@ class resources_ui
 
 		$this->tmpl->read('resources.edit');
 		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$read_only,$preserv,2);
-	}
-
-	/**
-	 * select resources
-	 *
-	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
-	 */
-	function select($content='')
-	{
-		$GLOBALS['phpgw']->js->set_onload("copyOptions('exec[resources][selectbox]');");
-
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
-			window.focus();
-
-			openerid='resources_selectbox';
-			id='exec[nm][rows][selectbox]';
-
-			function addOption(label,value,button_id,useable)
-			{
-				var quantity = document.getElementById(button_id+'[default_qty]').value;
-				value = value+':'+quantity;
-				if(quantity>useable) {
-					alert('".lang('You chose more resources than available')."');
-					return false;
-				}
-				label = label+'['+quantity+'/'+useable+']';
-				openerSelectBox = opener.document.getElementById(openerid);
-				if (openerSelectBox) {
-					select = '';
-					for(i=0; i < openerSelectBox.length; i++) {
-						with (openerSelectBox.options[i]) {
-							if (selected || openerSelectBox.selectedIndex == i) {
-								select += (value.slice(0,1)==',' ? '' : ',')+value;
-							}
-						}
-					}
-					select += (select ? ',' : '')+value;
-					opener.selectbox_add_option(openerid,label,value,0);
-				}
-				selectBox = document.getElementById(id);
-				if (selectBox) {
-					var resource_value = value.split(':');
-					for (i=0; i < selectBox.length; i++) {
-						var selectvalue = selectBox.options[i].value.split(':');
-						if (selectvalue[0] == resource_value[0]) {
-							selectBox.options[i] = null;
-							selectBox.options[selectBox.length] = new Option(label,value,false,true);
-							break;
-						}
-					}
-					if (i >= selectBox.length) {
-						selectBox.options[selectBox.length] = new Option(label,value,false,true);
-					}
-				}
-			}
-
-			function removeSelectedOptions()
-			{
-				openerSelectBox = opener.document.getElementById(openerid);
-				if (openerSelectBox == null) window.close();
-				selectBox = document.getElementById(id);
-				for (i=0; i < selectBox.length; i++) {
-					if (selectBox.options[i].selected) {
-						for (j=0; j < openerSelectBox.length; j++) {
-							if (openerSelectBox[j].value == selectBox.options[i].value) {
-								openerSelectBox.removeChild(openerSelectBox[j]);
-							}
-						}
-						selectBox.options[i--] = null;
-					}
-				}
-			}
-
-			function copyOptions()
-			{
-				openerSelectBox = opener.document.getElementById(openerid);
-				selectBox = document.getElementById(id);
-				for (i=0; i < openerSelectBox.length; i++) {
-					with (openerSelectBox.options[i]) {
-						if (selected && value.slice(0,1) != ',') {
-							selectBox.options[selectBox.length] =  new Option(text,value);
-						}
-					}
-				}
-			}
-
-			function oneLineSubmit()
-			{
-			/*
-				openerSelectBox = opener.document.getElementById(openerid);
-
-				if (openerSelectBox) {
-					if (openerSelectBox.selectedIndex >= 0) {
-						selected = openerSelectBox.options[openerSelectBox.selectedIndex].value;
-						if (selected.slice(0,1) == ',') selected = selected.slice(1);
-						opener.selectbox_add_option(openerid,'multiple*',selected,1);
-					}
-					else {
-						for (i=0; i < openerSelectBox.length; i++) {
-							with (openerSelectBox.options[i]) {
-								if (selected) {
-									opener.selectbox_add_option(openerid,text,value,1);
-									break;
-								}
-							}
-						}
-					}
-				}
-			*/
-				window.close();
-			}</script>";
-
-		if (!is_array($content))
-		{
-			if (!($content['nm'] = egw_cache::getSession('resources','get_rows')))
-			{
-				$content['nm'] = array(
-					'header_left'   => 'resources.resource_select.header',
-					'show_bookable' => true,
-					'get_rows' 	    => 'resources.resources_bo.get_rows',
-					'filter_label'	=> 'Category',
-					'filter_help'	=> lang('Select a category'),
-					'options-filter'=> array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ),
-					'no_filter2'	=> true,
-					'filter_no_lang'=> true,
-					'no_cat'	    => true,
-					'rows'          => array('js_id' => 1),
-					'csv_fields'    => false,
-					'default_cols'  => 'name,cat_id,quantity',	// I  columns to use if there's no user or default pref
-					'store_state' => 'get_rows',	// store in session as for location get_rows
-				);
-				$content['nm']['filter'] = $GLOBALS['egw_info']['user']['preferences']['resources']['filter'];
-			}
-		}
-		$sel_options = array();
-		$no_button = array();
-		$this->tmpl->read('resources.resource_select');
-		return $this->tmpl->exec('resources.resources_ui.select',$content,$sel_options,$no_button,$preserv,2);
 	}
 
 	/**
