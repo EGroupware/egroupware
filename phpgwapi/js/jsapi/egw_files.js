@@ -199,23 +199,26 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Include a CSS file
 		 *
-		 * @param _cssFile full url of file to include
+		 * @param {string|array} _cssFiles full url of file to include
 		 */
-		includeCSS: function(_cssFile)
+		includeCSS: function(_cssFiles)
 		{
-			if (!this.included(_cssFile, true))	// check if included and marks as such if not
-			{
-				// Create the node which is used to include the css file
-				var cssnode = _wnd.document.createElement('link');
-				cssnode.type = "text/css";
-				cssnode.rel = "stylesheet";
-				cssnode.href = _cssFile;
+			if (typeof _cssFiles == 'string') _cssFiles = [_cssFiles];
+			_cssFiles = strip_egw_url(_cssFiles);
 
-				// Get the head node and append the newly created "link" node
-				// to it.
-				var head = _wnd.document.getElementsByTagName('head')[0];
-				if(jQuery('link[href="'+_cssFile+'"]',head).length == 0)
+			for(var n=0; n < _cssFiles.length; ++n)
+			{
+				var file = _cssFiles[n];
+				if (!this.included(file, true))	// check if included and marks as such if not
 				{
+					// Create the node which is used to include the css file
+					var cssnode = _wnd.document.createElement('link');
+					cssnode.type = "text/css";
+					cssnode.rel = "stylesheet";
+					cssnode.href = egw.webserverUrl+'/'+file;
+
+					// Get the head node and append the newly created "link" nod to it
+					var head = _wnd.document.getElementsByTagName('head')[0];
 					head.appendChild(cssnode);
 				}
 			}
