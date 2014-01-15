@@ -1,6 +1,8 @@
 /**
  * EGroupware: CSS with less preprocessor
  *
+ * Mail
+ * 
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
  * @link http://www.egroupware.org
@@ -13,6 +15,7 @@
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 @import (less) "../default/app.css";
+
 #popupMainDiv{
 	padding: 5px;
 	.et2_grid{
@@ -108,7 +111,8 @@ div#mail-index{
             div {}
 
             // Bilder in den Listen
-            tr.mail td img {height: 16px;}
+            tr.mail td img {.dimension_height_xs;.box_shadow_none;.border_none;}
+            tr.mail div span {.dimension_height_xs;.box_shadow_none; display: table-cell; }
 
 
 
@@ -1302,7 +1306,7 @@ div.mailPreviewHeaders div.mail_extraEmails {
 #mail-index_mailPreviewHeadersAttachments{
     
     
-    img.et2_button_icon {.dimension_width_height_m;}
+    img.et2_button_icon {.dimension_width_height_xs;}
     
 }
 

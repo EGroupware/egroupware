@@ -11,7 +11,7 @@
  * @package infolog
  * @version $Id$
  */
-/* $Id: app.css 44607 2013-11-19 22:02:37Z ralfbecker $ */
+/* $Id: app.css 45124 2014-01-14 13:48:11Z nathangray $ */
 .infolog_headertext {
   color: black;
   font-size: 120%;
@@ -64,6 +64,9 @@ table.infolog_fullWidth {
 }
 td.infolog_infoId:before {
   content: "#";
+}
+#infolog-edit_info_contact {
+  width: 98%;
 }
 .infolog_fixedHeight {
   height: 12px;

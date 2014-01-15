@@ -1,6 +1,8 @@
 /**
  * EGroupware: CSS with less preprocessor
  *
+ * Mail
+ * 
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
  * @link http://www.egroupware.org
@@ -594,7 +596,18 @@ div#mail-index div#mail-index_nm div.nextmatch_header div.filters input#mail-ind
   /*height: 20px !important;*/
 }
 div#mail-index div#mail-index_nm tr.mail td img {
-  height: 16px;
+  height: 12px;
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  border: 0px solid rgba(0, 0, 0, 0.9);
+}
+div#mail-index div#mail-index_nm tr.mail div span {
+  height: 12px;
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  display: table-cell;
 }
 div#mail-index div.splitter-bar,
 div#mail-index div.splitter-bar-horizontal {
@@ -1642,8 +1655,8 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
 }
 /* Button after field*/
 #mail-index_mailPreviewHeadersAttachments img.et2_button_icon {
-  width: 24px;
-  height: 24px;
+  width: 12px;
+  height: 12px;
 }
 .mailDisplayContainer,
 .mailDisplayAttachments {
