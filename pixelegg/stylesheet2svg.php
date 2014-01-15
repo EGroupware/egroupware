@@ -34,10 +34,11 @@ foreach($args as $path)
 {
 	if (!preg_match('|^([^/]+)/.*/(.*).svg$|', $path, $matches) || !($svg = file_get_contents($path)))
 	{
-		die("SVG image $path NOT found!\n");
+		error_log("SVG image $path NOT found or empty!\n");
+		continue;
 	}
 	// remove evtl. existing old stylesheet
-	$svg = preg_replace("|<?xml-stylesheet[^?]+?>\n|", '', $svg);
+	$svg = preg_replace("|<\\?xml-stylesheet[^?]+\\?>\n?|", '', $svg);
 	// add stylesheet
 	$style_url = rel_path($stylesheet, $path);
 	$svg = preg_replace('|<svg|', '<?xml-stylesheet type="text/css" href="'.$style_url.'" ?>'."\n".'<svg', $svg);
