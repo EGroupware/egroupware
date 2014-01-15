@@ -164,10 +164,12 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					i--;	// as index will be incr by for!
 				}
 			}
-			// check if all files already included --> call callback right away
+			// check if all files already included or sheduled to be included --> call callback via egw_LAB.wait
 			if (!_jsFiles.length)
 			{
-				_callback.call(_context);
+				egw_LAB.wait(function(){
+					_callback.call(_context);
+				});
 				return;
 			}
 
