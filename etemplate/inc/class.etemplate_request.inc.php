@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
@@ -64,6 +64,8 @@
  *	}
  *
  * For an example look in link_widget::ajax_search()
+ *
+ * @property-read boolean $data_modified true if data was modified and therefore needs saving
  */
 class etemplate_request
 {
@@ -79,6 +81,12 @@ class etemplate_request
 	 * @var boolean
 	 */
 	protected $data_modified=false;
+	/**
+	 * Flag that stored data should be removed by destructor, if not modified.
+	 *
+	 * @var boolean
+	 */
+	protected $remove_if_not_modified=false;
 	/**
 	 * mcrypt resource
 	 *
@@ -105,6 +113,9 @@ class etemplate_request
 	/**
 	 * Factory method to get a new request object or the one for an existing request
 	 *
+	 * New default is to use egw_cache to store requests and no longer request or
+	 * session documented below:
+	 *
 	 * If mcrypt AND gzcompress is available this factory method chooses etemplate_request,
 	 * which stores the request data encrypted in a hidden var directly in the form,
 	 * over etemplate_request_session, which stores the data in the session (and causing
@@ -117,42 +128,58 @@ class etemplate_request
 	{
 		if (is_null(self::$request_class))
 		{
+			// new default to use egw_cache to store requests
+			self::$request_class = 'etemplate_request_cache';
+			/* old default to use request if mcrypt and gzcompress are available and session if not
 			self::$request_class = check_load_extension('mcrypt') && function_exists('gzcompress') &&
 				self::init_crypt() ? __CLASS__ : 'etemplate_request_session';
+			 */
 		}
 		if (self::$request_class != __CLASS__)
 		{
-			return call_user_func(array(self::$request_class,'read'),$id);
+			$request = call_user_func(self::$request_class.'::read', $id);
 		}
-		$request = new etemplate_request();
-
-		if (!is_null($id))
+		else
 		{
-			$id = base64_decode($id);
+			$request = new etemplate_request();
 
-			// decrypt the data if available
-			if (self::init_crypt())
+			if (!is_null($id))
 			{
-				$id = mdecrypt_generic(self::$mcrypt,$id);
-			}
-			// uncompress the data if available
-			if (self::$compression_level && function_exists('gzcompress'))
-			{
-				//$len_compressed = bytes($id);
-				//$time = microtime(true);
-				$id = gzuncompress($id);
-				//$time = number_format(1000.0 * (microtime(true) - $time),1);
-				//$len_uncompressed = bytes($id);
-				//error_log(__METHOD__."() uncompressed from $len_compressed to $len_uncompressed bytes $time ms");
-			}
-			$request->data = unserialize($id);
+				$id = base64_decode($id);
 
-			if (!$request->data)
-			{
-				error_log(__METHOD__."() id not valid!");
-				return false;
+				// decrypt the data if available
+				if (self::init_crypt())
+				{
+					$id = mdecrypt_generic(self::$mcrypt,$id);
+				}
+				// uncompress the data if available
+				if (self::$compression_level && function_exists('gzcompress'))
+				{
+					//$len_compressed = bytes($id);
+					//$time = microtime(true);
+					$id = gzuncompress($id);
+					//$time = number_format(1000.0 * (microtime(true) - $time),1);
+					//$len_uncompressed = bytes($id);
+					//error_log(__METHOD__."() uncompressed from $len_compressed to $len_uncompressed bytes $time ms");
+				}
+				$request->data = unserialize($id);
+
+				if (!$request->data)
+				{
+					error_log(__METHOD__."() id not valid!");
+					$request = false;
+				}
+				//error_log(__METHOD__."() size of request = ".bytes($id));
 			}
-			//error_log(__METHOD__."() size of request = ".bytes($id));
+		}
+		if (!$request)	// eT2 request/session expired
+		{
+			// redirect to index-url of app
+			error_log(__METHOD__."('$id', ...) eT2 request not found --> redirect to index-url");
+			list($app) = explode('.', $_GET['menuaction']);
+			$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
+				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
+			egw_framework::redirect_link($index_url);
 		}
 		return $request;
 	}
@@ -174,14 +201,14 @@ class etemplate_request
 	 */
 	public function &id()
 	{
-		$id = serialize($this->data);
+		$data = serialize($this->data);
 
 		// compress the data if available
 		if (self::$compression_level && function_exists('gzcompress'))
 		{
 			//$len_uncompressed = bytes($id);
 			//$time = microtime(true);
-			$id = gzcompress($id,self::$compression_level);
+			$data = gzcompress($data, self::$compression_level);
 			//$time = number_format(1000.0 * (microtime(true) - $time),1);
 			//$len_compressed = bytes($id);
 			//error_log(__METHOD__."() compressed from $len_uncompressed to $len_compressed bytes in $time ms");
@@ -189,9 +216,9 @@ class etemplate_request
 		// encrypt the data if available
 		if (self::init_crypt())
 		{
-			$id = mcrypt_generic(self::$mcrypt,$id);
+			$data = mcrypt_generic(self::$mcrypt, $data);
 		}
-		$id = base64_encode($id);
+		$id = base64_encode($data);
 
 		//error_log(__METHOD__."() #$this->id: size of request = ".bytes($id));//.", id='$id'");
 		//self::debug();
@@ -293,6 +320,7 @@ class etemplate_request
 		if ($this->data[$var] !== $val)
 		{
 			$this->data[$var] = $val;
+			//error_log(__METHOD__."('$var', ...) data of id=$this->id changed ...");
 			$this->data_modified = true;
 		}
 	}
@@ -305,6 +333,8 @@ class etemplate_request
 	 */
 	public function &__get($var)
 	{
+		if ($var == 'data_modified') return $this->data_modified;
+
 		return $this->data[$var];
 	}
 
@@ -415,5 +445,15 @@ class etemplate_request
 			mcrypt_generic_deinit(self::$mcrypt);
 			self::$mcrypt = null;
 		}
+	}
+
+	/**
+	 * Mark request as to destroy, if it does not get modified before destructor is called
+	 *
+	 * If that function is called, request is removed from storage, further modification will work!
+	 */
+	public function remove_if_not_modified()
+	{
+		$this->remove_if_not_modified = true;
 	}
 }

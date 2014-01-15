@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
@@ -119,8 +119,15 @@ class etemplate_request_session extends etemplate_request
 	 */
 	function __destruct()
 	{
-		if ($this->data_modified) $GLOBALS['egw']->session->appsession($this->id,'etemplate',$this->data);
-
+		if ($this->remove_if_not_modified && !$this->data_modified)
+		{
+			//error_log(__METHOD__."() destroying $this->id");
+			egw_cache::unsetSession('etemplate', $this->id);
+		}
+		elseif (!$this->destroyed && $this->data_modified)
+		{
+			egw_cache::setSession('etemplate', $this->id, $this->data);
+		}
 		if (!$this->garbage_collection_done)
 		{
 			$this->_php4_request_garbage_collection();

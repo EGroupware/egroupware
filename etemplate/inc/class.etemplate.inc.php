@@ -51,11 +51,7 @@ class etemplate_new extends etemplate_widget_template
 		if ($name) $this->read($name,$template='default',$lang='default',$group=0,$version='',$load_via);
 
 		// generate new etemplate request object, if not already existing
-		if(!self::$request)
-		{
-			self::$request = etemplate_request::read();
-			self::$request->content = array();
-		}
+		if(!isset(self::$request)) self::$request = etemplate_request::read();
 	}
 
 	/**
@@ -294,6 +290,10 @@ class etemplate_new extends etemplate_widget_template
 			self::$response->generic('et2_validation_error', self::$validation_errors);
 			exit;
 		}
+
+		// tell request call to remove request, if it is not modified eg. by call to exec in callback
+		self::$request->remove_if_not_modified();
+
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
 		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
@@ -345,6 +345,9 @@ class etemplate_new extends etemplate_widget_template
 		}
 		error_log(__METHOD__."(,".array2string($content).')');
 		error_log(' validated='.array2string($validated));
+
+		// tell request call to remove request, if it is not modified eg. by call to exec in callback
+		self::$request->remove_if_not_modified();
 
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}

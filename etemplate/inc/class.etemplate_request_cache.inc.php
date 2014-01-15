@@ -1,25 +1,26 @@
 <?php
 /**
- * eGroupWare - eTemplate request object storing the data in the filesystem
+ * eGroupWare - eTemplate request object storing the data in EGroupware instance cache
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2009-14 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2014 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
 /**
  * Class to represent the persitent information stored on the server for each eTemplate request
  *
- * The information is stored in the filesystem. The admin has to take care of regulary cleaning of
- * the used directory, as old requests get NOT deleted by this handler.
+ * The information is stored in EGroupware tree cache with a given fixed expiration time.
+ * We use tree cache with install-id as part of key to not loose all requests, if admin
+ * clears instance cache (Admin >> Clear cache and register hooks)!
  *
  * To enable the use of this handler, you have to set (in etemplate/inc/class.etemplate_request.inc.php):
  *
- * 		etemplate_request::$request_class = 'etemplate_request_files';
+ * 		etemplate_request::$request_class = 'etemplate_request_cache';
  *
  * The request object should be instancated only via the factory method etemplate_request::read($id=null)
  *
@@ -36,7 +37,7 @@
  * 		// request not found
  * }
  *
- * Ajax requests can use this object to open the original request by using the id, they have to transmitt back,
+ * Ajax requests can use this object to open the original request by using the id, they have to transmit back,
  * and register further variables, modify the registered ones or delete them AND then update the id, if it changed:
  *
  *	if (($new_id = $request->id()) != $id)
@@ -46,8 +47,14 @@
  *
  * For an example look in link_widget::ajax_search()
  */
-class etemplate_request_files extends etemplate_request
+
+class etemplate_request_cache extends etemplate_request
 {
+	/**
+	 * Expiration time of 4 hours
+	 */
+	const EXPIRATION = 7200;
+
 	/**
 	 * request id
 	 *
@@ -56,26 +63,14 @@ class etemplate_request_files extends etemplate_request
 	protected $id;
 
 	/**
-	 * Name of the directory to store the request data, by default $GLOBALS['egw_info']['server']['temp_dir']
-	 *
-	 * @var string
-	 */
-	static public $directory;
-
-	/**
 	 * Private constructor to force the instancation of this class only via it's static factory method read
 	 *
-	 * @param array $id
+	 * @param string $_id
 	 */
-	private function __construct($id=null)
+	private function __construct($_id=null)
 	{
-		if (is_null(self::$directory))
-		{
-			self::$directory = $GLOBALS['egw_info']['server']['temp_dir'];
-		}
-		if (!$id) $id = self::request_id();
-
-		$this->id = $id;
+		$this->id = $_id ? $_id : self::request_id();
+		//error_log(__METHOD__."($_id) this->id=$this->id");
 	}
 
 	/**
@@ -97,36 +92,29 @@ class etemplate_request_files extends etemplate_request
 	 */
 	static function read($id=null)
 	{
-		$request = new etemplate_request_files($id);
+		$request = new etemplate_request_cache($id);
 
 		if (!is_null($id))
 		{
-			if (!file_exists($filename = self::$directory.'/'.$id) || !is_readable($filename))
+			//error_log(__METHOD__."() reading $id");
+			if (!($request->data = egw_cache::getTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $id)))
 			{
-				error_log("Error opening '$filename' to read the etemplate request data!");
+				error_log("Error reading etemplate request data for id=$id!");
 				return false;
 			}
-			$request->data = unserialize(file_get_contents($filename));
-			if ($request->data === false) error_log("Error unserializing '$filename' to read the etemplate request data!");
 		}
-		//error_log(__METHOD__."(id=$id");
+		//error_log(__METHOD__."(id=$id) returning ".array2string($request));
 		return $request;
 	}
 
 	/**
-	 * creates a new request-id via microtime()
+	 * creates a new unique request-id
 	 *
 	 * @return string
 	 */
 	static function request_id()
 	{
-		do
-		{
-			$id = uniqid('etemplate_'.$GLOBALS['egw_info']['flags']['currentapp'].'_',true);
-		}
-		while (file_exists(self::$directory.'/'.$id));
-
-		return $id;
+		return uniqid($GLOBALS['egw_info']['flags']['currentapp'].'_'.$GLOBALS['egw_info']['user']['account_lid'].'_',true);
 	}
 
 	/**
@@ -139,15 +127,21 @@ class etemplate_request_files extends etemplate_request
 	 */
 	function __destruct()
 	{
-		if ($this->remove_if_not_modified && !$this->data_modified)
+		if ($this->remove_if_not_modified && !$this->data_modified && isset($this->data['last_saved']))
 		{
 			//error_log(__METHOD__."() destroying $this->id");
-			@unlink(self::$directory.'/'.$this->id);
+			egw_cache::unsetTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id);
 		}
-		elseif (!$this->destroyed && $this->data_modified &&
-			!file_put_contents($filename = self::$directory.'/'.$this->id,serialize($this->data)))
+		elseif (($this->data_modified ||
+			// if half of expiration time is over, save it anyway, to restart expiration time
+			isset($this->data['last_saved']) && (time()-$this->data['last_saved']) > self::EXPIRATION/2))
 		{
-			error_log("Error opening '$filename' to store the etemplate request data!");
+			//error_log(__METHOD__."() saving $this->id");
+			$this->data['last_saved'] = time();
+			if (!egw_cache::setTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id, $this->data, self::EXPIRATION))
+			{
+				error_log("Error storing etemplate request data for id=$this->id!");
+			}
 		}
 	}
 }
