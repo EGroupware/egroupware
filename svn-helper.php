@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2007-14 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -45,7 +45,7 @@ switch ($args[0])
 		}
 		// fall through
 	default:
-		foreach(get_app_dirs as $module => $dir)
+		foreach(get_app_dirs() as $module => $dir)
 		{
 			chdir(__DIR__ . '/'. $dir);
 
