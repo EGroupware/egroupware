@@ -90,7 +90,7 @@ function nm_action(_action, _senders, _target, _ids)
 			}
 			else if(target)
 			{
-				egw.open_link(url, target);
+				egw.open_link(url, target, _action.data.width ? _action.data.width+'x'+_action.data.height : false);
 			}
 			else
 			{
@@ -104,10 +104,26 @@ function nm_action(_action, _senders, _target, _ids)
 
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
-			console.log(params);
+
 			var egw_open_id = idsArr[0];
-			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
-			egw(params[1],window).open(egw_open_id,params[1],params[0],params[3],target);
+			var type = params.shift();
+			var app = params.shift();
+			if (typeof params[2] != 'undefined')
+			{
+					if(egw_open_id.indexOf(':') >= 0)
+					{
+						egw_open_id = egw_open_id.split(':')[params.shift(params[2])];
+					}
+					else
+					{
+						// Discard
+						params.shift(params[2]);
+					}
+			}
+
+			// Re-join, in case extra has a -
+			var extra = params.join('-');
+			egw(app,window).open(egw_open_id,app,type,extra,target);
 			break;
 
 		case 'open_popup':
