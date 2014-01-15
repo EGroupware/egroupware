@@ -415,6 +415,20 @@ app.classes.addressbook = AppJS.extend(
 		this.et2.getInstanceManager().submit(this.et2.getWidgetById('button[search]'));
 		return false;
 	},
+	
+	/**
+	 * Action function to set business or private mail checkboxes to user preferences
+	 *
+	 * @param {egwAction} action Action user selected.
+	 */
+	mailCheckbox: function(action)
+	{
+		var preferences = {
+			business:(action.getManager().getActionById('email_business').checked?true:false),
+			private:(action.getManager().getActionById('email_home').checked?true:false),
+		}
+		this.egw.set_preference('addressbook','preferredMail', preferences)
+	},
 
 	/**
 	 * Action function to add the email address (business or home) of the selected

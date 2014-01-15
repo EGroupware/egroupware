@@ -126,19 +126,6 @@ class addressbook_hooks
 				'default'=> 3,
 			);
 		}
-		$settings['distributionListPreferredMail'] = array(
-			'type'   => 'select',
-			'label'  => 'Preferred email address to use in distribution lists',
-			'name'   => 'distributionListPreferredMail',
-			'values' => array(
-				'email'	=> lang("Work email if given, else home email"),
-				'email_home'	=> lang("Home email if given, else work email"),
-			),
-			'help'   => 'Defines which email address (business or home) to use as the preferred one for distribution lists in mail.',
-			'xmlrpc' => True,
-			'admin'  => False,
-			'forced'=> 'email',
-		);
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 		{
 			$settings['private_addressbook'] = array(

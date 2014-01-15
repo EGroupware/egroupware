@@ -580,18 +580,22 @@ class addressbook_ui extends addressbook_bo
 							'no_lang' => true,
 							'checkbox' => true,
 							'group'	=> $group,
-							'onExecute' => 'javaScript:app.addressbook.mailCheckMenu',
+							'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
+							'checked' => $this->prefs['preferredMail']['business'],
 						),
 						'email_home' => array(
 							'caption' => lang('Add %1',lang('home email')),
 							'no_lang' => true,
 							'checkbox' => true,
 							'group'	=> $group,
-							'onExecute' => 'javaScript:app.addressbook.mailCheckMenu',
+							'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
+							'checked' => $this->prefs['preferredMail']['private'],
 						),
 				),
 
 			);
+		if (!$this->prefs['preferredMail'])
+			$actions['email']['children']['email_business']['checked'] = true;
 
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
