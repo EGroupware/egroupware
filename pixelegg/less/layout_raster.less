@@ -300,60 +300,7 @@
 
 
 
-    /*    span#quick_add{
-            .Complete_Button_add;
-            .Button_size_square_16;
-            .border_normal;
-            .box_shadow_standard_light;
-            float: right;
-            position: fixed;
-            right: 83px;
-            top: 5px;
-            padding: 0.5em;
-            &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
-            &:focus {.box_shadow_standard_light_inset;};
-            .transition (0.2s, ease-out);
-    
-            select#quick_add_selectbox{
-                                        position: fixed;
-                                        right: 83px;
-                                        .border_normal;
-                                        .box_shadow_standard_light;
-                                        height: 26px;
-                                        padding: 0 0 0 10px;
-                                        font-size: 0.9em;
-                                        line-height: 1.1em;
-                                        
-                                        visibility: hidden;
-                                        
-                                        transition-property: visibility;
-                                        transition-duration: 0s;
-                                        transition-timing-function: linear;
-                                        transition-delay: 0s;
-                                        }
-                                    }
-    
-    
-        
-    
-       hover
-       span#quick_add:hover {  
-                 
-                 width: 166px !important;
-                .box_shadow_standard_light_hover;
-       
-                 select#quick_add_selectbox {
-                    .box_shadow_standard_light_hover;
-                    .box_shadow_none;
-                    border: none;
-                    position: relative !important;
-                    right: 1px !important;
-                    top: -5px;
-                    z-index: 200;
-                    visibility: visible !important;
-                }
-       
-       }*/
+   
 
 }  
 
@@ -557,6 +504,9 @@
                     padding-left: 3em;
                     .color_40_gray;
                 }
+                
+                object {background-color: @gray_0; .dimension_width_height_m;}
+                
             }
 
 
@@ -597,7 +547,12 @@
                     .background_color_25_gray;
                 }
 
-
+                object {
+                    margin-left: 14px;
+                    margin-top: 8px;
+                    .rounded (3px;);
+                    .dimension_width_height_s;
+                }
 
                 .egw_fw_ui_ajaxloader {margin-top: -26px;}
 
@@ -656,6 +611,12 @@
                         color:#ff0000; 
                         background-color: yellow !important;
                     } 
+                    
+                  div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+                                img.egw_fw_ui_sidemenu_listitem_icon {
+                                 display: block;
+                                 } 
+                  }
 
                 }
 
@@ -726,11 +687,7 @@
                 /*filter grey*/
                 .img_filter_gray;
                 
-/*                path {color: red}
-                
-                svg:hover path {fill: red;}
-                
-                filter: hue-rotate(90deg);*/
+
             }
         }
 
@@ -826,16 +783,16 @@
 
     // Icon before
     img.egw_fw_ui_sidemenu_listitem_icon {
-        .dimension_width_height_s;
+        /*display: none;*/
+        .dimension_width_height_xs;
         padding: 0px;
         margin: 0px 5px;
         float: left;
         /*.Complete_Button_Icon_normal;*/
-        background-image: url("../images/bullet.png");
+/*        background-image: url("../images/bullet.svg");
         background-size: .dimension_width_height_s;
+        background-position: center;*/
 
-        background-position: center;
-        /*&:hover {height: 16px; .Complete_Button_Icon_hover ;}*/
     }
 
     input {
@@ -1154,18 +1111,14 @@ div#calendar-container {
                 margin: 0 auto;
                 .dimension_width_height_s;
             }
-
-
-
-            // Tab
+            
+              // Tab
 
             // ##########
             // #        #
-            // # 16x16  #
+            // #        #
             // ##########
-            // aktive
-
-
+            // inaktive
 
             .egw_fw_ui_tab_header {
                 text-align: center;
@@ -1206,12 +1159,26 @@ div#calendar-container {
                     margin: 5px 1px 0 1em;
                     
                     .img_filter_gray;
-                    
-
                 }
 
-            }
+                object {
+                .dimension_width_height_s;
+                background-color: @gray_0;
+                margin: 8px 1px 0 5px;
+                .border_radius(5px,0, 0, 5px);
 
+                
+                }
+                
+                
+            }
+            
+            // ##########
+            // #        #
+            // #        #
+            // ##########
+
+            /*aktive Tabs*/
             .egw_fw_ui_tab_header_active {
                 border-width: 1px 1px 0px 1px !important;
                 padding: 0 0 5px !important;
@@ -1225,15 +1192,18 @@ div#calendar-container {
                 img.egw_fw_ui_tab_icon {
                     display: inline-block;
                     .dimension_width_height_s;
-                    -webkit-transform: scale(1.1);
-                    -moz-transform: scale(1.1);
-                    -ms-transform: scale(1.1);
-                    -o-transform: scale(1.1);
-                    transform: scale(1.1);
+                   
                     
                     
                 }
-
+                 /*aktive Objekte*/
+                 object {
+                .dimension_width_height_m;
+                margin: 2px 1px 0 5px;
+                .border_radius(2px,0, 0, 2px);
+                
+                background-color: @gray_30;
+                }
 
             }
 

@@ -647,7 +647,7 @@ ul.et2_link_string {
     position: fixed;
     border: 1px solid #897f51;
     padding: 3px;
-    background-color: @color_hint;
+    background-color: @color_tooltip;
     max-width: 300px;
     color: black;
 }
@@ -1218,8 +1218,9 @@ div.message.floating {
 
     // List Icon 
     .sideboxstar{
-        background-image: url("../images/bullet.png");
+        background-image: url("../images/bullet.svg");
         background-repeat: no-repeat;
+        background-size: contain;
         .dimension_width_height_xs;
     }
 
@@ -1229,6 +1230,7 @@ div.message.floating {
 
 
 .sidebox-favorites {
+    
     ul.favorites {
         width: 99%;
         padding: 0px;
@@ -1237,9 +1239,9 @@ div.message.floating {
 
         li {
 
-            padding-left: 0 !important; 
+            padding-left: 1em !important; 
             margin-left: 0px; 
-            line-height: 2.5em;
+            line-height: 2em;
 
 
             img {
@@ -1265,11 +1267,16 @@ div.message.floating {
                 &:hover {.dimension_height_s; .Complete_Button_Icon_hover ;}
 
             }
-
-
-
+            
+            a {
+                div.sideboxstar {display: none;}
+                div.ui-icon-trash{
+                                    margin-top: -1px;
+                                    margin-right: 2px;
+                }
+            }
+            
         }
-
     }
 
     .ui-state-hover,
@@ -1299,24 +1306,26 @@ div.message.floating {
         }
     }
 
+    /*ul*/
     .ui-menu {
-
+        /*li*/
         .ui-menu-item {
-
-
+            
+            width: 93%;
+            
             &:hover {background-color: @egw_color_1_e;}
 
             a {
                 line-height: inherit;
                 padding: 2px 0px;
-                padding-left: 0 !important;
+                padding-left: 5px !important;
 
                 &:hover {text-decoration: underline; 
                          /*.Complete_Button_Icon_hover ;*/
                 }
 
-                img { .dimension_width_height_s ;
-                }
+                img { .dimension_width_height_s ;}
+                div.ui-icon-heart{display: none}
             }
 
         }
@@ -1332,31 +1341,18 @@ div.message.floating {
         background-image: none;
     }	
     div.ui-icon-trash{
-
-        background-image:url(../images/delete.png);
+        margin-top: 0px;
+        margin-right: 2px;
+        background-image:url(../images/delete.svg);
         background-size: 16px 16px;
         background-position: 0 0;
 
-        background-color: #e6e6e6;
-        -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-        -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-        box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-        border: 1px solid rgba(0,0,0,0.15);
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        margin-right: 0.5em;
-        padding: 0px 2px 0 2px;
-        width: 10px;
-
-
+        background-color: #000;
+        .box_shadow_standard_light;
+        .rounded;
     }
 
 } // sidebox-favorites
-
-
-
-
 
 
 .nextmatch_sortheader {
@@ -1718,4 +1714,4 @@ iframe#admin-index_iframe{
 }
 
 //
-//                                                                                                                                                                                                                                                                                                        
+//      

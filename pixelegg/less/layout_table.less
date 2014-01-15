@@ -109,7 +109,10 @@ table.egwGridView_outer{
                     border-bottom: 1px solid silver;
                 }
 
-
+                div.innerContainer {
+                                        max-height: 7em;
+                                        overflow-y: auto;
+                                    }
 
 
             }
@@ -187,7 +190,8 @@ table.egwGridView_grid{
     border-spacing: 0px 1px;
     width: 100%;
 
-    img{ height: 16px;}
+    img{ .dimension_height_s;}
+    img.iphoto {height: 9em;margin: 0.2em; max-height: 60px;}
 
     tbody {
         border-bottom: 1px solid @lightgray;
@@ -336,4 +340,10 @@ table.egwGridView_grid{
      }
  }
  
-//
+/*########################################################*/
+// Tabelle der APP Ausgabe
+
+table.nextmatch_header{
+    
+    img{ .dimension_width_height_s;}
+}
