@@ -558,25 +558,25 @@ class addressbook_ui extends addressbook_bo
 				'group' => $group,
 				'children' => array(
 						'add_to_to' => array(
-							'caption' => lang('Add to %1',lang('To')),
+							'caption' => lang('Add to To'),
 							'no_lang' => true,
 							'onExecute' => 'javaScript:app.addressbook.addEmail',
 
 						),
 						'add_to_cc' => array(
-							'caption' => lang('Add to %1',lang('Cc')),
+							'caption' => lang('Add to Cc'),
 							'no_lang' => true,
 							'onExecute' => 'javaScript:app.addressbook.addEmail',
 
 						),
 						'add_to_bcc' => array(
-							'caption' => lang('Add to %1',lang('BCc')),
+							'caption' => lang('Add to BCc'),
 							'no_lang' => true,
 							'onExecute' => 'javaScript:app.addressbook.addEmail',
 
 						),
 						'email_business' => array(
-							'caption' => lang('Add %1',lang('business email')),
+							'caption' => lang('Business email'),
 							'no_lang' => true,
 							'checkbox' => true,
 							'group'	=> $group,
@@ -584,7 +584,7 @@ class addressbook_ui extends addressbook_bo
 							'checked' => $this->prefs['preferredMail']['business'],
 						),
 						'email_home' => array(
-							'caption' => lang('Add %1',lang('home email')),
+							'caption' => lang('Home email'),
 							'no_lang' => true,
 							'checkbox' => true,
 							'group'	=> $group,
