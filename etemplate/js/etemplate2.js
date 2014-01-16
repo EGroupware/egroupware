@@ -121,6 +121,12 @@ etemplate2.prototype.clear = function()
 		$j(window).off("."+this.uniqueId);
 	}
 
+	// call our destroy_session handler, if it is not already unbind, and unbind it after
+	if (this.destroy_session)
+	{
+		this.destroy_session();
+		this.unbind_unload();
+	}
 	if (this.widgetContainer != null)
 	{
 		// Un-register handler
@@ -195,14 +201,16 @@ etemplate2.prototype._createArrayManagers = function(_data)
  */
 etemplate2.prototype.bind_unload = function()
 {
+	this.destroy_session = jQuery.proxy(function(ev)
+	{
+		var request = egw.json(this.app+".etemplate_new.ajax_destroy_session.etemplate",
+			[this.etemplate_exec_id], null, null, false);
+		request.sendRequest();
+	}, this);
+
 	if (!window.onbeforeunload)
 	{
-		window.onbeforeunload = this.destroy_session = jQuery.proxy(function(ev)
-		{
-			var request = egw.json(self.egw().getAppName()+".etemplate_new.ajax_destroy_session.etemplate",
-				[this.etemplate_exec_id], null, null, false);
-			request.sendRequest();
-		}, this);
+		window.onbeforeunload = this.destroy_session;
 	}
 };
 
@@ -214,8 +222,8 @@ etemplate2.prototype.unbind_unload = function()
 	if (window.onbeforeunload === this.destroy_session)
 	{
 		window.onbeforeunload = null;
-		delete this.destroy_session;
 	}
+	delete this.destroy_session;
 };
 
 /**
@@ -223,12 +231,8 @@ etemplate2.prototype.unbind_unload = function()
  */
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
-	if (_data.etemplate_exec_id)
-	{
-		this.bind_unload();
-	}
 	egw().debug("info", "Loaded data", _data);
-	var currentapp = _data.currentapp || window.egw_appName;
+	var currentapp = this.app = _data.currentapp || window.egw_appName;
 
 	// Register a handler for AJAX responses
 	egw(currentapp, window).registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
@@ -298,6 +302,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			{
 				window.egw_app_header(_data.app_header);
 			}
+			// bind our unload handler
+			this.bind_unload();
 		}
 
 		var _load = function() {
