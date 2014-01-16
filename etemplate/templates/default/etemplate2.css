@@ -976,7 +976,8 @@ div.et2_progress {
 }
 div.et2_progress > div {
   background-color: #D00000;
-  height: 5px;
+  height: 100%;
+  min-height: 5px;
 }
 .egwResizeOverlay {
   position: fixed;
