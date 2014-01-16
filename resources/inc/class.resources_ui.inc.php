@@ -106,7 +106,6 @@ class resources_ui
 		$content = array();
 		$content['msg'] = $msg ? $msg : $_GET['msg'];
 
-		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['header_right']	= 'resources.show.nm_right';
 		$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;

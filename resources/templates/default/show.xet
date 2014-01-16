@@ -18,7 +18,6 @@
 			<columns>
 				<column/>
 				<column/>
-				<column width="3%"/>
 				<column/>
 				<column/>
 				<column/>
@@ -26,7 +25,7 @@
 				<column width="5%"/>
 			</columns>
 			<rows>
-				<row class="nmh">
+				<row class="th">
 					<description/>
 					<vbox>
 						<nextmatch-sortheader label="Name" id="name"/>
@@ -46,13 +45,8 @@
 					</vbox>
 					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
-					<hbox align="right">
-						<description/>
-						<description needed="1"/>
-						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="toggle_all(this.form,form::name('nm[rows][checkbox][]'),true); return false;" image="check.png"/>
-					</hbox>
 				</row>
-				<row class="nmr $row_cont[class]" valign="top">
+				<row class="$row_cont[class]" valign="top">
 					<button align="center" id="${row}[picture_thumb]" onclick="if('${row}[picture_src]}' == 'own_src') {egw.open('/apps/resources/${row_cont[res_id]}/.picture.jpg','file');} return false;" image="${row}[picture_thumb]" class="thumb"/>
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
@@ -75,7 +69,7 @@
 						<description id="${row}[storage_info]" no_lang="1"/>
 					</vbox>
 					<vbox no_lang="1">
-						<description id="${row}[accessory_of_label]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" extra_link_popup="850x600"/>
+						<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" no_lang="1"/>
 						<grid width="100%" id="${row}[accessories]">
 							<columns>
 								<column/>
@@ -101,9 +95,6 @@
 				<row disabled="!@msg">
 					<description align="center" id="msg" span="all" class="message"/>
 				</row>
-				<row disabled="1">
-					<template align="right" id="nm_right"/>
-				</row>
 				<row>
 					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
 				</row>
@@ -113,7 +104,7 @@
 					</hbox>
 				</row>
 				<row>
-					<box class="action_popup prompt" id="delete_popup">
+					<box id="delete_popup" class="action_popup prompt">
 						<vbox class="prompt">
 							<description value="Delete" class="promptheader"/>
 							<description value="Delete accessories of selected resources too?"/>
@@ -126,7 +117,7 @@
 					</box>
 				</row>
 				<row>
-					<box class="action_popup prompt" id="restore_popup">
+					<box id="restore_popup" class="action_popup prompt">
 						<vbox class="prompt">
 							<description value="Un-delete" class="promptheader"/>
 							<description value="Un-delete accessories of selected resources too?"/>
