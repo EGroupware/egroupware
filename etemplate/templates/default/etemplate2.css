@@ -645,6 +645,14 @@ ul.et2_link_string {
   margin: 0px;
   padding: 0px;
 }
+.et2_taglist .mailinglist {
+  width: 100%;
+  background-image: url(images/email.png);
+  padding-right: 20px;
+  background-position: right;
+  background-repeat: no-repeat;
+  font-weight: bold;
+}
 /**
  * VFS widget(s)
  */

@@ -244,7 +244,7 @@ class mail_compose
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
-		
+
 		// Process different places we can use as a start for composing an email
 		if($_GET['from'] && $replyID)
 		{
@@ -1242,7 +1242,7 @@ class mail_compose
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
-	
+
 	/**
 	 * Get pre-fill a new compose based on an existing email
 	 *
@@ -1284,14 +1284,14 @@ class mail_compose
 				case 'composeasnew':
 				case 'composefromdraft':
 					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
-					
+
 					$_focusElement = 'body';
 					$suppressSigOnTop = true;
 					break;
 				case 'reply':
 				case 'reply_all':
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
-					
+
 					$_focusElement = 'body';
 					$suppressSigOnTop = false;
 					$isReply = true;
@@ -1952,7 +1952,7 @@ class mail_compose
 				}
 			}
 		}
-		
+
 		foreach((array)$_formData['to'] as $address) {
 			$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address), '');
 			foreach((array)$address_array as $addressObject) {
@@ -2708,7 +2708,9 @@ class mail_compose
 				$results[] = array(
 					'id'	=> $key,
 					'name'	=> $list_name,
-					'label'	=> $list_name
+					'label'	=> $list_name,
+					'class' => 'mailinglist',
+					'title' => lang('Mailinglist'),
 				);
 				if($list_count++ > 5) break;
 			}

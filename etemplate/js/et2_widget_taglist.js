@@ -112,7 +112,7 @@ var et2_taglist = et2_selectbox.extend(
 		this._super.apply(this, arguments);
 
 		// jQuery wrapped DOM node
-		this.div = jQuery("<div></div>");
+		this.div = jQuery("<div></div>").addClass('et2_taglist');
 
 		// magicSuggest object
 		this.taglist = null;
@@ -365,7 +365,7 @@ var et2_taglist_email = et2_taglist.extend(
 			this.options.autocomplete_params.include_lists = true;
 		}
 	},
-	
+
 	// PREG for validation comes from et2_url
 	//EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
 
@@ -375,6 +375,7 @@ var et2_taglist_email = et2_taglist.extend(
 		var valid = item.id != item.label || et2_url.prototype.EMAIL_PREG.test(item.id || '');
 
 		var label = jQuery('<span>').text(item.label);
+		if (item.class) label.addClass(item.class);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
 		if (!valid) label.addClass('ui-state-error');
 
