@@ -54,7 +54,10 @@ class infolog_hooks
 			),
 			'view_id'    => 'info_id',
 			'view_popup'  => '750x580',
-			'view_list'	=>	'infolog.infolog_ui.index',
+			'list'	=>	array(
+				'menuaction' => 'infolog.infolog_ui.index',
+				'ajax' => 'true'
+			 ),
 			'add' => array(
 				'menuaction' => 'infolog.infolog_ui.edit',
 				'type'   => 'task'
