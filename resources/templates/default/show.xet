@@ -46,22 +46,22 @@
 					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
 				</row>
-				<row class="$row_cont[class]" valign="top">
-					<button align="center" id="${row}[picture_thumb]" onclick="if('${row}[picture_src]}' == 'own_src') {egw.open('/apps/resources/${row_cont[res_id]}/.picture.jpg','file');} return false;" image="${row}[picture_thumb]" class="thumb"/>
+				<row class="$row_cont[class]">
+					<button align="center" id="${row}[picture_thumb]" />
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
 					</vbox>
-					<vbox align="right">
-						<description align="right" id="${row}[useable]" no_lang="1"/>
-						<description align="right" id="${row}[quantity]" no_lang="1"/>
+					<vbox align="left">
+						<description align="left" id="${row}[useable]" no_lang="1"/>
+						<description align="left" id="${row}[quantity]" no_lang="1"/>
 					</vbox>
 					<vbox>
 						<menulist>
-							<menupopup type="select-cat" id="${row}[cat_id]" no_lang="1" readonly="true"/>
+							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
 						</menulist>
 						<menulist>
-							<menupopup type="select-account" id="${row}[admin]" no_lang="1" readonly="true"/>
+							<menupopup type="select-account" id="{$row}[admin]" no_lang="1" readonly="true"/>
 						</menulist>
 					</vbox>
 					<vbox>
@@ -97,11 +97,6 @@
 				</row>
 				<row>
 					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
-				</row>
-				<row>
-					<hbox>
-						<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
-					</hbox>
 				</row>
 				<row>
 					<box id="delete_popup" class="action_popup prompt">
