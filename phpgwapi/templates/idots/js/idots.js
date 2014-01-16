@@ -14,8 +14,9 @@
  * idots javascript
  */
 egw_LAB.wait(function() {
-	// add quick add select box
-	egw.link_quick_add('quick_add');
+	// add quick-add select box, but only if parent is present (not for login page!)
+	var quick_add = document.getElementById('quick_add');
+	if (quick_add) egw.link_quick_add(quick_add);
 
 	// instanciate slideout menus via "data-slide-out" of egw.js script tag
 	var egw_script = document.getElementById('egw_script_id');

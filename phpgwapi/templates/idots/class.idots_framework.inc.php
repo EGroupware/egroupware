@@ -111,17 +111,20 @@ class idots_framework extends egw_framework
 			egw_framework::set_onload('window.setTimeout(function(){window.scrollTo(0, 1);}, 100);');
 		}
 
-		// include regular include slidereffects.js
-		if (!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
+		// load idots specific javascript files, if we are not in login or logout
+		if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('login', 'logout')))
 		{
-			self::validate_file('/phpgwapi/templates/idots/js/slidereffects.js');
+			// include regular include slidereffects.js
+			if (!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
+			{
+				self::validate_file('/phpgwapi/templates/idots/js/slidereffects.js');
+			}
+			else
+			{
+				self::validate_file('/phpgwapi/templates/idots/js/simple_show_hide.js');
+			}
+			self::validate_file('/phpgwapi/templates/idots/js/idots.js');
 		}
-		else
-		{
-			self::validate_file('/phpgwapi/templates/idots/js/simple_show_hide.js');
-		}
-		self::validate_file('/phpgwapi/templates/idots/js/idots.js');
-
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover' && !html::$ua_mobile)
 		{
 			$show_menu_event = 'mouseover';
