@@ -52,9 +52,9 @@ connect to profile %1	mail	en	Connect to Profile %1
 connection status	mail	en	Connection Status
 contains	mail	en	contains
 contains(*)	mail	en	Contains(*)
-convert only mail to item (ignore possible attachments)	mail	en	convert only Mail to item (ignore possible attachments)
 convert mail to item and attach its attachments to this item (standard)	mail	en	convert Mail to item and attach its attachments to this item (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment
+convert only mail to item (ignore possible attachments)	mail	en	convert only Mail to item (ignore possible attachments)
 copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
 could not append message:	mail	en	Could not append Message:
 could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
@@ -194,12 +194,12 @@ keep a copy of the message in your inbox	mail	en	Keep a copy of the message in y
 kilobytes	mail	en	kilobytes
 later	mail	en	later
 less than	mail	en	less than
-mail	mail	en	Mail
-mailaccount	mail	en	Mailaccount
+mail	common	en	Mail
 mail filter	mail	en	Mail filter
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
+mailaccount	mail	en	Mailaccount
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
 matches	mail	en	matches
