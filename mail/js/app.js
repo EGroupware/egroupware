@@ -625,7 +625,7 @@ app.classes.mail = AppJS.extend(
 		messages['msg'] = [_id];
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		dataElem.data.flags.read = 'read';
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
 		this.mail_removeRowClass(messages,'unseen');
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
