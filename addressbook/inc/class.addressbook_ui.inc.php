@@ -516,6 +516,8 @@ class addressbook_ui extends addressbook_bo
 					'infolog' => array(
 						'caption' => lang('View linked InfoLog entries'),
 						'icon' => 'infolog/navbar',
+						'onExecute' => 'javaScript:app.addressbook.view_infolog',
+						'allowOnMultiple' => false
 					),
 					'infolog_add' => array(
 						'caption' => 'Add a new Infolog',
@@ -893,16 +895,6 @@ window.egw_LAB.wait(function() {
 				$vcard->export($checked);
 				// does not return!
 				$Ok = false;
-				break;
-
-			case 'infolog':
-				egw::redirect_link('/index.php',array(
-					'menuaction' => 'infolog.infolog_ui.index',
-					'action' => 'addressbook',
-					'action_id' => implode(',',$checked),
-					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',
-					'ajax' => 'true'
-				));
 				break;
 
 			case 'merge':

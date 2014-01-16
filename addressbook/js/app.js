@@ -110,6 +110,25 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 * View infolog entries linked to selected contact - just one, infolog fails with multiple
+	 * @param {egwAction} _action Select action
+	 * @param {egwActionObject[]} _senders Selected contact(s)
+	 */
+	view_infolog: function(_action, _senders)
+	{
+		var extras = {
+			action: 'addressbook',
+			action_id: [],
+			action_title: _senders.length > 1 ? this.egw.lang('selected contacts') : ''
+		}
+		// Remove UID prefix for just contact_id
+		var id = _senders[0].id.split('::');
+		extras.action_id = id[1];
+		
+		egw.open('', 'infolog', 'list', extras, 'infolog');
+	},
+
+	/**
 	 * Add task for selected contacts, call default nm_action after some checks
 	 *
 	 * @param _action
