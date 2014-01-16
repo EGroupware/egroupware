@@ -218,8 +218,7 @@ class resources_ui
 
 
 			'select_all' => array(
-				'caption' => 'Whole query',
-				'checkbox' => true,
+				'caption' => 'Select all',
 				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
 				'group' => ++$group,
 			),
