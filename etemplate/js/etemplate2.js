@@ -120,7 +120,7 @@ etemplate2.prototype.clear = function()
 	{
 		$j(window).off("."+this.uniqueId);
 	}
-	
+
 	if (this.widgetContainer != null)
 	{
 		// Un-register handler
@@ -191,10 +191,42 @@ etemplate2.prototype._createArrayManagers = function(_data)
 };
 
 /**
+ * Bind our unload handler to notify server that eT session/request no longer needed
+ */
+etemplate2.prototype.bind_unload = function()
+{
+	if (!window.onbeforeunload)
+	{
+		window.onbeforeunload = this.destroy_session = jQuery.proxy(function(ev)
+		{
+			var request = egw.json(self.egw().getAppName()+".etemplate_new.ajax_destroy_session.etemplate",
+				[this.etemplate_exec_id], null, null, false);
+			request.sendRequest();
+		}, this);
+	}
+};
+
+/**
+ * Unbind our unload handler
+ */
+etemplate2.prototype.unbind_unload = function()
+{
+	if (window.onbeforeunload === this.destroy_session)
+	{
+		window.onbeforeunload = null;
+		delete this.destroy_session;
+	}
+};
+
+/**
  * Loads the template from the given URL and sets the data object
  */
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
+	if (_data.etemplate_exec_id)
+	{
+		this.bind_unload();
+	}
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = _data.currentapp || window.egw_appName;
 
@@ -294,7 +326,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 			// Connect to the window resize event
 			$j(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize();});
-			
+
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
 
@@ -468,6 +500,9 @@ etemplate2.prototype.submit = function(button, async)
 		// Create the request object
 		if (this.menuaction)
 		{
+			// unbind our session-destroy handler, as we are submitting
+			this.unbind_unload();
+
 			var api = this.widgetContainer.egw();
 			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this, async);
 			request.sendRequest();
@@ -500,6 +535,9 @@ etemplate2.prototype.postSubmit = function()
 
 	if (canSubmit)
 	{
+		// unbind our session-destroy handler, as we are submitting
+		this.unbind_unload();
+
 		var form = jQuery("<form id='form' action='"+egw().webserverUrl +
 			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "&ajax=true' method='POST'>");
 

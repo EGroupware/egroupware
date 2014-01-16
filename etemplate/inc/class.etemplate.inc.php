@@ -310,6 +310,21 @@ class etemplate_new extends etemplate_widget_template
 	}
 
 	/**
+	 * Notify server that eT session/request is no longer needed, because user closed window
+	 *
+	 * @param string $_exec_id
+	 */
+	static public function ajax_destroy_session($_exec_id)
+	{
+		//error_log(__METHOD__."('$_exec_id')");
+		if (($request = etemplate_request::read($_exec_id)))
+		{
+			$request->remove_if_not_modified();
+			unset($request);
+		}
+	}
+
+	/**
 	 * Process via POST submitted content
 	 */
 	static public function process_exec()
