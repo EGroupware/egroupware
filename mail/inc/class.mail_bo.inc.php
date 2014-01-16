@@ -5362,7 +5362,7 @@ class mail_bo
 								}
 								else
 								{
-									$errorInfo = $mailObject->ErrorInfo;
+									$errorInfo = 'Send Failed for '.$mailObject->Subject.' to '.$nfn.'<'.$email.'> Error:'.$mailObject->ErrorInfo;
 								}
 							}
 							//error_log(__METHOD__.__LINE__.array2string($errorInfo));

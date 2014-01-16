@@ -1771,12 +1771,14 @@ abstract class bo_merge
 						'group' => 2,
 						'children' => array(),
 					);
-					if ($file['mime'] == 'message/rfc822')
-					{
-						self::document_mail_action($documents[$prefix.$file['name']], $file);
-					}
 				}
-				$documents[$file['mime']]['children'][$prefix.$file['name']] = egw_vfs::decodePath($file['name']);
+				$documents[$file['mime']]['children'][$prefix.$file['name']] = array(
+					'caption' => egw_vfs::decodePath($file['name'])
+				);
+				if ($file['mime'] == 'message/rfc822')
+				{
+					self::document_mail_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
+				}
 			}
 			else
 			{
@@ -1819,26 +1821,24 @@ abstract class bo_merge
 	{
 		unset($action['postSubmit']);
 
-		// These parameters trigger compose + merge
-		$extra = array(
-			'from' => 'merge',
-			'document' => $file['path'],
-		);
-		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?') .
-			lang('Popup will close when finished');
+		// Lots takes a while, confirm
+		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
 
-		// egw.open() would work, but nextmatch actions only passes 1 ID through
-		//$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
-		//
-		// We use location and send the popup info anyway instead
-		$action['nm_action'] = 'location';
-		$action['popup'] = egw_link::get_registry('mail', 'edit_popup');
-		$action['url'] = egw_link::get_registry('mail', 'edit') + $extra + array(
-			// Mail edit requires ID to have a value before it will look at the other variables
-			egw_link::get_registry('mail', 'edit_id') => 'true',
-			'preset[mailtocontactbyid]' => '$id',
+		// These parameters trigger compose + merge - only if 1 row
+		$extra = array(
+			'from=merge',
+			'document='.$file['path'],
 		);
+
+		// egw.open() used if only 1 row selected
+		$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
 		$action['target'] = 'compose_' .$file['path'];
+		
+		// long_task runs menuaction once for each selected row
+		$action['nm_action'] = 'long_task';
+		$action['popup'] = egw_link::get_registry('mail', 'edit_popup');
+		$action['message'] = lang('insert in %1',egw_vfs::decodePath($file['name']));
+		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document='.$file['path'];
 	}
 
 	/**

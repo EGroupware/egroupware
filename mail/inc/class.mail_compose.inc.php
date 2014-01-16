@@ -1318,9 +1318,9 @@ class mail_compose
 		else if ($from == 'merge' && $_REQUEST['document'])
 		{
 			/*
-			 * Special merge from everywhere else becase all other apps merge gives
-			 * a document to be downloaded, this either opens a compose dialog or
-			 * just sends emails
+			 * Special merge from everywhere else because all other apps merge gives
+			 * a document to be downloaded, this opens a compose dialog.
+			 * Use ajax_merge to merge & send multiple
 			 */
 			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
 			$document_merge = new addressbook_merge();
@@ -1341,11 +1341,13 @@ class mail_compose
 				$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
 				// Actually do the merge
-				$results = $this->mail_bo->importMessageToMergeAndSend($document_merge, egw_vfs::PREFIX . $_REQUEST['document'], $merge_ids, $folder, $merged_mail_id);
-
-				// Handle results - one email open compose, more than one just sent
 				if(count($merge_ids) <= 1)
 				{
+					$results = $this->mail_bo->importMessageToMergeAndSend(
+						$document_merge, egw_vfs::PREFIX . $_REQUEST['document'], $merge_ids, $folder, $merged_mail_id
+					);
+
+					// Open compose
 					$merged_mail_id = trim($GLOBALS['egw_info']['user']['account_id']).mail_ui::$delimiter.
 						$this->mail_bo->profileID.mail_ui::$delimiter.
 						base64_encode($folder).mail_ui::$delimiter.$merged_mail_id;
@@ -2718,4 +2720,43 @@ class mail_compose
 		common::egw_exit();
 	}
 
+	/**
+	 * Merge the selected contact ID into the document given in $_REQUEST['document']
+	 * and send it.
+	 *
+	 * @param int $contact_id
+	 */
+	public function ajax_merge($contact_id)
+	{
+		$response = egw_json_response::get();
+		$document_merge = new addressbook_merge();
+		$this->mail_bo->openConnection();
+		
+		if($error = $document_merge->check_document($_REQUEST['document'],''))
+		{
+			$response->error($error);
+			return;
+		}
+
+		// Merge does not work correctly (missing to) if current app is not addressbook
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+
+		// Actually do the merge
+		$results = $this->mail_bo->importMessageToMergeAndSend(
+			$document_merge, egw_vfs::PREFIX . $_REQUEST['document'],
+			// Send an extra non-numeric ID to force actual send of document
+			// instead of save as draft
+			array((int)$contact_id, ''),
+			$folder,$merged_mail_id
+		);
+
+		if($results['success'])
+		{
+			$response->data(implode(',',$results['success']));
+		}
+		if($results['failed'])
+		{
+			$response->error(implode(',',$results['failed']));
+		}
+	}
 }
