@@ -13,7 +13,7 @@
 /**
  * idots javascript
  */
-(function(){
+egw_LAB.wait(function() {
 	// add quick add select box
 	egw.link_quick_add('quick_add');
 
@@ -86,4 +86,4 @@
 			egw.set_preference(egw_appName, 'idotssideboxwidth', ui.size.width);
 		}});
 	});
-})();
+});
