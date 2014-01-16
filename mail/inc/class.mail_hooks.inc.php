@@ -677,31 +677,6 @@ class mail_hooks
 			'icon' => false
 		);
 		$showMainScreenStuff = false;
-/*
-		if (!$showMainScreenStuff)
-		{
-			// action links that are mostly static and dont need any connection and additional classes ...
-			$file += array(
-				'mail'		=> egw::link('/index.php','menuaction=mail.mail_ui.index&ajax=true'),
-			);
-
-		}
-*/
-		// empty trash (if available -> move to trash )
-		if($preferences['deleteOptions'] == 'move_to_trash')
-		{
-			$file += array(
-				'_NewLine_'	=> '', // give a newline
-				'empty trash'	=> "javascript:mail_callEmptyTrash();",
-			);
-		}
-		if($preferences['deleteOptions'] == 'mark_as_deleted')
-		{
-			$file += array(
-				'_NewLine_'		=> '', // give a newline
-				'compress folder'	=> "javascript:mail_callCompressFolder();",
-			);
-		}
 		// import Message link - only when the required library is available
 		if ((@include_once 'Mail/mimeDecode.php') !== false)
 		{

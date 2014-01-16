@@ -2375,14 +2375,3 @@ app.classes.mail = AppJS.extend(
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '720x500');
 	}
 });
-// wrapper functions to call functions within app
-function mail_callEmptyTrash()
-{
-	this.mail_emptyTrash();
-
-}
-function mail_callCompressFolder()
-{
-	this.mail_compressFolder();
-}
-

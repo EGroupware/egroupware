@@ -389,6 +389,25 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
 		);
+		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
+		if($deleteOptions == 'move_to_trash')
+		{
+			$tree_actions['empty_trash'] = array(
+				'caption' => 'empty trash',
+				'icon' => 'dhtmlxtree/MailFolderTrash',
+				'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+				//'enableId' => '^\\d+$',	// only show action on account itself
+			);
+		}
+		if($preferences['deleteOptions'] == 'mark_as_deleted')
+		{
+			$tree_actions['compress_folder'] = array(
+				'caption' => 'compress folder',
+				'icon' => 'dhtmlxtree/MailFolderTrash',
+				'onExecute' => 'javaScript:app.mail.mail_compressFolder',
+				//'enableId' => '^\\d+$',	// only show action on account itself
+			);
+		}
 
 		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
 		if (!$this->mail_bo->icServer->acc_sieve_enabled)
