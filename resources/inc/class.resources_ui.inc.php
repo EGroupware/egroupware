@@ -34,7 +34,6 @@ class resources_ui
 		$this->tmpl	= new etemplate_new('resources.show');
 		$this->bo	= new resources_bo();
 // 		$this->calui	= CreateObject('resources.ui_calviews');
-//egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
 	}
 
 	/**
@@ -450,16 +449,21 @@ class resources_ui
 					break;
 				case 'delete':
 					unset($content['delete']);
-					$msg = $this->bo->delete($content['res_id']);
-					break;
+					if(!$this->bo->delete($content['res_id']))
+					{
+						$msg = lang('Resource %1 deleted!',$content['res_id']);
+					}
+					else
+					{
+						$msg = lang('Resource %1 faild to be deleted!', $content['res_id']);
+						break;
+					}
 			}
-
-			egw_framework::refresh_opener($msg, 'resources',$content['res_id'],(button == 'delete' ? 'delete' : 'edit'));
+			egw_framework::refresh_opener($msg, 'resources',$content['res_id'],($button == 'delete'?'delete':'edit'));
 
 			if($button != 'apply')
 			{
 				egw_framework::window_close();
-				$GLOBALS['egw']->common->egw_exit();
 			}
 
 		}
