@@ -4233,6 +4233,7 @@ class mail_bo
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
+		if (is_null($rawBody)) $rawBody = array();
 
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
