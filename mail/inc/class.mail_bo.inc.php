@@ -168,12 +168,22 @@ class mail_bo
 	 * @param int $_profileID=0
 	 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
+	 * @param mixed boolean/object $_icServerObject - if object, return instance with object set as icServer
+	 *												  immediately, if boolean === true use oldImapServer in constructor
 	 * @return mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false)
 	{
 		//$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
+		if ($_oldImapServerObject instanceof Horde_Imap_Client)
+		{
+			self::$instances[$_profileID]->icServer = $_oldImapServerObject;
+			self::$instances[$_profileID]->accountid= $_oldImapServerObject->ImapServerId;
+			self::$instances[$_profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
+			self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
+			return self::$instances[$_profileID];
+		}
 		if ($_profileID == 0)
 		{
 			if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
@@ -4122,7 +4132,7 @@ class mail_bo
 		$uidsToFetch->add((array)$_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->headerText();
+		$fquery->headerText(array('peek'=>true));
 		if ($_partID != '') $fquery->structure();
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
@@ -4512,7 +4522,7 @@ class mail_bo
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->structure();
-		$fquery->bodyPart($_partID);
+		$fquery->bodyPart($_partID, array('peek'=>true));
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
 		));
@@ -4532,7 +4542,7 @@ class mail_bo
 						$structure_mime=$mime_type;
 						$structure_partID=$mime_id;
 						$filename=$part->getName();
-						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=false);
+						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true);
 						if ($_returnPart) return $part;
 					}
 				}
