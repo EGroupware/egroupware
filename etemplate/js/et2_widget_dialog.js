@@ -443,7 +443,7 @@ jQuery.extend(et2_dialog,
 	 * Show a confirmation dialog
 	 *
 	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
-	 * @param String _message Message to be place in the dialog.  Usually just text, but DOM nodes will work too.
+	 * @param String _message Message to be place in the dialog.
 	 * @param String _title Text in the top bar of the dialog.
 	 * @param any _value passed unchanged to callback as 2. parameter
 	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
@@ -467,7 +467,7 @@ jQuery.extend(et2_dialog,
 	 * Show a prompt dialog
 	 *
 	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
-	 * @param String _message Message to be place in the dialog.  Usually just text, but DOM nodes will work too.
+	 * @param String _message Message to be place in the dialog.
 	 * @param String _title Text in the top bar of the dialog.
 	 * @param String _value for prompt, passed to callback as 2. parameter
 	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
@@ -523,4 +523,127 @@ jQuery.extend(et2_dialog,
 		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg),egw.lang(titleMsg), {},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE);
 	},
 
+
+	/**
+	 * Show a dialog for a long-running, multi-part task
+	 *
+	 * Given a server url and a list of parameters, this will open a dialog with
+	 * a progress bar, asynchronously call the url with each parameter, and update
+	 * the progress bar.
+	 * Any output from the server will be displayed in a box.
+	 *
+	 * When all tasks are done, the callback will be called with boolean true.  It will
+	 * also be called if the user clicks a button (OK or CANCEL), so be sure to
+	 * check to avoid executing more than intended.
+	 *
+	 * @param function _callback Function called when the user clicks a button,
+	 *	or when the list is done processing.  The context will be the et2_dialog
+	 *	widget, and the button constant is passed in.
+	 * @param String _message Message to be place in the dialog.  Usually just
+	 *	text, but DOM nodes will work too.
+	 * @param String _title Text in the top bar of the dialog.
+	 * @param {string} _menuaction the menuaction function which should be called and
+	 * 	which handles the actual request. If the menuaction is a full featured
+	 * 	url, this one will be used instead.
+	 * @param {Array[]} _list - List of parameters, one for each call to the
+	 *	address.  Multiple parameters are allowed, in an array.
+	 *
+	 * @return {et2_dialog}
+	 */
+	long_task: function(_callback, _message, _title, _menuaction, _list)
+	{
+		// Special action for cancel
+		var buttons = [
+			{"button_id": et2_dialog.OK_BUTTON,"text": egw.lang('ok'), "default":true, "disabled":true},
+			{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'), click: function() {
+				// Cancel run
+				cancel = true;
+				$j("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
+				update.call(_list.length,'');
+			}}
+		];
+		var dialog = et2_createWidget("dialog", {
+			template: egw.webserverUrl+'/etemplate/templates/default/long_task.xet',
+			value: {
+				content: {
+					message: _message
+				}
+			},
+			callback: function(_button_id, _value) {
+				if(_button_id == et2_dialog.CANCEL_BUTTON)
+				{
+					cancel = true;
+				}
+				if (typeof _callback == "function")
+				{
+					_callback.call(this, _button_id, _value.value);
+				}
+			},
+			title: _title||egw.lang('please wait...'),
+			buttons: buttons
+		});
+
+		// OK starts disabled
+		$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("disable");
+
+		var log = null;
+		var progressbar = null;
+		var cancel = false;
+
+		// Updates progressbar & log, calls next step
+		var update = function(response) {
+			// context is index
+			var index = this || 0;
+			
+			progressbar.set_value(100*(index/_list.length));
+
+			// Display response information
+			switch(response.type)
+			{
+				case 'error':
+					log.append("<div class='message error'>"+response.data+"</div>");
+					break;
+				default:
+					if(response)
+					{
+						log.append("<div class='message'>"+response+"</div>");
+					}
+			}
+			// Scroll to bottom
+			var height = log[0].scrollHeight;
+			log.scrollTop(height);
+
+			// Fire next step
+			if(!cancel && index < _list.length)
+			{
+				var parameters = _list[index];
+				if(typeof parameters != 'object') parameters = [parameters];
+
+				// Async request, we'll take the next step in the callback
+				egw.json(_menuaction, parameters, update, index+1,true,index+1).sendRequest();
+			}
+			else
+			{
+				// All done
+				if(!cancel) progressbar.set_value(100);
+				$j("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
+				$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("enable");
+				if (!cancel && typeof _callback == "function")
+				{
+					_callback.call(dialog, true);
+				}
+			}
+		};
+
+		$j(dialog.template.DOMContainer).on('load', function() {
+			// Get access to template widgets
+			log = $j(dialog.template.widgetContainer.getWidgetById('log').getDOMNode());
+			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+
+			// Start
+			window.setTimeout(function() {update.call(0,'');},0);
+		});
+
+		return dialog;
+	}
 });

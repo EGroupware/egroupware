@@ -102,6 +102,16 @@ function nm_action(_action, _senders, _target, _ids)
 			egw.open_link(url,target,_action.data.width+'x'+_action.data.height);
 			break;
 
+		case 'long_task':
+			// Run a long task once for each ID with a nice dialog instead of
+			// freezing for a while.  If egw_open is set, and only 1 row selected,
+			// egw_open will be used instead.
+			if(idsArr.length > 1 || typeof _action.data.egw_open == 'undefined')
+			{
+				et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+				break;
+			}
+			// Fall through
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
 

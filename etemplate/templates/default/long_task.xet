@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.long_task" template="" lang="" group="0" version="1.9.001">
+		<hbox class="long_task">
+			<image class="dialog_icon"/>
+			<vbox class="ui-dialog-content">
+				<label id="message"/>
+				<progress id="progressbar"/>
+				<box class="log" id="log"/>
+			</vbox>
+		</hbox>
+		<styles>
+			.long_task .ui-dialog-content {
+				width: 90%;
+			}
+			.long_task .log {
+				max-height: 10em;
+				overflow: auto;
+			}
+			.long_task .et2_progress {
+				width: 100%;
+				height: 1em;
+			}
+		</styles>
+	</template>
+</overlay>
