@@ -245,4 +245,69 @@ app.classes.admin = AppJS.extend(
 	{
 		window.egw_refresh(_data.msg, this.appname, _data.ids, _data.type);
 	},
+
+	/**
+	 * Check to see if admin has taken away access to a category
+	 *
+	 * @@param {widget} button add/apply pressed button
+	 */
+	check_owner: function(button) {
+		var select_owner = this.et2.getWidgetById('owner');
+		if (typeof select_owner != 'undefined')
+		{
+			var owner = select_owner.get_value();
+		}
+
+		if(typeof owner != 'object')
+		{
+			owner = [owner];
+		}
+		// No owner probably means selectbox is read-only, so no need to check
+		if(owner == null) return true;
+
+		var all_users = owner.indexOf('0') >= 0;
+
+		// If they checked all users, uncheck the others
+		if(all_users) {
+			select_owner.set_value(['0']);
+			return true;
+		}
+
+		// Find out what changed
+		var cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner').split(",");
+		var new_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
+						{
+							for (j=0; j <= cat_original_owner.length;j++)
+							{
+								if (cat_original_owner[j] == val.value)
+								{
+									return val.label;
+								}
+							}
+						});
+
+		// Somebody will lose permission, give warning.
+		if(new_cat_label)
+		{
+			var msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
+			return et2_dialog.confirm(button,msg + new_cat_label.join(','));
+		}
+		return true;
+	},
+
+	/**
+	 * Show icon based on icon-selectbox, hide placeholder (broken image), if no icon selected
+	 *
+	 * @param {widget} widget select box widget
+	 */
+	change_icon: function(widget)
+	{
+		var img = widget.getRoot().getWidgetById('icon_url');
+
+		if (img)
+		{
+			img.set_src(widget.getValue());
+		}
+	},
+
 });

@@ -87,7 +87,7 @@
 					<description value="Icon" for="data[icon]"/>
 					<hbox options="0,0">
 						<menulist>
-							<menupopup id="data[icon]" onchange="change_icon(widget);" options="None"/>
+							<menupopup id="data[icon]" onchange="app.admin.change_icon(widget);" options="None"/>
 						</menulist>
 						<image src="icon_url" id="icon_url" class="leftPad5"/>
 					</hbox>
@@ -108,8 +108,8 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Save" id="button[save]" onclick="return check_owner(widget,form::name('owner'));"/>
-						<button label="Apply" id="button[apply]" onclick="return check_owner(widget,form::name('owner'));"/>
+						<button label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);"/>
+						<button label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);"/>
 					</hbox>
 					<hbox>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
