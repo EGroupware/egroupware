@@ -4235,7 +4235,7 @@ class mail_bo
 		static $rawBody;
 
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
 			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
