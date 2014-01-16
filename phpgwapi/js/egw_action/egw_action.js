@@ -213,9 +213,9 @@ egwAction.prototype.getActionById = function(_id)
 
 /**
  * Searches for actions having an attribute with a certain value
- * 
+ *
  * Example: actionManager.getActionsByAttr("checkbox", true) returns all checkbox actions
- * 
+ *
  * @param string _attr attribute name
  * @param mixed _val attribute value
  * @return array
@@ -223,7 +223,7 @@ egwAction.prototype.getActionById = function(_id)
 egwAction.prototype.getActionsByAttr = function(_attr, _val)
 {
 	var _actions = [];
-	
+
 	// If the current action object has the given attr AND value, return it
 	if (typeof this[_attr] != "undefined" && this[_attr] === _val)
 	{
@@ -299,7 +299,7 @@ egwAction.prototype.defaultIcons = {
 
 /**
  * Updates the children of this element
- * 
+ *
  * @param Object _actions { id: action, ...}
  * @param string _app defaults to egw_getAppname()
  */
@@ -331,25 +331,17 @@ egwAction.prototype.updateActions = function(_actions, _app)
 					if (typeof elem.icon == "undefined") elem.icon = this.defaultIcons[elem.id];
 					if (typeof elem.icon != "undefined")
 					{
-						var parts = elem.icon.split('/', 2);	// app/image syntax to search icon in different app
-						if (parts.length == 2)
-						{
-							elem.iconUrl = egw.image(parts[1], parts[0]);
-						}
-						else
-						{
-							elem.iconUrl = egw.image(elem.icon);
-						}
+						elem.iconUrl = egw.image(elem.icon);
 					}
 					delete elem.icon;
 				}
-				
+
 				// allways add shortcut for delete
 				if (elem.id == "delete" && typeof elem.shortcut == "undefined")
 				{
 					elem.shortcut = { keyCode: 46, shift: false, ctrl: false, alt: false, caption: egw.lang('Del') };
 				}
-				
+
 				// translate caption
 				if (elem.caption && (typeof elem.no_lang == "undefined" || !elem.no_lang))
 				{
@@ -430,7 +422,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
 
 /**
  * Callback to check if none of _senders rows has disableClass set
- * 
+ *
  * @param _action egwAction object, we use _action.data.disableClass to check
  * @param _senders array of egwActionObject objects
  * @param _target egwActionObject object, get's called for every object in _senders
@@ -443,7 +435,7 @@ egwAction.prototype.not_disableClass = function(_action, _senders, _target)
 
 /**
  * Callback to check if all of _senders rows have enableClass set
- * 
+ *
  * @param _action egwAction object, we use _action.data.enableClass to check
  * @param _senders array of egwActionObject objects
  * @param _target egwActionObject object, get's called for every object in _senders
@@ -456,7 +448,7 @@ egwAction.prototype.enableClass = function(_action, _senders, _target)
 
 /**
  * Enable an _action, if it matches a given regular expresstion in _action.data.enableId
- * 
+ *
  * @param _action egwAction object, we use _action.data.enableId to check
  * @param _senders array of egwActionObject objects
  * @param _target egwActionObject object, get's called for every object in _senders
@@ -466,7 +458,7 @@ egwAction.prototype.enableId = function(_action, _senders, _target)
 {
 	if (typeof _action.data.enableId == 'string')
 		_action.data.enableId = new RegExp(_action.data.enableId);
-	
+
 	return _target.id.match(_action.data.enableId);
 };
 
@@ -549,7 +541,7 @@ egwAction.prototype.execute = function(_senders, _target)
  * In all possible situation, the called function will get the following parameters:
  * 	1. A reference to this action
  * 	2. The senders, an array of all objects (JS)/object ids (PHP) which evoked the event
- */ 
+ */
 egwAction.prototype.set_onExecute = function(_value)
 {
 	this.onExecute.setValue(_value);
@@ -617,7 +609,7 @@ function _egwActionTreeContains(_tree, _elem)
 
 /**
  * The appendToGraph function generates an action tree which automatically contains
- * all parent elements. If the appendToGraph function is called for a 
+ * all parent elements. If the appendToGraph function is called for a
  *
  * @param array _tree contains the tree structure - pass an object containing
  * 	the empty array "root" to this function {"root": []}. The result will be stored in
@@ -763,7 +755,7 @@ function egwActionImplementation()
 }
 
 /**
- * Injects the implementation code into the DOM tree by using the supplied 
+ * Injects the implementation code into the DOM tree by using the supplied
  * actionObjectInterface.
  *
  * @param object _actionObjectInterface is the AOI in which the implementation
@@ -1375,7 +1367,7 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 
 		if (!_alt)
 		{
-			var intval = 
+			var intval =
 				(_keyCode == EGW_KEY_ARROW_UP || _keyCode == EGW_KEY_ARROW_DOWN) ?
 				1 : 10;
 
@@ -1905,7 +1897,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 {
 	var actionLinks = {};
 	var testedSelected = [];
-	
+
 	var test = function(olink)
 	{
 		// Test whether the action type is of the given implementation type
@@ -1927,7 +1919,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 				olink.enabled && olink.visible;
 			llink.visible = (llink.visible || olink.visible);
 			llink.cnt++;
-			
+
 			// Add in children, so they can get checked for visible / enabled
 			if(olink.actionObj && olink.actionObj.children.length > 0)
 			{
@@ -1944,7 +1936,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 			}
 		}
 	};
-	
+
 	for (var i = 0; i < _objs.length; i++)
 	{
 		var obj = _objs[i];
@@ -1965,7 +1957,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 		actionLinks[k].enabled = actionLinks[k].enabled &&
 			(actionLinks[k].cnt >= testedSelected.length) &&
 			(
-				(actionLinks[k].actionObj.allowOnMultiple === true) || 
+				(actionLinks[k].actionObj.allowOnMultiple === true) ||
 				(actionLinks[k].actionObj.allowOnMultiple == "only" && actionLinks[k].cnt > 1) ||
 				(actionLinks[k].actionObj.allowOnMultiple == false && actionLinks[k].cnt == 1)
 			);
@@ -2050,7 +2042,7 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
 /** egwActionObjectInterface Interface **/
 
 /**
- * The egwActionObjectInterface has to be implemented for each actual object in 
+ * The egwActionObjectInterface has to be implemented for each actual object in
  * the browser. E.g. for the object "DataGridRow", there has to be an
  * egwActionObjectInterface which is responsible for returning the outer DOMNode
  * of the object to which JS-Events may be attached by the egwActionImplementation
@@ -2169,7 +2161,7 @@ egwActionObjectInterface.prototype.setState = function(_state)
 }
 
 /**
- * Returns the current state of the object. The state is maintained by the 
+ * Returns the current state of the object. The state is maintained by the
  * egwActionObjectInterface and implementations do not have to overwrite this
  * function as long as they call the _selectChange function.
  */
