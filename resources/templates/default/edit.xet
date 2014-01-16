@@ -223,7 +223,7 @@
 						<button label="Apply" id="apply"/>
 						<button label="Cancel" onclick="window.close();"/>
 					</hbox>
-					<button align="right" label="Delete" id="delete" onclick="return confirm('Do you really want do delte this resource?');"/>
+					<button align="right" label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')"/>
 				</row>
 			</rows>
 		</grid>
