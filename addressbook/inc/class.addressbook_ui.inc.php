@@ -604,7 +604,7 @@ class addressbook_ui extends addressbook_bo
 			$actions['filemanager'] = array(
 				'icon' => 'filemanager/navbar',
 				'caption' => 'Filemanager',
-				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id&ajax=true',
 				'allowOnMultiple' => false,
 				'group' => $group,
 				// disable for for org-views, as it needs contact-ids
