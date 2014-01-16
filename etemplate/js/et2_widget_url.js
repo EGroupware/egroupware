@@ -31,9 +31,24 @@ var et2_url = et2_textbox.extend(
 		}
 	},
 
-	// PREG for client-side validation copied from etemplate_widget_url
-	// using \042 instead of " to NOT stall minifyer!
-	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9.!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
+	/**
+	 * Regexes for validating email addresses incl. email in angle-brackets eg.
+	 * + "Ralf Becker <rb@stylite.de>"
+	 * + "Ralf Becker (Stylite AG) <rb@stylite.de>"
+	 * + "<rb@stylite.de>" or "rb@stylite.de"
+	 * + '"Becker, Ralf" <rb@stylite.de>'
+	 * + "'Becker, Ralf' <rb@stylite.de>"
+	 * but NOT:
+	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
+	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
+	 *
+	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
+	 *
+	 * Using \042 instead of " to NOT stall minifyer!
+	 *
+	 * Same preg is in etemplate_widget_url PHP class!
+	 */
+	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/i),
 	/**
 	 * @memberOf et2_url
 	 */

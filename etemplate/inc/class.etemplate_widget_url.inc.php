@@ -19,9 +19,21 @@
 class etemplate_widget_url extends etemplate_widget
 {
 	/**
-	 * Regexes for validating
+	 * Regexes for validating email addresses incl. email in angle-brackets eg.
+	 * + "Ralf Becker <rb@stylite.de>"
+	 * + "Ralf Becker (Stylite AG) <rb@stylite.de>"
+	 * + "<rb@stylite.de>" or "rb@stylite.de"
+	 * + '"Becker, Ralf" <rb@stylite.de>'
+	 * + "'Becker, Ralf' <rb@stylite.de>"
+	 * but NOT:
+	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
+	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
+	 *
+	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
+	 *
+	 * Same preg is in et2_widget_url Javascript class!
 	 */
-	const EMAIL_PREG = '^(?:[ a-z0-9.!#$%&\'*+\/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\"\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
+	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/i";
 
 	/**
 	 * Validate input
