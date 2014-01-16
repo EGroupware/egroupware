@@ -839,7 +839,7 @@ class calendar_uilist extends calendar_ui
 			$actions['filemanager'] = array(
 				'icon' => 'filemanager/navbar',
 				'caption' => 'Filemanager',
-				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/$app/$id',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/calendar/$id&ajax=true',
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.calendar.cal_fix_app_id',
