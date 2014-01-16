@@ -33,7 +33,7 @@ var et2_url = et2_textbox.extend(
 
 	// PREG for client-side validation copied from etemplate_widget_url
 	// using \042 instead of " to NOT stall minifyer!
-	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
+	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9.!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
 	/**
 	 * @memberOf et2_url
 	 */
