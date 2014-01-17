@@ -613,9 +613,9 @@ class mail_ui
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
-		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
+		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
 		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly);
-		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);
@@ -3966,7 +3966,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy')
 	{
-		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';

@@ -2995,7 +2995,7 @@ class mail_bo
 			$uidsToFetch->add($_messageUID);
 
 			$fquery = new Horde_Imap_Client_Fetch_Query();
-			$fquery->fullText();
+			$fquery->fullText(array('peek'=>true));
 			$fquery->flags();
 			$headersNew = $this->icServer->fetch($sourceFolder, $fquery, array(
 				'ids' => $uidsToFetch,
@@ -3024,6 +3024,10 @@ class mail_bo
 					$ret = $target->append($_foldername,$dataNflags);
 					$retUid->add($ret);
 					unset($dataNflags);
+				}
+				if ($deleteAfterMove)
+				{
+					$this->deleteMessages($_messageUID, $sourceFolder, $_forceDeleteMethod='remove_immediately');
 				}
 			}
 		}
