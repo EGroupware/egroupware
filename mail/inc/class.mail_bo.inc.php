@@ -5292,7 +5292,7 @@ class mail_bo
 					$mailObject->set('error_count',0);
 					$sendOK = $openComposeWindow = $openAsDraft = null;
 					//error_log(__METHOD__.__LINE__.' Id To Merge:'.$val);
-					if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
+					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
 						count($SendAndMergeTocontacts) > 1 &&
 						is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
 					{
@@ -5375,7 +5375,7 @@ class mail_bo
 						$mailObject->MessageID = '';
 						$mailObject->ClearAllRecipients();
 						$mailObject->ClearCustomHeaders();
-						if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
+						if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
 							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
 						{
 							$contact = $bo_merge->contacts->read($val);

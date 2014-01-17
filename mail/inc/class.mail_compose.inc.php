@@ -1210,7 +1210,7 @@ class mail_compose
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';
+		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
 
 		if ($content['mimeType']=='html')
@@ -1338,7 +1338,7 @@ class mail_compose
 				}
 
 				// Merge does not work correctly (missing to) if current app is not addressbook
-				$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+				//$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
 				// Actually do the merge
 				if(count($merge_ids) <= 1)
@@ -2741,7 +2741,7 @@ class mail_compose
 		}
 
 		// Merge does not work correctly (missing to) if current app is not addressbook
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+		//$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
 		// Actually do the merge
 		$results = $this->mail_bo->importMessageToMergeAndSend(
