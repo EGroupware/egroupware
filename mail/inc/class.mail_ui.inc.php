@@ -3751,6 +3751,7 @@ blockquote[type=cite] {
 	{
 		//error_log(__METHOD__.__LINE__.array2string($icServerID));
 		if (is_null($icServerID)) $icServerID = $this->mail_bo->profileID;
+		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
@@ -3773,7 +3774,11 @@ blockquote[type=cite] {
 			$content['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
 			$content['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 		}
-
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 		$response = egw_json_response::get();
 		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
 	}
@@ -3781,34 +3786,70 @@ blockquote[type=cite] {
 	/**
 	 * empty trash folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
+	 * @param string $icServerID id of the server to empty its trashFolder
 	 * @return nothing
 	 */
-	function ajax_emptyTrash()
+	function ajax_emptyTrash($icServerID)
 	{
+		error_log(__METHOD__.__LINE__.' '.$icServerID);
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
 		$trashFolder = $this->mail_bo->getTrashFolder();
 		if(!empty($trashFolder)) {
 			$this->mail_bo->compressFolder($trashFolder);
 		}
-		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('empty trash'),'mail');
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			$oldFolderInfo = $this->mail_bo->getFolderStatus($trashFolder,false);
+			$response = egw_json_response::get();
+			$response->call('egw_message',lang('empty trash'));
+			$response->call('app.mail.mail_reloadNode',array($icServerID.self::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
+		else
+		{
+			$response = egw_json_response::get();
+			$response->call('egw_refresh',lang('empty trash'),'mail');
+		}
 	}
 
 	/**
 	 * compress folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * fetches the current folder from session and compresses it
+	 * @param string $_folderName id of the folder to compress
 	 * @return nothing
 	 */
-	function ajax_compressFolder()
+	function ajax_compressFolder($_folderName)
 	{
+		error_log(__METHOD__.__LINE__.' '.$_folderName);
 		$this->mail_bo->restoreSessionData();
-		$folder = $this->mail_bo->sessionData['mailbox'];
-		if ($this->mail_bo->folderExists($folder))
+		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		list($icServerID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+
+		if (empty($folderName)) $folderName = $this->mail_bo->sessionData['mailbox'];
+		if ($this->mail_bo->folderExists($folderName))
 		{
+			$rememberServerID = $this->mail_bo->profileID;
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 			if(!empty($folder)) {
-				$this->mail_bo->compressFolder($folder);
+				$this->mail_bo->compressFolder($folderName);
+			}
+			if ($rememberServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+				$this->changeProfile($rememberServerID);
 			}
 			$response = egw_json_response::get();
-			$response->call('egw_refresh',lang('compress folder').': '.$folder,'mail');
+			$response->call('egw_refresh',lang('compress folder').': '.$folderName,'mail');
 		}
 	}
 

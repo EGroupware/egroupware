@@ -999,21 +999,29 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_emptyTrash
 	 */
-	mail_emptyTrash: function() {
+	mail_emptyTrash: function(action,_senders) {
+		var server = _senders[0].iface.id.split('::');
+
+		//console.log(action,_senders,FolderName);
 		egw_message(this.egw.lang('empty trash'));
-		egw.json('mail.mail_ui.ajax_emptyTrash')
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]])
 			.sendRequest(true);
-		this.mail_refreshFolderStatus();
+		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
+		// as the actions thereof are now bound to run after grid refresh
+		//this.mail_refreshFolderStatus();
 	},
 
 	/**
 	 * mail_compressFolder
 	 */
-	mail_compressFolder: function() {
+	mail_compressFolder: function(action,_senders) {
+		//console.log(action,_senders,FolderName);
 		egw_message(this.egw.lang('compress folder'));
-		egw.json('mail.mail_ui.ajax_compressFolder')
+		egw.json('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id])
 			.sendRequest(true);
-		this.mail_refreshFolderStatus();
+		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
+		// as the actions thereof are now bound to run after grid refresh
+		//this.mail_refreshFolderStatus();
 	},
 
 	/**
