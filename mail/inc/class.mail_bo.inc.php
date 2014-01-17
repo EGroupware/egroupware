@@ -3673,7 +3673,8 @@ class mail_bo
 		{
 			return array(
 				array(
-					'body'		=> '',
+					'error'		=> 1,
+					'body'		=> 'Error: Could not fetch structure on mail:'.$_uid." as $_htmlOptions". 'for Mailprofile'.$this->icServer->ImapServerId.' User:'.$GLOBALS['egw_info']['user']['account_lid'],
 					'mimeType'	=> 'text/plain',
 					'charSet'	=> self::$displayCharset,
 				)
