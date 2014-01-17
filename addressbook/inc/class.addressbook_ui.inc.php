@@ -539,7 +539,7 @@ class addressbook_ui extends addressbook_bo
 					'calendar_view' => array(
 						'caption' => 'Show',
 						'icon' => 'view',
-						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id',
+						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id&ajax=true',
 						'targetapp' => 'calendar',	// open in calendar tab
 					),
 					'calendar_add' => array(
