@@ -561,6 +561,7 @@ class resources_ui
 
 		// Disable custom tab if there are no custom fields defined
 		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
+		$read_only['tabs']['history'] = ($content['history']['id'] != 0?false:true);
 
 		$preserv = $content;
 
