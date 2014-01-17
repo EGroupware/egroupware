@@ -497,10 +497,11 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	* Add info items to the topmenu template class to be displayed
 	*
 	* @param string $content html of item
+	* @param string $id=null
 	* @access protected
 	* @return void
 	*/
-	function _add_topmenu_info_item($content)
+	function _add_topmenu_info_item($content, $id=null)
 	{
 		$this->tplsav2->menuinfoitems[] = $content;
 	}

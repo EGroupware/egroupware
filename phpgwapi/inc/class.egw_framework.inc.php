@@ -1298,11 +1298,11 @@ abstract class egw_framework
 
 		if($GLOBALS['egw_info']['user']['apps']['notifications'])
 		{
-			$this->_add_topmenu_info_item(self::_get_notification_bell());
+			$this->_add_topmenu_info_item(self::_get_notification_bell(), 'notifications');
 		}
-		$this->_add_topmenu_info_item($vars['user_info']);
-		$this->_add_topmenu_info_item($vars['current_users']);
-		$this->_add_topmenu_info_item($vars['quick_add']);
+		$this->_add_topmenu_info_item($vars['user_info'], 'user_info');
+		$this->_add_topmenu_info_item($vars['current_users'], 'current_users');
+		$this->_add_topmenu_info_item($vars['quick_add'], 'quick_add');
 	}
 
 	/**
@@ -1368,10 +1368,11 @@ abstract class egw_framework
 	* Add info items to the topmenu template class to be displayed
 	*
 	* @param string $content html of item
+	* @param string $id=null
 	* @access protected
 	* @return void
 	*/
-	abstract function _add_topmenu_info_item($content);
+	abstract function _add_topmenu_info_item($content, $id=null);
 
 	static $top_menu_extra = array();
 
