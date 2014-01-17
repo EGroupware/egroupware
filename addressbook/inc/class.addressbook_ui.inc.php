@@ -540,7 +540,6 @@ class addressbook_ui extends addressbook_bo
 						'caption' => 'Show',
 						'icon' => 'view',
 						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id',
-						'onExecute' => 'javaScript:app.addressbook.add_cal',	// call server for org-view only
 						'targetapp' => 'calendar',	// open in calendar tab
 					),
 					'calendar_add' => array(
