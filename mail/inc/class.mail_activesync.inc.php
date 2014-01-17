@@ -194,7 +194,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$identities = $this->getAvailableProfiles($hook_data);
 		}
 		$identities += array(
-			'G' => lang('Primary emailadmin Profile'),
+			'G' => lang('Primary Profile'),
 		);
 
 		$settings['mail-ActiveSyncProfileID'] = array(
