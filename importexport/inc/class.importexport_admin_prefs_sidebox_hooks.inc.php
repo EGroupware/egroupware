@@ -54,6 +54,7 @@ class importexport_admin_prefs_sidebox_hooks
 			{
 				$file['Define imports|exports']	= egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.index',
+						'ajax' => 'true'
 				),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
 			}
 			display_sidebox($appname,lang($appname),$file);
@@ -66,6 +67,7 @@ class importexport_admin_prefs_sidebox_hooks
 				'Import definitions' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition','admin'),
 				'Define imports|exports'  => egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
+					'ajax' => 'true'
 				),'admin'),
 				'Schedule' => egw::link('/index.php', array(
 					'menuaction' => 'importexport.importexport_schedule_ui.index'
@@ -142,6 +144,7 @@ class importexport_admin_prefs_sidebox_hooks
 			$file['Define imports|exports']	= egw::link('/index.php',array(
 				'menuaction' => 'importexport.importexport_definitions_ui.index',
 				'application' => $appname,
+				'ajax' => 'true'
 			),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
