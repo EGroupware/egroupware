@@ -130,6 +130,29 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		this.set_src(_value);
 	},
 
+	set_href: function (_value)
+	{
+		if (!this.isInTree())
+		{
+			return false;
+		}
+
+		this.options.href = _value;
+		this.image.wrapAll('<a href="'+_value+'"></a>"');
+
+		var href = this.options.href;
+		var popup = this.options.extra_link_popup;
+		var target = this.options.extra_link_target;
+		this.image.parent().click(function(e)
+		{
+			egw.open_link(href,target,popup);
+			e.preventDefault();
+			return false;
+		});
+		
+		return true;
+	},
+
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
@@ -186,6 +209,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		if(_values["href"])
 		{
 			this.image.addClass('et2_clickable');
+			this.set_href(_values["href"]);
 		}
 	}
 });
