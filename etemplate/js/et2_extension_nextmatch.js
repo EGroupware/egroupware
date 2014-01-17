@@ -1652,9 +1652,23 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 		this.headers = [{id:this.nextmatch.options.header_left}, {id:this.nextmatch.options.header_right}];
 
+		// Search
+		this.search_box = jQuery(document.createElement("div"))
+			.appendTo(this.div)
+			.addClass("search");
+		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
+		this.search.input.attr("type", "search");
+		this.search.input.val(settings.search)
+			.on("keypress", function(event) {
+				if(event.which == 13)
+				{
+					self.nextmatch.applyFilters({search: self.search.getValue()});
+				}
+			});
+
 		this.filters = jQuery(document.createElement("div")).appendTo(this.div)
 			.addClass("filters");
-		
+
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
@@ -1692,18 +1706,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					}), '_blank', 850, 440, 'yes');
 				});
 		}
-
-
-		// Search
-		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
-		this.search.input.attr("type", "search");
-		this.search.input.val(settings.search)
-			.on("keypress", function(event) {
-				if(event.which == 13)
-				{
-					self.nextmatch.applyFilters({search: self.search.getValue()});
-				}
-			});
 
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
@@ -1989,7 +1991,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 * Help out nextmatch / widget stuff by checking to see if sender is part of header
 	 */
 	getDOMNode: function(_sender) {
-		var filters = [this.category, this.filter, this.filter2, this.search, this.search_button];
+		var filters = [this.category, this.filter, this.filter2];
 		for(var i = 0; i < filters.length; i++)
 		{
 			if(_sender == filters[i]) 
@@ -1998,6 +2000,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				return this.filters[0];
 			}
 		}
+		if(_sender == this.search || _sender == this.search_button) return this.search_box[0];
+		
 		if(_sender && _sender._type == "template")
 		{
 			for(var i = 0; i < this.headers.length; i++)

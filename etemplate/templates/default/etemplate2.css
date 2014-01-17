@@ -792,6 +792,9 @@ div.message.floating {
   font-size: 150%;
   text-align: center;
 }
+.nextmatch_header > .search {
+	float: left;
+}
 .nextmatch_header > .filters {
   padding-left: 5px;
 }
