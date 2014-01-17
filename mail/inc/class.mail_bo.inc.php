@@ -4331,19 +4331,26 @@ class mail_bo
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);
+		try
+		{
+			$_fquery = new Horde_Imap_Client_Fetch_Query();
+	// not sure why Klaus add these, seem not necessary
+	//		$fquery->envelope();
+	//		$fquery->size();
+			$_fquery->structure();
+			if ($_partID) $_fquery->bodyPart($_partID, array('peek' => $_preserveSeen));
 
-		$_fquery = new Horde_Imap_Client_Fetch_Query();
-// not sure why Klaus add these, seem not necessary
-//		$fquery->envelope();
-//		$fquery->size();
-		$_fquery->structure();
-		if ($_partID) $_fquery->bodyPart($_partID, array('peek' => $_preserveSeen));
+			$mail = $this->icServer->fetch($_folder, $_fquery, array(
+				'ids' => $uidsToFetch,
+			))->first();
 
-		$mail = $this->icServer->fetch($_folder, $_fquery, array(
-			'ids' => $uidsToFetch,
-		))->first();
-
-		return $mail->getStructure();
+			return $mail->getStructure();
+		}
+		catch (Exception $e)
+		{
+			error_log(__METHOD__.__LINE__.' Could not fetch structure on mail:'.$_uid.' Serverprofile->'.$this->icServer->ImapServerId.' Message:'.$e->getMessage());
+			return null;
+		}
 	}
 
 	/**
