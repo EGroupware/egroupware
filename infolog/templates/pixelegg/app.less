@@ -117,7 +117,7 @@ span#favorite_sidebox_infolog{
                       
                       // IMG
                         img {
-                            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
                             .Complete_Button_Icon_normal;
                             .dimension_width_height_s;
                             margin-left: 0.5em;
@@ -138,13 +138,13 @@ span#favorite_sidebox_infolog{
                 /*MouseOver*/
                       &:hover {
                           .box_shadow_standard_light_hover; 
-                          background-color: @egw_color_2_a !important;
+                          background-color: fade(@egw_color_2_a, 80%) !important;
                           .border_radius_button_lefttop;
                           .dimension_height_l;
                           &:before {content: ""; font-size: 1em;padding-left: 5px;}
                           /*Text*/
                           span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0.5em; .gradient_vertical (@egw_color_2_a, @egw_color_2_a);} 
+                         img {.scale; margin: 0.5em; background: @gray_0;} 
                       }
                     }
                 }
@@ -332,7 +332,14 @@ span#infolog-edit_info_number{}
 div#infolog-edit_info_contact{
     
     input.ui-autocomplete-input {
-    width: 100%;
+        
+        span.ui-icon-close {
+            background-color: @gray_0;
+            background-size: contain;
+            background-position: 5px 5px;
+            top: 9px !important;
+        }
+
 }
     
     

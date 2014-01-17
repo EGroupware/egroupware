@@ -644,9 +644,12 @@ div.calendar {
   font-weight: bold;
   /* Pressing it will take you to the current date */
   text-align: center;
-  background: #679fd2;
+  background-color: #679fd2;
   color: #000;
   padding: 2px;
+}
+.calendar thead .title:hover {
+  background-color: #ffffff !important;
 }
 .calendar thead .headrow {
   /* Row <TR> containing navigation buttons */
@@ -671,15 +674,18 @@ div.calendar {
 .calendar thead .hilite {
   /* How do the buttons in header appear when hover */
   background-color: #ffffff;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #000;
-  border: 1px solid;
+  border: 0px solid;
   border-color: #828282;
   padding: 1px;
 }
 .calendar thead .active {
   /* Active (pressed) buttons in header */
   background_color: #408dd2;
-  padding: 2px 0px 0px 2px;
+  /*padding: 2px 0px 0px 2px;*/
 }
 .calendar tbody .day {
   /* Cells <TD> containing month days dates */
@@ -760,6 +766,7 @@ div.calendar {
   color: #445;
   border-top: 1px solid #556;
   padding: 1px;
+  height: 30px;
 }
 .calendar tfoot .hilite {
   /* Hover style for buttons in footer */

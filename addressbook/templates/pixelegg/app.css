@@ -337,12 +337,12 @@ fieldset.emailGroup {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-    /*.Complete_Button_add;*/
     width: 32px;
     height: 32px;
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: 0.5em;
+    background-color: #0c5da5 !important;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
     content: "+";
@@ -351,6 +351,9 @@ fieldset.emailGroup {
     line-height: 0.6em;
     padding-left: 0.1em;
     padding-right: 4em;
+  }
+  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:active {
+    background-color: #1aa200;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
     background-color: #66a1d2 !important;
@@ -364,6 +367,9 @@ fieldset.emailGroup {
     -moz-border-radius-topleft: 10px;
     border-radius: 3px;
     border-top-left-radius: 10px;
+  }
+  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:active {
+    background-color: #1aa200 !important;
   }
   div#addressbook-index div.filters select#infolog-index_cat_id {
     width: 10%;

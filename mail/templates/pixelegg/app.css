@@ -939,7 +939,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   width: 8em;
   font-size: 0.8em;
   text-align: right;
-  padding-left: 5px;
+  padding-right: 5px;
 }
 #mail-compose .mailComposeHeaders div,
 #mail-compose .mailComposeHeadersSection div {

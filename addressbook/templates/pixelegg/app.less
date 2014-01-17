@@ -118,26 +118,13 @@ div#addressbook-index{
 
         // hinzufügen
         button#addressbook-index_add{
-            /*.Complete_Button_add;*/
-                .dimension_width_height_l;
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-                padding: 0.5em;
-
-                
-                &:before {
-                        content: "+"; 
-                        font-size: 2em; 
-                        color: @egw_color_1; 
-                        line-height: 0.6em; 
-                        padding-left: 0.1em;
-                        padding-right: 4em;
-                }
-            
-
-            &:hover {.Complete_Button_add_hover;}
+           
+            .Complete_Button_add_only_plus;
+            &:hover {.Complete_Button_add_only_plus_hover;}
+            &:active {background-color: @color_positive_action_active !important;}
 
         }
+           
 
 
 

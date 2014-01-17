@@ -16,26 +16,29 @@
 }
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget {
-  background-color: #0b5fa4;
+  /*background-color: @egw_color_blue_lighter !important;*/
   color: #FFF;
   text-shadow: none;
+  /*    height: auto;*/
   background-image: none !important;
+  /*.border_radius_button_lefttop;*/
   -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topleft: 10px;
   border-radius: 3px;
-  border-top-left-radius: 20px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 10px;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   height: 35px;
 }
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:before,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:before {
   content: "+";
-  font-size: 2em;
+  font-size: 1.5em;
   color: #ffc200;
+  line-height: 1.1em;
 }
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget .infolog_headertext,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget .infolog_headertext {
@@ -43,9 +46,45 @@
 }
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  padding: 0.5em;
+  background-color: #0c5da5 !important;
+  background-color: #0c5da5;
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+  line-height: 0.6em;
+  padding-left: 0.1em;
+  padding-right: 4em;
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:active {
+  background-color: #1aa200;
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
+}
+#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:active {
+  background-color: #1aa200 !important;
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_favorite"] img {
   height: 16px;

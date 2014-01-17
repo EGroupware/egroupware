@@ -201,24 +201,18 @@ div.filemanager_navigation > label {
   margin-right: 0.2em;
 }
 div.filemanager_navigation > label > input {
-  width: 85%;
+  width: 95%;
 }
 #filemanager-index .et2_file {
-  /*background-color: @egw_color_blue_lighter !important;*/
-  color: #FFF;
-  text-shadow: none;
-  /*    height: auto;*/
-  background-image: none !important;
-  /*.border_radius_button_lefttop;*/
-  color: #fff;
-  height: auto;
-  width: 55%;
+  /*background-color: @egw_color_2_a;*/
 }
 #filemanager-index .et2_file:before {
   content: "+";
-  font-size: 1.5em;
+  font-size: 2em;
   color: #ffc200;
-  line-height: 1.1em;
+  line-height: 0.6em;
+  padding-left: 0.1em;
+  padding-right: 0em;
 }
 #filemanager-index .et2_file:hover {
   background-color: #66a1d2 !important;
@@ -233,14 +227,20 @@ div.filemanager_navigation > label > input {
   border-radius: 3px;
   border-top-left-radius: 10px;
 }
-#filemanager-index .et2_file:before {
-  font-size: 1.5em;
-  padding-right: 0.5em;
-  padding-left: 0.5em;
+#filemanager-index .et2_file:active {
+  background-color: #1aa200 !important;
 }
-#filemanager-index .et2_file #filemanager-index_upload {
-  border: none;
-  width: 86%;
+#filemanager-index .et2_file input#filemanager-index_upload {
+  width: 250px;
+  /*.Complete_Button_add_only_plus;*/
+  /*.dimension_width_height_s;*/
+  /*background-color: @egw_color_2_a;*/
+  /*position: relative; top: 7px;*/
+  /*background-image: url(images/gradient01.png);*/
+  /*input {display: none;}*/
+}
+#filemanager-index .et2_file div.progress {
+  width: 0px;
 }
 #filemanager-index #filemanager-index_tarp {
   width: 32px !important;

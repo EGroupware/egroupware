@@ -103,7 +103,7 @@ tr.prefRow > td {
   position: absolute;
   display: none;
   width: 98%;
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
   padding: 5px;
   margin-top: 5px;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -113,7 +113,7 @@ tr.prefRow > td {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  color: #ffffff !important;
+  color: #000000 !important;
 }
 tr.prefRow:hover .prefHelp {
   display: block;

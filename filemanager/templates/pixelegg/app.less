@@ -103,23 +103,42 @@ div.filemanager_navigation > label {
 
 
 div.filemanager_navigation > label > input {
-    width: 85%;
+    width: 95%;
 }
 
 
 #filemanager-index{
 
     .et2_file{
-        .Complete_Button_add;
+       /*background-color: @egw_color_2_a;*/
+        &:before {
+                        content: "+"; 
+                        font-size: 2em; 
+                        color: @egw_color_1_a; 
+                        line-height: 0.6em; 
+                        padding-left: 0.1em;
+                        padding-right: 0em;
+                }
+                
+        &:hover {.Complete_Button_add_only_plus_hover;}
+        &:active {background-color: @color_positive_action_active !important;}        
         
-        color: #fff;
-        height: auto;
-        width: 55%;
-        &:hover { .Complete_Button_add_hover;}
-        &:before{ font-size: 1.5em; padding-right: 0.5em; padding-left: 0.5em;}
+        input#filemanager-index_upload {
+            
+            width: 250px;
+            
+            /*.Complete_Button_add_only_plus;*/
+            /*.dimension_width_height_s;*/
+            /*background-color: @egw_color_2_a;*/
+            /*position: relative; top: 7px;*/
+            /*background-image: url(images/gradient01.png);*/
+            
+            /*input {display: none;}*/
+            
+            
+        }
         
-        
-        #filemanager-index_upload {border: none; width: 86%;}
+        div.progress {width: 0px;}
 
 
 

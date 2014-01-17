@@ -10,8 +10,8 @@
  * @version $Id$
  */
 
-@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
-@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 
 
 // iframe
@@ -52,6 +52,15 @@
 
         // rechte Box
         #timesheet-index_timesheet-index-add{
+            
+            button#timesheet-index_add{
+            .Complete_Button_add_only_plus;
+            background-color: @egw_color_2_a;
+            
+            &:hover {.Complete_Button_add_only_plus_hover;}
+            &:active {background-color: @color_positive_action_active !important;}
+
+        }
 
 
 

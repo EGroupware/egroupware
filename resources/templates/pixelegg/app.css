@@ -1,0 +1,52 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Ressources
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package tracker
+ * @version $Id$
+ */
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active h1 {
+  font-size: 1.15em !important;
+}
+button#resources-show_add {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  padding: 0.5em;
+  background-color: #0c5da5 !important;
+  background-color: #0c5da5;
+}
+button#resources-show_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+  line-height: 0.6em;
+  padding-left: 0.1em;
+  padding-right: 4em;
+}
+button#resources-show_add:active {
+  background-color: #1aa200;
+}
+button#resources-show_add:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
+}
+button#resources-show_add:active {
+  background-color: #1aa200 !important;
+}
