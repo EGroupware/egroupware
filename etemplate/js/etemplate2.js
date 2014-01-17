@@ -198,19 +198,25 @@ etemplate2.prototype._createArrayManagers = function(_data)
 
 /**
  * Bind our unload handler to notify server that eT session/request no longer needed
+ *
+ * We only bind, if we have an etemplate_exec_id: not the case for pure client-side
+ * calls, eg. via et2_dialog.
  */
 etemplate2.prototype.bind_unload = function()
 {
-	this.destroy_session = jQuery.proxy(function(ev)
+	if (this.etemplate_exec_id)
 	{
-		var request = egw.json(this.app+".etemplate_new.ajax_destroy_session.etemplate",
-			[this.etemplate_exec_id], null, null, false);
-		request.sendRequest();
-	}, this);
+		this.destroy_session = jQuery.proxy(function(ev)
+		{
+			var request = egw.json(this.app+".etemplate_new.ajax_destroy_session.etemplate",
+				[this.etemplate_exec_id], null, null, false);
+			request.sendRequest();
+		}, this);
 
-	if (!window.onbeforeunload)
-	{
-		window.onbeforeunload = this.destroy_session;
+		if (!window.onbeforeunload)
+		{
+			window.onbeforeunload = this.destroy_session;
+		}
 	}
 };
 
