@@ -28,7 +28,7 @@
 /**
  * @augments et2_dataview_controller
  */
-var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider, 
+var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 {
 	/**
 	 * Initializes the nextmatch controller.
@@ -127,9 +127,14 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		if(_actions == null) _actions = [];
 
 		// Initialize the action manager and add some actions to it
-		var gam = egw_getActionManager(this.egw.appName);
+		// To work around a bug in action system we call global actionManger
+		// of an application NOT just appname, but prefix it with "__"
+		// If it is called just appname, actionLinks of actions with id
+		// of an application fetch that applications menu as children,
+		// if that applications tab is open in toplevel window.
+		var gam = egw_getActionManager('__'+this.egw.appName);
 		this._actionManager = gam.addAction("actionManager", uid);
-		this._actionManager.updateActions(_actions);
+		this._actionManager.updateActions(_actions, this.egw.appName);
 		var data = this._actionManager.data;
 		if (data == 'undefined' || !data)
 		{
@@ -151,7 +156,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			// Call the nm_action function with the ids
 			nm_action(_action, _senders, _target, ids);
 		});
-		
+
 		// Set the 'Select All' handler
 		var select_all = this._actionManager.getActionById('select_all');
 		if(select_all)
@@ -208,7 +213,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 * classes, unless the row UID is "", then it's an 'empty' row.
 	 *
 	 * The empty row placeholder can still have actions, but nothing that requires
-	 * an actual UID.  
+	 * an actual UID.
 	 *
 	 * @TODO: Currently empty row is just add, need to actually filter somehow.  Here
 	 * 	might not be the right place.
@@ -273,7 +278,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				mgr.data[i] = _response.rows[i];
 			}
 		}
-		
+
 		// Call the inherited function
 		this._super.apply(this, arguments);
 	},
@@ -314,7 +319,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	},
 
 	dataRegisterUID: function (_uid, _callback, _context) {
-		this.egw.dataRegisterUID(_uid, _callback, _context, 
+		this.egw.dataRegisterUID(_uid, _callback, _context,
 			this._widget.getInstanceManager().etemplate_exec_id || this._execId,
 			this._widgetId
 		);
