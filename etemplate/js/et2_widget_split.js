@@ -59,6 +59,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		"cols": {"ignore": true}
 	},
 
+	DOCK_TOLERANCE: 15,
+
 	/**
 	 * Constructor
 	 * 
@@ -189,7 +191,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		// Start docked?
 		if(options.dock)
 		{
-			if(options.dock == "bottomDock" && options.sizeTop >= this.div.height() ||
+			if(options.dock == "bottomDock" && Math.abs(options.sizeTop - this.div.height()) < et2_split.DOCK_TOLERANCE ||
 				options.dock == "topDock" && options.sizeTop == 0)
 			{
 				this.dock();
@@ -217,8 +219,22 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
 					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
 				}
+				// Force immediate layout, so proper layout & sizes are available
+				// for resize().  Chrome defers layout, so current DOM node sizes
+				// are not available to widgets if they ask. 
+				var display = this.style.display;
+				this.style.display = 'none';
+				this.offsetHeight;
+				this.style.display = display;
+
+				// Ok, update children
 				self.iterateOver(function(widget) {
-					if(widget != self) widget.resize();
+					if(widget != self)
+					{
+						widget.resize();
+						// Above forcing is not enough for Firefox, defer
+						window.setTimeout(jQuery.proxy(function() {this.resize();},widget),200);
+					}
 				},self,et2_IResizeable);
 			});
 		}
