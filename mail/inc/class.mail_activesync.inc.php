@@ -1330,7 +1330,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// end AS12 Stuff
 
 			// start handle Attachments (include text/calendar multiplar alternative)
-			$attachments = $this->mail->getMessageAttachments($id, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=true);
+			$attachments = $this->mail->getMessageAttachments($id, $_partID='', $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=true);
 			if (is_array($attachments) && count($attachments)>0)
 			{
 				debugLog(__METHOD__.__LINE__.' gather Attachments for MessageID:'.$id.' found:'.count($attachments));
@@ -1409,7 +1409,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			return false;
 		}
 		$ret = false;
-		foreach($this->mail->getMessageAttachments($requestid, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=true) as $key => $attach)
+		foreach($this->mail->getMessageAttachments($requestid, $_partID='', $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=true) as $key => $attach)
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
 				($attachment = $this->mail->getAttachment($requestid, $attach['partID'])))
