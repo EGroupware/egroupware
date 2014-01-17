@@ -407,7 +407,7 @@ action buttons, left aligned for "extra" controls
  * File upload
  */
   div.et2_file input {
-    background-color: #ffc200;
+    /*background-color: @egw_color_1_a;*/
   }
   .et2_file .progress {
     width: 300px;
@@ -554,8 +554,9 @@ action buttons, left aligned for "extra" controls
     float: left;
     margin: 0.5em 2em;
     padding: 0.5em;
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
+    background-color: #b4b4b4;
   }
   .et2_link_to .et2_button_icon:hover {
     /*.background_color_20_gray;*/
@@ -577,6 +578,50 @@ action buttons, left aligned for "extra" controls
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #1aa200;
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to .et2_file {
+    background-color: #ffffff !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 1em;
+    padding-top: 0.2em;
+  }
+  .et2_link_to .et2_file input {
+    border: none;
+    padding: 1em;
+  }
+  .et2_link_to .et2_file:before {
+    content: "+ ";
+    font-size: 2em;
+    color: #ffc200;
+    line-height: 0.6em;
+    padding-left: 0.1em;
+    padding-right: 0em;
+    background-color: #0c5da5;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
+  }
+  .et2_link_to .et2_file:hover {
+    background-color: #66a1d2 !important;
+    color: #ffc200;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
+  }
+  .et2_link_to .et2_file:active {
+    background-color: #1aa200 !important;
   }
   .et2_link {
     cursor: pointer;
@@ -2292,10 +2337,49 @@ span.ui-icon-search {
   -moz-box-shadow: 6px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 6px 2px 1px rgba(0, 0, 0, 0.5);
   padding: 1em;
+  /*Button*/
 }
 #egwpopup input#egwpopup_ok_button,
 #egwpopup button#desktop_perms {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
   height: 24px;
+  padding: 0 5px;
+}
+#egwpopup input#egwpopup_ok_button:hover,
+#egwpopup button#desktop_perms:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  background-color: inherit !important;
+}
+#egwpopup input#egwpopup_ok_button:active,
+#egwpopup button#desktop_perms:active {
+  background-color: #1aa200 !important;
+}
+/*popup Messsage*/
+div#egwpopup_message {
+  background-color: .color_gray_0;
+  padding: 1em;
 }
 #msg,
 .message {
@@ -2342,11 +2426,6 @@ td.message span.message {
   background: red;
   height: auto;
   width: 100%;
-}
-/*popup Messsage*/
-div#egwpopup_message {
-  background-color: .color_gray_0;
-  padding: 1em;
 }
 /**
  * EGroupware: CSS with less preprocessor
@@ -3246,9 +3325,12 @@ input[type="submit"][id="delete"],
 input[type="button"][id="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
-button[id="addressbook-edit_button[delete]"] {
-  background-image: url('../images/delete.png') !important;
+button[id="addressbook-edit_button[delete]"],
+button[id="resources-edit_delete"] {
+  background-color: #b81f00 !important;
+  background-image: url('../images/delete-hover.png') !important;
   margin-left: 3em;
+  /*color: @gray_100;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -3277,13 +3359,14 @@ button[id="addressbook-edit_button[delete]"] {
   width: auto;
   height: 32px;
   /*background-color: @color-negative-action !important;*/
-  /*color: @gray_100 !important;*/
+  color: #ffffff !important;
 }
 input[type="submit"][id="delete"]:hover,
 input[type="button"][id="delete"]:hover,
 button[id="delete"]:hover,
 button[id="infolog-edit_button[delete]"]:hover,
-button[id="addressbook-edit_button[delete]"]:hover {
+button[id="addressbook-edit_button[delete]"]:hover,
+button[id="resources-edit_delete"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3319,7 +3402,8 @@ input[type="submit"][id="delete"]:active,
 input[type="button"][id="delete"]:active,
 button[id="delete"]:active,
 button[id="infolog-edit_button[delete]"]:active,
-button[id="addressbook-edit_button[delete]"]:active {
+button[id="addressbook-edit_button[delete]"]:active,
+button[id="resources-edit_delete"]:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3584,6 +3668,35 @@ button[id="add"]:active {
   background-color: #1aa200 !important;
 }
 /*Button Ende #######################################################*/
+/*dhtml Submenu ##########################################################*/
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item {
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
+  background-color: #000000;
+  background-color: #1e1e1e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -ms-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1e1e1e), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -o-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-repeat: repeat-x;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
+  background-color: #ffc200 !important;
+  background-image: none !important;
+}
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select {
     padding-right: 20px !important;
@@ -4368,31 +4481,6 @@ table.nextmatch_header img {
  Add / Print / Logout / 
     - Name / Date
 ###################################################*/
-#egw_fw_topmenu_addons span#quick_add {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-  float: right;
-  padding: 0.5em;
-  position: fixed;
-  right: 83px;
-  top: 5px;
-  width: 16px;
-  height: 16px;
-}
-#egw_fw_topmenu_addons span#quick_add:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-  line-height: 0.6em;
-}
-#egw_fw_topmenu_addons select#quick_add_selectbox {
-  visibility: hidden;
-  border: medium none;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  position: relative !important;
-  right: 1px !important;
-  top: -5px;
-}
 #egw_fw_logout {
   background-image: url(../images/logout.png);
   background-size: 16px 16px;
@@ -4487,12 +4575,11 @@ table.nextmatch_header img {
   -webkit-justify-content: flex-start;
   -ms-flex-direction: row;
   -ms-justify-content: flex-start;
-  /*postion: bottom*/
-  /*        bottom: 3px;
-            right: 5px;
-            padding-right: 20px;
-            position: fixed;
-            z-index: 1000;*/
+  /*Notification*/
+  /*user info*/
+  /*current user info*/
+  /*current user info*/
+  /*quick*/
 }
 #egw_fw_topmenu_info_items .topmenu_info_item {
   overflow: visible;
@@ -4522,6 +4609,31 @@ table.nextmatch_header img {
   content: "| ";
   font-size: 1em;
   color: #0c5da5;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  float: right;
+  padding: 0.5em;
+  position: fixed;
+  right: 83px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+  line-height: 0.6em;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add select#quick_add_selectbox {
+  visibility: hidden;
+  border: medium none;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  position: relative !important;
+  right: 1px !important;
+  top: -5px;
 }
 /* ################################################################################################################
  * Sidebar
@@ -5093,12 +5205,12 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   width: 100%;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
-  margin: 2px 0 0 0;
+  margin: 0px 0 0 0;
   padding: 0px 1px 0px 1px;
   background-position: bottom;
   background-repeat: repeat-x;
   background-color: transparent;
-  height: 30px;
+  height: 34px;
   /*aktive Tabs*/
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header h1 {
@@ -5137,14 +5249,14 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   /*.background-color-5-gray;*/
   background: transparent;
   display: inline-table;
-  margin: 3px 5px 0px 0px;
+  margin: 0px 5px 0px 0px;
   /*padding: 2px 10px 2px 10px;*/
   cursor: pointer;
   border-width: 1px 1px 0 1px;
   border-style: solid;
   border-color: #b4b4b4;
   background-repeat: repeat-x;
-  height: 20px;
+  height: 24px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: #b3b3b3 !important;

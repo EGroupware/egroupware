@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+[EGroupware] Content Element Library
+
+Author: Stefan Reinhardt (c) pixelegg
+-->
+<html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+
+
+        <title> [EGroupware] Content Element Library</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="EGroupware" />
+        <meta name="description" content="EGroupware" />
+        <meta name="keywords" content="EGroupware" />
+        <meta name="copyright" content="Stylite AG 2013, see http://www.stylite.de/EPL" />
+        <meta name="language" content="de" />
+        <meta name="author" content="Stylite AG www.stylite.de" />
+
+        <meta name="robots" content="none" />
+        <link rel="icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico" />
+        <link rel="shortcut icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" />
+        <link href="/egroupware2/phpgwapi/js/jscalendar/calendar-blue.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/jquery/chosen/chosen.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/etemplate/templates/default/etemplate2.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/pixelegg/css/pixelegg.css" type="text/css" rel="StyleSheet" />
+        <link href="/egroupware2/phpgwapi/templates/idots/print.css" type="text/css" rel="StyleSheet" />
+
+        <!--mail-->
+        <link type="text/css" rel="stylesheet" href="/egroupware2/mail/templates/pixelegg/app.css">
+        <!--calendar-->
+        <link type="text/css" rel="stylesheet" href="/egroupware2/calendar/templates/pixelegg/app.css">
+
+
+        <link type="text/css" rel="stylesheet" href="/egroupware2/pixelegg/content-element-library/css/contentElementLibrary.css">
+
+
+
+    </head>
+    <body>
+        <hr class="clearer">
+
+        <div class="headline1">Popup Message</div>
+        
+       <div style="display: block; z-index: 999; position: absolute; width: 500px; left: 540.5px; top: 291.25px;" id="egwpopup">
+			<div id="egwpopup_header">Benachrichtigung<span style="float:right;"><input type="image" src="/egroupware2/pixelegg/images/close.button.png" id="egwpopup_close_button" value="X" name="egwpopup_close_button">
+</span></div>
+			<div id="egwpopup_message" style="max-height: 582.5px;">Nachricht von: Herr Stefan Reinhardt<br><b>Sie haben neue E-Mails</b><hr>
+<form action="https://buero.pixelegg.de/egroupware2/etemplate/process_exec.php?menuaction=" name="eTemplate" method="POST">
+<input type="hidden" id="etemplate_exec_id" value="notifications_stefan.reinhardt_52d8f152a2dbd7.92735669" name="etemplate_exec_id">
+
+
+<!-- BEGIN eTemplate mail.checkmailbox -->
+<div id="mail.checkmailbox">
+
+
+
+
+
+<!-- BEGIN grid  -->
+<table>
+	<tbody><tr class="th">
+		<td align="left">Ordner </td>
+		<td align="left">Betreff </td>
+		<td align="left">von </td>
+		<td align="left">Erhalten </td>
+	</tr>
+	<tr valign="top" class="row_on">
+		<td align="left"><span id="1[mail_folder]">INBOX</span></td>
+		<td align="left"><span id="1[mail_subject]"><b>Top Managers Deutschland 2014</b></span></td>
+		<td align="left"><a title="info@eucrm-eu.com" onclick="window.open(this,this.target,'width=700,height=750,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" href="https://buero.pixelegg.de/egroupware2/index.php?menuaction=felamimail.uicompose.compose&amp;send_to=R2FicmllbGUgTmV1bWFubiA8aW5mb0BldWNybS1ldS5jb20+"><span id="1[mail_from]">Gabriele Neumann </span></a></td>
+		<td align="left"><span id="1[mail_received]">17.01.2014 09:48</span></td>
+	</tr>
+</tbody></table>
+<!-- END grid  -->
+
+
+</div>
+<!-- END eTemplate mail.checkmailbox -->
+
+<input type="hidden" value="" name="submit_button">
+<input type="hidden" value="" name="innerWidth">
+</form>
+</div>
+			<div id="egwpopup_footer">
+				<input type="button" value="OK" id="egwpopup_ok_button">
+			</div>
+		</div>
+        
+        
+       
+
+
+</body>
+</html>

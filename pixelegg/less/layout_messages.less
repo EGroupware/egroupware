@@ -27,15 +27,29 @@
      .box_shadow_message;          
      padding: 1em;
      
-     
+     /*Button*/
      input#egwpopup_ok_button,
      button#desktop_perms{
-         
+         .Complete_Button_normal;
          .dimension_height_m;
+         padding: 0 5px;
+         
+         &:hover {.Complete_Button_hover;}
+         &:active {background-color: @color_positive_action_active !important;}
          
      }
     
 }
+
+/*popup Messsage*/
+ div#egwpopup_message {
+     
+     background-color: .color_gray_0;
+     padding: 1em;
+     
+     
+ }
+
 
 #msg,.message {
             color: red;
@@ -99,12 +113,5 @@
  }
  
  
- /*popup Messsage*/
- div#egwpopup_message {
-     
-     background-color: .color_gray_0;
-     padding: 1em;
-     
-     
- }
+ 
  //

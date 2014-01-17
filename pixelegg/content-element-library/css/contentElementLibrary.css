@@ -37,3 +37,12 @@ div.headline1 {font-size: 2em;}
 
 ul.navigation {list-style: none;}
 ul.navigation li { border: 1px solid black; margin: 3px 0px; padding:0.2em; width: 270px;}
+
+
+div.show_content {
+    
+box-shadow: #0000FF 10px 13px 13px inset;
+margin: 1em;
+padding: 2em;
+    
+}

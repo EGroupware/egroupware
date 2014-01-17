@@ -73,8 +73,8 @@
     
     <div class="animation_login">
     
-<img id="img1" src="pixelegg/images/about.svg" alt="STYLITE" title="STYLITE">
-<img id="img2" src="pixelegg/images/accounts.svg" alt="EGROUPWARE" title="EGROUPWARE">
-<img id="img3" src="pixelegg/images/alarm.svg" alt="EGROUPWARE" title="EGROUPWARE">
-<img id="img4" src="pixelegg/images/cake.svg" alt="EGROUPWARE" title="EGROUPWARE">
+<img id="img1" src="pixelegg/images/login/about.svg" alt="STYLITE" title="STYLITE">
+<img id="img2" src="pixelegg/images/login/accounts.svg" alt="EGROUPWARE" title="EGROUPWARE">
+<img id="img3" src="pixelegg/images/login/alarm.svg" alt="EGROUPWARE" title="EGROUPWARE">
+<img id="img4" src="pixelegg/images/login/cake.svg" alt="EGROUPWARE" title="EGROUPWARE">
 </div>

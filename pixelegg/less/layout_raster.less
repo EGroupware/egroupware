@@ -273,36 +273,7 @@
 ###################################################*/
 #egw_fw_topmenu_addons{
 
-    // ########################################
-    // quick_add
-
-    span#quick_add {
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-        float: right;
-        padding: 0.5em;
-        position: fixed;
-        right: 83px;
-        top: 5px;
-        .dimension_width_height_s;
-        &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
-    }
-
-    select#quick_add_selectbox {
-
-        visibility: hidden;
-        border: medium none;
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-        position: relative !important;
-        right: 1px !important;
-        top: -5px;
-
-    }
-
-
-
-   
-
+    
 }  
 
 
@@ -391,13 +362,6 @@
     -ms-justify-content: flex-start;
 
 
-    /*postion: bottom*/
-    /*        bottom: 3px;
-            right: 5px;
-            padding-right: 20px;
-            position: fixed;
-            z-index: 1000;*/
-
     .topmenu_info_item {
 
         overflow: visible;
@@ -434,6 +398,50 @@
         }
 
     }
+    
+    /*Notification*/
+    #topmenu_info_notifications {}
+    
+    /*user info*/
+    #topmenu_info_user_info {}
+    
+    /*current user info*/
+    #topmenu_info_current_users {}
+    
+    /*current user info*/
+    #topmenu_info_current_users {}
+    
+    /*quick*/
+    #topmenu_info_quick_add {
+        
+        // ########################################
+    // quick_add
+
+    span#quick_add {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        float: right;
+        padding: 0.5em;
+        position: fixed;
+        right: 83px;
+        top: 5px;
+        .dimension_width_height_s;
+        &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+    }
+
+    select#quick_add_selectbox {
+
+        visibility: hidden;
+        border: medium none;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        position: relative !important;
+        right: 1px !important;
+        top: -5px;
+
+    }
+        
+    }
+    
 
 } 
 // Ende items
@@ -1087,7 +1095,7 @@ div#calendar-container {
 
         .egw_fw_ui_tabs_header {
 
-            margin: 2px 0 0 0;
+            margin: 0px 0 0 0;
 
             padding: 0px 1px 0px 1px;
 
@@ -1095,7 +1103,7 @@ div#calendar-container {
             background-repeat: repeat-x;
             background-color: transparent;
 
-            height: 30px;
+            height: 34px;
 
             h1 {
                 /*float: left;*/
@@ -1134,7 +1142,7 @@ div#calendar-container {
                 background: transparent;
 
                 display: inline-table;
-                margin: 3px 5px 0px 0px;
+                margin: 0px 5px 0px 0px;
                 /*padding: 2px 10px 2px 10px;*/
                 cursor: pointer;
                 border-width: 1px 1px 0 1px;
@@ -1143,7 +1151,7 @@ div#calendar-container {
 
                 background-repeat:repeat-x;
 
-                height: 20px;
+                height: 24px;
                 
                 &:hover {.background_color_30_gray ;}
 

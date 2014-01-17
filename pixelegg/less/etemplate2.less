@@ -433,7 +433,9 @@ action buttons, left aligned for "extra" controls
  * File upload
  */
 
-div.et2_file input {background-color: @egw_color_1_a;}
+div.et2_file input {
+    /*background-color: @egw_color_1_a;*/
+}
 
 .et2_file .progress {
     width: 300px;
@@ -586,10 +588,35 @@ div.et2_link_entry input.ui-autocomplete-input {
             float: left;
             margin: 0.5em 2em;
             padding: 0.5em;
-            .dimension_width_height_l;
-
+            .dimension_width_height_s;
+            background-color: @gray_30;
             &:hover {.Complete_Button_Icon_hover;}
-            &:active {.Complete_Button_Icon_active; }
+            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+}
+
+.et2_link_to .et2_file{
+       background-color: @gray_0 !important;
+       .rounded (5px);
+        margin-top: 1em;
+        padding-top: 0.2em;
+       
+       input{
+           border: none;
+           padding: 1em;
+           
+        }
+         &:before {
+                        content: "+ "; 
+                        font-size: 2em; 
+                        color: @egw_color_1_a; 
+                        line-height: 0.6em; 
+                        padding-left: 0.1em;
+                        padding-right: 0em;
+                        background-color: @egw_color_2_a;
+                        .border_radius_button_lefttop;
+                }
+         &:hover {.Complete_Button_add_only_plus_hover;}
+         &:active {background-color: @color_positive_action_active !important;}
 }
 
 .et2_link {

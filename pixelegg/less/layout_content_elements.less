@@ -915,14 +915,16 @@ input[type="submit"][id="delete"],
 input[type="button"][id="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
-button[id="addressbook-edit_button[delete]"]
+button[id="addressbook-edit_button[delete]"],
+button[id="resources-edit_delete"]
 {
-
-    background-image:url('../images/delete.png')!important;
+    background-color: @color_negative_action_hover !important;
+    background-image:url('../images/delete-hover.png')!important;
     margin-left: 3em;
+    /*color: @gray_100;*/
     .Complete_Button_text_icon_before;
     /*background-color: @color-negative-action !important;*/
-    /*color: @gray_100 !important;*/
+    color: @gray_0 !important;
             
             &:hover {
 
@@ -1041,6 +1043,28 @@ button[id="add"]{
 
 /*Button Ende #######################################################*/
 
+/*dhtml Submenu ##########################################################*/
+div.dhtmlxMenu_egw_SubLevelArea_Polygon{
+    
+    table.dhtmlxMebu_SubLevelArea_Tbl{
+        
+        tr.sub_item  {
+                .img_filter_gray;
+        
+                td.sub_item_icon{
+                                img[src*="svg"]{background-color: @gray_100; .gradient_vertical (@gray_90, @gray_90);}
+                                }
+        }
+        
+        tr.sub_item_selected  {
+            background-color: @egw_color_1_a !important; 
+            background-image: none !important;}
+    }
+    
+}
+
+
+
 /////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
             select {
@@ -1051,5 +1075,9 @@ button[id="add"]{
                 background-size: 20px auto;
             }
 }
+
+
+
+
 
 // 
