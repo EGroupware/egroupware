@@ -1210,7 +1210,7 @@ class mail_compose
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
-
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';
 		$etpl = new etemplate_new('mail.compose');
 
 		if ($content['mimeType']=='html')

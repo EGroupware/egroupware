@@ -1794,6 +1794,7 @@ unset($query['actions']);
 		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox, $htmlOptions,false);
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';
 		$etpl = new etemplate_new('mail.display');
 		// Set cell attributes directly
 /*
