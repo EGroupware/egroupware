@@ -3673,7 +3673,7 @@ class mail_bo
 		{
 			return array(
 				array(
-					'body'		=> null,
+					'body'		=> '',
 					'mimeType'	=> 'text/plain',
 					'charSet'	=> self::$displayCharset,
 				)
