@@ -456,14 +456,34 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 					break;
 				case "delete":
+					// Record current & next index
+					var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+					var next = entry.ao.getNext(1);
+					if(next == null || !next.id)
+					{
+						// No next, select previous
+						next = entry.ao.getPrevious(1);
+					}
+					// Select next row
+					if(next && next.id)
+					{
+						this.controller._selectionMgr._handleSelect(next.id);
+					}
+
 					// Blank the row
 					this.egw().dataStoreUID(uid,null);
 					// Stop caring about this ID
 					this.egw().dataUnregisterUID(uid);
 					// Update the count
 					this.options.settings.total -= 1;
-					// This triggers an invalidate, which may update the grid in needed
-					this.dataview.grid.setTotalCount(this.options.settings.total);
+					// This removes the last row (in addition), doesn't matter if that wasn't the right one,
+					// then triggers an invalidate, which may update the grid
+					// this.dataview.grid.setTotalCount(this.options.settings.total);
+					// Update directly instead
+					this.dataview.grid._total -= this.options.settings.total;
+					this.controller._selectionMgr._total = this.options.settings.total;
+					this.header.count_total.text(this.options.settings.total+"");
+
 					break;
 				case "edit":
 				case "add":
@@ -474,7 +494,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}
 		// Trigger an event so app code can act on it
-		$j(this).triggerHandler("refresh",[this]);
+		$j(this).triggerHandler("refresh",[this,_row_ids,_type]);
 	},
 
 	/**

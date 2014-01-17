@@ -568,7 +568,10 @@ var et2_dataview_controller = Class.extend({
 			// If there's no data, stop
 			if(typeof _data == "undefined" || _data == null)
 			{
-				this._destroyCallback();
+				this.self._destroyCallback.call(
+					this,
+					this.entry.row
+				);
 				return;
 			}
 
@@ -632,6 +635,7 @@ var et2_dataview_controller = Class.extend({
 		if (this.entry.row)
 		{
 			var tr = this.entry.row.getDOMNode();
+			this.self._selectionMgr._updateState(this.entry.uid, EGW_AO_STATE_NORMAL)
 			this.self._selectionMgr.unregisterRow(this.entry.uid, tr);
 		}
 

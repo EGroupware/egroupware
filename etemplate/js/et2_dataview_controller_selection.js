@@ -152,6 +152,7 @@ var et2_dataview_selectionManager = Class.extend(
 			if (!_noDelete
 			    && this._registeredRows[_uid].state === EGW_AO_STATE_NORMAL)
 			{
+				delete this._indexMap[this._registeredRows[_uid].idx];
 				delete this._registeredRows[_uid];
 			}
 
@@ -326,8 +327,16 @@ var et2_dataview_selectionManager = Class.extend(
 		}
 
 		function getElementRelatively (_step) {
-			return getIndexAO(Math.max(0,
-				Math.min(self._total - 1, _entry.idx + _step)));
+			var count = self._total;
+			var element = null;
+			var idx = _entry.idx;
+			while(element == null && count > 0 && idx <= self._total)
+			{
+				count--;
+				element = getIndexAO(Math.max(0,
+					Math.min(self._total - 1, idx += _step)));
+			}
+			return element;
 		};
 
 		_entry.ao.getPrevious = function (_step) {
