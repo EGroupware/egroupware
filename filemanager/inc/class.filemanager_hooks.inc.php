@@ -68,17 +68,17 @@ class filemanager_hooks
 			}
 			if ($file_prefs['showhome'] != 'no')
 			{
-				$file['Your home directory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath));
+				$file['Your home directory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath,'ajax'=>'true'));
 			}
 			if ($file_prefs['showusers'] != 'no')
 			{
-				$file['Users and groups'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath));
+				$file['Users and groups'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath,'ajax'=>'true'));
 			}
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
-				$file['Basedirectory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
+				$file['Basedirectory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath,'ajax'=>'true'));
 			}
-			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
+			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
 			for ($i=1; $i<=self::$foldercount; $i++)
 			{
 				if (!empty($file_prefs['folderlink'.$i]))
@@ -88,6 +88,7 @@ class filemanager_hooks
 						'menuaction' => self::$appname.'.filemanager_ui.index',
 						'path'       => $file_prefs['folderlink'.$i],
 						'nolang'     => true,
+						'ajax'       => 'true'
 					));
 				}
 			}
