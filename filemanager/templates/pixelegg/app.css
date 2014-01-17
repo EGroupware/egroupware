@@ -190,7 +190,7 @@ div.filemanager_navigation > label {
     left: 0px;
     right: 30%;
     position: relative;*/
-  /*top: -26px;*/
+  top: -5px;
   float: left;
   position: absolute;
   right: 0;
@@ -211,8 +211,16 @@ div.filemanager_navigation > label > input {
   font-size: 2em;
   color: #ffc200;
   line-height: 0.6em;
-  padding-left: 0.1em;
   padding-right: 0em;
+  position: relative;
+  top: 15px;
+  background-color: #0c5da5;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
 }
 #filemanager-index .et2_file:hover {
   background-color: #66a1d2 !important;
@@ -231,13 +239,10 @@ div.filemanager_navigation > label > input {
   background-color: #1aa200 !important;
 }
 #filemanager-index .et2_file input#filemanager-index_upload {
+  margin-left: 2em;
+  position: relative;
+  top: -8px;
   width: 250px;
-  /*.Complete_Button_add_only_plus;*/
-  /*.dimension_width_height_s;*/
-  /*background-color: @egw_color_2_a;*/
-  /*position: relative; top: 7px;*/
-  /*background-image: url(images/gradient01.png);*/
-  /*input {display: none;}*/
 }
 #filemanager-index .et2_file div.progress {
   width: 0px;

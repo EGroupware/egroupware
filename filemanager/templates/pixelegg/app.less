@@ -87,7 +87,7 @@ div.filemanager_navigation > label {
     left: 0px;
     right: 30%;
     position: relative;*/
-    /*top: -26px;*/
+    top: -5px;
     
     float: left;
     position: absolute;
@@ -111,30 +111,28 @@ div.filemanager_navigation > label > input {
 
     .et2_file{
        /*background-color: @egw_color_2_a;*/
-        &:before {
-                        content: "+"; 
-                        font-size: 2em; 
-                        color: @egw_color_1_a; 
-                        line-height: 0.6em; 
-                        padding-left: 0.1em;
-                        padding-right: 0em;
+        
+       &:before {
+            content: "+";
+            font-size: 2em;
+            color: #ffc200;
+            line-height: 0.6em;
+            padding-right: 0em;
+            position: relative;
+            top: 15px;
+            background-color: @egw_color_2_a;
+            .border_radius_button_lefttop;
                 }
                 
         &:hover {.Complete_Button_add_only_plus_hover;}
         &:active {background-color: @color_positive_action_active !important;}        
         
+       
         input#filemanager-index_upload {
-            
+            margin-left: 2em;
+            position: relative;
+            top: -8px;
             width: 250px;
-            
-            /*.Complete_Button_add_only_plus;*/
-            /*.dimension_width_height_s;*/
-            /*background-color: @egw_color_2_a;*/
-            /*position: relative; top: 7px;*/
-            /*background-image: url(images/gradient01.png);*/
-            
-            /*input {display: none;}*/
-            
             
         }
         

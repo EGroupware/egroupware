@@ -50,3 +50,6 @@ button#resources-show_add:hover {
 button#resources-show_add:active {
   background-color: #1aa200 !important;
 }
+div#resources-edit {
+  margin: 0.5em;
+}

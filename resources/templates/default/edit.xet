@@ -214,16 +214,16 @@
 				<column/>
 				<column/>
 				<column/>
-				<column width="100%"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
 					<hbox span="3">
-						<button statustext="Saves entry and exits" label="Save" id="save"/>
-						<button label="Apply" id="apply"/>
-						<button label="Cancel" onclick="window.close();"/>
+						<button statustext="Saves entry and exits" label="Save" id="save" image="save" background_image="1"/>
+						<button label="Apply" id="apply" image="apply" background_image="1"/>
+						<button label="Cancel" id="cancel" onclick="window.close();" image="close" background_image="1"/>
 					</hbox>
-					<button align="right" label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')"/>
+					<button align="right" label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
@@ -237,7 +237,7 @@
 				<row disabled="!@msg">
 					<description id="msg" no_lang="1" span="all" class="message"/>
 				</row>
-				<row>
+				<row class="th dialog-header">
 					<hbox>
 						<textbox statustext="Name of resource" label="Name" id="name" needed="1"/>
 						<textbox label="Inventory number" id="inventory_number"/>
@@ -249,7 +249,7 @@
 				<row>
 					<template id="resources.edit_tabs"/>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<template id="resources.edit_buttons"/>
 				</row>
 			</rows>
