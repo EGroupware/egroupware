@@ -3669,7 +3669,16 @@ class mail_bo
 		{
 			$_structure = $this->getStructure($_uid, $_partID, $_folder, $_preserveSeen);
 		}
-
+		if (!is_object($_structure))
+		{
+			return array(
+				array(
+					'body'		=> null,
+					'mimeType'	=> 'text/plain',
+					'charSet'	=> self::$displayCharset,
+				)
+			);
+		}
 		switch($_structure->getPrimaryType())
 		{
 			case 'application':
