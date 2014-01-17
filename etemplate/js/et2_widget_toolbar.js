@@ -93,16 +93,20 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
 
 		var last_group = false;
+		var last_group_id = false;
 		for(var name in actions)
 		{
 			var action = actions[name];
 
 			// Add in divider
-			if(!last_group) last_group = action.group;
-			if(last_group != action.group)
+			if(last_group_id != action.group)
 			{
-				this.actionlist.append(" ");
-				last_group = action.group;
+				last_group = $j('[data-group="' + action.group + '"]',this.actionlist);
+				if(last_group.length == 0)
+				{
+					$j('<span data-group="'+action.group+'">').appendTo(this.actionlist);
+				}
+				last_group_id = action.group;
 			}
 
 			// Make sure there's something to display
@@ -112,7 +116,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			{
 				this.dropdowns[action.id] = $j(document.createElement('span'))
 					.addClass("ui-state-default")
-					.appendTo(this.actionlist);
+					.appendTo(last_group);
 				var children = {};
 				var add_children = function(root, children) {
 					for(var id in root.children)
@@ -174,7 +178,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
-		var toolbar =jQuery('#'+this.id+'-'+'actionlist').children(),
+		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('button'),
 			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
 			menulist = jQuery('#'+this.id+'-'+'menulist');
 
@@ -210,10 +214,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 			}
 		});
 		toolbox.accordion({
-				heightStyle:"fill",
-			  collapsible: true,
-			  active:'none'
-			});
+			heightStyle:"fill",
+			collapsible: true,
+			active:'none'
+		});
 	},
 
 	/**
@@ -247,7 +251,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var button = $j(document.createElement('button'))
 			.addClass("et2_button")
 			.attr('id', this.id+'-'+action.id)
-			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:this.actionlist);
+			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 		if(action.iconUrl)
 		{
 			button.prepend("<img src='"+action.iconUrl+"' title='"+action.caption+"' class='et2_button_icon'/>");
