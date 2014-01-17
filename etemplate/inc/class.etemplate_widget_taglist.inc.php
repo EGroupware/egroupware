@@ -96,7 +96,7 @@ class etemplate_widget_taglist extends etemplate_widget
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					unset($value[$key]);
 				}
-				if($this->type == 'taglist-email' && !preg_match('/('.etemplate_widget_url::EMAIL_PREG.')?/iu',$val))
+				if($this->type == 'taglist-email' && !preg_match(etemplate_widget_url::EMAIL_PREG, $val))
 				{
 						self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
 				}

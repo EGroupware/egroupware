@@ -31,9 +31,9 @@ class etemplate_widget_url extends etemplate_widget
 	 *
 	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
 	 *
-	 * Same preg is in et2_widget_url Javascript class!
+	 * Same preg is in et2_widget_url Javascript class, but no \x00 allowed and /u modifier for utf8!
 	 */
-	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/i";
+	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/iu";
 
 	/**
 	 * Validate input
@@ -78,7 +78,7 @@ class etemplate_widget_url extends etemplate_widget
 						}
 						break;
 					case 'url-email':
-						$this->attrs['preg'] = '/('.self::EMAIL_PREG.')?$/iu';
+						$this->attrs['preg'] = self::EMAIL_PREG;
 						break;
 				}
 			}
@@ -94,6 +94,7 @@ class etemplate_widget_url extends etemplate_widget
 				switch($this->type)
 				{
 					default:
+						//error_log("preg_match('{$this->attrs['preg']}', '$value')=".array2string(preg_match($this->attrs['preg'], $value)));
 						self::set_validation_error($form_name,lang("'%1' has an invalid format",$value)/*." !preg_match('$this->attrs[preg]', '$value')"*/,'');
 						break;
 				}
