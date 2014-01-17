@@ -19,10 +19,14 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer!
 '%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
+1 minute	etemplate	en	1 Minute
+30 seconds	etemplate	en	30 seconds
+5 minutes	etemplate	en	5 Minutes
 a pattern to be searched for	etemplate	en	Pattern to be searched for
 accesskey	etemplate	en	Access key
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Access keys can also be specified with an & in the label (eg. &Name)
 account contactdata	etemplate	en	Account contact data
+actions...	etemplate	en	Actions...
 add a new column (after the existing ones)	etemplate	en	Add a new column
 add a new entry of the selected application	etemplate	en	Add a new entry of the selected application
 add a new multi-column index	etemplate	en	Add a new multi-column index
@@ -107,9 +111,8 @@ custom	etemplate	en	Custom
 custom fields	etemplate	en	Custom fields
 custom javascript for onchange	etemplate	en	Custom javascript for onChange
 cut	etemplate	en	Cut
-date	preferences	en	Date
+date	etemplate	en	Date
 date+time	etemplate	en	Date+Time
-datum	etemplate	en	Datum
 day	etemplate	en	Day
 days	etemplate	en	Days
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
@@ -197,6 +200,7 @@ fileupload	etemplate	en	File upload
 first	etemplate	en	First
 floating point	etemplate	en	Floating point
 for more than one contact in a document use the tag pagerepeat!	preferences	en	Use the tag page repeat for more than one contact in a document!
+force	etemplate	en	force
 foreign key	etemplate	en	Foreign key
 formatted text (html)	etemplate	en	Formatted text (HTML)
 general fields:	preferences	en	General fields:
@@ -278,6 +282,7 @@ minutes	etemplate	en	Minutes
 missing: %1	etemplate	en	Missing: %1
 modifier	preferences	en	Modifier
 month	etemplate	en	Month
+more	etemplate	en	More
 more than 1 match for '%1'	etemplate	en	More than 1 match for '%1'
 multicolumn indices	etemplate	en	Multi column indices
 name	etemplate	en	Name
@@ -288,6 +293,7 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	Need to be unique in the table and no reserved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 new search	common	en	New search
 new table created	etemplate	en	New table created
+new value	etemplate	en	New Value
 newer version '%1' exists !!!	etemplate	en	Newer version '%1' exists!
 nextmatch	etemplate	en	Nextmatch
 nextmatch accountfilter	etemplate	en	Nextmatch account filter
@@ -310,6 +316,8 @@ nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	Number of columns the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	Number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
+off	etemplate	en	off
+old value	etemplate	en	Old Value
 onchange	etemplate	en	onChange
 onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	Other version found!
@@ -328,6 +336,7 @@ please enter table-name first !!!	etemplate	en	Enter table name first!
 pm	etemplate	en	pm
 popup	etemplate	en	Popup
 precision	etemplate	en	Precision
+preference	etemplate	en	Preference
 primary key	etemplate	en	Primary key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automatically indexed
 radiobutton	etemplate	en	Radio button
@@ -336,9 +345,12 @@ read a list of entries.	etemplate	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	etemplate	en	Read a single entry by passing the ID and field list.
 read etemplate from database (for the keys above)	etemplate	en	Read eTemplate from database (for the keys above)
 readonly	etemplate	en	Read only
+refresh	etemplate	en	Refresh
 remove row (can not be undone!!!)	etemplate	en	Remove row
 remove this link (not the entry itself)	etemplate	en	Remove link
 required	etemplate	en	Required
+reset	etemplate	en	Reset
+reset all user's column preferences	etemplate	en	Reset all user's column preferences
 restore all	etemplate	en	Restore all
 restore all application templates, overwriting existing ones with identical version number	etemplate	en	Restore all application templates, overwriting existing ones with identical version number
 returns savely, without deleting	etemplate	en	Returns WITHOUT deleting
@@ -387,6 +399,7 @@ select which accounts to show	etemplate	en	Select accounts to show
 select which values to show	etemplate	en	Select values to show
 select year	etemplate	en	Select year
 selectbox	etemplate	en	Select box
+set these columns as the default	etemplate	en	Set these columns as the default
 sets today as date	etemplate	en	Set today as date
 should the form be submitted or any custom javascript be executed	etemplate	en	Should form be submitted or any custom javascript executed
 show	etemplate	en	Show
@@ -440,6 +453,7 @@ unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields
 update from version '%s' to	etemplate	en	Update from version '%s' to
 upload	etemplate	en	Upload
+user	etemplate	en	User
 user-agent & action	etemplate	en	User-agent & action
 valign	etemplate	en	vAlign
 value	etemplate	en	Value

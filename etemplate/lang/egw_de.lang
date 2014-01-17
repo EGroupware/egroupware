@@ -19,10 +19,14 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
 '%1' is not allowed ('%2')!	etemplate	de	'%1' ist NICHT erlaubt ('%2')!
+1 minute	etemplate	de	1 Minute
+30 seconds	etemplate	de	30 Sekunden
+5 minutes	etemplate	de	5 Minuten
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 accesskey	etemplate	de	Tastaturkürzel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
 account contactdata	etemplate	de	Kontaktdaten eines Benutzers
+actions...	etemplate	de	Aktionen...
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add a new entry of the selected application	etemplate	de	Einen neuen Eintrag der ausgewählten Anwendung hinzufügen
 add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
@@ -107,9 +111,8 @@ custom	etemplate	de	Benutzerdefiniert
 custom fields	etemplate	de	Benutzerdefinierte Felder
 custom javascript for onchange	etemplate	de	Benutzerdefiniertes Javascript für onChange
 cut	etemplate	de	Ausschneiden
-date	preferences	de	Datum
+date	etemplate	de	Datum
 date+time	etemplate	de	Datum+Uhrzeit
-datum	etemplate	de	Datum
 day	etemplate	de	Tag
 days	etemplate	de	Tage
 db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
@@ -196,6 +199,7 @@ fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
 for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
+force	etemplate	de	erzwingen
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
 general fields:	preferences	de	Allgemeine Felder:
@@ -277,6 +281,7 @@ minutes	etemplate	de	Minuten
 missing: %1	etemplate	de	nicht vorhanden: %1
 modifier	preferences	de	Geändert von
 month	etemplate	de	Monat
+more	etemplate	de	Weitere
 more than 1 match for '%1'	etemplate	de	Mehr als 1 trifft für '%1' zu
 multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
@@ -287,6 +292,7 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
 new search	common	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
+new value	etemplate	de	Neuer Wert
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 nextmatch accountfilter	etemplate	de	Nextmatch Benutzerfilter
@@ -309,6 +315,8 @@ nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchk
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von
+off	etemplate	de	Keine
+old value	etemplate	de	Alter Wert
 onchange	etemplate	de	onChange
 onclick	etemplate	de	onClick
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
@@ -327,6 +335,7 @@ please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabe
 pm	etemplate	de	Nachmittag
 popup	etemplate	de	Pop-up
 precision	etemplate	de	Genauigkeit
+preference	etemplate	de	Einstellung
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
 radiobutton	etemplate	de	Radioknopf
@@ -335,9 +344,12 @@ read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
 read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 readonly	etemplate	de	nur lesen
+refresh	etemplate	de	Aktualisieren
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 required	etemplate	de	Benötigt
+reset	etemplate	de	Zurücksetzen
+reset all user's column preferences	etemplate	de	Spaltenauswahl für alle Benutzer zurücksetzen
 restore all	etemplate	de	Alle wiederherstellen
 restore all application templates, overwriting existing ones with identical version number	etemplate	de	Alle eTemplates der Anwendung wiederherstellen, durch Überschreiben der existierenden mit gleicher Versionsnummer
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
@@ -386,6 +398,7 @@ select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
 select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
+set these columns as the default	etemplate	de	Speichern Sie diese Spaltenauswahl als Vorgabe
 sets today as date	etemplate	de	setzt heutiges Datum
 should the form be submitted or any custom javascript be executed	etemplate	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
 show	etemplate	de	Anzeigen
@@ -439,6 +452,7 @@ unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
+user	etemplate	de	Benutzer
 user-agent & action	etemplate	de	Browser-Typ & Aktion
 valign	etemplate	de	vAlign
 value	etemplate	de	Wert

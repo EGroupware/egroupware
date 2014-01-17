@@ -693,6 +693,7 @@ select user	common	en	Select user
 select work email address	common	en	Select work email address
 selection	common	en	Selection
 send	common	en	Send
+send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL
 september	common	en	September
 serbia	common	en	Serbia

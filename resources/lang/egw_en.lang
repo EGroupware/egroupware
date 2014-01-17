@@ -109,6 +109,9 @@ remove accessories before changing accessory of	resources	en	Remove accessories 
 require confirmation	resources	en	Require confirmation
 reserve	resources	en	Reserve
 resource	resources	en	Resource
+resource %1 deleted!	resources	en	Resource %1 deleted!
+resource %1 faild to be deleted!	resources	en	Resource %1 faild to be deleted!
+resource %1 saved!	resources	en	Resource %1 saved!
 resource id	resources	en	Resource ID
 resources	common	en	Resources
 resources and accessories	resources	en	Resources and Accessories

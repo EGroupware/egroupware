@@ -1,3 +1,4 @@
+%1 accessories now resources	resources	de	%1 Zubehör ist jetzt  eine Ressource
 %1 accessories restored	resources	de	%1 Zubehör wiederhergestellt
 %1 resource(s) %2	resources	de	%1 Ressource(n) %2
 %1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen
@@ -29,6 +30,7 @@ choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kate
 clear selection	resources	de	Auswahl löschen
 configure access permissions	admin	de	Zugangseinstellungen konfigurieren
 confirmation email text	resources	de	Text der Bestätigungsmail
+confirmed addressbook.	resources	de	Adressbucheintrag bestätigt.
 conflict	resources	de	Konflikt
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Ressource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
@@ -42,6 +44,7 @@ description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
 don't use vfs (this will need a symlink --> see readme)	resources	de	Vfs nicht benutzen. (Dies erfordert einen symlink --> siehe README)
 edit this entry	resources	de	Diesen Eintrag bearbeiten
+event start	resources	de	Ereignis startet
 existing links	resources	de	Bestehende Verknüpfungen
 exists	resources	de	besteht bereits
 expiry	resources	de	Ablauf
@@ -102,8 +105,13 @@ read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 registration confirmed %1	resources	de	Eintragung bestätigt %1
 related links	resources	de	Siehe auch
+remove accessories before changing accessory of	resources	de	Entfernen Sie das Zubehör, bevor Sie das Zubehör ändern von:
 require confirmation	resources	de	Benötigt Bestätigung
+reserve	resources	de	Reserviert
 resource	resources	de	Resource
+resource %1 deleted!	resources	de	Ressource %1 wurde gelöscht!
+resource %1 faild to be deleted!	resources	de	Ressource %1 konnte nicht gelöscht werden!
+resource %1 saved!	resources	de	Ressource %1 wurde gespeichert.
 resource id	resources	de	Ressourcen ID
 resources	common	de	Ressourcen
 resources and accessories	resources	de	Ressourcen und Zubehör
@@ -120,6 +128,7 @@ select/deselect all	resources	de	Alle auswählen / Auswahl aufheben
 short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Ressource
 show calendar of resource	resources	de	Kalender der Ressource anzeigen
+simple reservation of a single item	resources	de	Einfache Reservierung eines einzelnen Elements
 something went wrong by deleting resource	resources	de	Beim Löschen der Ressource gab es ein Problem
 something went wrong by saving resource	resources	de	Beim Speichern der Ressource gab es ein Problem
 storage	resources	de	Informationen zur Lagerung
@@ -129,6 +138,8 @@ the anonymous user needs add rights for it!	resources	de	Der anonyme Benutzer be
 the calendar of this resource	resources	de	Kalender der Ressource
 this module displays the resources app	resources	de	Dieses Modul zeigt die Ressourcen Anwendung an
 too many matches	resources	de	Zu viele Treffer
+unable to link to %1 "%2"	resources	de	Verknüpfung zu %1 %2 fehlgeschlagen
+unable to process confirmation.	resources	de	Bestätigung kann nicht durchgeführt werden.
 use general resources icon	resources	de	Generelles Bild benutzen
 use own picture	resources	de	Eigenes Bild benutzen
 use the category's icon	resources	de	Bild der Kategorie benutzen
