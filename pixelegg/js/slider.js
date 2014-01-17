@@ -47,10 +47,10 @@ function hide_pixelegg_header(_toggle, _delay)
 	$j("#egw_fw_topmenu_info_items").css("position", "fixed");
 	$j("#egw_fw_topmenu_info_items").css("z-index", "1000");
         
-        $j(".egw_fw_ui_tabs_header").css("height", "32px");
+        $j(".egw_fw_ui_tabs_header").css("height", "30px");
         
         //Tab
-        $j(".egw_fw_ui_tab_header").css("height", "32px");
+        $j(".egw_fw_ui_tab_header").css("height", "24px");
             // ICON
             $j(".egw_fw_ui_tab_icon").css("height", "17px");
             $j(".egw_fw_ui_tab_icon").css("display", "inline-block");

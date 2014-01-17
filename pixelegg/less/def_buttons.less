@@ -73,6 +73,9 @@
     &:before {content: "+";font-size: 1.5em;color: @egw_color_1; line-height: 1.1em;}
 }
 
+
+
+
 .Complete_Button_add_hover {
     background-color: @egw_color_blue_lightest !important;
     color: @egw_color_1;
@@ -80,6 +83,33 @@
     .border_radius_button_lefttop;
 }
 
+
+/*ADD / Hinzufügen = only PLUS */
+.Complete_Button_add_only_plus {
+                .dimension_width_height_l;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+                padding: 0.5em;
+                background-color: @egw_color_2_a !important;
+
+                
+                &:before {
+                        content: "+"; 
+                        font-size: 2em; 
+                        color: @egw_color_1_a; 
+                        line-height: 0.6em; 
+                        padding-left: 0.1em;
+                        padding-right: 4em;
+                }
+                &:active {background-color: @color_positive_action_active;}
+}
+
+.Complete_Button_add_only_plus_hover {
+    background-color: @egw_color_blue_lightest !important;
+    color: @egw_color_1;
+    .box_shadow_standard_light_hover;
+    .border_radius_button_lefttop;
+}
 
 
 .Complete_Button_hinweis{
