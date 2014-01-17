@@ -960,7 +960,7 @@ class calendar_uiviews extends calendar_ui
 						$todo_label .= '&nbsp;'.html::a_href( html::image('infolog',$type,lang('Add')),'infolog.infolog_ui.edit',array(
 							'type' => $type,
 							'start_time' => $ts,
-						),' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
+						),' data-todo="app|750x590"');
 					}
 				}
 				$cols[1] = html::div(
@@ -1045,8 +1045,8 @@ class calendar_uiviews extends calendar_ui
 						if($todo['edit']) {
 							list($width, $height) = explode('x', $todo['edit']['size']);
 							unset($todo['edit']['size']);
-							$edit_icon_href = html::a_href( $icons, $todo['edit'],'',' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width='.$width.',height='.$height.',scrollbars=yes,status=yes\'); return false;"');
-							$edit_href = html::a_href( $todo['title'], $todo['edit'],'',' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
+							$edit_icon_href = html::a_href( $icons, $todo['edit'],'',' data-todo="app|'.$width.'x'.$height.'" ');
+							$edit_href = html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
 						}
 						$icon_href = html::a_href($icons,$todo['view']);
 						$href = html::a_href($todo['title'], $todo['view']);
@@ -1877,12 +1877,11 @@ class calendar_uiviews extends calendar_ui
 
 			if ($popup_size)
 			{
-				list($w,$h) = explode('x',$popup_size);
-				$popup = ' onclick="'.$this->popup($view_link,'_blank',$w,$h).'; return false;"';
+				$popup = ' data-app="app|'.$popup_size.'"';
 			}
 			else
 			{
-				$popup = ' onclick="location.href=\''.$view_link.'\'; return false;"';
+				$popup = ' data-app="app|'.$app.'|'.'"';
 			}
 		}
 		return $popup;

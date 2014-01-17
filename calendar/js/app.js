@@ -232,11 +232,13 @@ app.classes.calendar = AppJS.extend(
 		//onClick Handler for calender entries
 		jQuery("div.calendar_calEvent").on({
 			click:function(ev){
-				var eventId = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
+				var Id = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
+				var eventId = Id.match(/-?\d+\.?\d*/g)[0];
+				var appName = Id.replace(/-?\d+\.?\d*/g,'');
 				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
-				if (ev.currentTarget.id.match(/drag_/g))
+				if (ev.currentTarget.id.match(/drag_/g) || appName)
 				{
-					egw.open(eventId,'calendar','edit');
+					that.egw.open(eventId,appName !=""?appName:'calendar','edit');
 				}
 				else
 				{
@@ -264,6 +266,17 @@ app.classes.calendar = AppJS.extend(
 			},
 			mousedown: function(){
 				jQuery(this).tooltip("disable");
+			}
+		});
+
+		//Click handler for calendar todos
+		jQuery("div.calendar_calDayTodos").find("[data-todo^='app|']").on({
+			click:function(ev)
+			{
+				var windowSize = ev.currentTarget.getAttribute('data-todo').split("|")[1];
+				var link = ev.currentTarget.getAttribute('href');
+				that.egw.open_link(link,'_blank',windowSize);
+				return false;
 			}
 		});
 
@@ -322,11 +335,11 @@ app.classes.calendar = AppJS.extend(
 			var minute = timestamp[2];
 			if (ownerId == 0)
 			{
-				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute,'_blank','700x700');
+				that.egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute,'_blank','700x700');
 			}
 			else
 			{
-				egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerId,'_blank','700x700');
+				that.egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerId,'_blank','700x700');
 			}
 		});
 
