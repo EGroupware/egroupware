@@ -928,9 +928,17 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
-		egw_message(this.egw.lang('delete messages'));
+		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
-			.sendRequest();
+			.sendRequest(true);
+
+		// Update list
+		var ids = [];
+		for (var i = 0; i < _msg['msg'].length; i++)
+		{
+			ids.push(_msg['msg'][i].replace(/mail::/,''));
+		}
+		egw_refresh(this.egw.lang('delete messages'),'mail',ids,'delete');
 	},
 
 	/**
@@ -940,15 +948,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessagesShowResult: function(_msg)
 	{
-		var myMessage = _msg['egw_message'];
-		for (var i = 0; i < _msg['msg'].length; i++)
-		{
-			egw_refresh(myMessage,'mail',_msg['msg'][i].replace(/mail::/,''),'delete');
-			egw.dataDeleteUID(_msg['msg'][i]);
-		}
-		//this.mail_refreshMessageGrid(_calledFromPopup);
-
-		this.mail_preview();
+		egw_message(_msg['egw_message']);
 	},
 
 	/**
