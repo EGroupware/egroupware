@@ -117,6 +117,7 @@ class resources_ui
 		$content['nm']['sort']		= 'ASC';
 		$content['nm']['store_state']	= 'get_rows';
 		$content['nm']['row_id']	= 'res_id';
+		$content['nm']['favorites'] = true;
 
 		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		if($nm_session_data)
