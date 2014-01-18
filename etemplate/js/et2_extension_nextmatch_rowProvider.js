@@ -483,7 +483,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 					// Cache
 					if(categories) this.categories = categories;
 				}
-				for(var i = 0; i < cats.length; i++)
+				for(var i = 0; i < cats.length && this.categories; i++)
 				{
 					// Need cat_, classes can't start with a number
 					var cat_id = cats[i];
