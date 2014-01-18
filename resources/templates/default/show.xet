@@ -26,7 +26,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description/>
+					<nextmatch-sortheader label="Image" id="image"/>
 					<vbox>
 						<nextmatch-sortheader label="Name" id="name"/>
 						<nextmatch-sortheader label="Short description" id="short_description"/>
@@ -47,7 +47,7 @@
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[class]">
-					<button align="center" id="${row}[picture_thumb]" />
+					<image id="${row}[picture_thumb]" extra_link_target="_blank" href="webdav.php/apps/resources/${row_cont[res_id]}/.picture.jpg" src="${row}[picture_thumb]" />
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
@@ -76,7 +76,7 @@
 							</columns>
 							<rows>
 								<row>
-									<description id="${row}[name]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" extra_link_popup="850x600"/>
+									<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" no_lang="1"/>
 								</row>
 							</rows>
 						</grid>
