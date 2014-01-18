@@ -379,6 +379,16 @@ action buttons, left aligned for "extra" controls
 }
 */
 /**
+ * Custom field list
+ */
+.et2_customfield_list {
+	width: 100%;
+}
+.et2_customfield_list input {
+	max-width: 100ex;
+}
+
+/**
  * Diff widget
  */
 .diff thead,
