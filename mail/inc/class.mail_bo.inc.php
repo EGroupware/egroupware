@@ -4085,9 +4085,9 @@ class mail_bo
 	 * @param boolean $preserveUnSeen flag to preserve the seen flag where applicable
 	 * @return array the message header
 	 */
-	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false)
+	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
 	{
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);
 

@@ -1016,6 +1016,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//$this->debugLevel=4;
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
+		$rv = $this->splitID($folderid,$account,$_folderName,$id);
 		$stat = $this->StatMessage($folderid, $id);
 		if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($stat));
 		// StatMessage should reopen the folder in question, so we dont need folderids in the following statements.
@@ -1024,10 +1025,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			debugLog(__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
 			// initialize the object
 			$output = new SyncMail();
-			$headers = $this->mail->getMessageHeader($id,'',true,true);
+			$headers = $this->mail->getMessageHeader($id,'',true,true,$_folderName);
 			if (empty($headers))
 			{
-				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.'/'.$GLOBALS['egw_info']['user']['account_lid'].' ServerID:'.self::$profileID.'FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
+				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.'/'.$GLOBALS['egw_info']['user']['account_lid'].' ServerID:'.self::$profileID.'FolderID:'.$folderid.'/'.$_folderName.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
 				return $output;//empty object
 			}
 			//$rawHeaders = $this->mail->getMessageRawHeader($id);
