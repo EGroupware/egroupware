@@ -76,7 +76,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
 		this.table = $j(document.createElement("table"))
-			.addClass("et2_grid");
+			.addClass("et2_grid et2_customfield_list");
 		this.table.append(this.tbody);
 
 		this.rows = {};
