@@ -122,7 +122,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 */
 	_initActions: function (_actions) {
 		// Generate a uid for the action and object manager
-		var uid = this.egw.uid();
+		var uid = this._widget.id||this.egw.uid();
 
 		if(_actions == null) _actions = [];
 
