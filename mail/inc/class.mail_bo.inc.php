@@ -4358,7 +4358,7 @@ class mail_bo
 		}
 		catch (Exception $e)
 		{
-			error_log(__METHOD__.__LINE__.' Could not fetch structure on mail:'.$_uid.' Serverprofile->'.$this->icServer->ImapServerId.' Message:'.$e->getMessage());
+			error_log(__METHOD__.__LINE__.' Could not fetch structure on mail:'.$_uid.' Serverprofile->'.$this->icServer->ImapServerId.' Message:'.$e->getMessage().' Stack:'.function_backtrace());
 			return null;
 		}
 	}

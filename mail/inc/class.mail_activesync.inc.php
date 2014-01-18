@@ -1014,6 +1014,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
 		//$this->debugLevel=4;
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$stat = $this->StatMessage($folderid, $id);
 		if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($stat));
@@ -1026,7 +1027,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$headers = $this->mail->getMessageHeader($id,'',true,true);
 			if (empty($headers))
 			{
-				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.' ServerID:'.self::$profileID.'FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
+				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.'/'.$GLOBALS['egw_info']['user']['account_lid'].' ServerID:'.self::$profileID.'FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
 				return $output;//empty object
 			}
 			//$rawHeaders = $this->mail->getMessageRawHeader($id);
