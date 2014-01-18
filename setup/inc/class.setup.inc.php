@@ -301,8 +301,9 @@ class setup
 							$GLOBALS['egw_domain'][$_POST['FormDomain']]['config_passwd']) &&
 						!$this->check_auth($_POST['FormUser'], $_POST['FormPW'],
 							$GLOBALS['egw_info']['server']['header_admin_user'],
-							$GLOBALS['egw_info']['server']['header_admin_passwd']))
+							$GLOBALS['egw_info']['server']['header_admin_password']))
 					{
+						//error_log(__METHOD__."() Invalid password: $_POST[FormDomain]: used $_POST[FormUser]/md5($_POST[FormPW])=".md5($_POST['FormPW'])." != {$GLOBALS['egw_info']['server']['header_admin_user']}/{$GLOBALS['egw_info']['server']['header_admin_password']}");
 						$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
 						return false;
 					}
