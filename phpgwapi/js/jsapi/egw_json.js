@@ -69,9 +69,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	/**
 	 * Sends the assembled request to the server
 	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
-	 * @returns undefined
+	 * @param {string} method='POST' allow to eg. use a (cachable) 'GET' request instead of POST
 	 */
-	json_request.prototype.sendRequest = function(async) {
+	json_request.prototype.sendRequest = function(async,method) {
 		if(typeof async != "undefined")
 		{
 			this.async = async;
@@ -95,7 +95,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			context: this,
 			data: request_obj,
 			dataType: 'json',
-			type: 'POST',
+			type: method || 'POST',
 			success: this.handleResponse,
 			error: function(_xmlhttp, _err) {
 				this.egw.debug('error', 'Ajax request to', this.url, ' failed:',

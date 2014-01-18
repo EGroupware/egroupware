@@ -29,10 +29,9 @@ $preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['common']
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
 $etag = '"'.md5($preferences.$user).'"';
 
-// headers to allow caching
+// headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
+egw_session::cache_control(86400);	// cache for 1 day
 Header('Content-Type: text/javascript; charset=utf-8');
-Header('Cache-Control: public, no-transform');
-Header('Pragma: cache');
 Header('ETag: '.$etag);
 
 // if servers send a If-None-Match header, response with 304 Not Modified, if etag matches

@@ -32,14 +32,9 @@ include '../header.inc.php';
 // use an etag with app, lang and a hash over the creation-times of all lang-files
 $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.translation::etag($_GET['app'], $_GET['lang']).'"';
 
-// tell browser/caches to cache for one day, we change url on real modifications
-$expires = 864000;	// 10days
-
-// headers to allow caching of one month
+// headers to allow caching, we specify etag on url to force reload, even with Expires header
+egw_session::cache_control(864000);	// cache for 10 days
 Header('Content-Type: text/javascript; charset=utf-8');
-Header('Cache-Control: public, no-transform, max-age='.$expires);
-header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
-Header('Pragma: cache');
 Header('ETag: '.$etag);
 
 // if servers send a If-None-Match header, response with 304 Not Modified, if etag matches

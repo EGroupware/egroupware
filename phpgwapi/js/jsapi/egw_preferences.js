@@ -62,8 +62,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 
 			if (typeof prefs[_app] == 'undefined')
 			{
-				var request = this.json('home.egw_framework.ajax_get_preference.template', [_app],null,null,false);
-				request.sendRequest();
+				var request = this.json('home.egw_framework.ajax_get_preference.template', [_app]);
+				request.sendRequest(false, 'GET');	// use synchronous (cachable) GET request
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
 			}
 			if(_name == "*") return prefs[_app];

@@ -15,12 +15,14 @@
 /**
  * preferences class used for setting application preferences
  *
- * the prefs are read into 5 arrays:
- * 	 $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
- * 	 $user the stored user prefs, only used for manipulating and storeing the user prefs
- *   $group the stored prefs of all group-memberships of current user, can NOT be deleted or stored directly!
- * 	 $default the default preferences, always used when the user has no own preference set
- * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
+ * preferences are read into following arrays:
+ * - $data effective prefs used everywhere in EGroupware
+ * Effective prefs are merged together in following precedence from:
+ * - $forced forced preferences set by the admin, they take precedence over user or default prefs
+ * - $session temporary prefs eg. language set on login just for session
+ * - $user the stored user prefs, only used for manipulating and storeing the user prefs
+ * - $group the stored prefs of all group-memberships of current user, can NOT be deleted or stored directly!
+ * - $default the default preferences, always used when the user has no own preference set
  *
  * To update the prefs of a certain group, not just the primary group of the user, you have to
  * create a new instance of preferences class, with the given id of the group. This takes into

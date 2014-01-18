@@ -25,14 +25,13 @@ $GLOBALS['egw_info'] = array(
 include '../header.inc.php';
 
 // use an etag over config and link-registry
-$config = config::clientConfigs();
+$config = json_encode(config::clientConfigs());
 $link_registry = egw_link::json_registry();
-$etag = '"'.md5(serialize($config).$link_registry).'"';
+$etag = '"'.md5($config.$link_registry).'"';
 
-// headers to allow caching
+// headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
+egw_session::cache_control(86400);	// cache for one day
 Header('Content-Type: text/javascript; charset=utf-8');
-Header('Cache-Control: public, no-transform');
-Header('Pragma: cache');
 Header('ETag: '.$etag);
 
 // if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
@@ -42,7 +41,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	common::egw_exit();
 }
 
-$content = 'egw.set_configs('.json_encode($config).");\n";
+$content = 'egw.set_configs('.$config.");\n";
 $content .= 'egw.set_link_registry('.$link_registry.");\n";
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content

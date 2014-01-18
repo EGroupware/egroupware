@@ -1125,11 +1125,23 @@ abstract class egw_framework
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
 		}
 		// add configuration, link-registry, images, user-data and -perferences for non-popup windows
+		// specifying etag in url to force reload, as we send expires header
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			self::validate_file('/phpgwapi/config.php');
-			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
-			self::validate_file('/phpgwapi/user.php',array('user' => $GLOBALS['egw_info']['user']['account_lid']));
+			self::validate_file('/phpgwapi/config.php', array(
+				'etag' => md5(json_encode(config::clientConfigs()).egw_link::json_registry()),
+			));
+			self::validate_file('/phpgwapi/images.php', array(
+				'template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set'],
+				'etag' => md5(json_encode(common::image_map($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))),
+			));
+			self::validate_file('/phpgwapi/user.php', array(
+				'user' => $GLOBALS['egw_info']['user']['account_lid'],
+				'lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
+				// add etag on url, so we can set an expires header
+				'etag' => md5(json_encode($GLOBALS['egw_info']['user']['preferences']['common']).
+					$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])),
+			));
 		}
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
@@ -1870,9 +1882,21 @@ abstract class egw_framework
 		if (preg_match('/^[a-z0-9_]+$/i', $app))
 		{
 			$response = egw_json_response::get();
-			$pref = $GLOBALS['egw_info']['user']['preferences'][$app];
-			if(!$pref) $pref = Array();
-			$response->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
+			$pref = json_encode($GLOBALS['egw_info']['user']['preferences'][$app] ?
+					$GLOBALS['egw_info']['user']['preferences'][$app] : array());
+
+			// send etag header, if we are directly called (not via jsonq!)
+			if (strpos($_GET['menuaction'], __FUNCTION__) !== false)
+			{
+				$etag = '"'.$app.'-'.md5($pref).'"';
+				if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
+				{
+					header("HTTP/1.1 304 Not Modified");
+					common::egw_exit();
+				}
+				header('ETag: '.$etag);
+			}
+			$response->script('window.egw.set_preferences('.$pref.', "'.$app.'");');
 		}
 	}
 
