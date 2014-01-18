@@ -400,7 +400,8 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		}
 
 		// Initialize the action manager and add some actions to it
-		var gam = egw_getAppActionManager();
+		// Only look 1 level deep
+		var gam = egw_getActionManager(this.egw().appName,true,1);
 		if(typeof this._actionManager != "object")
 		{
 			if(gam.getActionById(this.id) != null)

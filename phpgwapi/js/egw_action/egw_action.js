@@ -28,10 +28,17 @@ var egw_globalObjectManager = null;
  * @param _id is the name of the sub-actionManager which should be returned.
  * 	If the action manager does not exist right now, it is created. If the
  * 	parameter is ommited or null, the global action manager is returned.
+ * @param {boolean} [_create=true] If an objectManager with the given id is not
+ *	found, it will be created at the top level.
+ * @param {number} [_search_depth=Infinite] How deep into existing action children
+ *	to search.
  */
-function egw_getActionManager(_id, _create) {
+function egw_getActionManager(_id, _create,_search_depth) {
 	if (typeof _create == 'undefined') {
 		_create = true;
+	}
+	if (typeof _search_depth == "undefined") {
+		_search_depth = Number.MAX_VALUE;
 	}
 
 	// Check whether the global action manager had been created, if not do so
@@ -42,7 +49,7 @@ function egw_getActionManager(_id, _create) {
 
 	// Check whether the sub-action manager exists, if not, create it
 	if (typeof _id != 'undefined' && _id != null) {
-		res = egw_globalActionManager.getActionById(_id);
+		res = egw_globalActionManager.getActionById(_id,_search_depth);
 		if (res == null && _create) {
 			res = egw_globalActionManager.addAction("actionManager", _id);
 		}
@@ -58,10 +65,17 @@ function egw_getActionManager(_id, _create) {
  * @param _id is the name of the sub-object manager should be returned. If the
  * 	object manager does not exists right now, it is created. If the parameter
  *	is ommited or null, the global object manager is returned.
+ * @param {boolean} [_create=true] If an objectManager with the given id is not
+ *	found, it will be created at the top level.
+ * @param {number} [_search_depth=Infinite] How deep into existing action children
+ *	to search.
  */
-function egw_getObjectManager(_id, _create) {
+function egw_getObjectManager(_id, _create, _search_depth) {
 	if (typeof _create == "undefined") {
 		_create = true;
+	}
+	if (typeof _search_depth == "undefined") {
+		_search_depth = Number.MAX_VALUE;
 	}
 
 	// Check whether the global object manager exists
@@ -74,7 +88,7 @@ function egw_getObjectManager(_id, _create) {
 
 	// Check whether the sub-object manager exists, if not, create it
 	if (typeof _id != 'undefined' && _id != null) {
-		res = egw_globalObjectManager.getObjectById(_id);
+		res = egw_globalObjectManager.getObjectById(_id, _search_depth);
 		if (res == null && _create) {
 			res = new egwActionObjectManager(_id,
 				egw_getActionManager(_id));
@@ -89,14 +103,14 @@ function egw_getObjectManager(_id, _create) {
  * Returns the object manager for the current application
  */
 function egw_getAppObjectManager(_create) {
-	return egw_getObjectManager(egw_getAppName(), _create);
+	return egw_getObjectManager(egw_getAppName(), _create,1);
 }
 
 /**
  * Returns the action manager for the current application
  */
 function egw_getAppActionManager(_create) {
-	return egw_getActionManager(egw_getAppName(), _create);
+	return egw_getActionManager(egw_getAppName(), _create,1);
 }
 
 
@@ -185,22 +199,31 @@ egwAction.prototype.remove = function () {
 
 /**
  * Searches for a specific action with the given id
+ * 
+ * @param {string|number} id ID of the action to find
+ * @param {number} [_search_depth=Infinite] How deep into existing action children
+ *	to search.
+ *
+ * @return {egwAction|null}
  */
-egwAction.prototype.getActionById = function(_id)
+egwAction.prototype.getActionById = function(_id,_search_depth)
 {
 	// If the current action object has the given id, return this object
 	if (this.id == _id)
 	{
 		return this;
 	}
+	if (typeof _search_depth == "undefined") {
+		_search_depth = Number.MAX_VALUE;
+	}
 
 	// If this element is capable of having children, search those for the given
 	// action id
 	if (this.canHaveChildren)
 	{
-		for (var i = 0; i < this.children.length; i++)
+		for (var i = 0; i < this.children.length && _search_depth > 0; i++)
 		{
-			var elem = this.children[i].getActionById(_id);
+			var elem = this.children[i].getActionById(_id,_search_depth-1);
 			if (elem)
 			{
 				return elem;
@@ -933,16 +956,19 @@ egwActionObject.prototype.setAOI = function(_aoi)
  * Returns the object from the tree with the given ID
  */
 //TODO: Add search function to egw_action_commons.js
-egwActionObject.prototype.getObjectById = function(_id)
+egwActionObject.prototype.getObjectById = function(_id, _search_depth)
 {
 	if (this.id == _id)
 	{
 		return this;
 	}
+	if (typeof _search_depth == "undefined") {
+		_search_depth = Number.MAX_VALUE;
+	}
 
-	for (var i = 0; i < this.children.length; i++)
+	for (var i = 0; i < this.children.length && _search_depth > 0; i++)
 	{
-		var obj = this.children[i].getObjectById(_id);
+		var obj = this.children[i].getObjectById(_id, _search_depth - 1);
 		if (obj)
 		{
 			return obj;
@@ -1268,9 +1294,7 @@ egwActionObject.prototype.getIndex = function()
  */
 egwActionObject.prototype.getFocusedObject = function()
 {
-	/*var cr = this.getContainerRoot();*/
-	var cr = this.getRootObject();
-	return cr ? cr.focusedChild : null;
+	return this.focusedChild || null;
 }
 
 /**

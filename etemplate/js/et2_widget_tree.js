@@ -329,7 +329,8 @@ var et2_tree = et2_inputWidget.extend(
 	_link_actions: function(actions) 
 	{
 		// Get the top level element for the tree
-		var objectManager = egw_getAppObjectManager(true);
+		// Only look 1 level deep for application object manager
+		var objectManager = egw_getObjectManager(this.egw().appName,true,1);
 		var treeObj = objectManager.getObjectById(this.id);
 		if (treeObj == null) {
 			// Add a new container to the object manager which will hold the tree

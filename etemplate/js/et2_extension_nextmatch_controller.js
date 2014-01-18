@@ -127,12 +127,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		if(_actions == null) _actions = [];
 
 		// Initialize the action manager and add some actions to it
-		// To work around a bug in action system we call global actionManger
-		// of an application NOT just appname, but prefix it with "__"
-		// If it is called just appname, actionLinks of actions with id
-		// of an application fetch that applications menu as children,
-		// if that applications tab is open in toplevel window.
-		var gam = egw_getActionManager('__'+this.egw.appName);
+		// Only look 1 level deep
+		var gam = egw_getActionManager(this.egw.appName,true,1);
 		this._actionManager = gam.addAction("actionManager", uid);
 		this._actionManager.updateActions(_actions, this.egw.appName);
 		var data = this._actionManager.data;
@@ -166,8 +162,9 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			}, this));
 		}
 
-		// Initialize the object manager
-		var gom = egw_getObjectManager(this.egw.appName);
+		// Initialize the object manager - look for application
+		// object manager 1 level deep
+		var gom = egw_getObjectManager(this.egw.appName,true,1);
 		this._objectManager = gom.addObject(
 				new egwActionObjectManager(uid, this._actionManager));
 		this._objectManager.flags = this._objectManager.flags
