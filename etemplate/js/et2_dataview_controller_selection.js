@@ -327,16 +327,17 @@ var et2_dataview_selectionManager = Class.extend(
 		}
 
 		function getElementRelatively (_step) {
+			var total = self._total || Object.keys(self._indexMap).length;
+			var max_index = Math.max.apply(Math,Object.keys(self._indexMap));
 			// Get a reasonable number of iterations - not all
-			var total = Math.max(1,Math.min(Object.keys(self._indexMap).length,50));
-			var count = total;
+			var count = Math.max(1,Math.min(self._total,50));
 			var element = null;
 			var idx = _entry.idx;
-			while(element == null && count > 0 && idx <= total)
+			while(element == null && count > 0)
 			{
 				count--;
 				element = getIndexAO(Math.max(0,
-					Math.min(self._total||total - 1, idx += _step)));
+					Math.min(max_index, idx += _step)));
 			}
 			return element;
 		};
