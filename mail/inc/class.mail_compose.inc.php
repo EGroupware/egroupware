@@ -240,7 +240,8 @@ class mail_compose
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
-		$_contenHasSigID = array_key_exists('signatureid',(array)$_content);
+		$_contentHasSigID = array_key_exists('signatureid',(array)$_content);
+		$_contentHasMimeType = array_key_exists('mimeType',(array)$_content);
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
@@ -445,6 +446,20 @@ class mail_compose
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
+		if ($_contentHasMimeType)
+		{
+			if ($content['mimeType']==1)
+			{
+				$_content['mimeType'] = $content['mimeType']='html';
+			}
+			else
+			{
+				$_content['mimeType'] = $content['mimeType']='plain';
+			}
+
+		}
+		// mimeType is now a checkbox; convert it here to match expectations
+		// ToDo: match Code to meet checkbox value
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')
 		{
@@ -493,7 +508,6 @@ class mail_compose
 		{
 			$buttonClicked = true;
 			$suppressSigOnTop = true;
-
 			if (!empty($composeCache['mailaccount']) && !empty($_content['mailaccount']) && $_content['mailaccount'] != $composeCache['mailaccount'])
 			{
 				$acc = emailadmin_account::read($_content['mailaccount']);
@@ -1160,7 +1174,7 @@ class mail_compose
 		if ($_content)
 		{
 			//input array of _content had no signature information but was seeded later, and content has a valid setting
-			if (!$_contenHasSigID && $content['signatureid'] && array_key_exists('signatureid',$_content)) unset($_content['signatureid']);
+			if (!$_contentHasSigID && $content['signatureid'] && array_key_exists('signatureid',$_content)) unset($_content['signatureid']);
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
@@ -1240,6 +1254,12 @@ class mail_compose
 			$content['serverID'] = $this->mail_bo->profileID;
 		}
 		$preserv['serverID'] = $content['serverID'];
+		// convert it back to checkbox expectations
+		if($content['mimeType'] == 'html') {
+			$content['mimeType']=1;
+		} else {
+			$content['mimeType']=0;
+		}
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
