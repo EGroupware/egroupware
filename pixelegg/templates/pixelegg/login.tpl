@@ -69,12 +69,16 @@
     </div>
 </div>
 
-<div id="wrap">
+<!--<div id="wrap">
     
     <div class="animation_login">
     
-<img id="img1" src="pixelegg/images/login/about.svg" alt="STYLITE" title="STYLITE">
-<img id="img2" src="pixelegg/images/login/accounts.svg" alt="EGROUPWARE" title="EGROUPWARE">
-<img id="img3" src="pixelegg/images/login/alarm.svg" alt="EGROUPWARE" title="EGROUPWARE">
-<img id="img4" src="pixelegg/images/login/cake.svg" alt="EGROUPWARE" title="EGROUPWARE">
-</div>
+        <img id="img1" src="pixelegg/images/login/about.svg" alt="STYLITE" title="STYLITE">
+        <img id="img2" src="pixelegg/images/login/app_addressbook_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img3" src="pixelegg/images/login/app_calendar_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img4" src="pixelegg/images/login/app_infolog_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img5" src="pixelegg/images/login/app_developer_tools_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img6" src="pixelegg/images/login/app_mail_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img7" src="pixelegg/images/login/app_tracker_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+        <img id="img8" src="pixelegg/images/login/app_timesheet_icon.svg" alt="EGROUPWARE" title="EGROUPWARE">
+</div>-->
