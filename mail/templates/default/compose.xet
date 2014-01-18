@@ -2,106 +2,117 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-		<html id="msg" class="message"/>
-		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Mailaccount"/>
-				<menulist>
-					<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
-				</menulist>
-				<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
-				<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
-			</hbox>
-			<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
-				<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/> 
-				<buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
-				<buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
-				<vfs-select class="$cont[vfsNotAvailable]" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
-				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
-				<description class="$cont[noSaveAsAvailable]" value="Save:"/>
-				<hbox class="$cont[noInfologAvailable]">
-					<image class="et2_button ui-button et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
-					<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
+			<html id="msg" class="message"/>
+			<vbox class="mailCompose mailComposeHeaderSection" width="99%">
+				<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
+					<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
+					<buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
+					<buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
+					<vfs-select class="$cont[vfsNotAvailable]" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
+					<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
+					<description class="$cont[noSaveAsAvailable]" value="Save:"/>
+					<hbox class="$cont[noInfologAvailable]">
+						<image class="et2_button ui-button et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
+						<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
+					</hbox>
+					<hbox class="$cont[noTrackerAvailable]">
+						<image class="et2_button ui-button et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
+						<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
+					</hbox>
+					<description value="Recieve notification"/>
+					<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
+					<description value="Priority"/>
+					<menulist>
+						<menupopup id="priority"/>
+					</menulist>
 				</hbox>
-				<hbox class="$cont[noTrackerAvailable]">
-					<image class="et2_button ui-button et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
-					<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
-				</hbox>
-				<description value="Recieve notification"/>
-				<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
-				<description value="Priority"/>
-				<menulist>
-					<menupopup id="priority"/>
-				</menulist>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="To"/>
-				<taglist-email id="to" width="88%" onclick="app.mail.address_click" include_lists="true"/>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Cc"/>
-				<taglist-email id="cc" width="88%" onclick="app.mail.address_click" include_lists="true"/>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Bcc"/>
-				<taglist-email id="bcc" width="88%" onclick="app.mail.address_click" include_lists="true"/>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Reply To"/>
-				<taglist-email id="replyto" width="88%" maxSelection="1" onclick="app.mail.address_click"/>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="99%">
-				<description value="Store to Folder"/>
-				<taglist id="folder" width="88%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
-			</hbox>
-			<hbox  class="mailComposeHeaders" width="99%">
-				<description value="Subject"/>
-				<textbox align="left" width="88%" id="subject"/>
-			</hbox>
-			<hbox class="mail_Composeicons">
-				<html id="mail_composeicons"/>
-			</hbox>
-		</vbox>
-		<vbox class="mailComposeBodySection" width="99%">
-			<hbox disabled="@is_plain" class="mailComposeBody">
-				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="320px" width="100%" />
-			</hbox>
-			<hbox disabled="@is_html" class="mailComposeBody">
-				<textbox multiline="true" rows="15" cols="120" width="99%" span="all" name="mail_plaintext" id="mail_plaintext"/>
-			</hbox>
-			<groupbox class="mailSignature">
-				<menulist>
-					<menupopup id="signatureid" onchange="app.mail.submitOnChange"/>
-				</menulist>
-				<description value=" "/>
-				<description value="Editor type"/>
-				<menulist>
-					<menupopup id="mimeType" onchange="app.mail.submitOnChange"/>
-				</menulist>
-			</groupbox>
-			<groupbox class="et2_file mailUploadSection">
-				<caption label="Files"/>
-				<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
-				<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">
-				  <columns>
-				   <column disabled="!@showtempname"/>
-				   <column width="50%" />
-				   <column width="25%" />
-				   <column width="15%"/>
-				   <column />
-				  </columns>
-				  <rows>
-				   <row >
-					<description id="${row}[tmp_name]" />
-					<description id="${row}[name]" />
-					<description id="${row}[type]" />
-					<description align="right" id="${row}[size]" />
-					<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" />
-				   </row>
-				  </rows>
+				<grid  width="100%">
+					<columns>
+						<column widtd="10%"/>
+						<column width="42%" />
+						<column width="42%"/>
+						<column width="6%"/>
+					</columns>
+					<rows>
+						<row class="mailComposeHeaders" >
+							<description value="From"/>
+							<hbox>
+								<menulist>
+									<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
+								</menulist>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
+							</hbox>
+							<taglist-email id="replyto" empty_label="Reply to" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
+							<description/>
+						</row>
+						<row class="mailComposeHeaders" >
+							<description value="To"/>
+							<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<hbox>
+								<description id="cc_expander" value="Cc" onclick="app.mail.compose_cc_expander"/>
+								<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_cc_expander"/>
+							</hbox>
+						</row>
+						<row class="mailComposeHeaders mailComposeJQueryCc">
+							<description value="Cc"/>
+							<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<taglist id="folder" empty_label="Folder" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
+						</row>
+						<row  class="mailComposeHeaders mailComposeJQueryBcc">
+							<description value="Bcc"/>
+							<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+						</row>
+						<row class="mailComposeHeaders">
+							<description value="Subject"/>
+							<textbox align="left" width="100%" id="subject" span="2"/>
+							<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable"/>
+						</row>
+						<row>
+							<description/>
+							<hbox class="mail_Composeicons">
+								<html id="mail_composeicons"/>
+							</hbox>
+						</row>
+					</rows>
 				</grid>
+			</vbox>
+			<vbox class="mailComposeBodySection" width="99%">
+				<hbox disabled="@is_plain" class="mailComposeBody">
+					<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="320px" width="100%" />
+				</hbox>
+				<hbox disabled="@is_html" class="mailComposeBody">
+					<textbox multiline="true" rows="15" cols="120" width="99%" span="all" name="mail_plaintext" id="mail_plaintext"/>
+				</hbox>
+				<groupbox class="mailSignature">
+					<menulist>
+						<menupopup id="signatureid" onchange="app.mail.submitOnChange"/>
+					</menulist>
+					<description value=" "/>
+				</groupbox>
+				<groupbox class="et2_file mailUploadSection">
+					<caption label="Files"/>
+					<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
+					<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">
+					  <columns>
+					   <column disabled="!@showtempname"/>
+					   <column width="50%" />
+					   <column width="25%" />
+					   <column width="15%"/>
+					   <column />
+					  </columns>
+					  <rows>
+					   <row >
+						<description id="${row}[tmp_name]" />
+						<description id="${row}[name]" />
+						<description id="${row}[type]" />
+						<description align="right" id="${row}[size]" />
+						<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" />
+					   </row>
+					  </rows>
+					</grid>
 
-			</groupbox>
-		</vbox>
+				</groupbox>
+			</vbox>
 	</template>
 </overlay>

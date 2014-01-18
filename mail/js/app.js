@@ -104,6 +104,8 @@ app.classes.mail = AppJS.extend(
 				case 'mail.compose':
 					this.mail_isMainWindow = false;
 					isCompose = true;
+					this.hide_cc_compose();
+					break;
 			}
 		}
 		//alert('action about to go down');
@@ -2381,5 +2383,46 @@ app.classes.mail = AppJS.extend(
 	{
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '720x500');
-	}
+	},
+
+	/**
+	 * Hide Cc and Bcc rows from the compose popup
+	 *
+	 */
+	hide_cc_compose: function ()
+	{
+		jQuery(".mailComposeJQueryCc").hide();
+		jQuery(".mailComposeJQueryBcc").hide();
+	},
+
+	/**
+	 * Display Cc or Bcc fields in compose popup
+	 *
+	 * @param {widget object} widget clicked label (Cc or Bcc) from compose popup
+	 *
+	 */
+	compose_cc_expander: function(widget)
+	{
+		var Cc = this.et2.getWidgetById('cc_expander');
+		var Bcc = this.et2.getWidgetById('bcc_expander');
+
+		if (widget.id == "mail-compose_cc_expander")
+		{
+			jQuery(".mailComposeJQueryCc").show();
+			if (typeof Cc !='undefined')
+			{
+				Cc.set_disabled(true);
+			}
+
+		}
+		else if (widget.id == "mail-compose_bcc_expander")
+		{
+			jQuery(".mailComposeJQueryBcc").show();
+			if (typeof Bcc !='undefined')
+			{
+				Bcc.set_disabled(true);
+			}
+		}
+	},
+
 });
