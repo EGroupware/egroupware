@@ -2868,7 +2868,7 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[2], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if ($attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
+				if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
 				{
 					$this->mail_bo->fetchPartContents($this->uid, $attachment);
 					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
@@ -2910,7 +2910,7 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (bytes($attachment->getBytes()) < 8192)	// msie=8 allows max 32k data uris
+				if (($attachment instanceof Horde_Mime_Part) && bytes($attachment->getBytes()) < 8192)	// msie=8 allows max 32k data uris
 				{
 					$this->mail_bo->fetchPartContents($this->uid, $attachment);
 					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
@@ -2952,7 +2952,7 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if ($attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
+				if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
 				{
 					$this->mail_bo->fetchPartContents($this->uid, $attachment);
 					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
