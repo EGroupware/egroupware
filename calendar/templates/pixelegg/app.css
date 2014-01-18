@@ -687,12 +687,17 @@ div.calendar {
   background_color: #408dd2;
   /*padding: 2px 0px 0px 2px;*/
 }
+.calendar tbody tr,
+.calendar tbody td {
+  border: 1px;
+}
 .calendar tbody .day {
   /* Cells <TD> containing month days dates */
-  width: 2em;
+  /*width: 2em;*/
   color: #456;
   text-align: right;
   padding: 2px 4px 2px 2px;
+  /*border: 1px;*/
 }
 .calendar tbody .day.othermonth {
   font-size: 80%;
@@ -721,7 +726,7 @@ div.calendar {
 .calendar tbody td.selected {
   /* Cell showing today date */
   font-weight: bold;
-  border: 0px solid #000;
+  border: 1px solid #000;
   padding: 1px 3px 1px 1px;
   background: #fff;
   color: #000;
@@ -735,7 +740,7 @@ div.calendar {
 }
 .calendar tbody td.today {
   /* Cell showing selected date */
-  font-weight: bold;
+  font-weight: normal;
   color: #00f;
 }
 .calendar tbody .disabled {
@@ -1714,7 +1719,7 @@ tr.prefRow > td {
   right: 55%;
   display: none;
   width: 33%;
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #ffffff;
 }
 tr.prefRow:hover .prefHelp {
   display: block;

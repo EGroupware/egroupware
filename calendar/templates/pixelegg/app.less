@@ -110,8 +110,6 @@ div.calendar { position: relative; }
 
 .calendar{
 
-
-
     .button { /* "<<", "<", ">", ">>" buttons have this class */
         text-align: center;    /* They are the navigation buttons */
         padding: 2px;          /* Make the buttons seem like they're pressing */
@@ -121,7 +119,7 @@ div.calendar { position: relative; }
         .background_table_cal_head;
     }
 
-
+    
 
     thead {
         .title { /* This holds the current "month, year" */
@@ -173,11 +171,15 @@ div.calendar { position: relative; }
     /* The body part -- contains all the days in month. */
 
     tbody {
+        
+        tr, td {border: 1px;}
+        
         .day { /* Cells <TD> containing month days dates */
-            width: 2em;
+            /*width: 2em;*/
             color: #456;
             text-align: right;
             padding: 2px 4px 2px 2px;
+            /*border: 1px;*/
         }
 
         .day.othermonth {
@@ -210,7 +212,7 @@ div.calendar { position: relative; }
 
         td.selected { /* Cell showing today date */
             font-weight: bold;
-            border: 0px solid #000;
+            border: 1px solid #000;
             padding: 1px 3px 1px 1px;
             background: #fff;
             color: #000;
@@ -222,7 +224,7 @@ div.calendar { position: relative; }
         }
 
         td.today { /* Cell showing selected date */
-            font-weight: bold;
+            font-weight: normal;
             color: #00f;
         }
 
@@ -1226,7 +1228,7 @@ tr.prefRow > td {
     right: 55%;
     display: none;
     width: 33%;
-    background-color: @color_hint;
+    background-color: @color_tooltip;
 
 }
 tr.prefRow:hover .prefHelp {
