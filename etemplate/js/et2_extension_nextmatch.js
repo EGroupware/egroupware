@@ -480,7 +480,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					// then triggers an invalidate, which may update the grid
 					// this.dataview.grid.setTotalCount(this.options.settings.total);
 					// Update directly instead
-					this.dataview.grid._total -= this.options.settings.total;
+					this.dataview.grid._total = this.options.settings.total;
 					this.controller._selectionMgr._total = this.options.settings.total;
 					this.header.count_total.text(this.options.settings.total+"");
 
