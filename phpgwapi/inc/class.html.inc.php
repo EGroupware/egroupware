@@ -229,7 +229,7 @@ class html
 	 */
 	static function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0,$enhanced=null)
 	{
-		if(is_null($enhanced)) $enhanced = (count($arr) > self::SELECT_ENHANCED_ROW_COUNT);
+		if(is_null($enhanced)) $enhanced = false;	//disabled by default (count($arr) > self::SELECT_ENHANCED_ROW_COUNT);
 
 		if (!is_array($arr))
 		{
