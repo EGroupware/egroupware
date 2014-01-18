@@ -179,6 +179,21 @@ class calendar_uilist extends calendar_ui
 		}
 		$sel_options['filter'] = &$this->date_filters;
 
+		// Send categories for row styling - calendar uses no_cat, so they don't go automatically
+		$sel_options['category'] = array('' => lang('all')) + etemplate_widget_menupopup::typeOptions('select-cat', ',,calendar',$no_lang,false,$value['cat_id']);
+		// Prevent double encoding - widget does this on its own, but we're just grabbing the options
+		foreach($sel_options['category'] as &$label)
+		{
+			if(!is_array($label))
+			{
+				$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+			}
+			elseif($label['label'])
+			{
+				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+			}
+		}
+
 		// add scrollbar to long describtion, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
