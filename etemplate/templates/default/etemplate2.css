@@ -724,6 +724,16 @@ table.et2_grid {
 table.et2_grid tbody.ui-sortable > tr:not(.th) {
   cursor: ns-resize;
 }
+
+/**
+ * irame & loader
+ */
+.et2_iframe.loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
 /**
  * Create some spacing for widgets inside labels
  */

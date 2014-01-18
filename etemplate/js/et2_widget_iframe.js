@@ -111,7 +111,24 @@ var et2_iframe = et2_valueWidget.extend(
 	set_src: function(_value) {
 		if(_value.trim() != "")
 		{
-			this.htmlNode.attr("src", _value);
+			if(_value.trim() == 'about:blank')
+			{
+				this.htmlNode.attr("src", _value);
+			}
+			else
+			{
+				// Load the new page, but display a loader
+				var loader = $j('<div class="et2_iframe loading"/>');
+				this.htmlNode
+					.before(loader);
+				window.setTimeout(jQuery.proxy(function() {
+					this.htmlNode.attr("src", _value)
+						.one('load',function() {
+							loader.remove();
+						});
+				},this),0);
+
+			}
 		}
 	},
 
