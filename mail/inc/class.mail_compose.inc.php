@@ -64,7 +64,7 @@ class mail_compose
 	var $composeID;
 	var $sessionData;
 
-	function mail_compose()
+	function __construct()
 	{
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
@@ -984,6 +984,7 @@ class mail_compose
 				$sel_options['mailaccount'][$singleIdentity['acc_id']] = $id_prepend.$iS;
 			}
 		}
+		$sel_options['mailaccount'] = iterator_to_array(emailadmin_account::search());
 		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
 		// if there are 2 defaultIDs, its most likely, that the user choose to set
 		// the one not being the activeServerProfile to be his default Identity
@@ -2733,7 +2734,7 @@ class mail_compose
 		$response = egw_json_response::get();
 		$document_merge = new addressbook_merge();
 		$this->mail_bo->openConnection();
-		
+
 		if($error = $document_merge->check_document($_REQUEST['document'],''))
 		{
 			$response->error($error);
