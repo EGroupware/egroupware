@@ -35,6 +35,12 @@ app.classes.mail = AppJS.extend(
 	mail_fileSelectorWindow: null,
 	mail_isMainWindow: true,
 
+	// Some state variables to track preview pre-loading
+	preview_preload: {
+		timeout: null,
+		request: null
+	},
+	
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -540,6 +546,10 @@ app.classes.mail = AppJS.extend(
 			return;
 		}
 
+		// Blank first, so we don't show previous email while loading
+		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+		IframeHandle.set_src('about:blank');
+
 		// Set up additional content that can be expanded.
 		// We add a new URL widget for each address, so they get all the UI
 		// TO addresses have the first one split out, not all together
@@ -620,17 +630,33 @@ app.classes.mail = AppJS.extend(
 		this.mail_disablePreviewArea(false);
 		var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.toolbaractions != 'undefined')?JSON.parse(dataElem.data.toolbaractions):undefined);
 		if (toolbaractions) this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
-		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
-		//console.log(IframeHandle);
+
+		// Request email body from server
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
+
 		var messages = {};
 		messages['msg'] = [_id];
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
 		this.mail_removeRowClass(messages,'unseen');
-	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
-	//	request.sendRequest(false);
+
+		// Pre-load next email already so user gets it faster
+		// Browser will cache the file for us
+		var next = egw_getObjectManager('mail',false,1).getObjectById('nm').getFocusedObject().getNext(1);
+		if(next && next.id)
+		{
+			if(this.preview_preload.timer != null)
+			{
+				window.clearTimeout(this.preview_preload.timer);
+			}
+			// Wait 0.5s to avoid flooding server if user is scrolling through their mail
+			this.preview_preload.timer = window.setTimeout( jQuery.proxy(function() {
+				this.preview_preload.request = jQuery.get(
+					egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:next.id})
+				);
+			},this),500);
+		}
 	},
 
 	/**
