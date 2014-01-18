@@ -1682,25 +1682,31 @@ class egw_session
 		// session already started
 		if (isset($_SESSION))
 		{
-			if (isset($expire) && (session_cache_limiter() !== 'public' || $expire !== session_cache_expire()))
+			if ($expire && (session_cache_limiter() !== ($expire===true?'private_no_expire':'public') ||
+				is_int($expire) && $expire/60 !== session_cache_expire()))
 			{
 				if (headers_sent($file, $line))
 				{
 					error_log(__METHOD__."($expire) called, but header already sent in $file: $line");
+					return;
+				}
+				if($expire === true)
+				{
+					header('Cache-Control: private, max-age='.(60*session_cache_expire()));
 				}
 				else
 				{
 					header('Cache-Control: public, max-age='.$expire);
 					header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expire) . ' GMT');
-					// remove Pragma header, might be set by old header
-					if (function_exists('header_remove'))	// PHP 5.3+
-					{
-						header_remove('Pragma');
-					}
-					else
-					{
-						header('Pragma:');
-					}
+				}
+				// remove Pragma header, might be set by old header
+				if (function_exists('header_remove'))	// PHP 5.3+
+				{
+					header_remove('Pragma');
+				}
+				else
+				{
+					header('Pragma:');
 				}
 			}
 		}

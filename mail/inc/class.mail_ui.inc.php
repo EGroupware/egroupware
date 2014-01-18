@@ -3229,6 +3229,7 @@ blockquote[type=cite] {
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
 		$bodyResponse = $this->get_load_email_data($messageID,'',$folder);
+		egw_session::cache_control(true);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;
 
@@ -3596,7 +3597,7 @@ blockquote[type=cite] {
 				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
 				if (strlen($parentFolder)>strlen($oldParentFolder) && strpos($parentFolder,$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
 				if (count($refreshData)>1 && strlen($oldParentFolder)>strlen($parentFolder) && strpos($oldParentFolder,$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
-				
+
 				// Send full info back in the response
 				foreach($refreshData as $folder => &$name)
 				{
