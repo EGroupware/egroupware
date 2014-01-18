@@ -108,8 +108,14 @@ class egw_htmLawed
 		if (is_array($Config) && is_array($this->Configuration)) $Config = array_merge($this->Configuration, $Config);
 		if (empty($Config)) $Config = $this->Configuration;
 		if (empty($Spec)) $Spec = $this->Spec;
+		// If we are processing mails, we take out stuff in <style> stuff </style> tags and
+		// put it back in after purifying; styles are processed for known security risks
+		// in html::getStyles
+		$styles='';
+		if ($Config['hook_tag'] =="hl_email_tag_transform") $styles = html::getStyles($html2check);
+		//error_log(__METHOD__.__LINE__.array2string($styles));
 
-		return htmLawed($html2check, $Config, $Spec);
+		return ($styles?$styles:'').htmLawed($html2check, $Config, $Spec);
 	}
 }
 

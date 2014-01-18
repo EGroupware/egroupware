@@ -178,17 +178,22 @@ class html
 		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$optBracket = '';
+		//$optBracket = '(>|&gt;)';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
 
 		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
+		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
 
 		//  Now match things beginning with www.
 		$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
 		$Domain = 'www(\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
+		//$optBracket = '(>|&gt;)';
+		//$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . $optBracket . '/i';
 
 		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result );
+		//return preg_replace( $Expr, "<a href=\"http://www$1$2\" target=\"_blank\">www$1$2</a>$3 ", $result );
 	}
 
 	/**
@@ -489,7 +494,7 @@ class html
 		// this one is for testing how it will turn out, if you do not have the device or agent ready at your fingertips
 		// if (stripos($_SERVER[HTTP_USER_AGENT],'mozilla') !== false) return false;
 
-		// CKeditor3 will doublecheck availability for us, but its fallback does not look nice, and you will get
+		// CKeditor will doublecheck availability for us, but its fallback does not look nice, and you will get
 		// no conversion of html content to plain text, so we provide a check for known USER_AGENTS to fail the test
 		return true;
 	}
@@ -554,6 +559,7 @@ class html
 
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
+		//error_log(__METHOD__.__LINE__.' '.self::$user_agent.','.self::$ua_version);
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
 '
 <script type="text/javascript">
@@ -1481,6 +1487,57 @@ egw_LAB.wait(function() {
 			//$pos=false;
 		}
 		return $html2ret;
+	}
+
+	/**
+	 * get all style tag definitions, <style> stuff </style> of the html passed in
+	 * and remove it from input
+	 * @author Leithoff, Klaus
+	 * @param string html
+	 * @return string the style css
+	 */
+	static function getStyles(&$html)
+	{
+		$ct=0;
+		if (stripos($html,'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
+		if ($ct>0)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
+			$style2buffer = implode('',$newStyle[0]);
+		}
+		if ($style2buffer)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($style2buffer));
+			$test = json_encode($style2buffer);
+			//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+			//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+			if ($test=="null" && strlen($style2buffer)>0)
+			{
+				// this should not be needed, unless something fails with charset detection/ wrong charset passed
+				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.translation::detect_encoding($style2buffer));
+				$style2buffer = utf8_encode($style2buffer);
+			}
+		}
+		$style .= $style2buffer;
+		// clean out comments and stuff
+		$search = array(
+			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
+		);
+		$style = preg_replace($search,"",$style);
+
+		// CSS Security
+		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
+		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
+		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
+		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		//error_log(__METHOD__.__LINE__.$css);
+		// TODO: we may have to strip urls and maybe comments and ifs
+		if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
+		return $css;
 	}
 }
 html::_init_static();
