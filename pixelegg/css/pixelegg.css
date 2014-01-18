@@ -967,15 +967,40 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header > .filters > select > option {
     font-size: 0.9em;
   }
-  .nextmatch_header > .filters input[type=search] {
-    background-color: #ffd44d;
-    color: black;
-    /*height: 16.21875px;*/
-    float: left;
-    margin: 5px 0 0 2px;
-    font-size: 0.95em;
+  .nextmatch_header > .search {
+    background-color: #b4b4b4;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-right-radius: 20px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topright: 20px;
+    border-radius: 3px;
+    border-top-right-radius: 20px;
   }
-  .nextmatch_header > .filters button.et2_button {
+  .nextmatch_header > .search input {
+    background-color: #b4b4b4;
+    /*background-color: @gray_0;*/
+    border: none;
+    font-size: 16px;
+    color: #000;
+    /*margin: 0 2px;*/
+  }
+  .nextmatch_header > .search input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #696969;
+  }
+  .nextmatch_header > .search input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #696969;
+  }
+  .nextmatch_header > .search input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #696969;
+  }
+  .nextmatch_header > .search input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: #696969;
+  }
+  .nextmatch_header > .search button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-color: #b4b4b4;
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -989,36 +1014,34 @@ action buttons, left aligned for "extra" controls
     -moz-border-radius-topright: 20px;
     border-radius: 3px;
     border-top-right-radius: 20px;
-    background-color: #ffd44d;
+    background-color: #b4b4b4;
     color: #ffd44d;
     text-decoration: none;
     cursor: pointer;
     padding: 0px;
+    margin: 10px;
     margin-left: 0px;
     background-image: url("../images/search.png");
     background-position: center 0;
     background-size: contain;
     background-repeat: no-repeat;
-    float: left;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
   }
-  .nextmatch_header > .filters button.et2_button:hover {
+  .nextmatch_header > .search button.et2_button:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    /*        .Complete_Button_search_action_hover;*/
     background-color: #679fd2 !important;
     /*hide arrow*/
     color: #679fd2 !important;
   }
-  .nextmatch_header > .filters button.et2_button:active {
-    background: -webkit-gradient(linear, 0 0, 0 bottom, #d8d8d8, #a3a3a3), -moz-linear-gradient(#d8d8d8, #a3a3a3), -o-linear-gradient(#d8d8d8, #a3a3a3), linear-gradient(#d8d8d8, #a3a3a3);
-    -pie-background: linear-gradient(#d8d8d8, #a3a3a3);
-    behavior: url(/PIE.htc);
+  .nextmatch_header > .search button.et2_button:active {
+    /*.background_verlauf_diagonal_gray;*/
+    background-color: #1aa200 !important;
   }
-  .nextmatch_header > .filters button.et2_button:focus {
+  .nextmatch_header > .search button.et2_button:focus {
     outline: 0;
     border-width: 1px;
     border-style: solid;
@@ -1026,6 +1049,7 @@ action buttons, left aligned for "extra" controls
     -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+    /*background-color: @color_positive_action_active !important;*/
   }
   .nextmatch_header > .filters input {
     margin-right: 2ex;
@@ -1244,9 +1268,10 @@ action buttons, left aligned for "extra" controls
     display: none;
   }
   .favorites .sideboxstar {
-    background-image: url("../images/bullet.svg");
+    background-image: url("../images/bullet.png");
     background-repeat: no-repeat;
     background-size: contain;
+    background-color: egw_color_2_a;
     width: 12px;
     height: 12px;
   }
@@ -1378,10 +1403,10 @@ action buttons, left aligned for "extra" controls
   .sidebox-favorites div.ui-icon-trash {
     margin-top: 0px;
     margin-right: 2px;
-    background-image: url(../images/delete.svg);
+    background-image: url(../images/delete.png);
     background-size: 16px 16px;
     background-position: 0 0;
-    background-color: #000;
+    background-color: egw_color_2_a;
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -2566,6 +2591,21 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+*::-webkit-input-placeholder {
+  color: #696969;
+}
+*:-moz-placeholder {
+  /* FF 4-18 */
+  color: #696969;
+}
+*::-moz-placeholder {
+  /* FF 19+ */
+  color: #696969;
+}
+*:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #696969;
 }
 /* #######################################################################################
 *
@@ -5181,15 +5221,11 @@ div#calendar-container {
   margin-left: 0px;
 }
 div#calendar-container div.calendar {
-  margin-bottom: 1em;
+  margin-bottom: 16px;
   background-color: inherit;
-  padding: 0%;
+  padding: 0px;
 }
 div#calendar-container div.calendar table {
-  font-size: 0.9em;
-  color: #000;
-  cursor: default;
-  padding: 0.3em;
   background-color: #fafafa;
   font-family: Verdana, Helvetica, Sans-Serif;
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
@@ -5577,6 +5613,25 @@ tr.dialog-header4 .et2_label {
   color: #1a1a1a;
   vertical-align: bottom;
   padding: 0px 0px 0px 3px !important;
+}
+/************* Tabs  *********************************/
+.dialog-tabs {
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+  /* IE6-9 */
+  color: #000000;
 }
 /************* Main  **********************************/
 .dialog-main-timeframe div {
