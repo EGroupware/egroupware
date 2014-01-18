@@ -162,18 +162,12 @@ var et2_url = et2_textbox.extend(
 				}
 				else if (this.egw().config("call_link"))
 				{
-					var link = this.egw().config("call_link").replace("%1", value).
-						replace("%u",this.egw().user('account_id')).replace("%t",this.egw().user('account_phone'));
-
-					if(this.egw().config("call_popup"))
-					{
- 						var size = this.egw().config("call_popup").split("x");
- 						value = function() { egw_openWindowCentered(link, false,size[0],size[1]); };
-					}
-					else	// no popup
-					{
-						value = function() { window.open(link, false); };
-					}
+					var link = this.egw().config("call_link")
+						.replace("%1", encodeURIComponent(value))
+						.replace("%u",this.egw().user('account_lid'))
+						.replace("%t",this.egw().user('account_phone'));
+					var popup = this.egw().config("call_popup");
+					value = function() { egw.open_link(link, 'phonecall', popup); };
 				}
 				else {
 					// Can't make a good handler
