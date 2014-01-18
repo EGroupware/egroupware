@@ -123,9 +123,9 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
-		<grid width="450" height="300" spacing="10">
+		<grid width="550" height="300" spacing="10">
 			<columns>
-				<column/>
+				<column width="120"/>
 				<column/>
 				<column/>
 			</columns>
@@ -162,13 +162,13 @@
 					</groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
-					<menulist>
+					<menulist class="filemanager-file_filemanager-file-eaclowner eaclAccount">
 						<menupopup type="select-account" class="eaclAccount" label="Owner" id="eacl[owner]" options="select one,both"/>
 					</menulist>
 					<menulist>
 						<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
 					</menulist>
-					<button label="Add" id="button[eacl]"/>
+					<button label="Add" id="button[eacl]" image="add" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
@@ -251,7 +251,7 @@
 				<row disabled="!@msg">
 					<description id="msg" span="all" class="redItalic"/>
 				</row>
-				<row>
+				<row class="dialog-tabs">
 					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
@@ -269,14 +269,14 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row>
+				<row class="dialog-footer-toolbar">
 					<hbox>
 						<hbox>
-							<button label="Save" id="button[save]"/>
-							<button label="Apply" id="button[apply]"/>
-							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
+							<button label="Save" id="button[save]" image="save" background_image="1"/>
+							<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
+							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						</hbox>
-						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="\$j('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();"/>
+						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="\$j('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" background_image="1"/>
 					</hbox>
 				</row>
 				<row>

@@ -207,23 +207,12 @@ div.filemanager_navigation > label > input {
   /*background-color: @egw_color_2_a;*/
   height: 24px;
 }
-#filemanager-index .et2_file:before {
-  content: "+";
-  font-size: 25px;
-  color: #ffc200;
-  line-height: 40px;
-  padding-right: 0em;
-  position: relative;
-  top: -8px;
+#filemanager-index .et2_file input#filemanager-index_upload {
+  color: #ffffff;
+  width: 250px;
   background-color: #0c5da5;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
 }
-#filemanager-index .et2_file:hover {
+#filemanager-index .et2_file input#filemanager-index_upload:hover {
   background-color: #66a1d2 !important;
   color: #ffc200;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -236,15 +225,8 @@ div.filemanager_navigation > label > input {
   border-radius: 3px;
   border-top-left-radius: 10px;
 }
-#filemanager-index .et2_file:active {
+#filemanager-index .et2_file input#filemanager-index_upload:active {
   background-color: #1aa200 !important;
-}
-#filemanager-index .et2_file input#filemanager-index_upload {
-  margin-left: 2em;
-  margin-right: -2em;
-  position: relative;
-  top: -39px;
-  width: 217px;
 }
 #filemanager-index .et2_file div.progress {
   width: 0px;
@@ -261,8 +243,8 @@ div.filemanager_navigation > label > input {
 #filemanager-index .filters #filemanager-index_filter {
   margin-top: 0.5em;
 }
-/*// Dialog filemanager 
-// #####################################################*/
+/*// #####################################################*/
+/*Dialog filemanager*/
 #filemanager-select {
   padding: 0px 8px 0 0;
 }
@@ -308,4 +290,103 @@ div.filemanager_navigation > label > input {
 #filemanager-select .vfsMimeIcon {
   width: 16px;
   height: 16px;
+}
+/*// #####################################################*/
+/*Dialog filemanager edit POPUP WINDOW*/
+div#filemanager-file {
+  margin: 0.5em;
+}
+div#filemanager-file_tabs {
+  width: 564px;
+  /*eacl*/
+  /*Abonements*/
+}
+div#filemanager-file_tabs .et2_tabs {
+  width: 554px;
+}
+div#filemanager-file_tabs img {
+  width: 24px;
+  height: 24px;
+}
+div#filemanager-file_tabs span.ui-icon-search {
+  /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  position: relative;
+  top: 3px;
+  margin-left: 3px;
+}
+div#filemanager-file_tabs span.ui-icon-search:hover {
+  /*.background_color_20_gray;*/
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+div#filemanager-file_tabs span.ui-icon-search:active {
+  /*.background_color_30_gray;*/
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  background-color: #1aa200;
+}
+div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl {
+  /*Owner*/
+}
+div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl td.filemanager-file_filemanager-file-eaclowner span {
+  display: flex;
+  margin-right: 1px;
+}
+div#filemanager-file_tabs #filemanager-file_filemanager-file-eacl td.filemanager-file_filemanager-file-eaclowner span.ui-icon-search {
+  position: relative;
+  top: 15px;
+  margin-left: -3px;
+  margin-right: 3px;
+}
+div#filemanager-file_tabs td.eaclAccount {
+  width: 200px;
+}
+/*// #####################################################*/
+/*Dialog filemanager upload POPUP WINDOW*/
+div#stylite-filemanager-upload {
+  margin: 0.5em;
+}
+div#stylite-filemanager-upload .et2_file {
+  height: 24px;
+}
+div#stylite-filemanager-upload .et2_file input {
+  color: #ffffff;
+  width: 250px;
+  background-color: #0c5da5;
+}
+div#stylite-filemanager-upload .et2_file input:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
+}
+div#stylite-filemanager-upload .et2_file input:active {
+  background-color: #1aa200 !important;
+}
+div#stylite-filemanager-upload .et2_file div.progress {
+  width: 0px;
 }

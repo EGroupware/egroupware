@@ -23,12 +23,12 @@
 
 .egw_fw_ui_category_content{
     padding-left: 0px !important;
-    
+
     // Icon before genrell hidden
     img.egw_fw_ui_sidemenu_listitem_icon {
-                                                display: none;
-                                            }
-    
+        display: none;
+    }
+
 
 }
 
@@ -45,7 +45,7 @@ img.sideboxstar {
         background-color: @color_positive_action_active !important;}
 }
 
-   
+
 
 .chzn-container {
     max-width: 85% !important;
@@ -62,8 +62,8 @@ img.sideboxstar {
     border: none;
 
 
-        
-        
+
+
 
 
 } // Ende Iframe
@@ -77,8 +77,8 @@ img.sideboxstar {
 
 .calendar_calEventBodySmall img[src$="svg"],
 .calendar_calDayColHeader img[src$="svg"]  {
-            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-        }
+    .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+}
 
 
 
@@ -119,16 +119,16 @@ div.calendar { position: relative; }
         .background_table_cal_head;
     }
 
-    
+
 
     thead {
         .title { /* This holds the current "month, year" */
             font-weight: bold;      /* Pressing it will take you to the current date */
-            text-align: center;
+            /*text-align: center;*/
             background-color: @egw_color_2_e;
-            color: #000;
-            padding: 2px;
-            
+            /*color: #000;*/
+            /*padding: 2px;*/
+
             &:hover {background-color: @gray_0 !important;}
         }
         .headrow { /* Row <TR> containing navigation buttons */
@@ -141,10 +141,10 @@ div.calendar { position: relative; }
         }
 
         .name { /* Cells <TD> containing the day names */
-            border-bottom: 1px solid #556;
-            padding: 2px;
-            text-align: center;
-            color: #000;
+            /*border-bottom: 1px solid #556;*/
+            /*padding: 2px;*/
+            /*text-align: center;*/
+            /*color: #000;*/
         }
 
         .weekend { /* How a weekend day name shows in header */
@@ -155,10 +155,10 @@ div.calendar { position: relative; }
         .hilite { /* How do the buttons in header appear when hover */
             .background_color_0_gray;
             .box_shadow_standard_light_inset;
-            color: #000;
-            border: 0px solid;
+            /*color: #000;*/
+            /*border: 0px solid;*/
             border-color: @gray_50;
-            padding: 1px;
+            /*padding: 1px;*/
         }
 
         .active { /* Active (pressed) buttons in header */
@@ -171,14 +171,14 @@ div.calendar { position: relative; }
     /* The body part -- contains all the days in month. */
 
     tbody {
-        
+
         tr, td {border: 1px;}
-        
+
         .day { /* Cells <TD> containing month days dates */
             /*width: 2em;*/
-            color: #456;
-            text-align: right;
-            padding: 2px 4px 2px 2px;
+            /*color: #456;*/
+            /*text-align: right;*/
+            /*padding: 2px 4px 2px 2px;*/
             /*border: 1px;*/
         }
 
@@ -200,20 +200,20 @@ div.calendar { position: relative; }
         }
 
         td.hilite { /* Hovered cells <TD> */
-            background: #def;
-            padding: 1px 3px 1px 1px;
-            border: 1px solid #bbb;
+            /*background: #def;*/
+            /*padding: 1px 3px 1px 1px;*/
+            /*border: 1px solid #bbb;*/
         }
 
         td.active { /* Active (pressed) cells <TD> */
             background: #cde;
-            padding: 2px 2px 0px 2px;
+            /*padding: 2px 2px 0px 2px;*/
         }
 
         td.selected { /* Cell showing today date */
-            font-weight: bold;
-            border: 1px solid #000;
-            padding: 1px 3px 1px 1px;
+            /*font-weight: bold;*/
+            /*border: 1px solid #000;*/
+            /*padding: 1px 3px 1px 1px;*/
             background: #fff;
             color: #000;
             .box_shadow_standard_light_inset;
@@ -414,11 +414,11 @@ div#calendar-edit{
         height: 299px;
         overflow: auto;
 
-            table.et2_grid {
-        // Listendarstellung
-        tr:nth-child(even) {background: @color_even;}
-        tr:nth-child(odd) {background: @color_odd;}
-    }
+        table.et2_grid {
+            // Listendarstellung
+            tr:nth-child(even) {background: @color_even;}
+            tr:nth-child(odd) {background: @color_odd;}
+        }
 
     }
 
@@ -435,9 +435,6 @@ div#calendar-edit{
 
             width: 72% !important;
 
-
-
-
             td {
                 padding: 4px;
             }
@@ -445,12 +442,8 @@ div#calendar-edit{
             #calendar-edit_duration{
                 float: left;
             }
-
             // Terminsuche
-
-/*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
-
-
+            /*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
             // hole day
             .et2_checkbox,
             input#calendar-edit_whole_day {margin-left: 5px important; border-left: 10px solid red;}
@@ -464,21 +457,28 @@ div#calendar-edit{
             border: 1px solid;
             border-color: @gray_30;
             .border_radius_button_normal;
+
+            li{
+                .ui-state-hover{
+                    font-weight: normal !important;
+                    .box_shadow_standard_light_hover;
+                }
+            }
         }
 
     }
 
-     /*###########################################*/
-     /*Tab Beschreibung*/
+    /*###########################################*/
+    /*Tab Beschreibung*/
 
     /*###########################################*/
     // Teilnehmer
 
     #calendar-edit_calendar-edit-participants{
 
-           tr.optional {background-color: @color_optional;}
+        tr.optional {background-color: @color_optional;}
 
-          tbody{
+        tbody{
             display: table;
             width: 100%;
 
@@ -560,7 +560,7 @@ div#calendar-edit{
             .et2_link_to {width: auto !important;}
         }
 
-       span.et2_label {padding:  1em;}
+        span.et2_label {padding:  1em;}
     }
 
     /*###########################################*/
@@ -575,8 +575,8 @@ div#calendar-edit{
             tr.add_alarm_action {background-color: @color_optional; margin-bottom: 1em;}
         }
     }
-
-    // Historie
+    /*###########################################*/
+    /*// Historie*/
 
     #calendar-edit_calendar-edit-history{
         max-width: 800px;
@@ -586,6 +586,19 @@ div#calendar-edit{
 
         }
     }
+    
+    /*###########################################*/
+    /*// Toolbar*/
+    
+    tr.dialog-footer-toolbar{
+        
+        label.et2_label {top: 0px !important;}
+        
+    }
+    
+    
+    
+    
 }
 //###################################################################
 //# generell
@@ -624,15 +637,15 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 /* custom ui-tooltip style for calendar
 */
 .calendar_uitooltip {
-	padding: 0px;
-	position: absolute;
-	border: none;
-	max-height: 400px;
-	z-index: 9999;
-	max-width: 300px;
-	-webkit-box-shadow: 0 0 5px;
-	-moz-box-shadow: 0 0 5px;
-	box-shadow: 0 0 5px;
+    padding: 0px;
+    position: absolute;
+    border: none;
+    max-height: 400px;
+    z-index: 9999;
+    max-width: 300px;
+    -webkit-box-shadow: 0 0 5px;
+    -moz-box-shadow: 0 0 5px;
+    box-shadow: 0 0 5px;
 }
 
 .calendar_size120b { font-size: 120%; font-weight: bold; }
@@ -944,7 +957,7 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
         img[src$="svg"]  {
             .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
         }
-        
+
         img {
             .Complete_Button_normal;
             .dimension_width_height_s;
@@ -959,17 +972,17 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 
     table {
 
-                // Listendarstellung
+        // Listendarstellung
         // Reihen ohne Border left und right
         tr:nth-child(even) {background: @color_even;}
         tr:nth_child(odd) {background: @color_odd;}
 
         td {
             padding: 3px;
-            
+
             img[src$="svg"]  {
-            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-        }
+                .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+            }
 
             img {
                 .dimension_width_height_xs;

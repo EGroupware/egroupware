@@ -112,37 +112,16 @@ div.filemanager_navigation > label > input {
     .et2_file{
        /*background-color: @egw_color_2_a;*/
        .dimension_height_m;
-        
-       &:before {
-            content: "+";
-            font-size: 25px;
-            color: #ffc200;
-            line-height: 40px;
-            padding-right: 0em;
-            position: relative;
-            top: -8px;
+       input#filemanager-index_upload {
+            color: @gray_0;
+            width: 250px;
             background-color: @egw_color_2_a;
-            .border_radius_button_lefttop;
-                }
-                
         &:hover {.Complete_Button_add_only_plus_hover;}
-        &:active {background-color: @color_positive_action_active !important;}        
-        
-       
-        input#filemanager-index_upload {
-            margin-left: 2em;
-            margin-right: -2em;
-            position: relative;
-            top: -39px;
-            width: 217px;
-            
+        &:active {background-color: @color_positive_action_active !important;}  
         }
         
         div.progress {width: 0px;}
-
-
-
-    }
+  }
 
 
     #filemanager-index_tarp {
@@ -170,9 +149,9 @@ div.filemanager_navigation > label > input {
 
 
 
+/*// #####################################################*/
+/*Dialog filemanager*/ 
 
-/*// Dialog filemanager 
-// #####################################################*/
 #filemanager-select{
 
     padding: 0px 8px 0 0;
@@ -222,7 +201,74 @@ div.filemanager_navigation > label > input {
 
 
 
+/*// #####################################################*/
+/*Dialog filemanager edit POPUP WINDOW*/ 
+
+div#filemanager-file {margin: 0.5em;}
+
+div#filemanager-file_tabs {
+    
+    width: 564px;
+
+    .et2_tabs{width: 554px;}
+    
+    img {.dimension_width_height_m;}
+    
+    span.ui-icon-search { 
+                .Complete_Button_Icon_normal;
+                position: relative;
+                top: 3px;
+                margin-left: 3px;
+            
+                &:hover {.Complete_Button_Icon_hover;}
+                &:active {.Complete_Button_Icon_active;}
+            }
+    
+    
+    /*eacl*/
+    #filemanager-file_filemanager-file-eacl{
+        
+        /*Owner*/
+        td.filemanager-file_filemanager-file-eaclowner{
+            
+            span {display: flex; margin-right: 1px;}
+                span.ui-icon-search { 
+                position: relative;
+                top: 15px;
+                margin-left: -3px;
+                margin-right: 3px;
+                }
+            
+        }
+        
+    }
+    
+    
+    /*Abonements*/
+    td.eaclAccount {width: 200px;}
+}
+
+/*// #####################################################*/
+/*Dialog filemanager upload POPUP WINDOW*/ 
+
+div#stylite-filemanager-upload{
+    margin: 0.5em;
+
+    .et2_file{
+       .dimension_height_m;
+       input {
+            color: @gray_0;
+            width: 250px;
+            background-color: @egw_color_2_a;
+        &:hover {.Complete_Button_add_only_plus_hover;}
+        &:active {background-color: @color_positive_action_active !important;}  
+        }
+        
+        div.progress {width: 0px;}
+  }                           
 
 
-// Ende filemanager
+}
+
+
 //
