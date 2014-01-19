@@ -475,3 +475,10 @@ function phpgwapi_upgrade1_9_018()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.019';
 }
 
+
+function phpgwapi_upgrade1_9_019()
+{
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_interserv');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.020';
+}

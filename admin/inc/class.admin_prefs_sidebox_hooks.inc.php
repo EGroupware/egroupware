@@ -60,12 +60,6 @@ class admin_prefs_sidebox_hooks
 				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 			}
 
-			/* disabled it, til it does something useful
-			if (! $GLOBALS['egw']->acl->check('peer_server_access',1,'admin'))
-			{
-				$file['Peer Servers']               = egw::link('/index.php','menuaction=admin.uiserver.list_servers');
-			}
-			*/
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
 				$file['User Accounts']              = array(

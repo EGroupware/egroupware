@@ -44,19 +44,6 @@
 		)
 	);	// was already there and seems to work ralfbecker
 
-/* not usable at the moment
-	$GLOBALS['acl_manager']['admin']['peer_server_access'] = array(
-		'name' => 'Deny access to peer servers',
-		'rights' => array(
-			'Peer server list'    => 1,
-			'Search peer servers' => 2,
-			'Add peer server'     => 4,
-//			'View peer server'    => 8,		// there's no view-routine atm.
-			'Edit peer server'    => 16,
-			'Delete peer server'  => 32
-		)
-	);
-*/
 	$GLOBALS['acl_manager']['admin']['applications_access'] = array(
 		'name' => 'Deny access to applications',
 		'rights' => array(
