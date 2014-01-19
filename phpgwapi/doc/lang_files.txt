@@ -33,11 +33,11 @@ Rules:
   for the most part.  Please set the appname field to your application name.
 
 3.  Consult an API developer prior to adding or editing files in the
-  phpgwapi/setup language files, and prior to adding a lot of phrases
-  to 'common' within an application/setup dir.
+  phpgwapi/lang language files, and prior to adding a lot of phrases
+  to 'common' within an application/lang dir.
 
 4.  TRANSLATION to other languages MUST be based upon the english language
-  files (phpgw_en.lang in each app/setup directory).  Since most of the
+  files (egw_en.lang in each app/setup directory).  Since most of the
   developers are using English as their primary language, those should
   have the most complete list.
 
