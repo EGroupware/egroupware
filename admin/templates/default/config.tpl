@@ -295,17 +295,8 @@
     </td>
    </tr>
 -->
-   <tr class="row_off">
-    <td>{lang_Enable_the_xmlrpc_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
-    <td>
-      <select name="newsettings[xmlrpc_enabled]">
-         <option value="">{lang_No}</option>
-         <option value="True"{selected_xmlrpc_enabled_True}>{lang_Yes}</option>
-       </select>
-    </td>
-   </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[soap_enabled]">
@@ -314,19 +305,19 @@
        </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:<br />{lang_This_controls_exports_and_merging.}</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Group_excepted_from_above_export_limit_(admins_are_always_excepted)}:</td>
     <td>{call_bo_merge::hook_export_limit_excepted}</td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
     <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Should_exceptions_contain_a_trace_(including_function_arguments)}:</td>
     <td>
       <select name="newsettings[exception_show_trace]">
@@ -335,7 +326,7 @@
        </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Disable_minifying_of_javascript_and_CSS_files}:</td>
     <td>
       <select name="newsettings[debug_minify]">
