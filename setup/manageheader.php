@@ -97,8 +97,7 @@ else
 	switch($action)
 	{
 		case 'download':
-			$browser = CreateObject('phpgwapi.browser');
-			$browser->content_header('header.inc.php','application/octet-stream');
+			html::content_header('header.inc.php','application/octet-stream');
 			echo $newheader;
 			break;
 

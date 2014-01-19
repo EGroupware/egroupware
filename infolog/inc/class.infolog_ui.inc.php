@@ -1275,7 +1275,7 @@ class infolog_ui
 			case 'ical':
 				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
-				ExecMethod2('phpgwapi.browser.content_header','todo.ics','text/calendar');
+				html::content_header('todo.ics','text/calendar');
 				echo $boical->exportvCalendar($checked);
 				common::egw_exit();
 

@@ -107,6 +107,6 @@ if ($_GET['debug'])
 }
 else
 {
-	ExecMethod2('phpgwapi.browser.content_header','freebusy.ifb','text/calendar');
+	html::content_header('freebusy.ifb','text/calendar');
 }
 echo ExecMethod2('calendar.calendar_ical.freebusy',$user,$_GET['end']);

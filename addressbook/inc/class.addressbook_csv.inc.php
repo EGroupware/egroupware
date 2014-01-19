@@ -74,8 +74,7 @@ class addressbook_csv
 		}
 		if (!$file)
 		{
-			$browser = new browser();
-			$browser->content_header('addressbook.csv','text/comma-separated-values');
+			html::content_header('addressbook.csv','text/comma-separated-values');
 		}
 		if (!($fp = fopen($file ? $file : 'php://output','w')))
 		{

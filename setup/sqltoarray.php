@@ -140,8 +140,7 @@
 
 	function download_handler($dlstring,$fn='tables_current.inc.php')
 	{
-		$b = CreateObject('phpgwapi.browser');
-		$b->content_header($fn);
+		html::content_header($fn);
 		echo $dlstring;
 		exit;
 	}

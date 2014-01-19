@@ -1561,7 +1561,7 @@ abstract class bo_merge
 					$mimetype = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
 				}
 			}
-			ExecMethod2('phpgwapi.browser.content_header',$name,$mimetype);
+			html::content_header($name,$mimetype);
 			echo $merged;
 		}
 		common::egw_exit();
