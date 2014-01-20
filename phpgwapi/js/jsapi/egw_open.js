@@ -198,7 +198,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 					return;
 				}
 				url = '/index.php';
-				params = app_registry[type];
+				// Copy, not get a reference, or we'll change the registry
+				params = jQuery.extend({},app_registry[type]);
 				if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
 				{
 					params[app_registry[type+'_id']] = id;
