@@ -4384,15 +4384,17 @@ class mail_bo
 	 * @param boolean $fetchEmbeddedImages=true,
 	 * @param boolean $fetchTextCalendar=false,
 	 * @param boolean $resolveTNEF=true
+	 * @param string $_folder folder to work on
 	 * @return array  an array of information about the attachment: array of array(name, size, mimeType, partID, encoding)
 	 */
-	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
+	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
 		if (!isset($_structure))
 		{
-			$_structure = $this->getStructure($_uid, $_partID,null,true);
+			$_structure = $this->getStructure($_uid, $_partID,$_folder,true);
 		}
 		if (!$_structure || !$_structure->contentTypeMap()) return array();
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)

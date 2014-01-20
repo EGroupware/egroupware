@@ -743,8 +743,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
             if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
 				$rawHeader='';
-				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID);
-				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID);
+				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID,$folder);
+				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID,$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($headers['SUBJECT']), '7bit', 'message/rfc822');
             }
             else
@@ -780,6 +780,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				$body .= $bodyBUFF;
 				// get all the attachments and add them too.
 				// start handle Attachments
+				//												$_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folderName=''
+				$attachments = $this->mail->getMessageAttachments($uid, null,          null,								true,						false,				 true			, $folder);
+
 				$attachments = $this->mail->getMessageAttachments($uid);
 				$attachmentNames = false;
 				if (is_array($attachments) && count($attachments)>0)
@@ -793,8 +796,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						{
 							case 'MESSAGE/RFC822':
 								$rawHeader = $rawBody = '';
-								$rawHeader = $this->mail->getMessageRawHeader($uid, $attachment['partID']);
-								$rawBody = $this->mail->getMessageRawBody($uid, $attachment['partID']);
+								$rawHeader = $this->mail->getMessageRawHeader($uid, $attachment['partID'],$folder);
+								$rawBody = $this->mail->getMessageRawBody($uid, $attachment['partID'],$folder);
 								$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
 								break;
 							default:
@@ -1204,7 +1207,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					}
 					// we still need the attachments to be added ( if there are any )
 					// start handle Attachments
-					$attachments = $this->mail->getMessageAttachments($id);
+					//												$_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folderName=''
+					$attachments = $this->mail->getMessageAttachments($id, null,          null,								true,						false,					 true				, $_folderName);
 					if (is_array($attachments) && count($attachments)>0)
 					{
 						debugLog(__METHOD__.__LINE__.' gather Attachments for BodyCreation of/for MessageID:'.$id.' found:'.count($attachments));
