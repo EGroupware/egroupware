@@ -36,9 +36,11 @@
   margin-bottom: 2em;
   position: relative;
   top: 1px;
+  background-color: #679fd2;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
-  width: 100%;
+  width: 70%;
+  margin-left: 15%;
 }
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
   background-color: #679fd2;

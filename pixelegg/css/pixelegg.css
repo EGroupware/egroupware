@@ -4059,9 +4059,11 @@ table.nextmatch_header img {
   margin-bottom: 2em;
   position: relative;
   top: 1px;
+  background-color: #679fd2;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
-  width: 100%;
+  width: 70%;
+  margin-left: 15%;
 }
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
   background-color: #679fd2;
@@ -4783,7 +4785,7 @@ table.nextmatch_header img {
   border-bottom: solid 1px #b4b4b4;
   margin: 0 0 0 0;
   border-bottom: none;
-  height: 30px;
+  height: 33px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active img {
   padding-left: 9px;
@@ -5028,14 +5030,14 @@ table.nextmatch_header img {
   position: absolute;
   background-color: #b3b3b3 !important;
   width: 5px;
-  top: 36px;
+  top: 39px;
   bottom: 3px;
   right: 0px;
 }
 #egw_fw_sidebar #egw_fw_splitter:hover {
   background-color: #ffc200;
 }
-.egw_fw_ui_splitter_vertical {
+#egw_fw_sidebar .egw_fw_ui_splitter_vertical {
   background-image: url(../images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
@@ -5310,7 +5312,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background: transparent;
   display: inline-table;
   margin: 0px 5px 0px 0px;
-  /*padding: 2px 10px 2px 10px;*/
+  padding: 2px 10px 5px 10px;
   cursor: pointer;
   border-width: 1px 1px 0 1px;
   border-style: solid;
@@ -5364,7 +5366,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
   border-width: 1px 1px 0px 1px !important;
-  padding: 0 0 5px !important;
+  /*padding: 0 0 5px !important;*/
   background-color: #b3b3b3 !important;
   background-image: none !important;
   /*aktive Objekte*/
@@ -5380,7 +5382,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active object {
   width: 24px;
   height: 24px;
-  margin: 2px 1px 0 5px;
+  margin: 0px 1px 0 5px;
   -webkit-border-top-right-radius: 2px;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
