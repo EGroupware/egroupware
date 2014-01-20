@@ -623,7 +623,13 @@ var et2_link_entry = et2_inputWidget.extend(
 		// Autocomplete
 		this.search.autocomplete({
 			source: function(request, response) { return self.query(request, response);},
-			select: function(event, item) { event.data = self; self.select(event,item); return false;},
+			select: function(event, item) {
+				event.data = self;
+				// Correct changed value from server
+				item.item.value = item.item.value.trim();
+				self.select(event,item);
+				return false;
+			},
 			focus: function(event, item) { 
 				event.stopPropagation(); 
 				self.search.val(item.item.label);
@@ -892,6 +898,8 @@ var et2_link_entry = et2_inputWidget.extend(
 	 * User selected a value
 	 */
 	select: function(event, selected) {
+		// Correct changed value from server
+		selected.item.value = selected.item.value.trim();
 		if(this.options.select && typeof this.options.select == 'function')
 		{
 			if(!this.options.select(event, selected)) return false;
