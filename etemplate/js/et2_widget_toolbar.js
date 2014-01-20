@@ -251,10 +251,11 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var button = $j(document.createElement('button'))
 			.addClass("et2_button")
 			.attr('id', this.id+'-'+action.id)
+			.attr('title', action.caption)
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 		if(action.iconUrl)
 		{
-			button.prepend("<img src='"+action.iconUrl+"' title='"+action.caption+"' class='et2_button_icon'/>");
+			button.prepend("<img src='"+action.iconUrl+"'  class='et2_button_icon'/>");
 		}
 		if(action.icon)
 		{
