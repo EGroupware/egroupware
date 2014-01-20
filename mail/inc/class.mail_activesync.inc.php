@@ -811,15 +811,18 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		} // end forward
 
 		// add signature!! -----------------------------------------------------------------
-		$bosignatures	= CreateObject('felamimail.felamimail_bosignatures');
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
-		$defaultSig = $bosignatures->getDefaultSignature();
-		if ($defaultSig === false) $defaultSig = -1;
-		$presetSig = (!empty($activeMailProfile->signature) ? $activeMailProfile->signature : $defaultSig); // thats the default
-		$disableRuler = false;
-
-		$_signature = $bosignatures->getSignature($presetSig);
-		$signature = $_signature->fm_signature;
+		try
+		{
+			$acc = emailadmin_account::read($this->mail->icServer->ImapServerId);
+			//error_log(__METHOD__.__LINE__.array2string($acc));
+			$_signature = emailadmin_account::read_identity($acc['ident_id'],true);
+		}
+		catch (Exception $e)
+		{
+			$_signature=array();
+		}
+		$signature = $_signature['ident_signature'];
 		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
 			$preferencesArray['disableRulerForSignatureSeparation']) ||
 			empty($signature) || trim(translation::convertHTMLToText($signature)) =='')

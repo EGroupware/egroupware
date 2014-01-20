@@ -2035,7 +2035,7 @@ class mail_compose
 		}
 		$disableRuler = false;
 		#if ($realCharset != $this->displayCharset) error_log("Error: bocompose::createMessage found Charset ($realCharset) differs from DisplayCharset (".$this->displayCharset.")");
-		$signature = $_signature[ident_signature];
+		$signature = $_signature['ident_signature'];
 
 		if ((isset($this->preferencesArray['insertSignatureAtTopOfMessage']) && $this->preferencesArray['insertSignatureAtTopOfMessage']))
 		{
