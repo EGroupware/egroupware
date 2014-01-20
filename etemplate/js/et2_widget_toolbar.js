@@ -80,6 +80,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 	/**
 	 * Go through actions and build buttons for the toolbar
+	 *
+	 * @param {Object} actions egw-actions to build menu from
 	 */
 	_build_menu: function(actions)
 	{
@@ -187,13 +189,13 @@ var et2_toolbar = et2_DOMWidget.extend(
 			//revert:"invalid",
 			containment: "document",
 			cursor: "move",
-			helper: "clone",
+			helper: "clone"
 		});
 		menulist.children().draggable({
 			cancel:true,
 			containment:"document",
 			helper:"clone",
-			cursor:"move",
+			cursor:"move"
 		});
 		var that = this;
 		toolbox.droppable({
@@ -202,9 +204,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
 					ui.draggable.appendTo(menulist);
 			},
-			tolerance:"pointer",
-
-			});
+			tolerance:"pointer"
+		});
 
 		jQuery('#'+this.id+'-'+'actionlist').droppable({
 			tolerance:"pointer",
@@ -243,6 +244,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 	/**
 	 * Make a button based on the given action
+	 *
+	 * @param {Object} action action object with attributes icon, caption, ...
 	 */
 	_make_button: function(action)
 	{
@@ -259,7 +262,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		}
 		if(action.icon)
 		{
-			button_options.icon = action.icon
+			button_options.icon = action.icon;
 		}
 		button.button(button_options);
 
@@ -279,6 +282,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
+	 * @param {Object} actions egw-actions to build menu from
 	 */
 	_link_actions: function(actions)
 	{
@@ -295,4 +299,3 @@ var et2_toolbar = et2_DOMWidget.extend(
 	}
 });
 et2_register_widget(et2_toolbar, ["toolbar"]);
-
