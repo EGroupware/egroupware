@@ -294,6 +294,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 					{
 						$values[] = $val['value'];
 					}
+					else if ((isset($val['label']) || isset($val['title'])) && count($val) == 1 ||
+						isset($val['title']) && isset($val['label']) && count($val) == 2)
+					{
+						// key => {label, title}
+						$values[] = $key;
+					}
 					else	// optgroup
 					{
 						foreach($val as $k => $v)
