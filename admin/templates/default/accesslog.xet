@@ -37,7 +37,7 @@
 					<date-time id="${row}[lo]" readonly="true"/>
 					<date-duration id="${row}[total]" readonly="true" options=",hm,24"/>
 					<date-since id="${row}[session_dla]" readonly="true"/>
-					<description statustext="$row_cont[user_agent]" id="{$row}[user_agent]" class="userAgent"/>
+					<description statustext="$row_cont[user_agent]" id="{$row}[user_agent]" class="admin_userAgent"/>
 				</row>
 			</rows>
 		</grid>
@@ -50,7 +50,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description align="center" id="msg" span="all" class="redItalic"/>
+					<description align="center" id="msg" span="all" class="message"/>
 					<description/>
 				</row>
 				<row>
@@ -66,14 +66,6 @@
 		</grid>
 		<styles>
 			.selectAllArrow { padding-right: 12px; }
-td.userAgent { max-width: 200px; }
-td.userAgent span {
-  display: block;
-  white-space: nowrap;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 		</styles>
 	</template>
 </overlay>

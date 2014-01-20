@@ -41,3 +41,12 @@ tr.adminAccountInactive .adminStatus {
 img.admin_aclApp {
 	width: 16px;
 }
+
+td.admin_userAgent { max-width: 200px; }
+td.admin_userAgent span {
+  display: block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
