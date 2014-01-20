@@ -2176,7 +2176,11 @@ class mail_compose
 		$this->sessionData['attachments']  = $_formData['attachments'];
 		try
 		{
-			$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
+			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
+			//error_log(__METHOD__.__LINE__.array2string($acc));
+			$identity = emailadmin_account::read_identity($acc['ident_id'],true);
+
+			//$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
 		}
 		catch (Exception $e)
 		{
@@ -2289,7 +2293,11 @@ class mail_compose
 		#error_log(print_r($this->preferences,true));
 		try
 		{
-			$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
+			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
+			//error_log(__METHOD__.__LINE__.array2string($acc));
+			$identity = emailadmin_account::read_identity($acc['ident_id'],true);
+
+			//$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
 		}
 		catch (Exception $e)
 		{

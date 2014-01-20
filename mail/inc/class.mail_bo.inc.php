@@ -1665,7 +1665,6 @@ class mail_bo
 		else
 		{
 			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
-//$_tryIDNConversion=false;
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
 				$rfcAddr = imap_rfc822_parse_adrlist(str_replace(',','\,',$_string),'');
