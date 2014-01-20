@@ -910,3 +910,11 @@ td.lettersearch {
 	font-weight: bold;
 	background-image: url(../../default/images/dialog_error.png);
 }
+
+/**
+ * Javascript error image / trigger for log
+ */
+#topmenu_info_error {
+	width: 16px;
+	cursor: pointer;
+}
