@@ -292,7 +292,7 @@ class preferences_settings
 		foreach($this->settings as $setting)
 		{
 			if (!is_array($setting)) continue;
-			if ($type != 'forced' && !empty($GLOBALS['egw']->preferences->forced[$appname][$setting['name']]))
+			if ($type != 'forced' && (string)$GLOBALS['egw']->preferences->forced[$appname][$setting['name']] !== '')
 			{
 				continue;	// forced preferences are not displayed, unless we edit them
 			}
