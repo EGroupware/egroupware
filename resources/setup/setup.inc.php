@@ -13,10 +13,11 @@
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '1.9.002';
+$setup_info['resources']['version']	= '1.9.003';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
+$setup_info['resources']['index']	= 'resources.resources_ui.index&ajax=true' ;
 
 $setup_info['resources']['author']	= 'Cornelius Weiss';
 $setup_info['resources']['license']	= 'GPL';
