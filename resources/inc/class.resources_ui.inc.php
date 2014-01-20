@@ -526,7 +526,6 @@ class resources_ui
 			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 		}
 		$search_options = array('accessory_of' => -1);
-		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
 
 		$content['history'] = array(
 			'id' => $res_id,
@@ -536,6 +535,8 @@ class resources_ui
 				'long_description' => 'html'
 			)
 		);
+		
+		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
 		if($res_id) unset($sel_options['accessory_of'][$res_id]);
 
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug

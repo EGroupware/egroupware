@@ -12,52 +12,44 @@
 			<rows>
 				<row>
 					<description value="Description (short)"/>
-					<textbox statustext="Short description of resource" id="short_description" size="50" maxlength="100"/>
-					<description/>
+					<textbox statustext="Short description of resource" id="short_description" size="50" maxlength="100" span="2"/>
 					<description value="Short description of resource"/>
 				</row>
 				<row>
 					<description value="Location"/>
-					<textbox statustext="Location of resource" id="location" size="50" maxlength="100"/>
-					<description/>
+					<textbox statustext="Location of resource" id="location" size="50" maxlength="100" span="2"/>
 					<description value="Where to find this resource?"/>
 				</row>
 				<row>
 					<description value="Storage information"/>
-					<textbox statustext="Information about storage" id="storage_info" size="50" maxlength="100"/>
-					<description/>
+					<textbox statustext="Information about storage" id="storage_info" size="50" maxlength="100" span="2"/>
 					<description value="Information about storage"/>
 				</row>
 				<row>
 					<description value="Quantity"/>
-					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10"/>
-					<description/>
+					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10" span="2"/>
 					<description value="Quantity of resource"/>
 				</row>
 				<row>
 					<description value="Useable"/>
-					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10"/>
-					<description/>
+					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" span="2"/>
 					<description value="How many of the resources are useable?"/>
 				</row>
 				<row>
 					<description value="Bookable"/>
-					<checkbox statustext="Is resource bookable?" id="bookable"/>
-					<description/>
+					<checkbox statustext="Is resource bookable?" id="bookable" span="2"/>
 					<description value="Is this resource bookable?"/>
 				</row>
 				<row>
-					<description value="Accessory of"/>
+					<description value="Accessory sdfsdfof"/>
 					<menulist>
-						<menupopup id="accessory_of" no_lang="1"/>
+						<menupopup id="accessory_of" no_lang="1" span="2"/>
 					</menulist>
-					<description/>
 					<description id="accessory_label"/>
 				</row>
 				<row>
 					<description disabled="true" value="Buyable"/>
-					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable"/>
-					<description/>
+					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable" span="2"/>
 					<description disabled="true" value="Is this resource buyable?"/>
 				</row>
 				<row height="100%">
