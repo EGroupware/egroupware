@@ -681,7 +681,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$this->mail->reopen($folder);
 			// not needed, as the original header is always transmitted
 			/*
-			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true);
+			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." Headers of Message with UID:$uid ->".array2string($headers));
 			$body .= $this->mail->createHeaderInfoSection($headers,lang("original message"));
 			*/
@@ -737,7 +737,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$this->mail->reopen($folder);
             // receive entire mail (header + body)
 			// get message headers for specified message
-			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true);
+			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
 
             // build a new mime message, forward entire old mail as file
             if ($preferencesArray['message_forwarding'] == 'asmail')

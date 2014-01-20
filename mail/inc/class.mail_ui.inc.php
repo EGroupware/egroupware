@@ -1777,8 +1777,8 @@ unset($query['actions']);
 			$error_msg[] = array2string($headers->backtrace[0]);
 		}
 		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
-		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true);
-		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
+		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true,$mailbox);
+		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages);

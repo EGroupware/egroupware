@@ -1665,6 +1665,7 @@ class mail_bo
 		else
 		{
 			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
+//$_tryIDNConversion=false;
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
 				$rfcAddr = imap_rfc822_parse_adrlist(str_replace(',','\,',$_string),'');
@@ -3975,12 +3976,15 @@ class mail_bo
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID='' , the partID, may be omitted
 	 * @param boolean $decode flag to do the decoding on the fly
+	 * @param string $_folder folder to work on
 	 * @return array the message header
 	 */
-	function getMessageEnvelope($_uid, $_partID = '',$decode=false)
+	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='')
 	{
-		if($_partID == '') {
-			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__.":$_uid,$_partID,$decode,$_folder".function_backtrace());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__.":$_uid,$_partID,$decode,$_folder");
+		if(empty($_partID)) {
 			$uidsToFetch = new Horde_Imap_Client_Ids();
 			$uidsToFetch->add((array)$_uid);
 
@@ -4034,8 +4038,10 @@ class mail_bo
 			//error_log(__METHOD__.__LINE__.array2string($envelope));
 			return ($decode ? self::decode_header($envelope,true): $envelope);
 		} else {
-			$headers = $this->getMessageHeader($_uid, $_partID, true,true);
-			//error_log(__METHOD__.__LINE__.array2string($headers));
+
+			$headers = $this->getMessageHeader($_uid, $_partID, true,true,$_folder);
+
+			//print_r(__METHOD__.__LINE__.':'.array2string($headers),true);
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
@@ -4083,10 +4089,12 @@ class mail_bo
 	 * @param string/int $_partID='' , the partID, may be omitted
 	 * @param boolean $decode flag to do the decoding on the fly
 	 * @param boolean $preserveUnSeen flag to preserve the seen flag where applicable
+	 * @param string $_folder folder to work on
 	 * @return array the message header
 	 */
 	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
 	{
+		//error_log(__METHOD__.__LINE__.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);
@@ -4120,6 +4128,7 @@ class mail_bo
 		{
 			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
 		}
+		//error_log(__METHOD__.__LINE__.':'.array2string($decode ? self::decode_header($retValue,true):$retValue));
 		return ($decode ? self::decode_header($retValue,true):$retValue);
 	}
 
@@ -4128,19 +4137,20 @@ class mail_bo
 	 * get messages raw header data
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param string $_folder folder to work on
 	 * @return string the message header
 	 */
-	function getMessageRawHeader($_uid, $_partID = '')
+	function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
 	{
 		static $rawHeaders;
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.__LINE__." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
 		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-		if (isset($rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		if (isset($rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
-			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add((array)$_uid);
@@ -4167,7 +4177,7 @@ class mail_bo
 				}
 			}
 		}
-		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]=$retValue;
+		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
 		return $retValue;
 	}
@@ -4250,10 +4260,10 @@ class mail_bo
 		if (is_null($rawBody)) $rawBody = array();
 
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
-			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
 		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -4317,7 +4327,7 @@ class mail_bo
 			}
 		}
 
-		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)] = $body;
+		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
 		return $body;
 	}
 
