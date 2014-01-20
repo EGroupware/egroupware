@@ -175,6 +175,9 @@ var et2_selectAccount = et2_selectbox.extend(
 			var self = this;
 			this.search_widget.select =  function(e, selected) {
 				var current = self.getValue();
+
+				// Fix ID as sent from server - must be numeric
+				selected.item.value = parseInt(selected.item.value);
 				
 				// This one is important, it makes sure the option is there
 				old_select.apply(this, arguments);
@@ -379,9 +382,16 @@ var et2_selectAccount = et2_selectbox.extend(
 				},
 				'select': function(e, selected) {
 					// Make sure option is there
-					if(typeof self.options.select_options[selected.item.value] == 'undefined')
+					var already_there = false;
+					var last_key = null;
+					for(last_key in self.options.select_options)
 					{
-						self.options.select_options[selected.item.value] = selected.item;
+						var option = self.options.select_options[last_key];
+						already_there = already_there || (typeof option.value != 'undefined' && option.value == selected.item.value);
+					}
+					if(!already_there)
+					{
+						self.options.select_options[parseInt(last_key)+1] = selected.item;
 						self._appendOptionElement(selected.item.value, selected.item.label);
 					}
 					self.set_value(selected.item.value);
@@ -416,7 +426,9 @@ var et2_selectAccount = et2_selectbox.extend(
 		// Don't show normal drop-down
 		search_widget.search.data("ui-autocomplete")._suggest = function(items) {
 			jQuery.each(items, function (index, item) {
-					self._add_search_result(results, item);
+				// Make sure value is numeric
+				item.value = parseInt(item.value);
+				self._add_search_result(results, item);
 			});
 		};
 
