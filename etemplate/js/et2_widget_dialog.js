@@ -456,8 +456,8 @@ jQuery.extend(et2_dialog,
 			callback: _callback||function(){},
 			message: _message,
 			title: _title||egw.lang('Confirmation required'),
-			buttons: _buttons||et2_dialog.BUTTONS_YES_NO,
-			dialog_type: _type||et2_dialog.QUESTION_MESSAGE,
+			buttons: typeof _buttons != 'undefined' ? _buttons : et2_dialog.BUTTONS_YES_NO,
+			dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
 			icon: _icon,
 			value: _value
 		});
