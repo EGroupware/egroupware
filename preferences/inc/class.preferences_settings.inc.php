@@ -218,7 +218,7 @@ class preferences_settings
 					break;
 			}
 
-			if (isset($value) && $value !== '' && $value !== '**NULL**')
+			if (isset($value) && $value !== '' && $value !== '**NULL**' && $value !== array())
 			{
 				if (is_array($value)) $value = implode(',',$value);	// multiselect
 
