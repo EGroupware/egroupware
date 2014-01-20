@@ -197,7 +197,10 @@ class admin_categories
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
-		$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
+		if($content['data']['icon'])
+		{
+			$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
+		}
 
 		$sel_options['icon'] = self::get_icons();
 		$sel_options['owner'] = array();
