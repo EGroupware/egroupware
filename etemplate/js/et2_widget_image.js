@@ -34,7 +34,8 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		"href": {
 			"name": "Link Target",
 			"type": "string",
-			"description": "Link URL, empty if you don't wan't to display a link."
+			"description": "Link URL, empty if you don't wan't to display a link.",
+			"default": et2_no_init
 		},
 		"extra_link_target": {
 			"name": "Link target",
