@@ -1538,7 +1538,7 @@ class mail_bo
 
 		//_debug_array($_criterias);
 		if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
-		if((!is_array($_criterias) || $_criterias['status']=='any') && !isset($_criterias['string']) && empty($_criterias['string'])) {
+		if((!is_array($_criterias) || $_criterias['status']=='any') && (!isset($_criterias['string']) || empty($_criterias['string']))) {
 			$imapFilter->flag('DELETED', $set=false);
 			return $imapFilter;
 		}
