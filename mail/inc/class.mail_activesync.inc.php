@@ -1040,7 +1040,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
 			if ($bodypreference === false) {
-				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true);
+				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true,$_folderName);
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
 				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				if (stripos($body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
@@ -1072,7 +1072,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				if ($this->debugLevel>0) debugLog("airsyncbasebody!");
 				// fetch the body (try to gather data only once)
 				$css ='';
-				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true);
+				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
 				if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
@@ -1085,7 +1085,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					// plain text Message
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text (HTML, if no text available)');
 					$output->airsyncbasenativebodytype=1;
-					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true); //'only_if_no_text');
+					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
 					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' never display html(plain text only):'.$body);
@@ -1096,7 +1096,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				// prepare plaintextbody
 				if ($output->airsyncbasenativebodytype == 2)
 				{
-					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true); //'only_if_no_text');
+					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if($bodyStructplain[0]['error']==1)
 					{
 						$plainBody = translation::convertHTMLToText($body,true); // always display with preserved HTML
@@ -1217,9 +1217,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 									$rawHeader = $rawBody = '';
 									if (isset($attachment['partID']))
 									{
-										$rawHeader = $this->mail->getMessageRawHeader($id, $attachment['partID']);
+										$rawHeader = $this->mail->getMessageRawHeader($id, $attachment['partID'],$_folderName);
 									}
-									$rawBody = $this->mail->getMessageRawBody($id, $attachment['partID']);
+									$rawBody = $this->mail->getMessageRawBody($id, $attachment['partID'],$_folderName);
 									$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
 									break;
 								default:

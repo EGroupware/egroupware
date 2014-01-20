@@ -643,6 +643,7 @@ app.classes.mail = AppJS.extend(
 
 		// Pre-load next email already so user gets it faster
 		// Browser will cache the file for us
+/*
 		var fO = egw_getObjectManager('mail',false,1).getObjectById('nm').getFocusedObject();
 		var next = false;
 		if (fO) next = fO.getNext(1);
@@ -660,6 +661,7 @@ app.classes.mail = AppJS.extend(
 				);
 			},this),500);
 		}
+*/
 	},
 
 	/**
