@@ -5,26 +5,41 @@
 			<html id="msg" class="message"/>
 			<vbox class="mailCompose mailComposeHeaderSection" width="99%">
 				<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
-					<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
-					<buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
-					<buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
+				<description class="email-button-group sent">	
+                                    <button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
+				</description> 	
+                                <description class="email-button-group save">
+                                            <buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
+                                            <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
+                                </description>  
+                               <description class="email-button-group file">
 					<vfs-select class="$cont[vfsNotAvailable]" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 					<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
-					<description class="$cont[noSaveAsAvailable]" value="Save:"/>
-					<hbox class="$cont[noInfologAvailable]">
+				</description>
+                                <description class="email-button-group egw"> 	
+                                        <description class="$cont[noSaveAsAvailable]" value="Save:"/>
+				 
+                                        <hbox class="$cont[noInfologAvailable]">
 						<image class="et2_button ui-button et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
 						<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
 					</hbox>
+                              
 					<hbox class="$cont[noTrackerAvailable]">
 						<image class="et2_button ui-button et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
 						<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
 					</hbox>
-					<description value="Recieve notification"/>
+                                </description>
+                                  <description class="email-button-group notification">         
+                                    <description value="Recieve notification"/>
 					<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
-					<description value="Priority"/>
+                                    </description>
+                                
+                                <description class="email-button-group priority">	
+                                        <description value="Priority"/>
 					<menulist>
 						<menupopup id="priority"/>
 					</menulist>
+                                </description>        
 				</hbox>
 				<grid  width="100%">
 					<columns>
