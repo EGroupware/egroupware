@@ -1019,7 +1019,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//$this->debugLevel=4;
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
-		$rv = $this->splitID($folderid,$account,$_folderName,$id);
+		$rv = $this->splitID($folderid,$account,$_folderName,$xid);
+		$this->mail->reopen($_folderName);
 		$stat = $this->StatMessage($folderid, $id);
 		if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($stat));
 		// StatMessage should reopen the folder in question, so we dont need folderids in the following statements.
