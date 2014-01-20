@@ -100,11 +100,16 @@ class admin_accesslog
 			if ($GLOBALS['egw']->session->sessionid_access_log == $row['sessionid'] && $query['session_list'])
 			{
 				$readonlys['kill['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
+				$readonlys["kill[$row[sessionid]]"]= true;
+				$row['class'] .= ' rowNoDelete ';
 			}
 			// do not allow to delete access log off active sessions
 			if (!$row['lo'] && $row['session_dla'] > time()-$GLOBALS['egw_info']['server']['sessions_timeout'] && !$query['session_list'])
 			{
 				$readonlys['delete['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
+
+				$readonlys["delete[$row[sessionid]]"]= true;
+				$row['class'] .= ' rowNoDelete ';
 			}
 			unset($row['session_php']);	// for security reasons, do NOT give real PHP sessionid to UI
 		}
@@ -128,7 +133,7 @@ class admin_accesslog
 	 */
 	function index(array $content=null, $msg='', $sessions_list=false)
 	{
-		//_debug_array($content);
+
 		if (is_array($content)) $sessions_list = $content['nm']['session_list'];
 
 		// check if user has access to requested functionality
@@ -154,6 +159,8 @@ class admin_accesslog
 				//'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				'csv_fields'     =>	false,	// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 								//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+				'actions'		=> $this->get_actions($sessions_list),
+				'row_id'			=> 'sessionid',
 			);
 			if ((int)$_GET['account_id'])
 			{
@@ -169,70 +176,145 @@ class admin_accesslog
 			}
 			$content['nm']['session_list'] = $sessions_list;
 		}
-		elseif(isset($content['nm']['rows']['delete']) || isset($content['delete']))
+		error_log(__METHOD__. ' accesslog =>' . array2string($content['nm']['selected']));
+		if ($content['nm']['action'])
 		{
-			if (isset($content['nm']['rows']['delete']))
+
+			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
-				list($sessionid) = each($content['nm']['rows']['delete']);
-				unset($content['nm']['rows']['delete']);
+				$msg = lang('You need to select some entries first!');
 			}
 			else
 			{
-				unset($content['delete']);
-				$sessionid = $content['nm']['rows']['selected'];
-			}
-			$del_msg= $this->so->delete(array('sessionid' => $sessionid));
-			if ($sessionid && $del_msg)
-			{
-				$msg = lang('%1 log entries deleted.',$del_msg);
-			}
-			else
-			{
-				$msg = lang('Error deleting log entry!');
-			}
-		}
-		elseif(isset($content['nm']['rows']['kill']) || isset($content['kill']))
-		{
-			if (isset($content['nm']['rows']['kill']))
-			{
-				list($sessionid) = each($content['nm']['rows']['kill']);
-				$sessionid = array($sessionid);
-				unset($content['nm']['rows']['kill']);
-			}
-			else
-			{
-				unset($content['kill']);
-				$sessionid = $content['nm']['rows']['selected'];
-			}
-			if (($key = array_search($GLOBALS['egw']->session->sessionid_access_log, $sessionid)))
-			{
-				unset($sessionid[$key]);	// dont allow to kill own sessions
-			}
-			if ($GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
-			{
-				$msg = lang('Permission denied!');
-			}
-			else
-			{
-				foreach((array)$sessionid as $id)
-				{
-					$GLOBALS['egw']->session->destroy($id);
+
+				if ($this->action($content['nm']['action'],$content['nm']['selected']
+					,$success,$failed,$action_msg,$msg))
+				{ // In case of action success
+					switch ($action_msg)
+					{
+						case'deleted':
+							$msg = lang('%1 log entries deleted.',$success);
+							break;
+						case'killed':
+							$msg = lang('%1 sessions killed',$success);
+					}
 				}
-				$msg = lang('%1 sessions killed',count($sessionid));
+				elseif($failed) // In case of action failiure
+				{
+					switch ($action_msg)
+					{
+						case'deleted':
+							$msg = lang('Error deleting log entry!');
+							break;
+						case'killed':
+							$msg = lang('Permission denied!');
+					}
+				}
 			}
 		}
-		$readonlys['kill'] = !$sessions_list;
-		$readonlys['delete'] = $sessions_list;
 
 		$content['msg'] = $msg;
 		$content['percent'] = 100.0 * $GLOBALS['egw']->db->query(
 			'SELECT ((SELECT COUNT(*) FROM '.self::TABLE.' WHERE lo != 0) / COUNT(*)) FROM '.self::TABLE,
 			__LINE__,__FILE__)->fetchColumn();
 
-		$tmpl = new etemplate('admin.accesslog');
+		$tmpl = new etemplate_new('admin.accesslog');
 		$tmpl->exec('admin.admin_accesslog.index',$content,$sel_options,$readonlys,array(
 			'nm' => $content['nm'],
 		));
+	}
+
+	/**
+	 * Apply an action to multiple logs
+	 *
+	 * @param type $action
+	 * @param type $checked
+	 * @param type $use_all
+	 * @param type $success
+	 * @param int $failed
+	 * @param type $action_msg
+	 * @param type $msg
+	 * @return type number of failed
+	 */
+	function action($action,$checked,&$success,&$failed,&$action_msg,&$msg)
+	{
+
+		$success = $failed = 0;
+		error_log(__METHOD__.'selected:' . array2string($checked). 'action:' . $action);
+		switch ($action)
+		{
+			case "delete":
+				$action_msg = "deleted";
+				$del_msg= $this->so->delete(array('sessionid' => $checked));
+				if ($checked && $del_msg)
+				{
+					$success = $del_msg;
+				}
+				else
+				{
+					$failed ++;
+				}
+				break;
+			case "kill":
+				$action_msg = "killed";
+				$sessionid = $checked;
+				if (($key = array_search($GLOBALS['egw']->session->sessionid_access_log, $sessionid)))
+				{
+						unset($sessionid[$key]);	// dont allow to kill own sessions
+				}
+				if ($GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
+				{
+					$failed ++;
+				}
+				else
+				{
+					foreach((array)$sessionid as $id)
+					{
+						$GLOBALS['egw']->session->destroy($id);
+					}
+					$success= count($sessionid);
+				}
+				break;
+		}
+		return !$failed;
+	}
+
+	/**
+	 * Get actions / context menu for index
+	 *
+	 * Changes here, require to log out, as $content['nm'] get stored in session!
+	 *
+	 * @return array see nextmatch_widget::egw_actions()
+	 */
+	private static function get_actions($sessions_list)
+	{
+
+		if ($sessions_list)
+		{
+		//	error_log(__METHOD__. $sessions_list);
+			$actions= array(
+				'kill' => array(
+					'caption' => 'Kill',
+					'confirm' => 'Kill this session',
+					'confirm_multiple' => 'Kill these sessions',
+					'group' => $group,
+				),
+			);
+
+		}
+		else
+		{
+			$actions= array(
+				'delete' => array(
+					'caption' => 'Delete',
+					'confirm' => 'Delete this entry',
+					'confirm_multiple' => 'Delete these entries',
+					'group' => $group,
+					'disableClass' => 'rowNoDelete',
+				),
+			);
+		}
+		return $actions;
 	}
 
 	/**
