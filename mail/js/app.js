@@ -644,7 +644,8 @@ app.classes.mail = AppJS.extend(
 		// Pre-load next email already so user gets it faster
 		// Browser will cache the file for us
 		var next = egw_getObjectManager('mail',false,1).getObjectById('nm').getFocusedObject().getNext(1);
-		if(next && next.id)
+		// Stop until we get all the details worked out - server marks as seen automatically
+		if(false && next && next.id)
 		{
 			if(this.preview_preload.timer != null)
 			{
