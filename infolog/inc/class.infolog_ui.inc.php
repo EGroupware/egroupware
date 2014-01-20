@@ -2410,12 +2410,12 @@ class infolog_ui
 					//error_log(__METHOD__.__LINE__.array2string($attachment));
 					if (trim(strtoupper($attachment['type'])) == 'MESSAGE/RFC822' && !empty($attachment['uid']) && !empty($attachment['folder']))
 					{
-						$mailobject->reopen($attachment['folder']);
+						$mailobject->reopen(($attachment['folder']?$attachment['folder']:$mailbox));
 
 						// get the message itself, and attach it, as we are able to display it in egw
 						// instead of fetching only the attachments attached files (as we did previously)
-						$message = $mailobject->getMessageRawBody($attachment['uid'],$attachment['partID']);
-						$headers = $mailobject->getMessageHeader($attachment['uid'],$attachment['partID'],true);
+						$message = $mailobject->getMessageRawBody($attachment['uid'],$attachment['partID'],($attachment['folder']?$attachment['folder']:$mailbox));
+						$headers = $mailobject->getMessageHeader($attachment['uid'],$attachment['partID'],true,false,($attachment['folder']?$attachment['folder']:$mailbox));
 						$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
 						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 						$tmpfile = fopen($attachment_file,'w');
@@ -2501,8 +2501,8 @@ class infolog_ui
 			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
 			{
-				$message = $mailobject->getMessageRawBody($uid, $partid);
-				$headers = $mailobject->getMessageHeader($uid, $partid,true);
+				$message = $mailobject->getMessageRawBody($uid, $partid,$mailbox);
+				$headers = $mailobject->getMessageHeader($uid, $partid,true,false,$mailbox);
 				$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
 				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 				$tmpfile = fopen($attachment_file,'w');

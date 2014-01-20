@@ -3653,6 +3653,7 @@ class mail_bo
 	 * @param string $_partID=null , the partID, may be omitted
 	 * @param Horde_Mime_Part $_structure=null if given use structure for parsing
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param string $_folder folder to work on
 	 * @return array containing the message body, mimeType and charset
 	 */
 	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '')
@@ -4250,15 +4251,15 @@ class mail_bo
 	 * get the message raw body
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param string $_folder folder to work on
 	 * @return string the message body
 	 */
-	function getMessageRawBody($_uid, $_partID = '')
+	function getMessageRawBody($_uid, $_partID = '', $_folder='')
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
 		if (is_null($rawBody)) $rawBody = array();
-
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
@@ -4772,10 +4773,10 @@ class mail_bo
 	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true, $includeAttachments=true)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
-			$headers = $mailClass->getMessageHeader($uid,$partid,true);
+			$headers = $mailClass->getMessageHeader($uid,$partid,true,false,$mailbox);
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
-			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
+			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid,null,false,$mailbox);
 			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
 			if ( !$preserveHTML && $bodyParts[0]['mimeType']=='text/html')
 			{
