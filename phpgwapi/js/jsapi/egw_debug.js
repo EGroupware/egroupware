@@ -82,7 +82,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		var data = {
 			time: (new Date()).getTime(),
 			level: _level,
-			args: _args,
+			args: _args
 		};
 		// Add in a trace, if no navigation _level
 		if (_level != 'navigation' && typeof (new Error).stack != 'undefined')
