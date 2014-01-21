@@ -143,9 +143,15 @@ var et2_dataview_controller = Class.extend({
 			// Scroll to top
 			this._grid.makeIndexVisible(0);
 			this._grid.clear();
+
+			// Free selection manager
+			this._selectionMgr.clear();
 			
 			// Clear the map
 			this._indexMap = {}
+			// Update selection manager, it uses this by reference
+			this._selectionMgr.setIndexMap(this._indexMap);
+
 			// Clear the queue
 			this._queue = {};
 		}

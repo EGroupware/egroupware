@@ -94,6 +94,19 @@ var et2_dataview_selectionManager = Class.extend(
 		this.select_callback = null;
 	},
 
+	clear: function() {
+		for (var key in this._registeredRows)
+		{
+			this.unregisterRow(key, this._registeredRows[key].tr);
+		}
+		this._indexMap = {};
+		this._total = 0;
+		this._focusedEntry = null;
+		this._invertSelection = false;
+		this._selectAll = false;
+		this._inUpdate = false;
+	},
+
 	setIndexMap: function (_indexMap) {
 		this._indexMap = _indexMap;
 	},
