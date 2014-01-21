@@ -392,7 +392,12 @@ class accounts_sql
 				common::display_fullname('account_lid','account_firstname','account_lastname'))),$order);
 		}
 		$order = str_replace(array_keys($order2contact),array_values($order2contact),$order);
-		if ($sort) $order .= ' '.$sort;
+		// allways add 'account_lid', as it is only valid one for groups
+		if (strpos($order, 'account_lid') === false)
+		{
+			$order .= ',account_lid';
+		}
+		if ($sort) $order = implode(' '.$sort.',', explode(',', $order)).' '.$sort;
 
 		switch($_type)
 		{
