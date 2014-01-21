@@ -534,40 +534,7 @@ class mail_ui
 		_debug_array($preferences);
 		//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
 		//error_log(__METHOD__.__LINE__.' ImapServerObject:'.array2string($imapServer));
-		if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity($icServerID, true);
-		//_debug_array($activeIdentity);
-		$maxMessages	=  50;
 
-		// retrieve data for/from user defined accounts
-		$selectedID = 0;
-		if (count($preferences->ic_server)) {
-			foreach ($preferences->ic_server as $tmpkey => $accountData)
-			{
-				if ($tmpkey==0) continue;
-				$identity =& $preferences->identities[$tmpkey];
-				$icServer =& $accountData;
-				//_debug_array($identity);
-				//_debug_array($icServer);
-				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
-				if (empty($icServer->host)) continue;
-				$identities[$identity->id]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt;';
-				if (!empty($identity->default)) $identities[$identity->id] = $identities[$identity->id].'<b>('.lang('selected').')</b>';
-			}
-		}
-		if (count($identities)>0)
-		{
-			echo "<hr /><h3 style='color:red'>".lang('available personal EMail-Accounts/Profiles')."</h3>";
-			_debug_array($identities);
-		}
-
-		if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
-		{
-			// redirect to new personal account
-			egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
-				'accountID'=>"new",
-				'msg'	=> lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
-			));
-		}
 		common::egw_footer();
 	}
 
@@ -1372,7 +1339,13 @@ unset($query['actions']);
 
 		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
-
+//ajax_get_rows
+//error_log(__METHOD__.__LINE__.' MenuactionCalled:'.$_GET['menuaction'].'->'.function_backtrace());
+		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
+		{
+			$response = egw_json_response::get();
+			$response->call('app.mail.unlock_tree');
+		}
 		return $rowsFetched['messages'];
 	}
 

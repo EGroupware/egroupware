@@ -697,7 +697,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _nodeID
 	 * @param mode
 	 */
-	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea) {
+	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
 		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
 		{
 			_refreshGridArea = _nodeID[_refreshGridArea];
@@ -707,6 +707,7 @@ app.classes.mail = AppJS.extend(
 		var nodeToRefresh = 0;
 		var mode2use = "none";
 		if (typeof _refreshGridArea == 'undefined') _refreshGridArea=true;
+		if (typeof _refreshQuotaDisplay == 'undefined') _refreshQuotaDisplay=true;
 		if (_nodeID) nodeToRefresh = _nodeID;
 		if (mode) {
 			if (mode == "forced") {mode2use = mode;}
@@ -720,11 +721,14 @@ app.classes.mail = AppJS.extend(
 			this.mail_queueRefreshFolderList(activeFolders);
 			if (_refreshGridArea)
 			{
-				this.mail_refreshQuotaDisplay();
 				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
 				// would solve the refresh issue more accurately
 				//if (mode == "forced") this.mail_refreshMessageGrid();
 				this.mail_refreshMessageGrid();
+			}
+			if (_refreshQuotaDisplay)
+			{
+				this.mail_refreshQuotaDisplay();
 			}
 			//the two lines below are not working yet.
 			//var no =tree_wdg.getSelectedNode();
@@ -1054,7 +1058,7 @@ app.classes.mail = AppJS.extend(
 			.sendRequest(true);
 		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
-		//this.mail_refreshFolderStatus();
+		//this.mail_g();
 	},
 
 	/**
@@ -1102,6 +1106,7 @@ app.classes.mail = AppJS.extend(
 		var nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
+			this.lock_tree();
 			// Changing dataset entirely, force a reset
 			nm.controller.reset();
 			nm.applyFilters({'selectedFolder': folder});
@@ -1122,7 +1127,7 @@ app.classes.mail = AppJS.extend(
 		if (profileChange == false) egw_message(myMsg);
 
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
-		this.mail_refreshFolderStatus(folder,'forced');
+		this.mail_refreshFolderStatus(folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
