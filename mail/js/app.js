@@ -1113,8 +1113,6 @@ app.classes.mail = AppJS.extend(
 		if(nm)
 		{
 			this.lock_tree();
-			// Changing dataset entirely, force a reset
-			nm.controller.reset();
 			nm.applyFilters({'selectedFolder': folder});
 		}
 		displayname = _widget.getSelectedLabel();
