@@ -93,8 +93,37 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		{
 			window.localStorage[LASTLOG] = 0;
 		}
-		window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
-
+		try {
+			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
+		}
+		catch(e) {
+			// one of the args is not JSON.stringify, because it contains circular references eg. an et2 widget
+			for(var i=0; i < data.args.length; ++i)
+			{
+				try {
+					JSON.stringify(data.args[i]);
+				}
+				catch(e) {
+					// for Class we try removing _parent and _children attributes and try again to stringify
+					if (data.args[i] instanceof Class)
+					{
+						data.args[i] = clone(data.args[i]);
+						delete data.args[i]._parent;
+						delete data.args[i]._children;
+						try {
+							JSON.stringify(data.args[i]);
+							continue;	// stringify worked --> check other arguments
+						}
+						catch(e) {
+							// ignore error and remove whole argument
+						}
+					}
+					// if above doesnt work, we remove the attribute
+					data.args[i] = '** removed, circular reference **';
+				}
+			}
+			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
+		}
 		window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
 	}
 
@@ -129,7 +158,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	{
 		// Remove indicator icon
 		jQuery('#topmenu_info_error').remove();
-		
+
 		if (!window.localStorage) return false;
 
 		for(var i=0; i < MAX_LOGS; ++i)
@@ -147,7 +176,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	/**
 	 * Format one log message for display
 	 *
-	 * @param {{level: string, time: number, stack: string, args: array[]}} Log information
+	 * @param {Object} log {{level: string, time: number, stack: string, args: array[]}} Log information
 	 *	Actual message is in args[0]
 	 * @returns {DOMNode}
 	 */
@@ -158,7 +187,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		var timestamp = row.insertCell(-1);
 		timestamp.appendChild(document.createTextNode(new Date(log.time)));
 		timestamp.setAttribute('class', 'timestamp');
-		
+
 		var level = row.insertCell(-1);
 		level.appendChild(document.createTextNode(log.level));
 		level.setAttribute('class', 'level');
@@ -193,7 +222,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			icon.addClass('topmenu_info_item').attr('id', 'topmenu_info_error');
 			// ToDo: tooltip
 			icon.on('click', egw(_wnd).show_log);
-			jQuery('#egw_fw_topmenu_info_items').append(icon);
+			jQuery('#egw_fw_topmenu_info_items,#topmenu_info').append(icon);
 		}
 	}
 
@@ -278,9 +307,9 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 				body.appendChild(format_message(client_log[i]));
 			}
 			table.appendChild(body);
-			
+
 			// Use a wrapper div for ease of styling
-			var wrapper = document.createElement('div')
+			var wrapper = document.createElement('div');
 			wrapper.setAttribute('class', 'client_error_log');
 			wrapper.appendChild(table);
 
@@ -292,7 +321,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 					.on('click', function() {
 						$j(this).toggleClass('hidden',{});
 						$j(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
-					})
+					});
 				// Wrap in div so we can control height
 				$j('td',$wrapper).wrapInner('<div/>')
 					.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
@@ -305,7 +334,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 					],
 					width: 800,
 					height: 400
-				})
+				});
 				$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
 			}
 			if (_wnd.console) _wnd.console.log(get_client_log());
