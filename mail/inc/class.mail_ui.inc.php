@@ -3843,7 +3843,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_flagMessages($_flag, $_messageList, $_sendJsonResponse=true)
 	{
-		if(mail_bo::$debug); error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if ($_messageList=='all')
