@@ -131,6 +131,7 @@ app.classes.mail = AppJS.extend(
 			{
 				tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 				tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+				tree_wdg.set_onclick(jQuery.proxy(this.click_node, this));
 			}
 		}
 		if (isDisplay)
@@ -1099,7 +1100,7 @@ app.classes.mail = AppJS.extend(
 				rv = this.mail_changeProfile(folder,_widget);
 				profileChange = true;
 			}
-			else if (_widget.event_args.length==2)
+			else if (typeof _widget.event_args !== 'undefined' && _widget.event_args.length==2)
 			{
 				folder = _widget.event_args[1];
 				_widget.set_value(folder);
@@ -2519,5 +2520,39 @@ app.classes.mail = AppJS.extend(
 		{
 			this.unlock_tree();
 		}
+	},
+
+	/**
+	 * Called when a node gets selected
+	 *
+	 * @param {String} _id account-id[::folder-name]
+	 * @param {et2_widget_tree} _widget
+	 */
+	click_node: function(_id, _widget,_previous)
+	{
+		//var selected = _widget.getValue();
+		var img = _widget.getSelectedNode().images[0]; // fetch first image
+		var reopenId = _previous;//(_widget.oldValue?_widget.oldValue:_widget.value);
+		//console.log(_id,reopenId,_previous,_widget);
+		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
+		{
+			if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
+			{
+				//_widget.oldValue / _widget.value
+				_widget.reSelectItem(reopenId);
+				return false;// wants to open INBOX probably
+			}
+			else if (!(img.search(eval('/'+'NoSelect'+'/'))<0))
+			{
+				_widget.reSelectItem(reopenId);
+				return false;
+			}
+		}
+		if ( _id.indexOf('::') == -1) // same as thunderbird
+		{
+			_widget.reSelectItem(reopenId);
+			return false;
+		}
+		return true;
 	}
 });
