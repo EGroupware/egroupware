@@ -1767,6 +1767,10 @@ unset($query['actions']);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		//error_log(__METHOD__.__LINE__.array2string($hA));
+		if ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox))
+		{
+			egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
+		}
 		$this->mail_bo->reopen($mailbox);
 		// retrieve the flags of the message, before touching it.
 		$headers	= $this->mail_bo->getMessageHeader($uid, $partID);

@@ -1293,7 +1293,7 @@ class mail_compose
 		$icServerID = $hA['profileID'];
 		if ($icServerID != $this->mail_bo->profileID)
 		{
-			$this->changeProfile($_content['serverID']);
+			$this->changeProfile($icServerID);
 			$composeProfile = $this->mail_bo->profileID;
 		}
 		$icServer = $this->mail_bo->icServer;
