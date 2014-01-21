@@ -567,3 +567,23 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 .mail_extraEmails.visible > a {
 	display: list-item;
 }
+
+/**
+ * Lock div for tree to prevent further clicks
+ */
+#mail-index_nm\[foldertree\] {
+	position: relative;
+}
+#mail_folder_lock_div {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10000;
+	// only change styling below:
+	background-image: url(../../../phpgwapi/templates/default/images/ajax-loader.gif);
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-color: rgba(255,255,255,0.5);
+}

@@ -40,7 +40,7 @@ app.classes.mail = AppJS.extend(
 		timeout: null,
 		request: null
 	},
-	
+
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -2456,4 +2456,26 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
+	/**
+	 * Lock tree so it does NOT receive any more mouse-clicks
+	 */
+	lock_tree: function()
+	{
+		if (!document.getElementById('mail_folder_lock_div'))
+		{
+			var parent = jQuery('#mail-index_nm\\[foldertree\\]');
+			var lock_div = jQuery(document.createElement('div'));
+			lock_div.attr('id', 'mail_folder_lock_div')
+				.addClass('mail_folder_lock');
+			parent.prepend(lock_div);
+		}
+	},
+
+	/**
+	 * Unlock tree so it receives again mouse-clicks after calling lock_tree()
+	 */
+	unlock_tree: function()
+	{
+		jQuery('#mail_folder_lock_div').remove();
+	}
 });
