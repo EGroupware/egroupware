@@ -27,11 +27,11 @@ class mail_bosieve
 		// unset the fm_preferences session object, to force the reload/rebuild
 
 		$_restoreSession = false; // as in async, each call may be for a different user
-		//$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
-		//$mailPreferences  = $bopreferences->getPreferences();
-		//$icServer = $mailPreferences->getIncomingServer(0);
-		$_profile_id=999999;
-		$icServer = emailadmin_account::read($_profile_id)->imapServer();
+		$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
+		$mailPreferences  = $bopreferences->getPreferences();
+		$icServer = $mailPreferences->getIncomingServer(0);
+		//$_profile_id=999999;
+		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
 
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'->LoginName:'.$icServer->loginName);
 		//error_log(__METHOD__.__LINE__.array2string($_vacation));
