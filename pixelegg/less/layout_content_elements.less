@@ -330,17 +330,18 @@ div.selectbox-wrapper {
         display: block;
         outline: none;
         padding: 7px 0 7px 3px;
+        color:@link_color;
     }
 
     a:link,
-        a:visited{
-        .color_100_gray;
+    a:visited{
+        color:@link_color;
         text-decoration: none;
     }
     a:hover,
-        a:focus,
-        a.sbFocus{
-        color: #EBB52D;
+    a:focus,
+    a.sbFocus{
+        color: @link_color_active;
     }
     li.last a{
         border-bottom: none;
@@ -925,12 +926,13 @@ button.et2_button_with_image{
  *
  ######################################################################################## */ 
 
-input[type="submit"][id="delete"],
-input[type="button"][id="delete"],
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
-button[id="resources-edit_delete"]
+button[id="resources-edit_delete"],
+button[id="calendar-edit_button[delete]"]
 {
     background-color: @color_negative_action_hover !important;
     background-image:url('../images/delete-hover.png')!important;
@@ -1091,7 +1093,37 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon{
 }
 
 
+/**
+* Clientside Javascript error-log
+*/
+#topmenu_info_error {
+    width: 16px;
+    cursor: pointer;
+}
+div.client_error_log {
+    max-height: 50ex;
+}
+div.client_error_log tbody {
+    vertical-align: top;
+}
+div.client_error_log tr.hidden td > div {
+    max-height: 2ex;
+    max-width: 40ex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
+div.client_error_log tr td.timestamp > div {
+    text-wrap: none;
+    white-space: normal;
+    width: 27ex;
+}
+div.client_error_log tr.hidden td.stack > div {
+    text-indent: 100%
+}
+div.client_error_log tr td.stack > div {
+    white-space: pre;
+}
 
 
-
-// 
+//

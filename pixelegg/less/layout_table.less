@@ -160,11 +160,13 @@ table.egwGridView_outer{
     /*Elements inside td*/
         td{
         
-            .et2_link {margin-left: 0px}
+            .et2_link {margin-left: 0px; color: @link_color; font-weight: bold;}
             
-            img {
-            .Complete_Button_Icon_normal;
-        }
+            img {.Complete_Button_Icon_normal;}
+            
+            time {display: block;}
+        
+        
         img[src$="svg"]  {
             .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
         }
@@ -236,7 +238,7 @@ table.egwGridView_grid{
 
             /*padding: 0.3em 0 0.3em 0.3em;*/
             border-bottom: 1px solid;
-            color: #bfbfbf;
+            color: @gray_60;;
             /*&:hover {background-color: @egw_color_2_e;} legacy*/
 
             &:active {

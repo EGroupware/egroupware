@@ -52,7 +52,7 @@ function hide_pixelegg_header(_toggle, _delay)
         //Tab
         $j(".egw_fw_ui_tab_header").css("height", "24px");
             // ICON
-            $j(".egw_fw_ui_tab_icon").css("height", "17px");
+            //$j(".egw_fw_ui_tab_icon").css("height", "17px");
             $j(".egw_fw_ui_tab_icon").css("display", "inline-block");
             $j(".egw_fw_ui_tab_icon").css("margin-right", "5px");
             // H1

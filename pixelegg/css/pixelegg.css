@@ -2835,16 +2835,17 @@ div.selectbox-wrapper ul li {
   display: block;
   outline: none;
   padding: 7px 0 7px 3px;
+  color: #26537c;
 }
 .sbOptions a:link,
 .sbOptions a:visited {
-  color: #000000;
+  color: #26537c;
   text-decoration: none;
 }
 .sbOptions a:hover,
 .sbOptions a:focus,
 .sbOptions a.sbFocus {
-  color: #EBB52D;
+  color: #ffffff;
 }
 .sbOptions li.last a {
   border-bottom: none;
@@ -2873,7 +2874,7 @@ a:visited,
 select,
 input,
 textarea {
-  color: #000000;
+  color: #26537c;
 }
 select,
 input,
@@ -2891,13 +2892,13 @@ select {
 a:link,
 a:visited {
   cursor: pointer;
-  color: #000000;
+  color: #26537c;
   text-decoration: none;
 }
 a:hover,
 a:active {
   cursor: pointer;
-  color: #000000;
+  color: #ffffff;
   text-decoration: underline;
 }
 .divLoginboxHeader,
@@ -3361,12 +3362,13 @@ button.et2_button_with_image background-color[url$="svg"] {
  * Button löschen / delete / => color-negative-action
  *
  ######################################################################################## */
-input[type="submit"][id="delete"],
-input[type="button"][id="delete"],
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
-button[id="resources-edit_delete"] {
+button[id="resources-edit_delete"],
+button[id="calendar-edit_button[delete]"] {
   background-color: #b81f00 !important;
   background-image: url('../images/delete-hover.png') !important;
   margin-left: 3em;
@@ -3401,12 +3403,13 @@ button[id="resources-edit_delete"] {
   /*background-color: @color-negative-action !important;*/
   color: #ffffff !important;
 }
-input[type="submit"][id="delete"]:hover,
-input[type="button"][id="delete"]:hover,
+input[type="submit"][id*="delete"]:hover,
+input[type="button"][id*="delete"]:hover,
 button[id="delete"]:hover,
 button[id="infolog-edit_button[delete]"]:hover,
 button[id="addressbook-edit_button[delete]"]:hover,
-button[id="resources-edit_delete"]:hover {
+button[id="resources-edit_delete"]:hover,
+button[id="calendar-edit_button[delete]"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3438,12 +3441,13 @@ button[id="resources-edit_delete"]:hover {
   height: 32px;
   color: #ffffff !important;
 }
-input[type="submit"][id="delete"]:active,
-input[type="button"][id="delete"]:active,
+input[type="submit"][id*="delete"]:active,
+input[type="button"][id*="delete"]:active,
 button[id="delete"]:active,
 button[id="infolog-edit_button[delete]"]:active,
 button[id="addressbook-edit_button[delete]"]:active,
-button[id="resources-edit_delete"]:active {
+button[id="resources-edit_delete"]:active,
+button[id="calendar-edit_button[delete]"]:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3746,6 +3750,37 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   }
 }
 /**
+* Clientside Javascript error-log
+*/
+#topmenu_info_error {
+  width: 16px;
+  cursor: pointer;
+}
+div.client_error_log {
+  max-height: 50ex;
+}
+div.client_error_log tbody {
+  vertical-align: top;
+}
+div.client_error_log tr.hidden td > div {
+  max-height: 2ex;
+  max-width: 40ex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+div.client_error_log tr td.timestamp > div {
+  text-wrap: none;
+  white-space: normal;
+  width: 27ex;
+}
+div.client_error_log tr.hidden td.stack > div {
+  text-indent: 100%;
+}
+div.client_error_log tr td.stack > div {
+  white-space: pre;
+}
+/**
  * EGroupware: Stylite Pixelegg template
  *
  * et2 table
@@ -3872,6 +3907,8 @@ table.egwGridView_outer tbody td.frame {
 }
 table.egwGridView_outer tbody td .et2_link {
   margin-left: 0px;
+  color: #26537c;
+  font-weight: bold;
 }
 table.egwGridView_outer tbody td img {
   /*.background_color_10_gray;*/
@@ -3882,6 +3919,9 @@ table.egwGridView_outer tbody td img {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+}
+table.egwGridView_outer tbody td time {
+  display: block;
 }
 table.egwGridView_outer tbody td img[src$="svg"] {
   background-color: #0c5da5;
@@ -3941,7 +3981,7 @@ table.egwGridView_grid tr td {
   border-right: 0px;
   /*padding: 0.3em 0 0.3em 0.3em;*/
   border-bottom: 1px solid;
-  color: #bfbfbf;
+  color: #696969;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
 }
 table.egwGridView_grid tr td:active {
@@ -4700,6 +4740,9 @@ table.nextmatch_header img {
   right: 1px !important;
   top: -5px;
 }
+#egw_fw_topmenu_info_items img#topmenu_info_error {
+  height: 16px;
+}
 /* ################################################################################################################
  * Sidebar
  * ################################################################################################################*/
@@ -5312,7 +5355,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background: transparent;
   display: inline-table;
   margin: 0px 5px 0px 0px;
-  padding: 2px 10px 5px 10px;
+  padding: 2px 2px 5px 2px;
   cursor: pointer;
   border-width: 1px 1px 0 1px;
   border-style: solid;
@@ -5326,7 +5369,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 100%;
   line-height: 1em;
-  margin: 0 15px 2px 3px;
+  margin: 0 1px 2px 2px;
   vertical-align: super;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
@@ -5402,8 +5445,8 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   right: 1px;
   top: 1px;
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   margin-left: 0px;
   background-repeat: no-repeat;
   background-position: center;
