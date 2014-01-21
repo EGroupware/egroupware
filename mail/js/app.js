@@ -131,7 +131,6 @@ app.classes.mail = AppJS.extend(
 			{
 				tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 				tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
-				tree_wdg.set_onclick(jQuery.proxy(this.click_node, this));
 			}
 		}
 		if (isDisplay)
@@ -1084,55 +1083,61 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_changeFolder
-	 * @param folder, the ID of the selected Node
+	 * @param _folder, the ID of the selected Node
 	 * @param _widget, handle to the tree widget
+	 * @param {string} _previous - Previously selected node ID
 	 */
-	mail_changeFolder: function(folder,_widget) {
-		//alert('change Folder called:'+folder);
-		var server = folder.split('::');
-		(this.egw.lang('change folder')+'...', 'mail');
-		var img = _widget.getSelectedNode().images[0]; // fetch first image
-		var profileChange = false;
-		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
+	mail_changeFolder: function(_folder,_widget, _previous) {
+
+		// Abort if user selected an un-selectable node
+		// Use image over anything else because...?
+		var img = _widget.getSelectedNode().images[0];
+		if (img.indexOf('NoSelect') !== -1)
 		{
-			if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
-			{
-				rv = this.mail_changeProfile(folder,_widget);
-				profileChange = true;
-			}
-			else if (typeof _widget.event_args !== 'undefined' && _widget.event_args.length==2)
-			{
-				folder = _widget.event_args[1];
-				_widget.set_value(folder);
-			}
-			else
-			{
-				_widget.set_value('');
-			}
+			_widget.reSelectItem(_previous);
+			return;
 		}
+
+		// Check if this is a top level node and
+		// change profile if server has changed
+		var server = _folder.split('::');
+		var previousServer = _previous.split('::');
+		var profile_selected = (_folder.indexOf('::') === -1);
+		if (server[0] != previousServer[0] && profile_selected)
+		{
+			// mail_changeProfile triggers a refresh, no need to do any more
+			return this.mail_changeProfile(_folder,_widget);
+		}
+
+		// Apply new selected folder to list, which updates data
 		var nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
 			this.lock_tree();
-			nm.applyFilters({'selectedFolder': folder});
+			nm.applyFilters({'selectedFolder': _folder});
 		}
-		displayname = _widget.getSelectedLabel();
-		inBraket = displayname.search(/\(/);
-		if (inBraket!=-1)
-		{
-			outBraket = displayname.search(/\)/);
-			if (outBraket!=-1)
-			{
-				displayname = displayname.replace(/\((.*?)\)/,"");
-				displayname = displayname.replace(/<b>/,"");
-				displayname = displayname.replace(/<\/b>/,"");
-			}
-		}
-		myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
-		if (profileChange == false) egw_message(myMsg);
 
-		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
-		this.mail_refreshFolderStatus(folder,'forced',false,false);
+		// Get nice folder name for message, if selected is not a profile
+		if(!profile_selected)
+			{
+			var displayname = _widget.getSelectedLabel();
+			var inBraket = displayname.indexOf('\(');
+			if (inBraket!=-1)
+			{
+				var outBraket = displayname.indexOf('\)');
+				if (outBraket!=-1)
+				{
+					displayname = displayname.replace(/\((.*?)\)/,"");
+					displayname = displayname.replace(/<b>/,"");
+					displayname = displayname.replace(/<\/b>/,"");
+				}
+			}
+			var myMsg = (displayname?displayname:_folder)+' '+this.egw.lang('selected');
+			egw_message(myMsg);
+		}
+
+		// Update non-grid
+		this.mail_refreshFolderStatus(_folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
@@ -2520,39 +2525,5 @@ app.classes.mail = AppJS.extend(
 		{
 			this.unlock_tree();
 		}
-	},
-
-	/**
-	 * Called when a node gets selected
-	 *
-	 * @param {String} _id account-id[::folder-name]
-	 * @param {et2_widget_tree} _widget
-	 */
-	click_node: function(_id, _widget,_previous)
-	{
-		//var selected = _widget.getValue();
-		var img = _widget.getSelectedNode().images[0]; // fetch first image
-		var reopenId = _previous;//(_widget.oldValue?_widget.oldValue:_widget.value);
-		//console.log(_id,reopenId,_previous,_widget);
-		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
-		{
-			if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
-			{
-				//_widget.oldValue / _widget.value
-				_widget.reSelectItem(reopenId);
-				return false;// wants to open INBOX probably
-			}
-			else if (!(img.search(eval('/'+'NoSelect'+'/'))<0))
-			{
-				_widget.reSelectItem(reopenId);
-				return false;
-			}
-		}
-		if ( _id.indexOf('::') == -1) // same as thunderbird
-		{
-			_widget.reSelectItem(reopenId);
-			return false;
-		}
-		return true;
 	}
 });
