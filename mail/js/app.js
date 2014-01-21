@@ -1102,9 +1102,9 @@ app.classes.mail = AppJS.extend(
 		var nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
-			nm.activeFilters['selectedFolder'] = folder;
 			// Changing dataset entirely, force a reset
 			nm.controller.reset();
+			nm.applyFilters({'selectedFolder': folder});
 		}
 		displayname = _widget.getSelectedLabel();
 		inBraket = displayname.search(/\(/);
