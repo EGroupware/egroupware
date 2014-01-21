@@ -144,6 +144,7 @@ do you want to send the message to all selected entries, without further editing
 document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 documentation	etemplate	de	Dokumentation
 doesn't matter	etemplate	de	spielt keine Rolle
+done	etemplate	de	Schliessen
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
@@ -202,6 +203,7 @@ for more than one contact in a document use the tag pagerepeat!	preferences	de	F
 force	etemplate	de	erzwingen
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
+fr	etemplate	de	Fr
 general fields:	preferences	de	Allgemeine Felder:
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gehe zum letzten Eintrag
@@ -279,6 +281,7 @@ middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
 minutes	etemplate	de	Minuten
 missing: %1	etemplate	de	nicht vorhanden: %1
+mo	etemplate	de	Mo
 modifier	preferences	de	Geändert von
 month	etemplate	de	Monat
 more	etemplate	de	Weitere
@@ -312,6 +315,7 @@ nothing	etemplate	de	nichts
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nothing in clipboard to paste !!!	etemplate	de	Zwischenablage leer - nichts zum einfügen !!!
 nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
+now	etemplate	de	Jetzt
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von
@@ -355,6 +359,7 @@ restore all application templates, overwriting existing ones with identical vers
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
+sa	etemplate	de	Sa
 save selected columns as default preference for all users.	etemplate	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	etemplate	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
@@ -414,6 +419,7 @@ span, class	etemplate	de	Span, Class
 stack	etemplate	de	Stapel
 start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
 start new search for the above pattern	etemplate	de	neue Suche für das obige Muster starten
+su	etemplate	de	So
 submit form	etemplate	de	Formular abschicken
 submitbutton	etemplate	de	Schaltfläche
 swap	etemplate	de	tauschen
@@ -431,6 +437,7 @@ template deleted	etemplate	de	Template gelöscht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
+th	etemplate	de	Do
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
@@ -443,6 +450,7 @@ to start the search	etemplate	de	startet die Suche
 today	etemplate	de	Heute
 top	etemplate	de	Oben
 tree	etemplate	de	Baum
+tu	etemplate	de	Di
 type	etemplate	de	Typ
 type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
@@ -464,6 +472,7 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 vertical alignment of row	etemplate	de	vertikale Ausrichtung der Zeile
 view this etemplate	etemplate	de	dieses eTemplate anzeigen
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
+we	etemplate	de	Mi
 weekend	etemplate	de	Wochenende
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 widget copied into clipboard	etemplate	de	Widget wurde in die Zwischenablage kopiert
@@ -472,6 +481,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	de	Breite der Spalte (in % oder Punkten)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
 width, disabled	etemplate	de	Breite, Deaktiviert
+wk	etemplate	de	KW
 working days	etemplate	de	Werktage
 write <app>/setup/tables_current.inc.php	etemplate	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	etemplate	de	Sprachdatei

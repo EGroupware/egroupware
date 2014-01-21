@@ -137,7 +137,7 @@ files	mail	de	Anhang
 flagged	mail	de	Markieren
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
 flagged / unflagged	mail	de	Markierung
-folder	mail	de	Ordner
+folder	mail	de	Ablageordner
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 force html	mail	de	erzwinge HTML
@@ -279,7 +279,7 @@ replied	mail	de	beantwortet
 reply	mail	de	Antworten nur an Absender
 reply all	mail	de	Antworten an Alle
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
-reply to	mail	de	Antwort an
+reply to	mail	de	Antworten an
 replyto	mail	de	Antwort an
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 respond to mail sent to:	mail	de	Benachrichtigung für
@@ -292,7 +292,7 @@ save all	mail	de	Alle speichern
 save as	mail	de	Konvertiere E-Mails in andere Anwendung als
 save as draft	mail	de	Als Entwurf speichern
 save as draft and print	mail	de	Als Entwurf speichern und drucken
-save as infolog on send	mail	de	Als Infolog speichern, nachdem die E-Mail versendet wurde
+save as infolog on send	mail	de	Als Infolog speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save message to disk	mail	de	Nachricht auf Ihrem Computer speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3

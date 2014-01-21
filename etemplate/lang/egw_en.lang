@@ -144,6 +144,7 @@ do you want to send the message to all selected entries, without further editing
 document '%1' does not exist or is not readable for you!	preferences	en	Document '%1' does not exist or is not readable for you!
 documentation	etemplate	en	Documentation
 doesn't matter	etemplate	en	Doesn't matter
+done	etemplate	en	Done
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop table
 dump4setup	etemplate	en	Dump4Setup
@@ -203,6 +204,7 @@ for more than one contact in a document use the tag pagerepeat!	preferences	en	U
 force	etemplate	en	force
 foreign key	etemplate	en	Foreign key
 formatted text (html)	etemplate	en	Formatted text (HTML)
+fr	etemplate	en	Fr
 general fields:	preferences	en	General fields:
 go to the first entry	etemplate	en	Go to the first entry
 go to the last entry	etemplate	en	Go to the last entry
@@ -280,6 +282,7 @@ middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 minutes	etemplate	en	Minutes
 missing: %1	etemplate	en	Missing: %1
+mo	etemplate	en	Mo
 modifier	preferences	en	Modifier
 month	etemplate	en	Month
 more	etemplate	en	More
@@ -313,6 +316,7 @@ nothing	etemplate	en	Nothing
 nothing found - try again !!!	etemplate	en	Nothing found - try again!
 nothing in clipboard to paste !!!	etemplate	en	Nothing in clipboard to paste!
 nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria!
+now	etemplate	en	Now
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	Number of columns the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	Number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
@@ -356,6 +360,7 @@ restore all application templates, overwriting existing ones with identical vers
 returns savely, without deleting	etemplate	en	Returns WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
+sa	etemplate	en	Sa
 save selected columns as default preference for all users.	etemplate	en	Save columns as default preference for all users.
 save the changes made and close the window	etemplate	en	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs
@@ -415,6 +420,7 @@ span, class	etemplate	en	Span, Class
 stack	etemplate	en	Stack
 start a new search, cancel this link	etemplate	en	Start new search, cancel this link
 start new search for the above pattern	etemplate	en	Start new search for the above pattern
+su	etemplate	en	Su
 submit form	etemplate	en	Submit form
 submitbutton	etemplate	en	Submit button
 swap	etemplate	en	Swap
@@ -432,6 +438,7 @@ template deleted	etemplate	en	Template deleted.
 template saved	etemplate	en	Template saved.
 text	etemplate	en	Text
 textarea	etemplate	en	Text area
+th	etemplate	en	Th
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	en	The document can contain placeholder like {{%3}}, to be replaced with the data. %1Full list of placeholder names%2.
 the following document-types are supported:	preferences	en	The following document types are supported:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	Text gets displayed if the input field is empty and has no focus (blur)
@@ -444,6 +451,7 @@ to start the search	etemplate	en	To start search
 today	etemplate	en	Today
 top	etemplate	en	Top
 tree	etemplate	en	Tree
+tu	etemplate	en	Tu
 type	etemplate	en	Type
 type of the column	etemplate	en	Type of column
 type of the field (select label if field should be empty)	etemplate	en	Type of field. Select label if field should be empty.
@@ -465,6 +473,7 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 vertical alignment of row	etemplate	en	Vertical alignment of row
 view this etemplate	etemplate	en	View eTemplate
 view this linked entry in its application	etemplate	en	View linked entry in its application
+we	etemplate	en	We
 weekend	etemplate	en	Weekend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 widget copied into clipboard	etemplate	en	Widget copied into clipboard
@@ -473,6 +482,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	en	Width of column in % or pixels
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table tag and (optional) div
 width, disabled	etemplate	en	Width, Disabled
+wk	etemplate	en	Wk
 working days	etemplate	en	Working days
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write language file

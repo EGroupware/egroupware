@@ -136,7 +136,7 @@ files	mail	en	Files
 flagged	mail	en	flagged
 flagged %1 messages as %2 in %3	mail	en	flagged %1 messages as %2 in %3
 flagged / unflagged	mail	en	Flagged / Unflagged
-folder	mail	en	folder
+folder	mail	en	Folder
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
 force html	mail	en	force html
@@ -278,7 +278,7 @@ replied	mail	en	replied
 reply	mail	en	Reply
 reply all	mail	en	Reply All
 reply message type	mail	en	Reply message type
-reply to	mail	en	Reply To
+reply to	mail	en	Reply to
 replyto	mail	en	replyto
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 respond to mail sent to:	mail	en	Respond to mail sent to:
