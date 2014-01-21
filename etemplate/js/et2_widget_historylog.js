@@ -23,12 +23,12 @@
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
- * The widget is encapsulated, and only needs the record's ID, and a map of 
+ * The widget is encapsulated, and only needs the record's ID, and a map of
  * fields:widgets for display.
  *
  * It defers its initialization until the tab that it's on is selected, to avoid
  * wasting time if the user never looks at it.
- * 
+ *
  * @augments et2_valueWidget
  */
 var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
@@ -57,10 +57,10 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	],
 
 	TIMESTAMP: 0, OWNER: 1, FIELD: 2, NEW_VALUE: 3, OLD_VALUE: 4,
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_historylog
 	 */
 	init: function() {
@@ -170,7 +170,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	},
 
 	/**
-	 * Destroys all 
+	 * Destroys all
 	 */
 	destroy: function() {
 		// Unbind, if bound
@@ -178,7 +178,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 		{
 			$j(window).off('.' +this.options.value.app + this.options.value.id);
 		}
-		
+
 		// Free the widgets
 		for(var i = 0; i < this.columns.length; i++)
 		{
@@ -189,7 +189,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 			this.fields[key].widget.destroy();
 		}
 		if(this.diff) this.diff.widget.destroy();
-		
+
 		// Free the grid components
 		if(this.dataview) this.dataview.free();
 		if(this.rowProvider) this.rowProvider.free();
@@ -260,7 +260,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 				{
 					if(nodes[i] == null) nodes.splice(i,1);
 				}
-				
+
 				// Save to use for each row
 				this.fields[cf_widget.prefix + key] = {
 					attrs: cf_widget.widgets[key].options,
@@ -288,7 +288,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 				var options = field.split(':');
 				field = options.shift();
 			}
-			
+
 			var widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
 
 			// Parse / set legacy options
@@ -363,7 +363,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	dataFetch: function (_queriedRange, _callback, _context) {
 		// Skip getting data if there's no ID
 		if(!this.value.id) return;
-		
+
 		// Pass the fetch call to the API
 		this.egw().dataFetch(
 			this.getInstanceManager().etemplate_exec_id,
@@ -458,7 +458,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	_needsDiffWidget: function(columnName, value) {
 		if(typeof value !== "string")
 		{
-			this.egw().debug("warning", "Crazy diff value", value);
+			this.egw().debug("warn", "Crazy diff value", value);
 			return false;
 		}
 		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)));

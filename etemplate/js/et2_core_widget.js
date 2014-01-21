@@ -77,7 +77,7 @@ function et2_createWidget(_name, _attrs, _parent)
 	// Parse the "readonly" and "type" flag for this element here, as they
 	// determine which constructor is used
 	var nodeName = _attrs["type"] = _name;
-	var readonly = _attrs["readonly"] = 
+	var readonly = _attrs["readonly"] =
 		typeof _attrs["readonly"] == "undefined" ? false : _attrs["readonly"];
 
 	// Get the constructor - if the widget is readonly, use the special "_ro"
@@ -98,7 +98,7 @@ function et2_createWidget(_name, _attrs, _parent)
 
 /**
  * The et2 widget base class.
- * 
+ *
  * @augments Class
  */
 var et2_widget = Class.extend(
@@ -158,7 +158,7 @@ var et2_widget = Class.extend(
 	 * The init function is the constructor of the widget. When deriving new
 	 * classes from the widget base class, always call this constructor unless
 	 * you know what you're doing.
-	 * 
+	 *
 	 * @param _parent is the parent object from the XML tree which contains this
 	 * 	object. The default constructor always adds the new instance to the
 	 * 	children list of the given parent object. _parent may be NULL.
@@ -317,7 +317,7 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Inserts an child at the end of the list.
-	 * 
+	 *
 	 * @param _node is the node which should be added. It has to be an instance
 	 * 	of et2_widget
 	 */
@@ -327,7 +327,7 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Inserts a child at the given index.
-	 * 
+	 *
 	 * @param _node is the node which should be added. It has to be an instance
 	 * 	of et2_widget
 	 * @param _idx is the position at which the element should be added.
@@ -344,14 +344,14 @@ var et2_widget = Class.extend(
 
 			_node._parent = this;
 			this._children.splice(_idx, 0, _node);
-			
+
 			if(_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && _node.parentNode)
 			{
 				_node.detachFromDOM();
 				_node.parentNode = this.getDOMNode(_node);
 				_node.attachToDOM();
 			}
-			
+
 		}
 		else
 		{
@@ -378,7 +378,7 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Searches an element by id in the tree, descending into the child levels.
-	 * 
+	 *
 	 * @param _id is the id you're searching for
 	 */
 	getWidgetById: function(_id) {
@@ -429,7 +429,7 @@ var et2_widget = Class.extend(
 	 * Returns true if the widget currently resides in the visible part of the
 	 * widget tree. E.g. Templates which have been cloned are not in the visible
 	 * part of the widget tree.
-	 * 
+	 *
 	 * @param _vis can be used by widgets overwriting this function - simply
 	 * 	write
 	 * 		return this._super(inTree);
@@ -521,7 +521,7 @@ var et2_widget = Class.extend(
 						{
 							attrValue = splitted.slice(j);
 						}
-						
+
 						var attr = _proto.attributes[_proto.legacyOptions[j]];
 
 						// If the attribute is marked as boolean, parse the
@@ -600,7 +600,7 @@ var et2_widget = Class.extend(
 		{
 			if (_attrs[key] && typeof this.attributes[key] != "undefined")
 			{
-				if (this.attributes[key].translate === true || 
+				if (this.attributes[key].translate === true ||
 				   (this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"]))
 				{
 					_attrs[key] = this.egw().lang(_attrs[key]);
@@ -615,7 +615,7 @@ var et2_widget = Class.extend(
 	 * First the type and attributes are read from the node.  Then the readonly & modifications
 	 * arrays are checked for changes specific to the loaded data.  Then the appropriate
 	 * constructor is called.  After the constructor returns, the widget has a chance to
-	 * further initialize itself from the XML node when the widget's loadFromXML() method 
+	 * further initialize itself from the XML node when the widget's loadFromXML() method
 	 * is called with the node.
 	 *
 	 * @param _node XML node to read
@@ -671,7 +671,7 @@ var et2_widget = Class.extend(
 
 		// Parse the attributes from the given XML attributes object
 		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
-		
+
 		// check if parseXMLAttrs gives a different type attribute eg. type="@${row}[type]"
 		if (attributes.type && attributes.type != _nodeName)
 		{
@@ -682,7 +682,7 @@ var et2_widget = Class.extend(
 			if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 			{
 				constructor = et2_registry[_nodeName + "_ro"];
-			}			
+			}
 		}
 
 		// Do an sanity check for the attributes
@@ -739,7 +739,7 @@ var et2_widget = Class.extend(
 	 * recursively called for all child elements. Do not directly override this
 	 * function but the doLoadingFinished function which is executed before
 	 * descending deeper into the DOM-Tree.
-	 * 
+	 *
 	 * Some widgets (template) do not load immediately because they request
 	 * additional resources via AJAX.  They will return a Deferred Promise object.
 	 * If you call loadingFinished(promises) after creating such a widget
@@ -751,14 +751,14 @@ var et2_widget = Class.extend(
 	 * jQuery.when.apply(null, promises).done( doneCallback );
 	 * </code>
 	 * @see {@link http://api.jquery.com/category/deferred-object/|jQuery Deferred}
-	 * 
+	 *
 	 * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
 	 */
 	loadingFinished: function(promises) {
 		// Call all availble setters
 		this.initAttributes(this.options);
-		
-		// Make sure promises is defined to avoid errors.  
+
+		// Make sure promises is defined to avoid errors.
 		// We'll warn (below) if programmer should have passed it.
 		if(typeof promises == "undefined")
 		{
@@ -781,7 +781,7 @@ var et2_widget = Class.extend(
 				}
 			}
 		};
-		
+
 		var result = this.doLoadingFinished();
 		if(typeof result == "boolean" && result)
 		{
@@ -794,7 +794,7 @@ var et2_widget = Class.extend(
 			if(warn_if_deferred)
 			{
 				// Might not be a problem, but if you need the widget to be really loaded, it could be
-				egw.debug("warning", "Loading was deferred for widget %o, but creator is not checking.  Pass a list to loadingFinished().");
+				egw.debug("warn", "Loading was deferred for widget %o, but creator is not checking.  Pass a list to loadingFinished().", this);
 			}
 			// Widget is waiting.  Add to the list
 			promises.push(result);
@@ -802,13 +802,13 @@ var et2_widget = Class.extend(
 			result.done(jQuery.proxy(loadChildren, this));
 		}
 	},
-	
+
 	/**
 	 * The initAttributes function sets the attributes to their default
 	 * values. The attributes are not overwritten, which means, that the
 	 * default is only set, if either a setter exists or this[propName] does
 	 * not exist yet.
-	 * 
+	 *
 	 * Overwritten here to compile legacy JS code in attributes of type "js"
 	 */
 	initAttributes: function(_attrs) {
@@ -820,8 +820,8 @@ var et2_widget = Class.extend(
 				// compile string values of attribute type "js" to functions
 				if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string')
 				{
-					val = et2_compileLegacyJS(val, this, 
-							this.instanceOf(et2_inputWidget) ? this.getInputNode() : 
+					val = et2_compileLegacyJS(val, this,
+							this.instanceOf(et2_inputWidget) ? this.getInputNode() :
 								(this.implements(et2_IDOMNode) ? this.getDOMNode() : null));
 				}
 				this.setAttribute(key, val, false);
@@ -832,10 +832,10 @@ var et2_widget = Class.extend(
 	/**
 	 * Does specific post-processing after the widget is loaded.  Most widgets should not
 	 * need to do anything here, it should all be done before.
-	 * 
+	 *
 	 * @return {boolean|Promise} True if the widget is fully loaded, false to avoid procesing children,
 	 * or a Promise if loading is not actually finished (eg. waiting for AJAX)
-	 * 
+	 *
 	 * @see {@link http://api.jquery.com/deferred.promise/|jQuery Promise}
 	 */
 	doLoadingFinished: function() {
@@ -848,7 +848,7 @@ var et2_widget = Class.extend(
 	 * widget using the setApiInstance function.
 	 */
 	egw: function() {
-		// The _egw property is not set 
+		// The _egw property is not set
 		if (typeof this._egw === 'undefined')
 		{
 			if (this._parent != null)
