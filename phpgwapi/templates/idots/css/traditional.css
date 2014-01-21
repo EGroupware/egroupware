@@ -912,16 +912,12 @@ td.lettersearch {
 }
 
 /**
- * Javascript error image / trigger for log
+ * Clientside Javascript error-log
  */
 #topmenu_info_error {
 	width: 16px;
 	cursor: pointer;
 }
-
-/**
- * Error log
- */
 div.client_error_log {
 	max-height: 50ex;
 }
