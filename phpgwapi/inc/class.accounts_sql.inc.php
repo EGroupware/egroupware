@@ -395,7 +395,7 @@ class accounts_sql
 		// allways add 'account_lid', as it is only valid one for groups
 		if (strpos($order, 'account_lid') === false)
 		{
-			$order .= ',account_lid';
+			$order .= ($order?',':'').'account_lid';
 		}
 		if ($sort) $order = implode(' '.$sort.',', explode(',', $order)).' '.$sort;
 
