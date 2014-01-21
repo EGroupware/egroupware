@@ -697,6 +697,16 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * reSelectItem, reselects an item by id
+	 * @param _id ID of the node
+	 */
+	reSelectItem: function(_id)
+	{
+		if (this.input == null) return null;
+		this.input.selectItem(_id,false,false);
+	},
+
+	/**
 	 * Set images for a specific node or all new nodes (default)
 	 *
 	 * If images contain an extension eg. "leaf.gif" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
