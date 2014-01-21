@@ -124,7 +124,7 @@ app.classes.addressbook = AppJS.extend(
 		// Remove UID prefix for just contact_id
 		var id = _senders[0].id.split('::');
 		extras.action_id = id[1];
-		
+
 		egw.open('', 'infolog', 'list', extras, 'infolog');
 	},
 
@@ -192,8 +192,7 @@ app.classes.addressbook = AppJS.extend(
 
 	check_value: function(input, own_id)
 	{
-		var values = egw_json_getFormValues(input.form).exec;	// todo use eT2 method, if running under et2
-		if(typeof values == 'undefined' && typeof etemplate2 != 'undefined') {
+		if(typeof etemplate2 != 'undefined') {
 			var template = etemplate2.getByApplication('addressbook')[0];
 			values = template.getValues(template.widgetContainer);
 		}
@@ -218,26 +217,19 @@ app.classes.addressbook = AppJS.extend(
 				name.value = value;
 			}
 		}
-		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, input.name, own_id]).sendRequest(true, function(data) {
+		var request = new egw_json_request ('addressbook.addressbook_ui.ajax_check_values', [values, input.name, own_id])
+		request.sendRequest(true, function(data) {
 			if (data.msg && confirm(data.msg))
 			{
 				for(var id in data.doublicates)
 				{
 					egw.open(id, 'addressbook');
-					//opener.egw_openWindowCentered2(egw_webserverUrl+'/index.php?menuaction=addressbook.addressbook_ui.edit&contact_id='+id, '_blank', 870, 480, 'yes', 'addressbook');
 				}
 			}
 			if (typeof data.fileas_options == 'object')
 			{
-				var selbox = document.getElementById("exec[fileas_type]");
-				if (selbox)
-				{
-					for (var i=0; i < data.fileas_options.length; i++)
-					{
-						selbox.options[i].text = data.fileas_options[i];
-					}
-				}
-				else if (template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
+				var selbox = {};
+				(template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
 				{
 					selbox.set_select_options(data.fileas_sel_options);
 				}
@@ -434,7 +426,7 @@ app.classes.addressbook = AppJS.extend(
 		this.et2.getInstanceManager().submit(this.et2.getWidgetById('button[search]'));
 		return false;
 	},
-	
+
 	/**
 	 * Action function to set business or private mail checkboxes to user preferences
 	 *
