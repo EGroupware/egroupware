@@ -221,7 +221,7 @@ class calendar_ui
 	}
 
 	/**
-	 * show the egw-framework plus possible messages ($_GET['msg'] and $this->group_warning from check_owner_access)
+	 * show the egw-framework plus evtl. $this->group_warning from check_owner_access
 	 */
 	function do_header()
 	{
@@ -237,11 +237,7 @@ class calendar_ui
 		// load our app.js file
 		egw_framework::validate_file('/calendar/js/app.js');
 
-		// tell egw_framework to include wz_tooltip
-		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 		common::egw_header();
-
-		if ($_GET['msg']) echo '<p class="message" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
 		if ($this->bo->warnings) echo '<p class="message" align="center">'.implode('<br />',$this->bo->warnings)."</p>\n";
 	}
