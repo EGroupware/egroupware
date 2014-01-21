@@ -477,7 +477,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 				if($select_pref == 'popup') break;
 
 				$no_lang = True;
-				$accs = $GLOBALS['egw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
+				$accs = $GLOBALS['egw']->accounts->search(array(
+					'type' => empty($type) ? 'accounts' : $type, // default is accounts
+					'order' => 'account_fullname',	// order according to pref of how to display accounts
+				));
 				foreach($accs as $acc)
 				{
 					if ($acc['account_type'] == 'u')
