@@ -174,12 +174,12 @@ class etemplate_request
 		}
 		if (!$request)	// eT2 request/session expired
 		{
-			// redirect to index-url of app
-			error_log(__METHOD__."('$id', ...) eT2 request not found --> redirect to index-url");
+			/* redirect to index-url of app does not work, opens eTemplate tab in Stylite/Pixelegg template :-(
 			list($app) = explode('.', $_GET['menuaction']);
 			$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
 				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
-			egw_framework::redirect_link($index_url);
+			egw_framework::redirect_link($index_url); */
+			error_log(__METHOD__."('$id', ...) eT2 request not found / expired!");
 		}
 		return $request;
 	}
