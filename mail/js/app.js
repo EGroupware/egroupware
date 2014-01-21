@@ -646,7 +646,7 @@ app.classes.mail = AppJS.extend(
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
 		this.mail_removeRowClass(messages,'unseen');
-
+		egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		// Pre-load next email already so user gets it faster
 		// Browser will cache the file for us
 /*
@@ -1060,8 +1060,8 @@ app.classes.mail = AppJS.extend(
 	mail_compressFolder: function(action,_senders) {
 		//console.log(action,_senders,FolderName);
 		egw_message(this.egw.lang('compress folder'));
-		egw.json('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id])
-			.sendRequest(true);
+		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id]);
+		//	.sendRequest(true);
 		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
 		//this.mail_g();
@@ -1269,8 +1269,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_flagMessages: function(_flag, _elems,_isPopup)
 	{
-		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
-			.sendRequest(true);
+		egw.jsonq('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
+		//	.sendRequest(true);
 	},
 
 	/**

@@ -3837,12 +3837,13 @@ blockquote[type=cite] {
 	 *
 	 * @param string _flag name of the flag
 	 * @param array _messageList list of UID's
+	 * @param bool _sendJsonResponse tell fuction to send the JsonResponse
 	 *
 	 * @return xajax response
 	 */
-	function ajax_flagMessages($_flag, $_messageList)
+	function ajax_flagMessages($_flag, $_messageList, $_sendJsonResponse=true)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
+		if(mail_bo::$debug); error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if ($_messageList=='all')
@@ -3875,8 +3876,11 @@ blockquote[type=cite] {
 			$this->saveSessionData();
 		}
 */
-		$response = egw_json_response::get();
-		$response->call('egw_message',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),lang($_flag),$folder));
+		if ($_sendJsonResponse)
+		{
+			$response = egw_json_response::get();
+			$response->call('egw_message',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),lang($_flag),$folder));
+		}
 	}
 
 	/**
@@ -3909,7 +3913,7 @@ blockquote[type=cite] {
 			}
 			try
 			{
-				//error_log(__METHOD__."->".print_r($messageList,true).' Method:'.$_forceDeleteMethod);
+				//error_log(__METHOD__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
 				$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
 			}
 			catch (egw_exception $e)
