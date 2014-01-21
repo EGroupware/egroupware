@@ -89,6 +89,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 		this._invalidateCallback = null;
 		this._invalidateContext = null;
 
+		// Flag for stopping invalidate while working
+		this.doInvalidate = true;
+
 		// _map contains a mapping between the grid indices and the elements
 		// associated to it. The first element in the array always refers to the
 		// element starting at index zero (being a spacer if the grid currently
@@ -483,9 +486,15 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 			window.clearTimeout(this._invalidateTimeout);
 		}
 
+		if(!this.doInvalidate)
+		{
+			return;
+		}
+		
 		var self = this;
 		var _super = this._super;
 		this._invalidateTimeout = window.setTimeout(function() {
+			egw.debug("log","Dataview grid timed invalidate");
 			// Clear the "_avgHeight"
 			self._avgHeight = false;
 			self._avgCount = false;
@@ -775,7 +784,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					var vtop = Math.max(0, vcr_top);
 					var idxStart = Math.floor(
 							Math.min(cidx + ccnt - 1, 
-								cidx + (vtop - elemRange.top) / avg));
+								cidx + (vtop - elemRange.top) / avg,
+								this._total
+							));
 
 					// Calculate the end index -- prevent vtop from getting
 					// negative (and so idxEnd being smaller than cidx) and
@@ -784,7 +795,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					var vbot = Math.max(0, vcr_bot);
 					var idxEnd = Math.ceil(
 							Math.min(cidx + ccnt - 1, 
-								cidx + (vbot - elemRange.top) / avg));
+								cidx + (vbot - elemRange.top) / avg,
+								this._total
+							));
 
 					// Initial resize while the grid is hidden will give NaN
 					// This is an important optimisation, as it is involved in not
@@ -802,6 +815,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					if (this._callback)
 					{
 						var self = this;
+						egw.debug("log","Dataview grid flag for update: ", {start:idxStart,end:idxEnd});
 						window.setTimeout(function() {
 							// If row template changes, self._callback might disappear
 							if(typeof self._callback != "undefined")

@@ -135,14 +135,22 @@ var et2_dataview_controller = Class.extend({
 		// TODO: Actually stuff here should be done if the server responds that
 		// there at all were some changes (needs implementation of "refresh")
 
+		// Tell the grid not to try and update itself while we do this
+		this._grid.doInvalidate = false;
+
 		if(clear)
 		{
-			this._grid.clear.apply(this._grid,[]);
+			// Scroll to top
+			this._grid.makeIndexVisible(0);
+			this._grid.clear();
+			
+			// Clear the map
+			this._indexMap = {}
+			// Clear the queue
+			this._queue = {};
 		}
 		// Remove all rows which are outside the view range
 		this._grid.cleanup();
-		
-		// ---------
 
 		// Get the currently visible range from the grid
 		var range = this._grid.getIndexRange();
@@ -357,7 +365,7 @@ var et2_dataview_controller = Class.extend({
 		// Insert the row into the table -- the same row must never be inserted
 		// twice into the grid, so this function only executes the following
 		// code only if it is a newly created row.
-		if (createdRow)
+		if (createdRow && _entry.row)
 		{
 			this._grid.insertRow(_entry.idx, _entry.row);
 		}
@@ -421,6 +429,7 @@ var et2_dataview_controller = Class.extend({
 		if (this._queueTimer === null && !_isUpdate)
 		{
 			var self = this;
+			egw.debug('log', 'Dataview queue: ', _range);
 			this._queueTimer = window.setTimeout(function () {
 				self._flushQueue(false);
 			}, ET2_DATAVIEW_FETCH_TIMEOUT);
@@ -508,8 +517,12 @@ var et2_dataview_controller = Class.extend({
 			fetchList.push({
 				"start": 0, "count": 0
 			});
+
+			// Disable grid invalidate, or it might request again before we're done
+			this._grid.doInvalidate = false;
 		}
 
+		egw.debug("log", "Dataview flush", fetchList);
 		// Execute all queries
 		for (var i = 0; i < fetchList.length; i++)
 		{
@@ -825,9 +838,15 @@ var et2_dataview_controller = Class.extend({
 			this.self._selectionMgr.unregisterRow("",0,row.get(0));
 		}
 
+		// Now it's OK to invalidate, if it wasn't before
+		this.self._grid.doInvalidate = true;
+		
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
 		this.self._selectionMgr.setTotalCount(_response.total);
+		
+		// Schedule an invalidate, in case total is the same
+		this.self._grid.invalidate();
 	},
 
 	/**

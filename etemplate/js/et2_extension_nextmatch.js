@@ -400,9 +400,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}, this.activeFilters.col_filter, et2_INextmatchHeader);
 
-		// Explicitly the total count to zero, we're going to get some new info
-		this.controller._grid.setTotalCount(0);
-
 		// Trigger an update
 		this.controller.update(true);
 	},

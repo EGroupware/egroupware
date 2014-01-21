@@ -152,7 +152,6 @@ var et2_dataview_selectionManager = Class.extend(
 			if (!_noDelete
 			    && this._registeredRows[_uid].state === EGW_AO_STATE_NORMAL)
 			{
-				delete this._indexMap[this._registeredRows[_uid].idx];
 				delete this._registeredRows[_uid];
 			}
 

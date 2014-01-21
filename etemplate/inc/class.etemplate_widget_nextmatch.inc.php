@@ -292,7 +292,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
-		if($value['num_rows'] == 0) $value['num_rows'] = 20;
+		if($value['num_rows'] == 0) $value['num_rows'] = self::INITIAL_ROWS;
 		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
 		if (($parent_id = $value['parent_id']))
 		{
