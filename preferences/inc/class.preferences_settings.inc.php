@@ -445,7 +445,7 @@ class preferences_settings
 				$user_apps = $GLOBALS['egw']->acl->get_user_applications($id);
 				$sel_options['appname'] = array_intersect_key($sel_options['appname'], $user_apps);
 			}
-			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups', 'sort' => 'account_lid')) as $account_id => $group)
+			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups', 'order' => 'account_lid')) as $account_id => $group)
 			{
 				$sel_options['type']['group:'.$account_id] = lang('Preferences').' '.common::display_fullname($group['account_lid'], '', '', $account_id);
 			}
