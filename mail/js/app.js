@@ -126,6 +126,12 @@ app.classes.mail = AppJS.extend(
 				var self = this;
 				$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
 			}
+			var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+			if (tree_wdg)
+			{
+				tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
+				tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+			}
 		}
 		if (isDisplay)
 		{
@@ -2482,5 +2488,38 @@ app.classes.mail = AppJS.extend(
 	unlock_tree: function()
 	{
 		jQuery('#mail_folder_lock_div').remove();
+	},
+
+	/**
+	 * Called when tree opens up an account or folder
+	 *
+	 * @param {String} _id account-id[::folder-name]
+	 * @param {et2_widget_tree} _widget
+	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
+	 */
+	openstart_tree: function(_id, _widget, _hasChildren)
+	{
+		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
+			!_hasChildren)
+		{
+			this.lock_tree();
+		}
+		return true;	// allow opening of node
+	},
+
+	/**
+	 * Called when tree opens up an account or folder
+	 *
+	 * @param {String} _id account-id[::folder-name]
+	 * @param {et2_widget_tree} _widget
+	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
+	 */
+	openend_tree: function(_id, _widget, _hasChildren)
+	{
+		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
+			_hasChildren == 1)
+		{
+			this.unlock_tree();
+		}
 	}
 });

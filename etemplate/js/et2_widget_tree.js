@@ -26,9 +26,9 @@
 
 /**
  * Tree widget
- * 
+ *
  * For syntax of nodes supplied via sel_optons or autoloading refer to etemplate_widget_tree class.
- * 
+ *
  * @augments et2_inputWidget
  */
 var et2_tree = et2_inputWidget.extend(
@@ -94,7 +94,7 @@ var et2_tree = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_tree
 	 */
 	init: function() {
@@ -189,15 +189,15 @@ var et2_tree = et2_inputWidget.extend(
 				url = '/json.php?menuaction='+url;
 			}
 			this.autoloading_url = url;
-			
+
 			widget.input.setXMLAutoLoading(egw.link(url));
 			widget.input.setDataMode('JSON');
 		}
 	},
-	
+
 	/**
 	 * Install event handlers on tree
-	 * 
+	 *
 	 * @param _name
 	 * @param _handler
 	 */
@@ -214,16 +214,18 @@ var et2_tree = et2_inputWidget.extend(
 				var args = jQuery.makeArray(arguments);
 				// splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
 				args.splice(1, 0, widget);
-				handler.apply(this, args);	
+				return handler.apply(this, args);
 			});
 		}
 	},
-	
+
 	set_onchange: function(_handler) { this._install_handler('onchange', _handler); },
 	set_onclick:  function(_handler) { this._install_handler('onclick',  _handler); },
 	set_onselect: function(_handler) { this._install_handler('onselect', _handler); },
+	set_onopenstart: function(_handler) { this._install_handler('onOpenStart', _handler); },
+	set_onopenend: function(_handler) { this._install_handler('onOpenEnd', _handler); },
 
-	set_select_options: function(options) 
+	set_select_options: function(options)
 	{
 		var custom_images = false;
 		this.options.select_options = options;
@@ -240,10 +242,10 @@ var et2_tree = et2_inputWidget.extend(
 			for(var key in options)
 			{
 				// See if item has an icon
-				if(options[key].data && typeof options[key].data.icon !== 'undefined' && options[key].data.icon) 
+				if(options[key].data && typeof options[key].data.icon !== 'undefined' && options[key].data.icon)
 				{
 					var img = this.egw().image(options[key].data.icon, options[key].appname);
-					if(img) 
+					if(img)
 					{
 						custom_images = true;
 						options[key].im0 = options[key].im1 = options[key].im2 = img;
@@ -253,7 +255,7 @@ var et2_tree = et2_inputWidget.extend(
 				if(options[key].data && typeof options[key].data.color !== 'undefined' && options[key].data.color)
 				{
 					options[key].style = options[key].style || "" + "background-color ='"+options[key].data.color+"';";
-				} 
+				}
 
 				// Tooltip
 				if(options[key].description && !options[key].tooltip)
@@ -296,7 +298,7 @@ var et2_tree = et2_inputWidget.extend(
 	set_value: function(new_value) {
 		this.value = this._oldValue = (typeof new_value === 'string' && this.options.multiple ? new_value.split(',') : new_value);
 		if(this.input == null) return;
-		
+
 		if (this.options.multiple)
 		{
 			// Clear all checked
@@ -305,7 +307,7 @@ var et2_tree = et2_inputWidget.extend(
 			{
 				this.input.setCheck(checked[i], false);
 			}
-	
+
 			// Check selected
 			for(var i = 0; i < this.value.length; i++)
 			{
@@ -326,7 +328,7 @@ var et2_tree = et2_inputWidget.extend(
 	 *
 	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
-	_link_actions: function(actions) 
+	_link_actions: function(actions)
 	{
 		// Get the top level element for the tree
 		// Only look 1 level deep for application object manager
@@ -421,7 +423,7 @@ var et2_tree = et2_inputWidget.extend(
 				treeObj.children[i].iface.id = _newItemId;
 			}
 		}
-		
+
 		if (typeof _label != 'undefined') this.input.setItemText(_newItemId,_label);
 	},
 
@@ -529,10 +531,10 @@ var et2_tree = et2_inputWidget.extend(
 		// Update actions by just re-setting them
 		this.set_actions(this.options.actions || {});
 	},
-	
+
 	/**
 	 * Recursive search item object for given id
-	 * 
+	 *
 	 * @param string _id
 	 * @param object _item
 	 * @returns
@@ -588,7 +590,7 @@ var et2_tree = et2_inputWidget.extend(
 
 	/**
 	 * getTreeNodeOpenItems
-	 * 
+	 *
 	 * @param _nodeID, the nodeID where to start from (initial node)
 	 * @param mode, the mode to run in: forced fakes the initial node openState to be open
 	 * @return structured array of node ids: array(message-ids)
@@ -615,22 +617,22 @@ var et2_tree = et2_inputWidget.extend(
 					rv = this.getTreeNodeOpenItems(z[i]);
 					//returnValue.concat(rv); // not working as expected; the following does
 					for(var j=0;j<rv.length;j++) {returnValue.push(rv[j]);}
-				}		
+				}
 			}
 		}
 		//alert(returnValue.join('#,#'));
 		return returnValue;
 	},
-	
+
 	/**
 	 * Fetch user-data stored in specified node under given name
-	 * 
+	 *
 	 * User-data need to be stored in json as follows:
-	 * 
+	 *
 	 * {"id": "node-id", "im0": ..., "userdata": [{"name": "user-name", "content": "user-value"},...]}
-	 * 
+	 *
 	 * In above example getUserData("node-id", "user-name") will return "user-value"
-	 * 
+	 *
 	 * @param _nodeId
 	 * @param _name
 	 * @returns
@@ -640,10 +642,10 @@ var et2_tree = et2_inputWidget.extend(
 		if(this.input == null) return null;
 		return this.input.getUserData(_nodeId, _name);
 	},
-	
+
 	/**
 	 * Stores / updates user-data in specified node and name
-	 * 
+	 *
 	 * @param _nodeId
 	 * @param _name
 	 * @param _value
@@ -654,10 +656,10 @@ var et2_tree = et2_inputWidget.extend(
 		if(this.input == null) return null;
 		return this.input.setUserData(_nodeId, _name, _value);
 	},
-	
+
 	/**
 	 * Query nodes open state and optinal change it
-	 * 
+	 *
 	 * @param _id node-id
 	 * @param _open specify to change true: open, false: close, everything else toggle
 	 * @returns true if open, false if closed
@@ -667,7 +669,7 @@ var et2_tree = et2_inputWidget.extend(
 		if (this.input == null) return null;
 
 		var is_open = this.input.getOpenState(_id) == 1;
-			
+
 		if (typeof _open != 'undefined' && is_open !== _open)
 		{
 			if(is_open)
@@ -681,13 +683,13 @@ var et2_tree = et2_inputWidget.extend(
 		}
 		return is_open;
 	},
-	
+
 	/**
 	 * Set images for a specific node or all new nodes (default)
-	 * 
+	 *
 	 * If images contain an extension eg. "leaf.gif" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
 	 * Otherwise they get searched via egw.image() in current app, phpgwapi or can be specified as "app/image".
-	 * 
+	 *
 	 * @param string _leaf leaf image, default "leaf.gif"
 	 * @param string _closed closed folder image, default "folderClosed.gif"
 	 * @param string _open opened folder image, default "folderOpen.gif"
@@ -715,12 +717,12 @@ var et2_tree = et2_inputWidget.extend(
 			this.input.setItemImage2.apply(this.input, images);
 		}
 	},
-	
+
 	/**
 	 * Get URL relative to image_path option
-	 * 
+	 *
 	 * Both URL start with EGroupware webserverUrl and image_path gets allways appended to images by tree.
-	 * 
+	 *
 	 * @param string _url
 	 * @return string relativ url
 	 */
@@ -730,7 +732,7 @@ var et2_tree = et2_inputWidget.extend(
 		path_parts = path_parts[1].split('/');
 		var url_parts = _url.split(this.egw().webserverUrl);
 		url_parts = url_parts[1].split('/');
-		
+
 		for(var i=0; i < path_parts.length; ++i)
 		{
 			if (path_parts[i] != url_parts[i])
