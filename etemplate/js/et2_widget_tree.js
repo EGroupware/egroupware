@@ -62,6 +62,18 @@ var et2_tree = et2_inputWidget.extend(
 			"description": "Javascript executed when user checks a node"
 		},
 		// onChange event is mapped depending on multiple to onCheck or onSelect
+		onopenstart: {
+			"name": "onOpenStart",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
+		},
+		onopenend: {
+			"name": "onOpenEnd",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
+		},
 		"image_path": {
 			"name": "Image directory",
 			"type": "string",
