@@ -324,12 +324,7 @@ div#mail-index{
         width: 100%;
 
         span.email-button-group {
-            margin: 3px 4px 4px 4px;
-            padding: 2px;
-            background-color: @gray_20;
-            /*.background_linear_gradient !important;*/
-            .dimension_height_m;
-            .rounded (5px);
+            .span_tool_group;
         }
 
         span.sent {float: left;}
@@ -350,12 +345,6 @@ div#mail-index{
                     span.et2_label {line-height: 25px;}    
         }
 
-        button.et2_button {
-            .dimension_height_m;
-/*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
-        }
-
         img{.dimension_height_m;}
         img[src$="svg"]{ 
             .gradient_vertical (@gray_30, @gray_40); 
@@ -368,18 +357,28 @@ div#mail-index{
             }
         }
 
-        span.et2_label {font-size: 9px;}
+        span.et2_label {font-size: 8px;}
 
         /*######################################*/
         /*// Button senden -> dev_buttons.less*/
+        button.et2_button {
+            /*.dimension_height_m;*/
+            
+/*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
+        }
+        
+        
         .mail-compose_button{
-            /*margin-right: 15px !important;*/
+            height: 27px;
+            margin-right: 3px !important;
+            margin-top: 0px !important;
             padding: 0 3px 0 0;
             text-align: left;
             font-weight: bold;
             padding-left: 20px;
             width: 71px;
-
+            float: left;
             background-image: url(images/mail_send.png) !important;
             background-position: left;
             background-repeat: no-repeat;
@@ -490,7 +489,18 @@ div#mail-index{
         margin: 2px 0;
         width: 98%;
 
-        span { width: 8em; font-size: 0.8em; text-align: right; padding-right: 5px;}
+        span { 
+               width: 8em; 
+               font-size: 0.8em; 
+               text-align: right; 
+               padding-right: 5px;
+        }
+        
+        span.ms-close-btn {
+            width: auto; 
+            background-repeat: no-repeat;
+            padding-right: 8px;
+        }
 
         div{ max-width: 770px; 	}
 
@@ -502,7 +512,7 @@ div#mail-index{
         }
 
         /*Von*/
-        select#mail-compose_mailaccount {width: 100%;}
+        select#mail-compose_mailaccount {width: 100%; height: 30px;}
         /*An*/
         
         /*Kopie*/
@@ -1422,4 +1432,4 @@ div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-c
 }
 
 
-//
+//                                                                                                                                                                                                                                                                    

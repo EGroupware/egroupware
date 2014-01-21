@@ -779,14 +779,25 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*######################################*/
 }
 #mail-compose .mail-compose_toolbar span.email-button-group {
-  margin: 3px 4px 4px 4px;
-  padding: 2px;
-  background-color: #cdcdcd;
-  /*.background_linear_gradient !important;*/
-  height: 24px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  float: left;
+  margin: 0 6px 5px 0;
+  padding: 0px 2px;
+  border: 1px solid #a6a6a6;
+  border-bottom-color: #979797;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+  background: #e4e4e4;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e4e4e4));
+  background-image: -moz-linear-gradient(top, #ffffff, #e4e4e4);
+  background-image: -webkit-linear-gradient(top, #ffffff, #e4e4e4);
+  background-image: -o-linear-gradient(top, #ffffff, #e4e4e4);
+  background-image: -ms-linear-gradient(top, #ffffff, #e4e4e4);
+  background-image: linear-gradient(top, #ffffff, #e4e4e4);
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#ffffff', endColorstr='#e4e4e4');
 }
 #mail-compose .mail-compose_toolbar span.sent {
   float: left;
@@ -817,11 +828,6 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mail-compose_toolbar span.priority span.et2_label {
   line-height: 25px;
-}
-#mail-compose .mail-compose_toolbar button.et2_button {
-  height: 24px;
-  /*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
 }
 #mail-compose .mail-compose_toolbar img {
   height: 24px;
@@ -854,15 +860,23 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-repeat: repeat-x;
 }
 #mail-compose .mail-compose_toolbar span.et2_label {
-  font-size: 9px;
+  font-size: 8px;
+}
+#mail-compose .mail-compose_toolbar button.et2_button {
+  /*.dimension_height_m;*/
+  /*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
 }
 #mail-compose .mail-compose_toolbar .mail-compose_button {
-  /*margin-right: 15px !important;*/
+  height: 27px;
+  margin-right: 3px !important;
+  margin-top: 0px !important;
   padding: 0 3px 0 0;
   text-align: left;
   font-weight: bold;
   padding-left: 20px;
   width: 71px;
+  float: left;
   background-image: url(images/mail_send.png) !important;
   background-position: left;
   background-repeat: no-repeat;
@@ -1043,6 +1057,12 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   text-align: right;
   padding-right: 5px;
 }
+#mail-compose .mailComposeHeaders span.ms-close-btn,
+#mail-compose .mailComposeHeadersSection span.ms-close-btn {
+  width: auto;
+  background-repeat: no-repeat;
+  padding-right: 8px;
+}
 #mail-compose .mailComposeHeaders div,
 #mail-compose .mailComposeHeadersSection div {
   max-width: 770px;
@@ -1062,6 +1082,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mailComposeHeaders select#mail-compose_mailaccount,
 #mail-compose .mailComposeHeadersSection select#mail-compose_mailaccount {
   width: 100%;
+  height: 30px;
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander {
