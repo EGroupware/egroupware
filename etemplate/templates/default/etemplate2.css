@@ -1178,3 +1178,13 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
   overflow-x: hidden;
 }
+/**
+* et2_toolbar
+*/
+.ui-toolbar_dropShadow {
+	height: 100%;
+    border: dashed;
+    border-width: 1px;
+    border-color: gray;
+	opacity:0.7;
+}

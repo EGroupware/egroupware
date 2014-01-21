@@ -203,6 +203,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 			drop:function (event, ui) {
 					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
 					ui.draggable.appendTo(menulist);
+					if (that.actionlist.find(".ui-draggable").length == 1)
+					{
+						that.actionlist.addClass("ui-toolbar_dropShadow");
+					}
 			},
 			tolerance:"pointer"
 		});
@@ -212,12 +216,24 @@ var et2_toolbar = et2_DOMWidget.extend(
 			drop:function (event,ui) {
 				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"remove");
 				ui.draggable.appendTo(jQuery('#'+that.id+'-'+'actionlist'));
+				that.actionlist.removeClass("ui-toolbar_dropShadow");
 			}
 		});
 		toolbox.accordion({
 			heightStyle:"fill",
 			collapsible: true,
-			active:'none'
+			active:'none',
+			activate:function(event,ui)
+			{
+				if (that.actionlist.find(".ui-draggable").length == 0 && ui.oldPanel.length == 0)
+				{
+					that.actionlist.addClass("ui-toolbar_dropShadow");
+				}
+				else if(that.actionlist.find(".ui-draggable").length == 0 && ui.newPanel.length == 0)
+				{
+					that.actionlist.removeClass("ui-toolbar_dropShadow");
+				}
+			}
 		});
 	},
 
