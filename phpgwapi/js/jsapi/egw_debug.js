@@ -30,14 +30,14 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 * 4 = -- " -- plus "log"
 	 * 5 = -- " -- plus a stacktrace
 	 */
-	var DEBUGLEVEL = 2;
+	var DEBUGLEVEL = 3;
 
 	/**
 	 * Log-level for local storage
 	 *
 	 * @type Number
 	 */
-	var LOCAL_LOG_LEVEL = 1;
+	var LOCAL_LOG_LEVEL = 2;
 	/**
 	 * Number of log-entries stored on client, new errors overwrite old ones
 	 *
@@ -127,6 +127,9 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 */
 	function clear_client_log()
 	{
+		// Remove indicator icon
+		jQuery('#topmenu_info_error').remove();
+		
 		if (!window.localStorage) return false;
 
 		for(var i=0; i < MAX_LOGS; ++i)
@@ -139,6 +142,43 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		delete window.localStorage[LASTLOG];
 
 		return true;
+	}
+
+	/**
+	 * Format one log message for display
+	 *
+	 * @param {{level: string, time: number, stack: string, args: array[]}} Log information
+	 *	Actual message is in args[0]
+	 * @returns {DOMNode}
+	 */
+	function format_message(log)
+	{
+		var row = document.createElement('tr');
+		row.setAttribute('class', log.level);
+		var timestamp = row.insertCell(-1);
+		timestamp.appendChild(document.createTextNode(new Date(log.time)));
+		timestamp.setAttribute('class', 'timestamp');
+		
+		var level = row.insertCell(-1);
+		level.appendChild(document.createTextNode(log.level));
+		level.setAttribute('class', 'level');
+
+		var message = row.insertCell(-1);
+		for(var i = 0; i < log.args.length; i++)
+		{
+
+			var arg = document.createElement('p');
+			arg.appendChild(
+				document.createTextNode(typeof log.args[i] == 'string' ? log.args[i] : JSON.stringify( log.args[i]))
+			);
+			message.appendChild(arg);
+		}
+
+		var stack = row.insertCell(-1);
+		stack.appendChild(document.createTextNode(log.stack||''));
+		stack.setAttribute('class','stack');
+
+		return row;
 	}
 
 	/**
@@ -165,12 +205,6 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		// rethrow error to let browser log and show it in usual way too
 		throw e;
 	});
-
-	/* show error icon / show_log trigger */
-	window.setTimeout(function(){
-		raise_error();
-	}, 10000);
-
 
 	/**
 	 * The debug function can be used to send a debug message to the
@@ -236,7 +270,44 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		 */
 		show_log: function()
 		{
-			alert('show_log clicked :-)');
+			var table = document.createElement('table');
+			var body = document.createElement('tbody');
+			var client_log = get_client_log();
+			for(var i = 0; i < client_log.length; i++)
+			{
+				body.appendChild(format_message(client_log[i]));
+			}
+			table.appendChild(body);
+			
+			// Use a wrapper div for ease of styling
+			var wrapper = document.createElement('div')
+			wrapper.setAttribute('class', 'client_error_log');
+			wrapper.appendChild(table);
+
+			if(window.jQuery && window.jQuery.ui.dialog)
+			{
+				var $wrapper = $j(wrapper);
+				// Start hidden
+				$j('tr',$wrapper).addClass('hidden')
+					.on('click', function() {
+						$j(this).toggleClass('hidden',{});
+						$j(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
+					})
+				// Wrap in div so we can control height
+				$j('td',$wrapper).wrapInner('<div/>')
+					.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
+
+				$wrapper.dialog({
+					title: egw.lang('Error log'),
+					buttons: [
+						{text: egw.lang('OK'), click: function() {$j(this).dialog( "close" ); }},
+						{text: egw.lang('clear'), click: function() {clear_client_log(); $j(this).empty();}}
+					],
+					width: 800,
+					height: 400
+				})
+				$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
+			}
 			if (_wnd.console) _wnd.console.log(get_client_log());
 		}
 	};

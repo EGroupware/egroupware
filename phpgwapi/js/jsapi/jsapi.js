@@ -227,6 +227,9 @@ function egw_getAppName()
  */
 function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 {
+	// Log for debugging purposes
+	egw.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)",_msg,_app,_id,_type,_target_app,_replace,_with,_msg_type);
+	
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
 
@@ -456,6 +459,9 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 // works only correctly in Mozilla/FF and Konqueror
 function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _app, _returnID)
 {
+	// Log for debugging purposes
+	egw.debug("navigation", "egw_openWindowCentered2(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
+
 	if (typeof(_app) == 'undefined') _app = false;
 	if (typeof(_returnID) == 'undefined') _returnID = false;
 	windowWidth = egw_getWindowOuterWidth();

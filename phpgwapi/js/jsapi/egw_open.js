@@ -131,6 +131,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 */
 		open: function(id_data, app, type, extra, target, target_app)
 		{
+			// Log for debugging purposes - special log tag 'navigation' always
+			// goes in user log, if user log is enabled
+			egw.debug("navigation", 
+				"egw.open(id_data=%o, app=%s, type=%s, extra=%o, target=%s, target_app=%s)",
+				id_data,app,type,extra,target,target_app
+			);
+
 			var id;
 			if(typeof target === 'undefined')
 			{
@@ -234,6 +241,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 */
 		open_link: function(_link, _target, _popup, _target_app)
 		{
+			// Log for debugging purposes - don't use navigation here to avoid
+			// flooding log with details already captured by egw.open()
+			egw.debug("log",
+				"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
+				_link,_target,_popup,_target_app
+			);
+			
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
 			{

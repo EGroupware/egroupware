@@ -918,3 +918,31 @@ td.lettersearch {
 	width: 16px;
 	cursor: pointer;
 }
+
+/**
+ * Error log
+ */
+div.client_error_log {
+	max-height: 50ex;
+}
+div.client_error_log tbody {
+	vertical-align: top;
+}
+div.client_error_log tr.hidden td > div {
+	max-height: 2ex;
+	max-width: 40ex;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space:nowrap;
+}
+div.client_error_log tr td.timestamp > div {
+	text-wrap: none;
+	white-space: normal;
+	width: 27ex;
+}
+div.client_error_log tr.hidden td.stack > div {
+	text-indent: 100%
+}
+div.client_error_log tr td.stack > div {
+	white-space: pre;
+}
