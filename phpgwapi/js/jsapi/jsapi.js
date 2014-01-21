@@ -228,8 +228,8 @@ function egw_getAppName()
 function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 {
 	// Log for debugging purposes
-	egw.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)",_msg,_app,_id,_type,_target_app,_replace,_with,_msg_type);
-	
+	egw.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)", _msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
+
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
 

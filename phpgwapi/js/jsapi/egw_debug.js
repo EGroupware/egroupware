@@ -139,13 +139,18 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		if (window.localStorage && typeof window.localStorage[LASTLOG] != 'undefined')
 		{
 			var lastlog = parseInt(window.localStorage[LASTLOG]);
-			for(var i=lastlog; i < MAX_LOGS && typeof window.localStorage[LOG_PREFIX+i] != 'undefined'; ++i)
+			for(var i=lastlog; i < lastlog+MAX_LOGS; ++i)
 			{
-				logs.push(JSON.parse(window.localStorage[LOG_PREFIX+i]));
-			}
-			for (var i=0; i < lastlog; ++i)
-			{
-				logs.push(JSON.parse(window.localStorage[LOG_PREFIX+i]));
+				var log = window.localStorage[LOG_PREFIX+(i%MAX_LOGS)];
+				if (typeof log != 'undefined')
+				{
+					try {
+						logs.push(JSON.parse(log));
+					}
+					catch(e) {
+						// ignore not existing log entries
+					}
+				}
 			}
 		}
 		return logs;
