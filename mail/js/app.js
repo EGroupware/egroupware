@@ -1071,12 +1071,27 @@ app.classes.mail = AppJS.extend(
 	 * mail_changeProfile
 	 * @param folder, the ID of the selected Node -> should be an integer
 	 * @param _widget, handle to the tree widget
+	 * @param {boolean} getFolders Flag to indicate that the profile needs the mail
+	 *	folders.  False means they're already loaded in the tree, and we don't need
+	 *	them again
 	 */
-	mail_changeProfile: function(folder,_widget) {
+	mail_changeProfile: function(folder,_widget, getFolders) {
+		if(typeof getFolders == 'undefined')
+		{
+			getFolders = true;
+		}
 	//	alert(folder);
 		egw_message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel()));
-		egw.json('mail.mail_ui.ajax_changeProfile',[folder])
-			.sendRequest();
+
+		this.lock_tree();
+		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders], jQuery.proxy(function() {
+			// Profile changed, select inbox
+			var inbox = folder + '::INBOX';
+			_widget.reSelectItem(inbox)
+			this.mail_changeFolder(inbox,_widget,'');
+			this.unlock_tree();
+		},this))
+			.sendRequest(true);
 
 		return true;
 	},
@@ -1106,7 +1121,7 @@ app.classes.mail = AppJS.extend(
 		if (server[0] != previousServer[0] && profile_selected)
 		{
 			// mail_changeProfile triggers a refresh, no need to do any more
-			return this.mail_changeProfile(_folder,_widget);
+			return this.mail_changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
 		}
 
 		// Apply new selected folder to list, which updates data

@@ -3707,9 +3707,11 @@ blockquote[type=cite] {
 	/**
 	 * empty changeProfile - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
+	 * @param int $icServerId New profile / server ID
+	 * @param bool $getFolders The client needs the folders for the profile
 	 * @return nothing
 	 */
-	function ajax_changeProfile($icServerID)
+	function ajax_changeProfile($icServerID, $getFolders = true)
 	{
 		//lang('Connect to Profile %1',$icServerID);
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
@@ -3718,7 +3720,16 @@ blockquote[type=cite] {
 			$this->changeProfile($icServerID);
 		}
 		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('changed profile'),'mail');
+		//$folderInfo = $this->mail_bo->getFolderStatus($icServerID,false);
+
+		// Send full info back in the response
+		if($getFolders)
+		{
+			$refreshData = array(
+				$icServerID => $this->getFolderTree(true, $icServerID, true)
+			);
+			$response->call('app.mail.mail_reloadNode',$refreshData);
+		}
 	}
 
 	/**
