@@ -134,7 +134,7 @@ file into:	mail	de	verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
 filemanager	mail	de	Dateimanager
 files	mail	de	Anhang
-flagged	mail	de	Markieren
+flagged	mail	de	markieren
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ablageordner
@@ -260,9 +260,9 @@ provide a default vacation text, (used on new vacation messages when there was n
 quicksearch	mail	de	Schnellsuche
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
 quota: %1	mail	de	Quota: %1
-read	mail	de	lesen
+read	mail	de	gelesen
 read / unread	mail	de	Gelesen / Ungelesen
-readable	mail	de	Lesen
+readable	mail	de	lesen
 reason!	mail	de	Grund!
 recieve notification	mail	de	Empfangsbestätigung
 recursively	mail	de	Rekursiv
@@ -364,7 +364,7 @@ turn off horizontal line between signature and composed message (this is not acc
 unable to fetch vacation!	mail	de	Abwesenheitsnotiz konnte nicht gelesen werden!
 undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
-unread	mail	de	Ungelesen
+unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Abbestellen
 urgent	mail	de	dringend
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
