@@ -437,6 +437,52 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var list = this.options.settings.get_rows.split('.', 2);
 		if (list.length < 2) list = this.options.settings.get_rows.split('_', 2);	// support "app_something::method"
 		var app = list[0];
+
+		if(_type == "delete")
+		{
+			// Record current & next index
+			var uid = app + "::" + _row_ids[0];
+			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+			var next = entry.ao.getNext(_row_ids.length-1);
+			if(next == null || !next.id)
+			{
+				// No next, select previous
+				next = entry.ao.getPrevious(1);
+			}
+			// Select next row
+			if(next && next.id)
+			{
+				this.controller._selectionMgr._handleSelect(next.id);
+			}
+
+			// Stop automatic updating
+			this.dataview.grid.doInvalidate = false;
+			// Collect IDs
+			var grid_IDs = [];
+			for(var i = 0; i < _row_ids.length; i++)
+			{
+				uid = app + "::" + _row_ids[i];
+				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+				grid_IDs.push(entry.idx);
+				// Stop caring about this ID
+				this.egw().dataDeleteUID(uid);
+			}
+
+			// Grid indexes change as we delete rows, so go from bottom
+			// Sort to make sure they're in numeric order
+			grid_IDs.sort(function(a,b){return b-a;});
+			for(var i = 0; i < grid_IDs.length; i++)
+			{
+				// Blank the row
+				this.dataview.grid.deleteRow(grid_IDs[i]);
+			}
+			
+			// Update the count
+			var total = this.dataview.grid._total - _row_ids.length;
+			this.dataview.grid.setTotalCount(total);
+			// Re-enable automatic updating
+			this.dataview.grid.doInvalidate = true;
+		}
 		
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
@@ -453,30 +499,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 					break;
 				case "delete":
-					// Record current & next index
-					var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-					var next = entry.ao.getNext(1);
-					if(next == null || !next.id)
-					{
-						// No next, select previous
-						next = entry.ao.getPrevious(1);
-					}
-					// Select next row
-					if(next && next.id)
-					{
-						this.controller._selectionMgr._handleSelect(next.id);
-					}
-					// Stop automatic updating
-					this.dataview.grid.doInvalidate = false;
-					// Blank the row
-					this.dataview.grid.deleteRow(entry.idx);
-					// Stop caring about this ID
-					this.egw().dataDeleteUID(uid);
-					// Update the count
-					var total = this.dataview.grid._total - 1;
-					this.dataview.grid.setTotalCount(total);
-					// Re-enable automatic updating
-					this.dataview.grid.doInvalidate = true;
+					// Handled above, more code to execute after loop
 					break;
 				case "edit":
 				case "add":
