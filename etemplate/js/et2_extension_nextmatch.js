@@ -466,21 +466,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					{
 						this.controller._selectionMgr._handleSelect(next.id);
 					}
-
+					// Stop automatic updating
+					this.dataview.grid.doInvalidate = false;
 					// Blank the row
-					this.egw().dataStoreUID(uid,null);
+					this.dataview.grid.deleteRow(entry.idx);
 					// Stop caring about this ID
-					this.egw().dataUnregisterUID(uid);
+					this.egw().dataDeleteUID(uid);
 					// Update the count
-					this.options.settings.total -= 1;
-					// This removes the last row (in addition), doesn't matter if that wasn't the right one,
-					// then triggers an invalidate, which may update the grid
-					// this.dataview.grid.setTotalCount(this.options.settings.total);
-					// Update directly instead
-					this.dataview.grid._total = this.options.settings.total;
-					this.controller._selectionMgr._total = this.options.settings.total;
-					this.header.count_total.text(this.options.settings.total+"");
-
+					var total = this.dataview.grid._total - 1;
+					this.dataview.grid.setTotalCount(total);
+					// Re-enable automatic updating
+					this.dataview.grid.doInvalidate = true;
 					break;
 				case "edit":
 				case "add":

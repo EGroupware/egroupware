@@ -753,10 +753,13 @@ var et2_dataview_controller = Class.extend({
 
 		// Delete as many rows as we have left, invalidate the corresponding
 		// index entry
-		for (var i = mapIdx; i < _idxMap.length; i++)
+		for (var i = mapIdx; i < this._grid._map.length; i++)
 		{
-			this._grid.deleteRow(idx);
-			_idxMap[i].uid = null;
+			this._grid.deleteRow(i);
+			if(typeof _idxMap[i] != 'undefined')
+			{
+				_idxMap[i].uid = null;
+			}
 		}
 
 		return result;

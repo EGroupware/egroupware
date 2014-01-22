@@ -834,6 +834,8 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 	 * containers have to be removed and where new containers should be added.
 	 */
 	_doInvalidate: function(_super) {
+		if(!this.doInvalidate) return;
+		
 		// Update the pixel positions
 		this._recalculateElementPosition();
 
