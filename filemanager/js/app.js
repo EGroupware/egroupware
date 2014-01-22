@@ -4,7 +4,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -90,7 +90,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Convert id to path (remove "filemanager::" prefix)
 	 *
-	 * @param string _id
+	 * @param {string} _id
 	 * @returns string
 	 */
 	id2path: function(_id)
@@ -101,7 +101,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Convert array of elems to array of paths
 	 *
-	 * @param array _elems selected items from actions
+	 * @param {array} _elems selected items from actions
 	 * @return array
 	 */
 	_elems2paths: function(_elems)
@@ -117,7 +117,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Get directory of a path
 	 *
-	 * @param string _path
+	 * @param {string} _path
 	 * @returns string
 	 */
 	dirname: function(_path)
@@ -130,7 +130,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Get name of a path
 	 *
-	 * @param string _path
+	 * @param {string} _path
 	 * @returns string
 	 */
 	basename: function(_path)
@@ -151,7 +151,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Open compose with already attached files
 	 *
-	 * @param string|array attachment path(s)
+	 * @param {(string|string[])} attachments path(s)
 	 */
 	open_mail: function(attachments)
 	{
@@ -179,9 +179,9 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 *
-	 * @param _event
-	 * @param _file_count
-	 * @param {string} [_path=current directory] Where the file is uploaded to.
+	 * @param {event} _event
+	 * @param {number} _file_count
+	 * @param {string=} _path where the file is uploaded to, default current directory
 	 */
 	upload: function(_event, _file_count, _path)
 	{
@@ -201,6 +201,9 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * Finish callback for file a file dialog, to get the overwrite / rename prompt
+	 *
+	 * @param {event} _event
+	 * @param {number} _file_count
 	 */
 	file_a_file_upload: function(_event, _file_count)
 	{
@@ -241,7 +244,7 @@ app.classes.filemanager = AppJS.extend(
 	 * - display message and refresh list
 	 * - ask use to confirm overwritting existing files or rename upload
 	 *
-	 * @param object _data values for attributes msg, files, ...
+	 * @param {object} _data values for attributes msg, files, ...
 	 */
 	_upload_callback: function(_data)
 	{
@@ -255,7 +258,7 @@ app.classes.filemanager = AppJS.extend(
 				var buttons = [
 					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true},
 					{text: this.egw.lang("Rename"), id:"rename"},
-					{text: this.egw.lang("Cancel"), id:"cancel"},
+					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				if (_data.uploaded[file].confirm === "is_dir")
 					buttons.shift();
@@ -505,7 +508,7 @@ app.classes.filemanager = AppJS.extend(
 
 		egw().open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.file',
-			path: path,
+			path: path
 		}), 'fileprefs', '495x425');
 	},
 
@@ -540,6 +543,7 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @param {string} row_uid UID of the row the files were dropped on
 	 * @param {et2_nextmatch} widget widget that got the drop
+	 * @param {array} files
 	 */
 	filedrop: function(row_uid, widget ,files)
 	{
@@ -556,7 +560,7 @@ app.classes.filemanager = AppJS.extend(
 		widget.options.onFinish = function(_event, _file_count) {
 			widget.options.onFinish = old_onfinish;
 			self.upload(_event, _file_count, path);
-		}
+		};
 		// This triggers the upload
 		widget.set_value(files);
 
@@ -567,8 +571,8 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Get drag helper, called on drag start
 	 *
-	 * @param _action
-	 * @param _elems
+	 * @param {egwAction} _action
+	 * @param {array} _elems
 	 * @return some dome objects
 	 */
 	drag: function(_action, _elems)
@@ -646,10 +650,10 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Change readonly state for given directory
 	 *
-	 * I get call/transported with each get_rows call, but should only by applied to UI if matching curent dir
+	 * Get call/transported with each get_rows call, but should only by applied to UI if matching curent dir
 	 *
-	 * @param _path
-	 * @param _ro
+	 * @param {string} _path
+	 * @param {boolean} _ro
 	 */
 	set_readonly: function(_path, _ro)
 	{
@@ -683,7 +687,10 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Functions for the select dialog
+	 * Functions for select dialog
+	 *
+	 * @param {string} to
+	 * @param {et2_widget} widget
 	 */
 	select_goto: function(to,widget)
 	{
@@ -704,6 +711,11 @@ app.classes.filemanager = AppJS.extend(
 		return false;
 	},
 
+	/**
+	 * Select given file
+	 *
+	 * @param {string} file
+	 */
 	select_show: function(file)
 	{
 		var editfield = this.et2.getWidgetById('name');
@@ -713,13 +725,21 @@ app.classes.filemanager = AppJS.extend(
 		}
 		return false;
 	},
+
+	/**
+	 * Change selection of given file
+	 *
+	 * @param {string} file
+	 * @param {et2_widget} widget
+	 */
 	select_toggle: function(file,widget)
 	{
-		widget.getParent().iterateOver(function(widget) {
-				if(widget.options.selected_value == file)
-				{
-					widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
-				}
+		widget.getParent().iterateOver(function(widget)
+		{
+			if(widget.options.selected_value == file)
+			{
+				widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
+			}
 		}, null, et2_checkbox);
 
 		// Stop event or it will toggle back off
