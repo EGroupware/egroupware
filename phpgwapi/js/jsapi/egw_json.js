@@ -105,7 +105,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	}
 
 	json_request.prototype.handleResponse = function(data) {
-		if (data && data.response)
+		if (data && typeof data.response != 'undefined')
 		{
 			// Load files first
 			var js_files = [];
@@ -132,7 +132,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			}
 
 			// Flag for only data response - don't call callback if only data
-			var only_data = true;
+			var only_data = (data.response.length > 0);
 
 			for (var i = 0; i < data.response.length; i++)
 			{
