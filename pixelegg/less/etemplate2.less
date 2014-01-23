@@ -586,11 +586,11 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to .et2_button_icon {
             .Complete_Button_Icon_normal;
             float: left;
-            margin: 0.5em 2em;
-            padding: 0.5em;
-            .dimension_width_height_s;
+            margin: 10px 20px;
+            padding: 3px;
+            .dimension_width_height_m;
             background-color: @gray_30;
-            &:hover {.Complete_Button_Icon_hover;}
+            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
             &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
 }
 
@@ -605,7 +605,7 @@ div.et2_link_entry input.ui-autocomplete-input {
            padding: 1em;
            
         }
-         &:before {
+/*         &:before {
                         content: "+ "; 
                         font-size: 2em; 
                         color: @egw_color_1_a; 
@@ -614,7 +614,7 @@ div.et2_link_entry input.ui-autocomplete-input {
                         padding-right: 0em;
                         background-color: @egw_color_2_a;
                         .border_radius_button_lefttop;
-                }
+                }*/
          &:hover {.Complete_Button_add_only_plus_hover;}
          &:active {background-color: @color_positive_action_active !important;}
 }
@@ -688,7 +688,7 @@ ul.et2_link_string {
     margin: 1em 3px -1px 0;
     padding: 4px;
     cursor: pointer;
-    font-size: 0.8em;
+    /*font-size: 0.8em;*/
     /*.border_radius(3px,0,0,3px);*/
 
     .background_color_25_gray;
@@ -989,14 +989,17 @@ div.message.floating {
 // Search Field
 .nextmatch_header > .search{
     
+    padding: 0 0 0 3px;
+    margin-right: 3px;
+    
     .background_color_search;
     .border_radius_button_righttop;
     
     input { 
-        .background_color_search; 
+        /*.background_color_search;*/ 
         /*background-color: @gray_0;*/
         border: none; 
-        font-size: 16px;
+        font-size: 11px;
         color: #000;
         
         /*margin: 0 2px;*/
@@ -1020,20 +1023,24 @@ div.message.floating {
     
     button.et2_button {
             .border_normal;
+            
             border-color: @gray_30;
-            .box_shadow_standard_light;
+            -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+            -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.9);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+            
             width: 45px;
             /*height: 1.6em;*/
 
             .border_radius_button_righttop;
-            .background_color_search;
+            /*.background_color_search;*/
 
             color: lighten(@egw_color_1, 15%);
             text-decoration: none;
 
             cursor: pointer;
             padding: 0px;
-            margin: 10px;
+            margin: 8px 10px;
             margin-left: 0px;
 
             background-image: url("../images/search.png");

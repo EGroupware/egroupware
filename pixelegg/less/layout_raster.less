@@ -92,10 +92,10 @@
                     /*.Button_size_square_32;*/
                     padding: 0.3em 0.4em;
                     .Complete_Button_normal;
-                    background-color: @gray_20;
+                    background-color: @gray_10;
 
 
-                    &:hover{.Complete_Button_hover; .color_100_gray;}
+                    &:hover{.Complete_Button_hover; color: @gray_100;}
                     &:active {.Complete_Button_active;}
                     .transition (0.2s, ease-out);
 
@@ -103,7 +103,7 @@
                         .color_100_gray; 
                         text-decoration: none; 
                         .dimension_height_s;
-                        font-size: 1.1em;
+                        /*font-size: 1.1em;*/
 
                         &:hover {
                             .color_50_gray;
@@ -410,6 +410,11 @@
     /*current user info*/
     #topmenu_info_current_users {}
     
+    /*time zone*/
+    form { height: 0px;
+           select {padding: 0px;}
+    }
+    
     /*quick*/
     #topmenu_info_quick_add {
         
@@ -477,7 +482,7 @@
         overflow: hidden;
         z-index: 0;
         padding-top: 0.6em;
-        font-size: 80%;
+        font-size: 0.9em;
         //								.background-color-0-gray;
 
         .egw_fw_ui_scrollarea_outerdiv{
@@ -490,11 +495,7 @@
                 div {
                     padding: 3px 0 1px 3px;
                     cursor: pointer;
-
-
-
                 }
-
             }
 
             .egw_fw_ui_sidemenu_entry_header {
@@ -581,7 +582,7 @@
                 border-width: 0px;
                 margin: 0 0 2em 0;
 
-                > div:nth-of-type(1)  {
+                &:nth-last-of-type(-n+3)   {
                     padding:  5px 0.3em 1.5em 0.3em;
                     margin: 0 0 10px 0;
                     .background_color_30_gray;
@@ -753,6 +754,14 @@
     padding-top: 14px;
     margin-right: 5px;
     /*min-height: 50px;*/
+    
+    &:last-child{
+                    /*padding:  5px 0.3em 1.5em 0.3em;*/
+                    /*margin: 0 0 10px 0;*/
+                    /*.background_color_30_gray;*/
+                    .border_radius (0, 0, 10px, 0);
+                    border-color: @gray_30;
+                }
 
     img { .dimension_height_s; vertical-align: middle;}
 
@@ -797,10 +806,6 @@
         padding: 0px;
         margin: 0px 5px;
         float: left;
-        /*.Complete_Button_Icon_normal;*/
-/*        background-image: url("../images/bullet.svg");
-        background-size: .dimension_width_height_s;
-        background-position: center;*/
 
     }
 
@@ -1073,6 +1078,7 @@ div#calendar-container {
         background-color: transparent;
         float: left;
         width: 100%;
+        margin-top: -1px;
 
         // ############################################################
         // Tabnavigation
@@ -1150,7 +1156,7 @@ div#calendar-container {
 
                 height: 24px;
                 
-                &:hover {.background_color_30_gray ;}
+                &:hover {.background_color_20_gray ;}
 
                 h1 {
                     font-size: 100%; 
@@ -1272,4 +1278,4 @@ div#calendar-container {
 
 
 // 
-// 
+//     

@@ -175,9 +175,7 @@
     font-size: 9pt;*/
     text-shadow: 0px 0px !important;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    /*.box_shadow_standard_light;*/
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -194,7 +192,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #b4b4b4;
+    background-color: #e6e6e6;
   }
   /*in Nextmatch definiert*/
   .et2_button_icon {
@@ -552,10 +550,10 @@ action buttons, left aligned for "extra" controls
     -moz-border-radius: 3px;
     border-radius: 3px;
     float: left;
-    margin: 0.5em 2em;
-    padding: 0.5em;
-    width: 16px;
-    height: 16px;
+    margin: 10px 20px;
+    padding: 3px;
+    width: 24px;
+    height: 24px;
     background-color: #b4b4b4;
   }
   .et2_link_to .et2_button_icon:hover {
@@ -567,6 +565,7 @@ action buttons, left aligned for "extra" controls
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    background-color: #1aa200 !important;
   }
   .et2_link_to .et2_button_icon:active {
     /*.background_color_30_gray;*/
@@ -587,25 +586,20 @@ action buttons, left aligned for "extra" controls
     border-radius: 5px;
     margin-top: 1em;
     padding-top: 0.2em;
+    /*         &:before {
+                        content: "+ "; 
+                        font-size: 2em; 
+                        color: @egw_color_1_a; 
+                        line-height: 0.6em; 
+                        padding-left: 0.1em;
+                        padding-right: 0em;
+                        background-color: @egw_color_2_a;
+                        .border_radius_button_lefttop;
+                }*/
   }
   .et2_link_to .et2_file input {
     border: none;
     padding: 1em;
-  }
-  .et2_link_to .et2_file:before {
-    content: "+ ";
-    font-size: 2em;
-    color: #ffc200;
-    line-height: 0.6em;
-    padding-left: 0.1em;
-    padding-right: 0em;
-    background-color: #0c5da5;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
   }
   .et2_link_to .et2_file:hover {
     background-color: #66a1d2 !important;
@@ -690,7 +684,7 @@ action buttons, left aligned for "extra" controls
     margin: 1em 3px -1px 0;
     padding: 4px;
     cursor: pointer;
-    font-size: 0.8em;
+    /*font-size: 0.8em;*/
     /*.border_radius(3px,0,0,3px);*/
     background-color: #bfbfbf;
     -webkit-box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.5);
@@ -968,6 +962,8 @@ action buttons, left aligned for "extra" controls
     font-size: 0.9em;
   }
   .nextmatch_header > .search {
+    padding: 0 0 0 3px;
+    margin-right: 3px;
     background-color: #b4b4b4;
     -webkit-border-radius: 3px;
     -webkit-border-top-right-radius: 20px;
@@ -977,10 +973,10 @@ action buttons, left aligned for "extra" controls
     border-top-right-radius: 20px;
   }
   .nextmatch_header > .search input {
-    background-color: #b4b4b4;
+    /*.background_color_search;*/
     /*background-color: @gray_0;*/
     border: none;
-    font-size: 16px;
+    font-size: 11px;
     color: #000;
     /*margin: 0 2px;*/
   }
@@ -1003,9 +999,9 @@ action buttons, left aligned for "extra" controls
   .nextmatch_header > .search button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-color: #b4b4b4;
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
     width: 45px;
     /*height: 1.6em;*/
     -webkit-border-radius: 3px;
@@ -1014,12 +1010,12 @@ action buttons, left aligned for "extra" controls
     -moz-border-radius-topright: 20px;
     border-radius: 3px;
     border-top-right-radius: 20px;
-    background-color: #b4b4b4;
+    /*.background_color_search;*/
     color: #ffd44d;
     text-decoration: none;
     cursor: pointer;
     padding: 0px;
-    margin: 10px;
+    margin: 8px 10px;
     margin-left: 0px;
     background-image: url("../images/search.png");
     background-position: center 0;
@@ -1973,9 +1969,7 @@ span.ui-icon-search {
 }
 .ui-dialog-buttonset button {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -1992,7 +1986,7 @@ span.ui-icon-search {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2368,9 +2362,7 @@ span.ui-icon-search {
 #egwpopup input#egwpopup_ok_button,
 #egwpopup button#desktop_perms {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -2387,7 +2379,7 @@ span.ui-icon-search {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   height: 24px;
   padding: 0 5px;
 }
@@ -2430,7 +2422,7 @@ div#egwpopup_message {
   border-radius: 3px;
   border-top-right-radius: 20px;
   padding: 5px 2px 4px 15px;
-  font-size: 1em;
+  /*font-size: 1em;*/
   font-weight: normal;
   background-color: #f0f0f0;
   color: #408dd2;
@@ -2846,7 +2838,7 @@ div.selectbox-wrapper ul li {
 .sbOptions a:hover,
 .sbOptions a:focus,
 .sbOptions a.sbFocus {
-  color: #ffffff;
+  color: rgba(38, 83, 124, 0.6);
 }
 .sbOptions li.last a {
   border-bottom: none;
@@ -2881,14 +2873,14 @@ select,
 input,
 button {
   color: #000000;
-  font-size: 99%;
-  padding: 0.2em 0;
+  /*font-size:99%;*/
+  padding: 1px;
   border-width: 1px;
   border-style: solid;
   border-color: #cdcdcd;
 }
 select {
-  font-size: 100%;
+  /*font-size:100%;*/
 }
 a:link,
 a:visited {
@@ -2899,7 +2891,7 @@ a:visited {
 a:hover,
 a:active {
   cursor: pointer;
-  color: #ffffff;
+  color: rgba(38, 83, 124, 0.6);
   text-decoration: underline;
 }
 .divLoginboxHeader,
@@ -3028,11 +3020,23 @@ img {
   border: 0;
 }
 /*SVG Filter / not for Logo */
-#egw_fw_sidebar img[src$="svg"],
+#egw_fw_sidebar img[src$="svg"] {
+  background-color: #696969;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #696969, #696969);
+  background-image: -ms-linear-gradient(top, #696969, #696969);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
+  background-image: -webkit-linear-gradient(top, #696969, #696969);
+  background-image: -o-linear-gradient(top, #696969, #696969);
+  background-image: linear-gradient(top, #696969, #696969);
+  background-repeat: repeat-x;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ffffff;
+}
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"] {
-  /*path{fill: red;}*/
-  /*stroke: none; fill: #0000ff;*/
   background-color: #0c5da5;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
@@ -3042,18 +3046,6 @@ img {
   background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
   background-image: linear-gradient(top, #0c5da5, #0c5da5);
   background-repeat: repeat-x;
-  /*            &:hover {
-              
-                 path{fill: red;}
-                
-            }*/
-}
-input,
-button,
-select {
-  border: solid 1px #bbbbbb;
-  padding: 0.2em;
-  font-size: 1em;
 }
 div {
   color: #000000;
@@ -3318,9 +3310,7 @@ input[type=button]:active {
  ######################################################################################## */
 button.et2_button_with_image {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3337,6 +3327,7 @@ button.et2_button_with_image {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-size: 20px auto !important;
@@ -3375,9 +3366,7 @@ button[id="calendar-edit_button[delete]"] {
   margin-left: 3em;
   /*color: @gray_100;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3394,7 +3383,7 @@ button[id="calendar-edit_button[delete]"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3414,9 +3403,7 @@ button[id="calendar-edit_button[delete]"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3433,7 +3420,7 @@ button[id="calendar-edit_button[delete]"]:hover {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3452,9 +3439,7 @@ button[id="calendar-edit_button[delete]"]:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3471,7 +3456,7 @@ button[id="calendar-edit_button[delete]"]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3514,9 +3499,7 @@ button#filemanager-select_button[ok]:active {
 button#series {
   background-image: url('../images/edit.svg') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3533,7 +3516,7 @@ button#series {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3551,9 +3534,7 @@ button#series:active {
 button#exception {
   background-image: url('../images/edit.svg') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3570,7 +3551,7 @@ button#exception {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3620,9 +3601,7 @@ button#cancel:active {
 button[id="cancel"] {
   background-image: url('../images/cancel.png') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3639,7 +3618,7 @@ button[id="cancel"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3681,9 +3660,7 @@ button.add:before {
 button[id="add"] {
   background-image: url('../images/add.png') !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -3700,7 +3677,7 @@ button[id="add"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3912,14 +3889,8 @@ table.egwGridView_outer tbody td .et2_link {
   font-weight: bold;
 }
 table.egwGridView_outer tbody td img {
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  border: 1px solid transparent;
+  box-shadow: none;
 }
 table.egwGridView_outer tbody td time {
   display: block;
@@ -3962,11 +3933,11 @@ table.egwGridView_grid tbody {
 }
 table.egwGridView_grid tbody tr.selected {
   background-image: none;
-  background-color: #ffdd73 !important;
-  /*.bw-gradient;*/
+  /*background-color: @egw_color_1_e !important;*/
+  background-color: rgba(255, 194, 0, 0.5);
 }
 table.egwGridView_grid tbody tr.focused {
-  background-image: url(../images/focused_hatching.png);
+  background-image: url(../images/yellow-stripe-a.png);
   background-repeat: repeat;
   background-color: rgba(255, 194, 0, 0.5);
 }
@@ -3982,7 +3953,7 @@ table.egwGridView_grid tr td {
   border-right: 0px;
   /*padding: 0.3em 0 0.3em 0.3em;*/
   border-bottom: 1px solid;
-  color: #696969;
+  color: #e6e6e6;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
 }
 table.egwGridView_grid tr td:active {
@@ -4418,9 +4389,7 @@ table.nextmatch_header img {
   /*.Button_size_square_32;*/
   padding: 0.3em 0.4em;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -4437,8 +4406,7 @@ table.nextmatch_header img {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
-  background-color: #cdcdcd;
+  background-color: #e6e6e6;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
@@ -4460,7 +4428,7 @@ table.nextmatch_header img {
   color: #000000;
   text-decoration: none;
   height: 16px;
-  font-size: 1.1em;
+  /*font-size: 1.1em;*/
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   color: #808080;
@@ -4685,6 +4653,7 @@ table.nextmatch_header img {
   /*user info*/
   /*current user info*/
   /*current user info*/
+  /*time zone*/
   /*quick*/
 }
 #egw_fw_topmenu_info_items .topmenu_info_item {
@@ -4715,6 +4684,12 @@ table.nextmatch_header img {
   content: "| ";
   font-size: 1em;
   color: #0c5da5;
+}
+#egw_fw_topmenu_info_items form {
+  height: 0px;
+}
+#egw_fw_topmenu_info_items form select {
+  padding: 0px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -4766,7 +4741,7 @@ table.nextmatch_header img {
   overflow: hidden;
   z-index: 0;
   padding-top: 0.6em;
-  font-size: 80%;
+  font-size: 0.9em;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv {
   background-color: #fafafa;
@@ -4922,7 +4897,7 @@ table.nextmatch_header img {
   /*letztes Element*/
   /*######################*/
 }
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content > div:nth-of-type(1) {
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
   padding: 5px 0.3em 1.5em 0.3em;
   margin: 0 0 10px 0;
   background-color: #b3b3b3 !important;
@@ -5104,6 +5079,25 @@ table.nextmatch_header img {
   margin-right: 5px;
   /*min-height: 50px;*/
 }
+.egw_fw_ui_category_content:last-child {
+  /*padding:  5px 0.3em 1.5em 0.3em;*/
+  /*margin: 0 0 10px 0;*/
+  /*.background_color_30_gray;*/
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 10px;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 0;
+  /*.background-clip(padding-box);*/
+  border-color: #b4b4b4;
+}
 .egw_fw_ui_category_content img {
   height: 16px;
   vertical-align: middle;
@@ -5133,10 +5127,6 @@ table.nextmatch_header img {
   padding: 0px;
   margin: 0px 5px;
   float: left;
-  /*.Complete_Button_Icon_normal;*/
-  /*        background-image: url("../images/bullet.svg");
-        background-size: .dimension_width_height_s;
-        background-position: center;*/
 }
 .egw_fw_ui_sidemenu_listitem input {
   height: 16px;
@@ -5309,6 +5299,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: transparent;
   float: left;
   width: 100%;
+  margin-top: -1px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
   margin: 0px 0 0 0;
@@ -5365,7 +5356,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   height: 24px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
-  background-color: #b3b3b3 !important;
+  background-color: #cccccc;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 100%;
@@ -5559,6 +5550,9 @@ div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasD
 }
 div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
   cursor: pointer;
+}
+div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs button.et2_button_with_image {
+  height: 24px;
 }
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
   background-color: #ffffff;

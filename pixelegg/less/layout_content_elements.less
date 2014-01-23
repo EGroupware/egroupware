@@ -381,8 +381,8 @@ a:link, a:visited, select, input, textarea {
 select,input,button
 {
     .color_100_gray;
-    font-size:99%;
-    padding: 0.2em 0;
+    /*font-size:99%;*/
+    padding: 1px;
     border-width: 1px;
     border-style: solid;
     border-color: @gray_20;
@@ -390,7 +390,7 @@ select,input,button
 
 select
 {
-    font-size:100%;
+    /*font-size:100%;*/
 }
 
 a:link,a:visited
@@ -562,29 +562,21 @@ img
 }
 
 /*SVG Filter / not for Logo */
-#egw_fw_sidebar img[src$="svg"],
+#egw_fw_sidebar img[src$="svg"]{
+            .gradient_vertical (@gray_60, @gray_60);
+            .rounded(3px);
+            border: 1px solid @gray_0;;
+}     
+
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"]{
-    
-            /*path{fill: red;}*/
-             /*stroke: none; fill: #0000ff;*/
             .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-            
-/*            &:hover {
-              
-                 path{fill: red;}
-                
-            }*/
+
 }
 
 
 
-input,button,select
-{
-    border: solid 1px #bbbbbb;
-    padding: 0.2em;
-    font-size: 1em;
-}
+
 div{
 	color: #000000;
 }
@@ -1126,4 +1118,4 @@ div.client_error_log tr td.stack > div {
 }
 
 
-//
+//                                                                                                                                                                                                                   
