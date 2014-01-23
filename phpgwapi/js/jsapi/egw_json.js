@@ -332,9 +332,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			var parts = res.data.func.split('.');
 			var func = parts.pop();
 			var parent = req.egw.window;
-			for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
+			for(var i=0; i < parts.length; ++i)
 			{
-				parent = parent[parts[i]];
+				if (typeof parent[parts[i]] != 'undefined')
+				{
+					parent = parent[parts[i]];
+				}
+				// check if we need a not yet instanciated app.js object --> instanciate it now
+				else if (i == 1 && parts[0] == 'app' && typeof req.egw.window.app.classes[parts[1]] == 'function')
+				{
+					parent = parent[parts[1]] = new req.egw.window.app.classes[parts[1]]();
+				}
 			}
 			if (typeof parent[func] == 'function')
 			{
