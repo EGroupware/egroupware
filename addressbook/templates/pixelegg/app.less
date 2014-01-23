@@ -192,55 +192,7 @@ div#addressbook-index{
 /*        div.et2_hbox,
         div.et2_box_widget*/
         .et2_hbox_right[id*="_infolog-index-header_right"]{
-/*                .Complete_Button_add;
-                height: auto;
-                .color-0-gray; // white
-                font-size: 0.9em;
 
-                &:before {padding-left: 5px;}
-                &:hover {.Complete_Button_add_hover;}
-
-                span.et2_label {color: @gray-0; font-size: 0.9em;padding-right: 11px;}
-                img.et2_button {margin-top: -15px;}*/
-
-/*         div.et2_box_widget{
-                        background-color: @egw_color_blue_lighter !important;
-                        color: #FFF;
-                        text-shadow: none;
-//                        height: 35px;
-                        background-image: none !important;
-                        .border_radius_button_lefttop;
-
-                        &:before {content: "+";font-size: 2em;color: @egw_color_1;}
-
-                            .border_radius_button_lefttop;
-                            .box_shadow_standard_light;
-
-                            height: 39px; // hieght of add-item
-
-                            .infolog_headertext{color: #FFF !important; font-size: 11px;}
-
-                      
-                      &:hover {.box_shadow_standard_light_hover; background-color: @egw_color_blue_lightest !important;}
-                      
-                      
-                      img#infolog-index_add[id="task"] {background-color: @gray-0; }
-                      
-                      // IMG
-                        img {
-
-                            .Complete_Button_Icon_normal;
-                            .dimension_width_height_s;
-                            margin-right: 0.5em;
-                            padding: 2px;
-                            margin-top: -2px;
-                            vertical-align: middle;
-
-                            &:hover{.Complete_Button_Icon_hover ;}
-                            &:active{.Complete_Button_Icon_active ;}
-
-                        }
-                    }*/
                 
                     div.et2_box_widget{
                         /*border: 1px solid rgba(0, 0, 0, 0.15);*/
@@ -271,7 +223,7 @@ div#addressbook-index{
                             padding: 0px;
                             margin-top: 0px;
                             vertical-align: middle;                            
-                            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
 
                             &:hover{.Complete_Button_Icon_hover ;}
 
@@ -291,7 +243,7 @@ div#addressbook-index{
                           &:before {content: ""; font-size: 1em;padding-left: 5px;}
                           /*Text*/
                           span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0.5em; .gradient_vertical (@egw_color_2_a, @egw_color_2_a);} 
+                         img {.scale; margin: 0.5em; background: @gray_0;} 
                       }
                     }  
 
@@ -590,7 +542,7 @@ div#addressbook-search{
         margin-top: 12px;
         margin-left: 1em;
         height: auto;
-        .background_color_15_gray;
+        /*.background_color_15_gray;*/
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
 
@@ -633,7 +585,7 @@ div#addressbook-search{
         margin-top: 10px;
         margin-left: 1em;
         height: auto;
-        .background_color_15_gray;
+        /*.background_color_15_gray;*/
         .border_radius_button_normal;
         legend { text-transform: uppercase;}
 
@@ -672,17 +624,7 @@ div#addressbook-search{
             background-size: 16px 16px;
             background-image: url('images/email.png');
         }
-
-
-
-
         }
-
-
-
-
-
-
     }
 
     fieldset.emailGroup * img {display: none !important; width: 20px;} // Bilder ausblenden
@@ -722,8 +664,8 @@ div#addressbook-search{
                      
                         margin-left: 2px;
                         border-top: 1px solid @gray_30 !important;
-                        tr:nth-child(even) {background: @color_even;}
-                        tr:nth-child(odd) {background: @color_odd;} 
+                        /*tr:nth-child(even) {background: @color_even;}*/
+                        /*tr:nth-child(odd) {background: @color_odd;}*/ 
                         td {padding: 5px 0px 5px 3px;}
                  }
                 
@@ -850,10 +792,9 @@ div#addressbook-edit_addressbook-edit-links {
         img.et2_button_icon {
             .Complete_Button_Icon_normal;
             float: left;
-            margin: 0.5em 2em;
-            padding: 0.5em;
-            height: 32px;
-            width: 32px;
+            /*margin: 0.5em 2em;*/
+            padding: 5px;
+            .dimension_width_height_m;
 
             &:hover {.Complete_Button_Icon_hover;}
             &:active {.Complete_Button_Icon_active;}
@@ -861,14 +802,13 @@ div#addressbook-edit_addressbook-edit-links {
 
 
         // Upload
-        div.et2_file {}
+        div.et2_file {
+            width: 350px;
+            margin-left: 100px;
+        }
 
     }
-
     table#addressbook-edit_link_to {overflow-y: scroll;}
-
-
-
 }
 
 
@@ -958,6 +898,7 @@ div#addressbook-edit_addressbook-edit-links {
 
 button.button_more {
     .Complete_Button_text_icon_before;
+    .dimension_height_m;
     background-image:url('../images/edit.png');
 }
 

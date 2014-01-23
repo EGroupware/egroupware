@@ -491,12 +491,22 @@ div#calendar-edit{
 
             span.ui-icon-search {
                 .Complete_Button_Icon_normal;
-                background-size: 24px 24px;
-                .dimension_width_height_m;
-                margin-left: 1em;
+                background-size: 16px 16px;
+                .dimension_width_height_s;
+                margin-left: 3px;
+                position: relative;
+                top: 4px;
 
                 &:hover {.Complete_Button_Icon_hover;}
                 &active {.Complete_Button_Icon_active;}
+            }
+            
+            // Quantity
+            input#calendar-edit_quantity {
+                width: 30px;
+                position: relative;
+                top: 4px;
+                
             }
 
             // Ressourcen
@@ -507,7 +517,7 @@ div#calendar-edit{
                 select {margin-right: 3px;}
             }
 
-
+            
             // Rolle
 
             select#calendar-edit_role {margin-top: 6px;}
@@ -525,6 +535,10 @@ div#calendar-edit{
             //			}
 
         }
+        
+        // Table
+        .et2_label {padding: 0 5px 0 0;}
+        
     }
 
     /*###########################################*/
@@ -559,7 +573,8 @@ div#calendar-edit{
 
             .et2_link_to {width: auto !important;}
         }
-
+        
+        .et2_file {margin-left: 100px; width: 357px;}
         span.et2_label {padding:  1em;}
     }
 

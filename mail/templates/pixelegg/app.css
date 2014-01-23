@@ -798,6 +798,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-image: -ms-linear-gradient(top, #ffffff, #e4e4e4);
   background-image: linear-gradient(top, #ffffff, #e4e4e4);
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#ffffff', endColorstr='#e4e4e4');
+  height: 27px;
 }
 #mail-compose .mail-compose_toolbar span.sent {
   float: left;
@@ -870,7 +871,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_button {
   height: 27px;
   margin-right: 3px !important;
-  margin-top: 0px !important;
+  margin-top: 0.7px !important;
   padding: 0 3px 0 0;
   text-align: left;
   font-weight: bold;
@@ -949,9 +950,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector input#mail-compose_uploadForCompose {
   /*font-size: 0.7em;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -968,7 +967,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1086,9 +1085,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -1105,7 +1102,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1123,9 +1120,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -1142,7 +1137,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   float: left;
   width: 47px;
   margin: 3px;
