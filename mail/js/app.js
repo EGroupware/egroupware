@@ -162,6 +162,7 @@ app.classes.mail = AppJS.extend(
 			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
 			//window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
+			this.compose_cc_expander();
 		}
 		//Vacation By_date filter
 		if (typeof et2.templates['mail.sieve.vacation'] != 'undefined')
@@ -2468,7 +2469,7 @@ app.classes.mail = AppJS.extend(
 		var Cc = this.et2.getWidgetById('cc_expander');
 		var Bcc = this.et2.getWidgetById('bcc_expander');
 
-		if (widget.id == "mail-compose_cc_expander")
+		if (typeof widget != "undefined" && widget.id == "mail-compose_cc_expander")
 		{
 			jQuery(".mailComposeJQueryCc").show();
 			if (typeof Cc !='undefined')
@@ -2477,12 +2478,33 @@ app.classes.mail = AppJS.extend(
 			}
 
 		}
-		else if (widget.id == "mail-compose_bcc_expander")
+		else if (typeof widget != "undefined" && widget.id == "mail-compose_bcc_expander")
 		{
 			jQuery(".mailComposeJQueryBcc").show();
 			if (typeof Bcc !='undefined')
 			{
 				Bcc.set_disabled(true);
+			}
+		}
+		else if (typeof widget == "undefined")
+		{
+			var CcField = this.et2.getWidgetById('cc');
+			var BccField = this.et2.getWidgetById('bcc');
+			if (CcField.options.value.length)
+			{
+				jQuery(".mailComposeJQueryCc").show();
+				if (typeof Cc !='undefined')
+				{
+					Cc.set_disabled(true);
+				}
+			}
+			if (BccField.options.value.length)
+			{
+				jQuery(".mailComposeJQueryBcc").show();
+				if (typeof Bcc !='undefined')
+				{
+					Bcc.set_disabled(true);
+				}
 			}
 		}
 	},
