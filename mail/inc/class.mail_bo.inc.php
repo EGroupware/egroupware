@@ -1590,12 +1590,15 @@ class mail_bo
 				case 'FLAGGED':
 				case 'RECENT':
 				case 'SEEN':
+					$imapFilter->flag($criteria, $set=true);
+					$queryValid = true;
+					break;
 				case 'KEYWORD1':
 				case 'KEYWORD2':
 				case 'KEYWORD3':
 				case 'KEYWORD4':
 				case 'KEYWORD5':
-					$imapFilter->flag($criteria, $set=true);
+					$imapFilter->flag(str_ireplace('KEYWORD','$LABEL',$criteria), $set=true);
 					$queryValid = true;
 					break;
 				case 'NEW':
