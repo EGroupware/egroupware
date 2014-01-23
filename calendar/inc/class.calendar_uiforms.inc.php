@@ -466,7 +466,7 @@ class calendar_uiforms extends calendar_ui
 
 		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
 
-		$ignore_conflicts = $edit_series_confirmed = $status_reset_to_unknown = false;
+		$ignore_conflicts = $status_reset_to_unknown = false;
 
 		switch((string)$button)
 		{
@@ -475,11 +475,7 @@ class calendar_uiforms extends calendar_ui
 				$button = $event['button_was'];	// save or apply
 				unset($event['button_was']);
 				break;
-
-			case 'confirm_edit_series':
-				$edit_series_confirmed = true;
-				$button = $event['button_was'];	// save or apply
-				unset($event['button_was']);
+		
 		}
 
 		switch((string)$button)
@@ -643,9 +639,8 @@ class calendar_uiforms extends calendar_ui
 								break;
 							}
 							// splitting of series confirmed or first event clicked (no confirmation necessary)
-							if ($edit_series_confirmed || $old_event['start'] == $event['actual_date'])
+							if ($old_event['start'] == $event['actual_date'])
 							{
-								$edit_series_confirmed = true;
 								$orig_event = $event;
 
 								// calculate offset against old series start or clicked recurrance,
@@ -782,8 +777,6 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif ($conflicts > 0)
 			{
-				if ($edit_series_confirmed)	// series moved by splitting in two
-				{
 					foreach ((array)$old_alarms as $alarm)
 					{
 						// check if alarms still needed in old event, if not delete it
@@ -834,7 +827,7 @@ class calendar_uiforms extends calendar_ui
 							$this->bo->update($exception, true, true, true, true, $msg=null, $content['no_notifications']);
 						}
 					}
-				}
+				
 
 				$message = lang('Event saved');
 				if ($status_reset_to_unknown)
@@ -1802,21 +1795,6 @@ class calendar_uiforms extends calendar_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
 
 		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,array(),array(),array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
-	}
-
-	/**
-	 * displays a confirmation window for changed start dates of series events
-	 *
-	 * @param array $event
-	 * @param array $preserv data to preserv
-	 */
-	function confirm_edit_series($event,$preserv)
-	{
-		$etpl = CreateObject('etemplate.etemplate','calendar.confirm_edit_series');
-
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Start of Series Event Changed');
-
-		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}
 
 	/**

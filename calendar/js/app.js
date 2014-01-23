@@ -725,6 +725,49 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Confirmation dialog for moving a series entry 
+	 *
+	 * @param {widget object} widget button Save | Apply
+	 * @param {type} _DOM
+	 */
+	move_edit_series: function(_DOM,_button)
+	{
+		var content = this.et2.getArrayMgr('content').data;
+		var start_date = this.et2.getWidgetById('start').get_value();
+		var whole_day = this.et2.getWidgetById('whole_day').get_value();
+		var button = _button;
+		var that = this;
+		if (typeof content != 'undefined' && typeof content.recur_type != 'undefined' && content.recur_type != 0)
+		{
+			if (content.start != start_date || content.whole_day.toString() != whole_day)
+			{
+				et2_dialog.show_dialog(function(_button_id)
+					{
+						if (_button_id == et2_dialog.OK_BUTTON)
+						{
+							that.et2._inst.submit(button);
+
+						}
+						else
+						{
+							return false;
+						}
+					},
+					this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
+					this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	},
+
+	/**
 	 * Create edit exception dialog for recurrence entries
 	 *
 	 * @param {object} event

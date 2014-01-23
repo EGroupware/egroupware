@@ -363,8 +363,8 @@
 				</row>
 				<row class="dialog-footer-toolbar">
 					<hbox span="3">
-						<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
-						<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" onclick="app.calendar.move_edit_series"/>
+						<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1" onclick="app.calendar.move_edit_series"/>
 						<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
