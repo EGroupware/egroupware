@@ -1941,7 +1941,7 @@ window.egw_LAB.wait(function() {
 		}
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
-		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
+		$content['tz'] = $content['tz'] ? $content['tz'] : '0';
 		if (count($this->content_types) > 1)
 		{
 			foreach($this->content_types as $type => $data)
