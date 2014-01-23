@@ -307,6 +307,7 @@ class etemplate_widget
 
 		if(!$xml)
 		{
+			if (empty($type)) $type = 'widget';
 			$xml = "<$type id='$id'/>";
 		}
 		//error_log(__METHOD__."('$type', ..., '$id') using $class_name");
