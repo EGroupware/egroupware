@@ -681,7 +681,9 @@ class preferences
 	{
 		if ($accountid > 0)
 		{
-			$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
+
+			egw_cache::unsetInstance(__CLASS__, $accountid);
 		}
 	}
 
@@ -694,7 +696,9 @@ class preferences
 	{
 		if ($accountid < 0)
 		{
-			$this->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
+
+			egw_cache::unsetInstance(__CLASS__, $accountid+self::DEFAULT_ID);
 		}
 	}
 
@@ -861,27 +865,36 @@ class preferences
 		if (isset($GLOBALS['egw_setup']) || !$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences') &&
 			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs[$account_id] != $prefs))
 		{
+			//error_log(__METHOD__."(type=$type) saved, because old_prefs[$account_id] != prefs=".array2string($prefs));
 			$this->db->transaction_begin();
 			foreach($prefs as $app => $value)
 			{
 				if (!is_array($value) || !$value)
 				{
-					continue;
+					$this->db->delete($this->table, array(
+						'preference_owner' => $account_id,
+						'preference_app'   => $app,
+					), __LINE__, __FILE__);
+					unset($prefs[$app]);
 				}
-				$this->quote($value);	// this quote-ing is for serialize, not for the db
+				else
+				{
+					$this->quote($value);	// this quote-ing is for serialize, not for the db
 
-				$this->db->insert($this->table,array(
-					'preference_value' => serialize($value),
-				),array(
-					'preference_owner' => $account_id,
-					'preference_app'   => $app,
-				),__LINE__,__FILE__);
+					$this->db->insert($this->table,array(
+						'preference_value' => serialize($value),
+					),array(
+						'preference_owner' => $account_id,
+						'preference_app'   => $app,
+					),__LINE__,__FILE__);
+				}
 			}
 			$this->db->transaction_commit();
 
 			// update instance-wide cache
 			egw_cache::setInstance(__CLASS__, $account_id, $prefs);
 		}
+		//else error_log(__METHOD__."(type=$type) NOT saved because old_prefs[$account_id] == prefs=".array2string($prefs));
 		return $this->data;
 	}
 
