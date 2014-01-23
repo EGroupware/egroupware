@@ -476,7 +476,7 @@ app.classes.calendar = AppJS.extend(
 	 * @param {Array} exceptions an array contains number of exception entries
 	 *
 	 */
-	delete_btn: function(exceptions)
+	delete_btn: function(widget,exceptions)
 	{
 		var content = this.et2.getArrayMgr('content').data;
 
@@ -486,11 +486,11 @@ app.classes.calendar = AppJS.extend(
 		}
 		else if (content['recur_type'] !== 0)
 		{
-			return confirm('Delete this series of recuring events');
+			et2_dialog.confirm(widget,'Delete this series of recuring events','Delete Series');
 		}
 		else
 		{
-			return confirm('Delete this event');
+			et2_dialog.confirm(widget,'Delete this event','Delete');
 		}
 	},
 

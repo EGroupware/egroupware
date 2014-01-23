@@ -173,7 +173,7 @@
 						<rows>
 							<row>
 								<date-time id="$row" readonly="true"/>
-								<button statustext="Delete this exception" label="Delete" id="delete_exception[$row_cont]" onclick="return confirm('Delete this exception');" image="delete"/>
+								<button statustext="Delete this exception" label="Delete" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"/>
 							</row>
 						</rows>
 					</grid>
@@ -270,7 +270,7 @@
 								<menulist>
 									<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
 								</menulist>
-								<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="return confirm('Delete this alarm');" image="delete"/>
+								<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
 							</row>
 						</rows>
 					</grid>
@@ -308,8 +308,8 @@
 	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="100"/>
-				<column width="300"/>
+				<column width="%10"/>
+				<column width="%100"/>
 				<column/>
 				<column/>
 			</columns>
@@ -320,9 +320,9 @@
 					<description/>
 					<description/>
 				</row>
-				<row class="th dialog-header" height="28">
+				<row class="dialog-header" height="28">
 					<description value="Title"/>
-					<hbox needed="1" options="0,0" span="all">
+					<hbox needed="1" options="0,0" span="4">
 						<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1"/>
 						<description font_style="b" id="id" class="calendar_calId"/>
 					</hbox>
@@ -371,7 +371,7 @@
 						</menulist>
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 					</hbox>
-					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="return app.calendar.delete_btn($cont[query_delete_exceptions]);" image="delete" background_image="1"/>
+					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 				</row>
 				<row >
 					<template id="calendar.delete_series" span="all" />
