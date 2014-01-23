@@ -439,6 +439,34 @@ jQuery.extend(et2_dialog,
 	YES_BUTTON: 2,
 	NO_BUTTON: 3,
 
+
+	/**
+	 * Create a parent to inject application specific egw object with loaded translations into et2_dialog
+	 *
+	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
+	 */
+	_create_parent: function(_egw_or_appname)
+	{
+		if (typeof _egw_or_appname == 'undefined')
+		{
+			_egw_or_appname = egw_appName;
+		}
+		// create a dummy parent with a correct reference to an application specific egw object
+		var parent = new et2_widget();
+		// if egw object is passed in because called from et2, just use it
+		if (typeof _egw_or_appname == 'object')
+		{
+			parent._egw = _egw_or_appname;
+		}
+		// otherwise use given appname to create app-specific egw instance and load default translations
+		else
+		{
+			parent._egw = egw(_egw_or_appname);
+			parent._egw.langRequireApp(parent._egw.window, _egw_or_appname);
+		}
+		return parent;
+	},
+
 	/**
 	 * Show a confirmation dialog
 	 *
@@ -449,18 +477,22 @@ jQuery.extend(et2_dialog,
 	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
 	 * @param integer _type One of the message constants.  This defines the style of the message.
 	 * @param String _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
+	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
 	 */
-	show_dialog: function(_callback, _message, _title, _value, _buttons, _type, _icon){
+	show_dialog: function(_callback, _message, _title, _value, _buttons, _type, _icon, _egw_or_appname)
+	{
+		var parent = et2_dialog._create_parent(_egw_or_appname);
+
 		// Just pass them along, widget handles defaults & missing
 		return et2_createWidget("dialog", {
 			callback: _callback||function(){},
 			message: _message,
-			title: _title||egw.lang('Confirmation required'),
+			title: _title||parent._egw.lang('Confirmation required'),
 			buttons: typeof _buttons != 'undefined' ? _buttons : et2_dialog.BUTTONS_YES_NO,
 			dialog_type: typeof _type != 'undefined' ? _type : et2_dialog.QUESTION_MESSAGE,
 			icon: _icon,
 			value: _value
-		});
+		}, parent);
 	},
 
 	/**
@@ -471,8 +503,9 @@ jQuery.extend(et2_dialog,
 	 * @param String _title Text in the top bar of the dialog.
 	 * @param String _value for prompt, passed to callback as 2. parameter
 	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
+	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
 	 */
-	show_prompt: function(_callback, _message, _title, _value, _buttons)
+	show_prompt: function(_callback, _message, _title, _value, _buttons, _egw_or_appname)
 	{
 		var callback = _callback;
 		// Just pass them along, widget handles defaults & missing
@@ -493,7 +526,7 @@ jQuery.extend(et2_dialog,
 			},
 			template: egw.webserverUrl+'/etemplate/templates/default/prompt.xet',
 			class: "et2_prompt"
-		});
+		}, et2_dialog._create_parent(_egw_or_appname));
 	},
 
 	/**
@@ -503,25 +536,27 @@ jQuery.extend(et2_dialog,
 	 * @param {widget} _senders widget that has been clicked
 	 * @param {String} _dialogMsg message shows in dialog box
 	 * @param {String} _titleMsg message shows as a title of the dialog box
+	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
 	 *
 	 * @description submit the form contents including the button that has been pressed
 	 */
-	confirm: function(_senders,_dialogMsg, _titleMsg)
+	confirm: function(_senders,_dialogMsg, _titleMsg, _egw_or_appname)
 	{
 		var senders = _senders;
 		var buttonId = _senders.id;
 		var dialogMsg = (typeof _dialogMsg !="undefined") ? _dialogMsg : '';
 		var titleMsg = (typeof _titleMsg !="undefined") ? _titleMsg : '';
-
+		var egw = _senders instanceof et2_widget ? _senders.egw() : et2_dialog._create_parent()._egw;
 		var callbackDialog = function (button_id)
 		{
 			if (button_id == et2_dialog.YES_BUTTON )
 			{
 				senders.getRoot().getInstanceManager().submit(buttonId);
 			}
-		}
-		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg),egw.lang(titleMsg), {},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE);
-	},
+		};
+		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {},
+			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+},
 
 
 	/**
@@ -547,11 +582,15 @@ jQuery.extend(et2_dialog,
 	 * 	url, this one will be used instead.
 	 * @param {Array[]} _list - List of parameters, one for each call to the
 	 *	address.  Multiple parameters are allowed, in an array.
+	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
 	 *
 	 * @return {et2_dialog}
 	 */
-	long_task: function(_callback, _message, _title, _menuaction, _list)
+	long_task: function(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
 	{
+		var parent = et2_dialog._create_parent(_egw_or_parent);
+		var egw = parent._egw;
+
 		// Special action for cancel
 		var buttons = [
 			{"button_id": et2_dialog.OK_BUTTON,"text": egw.lang('ok'), "default":true, "disabled":true},
@@ -581,7 +620,7 @@ jQuery.extend(et2_dialog,
 			},
 			title: _title||egw.lang('please wait...'),
 			buttons: buttons
-		});
+		}, parent);
 
 		// OK starts disabled
 		$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("disable");
@@ -594,7 +633,7 @@ jQuery.extend(et2_dialog,
 		var update = function(response) {
 			// context is index
 			var index = this || 0;
-			
+
 			progressbar.set_value(100*(index/_list.length));
 
 			// Display response information

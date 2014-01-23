@@ -89,6 +89,28 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		},
 
 		/**
+		 * Load default langfiles for an application: common, _appname, custom
+		 *
+		 * @param _window
+		 * @param {string} _appname name of application to load translations for
+		 * @param {function} _callback
+		 * @param _context
+		 */
+		langRequireApp: function(_window, _appname, _callback, _context)
+		{
+			var lang = egw.preference('lang');
+			var langs = [{app: 'common', lang: lang}];
+
+			if (_appname && _appname != 'eGroupWare')
+			{
+				langs.push({app: _appname, lang: lang});
+			}
+			langs.push({app: 'custom', lang: 'en'});
+
+			egw.langRequire(_window, langs, _callback, _context);
+		},
+
+		/**
 		 * Includes the language files for the given applications -- if those
 		 * do not already exist, include them.
 		 *
