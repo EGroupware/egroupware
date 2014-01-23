@@ -572,7 +572,7 @@ class preferences
 	{
 		if ($accountid > 0)
 		{
-			$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
 		}
 	}
 
@@ -585,7 +585,7 @@ class preferences
 	{
 		if ($accountid < 0)
 		{
-			$this->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
 		}
 	}
 
@@ -701,21 +701,29 @@ class preferences
 
 		if (!$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
 		{
+			//error_log(__METHOD__."(type=$type) saved, because old_prefs[$account_id] != prefs=".array2string($prefs));
 			$this->db->transaction_begin();
 			foreach($prefs as $app => $value)
 			{
 				if (!is_array($value))
 				{
-					continue;
+					$this->db->delete($this->table, array(
+						'preference_owner' => $account_id,
+						'preference_app'   => $app,
+					), __LINE__, __FILE__);
+					unset($prefs[$app]);
 				}
-				$this->quote($value);	// this quote-ing is for serialize, not for the db
+				else
+				{
+					$this->quote($value);	// this quote-ing is for serialize, not for the db
 
-				$this->db->insert($this->table,array(
-					'preference_value' => serialize($value),
-				),array(
-					'preference_owner' => $account_id,
-					'preference_app'   => $app,
-				),__LINE__,__FILE__);
+					$this->db->insert($this->table,array(
+						'preference_value' => serialize($value),
+					),array(
+						'preference_owner' => $account_id,
+						'preference_app'   => $app,
+					),__LINE__,__FILE__);
+				}
 			}
 			$this->db->transaction_commit();
 
@@ -724,6 +732,7 @@ class preferences
 			$egw->preferences = $this;
 			$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($egw);
 		}
+		//else error_log(__METHOD__."(type=$type) NOT saved because old_prefs[$account_id] == prefs=".array2string($prefs));
 		$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
 
 		return $this->data;
