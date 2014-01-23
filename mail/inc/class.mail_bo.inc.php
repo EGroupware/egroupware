@@ -2693,21 +2693,19 @@ class mail_bo
 		$msglist = '';
 		$oldMailbox = '';
 		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
-		if(!is_array($_messageUID) || count($_messageUID) === 0)
+		if (empty($_messageUID))
 		{
-			if ($_messageUID=='all')
-			{
-				$_messageUID= null;
-			}
-			else
-			{
-				if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
-				return false;
-			}
+			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+			return false;
+		}
+		elseif ($_messageUID==='all')
+		{
+			$_messageUID= null;
 		}
 		else
 		{
 			$uidsToDelete = new Horde_Imap_Client_Ids();
+			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
 			$uidsToDelete->add($_messageUID);
 		}
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
@@ -2724,10 +2722,11 @@ class mail_bo
 			$oldMailbox = $this->icServer->getCurrentMailbox();
 			$this->icServer->openMailbox($_folder);
 		}
-
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$updateCache = false;
 		switch($deleteOptions) {
 			case "move_to_trash":
+				//error_log(__METHOD__.__LINE__);
 				$updateCache = true;
 				if(!empty($trashFolder)); {
 					if (self::$debug) error_log(__METHOD__.__LINE__.implode(' : ', $_messageUID));
@@ -2738,6 +2737,7 @@ class mail_bo
 				break;
 
 			case "mark_as_deleted":
+				//error_log(__METHOD__.__LINE__);
 				// mark messages as deleted
 				if (is_null($_messageUID)) $_messageUID='all';
 				foreach((array)$_messageUID as $key =>$uid)
@@ -2757,12 +2757,20 @@ class mail_bo
 				break;
 
 			case "remove_immediately":
+				//error_log(__METHOD__.__LINE__);
 				$updateCache = true;
 				if (is_null($_messageUID)) $_messageUID='all';
-				foreach((array)$_messageUID as $key =>$uid)
+				if (is_object($_messageUID))
 				{
-					//flag messages, that are flagged for deletion as seen too
-					$this->flagMessages('delete', $uid, $_folder);
+					$this->flagMessages('delete', $_messageUID, $_folder);
+				}
+				else
+				{
+					foreach((array)$_messageUID as $key =>$uid)
+					{
+						//flag messages, that are flagged for deletion as seen too
+						$this->flagMessages('delete', $uid, $_folder);
+					}
 				}
 				// delete the messages finaly
 				$this->icServer->expunge($_folder);
@@ -2785,7 +2793,8 @@ class mail_bo
 	function getFlags ($_messageUID) {
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_messageUID);
+		if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
+		$uidsToFetch->add($_messageUID);
 		$_folderName = $this->icServer->getCurrentMailbox();
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->flags();
@@ -2841,22 +2850,19 @@ class mail_bo
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
-		if(!is_array($_messageUID)) {
-			#return false;
-			if ($_messageUID=='all')
-			{
-				//the empty array triggers the default for ctoring a flag for ALL messages
-				$uidsToModify = null;
-			}
-			else
-			{
-				$uidsToModify = new Horde_Imap_Client_Ids();
-				$uidsToModify->add($_messageUID);
-			}
+		if (empty($_messageUID))
+		{
+			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+			return false;
+		}
+		elseif ($_messageUID==='all')
+		{
+			$uidsToModify= null;
 		}
 		else
 		{
 			$uidsToModify = new Horde_Imap_Client_Ids();
+			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
 			$uidsToModify->add($_messageUID);
 		}
 
@@ -2967,21 +2973,19 @@ class mail_bo
 		$msglist = '';
 
 		$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
-		if(!is_array($_messageUID) || count($_messageUID) === 0)
+		if (empty($_messageUID))
 		{
-			if ($_messageUID=='all')
-			{
-				$uidsToMove= null;
-			}
-			else
-			{
-				if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
-				return false;
-			}
+			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+			return false;
+		}
+		elseif ($_messageUID==='all')
+		{
+			$uidsToMove= null;
 		}
 		else
 		{
 			$uidsToMove = new Horde_Imap_Client_Ids();
+			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
 			$uidsToMove->add($_messageUID);
 		}
 		$sourceFolder = (!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']);
@@ -3496,7 +3500,8 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__.array2string($_folder).'/'.$this->icServer->getCurrentMailbox().'/'. $this->sessionData['mailbox']);
 		// querying contents of body part
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->bodyPart($_partID, array(
@@ -3986,7 +3991,8 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__.":$_uid,$_partID,$decode,$_folder");
 		if(empty($_partID)) {
 			$uidsToFetch = new Horde_Imap_Client_Ids();
-			$uidsToFetch->add((array)$_uid);
+			if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+			$uidsToFetch->add($_uid);
 
 			$fquery = new Horde_Imap_Client_Fetch_Query();
 			$envFields = new Horde_Mime_Headers();
@@ -4097,7 +4103,8 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->headerText(array('peek'=>$preserveUnSeen));
@@ -4153,7 +4160,8 @@ class mail_bo
 			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->headerText(array('peek'=>true));
@@ -4267,7 +4275,8 @@ class mail_bo
 		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->fullText(array('peek'=>true));
@@ -4297,7 +4306,8 @@ class mail_bo
 			}
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->fullText(array('peek'=>true));//always do that as peek -> no seen flag set
@@ -4350,7 +4360,8 @@ class mail_bo
 			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 		try
 		{
 			$_fquery = new Horde_Imap_Client_Fetch_Query();
@@ -4552,7 +4563,8 @@ class mail_bo
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->structure();

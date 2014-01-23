@@ -411,6 +411,7 @@ class mail_compose
 			try
 			{
 				$_content['isDraft'] = 1;
+				$previouslyDrafted = $_content['lastdrafted'];
 				// save as draft
 				$folder = $this->mail_bo->getDraftFolder();
 				$this->mail_bo->reopen($folder);
@@ -425,13 +426,33 @@ class mail_compose
 				}
 				// saving as draft, does not mean closing the message
 				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-				if ($this->mail_bo->getMessageHeader($messageUid))
+				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.'/'.gettype($messageUid).' in folder:'.$folder);
+				if ($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder))
 				{
-					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
-					$draftContent = $this->bocompose->getDraftData($this->mail_bo->icServer, $folder, $messageUid);
+					$draft_id = mail_ui::createRowID($folder, $messageUid);
+					error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$draft_id.'/'.$previouslyDrafted.' in folder:'.$folder);
+					if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id)
+					{
+						$dhA = mail_ui::splitRowID($previouslyDrafted);
+						$duid = $dhA['msgUID'];
+						$dmailbox = $dhA['folder'];
+						try
+						{
+							error_log(__METHOD__.__LINE__."->".print_r($duid,true).' folder:'.$dmailbox.' Method:'.'remove_immediately');
+							$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
+						}
+						catch (egw_exception $e)
+						{
+							$error = str_replace('"',"'",$e->getMessage());
+							error_log(__METHOD__.__LINE__.$error);
+						}
+					}
+					$_content['lastdrafted'] = $draft_id;
+					//$draftContent = $this->bocompose->getDraftData($this->mail_bo->icServer, $folder, $messageUid);
 					//$this->compose($draftContent,null,'to',true);
 					//return true;
 				}
+
 
 			}
 			catch (egw_exception_wrong_userinput $e)
@@ -1254,6 +1275,9 @@ class mail_compose
 			$content['serverID'] = $this->mail_bo->profileID;
 		}
 		$preserv['serverID'] = $content['serverID'];
+		$preserv['lastdrafted'] = $content['lastdrafted'];
+		$preserv['processedmail_id'] = $content['processedmail_id'];
+		$preserv['mode'] = $content['mode'];
 		// convert it back to checkbox expectations
 		if($content['mimeType'] == 'html') {
 			$content['mimeType']=1;
@@ -1312,7 +1336,8 @@ class mail_compose
 				case 'reply':
 				case 'reply_all':
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
-
+					$content['processedmail_id'] = $mail_id;
+					$content['mode'] = 'reply';
 					$_focusElement = 'body';
 					$suppressSigOnTop = false;
 					$isReply = true;
@@ -1328,6 +1353,8 @@ class mail_compose
 						$folder = $hA['folder'];
 						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
 					}
+					$content['processedmail_id'] = implode(',',$replyIds);
+					$content['mode'] = 'forward';
 					$isReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
 					$suppressSigOnTop = false;// ($mode && $mode=='inline'?true:false);// may be a better solution
 					$_focusElement = 'to';
@@ -1625,9 +1652,10 @@ class mail_compose
 		//_debug_array($headers); exit;
 		// check for Re: in subject header
 		$this->sessionData['subject'] 	= "[FWD] " . $mail_bo->decode_header($headers['SUBJECT']);
-		$this->sessionData['sourceFolder']=$_folder;
-		$this->sessionData['forwardFlag']='forwarded';
-		$this->sessionData['forwardedUID']=$_uid;
+		// the three arrtibutes below are substituted by processedmail_id and mode
+		//$this->sessionData['sourceFolder']=$_folder;
+		//$this->sessionData['forwardFlag']='forwarded';
+		//$this->sessionData['forwardedUID']=$_uid;
 		if  ($this->preferencesArray['message_forwarding'] == 'asmail') {
 			$this->sessionData['mimeType']  = $this->preferencesArray['composeOptions'];
 			if($headers['SIZE'])
@@ -2271,6 +2299,33 @@ class mail_compose
 		$this->sessionData['mimeType']	= $_formData['mimeType'];
 		$this->sessionData['to_infolog'] = $_formData['to_infolog'];
 		$this->sessionData['to_tracker'] = $_formData['to_tracker'];
+		if (isset($_formData['lastdrafted']) && !empty($_formData['lastdrafted']))
+		{
+			$this->sessionData['lastdrafted'] = $_formData['lastdrafted'];
+		}
+		//error_log(__METHOD__.__LINE__.' Mode:'.$_formData['mode'].' PID:'.$_formData['processedmail_id']);
+		if (isset($_formData['mode']) && !empty($_formData['mode']))
+		{
+			if ($_formData['mode']=='forward' && !empty($_formData['processedmail_id']))
+			{
+				$this->sessionData['forwardFlag']='forwarded';
+				$_formData['processedmail_id'] = explode(',',$_formData['processedmail_id']);
+				$this->sessionData['uid']=array();
+				foreach ($_formData['processedmail_id'] as $k =>$rowid)
+				{
+					$fhA = mail_ui::splitRowID($rowid);
+					$this->sessionData['uid'][] = $fhA['msgUID'];
+					$this->sessionData['forwardedUID'][] = $fhA['msgUID'];
+					if (!empty($fhA['folder'])) $this->sessionData['sourceFolder'] = $fhA['folder'];
+				}
+			}
+			if ($_formData['mode']=='reply' && !empty($_formData['processedmail_id']))
+			{
+				$rhA = mail_ui::splitRowID($_formData['processedmail_id']);
+				$this->sessionData['uid'] = $rhA['msgUID'];
+				$this->sessionData['messageFolder'] = $rhA['folder'];
+			}
+		}
 		// if the body is empty, maybe someone pasted something with scripts, into the message body
 		// this should not happen anymore, unless you call send directly, since the check was introduced with the action command
 		if(empty($this->sessionData['body']))
@@ -2468,12 +2523,26 @@ class mail_compose
 		$lastDrafted = false;
 		if (isset($this->sessionData['lastDrafted']))
 		{
-			$lastDrafted = $this->sessionData['lastDrafted'];
+			$lastDrafted=array();
+			$dhA = mail_ui::splitRowID($this->sessionData['lastdrafted']);
+			$lastDrafted['uid'] = $dhA['msgUID'];
+			$lastDrafted['folder'] = $dhA['folder'];
 			if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
+			// manually drafted, do not delete
 			if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
 			//error_log(__METHOD__.__LINE__.array2string($lastDrafted));
 		}
-		if ($lastDrafted && is_array($lastDrafted) && $mail_bo->isDraftFolder($lastDrafted['folder'])) $mail_bo->deleteMessages((array)$lastDrafted['uid'],$lastDrafted['folder'],"remove_immediately");
+		if ($lastDrafted && is_array($lastDrafted) && $mail_bo->isDraftFolder($lastDrafted['folder']))
+		{
+			try
+			{
+				$mail_bo->deleteMessages($lastDrafted['uid'],$lastDrafted['folder'],'remove_immediately');
+			}
+			catch (egw_exception $e)
+			{
+				$error = str_replace('"',"'",$e->getMessage());
+			}
+		}
 		unset($this->sessionData['lastDrafted']);
 
 		//error_log("handling draft messages, flagging and such");
@@ -2481,17 +2550,19 @@ class mail_compose
 			|| (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 			// mark message as answered
 			$mail_bo->openConnection();
-			$mail_bo->reopen($this->sessionData['messageFolder']);
+			$mail_bo->reopen(($this->sessionData['messageFolder']?$this->sessionData['messageFolder']:$this->sessionData['sourceFolder']));
 			// if the draft folder is a starting part of the messages folder, the draft message will be deleted after the send
 			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
 			if ($mail_bo->isDraftFolder($this->sessionData['messageFolder']) && !$mail_bo->isTemplateFolder($this->sessionData['messageFolder']))
 			{
 				$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
 			} else {
-				$mail_bo->flagMessages("answered", array($this->sessionData['uid']));
+				$mail_bo->flagMessages("answered", $this->sessionData['uid'],($this->sessionData['messageFolder']?$this->sessionData['messageFolder']:$this->sessionData['sourceFolder']));
+				//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)).':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
 				if (array_key_exists('forwardFlag',$this->sessionData) && $this->sessionData['forwardFlag']=='forwarded')
 				{
-					$mail_bo->flagMessages("forwarded", array($this->sessionData['forwardedUID']));
+					//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
+					$mail_bo->flagMessages("forwarded", $this->sessionData['forwardedUID'],$this->sessionData['sourceFolder']);
 				}
 			}
 			//$mail_bo->closeConnection();
