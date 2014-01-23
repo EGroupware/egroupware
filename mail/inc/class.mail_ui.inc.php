@@ -288,7 +288,7 @@ class mail_ui
 		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 		{
 			$this->statusTypes = array_merge($this->statusTypes,array(
-				'keyword1'	=> 'urgent',//lang('urgent'),
+				'keyword1'	=> 'important',//lang('important'),
 				'keyword2'	=> 'job',	//lang('job'),
 				'keyword3'	=> 'personal',//lang('personal'),
 				'keyword4'	=> 'to do',	//lang('to do'),
@@ -1032,7 +1032,7 @@ class mail_ui
 							),
 							'label1' => array(
 								'group' => ++$group,
-								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
+								'caption' => "<font color='#ff0000'>".lang('important')."</font>",
 								'icon' => 'mail_label1',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
 								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
@@ -1075,7 +1075,7 @@ class mail_ui
 						'group' => ++$group,
 						'children' => array(
 							'unlabel1' => array(
-								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
+								'caption' => "<font color='#ff0000'>".lang('important')."</font>",
 								'icon' => 'mail_unlabel1',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
