@@ -143,34 +143,6 @@
 						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('calendar.list.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
 					</hbox>
 				</row>
-				<row>
-					<box class="action_popup prompt" id="delete_popup">
-						<vbox class="prompt">
-							<description value="Delete" class="promptheader"/>
-							<description value="Do you want to delete this event as an exception, or delete the whole series?"/>
-							<hbox>
-								<button label="Delete exception" id="delete" onclick="nm_submit_popup(this); return false;"/>
-								<button label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"/>
-								<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-							</hbox>
-						</vbox>
-					</box>
-					<description/>
-				</row>
-				<row>
-					<box class="action_popup prompt" id="undelete_popup">
-						<vbox class="prompt">
-							<description value="Un-delete" class="promptheader"/>
-							<description value="Do you want to Un-delete this event as an exception, or un-delete the whole series?"/>
-							<hbox>
-								<button label="Un-delete exception" id="undelete" onclick="nm_submit_popup(this); return false;"/>
-								<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
-								<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
-							</hbox>
-						</vbox>
-					</box>
-					<description/>
-				</row>
 			</rows>
 		</grid>
 		<styles>
