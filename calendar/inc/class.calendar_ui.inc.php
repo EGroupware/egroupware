@@ -421,7 +421,20 @@ class calendar_ui
 				}
 				// store state in request for clientside favorites to use
 				// remove date and other states never stored in a favorite
-				egw_framework::set_extra('calendar', 'state', array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false)));
+				$states = array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false));
+				if (strpos($_GET['menuaction'], 'ajax_sidebox') !== false)
+				{
+					// sidebox request is from top frame, which has app.calendar NOT loaded by time response arrives
+				}
+				elseif (egw_json_request::isJSONRequest())
+				{
+					$response = egw_json_response::get();
+					$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
+				}
+				else
+				{
+					egw_framework::set_extra('calendar', 'state', $states);
+				}
 			}
 		}
 	}

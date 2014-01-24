@@ -139,8 +139,7 @@ app.classes.calendar = AppJS.extend(
 				oldInnerHTML = event.helper[0].innerHTML;
 				oldWidth = event.helper.width();
 				event.helper.width(jQuery("#calColumn").width());
-			},
-
+			}
 		}).resizable({
 				//scroll:true,
 				start:function(ui,event)
@@ -181,15 +180,7 @@ app.classes.calendar = AppJS.extend(
 					var calOwner = id.substring(id.lastIndexOf("_O")+2,id.lastIndexOf("_C"));
 					var dpOwner = this.getAttribute('data-owner');
 					if (dpOwner == null) dpOwner = calOwner;
-					if (dg[0].getAttribute('id').match(/drag/g) && calOwner == dpOwner)
-					{
-						return true;
-					}
-					else
-					{
-						return false
-					}
-
+					return dg[0].getAttribute('id').match(/drag/g) && calOwner == dpOwner;
 				},
 				tolerance:'pointer',
 
@@ -218,15 +209,13 @@ app.classes.calendar = AppJS.extend(
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner == dgOwner )
 					{
-						event.helper[0].innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+timeDemo+'</div>'
+						event.helper[0].innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+timeDemo+'</div>';
 					}
 					else
 					{
 						event.helper[0].innerHTML = '<div style="background-color: red; height: 100%; width: 100%; text-align: center;">' + 'Forbidden' + '</div>';
 					}
-
-				},
-
+				}
 			});
 
 		//onClick Handler for calender entries
@@ -427,7 +416,7 @@ app.classes.calendar = AppJS.extend(
 	 * handles actions selectbox in calendar edit popup
 	 *
 	 * @param {mixed} _event
-	 * @param {et2_base_widget} widget, widget "actions selectBox" in edit popup window
+	 * @param {et2_base_widget} widget "actions selectBox" in edit popup window
 	 */
 	actions_change: function(_event, widget)
 	{
@@ -473,6 +462,7 @@ app.classes.calendar = AppJS.extend(
 	/**
 	 * control delete_series popup visibility
 	 *
+	 * @param {et2_widget} widget
 	 * @param {Array} exceptions an array contains number of exception entries
 	 *
 	 */
@@ -601,10 +591,14 @@ app.classes.calendar = AppJS.extend(
 		{
 			id = matches[1];
 		}
-		else if ((matches = id.match(/^([a-z_-]+)([0-9]+)/i)))
+		else
 		{
-			app = matches[1];
-			id = matches[2];
+			matches = id.match(/^([a-z_-]+)([0-9]+)/i);
+			if (matches)
+			{
+				app = matches[1];
+				id = matches[2];
+			}
 		}
 		var backup_url = _action.data.url;
 
@@ -636,7 +630,8 @@ app.classes.calendar = AppJS.extend(
 			this.edit_series(matches[1],matches[2]);
 			return;
 		}
-		else if ((matches = id.match(/^([a-z_-]+)([0-9]+)/i)))
+		matches = id.match(/^([a-z_-]+)([0-9]+)/i);
+		if (matches)
 		{
 			var app = matches[1];
 			_action.data.url = window.egw_webserverUrl+'/index.php?';
@@ -645,15 +640,18 @@ app.classes.calendar = AppJS.extend(
 			for(var name in get_params)
 				_action.data.url += name+"="+encodeURIComponent(get_params[name])+"&";
 
-			if (js_integration_data[app].edit_popup &&
-				((matches = js_integration_data[app].edit_popup.match(/^(.*)x(.*)$/))))
+			if (js_integration_data[app].edit_popup)
 			{
-				_action.data.width = matches[1];
-				_action.data.height = matches[2];
-			}
-			else
-			{
-				_action.data.nm_action = 'location';
+				matches = js_integration_data[app].edit_popup.match(/^(.*)x(.*)$/);
+				if (matches)
+				{
+					_action.data.width = matches[1];
+					_action.data.height = matches[2];
+				}
+				else
+				{
+					_action.data.nm_action = 'location';
+				}
 			}
 		}
 		egw.open(id.replace(/^calendar::/g,''),'calendar','edit');
@@ -699,7 +697,8 @@ app.classes.calendar = AppJS.extend(
 			{
 				return;
 			}
-			if ((row = jQuery("#"+id+"\\:"+date)))
+			row = jQuery("#"+id+"\\:"+date);
+			if (row)
 			{
 				// Open at row
 				popup.css({
@@ -811,6 +810,26 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Current state, get updated via set_state method
+	 *
+	 * @type object
+	 */
+	state: undefined,
+
+	/**
+	 * Method to set state for JSON requests (jdots ajax_exec or et2 submits can NOT use egw.js script tag)
+	 *
+	 * @param {object} _state
+	 */
+	set_state: function(_state)
+	{
+		if (typeof _state == 'object')
+		{
+			this.state = _state;
+		}
+	},
+
+	/**
 	 * Return state object defining current view
 	 *
 	 * Called by favorites to query current state.
@@ -819,11 +838,14 @@ app.classes.calendar = AppJS.extend(
 	 */
 	getState: function()
 	{
-		var egw_script_tag = document.getElementById('egw_script_id');
-		var state = egw_script_tag.getAttribute('data-calendar-state');
+		var state = this.state;
 
-		state = state ? JSON.parse(state) : {};
-
+		if (!state)
+		{
+			var egw_script_tag = document.getElementById('egw_script_id');
+			state = egw_script_tag.getAttribute('data-calendar-state');
+			state = state ? JSON.parse(state) : {};
+		}
 		// we are currently in list-view
 		if (this.et2 && this.et2.getWidgetById('nm'))
 		{
@@ -855,6 +877,35 @@ app.classes.calendar = AppJS.extend(
 		var menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.state != 'undefined' && state.state.view == 'undefined' || state.state.view == 'listview')
 		{
+			// check if we already use et2 / are in listview
+			if (this.et2)
+			{
+				// current calendar-code can set regular calendar states only via a server-request :(
+				// --> check if we only need to set something which can be handeled by nm internally
+				// or we need a redirect
+				// ToDo: pass them via nm's get_rows call to server (eg. by passing state), so we dont need a redirect
+				var current_state = this.getState();
+				var need_redirect = false;
+				for(var attr in current_state)
+				{
+					switch(attr)
+					{
+						case 'cat_id':
+						case 'owner':
+						case 'filter':
+							if (state.state[attr] != current_state[attr])
+							{
+								need_redirect = true;
+								break;
+							}
+							break;
+					}
+				}
+				if (!need_redirect)
+				{
+					return this._super.apply(this, [state]);
+				}
+			}
 			menuaction = 'calendar.calendar_uilist.listview';
 			state.state.ajax = 'true';
 			if (state.name)
