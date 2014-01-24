@@ -21,7 +21,7 @@
 		current_view_url = script_tag.getAttribute('data-current-view-url');
 		link_day_url = script_tag.getAttribute('data-link-day-url');
 		link_week_url = script_tag.getAttribute('data-link-week-url');
-		link_month_url = script_tag.getAttribute('data-link-week-url');
+		link_month_url = script_tag.getAttribute('data-link-month-url');
 		flatdate = script_tag.getAttribute('data-date');
 		current_date = script_tag.getAttribute('data-current-date');
 	}
@@ -160,8 +160,7 @@
 			flatMonthCallback : (link_month_url)?monthClicked:'',
 			flatMonthTTip : egw.lang('show this month'),
 			flatTodayCallback : (flatdate)?todayClicked:'',
-			date : (flatdate)?flatdate:'',
-
+			date : (flatdate)?flatdate:''
 		});
 	});
 })();
