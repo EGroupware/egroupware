@@ -566,11 +566,7 @@ class calendar_ui
 	 */
 	function sidebox_menu()
 	{
-		$base_hidden_vars = $link_vars = array();
-		if (@$_POST['keywords'])
-		{
-			$base_hidden_vars['keywords'] = $_POST['keywords'];
-		}
+		$link_vars = array();
 		// Magic etemplate2 favorites menu (from nextmatch widget)
 		display_sidebox('calendar',lang('Favorites'),array(
 			array(
@@ -698,12 +694,9 @@ class calendar_ui
 		$file[++$n] = $this->_select_box('displayed view','view',$options,egw::link('/index.php','',false));
 
 		// Search
-		$blur = addslashes(html::htmlspecialchars(lang('Search').'...'));
-		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : '';
 		$file[++$n] = array(
-			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 97.5%;"'.
-				' placeholder="'.$blur.'" title="'.lang('Search').'">',
-				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview','ajax'=>'true')),
+			'text' => html::input('keywords', '', 'text',
+					'id="calendar_keywords" style="width: 97.5%;" placeholder="'.html::htmlspecialchars(lang('Search').'...').'"'),
 			'no_lang' => True,
 			'link' => False,
 			'icon' => false,

@@ -148,6 +148,9 @@
 					selectBox.multiple=true;
 				}
 			});
+			$j('#calendar_keywords').change(function(){
+				egw.open_link('calendar.calendar_uilist.listview&keywords='+encodeURIComponent(this.value)+'&ajax=true', 'calendar');
+			});
 		});
 		Calendar.setup({
 			flat         : "calendar-container",

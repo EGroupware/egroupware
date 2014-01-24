@@ -173,6 +173,16 @@ class calendar_uilist extends calendar_ui
 		{
 			$content['nm']['search'] = $_GET['search'];
 		}
+		// search via jdots ajax_exec uses $_REQUEST['json_data'] instead of regular GET parameters
+		if (isset($_REQUEST['json_data']) && ($json_data = json_decode($_REQUEST['json_data'], true)) &&
+			!empty($json_data['request']['parameters'][0]))
+		{
+			parse_str(substr($json_data['request']['parameters'][0], 10), $params);	// cut off "/index.php?"
+			if (isset($params['keywords']))	// new search => set filters so every match is shown
+			{
+				$this->adjust_for_search($params['keywords'], $content['nm']);
+			}
+		}
 		if (isset($_REQUEST['keywords']))	// new search => set filters so every match is shown
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
