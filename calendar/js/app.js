@@ -213,14 +213,9 @@ app.classes.calendar = AppJS.extend(
 		//Droppable
 		jQuery("div[id^='drop_']").droppable(
 			{
-				accept:function(dg)
+				accept:function()
 				{
-
-					var id = dg[0].getAttribute('id');
-					var calOwner = id.substring(id.lastIndexOf("_O")+2,id.lastIndexOf("_C"));
-					var dpOwner = this.getAttribute('data-owner');
-					if (dpOwner == null) dpOwner = calOwner;
-					return dg[0].getAttribute('id').match(/drag/g) && calOwner == dpOwner;
+					return true;
 				},
 				tolerance:'pointer',
 
@@ -237,7 +232,7 @@ app.classes.calendar = AppJS.extend(
 					}
 					else
 					{
-
+						jQuery(event.draggable).draggable("option","revert",true);
 					}
 
 				},
@@ -248,13 +243,13 @@ app.classes.calendar = AppJS.extend(
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
 					var dpOwner = ui.target.getAttribute('data-owner');
 					if (dpOwner == null) dpOwner = dgOwner;
-					if (dpOwner == dgOwner )
+					if (dpOwner === dgOwner )
 					{
-						event.helper[0].innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+timeDemo+'</div>';
+						event.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter">'+timeDemo+'</div>';
 					}
 					else
 					{
-						event.helper[0].innerHTML = '<div style="background-color: red; height: 100%; width: 100%; text-align: center;">' + 'Forbidden' + '</div>';
+						event.helper[0].innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
 					}
 				}
 			});
