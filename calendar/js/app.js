@@ -142,6 +142,14 @@ app.classes.calendar = AppJS.extend(
 			}
 		}).resizable({
 				//scroll:true,
+				create:function(ui,event)
+				{
+					var resizeHelper = ui.target.getAttribute('data-resize').split("|")[3];
+					if (resizeHelper == 'WD' )
+					{
+						$j(this).resizable('disable');
+					}
+				},
 				start:function(ui,event)
 				{
 					var resizeHelper = ui.target.getAttribute('data-resize');
@@ -156,14 +164,15 @@ app.classes.calendar = AppJS.extend(
 				},
 				stop:function(ui,event)
 				{
-					that.dropEvent(this.getAttribute('id'),dropDate,newDuration);
+					var eventFlag = ui.target.getAttribute('data-resize').split("|")[3];
+					that.dropEvent(this.getAttribute('id'),dropDate,newDuration,eventFlag);
 				},
 				resize:function(ui,event)
 				{
 					var dataResize = ui.target.getAttribute('data-resize').split("|");
 					newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
 					var hours = Math.floor( newDuration / 3600);
-				    var minutes = (newDuration/60) % 60;
+					var minutes = (newDuration/60) % 60;
 
 					this.innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+hours+'h'+minutes+'</div>';
 				}
@@ -189,10 +198,11 @@ app.classes.calendar = AppJS.extend(
 					var dgId = event.draggable[0].getAttribute('id');
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
 					var dpOwner = id.target.getAttribute('data-owner');
+					var eventFlag = event.draggable[0].getAttribute('data-resize').split("|")[3];
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner == dgOwner )
 					{
-						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")),null);
+						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")),null,eventFlag);
 					}
 					else
 					{
@@ -225,7 +235,8 @@ app.classes.calendar = AppJS.extend(
 				var eventId = Id.match(/-?\d+\.?\d*/g)[0];
 				var appName = Id.replace(/-?\d+\.?\d*/g,'');
 				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
-				if (ev.currentTarget.id.match(/drag_/g) || appName)
+				var eventFlag = ev.currentTarget.getAttribute('data-resize').split("|")[3];
+				if (eventFlag != 'S')
 				{
 					that.egw.open(eventId,appName !=""?appName:'calendar','edit');
 				}
@@ -340,22 +351,49 @@ app.classes.calendar = AppJS.extend(
 	 * @param {string} _id dragged event id
 	 * @param {array} _date array of date,hour, and minute of dropped cell
 	 * @param {string} _duration description
-	 *
+	 * @param {string} _eventFlag Flag to distinguesh wheter the event is Whole Day, Series, or Single
 	 */
-	dropEvent : function(_id, _date, _duration)
+	dropEvent : function(_id, _date, _duration, _eventFlag)
 	{
 		var eventId = _id.substring(_id.lastIndexOf("drag_")+5,_id.lastIndexOf("_O"));
 		var calOwner = _id.substring(_id.lastIndexOf("_O")+2,_id.lastIndexOf("_C"));
 		var eventOwner = _id.substring(_id.lastIndexOf("_C")+2,_id.lastIndexOf(""));
 		var date = _date;
-		xajax_doXMLHTTP(
-				'calendar.calendar_ajax.moveEvent',
-				eventId,
-				calOwner,
-				date,
-				eventOwner,
-				_duration
-			);
+		var moveOrder = false;
+
+		if (_eventFlag == 'S')
+		{
+			et2_dialog.show_dialog(function(_button_id)
+						{
+							if (_button_id == et2_dialog.OK_BUTTON)
+							{
+								xajax_doXMLHTTP(
+									'calendar.calendar_ajax.moveEvent',
+									eventId,
+									calOwner,
+									date,
+									eventOwner,
+									_duration
+								);
+							}							
+						},this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
+					this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
+		}
+		else
+		{
+			moveOrder = true;
+		}
+		if (moveOrder)
+		{
+			xajax_doXMLHTTP(
+					'calendar.calendar_ajax.moveEvent',
+					eventId,
+					calOwner,
+					date,
+					eventOwner,
+					_duration
+				);
+		}
 	},
 	/**
 	 * open the freetime search popup

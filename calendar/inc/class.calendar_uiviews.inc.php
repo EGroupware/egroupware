@@ -1831,13 +1831,21 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{
-				$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+				$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
 			}
 		}
 		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$tooltip));
-		$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'];
-		$html = $indent.'<div id="'.$draggableID.'" data-tooltip ="'.$tooltip .'" data-resize="'.$resizableHelper.' " class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
+		if (!$event['whole_day_on_top'] &&
+				!$event['whole_day'])
+		{
+			$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.($event['recur_type']?'S':'');
+		}
+		else
+		{
+			$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.'WD';
+		}
+		$html = $indent.'<div id="'.$draggableID.'" data-tooltip ="'.$tooltip .'" data-resize="'.$resizableHelper.'" class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			'>'.$prefix_icon."\n".$html."\n".
 			$indent."</div>"."\n";
