@@ -390,7 +390,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				gen_time_div.find('.et2RenderTime').remove();
 				gen_time_div.append('<span class="et2RenderTime">'+egw.lang('eT2 rendering took %1s', (end_time-start_time)/1000)+'</span>');
 			},this));
-			};
+		};
 
 
 		// Load & process
