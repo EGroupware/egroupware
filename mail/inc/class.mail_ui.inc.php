@@ -1731,8 +1731,10 @@ unset($query['actions']);
 			$rowID = $_requesteddata['id'];
 			//unset($_REQUEST);
 		}
+		$preventRedirect=false;
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
+		if(isset($_GET['mode'])) $preventRedirect   = ($_GET['mode']=='display'?true:false);
 		$htmlOptions = $this->mail_bo->htmlOptions;
 		if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
 		if (!empty($_GET['tryashtml'])) $htmlOptions  = "always_display";
@@ -1741,7 +1743,7 @@ unset($query['actions']);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		//error_log(__METHOD__.__LINE__.array2string($hA));
-		if ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox))
+		if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
 		{
 			egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
 		}
@@ -3140,7 +3142,7 @@ blockquote[type=cite] {
 	function importMessageFromVFS2DraftAndDisplay($formData='',$mode='display')
 	{
 		if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
-		//error_log(array2string($formData));
+		//error_log(__METHOD__.__LINE__.':'.array2string($formData).' Mode:'.$mode.'->'.function_backtrace());
 		$draftFolder = $this->mail_bo->getDraftFolder(false);
 		$importID = mail_bo::getRandomString();
 		// name should be set to meet the requirements of checkFileBasics
@@ -3177,6 +3179,11 @@ blockquote[type=cite] {
 				unset($linkData['deleteDraftOnClose']);
 				$linkData['method']	='importMessageToMergeAndSend';
 			}
+			else
+			{
+				$linkData['mode']=$mode;
+			}
+
 		}
 		catch (egw_exception_wrong_userinput $e)
 		{
