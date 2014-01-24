@@ -180,6 +180,7 @@ class mail_bo
 		{
 			self::$instances[$_profileID]->icServer = $_oldImapServerObject;
 			self::$instances[$_profileID]->accountid= $_oldImapServerObject->ImapServerId;
+			self::$instances[$_profileID]->profileID= $_oldImapServerObject->ImapServerId;
 			self::$instances[$_profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
 			self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
 			return self::$instances[$_profileID];
@@ -499,10 +500,11 @@ class mail_bo
 
 	/**
 	 * getUserEMailAddresses - function to gather the emailadresses connected to the current mail-account
+	 * @param string $_profileID the ID of the mailaccount to check for identities, if null current mail-account is used
 	 * @return array - array(email=>realname)
 	 */
-	function getUserEMailAddresses() {
-		$acc = emailadmin_account::read($this->profileID);
+	function getUserEMailAddresses($_profileID=null) {
+		$acc = emailadmin_account::read((!empty($_profileID)?$_profileID:$this->profileID));
 		$identities = $acc->identities();
 
 		$userEMailAdresses = array();

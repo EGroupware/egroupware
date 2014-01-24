@@ -1479,11 +1479,19 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		if (!empty($addHeadInfo['X-MAILFOLDER'])) {
 			foreach ( explode('|',$addHeadInfo['X-MAILFOLDER']) as $val ) {
-				$this->sessionData['folder'][] = $val;
+				if ($mail_bo->folderExists($val)) $this->sessionData['folder'][] = $val;
 			}
 		}
 		if (!empty($addHeadInfo['X-SIGNATURE'])) {
-			$this->sessionData['signatureid'] = $addHeadInfo['X-SIGNATURE'];
+			// with the new system it would be the identity
+			try
+			{
+				$identity = emailadmin_account::read_identity($addHeadInfo['X-SIGNATURE']);
+				$this->sessionData['signatureid'] = $addHeadInfo['X-SIGNATURE'];
+			}
+			catch (Exception $e)
+			{
+			}
 		}
 		/*
 		if (!empty($addHeadInfo['X-STATIONERY'])) {
@@ -1491,7 +1499,17 @@ class mail_compose
 		}
 		*/
 		if (!empty($addHeadInfo['X-IDENTITY'])) {
-			$this->sessionData['mailaccount'] = $addHeadInfo['X-IDENTITY'];
+			// with the new system it would the identity is the account id
+			try
+			{
+				$acc = emailadmin_account::read($addHeadInfo['X-IDENTITY']);
+				$this->sessionData['mailaccount'] = $addHeadInfo['X-IDENTITY'];
+			}
+			catch (Exception $e)
+			{
+				// fail silently
+				$this->sessionData['mailaccount'] = $mail_bo->profileID;
+			}
 		}
 		// if the message is located within the draft folder, add it as last drafted version (for possible cleanup on abort))
 		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = array('uid'=>$_uid,'folder'=>$_folder);
@@ -1499,19 +1517,18 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
 		foreach((array)$headers['CC'] as $val) {
-			if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$_rfcAddr = $rfcAddr[0];
+			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
-
-			//if($userEMailAddresses[$val['EMAIL']]) {
-			//	continue;
-			//}
-
-			if(!$foundAddresses[$val['EMAIL']]) {
-				$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
+			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+			if(!$foundAddresses[$keyemail]) {
+				$address = $val;
 				$address = $this->mail_bo->decode_header($address,true);
-				$this->sessionData['cc'][] = $address;
-				$foundAddresses[$val['EMAIL']] = true;
+				$this->sessionData['cc'][] = $val;
+				$foundAddresses[$keyemail] = true;
 			}
 		}
 
@@ -1521,53 +1538,50 @@ class mail_compose
 				$this->sessionData['to'][] = $val;
 				continue;
 			}
-			if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$_rfcAddr = $rfcAddr[0];
+			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
-
-			//if($userEMailAddresses[$val['EMAIL']]) {
-			//	continue;
-			//}
-
-			if(!$foundAddresses[$val['EMAIL']]) {
-				$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
+			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+			if(!$foundAddresses[$keyemail]) {
+				$address = $val;
 				$address = $this->mail_bo->decode_header($address,true);
-				$this->sessionData['to'][] = $address;
-				$foundAddresses[$val['EMAIL']] = true;
+				$this->sessionData['to'][] = $val;
+				$foundAddresses[$keyemail] = true;
 			}
 		}
 
 		foreach((array)$headers['REPLY_TO'] as $val) {
-			if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$_rfcAddr = $rfcAddr[0];
+			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
-
-			//if($userEMailAddresses[$val['EMAIL']]) {
-			//	continue;
-			//}
-
-			if(!$foundAddresses[$val['EMAIL']]) {
-				$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
+			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+			if(!$foundAddresses[$keyemail]) {
+				$address = $val;
 				$address = $this->mail_bo->decode_header($address,true);
-				$this->sessionData['replyto'][] = $address;
-				$foundAddresses[$val['EMAIL']] = true;
+				$this->sessionData['replyto'][] = $val;
+				$foundAddresses[$keyemail] = true;
 			}
 		}
 
 		foreach((array)$headers['BCC'] as $val) {
-			if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
+			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$_rfcAddr = $rfcAddr[0];
+			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
-
-			//if($userEMailAddresses[$val['EMAIL']]) {
-			//	continue;
-			//}
-
-			if(!$foundAddresses[$val['EMAIL']]) {
-				$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
+			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+			if(!$foundAddresses[$keyemail]) {
+				$address = $val;
 				$address = $this->mail_bo->decode_header($address,true);
-				$this->sessionData['bcc'][] = $address;
-				$foundAddresses[$val['EMAIL']] = true;
+				$this->sessionData['bcc'][] = $val;
+				$foundAddresses[$keyemail] = true;
 			}
 		}
 
@@ -1759,7 +1773,7 @@ class mail_compose
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = $headers['MESSAGE_ID'];
-		//error_log(__METHOD__.__LINE__.array2string($headers));
+		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
 		// check for Reply-To: header and use if available
 		if(!empty($headers['REPLY_TO']) && ($headers['REPLY_TO'] != $headers['FROM'])) {
 			foreach($headers['REPLY_TO'] as $val) {
@@ -1776,7 +1790,7 @@ class mail_compose
 					$foundAddresses[$val] = true;
 				}
 			}
-			$oldToAddress	= (is_array($headers['REPLY_TO'])?$headers['REPLY_TO'][0]:$headers['REPLY_TO']);
+			$oldToAddress	= (is_array($headers['FROM'])?$headers['FROM'][0]:$headers['FROM']);
 		}
 		//error_log(__METHOD__.__LINE__.' OldToAddress:'.$oldToAddress.'#');
 		if($_mode != 'all' || ($_mode == 'all' && !empty($oldToAddress) && !$this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$oldToAddress)) ) {
@@ -1787,11 +1801,9 @@ class mail_compose
 			// reply to any address which is cc, but not to my self
 			#if($headers->cc) {
 				foreach($headers['CC'] as $val) {
-
 					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
-
 					if(!$foundAddresses[$val]) {
 						$this->sessionData['cc'][] = $val;
 						$foundAddresses[$val] = true;
@@ -1802,11 +1814,9 @@ class mail_compose
 			// reply to any address which is to, but not to my self
 			#if($headers->to) {
 				foreach($headers['TO'] as $val) {
-
 					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
-
 					if(!$foundAddresses[$val]) {
 						$this->sessionData['to'][] = $val;
 						$foundAddresses[$val] = true;
@@ -1816,7 +1826,6 @@ class mail_compose
 
 			#if($headers->from) {
 				foreach($headers['FROM'] as $val) {
-
 					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}

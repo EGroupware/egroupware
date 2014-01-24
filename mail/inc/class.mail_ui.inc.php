@@ -34,6 +34,7 @@ class mail_ui
 		'vfsSaveMessage' => True,
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
+		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'TestConnection' => True,
 	);
 
