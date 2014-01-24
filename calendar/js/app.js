@@ -74,6 +74,16 @@ app.classes.calendar = AppJS.extend(
 
 		if (typeof et2.templates['calendar.list'] != 'undefined')
 		{
+			try {
+				// check if listview runs in an iframe --> use linkHandler to open it top-level
+				if (top.egw && top != window && window.framework)
+				{
+					window.framework.linkHandler(document.location.href+'&ajax=true', 'calendar');
+				}
+			}
+			catch(e) {
+				// ignore error eg. comming because we have a top not belonging to EGroupware
+			}
 			this.filter_change();
 		}
 		if (typeof et2.templates['calendar.edit'] != 'undefined' && typeof content.data['conflicts'] == 'undefined')
@@ -103,6 +113,27 @@ app.classes.calendar = AppJS.extend(
 			this.set_enddate_visibility();
 		}
 	},
+
+	/**
+	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
+	 *
+	 * @param {String} _url
+	 * @return {boolean|string} true, if linkHandler took care of link, false for default processing or url to navigate to
+	 */
+	linkHandler: function(_url)
+	{
+		if (_url.match('menuaction=calendar.calendar_uiviews.index'))
+		{
+			var state = this.getState();
+			if (state.view == 'listview')
+			{
+				return _url.replace(/menuaction=[^&]+/, 'menuaction=calendar.calendar_uilist.listview&ajax=true');
+			}
+		}
+		// can not load our own index page, has to be done by framework
+		return false;
+	},
+
 	/**
 	 * Drag and Drop
 	 *
@@ -762,10 +793,10 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
-	 * Confirmation dialog for moving a series entry 
+	 * Confirmation dialog for moving a series entry
 	 *
-	 * @param {widget object} widget button Save | Apply
-	 * @param {type} _DOM
+	 * @param {object} _DOM
+	 * @param {et2_widget} _button button Save | Apply
 	 */
 	move_edit_series: function(_DOM,_button)
 	{
