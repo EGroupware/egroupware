@@ -2494,7 +2494,7 @@ app.classes.mail = AppJS.extend(
 		{
 			var CcField = this.et2.getWidgetById('cc');
 			var BccField = this.et2.getWidgetById('bcc');
-			if (CcField.options.value.length)
+			if (CcField.get_value().length)
 			{
 				jQuery(".mailComposeJQueryCc").show();
 				if (typeof Cc !='undefined')
@@ -2502,7 +2502,7 @@ app.classes.mail = AppJS.extend(
 					Cc.set_disabled(true);
 				}
 			}
-			if (BccField.options.value.length)
+			if (BccField.get_value().length)
 			{
 				jQuery(".mailComposeJQueryBcc").show();
 				if (typeof Bcc !='undefined')
