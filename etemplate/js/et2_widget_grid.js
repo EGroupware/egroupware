@@ -79,7 +79,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		this.rowData = [];
 		this.colData = [];
 		this.managementArray = [];
-		
+
 		// Keep the template node for later regeneration
 		this.template_node = null;
 	},
@@ -428,6 +428,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					cell.align = node.getAttribute("align");
 				}
 
+				// store id of nextmatch-*headers, so it is available for disabled widgets, which get not instanciated
+				if (nodeName.substr(0, 10) == 'nextmatch-')
+				{
+					cell.nm_id = node.getAttribute('id');
+				}
 				// Apply widget's class to td, for backward compatability
 				if(node.getAttribute("class"))
 				{
@@ -574,11 +579,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	 * As the does not fit very well into the default widget structure, we're
 	 * overwriting the loadFromXML function and doing a two-pass reading -
 	 * in the first step the
+	 *
+	 * @param {object} _node xml node to process
 	 */
 	loadFromXML: function(_node) {
 		// Keep the node for later changing / reloading
 		this.template_node = _node;
-		
+
 		// Get the columns and rows tag
 		var rowsElems = et2_directChildrenByTagName(_node, "rows");
 		var columnsElems = et2_directChildrenByTagName(_node, "columns");
@@ -763,21 +770,21 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	get_align: function(_value) {
 		return this.align;
 	},
-	
+
 	/**
 	 * Change the content for the grid, and re-generate its contents.
-	 * 
+	 *
 	 * Changing the content does not allow changing the structure of the grid,
 	 * as that is loaded from the template file.  The rows and widgets inside
-	 * will be re-created (including auto-repeat).  
-	 * 
+	 * will be re-created (including auto-repeat).
+	 *
 	 * @param {Object} _value New data for the grid
 	 * @param {Object} [_value.content] New content
 	 * @param {Object} [_value.sel_options] New select options
 	 * @param {Object} [_value.readonlys] New read-only values
-	 */	
+	 */
 	set_value: function(_value) {
-		
+
 		// Destroy children, empty grid
 		for(var i = 0; i < this.managementArray.length; i++)
 		{
@@ -789,16 +796,16 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		}
 		this.managementArray = [];
 		this.tbody.empty();
-		
+
 		// Update array managers
 		for(var key in _value)
 		{
 			this.getArrayMgr(key).data = _value[key];
 		}
-		
+
 		// Rebuild grid
 		this.loadFromXML(this.template_node);
-		
+
 		// New widgets need to finish
 		this.loadingFinished();
 	},
@@ -847,7 +854,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	/**
 	 * Override parent to apply actions on each row
 	 *
-	 * @param Object[ {ID: attributes..}+] as for set_actions
+	 * @param {array} actions [ {ID: attributes..}+] as for set_actions
 	 */
 	_link_actions: function(actions)
 	{
@@ -886,6 +893,8 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
 	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
 	},
@@ -895,6 +904,28 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
+	},
+
+	/**
+	 * Generates nextmatch column name for headers in a grid
+	 *
+	 * Implemented here as default implementation in et2_externsion_nextmatch
+	 * only considers children, but grid does NOT instanciate disabled rows as children.
+	 *
+	 * @return {string}
+	 */
+	_getColumnName: function()
+	{
+		var ids = [];
+		for(var r=0; r < this.cells.length; ++r)
+		{
+			var cols = this.cells[r];
+			for(var c=0; c < cols.length; ++c)
+			{
+				if (cols[c].nm_id) ids.push(cols[c].nm_id);
+			}
+		}
+		return ids.join('_');
 	}
 });
 et2_register_widget(et2_grid, ["grid"]);
