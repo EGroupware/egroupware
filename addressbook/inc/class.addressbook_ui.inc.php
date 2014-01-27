@@ -415,13 +415,7 @@ class addressbook_ui extends addressbook_bo
 				)+array(
 					'icon' => 'foldertree_nolines_minus',
 					'disableClass' => 'rowNoEdit',
-				),
-				'cat_edit' => array(
-					'caption' => 'Edit categories',
-					'url' => 'menuaction=preferences.preferences_categories_ui.index&cats_app=addressbook&cats_level=True&global_cats=True',
-					'icon' => 'edit',
-					'group' => $group,
-				),
+				),	
 			),
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences']) unset($actions['cats']['children']['cat_edit']);
