@@ -148,11 +148,10 @@ class egw_tail
 	 * Return html & javascript for logviewer
 	 *
 	 * @param string $header=null default $this->filename
-	 * @param string $id='log'
 	 * @return string
 	 * @throws egw_exception_wrong_parameter
 	 */
-	public function show($header=null, $id='log')
+	public function show($header=null)
 	{
 		if (!isset($this->filename))
 		{
@@ -161,73 +160,19 @@ class egw_tail
 		if (is_null($header)) $header = $this->filename;
 
 		return '
-<script type="text/javascript">
-var '.$id.'_tail_start = 0;
-function button_'.$id.'(button)
-{
-	if (button.id != "clear_'.$id.'")
-	{
-		var ajax = new egw_json_request("home.egw_tail.ajax_delete",["'.$this->filename.'",button.id=="empty_'.$id.'"]);
-		ajax.sendRequest(true);
-	}
-	$j("#'.$id.'").text("");
-}
-function refresh_'.$id.'()
-{
-	var ajax = new egw_json_request("home.egw_tail.ajax_chunk",["'.$this->filename.'",'.$id.'_tail_start]);
-	ajax.sendRequest(true,function(_data) {
-		if (_data.length) {
-			'.$id.'_tail_start = _data.next;
-			var log = $j("#'.$id.'").append(_data.content.replace(/</g,"&lt;"));
-			log.animate({ scrollTop: log.prop("scrollHeight") - log.height() + 20 }, 500);
-		}
-		if (_data.size === false)
-		{
-			$j("#download_'.$id.'").hide();
-		}
-		else
-		{
-			$j("#download_'.$id.'").show().attr("title","'.lang('Size').': "+_data.size);
-		}
-		if (_data.writable === false)
-		{
-			$j("#delete_'.$id.'").hide();
-			$j("#empty_'.$id.'").hide();
-		}
-		else
-		{
-			$j("#delete_'.$id.'").show();
-			$j("#empty_'.$id.'").show();
-		}
-		window.setTimeout(refresh_'.$id.',_data.length?200:2000);
-	});
-}
-function resize_'.$id.'()
-{
-	$j("#'.$id.'").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
-}
-egw_LAB.wait(function() {
-	$j(document).ready(function()
-	{
-		resize_'.$id.'();
-		refresh_'.$id.'();
-	});
-	$j(window).resize(resize_'.$id.');
-});
-</script>
 <p style="float: left; margin: 5px"><b>'.htmlspecialchars($header).'</b></p>
 <div style="float: right; margin: 2px; margin-right: 5px">
 	'.html::form(
-		html::input('clear_'.$id,lang('Clear window'),'button','id="clear_'.$id.'" onClick="button_'.$id.'(this)"')."\n".
-		html::input('delete_'.$id,lang('Delete file'),'button','id="delete_'.$id.'" onClick="button_'.$id.'(this)"')."\n".
-		html::input('empty_'.$id,lang('Empty file'),'button','id="empty_'.$id.'" onClick="button_'.$id.'(this)"')."\n".
-		html::input('download_'.$id,lang('Download'),'submit','id="download_'.$id.'"'),
+		html::input('clear_log',lang('Clear window'),'button','id="clear_log"')."\n".
+		html::input('delete_log',lang('Delete file'),'button','id="delete_log"')."\n".
+		html::input('empty_log',lang('Empty file'),'button','id="empty_log"')."\n".
+		html::input('download_log',lang('Download'),'submit','id="download_log"'),
 		'','/index.php',array(
 		'menuaction' => 'phpgwapi.egw_tail.download',
 		'filename' => $this->filename,
 	)).'
 </div>
-<pre class="tail" id="'.$id.'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
+<pre class="tail" id="log" data-filename="'.$this->filename.'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
 	}
 
 	/**
