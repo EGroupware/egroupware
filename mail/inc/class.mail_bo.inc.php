@@ -1242,11 +1242,15 @@ class mail_bo
 				{
 					if ($mime_id==0) $messageMimeType = $mime_type;
 					$part = $mailStructureObject->getPart($mime_id);
-					if ($part->getDisposition()=='attachment')
+					$partdisposition = $part->getDisposition();
+					$cid = $part->getContentId();
+					if ($partdisposition=='attachment' || ($partdisposition=='inline'&&empty($cid)) ||
+						($partdisposition=='inline' && $part->getPrimaryType() != 'image'))
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
 						$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=$mime_type;
-						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$id;
+						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$uid;
+						$headerObject['ATTACHMENTS'][$mime_id]['cid'] = $cid;
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
 						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
 						//error_log(__METHOD__.__LINE__.' PartDisposition:'.$mime_id.'->'.array2string($part->getName()));
@@ -4436,123 +4440,6 @@ class mail_bo
 	}
 
 	/**
-	 * getFileNameFromStructure
-	 * parse the structure for the filename of an attachment
-	 * @param array $_structure='', structure used for parsing
-	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='', the partID, may be omitted
-	 * @return string a string representing the filename of an attachment
-	 */
-	function getFileNameFromStructure(&$structure, $_uid = false, $partID = false)
-	{
-		static $namecounter;
-		if (is_null($namecounter)) $namecounter = 0;
-
-		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->getMessageHeader($_uid, $partID, true)));
-		if(isset($structure->parameters['NAME'])) {
-			//error_log(__METHOD__.__LINE__.array2string(substr($structure->parameters['NAME'],0,strlen('data:'))));
-			if (!is_array($structure->parameters['NAME']) && substr($structure->parameters['NAME'],0,strlen('data:'))==='data:') {
-				$namecounter++;
-				$ext = mime_magic::mime2ext($structure->Type.'/'.$structure->subType);
-				return lang("unknown").$namecounter.($ext?$ext:($structure->subType ? ".".$structure->subType : ""));
-			}
-			if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
-			return rawurldecode(self::decode_header($structure->parameters['NAME']));
-		} elseif(isset($structure->dparameters['FILENAME'])) {
-			return rawurldecode(self::decode_header($structure->dparameters['FILENAME']));
-		} elseif(isset($structure->dparameters['FILENAME*'])) {
-			return rawurldecode(self::decode_header($structure->dparameters['FILENAME*']));
-		} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
-			return rawurldecode(self::decode_header($structure->filename));
-		} else {
-			if ( $_uid && $partID)
-			{
-				$headers = $this->getMessageHeader($_uid, $partID, true, true);
-				if ($headers)
-				{
-					if (!PEAR::isError($headers))
-					{
-						// simple parsing of the headers array for a usable name
-						//error_log( __METHOD__.__LINE__.array2string($headers));
-						foreach(array('CONTENT-TYPE','CONTENT-DISPOSITION') as $k => $v)
-						{
-							$headers[$v] = rawurldecode(self::decode_header($headers[$v]));
-							foreach(array('filename','name') as $sk => $n)
-							{
-								if (stripos($headers[$v],$n)!== false)
-								{
-									$buff = explode($n,$headers[$v]);
-									//error_log(__METHOD__.__LINE__.array2string($buff));
-									$namepart = array_pop($buff);
-									//error_log(__METHOD__.__LINE__.$namepart);
-									$fp = strpos($namepart,'"');
-									//error_log(__METHOD__.__LINE__.' Start:'.$fp);
-									if ($fp !== false)
-									{
-										$np = strpos($namepart,'"', $fp+1);
-										//error_log(__METHOD__.__LINE__.' End:'.$np);
-										if ($np !== false)
-										{
-											$name = trim(substr($namepart,$fp+1,$np-$fp-1));
-											if (!empty($name)) return $name;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			$namecounter++;
-			$ext = mime_magic::mime2ext($structure->Type.'/'.$structure->subType);
-			return lang("unknown").$namecounter.($ext?$ext:($structure->subType ? ".".$structure->subType : ""));
-		}
-	}
-
-	/**
-	 * getMethodFromStructure
-	 * parse the structure for the METHOD of an ics event (attachment)
-	 * @param array $_structure='', structure used for parsing
-	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='', the partID, may be omitted
-	 * @return string a string representing the filename of an attachment
-	 */
-	function getMethodFromStructure(&$structure, $_uid = false, $partID = false)
-	{
-		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
-		if(isset($subPart->parameters['METHOD'])) {
-			return $subPart->parameters['METHOD'];
-		}
-		else
-		{
-			if ( $_uid && $partID && $structure->type=='TEXT' && $structure->subType=='CALENDAR' &&  $structure->filename=='NIL')
-			{
-				$attachment = $this->getAttachment($_uid, $partID);
-				if ($attachment['attachment'])
-				{
-					if (!PEAR::isError($attachment['attachment']))
-					{
-						// simple parsing of the attachment for a usable method
-						//error_log( __METHOD__.__LINE__.array2string($attachment['attachment']));
-						foreach(explode("\r\n",$attachment['attachment']) as $k => $v)
-						{
-							if (strpos($v,':') !== false)
-							{
-								list($first,$rest) = explode(':',$v,2);
-								$first = trim($first);
-								if ($first=='METHOD')
-								{
-									return trim($rest);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * retrieve a attachment
 	 *
 	 * @param int _uid the uid of the message
@@ -4585,7 +4472,7 @@ class mail_bo
 					$mailStructureObject = $_headerObject->getStructure();
 					$mailStructureObject->contentTypeMap();
 					$part = $mailStructureObject->getPart($_partID);
-					if ($part->getDisposition()=='attachment')
+					if ($part->getDisposition()=='attachment' || $part->getDisposition()=='inline')
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
 
