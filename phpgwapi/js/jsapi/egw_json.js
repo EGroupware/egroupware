@@ -400,7 +400,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			}
 			else
 			{
-				egw_appWindowOpen(req.egw.getAppName(), res.data.url);
+				egw_appWindowOpen(res.data.app, res.data.url);
 			}
 			return true;
 		}

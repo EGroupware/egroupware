@@ -528,7 +528,8 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					case 'redirect':
 						//console.log(res.data.url);
 						if (typeof res.data.url == 'string' &&
-							typeof res.data.global == 'boolean')
+							typeof res.data.global == 'boolean' &&
+							typeof res.data.app == 'string')
 						{
 							//Special handling for framework reload
 							res.data.global |= (res.data.url.indexOf("?cd=10") > 0);
@@ -539,7 +540,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							else
 							{
-								egw_appWindowOpen(this.app, res.data.url);
+								egw_appWindowOpen(res.data.app, res.data.url);
 							}
 
 							hasResponse = true;

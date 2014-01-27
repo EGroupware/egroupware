@@ -462,9 +462,10 @@ class egw_json_response
 	 *
 	 * @param string $url
 	 * @param boolean $global specifies whether to redirect the whole framework
+	 * @param string $app=null default current app from flags
 	 * or only the current application
 	 */
-	public function redirect($url, $global = false)
+	public function redirect($url, $global = false, $app=null)
 	{
 		if (is_string($url) && is_bool($global))
 		{
@@ -472,6 +473,7 @@ class egw_json_response
 			$this->addGeneric('redirect', array(
 				'url' => $url,
 				'global' => $global,
+				'app' => $app ? $app : $GLOBALS['egw_info']['flags']['currentapp'],
 			));
 		}
 	}
