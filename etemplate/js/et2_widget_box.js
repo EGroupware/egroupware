@@ -18,10 +18,11 @@
 */
 
 /**
- * Class which implements the hbox and vbox tag
+ * Class which implements box and vbox tag
+ *
  * @augments et2_baseWidget
- */ 
-var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		// Not needed
@@ -33,7 +34,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_box
 	 */
 	init: function() {
@@ -45,13 +46,15 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 		this.setDOMNode(this.div[0]);
 	},
-	
+
 	/**
 	 * Overriden so we can check for autorepeating children.  We only check for
 	 * $ in the immediate children & grandchildren of this node.
+	 *
+	 * @param {object} _node
 	 */
 	loadFromXML: function(_node) {
-		if(this._type != "box") 
+		if(this._type != "box")
 		{
 			return this._super.apply(this, arguments);
 		}
@@ -89,7 +92,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 				repeatNode = node;
 			}
 		}
-		
+
 		// Only the last child repeats(?)
 		if(repeatNode != null)
 		{
@@ -108,19 +111,21 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 				this.createElementFromNode(repeatNode);
 			}
-		
+
 			// Reset
 			for(var name in this.getArrayMgrs())
 			{
 				this.getArrayMgr(name).perspectiveData = currentPerspective;
 			}
-		}		
+		}
 	},
-		
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
 	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs)
 	{

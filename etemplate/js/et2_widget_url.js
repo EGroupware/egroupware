@@ -76,6 +76,8 @@ var et2_url = et2_textbox.extend(
 
 	/**
 	 * Override parent to update href of 'button'
+	 *
+	 * @param _value value to set
 	 */
 	set_value: function(_value) {
 		this.update_button(_value);
@@ -292,8 +294,9 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
-
 	getDetachedAttributes: function(_attrs)
 	{
 		_attrs.push("value", "class");

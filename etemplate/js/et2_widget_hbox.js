@@ -1,5 +1,5 @@
 /**
- * EGroupware eTemplate2 - JS Box object
+ * EGroupware eTemplate2 - JS HBox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,17 +18,17 @@
 */
 
 /**
- * Class which implements the hbox and vbox tag
- * 
+ * Class which implements hbox tag
+ *
  * @augments et2_baseWidget
- */ 
+ */
 var et2_hbox = et2_baseWidget.extend(
 {
 	createNamespace: true,
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_hbox
 	 */
 	init: function() {
@@ -98,6 +98,8 @@ var et2_hbox = et2_baseWidget.extend(
 	/**
 	 * The overwritten loadFromXML function checks whether any child element has
 	 * a special align value.
+	 *
+	 * @param {object} _node
 	 */
 	loadFromXML: function(_node) {
 		// Check whether any child node has an alignment tag
@@ -172,6 +174,8 @@ var et2_hbox = et2_baseWidget.extend(
 
 	/**
 	 * Tables added to the root node need to be inline instead of blocks
+	 *
+	 * @param {et2_widget} child child-widget to add
 	 */
 	addChild: function(child) {
 		this._super.apply(this, arguments);
