@@ -63,9 +63,9 @@ var et2_INextmatchSortable = new Interface({
 
 /**
  * Class which implements the "nextmatch" XET-Tag
- * 
+ *
  * @augments et2_DOMWidget
- */ 
+ */
 var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 {
 	attributes: {
@@ -119,14 +119,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_nextmatch
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.activeFilters = {col_filter:{}};
-		
-		/* 
+
+		/*
 		Process selected custom fields here, so that the settings are correctly
 		set before the row template is parsed
 		*/
@@ -144,7 +144,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			global_data.fields = cfs;
 		}
-		
+
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
 
@@ -172,7 +172,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	/**
-	 * Destroys all 
+	 * Destroys all
 	 */
 	destroy: function() {
 		// Free the grid components
@@ -216,18 +216,18 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				}
 			}
 		}
-	},	
-		
+	},
+
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		
+
 		// Register handler for dropped files, if possible
 		if(this.options.settings.row_id)
 		{
 			// Appname should be first part of the template name
 			var split = this.options.template.split('.');
 			var appname = split[0];
-			
+
 			// Check link registry
 			if(this.egw().link_get_registry(appname))
 			{
@@ -237,13 +237,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					.on('dragenter','tr',function(e) {
 						// Figure out _which_ row
 						var row = self.controller.getRowByNode(this);
-							
+
 						if(!row || !row.uid)
 						{
 							return false;
 						}
 						e.stopPropagation(); e.preventDefault();
-						
+
 						// Indicate acceptance
 						if(row.controller && row.controller._selectionMgr)
 						{
@@ -255,7 +255,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						self.controller._selectionMgr.setFocused();
 					})
 					.on('dragover','tr',false).attr("dropzone","copy")
-					
+
 					.on('drop', 'tr',function(e) {
 						self.handle_drop(e,this);
 						return false;
@@ -346,7 +346,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Apply current or modified filters on NM widget (updating rows accordingly)
-	 * 
+	 *
 	 * @param _set filter(s) to set eg. { filter: '' } to reset filter in NM header
 	 */
 	applyFilters: function(_set) {
@@ -358,7 +358,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			this.activeFilters.col_filter = {};
 		}
-		
+
 		if (typeof _set == 'object')
 		{
 			for(var s in _set)
@@ -378,7 +378,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
-		
+
 		// Update the filters in the grid controller
 		this.controller.setFilters(this.activeFilters);
 
@@ -403,17 +403,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Trigger an update
 		this.controller.update(true);
 	},
-	
+
 	/**
 	 * Refresh given rows for specified change
-	 * 
+	 *
 	 * Change type parameters allows for quicker refresh then complete server side reload:
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload
-	 * 
+	 *
 	 * @param {string[]|string} _row_ids rows to refresh
 	 * @param {?string} _type "update", "edit", "delete" or "add"
 	 *
@@ -423,10 +423,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
-		if (typeof _row_ids == "undefined" || _row_ids === null) 
+		if (typeof _row_ids == "undefined" || _row_ids === null)
 		{
 			this.applyFilters();
-			
+
 			// Trigger an event so app code can act on it
 			$j(this).triggerHandler("refresh",[this]);
 
@@ -476,14 +476,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// Blank the row
 				this.dataview.grid.deleteRow(grid_IDs[i]);
 			}
-			
+
 			// Update the count
 			var total = this.dataview.grid._total - _row_ids.length;
 			this.dataview.grid.setTotalCount(total);
 			// Re-enable automatic updating
 			this.dataview.grid.doInvalidate = true;
 		}
-		
+
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
 		{
@@ -515,7 +515,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Gets the selection
-	 * 
+	 *
 	 * @return Object { ids: [UIDs], inverted: boolean}
 	 */
 	getSelection: function() {
@@ -622,7 +622,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var app = list[0];
 			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
 			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
-			if(pref) 
+			if(pref)
 			{
 				negated = (pref[0] == "!");
 				columnPreference = negated ? pref.substring(1) : pref;
@@ -673,7 +673,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					_colData[i].disabled = true;
 					continue;
 				}
-				
+
 				// Customfields needs special processing
 				if(_row[i].widget.instanceOf(et2_nextmatch_customfields))
 				{
@@ -688,7 +688,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 								{
 									_row[i].widget.options.fields[columnDisplay[k].substr(1)] = true;
 								}
-							} 
+							}
 							// Resets field visibility too
 							_row[i].widget._getColumnName();
 							_colData[i].disabled = negated || jQuery.isEmptyObject(_row[i].widget.options.fields);
@@ -699,7 +699,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 				var colName = this._getColumnName(_row[i].widget);
 				if(!colName) continue;
-				
+
 				if(size[colName]) _colData[i].width = size[colName];
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
@@ -737,7 +737,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var colName = this._getColumnName(widget);
 			if(colName) {
 				// Server side wants each cf listed as a seperate column
-				if(widget.instanceOf(et2_nextmatch_customfields)) 
+				if(widget.instanceOf(et2_nextmatch_customfields))
 				{
 					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 					colName = widget.id;
@@ -746,7 +746,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 				}
 				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
-				
+
 				// When saving sizes, only save columns with explicit values, preserving relative vs fixed
 				// Others will be left to flex if width changes or more columns are added
 				if(colMgr.columns[i].relativeWidth)
@@ -761,7 +761,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				this.egw().debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
 		}
-			
+
 		var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 		var app = list[0];
 
@@ -797,9 +797,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	_parseHeaderRow: function(_row, _colData) {
-	
+
 		// Make sure there's a widget - cols disabled in template can be missing them, and the header really likes to have a widget
-		
+
 		for (var x = 0; x < _row.length; x++)
 		{
 			if(!_row[x].widget)
@@ -807,7 +807,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				_row[x].widget = et2_createWidget("label");
 			}
 		}
-		
+
 		// Get column display preference
 		this._applyUserPreferences(_row, _colData);
 
@@ -835,7 +835,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// No action columns in et2
 			var colName = this._getColumnName(_row[x].widget);
-			if(colName == 'actions' || colName == 'legacy_actions' || colName == 'legacy_actions_check_all') 
+			if(colName == 'actions' || colName == 'legacy_actions' || colName == 'legacy_actions_check_all')
 			{
 				remove_action_index = x;
 				continue;
@@ -859,7 +859,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Append the widget to this container
 			this.addChild(_row[x].widget);
 		}
-		
+
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
 			this.dataview.rowProvider, this._getSubgrid, this);
@@ -949,13 +949,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		));*/
 
 		this.controller.setFilters(this.activeFilters);
-		
+
 		// Set the initial row count
 		var total = typeof this.options.settings.total != "undefined" ?
 			this.options.settings.total : 0;
 		// This triggers an invalidate, which updates the grid
 		this.dataview.grid.setTotalCount(total);
-		
+
 		// Insert any data sent from server, so invalidate finds data already
 		if(this.options.settings.rows)
 		{
@@ -979,7 +979,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Search the rows for a header-row - if one is found, parse it
 		for (var y = 0; y < _grid.rowData.length; y++)
 		{
-			// Parse the first row as a header, need header to parse the data rows 
+			// Parse the first row as a header, need header to parse the data rows
 			if (_grid.rowData[y]["class"] == "th" || y == 0)
 			{
 				this._parseHeaderRow(_grid.cells[y], _grid.colData);
@@ -1093,7 +1093,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(!this.selectPopup)
 		{
 			var select = et2_createWidget("select", {
-				multiple: true, 
+				multiple: true,
 				rows: 8,
 				empty_label:this.egw().lang("select columns"),
 				selected_first: false
@@ -1137,7 +1137,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 				}
 				var value = select.getValue();
-				
+
 				// Update & remove letter filter
 				if(self.header.lettersearch)
 				{
@@ -1152,7 +1152,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 					self._set_lettersearch(show_letters);
 				}
-				
+
 				var column = 0;
 				for(var i = 0; i < value.length; i++)
 				{
@@ -1225,7 +1225,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()));
 			}
 		}
-		else	
+		else
 		{
 			this.selectPopup.toggle();
 		}
@@ -1237,7 +1237,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Set the letter search preference, and update the UI
-	 * 
+	 *
 	 * @param {boolean} letters_on
 	 */
 	_set_lettersearch: function(letters_on) {
@@ -1268,7 +1268,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 
 		// Start / update timer
-		var self = this;
 		if (this._autorefresh_timer)
 		{
 			window.clearInterval(this._autorefresh_timer);
@@ -1276,7 +1275,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		if(time > 0)
 		{
-			this._autorefresh_timer = setInterval(function() {self.refresh();}, time * 1000);
+			this._autorefresh_timer = setInterval(jQuery.proxy(this.refresh, this), time * 1000);
 		}
 	},
 
@@ -1304,13 +1303,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			{
 				return;
 			}
-			
+
 			// Free the grid components - they'll be re-created as the template is processed
 			this.dataview.free();
 			this.rowProvider.free();
 			this.controller.free();
-			
-			// Clear this setting if it's the same as the template, or 
+
+			// Clear this setting if it's the same as the template, or
 			// the columns will not be loaded
 			if(this.template == this.options.settings.columnselection_pref)
 			{
@@ -1318,13 +1317,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 			this.dataview = new et2_dataview(this.innerDiv, this.egw());
 		}
-		
+
 		// Create the template
 		var template = et2_createWidget("template", {"id": _value}, this);
 
 		if (!template)
 		{
-			this.egw().debug("error", "Error while loading definition template for " + 
+			this.egw().debug("error", "Error while loading definition template for " +
 				"nextmatch widget.",_value);
 			return;
 		}
@@ -1334,7 +1333,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			// Keep the name of the template, as we'll free up the widget after parsing
 			this.template = _value;
-			
+
 			// Fetch the grid element and parse it
 			var definitionGrid = template.getChildren()[0];
 			if (definitionGrid && definitionGrid instanceof et2_grid)
@@ -1343,7 +1342,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 			else
 			{
-				this.egw().debug("error", "Nextmatch widget expects a grid to be the " + 
+				this.egw().debug("error", "Nextmatch widget expects a grid to be the " +
 					"first child of the defined template.");
 				return;
 			}
@@ -1369,11 +1368,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Start auto-refresh
 			this._set_autorefresh(this._get_autorefresh());
 		};
-		
+
 		// Template might not be loaded yet, defer parsing
 		var promise = []
 		template.loadingFinished(promise);
-		
+
 		// Wait until template (& children) are done
 		jQuery.when.apply(null, promise).done(
 			jQuery.proxy(function() {
@@ -1400,7 +1399,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			filter_name = 'filter'
 		}
-		
+
 		var filter = this.header[filter_name];
 		if(filter)
 		{
@@ -1408,7 +1407,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		else if (bool)
 		{
-			filter = this.header._build_select(filter_name, 'select', 
+			filter = this.header._build_select(filter_name, 'select',
 				this.settings[filter_name], this.settings[filter_name+'_no_lang']);
 		}
 	},
@@ -1420,37 +1419,37 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Actions are handled by the controller, so ignore these
 	 */
 	set_actions: function(actions) {},
-	
+
 	/**
 	 * Set a different / additional handler for dropped files.
-	 * 
+	 *
 	 * File dropping doesn't work with the action system, so we handle it in the
 	 * nextmatch by linking automatically to the target row.  This allows an additional handler.
 	 * It should accept a row UID and a File[], and return a boolean Execute the default (link) action
-	 * 
+	 *
 	 * @param {String|Function} handler
 	 */
 	 set_onfiledrop: function(handler) {
 		this.options.onfiledrop = handler;
 	 },
-		 
+
 	/**
 	 * Handle drops of files by linking to the row, if possible.
-	 * 
+	 *
 	 * HTML5 / native file drops conflict with jQueryUI draggable, which handles
 	 * all our drop actions.  So we side-step the issue by registering an additional
 	 * drop handler on the rows parent.  If the row/actions itself doesn't handle
-	 * the drop, it should bubble and get handled here.	
+	 * the drop, it should bubble and get handled here.
 	 */
 	 handle_drop: function(event, target) {
 		// Check to see if we can handle the link
 		// First, find the UID
 		var row = this.controller.getRowByNode(target);
 		var uid = row.uid || null;
-		
+
 		// Get the file information
 		var files = [];
-		if(event.originalEvent && event.originalEvent.dataTransfer && 
+		if(event.originalEvent && event.originalEvent.dataTransfer &&
 			event.originalEvent.dataTransfer.files && event.originalEvent.dataTransfer.files.length > 0)
 		{
 			files = event.originalEvent.dataTransfer.files;
@@ -1459,14 +1458,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			return false;
 		}
-		
+
 		// Exectute the custom handler code
 		if (this.options.onfiledrop && !this.options.onfiledrop.call(this, uid, files))
 		{
 			return false;
 		}
 		event.stopPropagation();
-		event.preventDefault(); 
+		event.preventDefault();
 
 		if(!row || !row.uid) return false;
 
@@ -1481,7 +1480,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var link = et2_createWidget("link-to", {value: link_value}, this);
 		link.loadingFinished();
 		link.file_upload.set_drop_target(false);
-		
+
 		if(row.row.tr)
 		{
 			// Ignore most of the UI, just use the status indicators
@@ -1492,7 +1491,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				.append(link.status_span)
 				.append(link.file_upload.progress)
 				.appendTo(row.row.tr);
-			
+
 			// Bind to link event so we can remove when done
 			link.div.on('link.et2_link_to', function(e, linked) {
 				if(!linked)
@@ -1511,10 +1510,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						link.free();
 						status.remove();
 					});
-				
+
 			});
 		}
-		
+
 		// Upload and link - this triggers the upload, which triggers the link, which triggers the cleanup and refresh
 		link.file_upload.set_value(files);
 	 },
@@ -1558,7 +1557,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	getValue: function() {
 		var _ids = this.getSelection();
-		
+
 		// Translate the internal uids back to server uids
 		var idsArr = _ids.ids;
 		for (var i = 0; i < idsArr.length; i++)
@@ -1567,7 +1566,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		var value = {
 			"selected": idsArr,
-		}	
+		}
 		jQuery.extend(value, this.activeFilters, this.value);
 		return value;
 	},
@@ -1588,7 +1587,7 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  * actually load templates from the server.
  * @augments et2_DOMWidget
  */
-var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, 
+var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		"filter_label": {
@@ -1623,7 +1622,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param nextmatch
 	 * @param nm_div
 	 * @memberOf et2_nextmatch_header_bar
@@ -1650,7 +1649,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		{
 			this._createHeader();
 		}
-		
+
 		// Bind row count
 		this.nextmatch.dataview.grid.setInvalidateCallback(function () {
 			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
@@ -1683,7 +1682,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Set up so if row count changes, display is updated
 		// Register the handler which will update the "totalCount" display
-		
+
 		// Left & Right headers
 		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 		this.headers = [{id:this.nextmatch.options.header_left}, {id:this.nextmatch.options.header_right}];
@@ -1745,7 +1744,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
-		
+
 		this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
 		this.search_button.onclick = function(event) {
 			self.nextmatch.activeFilters.search = self.search.getValue();
@@ -1754,8 +1753,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 
 		// Letter search
-		var current_letter = this.nextmatch.options.settings.searchletter ? 
-			this.nextmatch.options.settings.searchletter : 
+		var current_letter = this.nextmatch.options.settings.searchletter ?
+			this.nextmatch.options.settings.searchletter :
 			(this.nextmatch.activeFilters ? this.nextmatch.activeFilters.searchletter : false);
 		if(this.nextmatch.options.settings.lettersearch || current_letter)
 		{
@@ -1867,7 +1866,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			}
 		}
 
-		// Legacy: Add in 'All' option for cat_id, if not provided. 
+		// Legacy: Add in 'All' option for cat_id, if not provided.
 		if(name == 'cat_id' && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
 		{
 			widget_options.empty_label = this.egw().lang('All');
@@ -1887,7 +1886,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Set onChange
 		var input = select.input;
-		
+
 		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 		select.attributes.value.ignore = true;
 		select.attributes.select_options.ignore = true;
@@ -1919,7 +1918,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				event.data.activeFilters[name] = select.getValue();
 				event.data.applyFilters();
 			});
-		}	
+		}
 		return select;
 	},
 
@@ -1958,14 +1957,14 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 * @param filters Array Key => Value pairs of current filters
 	 */
 	setFilters: function(filters) {
-		
+
 		// Use an array mgr to hande non-simple IDs
 		var mgr = new et2_arrayMgr(filters);
-		
+
 		this.iterateOver(function(child) {
 			// Skip favorites, don't want them in the filter
 			if(typeof child.id != "undefined" && child.id.indexOf("favorite") == 0) return;
-			
+
 			var value = '';
 			if(typeof child.set_value != "undefined" && child.id)
 			{
@@ -1974,7 +1973,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				/**
 				 * Sometimes a filter value is not in current options.  This can
 				 * happen in a saved favorite, for example, or if server changes
-				 * some filter options, and the order doesn't work out.  The normal behaviour 
+				 * some filter options, and the order doesn't work out.  The normal behaviour
 				 * is to warn & not set it, but for nextmatch we'll just add it
 				 * in, and let the server either set it properly, or ignore.
 				 */
@@ -1992,11 +1991,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				// Put data in the proper place
 				var target = this;
 				var value = child.get_value();
-				
+
 				// Split up indexes
 				var indexes = child.id.replace(/&#x5B;/g,'[').split('[');
 
-				for(var i = 0; i < indexes.length; i++) 
+				for(var i = 0; i < indexes.length; i++)
 				{
 					indexes[i] = indexes[i].replace(/&#x5D;/g,'').replace(']','');
 					if (i < indexes.length-1)
@@ -2006,7 +2005,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					}
 					else
 					{
-						target[indexes[i]] = value;							
+						target[indexes[i]] = value;
 					}
 				}
 			}
@@ -2030,14 +2029,14 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var filters = [this.category, this.filter, this.filter2];
 		for(var i = 0; i < filters.length; i++)
 		{
-			if(_sender == filters[i]) 
+			if(_sender == filters[i])
 			{
 				// Give them the filter div
 				return this.filters[0];
 			}
 		}
 		if(_sender == this.search || _sender == this.search_button) return this.search_box[0];
-		
+
 		if(_sender && _sender._type == "template")
 		{
 			for(var i = 0; i < this.headers.length; i++)
@@ -2047,7 +2046,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 		return null;
 	},
-		
+
 	_bindHeaderInput: function(_widget) {
 		var header = this;
 		_widget.iterateOver(function(_widget){
@@ -2061,7 +2060,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				if(result && _widget.isDirty()) {
 					// Update dirty
 					_widget._oldValue = _widget.getValue();
-					
+
 					var value = this.getInstanceManager().getValues(header);
 					// Filter now
 					header.nextmatch.applyFilters(value[header.nextmatch.id]);
@@ -2083,10 +2082,10 @@ et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 
 /**
  * Classes for the nextmatch sortheaders etc.
- * 
+ *
  * @augments et2_baseWidget
  */
-var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, 
+var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		"label": {
@@ -2099,7 +2098,7 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_nextmatch_header
 	 */
 	init: function() {
@@ -2134,10 +2133,10 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
 
 /**
  * Extend header to process customfields
- * 
+ *
  * @augments et2_customfields_list
  */
-var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader, 
+var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		'customfields': {
@@ -2152,7 +2151,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_nextmatch_customfields
 	 */
 	init: function() {
@@ -2210,7 +2209,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			}
 		}
 		if(!nm_column) return;
-		
+
 		// Check for global setting changes (visibility)
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
 		if(global_data != null && global_data.fields) this.options.fields = global_data.fields;
@@ -2221,7 +2220,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			var field = this.options.customfields[field_name];
 			var cf_id = et2_customfields_list.prototype.prefix + field_name;
 
-			
+
 			if(this.rows[field_name]) continue;
 
 			// Table row
@@ -2242,7 +2241,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 					select_options: field.values
 				}, this);
 			}
-			else if (apps[field.type]) 
+			else if (apps[field.type])
 			{
 				widget = et2_createWidget("nextmatch-entryheader", {
 					id: cf_id,
@@ -2280,7 +2279,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			this.nextmatch.iterateOver(
 				function(widget) {
 					if(widget == self) return;
-					widget.set_visible(_fields); 
+					widget.set_visible(_fields);
 				}, this, et2_customfields_list
 			);
 		}
@@ -2343,7 +2342,7 @@ et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 /**
  * @augments et2_nextmatch_header
  */
-var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, 
+var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable,
 {
 	attributes: {
 		"sortmode": {
@@ -2354,10 +2353,10 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 		}
 	},
 	legacyOptions: ['sortmode'],
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_nextmatch_sortheader
 	 */
 	init: function() {
@@ -2385,7 +2384,7 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 	{
 		this.setSortmode(_mode);
 	},
-		
+
 	/**
 	 * Function which implements the et2_INextmatchSortable function.
 	 */
@@ -2403,11 +2402,11 @@ et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 /**
  * @augments et2_selectbox
  */
-var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable], 
+var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable],
 {
 	/**
 	 * Override to add change handler
-	 * 
+	 *
 	 * @memberOf et2_nextmatch_filterheader
 	 */
 	createInputWidget: function() {
@@ -2473,11 +2472,11 @@ et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 /**
  * @augments et2_selectAccount
  */
-var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable], 
+var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable],
 {
 	/**
 	 * Override to add change handler
-	 * 
+	 *
 	 * @memberOf et2_nextmatch_accountfilterheader
 	 */
 	createInputWidget: function() {
@@ -2549,11 +2548,11 @@ et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter
 /**
  * @augments et2_link_entry
  */
-var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, 
+var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 {
 	/**
 	 * Override to add change handler
-	 * 
+	 *
 	 * @memberOf et2_link_entry
 	 */
 	select: function(event, selected) {
@@ -2569,9 +2568,9 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 			else
 			{
 				// App is expecting app:id
-				this.nextmatch.activeFilters["col_filter"][this.id] = 
+				this.nextmatch.activeFilters["col_filter"][this.id] =
 					event.data.app_select.val() + ":"+ selected.item.value;
-				
+
 			}
 		} else {
 			delete (this.nextmatch.activeFilters["col_filter"][this.id]);
@@ -2644,7 +2643,7 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _attrs
 	 * @memberOf et2_nextmatch_customfilter
