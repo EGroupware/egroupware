@@ -268,7 +268,7 @@ app.classes.calendar = AppJS.extend(
 				}
 				else
 				{
-					that.edit_series(event,eventId,startDate);
+					that.edit_series(eventId,startDate);
 				}
 			},
 			mouseover: function(){
@@ -318,7 +318,7 @@ app.classes.calendar = AppJS.extend(
 				}
 				else
 				{
-					that.edit_series(event,eventId,startDate);
+					that.edit_series(eventId,startDate);
 				}
 			},
 			mouseover: function(){
