@@ -660,6 +660,13 @@ var et2_widget = Class.extend(
 			entry = null;
 		}
 
+		// if _nodeName / type-attribute contains something to expand (eg. type="@${row}[type]"),
+		// we need to expand it now as it defines the constructor and by that attributes parsed via parseXMLAttrs!
+		if (_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
+		{
+			_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
+		}
+
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
 		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
@@ -671,19 +678,6 @@ var et2_widget = Class.extend(
 
 		// Parse the attributes from the given XML attributes object
 		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
-
-		// check if parseXMLAttrs gives a different type attribute eg. type="@${row}[type]"
-		if (attributes.type && attributes.type != _nodeName)
-		{
-			// set _nodeName and constructor accordingly
-			_nodeName = attributes.type;
-			constructor = typeof et2_registry[_nodeName] == "undefined" ?
-				et2_placeholder : et2_registry[_nodeName];
-			if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
-			{
-				constructor = et2_registry[_nodeName + "_ro"];
-			}
-		}
 
 		// Do an sanity check for the attributes
 		constructor.prototype.generateAttributeSet(attributes);

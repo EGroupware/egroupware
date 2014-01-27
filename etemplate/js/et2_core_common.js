@@ -84,7 +84,7 @@ function et2_form_name(_cname,_name)
  * Checks whether the given value is of the given type. Strings are converted
  * into the corresponding type. The (converted) value is returned. All supported
  * types are listed in the et2_validTypes array.
- * 
+ *
  * @param mixed _val value
  * @param string _type a valid type eg. "string" or "js"
  * @param string _attr attribute name
@@ -102,7 +102,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 
 		if(typeof _val != "undefined" && _val)
 		{
-			egw.debug("warn", "Widget %o: '" + _val + "' was not of specified _type '" + 
+			egw.debug("warn", "Widget %o: '" + _val + "' was not of specified _type '" +
 				_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
 				"and is now '" + res + "'",_widget);
 		}
@@ -111,6 +111,13 @@ function et2_checkType(_val, _type, _attr, _widget)
 
 	// If the type is "any" simply return the value again
 	if (_type == "any")
+	{
+		return _val;
+	}
+
+	// we dont check default-value any further, that also fixes type="js" does NOT accept null,
+	// which happens on expanded values
+	if (_val === et2_typeDefaults[_type])
 	{
 		return _val;
 	}
@@ -204,7 +211,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 		}
 
 		// Case 3: The value is already a valid css pixel value or a percentage
-		if (typeof _val == "string" && 
+		if (typeof _val == "string" &&
 		   ((_val.indexOf("px") == _val.length - 2 && !isNaN(_val.split("px")[0])) ||
 		   (_val.indexOf("%") == _val.length - 1 && !isNaN(_val.split("%")[0]))))
 		{
@@ -246,7 +253,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 				}
 			}
 		}
-		
+
 		if (typeof _val == "string")
 		{
 			return _val;	// get compiled later in widgets own initAttributes, as widget is not yet initialised
@@ -306,7 +313,7 @@ function et2_validateAttrib(_id, _attrib)
 	{
 		if (et2_validTypes.indexOf(_attrib["type"]) < 0)
 		{
-			egw.debug("error", "Invalid type '" + _attrib["type"] + "' for attribute '" + _id + 
+			egw.debug("error", "Invalid type '" + _attrib["type"] + "' for attribute '" + _id +
 			    "' supplied.  Valid types are ", et2_validTypes);
 		}
 	}
@@ -426,7 +433,7 @@ function et2_csvSplit(_str, _num, _delimiter, _enclosure)
 
 	// Split the string at the delimiter and join it again, when a enclosure is
 	// found at the beginning/end of a part
-	var parts = _str.split(_delimiter); 
+	var parts = _str.split(_delimiter);
 	for (var n = 0; typeof parts[n] != "undefined"; n++)
 	{
 		var part = parts[n];
@@ -559,7 +566,7 @@ function et2_activateLinks(_content)
  */
 function et2_insertLinkText(_text, _node, _target)
 {
-	if(!_node) 
+	if(!_node)
 	{
 		egw.debug("warn", "et2_insertLinkText called without node", _text, _node, _target);
 		return;
@@ -745,7 +752,7 @@ function et2_rangeSubstract(_ar1, _ar2)
 
 /**
  * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
- * 
+ *
  * @param string func dot-separated function name
  * @param arguments variable number of arguments
  * @returns {Boolean}
