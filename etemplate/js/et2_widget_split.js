@@ -159,6 +159,11 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	 */
 	_init_splitter: function() {
 		if(!this.isAttached()) return;
+
+		// Avoid trying to do anything while hidden - it ruins all the calculations
+		// Try again in resize()
+		if(!this.div.is(':visible')) return;
+
 		var options = {
 			type:	this.orientation,
 			dock:	this.dock_side,
@@ -174,6 +179,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 			if(pref)
 			{
 				options = $j.extend(options, pref);
+				this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 			}
 		}
 
@@ -192,7 +198,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		if(options.dock)
 		{
 			if(options.dock == "bottomDock" && Math.abs(options.sizeTop - this.div.height()) < et2_split.DOCK_TOLERANCE ||
-				options.dock == "topDock" && options.sizeTop == 0)
+				options.dock == "topDock" && options.sizeTop == 0 ||
+				!this.div.is(':visible')  // Starting docked if hidden simplifies life when resizing
+			)
 			{
 				this.dock();
 			}
@@ -217,6 +225,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 				{
 					// Store current position in preferences
 					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
+					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
 				}
 				// Force immediate layout, so proper layout & sizes are available
@@ -246,6 +255,11 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	 * Implement the et2_IResizable interface to resize
 	 */
 	resize: function() {
+		// Avoid doing anything while hidden - check here, and init if needed
+		if(this.div.children().length <= 2)
+		{
+			this._init_splitter();
+		}
 		if(this.dynheight)
 		{
 			var old = {w: this.div.width(), h: this.div.height()};
@@ -274,7 +288,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 				}
 				if(w != old.w || h != old.h)
 				{
-					this.div.trigger('resize.et2_split.'+this.id);
+					this.div.trigger('resize.et2_split.'+this.id, this.prefSize);
 				}
 			}, this);
 		}
