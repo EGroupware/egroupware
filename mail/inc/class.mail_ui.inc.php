@@ -687,13 +687,13 @@ class mail_ui
 			array_unshift($fFP,$this->mail_bo->profileID);
 			$oA['path'] = $fFP;
 			$path = $key; //$obj->folderName; //$obj->delimiter
-			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
 			if ($path=='INBOX')
 			{
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "kfm_home.png";
 			}
 			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
 			{
+				$oA['text'] = lang($oA['text']);
 				//echo $obj->shortFolderName.'<br>';
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$obj->shortFolderName.".png";
 				//$image2 = "'MailFolderPlain.png'";
@@ -710,6 +710,7 @@ class mail_ui
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
+			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
 			$path = $this->mail_bo->profileID.self::$delimiter.$key; //$obj->folderName; //$obj->delimiter
 			$oA['id'] = $path; // ID holds the PATH
 			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
@@ -3228,6 +3229,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_setFolderStatus($_folder)
 	{
+		translation::add_app('mail');
 		//error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
@@ -3242,6 +3244,7 @@ blockquote[type=cite] {
 					if ($folderName)
 					{
 						$fS = $this->mail_bo->getFolderStatus($folderName,false);
+						if (in_array($fS['shortDisplayName'],mail_bo::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
@@ -3334,6 +3337,7 @@ blockquote[type=cite] {
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
+			translation::add_app('mail');
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
@@ -3574,6 +3578,8 @@ blockquote[type=cite] {
 			$response = egw_json_response::get();
 			if ($success)
 			{
+				translation::add_app('mail');
+
 				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false);
 				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
 				$refreshData = array(
@@ -3733,6 +3739,8 @@ blockquote[type=cite] {
 		// Send full info back in the response
 		if($getFolders)
 		{
+			translation::add_app('mail');
+
 			$refreshData = array(
 				$icServerID => $this->getFolderTree(true, $icServerID, true)
 			);
@@ -3748,6 +3756,7 @@ blockquote[type=cite] {
 	function ajax_refreshQuotaDisplay($icServerID=null)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($icServerID));
+		translation::add_app('mail');
 		if (is_null($icServerID)) $icServerID = $this->mail_bo->profileID;
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
@@ -3789,7 +3798,9 @@ blockquote[type=cite] {
 	 */
 	function ajax_emptyTrash($icServerID)
 	{
-		error_log(__METHOD__.__LINE__.' '.$icServerID);
+		//error_log(__METHOD__.__LINE__.' '.$icServerID);
+		translation::add_app('mail');
+
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
@@ -3824,7 +3835,9 @@ blockquote[type=cite] {
 	 */
 	function ajax_compressFolder($_folderName)
 	{
-		error_log(__METHOD__.__LINE__.' '.$_folderName);
+		//error_log(__METHOD__.__LINE__.' '.$_folderName);
+		translation::add_app('mail');
+
 		$this->mail_bo->restoreSessionData();
 		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		list($icServerID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);

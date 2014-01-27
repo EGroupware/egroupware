@@ -726,7 +726,7 @@ app.classes.mail = AppJS.extend(
 
 			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
-			this.mail_queueRefreshFolderList(activeFolders);
+			this.mail_queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
 			if (_refreshGridArea)
 			{
 				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
@@ -770,28 +770,16 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Queues a refreshFolderList request for 1ms. Actually this will just execute the
+	 * Queues a refreshFolderList request for 10ms. Actually this will just execute the
 	 * code after the calling script has finished.
 	 */
 	mail_queueRefreshFolderList: function(_folders)
 	{
-		this.mail_queuedFolders.push(_folders);
-		this.mail_queuedFoldersIndex++;
-
-		// Copy idx onto the anonymous function scope
-		var idx = this.mail_queuedFoldersIndex;
-		var self = this;
+		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
+		// are executed last of the queue
 		window.setTimeout(function() {
-			if (idx == self.mail_queuedFoldersIndex)
-			{
-				//var folders = mail_queuedFolders.join(",");
-				self.mail_queuedFoldersIndex = 0;
-				self.mail_queuedFolders = [];
-
-				egw.json('mail.mail_ui.ajax_setFolderStatus',[_folders])
-					.sendRequest(true);
-			}
-		}, 10);
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders]);
+		}, 100);
 	},
 
 	/**
@@ -1170,6 +1158,14 @@ app.classes.mail = AppJS.extend(
 	{
 		var do_nmactions = true;
 		var msg;
+		var ftree;
+		var _folder;
+		if (_action.id=='read')
+		{
+			ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+			var _foldernode = ftree.getSelectedNode();
+			_folder = _foldernode.id;
+		}
 		if (typeof _elems == 'undefined')
 		{
 			do_nmactions = false;//indicates that this action is probably a popup?
@@ -1184,6 +1180,8 @@ app.classes.mail = AppJS.extend(
 				{
 					msg = {};
 					msg['msg'] = [this.mail_currentlyFocussed];
+					_elems = msg;
+					do_nmactions = true;// is triggered from preview
 				}
 			}
 		}
@@ -1271,7 +1269,8 @@ app.classes.mail = AppJS.extend(
 				{
 					this.mail_flagMessages(_action.id,msg_set);
 				}
-				// No further update needed
+				// No further update needed, only in case of read, the counters should be refreshed
+				if (_action.id=='read') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
 				return;
 			}
 		}
@@ -1279,7 +1278,10 @@ app.classes.mail = AppJS.extend(
 		{
 			this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 		}
-		this.mail_refreshFolderStatus();
+		// only refresh counter. not grid as the ajaxmethod is called asyncronously
+		// on flagging, only seen/unseen has effect on counterdisplay
+		if (_action.id=='read') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
+		//this.mail_refreshFolderStatus();
 	},
 
 	/**
@@ -1752,6 +1754,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_getFormData: function(_actionObjects) {
 		var messages = {};
+		// if 
+		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
 		if (_actionObjects.length>0)
 		{
 			messages['msg'] = [];
