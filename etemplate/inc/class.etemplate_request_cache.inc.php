@@ -136,7 +136,7 @@ class etemplate_request_cache extends etemplate_request
 			// if half of expiration time is over, save it anyway, to restart expiration time
 			isset($this->data['last_saved']) && (time()-$this->data['last_saved']) > self::EXPIRATION/2))
 		{
-			//error_log(__METHOD__."() saving $this->id");
+			//error_log(__METHOD__."() saving $this->id".($this->data_modified?'':' data NOT modified, just keeping session alife'));
 			$this->data['last_saved'] = time();
 			if (!egw_cache::setTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id, $this->data, self::EXPIRATION))
 			{

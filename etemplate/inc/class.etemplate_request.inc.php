@@ -174,12 +174,24 @@ class etemplate_request
 		}
 		if (!$request)	// eT2 request/session expired
 		{
-			/* redirect to index-url of app does not work, opens eTemplate tab in Stylite/Pixelegg template :-(
 			list($app) = explode('.', $_GET['menuaction']);
 			$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
 				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
-			egw_framework::redirect_link($index_url); */
-			error_log(__METHOD__."('$id', ...) eT2 request not found / expired!");
+			error_log(__METHOD__."('$id', ...) eT2 request not found / expired --> redirecting app $app to $index_url (_GET[menuaction]=$_GET[menuaction], isJSONRequest()=".array2string(egw_json_request::isJSONRequest()).')');
+			if (egw_json_request::isJSONRequest())
+			{
+				// we must not redirect ajax_destroy_session calls, as they might originate from our own redirect!
+				if (strpos($_GET['menuaction'], '.ajax_destroy_session.etemplate') === false)
+				{
+					$response = egw_json_response::get();
+					$response->redirect($index_url, false, $app);
+					common::egw_exit();
+				}
+			}
+			else
+			{
+				egw_framework::redirect_link($index_url);
+			}
 		}
 		return $request;
 	}
