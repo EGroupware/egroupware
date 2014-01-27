@@ -178,7 +178,7 @@ app.classes.calendar = AppJS.extend(
 					var resizeHelper = ui.target.getAttribute('data-resize').split("|")[3];
 					if (resizeHelper == 'WD' )
 					{
-						$j(this).resizable('disable');
+						$j(this).resizable('destroy');
 					}
 				},
 				start:function(ui,event)
