@@ -319,7 +319,6 @@ class etemplate_old extends boetemplate
 			$html .= '</script>';
 		}
 
-		error_log("OUTPUT MODE: $output_mode");
 		if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
 		{
 			if (!@self::$hooked)
