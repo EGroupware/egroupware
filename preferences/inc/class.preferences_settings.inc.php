@@ -100,11 +100,11 @@ class preferences_settings
 					{
 						if ($app_data['index'])
 						{
-							egw::redirect_link('/index.php', 'menuaction='.$app_data['index']);
+							egw::redirect_link('/index.php', 'menuaction='.$app_data['index'], $content['current_app']);
 						}
 						else
 						{
-							egw::redirect_link('/'.$content['current_app'].'/index.php');
+							egw::redirect_link('/'.$content['current_app'].'/index.php', null, $content['current_app']);
 						}
 					}
 					else
