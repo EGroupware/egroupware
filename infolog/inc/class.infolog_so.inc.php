@@ -670,6 +670,7 @@ class infolog_so
 	 * @param int $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
 	 * @param string|array $query[cols]=null what to query, if set the recordset / iterator get's returned
 	 * @param string $query[append]=null get's appended to sql query, eg. for GROUP BY
+	 * @param boolean $query['custom_fields']=false query custom-fields too, default not
 	 * @return array|iterator with id's as key of the matching log-entries or recordset/iterator if cols is set
 	 */
 	function search(&$query)

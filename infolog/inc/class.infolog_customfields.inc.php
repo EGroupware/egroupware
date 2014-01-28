@@ -21,7 +21,7 @@ class infolog_customfields
 	/**
 	 * Instance of the infolog BO class
 	 *
-	 * @var boinfolog
+	 * @var infolog_bo
 	 */
 	var $bo;
 	/**
