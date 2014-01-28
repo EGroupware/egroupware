@@ -18,11 +18,12 @@ class infolog_hooks
 	/**
 	 * For which groups should no group acl be used: infolog group owners
 	 *
-	 * @param string|array $data
+	 * @param array|string $location location and other parameters (not used)
 	 * @return boolean|array true, false or array with group-account_id's
 	 */
-	static function not_enum_group_acls($data)
+	static function not_enum_group_acls($location)
 	{
+		unset($location);	// not used, but part of hook signature
 		$config = config::read('infolog');
 
 		return $config['group_owners'];
@@ -31,15 +32,17 @@ class infolog_hooks
 	/**
 	 * Hook called by link-class to include infolog in the appregistry of the linkage
 	 *
-	 * @param array/string $location location and other parameters (not used)
+	 * @param array|string $location location and other parameters (not used)
 	 * @return array with method-names
 	 */
 	static function search_link($location)
 	{
+		unset($location);	// not used, but part of hook signature
 		// register our not_enum_group_acls hook, if not already registered
 		// can be removed after next infolog version update after 1.6
-		if ($GLOBALS['egw']->hooks->single('not_enum_group_acls',$acl_app) === false)
+		if ($GLOBALS['egw']->hooks->single('not_enum_group_acls', 'infolog') === false)
 		{
+			$setup_info = array();
 			include(EGW_INCLUDE_ROOT.'/infolog/setup/setup.inc.php');
 			$GLOBALS['egw']->hooks->register_hooks('infolog',$setup_info['infolog']['hooks']);
 			unset($setup_info);
@@ -420,10 +423,11 @@ class infolog_hooks
 				}
 				catch (Exception $e)
 				{
+					unset($e);
 					// permission error
 					continue;
 				}
-				if ($title = $definition->get_title())
+				if (($title = $definition->get_title()))
 				{
 					$options[$title] = $title;
 				}
@@ -534,6 +538,7 @@ class infolog_hooks
 	 */
 	public static function acl_rights($params)
 	{
+		unset($params);	// not used, but default function signature for hooks
 		return array(
 			acl::READ    => 'read',
 			acl::ADD     => 'add',
@@ -546,11 +551,12 @@ class infolog_hooks
 	/**
 	 * Hook to tell framework we use standard categories method
 	 *
-	 * @param string|array $data hook-data or location
+	 * @param array|string $location location and other parameters (not used)
 	 * @return boolean
 	 */
-	public static function categories($data)
+	public static function categories($location)
 	{
+		unset($location);	// not used, but part of hook signature
 		return true;
 	}
 }
