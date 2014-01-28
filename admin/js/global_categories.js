@@ -14,7 +14,7 @@ function check_owner(element_id) {
 	var all_users = $j(document.getElementById(element_id + '[0]'));
 
 	// If they checked all users, uncheck the others
-	if(all_users.length > 0 && all_users.attr("checked")) {
+	if(all_users.length > 0 && all_users[0].checked) {
 		checkboxes.attr("checked",false); 
 		all_users.attr("checked", true);
 		checkboxes = $j(':checkbox', document.getElementById(element_id)).filter(':checked');
