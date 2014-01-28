@@ -55,12 +55,12 @@ function infolog_upgrade0_9_15_002()
 	$select = "SELECT 'infolog',info_id,'addressbook',info_addr_id,info_from,info_datemodified,info_owner FROM phpgw_infolog WHERE info_addr_id != 0";
 	//echo "<p>copying address-links: $insert.$select</p>\n";
 	$GLOBALS['egw_setup']->oProc->query($insert.$select);
-	$select = "SELECT 'infolog',info_id,'projects',info_proj_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_proj_id != 0";
+	$select2 = "SELECT 'infolog',info_id,'projects',info_proj_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_proj_id != 0";
 	//echo "<p>copying projects-links: $insert.$select</p>\n";
-	$GLOBALS['egw_setup']->oProc->query($insert.$select);
-	$select = "SELECT 'infolog',info_id,'calendar',info_event_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_event_id != 0";
+	$GLOBALS['egw_setup']->oProc->query($insert.$select2);
+	$select3 = "SELECT 'infolog',info_id,'calendar',info_event_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_event_id != 0";
 	//echo "<p>copying calendar-links: $insert.$select</p>\n";
-	$GLOBALS['egw_setup']->oProc->query($insert.$select);
+	$GLOBALS['egw_setup']->oProc->query($insert.$select3);
 
 	$GLOBALS['egw_setup']->oProc->DropColumn('phpgw_infolog',array(
 		'fd' => array(
