@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -703,6 +703,8 @@ WHERE parent.caldav_name=sub.caldav_name',__LINE__,__FILE__) as $row)
 	}
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.003';
 }
+
+
 function infolog_upgrade1_9_003()
 {
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','caldav_name',array(
@@ -713,10 +715,24 @@ function infolog_upgrade1_9_003()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.004';
 }
+
+
 /**
  * Enable ajax=true
  */
 function infolog_upgrade1_9_004()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.005';
+}
+
+
+/**
+ * Change infolog async job method from infolog.boinfolog.async_notification to infolog_bo
+ */
+function infolog_upgrade1_9_005()
+{
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_async SET async_method='infolog.infolog_bo.async_notification'".
+		" WHERE async_method='infolog.boinfolog.async_notification'", __LINE__, __FILE__);
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.006';
 }
