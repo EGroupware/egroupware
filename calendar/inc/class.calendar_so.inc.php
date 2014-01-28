@@ -318,6 +318,11 @@ class calendar_so
 	}
 
 	/**
+	 * Maximum time a ctag get cached, as ActiveSync ping requests can run for a long time
+	 */
+	const MAX_CTAG_CACHE_TIME = 300;
+
+	/**
 	 * Get maximum modification time of events for given participants and optional owned by them
 	 *
 	 * This includes ALL recurences of an event series
@@ -330,6 +335,12 @@ class calendar_so
 	function get_ctag($users, $owner_too=false,$master_only=false)
 	{
 		static $ctags = array();	// some per-request caching
+		static $last_request = null;
+		if (!isset($last_request) || time()-$last_request > self::MAX_CTAG_CACHE_TIME)
+		{
+			$ctags = array();
+			$last_request = time();
+		}
 		$signature = serialize(func_get_args());
 		if (isset($ctags[$signature])) return $ctags[$signature];
 
