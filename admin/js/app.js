@@ -253,6 +253,9 @@ app.classes.admin = AppJS.extend(
 	 */
 	check_owner: function(button) {
 		var select_owner = this.et2.getWidgetById('owner');
+		var diff = [];
+		var diffStatFlag = false;
+		
 		if (typeof select_owner != 'undefined')
 		{
 			var owner = select_owner.get_value();
@@ -274,23 +277,45 @@ app.classes.admin = AppJS.extend(
 		}
 
 		// Find out what changed
-		var cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner').split(",");
-		var new_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
-						{
-							for (j=0; j <= cat_original_owner.length;j++)
-							{
-								if (cat_original_owner[j] == val.value)
-								{
-									return val.label;
-								}
-							}
-						});
-
-		// Somebody will lose permission, give warning.
-		if(new_cat_label)
+		var content = this.et2.getArrayMgr('content').getEntry('owner');
+		if (content)
 		{
-			var msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
-			return et2_dialog.confirm(button,msg + new_cat_label.join(','));
+			var cat_original_owner = content.split(",");
+			var selected_groups = select_owner.get_value().toString();
+			
+			for(var i =0;i < cat_original_owner.length;i++)
+			{
+				if (selected_groups.search(cat_original_owner[i]) >= 0)
+				{
+					diffStatFlag = false;
+				}
+				else
+				{
+					diffStatFlag = true;
+					diff.push(cat_original_owner[i]);
+				}
+			}
+			
+			if (diffStatFlag && diff)
+			{
+				var removed_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
+								{
+									for (j=0; j <= diff.length;j++)
+									{
+										if (diff[j] == val.value)
+										{
+											return val.label;
+										}
+									}
+								});
+
+				// Somebody will lose permission, give warning.
+				if(removed_cat_label)
+				{
+					var msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
+					return et2_dialog.confirm(button,msg + removed_cat_label.join(','));
+				}
+			}
 		}
 		return true;
 	},
