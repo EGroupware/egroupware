@@ -966,10 +966,10 @@ class addressbook_bo extends addressbook_so
 	 * Resizes photo to 60*80 pixel and returns it
 	 *
 	 * @param string|FILE $photo string with image or open filedescribtor
-	 * @param int $dst_w=60 max width to resize to
+	 * @param int $dst_w=240 max width to resize to
 	 * @return string with resized jpeg photo, null on error
 	 */
-	public static function resize_photo($photo,$dst_w=60)
+	public static function resize_photo($photo,$dst_w=240)
 	{
 		if (is_resource($photo))
 		{
