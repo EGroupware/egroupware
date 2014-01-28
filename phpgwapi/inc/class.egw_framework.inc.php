@@ -177,10 +177,11 @@ abstract class egw_framework
 	 * Link url generator
 	 *
 	 * @param string $url	The url the link is for
-	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @param string|array	$extravars	Extra params to be passed to the url
+	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
-	static function link($url, $extravars = '')
+	static function link($url, $extravars = '', $link_app=null)
 	{
 		return $GLOBALS['egw']->session->link($url, $extravars);
 	}
@@ -189,12 +190,13 @@ abstract class egw_framework
 	 * Redirects direct to a generated link
 	 *
 	 * @param string $url	The url the link is for
-	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @param string|array	$extravars	Extra params to be passed to the url
+	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
-	static function redirect_link($url, $extravars='')
+	static function redirect_link($url, $extravars='', $link_app=null)
 	{
-		egw::redirect(self::link($url, $extravars));
+		egw::redirect(self::link($url, $extravars), $link_app);
 	}
 
 	/**

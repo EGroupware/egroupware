@@ -96,10 +96,12 @@ class egw extends egw_minimal
 			// ignore exception, get handled below
 		}
 		catch(egw_exception_db_invalid_sql $e1) {
+			unset($e1);	// not used
 			try {
 				$phpgw_config = $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
 			}
 			catch (egw_exception_db_invalid_sql $e2) {
+				unset($e2);	// not used
 				// ignor error, get handled below
 			}
 		}
@@ -296,6 +298,7 @@ class egw extends egw_minimal
 		// check if we have a session, if not try to automatic create one
 		if ($this->session->verify()) return true;
 
+		$account = null;
 		if (($account_callback = $GLOBALS['egw_info']['flags']['autocreate_session_callback']) && is_callable($account_callback) &&
 			($sessionid = call_user_func_array($account_callback,array(&$account))) === true)	// $account_call_back returns true, false or a session-id
 		{
@@ -313,6 +316,7 @@ class egw extends egw_minimal
 			}
 			else	// the webserver-url is empty or just a slash '/' (eGW is installed in the docroot and no domain given)
 			{
+				$matches = null;
 				if (preg_match('/^https?:\/\/[^\/]*\/(.*)$/',$relpath=$_SERVER['PHP_SELF'],$matches))
 				{
 					$relpath = $matches[1];
@@ -469,8 +473,9 @@ class egw extends egw_minimal
 	 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
 	 *
 	 * @param  string The url ro redirect to
+	 * @param string $link_app=null appname to redirect for, default currentapp
 	 */
-	static function redirect($url)
+	static function redirect($url, $link_app)
 	{
 		// Determines whether the current output buffer should be flushed
 		$do_flush = true;
@@ -478,13 +483,14 @@ class egw extends egw_minimal
 		if (egw_json_response::isJSONResponse() || egw_json_request::isJSONRequest())
 		{
 			$response = egw_json_response::get();
-			$response->redirect($url);
+			$response->redirect($url, false, $link_app);
 
 			// If we are in a json request, we should not flush the current output!
 			$do_flush = false;
 		}
 		else
 		{
+			$file = $line = null;
 			if (headers_sent($file,$line))
 			{
 				throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
