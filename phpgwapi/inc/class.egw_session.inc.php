@@ -1690,9 +1690,10 @@ class egw_session
 					error_log(__METHOD__."($expire) called, but header already sent in $file: $line");
 					return;
 				}
-				if($expire === true)
+				if($expire === true)	// same behavior as session_cache_limiter('private_no_expire')
 				{
 					header('Cache-Control: private, max-age='.(60*session_cache_expire()));
+					header_remove('Expires');
 				}
 				else
 				{
