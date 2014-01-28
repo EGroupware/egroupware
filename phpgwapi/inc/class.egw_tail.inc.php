@@ -164,7 +164,7 @@ class egw_tail
 <div style="float: right; margin: 2px; margin-right: 5px">
 	'.html::form(
 		html::input('clear_log',lang('Clear window'),'button','id="clear_log"')."\n".
-		html::input('delete_log',lang('Delete file'),'button','id="delete_log"')."\n".
+		html::input('delete_log',lang('Delete file'),'button','id="purge_log"')."\n".
 		html::input('empty_log',lang('Empty file'),'button','id="empty_log"')."\n".
 		html::input('download_log',lang('Download'),'submit','id="download_log"'),
 		'','/index.php',array(

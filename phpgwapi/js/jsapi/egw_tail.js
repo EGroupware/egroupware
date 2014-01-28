@@ -48,12 +48,12 @@ $j(function(){
 			}
 			if (_data.writable === false)
 			{
-				$j("#delete_log").hide();
+				$j("#purge_log").hide();
 				$j("#empty_log").hide();
 			}
 			else
 			{
-				$j("#delete_log").show();
+				$j("#purge_log").show();
 				$j("#empty_log").show();
 			}
 			window.setTimeout(refresh_log,_data.length?200:2000);
@@ -66,7 +66,7 @@ $j(function(){
 	jQuery('input[id^="clear_log"]').on('click',function(){
 		button_log(this.getAttribute('id'));
 	});
-	jQuery('input[id^="delete_log"]').on('click',function(){
+	jQuery('input[id^="purge_log"]').on('click',function(){
 		button_log(this.getAttribute('id'));
 	});
 	jQuery('input[id^="empty_log"]').on('click',function(){
