@@ -114,13 +114,6 @@ class infolog_bo
 	 */
 	var $tracking;
 	/**
-	 * Variable used to tell read function to ignore the acl
-	 * used in async_notification;
-	 *
-	 * @var ignore_acl
-	 */
-	static $ignore_acl;
-	/**
 	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
 	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
 	 *
@@ -598,7 +591,7 @@ class infolog_bo
 		}
 		$info_id = $data['info_id'];	// in case the uid was specified
 
-		if (!(self::$ignore_acl || $ignore_acl) && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
+		if (!$ignore_acl && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
 			return False;
 		}
@@ -1557,7 +1550,7 @@ class infolog_bo
 				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
-				$params = array('filter' => $filter);
+				$params = array('filter' => $filter, 'custom_fields' => true);
 				foreach($this->so->search($params) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
@@ -1591,13 +1584,7 @@ class infolog_bo
 							break;
 					}
 					//error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
-					// ignore acl for further processing, needed to instruct bo->read to ignore the
-					// acl, when called for tracking -> get_signature -> merge to resolve possible
-					// infolog specific placeholders in infolog_egw_record
-					self::$ignore_acl = true;
-					$info = $this->read($info['info_id'], false, 'server',true);
 					$this->tracking->send_notification($info,null,$email,$user,$pref);
-					self::$ignore_acl = false;
 
 					$notified_info_ids[] = $info['info_id'];
 				}
