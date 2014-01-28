@@ -189,6 +189,7 @@ class infolog_so
 	 */
 	function aclFilter($filter = False)
 	{
+		$vars = null;
 		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
 		$f_user = $vars[2];
@@ -278,6 +279,7 @@ class infolog_so
 	 */
 	function statusFilter($filter = '',$prefix_and=true)
 	{
+		$vars = null;
 		preg_match('/(done|open|offer|deleted|\+deleted)/',$filter,$vars);
 		$filter = $vars[1];
 
@@ -306,6 +308,7 @@ class infolog_so
 	 */
 	function dateFilter($filter = '')
 	{
+		$vars = null;
 		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
 		$filter = $vars[1];
 
@@ -494,9 +497,8 @@ class infolog_so
 			$new_responsible = explode(',',$row['info_responsible']);
 			unset($new_responsible[array_search($args['account_id'],$new_responsible)]);
 			if ((int)$args['new_owner']) $new_responsible[] = (int)$args['new_owner'];
-			$new_responsible = implode(',',$new_responsible);
 			$this->db->update($this->info_table,array(
-				'info_responsible' => $new_responsible,
+				'info_responsible' => implode(',',$new_responsible),
 			),array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
 		}
 
@@ -713,7 +715,7 @@ class infolog_so
 				}
 				else
 				{
-					static $table_def;
+					static $table_def = null;
 					if (is_null($table_def)) $table_def = $this->db->get_table_definitions('infolog',$this->info_table);
 					if (substr($val,0,5) != 'info_' && isset($table_def['fd']['info_'.$val])) $val = 'info_'.$val;
 					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
@@ -731,7 +733,7 @@ class infolog_so
 		{
 			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 		}
-		$acl_filter = $filtermethod = $this->aclFilter($query['filter']);
+		$filtermethod = $this->aclFilter($query['filter']);
 		if (!$query['col_filter']['info_status'])  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
 		$cfcolfilter=0;
@@ -820,12 +822,11 @@ class infolog_so
 				ctype_digit($query['search'] ? ' UNION (SELECT '.$this->db->quote($query['search']).')' : '').')';
 			*/
 			/* old code searching the table direct */
-			$pattern = ' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$query['search'].'%');
-
 			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
+			$wildcard = $op = null;
 			$search = so_sql::search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode($op, $search) .')';
@@ -892,7 +893,7 @@ class infolog_so
 
 				$ids[$info['info_id']] = $info;
 			}
-			static $index_load_cfs;
+			static $index_load_cfs = null;
 			if (is_null($index_load_cfs) && $query['col_filter']['info_type'])
 			{
 				$config_data = config::read('infolog');

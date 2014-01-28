@@ -357,7 +357,6 @@ class infolog_ui
 		{
 			$infos = array( );
 		}
-		$details = $query['filter2'] == 'all';
 		// add a '-details' to the name of the columnselection pref
 		if ($details)
 		{
@@ -420,7 +419,7 @@ class infolog_ui
 					{
 						if ($col[0] == '#')
 						{
-							foreach($main as $n => $v)
+							foreach(array_keys($main) as $n)
 							{
 								if ($n[0] == '#' && !in_array($n, $columselection)) unset($main[$n]);
 							}
@@ -593,7 +592,7 @@ class infolog_ui
 			}
 		}
 		// Copy same custom fields
-		foreach(config::get_customfields('calendar') as $name => $settings)
+		foreach(array_keys(config::get_customfields('calendar')) as $name)
 		{
 			if ($this->bo->customfields[$name]) $event['#'.$name] = $infolog['#'.$name];
 		}
@@ -615,6 +614,7 @@ class infolog_ui
 	 */
 	function index($values = null,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='',$action_title='')
 	{
+		unset($extra_app_header);	// not used, but dont want to change signature
 		if (is_array($values))
 		{
 			$called_as = $values['called_as'];
@@ -682,6 +682,7 @@ class infolog_ui
 					unset($values[$multi_action.'_popup']);
 					unset($values[$multi_action]);
 				}
+				$success = $failed = $action_msg = null;
 				if ($this->action($values['nm']['multi_action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
@@ -774,8 +775,8 @@ class infolog_ui
 			}
 			else
 			{
-				list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
-				list($do_id) = @each($do_id);
+				list($do,$do2) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
+				list($do_id) = @each($do2);
 				switch((string)$do)
 				{
 					case 'close':
@@ -820,7 +821,6 @@ class infolog_ui
 		$readonlys['cancel'] = $action != 'sp';
 
 		$this->tmpl->read('infolog.index');
-		if ($colfilter) $values['nm']['col_filter'] = $persist['col_filter'] = $colfilter;
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
@@ -854,7 +854,7 @@ class infolog_ui
 			if (!$values['main']['no_customfields'])
 			{
 				// set the column-header of the main table for the customfields.
-				foreach($this->bo->customfields as $lname => $data)
+				foreach(array_keys($this->bo->customfields) as $lname)
 				{
 					$values['main']['customfields'].=$lname."\n";
 				}
@@ -863,7 +863,10 @@ class infolog_ui
 		$values['nm']['header_right'] = 'infolog.index.header_right';
 		if ($values['nm']['filter']=='bydate')
 		{
-			foreach (array_keys($values['nm']['col_filter']) as $colfk) if (is_int($colfk)) unset($values['nm']['col_filter']);
+			foreach (array_keys($values['nm']['col_filter']) as $colfk)
+			{
+				if (is_int($colfk)) unset($values['nm']['col_filter']);
+			}
 		}
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
@@ -887,7 +890,7 @@ class infolog_ui
 			$this->tmpl->set_dom_id("{$this->tmpl->name}-$action-$action_id");
 		}
 		// add scrollbar to long description, if user choose so in his prefs
-		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '');
+		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
 			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
 				' max-height: '.
@@ -944,8 +947,10 @@ class infolog_ui
 	 */
 	private function get_actions(array $query)
 	{
-		for($i = 0; $i <= 100; $i += 10) $percent[$i] = $i.'%';
-
+		for($i = 0; $i <= 100; $i += 10)
+		{
+			$percent[$i] = $i.'%';
+		}
 		// Types
 		$types = $this->get_validtypes();
 		$types_add = array();
@@ -962,6 +967,7 @@ class infolog_ui
 			);
 		}
 
+		$icons = null;
 		$statis = $this->bo->get_status($query['col_filter']['info_type'], $icons);
 		foreach($statis as $type => &$data)
 		{
@@ -1191,6 +1197,7 @@ class infolog_ui
 		{
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
+			$result = $readonlys = null;
 			$this->get_rows($query,$result,$readonlys);
 			$checked = array();
 			foreach($result as $key => $info)
@@ -1397,10 +1404,10 @@ class infolog_ui
 					break;
 
 				case 'responsible':
-					list($add_remove, $users) = explode('_', $settings, 2);
+					list($add_remove, $user_str) = explode('_', $settings, 2);
 					$action_msg = ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
 					$names = array();
-					$users = explode(',', $users);
+					$users = explode(',', $user_str);
 					foreach($users as $account_id)
 					{
 						$names[] = common::grab_owner_name($account_id);
@@ -1464,7 +1471,7 @@ class infolog_ui
 				{
 					if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
 					{
-						$this->close($info['info_id'],$referer,$closeall,$skip_notification);	// we call ourselfs recursive to process subs from subs too
+						$this->close($info['info_id'],$referer,$closesingle,$skip_notification);	// we call ourselfs recursive to process subs from subs too
 					}
 				}
 			}
@@ -1735,9 +1742,9 @@ class infolog_ui
 			$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 			$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 			$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-			$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
+			$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
 				common::get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
-			$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
+			if (strpos($referer, 'msg=') !== false) $referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 			$no_popup  = $_GET['no_popup'];
 			$print = (int) $_REQUEST['print'];
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
@@ -2134,7 +2141,7 @@ class infolog_ui
 		// Get links to be copied, if not excluded
 		if (!in_array('link_to',$exclude_fields) || !in_array('attachments',$exclude_fields))
 		{
-			foreach(egw_link::get_links($content['link_to']['to_app'], $info_id) as $link_id => $link)
+			foreach(egw_link::get_links($content['link_to']['to_app'], $info_id) as $link)
 			{
 				if ($link['app'] != egw_link::VFS_APPNAME && !in_array('link_to', $exclude_fields))
 				{
@@ -2217,7 +2224,7 @@ class infolog_ui
 		{
 			if (is_array($val))
 			{
-				$arr[$key] = self::array_stripslashes($var);
+				$arr[$key] = self::array_stripslashes($val);
 			}
 			else
 			{
@@ -2355,7 +2362,7 @@ class infolog_ui
 		);
 		$preserve['notification_old_type'] = $content['notification_type'];
 		$this->tmpl->read('infolog.config');
-		$this->tmpl->exec('infolog.infolog_ui.admin',$content,$sel_options,$readonlys,$preserve);
+		$this->tmpl->exec('infolog.infolog_ui.admin',$content,$sel_options,array(),$preserve);
 	}
 
 	/**
@@ -2473,16 +2480,22 @@ class infolog_ui
 
 			//_debug_array($_to_emailAddress);
 			$toaddr = array();
-			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
+			foreach(array('to','cc','bcc') as $x)
+			{
+				if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x]))
+				{
+					$toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
+				}
+			}
 			//_debug_array($attachments);
-			$_body = strip_tags($mailClass::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" )
-			$_body = htmlspecialchars_decode($_body,ENT_QUOTES);
+			$body_striped = strip_tags($mailClass::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" )
+			$body_decoded = htmlspecialchars_decode($body_striped,ENT_QUOTES);
 			$body = $mailClass::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
 				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
-				'DATE'=>$mailClass::_strtotime($_date))).$_body;
+				'DATE'=>$mailClass::_strtotime($_date))).$body_decoded;
 			$this->edit($this->bo->import_mail(
 				implode(',',$toaddr),$_subject,$body,$attachments,$_date
 			));
@@ -2525,24 +2538,6 @@ class infolog_ui
 			));
 		}
 		egw_framework::window_close(lang('Error: no mail (Mailbox / UID) given!'));
-	}
-
-
-	/**
-	 * return javascript to open compose window to print the Infolog
-	 *
-	 * @param array $event
-	 * @param boolean $added
-	 * @return string javascript window.open command
-	 */
-	function custom_print($content,$added)
-	{
-		$vars = array(
-			'menuaction'      => 'infolog.infolog_ui.edit',
-			'info_id'         => $content['info_id'],
-			'print'           => true,
-		);
-		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
 	/**

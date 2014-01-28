@@ -162,9 +162,8 @@ class infolog_bo
 	 * Constructor Infolog BO
 	 *
 	 * @param int $info_id
-	 * @param boolean $instanciate_link=true should the link class be instanciated, used by the link-registry to prevent infinit recursion
 	 */
-	function __construct($info_id = 0,$instanciate_link=true)
+	function __construct($info_id = 0)
 	{
 		$this->enums = $this->stock_enums = array(
 			'priority' => array (
@@ -209,7 +208,7 @@ class infolog_bo
 		{
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
-				foreach($config_data['status'] as $key => $data)
+				foreach(array_keys($config_data['status']) as $key)
 				{
 					if (!is_array($this->status[$key]))
 					{
@@ -305,7 +304,7 @@ class infolog_bo
 	{
 		if ($links) $link_types = customfields_widget::get_customfield_link_types();
 
-		foreach($this->customfields as $name => $field)
+		foreach($this->customfields as $field)
 		{
 			if ((!$type || empty($field['type2']) || in_array($type,explode(',',$field['type2']))) &&
 				(!$links || in_array($field['type'],$link_types)))
@@ -866,7 +865,7 @@ class infolog_bo
 			$values['info_owner'] = $this->so->user;
 		}
 
-		if ($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from'])))
+		if (($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))))
 		{
 			$values['info_from'] = $this->link_id2from($values);
 		}
@@ -932,7 +931,7 @@ class infolog_bo
 			}
 			$values['info_id'] = $info_id;
 			$to_write['info_id'] = $info_id;
-			
+
 					error_log(__LINE__);
 					error_log(array2string($values));
 			// if the info responbsible array is not passed, fetch it from old.
@@ -967,7 +966,7 @@ class infolog_bo
 			{
 				// Some custom fields (multiselect with nothing selected) will be missing,
 				// and that's OK.  Don't put them back.
-				foreach($missing_fields as $field => $m_value)
+				foreach(array_keys($missing_fields) as $field)
 				{
 					if(array_key_exists($field, $values_in))
 					{
@@ -1266,7 +1265,7 @@ class infolog_bo
 		$content = array();
 		if (is_array($ids))
 		{
-			foreach ($ids as $id => $info )
+			foreach(array_keys($ids) as $id)
 			{
 				$content[$id] = $this->link_title($id);
 			}
@@ -1285,6 +1284,7 @@ class infolog_bo
 	 */
 	function file_access($id,$check,$rel_path=null,$user=null)
 	{
+		unset($rel_path);	// not used
 		return $this->check_access($id,$check,0,$user);
 	}
 
@@ -1341,18 +1341,10 @@ class infolog_bo
 			foreach ($infos as $info)
 			{
 				$start = new egw_time($info['info_startdate'],egw_time::$user_timezone);
-				$time = (int) $start->format('Hi');
-				$date = $start->format('Y/m/d');
-				/* As event-like infologs are not showen in current calendar,
-				we need to present all open infologs to the user! (2006-06-27 nelius)
-				if ($do_events && !$time ||
-				    !$do_events && $time && $date == $date_wanted)
-				{
-					continue;
-				}*/
 				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
+				$size = null;
 				$edit = egw_link::edit('infolog',$info['info_id'], $size);
 				$edit['size'] = $size;
 				$content=array();
@@ -1364,7 +1356,7 @@ class infolog_bo
 					$content[] = html::image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
 				}
 				$content[] = html::a_href($title,$view);
-				$content = html::table(array(1 => $content));
+				$html = html::table(array(1 => $content));
 
 				$to_include[] = array(
 					'starttime' => $info['info_startdate'],
@@ -1373,7 +1365,7 @@ class infolog_bo
 					'view'      => $view,
 					'edit'      => $edit,
 					'icons'     => $icons,
-					'content'   => $content
+					'content'   => $html,
 				);
 			}
 			if ($query['total'] <= ($query['start']+=count($infos)))
@@ -1400,7 +1392,7 @@ class infolog_bo
 				'subs' => true,
 				'cols' => 'info_id,info_type,info_status,info_percent,info_id_parent',
 			);
-			$ids = $infos = array();
+			$infos = array();
 			foreach($this->search($query) as $row)
 			{
 				$infos[$row['info_id']] = array(
@@ -1747,9 +1739,10 @@ class infolog_bo
 
 		$parentID = False;
 		$myfilter = array('col_filter' => array('info_uid'=>$_guid)) ;
-		if ($_guid && ($found=$this->search($myfilter)) && ($uidmatch = array_shift($found))) {
+		if ($_guid && ($found=$this->search($myfilter)) && ($uidmatch = array_shift($found)))
+		{
 			$parentID = $uidmatch['info_id'];
-		};
+		}
 		return $parentID;
 	}
 
@@ -1814,6 +1807,7 @@ class infolog_bo
 					. "()[description]: $description");
 			}
 			// Avoid quotation problems
+			$matches = null;
 			if (preg_match_all('/[\x20-\x7F]*/m', $text, $matches, PREG_SET_ORDER))
 			{
 				$text = '';
