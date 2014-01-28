@@ -198,6 +198,7 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_details($data,$receiver=null)
 	{
+		unset($receiver);	// not used, but required function signature
 		//error_log(__METHOD__.__LINE__.' Data:'.array2string($data));
 		$responsible = array();
 		if ($data['info_responsible'])
@@ -312,14 +313,18 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_config($name,$data,$old=null)
 	{
-		$config = array();
+		unset($old);	// not used, but required function signature
 		switch($name)
 		{
 			case 'copy':	// include the info_cc addresses
 				if ($data['info_access'] == 'private') return array();	// no copies for private entries
 				if ($data['info_cc'])
 				{
-					$config = array_merge($config,preg_split('/, ?/',$data['info_cc']));
+					$config = preg_split('/, ?/',$data['info_cc']);
+				}
+				else
+				{
+					$config = array();
 				}
 				break;
 			case self::CUSTOM_NOTIFICATION:
@@ -329,14 +334,14 @@ class infolog_tracking extends bo_tracking
 					return '';
 				}
 				// Per-type notification
-				$config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
+				$type_config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
 				$global = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
 
 				// Disabled
-				if(!$config['use_custom'] && !$global['use_custom']) return '';
+				if(!$type_config['use_custom'] && !$global['use_custom']) return '';
 
 				// Type or globabl
-				$config = trim(strip_tags($config['message'])) != '' && $config['use_custom'] ? $config['message'] : $global['message'];
+				$config = trim(strip_tags($type_config['message'])) != '' && $type_config['use_custom'] ? $type_config['message'] : $global['message'];
 				break;
 		}
 		return $config;
