@@ -254,7 +254,6 @@ app.classes.admin = AppJS.extend(
 	check_owner: function(button) {
 		var select_owner = this.et2.getWidgetById('owner');
 		var diff = [];
-		var diffStatFlag = false;
 		
 		if (typeof select_owner != 'undefined')
 		{
@@ -285,18 +284,13 @@ app.classes.admin = AppJS.extend(
 			
 			for(var i =0;i < cat_original_owner.length;i++)
 			{
-				if (selected_groups.search(cat_original_owner[i]) >= 0)
+				if (selected_groups.search(cat_original_owner[i]) < 0)
 				{
-					diffStatFlag = false;
-				}
-				else
-				{
-					diffStatFlag = true;
 					diff.push(cat_original_owner[i]);
 				}
 			}
 			
-			if (diffStatFlag && diff)
+			if (diff.length > 0)
 			{
 				var removed_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
 								{
