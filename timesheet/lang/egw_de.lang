@@ -148,7 +148,7 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
-yes, only admins can purge deleted items	admin	de	Ja, nur Administatoren dürfen gelöschte Einträge endgültig löschen
+yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	de	Ihre Datenbank ist NICHT aktuell (%1 statt %2), bitte rufen sie %3setup%4 auf um die Datenbank zu aktualisieren.

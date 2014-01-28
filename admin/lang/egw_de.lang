@@ -6,7 +6,7 @@
 %1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
-%1 class not instanciated	admin	de	%1 Klasse nicht instanziert
+%1 class not instanciated	admin	de	%1 Klasse nicht instanziiert
 %1 group %2	admin	de	%1 Gruppe %2
 %1 is no command!	admin	de	%1 ist kein Befehl !
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
@@ -24,7 +24,7 @@ access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffskontrolle
 access to %1 data by others	admin	de	Zugriff auf Daten von %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
-account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine EMail Adresse --> nicht benachrichtigt!
+account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Benutzerkonto '%1' gelöscht.
@@ -137,7 +137,7 @@ category saved.	admin	de	Kategorie gespeichert
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
-change domain of email address and aliases	admin	de	ändert Domain von EMail Adressen oder Aliasen
+change domain of email address and aliases	admin	de	ändert Domain von E-Mail Adressen oder Aliase
 change main screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
@@ -276,7 +276,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal.
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
-enter the title for your site	admin	de	Titel der Egroupware-Installation
+enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	de	Geben Sie eine URL oder einen Dateinamen (in Ihrem Templates Bilder Verzeichnis) für Ihrem Favoriten (das kleine Icon oben links im Browserfenster) an.
@@ -342,7 +342,7 @@ hide php information	admin	de	PHP-Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)?
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (Maximum in Bildpunkten)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen Nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
@@ -375,7 +375,7 @@ last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2
 last action	admin	de	Letzte Aktion
 last login	admin	de	Letzter Login
-last login from	admin	de	Letzer Login von
+last login from	admin	de	Letzter Login von
 last password change	admin	de	Letzte Passwortänderung
 last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen

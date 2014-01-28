@@ -4,7 +4,7 @@
 %1 is no existing vfs file!	preferences	de	Die VFS Datei %1 existiert nicht!
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
-a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von EGroupWare und enthält die Icons (Symbole) der Anwendungen.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von EGroupware und enthält die Icons (Symbole) der Anwendungen.
 a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benutzeroberfläche.
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upgedatet
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
@@ -91,7 +91,7 @@ old password and new password are the same. this is invalid. you must enter a ne
 p: paragraph	preferences	de	p: Absatz
 password changed	preferences	de	Ihr Password wurde geändert
 password contains only %1 of required %2 character classes: no %3	preferences	de	Passwort enthält nur %1 von erforderlichen %2 Zeichenklassen: keine %3
-password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzername oder vollständigen Names (3 oder mehr Zeichen lang)
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzernamens oder vollständigen Namen (3 oder mehr Zeichen lang)
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.

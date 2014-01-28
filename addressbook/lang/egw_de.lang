@@ -430,7 +430,7 @@ that field name has been used already !	addressbook	de	Dieser Feldname wird bere
 the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für dieses Adressbuch.
 the anonymous user needs add rights for it!	addressbook	de	Der Anonymous Benutzer benötigt Hinzufügen Rechte dafür!
 the anonymous user needs read it!	addressbook	de	Der Anonymous Benutzer muss dies lesen können
-the following document-types are supported:	addressbook	de	Folende Dateitypen werden unterstützt:
+the following document-types are supported:	addressbook	de	Folgende Dateitypen werden unterstützt:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	de	Die zip Erweiterung (Extension) wird benötigt, um Daten in eine OpenOffice oder MsOffice Dokument einzufügen.
 there was an error saving your data :-(	addressbook	de	Beim Speichern Ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Dieses Modul ist ein Kontaktformular, welches direkt in das Adressbuch speichert.

@@ -1,11 +1,11 @@
 %1 attachments	mail	de	%1 Anhänge
-%1 is not writable by you!	mail	de	%1 ist nicht schreibbar für Sie
+%1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
 (no subject)	mail	de	(Kein Betreff)
 (not connected)	mail	de	(nicht verbunden)
-(select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von EMails durch anklicken der Zeile)
+(select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von E-Mails durch anklicken der Zeile)
 (with checkbox enforced)	mail	de	(mit Checkbox)
 account editable by user	mail	de	Anwender darf dieses Konto bearbeiten
 acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
@@ -15,15 +15,15 @@ activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach 
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add folder	mail	de	Neuer Ordner
-add to addressbook	mail	de	zum Adressbuch hinzuügen
+add to addressbook	mail	de	zum Adressbuch hinzufügen
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
-all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiederruflich gelöscht werden.
+all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht werden.
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
-allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML EMails
+allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML E-Mails
 allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten hinzufügen
 allways a new window	mail	de	immer in einem neuen Fenster
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
@@ -105,11 +105,11 @@ edit account	mail	de	Konto Einstellungen
 edit folder acl	mail	de	Berechtigungen bearbeiten
 edit vacation settings	mail	de	Abwesenheitsnotiz bearbeiten
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
-email notification successfully updated!	mail	de	E-mail Benachrichtigungen erfolgreich aktualisiert!
+email notification successfully updated!	mail	de	E--mail Benachrichtigungen erfolgreich aktualisiert!
 email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
-email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-mail Benachrichtigungen fehlgeschlagen! Es muss eine E-mail-Adresse ausgewählt sein!
+email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
-emailadmin: profilemanagement	mail	de	E-MailAdmin: Profilmanagement
+emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
 empty trash	mail	de	Papierkorb leeren
 enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!
@@ -134,7 +134,7 @@ file into:	mail	de	verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
 filemanager	mail	de	Dateimanager
 files	mail	de	Anhang
-flagged	mail	de	markieren
+flagged	mail	de	markiert
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ablageordner
@@ -161,8 +161,8 @@ how often to check with the server for new mail	mail	de	Aktualisierungsintervall
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
-identity	mail	de	Indentität
-identity+signature	mail	de	Intentität+Signature
+identity	mail	de	Identität
+identity+signature	mail	de	Identität+Signature
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	falls abweichend zur E-Mail
@@ -174,7 +174,7 @@ if message size	mail	de	wenn Nachrichtengröße
 if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ordner sollen auf der Startseite dargestellt werden (gelesene/ungelesene Nachrichten)
 if subject contains:(*)	mail	de	wenn Betreff enthält:(*)
 if to contains:(*)	mail	de	wenn An enthält:(*)
-if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-Mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
 imap	mail	de	Posteingang-Server
 imap - incoming mail	mail	de	IMAP - Posteingang-Server
 imap administration	mail	de	Administrator IMAP-Server
@@ -277,8 +277,8 @@ rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner umbenennen zu %1 ?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen zu:
 replied	mail	de	beantwortet
-reply	mail	de	Antworten nur an Absender
-reply all	mail	de	Antworten an Alle
+reply	mail	de	Antworten
+reply all	mail	de	Allen Antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
 replyto	mail	de	Antwort an
@@ -333,7 +333,7 @@ small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
 sort order	mail	de	Sortierreihenfolge
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die Email vom Sender ursprünglich verfasst wurde.
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang konfigurieren
 store to folder	mail	de	Ablageordner
 subject(a->z)	mail	de	Betreff (A->Z)
@@ -374,7 +374,7 @@ use username+password from current user	mail	de	verwendet Benutzername+Passwort 
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	admin	de	Abwesenheitsnotiz
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
-vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisert.
+vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisiert.
 vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 vacation start-date must be before the end-date!	mail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 vacation update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen

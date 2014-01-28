@@ -75,7 +75,6 @@ links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application.  Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record
-manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
 modified	timesheet	en	Modified
 modify status	timesheet	en	Modify status
@@ -87,7 +86,6 @@ no project	timesheet	en	No project
 no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	Number of row for a multi-line input field or line of a multi select box
-old fixed definition	timesheet	en	Old fixed definition
 only admin	timesheet	en	Only admin
 only admin can edit this status	timesheet	en	Only admins can edit timesheets with this status
 or endtime	timesheet	en	or end time

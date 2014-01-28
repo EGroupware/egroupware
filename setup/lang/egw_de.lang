@@ -111,7 +111,7 @@ because it is not a user application, or access is controlled via acl	setup	de	w
 because it requires manual table installation, <br />or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br />oder die Tabellen-Definition war nicht korrekt
 because it was manually disabled	setup	de	weil es manuell ausgeschaltet wurde
 because its sources are missing	setup	de	weil die Quelldateien fehlen
-because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installation fehlgeschlug
+because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installationfehlgeschlagen ist
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlgeschlagen ist, oder die Datenbank ist neuer als die installierte Version dieser Applikation
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
@@ -123,7 +123,7 @@ can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht 
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
 can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
 can not create dn %1!	setup	de	Kann DN %1 nicht anlegen!
-can not instancate accounts object for %1	setup	de	Kann Benutzerkonten-Object für %1 nicht instanzieren
+can not instancate accounts object for %1	setup	de	Kann Benutzerkonten-Objekt für %1 nicht instanziieren
 can only be change via setup!	setup	de	Kann nur im EGroupware Setup geändert werden!
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1 oder %2.
@@ -326,7 +326,7 @@ hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
 however the tables are still in the database	setup	de	Wie auch immer, die Tabellen sind noch immer in der Datenbank
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
-however, the application may still work	setup	de	Wie auch immer, die Anwendung mag denoch funktionieren
+however, the application may still work	setup	de	Wie auch immer, die Anwendung mag dennoch funktionieren
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de	HTTP Authetifizierungs Typen (Komma-getrennt) die ohne Login Seite benutzt werden sollen, zB. "NTLM"
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
@@ -335,7 +335,7 @@ if using ads (active directory)	setup	de	Wenn Sie ADS (Active Directory) benutze
 if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Authentication Service) benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
-if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzern Sie hier den Pfad für temporäre Dateien.
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzen Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
@@ -390,7 +390,7 @@ logout	setup	de	Abmelden
 mail account of %1 migraged	setup	de	Mail Konto von %1 Migriert
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
 mail server login type	setup	de	Mail Server Login Typ
-mail server protocol	setup	de	Mail Server Protokol
+mail server protocol	setup	de	Mail Server Protokoll
 make sure that your database is created and the account permissions are set	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten

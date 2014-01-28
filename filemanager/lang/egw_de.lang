@@ -58,7 +58,7 @@ create file	filemanager	de	Datei erstellen
 create folder	filemanager	de	Verzeichnis erstellen
 created	filemanager	de	erstellt
 created %1,%2	filemanager	de	erstellt %1, %2
-created directory %1	filemanager	de	Verzeichis %1 erstellt
+created directory %1	filemanager	de	Verzeichnis %1 erstellt
 current directory	filemanager	de	Aktuelles Verzeichnis
 custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden

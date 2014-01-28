@@ -161,7 +161,7 @@ do you want a notification, if items you delegated are about to start?	infolog	d
 do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
-done	common	de	erledigt
+done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 due %1	infolog	de	%1 fällig
 duration	infolog	de	Dauer

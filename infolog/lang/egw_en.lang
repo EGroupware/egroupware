@@ -161,7 +161,7 @@ do you want a notification, if items you delegated are about to start?	infolog	e
 do you want a notification, if items you delegated are due?	infolog	en	Get notified if entries you delegated are due.
 do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML mails or plain text.
 don't show infolog	infolog	en	DON'T show InfoLog
-done	common	en	Done
+done	infolog	en	Done
 download	infolog	en	Download
 download url for links	infolog	en	Download url for links
 due %1	infolog	en	Due %1
