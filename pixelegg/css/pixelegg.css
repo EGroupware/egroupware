@@ -5056,7 +5056,8 @@ table.nextmatch_header img {
 #egw_fw_sidebar #egw_fw_splitter:hover {
   background-color: #ffc200;
 }
-#egw_fw_sidebar .egw_fw_ui_splitter_vertical {
+/** DON"T MOVE THIS **/
+.egw_fw_ui_splitter_vertical {
   background-image: url(../images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
