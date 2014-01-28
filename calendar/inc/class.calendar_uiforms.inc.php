@@ -1793,8 +1793,35 @@ class calendar_uiforms extends calendar_ui
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
+		$resources_config = config::read('resources');
+		$readonlys = array();
+		if($event['participant_types']['r'] && $resources_config)
+		{
 
-		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,array(),array(),array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
+			switch ($resources_config['ignoreconflicts'])
+			{
+				case 'no':
+					$readonlys['button[ignore]'] = true;
+					break;
+				case 'allusers':
+					$readonlys['button[ignore]'] = false;
+					break;
+				case 'directbooking':
+					foreach ($event['participants'] as $pIds => $val)
+					{
+						if ($val != 'ACHAIR')
+						{
+							if ($this->bo->check_status_perms($pIds, $event))
+							{
+								$readonlys['button[ignore]'] = true;
+								break;
+							}
+						}
+					}
+					
+			}
+		}
+		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,array(),$readonlys,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}
 
 	/**
