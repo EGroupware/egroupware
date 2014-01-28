@@ -133,6 +133,7 @@ class preferences_settings
 		$GLOBALS['egw_info']['flags']['currentapp'] = $preserve['current_app'] = $content['current_app'];
 		egw_framework::includeCSS('preferences','app');
 
+		$sel_options = $readonlys = null;
 		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
 		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
 		$preserve['type'] = $preserve['old_type'] = $content['type'];
@@ -161,7 +162,7 @@ class preferences_settings
 	 * @param boolean $only_verify=false
 	 * @return string with verification error or null on success
 	 */
-	function process_array(array &$repository, array $values, array $types=null, $appname, $type, $only_verify=false)
+	function process_array(array &$repository, array $values, array $types, $appname, $type, $only_verify=false)
 	{
 		//_debug_array($repository);
 		$prefs = &$repository[$appname];
@@ -235,17 +236,15 @@ class preferences_settings
 				if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
 			}
 		}
-		//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$appname]); echo "</pre>\n";
 
 		// the following hook can be used to verify the prefs
 		// if you return something else than False, it is treated as an error-msg and
 		// displayed to the user (the prefs are not saved)
 		//
 		if(($error .= $GLOBALS['egw']->hooks->single(array(
-			'location' => 'verify_settings',
-			'prefs'    => $repository[$appname],
-			'prefix'   => $prefix,
-			'type'     => $type
+				'location' => 'verify_settings',
+				'prefs'    => $repository[$appname],
+				'type'     => $type
 			),
 			$appname
 		)))
@@ -544,7 +543,7 @@ class preferences_settings
 		}
 
 		// calling settings hook all apps can answer (for a specific app)
-		foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname,true) as $app => $settings)
+		foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname,true) as $settings)
 		{
 			if (isset($settings) && is_array($settings) && $settings)
 			{
