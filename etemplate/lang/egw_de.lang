@@ -200,7 +200,7 @@ fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
 for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
-force	etemplate	de	erzwingen
+force	etemplate	de	Erzwungen
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
 fr	etemplate	de	Fr
@@ -348,7 +348,7 @@ read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
 read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 readonly	etemplate	de	nur lesen
-refresh	etemplate	de	Aktualisieren
+refresh	etemplate	de	Aktualisierung
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 required	etemplate	de	Benötigt

@@ -1,5 +1,6 @@
 %1 attachments	mail	en	%1 attachments
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
+%1 mails selected	mail	en	%1 Mails selected
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
@@ -56,6 +57,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	en	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	convert Mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	convert only Mail to item (ignore possible attachments)
 copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
+copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
 create new account	mail	en	create new account
@@ -184,8 +186,8 @@ import of message %1 failed. could not save message to folder %2 due to: %3	mail
 import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination Folder %2 does not exist.
 import of message %1 failed. destination folder not set.	mail	en	Import of message %1 failed. Destination Folder not set.
 import of message %1 failed. no contacts to merge and send to specified.	mail	en	Import of message %1 failed. No Contacts to merge and send to specified.
-important	mail	en	important
 importance	mail	en	importance
+important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 inbox	mail	en	INBOX
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
@@ -211,6 +213,7 @@ message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
 move selected to	mail	en	Move selected to
+move to	mail	en	Move to
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
 name of account	mail	en	Name of account

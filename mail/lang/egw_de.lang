@@ -1,5 +1,6 @@
 %1 attachments	mail	de	%1 Anhänge
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
+%1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
@@ -57,6 +58,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	de	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge, sowie die Original Nachricht, als message/rfc (.eml) Datei hinzu.
 convert only mail to item (ignore possible attachments)	mail	de	konvertiere nur den E-Mail-Text zum Eintrag ohne mögliche Anhänge zu beachten
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
+copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
@@ -185,8 +187,8 @@ import of message %1 failed. could not save message to folder %2 due to: %3	mail
 import of message %1 failed. destination folder %2 does not exist.	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Zielordner %2 existiert nicht.
 import of message %1 failed. destination folder not set.	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Zielordner nicht gesetzt.
 import of message %1 failed. no contacts to merge and send to specified.	mail	de	Der Import der Nachricht %1 ist fehlgeschlagen. Es wurde keine Kontaktinformation für das Versenden und Zusammenführen von E-Mail und Kontaktdaten angegeben.
-important	mail	de	wichtig
 importance	mail	de	Wichtigkeit
+important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mailordner: %1, mit der ID: %2 und der PartID: %3
 inbox	mail	de	Posteingang
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
@@ -212,6 +214,7 @@ message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 move selected to	mail	de	Verschiebe ausgewählte nach
+move to	mail	de	verschieben
 move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 name of account	mail	de	Konten-Bezeichnung
