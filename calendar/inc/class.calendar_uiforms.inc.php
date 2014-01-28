@@ -923,7 +923,7 @@ class calendar_uiforms extends calendar_ui
 
 		case 'freetime':
 			// the "click" has to be in onload, to make sure the button is already created
-			$GLOBALS['egw']->js->set_onload("document.getElementsByName('exec[freetime]')[0].click();");
+			egw_framwork::set_onload("document.getElementsByName('exec[freetime]')[0].click();");
 			break;
 
 		case 'add_alarm':
@@ -1340,7 +1340,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',true,false);
 			}
-			if (($lock = egw_vfs::checkLock($lock_path)) && $lock['owner'] != $lock_owner)
+			if (($lock = egw_vfs::checkLock($lock_path)))
 			{
 				$msg .= ' '.lang('This entry is currently opened by %1!',
 					(($lock_uid = $GLOBALS['egw']->accounts->name2id(substr($lock['owner'],7),'account_email')) ?
@@ -1353,32 +1353,8 @@ class calendar_uiforms extends calendar_ui
 			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
 			{
                 // install ajax handler to unlock the entry again, if the window get's closed by the user (X of window or our [Close] button)
-                $GLOBALS['egw']->js->set_onunload("if (do_onunload) xajax_doXMLHTTPsync('calendar.calendar_uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
-                $GLOBALS['egw']->js->set_onload("replace_eTemplate_onsubmit();");
-
-                // overwrite submit method of eTemplate form AND onSubmit event, to switch off onUnload handler for regular form submits
-                // selectboxes use onchange(this.form.submit()) which does not fire onSubmit event --> need to overwrite submit() method
-                // regular submit buttons dont call submit(), but trigger onSubmit event --> need to overwrite onSubmit event
-                $GLOBALS['egw_info']['flags']['java_script'] .= '
-<script>
-var do_onunload = true;
-function replace_eTemplate_onsubmit()
-{
-    document.eTemplate.old_submit = document.eTemplate.submit;
-    document.eTemplate.submit = function()
-    {
-        do_onunload = false;
-        this.old_submit();
-    }
-    document.eTemplate.old_onsubmit = document.eTemplate.onsubmit;
-    document.eTemplate.onsubmit = function()
-    {
-        do_onunload = false;
-        this.old_onsubmit();
-    }
-}
-</script>
-';
+                egw_framework::set_onbeforeunload("unlock_event($event[id],'$preserv[lock_token]');");
+                egw_framework::set_onload("replace_eTemplate_onsubmit();");
 			}
 			else
 			{
@@ -1575,7 +1551,7 @@ function replace_eTemplate_onsubmit()
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 			$onload .= " set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');";
 
-			$GLOBALS['egw']->js->set_onload($onload);
+			egw_framework::set_onload($onload);
 
 			$readonlys['recur_exception'] = true;
 
@@ -1686,8 +1662,9 @@ function replace_eTemplate_onsubmit()
 	 * @param int $id
 	 * @param string $token
 	 */
-	function ajax_unlock($id,$token)
+	public static function ajax_unlock($id,$token)
 	{
+		error_log(__METHOD__."($id,'$token')");
 		$lock_path = egw_vfs::app_entry_lock_path('calendar',$id);
 		$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
@@ -1695,9 +1672,6 @@ function replace_eTemplate_onsubmit()
 		{
 			egw_vfs::unlock($lock_path,$token,false);
 		}
-		$response = new xajaxResponse();
-		$response->addScript('window.close();');
-		return $response->getXML();
 	}
 
 	/**
@@ -2099,15 +2073,11 @@ function replace_eTemplate_onsubmit()
 		// let the window popup, if its already there
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\nwindow.focus();\n</script>\n";
 
-		if (!is_object($GLOBALS['egw']->js))
-		{
-			$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
-		}
 		$sel_options['duration'] = $this->durations;
 		if ($content['duration'] && isset($sel_options['duration'][$content['duration']])) $content['end'] = '';
 		// We hide the enddate if one of our predefined durations fits
 		// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-		$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
+		egw_framework::set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
 		$etpl->exec('calendar.calendar_uiforms.freetimesearch',$content,$sel_options,'',array(
 				'participants'	=> $content['participants'],

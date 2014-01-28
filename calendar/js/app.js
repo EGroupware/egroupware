@@ -10,9 +10,9 @@
 
 /**
  * Fix calendar specific id: "cal_id:recurrence" or "appId:", replacing $app and $id in url
- * 
+ *
  * Cut away the recurrence date from id, and use app from calendar integration
- * 
+ *
  * @param _action
  * @param _senders
  */
@@ -31,20 +31,20 @@ function cal_fix_app_id(_action, _senders)
 		id = matches[2];
 	}
 	var backup_url = _action.data.url;
-	
+
 	_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
 	_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
 
 	nm_action(_action, _senders);
-	
+
 	_action.data.url = backup_url;	// restore url
 }
 
 /**
  * Open calendar entry, taking into accout the calendar integration of other apps
- * 
+ *
  * calendar_uilist::get_rows sets var js_calendar_integration object
- * 
+ *
  * @param _action
  * @param _senders
  */
@@ -80,14 +80,14 @@ function cal_open(_action, _senders)
 	}
 	console.log(_action);
 	nm_action(_action, _senders);
-	
+
 	_action.data = backup;	// restore url, width, height, nm_action
 }
 
 /**
  * Delete calendar entry, asking if you want to delete series or exception
- * 
- * 
+ *
+ *
  * @param _action
  * @param _senders
  */
@@ -142,6 +142,43 @@ function cal_delete(_action, _senders)
 	}
 	console.log(_action);
 	nm_action(_action, _senders, null, {ids: []});
-	
+
 	_action.data = backup;	// restore url, width, height, nm_action
+}
+
+do_onunload = true;
+/**
+ * Overwrite submit method of eTemplate form AND onSubmit event, to switch off onUnload handler for regular form submits
+ *
+ * selectboxes use onchange(this.form.submit()) which does not fire onSubmit event --> need to overwrite submit() method
+ * regular submit buttons dont call submit(), but trigger onSubmit event --> need to overwrite onSubmit event
+ */
+function replace_eTemplate_onsubmit()
+{
+	document.eTemplate.old_submit = document.eTemplate.submit;
+	document.eTemplate.submit = function()
+	{
+		do_onunload = false;
+		this.old_submit();
+	};
+	document.eTemplate.old_onsubmit = document.eTemplate.onsubmit;
+	document.eTemplate.onsubmit = function()
+	{
+		do_onunload = false;
+		this.old_onsubmit();
+	};
+}
+
+/**
+ * Send synchronious ajax request to server to unlock an etry
+ *
+ * @param {number} _cal_id
+ * @param {string} _token
+ */
+function unlock_event(_cal_id, _token)
+{
+	if (do_onunload)
+	{
+		xajax_doXMLHTTPsync('calendar_uiforms::ajax_unlock', _cal_id, _token);
+	}
 }
