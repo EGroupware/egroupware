@@ -1104,7 +1104,7 @@ class common
 	{
 		if (!$t) $t = 'now';
 
-		$ret = $adjust_to_usertime ? egw_time::server2user($t, $format) : egw_time::to($to, $format);
+		$ret = $adjust_to_usertime ? egw_time::server2user($t, $format) : egw_time::to($t, $format);
 		//error_log(__METHOD__.'('.array2string($t).", '$format', ".array2string($adjust_to_usertime).') returning '.array2string($ret));
 		return $ret;
 	}
