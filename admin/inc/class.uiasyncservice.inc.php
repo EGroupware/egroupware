@@ -22,11 +22,11 @@ class uiasyncservice
 	{
 		if ($GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
 		{
-			$GLOBALS['egw']->redirect_link('/index.php');
+			egw::redirect_link('/index.php');
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
 
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		echo parse_navbar();
 
 		$async = $GLOBALS['egw']->asyncservice;	// use an own instance, as we might set debug=True
@@ -88,7 +88,7 @@ class uiasyncservice
 		echo '<div style="text-align: left; margin: 10px;">'."\n";
 
 		$last_run = $async->last_check_run();
-		$lr_date = $last_run['end'] ? $GLOBALS['egw']->common->show_date($last_run['end']) : lang('never');
+		$lr_date = $last_run['end'] ? common::show_date($last_run['end']) : lang('never');
 		echo '<p><b>'.lang('Async services last executed').'</b>: '.$lr_date.' ('.$last_run['run_by'].")</p>\n<hr>\n";
 
 		if (isset($_POST['asyncservice']) && $_POST['asyncservice'] != $GLOBALS['egw_info']['server']['asyncservice'])
@@ -162,7 +162,7 @@ class uiasyncservice
 		{
 			$next = $async->next_run($times,True);
 
-			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".$GLOBALS['egw']->common->show_date($next))."</p>\n";
+			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".common::show_date($next))."</p>\n";
 		}
 		echo '<hr><p><input type="submit" name="cancel" value="'.lang('Cancel TestJob!')."\"> &nbsp;\n";
 		echo '<input type="submit" name="test" value="'.lang('Start TestJob!')."\">\n";
@@ -170,12 +170,12 @@ class uiasyncservice
 		echo '<p>'.lang('The TestJob sends you a mail everytime it is called.')."</p>\n";
 
 		echo '<hr><p><b>'.lang('Jobs').":</b>\n";
-		if ($jobs = $async->read('%'))
+		if (($jobs = $async->read('%')))
 		{
 			echo "<table border=1>\n<tr>\n<th>Id</th><th>".lang('Next run').'</th><th>'.lang('Times').'</th><th>'.lang('Method').'</th><th>'.lang('Data')."</th><th>".lang('LoginID')."</th></tr>\n";
 			foreach($jobs as $job)
 			{
-				echo "<tr>\n<td>$job[id]</td><td>".$GLOBALS['egw']->common->show_date($job['next'])."</td><td>";
+				echo "<tr>\n<td>$job[id]</td><td>".common::show_date($job['next'])."</td><td>";
 				print_r($job['times']);
 				echo "</td><td>$job[method]</td><td>";
 				print_r($job['data']);
