@@ -1212,6 +1212,7 @@ class etemplate extends boetemplate
 				}
 				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 				// fall-through
+			case 'hidden':
 			case 'passwd' :
 			case 'text':		// size: [length][,maxLength[,preg]]
 				$autocompletion_off='';
@@ -1224,7 +1225,7 @@ class etemplate extends boetemplate
 				else
 				{
 					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
-					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : '',
+					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : ''),
 						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($autocompletion_off?' '.$autocompletion_off:''));
 
 					if (!$readonly)
@@ -2141,6 +2142,7 @@ class etemplate extends boetemplate
 				case 'float':
 				case 'passwd':
 				case 'text':
+				case 'hidden':
 				case 'textarea':
 				case 'colorpicker':
 					if ((string)$value === '' && $attr['needed'] && !$attr['blur'])
