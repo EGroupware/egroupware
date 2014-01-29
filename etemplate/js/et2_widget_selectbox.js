@@ -284,6 +284,11 @@ var et2_selectbox = et2_inputWidget.extend(
 
 	/**
 	 * Add an option to regular drop-down select
+	 *
+	 * @param {string} _value value attribute of option
+	 * @param {string} _label label of option
+	 * @param {string} _title title attribute of option
+	 * @param {node} dom_element parent of new option
 	 */
 	_appendOptionElement: function(_value, _label, _title, dom_element) {
 		if(_value == "" && (_label == null || _label == "")) {
@@ -316,6 +321,11 @@ var et2_selectbox = et2_inputWidget.extend(
 
 	/**
 	 * Append a value to multi-select
+	 *
+	 * @param {string} _value value attribute of option
+	 * @param {string} _label label of option
+	 * @param {string} _title title attribute of option
+	 * @param {node} dom_element parent of new option
 	 */
 	_appendMultiOption: function(_value, _label, _title, dom_element) {
 		var option_data = null;
@@ -429,7 +439,7 @@ var et2_selectbox = et2_inputWidget.extend(
 						var all_set = jQuery("input[type='checkbox']",e.data).prop("checked");
 						jQuery("input[type='checkbox']",e.data).prop("checked", !all_set);
 					}
-				},
+				}
 			};
 			for(var key in header_controls)
 			{
@@ -456,8 +466,8 @@ var et2_selectbox = et2_inputWidget.extend(
 
 	loadFromXML: function(_node) {
 		// Handle special case where legacy option for empty label is used (conflicts with rows), and rows is set as an attribute
-		var legacy;
-		if(legacy = _node.getAttribute("options"))
+		var legacy = _node.getAttribute("options");
+		if(legacy)
 		{
 			var legacy = legacy.split(",");
 			if(legacy.length && isNaN(legacy[0]))
@@ -623,6 +633,8 @@ var et2_selectbox = et2_inputWidget.extend(
 	/**
 	 * The set_select_options function is added, as the select options have to be
 	 * added after the "option"-widgets were added to selectbox.
+	 *
+	 * @param {(array|object)} _options array or object with options
 	 */
 	set_select_options: function(_options) {
 		// Empty current options
@@ -877,35 +889,39 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 	 * Functions for et2_IDetachedDOM
 	 */
 	 /**
-         * Creates a list of attributes which can be set when working in the
-         * "detached" mode. The result is stored in the _attrs array which is provided
-         * by the calling code.
-         */
-        getDetachedAttributes: function(_attrs) {
-                _attrs.push("value");
-        },
+	 * Creates a list of attributes which can be set when working in the
+	 * "detached" mode. The result is stored in the _attrs array which is provided
+	 * by the calling code.
+	 *
+	 * @param {array} _attrs array to add further attributes to
+	 */
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("value");
+	},
 
-        /**
-         * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
-         * passed to the "setDetachedAttributes" function in the same order.
-         */
-        getDetachedNodes: function() {
-                return [this.span[0]];
-        },
+	/**
+	 * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
+	 * passed to the "setDetachedAttributes" function in the same order.
+	 *
+	 * @return {array}
+	 */
+	getDetachedNodes: function() {
+		return [this.span[0]];
+	},
 
-        /**
-         * Sets the given associative attribute->value array and applies the
-         * attributes to the given DOM-Node.
-         *
-         * @param _nodes is an array of nodes which have to be in the same order as
-         *      the nodes returned by "getDetachedNodes"
-         * @param _values is an associative array which contains a subset of attributes
-         *      returned by the "getDetachedAttributes" function and sets them to the
-         *      given values.
-         */
-        setDetachedAttributes: function(_nodes, _values) {
-                this.span = jQuery(_nodes[0]);
-                this.set_value(_values["value"]);
+	/**
+	 * Sets the given associative attribute->value array and applies the
+	 * attributes to the given DOM-Node.
+	 *
+	 * @param _nodes is an array of nodes which have to be in the same order as
+	 *      the nodes returned by "getDetachedNodes"
+	 * @param _values is an associative array which contains a subset of attributes
+	 *      returned by the "getDetachedAttributes" function and sets them to the
+	 *      given values.
+	 */
+	setDetachedAttributes: function(_nodes, _values) {
+		this.span = jQuery(_nodes[0]);
+		this.set_value(_values["value"]);
 	}
 });
 et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",

@@ -328,6 +328,8 @@ var et2_date_duration = et2_date.extend(
 
 	/**
 	 * Use id on node, same as DOMWidget
+	 *
+	 * @param {string} _value id to set
 	 */
 	set_id: function(_value) {
 		this.id = _value;
@@ -412,9 +414,9 @@ var et2_date_duration = et2_date.extend(
 		if(_value === '') _unit = '';
 
 		// use decimal separator from user prefs
-		var sep = '.';
 		var format = this.egw().preference('number_format');
-		if (typeof _value == 'string' && format && (sep = format[0]) && sep != '.')
+		var sep = format ? format[0] : '.';
+		if (typeof _value == 'string' && format && sep && sep != '.')
 		{
 			_value = _value.replace('.',sep);
 		}
@@ -480,6 +482,8 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 	 * Build a list of attributes which can be set when working in the
 	 * "detached" mode in the _attrs array which is provided
 	 * by the calling code.
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("value");
@@ -488,6 +492,8 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 	/**
 	 * Returns an array of DOM nodes. The (relativly) same DOM-Nodes have to be
 	 * passed to the "setDetachedAttributes" function in the same order.
+	 *
+	 * @return {array}
 	 */
 	getDetachedNodes: function() {
 		return [this.duration[0], this.format[0]];
@@ -658,6 +664,8 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("value", "class");
@@ -666,6 +674,8 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
 	 * passed to the "setDetachedAttributes" function in the same order.
+	 *
+	 * @return {array}
 	 */
 	getDetachedNodes: function() {
 		return [this.span[0]];
