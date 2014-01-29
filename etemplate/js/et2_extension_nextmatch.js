@@ -443,11 +443,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Record current & next index
 			var uid = app + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-			var next = entry.ao.getNext(_row_ids.length-1);
+			var next = (entry.ao?entry.ao.getNext(_row_ids.length-1):null);
 			if(next == null || !next.id)
 			{
 				// No next, select previous
-				next = entry.ao.getPrevious(1);
+				next = (entry.ao?entry.ao.getPrevious(1):null);
 			}
 			// Select next row
 			if(next && next.id)
