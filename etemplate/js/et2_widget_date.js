@@ -83,6 +83,7 @@ var et2_date = et2_inputWidget.extend(
 		var self = this;
 		this.input_date.bind('change', function(e){
 			self.set_value(this.value);
+			return false;
 		});
 
 		// Framewok skips nulls, but null needs to be processed here
@@ -128,8 +129,28 @@ var et2_date = et2_inputWidget.extend(
 				}
 				return;
 			} else {
-				this.date = new Date(jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
-					this.input_date.datepicker('option', 'timeFormat'), _value));
+				try {
+					// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
+					var fix_reg = / ([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$/i;
+					var matches = _value.match(fix_reg);
+					if (matches && (matches[1].length < 2 || matches[2] === undefined || matches[2].length < 3 ||
+						matches[3] && matches[3] != 'am' && matches[3] != 'pm'))
+					{
+						if (matches[1].length < 2 && !matches[3]) matches[1] = '0'+matches[1];
+						if (matches[2] === undefined) matches[2] = ':00';
+						while (matches[2].length < 3) matches[2] = ':0'+matches[2].substr(1);
+						_value = _value.replace(fix_reg, ' '+matches[1]+matches[2]+matches[3]);
+						if (matches[4] !== undefined) matches[3] = matches[4].toLowerCase() == 'a' ? 'am' : 'pm';
+					}
+					var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
+						this.input_date.datepicker('option', 'timeFormat'), _value);
+					this.date = new Date(parsed);
+					this.set_validation_error(false);
+				}
+				catch(e) {
+					this.set_validation_error(this.egw().lang("'%1' has an invalid format !!!",_value));
+					return;
+				}
 			}
 		} else if (typeof _value == 'object' && _value.date) {
 			this.date = _value.date;

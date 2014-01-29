@@ -49,7 +49,8 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	function timePreferences(_egw)
 	{
 		return {
-			"timeFormat": egw.preference("timeformat") == 12 ? "h:mm tt" : "HH:mm",
+			// timepicker does NOT work with spaces in timeformat
+			"timeFormat": egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
 			"ampm": (egw.preference("timeformat") == "12"),
 			"hourGrid": 4,
 			"minuteGrid": 10
@@ -87,8 +88,8 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				onClose:	function(date_text, picker) {
 					// Only update if there's a change - "" if no date selected
 					if(date_text != "") self.set_value(new Date(
-						picker.selectedYear, 
-						picker.selectedMonth, 
+						picker.selectedYear,
+						picker.selectedMonth,
 						picker.selectedDay,
 						self.input_hours ? self.input_hours.val() : 0,
 						self.input_minutes ? self.input_minutes.val() : 0,
@@ -119,10 +120,10 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			"currentText": false,
 			"prevText": false,
 			"closeText": false,
-			
-			// These ones are arrays.  
+
+			// These ones are arrays.
 			// Integers are length.  If lang() has no short translation, just trim full
-			"dayNames":	false, 
+			"dayNames":	false,
 			"dayNamesShort":3,
 			"dayNamesMin":	2,
 			"monthNames":	false,
@@ -201,11 +202,11 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	var ready = this.module('ready', _wnd);
 	ready.ready(translateCalendar,this);
 	ready.ready(translateTimepicker,this);
-	
+
 	return {
 		/**
 		 * setup a calendar / date-selection
-		 * 
+		 *
 		 * @member of egw
 		 * @param _input
 		 * @param _time
@@ -218,7 +219,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		},
 		/**
 		 * setup a time-selection
-		 * 
+		 *
 		 * @param _input
 		 * @param _callback
 		 * @param _context
