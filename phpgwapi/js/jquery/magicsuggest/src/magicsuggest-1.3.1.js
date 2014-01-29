@@ -1094,7 +1094,8 @@
                     $.each(data, function(index, obj) {
                         var name = obj[cfg.displayField];
                         if((cfg.matchCase === true && name.indexOf(q) > -1) ||
-                            (cfg.matchCase === false && name.toLowerCase().indexOf(q.toLowerCase()) > -1)) {
+                            (cfg.matchCase === false && name.toLowerCase().indexOf(q.toLowerCase()) > -1) ||
+							cfg.strictSuggest === false) {
                             if(cfg.strictSuggest === false || name.toLowerCase().indexOf(q.toLowerCase()) === 0) {
                                 filtered.push(obj);
                             }
