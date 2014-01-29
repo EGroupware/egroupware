@@ -538,7 +538,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	custom_mail: function (vars)
 	{
-		this.egw.open_link('mail.mail_compose.compose&','_blank','700x700');
+		this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
 	},
 
 	/**
