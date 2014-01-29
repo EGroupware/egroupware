@@ -68,7 +68,8 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this._oldValue = "";
+		// mark value as not initialised, so set_value can determine if it is necessary to trigger change event
+		this._oldValue = et2_no_init;
 		this._labelContainer = null;
 	},
 
@@ -166,13 +167,20 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		}
 	},
 
-	set_value: function(_value) {
-
+	/**
+	 * Set value of widget and trigger for real changes a change event
+	 *
+	 * First initialisation (_oldValue === et2_no_init) is NOT considered a change!
+	 *
+	 * @param {string} _value value to set
+	 */
+	set_value: function(_value)
+	{
 		var node = this.getInputNode();
 		if (node)
 		{
 			$j(node).val(_value);
-			if(this.isAttached())
+			if(this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
 			{
 				$j(node).change();
 			}
