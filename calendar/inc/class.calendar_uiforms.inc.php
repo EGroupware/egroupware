@@ -1795,7 +1795,7 @@ class calendar_uiforms extends calendar_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
 		$resources_config = config::read('resources');
 		$readonlys = array();
-		if($event['participant_types']['r'] && $resources_config)
+		if($event['participant_types']['r'] && $resources_config) // resources Allow ignore conflicts
 		{
 
 			switch ($resources_config['ignoreconflicts'])
@@ -1806,17 +1806,17 @@ class calendar_uiforms extends calendar_ui
 				case 'allusers':
 					$readonlys['button[ignore]'] = false;
 					break;
-				case 'directbooking':
+				default:
 					foreach ($event['participants'] as $pIds => $val)
 					{
 						if ($val != 'ACHAIR')
 						{
-							if ($this->bo->check_status_perms($pIds, $event))
+							if (!$this->bo->check_status_perms($pIds, $event))
 							{
 								$readonlys['button[ignore]'] = true;
 								break;
 							}
-						}
+ 						}
 					}
 					
 			}
