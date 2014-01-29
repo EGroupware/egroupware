@@ -186,12 +186,30 @@ app.classes.calendar = AppJS.extend(
 					var resizeHelper = ui.target.getAttribute('data-resize');
 					var dataResize = resizeHelper.split("|");
 					var time = dataResize[1].split(":");
+					var minute = time[1];
+					var interval = dataResize[2];
+
+					if (minute > interval)
+					{
+						minute = Math.round(minute / interval) * interval;
+					}
+					else
+					{
+						minute = 0;
+					}
+					if (minute.toString().length < 2)
+					{
+						minute += '0';
+					}
+					var dropDateHelper  =  dataResize[0]+"T"+time[0]+ minute;
+					
 					dropDate = dataResize[0]+"T"+time[0]+time[1];
+
 					var calOwner = this.getAttribute('id').substring(this.getAttribute('id').lastIndexOf("_O")+2,this.getAttribute('id').lastIndexOf("_C"));
-					if(jQuery("div[id^='drop_"+dropDate+"']")[0].getAttribute('id').match(/_O[0-9]/g) == "_O0")
+					if(jQuery("div[id^='drop_"+dropDateHelper+"']")[0].getAttribute('id').match(/_O[0-9]/g) == "_O0")
 						calOwner = 0;
 
-					drop = jQuery("div[id^='drop_"+dropDate+"_O"+calOwner+"']");
+					drop = jQuery("div[id^='drop_"+dropDateHelper+"_O"+calOwner+"']");
 				},
 				stop:function(ui,event)
 				{
