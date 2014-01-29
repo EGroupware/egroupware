@@ -2308,6 +2308,8 @@ class mail_compose
 		$this->sessionData['mimeType']	= $_formData['mimeType'];
 		$this->sessionData['to_infolog'] = $_formData['to_infolog'];
 		$this->sessionData['to_tracker'] = $_formData['to_tracker'];
+		$this->sessionData['attachments']  = $_formData['attachments'];
+
 		if (isset($_formData['lastdrafted']) && !empty($_formData['lastdrafted']))
 		{
 			$this->sessionData['lastdrafted'] = $_formData['lastdrafted'];
