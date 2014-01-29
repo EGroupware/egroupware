@@ -82,7 +82,6 @@ var et2_date = et2_inputWidget.extend(
 		// Update internal value when changed
 		var self = this;
 		this.input_date.datepicker("option","onSelect", function(text,inst) {
-			var d = new Date();
 			var date_inst = null;
 			if(inst.inst && inst.inst.selectedYear)
 			{
@@ -92,12 +91,17 @@ var et2_date = et2_inputWidget.extend(
 			{
 				date_inst = inst;
 			}
+			var d;
 			// Date could be in different places, if it's a datetime or just date
 			if(date_inst)
 			{
-				d.setYear(date_inst.selectedYear);
-				d.setMonth(date_inst.selectedMonth);
-				d.setDate(date_inst.selectedDay);
+				// calling setYear(), setMonth() and setDate() one after the other can lead to unexpected results,
+				// if day is not valid for selected month, eg. setMonth(1/*=Feb*/) on a date-object with day>28 gives March
+				d = new Date(date_inst.selectedYear, date_inst.selectedMonth, date_inst.selectedDay);
+			}
+			else
+			{
+				d = new Date();
 			}
 			if(inst && typeof inst.hour != 'undefined')
 			{
