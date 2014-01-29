@@ -23,6 +23,18 @@
 </select>
 </td>
 </tr>
+<tr class="row_on">
+	<td>
+		&nbsp;{lang_Allow_ignore_conflicts}
+	</td>
+	<td>
+		<select name="newsettings[ignoreconflicts]">
+			<option value=""{selected_ignoreconflicts_directbooking}>{lang_Yes,_only_users_with_direct_booking_permission}</option>
+			<option value="allusers"{selected_ignoreconflicts_allusers}>{lang_Yes,_all_users_can_ignore_conflicts}</option>
+			<option value="no">{lang_No}</option>
+		</select>
+	</td>
+</tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->
