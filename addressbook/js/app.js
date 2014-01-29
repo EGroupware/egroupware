@@ -190,14 +190,79 @@ app.classes.addressbook = AppJS.extend(
 		}
 	},
 
-	check_value: function(input, own_id)
+	/**
+	 * Callback function to create confirm dialog for douplicates contacts
+	 *
+	 * @param {object} _data includes douplicats contacts information
+	 *
+	 */
+	_confirmdialog_callback: function(_data)
+	{
+		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname){
+
+							return et2_createWidget("dialog", {
+									callback: function(_buttons, _value) {
+											if (_buttons == et2_dialog.OK_BUTTON)
+											{
+												var id = '';
+												var content = this.template.widgetContainer.getArrayMgr('content').data;
+												for (var row in _value.grid)
+												{
+													if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
+													{
+														id = this.options.value.content.grid[row].confirm;
+														egw.open(id, 'addressbook');
+
+													}
+												}
+											}
+									},
+									title: _title||egw.lang('Input required'),
+									buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+									value: {
+											content: {
+												grid: _value
+											}
+
+									},
+									template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet',
+
+							}, et2_dialog._create_parent(_egw_or_appname))};
+
+		if (_data.msg && _data.doublicates)
+		{
+
+			var content = [];
+
+			for(var id in _data.doublicates)
+			{
+				content.push({"confirm":id,"name":_data.doublicates[id]});
+			}
+			confirmdialog('test',content,et2_dialog.BUTTONs_OK_CANCEL);
+		}
+		if (typeof _data.fileas_options == 'object')
+		{
+			var selbox = {};
+			(template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
+			{
+				selbox.set_select_options(_data.fileas_sel_options);
+			}
+		}
+	},
+	
+	/**
+	 *
+	 * @param {widget} widget widget
+	 * @param {string} own_id Current AB id
+	 */
+	check_value: function(widget, own_id)
 	{
 		if(typeof etemplate2 != 'undefined') {
 			var template = etemplate2.getByApplication('addressbook')[0];
-			values = template.getValues(template.widgetContainer);
+			var values = template.getValues(template.widgetContainer);
 		}
 
-		if (input.name.match(/n_/))
+		if (widget.id.match(/n_/))
 		{
 			var value = '';
 			if (values.n_prefix) value += values.n_prefix+" ";
@@ -206,35 +271,11 @@ app.classes.addressbook = AppJS.extend(
 			if (values.n_family) value += values.n_family+" ";
 			if (values.n_suffix) value += values.n_suffix;
 
-			var name = document.getElementById("exec[n_fn]");
-			if(name == null && template)
-			{
-				name = template.widgetContainer.getWidgetById('n_fn');
-				name.set_value(value);
-			}
-			else
-			{
-				name.value = value;
-			}
+			var name = template.widgetContainer.getWidgetById("n_fn");
+			if (typeof name != 'undefined')	name.set_value(value);
 		}
-		var request = new egw_json_request ('addressbook.addressbook_ui.ajax_check_values', [values, input.name, own_id])
-		request.sendRequest(true, function(data) {
-			if (data.msg && confirm(data.msg))
-			{
-				for(var id in data.doublicates)
-				{
-					egw.open(id, 'addressbook');
-				}
-			}
-			if (typeof data.fileas_options == 'object')
-			{
-				var selbox = {};
-				(template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
-				{
-					selbox.set_select_options(data.fileas_sel_options);
-				}
-			}
-		});
+		
+		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
 	},
 
 	add_whole_list: function(list)
