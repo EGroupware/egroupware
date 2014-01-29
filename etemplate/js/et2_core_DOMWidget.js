@@ -69,7 +69,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			"type": "any",
 			"default": et2_no_init,
 			"description": "List of egw actions that can be done on the widget.  This includes context menu, drag and drop.  TODO: Link to action documentation"
-		},
+		}
 	},
 
 	/**
@@ -234,6 +234,8 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	/**
 	 * Set the parent DOM node of this element. If another parent node is already
 	 * set, this widget removes itself from the DOM tree
+	 *
+	 * @param _node
 	 */
 	setParentDOMNode: function(_node) {
 		if (_node != this.parentNode)
@@ -284,6 +286,8 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	 * Sets the id of the DOM-Node.
 	 *
 	 * DOM id's have dots "." replaced with dashes "-"
+	 *
+	 * @param {string} _value id to set
 	 */
 	set_id: function(_value) {
 
@@ -388,7 +392,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	 * To customise how the actions are handled for a particular widget, override _link_actions().  It handles
 	 * the more widget-specific parts.
 	 *
-	 * @param Object {ID: {attributes..}+} map of egw action information
+	 * @param {object} actions {ID: {attributes..}+} map of egw action information
 	 * @see etemplate/inc/class.etemplate_widget_nextmatch->egw_actions()
 	 */
 	set_actions: function(actions)
@@ -445,6 +449,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
+	 * @param {object} actions {ID: {attributes..}+} map of egw action information
 	 */
 	_link_actions: function(actions)
 	{
@@ -690,6 +695,7 @@ var et2_surroundingsMgr = Class.extend(
  *
  * The class extension is different than the widgets
  *
+ * @param {et2_DOMWidget} widget
  */
 function et2_action_object_impl(widget)
 {
