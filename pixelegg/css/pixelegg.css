@@ -821,17 +821,6 @@ action buttons, left aligned for "extra" controls
     cursor: ns-resize;
   }
   /**
- * Create some spacing for widgets inside labels
- */
-  label input,
-  label span,
-  label div,
-  label select,
-  label textarea {
-    margin-left: 1ex;
-    margin-right: 1ex;
-  }
-  /**
  * Message styles
  */
   /* Style used for a generic message (such as success messages or validation errors) */
