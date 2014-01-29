@@ -81,39 +81,8 @@ var et2_date = et2_inputWidget.extend(
 		}
 		// Update internal value when changed
 		var self = this;
-		this.input_date.datepicker("option","onSelect", function(text,inst) {
-			var date_inst = null;
-			if(inst.inst && inst.inst.selectedYear)
-			{
-				date_inst = inst.inst;
-			}
-			else if (inst.selectedYear)
-			{
-				date_inst = inst;
-			}
-			var d;
-			// Date could be in different places, if it's a datetime or just date
-			if(date_inst)
-			{
-				// calling setYear(), setMonth() and setDate() one after the other can lead to unexpected results,
-				// if day is not valid for selected month, eg. setMonth(1/*=Feb*/) on a date-object with day>28 gives March
-				d = new Date(date_inst.selectedYear, date_inst.selectedMonth, date_inst.selectedDay);
-			}
-			else
-			{
-				d = new Date();
-			}
-			if(inst && typeof inst.hour != 'undefined')
-			{
-				d.setHours(inst.hour);
-				d.setMinutes(inst.minute);
-			}
-			else if(inst && (typeof inst.hour === 'undefined') && (typeof inst.settings.timepicker !== 'undefined'))
-			{
-				d.setHours(inst.settings.timepicker.hour);
-				d.setMinutes(inst.settings.timepicker.minute);
-			}
-			self.set_value(d);
+		this.input_date.bind('change', function(e){
+			self.set_value(this.value);
 		});
 
 		// Framewok skips nulls, but null needs to be processed here
@@ -159,12 +128,8 @@ var et2_date = et2_inputWidget.extend(
 				}
 				return;
 			} else {
-				var text = new Date(_value);
-
-				// Handle timezone offset - times are already in user time
-				var localOffset = text.getTimezoneOffset() * 60000;
-				this.date.setTime(text.valueOf()+localOffset);
-				_value = Math.round(this.date.valueOf() / 1000);
+				this.date = new Date(jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
+					this.input_date.datepicker('option', 'timeFormat'), _value));
 			}
 		} else if (typeof _value == 'object' && _value.date) {
 			this.date = _value.date;
