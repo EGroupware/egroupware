@@ -170,13 +170,14 @@ class notifications_ajax {
 		if(count($notify_folders) == 0) {
 			return true; //no folders configured for notifying - exit
 		}
-
 		$activeProfile = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 		//error_log(__METHOD__.__LINE__.' (user: '.$this->recipient->account_lid.') Active Profile:'.$activeProfile);
-		$bofelamimail = felamimail_bo::getInstance(true, $activeProfile);
+		$bofelamimail = felamimail_bo::getInstance(false, $activeProfile);
 		$activeProfile = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
  		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
- 		$bufferFMailSession = $bofelamimail->sessionData;
+ 		//$bufferFMailSession = $bofelamimail->sessionData;
+		$notified_mail_uidsCache = egw_cache::getCache(egw_cache::INSTANCE,'felamimail','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
+
 		if( !$bofelamimail->openConnection($activeProfile) ) {
 			// TODO: This is ugly. Log a bit nicer!
 			$error = $bofelamimail->getErrorMessage();
@@ -186,13 +187,12 @@ class notifications_ajax {
 			return false; // cannot connect to mailbox
 		}
 
-		$this->restore_session_data();
-
 		$recent_messages = array();
 		$folder_status = array();
 		foreach($notify_folders as $id=>$notify_folder) {
-			if(!is_array($this->session_data['notified_mail_uids'][$notify_folder])) {
-				$this->session_data['notified_mail_uids'][$notify_folder] = array();
+			if (empty($notify_folder)) continue;
+			if(!is_array($notified_mail_uidsCache[$activeProfile][$notify_folder])) {
+				$notified_mail_uidsCache[$activeProfile][$notify_folder] = array();
 			}
 			$folder_status[$notify_folder] = $bofelamimail->getFolderStatus($notify_folder);
 			$cutoffdate = time();
@@ -205,7 +205,7 @@ class notifications_ajax {
 				foreach($headers['header'] as $id=>$header) {
 					//error_log(__METHOD__.__LINE__.' Found Message:'.$header['uid'].' Subject:'.$header['subject']);
 					// check if unseen mail has already been notified
-				 	if(!in_array($header['uid'], $this->session_data['notified_mail_uids'][$notify_folder])) {
+				 	if(!in_array($header['uid'], $notified_mail_uidsCache[$activeProfile][$notify_folder])) {
 				 		// got a REAL recent message
 				 		$header['folder'] = $notify_folder;
 				 		$header['folder_display_name'] = $folder_status[$notify_folder]['displayName'];
@@ -215,9 +215,6 @@ class notifications_ajax {
 				}
 			}
 		}
-		// restore the felamimail session data, as they are needed by the app itself
-		$bofelamimail->sessionData = $bufferFMailSession;
-		$bofelamimail->saveSessionData();
 		if(count($recent_messages) > 0) {
 			// create notify message
 			$notification_subject = lang("You've got new mail");
@@ -233,7 +230,8 @@ class notifications_ajax {
 					'mail_received'			=> $recent_message['date'],
 				);
 				// save notification status
-				$this->session_data['notified_mail_uids'][$recent_message['folder']][] = $recent_message['uid'];
+				//$this->session_data['notified_mail_uids'][$recent_message['folder']][] = $recent_message['uid'];
+				$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = $recent_message['uid'];
 			}
 
 			// create etemplate
@@ -251,7 +249,7 @@ class notifications_ajax {
 			$notification->send();
 		}
 
-		$this->save_session_data();
+		egw_cache::setCache(egw_cache::INSTANCE,'felamimail','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),$notified_mail_uidsCache, $expiration=60*60*24*2);
 		return true;
 	}
 
