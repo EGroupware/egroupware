@@ -1003,13 +1003,13 @@ class calendar_uiforms extends calendar_ui
 		foreach($event['participants'] as $uid => $status)
 		{
 			$toadd = '';
-			if ($status == 'R' || $uid == $this->user) continue;
+			if ($status['status'] == 'R' || $status['uid'] == $this->user) continue;
 
-			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			if (is_numeric($status['uid']) && $GLOBALS['egw']->accounts->get_type($status['uid']) == 'u')
 			{
-				if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
+				if (!($email = $GLOBALS['egw']->accounts->id2name($status['uid'],'account_email'))) continue;
 
-				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
+				$GLOBALS['egw']->accounts->get_account_name($status['uid'],$lid,$firstname,$lastname);
 
 				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
 				if (!in_array($toadd,$to)) $to[] = $toadd;
