@@ -21,9 +21,9 @@
 
 /**
  * Class which implements the "colorpicker" XET-Tag
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_color = et2_inputWidget.extend(
 {
 	attributes: {
@@ -52,7 +52,7 @@ var et2_color = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_color
 	 */
 	init: function() {
@@ -107,7 +107,7 @@ var et2_color = et2_inputWidget.extend(
 		// Initialize jPicker
 
 		this.options.color.active = new jQuery.jPicker.Color({hex:this.value});
-		
+
 		// Do this to get a reference to the actual jPicker used, so we can fully remove it in destroy()
 		var list_id = jQuery.jPicker.List.length ? jQuery.jPicker.List.length : 0;
 
@@ -140,7 +140,7 @@ var et2_color = et2_inputWidget.extend(
 			});
 
 			// Hide original move bar
-			jQuery('table.jPicker .Move').hide();	
+			jQuery('table.jPicker .Move').hide();
 
 			// Trigger dialog opening
 			jQuery('.Image',self.$node.next()).click(function() {
@@ -196,11 +196,11 @@ et2_register_widget(et2_color, ["colorpicker"]);
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
  * @augments et2_valueWidget
  */
-var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_color_ro
 	 */
 	init: function() {
@@ -220,20 +220,22 @@ var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.$node.css("background-color", _value);
 	},
 	/**
-         * Code for implementing et2_IDetachedDOM
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-                _attrs.push("value");
-        },
+	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs array to add further attributes to
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value");
+	},
 
-        getDetachedNodes: function()
-        {
-                return [this.node];
-        },
+	getDetachedNodes: function()
+	{
+		return [this.node];
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
+	setDetachedAttributes: function(_nodes, _values)
+	{
 		this.span = jQuery(_nodes[0]);
 		if(typeof _values["value"] != 'undefined')
 		{

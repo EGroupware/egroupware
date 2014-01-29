@@ -87,6 +87,8 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 	/**
 	 * Load the validation errors from the server
+	 *
+	 * @param {object} _attrs
 	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
@@ -246,6 +248,8 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 	/**
 	 * Set tab index
+	 *
+	 * @param {number} index
 	 */
 	set_tabindex: function(index) {
 		jQuery(this.getInputNode()).attr("tabindex", index);

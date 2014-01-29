@@ -20,9 +20,9 @@
 
 /**
  * Class which implements the "textbox" XET-Tag
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_textbox = et2_inputWidget.extend(
 {
 	attributes: {
@@ -69,7 +69,7 @@ var et2_textbox = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_textbox
 	 */
 	init: function() {
@@ -152,14 +152,14 @@ var et2_textbox = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Set HTML readonly attribute.  
+	 * Set HTML readonly attribute.
 	 * Do not confuse this with etemplate readonly, which would use et_textbox_ro instead
 	 * @param _readonly Boolean
 	 */
 	set_readonly: function(_readonly) {
 		this.input.attr("readonly", _readonly);
 	},
-	
+
 	set_blur: function(_value) {
 		if(_value) {
 			this.input.attr("placeholder", _value + "");	// HTML5
@@ -181,10 +181,10 @@ et2_register_widget(et2_textbox, ["textbox", "passwd"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
- * 
+ *
  * @augments et2_valueWidget
  */
-var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Ignore all more advanced attributes.
@@ -215,7 +215,7 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_textbox_ro
 	 */
 	init: function() {
@@ -236,7 +236,7 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Remove current label
 		this.span.contents()
 			.filter(function(){ return this.nodeType == 3; }).remove();
-		
+
 		var parts = et2_csvSplit(label, 2, "%s");
 		this.span.prepend(parts[0]);
 		this.span.append(parts[1]);
@@ -254,6 +254,8 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 	/**
 	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
