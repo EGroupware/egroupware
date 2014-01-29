@@ -29,6 +29,9 @@ var et2_registry = {};
 /**
  * Registers the widget class defined by the given constructor and associates it
  * with the types in the _types array.
+ *
+ * @param {function} _constructor constructor
+ * @param {array} _types widget types _constructor wants to register for
  */
 function et2_register_widget(_constructor, _types)
 {
@@ -253,6 +256,8 @@ var et2_widget = Class.extend(
 	 * Creates a copy of this widget. The parameters given are passed to the
 	 * constructor of the copied object. If the parameters are omitted, _parent
 	 * is defaulted to null
+	 *
+	 * @param {et2_widget} _parent parent to set for clone, default null
 	 */
 	clone: function(_parent) {
 
@@ -362,6 +367,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Removes the child but does not destroy it.
+	 *
+	 * @param {et2_widget} _node child to remove
 	 */
 	removeChild: function(_node) {
 		// Retrieve the child from the child list
@@ -430,7 +437,8 @@ var et2_widget = Class.extend(
 	 * widget tree. E.g. Templates which have been cloned are not in the visible
 	 * part of the widget tree.
 	 *
-	 * @param _vis can be used by widgets overwriting this function - simply
+	 * @param _sender
+	 * @param {boolean} _vis can be used by widgets overwriting this function - simply
 	 * 	write
 	 * 		return this._super(inTree);
 	 *	when calling this function the _vis parameter does not have to be supplied.
@@ -467,7 +475,8 @@ var et2_widget = Class.extend(
 	 * function also parses the legacyOptions.
 	 *
 	 * @param _attrsObj is the XML DOM attributes object
-	 * @param _target is the object to which the attributes should be written.
+	 * @param {object} _target is the object to which the attributes should be written.
+	 * @param {et2_widget} _proto prototype with attributes and legacyOptions attribute
 	 */
 	parseXMLAttrs: function(_attrsObj, _target, _proto) {
 
@@ -565,6 +574,8 @@ var et2_widget = Class.extend(
 	/**
 	 * Apply the "modifications" to the element and translate attributes marked
 	 * with "translate: true"
+	 *
+	 * @param {object} _attrs
 	 */
 	transformAttributes: function(_attrs) {
 
@@ -694,6 +705,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Loads the widget tree from an XML node
+	 *
+	 * @param _node xml node
 	 */
 	loadFromXML: function(_node) {
 		// Load the child nodes.
@@ -723,6 +736,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Called whenever textNodes are loaded from the XML tree
+	 *
+	 * @param _content
 	 */
 	loadContent: function(_content) {
 	},
@@ -804,6 +819,8 @@ var et2_widget = Class.extend(
 	 * not exist yet.
 	 *
 	 * Overwritten here to compile legacy JS code in attributes of type "js"
+	 *
+	 * @param {object} _attrs
 	 */
 	initAttributes: function(_attrs) {
 		for (var key in _attrs)
@@ -871,6 +888,8 @@ var et2_widget = Class.extend(
 	/**
 	 * Sets the client side api instance. It can be retrieved by the widget tree
 	 * by using the "egw()" function.
+	 *
+	 * @param {egw} _egw egw object to set
 	 */
 	setApiInstance: function(_egw) {
 		this._egw = _egw;
@@ -879,6 +898,8 @@ var et2_widget = Class.extend(
 	/**
 	 * Sets all array manager objects - this function can be used to set the
 	 * root array managers of the container object.
+	 *
+	 * @param {object} _mgrs
 	 */
 	setArrayMgrs: function(_mgrs) {
 		this._mgrs = et2_cloneObject(_mgrs);
@@ -916,6 +937,9 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Sets the array manager for the given part
+	 *
+	 * @param {string} _part which array mgr to set
+	 * @param {object} _mgr
 	 */
 	setArrayMgr: function(_part, _mgr) {
 		this._mgrs[_part] = _mgr;
@@ -923,6 +947,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Returns the array manager object for the given part
+	 *
+	 * @param {string} _part name of array mgr to return
 	 */
 	getArrayMgr: function(_part) {
 		if (typeof this._mgrs[_part] != "undefined")
@@ -976,6 +1002,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Sets the instance manager object (of type etemplate2, see etemplate2.js)
+	 *
+	 * @param {etemplate2} _inst
 	 */
 	setInstanceManager: function(_inst) {
 		this._inst = _inst;
@@ -983,6 +1011,8 @@ var et2_widget = Class.extend(
 
 	/**
 	 * Returns the instance manager
+	 *
+	 * @return {etemplate2}
 	 */
 	getInstanceManager: function() {
 		if (this._inst != null)
