@@ -12,8 +12,8 @@
  * @version $Id$
  */
 * {
-  fill: #0c5da5;
-  stroke: #828282;
+  fill: #696969;
+  /*stroke: @gray_50;*/
   /*fill: @gray_0;*/
 }
 /*

@@ -45,7 +45,6 @@
   .et2_container {
     padding: 0px;
     background-color: transparent;
-    /*height: 100%; */
   }
   .et2_container > div:not([class]) {
     height: 100%;
@@ -68,31 +67,8 @@
   /**
  * HBox widget
  */
-  div.et2_hbox div.et2_hbox {
-    display: inline;
-  }
-  div.et2_hbox {
-    white-space: normal;
-  }
-  div.et2_hbox > * {
-    text-align: left;
-  }
-  div.et2_hbox_left {
-    float: left;
-  }
-  div.et2_hbox_al_center {
-    text-align: center;
-  }
-  div.et2_hbox_al_right {
-    text-align: right;
-  }
   div.et2_hbox_right {
-    float: right;
-    clear: right;
     background: transparent;
-  }
-  div.et2_hbox > div {
-    display: inline-block;
   }
   /**
  * Placeholder widget - used for un-implemented widgets
@@ -102,35 +78,9 @@
     /*border: 1px solid cornflowerblue;*/
     border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: #e6e6e6;
-    padding: 3px;
-    margin: 1px;
-  }
-  .et2_placeholder .et2_caption {
-    display: block;
-    font-size: 8pt;
-    margin: 0 0 5px 0;
-    font-weight: bold;
-    color: #2E2E2E;
-    cursor: pointer;
-    text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
   }
   .et2_placeholder .et2_attr {
-    display: block;
-    font-size: 8pt;
     color: #000000;
-    margin: 2px 0 2px 0;
-  }
-  /**
- * Splitter widget - split pane
- */
-  .et2_split {
-    width: 100%;
-    min-width: 100px;
-    min-height: 100px;
-  }
-  /* Make sure there's no overflow, or hidden bits still appear */
-  * > .et2_split {
-    overflow: hidden;
   }
   /**
  * Label widget, and labels for other widgets
@@ -138,41 +88,10 @@
   .et2_label {
     color: #1e1e1e;
   }
-  /*defined in layout_messages.less*/
-  /*#msg,.message {
-    color: red;
-    font-style: italic;
-}*/
-  input.et2_url {
-    margin-right: 6px;
-    padding-right: 8px;
-  }
-  a.et2_url {
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    margin: -4px;
-    padding: 2px;
-    padding-left: 16px;
-    margin-left: -10px;
-  }
-  a.et2_url.email {
-    background-image: url(images/email.png);
-  }
-  a.et2_url.phone {
-    background-image: url(images/phone.png);
-  }
-  a.et2_url.url {
-    background-image: url(images/url.png);
-  }
   /**
  * Button widget - text only, and icon
  */
   .et2_button {
-    /*    cursor: pointer;
-    text-align: center;
-
-    font-size: 9pt;*/
     text-shadow: 0px 0px !important;
     border: 1px solid rgba(0, 0, 0, 0.15);
     /*.box_shadow_standard_light;*/
@@ -194,124 +113,48 @@
     transition-timing-function: linear;
     background-color: #e6e6e6;
   }
-  /*in Nextmatch definiert*/
   .et2_button_icon {
-    border: none;
-    background: transparent;
-    padding: 0px;
     height: 16px;
   }
+  /* give the image a button lock and feel*/
+  img.et2_button_icon[src*="svg"] {
+    background-color: #b4b4b4;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+    background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-repeat: repeat-x;
+  }
+  img.et2_button_icon[src*="svg"]:hover {
+    background-color: #1aa200;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWFhMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWFhMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #1aa200, #1aa200);
+    background-image: -ms-linear-gradient(top, #1aa200, #1aa200);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1aa200), to(#1aa200));
+    background-image: -webkit-linear-gradient(top, #1aa200, #1aa200);
+    background-image: -o-linear-gradient(top, #1aa200, #1aa200);
+    background-image: linear-gradient(top, #1aa200, #1aa200);
+    background-repeat: repeat-x;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  }
+  img.et2_button_icon[src*="svg"]:active {
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  }
   /*look in layout_content_elements*/
-  /**
- * Drop down button
- */
-  .et2_dropdown button {
-    height: 3.0ex;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: -2px;
-    padding: 0px 1ex;
-  }
-  .et2_dropdown button > div {
-    vertical-align: middle;
-  }
-  .et2_dropdown button:last-child {
-    padding: 0px;
-  }
-  .et2_dropdown + ul.ui-menu {
-    position: absolute;
-    z-index: 2;
-  }
-  /**
- * Color picker widget
- */
-  .et2_color {
-    padding: .5ex;
-    height: 2ex;
-    width: 2ex;
-    border: 1px solid silver;
-  }
-  /**
- * Text box
- */
-  .et2_textbox {
-    resize: none;
-  }
-  .et2_textbox_ro {
-    white-space: pre-wrap;
-  }
-  .et2_bold {
-    font-weight: bold;
-  }
-  .et2_italic {
-    font-style: italic;
-  }
-  /**
- * Multi-select widget
- */
-  .et2_selectbox .ui-widget-header {
-    padding: 0px 6px 0px 10px;
-    text-align: center;
-  }
-  .et2_selectbox .ui-widget-header ul {
-    float: left;
-    margin-left: -5px;
-    text-align: left;
-  }
-  .et2_selectbox .ui-widget-header li {
-    float: left;
-    padding-top: 0px;
-  }
-  .et2_selectbox .ui-widget-header li > span.ui-icon {
-    float: left;
-    margin-top: -2px;
-  }
-  .et2_selectbox .ui-widget-header li > div.et2_link_entry {
-    /* Shrink search box to same size as header */
-    margin-top: -2px;
-    margin-bottom: -2px;
-    margin-right: 1ex;
-  }
-  .et2_selectbox .ui-widget-header li > div.et2_link_entry input {
-    height: 14px;
-  }
-  .et2_selectbox .ui-multiselect-checkboxes {
-    overflow-y: scroll;
-    position: relative;
-    text-align: left;
-  }
-  .et2_selectbox .ui-multiselect-checkboxes li {
-    margin: 0px;
-    clear: both;
-    text-decoration: none;
-    list-style-image: none;
-    list-style-type: none;
-  }
   .et2_selectbox .ui-multiselect-checkboxes li:hover {
     background-color: rgba(103, 159, 210, 0.1) !important;
-  }
-  .et2_selectbox .ui-multiselect-checkboxes ul {
-    margin: 0px auto;
-    padding-left: 0px;
-    clear: both;
-    text-decoration: none;
-    list-style-image: none;
-    list-style-type: none;
-  }
-  .et2_selectbox .ui-multiselect-checkboxes ul > label {
-    border-bottom: 1px solid black;
   }
   .et2_selectbox .ui-multiselect-checkboxes label {
     display: block;
     border: 0px solid transparent;
     padding: 0.1em 0.2em;
-  }
-  .et2_selectbox input[type="checkbox"] {
-    margin: 3px;
-  }
-  .et2_selectbox .ui-multiselect-checkboxes img {
-    float: right;
-    height: 1.8em;
   }
   .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
     /*visibility: hidden;*/
@@ -320,226 +163,23 @@
     margin: 2px;
     padding: 0px;
   }
-  .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
-    visibility: visible;
-  }
-  /* Read-only multi-select */
-  ul.et2_selectbox {
-    margin: 0px;
-    padding: 0px;
-  }
-  .et2_selectbox li {
-    text-decoration: none;
-    list-style-image: none;
-    list-style-type: none;
-  }
-  /**
- * Select account dialog
- */
   /**
  * Date / Time widgets
  */
-  span.et2_date {
-    min-width: 130px;
-  }
   span.et2_date input.et2_date {
     min-width: 21.5ex;
-    background-repeat: no-repeat;
-    background-position: top right;
-    background-size: contain;
-  }
-  span.et2_date input.et2_time {
-    min-width: 6ex;
   }
   span.et2_date span {
-    background-position: center;
-    background-repeat: no-repeat;
     color: #ffffff;
-    cursor: pointer;
-    padding-top: 3px;
-    padding-left: 22px;
-    text-align: center;
-    font-size: 9pt;
-  }
-  /**
- * Dialog widget
- * It uses jQueryUI, so this is just our little bits - icon on left
- */
-  .ui-dialog-content .dialog_icon {
-    margin-right: 2ex;
-    vertical-align: middle;
-  }
-  .ui-dialog-content {
-    vertical-align: middle;
-  }
-  /* These change button alignment, but it seems the standard is right-aligned for
-action buttons, left aligned for "extra" controls
-.ui-dialog .ui-dialog-buttonpane {
-        text-align: left;
-}
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-        float: none;
-}
-.ui-dialog .ui-dialog-buttonpane button {
-        float: none;
-}
-*/
-  /** 
- * Diff widget
- */
-  .diff thead,
-  .author {
-    display: none;
-  }
-  .diff .ui-icon {
-    margin-top: -16px;
-    float: right;
-  }
-  /** Display a loading icon **/
-  .loading {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('../images/ajax-loader.gif');
-  }
-  /**
- * File upload
- */
-  div.et2_file input {
-    /*background-color: @egw_color_1_a;*/
-  }
-  .et2_file .progress {
-    width: 300px;
-    max-height: 6em;
-    overflow: auto;
-    margin-left: 20px;
-  }
-  .et2_file .progress span.progressBar {
-    height: 5px;
-    width: 150px;
-    max-width: 150px;
-    display: inline;
-  }
-  /* Remove icon displayed when hovering */
-  .et2_file .progress li div.remove {
-    display: none;
-    cursor: pointer;
-    margin: 0px;
   }
   .et2_file .progress li:hover div.remove {
     width: 16px;
     height: 16px;
-    float: right;
-    display: block;
-    background-image: url("images/close.png");
-    background-position: center;
-    background-repeat: no-repeat;
   }
   .et2_file .progress p {
     background-color: #ffdd73;
-    height: 5px;
-    margin: 0px;
   }
-  /* Hide progress bar when completed */
-  .et2_file .progress li.success > span.progressBar {
-    display: none;
-  }
-  /**
- * Autocomplete - used in link widget
- * Restricting result size
- */
-  .ui-autocomplete {
-    max-height: 20ex;
-    overflow-y: auto;
-    /* prevent horizontal scrollbar */
-    overflow-x: hidden;
-  }
-  /**
- * Autocomplete in dialogs - fix so they go over/out of the dialog
- */
-  .ui-dialog * ul.ui-autocomplete {
-    position: fixed;
-  }
-  /**
- * Link wiget(s)
- */
-  /* Link entry - x button*/
-  div.et2_link_entry {
-    white-space: nowrap;
-  }
-  div.et2_link_entry:after {
-    display: inline-block;
-    content: ".";
-    height: 0;
-    visibility: hidden;
-    margin: -20px;
-  }
-  /* Special layout for inside nm grid */
-  .et2_nextmatch div.et2_link_entry {
-    padding-right: 4px;
-  }
-  .et2_nextmatch .et2_link_entry:after {
-    margin: -12px;
-  }
-  div.et2_link_entry select {
-    width: 39%;
-  }
-  div.et2_link_entry input.ui-autocomplete-input {
-    width: 61%;
-    padding-bottom: 1px;
-  }
-  .et2_link_entry.no_app input.ui-autocomplete-input {
-    width: 100%;
-  }
-  .et2_link_entry.no_app select {
-    display: none;
-  }
-  /* Link to */
-  .et2_link_to {
-    width: 350px;
-    overflow-x: visible;
-  }
-  .et2_link_to button {
-    display: inline;
-    float: right;
-    height: 5ex;
-  }
-  .et2_link_to span.status {
-    background-repeat: no-repeat;
-    background-position: 3px center;
-    width: 22px;
-    height: 22px;
-    display: block;
-    float: right;
-  }
-  .et2_link_to span.status.success {
-    background-image: url(images/tick.png);
-  }
-  .et2_link_to span.status.error {
-    background-image: url(images/error.png);
-  }
-  .et2_link_to .progress {
-    max-height: 12em;
-    overflow-y: scroll;
-  }
-  .et2_link_to .progress > .success input {
-    width: 100%;
-    margin-right: -20px;
-    /* Leave room for remove icon */
-  }
-  .et2_link_to .progress li {
-    list-style: none;
-    padding-bottom: 1px;
-    padding-top: 0px;
-  }
-  .et2_link_to .progress li.success span.ui-icon-comment {
-    display: none;
-    float: right;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-  .et2_link_to .progress li:hover.success span.ui-icon-comment {
-    display: inline;
-  }
+  /*Link to / Selector Widget*/
   .et2_link_to .et2_button_icon {
     /*.background_color_10_gray;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -587,57 +227,28 @@ action buttons, left aligned for "extra" controls
     margin-top: 1em;
     padding-top: 0.2em;
     /*         &:before {
-                        content: "+ "; 
-                        font-size: 2em; 
-                        color: @egw_color_1_a; 
-                        line-height: 0.6em; 
-                        padding-left: 0.1em;
-                        padding-right: 0em;
-                        background-color: @egw_color_2_a;
-                        .border_radius_button_lefttop;
-                }*/
+                            content: "+ "; 
+                            font-size: 2em; 
+                            color: @egw_color_1_a; 
+                            line-height: 0.6em; 
+                            padding-left: 0.1em;
+                            padding-right: 0em;
+                            background-color: @egw_color_2_a;
+                            .border_radius_button_lefttop;
+                    }*/
   }
   .et2_link_to .et2_file input {
     border: none;
     padding: 1em;
   }
   .et2_link_to .et2_file:hover {
-    background-color: #66a1d2 !important;
-    color: #ffc200;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
+    background-color: #1aa200 !important;
   }
   .et2_link_to .et2_file:active {
     background-color: #1aa200 !important;
   }
   .et2_link {
-    cursor: pointer;
     color: #0c5da5;
-    text-decoration: none;
-  }
-  .et2_link:hover {
-    text-decoration: underline;
-  }
-  ul.et2_link_string {
-    list-style-type: none;
-    display: inline;
-    padding: 0px;
-  }
-  .et2_link_string li {
-    display: inline;
-  }
-  .et2_link_string li:not(:last-child):after {
-    content: ', ';
-  }
-  .et2_link_list {
-    border-collapse: collapse;
   }
   .et2_link_list tr {
     cursor: pointer;
@@ -648,42 +259,22 @@ action buttons, left aligned for "extra" controls
   .et2_link_list tr:active {
     background-color: rgba(255, 194, 0, 0.01);
   }
-  .et2_link_list td.remark {
-    font-style: italic;
-  }
-  .et2_link_list td div.delete {
-    visibility: hidden;
-    background-image: url("../images/close.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding: 0px;
-  }
   .et2_link_list .icon img,
   .et2_link_list .icon {
     width: 14px !important;
     height: 14px !important;
-    display: inline-block;
-  }
-  .et2_link_list tr:hover div.delete {
-    visibility: visible;
   }
   .egw_tooltip {
-    position: fixed;
-    border: 1px solid #897f51;
-    padding: 3px;
     background-color: #ffffff;
-    max-width: 300px;
-    color: black;
   }
   /**
  * Tabs widget
  */
   .et2_tabflag {
-    display: inline-block;
+    /*display: inline-block;*/
     margin: 1em 3px -1px 0;
     padding: 4px;
-    cursor: pointer;
+    /*cursor: pointer;*/
     /*font-size: 0.8em;*/
     /*.border_radius(3px,0,0,3px);*/
     background-color: #bfbfbf;
@@ -718,19 +309,17 @@ action buttons, left aligned for "extra" controls
     background-color: white;
   }
   .et2_tabs {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
+    /*border-width: 0px 1px 1px 1px;*/
+    /*border-style: solid;*/
     border-color: #505050;
-    padding: 5px;
-    overflow-y: auto;
+    /*padding: 5px;*/
+    /*overflow-y: auto;*/
     background-color: #ffffff;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
   }
   .et2_tabheader {
-    background-position: bottom;
-    background-repeat: repeat-x;
     padding-left: 0em;
     border-bottom: 1px solid #bfbfbf;
     margin: 0 2px;
@@ -738,19 +327,6 @@ action buttons, left aligned for "extra" controls
   }
   .et2_tabheader :first-child {
     margin-left: 0.3em;
-  }
-  /**
- * VFS widget(s)
- */
-  ul.et2_vfs {
-    padding-left: 0px;
-    margin: 1px;
-  }
-  .et2_vfs li.vfsFilename {
-    display: inline;
-  }
-  .et2_vfs li.vfsFilename:not(:last-child):after {
-    padding: 0.25ex;
   }
   /**
 * Validation
@@ -771,39 +347,18 @@ action buttons, left aligned for "extra" controls
     border-top-left-radius: 3px;
     /*.background-clip(padding-box);*/
   }
-  .invalid {
-    border: 1px solid #a6261d;
-    background-color: #faecec;
-  }
-  .error {
-    -moz-border-radius: 0 4px 4px 0;
-    -moz-box-shadow: 0 0 6px #DDDDDD;
-    background-color: #FFFE36;
-    border: 1px solid #E1E16D;
-    color: #ff0000;
-    display: none;
-    font-size: 11px;
-    height: 15px;
-    padding: 4px 10px;
-  }
-  .error p {
-    margin: 0;
-  }
   /**
  * hrule widget
  */
   hr {
-    border-style: none;
+    /*border-style: none;*/
     border-top: 1px solid #e6e6e6;
-    height: 1px;
-    margin: 10px 0px 10px 0px;
+    /*height: 1px;*/
+    /*margin: 10px 0px 10px 0px;*/
   }
   /**
  * grid widget
  */
-  table.et2_grid {
-    border-collapse: collapse;
-  }
   .et2_grid td {
     /*	border: 1px dashed silver;*/
   }
@@ -815,69 +370,10 @@ action buttons, left aligned for "extra" controls
     background-color: transparent;
   }
   /**
- * Sortable grid
- */
-  table.et2_grid tbody.ui-sortable > tr:not(.th) {
-    cursor: ns-resize;
-  }
-  /**
- * Message styles
- */
-  /* Style used for a generic message (such as success messages or validation errors) */
-  div.message {
-    display: block;
-    border: 1px solid gray;
-    padding: 3px 3px 3px 22px;
-    margin: 5px 0px 5px 0px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-repeat: no-repeat;
-    background-position: 3px center;
-    clear: left;
-    max-width: 500px;
-  }
-  div.message.floating {
-    display: inline-block;
-    margin: 0px 5px 0px 5px;
-  }
-  .message.validation_error {
-    color: #a93030;
-    font-style: italic;
-    background-color: #f3d4d0;
-    border-color: #a93030;
-    background-image: url(images/error.png);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-  }
-  .message.success {
-    font-style: normal;
-    background-color: #e5f3d0;
-    color: #98a930;
-    border-color: #9ea930;
-    background-image: url(images/tick.png);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-  }
-  .message.hint {
-    font-style: normal;
-    background-color: #d9e2ed;
-    border-color: #56729a;
-    color: #56729a;
-    background-image: url(images/hint.png);
-    background-repeat: no-repeat;
-    padding-left: 20px;
-  }
-  /**
  * Nextmatch widget
 */
   .et2_nextmatch {
     background-color: #f0f0f0;
-  }
-  /* Left & right headers*/
-  .et2_nextmatch > div > .header {
-    margin-top: -20px;
-    border: none;
   }
   /* images*/
   .et2_nextmatch > img {
@@ -885,15 +381,9 @@ action buttons, left aligned for "extra" controls
     height: 16px;
   }
   .nextmatch_header .header_count {
-    padding: 0px 20px;
-    margin: 6px 20px 0px;
-    border: 1px solid #E0E0E0;
-    float: right;
     font-size: 11px;
-    text-align: center;
     position: relative;
     top: 7px;
-    /*width: 50px;*/
   }
   /*################################################################
 *
@@ -933,9 +423,6 @@ action buttons, left aligned for "extra" controls
     margin-right: 1px;
     margin-top: 8px;
     max-width: 14% !important;
-    /*height: 25px;*/
-    /*top: 8px;*/
-    /*padding: 5px 0px 0px 3px;*/
     /*Dialog - Addressbook - View */
   }
   .nextmatch_header > .filters .et2_label select:hover {
@@ -1157,8 +644,8 @@ action buttons, left aligned for "extra" controls
 *
 ################################################################*/
   .nextmatch_header div[id$=favorite_wrapper] {
-    margin-top: 6px;
-    vertical-align: middle;
+    /*    margin-top: 6px;
+    vertical-align: middle;*/
     -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -1212,26 +699,6 @@ action buttons, left aligned for "extra" controls
     background-color: #b4b4b4 !important;
     background-size: 16px 16px !important;
     background-position: 10px center !important;
-  }
-  /* Favorites */
-  .nextmatch_header div[id$=favorite_wrapper] {
-    margin-top: 6px;
-    vertical-align: middle;
-  }
-  #nm_favorites_popup_filters .filter_id,
-  #nm_favorites_popup_filters .filter_value {
-    width: 45%;
-    display: inline-block;
-  }
-  .nextmatch_header ul.favorites {
-    min-width: 20ex;
-  }
-  .nextmatch_header .favorites li .ui-menu .ui-menu-item a {
-    text-indent: -22px;
-    margin-left: 21px;
-  }
-  .nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
-    margin-left: 20px;
   }
   .favorites li:hover div.ui-icon {
     display: inline-block;
@@ -1399,272 +866,34 @@ action buttons, left aligned for "extra" controls
     -moz-border-radius: 2px;
     border-radius: 2px;
   }
-  .nextmatch_sortheader {
-    color: #003075;
-    cursor: pointer;
-    padding-right: 10px;
-    margin-right: 10px;
-    background-repeat: no-repeat;
-    background-position: right center;
-  }
-  .nextmatch_sortheader:hover {
-    text-decoration: underline;
-  }
   .nextmatch_sortheader.asc {
-    font-weight: bold;
-    background-image: url(../images/up.png);
+    /*    font-weight: bold;
+    background-image: url(../images/up.png);*/
     background-size: 12px 12px;
   }
   .nextmatch_sortheader.desc {
-    font-weight: bold;
-    background-image: url(../images/down.png);
+    /*    font-weight: bold;
+    background-image: url(../images/down.png);*/
     background-size: 12px 12px;
-  }
-  .nextmatch_resize_helper {
-    border-right: 1px dotted gray;
-    min-height: 100%;
-    background-color: gray;
-    opacity: 0.5;
-  }
-  /**
- * Grid / nextmatch Hierarchy 
- */
-  /* Make sure arrow & cell content don't overlap */
-  .egwGridView_grid span.arrow {
-    margin: 6px -12px 4px 4px;
-    float: left;
-    position: relative;
-  }
-  .egwGridView_grid span.arrow ~ div.innerContainer {
-    display: inline-block;
-  }
-  /* Indent the sub-grid */
-  .egwGridView_grid .egwGridView_grid {
-    margin-left: 10px;
-    border-left: 1px solid silver;
-  }
-  /** 
- * This class' margin-right is used to line up columns at each indent level
- * Classes level_# are created programmatically with margin-right * depth
- * Margin-right = -(indent + border)
- */
-  .indentation {
-    margin-right: -11px;
   }
   /* End of hierarchy */
   /* Mangled link-to widget inside a nextmatch - used for DnD uploads */
   .et2_nextmatch * .et2_link_to {
     position: relative;
-    left: 0px;
-    background-color: inherit;
-    border: 1px gray;
-    padding: 5px;
-  }
-  .et2_clickable {
-    cursor: pointer;
-  }
-  /**
- * et2_portlet
- */
-  div.et2_portlet {
-    min-width: 100px;
-  }
-  .et2_portlet .ui-widget-header {
-    margin: 0em;
-    padding-bottom: 4px;
-    padding-left: 0.2em;
-  }
-  .et2_portlet .ui-widget-header span.ui-icon {
-    display: inline-block;
-    float: right;
-  }
-  .et2_portlet .ui-widget-header span.ui-icon.ui-icon-gear {
-    display: inline-block;
-    float: left;
-  }
-  /**
- * et2_progress
- */
-  div.et2_progress {
-    display: inline-block;
-    border: 1px solid black;
-    background-color: white;
-    width: 30px;
-    padding: 1px;
-    margin: 2px;
-    text-align: left;
   }
   div.et2_progress > div {
     background-color: #ffdd73;
-    height: 5px;
-  }
-  .egwResizeOverlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    z-index: 99999;
-    cursor: ew-resize;
-  }
-  .egwResizeHelper {
-    position: absolute;
-    display: block;
-    z-index: 99998;
-    opacity: 0.5;
-    background-color: #829cbc;
-    cursor: ew-resize;
+    /*height: 5px;*/
   }
   /**
- * Indent grid sublevels
- */
-  .et2_nextmatch .subentry.level_1 div.et2_vbox {
-    margin-left: 2.5em;
-  }
-  .et2_nextmatch .subentry.level_2 div.et2_vbox {
-    margin-left: 5em;
-  }
-  .et2_nextmatch .subentry.level_3 div.et2_vbox {
-    margin-left: 7.5em;
-  }
-  /**
- * itempicker widget
- */
-  .et2_itempicker {
-    display: block;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 256px;
-  }
-  .et2_itempicker_left {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 50px;
-    overflow: hidden;
-  }
-  .et2_itempicker_right {
-    display: block;
-    position: absolute;
-    margin: 0;
-    top: 0;
-    left: 49px;
-    right: 0;
-    bottom: 0;
-    border: 1px solid #b6b6b6;
-    background-color: #f9f9f9;
-  }
-  .et2_itempicker_right_container {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .et2_itempicker_app_select {
-    list-style-type: none;
-    padding: 0;
-  }
-  .et2_itempicker_app_select li {
-    display: block;
-    margin: 0;
-    padding: 6px;
-  }
-  .et2_itempicker_app_select li.selected {
-    border: 1px solid #b6b6b6;
-    border-right: 1px solid transparent;
-    background-color: #f9f9f9;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-  .et2_itempicker_search {
-    display: inline-block;
-    margin: 1em;
-    margin-bottom: 0;
-    margin-right: 0;
-    width: 67%;
-    padding: 0.2em;
-  }
-  .et2_itempicker_clear {
-    position: relative;
-    top: 3px;
-    left: -20px;
-  }
-  .et2_itempicker_button_action {
-    position: absolute;
-    margin: 1em;
-    top: 0;
-    right: 0;
-  }
-  .et2_itempicker_itemlist {
-    display: block;
-    border: 1px solid #b6b6b6;
-    margin: 1em;
-    margin-bottom: 0;
-    padding: 0;
-    height: 67%;
-    background-color: #ffffff;
-    overflow: auto;
-  }
-  .et2_itempicker_itemlist ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  .et2_itempicker_itemlist li {
-    display: block;
-    margin: 0;
-    padding: 4px;
-    color: #284d8a;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  .et2_itempicker_itemlist li.row_on {
-    background-color: #f2f9fe;
-  }
-  .et2_itempicker_itemlist li.selected {
-    color: #ffffff;
-    background-color: #3875d7;
-  }
-  /**
- * et2_dialog: EGroupware left aligns all buttons, but [Delete]
- */
-  div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-    float: left;
-  }
-  div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
-    float: left;
-    margin-right: 1em;
-  }
-  .et2_prompt #message {
-    white-space: pre-wrap;
-    padding-bottom: 10px;
-  }
-  .et2_prompt #value {
-    width: 100%;
-  }
-  /**
-* et2_taglist
+* et2_toolbar
 */
-  .ms-ctn,
-  .ms-res-ctn {
-    /* It doesn't really work smaller than this */
-    min-width: 150px;
-  }
-  .ms-ctn .loading {
-    position: relative;
-    margin: 0px auto -16px auto;
-    top: 5px;
-  }
-  .ms-res-ctn {
-    overflow-x: hidden;
+  .ui-toolbar_dropShadow {
+    min-height: 30px;
+    border: dashed;
+    border-width: 1px;
+    border-color: gray;
+    opacity: 0.7;
   }
   /**
  * et2_textbox
@@ -2387,6 +1616,7 @@ span.ui-icon-search {
 div#egwpopup_message {
   background-color: .color_gray_0;
   padding: 1em;
+  overflow-y: auto;
 }
 #msg,
 .message {
@@ -3349,7 +2579,8 @@ button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
 button[id="resources-edit_delete"],
-button[id="calendar-edit_button[delete]"] {
+button[id="calendar-edit_button[delete]"],
+button[id="timesheet-edit_button[delete]"] {
   background-color: #b81f00 !important;
   background-image: url('../images/delete-hover.png') !important;
   margin-left: 3em;
@@ -3388,7 +2619,8 @@ button[id="delete"]:hover,
 button[id="infolog-edit_button[delete]"]:hover,
 button[id="addressbook-edit_button[delete]"]:hover,
 button[id="resources-edit_delete"]:hover,
-button[id="calendar-edit_button[delete]"]:hover {
+button[id="calendar-edit_button[delete]"]:hover,
+button[id="timesheet-edit_button[delete]"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -3424,7 +2656,8 @@ button[id="delete"]:active,
 button[id="infolog-edit_button[delete]"]:active,
 button[id="addressbook-edit_button[delete]"]:active,
 button[id="resources-edit_delete"]:active,
-button[id="calendar-edit_button[delete]"]:active {
+button[id="calendar-edit_button[delete]"]:active,
+button[id="timesheet-edit_button[delete]"]:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -5038,7 +4271,7 @@ table.nextmatch_header img {
   position: absolute;
   background-color: #b3b3b3 !important;
   width: 5px;
-  top: 39px;
+  top: 40px;
   bottom: 3px;
   right: 0px;
 }
@@ -5289,7 +4522,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: transparent;
   float: left;
   width: 100%;
-  margin-top: -1px;
+  margin-top: 3px;
+  /*position: absolute;*/
+  /*top: 65px;*/
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
   margin: 0px 0 0 0;
@@ -5373,7 +4608,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header object {
   width: 16px;
   height: 16px;
-  background-color: #ffffff;
+  /*background-color: @gray_0;*/
   margin: 8px 1px 0 5px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 0;
