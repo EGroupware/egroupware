@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @author Nathan Gray
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-14 by RalfBecker@outdoor-training.de
  * @copyright 2012 Nathan Gray
  * @version $Id$
  */
@@ -68,12 +68,23 @@ class etemplate_widget_url extends etemplate_widget
 				switch($this->type)
 				{
 					case 'url':
-						$valid = filter_var($value, FILTER_VALIDATE_URL);
-						if($valid === false &&
-							// Remove intl chars & check again, but if it passes we'll keep the original
-							filter_var(preg_replace('/[^[:print:]]/','',$value), FILTER_VALIDATE_URL) === false)
+						// if no protocol given eg. "www.egroupware.org" prepend "http://" for validation
+						if (($missing_protocol = strpos($value, '://') === false))
 						{
-							self::set_validation_error($form_name,lang("'%1' has an invalid format",$value),'');
+							$value = 'http://'.$value;
+						}
+						$url_valid = filter_var($value, FILTER_VALIDATE_URL) ||
+							// Remove intl chars & check again, but if it passes we'll keep the original
+							filter_var(preg_replace('/[^[:print:]]/','',$value), FILTER_VALIDATE_URL);
+						//error_log(__METHOD__."() filter_var(value=".array2string($value).", FILTER_VALIDATE_URL)=".array2string(filter_var($value, FILTER_VALIDATE_URL))." --> url_valid=".array2string($url_valid));
+						// remove http:// validation prefix again
+						if ($missing_protocol)
+						{
+							$value = substr($value, 7);
+						}
+						if (!$url_valid)
+						{
+							self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
 							return;
 						}
 						break;
@@ -95,12 +106,12 @@ class etemplate_widget_url extends etemplate_widget
 				{
 					default:
 						//error_log("preg_match('{$this->attrs['preg']}', '$value')=".array2string(preg_match($this->attrs['preg'], $value)));
-						self::set_validation_error($form_name,lang("'%1' has an invalid format",$value)/*." !preg_match('$this->attrs[preg]', '$value')"*/,'');
+						self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value)/*." !preg_match('$this->attrs[preg]', '$value')"*/,'');
 						break;
 				}
 			}
 			$valid = $value;
-			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
+			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
 		}
 	}
 }
