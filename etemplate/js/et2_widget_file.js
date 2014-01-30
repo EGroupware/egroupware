@@ -305,6 +305,7 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	getInputNode: function() {
+		if (typeof this.input == 'undefined') return false;
 		return this.input[0];
 	},
 
