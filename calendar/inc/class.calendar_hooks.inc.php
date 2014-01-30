@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-13 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-14 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -18,11 +18,12 @@ class calendar_hooks
 	/**
 	 * Hook called by link-class to include calendar in the appregistry of the linkage
 	 *
-	 * @param array/string $location location and other parameters (not used)
+	 * @param array|string $location location and other parameters (not used)
 	 * @return array with method-names
 	 */
 	static function search_link($location)
 	{
+		unset($location);	// not used, but in function signature for hooks
 		return array(
 			'query' => 'calendar.calendar_bo.link_query',
 			'title' => 'calendar.calendar_bo.link_title',
@@ -55,11 +56,12 @@ class calendar_hooks
 	/**
 	 * Hook called to retrieve a app specific exportLimit
 	 *
-	 * @param array/string $location location and other parameters (not used)
+	 * @param array|string $location location and other parameters (not used)
 	 * @return the export_limit to be applied for the app, may be empty, int or string
 	 */
 	static function getAppExportLimit($location)
 	{
+		unset($location);	// not used, but in function signature for hooks
 		return $GLOBALS['egw_info']['server']['calendar_export_limit'];
 	}
 
@@ -634,10 +636,11 @@ class calendar_hooks
 				}
 				catch (Exception $e)
 				{
+					unset($e);	// not used
 					// permission error
 					continue;
 				}
-				if ($title = $definition->get_title())
+				if (($title = $definition->get_title()))
 				{
 					$options[$title] = $title;
 				}
@@ -732,6 +735,7 @@ class calendar_hooks
 	 */
 	public static function categories($data)
 	{
+		unset($data);	// not used, but in function signature for hooks
 		return true;
 	}
 }

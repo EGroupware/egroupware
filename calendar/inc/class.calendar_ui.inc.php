@@ -368,7 +368,7 @@ class calendar_ui
 		// set the actual view as return_to
 		if (isset($_GET['menuaction']))
 		{
-			list($app,$class,$func) = explode('.',$_GET['menuaction']);
+			list(,$class,$func) = explode('.',$_GET['menuaction']);
 			if ($func == 'index')
 			{
 				$func = $this->view; $this->view = 'index';	// switch to the default view
@@ -448,7 +448,6 @@ class calendar_ui
 	function event_icons($event)
 	{
 		$is_private = !$event['public'] && !$this->bo->check_perms(EGW_ACL_READ,$event);
-		$viewable = !$this->bo->printer_friendly && $this->bo->check_perms(EGW_ACL_READ,$event);
 
 		$icons = array();
 		if (!$is_private)
@@ -462,7 +461,7 @@ class calendar_ui
 				$icons[] = html::image('calendar','recur',lang('recurring event'));
 			}
 			// icons for single user, multiple users or group(s) and resources
-			foreach($event['participants'] as  $uid => $status)
+			foreach(array_keys($event['participants']) as  $uid)
 			{
 				if(is_numeric($uid) || !isset($this->bo->resources[$uid[0]]['icon']))
 				{
@@ -508,7 +507,7 @@ class calendar_ui
 	* Create a select-box item in the sidebox-menu
 	* @privat used only by sidebox_menu !
 	*/
-	function _select_box($title,$name,$options,$baseurl='')
+	function _select_box($title,$name,$options)
 	{
 		$select = ' <select style="width: 99%;" name="'.$name.'" id="calendar_'.$name.'" title="'.
 			lang('Select a %1',lang($title)).'">'.
@@ -569,6 +568,7 @@ class calendar_ui
 		$link_vars = array();
 		// Magic etemplate2 favorites menu (from nextmatch widget)
 		display_sidebox('calendar',lang('Favorites'),array(
+			'menuOpened' => true,	// menu open by default
 			array(
 				'no_lang' => true,
 				'text'=> egw_framework::favorite_list('calendar',false),
@@ -577,6 +577,7 @@ class calendar_ui
 			)
 		));
 
+		$file = array('menuOpened' => true);	// menu open by default
 		$n = 0;	// index for file-array
 
 		$planner_days_for_view = false;
@@ -599,11 +600,11 @@ class calendar_ui
 			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview','ajax'=>'true'),
 		) as $view => $data)
 		{
-			$icon = array_shift($data);
+			$icon_name = array_shift($data);
 			$title = array_shift($data);
 			$vars = array_merge($link_vars,$data);
 
-			$icon = html::image('calendar',$icon,lang($title),"class=sideboxstar");  //to avoid jscadender from not displaying with pngfix
+			$icon = html::image('calendar',$icon_name,lang($title),"class=sideboxstar");  //to avoid jscadender from not displaying with pngfix
 			if ($view == 'add')
 			{
 				$link = html::a_href($icon,'javascript:'.$this->popup(egw::link('/index.php',array(
@@ -752,12 +753,12 @@ class calendar_ui
 
 		// Category Selection
 		$cat_id = explode(',',$this->cat_id);
-		$options = '<option value="0">'.lang('All categories').'</option>'.
-			$this->categories->formatted_list('select','all',$cat_id,'True');
 
 		$select = ' <select style="width: 87%;" id="calendar_cat_id" name="cat_id" title="'.
 			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
-			$options."</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"');
+			'<option value="0">'.lang('All categories').'</option>'.
+				$this->categories->formatted_list('select','all',$cat_id,'True').
+			"</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"');
 
 		$file[++$n] =  array(
 			'text' => $select,
@@ -768,7 +769,7 @@ class calendar_ui
 
 
 		// Filter all or hideprivate
-		$options = '';
+		$filter_options = '';
 		foreach(array(
 			'default'     => array(lang('Not rejected'), lang('Show all status, but rejected')),
 			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
@@ -785,14 +786,14 @@ class calendar_ui
 		) as $value => $label)
 		{
 			list($label,$title) = $label;
-			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
+			$filter_options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
 		}
 		// add deleted filter, if history logging is activated
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
-			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
+			$filter_options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
-		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
+		$file[] = $this->_select_box('Filter','filter',$filter_options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
