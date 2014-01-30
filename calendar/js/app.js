@@ -543,7 +543,7 @@ app.classes.calendar = AppJS.extend(
 									eventOwner,
 									_duration
 								);
-							}							
+							}
 						},this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
 					this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
 		}
@@ -1120,6 +1120,9 @@ app.classes.calendar = AppJS.extend(
 				state.state.favorite = state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 			}
 		}
+		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
+		this.state = state;
+
 		var query = jQuery.extend({menuaction: menuaction},state.state||{});
 
 		// prepend an owner 0, to reset all owners and not just set given resource type
