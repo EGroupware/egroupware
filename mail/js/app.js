@@ -296,7 +296,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		console.log(_action, _elems);
+		//console.log(_action, _elems);
 		// Extra info passed to egw.open()
 		var settings = {
 			// 'Source' Mail UID
@@ -325,8 +325,13 @@ app.classes.mail = AppJS.extend(
 			case 'forwardasattach':
 				if (_elems.length>1||_action.id == 'forwardasattach')
 				{
-					var url = 'menuaction=mail.mail_compose.compose';
-					return this.mail_openComposeWindow(url,_action.id == 'forwardasattach', _elems);
+					settings.from = 'forward';
+					settings.mode = 'forwardasattach';
+					if (typeof _elems != 'undefined' && _elems.length>1)
+					{
+						for(var j = 1; j < _elems.length; j++)
+						settings.id = settings.id + ',' + _elems[j].id;
+					}
 				}
 				else
 				{
