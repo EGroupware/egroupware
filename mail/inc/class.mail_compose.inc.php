@@ -261,6 +261,13 @@ class mail_compose
 			unset($_GET['part_id']);
 			unset($_GET['id']);
 			unset($_GET['mode']);
+			if (is_array($_content['attachments']))
+			{
+				foreach ($_content['attachments'] as $i => &$upload)
+				{
+					if (is_numeric($upload['size'])) $upload['size'] = mail_bo::show_readable_size($upload['size']);
+				}
+			}
 			//error_log(__METHOD__.__LINE__.array2string($_content));
 		}
 		$composeCache = array();
@@ -1285,7 +1292,7 @@ class mail_compose
 		} else {
 			$content['mimeType']=0;
 		}
-
+		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
@@ -1689,6 +1696,7 @@ class mail_compose
 			unset($this->sessionData['to']);
 			unset($this->sessionData['cc']);
 			if($attachments = $mail_bo->getMessageAttachments($_uid,$_partID)) {
+				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
 					$this->addMessageAttachment($_uid, $attachment['partID'],
 						$_folder,
@@ -2236,23 +2244,33 @@ class mail_compose
 		$mail_bo->openConnection();
 		if (is_array($_formData) && isset($_formData['attachments']))
 		{
+			//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 			$tnfattachments = null;
 			foreach((array)$_formData['attachments'] as $attachment) {
 				if(is_array($attachment))
 				{
 					if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
+						/* Example:
+						Array([0] => Array(
+						[uid] => 21178
+						[partID] => 2
+						[name] => [Untitled].pdf
+						[type] => application/pdf
+						[size] => 622379
+						[folder] => INBOX))
+						*/
 						$mail_bo->reopen($attachment['folder']);
 						switch($attachment['type']) {
 							case 'MESSAGE/RFC822':
 								$rawHeader='';
 								if (isset($attachment['partID'])) {
-									$rawHeader      = $mail_bo->getMessageRawHeader($attachment['uid'], $attachment['partID']);
+									$rawHeader      = $mail_bo->getMessageRawHeader($attachment['uid'], $attachment['partID'],$attachment['folder']);
 								}
-								$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID']);
+								$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
 								$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
 								break;
 							default:
-								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID']);
+								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
 								if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
 								{
 									if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
