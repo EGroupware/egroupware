@@ -177,33 +177,28 @@ var et2_date = et2_inputWidget.extend(
 		}
 
 		// Update input - popups do, but framework doesn't
+		_value = '';
 		if(this._type != 'date-timeonly')
 		{
-			this._oldValue = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date);
+			_value = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date);
 		}
 		if(this._type != 'date')
 		{
-			var current = this.input_date.val();
-			if(this._type != 'date-timeonly')
-			{
-				current += " ";
-			}
-			else
-			{
-				current = '';
-			}
-			this._oldValue = current + jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
+			if(this._type != 'date-timeonly') _value += ' ';
+
+			_value += jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
 				hour: this.date.getHours(),
 				minute: this.date.getMinutes(),
 				seconds: 0,
 				timezone: 0
 			});
 		}
-		this.input_date.val(this._oldValue);
+		this.input_date.val(_value);
 		if(this._oldValue !== et2_no_init && old_value != this.getValue())
 		{
 			this.change(this.input_date);
 		}
+		this._oldValue = _value;
 	},
 
 	getValue: function() {
@@ -310,7 +305,8 @@ var et2_date_duration = et2_date.extend(
 	createInputWidget: function() {
 		// Create nodes
 		this.node = $j(document.createElement("span"));
-		this.duration = $j(document.createElement("input")).attr("size", "2");
+		this.duration = $j(document.createElement("input"))
+			.attr({type: 'number', size: 3, style: 'width: 3em'});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)
@@ -419,7 +415,6 @@ var et2_date_duration = et2_date.extend(
 			}
 		}
 
-
 		// Figure out best unit for display
 		var _unit = this.options.display_format == "d" ? "d" : "h";
 		if (this.options.data_format.indexOf('m') > -1 && _value && _value < 60)
@@ -450,7 +445,7 @@ var et2_date_duration = et2_date.extend(
 	 * Change displayed value into storage value and return
 	 */
 	getValue: function() {
-		var value = this.duration.val();
+		var value = this.duration.val().replace(',', '.');
 		if(value === '')
 		{
 			return this.options.empty_not_0 ? null : 0;
@@ -488,9 +483,7 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 	 * @memberOf et2_date_duration_ro
 	 */
 	createInputWidget: function() {
-
 		this.node = $j(document.createElement("span"));
-		var display = this._convert_to_display(this.options.value);
 		this.duration = $j(document.createElement("span")).appendTo(this.node);
 		this.format = $j(document.createElement("span")).appendTo(this.node);
 	},
