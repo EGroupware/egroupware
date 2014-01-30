@@ -142,7 +142,7 @@ app.classes.calendar = AppJS.extend(
 	drag_n_drop: function()
 	{
 		var that = this;
-		
+
 		//Draggable
 		jQuery("div[id^='drag_']").draggable(
 			{
@@ -195,8 +195,8 @@ app.classes.calendar = AppJS.extend(
 			}
 		}).resizable({
 				distance: 10,
-				
-				
+
+
 				/**
 				 *  Triggered when the resizable is created.
 				 *
@@ -223,7 +223,7 @@ app.classes.calendar = AppJS.extend(
 					var resizeHelper = event.target.getAttribute('data-resize');
 					var dataResize = resizeHelper.split("|");
 					var time = dataResize[1].split(":");
-					
+
 					this.dropStart = that.resizeHelper(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top)
 					this.dropDate = dataResize[0]+"T"+time[0]+time[1];
 					//$j(this).resizable("option","containment",".calendar_calDayCol");
@@ -281,7 +281,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				/**
 				 * Make all draggable calEvents acceptable
-				 * 
+				 *
 				 */
 				accept:function()
 				{
@@ -453,7 +453,7 @@ app.classes.calendar = AppJS.extend(
 		});
 
 	},
-	
+
 	/**
 	 * Function to help calendar resizable event, to fetch the right droppable cell
 	 *
@@ -477,7 +477,7 @@ app.classes.calendar = AppJS.extend(
 		}
 		return false;
 	},
-	
+
 	/**
 	 * Convert AM/PM dateTime format to 24h
 	 *
@@ -512,7 +512,7 @@ app.classes.calendar = AppJS.extend(
 		}
 		return date;
 	},
-	
+
 	/**
 	 * DropEvent
 	 *
@@ -563,7 +563,7 @@ app.classes.calendar = AppJS.extend(
 				);
 		}
 	},
-	
+
 	/**
 	 * open the freetime search popup
 	 *
@@ -1085,7 +1085,7 @@ app.classes.calendar = AppJS.extend(
 		if (typeof state.state != 'undefined' && state.state.view == 'undefined' || state.state.view == 'listview')
 		{
 			// check if we already use et2 / are in listview
-			if (this.et2)
+			if (this.et2 || etemplate2 && etemplate2.getByApplication('calendar'))
 			{
 				// current calendar-code can set regular calendar states only via a server-request :(
 				// --> check if we only need to set something which can be handeled by nm internally
