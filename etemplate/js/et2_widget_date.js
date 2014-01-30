@@ -64,7 +64,8 @@ var et2_date = et2_inputWidget.extend(
 		this.span = $j(document.createElement("span")).addClass("et2_date");
 
 		this.input_date = $j(document.createElement("input"));
-		this.input_date.addClass("et2_date").attr("type", "text").attr("size", 5)
+		this.input_date.addClass("et2_date").attr("type", "text")
+			.attr("size", 7)	// strlen("10:00pm")=7
 			.appendTo(this.span);
 
 		this.setDOMNode(this.span[0]);
@@ -103,45 +104,58 @@ var et2_date = et2_inputWidget.extend(
 
 	set_value: function(_value) {
 		var old_value = this.getValue();
-		if(_value == null || _value == 0)
+		if(_value === null || _value === "" || _value === undefined)
 		{
-			this.value = _value;
+			_value = null;
 
 			if(this.input_date)
 			{
 				this.input_date.val("");
 			}
-			if(old_value !== this.value)
+			if(this._oldValue !== et2_no_init && old_value !== _value)
 			{
 				this.change(this.input_date);
 			}
+			this._oldValue = _value;
 			return;
 		}
 
 		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value)) {
-			if(_value.indexOf(":") > 0 && this._type == "date-timeonly") {
-				this.value = _value;
-				this.input_date.timepicker('setTime',_value);
-				if(old_value !== this.value)
+			// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
+			var fix_reg = new RegExp((this._type == "date-timeonly"?'^':' ')+'([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$','i');
+			var matches = _value.match(fix_reg);
+			if (matches && (matches[1].length < 2 || matches[2] === undefined || matches[2].length < 3 ||
+				matches[3] && matches[3] != 'am' && matches[3] != 'pm'))
+			{
+				if (matches[1].length < 2 && !matches[3]) matches[1] = '0'+matches[1];
+				if (matches[2] === undefined) matches[2] = ':00';
+				while (matches[2].length < 3) matches[2] = ':0'+matches[2].substr(1);
+				_value = _value.replace(fix_reg, (this._type == "date-timeonly"?'':' ')+matches[1]+matches[2]+matches[3]);
+				if (matches[4] !== undefined) matches[3] = matches[4].toLowerCase() == 'a' ? 'am' : 'pm';
+			}
+			if(this._type == "date-timeonly") {
+				var parsed = jQuery.datepicker.parseTime(this.input_date.datepicker('option', 'timeFormat'), _value);
+				if (!parsed)	// parseTime returns false
 				{
-					this.change(this.input_date);
+					this.set_validation_error(this.egw().lang("'%1' has an invalid format !!!",_value));
+					return;
 				}
+				this.set_validation_error(false);
+				this.date.setHours(parsed.hour);
+				this.date.setMinutes(parsed.minute);
+				if(old_value !== this.getValue())
+				{
+					this.input_date.timepicker('setTime',_value);
+					if (this._oldValue !== et2_no_init)
+					{
+						this.change(this.input_date);
+					}
+				}
+				this._oldValue = _value;
 				return;
 			} else {
-				try {
-					// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
-					var fix_reg = / ([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$/i;
-					var matches = _value.match(fix_reg);
-					if (matches && (matches[1].length < 2 || matches[2] === undefined || matches[2].length < 3 ||
-						matches[3] && matches[3] != 'am' && matches[3] != 'pm'))
-					{
-						if (matches[1].length < 2 && !matches[3]) matches[1] = '0'+matches[1];
-						if (matches[2] === undefined) matches[2] = ':00';
-						while (matches[2].length < 3) matches[2] = ':0'+matches[2].substr(1);
-						_value = _value.replace(fix_reg, ' '+matches[1]+matches[2]+matches[3]);
-						if (matches[4] !== undefined) matches[3] = matches[4].toLowerCase() == 'a' ? 'am' : 'pm';
-					}
+				try {	// parseDateTime throws exception
 					var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
 						this.input_date.datepicker('option', 'timeFormat'), _value);
 					this.date = new Date(parsed);
@@ -165,7 +179,7 @@ var et2_date = et2_inputWidget.extend(
 		// Update input - popups do, but framework doesn't
 		if(this._type != 'date-timeonly')
 		{
-			this.input_date.val(jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date));
+			this._oldValue = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date);
 		}
 		if(this._type != 'date')
 		{
@@ -178,14 +192,15 @@ var et2_date = et2_inputWidget.extend(
 			{
 				current = '';
 			}
-			this.input_date.val(current + jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
+			this._oldValue = current + jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
 				hour: this.date.getHours(),
 				minute: this.date.getMinutes(),
-				seconds: this.date.getSeconds(),
-				timezone: this.date.getTimezoneOffset()
-			}));
+				seconds: 0,
+				timezone: 0
+			});
 		}
-		if(old_value != this.getValue())
+		this.input_date.val(this._oldValue);
+		if(this._oldValue !== et2_no_init && old_value != this.getValue())
 		{
 			this.change(this.input_date);
 		}
@@ -196,6 +211,13 @@ var et2_date = et2_inputWidget.extend(
 		{
 			// User blanked the box
 			return null;
+		}
+		// date-timeonly returns just the seconds, without any date!
+		if (this._type == 'date-timeonly')
+		{
+			this.date.setDate(1);
+			this.date.setMonth(0);
+			this.date.setFullYear(1970);
 		}
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
