@@ -3,20 +3,20 @@
 <overlay>
 	<template id="calendar.edit.general" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
-			<grid width="100%" height="210">
+			<grid height="210">
 				<columns>
 					<column width="95"/>
 					<column/>
 				</columns>
 				<rows>
-					<row class="row">
+					<row>
 						<description for="start" value="Start" width="95"/>
 						<hbox options="0,0">
 							<date-time id="start" needed="1"/>
 							<checkbox align="center" statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable"/>
 						</hbox>
 					</row>
-					<row class="row">
+					<row>
 						<description for="duration" value="Duration" width="0"/>
 						<hbox options="0,0">
 							<menulist>
@@ -29,7 +29,7 @@
 						<description/>
 						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
 					</row>
-					<row class="row">
+					<row>
 						<description for="location" value="Location" width="0"/>
 						<textbox id="location" maxlength="255" class="calendar_inputFullWidth"/>
 					</row>
@@ -39,11 +39,11 @@
 							<menupopup type="select-priority" id="priority"/>
 						</menulist>
 					</row>
-					<row class="row">
+					<row>
 						<description value="Options" width="0"/>
 						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 					</row>
-					<row class="row">
+					<row>
 						<description/>
 						<checkbox label="Private" id="public" options="0,1"/>
 					</row>
@@ -62,7 +62,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="row" valign="top">
+				<row valign="top">
 					<description for="description" value="Description"/>
 					<textbox multiline="true" id="description" rows="12" cols="70"/>
 				</row>
@@ -128,19 +128,19 @@
 				<column width="50%"/>
 			</columns>
 			<rows>
-                                <row class="th" height="12">
+				<row class="th" height="12">
 					<description value="Repeating Event Information" span="all" class="gray"/>
 					<description/>
 					<description/>
 					<description/>
 				</row>
-				<row class="row" disabled="!@reference">
+				<row disabled="!@reference">
 					<description value="Exception"/>
 					<date-time id="recurrence" readonly="true"/>
 					<description id="reference" />
 					<description id="uid" />
 				</row>
-				<row class="row" height="12">
+				<row height="12">
 					<description for="recur_type" value="Repeat type"/>
 					<menulist>
 						<menupopup id="recur_type" onchange="app.calendar.check_recur_type"/>
@@ -150,7 +150,7 @@
 						<menupopup type="select-number" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" options="None,2,31"/>
 					</menulist>
 				</row>
-				<row class="row" height="12">
+				<row height="12">
 					<description for="recur_enddate" value="End date"/>
 					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" onclick="if(window.calendar.params.inputField.value == '') window.calendar.parseDate(document.getElementById(form::name('start')+'[str]').value);"/>
 					<description for="tzid" value="Timezone"/>
@@ -158,7 +158,7 @@
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid"/>
 					</menulist>
 				</row>
-				<row class="row" valign="top">
+				<row valign="top">
 					<description for="recur_data" value="Repeat days"/>
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 					<vbox options="0,0">
@@ -203,7 +203,7 @@
 				<row class="th" disabled="@view">
 					<description value="Create new links" span="all" class="gray"/>
 				</row>
-				<row class="row" disabled="@view">
+				<row disabled="@view">
 					<link-to id="link_to" span="all"/>
 				</row>
 				<row class="th">
@@ -263,7 +263,7 @@
 								<description value="Owner"/>
 								<description value="Action"/>
 							</row>
-							<row class="row">
+							<row>
 								<date-time id="${row}[time]" readonly="true"/>
 								<description id="${row}[offset]" no_lang="1"/>
 								<checkbox align="center" id="${row}[all]" readonly="true"/>
@@ -328,7 +328,7 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="tabs" height="210" span="all">
 						<tabs>
 							<tab id="general" label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab id="description" label="Description" statustext="Full description"/>
