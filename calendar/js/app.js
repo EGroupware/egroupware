@@ -142,10 +142,10 @@ app.classes.calendar = AppJS.extend(
 	drag_n_drop: function()
 	{
 		var that = this;
-
+		
 		//Draggable
 		jQuery("div[id^='drag_']").draggable(
-		{
+			{
 			stack: jQuery("div[id^='drag_']"),
 			revert: "invalid",
 			delay: 50,
@@ -156,118 +156,183 @@ app.classes.calendar = AppJS.extend(
 			opacity: .6,
 			cursor: "move",
 
-			stop: function(ui,event)
-			{
-				event.helper.width(oldWidth);
-				event.helper[0].innerHTML = oldInnerHTML;
+			/**
+			 * Triggered when the dragging of calEvent stoped.
+			 *
+			 * @param {event} event
+			 * @param {Object} ui
+			 */
+			stop: function(event, ui)
+				{
+				ui.helper.width(oldWidth);
+				ui.helper[0].innerHTML = oldInnerHTML;
 			},
-			drag:function(ui, event)
+
+			/**
+			 * Triggered while dragging a calEvent.
+			 *
+			 * @param {event} event
+			 * @param {Object} ui
+			 *
+			 */
+			drag:function(event, ui)
 			{
 				//that.dragEvent();
 			},
-			start: function(ui, event)
+
+			/**
+			 * Triggered when the dragging of calEvent started.
+			 *
+			 * @param {event} event
+			 * @param {Object} ui
+			 *
+			 */
+			start: function(event, ui)
 			{
-				oldInnerHTML = event.helper[0].innerHTML;
-				oldWidth = event.helper.width();
-				event.helper.width(jQuery("#calColumn").width());
+				oldInnerHTML = ui.helper[0].innerHTML;
+				oldWidth = ui.helper.width();
+				ui.helper.width(jQuery("#calColumn").width());
 			}
 		}).resizable({
-				//scroll:true,
-				create:function(ui,event)
+				distance: 10,
+				
+				
+				/**
+				 *  Triggered when the resizable is created.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				create:function(event, ui)
 				{
-					var resizeHelper = ui.target.getAttribute('data-resize').split("|")[3];
+					var resizeHelper = event.target.getAttribute('data-resize').split("|")[3];
 					if (resizeHelper == 'WD' )
 					{
 						$j(this).resizable('destroy');
 					}
 				},
-				start:function(ui,event)
+
+				/**
+				 * Triggered at start of resizing a calEvent
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				start:function(event, ui)
 				{
-					var resizeHelper = ui.target.getAttribute('data-resize');
+					var resizeHelper = event.target.getAttribute('data-resize');
 					var dataResize = resizeHelper.split("|");
 					var time = dataResize[1].split(":");
-					var minute = time[1];
-					var interval = dataResize[2];
+					
+					this.dropStart = that.resizeHelper(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top)
+					this.dropDate = dataResize[0]+"T"+time[0]+time[1];
+					//$j(this).resizable("option","containment",".calendar_calDayCol");
+				},
 
-					if (minute > interval)
+				/**
+				 * Triggered at the end of resizing the calEvent.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				stop:function(event, ui)
+				{
+					var eventFlag = event.target.getAttribute('data-resize').split("|")[3];
+					var dropdate = that.cal_dnd_tZone_converter(this.dropDate);
+					var sT = parseInt((dropdate.split("T")[1].substr(0,2)* 60)) + parseInt(dropdate.split("T")[1].substr(2,2));
+					if (this.dropEnd != 'undefined' && this.dropEnd)
 					{
-						minute = Math.round(minute / interval) * interval;
+						var eT = parseInt(this.dropEnd.getAttribute('data-date').split("|")[1] * 60) + parseInt(this.dropEnd.getAttribute('data-date').split("|")[2]);
+					 	var newDuration = ((eT - sT)/60) * 3600;
+						that.dropEvent(this.getAttribute('id'),dropdate,newDuration,eventFlag);
+					}
+				},
+
+				/**
+				 * Triggered during the resize, on the drag of the resize handler
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				resize:function(event, ui)
+				{
+					this.dropEnd = that.resizeHelper(ui.element[0].getBoundingClientRect().left,
+													ui.element[0].getBoundingClientRect().top+ui.size.height);
+
+					if (typeof this.dropEnd != 'undefined' && this.dropEnd)
+					{
+						if (this.dropEnd.getAttribute('id').match(/drop_/g))
+						{
+							var dH = this.dropEnd.getAttribute('data-date').split("|")[1];
+							var dM = this.dropEnd.getAttribute('data-date').split("|")[2];
+						}
+						var dataResize = event.target.getAttribute('data-resize').split("|");
+						this.innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+dH+'h'+dM+'</div>';
 					}
 					else
 					{
-						minute = 0;
+						this.innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
 					}
-					if (minute.toString().length < 2)
-					{
-						minute += '0';
-					}
-					var dropDateHelper  =  dataResize[0]+"T"+time[0]+ minute;
-					
-					dropDate = dataResize[0]+"T"+time[0]+time[1];
-
-					var calOwner = this.getAttribute('id').substring(this.getAttribute('id').lastIndexOf("_O")+2,this.getAttribute('id').lastIndexOf("_C"));
-					if(jQuery("div[id^='drop_"+dropDateHelper+"']")[0].getAttribute('id').match(/_O[0-9]/g) == "_O0")
-						calOwner = 0;
-
-					drop = jQuery("div[id^='drop_"+dropDateHelper+"_O"+calOwner+"']");
-				},
-				stop:function(ui,event)
-				{
-					var eventFlag = ui.target.getAttribute('data-resize').split("|")[3];
-					that.dropEvent(this.getAttribute('id'),dropDate,newDuration,eventFlag);
-				},
-				resize:function(ui,event)
-				{
-					var dataResize = ui.target.getAttribute('data-resize').split("|");
-					newDuration = Math.round(this.clientHeight/drop[0].clientHeight)*  parseInt(dataResize[2]) * 60;
-					var hours = Math.floor( newDuration / 3600);
-					var minutes = (newDuration/60) % 60;
-
-					this.innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+hours+'h'+minutes+'</div>';
 				}
-
 			});
 
 		//Droppable
 		jQuery("div[id^='drop_']").droppable(
 			{
+				/**
+				 * Make all draggable calEvents acceptable
+				 * 
+				 */
 				accept:function()
 				{
 					return true;
 				},
 				tolerance:'pointer',
 
-				drop:function(id, event)
+				/**
+				 * Triggered when the calEvent dropped.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				drop:function(event, ui)
 				{
-					var dgId = event.draggable[0].getAttribute('id');
+					var dgId = ui.draggable[0].getAttribute('id');
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
-					var dpOwner = id.target.getAttribute('data-owner');
-					var eventFlag = event.draggable[0].getAttribute('data-resize').split("|")[3];
+					var dpOwner = event.target.getAttribute('data-owner');
+					var eventFlag = ui.draggable[0].getAttribute('data-resize').split("|")[3];
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner == dgOwner )
 					{
-						that.dropEvent(event.draggable[0].id, id.target.getAttribute('id').substring(id.target.getAttribute('id').lastIndexOf("drop_")+5, id.target.getAttribute('id').lastIndexOf("_O")),null,eventFlag);
+						that.dropEvent(ui.draggable[0].id, event.target.getAttribute('id').substring(event.target.getAttribute('id').lastIndexOf("drop_")+5, event.target.getAttribute('id').lastIndexOf("_O")),null,eventFlag);
 					}
 					else
 					{
-						jQuery(event.draggable).draggable("option","revert",true);
+						jQuery(ui.draggable).draggable("option","revert",true);
 					}
 
 				},
-				over:function(ui, event)
+
+				/**
+				 * Triggered when draggable calEvent is over a droppable calCell.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				over:function(event, ui)
 				{
-					var timeDemo = ui.target.id.substring(ui.target.id.lastIndexOf("T")+1,ui.target.id.lastIndexOf("_O"));
-					var dgId = event.draggable[0].getAttribute('id');
+					var timeDemo = event.target.id.substring(event.target.id.lastIndexOf("T")+1,event.target.id.lastIndexOf("_O"));
+					var dgId = ui.draggable[0].getAttribute('id');
 					var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
-					var dpOwner = ui.target.getAttribute('data-owner');
+					var dpOwner = event.target.getAttribute('data-owner');
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner === dgOwner )
 					{
-						event.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter">'+timeDemo+'</div>';
+						ui.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter">'+timeDemo+'</div>';
 					}
 					else
 					{
-						event.helper[0].innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
+						ui.helper[0].innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
 					}
 				}
 			});
@@ -388,7 +453,66 @@ app.classes.calendar = AppJS.extend(
 		});
 
 	},
+	
+	/**
+	 * Function to help calendar resizable event, to fetch the right droppable cell
+	 *
+	 * @param {int} _X position left of draggable element
+	 * @param {int} _Y position top of draggable element
+	 *
+	 * @return {jquery object|boolean} return selected jquery if not return false
+	 */
+	resizeHelper: function(_X,_Y)
+	{
+		var drops = jQuery("div[id^='drop_']");
+		var top = Math.round(_Y);
+		var left = Math.round(_X);
+		for (var i=0;i < drops.length;i++)
+		{
+			if (top >= Math.round(drops[i].getBoundingClientRect().top)
+					&& top <= Math.round(drops[i].getBoundingClientRect().bottom)
+					&& left >= Math.round(drops[i].getBoundingClientRect().left)
+					&& left <= Math.round(drops[i].getBoundingClientRect().right))
+				return drops[i];
+		}
+		return false;
+	},
+	
+	/**
+	 * Convert AM/PM dateTime format to 24h
+	 *
+	 * @param {string} _date dnd date format: dateTtime{am|pm}, eg. 121214T1205 am
+	 *
+	 * @return {string} 24h format date
+	 */
+	cal_dnd_tZone_converter : function (_date)
+	{
+		var date = _date;
+		if (_date !='undefined')
+		{
+			var tZone = _date.split('T')[1];
+			if (tZone.search('am') > 0)
+			{
+				tZone = tZone.replace(' am','');
+				var tAm = tZone.substr(0,2);
+				if (tAm == '12')
+				{
+					tZone = tZone.replace('12','00');
+				}
+				date = _date.split('T')[0] + 'T' + tZone;
+			}
+			if (tZone.search('pm') > 0)
+			{
+				var pmTime = tZone.replace(' pm','');
+				var H = parseInt(pmTime.substring(0,2)) + 12;
+				pmTime = H.toString() + pmTime.substr(2,2);
+				date = _date.split('T')[0] + 'T' + pmTime;
+			}
 
+		}
+		return date;
+	},
+	
 	/**
 	 * DropEvent
 	 *
@@ -402,7 +526,7 @@ app.classes.calendar = AppJS.extend(
 		var eventId = _id.substring(_id.lastIndexOf("drag_")+5,_id.lastIndexOf("_O"));
 		var calOwner = _id.substring(_id.lastIndexOf("_O")+2,_id.lastIndexOf("_C"));
 		var eventOwner = _id.substring(_id.lastIndexOf("_C")+2,_id.lastIndexOf(""));
-		var date = _date;
+		var date = this.cal_dnd_tZone_converter(_date);
 		var moveOrder = false;
 
 		if (_eventFlag == 'S')
@@ -439,6 +563,7 @@ app.classes.calendar = AppJS.extend(
 				);
 		}
 	},
+	
 	/**
 	 * open the freetime search popup
 	 *
