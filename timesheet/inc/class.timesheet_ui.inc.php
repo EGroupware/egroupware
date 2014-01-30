@@ -74,12 +74,14 @@ class timesheet_ui extends timesheet_bo
 			{
 				$this->data = array(
 					'ts_start' => $this->today,
+					'start_time' => '',	// force empty start-time
 					'end_time' => egw_time::to($this->now,'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 				);
 			}
+			$matches = null;
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 
@@ -104,10 +106,10 @@ class timesheet_ui extends timesheet_bo
 			}
 			if ($this->ts_viewtype == 'short')
 			{
-				$content['start_time']=$content['end_time']='00:00';
+				$content['start_time']=$content['end_time']=null;
 			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
-			if (isset($content['start_time']) && $content['start_time'] != '00:00')		// start-time specified
+			if (isset($content['start_time']))		// start-time specified
 			{
 				//$content['ts_start'] += $content['start_time'];
 				$start = new egw_time($content['ts_start']);
@@ -115,7 +117,7 @@ class timesheet_ui extends timesheet_bo
 				$start->setTime($start_time[0],$start_time[1]);
 				$content['ts_start'] = $start->format('ts');
 			}
-			if (isset($content['end_time']) && $content['end_time'] != '00:00')		// end-time specified
+			if (isset($content['end_time']))		// end-time specified
 			{
 				$end = new egw_time($content['ts_start']);
 				$end_time = explode(':',$content['end_time']);
@@ -312,7 +314,7 @@ class timesheet_ui extends timesheet_bo
 				'to_app' => TIMESHEET_APP,
 			),
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
-			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
+			'start_time' => isset($this->data['start_time']) ? $this->data['start_time'] : $this->data['ts_start'],
 			'pm_integration' => $this->pm_integration,
 			'no_ts_status' => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
 		));
@@ -834,6 +836,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			else
 			{
+				$success = $failed = $action_msg = null;
 				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 					$success,$failed,$action_msg,'index',$msg))
 				{
@@ -853,7 +856,7 @@ class timesheet_ui extends timesheet_bo
 		if (!is_array($content['nm']))
 		{
 			$date_filters = array('All');
-			foreach($this->date_filters as $name => $date)
+			foreach(array_keys($this->date_filters) as $name)
 			{
 				$date_filters[$name] = $name;
 			}
@@ -905,7 +908,7 @@ class timesheet_ui extends timesheet_bo
 
 		// dont show [Export] button if app is not availible to the user or we are on php4
 		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
-		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys,$preserv);
+		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys);
 	}
 
 	/**
@@ -1042,6 +1045,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
+				$readonlys = null;
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
 		}
@@ -1207,7 +1211,6 @@ class timesheet_ui extends timesheet_bo
 			$max_id = max($id, $max_id);
 		}
 		$content['statis'][$i]['name'] = '';
-		$content['statis'][$i]['parent'];
 		$content['statis'][$i]['admin'] = '';
 		$content['statis'][$i]['id'] = ++$max_id;
 
@@ -1215,6 +1218,6 @@ class timesheet_ui extends timesheet_bo
 		$preserv = $content;
 		$sel_options['parent'] = $this->status_labels;
 		$etpl = new etemplate_new('timesheet.editstatus');
-		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,$readonlys,$preserv);
+		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,array(),$preserv);
 	}
 }
