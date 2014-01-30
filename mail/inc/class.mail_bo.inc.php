@@ -505,14 +505,15 @@ class mail_bo
 	 */
 	function getUserEMailAddresses($_profileID=null) {
 		$acc = emailadmin_account::read((!empty($_profileID)?$_profileID:$this->profileID));
+		//error_log(__METHOD__.__LINE__.':'.array2string($acc));
 		$identities = $acc->identities();
 
-		$userEMailAdresses = array();
+		$userEMailAdresses = array($acc['ident_email']=>$acc['ident_realname']);
 		
 		foreach($identities as $ik => $ident) {
 			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
 			$identity = emailadmin_account::read_identity($ik);
-			$userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
+			if (!empty($identity['ident_email']) && !isset($userEMailAdresses[$identity['ident_email']])) $userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
 		return $userEMailAdresses;
