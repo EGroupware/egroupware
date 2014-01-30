@@ -4170,8 +4170,9 @@ class mail_bo
 			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
-		$uidsToFetch->add($_uid);
+		$uid = $_uid;
+		if (!(is_object($_uid) || is_array($_uid))) $uid = (array)$_uid;
+		$uidsToFetch->add($uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->headerText(array('peek'=>true));
@@ -4285,8 +4286,9 @@ class mail_bo
 		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
-		$uidsToFetch->add($_uid);
+		$uid = $_uid;
+		if (!(is_object($_uid) || is_array($_uid))) $uid = (array)$_uid;
+		$uidsToFetch->add($uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->fullText(array('peek'=>true));
