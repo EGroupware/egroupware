@@ -443,7 +443,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Record current & next index
 			var uid = app + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-			var next = (entry.ao?entry.ao.getNext(_row_ids.length-1):null);
+			var next = (entry.ao?entry.ao.getNext(_row_ids.length):null);
 			if(next == null || !next.id)
 			{
 				// No next, select previous
@@ -464,6 +464,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				uid = app + "::" + _row_ids[i];
 				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 				grid_IDs.push(entry.idx);
+				// Trigger controller to remove from internals
+				this.egw().dataStoreUID(uid,null);
 				// Stop caring about this ID
 				this.egw().dataDeleteUID(uid);
 			}
@@ -482,6 +484,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.dataview.grid.setTotalCount(total);
 			// Re-enable automatic updating
 			this.dataview.grid.doInvalidate = true;
+			this.dataview.grid.invalidate();
 		}
 
 		id_loop:
