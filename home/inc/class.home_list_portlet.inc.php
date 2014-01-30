@@ -110,8 +110,6 @@ class home_list_portlet extends home_portlet
 				function($response, $script) {
 					// Bind to load event to make sure template is loaded first
 					$response->script('$j("#home-index").on("load", function() {'.$script.'});');
-					// Or just call it, in the event of a normal ajax change - no load event
-					$response->script("try { $script } catch (e) {egw.debug('error', e.message);}");
 				}
 				,$response, $script
 			);

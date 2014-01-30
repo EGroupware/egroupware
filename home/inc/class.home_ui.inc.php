@@ -34,6 +34,8 @@ class home_ui
 	 */
 	public function index($content = array())
 	{
+		// Disabled, for now
+		return;
 		// CSS for Gridster grid layout
 		egw_framework::includeCSS('/phpgwapi/js/jquery/gridster/jquery.gridster.css');
 
