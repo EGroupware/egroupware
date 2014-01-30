@@ -1413,24 +1413,33 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 *
+	 * displayAttachment
 	 */
-	displayAttachment: function(tag_info, widget)
+	displayAttachment: function(tag_info, widget, calledForCompose)
 	{
 		//console.log(this, arguments, widget);
 		var mailid;
 		var attgrid;
-		if (this.mail_isMainWindow)
+		if (typeof calledForCompose == 'undefined') calledForCompose=false;
+		if (calledForCompose==false)
 		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[filename\]/,'')];
+			if (this.mail_isMainWindow)
+			{
+				mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+				var p = widget.getParent();
+				var cont = p.getArrayMgr("content").data;
+				attgrid = cont[widget.id.replace(/\[filename\]/,'')];
+			}
+			else
+			{
+				mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+				attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+			}
 		}
 		else
 		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
+			mailid = this.et2.getArrayMgr("content").getEntry('processedmail_id');
 		}
 		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
@@ -1508,6 +1517,112 @@ app.classes.mail = AppJS.extend(
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
 				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
+				width = 870;
+				height = 600;
+				//document.location = url;
+				//return;
+		}
+		egw_openWindowCentered(url,windowName,width,height);
+	},
+
+	/**
+	 * displayUploadedFile
+	 */
+	displayUploadedFile: function(tag_info, widget)
+	{
+		//console.log(this, tag_info, widget);
+		var attgrid;
+		attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
+		//console.log(attgrid);
+		if (attgrid.uid && attgrid.partID)
+		{
+			this.displayAttachment(tag_info, widget, true);
+			return;
+		}
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width;
+		var height;
+		var windowName ='mail';
+		switch(attgrid.type.toUpperCase())
+		{
+			case 'IMAGE/JPEG':
+			case 'IMAGE/PNG':
+			case 'IMAGE/GIF':
+			case 'IMAGE/BMP':
+			case 'APPLICATION/PDF':
+			case 'TEXT/PLAIN':
+			case 'TEXT/HTML':
+			case 'TEXT/DIRECTORY':
+/*
+				$sfxMimeType = $value['mimeType'];
+				$buff = explode('.',$value['name']);
+				$suffix = '';
+				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+				{
+					$attachments[$key]['mimeType'] = $sfxMimeType;
+					$value['mimeType'] = strtoupper($sfxMimeType);
+				}
+*/
+			case 'TEXT/X-VCARD':
+			case 'TEXT/VCARD':
+			case 'TEXT/CALENDAR':
+			case 'TEXT/X-VCALENDAR':
+				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
+				url += '&filename='+attgrid.file;
+				url += '&tmpname='+attgrid.tmp_name;
+				url += '&name='+attgrid.name;
+				//url += '&size='+attgrid.size;
+				url += '&type='+attgrid.type;
+
+				windowName = windowName+'displayAttachment_'+attgrid.file.replace(/\//g,"_");
+				var reg = '800x600';
+				var reg2;
+				// handle calendar/vcard
+				if (attgrid.type.toUpperCase()=='TEXT/CALENDAR')
+				{
+					windowName = 'maildisplayEvent_'+attgrid.file.replace(/\//g,"_");
+					reg2 = egw.link_get_registry('calendar');
+					if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+					{
+						reg = app_registry['view_popup'];
+					}
+				}
+				if (attgrid.type.toUpperCase()=='TEXT/X-VCARD' || attgrid.type.toUpperCase()=='TEXT/VCARD')
+				{
+					windowName = 'maildisplayContact_'+attgrid.file.replace(/\//g,"_");
+					reg2 = egw.link_get_registry('addressbook');
+					if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
+					{
+						reg = app_registry['add_popup'];
+					}
+				}
+				var w_h =reg.split('x');
+				width = w_h[0];
+				height = w_h[1];
+				break;
+			case 'MESSAGE/RFC822':
+/*
+				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
+				url += '&id='+mailid;
+				url += '&part='+attgrid.partID;
+				url += '&is_winmail='+attgrid.winmailFlag;
+				windowName = windowName+'displayMessage_'+mailid+'_'+attgrid.partID;
+				width = 870;
+				height = egw_getWindowOuterHeight();
+				break;
+*/
+			default:
+				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
+				url += '&filename='+attgrid.file;
+				url += '&tmpname='+attgrid.tmp_name;
+				url += '&name='+attgrid.name;
+				//url += '&size='+attgrid.size;
+				url += '&type='+attgrid.type;
+				url += '&mode='+'save';
+
+				windowName = windowName+'displayAttachment_'+attgrid.file.replace(/\//g,"_");
 				width = 870;
 				height = 600;
 				//document.location = url;

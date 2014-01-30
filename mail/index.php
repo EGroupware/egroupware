@@ -4,9 +4,9 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
+ * @author Stylite AG [info@stylite.de]
  * @version 1.0
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
