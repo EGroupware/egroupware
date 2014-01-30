@@ -8,7 +8,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<textbox multiline="true" statustext="enter a textual description of the log-entry" id="info_des" no_lang="1" rows="13" class="description"/>
+					<textbox multiline="true" id="info_des" no_lang="1" rows="13" class="description"/>
 				</row>
 			</rows>
 		</grid>
@@ -284,7 +284,7 @@
 						</menulist>
 					</hbox>
 					<description/>
-                                        
+
 					<hbox span="3">
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="3"/>
 						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1"/>
