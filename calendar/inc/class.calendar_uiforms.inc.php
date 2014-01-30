@@ -475,7 +475,7 @@ class calendar_uiforms extends calendar_ui
 				$button = $event['button_was'];	// save or apply
 				unset($event['button_was']);
 				break;
-		
+
 		}
 
 		switch((string)$button)
@@ -777,6 +777,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif ($conflicts > 0)
 			{
+				// series moved by splitting in two --> move alarms and exceptions
+				if ($old_event && $old_event['id'] != $event['id'])
+				{
 					foreach ((array)$old_alarms as $alarm)
 					{
 						// check if alarms still needed in old event, if not delete it
@@ -827,7 +830,7 @@ class calendar_uiforms extends calendar_ui
 							$this->bo->update($exception, true, true, true, true, $msg=null, $content['no_notifications']);
 						}
 					}
-				
+				}
 
 				$message = lang('Event saved');
 				if ($status_reset_to_unknown)
@@ -1818,7 +1821,7 @@ class calendar_uiforms extends calendar_ui
 							}
  						}
 					}
-					
+
 			}
 		}
 		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,array(),$readonlys,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
