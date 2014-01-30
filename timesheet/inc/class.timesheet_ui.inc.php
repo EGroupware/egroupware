@@ -709,25 +709,27 @@ class timesheet_ui extends timesheet_bo
 					case 0:	// day-sum
 						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.common::show_date($row['ts_start'],
 						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
-
 						// For some reason day sum checkbox on the etemplate is checked[1] instead of checked[0]
 						$readonlys["checked[1]"] = true;
+						$row['ts_id'] = 'sum-day-'.$row['ts_start'];
 						break;
 					case -1:	// week-sum
 						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
+						$row['ts_id'] = 'sum-week-'.$row['ts_week'];
 						break;
 					case -2:	// month-sum
 						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
+						$row['ts_id'] = 'sum-month-'.$row['ts_month'];
 						break;
 					case -3:	// year-sum
 						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
+						$row['ts_id'] = 'sum-year-'.$row['ts_year'];
 						break;
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
 				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete';
 				$row['titleClass'] = 'timesheet_titleSum';
-				unset($row['ts_id']);	// otherwise row would be selectable action-wise
 				continue;
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
