@@ -11,7 +11,7 @@
 				<row>
 					<description span="all"/>
 				</row>
-				<row class="select_appname">
+				<row class="select_appname ">
 					<description value="Select application"/>
 					<menulist>
 						<menupopup id="appname" no_lang="1" onchange="1"/>

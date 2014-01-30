@@ -7,7 +7,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row class="dialog-header">
 					<description id="msg" no_lang="1"/>
 				</row>
 				<row>

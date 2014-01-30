@@ -975,10 +975,71 @@ fieldset.emailGroup {
     height: 150px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to {
-    width: 100% !important;
+    width: 550px;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to input {
+    width: 86%;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to button {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.box_shadow_standard_light;*/
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    height: 3.1ex;
+    background-color: #e6e6e6;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to button background-image[src$="svg"] {
+    background-color: #b4b4b4;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+    background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+    background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+    background-repeat: repeat-x;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to button:hover {
+    /*background-color: @gray_30;*/
+    text-shadow: 0px 0px;
+    color: #ffffff;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    background-color: #1aa200;
+    background-size: 20px 20px;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to button:active {
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to div#addressbook-edit_link_to_link_entry {
-    margin: 1em;
+    margin-top: 11px;
+    width: 100%;
+    /*div.et2_link_entry {*/
+    /*}*/
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to div#addressbook-edit_link_to_link_entry select {
+    width: 39%;
+  }
+  div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to div#addressbook-edit_link_to_link_entry input.ui-autocomplete-input {
+    width: 56%;
+    padding-bottom: 1px;
   }
   div#addressbook-edit_addressbook-edit-links div#addressbook-edit_link_to img.et2_button_icon {
     /*.background_color_10_gray;*/

@@ -15,8 +15,8 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Import" id="import"/>
-						<button label="Update default-definitions" id="update"/>
+						<button label="Import" id="import" image="import" background_image="1"/>
+						<button label="Update default-definitions" id="update" image="update" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

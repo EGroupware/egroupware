@@ -17,14 +17,14 @@
 						</vbox>
 					</hbox>
 				</row>
-				<row valign="bottom">
+				<row valign="bottom" class="dialog-footer-toolbar">
 					<hbox span="all">
 						<hbox>
-							<button label="previous" id="button[previous]"/>
-							<button label="next" id="button[next]"/>
-							<button label="finish" id="button[finish]"/>
+							<button label="previous" id="button[previous]" image="previous" background_image="1"/>
+							<button label="next" id="button[next]" image="next" background_image="1"/>
+							<button label="finish" id="button[finish]" image="finish" background_image="1"/>
 						</hbox>
-						<button align="right" label="cancel" id="button[cancel]" onclick="window.close(); return false;"/>
+						<button align="right" label="cancel" id="button[cancel]" onclick="window.close(); return false;" image="cancel" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>

@@ -781,12 +781,53 @@ div#addressbook-edit_addressbook-edit-links {
 
     /*neue verknüpfung erstellen - div*/
     div#addressbook-edit_link_to {
-        width: 100% !important;
+       
+        width: 550px;
+        
+         // Comment                            
+        input {width: 86%;}
+        
+        
+        // Button
+        button {
+        .Complete_Button_normal; 
+        height: 3.1ex;
+        background-color: @gray_10;
+        background-image[src$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
+    
+        &:hover{ 
+            /*background-color: @gray_30;*/ 
+            text-shadow: 0px 0px;
+            color: @gray_0;
+            .box_shadow_standard_light_hover;
+            background-color: @color_positive_action_active;
+            background-size: 20px 20px;
+           }
 
+        &:active {.box_shadow_standard_light_active !important;}
+            
+        }
+        
+        div#addressbook-edit_link_to_link_entry{ 
+            margin-top: 11px;
+            width: 100%;
 
-        // 1. with Addressbook
-        div#addressbook-edit_link_to_link_entry{ margin: 1em;}
+        
+        // APP Selector
+        /*div.et2_link_entry {*/
+            
+            select {width: 39%;}
+        
+        // Input Field
+            input.ui-autocomplete-input {
+                                    width: 56%;
+                                    padding-bottom: 1px;
+                                    }
 
+                                    
+            /*}*/                        
+                                    
+       }
 
         // 2. Icon
         img.et2_button_icon {
