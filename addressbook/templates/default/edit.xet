@@ -28,23 +28,23 @@
 			<rows>
 				<row>
 					<description for="n_prefix" value="prefix"/>
-					<textbox id="n_prefix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
+					<textbox id="n_prefix" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_given" value="first name"/>
-					<textbox id="n_given" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
+					<textbox id="n_given" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_middle" value="middle name"/>
-					<textbox id="n_middle" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
+					<textbox id="n_middle" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_family" value="last name"/>
-					<textbox id="n_family" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
+					<textbox id="n_family" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description for="n_suffix" value="suffix"/>
-					<textbox id="n_suffix" onchange="app.addressbook.check_value(this,'$cont[id]');" size="28" maxlength="64"/>
+					<textbox id="n_suffix" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="28" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
@@ -97,11 +97,11 @@
 				<row>
 				<!-- 	<image src="home"/> -->
 					<description value="Organisation"/>
-					<textbox id="org_name" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="128" colspan="3"/>
+					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="45" maxlength="128" colspan="3"/>
 				</row>
 				<row>
 					<description for="org_unit" value="department"/>
-					<textbox id="org_unit" onchange="app.addressbook.check_value(this,'$cont[id]');" size="45" maxlength="64"/>
+					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="45" maxlength="64"/>
 				</row>
 				<row>
 				<!-- 	<image src="gohome"/> -->
@@ -620,12 +620,12 @@
 									<row>
 										<image src="email.png"/>
 										<description for="email" value="email"/>
-										<url-email id="email" onchange="app.addressbook.check_value(this,'$cont[id]');" options="28,128"/>
+										<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
 									</row>
 									<row>
 										<description/>
 										<description for="email_home" value="Private"/>
-										<url-email id="email_home" onchange="app.addressbook.check_value(this,'$cont[id]');" options="28,128"/>
+										<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
 									</row>
 								</rows>
 							</grid>
