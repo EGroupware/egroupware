@@ -540,6 +540,9 @@ div.mailComposeBody,
 div.mailPreviewHeaders > * {
   margin-left: 3px;
 }
+div.mailComposeBody {
+  white-space: normal !important;
+}
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
   max-height: 1.3em;
