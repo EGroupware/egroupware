@@ -2271,12 +2271,12 @@ window.egw_LAB.wait(function() {
 	{
 		if(!empty($_content))
 		{
-			$do_email = $_content['do_email'];
+			
 			$response = egw_json_response::get();
 
-			$query = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
+			$query = egw_session::appsession('index','addressbook');
 
-			if ($_content['button']['cancel'])
+			if ($_content['button']['cancelsearch'])
 			{
 				unset($query['advanced_search']);
 			}
@@ -2291,18 +2291,15 @@ window.egw_LAB.wait(function() {
 			$query['start'] = 0;
 			$query['search'] = '';
 			// store the index state in the session
-			egw_session::appsession($do_email ? 'email' : 'index','addressbook',$query);
+			egw_session::appsession('index','addressbook',$query);
 
 			// store the advanced search in the session to call it again
 			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
 			error_log(__METHOD__. "() call ADV"  );
 			if ($_content['button']['search']) $response->call("app.addressbook.adv_search");
-			if ($_content['button']['cancel']) egw_framework::window_close (); //$response->addScript('this.close();');
+			if ($_content['button']['cancelsearch']) egw_framework::window_close (); //$response->addScript('this.close();');
 		}
-		else
-		{
-			$do_email = strpos($_SERVER['HTTP_REFERER'],'emailpopup') !== false;
-		}
+		
 		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
@@ -2353,12 +2350,11 @@ window.egw_LAB.wait(function() {
 		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
-
-		$this->tmpl->read('addressbook.search');
+		$content['showsearchbuttons'] = true; // enable search operation and search buttons| they're disabled by default
+		
+		$this->tmpl->read('addressbook.edit');
 		$this->tmpl->set_cell_attribute('change_org','disabled',true);
-		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(
-			'do_email' => $do_email,
-		),2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(),2);
 	}
 
 	/**

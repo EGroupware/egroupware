@@ -58,15 +58,23 @@ app.classes.addressbook = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		if (typeof et2.templates['addressbook.edit'] != 'undefined')
+		if (typeof et2.templates['addressbook.edit'] != 'undefined') // addressbook_ui.edit
 		{
-			this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
-			this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
-
-			// Instanciate infolog JS too - wrong app, so it won't be done automatically
-			if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
+			var content = this.et2.getArrayMgr('content').data;
+			if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
 			{
-				window.app.infolog = new window.app.classes.infolog();
+				this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
+				this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
+
+				// Instanciate infolog JS too - wrong app, so it won't be done automatically
+				if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
+				{
+					window.app.infolog = new window.app.classes.infolog();
+				}
+			}
+			else // addressbook_ui.search
+			{
+				//Any changes specificaly on AB search popup implement here
 			}
 		}
 

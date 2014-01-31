@@ -165,10 +165,10 @@
 			</rows>
 			
 		</grid>
-			<hbox class="addressbook_edit_general_picture">
-						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-						<template id="addressbook.edit.upload"/>
-					</hbox>
+		<hbox disabled="@hidebuttons" class="addressbook_edit_general_picture">
+			<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+			<template id="addressbook.edit.upload"/>
+		</hbox>
 		</row>
 		</rows>
 	</grid>		
@@ -283,17 +283,17 @@
 					<description value="Notes"/>
 					<textbox multiline="true" id="note" rows="6" cols="50"/>
 				</row>
-				<row>
+				<row disabled="@hidebuttons">
 					<image src="home"/>
 					<description value="Last date"/>
 					<link id="last_link"/>
 				</row>
-				<row>
+				<row disabled="@hidebuttons">
 					<description/>
 					<description value="Next date"/>
 					<link id="next_link"/>
 				</row>
-				<row class="row_off" valign="top">
+				<row disabled="@hidebuttons" class="row_off" valign="top">
 					<image src="gear"/>
 					<menulist>
 						<menupopup type="select-account" label="Created" readonly="true"/>
@@ -305,7 +305,7 @@
 						<date-time id="created" readonly="true" class="leftPad5"/>
 					</hbox>
 				</row>
-				<row class="row_on">
+				<row disabled="@hidebuttons" class="row_on">
 					<description/>
 					<description value="Last modified"/>
 					<hbox readonly="true" options="0,0">
@@ -644,6 +644,22 @@
 						<button align="left" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
 					</hbox>
 
+				</row>
+				<row disabled="!@showsearchbuttons" class="dialog-operators">
+					<hbox span="all">
+						<menulist>
+							<menupopup label="Operator" id="operator" no_lang="1"/>
+						</menulist>
+						<menulist>
+							<menupopup id="meth_select" no_lang="1"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row disabled="!@showsearchbuttons" class="dialog-footer-toolbar">
+					<hbox span="all">
+						<button label="Search" id="button[search]" image="search" background_image="1"/>
+						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
