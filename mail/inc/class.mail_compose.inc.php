@@ -328,6 +328,9 @@ class mail_compose
 		$keysToDelete = array();
 		if (!empty($_content['attachments']['delete']))
 		{
+			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']));
+			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']['delete']));
+
 			$suppressSigOnTop = true;
 			$toDelete = $_content['attachments']['delete'];
 			unset($_content['attachments']['delete']);
@@ -1723,7 +1726,8 @@ class mail_compose
 			'name'		=> $_name,
 			'type'		=> $_type,
 			'size'		=> $_size,
-			'folder'	=> $_folder
+			'folder'	=> $_folder,
+			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid),
 		);
 	}
 
@@ -1735,7 +1739,7 @@ class mail_compose
 		//if(isset($_GET['size'])) $attachment['size']	= $_GET['size'];
 		if(isset($_GET['type'])) $attachment['type']	= $_GET['type'];
 
-		error_log(__METHOD__.__LINE__.array2string($_GET));
+		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		if (isset($attachment['filename']) && parse_url($attachment['filename'],PHP_URL_SCHEME) == 'vfs')
 		{
 			egw_vfs::load_wrapper('vfs');

@@ -3999,7 +3999,7 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__.":$_uid,$_partID,$decode,$_folder".function_backtrace());
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.__LINE__.":$_uid,$_partID,$decode,$_folder");
-		if(empty($_partID)) {
+		if(empty($_partID)||$_partID=='null') {
 			$uidsToFetch = new Horde_Imap_Client_Ids();
 			if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
 			$uidsToFetch->add($_uid);

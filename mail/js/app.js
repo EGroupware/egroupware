@@ -1443,8 +1443,18 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
+			// CALLED FOR COMPOSE; processedmail_id could hold several IDs seperated by comma
 			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
-			mailid = this.et2.getArrayMgr("content").getEntry('processedmail_id');
+			var mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
+			var mailida = mailids.split(',');
+			mailid = mailida[widget.id.replace(/\[name\]/,'')];
+			if (typeof attgrid.uid != 'undefined' && attgrid.uid && mailid.indexOf(attgrid.uid)==-1)
+			{
+				for (i=0; i<mailida.length; i++)
+				{
+					if (mailida[i].indexOf('::'+attgrid.uid)>-1) mailid = mailida[i];
+				}
+			}
 		}
 		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
@@ -1539,7 +1549,7 @@ app.classes.mail = AppJS.extend(
 		var attgrid;
 		attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
 		//console.log(attgrid);
-		if (attgrid.uid && attgrid.partID)
+		if (attgrid.uid && (attgrid.partID||attgrid.folder))
 		{
 			this.displayAttachment(tag_info, widget, true);
 			return;
