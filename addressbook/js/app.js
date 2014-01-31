@@ -238,7 +238,7 @@ app.classes.addressbook = AppJS.extend(
 			{
 				content.push({"confirm":id,"name":_data.doublicates[id]});
 			}
-			confirmdialog('test',content,et2_dialog.BUTTONs_OK_CANCEL);
+			confirmdialog('Douplicate warning',content,et2_dialog.BUTTONs_OK_CANCEL);
 		}
 		if (typeof _data.fileas_options == 'object')
 		{
