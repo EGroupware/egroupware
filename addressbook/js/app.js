@@ -191,43 +191,43 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 * Callback function to create confirm dialog for douplicates contacts
+	 * Callback function to create confirm dialog for duplicates contacts
 	 *
-	 * @param {object} _data includes douplicats contacts information
+	 * @param {object} _data includes duplicates contacts information
 	 *
 	 */
 	_confirmdialog_callback: function(_data)
 	{
 		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname){
 
-							return et2_createWidget("dialog", {
-									callback: function(_buttons, _value) {
-											if (_buttons == et2_dialog.OK_BUTTON)
-											{
-												var id = '';
-												var content = this.template.widgetContainer.getArrayMgr('content').data;
-												for (var row in _value.grid)
-												{
-													if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
-													{
-														id = this.options.value.content.grid[row].confirm;
-														egw.open(id, 'addressbook');
+			return et2_createWidget("dialog", {
+					callback: function(_buttons, _value) {
+							if (_buttons == et2_dialog.OK_BUTTON)
+							{
+								var id = '';
+								var content = this.template.widgetContainer.getArrayMgr('content').data;
+								for (var row in _value.grid)
+								{
+									if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
+									{
+										id = this.options.value.content.grid[row].confirm;
+										egw.open(id, 'addressbook');
 
-													}
-												}
-											}
-									},
-									title: _title||egw.lang('Input required'),
-									buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
-									value: {
-											content: {
-												grid: _value
-											}
+									}
+								}
+							}
+					},
+					title: _title||egw.lang('Input required'),
+					buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+					value: {
+							content: {
+								grid: _value
+							}
 
-									},
-									template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet',
+					},
+					template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet',
 
-							}, et2_dialog._create_parent(_egw_or_appname))};
+			}, et2_dialog._create_parent(_egw_or_appname))};
 
 		if (_data.msg && _data.doublicates)
 		{
@@ -238,7 +238,7 @@ app.classes.addressbook = AppJS.extend(
 			{
 				content.push({"confirm":id,"name":_data.doublicates[id]});
 			}
-			confirmdialog('Douplicate warning',content,et2_dialog.BUTTONs_OK_CANCEL);
+			confirmdialog('Duplicate warning',content,et2_dialog.BUTTONs_OK_CANCEL);
 		}
 		if (typeof _data.fileas_options == 'object')
 		{
