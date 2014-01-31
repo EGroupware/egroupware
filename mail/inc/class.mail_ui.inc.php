@@ -1361,7 +1361,21 @@ unset($query['actions']);
 	 */
 	function createRowID($_folderName, $message_uid, $_prependApp=false)
 	{
-		return ($_prependApp?'mail'.self::$delimiter:'').trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$this->mail_bo->profileID.self::$delimiter.base64_encode($_folderName).self::$delimiter.$message_uid;
+		return self::generateRowID($this->mail_bo->profileID, $_folderName, $message_uid, $_prependApp);
+	}
+
+	/**
+	 * static function generateRowID - create a unique rowID for the grid
+	 *
+	 * @param integer $_profileID, profile ID for the rowid to be used
+	 * @param string $_folderName, used to ensure the uniqueness of the uid over all folders
+	 * @param string $message_uid, the message_Uid to be used for creating the rowID
+	 * @param boolean $_prependApp, flag to indicate that the app 'mail' is to be used for creating the rowID
+	 * @return string - a colon separated string in the form [app:]accountID:profileID:folder:message_uid
+	 */
+	static function generateRowID($_profileID, $_folderName, $message_uid, $_prependApp=false)
+	{
+		return ($_prependApp?'mail'.self::$delimiter:'').trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$_profileID.self::$delimiter.base64_encode($_folderName).self::$delimiter.$message_uid;
 	}
 
 	/**
@@ -1750,7 +1764,7 @@ unset($query['actions']);
 		}
 		$this->mail_bo->reopen($mailbox);
 		// retrieve the flags of the message, before touching it.
-		$headers	= $this->mail_bo->getMessageHeader($uid, $partID);
+		$headers	= $this->mail_bo->getMessageHeader($uid, $partID,true,true,$mailbox);
 		if (PEAR::isError($headers)) {
 			$error_msg[] = lang("ERROR: Message could not be displayed.");
 			$error_msg[] = lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
@@ -1759,6 +1773,7 @@ unset($query['actions']);
 		}
 		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true,$mailbox);
+		//error_log(__METHOD__.__LINE__.array2string($envelope));
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
