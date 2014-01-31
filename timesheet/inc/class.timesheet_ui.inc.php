@@ -832,6 +832,11 @@ class timesheet_ui extends timesheet_bo
 		}
 		if ($content['nm']['action'])
 		{
+			// remove sum-* rows from checked rows
+			$content['nm']['selected'] = array_filter($content['nm']['selected'], function($id)
+			{
+				return $id > 0;
+			});
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');
@@ -1016,9 +1021,6 @@ class timesheet_ui extends timesheet_bo
 				$actions[$action]['disableClass'] = 'rowNoEdit';
 			}
 		}
-		$actions['documents'] += array(
-			'disableClass' => 'th',
-		);
 		//_debug_array($actions);
 		return $actions;
 	}
