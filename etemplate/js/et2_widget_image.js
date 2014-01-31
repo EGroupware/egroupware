@@ -31,6 +31,11 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			"type": "string",
 			"description": "Displayed image"
 		},
+		default_src: {
+			name: "Default image",
+			type: "string",
+			description: "Image to use if src is not found"
+		},
 		"href": {
 			"name": "Link Target",
 			"type": "string",
@@ -120,7 +125,7 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 	},
 
 	set_label: function(_value) {
-		if(_value == this.options.label) return;
+		if(_value == this.options.label && _value == this.image.attr('title')) return;
 		this.options.label = _value;
 		// label is NOT the alt attribute in eTemplate, but the title/tooltip
 		this.image.attr("alt", _value).attr("title", _value);
@@ -150,10 +155,16 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			e.preventDefault();
 			return false;
 		});
-		
+
 		return true;
 	},
 
+	/**
+	 * Set image src
+	 *
+	 * @param {string} _value image, app/image or url
+	 * @return {boolean} true if image was found, false if not (image is either not displayed or default_src is used)
+	 */
 	set_src: function(_value) {
 		if(!this.isInTree())
 		{
@@ -174,17 +185,27 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			this.image.attr('src', _value).show();
 			return true;
 		}
+		src = null;
+		if (this.options.default_src)
+		{
+			src = this.egw().image(this.options.default_src);
+		}
+		if (src)
+		{
+			this.image.attr("src", src).show();
+		}
 		else
 		{
 			this.image.css("display","none");
-			return false;
 		}
+		return false;
 	},
 
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
+	 *
+	 * @param {array} _attrs
 	 */
-
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("src", "label", "href");
 	},
