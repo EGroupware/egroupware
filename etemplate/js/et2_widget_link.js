@@ -898,8 +898,11 @@ var et2_link_entry = et2_inputWidget.extend(
 	 * User selected a value
 	 */
 	select: function(event, selected) {
-		// Correct changed value from server
-		selected.item.value = selected.item.value.trim();
+		if(selected.item.value !== null)
+		{
+			// Correct changed value from server
+			selected.item.value = selected.item.value.trim();
+		}
 		if(this.options.select && typeof this.options.select == 'function')
 		{
 			if(!this.options.select(event, selected)) return false;
@@ -991,7 +994,7 @@ et2_register_widget(et2_link_entry, ["link-entry"]);
  * 
  * @augments et2_valueWidget
  */ 
-var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], 
+var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"only_app": {
