@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.dupconfirmdialog" template="" lang="" group="0" version="">
+		<grid id="grid">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<checkbox id="${row}[confirm]"/>
+					<description id="${row}[name]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
