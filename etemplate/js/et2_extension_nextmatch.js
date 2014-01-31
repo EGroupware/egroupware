@@ -553,6 +553,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Generates the column caption for the given column widget
+	 *
+	 * @param {et2_widget} _widget
 	 */
 	_genColumnCaption: function(_widget) {
 		var result = null;
@@ -561,6 +563,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		_widget.iterateOver(function(_widget) {
 			var label = (_widget.options.label ? _widget.options.label : _widget.options.empty_label);
+			if (!label) return;	// skip empty, undefined or null labels
 			if (!result)
 			{
 				result = label;
@@ -579,6 +582,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Used in preferences to refer to the columns by name instead of position
 	 *
 	 * See _getColumnCaption() for human fiendly captions
+	 *
+	 * @param {et2_widget} _widget
 	 */
 	_getColumnName: function(_widget) {
 		if(typeof _widget._getColumnName == 'function') return _widget._getColumnName();
