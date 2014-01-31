@@ -39,10 +39,10 @@
 								<nextmatch-filterheader id="ts_project" no_lang="1" options="All projects" search="false"/>
 							</row>
 							<row disabled="!@pm_integration=full">
-								<nextmatch-customfilter id="pm_id" onchange="1" options="projectmanager-select,All projects"/>
+								<nextmatch-customfilter id="pm_id" options="projectmanager-select,All projects"/>
 							</row>
 							<row>
-								<nextmatch-customfilter id="linked" onchange="1" options="link-entry"/>
+								<nextmatch-customfilter id="linked" options="link-entry"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Title" id="ts_title"/>
