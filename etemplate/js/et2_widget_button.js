@@ -21,8 +21,8 @@
 /**
  * Class which implements the "button" XET-Tag
  * @augments et2_baseWidget
- */ 
-var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], 
+ */
+var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -31,12 +31,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			"description": "Label of the button",
 			"translate": true
 		},
-		"image": { 
+		"image": {
 			"name": "Icon",
 			"type": "string",
 			"description": "Use an icon instead of label (when available)"
 		},
-		"ro_image": { 
+		"ro_image": {
 			"name": "Read-only Icon",
 			"type": "string",
 			"description": "Use this icon instead of hiding for read-only"
@@ -60,19 +60,39 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			name: "Add image in front of text",
 			type: "boolean",
 			description: "Adds image in front of text instead of just using an image with text as tooltip",
-			default: false
+			default: et2_no_init	// to leave it undefined, if not defined, so background-image is assigned by default
 		},
 		// No such thing as a required button
 		"needed": {
-			"ignore": true,
+			"ignore": true
 		}
 	},
 
 	legacyOptions: ["image", "ro_image"],
 
 	/**
+	 * images to be used as background-image, if none is explicitly applied and id matches given regular expression
+	 */
+	default_background_images: {
+		save: /save(&|\[|$)/,
+		apply: /apply(&|\[|$)/,
+		cancel: /cancel(&|\[|$)/,
+		delete: /delete(&|\[|$)/,
+		edit: /edit(&|\[|$)/,
+		next: /next(&|\[|$)/,
+		finish: /cancel(&|\[|$)/,
+		previous: /delete(&|\[|$)/,
+		copy: /copy(&|\[|$)/,
+		more: /cancel(&|\[|$)/,
+		check: /check(&|\[|$)/,
+		ok: /ok(&|\[|$)/,
+		close: /close(&|\[|$)/,
+		add: /(add(&|\[|$)|create)/	// customfields use create*
+	},
+
+	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_button
 	 */
 	init: function() {
@@ -98,12 +118,37 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		}
 	},
 
+	/**
+	 * Apply the "modifications" to the element and translate attributes marked
+	 * with "translate: true"
+	 *
+	 * Reimplemented here to assign default background-images to buttons
+	 *
+	 * @param {object} _attrs
+	 */
+	transformAttributes: function(_attrs)
+	{
+		if (this.id && typeof _attrs.background_image == 'undefined' && !_attrs.image)
+		{
+			for(var image in this.default_background_images)
+			{
+				if (this.id.match(this.default_background_images[image]))
+				{
+					_attrs.image = image;
+					_attrs.background_image = true;
+					break;
+				}
+			}
+		}
+		this._super.apply(this, arguments);
+	},
+
 	set_accesskey: function(key) {
 		jQuery(this.node).attr("accesskey", key);
 	},
 	/**
 	 * Set image and update current image
-	 * 
+	 *
 	 * @param _image
 	 */
 	set_image: function(_image) {
@@ -112,7 +157,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	},
 	/**
 	 * Set readonly image and update current image
-	 * 
+	 *
 	 * @param _image
 	 */
 	set_ro_image: function(_image) {
@@ -121,24 +166,24 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	},
 	/**
 	 * Set current image (dont update options.image)
-	 * 
+	 *
 	 * @param _image
 	 */
 	update_image: function(_image) {
 		if(!this.isInTree() || !this.options.background_image && this.image == null) return;
-		
-		if (typeof _image == 'undefined') 
+
+		if (typeof _image == 'undefined')
 			_image = this.options.readonly ? this.options.ro_image : this.options.image;
 
 		// Silently blank for percentages instead of warning about missing image - use a progress widget
-		if(_image.match(/^[0-9]+\%$/)) 
+		if(_image.match(/^[0-9]+\%$/))
 		{
 			_image = "";
 			//this.egw().debug("warn", "Use a progress widget instead of percentage images", this);
 		}
 
 		var found_image = false;
-		if(_image != "") 
+		if(_image != "")
 		{
 			var src = this.egw().image(_image);
 			if(src)
@@ -176,15 +221,15 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 
 	/**
 	 * Set options.readonly and update image
-	 * 
-	 * @param boolean _ro
+	 *
+	 * @param {boolean} _ro
 	 */
 	set_readonly: function(_ro)
 	{
 		if (_ro != this.options.readonly)
 		{
 			this.options.readonly = _ro;
-			
+
 			if (this.image)
 			{
 				this.update_image();
@@ -198,7 +243,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 
 	/**
 	 * Overwritten to maintain an internal clicked attribute
-	 * 
+	 *
 	 * @param _ev
 	 * @returns {Boolean}
 	 */
@@ -240,6 +285,8 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 
 	/**
 	 * Set tab index
+	 *
+	 * @param {number} index
 	 */
 	set_tabindex: function(index) {
 		jQuery(this.btn).attr("tabindex", index);
@@ -275,10 +322,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 
 	/**
 	 * et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("label", "value", "class", "image", "ro_image","onclick" );
+		_attrs.push("label", "value", "class", "image", "ro_image", "onclick", "background_image" );
 	},
 
 	getDetachedNodes: function()
