@@ -125,8 +125,8 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 	},
 
 	set_label: function(_value) {
-		if(_value == this.options.label && _value == this.image.attr('title')) return;
 		this.options.label = _value;
+		_value = this.egw().lang(_value);
 		// label is NOT the alt attribute in eTemplate, but the title/tooltip
 		this.image.attr("alt", _value).attr("title", _value);
 	},
