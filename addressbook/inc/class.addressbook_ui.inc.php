@@ -1261,6 +1261,11 @@ window.egw_LAB.wait(function() {
 
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
+			if($query['actions'] && $query['actions']['edit'])
+			{
+				// Just switched from contact view, update actions
+				$query['actions'] = $this->get_actions($query['col_filter']['tid'], $query['org_view']);
+			}
 			unset($query['col_filter']['list']);	// does not work together
 			$query['no_filter2'] = true;			// switch the distribution list selection off
 
@@ -1308,6 +1313,11 @@ window.egw_LAB.wait(function() {
 					list($name,$value) = explode(':',$part,2);
 					$query['col_filter'][$name] = $value;
 				}
+			}
+			else if($query['actions'] && !$query['actions']['edit'])
+			{
+				// Just switched from org view, update actions
+				$query['actions'] = $this->get_actions($query['col_filter']['tid'], $query['org_view']);
 			}
 			// translate the select order to the really used over all 3 columns
 			$sort = $query['sort'];
