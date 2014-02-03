@@ -107,7 +107,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 					// for Class we try removing _parent and _children attributes and try again to stringify
 					if (data.args[i] instanceof Class)
 					{
-						data.args[i] = clone(data.args[i]);
+						data.args[i] = jQuery.extend({}, data.args[i]);
 						delete data.args[i]._parent;
 						delete data.args[i]._children;
 						try {
