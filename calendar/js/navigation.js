@@ -77,7 +77,7 @@
 	function dateChanged(calendar) {
 
 		if (calendar.dateClicked) {
-		egw_link_handler(link_day_url+"&date=" + calendar.date.print("%Y%m%d"),"calendar");
+			egw_link_handler(link_day_url+"&date=" + calendar.date.print("%Y%m%d"),"calendar");
 		}
 	}
 
@@ -87,7 +87,7 @@
 	 * @returns {undefined}
 	 */
 	function todayClicked(calendar) {
-		egw_link_handler(link_day_url+"&date="+ current_date ,"calendar");
+		egw_link_handler(current_view_url+"&date="+ current_date ,"calendar");
 	}
 
 	/*
