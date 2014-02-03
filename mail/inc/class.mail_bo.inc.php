@@ -3696,6 +3696,13 @@ class mail_bo
 				)
 			);
 		}
+		if (!empty($_partID))
+		{
+			$_structure->contentTypeMap();
+			$_structure = $_structure->getPart($_partID);
+			//_debug_array($_structure->getMimeId()); exit;
+		}
+
 		switch($_structure->getPrimaryType())
 		{
 			case 'application':
@@ -3733,7 +3740,7 @@ class mail_bo
 				return array(
 					array(
 						'body'      => '',
-						'mimeType'  => $_structure->subType,
+						'mimeType'  => $_structure->getSubType(),
 					),
 				);
 
@@ -3761,8 +3768,8 @@ class mail_bo
 				{
 					case 'rfc822':
 						$newStructure = $_structure->getParts();
-						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure);}
-						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->getMimeId(), $newStructure, $_preserveSeen, $_folder));
+						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure[0]);}
+						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure[0]->getMimeId(), $newStructure[0], $_preserveSeen, $_folder));
 				}
 				break;
 
@@ -4057,7 +4064,7 @@ class mail_bo
 
 			$headers = $this->getMessageHeader($_uid, $_partID, true,true,$_folder);
 
-			//print_r(__METHOD__.__LINE__.':'.array2string($headers),true);
+			//error_log(__METHOD__.__LINE__.':'.array2string($headers));
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
@@ -4083,7 +4090,7 @@ class mail_bo
 						} else {
 							$addressData['RFC822_EMAIL'] = 'NIL';
 						}
-						$newData[$recepientType][] = $addressData;
+						$newData[$recepientType][] = ($addressData['RFC822_EMAIL']!='NIL'?$addressData['RFC822_EMAIL']:$addressData['EMAIL']);//$addressData;
 					}
 				} else {
 					if($recepientType == 'SENDER' || $recepientType == 'REPLY_TO') {
@@ -4117,8 +4124,15 @@ class mail_bo
 		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->headerText(array('peek'=>$preserveUnSeen));
-		if ($_partID != '') $fquery->structure();
+		if ($_partID != '')
+		{
+			$fquery->headerText(array('id'=>$_partID,'peek'=>$preserveUnSeen));
+			$fquery->structure();
+		}
+		else
+		{
+			$fquery->headerText(array('peek'=>$preserveUnSeen));
+		}
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
 		));
@@ -4132,7 +4146,9 @@ class mail_bo
 					{
 						if ($mime_id==$_partID)
 						{
+							//error_log(__METHOD__.__LINE__."$mime_id == $_partID".array2string($_headerObject->getHeaderText($mime_id,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray()));
 							$retValue = $_headerObject->getHeaderText($mime_id,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+							break;
 						}
 					}
 				}
@@ -4175,8 +4191,15 @@ class mail_bo
 		$uidsToFetch->add($uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->headerText(array('peek'=>true));
-		if ($_partID != '') $fquery->structure();
+		if ($_partID != '')
+		{
+			$fquery->headerText(array('id'=>$_partID,'peek'=>true));
+			$fquery->structure();
+		}
+		else
+		{
+			$fquery->headerText(array('peek'=>true));
+		}
 		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
 		));
@@ -4418,16 +4441,22 @@ class mail_bo
 		if (!isset($_structure))
 		{
 			$_structure = $this->getStructure($_uid, $_partID,$_folder,true);
+			//error_log(__METHOD__.__LINE__.':'.print_r($_structure->contentTypeMap(),true));
 		}
 		if (!$_structure || !$_structure->contentTypeMap()) return array();
+		if (!empty($_partID)) $_structure = $_structure->getPart($_partID);
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			$part = $_structure->getPart($mime_id);
+			//error_log(__METHOD__.__LINE__.':'.array2string($part->getMimeId()));
 
 			if ($part->getDisposition() == 'attachment' ||
 				$fetchEmbeddedImages && $part->getDisposition() == 'inline' &&
 					$part->getPrimaryType() == 'image')
 			{
+				// if type is message/rfc822 and _partID is gien, and MimeID equals partID
+				// we attempt to fetch "ourselves"
+				if ($_partID==$part->getMimeId() && $part->getPrimaryType()=='message') continue;
 				$attachment = $part->getAllDispositionParameters();
 				$attachment['mimeType'] = $mime_type;
 				$attachment['uid'] = $_uid;

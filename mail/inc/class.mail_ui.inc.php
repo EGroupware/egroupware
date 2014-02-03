@@ -1806,25 +1806,6 @@ unset($query['actions']);
 */
 		$subject = /*mail_bo::htmlspecialchars(*/$this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false)/*,
             mail_bo::$displayCharset)*/;
-		if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
-			$content['mail_displayfromaddress'] = self::emailAddressToHTML($envelope['SENDER'],'',false,true,false);
-			$content['mail_displayonbehalfofaddress'] = self::emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
-		} else {
-			$content['mail_displayfromaddress'] = self::emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
-		}
-
-		// parse the to header
-		$content['mail_displaytoaddress'] = self::emailAddressToHTML($envelope['TO'],'',false,true,false);
-
-		// parse the cc header
-		if(count($envelope['CC'])) {
-			$content['mail_displayccaddress'] = self::emailAddressToHTML($envelope['CC'],'',false,true,false);
-		}
-
-		// parse the bcc header
-		if(count($envelope['BCC'])) {
-			$content['mail_displaybccaddress'] = self::emailAddressToHTML($envelope['BCC'],'',false,true,false);
-		}
 
 		// Set up data for taglist widget(s)
 		if ($envelope['FROM']==$envelope['SENDER']) unset($envelope['SENDER']);
