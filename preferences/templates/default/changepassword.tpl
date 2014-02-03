@@ -3,7 +3,7 @@
    <center>{messages}</center>
 
    <form method="POST" action="{form_action}">
-    <table border="0">
+    <table border="0" class="table_passord_change">
      <tr>
        <td>
         {lang_enter_old_password}
@@ -31,8 +31,8 @@
      <tr>
        <td colspan="2">
         <table cellspacing="5"><tr>
-         <td><input type="submit" name="change" value="{lang_change}"></td>
-         <td><input type="submit" name="cancel" value="{lang_cancel}"></td>
+         <td><input type="submit" name="change" value="{lang_change}" id="passwordchange"></td>
+         <td><input type="submit" name="cancel" value="{lang_cancel}" id="passwordcancel"></td>
         </tr></table>
        </td>
      </tr>

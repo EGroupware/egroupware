@@ -943,15 +943,14 @@ fieldset.emailGroup {
   #addressbook-edit_addressbook-edit-details table.et2_grid {
     margin-left: 2px;
     border-top: 1px solid #b4b4b4 !important;
-  }
-  #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(even) {
-    background: #ffffff;
-  }
-  #addressbook-edit_addressbook-edit-details table.et2_grid tr:nth-child(odd) {
-    background: #fafafa;
+    /*tr:nth-child(even) {background: @color_even;}*/
+    /*tr:nth-child(odd) {background: @color_odd;}*/
   }
   #addressbook-edit_addressbook-edit-details table.et2_grid td {
     padding: 5px 0px 5px 3px;
+  }
+  #addressbook-edit_addressbook-edit-details .et2_selectbox .ui-multiselect-checkboxes li {
+    text-indent: -17px;
   }
   /*################## Tab 5  Verknüpfungen ###############################*/
   #addressbook-edit_addressbook-edit-links .th,

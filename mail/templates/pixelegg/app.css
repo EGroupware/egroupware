@@ -625,6 +625,17 @@ div#mail-index div#mail-index_nm tr.mail td img {
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   border: 0px solid rgba(0, 0, 0, 0.9);
 }
+div#mail-index div#mail-index_nm tr.mail td img[src*="svg"] {
+  background-color: #505050;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNTA1MDUwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNTA1MDUwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #505050, #505050);
+  background-image: -ms-linear-gradient(top, #505050, #505050);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#505050), to(#505050));
+  background-image: -webkit-linear-gradient(top, #505050, #505050);
+  background-image: -o-linear-gradient(top, #505050, #505050);
+  background-image: linear-gradient(top, #505050, #505050);
+  background-repeat: repeat-x;
+}
 div#mail-index div#mail-index_nm tr.mail div span {
   height: 12px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -716,7 +727,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:active,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:active {
-  background-color: #1aa200 !important;
+  background-color: #ffc200 !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
@@ -1195,8 +1206,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-color: #679fd2;
   background-image: none;
   padding: 5px 3px;
-  height: 25px;
+  height: 30px;
   display: -webkit-box;
+  /*OPEN SINGLE WINDOW AFTER CLICK ON MAIL*/
 }
 #mail-display .mailDisplayHeaderSection #mail-display_toolbar button {
   /*.background_color_10_gray;*/
@@ -1279,6 +1291,68 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_mark_wrapper li a img {
   width: 16px;
   margin-right: 3px;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist {
+  padding: 0px 3px;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist span[data-group] {
+  margin: 0px 40px 0 0;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button {
+  /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  height: 27px;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button [src*="svg"] {
+  background-color: #1e1e1e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -ms-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1e1e1e), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -o-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-repeat: repeat-x;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-print"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-save"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:hover {
+  background-color: #1aa200;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-reply_all"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-forward"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-print"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-save"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-header"]:active {
+  background-color: #1aa200;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:hover {
+  background-color: #e12500;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-unflagged"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-delete"]:active {
+  background-color: #e12500;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:hover,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:hover {
+  background-color: #ffc200;
+}
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-infolog"]:active,
+#mail-display .mailDisplayHeaderSection #mail-display_toolbar #toolbar-actionlist button[id*="toolbar-tracker"]:active {
+  background-color: .background_color_15_gray;
 }
 #mail-display .mailDisplayAttachments {
   background-color: #f0f0f0;
@@ -1722,7 +1796,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
   position: absolute;
   border: 1px solid .color_10_gray;
-  top: 80px;
+  top: 97px;
   bottom: 0;
   left: 3px;
   right: 0;
@@ -1752,18 +1826,19 @@ input[type=button] {
 #mail-index_toolbar button {
   width: 24px !important;
   height: 24px !important;
-  background-color: #e6e6e6;
+  background-color: #696969;
 }
 #mail-index_toolbar button img[src$="svg"] {
-  background-color: #6c6c6c;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMDAwMDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #b4b4b4, #000000);
-  background-image: -ms-linear-gradient(top, #b4b4b4, #000000);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#000000));
-  background-image: -webkit-linear-gradient(top, #b4b4b4, #000000);
-  background-image: -o-linear-gradient(top, #b4b4b4, #000000);
-  background-image: linear-gradient(top, #b4b4b4, #000000);
+  background-color: #696969;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #696969, #696969);
+  background-image: -ms-linear-gradient(top, #696969, #696969);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
+  background-image: -webkit-linear-gradient(top, #696969, #696969);
+  background-image: -o-linear-gradient(top, #696969, #696969);
+  background-image: linear-gradient(top, #696969, #696969);
   background-repeat: repeat-x;
+  background-color: #000000;
 }
 #mail-index_toolbar button span {
   padding: 0;
@@ -1782,6 +1857,32 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-save"]:focus,
 #mail-index_toolbar button[id*="toolbar-header"]:focus {
   background-color: #189800;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply_all"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-forward"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-flagged"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-print"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-save"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-header"]:focus img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
+  background-color: #189800;
 }
 #mail-index_toolbar button[id*="toolbar-composeasnew"]:hover,
 #mail-index_toolbar button[id*="toolbar-reply"]:hover,
@@ -1791,6 +1892,32 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-print"]:hover,
 #mail-index_toolbar button[id*="toolbar-save"]:hover,
 #mail-index_toolbar button[id*="toolbar-header"]:hover {
+  background-color: #189800;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply_all"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-forward"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-flagged"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-print"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-save"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-header"]:hover img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
   background-color: #189800;
 }
 #mail-index_toolbar button[id*="toolbar-composeasnew"]:active,
@@ -1802,29 +1929,175 @@ input[type=button] {
 #mail-index_toolbar button[id*="toolbar-save"]:active,
 #mail-index_toolbar button[id*="toolbar-header"]:active {
   background-color: #189800;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-composeasnew"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-reply_all"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-forward"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-flagged"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-print"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-save"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-header"]:active img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMTg5ODAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #189800, #189800);
+  background-image: -ms-linear-gradient(top, #189800, #189800);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#189800), to(#189800));
+  background-image: -webkit-linear-gradient(top, #189800, #189800);
+  background-image: -o-linear-gradient(top, #189800, #189800);
+  background-image: linear-gradient(top, #189800, #189800);
+  background-repeat: repeat-x;
+  background-color: #189800;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:focus,
 #mail-index_toolbar button[id*="toolbar-delete"]:focus {
+  background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-delete"]:focus img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
   background-color: #ae1d00;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:hover,
 #mail-index_toolbar button[id*="toolbar-delete"]:hover {
   background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-delete"]:hover img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
+  background-color: #ae1d00;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:active,
 #mail-index_toolbar button[id*="toolbar-delete"]:active {
+  background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-unflagged"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-delete"]:active img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
+  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-repeat: repeat-x;
   background-color: #ae1d00;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:focus,
 #mail-index_toolbar button[id*="toolbar-tracker"]:focus {
   background-color: #ffc200;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:focus img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-tracker"]:focus img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
+  background-color: #ffc200;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:hover,
 #mail-index_toolbar button[id*="toolbar-tracker"]:hover {
   background-color: #ffc200;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:hover img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-tracker"]:hover img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
+  background-color: #ffc200;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:active,
 #mail-index_toolbar button[id*="toolbar-tracker"]:active {
+  background-color: #ffc200;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
+}
+#mail-index_toolbar button[id*="toolbar-infolog"]:active img[src$="svg"],
+#mail-index_toolbar button[id*="toolbar-tracker"]:active img[src$="svg"] {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -ms-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#ffc200));
+  background-image: -webkit-linear-gradient(top, #ffc200, #ffc200);
+  background-image: -o-linear-gradient(top, #ffc200, #ffc200);
+  background-image: linear-gradient(top, #ffc200, #ffc200);
+  background-repeat: repeat-x;
   background-color: #ffc200;
 }
 /*AN / To*/

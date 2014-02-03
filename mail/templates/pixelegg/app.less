@@ -111,7 +111,13 @@ div#mail-index{
             div {}
 
             // Bilder in den Listen
-            tr.mail td img {.dimension_height_xs;.box_shadow_none;.border_none;}
+            tr.mail td img {
+                .dimension_height_xs;
+                .box_shadow_none;
+                .border_none;
+            }
+            tr.mail td img[src*="svg"]{ .gradient_vertical (@gray_70, @gray_70);}
+            
             tr.mail div span {.dimension_height_xs;.box_shadow_none; display: table-cell; }
 
 
@@ -237,7 +243,7 @@ div#mail-index{
                                 }
 
                         &:active {
-                                background-color: @color_positive_action_active !important;
+                                background-color: @egw_color_1_a !important;
                                 .border_radius_button_lefttop ;
                                 .box_shadow_standard_light_inset;
 
@@ -590,7 +596,7 @@ div#mail-index{
             background-color: @egw_color_2_e;
             background-image: none;
             padding: 5px 3px;
-            height: 25px;
+            height: 30px;
             display: -webkit-box;
            button {
                 .Complete_Button_Icon_normal;
@@ -723,6 +729,51 @@ div#mail-index{
                     }
                 }
             }
+            
+            
+     /*OPEN SINGLE WINDOW AFTER CLICK ON MAIL*/
+    // ###################### buttons##############################
+    // #      #      #     #     #     #     #     #     #     ####
+    // #      #      #     #     #     #     #     #     #     ####
+    // ############################################################
+                #toolbar-actionlist{
+                    
+                    padding: 0px 3px;
+                    
+                    span[data-group] {margin: 0px 40px 0 0;}
+
+                   button {
+                            .Complete_Button_Icon_normal;
+                            height: 27px;
+                                [src*="svg"]{
+                                 .gradient_vertical (@gray_90, @gray_90);
+                                            } 
+                            } 
+                    button[id*="toolbar-composeasnew"],
+                    button[id*="toolbar-reply"],
+                    button[id*="toolbar-reply_all"],
+                    button[id*="toolbar-forward"],
+                    button[id*="toolbar-print"],
+                    button[id*="toolbar-save"],
+                    button[id*="toolbar-header"]{
+                        &:hover {background-color: @color_positive_action_active;}
+                        &:active {background-color: @color_positive_action_active;}
+                    }
+
+                    button[id*="toolbar-unflagged"],
+                    button[id*="toolbar-delete"]{
+                        &:hover {background-color: @color_negative_action_active;}
+                        &:active {background-color: @color_negative_action_active;}
+                    }
+
+                    button[id*="toolbar-infolog"],
+                    button[id*="toolbar-tracker"]{
+                        &:hover {background-color: @egw_color_1_a;}
+                        &:active {background-color: .background_color_15_gray;}
+                    }        
+                            
+        }
+            
 
         }
 
@@ -752,8 +803,15 @@ div#mail-index{
     .mail_DisplayNone{
         display: none;
     }
+    
+    
+
+    
 
 } // Ende Display
+
+
+
 
 
 
@@ -1246,7 +1304,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
     position: absolute;
     border: 1px solid .color_10_gray;
-    top: 80px;
+    top: 97px;
     bottom: 0;
     left: 3px;
     right: 0;
@@ -1284,10 +1342,12 @@ input[type=button] {
 
            button {
                 .dimension_width_height_m !important;
-                background-color: @gray_10;
+                background-color: @gray_60;
 
                 img[src$="svg"]{
-            .gradient_vertical (@gray_30, @gray_100);
+                    
+                .gradient_vertical (@gray_60, @gray_60);
+                background-color: @gray_100;
                 }
 
 
@@ -1314,23 +1374,98 @@ input[type=button] {
             button[id*="toolbar-print"],
             button[id*="toolbar-save"],
             button[id*="toolbar-header"]{
-                &:focus {background-color: @color_positive_action}
-                &:hover {background-color: @color_positive_action}
-                &:active {background-color: @color_positive_action}
+                &:focus {
+                    background-color: @color_positive_action; 
+                    .gradient_vertical (@color_positive_action, @color_positive_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_positive_action, @color_positive_action);
+                           background-color: @color_positive_action;
+                           }
+                
+                }
+                &:hover {
+                    background-color: @color_positive_action; 
+                    .gradient_vertical (@color_positive_action, @color_positive_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_positive_action, @color_positive_action);
+                           background-color: @color_positive_action;
+                           }
+                
+                }
+                &:active {
+                    background-color: @color_positive_action; 
+                    .gradient_vertical (@color_positive_action, @color_positive_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_positive_action, @color_positive_action);
+                           background-color: @color_positive_action;
+                           }
+                
+                }
+               
+                
+                
             }
 
             button[id*="toolbar-unflagged"],
             button[id*="toolbar-delete"]{
-                &:focus {background-color: @color_negative_action;}
-                &:hover {background-color: @color_negative_action;}
-                &:active {background-color: @color_negative_action;}
+                                &:focus {
+                    background-color: @color_negative_action;; 
+                    .gradient_vertical (@color_negative_action, @color_negative_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_negative_action, @color_negative_action);
+                           background-color: @color_negative_action;
+                           }
+                
+                }
+                &:hover {
+                    background-color: @color_negative_action; 
+                    .gradient_vertical (@color_negative_action, @color_negative_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_negative_action, @color_negative_action);
+                           background-color: @color_negative_action;
+                           }
+                
+                }
+                &:active {
+                    background-color: @color_negative_action;; 
+                    .gradient_vertical (@color_negative_action, @color_negative_action);
+                            img[src$="svg"]{
+                           .gradient_vertical (@color_negative_action, @color_negative_action);
+                           background-color: @color_negative_action;
+                           }
+                
+                }
             }
 
             button[id*="toolbar-infolog"],
             button[id*="toolbar-tracker"]{
-                &:focus {background-color: @egw_color_1_a;}
-                &:hover {background-color: @egw_color_1_a;}
-                &:active {background-color: @egw_color_1_a;}
+                                &:focus {
+                    background-color: @egw_color_1_a; 
+                    .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                            img[src$="svg"]{
+                           .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                           background-color: @egw_color_1_a;
+                           }
+                
+                }
+                &:hover {
+                    background-color: @egw_color_1_a; 
+                    .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                            img[src$="svg"]{
+                           .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                           background-color: @egw_color_1_a;
+                           }
+                
+                }
+                &:active {
+                    background-color: @egw_color_1_a; 
+                    .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                            img[src$="svg"]{
+                           .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
+                           background-color: @egw_color_1_a;
+                           }
+                }
+                
             }
 
 

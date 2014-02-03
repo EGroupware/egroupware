@@ -7,10 +7,10 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="dialog-header">
+				<row>
 					<description id="msg" no_lang="1"/>
 				</row>
-				<row>
+				<row class="chooseapp">
 					<menulist>
 						<menupopup id="application" no_lang="1"/>
 					</menulist>
