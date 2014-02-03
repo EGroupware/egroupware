@@ -421,6 +421,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * @fires refresh from the widget itself
 	 */
 	refresh: function(_row_ids, _type) {
+		// Framework trying to refresh, but nextmatch not fully initialized
+		if(this.controller === null)
+		{
+			return;
+		}
+		
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 		if (typeof _row_ids == "undefined" || _row_ids === null)
