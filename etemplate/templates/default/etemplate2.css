@@ -679,7 +679,7 @@ ul.et2_vfs {
 /**
 * Validation
 */
-[required] {
+.et2_required, [required] {
   background-color: #ffffd0;
 }
 .invalid {

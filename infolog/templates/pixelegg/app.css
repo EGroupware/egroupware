@@ -2,7 +2,7 @@
  * EGroupware: CSS with less preprocessor
  *
  * INFOLOG
- * 
+ *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  * Pixleegg Template app.css
  * @link http://www.egroupware.org
@@ -120,7 +120,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 */
 /*
 .egw_fw_content_browser_div{
-    	
+
 }*/
 #infolog-index {
   /*height: auto !important;*/
@@ -286,7 +286,7 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
   margin-top: 1.5%;
 }
 #infolog-index #infolog-index_nm .frame {
-  /*            min-height: 100%; 
+  /*            min-height: 100%;
             height: 60em;*/
 }
 #infolog-index #infolog-index_nm .egwGridView_scrollarea {

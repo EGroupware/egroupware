@@ -203,7 +203,7 @@
 				</row>
 				<row class="row dialog-header4">
 					<description value="Subject" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="inputFullWidth" size="80" maxlength="255" needed="true" span="all" tabindex="1"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" class="inputFullWidth et2_required" size="80" maxlength="255" span="all" tabindex="1"/>
 				</row>
 				<row valign="top" height="250">
 					<tabbox id="tabs" span="all">
