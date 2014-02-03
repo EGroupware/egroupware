@@ -1266,6 +1266,10 @@ class mail_compose
 			$_htmlConfig = mail_bo::$htmLawed_config;
 			mail_bo::$htmLawed_config['comment'] = 2;
 			mail_bo::$htmLawed_config['transform_anchor'] = false;
+			// it is intentional to use that simple-withimage configuration for the ckeditor
+			// and not the eGroupware wide pref to prevent users from trying things that will potentially not work
+			// or not work as expected, as a full featured editor that may be wanted in other apps
+			// is way overloading the "normal" needs for composing mails
 			$content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
 			$content['validation_rules']= json_encode(mail_bo::$htmLawed_config);
 			$etpl->setElementAttribute('mail_htmltext','mode',$content['rtfEditorFeatures']);
