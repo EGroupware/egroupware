@@ -33,7 +33,7 @@
 /**
  * Styles for etemplate2 widgets
  * Überschreibt egroupware/etemplate/templates/default/etemplate2.css
- * 
+ *
  * @version: 1
  * Stefan Reinhardt
  */
@@ -227,10 +227,10 @@
     margin-top: 1em;
     padding-top: 0.2em;
     /*         &:before {
-                            content: "+ "; 
-                            font-size: 2em; 
-                            color: @egw_color_1_a; 
-                            line-height: 0.6em; 
+                            content: "+ ";
+                            font-size: 2em;
+                            color: @egw_color_1_a;
+                            line-height: 0.6em;
                             padding-left: 0.1em;
                             padding-right: 0em;
                             background-color: @egw_color_2_a;
@@ -388,6 +388,7 @@
   /**
 * Validation
 */
+  .et2_required,
   [required] {
     background-color: #ffe9a6;
     -webkit-border-top-right-radius: 3px;

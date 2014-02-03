@@ -1,7 +1,7 @@
 /**
  * Styles for etemplate2 widgets
  * Überschreibt egroupware/etemplate/templates/default/etemplate2.css
- * 
+ *
  * @version: 1
  * Stefan Reinhardt
  */
@@ -75,7 +75,7 @@ div.et2_hbox_right {
  */
 .et2_button {
     text-shadow: 0px 0px !important;
-    .Complete_Button_normal;  
+    .Complete_Button_normal;
 }
 
 
@@ -91,7 +91,7 @@ img.et2_button_icon[src*="svg"]{
 }
 
 /*look in layout_content_elements*/
-button.et2_button_text, 
+button.et2_button_text,
 input[type=button] {}
 
 
@@ -136,7 +136,7 @@ span.et2_date span {
 
 /*Link to / Selector Widget*/
 .et2_link_to {
-    
+
     .et2_button_icon {
             .Complete_Button_Icon_normal;
             float: left;
@@ -159,10 +159,10 @@ span.et2_date span {
 
             }
     /*         &:before {
-                            content: "+ "; 
-                            font-size: 2em; 
-                            color: @egw_color_1_a; 
-                            line-height: 0.6em; 
+                            content: "+ ";
+                            font-size: 2em;
+                            color: @egw_color_1_a;
+                            line-height: 0.6em;
                             padding-left: 0.1em;
                             padding-right: 0em;
                             background-color: @egw_color_2_a;
@@ -181,9 +181,9 @@ span.et2_date span {
     color: @egw_color_2_a;
 }
 .et2_link_list tr {
-    cursor: pointer;  
+    cursor: pointer;
     &:hover {background-color: @color_hover_row;}
-     &:active {background-color: @color_active_row;}  
+     &:active {background-color: @color_active_row;}
 }
 .et2_link_list .icon img, .et2_link_list .icon {
     width: 14px !important;
@@ -202,21 +202,21 @@ div.et2_link_to{
 
 
     button {
-    
+
     .Complete_Button_normal;
     &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
     &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
     }
-    
+
     input{width: 72% !important;}
 }
 
 
 div.et2_link_entry{
-    
+
     //left
     select {width: 30% !important;;}
-    
+
     //center
     input.ui-autocomplete-input {
               width: 51% !important;;
@@ -243,9 +243,9 @@ div.et2_link_entry{
     /*.border_radius(3px,0,0,3px);*/
 
     .background_color_25_gray;
-    .inner_shadow(1px, 0px, 0px, 0.5); 
+    .inner_shadow(1px, 0px, 0px, 0.5);
     -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);  
+    -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -288,18 +288,18 @@ div.et2_link_entry{
 
 .et2_tabheader {
     padding-left: 0em;
-    border-bottom: 1px solid #bfbfbf; 
+    border-bottom: 1px solid #bfbfbf;
     margin: 0 2px;
 	background-image: none;
     :first-child {
-        margin-left: 0.3em;	
+        margin-left: 0.3em;
     }
 }
 
 /**
 * Validation
 */
-[required] {
+.et2_required, [required] {
     background-color: lighten(@egw_color_1_e, 10%);
     .border_radius (3px, 3px ,3px ,3px );
 }
@@ -321,7 +321,7 @@ hr {
 
 .et2_grid td {
     /*	border: 1px dashed silver;*/
-    
+
     .gray {
         padding: 1em; background-color: @color_hint;
         span {background-color: transparent;}
@@ -361,33 +361,33 @@ hr {
     background-color: @gray_30;
     border: none !important;
     border-color: @gray_100;
-    background-image: none !important; 
+    background-image: none !important;
     height: 37px;
     .border_radius (15px, 3px, 0px, 0px);
-    
-    
+
+
     select {margin-top: 10px;}
-    
+
     .et2_label {
-        
+
 /*        font-size: 0.9em;*/
         padding: 0.2em;
-        
-        
+
+
         select {
             /*.Complete_Button_select;*/
-            margin-left: 2px; 
+            margin-left: 2px;
             margin-right: 1px;
             margin-top: 8px;
-            
+
             max-width: 14% !important;
 
-            
+
 
             &:hover{
                 .Complete_Button_select_hover;
             }
-            
+
             &:after {}
 
              /*Dialog - Addressbook - View */
@@ -395,58 +395,58 @@ hr {
               #infolog-index_filter {width: 50% !important;}
 
         }
-         
-    } 
-} 
 
-        
+    }
+}
+
+
 // Select -> Option
 .nextmatch_header > .filters > select > option {font-size: 0.9em;}
 
 
 // Search Field
 .nextmatch_header > .search{
-    
+
     padding: 0 0 0 3px;
     margin-right: 3px;
-    
+
     .background_color_search;
     .border_radius_button_righttop;
-    
-    input { 
-        /*.background_color_search;*/ 
+
+    input {
+        /*.background_color_search;*/
         /*background-color: @gray_0;*/
-        border: none; 
+        border: none;
         font-size: 11px;
         color: #000;
-        
+
         /*margin: 0 2px;*/
     }
-        input::-webkit-input-placeholder { 
+        input::-webkit-input-placeholder {
             /* WebKit browsers */
             color: @gray_60;
         }
-        input:-moz-placeholder { 
+        input:-moz-placeholder {
             /* Mozilla Firefox 4 to 18 */
             color:   @gray_60;
         }
-        input::-moz-placeholder { 
+        input::-moz-placeholder {
             /* Mozilla Firefox 19+ */
             color:   @gray_60;
         }
-        input:-ms-input-placeholder { 
+        input:-ms-input-placeholder {
             /* Internet Explorer 10+ */
             color:  @gray_60;
         }
-    
+
     button.et2_button {
             .border_normal;
-            
+
             border-color: @gray_30;
             -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
             -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.9);
             box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-            
+
             width: 45px;
             /*height: 1.6em;*/
 
@@ -487,7 +487,7 @@ hr {
         }
 
     }
-    
+
 }
 
 // Input Field
@@ -502,7 +502,7 @@ hr {
 
 
 .nextmatch_header .et2_button_icon {
-    
+
 }
 
 // Export Button
@@ -516,7 +516,7 @@ hr {
 
     &:hover{.Complete_Button_Icon_hover ;}
     &:active{.Complete_Button_Icon_active ;}
-    
+
 }
 
 
@@ -545,24 +545,24 @@ hr {
 
 /*ADD Button*/
 #admin-categories-index_add {
-    
+
     .dimension_width_height_l;
                 border: 1px solid rgba(0, 0, 0, 0.15);
                 box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
                 padding: 0.5em;
 
-                
+
                 &:before {
-                        content: "+"; 
-                        font-size: 2em; 
-                        color: @egw_color_1; 
-                        line-height: 0.6em; 
+                        content: "+";
+                        font-size: 2em;
+                        color: @egw_color_1;
+                        line-height: 0.6em;
                         padding-left: 0.1em;
                         padding-right: 4em;
                 }
-    
+
     &:hover {.Complete_Button_add_hover};
-    
+
 }
 
  #admin-categories-index_filter {top: 8px;}
@@ -607,14 +607,14 @@ hr {
             position: absolute;
             z-index: 2;
         }
-        
+
         /*left Button*/
         button.ui-corner-left,
         button.ui-state-default{
             background-image: none !important;
             background-repeat: no-repeat !important;
 //            background-size: 10px 10px;
-          
+
             img {
                 .dimension_width_height_s;
                 text-align: left;
@@ -622,17 +622,17 @@ hr {
                 right: 1px;
                 top: 3px;
             }
-            
-        }        
-        
-       
+
+        }
+
+
         /*right Button*/
-        button.ui-corner-right { 
+        button.ui-corner-right {
 //            background-image: url("../images/fav_filter_normal.png");
 //            background-repeat: no-repeat !important;
 //            background-size: 10px 10px;
         }
-        
+
        /* hover */
         button.ui-state-hover {
             background-color: @gray_30 !important;
@@ -641,13 +641,13 @@ hr {
             background-size: 16px 16px !important;
             background-position: 10px center !important;
                     }
-            
+
          button.ui-state-hover > img {
-//            position: absolute; 
+//            position: absolute;
 //            top: 70000px;
         }
 
-        
+
 
 
     } // dropdown
@@ -678,7 +678,7 @@ hr {
     input {margin-right: 1ex;}
 
     img {
-        margin-right: 1ex; 
+        margin-right: 1ex;
         .dimension_width_height_s;
     }
 
@@ -688,7 +688,7 @@ hr {
         display:none;
     }
 
-    // List Icon 
+    // List Icon
     .sideboxstar{
         background-image: url("../images/bullet.png");
         background-repeat: no-repeat;
@@ -703,7 +703,7 @@ hr {
 
 
 .sidebox-favorites {
-    
+
     ul.favorites {
         width: 99%;
         padding: 0px;
@@ -712,13 +712,13 @@ hr {
 
         li {
 
-            padding-left: 1em !important; 
-            margin-left: 0px; 
+            padding-left: 1em !important;
+            margin-left: 0px;
             line-height: 2em;
 
 
             img {
-//                margin-right: 1ex; 
+//                margin-right: 1ex;
                 margin: 0px 5px;
                 .dimension_height_s;
                 padding: 3px;
@@ -726,21 +726,21 @@ hr {
 
 
                 &:hover {
-                    .dimension_height_s; 
+                    .dimension_height_s;
                     /*.Complete_Button_Icon_hover ;*/
                 }
             }
 
             img.sideboxstar {
-                margin-right: 1ex; 
-                .dimension_height_s; 
+                margin-right: 1ex;
+                .dimension_height_s;
                 .Complete_Button_Icon_normal;
 				background-size: 16px 16px;
 				background-position: center;
                 &:hover {.dimension_height_s; .Complete_Button_Icon_hover ;}
 
             }
-            
+
             a {
                 div.sideboxstar {display: none;}
                 div.ui-icon-trash{
@@ -748,7 +748,7 @@ hr {
                                     margin-right: 2px;
                 }
             }
-            
+
         }
     }
 
@@ -763,7 +763,7 @@ hr {
         background: transparent !important;
         font-weight: bold;
         .color_100_gray;
-    }			
+    }
 
     .ui-menu-icons {
         .ui-menu-item {
@@ -783,9 +783,9 @@ hr {
     .ui-menu {
         /*li*/
         .ui-menu-item {
-            
+
             width: 93%;
-            
+
             &:hover {background-color: @egw_color_1_e;}
 
             a {
@@ -793,7 +793,7 @@ hr {
                 padding: 2px 0px;
                 padding-left: 5px !important;
 
-                &:hover {text-decoration: underline; 
+                &:hover {text-decoration: underline;
                          /*.Complete_Button_Icon_hover ;*/
                 }
 
@@ -812,7 +812,7 @@ hr {
         display:inline-block;
         margin: -3px 1px 0px 1px;
         background-image: none;
-    }	
+    }
     div.ui-icon-trash{
         margin-top: 0px;
         margin-right: 2px;
@@ -881,38 +881,38 @@ textarea.description {
 /*#################################### ADMIN PART #####################################################*/
 
 iframe#admin-index_iframe{
-    
+
     background-color: yellow;
-    
+
     }
-     
-     
+
+
     // Content Iframe
     #admin-categories-index{
-        
-     
-        
+
+
+
         div.egwGridView_scrollarea { min-height: 500px;}
-        
-        
+
+
         table.et2_grid {
-            
+
             #admin-categories-index_nm {
-                
+
                 div.egwGridView_outer{
-                    
+
                     td.frame {
-                        
-                        
+
+
                     }
                 }
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
 
 
 /*#################################### ADMIN PART #####################################################*/
@@ -925,8 +925,8 @@ iframe#admin-index_iframe{
 
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
 
-    .nextmatch_header > .filters select {  margin: 0px;}   
-    
+    .nextmatch_header > .filters select {  margin: 0px;}
+
 }
 
 @media only screen and (min-width: 760px) and (max-width: 979px) {
