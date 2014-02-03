@@ -2347,6 +2347,7 @@ window.egw_LAB.wait(function() {
 		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['links'] = true;
 		$readonlys['tabs']['distribution_list'] = true;
+		$readonlys['tabs']['history'] = true;
 		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
