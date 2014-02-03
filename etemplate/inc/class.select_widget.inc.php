@@ -220,10 +220,6 @@ class select_widget
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-					if (categories::is_global($cat))
-					{
-						$s .= ' &#9830;';
-					}
 					$cell['sel_options'][$cat['id']] = empty($cat['description']) ? $s : array(
 						'label' => $s,
 						'title' => $cat['description'],

@@ -804,7 +804,6 @@ class nextmatch_widget
 			foreach((array)$cats as $cat)
 			{
 				$name = str_repeat('&nbsp;',2*$cat['level']) . stripslashes($cat['name']);
-				if (categories::is_global($cat)) $name .= ' &#9830;';
 
 				$cat_actions[$cat['id']] = array(
 					'caption' => $name,
@@ -843,7 +842,6 @@ class nextmatch_widget
 			if ($cat['parent'] == $parent_id)
 			{
 				$name = stripslashes($cat['name']);
-				if (categories::is_global($cat)) $name .= ' &#9830;';
 
 				$cat_actions[$cat['id']] = array(
 					'caption' => $name,

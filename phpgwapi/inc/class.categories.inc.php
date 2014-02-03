@@ -143,7 +143,6 @@ class categories
 		if (is_null(self::$global_marker))
 		{
 			// as et2 adds options with .text(), it can't be entities, but php knows no string literals with utf-8
-			self::$global_marker = html_entity_decode(' &#9830;', ENT_NOQUOTES, 'utf-8');
 		}
 	}
 

@@ -105,10 +105,6 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 			foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat) {
 				$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-				if (categories::is_global($cat))
-				{
-					$s .= ' &#9830;';
-				}
 				$cat_list[$cat['id']] = empty($cat['description']) ? $s : array(
 					'label' => $s,
 					'title' => $cat['description'],
