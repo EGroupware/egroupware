@@ -80,7 +80,7 @@
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<hbox align="center">
 						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
-						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]"/>
+						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" default_src="status"/>
 						<image label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"/>
 						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 					</hbox>
