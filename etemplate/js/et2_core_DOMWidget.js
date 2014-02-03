@@ -223,7 +223,15 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	set_parent_node: function(_node) {
 		if(typeof _node == "string")
 		{
-			this.setParentDOMNode($j('#'+_node).get(0));
+			var parent = $j('#'+_node);
+			if(parent.length == 0 )
+			{
+				this.egw().debug('warn','Unable to find DOM parent node with ID "%s" for widget %o.',_node,this);
+			}
+			else
+			{
+				this.setParentDOMNode(parent.get(0));
+			}
 		}
 		else
 		{
