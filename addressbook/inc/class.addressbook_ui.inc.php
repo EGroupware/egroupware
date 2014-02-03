@@ -2352,6 +2352,8 @@ window.egw_LAB.wait(function() {
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
 		$content['showsearchbuttons'] = true; // enable search operation and search buttons| they're disabled by default
+
+		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 		
 		$this->tmpl->read('addressbook.edit');
 		$this->tmpl->set_cell_attribute('change_org','disabled',true);
