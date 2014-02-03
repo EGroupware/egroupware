@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare commonly used functions
+ * EGroupware commonly used functions
  *
  * This file was originaly written by Dan Kuykendall and Joseph Engo
  * Copyright (C) 2000, 2001 Dan Kuykendall
@@ -42,7 +42,7 @@ function array_stripslashes($var)
  */
 function bytes($str)
 {
-	static $func_overload;
+	static $func_overload = null;
 
 	if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
 
@@ -59,15 +59,45 @@ function bytes($str)
  */
 function cut_bytes(&$data,$offset,$len=null)
 {
-	static $func_overload;
+	static $func_overload = null;
 
 	if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
 
 	if (is_null($len))
 	{
-		return $func_overload ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
+		return $func_overload & 2 ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
 	}
 	return $func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+}
+
+if (!function_exists('mb_strlen'))
+{
+	/**
+	 * Number of characters in a string
+	 *
+	 * @param string $str
+	 * @return int
+	 */
+	function mb_strlen($str)
+	{
+		return strlen($str);
+	}
+}
+
+if (!function_exists('mb_substr'))
+{
+	/**
+	 * Return part of a string
+	 *
+	 * @param string $data
+	 * @param int $offset
+	 * @param int $len
+	 * @return string
+	 */
+	function mb_substr(&$data, $offset, $len=null)
+	{
+		return is_null($len) ? substr($data, $offset) : substr($data, $offset, $len);
+	}
 }
 
 /**
@@ -111,7 +141,7 @@ function check_load_extension($extension,$throw=false)
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
 	}
 	// we check for the existens of 'dl', as multithreaded webservers dont have it and some hosters disable it !!!
-	$loaded = extension_loaded($extension) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
+	$loaded = extension_loaded($extension) || function_exists('dl') && @dl($dl=PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
 
 	if (!$loaded && $throw)
 	{
@@ -375,6 +405,7 @@ function sanitize($string,$type)
 				return True;
 			}
 			break;
+
 		case 'isprint':
 			$length = strlen($string);
 			$position = 0;
@@ -388,19 +419,21 @@ function sanitize($string,$type)
 				$position = $position + 1;
 			}
 			return True;
-			break;
+
 		case 'alpha':
 			if (preg_match("/^[a-z]+$/i", $string))
 			{
 				return True;
 			}
 			break;
+
 		case 'number':
 			if (preg_match("/^[0-9]+$/i", $string))
 			{
 				return True;
 			}
 			break;
+
 		case 'alphanumeric':
 			if (preg_match("/^[a-z0-9 -._]+$/i", $string))
 			{
@@ -427,7 +460,7 @@ function sanitize($string,$type)
 				return True;
 			}
 			return False;
-			break;
+
 		case 'file':
 			if (preg_match("/^[a-z0-9_]+\.+[a-z]+$/i", $string))
 			{
@@ -523,10 +556,10 @@ function sanitize($string,$type)
 			}
 			$GLOBALS['egw_info']['flags']['msgbox_data']['Password must be at least '.$min_length.' characters']=False;
 			return False;
-			break;
+
 		case 'any':
 			return True;
-			break;
+
 		default :
 			if (isset($GLOBALS['egw_info']['server']['sanitize_types'][$type]['type']))
 			{
@@ -802,7 +835,7 @@ function &CreateObject($class)
 			break;
 		default:
 			$code = '$obj = new ' . $classname . '(';
-			foreach($args as $n => $arg)
+			foreach(array_keys($args) as $n)
 			{
 				if ($n)
 				{
@@ -838,7 +871,7 @@ function &ExecMethod2($acm)
 	}
 	if (!is_callable($acm))
 	{
-		list($app,$class,$method) = explode('.',$acm);
+		list(,$class,$method) = explode('.',$acm);
 		if (!is_object($obj =& $GLOBALS[$class]))
 		{
 			$obj =& CreateObject($acm);
@@ -871,15 +904,10 @@ function &ExecMethod2($acm)
  */
 function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 {
+	unset($loglevel);	// not used
 	/* Need to make sure this is working against a single dimensional object */
 	$partscount = count(explode('.',$method)) - 1;
 
-	// class::method is php5.2.3+
-	if (strpos($method,'::') !== false && version_compare(PHP_VERSION,'5.2.3','<'))
-	{
-		list($class,$method) = explode('::',$method);
-		$method = array($class,$method);
-	}
 	if (!is_callable($method) && $partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $method);
@@ -906,99 +934,8 @@ function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classpa
 	if (is_callable($method))
 	{
 		return $functionparam != '_UNDEF_' ? call_user_func($method,$functionparam) : call_user_func($method);
-
-		if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
-		{
-			return $GLOBALS[$classname]->$functionname($functionparams);
-		}
-		return $GLOBALS[$classname]->$functionname();
 	}
-	/* if the $method includes a parent class (multi-dimensional) then we have to work from it */
-/* RalfBecker: let's check if this is still in use, I don't think so:
-	elseif ($partscount >= 3)
-	{
-		$GLOBALS['methodparts'] = explode(".", $method);
-		$classpartnum = $partscount - 1;
-		$appname = $GLOBALS['methodparts'][0];
-		$classname = $GLOBALS['methodparts'][$classpartnum];
-		$functionname = $GLOBALS['methodparts'][$partscount];
-		// Now we clear these out of the array so that we can do a proper
-		// loop and build the $parentobject
-		unset ($GLOBALS['methodparts'][0]);
-		unset ($GLOBALS['methodparts'][$classpartnum]);
-		unset ($GLOBALS['methodparts'][$partscount]);
-		reset ($GLOBALS['methodparts']);
-		$firstparent = 'True';
-		foreach($GLOBALS['methodparts'] as $val)
-		{
-			if ($firstparent == 'True')
-			{
-				$parentobject = '$GLOBALS["'.$val.'"]';
-				$firstparent = False;
-			}
-			else
-			{
-				$parentobject .= '->'.$val;
-			}
-		}
-		unset($GLOBALS['methodparts']);
-		$code = '$isobject = is_object('.$parentobject.'->'.$classname.');';
-		eval ($code);
-		if (!$isobject)
-		{
-			if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
-			{
-				if (is_string($classparams))
-				{
-					eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'", "'.$classparams.'");');
-				}
-				else
-				{
-					eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
-				}
-			}
-			else
-			{
-				eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'");');
-			}
-		}
-
-		if ($functionparams != '_UNDEF_' && ($functionparams || $functionparams != 'True'))
-		{
-			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
-			return $returnval;
-		}
-		else
-		{
-			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
-			return $returnval;
-		}
-	}
-*/
 	return "<p>ExecMethod('$method'): error in parts!<br />".function_backtrace()."</p>\n";
-}
-
-/**
-  * duplicates the result of copying an object under php3/4 even when using php5
-  *
-  * This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
-  *
-  * @deprecated use $copy = clone($obj);
-  * @author milosch
-  * @param $a   - Source Object
-  * @param $b   - Target Object (copy)
- */
-function copyobj($a,&$b)
-{
-	if(floor(phpversion()) > 4)
-	{
-		$b = clone($a);
-	}
-	else
-	{
-		$b = $a;
-	}
-	return;
 }
 
 /**
@@ -1558,7 +1495,10 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	if(isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== 'cli')
 	{
 		error_log($headline.($e instanceof egw_exception_warning ? ': ' : ' ('.get_class($e).'): ').$e->getMessage());
-		foreach($trace as $line) error_log($line);
+		foreach($trace as $line)
+		{
+			error_log($line);
+		}
 		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
 			($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 	}
@@ -1574,6 +1514,7 @@ function _egw_log_exception(Exception $e,&$headline=null)
 function egw_exception_handler(Exception $e)
 {
 	// logging all exceptions to the error_log (if not cli) and get headline
+	$headline = null;
 	_egw_log_exception($e,$headline);
 
 	// exception handler for cli (command line interface) clients, no html, no logging
@@ -1670,7 +1611,7 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 /**
  * Used internally to trace warnings
  */
-class egw_exception_warning extends Exception {};
+class egw_exception_warning extends Exception {}
 
 // install our error-handler only for catchable fatal errors and warnings
 // following error types cannot be handled with a user defined function: E_ERROR, E_PARSE, E_CORE_ERROR, E_CORE_WARNING, E_COMPILE_ERROR, E_COMPILE_WARNING

@@ -1439,9 +1439,9 @@ class egw_db
 		}
 		// only truncate string if length given and <= 255
 		// to not unnecessary truncate varchar(>255) as PostgreSQL uses text anyway and MySQL truncates itself silently (unless strict mode!)
-		if (!is_null($length) && $length <= 255 && strlen($value) > $length)
+		if (!is_null($length) && $length <= 255 && mb_strlen($value) > $length)
 		{
-			$value = substr($value,0,$length);
+			$value = mb_substr($value, 0, $length);
 		}
 		// casting boolean explicitly to string, as ADODB_postgres64::qstr() has an unwanted special handling
 		// for boolean types, causing it to return "true" or "false" and not a quoted string like "'1'"!

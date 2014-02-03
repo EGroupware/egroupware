@@ -146,9 +146,9 @@ class etemplate_widget_textbox extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
-			if ((int) $this->attrs['maxlength'] > 0 && strlen($value) > (int) $this->attrs['maxlength'])
+			if ((int) $this->attrs['maxlength'] > 0 && mb_strlen($value) > (int) $this->attrs['maxlength'])
 			{
-				$value = substr($value,0,(int) $this->attrs['maxlength']);
+				$value = mb_substr($value,0,(int) $this->attrs['maxlength']);
 			}
 			if ($this->attrs['preg'] && !preg_match($this->attrs['preg'],$value))
 			{
