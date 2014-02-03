@@ -118,7 +118,7 @@ app.classes.admin = AppJS.extend(
 	linkHandler: function(_url)
 	{
 		var matches;
-		if (!_url.match('menuaction=admin.admin_ui.index') ||
+		if (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') ||
 			(matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/)))
 		{
 			if (matches)
