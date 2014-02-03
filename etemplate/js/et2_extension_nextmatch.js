@@ -1430,9 +1430,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	/**
-	 * Actions are handled by the controller, so ignore these
+	 * Actions are handled by the controller, so ignore these during init.
 	 */
-	set_actions: function(actions) {},
+	set_actions: function(actions) {
+		if(actions != this.options.actions && this.controller != null && this.controller._actionManager)
+		{
+			this.options.actions = actions;
+			this.options.settings.action_links = this._get_action_links(actions);
+			this.controller._actionManager.updateActions(actions,this.controller.egw.appName);
+		}
+	},
 
 	/**
 	 * Set a different / additional handler for dropped files.
