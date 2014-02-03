@@ -196,6 +196,41 @@ span.et2_date span {
 }
 
 /**
+ * Link_entry_widget
+ */
+div.et2_link_to{
+
+
+    button {
+    
+    .Complete_Button_normal;
+    &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+    &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+    }
+    
+    input{width: 72% !important;}
+}
+
+
+div.et2_link_entry{
+    
+    //left
+    select {width: 30% !important;;}
+    
+    //center
+    input.ui-autocomplete-input {
+              width: 51% !important;;
+              padding-bottom: 1px;
+                                }
+    //right - button
+    //line 201
+
+}
+
+
+
+
+/**
  * Tabs widget
  */
 
@@ -212,22 +247,17 @@ span.et2_date span {
     -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);  
     box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
-
-
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-
     &:hover {
         .color_5_gray;
         .background_color_25_gray;
     }
-
     &:active{
         .background_color_0_gray;
         .color_0_gray;
     }
-
 }
 
 
@@ -334,6 +364,9 @@ hr {
     background-image: none !important; 
     height: 37px;
     .border_radius (15px, 3px, 0px, 0px);
+    
+    
+    select {margin-top: 10px;}
     
     .et2_label {
         

@@ -829,6 +829,9 @@ a.textSidebox
     border-top:solid 1px #9c9c9c;
     border-left:solid 1px #9c9c9c;
     border-right:solid 1px #9c9c9c;
+    
+    
+   table img {.dimension_height_s;}
 }
 
 #divAppbox
@@ -914,12 +917,13 @@ button.et2_button_with_image{
 
 /* ########################################################################################
  * 
- * Button löschen / delete / => color-negative-action
+ * Button löschen / delete / => color-negative-action // red
  *
  ######################################################################################## */ 
 
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
+input[id*="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
@@ -953,7 +957,7 @@ button[id="timesheet-edit_button[delete]"]
 
 /* ########################################################################################
  * 
- * Button edit + save + apply + copy => color-positive-action
+ * Button edit + save + apply + copy => color-positive-action // green
  *
  ######################################################################################## */            
  
@@ -973,6 +977,20 @@ button#filemanager-select_button[ok]{
     &:active {background-color: @color_positive_action_active;}
 }
 
+// Password change
+#passwordchange {
+     background-image:url('../images/cancel.png') !important;
+    .Complete_Button_text_icon_before;
+    
+    &:hover {background-color: @color_positive_action_active !important; .box_shadow_standard_light_hover;}
+    &:active {background-color: @color_positive_action_active !important; .box_shadow_standard_light_inset;}
+
+    
+}
+
+
+/* ########################################################################################
+ * 
 /*ui-widget*/
  /*edit series*/
 button#series {
@@ -1005,11 +1023,12 @@ button[id*="edit_button[add_alarm]"]{
 }
 /* ########################################################################################
  * 
- * Button cancel /  => color-cancel-action
+ * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
  
 button[id*="cancel"],
+button[id*="importexport-wizardbox_button[previous]"],
 button#cancel{
 
                 &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
@@ -1028,6 +1047,18 @@ button[id="cancel"]{
                 
                 &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
                 &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
+}
+
+
+// Password cancel
+#passwordcancel {
+     background-image:url('../images/cancel.png') !important;
+    .Complete_Button_text_icon_before;
+    
+    &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
+    &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
+
+    
 }
 
 /* ########################################################################################
@@ -1119,4 +1150,15 @@ div.client_error_log tr td.stack > div {
 }
 
 
-//                                                                                                                                                                                                                   
+/**
+* table_passord_change
+*/
+
+table.table_passord_change{
+    margin: 1em;
+    tr {height: 50px;}
+    td:first-child{ padding-right: 4em;}
+    
+}
+
+// 

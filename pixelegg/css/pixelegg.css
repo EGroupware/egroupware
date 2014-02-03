@@ -268,6 +268,63 @@
     background-color: #ffffff;
   }
   /**
+ * Link_entry_widget
+ */
+  div.et2_link_to button {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.box_shadow_standard_light;*/
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #000000;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #e6e6e6;
+  }
+  div.et2_link_to button:hover {
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #1aa200 !important;
+  }
+  div.et2_link_to button:active {
+    /*.background_color_30_gray;*/
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
+    background-color: #1aa200 !important;
+  }
+  div.et2_link_to input {
+    width: 72% !important;
+  }
+  div.et2_link_entry select {
+    width: 30% !important;
+  }
+  div.et2_link_entry input.ui-autocomplete-input {
+    width: 51% !important;
+    padding-bottom: 1px;
+  }
+  /**
  * Tabs widget
  */
   .et2_tabflag {
@@ -412,6 +469,9 @@
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     /*.background-clip(padding-box);*/
+  }
+  .nextmatch_header > .filters select {
+    margin-top: 10px;
   }
   .nextmatch_header > .filters .et2_label {
     /*        font-size: 0.9em;*/
@@ -2461,6 +2521,9 @@ a.textSidebox {
   border-left: solid 1px #9c9c9c;
   border-right: solid 1px #9c9c9c;
 }
+#divAppboxHeader table img {
+  height: 16px;
+}
 #divAppbox {
   background-color: #ffffff;
   padding: 5px;
@@ -2570,11 +2633,12 @@ button.et2_button_with_image background-color[url$="svg"] {
 }
 /* ########################################################################################
  * 
- * Button löschen / delete / => color-negative-action
+ * Button löschen / delete / => color-negative-action // red
  *
  ######################################################################################## */
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
+input[id*="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
@@ -2615,6 +2679,7 @@ button[id="timesheet-edit_button[delete]"] {
 }
 input[type="submit"][id*="delete"]:hover,
 input[type="button"][id*="delete"]:hover,
+input[id*="delete"]:hover,
 button[id="delete"]:hover,
 button[id="infolog-edit_button[delete]"]:hover,
 button[id="addressbook-edit_button[delete]"]:hover,
@@ -2652,6 +2717,7 @@ button[id="timesheet-edit_button[delete]"]:hover {
 }
 input[type="submit"][id*="delete"]:active,
 input[type="button"][id*="delete"]:active,
+input[id*="delete"]:active,
 button[id="delete"]:active,
 button[id="infolog-edit_button[delete]"]:active,
 button[id="addressbook-edit_button[delete]"]:active,
@@ -2689,7 +2755,7 @@ button[id="timesheet-edit_button[delete]"]:active {
 }
 /* ########################################################################################
  * 
- * Button edit + save + apply + copy => color-positive-action
+ * Button edit + save + apply + copy => color-positive-action // green
  *
  ######################################################################################## */
 button[id*="save"] img[url*="svg"],
@@ -2716,6 +2782,48 @@ button[id*="edit_button[edit]"]:active {
 button#filemanager-select_button[ok]:active {
   background-color: #1aa200;
 }
+#passwordchange {
+  background-image: url('../images/cancel.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.box_shadow_standard_light;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #e6e6e6;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+#passwordchange:hover {
+  background-color: #1aa200 !important;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+#passwordchange:active {
+  background-color: #1aa200 !important;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+/* ########################################################################################
+ * 
 /*ui-widget*/
 /*edit series*/
 button#series {
@@ -2805,15 +2913,17 @@ button[id*="edit_button[add_alarm]"]:active {
 }
 /* ########################################################################################
  * 
- * Button cancel /  => color-cancel-action
+ * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
 button[id*="cancel"]:hover,
+button[id*="importexport-wizardbox_button[previous]"]:hover,
 button#cancel:hover {
   background-color: #f5b301 !important;
   color: #000000;
 }
 button[id*="cancel"]:active,
+button[id*="importexport-wizardbox_button[previous]"]:active,
 button#cancel:active {
   background-color: #fecc44 !important;
   color: #373737;
@@ -2856,6 +2966,46 @@ button[id="cancel"]:hover {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 button[id="cancel"]:active {
+  background-color: #fecc44 !important;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+#passwordcancel {
+  background-image: url('../images/cancel.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.box_shadow_standard_light;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #e6e6e6;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  width: auto;
+  height: 32px;
+}
+#passwordcancel:hover {
+  background-color: #f5b301 !important;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+#passwordcancel:active {
   background-color: #fecc44 !important;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -2979,6 +3129,18 @@ div.client_error_log tr.hidden td.stack > div {
 }
 div.client_error_log tr td.stack > div {
   white-space: pre;
+}
+/**
+* table_passord_change
+*/
+table.table_passord_change {
+  margin: 1em;
+}
+table.table_passord_change tr {
+  height: 50px;
+}
+table.table_passord_change td:first-child {
+  padding-right: 4em;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -3108,7 +3270,6 @@ table.egwGridView_outer tbody td.frame {
 table.egwGridView_outer tbody td .et2_link {
   margin-left: 0px;
   color: #26537c;
-  font-weight: bold;
 }
 table.egwGridView_outer tbody td img {
   border: 1px solid transparent;
@@ -4503,11 +4664,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: #ffc200;
 }
 /* ###########################################################################################################################################
-
-
-
-
-/* ###########################################################################################################################################
 /* ###########################################################################################################################################
 * Main
 /* ###########################################################################################################################################
@@ -4517,12 +4673,18 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   padding: 0;
   width: auto;
 }
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  #egw_fw_main #egw_fw_tabs {
+    /*Chrome needs margin-top*/
+    margin-top: 3px;
+  }
+}
 #egw_fw_main #egw_fw_tabs {
   position: relative;
   background-color: transparent;
   float: left;
   width: 100%;
-  margin-top: 3px;
+  /*margin-top: 3px;*/
   /*position: absolute;*/
   /*top: 65px;*/
 }
@@ -4687,6 +4849,24 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #egw_fw_main .egw_fw_ui_tab_content > div {
   width: 100%;
   padding: 0 0 0 0;
+}
+/* ###########################################################################################################################################
+*   ADMIN INDEX Tree
+/* ###########################################################################################################################################
+*/
+.standartTreeImage {
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
+  width: 16px;
+  height: 16px;
 }
 /*@import "../less/layout_nextmatch.less";*/
 /**
