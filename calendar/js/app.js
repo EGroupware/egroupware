@@ -267,7 +267,7 @@ app.classes.calendar = AppJS.extend(
 							var dM = this.dropEnd.getAttribute('data-date').split("|")[2];
 						}
 						var dataResize = event.target.getAttribute('data-resize').split("|");
-						this.innerHTML = '<div style="font-size: 1.1em; font-weight: bold; text-align: center;">'+dH+'h'+dM+'</div>';
+						this.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span style=" position: absolute; bottom: 0; align: center; ">'+dH+':'+dM+'</span></div>';
 					}
 					else
 					{
