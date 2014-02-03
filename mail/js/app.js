@@ -69,12 +69,14 @@ app.classes.mail = AppJS.extend(
 	destroy: function()
 	{
 		// Unbind from nm refresh
-		var nm = this.et2.getWidgetById('nm');
-		if(nm != null)
+		if(this.et2 != null)
 		{
-			$j(nm).off('refresh');
+			var nm = this.et2.getWidgetById('nm');
+			if(nm != null)
+			{
+				$j(nm).off('refresh');
+			}
 		}
-		delete this.et2;
 		delete this.et2_obj;
 		// call parent
 		this._super.apply(this, arguments);
@@ -92,7 +94,6 @@ app.classes.mail = AppJS.extend(
 		// call parent; somehow this function is called more often. (twice on a display and compose) why?
 		this._super.apply(this, arguments);
 		this.et2_obj = et2;
-		this.et2 = et2.widgetContainer;
 		var isMainView = false;
 		var isDisplay = false;
 		var isCompose = false;
