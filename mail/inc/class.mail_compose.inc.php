@@ -2597,8 +2597,9 @@ class mail_compose
 				return false;
 			}
 		}
-		#error_log("Mail Sent.!");
-		#error_log("Number of Folders to move copy the message to:".count($folder));
+		//error_log(__METHOD__.__LINE__."Mail Sent.!");
+		//error_log(__METHOD__.__LINE__."Number of Folders to move copy the message to:".count($folder));
+		//error_log(__METHOD__.__LINE__.array2string($folder));
 		if ((count($folder) > 0) || (isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
             || (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 			$mail_bo = $this->mail_bo;
@@ -2630,13 +2631,16 @@ class mail_compose
 				} elseif($mail_bo->isDraftFolder($folderName)) {
 					$flags = '\\Draft';
 				} else {
-					$flags = '';
+					$flags = '\\Seen';
 				}
 				#$mailHeader=explode('From:',$mail->getMessageHeader());
 				#$mailHeader[0].$mail->AddrAppend("Bcc",$mailAddr).'From:'.$mailHeader[1],
+				//error_log(__METHOD__.__LINE__.array2string($folderName));
+				//$mail_bo->reopen($folderName);
 				if ($mail_bo->folderExists($folderName,true)) {
 					try
 					{
+						//error_log(__METHOD__.__LINE__.array2string($folderName));
 						$mail_bo->appendMessage($folderName,
 								$sentMailHeader,
 								$sentMailBody,

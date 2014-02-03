@@ -4650,6 +4650,10 @@ class mail_bo
 		//error_log(__METHOD__.__LINE__."$_folderName, $_header, $_body, $_flags");
 		$header = ltrim(str_replace("\n","\r\n",$_header));
 		$body   = str_replace("\n","\r\n",$_body);
+		// the recent flag is the default enforced here ; as we assume the _flags is always set,
+		// we default it to hordes default (Recent) (, other wise we should not pass the parameter
+		// for flags at all)
+		if (empty($_flags)) $_flags = '\\Recent';
 		//if (!is_array($_flags) && stripos($_flags,',')!==false) $_flags=explode(',',$_flags);
 		//if (!is_array($_flags)) $_flags = (array) $_flags;
 		try
