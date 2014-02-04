@@ -19,7 +19,6 @@ class uifelamimail
 		var $public_functions = array
 		(
 			'addVcard'		=> True,
-			'changeFilter'		=> True,
 			'changeFolder'		=> True,
 			'changeSorting'		=> True,
 			'compressFolder'	=> True,
@@ -45,7 +44,6 @@ class uifelamimail
 		static $icServerID;
 		var $connectionStatus = false;
 		var $bofelamimail;
-		var $bofilter;
 		var $bopreferences;
 
 		function uifelamimail()
@@ -80,7 +78,6 @@ class uifelamimail
 			//error_log(__METHOD__.'->'.self::$icServerID);
 			$this->bofelamimail     = felamimail_bo::getInstance(false,self::$icServerID);
 			self::$icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
-			$this->bofilter		= new felamimail_bofilter(false);
 			$this->bopreferences=& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences;
 			if (is_object($this->preferences))
@@ -352,23 +349,6 @@ class uifelamimail
 			unlink($tmpfname);
 
 			$GLOBALS['egw']->common->egw_exit();
-		}
-
-		function changeFilter()
-		{
-			error_log(__METHOD__." called from:".function_backtrace());
-			if(isset($_POST["filter"]))
-			{
-				$data['quickSearch']	= $_POST["quickSearch"];
-				$data['filter']		= $_POST["filter"];
-				$this->bofilter->updateFilter($data);
-			}
-			elseif(isset($_GET["filter"]))
-			{
-				$data['filter']		= $_GET["filter"];
-				$this->bofilter->updateFilter($data);
-			}
-			$this->viewMainScreen();
 		}
 
 		function changeFolder()
@@ -799,7 +779,6 @@ class uifelamimail
 			//error_log(__METHOD__.__LINE__.$connectionReset);
 
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
-			$bofilter		=& $this->bofilter;
 			$uiwidgets		= CreateObject('felamimail.uiwidgets');
 			// fetch the active account with prefs and identities
 			$preferences	=& $this->preferences;

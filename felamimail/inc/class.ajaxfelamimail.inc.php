@@ -199,13 +199,11 @@ class ajaxfelamimail
 			$this->bofelamimail->restoreSessionData();
 			$this->bofelamimail->compressFolder($this->sessionData['mailbox']);
 
-			$bofilter = new felamimail_bofilter();
-
 			$sortResult = $this->bofelamimail->getSortedList(
 				$this->sessionData['mailbox'],
 				$this->sessionData['sort'],
 				$this->sessionData['sortReverse'],
-				$bofilter->getFilter($this->sessionData['activeFilter'])
+				$this->sessionData['messageFilter']
 			);
 
 			if(!is_array($sortResult) || empty($sortResult)) {
@@ -657,19 +655,6 @@ class ajaxfelamimail
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
 
-		function extendedSearch($_filterID)
-		{
-			// start displaying at message 1
-			$this->sessionData['startMessage']      = 1;
-			$this->sessionData['activeFilter']	= (int)$_filterID;
-			// unset the previewID, as the Message will not probably not be within the selection
-			unset($this->sessionData['previewMessage']);
-			$this->saveSessionData(true);
-
-			// generate the new messageview
-			return $this->generateMessageList($this->sessionData['mailbox']);
-		}
-
 		/*
 		* flag messages as read, unread, flagged, ...
 		*
@@ -1105,11 +1090,20 @@ class ajaxfelamimail
 			}
 		}
 
+		function clearSearch()
+		{
+			$this->sessionData['messageFilter'] = array();
+
+			$this->sessionData['startMessage'] = 1;
+
+			$this->saveSessionData(true);
+
+			// generate the new messageview
+			return $this->generateMessageList($this->sessionData['mailbox']);
+		}
+
 		function quickSearch($_searchType, $_searchString, $_status)
 		{
-			// save the filter
-			$bofilter		= new felamimail_bofilter();
-
 			$filter['filterName']	= lang('Quicksearch');
 			$filter['type']		= $_searchType;
 			$filter['string']	= str_replace('"','\"', str_replace('\\','\\\\',$_searchString));
