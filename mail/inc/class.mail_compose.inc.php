@@ -480,6 +480,8 @@ class mail_compose
 		$content = (is_array($_content)?$_content:array());
 		if ($_contentHasMimeType)
 		{
+			// mimeType is now a checkbox; convert it here to match expectations
+			// ToDo: match Code to meet checkbox value
 			if ($content['mimeType']==1)
 			{
 				$_content['mimeType'] = $content['mimeType']='html';
@@ -490,8 +492,6 @@ class mail_compose
 			}
 
 		}
-		// mimeType is now a checkbox; convert it here to match expectations
-		// ToDo: match Code to meet checkbox value
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')
 		{
@@ -876,7 +876,7 @@ class mail_compose
 					{
 						continue;
 					}
-					$this->addAttachment($formData,($alwaysAttachVCardAtCompose?true:false));
+					$this->addAttachment($formData,$content,($alwaysAttachVCardAtCompose?true:false));
 				}
 				$remember = array();
 				if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
@@ -937,7 +937,18 @@ class mail_compose
 		//is the MimeType set/requested
 		if (!empty($_REQUEST['mimeType']))
 		{
-			$content['mimeType'] = $_REQUEST['mimeType'];
+			if (($_REQUEST['mimeType']=="text" ||$_REQUEST['mimeType']=="plain") && $content['mimeType'] == 'html')
+			{
+				$_content['mimeType'] = $content['mimeType']  = 'plain';
+				$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
+			}
+			if ($_REQUEST['mimeType']=="html" && $content['mimeType'] != 'html')
+			{
+				$_content['mimeType'] = $content['mimeType']  = 'html';
+				$content['body'] = "<pre>".$content['body']."</pre>";
+				// take care this assumption is made on the creation of the reply header in bocompose::getReplyData
+				if (strpos($content['body'],"<pre> \r\n \r\n---")===0) $content['body'] = substr_replace($content['body']," <br>\r\n<pre>---",0,strlen("<pre> \r\n \r\n---")-1);
+			}
 		}
 		else
 		{
@@ -947,13 +958,13 @@ class mail_compose
 				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="text" &&
 					$content['mimeType'] == 'html')
 				{
-					$content['mimeType']  = 'plain';
+					$_content['mimeType'] = $content['mimeType']  = 'plain';
 					$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
 				}
 				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="html" &&
 					$content['mimeType'] != 'html')
 				{
-					$content['mimeType']  = 'html';
+					$_content['mimeType'] = $content['mimeType']  = 'html';
 					$content['body'] = "<pre>".$content['body']."</pre>";
 					// take care this assumption is made on the creation of the reply header in bocompose::getReplyData
 					if (strpos($content['body'],"<pre> \r\n \r\n---")===0) $content['body'] = substr_replace($content['body']," <br>\r\n<pre>---",0,strlen("<pre> \r\n \r\n---")-1);
@@ -963,7 +974,7 @@ class mail_compose
 
 		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
 		{
-			$content['mimeType'] = 'plain';
+			$_content['mimeType'] = $content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
 		}
 
@@ -1491,6 +1502,7 @@ class mail_compose
 		// get message headers for specified message
 		#$headers	= $mail_bo->getMessageHeader($_folder, $_uid);
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
+//_debug_array($headers); exit;
 		$addHeadInfo = $mail_bo->getMessageHeader($_uid, $_partID);
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		if (!empty($addHeadInfo['X-MAILFOLDER'])) {
@@ -1600,7 +1612,7 @@ class mail_compose
 				$foundAddresses[$keyemail] = true;
 			}
 		}
-
+		//_debug_array($this->sessionData);
 		$this->sessionData['subject']	= $mail_bo->decode_header($headers['SUBJECT']);
 		// remove a printview tag if composing
 		$searchfor = '/^\['.lang('printview').':\]/';
@@ -1720,6 +1732,57 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.array2string($this->sessionData));
 		return $this->sessionData;
+	}
+
+	/**
+	 * adds uploaded files or files in eGW's temp directory as attachments
+	 *
+	 * passes the given $_formData representing an attachment to $_content
+	 *
+	 * @param array $_formData fields of the compose form (to,cc,bcc,reply_to,subject,body,priority,signature), plus data of the file (name,file,size,type)
+	 * @param array $_content the content passed to the function and to be modified
+	 * @return void
+	 */
+	function addAttachment($_formData,&$_content,$eliminateDoubleAttachments=false)
+	{
+		$attachfailed = false;
+		// to guard against exploits the file must be either uploaded or be in the temp_dir
+		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		try
+		{
+			$tmpFileName = mail_bo::checkFileBasics($_formData,$this->composeID,false);
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+			$attachfailed = true;
+			$alert_msg = $e->getMessage();
+		}
+
+		if ($eliminateDoubleAttachments == true)
+			foreach ((array)$_content['attachments'] as $k =>$attach)
+				if ($attach['name'] && $attach['name'] == $_formData['name'] &&
+					strtolower($_formData['type'])== strtolower($attach['type']) &&
+					stripos($_formData['file'],'vfs://') !== false) return;
+
+		if ($attachfailed === false)
+		{
+			$buffer = array(
+				'name'	=> $_formData['name'],
+				'type'	=> $_formData['type'],
+				'file'	=> $tmpFileName,
+				'size'	=> $_formData['size']
+			);
+			// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
+			$attachmentID = md5(time().serialize($buffer));
+			//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
+			if (!is_array($_content['attachments'])) $_content['attachments']=array();
+			$_content['attachments'][$attachmentID] = $buffer;
+			unset($buffer);
+		}
+		else
+		{
+			error_log(__METHOD__.__LINE__.array2string($alert_msg));
+		}
 	}
 
 	function addMessageAttachment($_uid, $_partID, $_folder, $_name, $_type, $_size)

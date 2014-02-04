@@ -953,7 +953,6 @@ app.classes.mail = AppJS.extend(
 		}
 		var msg = this.mail_getFormData(_elems);
 		//alert(_action.id+','+ msg);
-		egw_message(this.egw.lang('delete messages'));
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
@@ -967,6 +966,21 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
+		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var _foldernode = ftree.getSelectedNode();
+
+		var displayname = _foldernode.label;
+		var inBraket = displayname.indexOf('\(');
+		if (inBraket!=-1)
+		{
+			var outBraket = displayname.indexOf('\)');
+			if (outBraket!=-1)
+			{
+				displayname = displayname.replace(/\((.*?)\)/,"");
+				displayname = displayname.replace(/<b>/,"");
+				displayname = displayname.replace(/<\/b>/,"");
+			}
+		}
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
@@ -977,7 +991,7 @@ app.classes.mail = AppJS.extend(
 		{
 			ids.push(_msg['msg'][i].replace(/mail::/,''));
 		}
-		egw_refresh(this.egw.lang('delete messages'),'mail',ids,'delete');
+		egw_refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,displayname),'mail',ids,'delete');
 	},
 
 	/**

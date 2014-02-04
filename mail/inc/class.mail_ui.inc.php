@@ -640,7 +640,7 @@ class mail_ui
 			if ($_profileID && $acc_id != $_profileID) continue;
 
 			$oA = array('id' => $acc_id,
-				'text' => htmlspecialchars($identity_name),
+				'text' => $identity_name,// htmlspecialchars($identity_name),
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 				'im0' => 'thunderbird.png',
 				'im1' => 'thunderbird.png',
@@ -1787,7 +1787,7 @@ unset($query['actions']);
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
 		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
-		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox, $htmlOptions,false);
+		//$mailBody = $this->get_load_email_data($uid, $partID, $mailbox, $htmlOptions,false);
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
@@ -1859,7 +1859,11 @@ unset($query['actions']);
 		$content['mail_id'] = $rowID;
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
-		$content['mail_displaybody'] = $mailBody;
+		//$content['mail_displaybody'] = $mailBody;
+		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
+		if (!empty($partID)) $linkData['_partID']=$partID;
+		if ($htmlOptions != $this->mail_bo->htmlOptions) $linkData['_htmloptions']=$htmlOptions;
+		$content['mailDisplayBodySrc'] = egw::link('/index.php',$linkData);
 		//_debug_array($attachments);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
 		$content['mail_id']=$rowID;
@@ -1917,7 +1921,7 @@ unset($query['actions']);
 							'is_winmail'    => $value['is_winmail']
 						);
 						$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
-						$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+						$linkView = "egw_openWindowCentered('".egw::link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
 						break;
 					case 'IMAGE/JPEG':
 					case 'IMAGE/PNG':
@@ -1964,7 +1968,7 @@ unset($query['actions']);
 						}
 						// apply to action
 						list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
-						$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',$width,$height);";
+						$linkView = "egw_openWindowCentered('".egw::link('/index.php',$linkData)."','$windowName',$width,$height);";
 						break;
 					default:
 						$linkData = array
@@ -1975,7 +1979,7 @@ unset($query['actions']);
 							'is_winmail'    => $value['is_winmail'],
 							'mailbox'   => base64_encode($mailbox),
 						);
-						$linkView = "window.location.href = '".$GLOBALS['egw']->link('/index.php',$linkData)."';";
+						$linkView = "window.location.href = '".egw::link('/index.php',$linkData)."';";
 						break;
 				}
 				//error_log(__METHOD__.__LINE__.$linkView);
@@ -1992,7 +1996,7 @@ unset($query['actions']);
 					'is_winmail'    => $value['is_winmail'],
 					'mailbox'   => base64_encode($mailbox),
 				);
-				$attachmentHTML[$key]['link_save'] ="<a href='".$GLOBALS['egw']->link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".html::image('felamimail','fileexport')."</a>";
+				$attachmentHTML[$key]['link_save'] ="<a href='".egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".html::image('felamimail','fileexport')."</a>";
 
 				if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 				{
@@ -2099,7 +2103,7 @@ unset($query['actions']);
 						'menuaction'	=> $addAction,
 						'send_to'	=> base64_encode($newSenderAddress)
 					);
-					$link = $GLOBALS['egw']->link('/index.php',$linkData);
+					$link = egw::link('/index.php',$linkData);
 
 					$newSenderAddress = mail_bo::htmlentities($newSenderAddress);
 					$realName = mail_bo::htmlentities($realName);
@@ -2151,7 +2155,7 @@ unset($query['actions']);
 						'menuaction'	=> $addAction,
 						'send_to'	=> base64_encode($addressData['EMAIL'])
 					);
-					$link = $GLOBALS['egw']->link('/index.php',$linkData);
+					$link = egw::link('/index.php',$linkData);
 					$senderEMail = mail_bo::htmlentities($addrEMail);
 					$senderAddress .= sprintf('<a href="%s">%s</a>',
 								$link,$senderEMail);
@@ -2314,7 +2318,7 @@ unset($query['actions']);
 						'menuaction'      => 'calendar.calendar_uiforms.edit',
 						'cal_id'      => $event,
 					);
-					$GLOBALS['egw']->redirect_link('../index.php',$vars);
+					egw::redirect_link('../index.php',$vars);
 				}
 				//Import failed, download content anyway
 			}
@@ -2343,7 +2347,7 @@ unset($query['actions']);
 						'menuaction'	=> 'addressbook.addressbook_ui.edit',
 						'contact_id'	=> $contact,
 					);
-					$GLOBALS['egw']->redirect_link('../index.php',$vars);
+					egw::redirect_link('../index.php',$vars);
 				}
 				//Import failed, download content anyway
 			}
@@ -2796,7 +2800,7 @@ blockquote[type=cite] {
 				// create links for email addresses
 				if ($modifyURI)
 				{
-					$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => $addAction));
+					$link = egw::link('/index.php',array('menuaction'    => $addAction));
 					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
 						"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
 					//print "<pre>".htmlentities($newBody)."</pre><hr>";
@@ -2835,7 +2839,7 @@ blockquote[type=cite] {
 			'cid'		=> base64_encode($matches[2]),
 			'partID'	=> $this->partID,
 		);
-		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+		$imageURL = egw::link('/index.php', $linkData);
 
 		// to test without data uris, comment the if close incl. it's body
 		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
@@ -2877,7 +2881,7 @@ blockquote[type=cite] {
 			'cid'		=> base64_encode($matches[1]),
 			'partID'	=> $this->partID,
 		);
-		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+		$imageURL = egw::link('/index.php', $linkData);
 
 		// to test without data uris, comment the if close incl. it's body
 		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
@@ -2919,7 +2923,7 @@ blockquote[type=cite] {
 			'cid'		=> base64_encode($matches[1]),
 			'partID'	=> $this->partID,
 		);
-		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+		$imageURL = egw::link('/index.php', $linkData);
 
 		// to test without data uris, comment the if close incl. it's body
 		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
@@ -2960,7 +2964,7 @@ blockquote[type=cite] {
 			'cid'		=> base64_encode($matches[2]),
 			'partID'	=> $this->partID,
 		);
-		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+		$imageURL = egw::link('/index.php', $linkData);
 
 		// to test without data uris, comment the if close incl. it's body
 		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
@@ -3202,15 +3206,18 @@ blockquote[type=cite] {
 	 *
 	 * @return xajax response
 	 */
-	function loadEmailBody($_messageID=null)
+	function loadEmailBody($_messageID=null,$_partID=null,$_htmloptions=null,$_fullHeader=true)
 	{
-		if (!$_messageID) $_messageID = $_GET['_messageID'];
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageID,true));
+		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
+		if (!$_partID && !empty($_GET['_partID'])) $_partID = $_GET['_partID'];
+		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
+		if (!$_fullHeader && !empty($_GET['_fullHeader'])) $_fullHeader = $_GET['_fullHeader'];
+		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions,$_fullHeade");
 		if (empty($_messageID)) return "";
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
-		$bodyResponse = $this->get_load_email_data($messageID,'',$folder);
+		$bodyResponse = $this->get_load_email_data($messageID,'',$folder,$_htmloptions,$_fullHeader);
 		egw_session::cache_control(true);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;

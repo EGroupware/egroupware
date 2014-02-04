@@ -36,7 +36,7 @@
 		</vbox>
 		<vbox class="mailDisplay" width="100%">
 			<box class="$cont[mailDisplayContainerClass]">
-				<html id="mail_displaybody"/>
+				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%" height="100%"/>
 			</box>
 			<box class="$cont[mailDisplayAttachmentsClass]">
 				<!-- <html id="mail_displayattachments"/> -->
