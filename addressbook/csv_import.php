@@ -254,8 +254,8 @@ switch($_POST['action'])
 		break;
 
 	case 'next':
-		$_POST['addr_fields'] = unserialize(stripslashes($_POST['addr_fields']));
-		$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
+		$_POST['addr_fields'] = json_decode(stripslashes($_POST['addr_fields']));
+		$_POST['trans']       = json_decode(stripslashes($_POST['trans']));
 		// fall-through
 	case 'import':
 		$hiddenvars = html::input_hidden(array(

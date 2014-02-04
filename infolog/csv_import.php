@@ -333,8 +333,8 @@ case 'download':
 	break;
 
 case 'next':
-	$_POST['info_fields'] = unserialize(stripslashes($_POST['info_fields']));
-	$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
+	$_POST['info_fields'] = json_decode(stripslashes($_POST['info_fields']));
+	$_POST['trans']       = json_decode(stripslashes($_POST['trans']));
 	// fall-through
 case 'import':
 	$hiddenvars = html::input_hidden(array(
