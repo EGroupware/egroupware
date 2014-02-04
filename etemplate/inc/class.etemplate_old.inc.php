@@ -2318,9 +2318,9 @@ class etemplate_old extends boetemplate
 					{
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
-					if ((int) $attr['maxlength'] > 0 && strlen($value) > (int) $attr['maxlength'])
+					if ((int) $attr['maxlength'] > 0 && mb_strlen($value) > (int) $attr['maxlength'])
 					{
-						$value = substr($value,0,(int) $attr['maxlength']);
+						$value = mb_substr($value,0,(int) $attr['maxlength']);
 					}
 					if ($attr['preg'] && !preg_match($attr['preg'],$value))
 					{
