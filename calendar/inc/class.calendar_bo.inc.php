@@ -1514,16 +1514,16 @@ class calendar_bo
 				switch($status[0])
 				{
 					case 'A':	// accepted
-						$status = html::image('calendar','agt_action_success',$lang_status);
+						$status = html::image('calendar','accepted',$lang_status);
 						break;
 					case 'R':	// rejected
-						$status = html::image('calendar','agt_action_fail',$lang_status);
+						$status = html::image('calendar','rejected',$lang_status);
 						break;
 					case 'T':	// tentative
 						$status = html::image('calendar','tentative',$lang_status);
 						break;
 					case 'U':	// no response = unknown
-						$status = html::image('calendar','cnr-pending',$lang_status);
+						$status = html::image('calendar','needs-action',$lang_status);
 						break;
 					case 'D':	// delegated
 						$status = html::image('calendar','forward',$lang_status);
