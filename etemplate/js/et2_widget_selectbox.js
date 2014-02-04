@@ -94,10 +94,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.input = null;
-
-		// If already provided, initialize value.  Prevents it from being cleared
-		// in set_select_options.
-		this.value = this.options.value || "";
+		this.value = '';
 
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
