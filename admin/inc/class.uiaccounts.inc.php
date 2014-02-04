@@ -204,7 +204,7 @@
 				{
 					$var = Array(
 						'class'       => $this->nextmatchs->alternate_row_color('', True),
-						'group_name'  => (!$account['account_lid']?'&nbsp;':$account['account_lid']),
+						'group_name'  => html::htmlspecialchars($account['account_lid']),
 						'delete_link' => $this->row_action('delete','group',$account['account_id'])
 					);
 					$p->set_var($var);
@@ -464,7 +464,13 @@
 						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 
-					$p->set_var($account);
+					$p->set_var(array(
+						'account_id' => $account['account_id'],
+						'account_lid' => html::htmlspecialchars($account['account_lid']),
+						'account_firstname' => html::htmlspecialchars($account['account_firstname']),
+						'account_lastname' => html::htmlspecialchars($account['account_lastname']),
+						'account_email' => html::htmlspecialchars($account['account_email']),
+					));
 
 					if ($can_edit)
 					{
@@ -983,9 +989,9 @@
 			$account =& CreateObject('phpgwapi.accounts',(int)$_GET['account_id'],'u');
 			$userData = $account->read_repository();
 
-			$var['account_lid']       = $userData['account_lid'];
-			$var['account_firstname'] = $userData['firstname'];
-			$var['account_lastname']  = $userData['lastname'];
+			$var['account_lid']       = html::htmlspecialchars($userData['account_lid']);
+			$var['account_firstname'] = html::htmlspecialchars($userData['firstname']);
+			$var['account_lastname']  = html::htmlspecialchars($userData['lastname']);
 
 			$acl =& CreateObject('phpgwapi.acl',(int)$_GET['account_id']);
 			$var['anonymous']         = $acl->check('anonymous',1,'phpgwapi') ? '&nbsp;&nbsp;X' : '&nbsp;';
@@ -1044,7 +1050,7 @@
 			{
 				while (list(,$group) = each($usergroups))
 				{
-					$group_names[] = $group['account_name'];
+					$group_names[] = html::htmlspecialchars($group['account_name']);
 				}
 				$var['groups_select'] = implode(', ',$group_names);
 			}
@@ -1166,7 +1172,7 @@
 				'form_action'       => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.'.($group_info['account_id']?'edit':'add').'_group'),
 				'hidden_vars'       => '<input type="hidden" name="account_id" value="' . $group_info['account_id'] . '">',
 				'lang_group_name'   => lang('group name'),
-				'group_name_value'  => $group_info['account_name'],
+				'group_name_value'  => html::htmlspecialchars($group_info['account_name']),
 				'lang_include_user' => lang('Select users for inclusion'),
 				'error'             => (!$_errors?'':'<center>'.$GLOBALS['egw']->common->error_list($_errors).'</center>'),
 				'lang_permissions'  => lang('Permissions this group has')
@@ -1398,9 +1404,10 @@
 			{
 				$lang_homedir = lang('home directory');
 				$lang_shell = lang('login shell');
-				$homedirectory = '<input name="homedirectory" id="homedirectory" value="'. ($_account_id?$userData['homedirectory']:$GLOBALS['egw_info']['server']['ldap_account_home'].$account_lid).'">';
+				$homedirectory = '<input name="homedirectory" id="homedirectory" value="'.
+						html::htmlspecialchars($_account_id?$userData['homedirectory']:$GLOBALS['egw_info']['server']['ldap_account_home'].$account_lid).'">';
 				$loginshell = '<input name="loginshell" value="'
-					. ($_account_id?$userData['loginshell']:$GLOBALS['egw_info']['server']['ldap_account_shell'])
+					. html::htmlspecialchars($_account_id?$userData['loginshell']:$GLOBALS['egw_info']['server']['ldap_account_shell'])
 					. '">';
 			}
 			else
@@ -1456,10 +1463,13 @@
 				'loginshell'    	=> $loginshell,
 				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
-				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
-				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['firstname'] . '">',
-				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['lastname'] . '">',
-				'account_email'     => '<input id="email" onchange="email_set=0; check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' . $userData['email'] . '">',
+				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['account_status']?' checked':'').'>',
+				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' .
+					html::htmlspecialchars($userData['account_firstname']) . '">',
+				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' .
+					html::htmlspecialchars($userData['account_lastname']) . '">',
+				'account_email'     => '<input id="email" onchange="email_set=0; check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' .
+					html::htmlspecialchars($userData['account_email']) . '">',
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space,
@@ -1503,7 +1513,7 @@
 				{
 					$primary_group_select .= ' selected="1"';
 				}
-				$primary_group_select .= '>' . $value['account_lid'] . '</option>'."\n";
+				$primary_group_select .= '>' . html::htmlspecialchars($value['account_lid']) . '</option>'."\n";
 			}
 			//prepare the userGroups Array for use with the checkbox-multiselect use -> selarray
 			$selarray=array();
