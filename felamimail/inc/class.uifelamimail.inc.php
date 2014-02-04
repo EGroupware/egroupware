@@ -18,7 +18,6 @@
 		var $public_functions = array
 		(
 			'addVcard'		=> True,
-			'changeFilter'		=> True,
 			'changeFolder'		=> True,
 			'changeSorting'		=> True,
 			'compressFolder'	=> True,
@@ -41,7 +40,6 @@
 		var $icServerID=0;
 		var $connectionStatus = false;
 		var $bofelamimail;
-		var $bofilter;
 		var $bopreferences;
 
 		function uifelamimail()
@@ -54,7 +52,6 @@
 			$this->displayCharset	= $GLOBALS['egw']->translation->charset();
 			$this->bofelamimail     = CreateObject('felamimail.bofelamimail',$this->displayCharset,false);
 
-			$this->bofilter		= CreateObject('felamimail.bofilter',false);
 			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 			$this->preferences	= $this->bopreferences->getPreferences();
 
@@ -107,23 +104,6 @@
 			unlink($tmpfname);
 
 			$GLOBALS['egw']->common->egw_exit();
-		}
-
-		function changeFilter()
-		{
-			error_log(__METHOD__." called from:".function_backtrace());
-			if(isset($_POST["filter"]))
-			{
-				$data['quickSearch']	= $_POST["quickSearch"];
-				$data['filter']		= $_POST["filter"];
-				$this->bofilter->updateFilter($data);
-			}
-			elseif(isset($_GET["filter"]))
-			{
-				$data['filter']		= $_GET["filter"];
-				$this->bofilter->updateFilter($data);
-			}
-			$this->viewMainScreen();
 		}
 
 		function changeFolder()
@@ -445,7 +425,6 @@
 			unset($_GET["message"]);
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
 			$bopreferences	=& $this->bopreferences;
-			$bofilter		=& $this->bofilter;
 			$uiwidgets		= CreateObject('felamimail.uiwidgets');
 
 			$preferences	=& $bopreferences->getPreferences();
@@ -827,24 +806,11 @@
 			);
 			$this->t->set_var('url_compose_empty',"egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','test',700,egw_getWindowOuterHeight());");
 
-
-			$linkData = array
-			(
-				'menuaction'    => 'felamimail.uifilter.mainScreen'
-			);
-			$this->t->set_var('url_filter',$GLOBALS['egw']->link('/index.php',$linkData));
-
 			$linkData = array
 			(
 				'menuaction'    => 'felamimail.uifelamimail.handleButtons'
 			);
 			$this->t->set_var('url_change_folder',$GLOBALS['egw']->link('/index.php',$linkData));
-
-			$linkData = array
-			(
-				'menuaction'    => 'felamimail.uifelamimail.changeFilter'
-			);
-			$this->t->set_var('url_search_settings',$GLOBALS['egw']->link('/index.php',$linkData));
 
 			$this->t->set_var('lang_mark_messages_as',lang('mark messages as'));
 			$this->t->set_var('lang_delete',lang('delete'));

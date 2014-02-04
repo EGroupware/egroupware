@@ -135,13 +135,11 @@ class ajaxfelamimail
 			$this->bofelamimail->restoreSessionData();
 			$this->bofelamimail->compressFolder($this->sessionData['mailbox']);
 
-			$bofilter = CreateObject('felamimail.bofilter');
-
 			$sortResult = $this->bofelamimail->getSortedList(
 				$this->sessionData['mailbox'],
 				$this->sessionData['sort'],
 				$this->sessionData['sortReverse'],
-				$bofilter->getFilter($this->sessionData['activeFilter'])
+				$this->sessionData['messageFilter']
 			);
 
 			if(!is_array($sortResult) || empty($sortResult)) {
@@ -395,18 +393,6 @@ class ajaxfelamimail
 				$this->bofelamimail->compressFolder($trashFolder);
 			}
 
-			return $this->generateMessageList($this->sessionData['mailbox']);
-		}
-
-		function extendedSearch($_filterID)
-		{
-			// start displaying at message 1
-			$this->sessionData['startMessage']      = 1;
-			$this->sessionData['activeFilter']	= (int)$_filterID;
-			$this->saveSessionData();
-			$GLOBALS['egw']->session->commit_session();
-
-			// generate the new messageview
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
 
@@ -738,8 +724,6 @@ class ajaxfelamimail
 
 		function quickSearch($_searchType, $_searchString, $_status)
 		{
-			// save the filter
-			$bofilter		= CreateObject('felamimail.bofilter');
 
 			$filter['filterName']	= lang('Quicksearch');
 			$filter['type']		= $_searchType;
@@ -747,6 +731,18 @@ class ajaxfelamimail
 			$filter['status']	= $_status;
 
 			$this->sessionData['messageFilter'] = $filter;
+
+			$this->sessionData['startMessage'] = 1;
+
+			$this->saveSessionData();
+
+			// generate the new messageview
+			return $this->generateMessageList($this->sessionData['mailbox']);
+		}
+
+		function clearSearch()
+		{
+			$this->sessionData['messageFilter'] = array();
 
 			$this->sessionData['startMessage'] = 1;
 

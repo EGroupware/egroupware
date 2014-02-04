@@ -16,7 +16,7 @@
 	{
 		var $public_functions = array
 		(
-			'addAtachment'	=> True,
+			'addAttachment'	=> True,
 			'action'	=> True
 		);
 
