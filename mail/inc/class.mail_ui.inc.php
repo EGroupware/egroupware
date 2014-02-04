@@ -2259,11 +2259,11 @@ unset($query['actions']);
 		{
 			header("Content-Type: ". $attachment->getType());// ."; name=\"". $attachment['filename'] ."\"");
 			header('Content-Disposition: inline; filename="'. $attachment->getDispositionParameter('filename') .'"');
-			header("Expires: 0");
+			//header("Expires: 0");
 			// the next headers are for IE and SSL
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Pragma: public");
-
+			//header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			//header("Pragma: public");
+			egw_session::cache_control(true);
 			echo $attachment->getContents();
 		}
 		else
@@ -3208,6 +3208,7 @@ blockquote[type=cite] {
 	 */
 	function loadEmailBody($_messageID=null,$_partID=null,$_htmloptions=null,$_fullHeader=true)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
 		if (!$_partID && !empty($_GET['_partID'])) $_partID = $_GET['_partID'];
 		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
@@ -3217,7 +3218,7 @@ blockquote[type=cite] {
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
-		$bodyResponse = $this->get_load_email_data($messageID,'',$folder,$_htmloptions,$_fullHeader);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions,$_fullHeader);
 		egw_session::cache_control(true);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;
