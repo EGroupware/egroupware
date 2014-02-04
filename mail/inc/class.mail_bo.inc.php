@@ -4586,16 +4586,16 @@ class mail_bo
 				if ($cid == $_cid)
 				{
 					$attachment = $part;
-					break;
 				}
 				// everything else we only consider after we checked all
 				if (!isset($attachment)) $attachment = $part;
+				// do we want content fetched, can be done later, if not needed
+				if (isset($_stream))
+				{
+					$this->fetchPartContents($_uid, $attachment, $_stream);
+				}
+				if (isset($attachment)) break;
 			}
-		}
-		// do we want content fetched, can be done later, if not needed
-		if (isset($_stream))
-		{
-			$this->fetchPartContents($_uid, $attachment, $_stream);
 		}
 		// set name as filename, if not set
 		if ($attachment && !$attachment->getDispositionParameter('filename'))
@@ -4622,8 +4622,9 @@ class mail_bo
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return Horde_Mime_Part
 	 */
-	public function fetchPartContents($_uid, Horde_Mime_Part $part, $_stream=false, $_preserveSeen=false)
+	public function fetchPartContents($_uid, Horde_Mime_Part $part=null, $_stream=false, $_preserveSeen=false)
 	{
+		if (is_null($part)) return null;//new Horde_Mime_Part;
 		$encoding = null;
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
