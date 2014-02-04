@@ -782,7 +782,7 @@ class etemplate_widget
 	public static function set_validation_error($name,$error,$cname=null)
 	{
 		// not yet used: if (is_null($cname)) $cname = self::$name_vars;
-		error_log(__METHOD__."('$name','$error','$cname')");
+		error_log(__METHOD__."('$name','$error','$cname') ".function_backtrace());
 
 		if ($cname) $name = self::form_name($cname,$name);
 
