@@ -105,7 +105,7 @@ class uiaclprefs
 		if ($_POST['save'] || $_POST['apply'])
 		{
 			$processed = $_POST['processed'];
-			$to_remove = unserialize(urldecode($processed));
+			$to_remove = json_decode(urldecode($processed));
 			foreach($to_remove as $uid)
 			{
 				//echo "deleting acl-records for $uid=".$GLOBALS['egw']->accounts->id2name($uid)." and $acl_app<br>\n";
@@ -276,7 +276,7 @@ class uiaclprefs
 			'search_type' => is_array($query_types) ? html::select('search_type',$search_type,$query_types) : '',
 			'search_value' => isset($query) && $query ? html::htmlspecialchars($query) : '',
 			'search'       => lang('search'),
-			'processed'    => urlencode(serialize($processed))
+			'processed'    => urlencode(json_encode($processed))
 		);
 
 		$letters = lang('alphabet');

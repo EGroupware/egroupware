@@ -274,8 +274,8 @@ case 'download':
 	break;
 
 case 'next':
-	$_POST['cal_fields'] = unserialize(stripslashes($_POST['cal_fields']));
-	$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
+	$_POST['cal_fields'] = json_decode(stripslashes($_POST['cal_fields']));
+	$_POST['trans']       = json_decode(stripslashes($_POST['trans']));
 	// fall-through
 case 'import':
 	$hiddenvars = html::input_hidden(array(
