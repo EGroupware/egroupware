@@ -541,7 +541,25 @@ div.mailComposeHeaders > span:first-child {
 div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > * {
 	margin-left: 3px;
 }
-
+div.mailDisplayHeaders div.mail_extraEmails
+{
+	display: inline-block;
+	max-height: 1.3em;
+	max-width: 50%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+div.mailDisplayHeaders div.mail_extraEmails.visible
+{
+	position: fixed;
+	left: 7em;
+	display: block;
+	max-height: 8em;
+	min-width: 30em;
+	z-index: 999;
+	overflow-y: auto;
+	background-color: white;
+}
 div.mailComposeBody {
 	white-space: normal !important;
 }
