@@ -207,7 +207,7 @@
 				{
 					$var = Array(
 						'class'       => $this->nextmatchs->alternate_row_color('', True),
-						'group_name'  => (!$account['account_lid']?'&nbsp;':$account['account_lid']),
+						'group_name'  => html::htmlspecialchars($account['account_lid']),
 						'delete_link' => $this->row_action('delete','group',$account['account_id'])
 					);
 					$p->set_var($var);
@@ -467,7 +467,13 @@
 						$account['account_status'].= '<br>'.common::show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 
-					$p->set_var($account);
+					$p->set_var(array(
+						'account_id' => $account['account_id'],
+						'account_lid' => html::htmlspecialchars($account['account_lid']),
+						'account_firstname' => html::htmlspecialchars($account['account_firstname']),
+						'account_lastname' => html::htmlspecialchars($account['account_lastname']),
+						'account_email' => html::htmlspecialchars($account['account_email']),
+					));
 
 					if ($can_edit)
 					{
