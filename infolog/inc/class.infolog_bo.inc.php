@@ -610,7 +610,6 @@ class infolog_bo
 			// pre-cache title and file access
 			self::set_link_cache($data);
 		}
-error_log(__METHOD__."() mb_strlen(info_subject='{$this->data['info_subject']}')=".mb_strlen($this->data['info_subject']));
 
 		return $data;
 	}
@@ -711,7 +710,6 @@ error_log(__METHOD__."() mb_strlen(info_subject='{$this->data['info_subject']}')
 	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true,
 		$skip_notification=false, $throw_exception=false, $purge_cfs=null)
 	{
-error_log(__METHOD__."() mb_strlen(info_subject='$values_in[info_subject]')=".mb_strlen($values_in['info_subject']));
 		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&

@@ -1557,7 +1557,6 @@ class infolog_ui
 	{
 		if (($submit = is_array($content)))
 		{
-error_log(__METHOD__."() mb_strlen(info_subject='$content[info_subject]')=".mb_strlen($content['info_subject']));
 			//echo "infolog_ui::edit: content="; _debug_array($content);
 			$info_id   = $content['info_id'];
 			$action    = $content['action'];    unset($content['action']);
@@ -1752,7 +1751,7 @@ error_log(__METHOD__."() mb_strlen(info_subject='$content[info_subject]')=".mb_s
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
-/*			foreach(array('info_subject', 'info_des') as $key)
+			foreach(array('info_subject', 'info_des') as $key)
 			{
 				if(!isset($content[$key]) || strlen($content[$key]) < 75)
 				{
@@ -1790,7 +1789,7 @@ error_log(__METHOD__."() mb_strlen(info_subject='$content[info_subject]')=".mb_s
 				}
 				$content[$key] = join("\n",$clarray);
 				unset($clarray);
-			}*/
+			}
 			if (is_numeric($_REQUEST['cat_id']))
 			{
 				$content['info_cat'] = (int) $_REQUEST['cat_id'];

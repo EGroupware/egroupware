@@ -409,7 +409,6 @@ class infolog_so
 			$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
 		}
 		//error_log(__METHOD__.'('.array2string($where).') returning '.array2string($this->data));
-error_log(__METHOD__."() mb_strlen(info_subject='{$this->data['info_subject']}')=".mb_strlen($this->data['info_subject']));
 		return $this->data;
 	}
 
