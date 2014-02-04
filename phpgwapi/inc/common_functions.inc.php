@@ -65,9 +65,39 @@ function cut_bytes(&$data,$offset,$len=null)
 
 	if (is_null($len))
 	{
-		return $func_overload ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
+		return $func_overload & 2 ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
 	}
-	return $func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+	return $func_overload & 2 ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+}
+
+if (!function_exists('mb_strlen'))
+{
+	/**
+	 * Number of characters in a string
+	 *
+	 * @param string $str
+	 * @return int
+	 */
+	function mb_strlen($str)
+	{
+		return strlen($str);
+	}
+}
+
+if (!function_exists('mb_substr'))
+{
+	/**
+	 * Return part of a string
+	 *
+	 * @param string $data
+	 * @param int $offset
+	 * @param int $len
+	 * @return string
+	 */
+	function mb_substr(&$data, $offset, $len=null)
+	{
+		return is_null($len) ? substr($data, $offset) : substr($data, $offset, $len);
+	}
 }
 
 /**
