@@ -3,27 +3,35 @@
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<vbox class="mailDisplay mailDisplayHeaderSection" >
-			<toolbar id="toolbar"/>
-			<hbox class="mailDisplayHeaders" disabled="!@FROM" width="100%">
+		<vbox class="mailDisplay">
+			<hbox>
+				<toolbar id="toolbar"/>
+			</hbox>
+			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
 				<description value="From"/>
-				<taglist id="FROM" readonly="true" onclick="app.mail.address_click"/>
+				<url-email id="FROM" readonly="true"/>
 			</hbox>
-			<hbox class="mailDisplayHeaders" disabled="!@SENDER" width="100%">
+			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
 				<description value="on behalf of"/>
-				<taglist id="SENDER" readonly="true" onclick="app.mail.address_click"/>
+				<url-email id="SENDER" readonly="true"/>
 			</hbox>
-			<hbox class="mailDisplayHeaders" disabled="!@TO" width="100%">
+			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
 				<description value="To"/>
-				<taglist id="TO" readonly="true" onclick="app.mail.address_click"/>
+				<hbox id="TO" class="mail_extraEmails">
+				</hbox>
+				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</hbox>
-			<hbox class="mailDisplayHeaders" disabled="!@CC" width="100%">
+			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
 				<description value="Cc"/>
-				<taglist id="CC" readonly="true" onclick="app.mail.address_click"/>
+				<hbox id="CC" class="mail_extraEmails">
+				</hbox>
+				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</hbox>
-			<hbox class="mailDisplayHeaders" disabled="!@BCC" width="100%">
+			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
 				<description value="Bcc"/>
-				<taglist id="BCC" readonly="true" onclick="app.mail.address_click"/>
+				<hbox id="BCC" class="mail_extraEmails">
+				</hbox>
+				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</hbox>
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="Date"/>

@@ -107,6 +107,7 @@ app.classes.mail = AppJS.extend(
 				case 'mail.display':
 					this.mail_isMainWindow = false;
 					isDisplay=true;
+					this.mail_display();
 					break;
 				case 'mail.compose':
 					this.mail_isMainWindow = false;
@@ -504,6 +505,109 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Create an expand on click box
+	 *
+	 * @param {object} _expContent an object with at least these elements
+	 *					{build_children, data_one, data, widget, line}
+	 *
+	 * @param {object} _dataElem includes data of the widget which need to be expand
+	 *
+	 * @return _dataElem content of widgets
+	 */
+	url_email_expandOnClick: function (_expContent, _dataElem)
+	{
+
+		for(var j = 0; j < _expContent.length; j++)
+		{
+			var field = _expContent[j] || [];
+			var content = _dataElem.data[field.data] || [];
+
+			// Add in single address, if there
+			if(typeof field.data_one != 'undefined')
+			{
+				content.unshift(_dataElem.data[field.data_one]);
+				// Unique
+				content = content.filter(function(value, index, self) {
+					return self.indexOf(value) === index;
+				});
+			}
+
+			// Disable whole box if there are none
+			var line = this.et2.getWidgetById(field.line);
+			if(line != null) line.set_disabled(content.length == 0);
+
+			var widget = this.et2.getWidgetById(field.widget);
+			if(widget == null) continue;
+			$j(widget.getDOMNode()).removeClass('visible');
+
+			// Programatically build the child elements
+			if(field.build_children)
+			{
+				// Remove any existing
+				var children = widget.getChildren();
+				for(var i = children.length-1; i >= 0; i--)
+				{
+					children[i].destroy();
+					widget.removeChild(children[i]);
+				}
+
+				// Add for current record
+				for(var i = 0; i < content.length; i++)
+				{
+					var value = content[i];
+					var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
+					email.loadingFinished();
+				}
+			}
+			else
+			{
+				widget.set_value({content: content});
+			}
+
+			// Show or hide button, as needed
+			line.iterateOver(function(button) {
+				// Avoid binding to any child buttons
+				if(button.getParent() != line) return;
+				button.set_disabled(
+					// Disable if only 1 address
+					content.length <=1 || (
+					// Disable if all content is visible
+					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
+					$j(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
+				);
+			},this,et2_button);
+		}
+
+		return _dataElem;
+	},
+
+	/**
+	 * Set values for mail dispaly From,Sender,To,Cc, and Bcc
+	 * Additionally, apply expand on click feature on thier widgets
+	 * 
+	 */
+	mail_display: function()
+	{
+		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
+		var content = this.et2.getArrayMgr('content').data;
+		var expand_content = [
+			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom'},
+			{build_children: true,  data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
+			{build_children: true, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
+			{build_children: true, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
+			{build_children: true, data: 'BCC', widget:'BCC', line: 'mailDisplayHeadersBcc'}
+		];
+
+		if (typeof  content != 'undefiend')
+		{
+			dataElem.data = jQuery.extend(dataElem.data, content);
+
+			this.url_email_expandOnClick(expand_content, dataElem);
+		}
+		
+	},
+
+	/**
 	 * mail_preview - implementation of the preview action
 	 *
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
@@ -572,69 +676,10 @@ app.classes.mail = AppJS.extend(
 			{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
 			{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
 		];
-		for(var j = 0; j < expand_content.length; j++)
-		{
-			var field = expand_content[j] || [];
-			var content = dataElem.data[field.data] || [];
 
-			// Add in single address, if there
-			if(typeof field.data_one != 'undefined')
-			{
-				content.unshift(dataElem.data[field.data_one]);
-				// Unique
-				content = content.filter(function(value, index, self) {
-					return self.indexOf(value) === index;
-				});
-			}
-
-			// Disable whole box if there are none
-			var line = this.et2.getWidgetById(field.line);
-			if(line != null) line.set_disabled(content.length == 0);
-
-			var widget = this.et2.getWidgetById(field.widget);
-			if(widget == null) continue;
-			$j(widget.getDOMNode()).removeClass('visible');
-
-			// Programatically build the child elements
-			if(field.build_children)
-			{
-				// Remove any existing
-				var children = widget.getChildren();
-				for(var i = children.length-1; i >= 0; i--)
-				{
-					children[i].destroy();
-					widget.removeChild(children[i]);
-				}
-
-				// Add for current record
-				for(var i = 0; i < content.length; i++)
-				{
-					var value = content[i];
-					var email = et2_createWidget('url-email',{value:value,readonly:true},widget);
-					email.loadingFinished();
-				}
-			}
-			else
-			{
-				widget.set_value({content: content});
-			}
-
-			// Show or hide button, as needed
-			line.iterateOver(function(button) {
-				// Avoid binding to any child buttons
-				if(button.getParent() != line) return;
-				button.set_disabled(
-					// Disable if only 1 address
-					content.length <=1 || (
-					// Disable if all content is visible
-					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
-					$j(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
-				);
-			},this,et2_button);
-		}
-
-		//console.log("mail_preview",dataElem);
-
+		dataElem = this.url_email_expandOnClick(expand_content,dataElem);
+		
+		
 		// Update the internal list of selected mails, if needed
 		if(this.mail_selectedMails.indexOf(_id) < 0)
 		{
