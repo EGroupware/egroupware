@@ -1545,7 +1545,7 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
 		foreach((array)$headers['CC'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
 			$_rfcAddr = $rfcAddr[0];
 			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
@@ -1566,7 +1566,7 @@ class mail_compose
 				$this->sessionData['to'][] = $val;
 				continue;
 			}
-			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
 			$_rfcAddr = $rfcAddr[0];
 			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
@@ -1582,7 +1582,7 @@ class mail_compose
 		}
 
 		foreach((array)$headers['REPLY_TO'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
 			$_rfcAddr = $rfcAddr[0];
 			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
@@ -1598,7 +1598,7 @@ class mail_compose
 		}
 
 		foreach((array)$headers['BCC'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val);
+			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
 			$_rfcAddr = $rfcAddr[0];
 			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
