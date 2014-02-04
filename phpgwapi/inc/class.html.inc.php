@@ -455,7 +455,7 @@ class html
 		{
 			if (is_array($value))
 			{
-				$value = serialize($value);
+				$value = json_encode($value);
 			}
 			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
