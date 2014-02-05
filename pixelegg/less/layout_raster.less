@@ -433,6 +433,7 @@
         &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
     }
 
+    // Country switch
     select#quick_add_selectbox {
 
         visibility: hidden;
@@ -446,8 +447,27 @@
         
     }
     
+    
+    // JS ERROR
     img#topmenu_info_error{
                             .dimension_height_s;
+                            position: fixed;
+                            top: 14px;
+                            right: 0px;
+                            
+                            .Button_size_square_16;
+                            .border_normal;
+                            .box_shadow_standard_light;
+                            padding: 0.5em;
+                            top: 5px;
+                            right: 45px;
+                            z-index: 200;
+                            &:hover {.box_shadow_standard_light_hover;}
+                            &:active {.Complete_Button_active;}
+                            &:focus {.box_shadow_standard_light_inset;}
+                            
+                            background-color: red;
+                            
                            }
     
 
