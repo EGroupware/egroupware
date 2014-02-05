@@ -796,7 +796,7 @@ class calendar_uiforms extends calendar_ui
 		$boical = new calendar_ical();
 		// we need to pass $event[id] so iCal class reads event again,
 		// as event is in user TZ, but iCal class expects server TZ!
-		$ics = $boical->exportVCal(array($event['id']),'2.0','request',false);
+		$ics = $boical->exportVCal(array($event['id']),'2.0','REQUEST',false);
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
@@ -811,7 +811,7 @@ class calendar_uiforms extends calendar_ui
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
 			'preset[file]'    => $ics_file,
-			'preset[type]'    => 'text/calendar; method=request',
+			'preset[type]'    => 'text/calendar; method=REQUEST',
 			'preset[size]'    => filesize($ics_file),
 		);
 		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
