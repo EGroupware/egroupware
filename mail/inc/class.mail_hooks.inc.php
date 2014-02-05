@@ -512,7 +512,7 @@ class mail_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
-			'prefpreventmanagefolders' => array(
+			/*'prefpreventmanagefolders' => array(
 				'type'   => 'select',
 				'label'  => 'Prevent managing folders',
 				'help'   => 'Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?',
@@ -571,7 +571,7 @@ class mail_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => '0',
-			),
+			),*/
 			'notavailableautofolders' => array(
 				'type'   => 'multiselect',
 				'label'  => 'do not auto create folders',
@@ -691,15 +691,18 @@ class mail_hooks
 		}
 
 		// create account wizard
-		$file += array(
-			'create new account' => "javascript:egw_openWindowCentered2('" .
-				egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
-				"','_blank',640,480,'yes')",
-		);
-
-		if ($preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
-
-
+		if (self::access('createaccount'))
+		{
+			$file += array(
+				'create new account' => "javascript:egw_openWindowCentered2('" .
+					egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
+					"','_blank',640,480,'yes')",
+			);
+		}
+		if (self::access('testconnection'))
+		{
+			$file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
+		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
@@ -860,6 +863,47 @@ class mail_hooks
 			$notification->send();
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),$notified_mail_uidsCache, $expiration=60*60*24*2);
+		return true;
+	}
+
+	/**
+	 * Hook returning options for deny_* groups
+	 *
+	 * @param string $name function name
+	 * @param array $arguments
+	 * @return string html
+	 */
+	public static function __callStatic($name, $arguments)
+	{
+		if (substr($name, 0, 5) != 'deny_')
+		{
+			throw new egw_exception_wrong_parameter("No method $name!");
+		}
+		$accountsel = new uiaccountsel();
+
+		return '<input type="hidden" value="" name="newsettings['.$name.']" />'.
+			$accountsel->selection('newsettings['.$name.']', 'deny_prefs', $arguments[0][$name], 'groups', 4);
+	}
+
+	/**
+	 * Check if current user has access to a specific feature
+	 *
+	 * Example: if (!mail_hooks::access("managerfolders")) return;
+	 *
+	 * @param string $feature "createaccounts", "managefolders", "forwards", "notifications", "filters",
+	 *		"notificationformailviaemail", "editfilterrules", "absentnotice", "testconnection", "aclmanagement"
+	 * @return boolean true if user has access, false if not
+	 */
+	public static function access($feature)
+	{
+		static $config=null;
+		if (!isset($config)) $config = (array)config::read('mail');
+
+		if (!empty($config['deny_'.$feature]))
+		{
+			$denied_groups = explode(',', $config['deny_'.$feature]);
+			return array_intersect($denied_groups, $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true));
+		}
 		return true;
 	}
 }

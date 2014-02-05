@@ -410,11 +410,26 @@ class mail_ui
 			);
 		}
 
-		if (!$this->mail_bo->icServer->queryCapability('ACL')) unset($tree_actions['edit_acl']);
-		if (!$this->mail_bo->icServer->acc_sieve_enabled)
+		// enforce global (group-specific) ACL
+		if (!$this->mail_bo->icServer->queryCapability('ACL') || !mail_hooks::access('aclmanagement'))
+		{
+			unset($tree_actions['edit_acl']);
+		}
+		if (!$this->mail_bo->icServer->acc_sieve_enabled || !mail_hooks::access('editfilterrules'))
 		{
 			unset($tree_actions['sieve']);
+		}
+		if (!$this->mail_bo->icServer->acc_sieve_enabled || !mail_hooks::access('absentnotice'))
+		{
 			unset($tree_actions['vacation']);
+		}
+		if (!mail_hooks::access('managefolders'))
+		{
+			unset($tree_actions['add']);
+			unset($tree_actions['move']);
+			unset($tree_actions['delete']);
+			unset($tree_actions['subscribe']);
+			unset($tree_actions['unsubscribe']);
 		}
 
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
