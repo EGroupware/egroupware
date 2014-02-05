@@ -372,8 +372,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
-		$is_parent = $value['is_parent'];
-		$is_parent_value = $value['is_parent_value'];
 
 		foreach($rows as $n => $row)
 		{
@@ -390,12 +388,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
 				{
-					if ($parent_id)	// if app supports parent_id / hierarchy, set parent_id and is_parent
-					{
-						$row['is_parent'] = isset($is_parent_value) ?
-							$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
-						$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
-					}
 					$result['data'][$id] = $row;
 				}
 				if ($kUkey !== false) unset($knownUids[$kUkey]);
@@ -544,6 +536,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// otherwise we might get stoped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
 
+		$is_parent = $value['is_parent'];
+		$is_parent_value = $value['is_parent_value'];
+
 		// remove empty rows required by old etemplate to compensate for header rows
 		$first = $total ? null : 0;
 		foreach($raw_rows as $n => $row)
@@ -552,6 +547,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			if (is_int($n) && is_array($rows))
 			{
 				if (is_null($first)) $first = $n;
+				
+				if ($row[$is_parent])	// if app supports parent_id / hierarchy, set parent_id and is_parent
+				{
+					$row['is_parent'] = isset($is_parent_value) ?
+						$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
+					$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
+				}
 				$rows[$n-$first+$value['start']] = $row;
 			}
 			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
