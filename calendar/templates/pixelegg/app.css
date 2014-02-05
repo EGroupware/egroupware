@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 45378 2014-01-24 16:04:11Z hnategh $ */
+/* $Id: app.css 45548 2014-02-05 10:04:13Z ralfbecker $ */
 .calendar_inputFullWidth input {
   width: 100%;
 }
@@ -924,22 +924,19 @@ div#calendar-edit .et2_tabs {
 div#calendar-edit .et2_tabcntr {
   overflow-y: auto;
 }
-div#calendar-edit .et2_tabcntr table.et2_grid tr:nth-child(even) {
-  /*background: @color_even;*/
-  line-height: 20px;
-}
-div#calendar-edit .et2_tabcntr table.et2_grid tr:nth-child(odd) {
-  /*background: @color_odd;*/
-  line-height: 44px;
-}
 div#calendar-edit #calendar-edit_calendar-edit-general {
   display: block;
   float: left;
   width: 100%;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid {
+  line-height: 30px;
   width: 60% !important;
   /*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
+}
+div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid #calendar-edit_start {
+  margin-top: 5px;
+  margin-right: 5px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid td {
   padding: 4px;
@@ -965,7 +962,6 @@ div#calendar-edit #calendar-edit_calendar-edit-general .et2_selectbox .ui-multis
   text-indent: -20px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-general #calendar-edit_category {
-  min-height: 310px;
   border: 1px solid;
   border-color: #b4b4b4;
   -webkit-border-radius: 3px;
@@ -1046,6 +1042,7 @@ div#calendar-edit #calendar-edit_calendar-edit-participants .et2_label {
 div#calendar-edit #calendar-edit_calendar-edit-recurrence tbody {
   display: table;
   width: 100%;
+  line-height: 30px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-custom tbody {
   display: table;

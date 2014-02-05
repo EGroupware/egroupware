@@ -420,19 +420,6 @@ div#calendar-edit{
 
     .et2_tabcntr {
         overflow-y: auto;
-
-        table.et2_grid {
-            // Listendarstellung
-            tr:nth-child(even) {
-                /*background: @color_even;*/
-                line-height: 20px;
-            }
-            tr:nth-child(odd) {
-                /*background: @color_odd;*/
-                line-height: 44px;
-            }
-        }
-
     }
 
 
@@ -445,6 +432,13 @@ div#calendar-edit{
         float: left;
         width: 100%;
         table.et2_grid{
+
+            line-height: 30px;
+
+			#calendar-edit_start{
+                margin-top: 5px;
+				margin-right: 5px;
+            }
 
             width: 60% !important;
 
@@ -476,8 +470,6 @@ div#calendar-edit{
 
         //selectbox
         #calendar-edit_category{
-            min-height: 310px;
-
             border: 1px solid;
             border-color: @gray_30;
             .border_radius_button_normal;
@@ -581,7 +573,7 @@ div#calendar-edit{
         tbody{
             display: table;
             width: 100%;
-
+			line-height: 30px;
         }
     }
 

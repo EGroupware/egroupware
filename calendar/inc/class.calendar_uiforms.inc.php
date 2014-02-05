@@ -1492,6 +1492,8 @@ class calendar_uiforms extends calendar_ui
 		$readonlys['tabs'] = array(
 			'custom' => !count($this->bo->config['customfields']),
 			'participants' => $this->accountsel->account_selection == 'none',
+			'history' => !$event['id'],
+			'alarms' => $readonlys['tabs']['alarms'],
 		);
 		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))	// no mail without mail-app
 		{
