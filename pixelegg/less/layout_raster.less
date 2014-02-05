@@ -295,7 +295,7 @@
     padding: 0.5em;
     top: 5px;
     position: fixed;
-    right: 5px;
+    right: 15px;
 
 
     &:hover {.box_shadow_standard_light_hover;}
@@ -323,7 +323,7 @@
     .box_shadow_standard_light;
     padding: 0.5em;
     top: 5px;
-    right: 45px;
+    right: 56px;
     z-index: 200;
     &:hover {.box_shadow_standard_light_hover;}
     &:active {.Complete_Button_active;}
@@ -427,7 +427,7 @@
         float: right;
         padding: 0.5em;
         position: fixed;
-        right: 83px;
+        right: 96px;
         top: 5px;
         .dimension_width_height_s;
         &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
@@ -450,26 +450,44 @@
     
     // JS ERROR
     img#topmenu_info_error{
-                            .dimension_height_s;
+                            .dimension_width_height_xs;
                             position: fixed;
-                            top: 14px;
-                            right: 0px;
+                           
+                            /*.Button_size_square_16;*/
                             
-                            .Button_size_square_16;
                             .border_normal;
                             .box_shadow_standard_light;
-                            padding: 0.5em;
-                            top: 5px;
-                            right: 45px;
+                            padding: 7px 4px;
+                            top: 6px;
+                            right: 0px;
                             z-index: 200;
                             &:hover {.box_shadow_standard_light_hover;}
                             &:active {.Complete_Button_active;}
                             &:focus {.box_shadow_standard_light_inset;}
                             
-                            background-color: red;
+                            background-color: @color_warning;
+                            
+                            
+                            //blinking
+                            -moz-transition:all 1s ease-in-out;
+                            -webkit-transition:all 1s ease-in-out;
+                            -o-transition:all 1s ease-in-out;
+                            -ms-transition:all 1s ease-in-out;
+                            transition:all 1s ease-in-out;
+                            /* order: name, direction, duration, iteration-count, timing-function */  
+                            -moz-animation:blink normal 2s infinite ease-in-out; /* Firefox */
+                            -webkit-animation:blink normal 2s infinite ease-in-out; /* Webkit */
+                            -ms-animation:blink normal 2s infinite ease-in-out; /* IE */
+                            animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
                             
                            }
-    
+                           
+                           
+                           
+@-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Firefox */
+@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Webkit */
+@-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* IE */
+@keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Opera and prob css3 final iteration */ 
 
 } 
 // Ende items
