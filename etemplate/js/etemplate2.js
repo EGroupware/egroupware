@@ -904,7 +904,7 @@ function etemplate2_handle_assign(type, res, req)
 			}
 			catch (e)
 			{
-				egw.debug("error", "When assigning %s on %s via AJAX, \n"+e.message,res.data.key,res.data.id,widget);
+				egw.debug("error", "When assigning %s on %s via AJAX, \n"+(e.message||e+""),res.data.key,res.data.id,widget);
 			}
 		}
 		return false;
