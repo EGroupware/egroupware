@@ -930,7 +930,7 @@ div.message.floating {
   position: relative;
 }
 .egwGridView_grid span.arrow ~ div.innerContainer {
-  display: inline-block;
+  display: inline;
 }
 /* Indent the sub-grid */
 .egwGridView_grid .egwGridView_grid {
