@@ -43,6 +43,9 @@ app.classes.admin = AppJS.extend(
 	 */
 	destroy: function()
 	{
+		this.iframe = null;
+		this.splitter = null;
+		
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -118,8 +121,8 @@ app.classes.admin = AppJS.extend(
 	linkHandler: function(_url)
 	{
 		var matches;
-		if (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') ||
-			(matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/)))
+		if (_url !='about:blank'&& (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') ||
+			(matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/))))
 		{
 			if (matches)
 			{
