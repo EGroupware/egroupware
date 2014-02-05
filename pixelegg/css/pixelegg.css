@@ -4995,7 +4995,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * dialog 
+ * dialog
 
  * define every dialog box in egw
  * even popup or jquery
@@ -5009,6 +5009,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
  * @version $Id$
  */
 /*@import (reference) "def_content_elements.less";*/
+div#popupMainDiv {
+  padding: 8px;
+}
 div.et2_container {
   padding: 0;
 }

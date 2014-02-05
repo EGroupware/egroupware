@@ -1,7 +1,7 @@
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * dialog 
+ * dialog
 
  * define every dialog box in egw
  * even popup or jquery
@@ -23,6 +23,9 @@
 
 // Dialoge Allgemeine Definition
 
+div#popupMainDiv {
+	padding: 8px;
+}
 
 div.et2_container {
 
@@ -45,15 +48,15 @@ div.et2_container {
 
                         td {
                             .et2_box_widget {
-                               
+
                                 select{
                                     height: 20px;
                                     padding: 0;
                                     margin: 0px;
                                     font-size: 0.95em;
-                                    
+
                                 }
-                                
+
                                input {
                                     height: 20px;
                                     padding: 0;
@@ -61,11 +64,11 @@ div.et2_container {
                                     font-size: 0.95em;
                                     .border_radius (3px, 3px ,3px ,3px );
                                 }
-                                
+
                                 input.hasDatepicker {
                                     background-image: url( "../images/datepopup.png");
-                                        
-                                    &:hover {cursor: pointer;}     
+
+                                    &:hover {cursor: pointer;}
                                 }
                             }
 
@@ -80,7 +83,7 @@ div.et2_container {
 
                             .et2_tabheader {}
                             .et2_tabs {
-                                
+
                                 button.et2_button_with_image {.dimension_height_m;}
 
                                 table.et2_grid {.background_color_0_gray;}
@@ -105,8 +108,8 @@ div.et2_container {
 /*Main div*/
 
 #popupMainDiv {
-   
-    
+
+
 }
 
 
@@ -138,46 +141,46 @@ table.dialog-main-view {width: 100%;}
 
 /**********    Header Part ********************/
 .dialog-header{
-    
-    
-    /*background-color: @egw_color_2_d;*/ 
+
+
+    /*background-color: @egw_color_2_d;*/
     .gradient_thead;
     .color_100_gray;
-    
+
 
     table.et2_grid {
         border-top: none;
 
         .th {
-            background-color: @egw_color_2_a !important; 
-            
+            background-color: @egw_color_2_a !important;
+
         }
 
         tr { height: 30px; }
 
         td {padding: 0px 0px 0px 3px; .color_100_gray;}
-        
+
         //Table in Table
         table.et2_grid {
-            
+
             label.et2_label {
                 span.et2_selectbox {
                         li {float: left;}
                 }
             }
-            
+
         }
-        
+
     }
-    
+
     .et2_label {
-        .color_100_gray; 
-        vertical-align: bottom; 
+        .color_100_gray;
+        vertical-align: bottom;
         padding: 0px 0px 0px 3px !important;
     }
-    
+
     td.space  {
-    
+
         span img {
                 background: @gray_0;
                 border: 2px solid @gray_0;
@@ -191,36 +194,36 @@ table.dialog-main-view {width: 100%;}
                     filter: grayscale(100%);
                     /*filter: url(grayscale.svg);  Firefox 4+ */
                     filter: gray; /* IE 6-9 */
-        
+
                     }
 
-                }            
-               
+                }
+
 }
 
 tr.dialog-header2,
 tr.dialog-header3,
-tr.dialog-header4{ 
+tr.dialog-header4{
     background-color: @gray_10 !important;
     border-top: 2px solid @gray_10;
     border-bottom: 2px solid @gray_10;
-    
-    
+
+
     .et2_label {
-        .color_90_gray; 
-        vertical-align: bottom; 
+        .color_90_gray;
+        vertical-align: bottom;
         padding: 0px 0px 0px 3px !important;
     }
-    
+
 }
 
 /************* Tabs  *********************************/
 
 .dialog-tabs {
-    
+
     .gradient_thead;
     .color_100_gray;
-    
+
 }
 
 
@@ -228,9 +231,9 @@ tr.dialog-header4{
 
 // Terminsuche
 .dialog-main-timeframe {
-    
+
     div {min-height: 100px;}
-    
+
 }
 
 /**********    Operators *******************************/
@@ -238,7 +241,7 @@ tr.dialog-header4{
     background-color: fade(@gray_10, 2%);
     border-top: 0px solid @gray_10;
     border-bottom: 0px solid @gray_10;
-   
+
     td {padding: 2px;}
 }
 
@@ -246,22 +249,22 @@ tr.dialog-header4{
 /**********    Footer  *******************************/
 /*Buttons / Toolbar*/
 
-.dialog-footer-toolbar{ 
+.dialog-footer-toolbar{
     background-color: @egw_color_2_e;
 
     td {padding: 0px 5px;}
-    
+
     button { height: 32px;}
-    
+
     button[id="addressbook-edit_button[delete]"]{
         float: right;
     }
-    
+
     // selectbox
     .et2_selectbox {height: 32px; top: 0px; font-size: 1.2em;}
-    
-    
-    
+
+
+
     // e.g. keine Benachrichtigung senden
     label.et2_label {
 /*        .Complete_Button_input;
@@ -273,16 +276,16 @@ tr.dialog-header4{
         position: relative;
         top: 11px;
     }
-    
+
     input.et2_checkbox { top: 0px;}
-    
+
 }
 
 /*Dialog Calendar - Resourcen suchen*/
 
 div#divMain {
     padding: 1em;
-    
+
     img {.dimension_width_height_s;}
     input[type*="image"] {.dimension_width_height_s;}
 }
