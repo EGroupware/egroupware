@@ -585,9 +585,7 @@ class mail_ui
 		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly);
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($data);
-		common::egw_exit();
+		etemplate_widget_tree::send_quote_json($data);
 	}
 
 	/**
@@ -640,7 +638,7 @@ class mail_ui
 			if ($_profileID && $acc_id != $_profileID) continue;
 
 			$oA = array('id' => $acc_id,
-				'text' => str_replace(array('<','>'),array('[',']'),$identity_name),// htmlspecialchars($identity_name),
+				'text' => $identity_name,// htmlspecialchars($identity_name),
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 				'im0' => 'thunderbird.png',
 				'im1' => 'thunderbird.png',
@@ -710,7 +708,11 @@ class mail_ui
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
-			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
+			if ($fS['unseen'])
+			{
+				$oA['text'] = $oA['text'].' ('.$fS['unseen'].')';
+				$oA['style'] = 'font-weight: bold';
+			}
 			$path = $this->mail_bo->profileID.self::$delimiter.$key; //$obj->folderName; //$obj->delimiter
 			$oA['id'] = $path; // ID holds the PATH
 			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
@@ -3253,12 +3255,11 @@ blockquote[type=cite] {
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
-							$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+							$oA[$_folderName] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
 						}
 						if ($fS['unseen']==0 && $fS['shortDisplayName'])
 						{
 							$oA[$_folderName] = $fS['shortDisplayName'];
-
 						}
 					}
 				}
@@ -3427,7 +3428,7 @@ blockquote[type=cite] {
 					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
 					if ($fS['unseen'])
 					{
-						$oA[$_folderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+						$oA[$_folderName]['desc'] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
 
 					}
 					else
@@ -3442,7 +3443,7 @@ blockquote[type=cite] {
 						$fS = $this->mail_bo->getFolderStatus($newFolderName.$fragment,false);
 						if ($fS['unseen'])
 						{
-							$oA[$oldFolderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
 
 						}
 						else

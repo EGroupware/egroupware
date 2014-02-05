@@ -584,7 +584,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Set values for mail dispaly From,Sender,To,Cc, and Bcc
 	 * Additionally, apply expand on click feature on thier widgets
-	 * 
+	 *
 	 */
 	mail_display: function()
 	{
@@ -604,7 +604,7 @@ app.classes.mail = AppJS.extend(
 
 			this.url_email_expandOnClick(expand_content, dataElem);
 		}
-		
+
 	},
 
 	/**
@@ -678,8 +678,8 @@ app.classes.mail = AppJS.extend(
 		];
 
 		dataElem = this.url_email_expandOnClick(expand_content,dataElem);
-		
-		
+
+
 		// Update the internal list of selected mails, if needed
 		if(this.mail_selectedMails.indexOf(_id) < 0)
 		{
@@ -840,6 +840,8 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		for (var i in _status) {
 			ftree.setLabel(i,_status[i]);
+			// display folder-name bold for unseen mails
+			ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
 			//alert(i +'->'+_status[i]);
 		}
 	},
@@ -1004,6 +1006,11 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Regular expression to find (and remove) unseen count from folder-name
+	 */
+	_unseen_regexp: / \([0-9]\)$/,
+
+	/**
 	 * Delete mails - actually calls the backend function for deletion
 	 * takes in all arguments
 	 * @param _msg - message list
@@ -1014,18 +1021,7 @@ app.classes.mail = AppJS.extend(
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var _foldernode = ftree.getSelectedNode();
 
-		var displayname = _foldernode.label;
-		var inBraket = displayname.indexOf('\(');
-		if (inBraket!=-1)
-		{
-			var outBraket = displayname.indexOf('\)');
-			if (outBraket!=-1)
-			{
-				displayname = displayname.replace(/\((.*?)\)/,"");
-				displayname = displayname.replace(/<b>/,"");
-				displayname = displayname.replace(/<\/b>/,"");
-			}
-		}
+		var displayname = _foldernode.label.replace(this._unseen_regexp, '');
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
@@ -1189,19 +1185,8 @@ app.classes.mail = AppJS.extend(
 
 		// Get nice folder name for message, if selected is not a profile
 		if(!profile_selected)
-			{
-			var displayname = _widget.getSelectedLabel();
-			var inBraket = displayname.indexOf('\(');
-			if (inBraket!=-1)
-			{
-				var outBraket = displayname.indexOf('\)');
-				if (outBraket!=-1)
-				{
-					displayname = displayname.replace(/\((.*?)\)/,"");
-					displayname = displayname.replace(/<b>/,"");
-					displayname = displayname.replace(/<\/b>/,"");
-				}
-			}
+		{
+			var displayname = _widget.getSelectedLabel().replace(this._remove_unseen_regexp, '');
 			var myMsg = (displayname?displayname:_folder)+' '+this.egw.lang('selected');
 			egw_message(myMsg);
 		}
@@ -1944,7 +1929,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_getFormData: function(_actionObjects) {
 		var messages = {};
-		// if 
+		// if
 		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
 		if (_actionObjects.length>0)
 		{

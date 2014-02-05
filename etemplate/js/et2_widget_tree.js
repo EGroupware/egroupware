@@ -268,7 +268,7 @@ var et2_tree = et2_inputWidget.extend(
 				// Item color - not working
 				if(options[key].data && typeof options[key].data.color !== 'undefined' && options[key].data.color)
 				{
-					options[key].style = options[key].style || "" + "background-color ='"+options[key].data.color+"';";
+					options[key].style = options[key].style || "" + "background-color:'"+options[key].data.color+"';";
 				}
 
 				// Tooltip
@@ -309,28 +309,39 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Regexp used by _htmlencode_node
+	 * Regexp used by _htmlencode
 	 */
 	_lt_regexp: /</g,
 
 	/**
-	 * Minimal html encoding of text and tooltip of node incl. all children
+	 * html encoding of text of node
 	 *
-	 * @param {object} _item with required attributes text, id and optional tooltip, child and item
+	 * We only do a minimal html encoding by replacing opening bracket < with &lt;
+	 * as tree seems not to need more and we dont want to waste time.
+	 *
+	 * @param {string} _text text to encode
+	 * @return {string}
+	 */
+	_htmlencode: function(_text)
+	{
+		if (_text && _text.indexOf('<') >= 0)
+		{
+			_text = _text.replace(this._lt_regexp, '&lt;');
+		}
+		return _text;
+	},
+
+	/**
+	 * html encoding of text of node incl. all children
+	 *
+	 * @param {object} _item with required attributes text, id and optional tooltip and item
 	 * @return {object} encoded node
 	 */
 	_htmlencode_node: function(_item)
 	{
-		// htmlencode text and tooltip
-		if (_item.text && _item.text.indexOf('<') >= 0)
-		{
-			_item.text = _item.text.replace(this._lt_regexp, '&lt;');
-		}
-		if (_item.tooltip && _item.tooltip.indexOf('<') >= 0)
-		{
-			_item.tooltip = _item.tooltip.replace(this._lt_regexp, '&lt;');
-		}
-		if (_item.child && jQuery.isArray(_item.item))
+		_item.text = this._htmlencode(_item.text);
+
+		if (_item.item && jQuery.isArray(_item.item))
 		{
 			for(var i=0; i < _item.item.length; ++i)
 			{
@@ -469,7 +480,7 @@ var et2_tree = et2_inputWidget.extend(
 			}
 		}
 
-		if (typeof _label != 'undefined') this.input.setItemText(_newItemId,_label);
+		if (typeof _label != 'undefined') this.setLabel(_newItemId, _label);
 	},
 
 	/**
@@ -602,14 +613,27 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
-	 * setLabel, sets the Label of of an item by id
+	 * Sets label of an item by id
+	 *
 	 * @param _id ID of the node
 	 * @param _label label to set
 	 * @return void
 	 */
 	setLabel: function(_id, _label) {
 		if(this.input == null) return null;
-		this.input.setItemText(_id,_label);
+		this.input.setItemText(_id, this._htmlencode(_label));
+	},
+
+	/**
+	 * Sets a style for an item by id
+	 *
+	 * @param {string} _id ID of node
+	 * @param {string} _style style to set
+	 * @return void
+	 */
+	setStyle: function(_id, _style) {
+		if(this.input == null) return null;
+		this.input.setItemStyle(_id, _style);
 	},
 
 	/**

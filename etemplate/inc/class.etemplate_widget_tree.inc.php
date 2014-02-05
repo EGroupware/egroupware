@@ -88,11 +88,7 @@ class etemplate_widget_tree extends etemplate_widget
 	{
 		$item['text'] = html::htmlspecialchars($item['text']);
 
-		if (!empty($item['tooltip']))
-		{
-			$item['tooltip'] = html::htmlspecialchars($item['tooltip']);
-		}
-		if ($item['child'] && isset($item['item']) && is_array($item['item']))
+		if (isset($item['item']) && is_array($item['item']))
 		{
 			foreach($item['item'] as &$child)
 			{
