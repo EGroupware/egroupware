@@ -573,9 +573,10 @@ class mail_ui
 	 */
 	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=true)
 	{
+		//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$_subscribedOnly);
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
-		$subscribedOnly = $_subscribedOnly;
+		$subscribedOnly = (bool)$_subscribedOnly;
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
 		$fetchCounters = !is_null($_nodeID);
@@ -638,7 +639,7 @@ class mail_ui
 			if ($_profileID && $acc_id != $_profileID) continue;
 
 			$oA = array('id' => $acc_id,
-				'text' => $identity_name,// htmlspecialchars($identity_name),
+				'text' => str_replace(array('<','>'),array('[',']'),$identity_name),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 				'im0' => 'thunderbird.png',
 				'im1' => 'thunderbird.png',
