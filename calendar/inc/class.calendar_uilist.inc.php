@@ -144,7 +144,6 @@ class calendar_uilist extends calendar_ui
 		}
 		$content = array(
 			'nm'  => egw_session::appsession('calendar_list','calendar'),
-			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
 		{
@@ -212,6 +211,10 @@ class calendar_uilist extends calendar_ui
 				'em; overflow: auto; }}</style>';
 		}
 
+		if($msg)
+		{
+			egw_framework::message($msg);
+		}
 		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,array(),$home ? -1 : 0);
 
 		// Not sure why this has to be echoed instead of appended, but that's what works.

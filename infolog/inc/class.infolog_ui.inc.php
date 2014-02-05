@@ -687,19 +687,21 @@ class infolog_ui
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
+					egw_framework::message($msg);
 				}
 				elseif(is_null($msg))
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					egw_framework::message($msg,'error');
 				}
 				elseif($msg)
 				{
 					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
+					egw_framework::message($msg,'error');
 				}
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['select_all']);
 			}
-			$values['msg'] = $msg;
 		}
 		if (!$action)
 		{
@@ -745,7 +747,6 @@ class infolog_ui
 
 			if (!$values['nm']['session_for'] && $this->called_by) $values['nm']['session_for'] = $this->called_by;
 
-			$values['msg'] = $_GET['msg'];
 			$action_id = $values['action_id'] = $action ? $action_id : $nm['action_id'];
 			$action_title = $values['action_title'] = $action ? $action_title : $nm['action_title'];
 			$action = $values['action'] = $action ? $action : $nm['action'];

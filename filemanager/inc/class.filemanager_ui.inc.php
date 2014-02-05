@@ -359,13 +359,15 @@ class filemanager_ui
 		require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
 		$tpl = new etemplate_new('filemanager.index');
 
-		$content['nm']['msg'] = $msg;
+		if($msg) egw_framework::message($msg);
 
 		if (($content['nm']['action'] || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
 		{
 			if ($content['nm']['action'])
 			{
-				$content['nm']['msg'] = self::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
+				$msg = self::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
+				if($msg) egw_framework::message($msg);
+
 				// clean up after action
 				unset($content['nm']['selected']);
 				// reset any occasion where action may be stored, as it may be ressurected out of the helpers by etemplate, which is quite unconvenient in case of action delete
@@ -377,7 +379,9 @@ class filemanager_ui
 			}
 			elseif($content['nm']['rows']['delete'])
 			{
-				$content['nm']['msg'] = self::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
+				$msg = self::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
+				if($msg) egw_framework::message($msg);
+
 				// clean up after action
 				unset($content['nm']['rows']['delete']);
 				// reset any occasion where action may be stored, as we use ['nm']['rows']['delete'] anyhow
@@ -408,7 +412,7 @@ class filemanager_ui
 				case 'upload':
 					if (!$content['upload'])
 					{
-						$content['nm']['msg'] = lang('You need to select some files first!');
+						egw_framework::message(lang('You need to select some files first!'),'error');
 						break;
 					}
 					$upload_success = $upload_failure = array();
@@ -430,12 +434,12 @@ class filemanager_ui
 					$content['nm']['msg'] = '';
 					if ($upload_success)
 					{
-						$content['nm']['msg'] = count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
-							lang('%1 successful uploaded.',implode(', ',$upload_success));
+						egw_framework::message( count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
+							lang('%1 successful uploaded.',implode(', ',$upload_success)));
 					}
 					if ($upload_failure)
 					{
-						$content['nm']['msg'] .= ($upload_success ? "\n" : '').lang('Error uploading file!')."\n".etemplate::max_upload_size_message();
+						egw_framework::message(lang('Error uploading file!')."\n".etemplate::max_upload_size_message(),'error');
 					}
 					break;
 			}

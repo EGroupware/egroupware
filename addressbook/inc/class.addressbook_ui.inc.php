@@ -144,11 +144,14 @@ class addressbook_ui extends addressbook_bo
 						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg,$content['nm']['checkboxes']))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
+						egw_framework::message($msg);
 					}
 					elseif(is_null($msg))
 					{
 						$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+						egw_framework::message($msg,'error');
 					}
+					$msg = '';
 				}
 			}
 			if ($content['nm']['rows']['infolog'])
@@ -186,9 +189,11 @@ class addressbook_ui extends addressbook_bo
 			'do_email' => $do_email,
 		);
 		$to = $content['nm']['to'];
-		$content = array(
-			'msg' => $msg ? $msg : $_GET['msg'],
-		);
+		$content = array();
+		if($msg || $_GET['msg'])
+		{
+			egw_framework::message($msg ? $msg : $_GET['msg']);
+		}
 
 		$content['nm'] = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
 		if (!is_array($content['nm']))
