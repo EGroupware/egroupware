@@ -342,6 +342,15 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// These keys we don't send row data back, as they cause a partial reload
 			if(in_array($key, array('template'))) $no_rows = true;
 
+			// Actions still need extra handling
+			if($key == 'actions' && !isset($value['actions'][0]))
+			{
+				$value['action_links'] = array();
+				$template_name = isset($value['template']) ? $value['template'] : '';
+				if (!is_array($value['action_links'])) $value['action_links'] = array();
+				$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
+			}
+
 			$changes = true;
 			$request_value[$key] = $value[$key];
 
