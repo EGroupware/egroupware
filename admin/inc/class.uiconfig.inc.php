@@ -161,7 +161,7 @@ class uiconfig
 			unset($errors);
 			unset($GLOBALS['config_error']);
 		}
-		else
+		elseif ($_POST['apply'])
 		{
 			egw_framework::message(lang('Configuration saved.'), 'success');
 		}
