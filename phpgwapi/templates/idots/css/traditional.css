@@ -942,3 +942,11 @@ div.client_error_log tr.hidden td.stack > div {
 div.client_error_log tr td.stack > div {
 	white-space: pre;
 }
+
+/**
+ * configuration
+ */
+div.admin-config form > table {
+	width: 100%;
+	padding: 5px;
+}

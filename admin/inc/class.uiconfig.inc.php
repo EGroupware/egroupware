@@ -262,13 +262,14 @@ class uiconfig
 			($GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? '' :
 				html::submit_button('save', 'Save').
 				html::submit_button('apply', 'Apply')));
-		$t->set_var('cancel', html::submit_button('cancel', lang('Cancel')).'</div>');
+		$t->set_var('cancel', html::submit_button('cancel', 'Cancel').'</div>');
 
 		// render the page
 		$GLOBALS['egw']->framework->render(
+			'<div id="admin-config-'.$appname.'" class="admin-config">'.
 			$t->parse('out','header').
 			$t->fp('out','body').
-			$t->fp('out','footer'),
+			$t->fp('out','footer').'</div>',
 			null,true
 		);
 	}
