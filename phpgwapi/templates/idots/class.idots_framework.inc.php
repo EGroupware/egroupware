@@ -621,6 +621,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 
 			foreach($file as $text => $url)
 			{
+				if ($text === 'menuOpened') continue;
 				$this->sidebox_content .= $this->_sidebox_menu_item($url,$text);
 			}
 			$this->sidebox_content .= $this->tpl->parse('out','extra_blocks_footer');
