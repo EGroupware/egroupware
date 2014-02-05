@@ -603,6 +603,8 @@ app.classes.mail = AppJS.extend(
 			dataElem.data = jQuery.extend(dataElem.data, content);
 
 			this.url_email_expandOnClick(expand_content, dataElem);
+			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
+			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
 		}
 
 	},

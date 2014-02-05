@@ -3,10 +3,12 @@
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<vbox class="mailDisplay">
+		<vbox class="mailDisplayToolbar">
 			<hbox>
-				<toolbar id="toolbar"/>
+				<toolbar id="displayToolbar" view_range="12"/>
 			</hbox>
+		</vbox>
+		<vbox class="mailDisplay">
 			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
 				<description value="From"/>
 				<url-email id="FROM" readonly="true"/>

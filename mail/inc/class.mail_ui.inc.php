@@ -1856,7 +1856,7 @@ unset($query['actions']);
 		$actionsenabled = array_reverse($actionsenabled,true);
 		$actionsenabled['composeasnew']=$cAN;
 		$actionsenabled = array_reverse($actionsenabled,true);
-		$etpl->setElementAttribute('toolbar','actions', $actionsenabled);
+		$content['displayToolbaractions'] = json_encode($actionsenabled);
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		// Send mail ID so we can use it for actions
