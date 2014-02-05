@@ -47,6 +47,10 @@
 						<description/>
 						<checkbox label="Private" id="public" options="0,1"/>
 					</row>
+					<row>
+						<description/>
+						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
+					</row>
 				</rows>
 			</grid>
 			<vbox align="right" options="0,0" class="row_on">
@@ -56,18 +60,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="210">
-			<columns>
-				<column width="95"/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<description for="description" value="Description"/>
-					<textbox multiline="true" id="description" rows="12" cols="70"/>
-				</row>
-			</rows>
-		</grid>
+		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="200"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="210" overflow="auto" id="participants">
@@ -308,8 +301,8 @@
 	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="%10"/>
-				<column width="%100"/>
+				<column width="100"/>
+				<column/>
 				<column/>
 				<column/>
 			</columns>
@@ -361,26 +354,16 @@
 						<menupopup type="select-account" align="right" class="noBreak" label="by" id="modifier" readonly="true"/>
 					</menulist>
 				</row>
-				<row class="dialog-footer-toolbar">
-					<hbox span="3">
-						<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" onclick="app.calendar.move_edit_series"/>
-						<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1" onclick="app.calendar.move_edit_series"/>
-						<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<menulist>
-							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
-						</menulist>
-						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
-					</hbox>
-					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
-				</row>
-				<row >
-					<template id="calendar.delete_series" span="all" />
-				</row>
 			</rows>
 		</grid>
-		<styles>
-			.end_hide { display: block; white-space: nowrap; margin-left: 10px; }
-.noBreak { white-space: nowrap; }
-		</styles>
+		<hbox class="dialog-footer-toolbar">
+			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" onclick="app.calendar.move_edit_series"/>
+			<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1" onclick="app.calendar.move_edit_series"/>
+			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+			<menulist>
+				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
+			</menulist>
+			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
+		</hbox>
 	</template>
 </overlay>
