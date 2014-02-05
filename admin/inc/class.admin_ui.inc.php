@@ -257,9 +257,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 	 */
 	public static function ajax_tree()
 	{
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
-		common::egw_exit();
+		etemplate_widget_tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
 	}
 
 	/**

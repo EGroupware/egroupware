@@ -129,6 +129,8 @@ var et2_tree = et2_inputWidget.extend(
 
 	/**
 	 * Get tree items from the sel_options data array
+	 *
+	 * @param {object} _attrs
 	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
@@ -184,7 +186,7 @@ var et2_tree = et2_inputWidget.extend(
 			width:		'100%',
 			height:		'100%',
 			image_path:	widget.options.image_path,
-			checkbox:	widget.options.multiple,
+			checkbox:	widget.options.multiple
 		});
 		if (widget.options.std_images)
 		{
@@ -274,7 +276,6 @@ var et2_tree = et2_inputWidget.extend(
 				{
 					options[key].tooltip = options[key].description;
 				}
-
 				var parent_id = parseInt(options[key]['parent']);
 				if(isNaN(parent_id)) parent_id = 0;
 				if(!stack[parent_id]) stack[parent_id] = [];
@@ -304,7 +305,39 @@ var et2_tree = et2_inputWidget.extend(
 		if (typeof options.id == 'undefined' && this.input.XMLsource)
 			this.input.loadJSON(this.input.XMLsource);
 		else
-			this.input.loadJSONObject(options);
+			this.input.loadJSONObject(this._htmlencode_node(options));
+	},
+
+	/**
+	 * Regexp used by _htmlencode_node
+	 */
+	_lt_regexp: /</g,
+
+	/**
+	 * Minimal html encoding of text and tooltip of node incl. all children
+	 *
+	 * @param {object} _item with required attributes text, id and optional tooltip, child and item
+	 * @return {object} encoded node
+	 */
+	_htmlencode_node: function(_item)
+	{
+		// htmlencode text and tooltip
+		if (_item.text && _item.text.indexOf('<') >= 0)
+		{
+			_item.text = _item.text.replace(this._lt_regexp, '&lt;');
+		}
+		if (_item.tooltip && _item.tooltip.indexOf('<') >= 0)
+		{
+			_item.tooltip = _item.tooltip.replace(this._lt_regexp, '&lt;');
+		}
+		if (_item.child && jQuery.isArray(_item.item))
+		{
+			for(var i=0; i < _item.item.length; ++i)
+			{
+				this._htmlencode_node(_item.item[i]);
+			}
+		}
+		return _item;
 	},
 
 	set_value: function(new_value) {
@@ -338,7 +371,7 @@ var et2_tree = et2_inputWidget.extend(
 	/**
 	 * Links actions to tree nodes
 	 *
-	 * @param Object[ {ID: attributes..}+] as for set_actions
+	 * @param {object} actions [ {ID: attributes..}+] as for set_actions
 	 */
 	_link_actions: function(actions)
 	{
@@ -416,10 +449,10 @@ var et2_tree = et2_inputWidget.extend(
 
 	/**
 	 * renameItem, renames an item by id
-	 * @param _id ID of the node
-	 * @param _newid ID of the node
-	 * @param _label label to set
-	 * @return void
+	 *
+	 * @param {string} _id ID of the node
+	 * @param {string} _newItemId ID of the node
+	 * @param {string} _label label to set
 	 */
 	renameItem: function(_id, _newItemId, _label) {
 		if(this.input == null) return null;
@@ -521,8 +554,8 @@ var et2_tree = et2_inputWidget.extend(
 	 * The tree has visually already been updated at this point, we just need
 	 * to update the internal data.
 	 *
-	 * @param Object new_data Fresh data for the tree
-	 * @param Object update_option_id optional If provided, only update that node (and children) with the
+	 * @param {object} new_data Fresh data for the tree
+	 * @param {string} update_option_id optional If provided, only update that node (and children) with the
 	 *	provided data instead of the whole thing.  Allows for partial updates.
 	 * @return void
 	 */
@@ -547,8 +580,8 @@ var et2_tree = et2_inputWidget.extend(
 	/**
 	 * Recursive search item object for given id
 	 *
-	 * @param string _id
-	 * @param object _item
+	 * @param {string} _id
+	 * @param {object} _item
 	 * @returns
 	 */
 	_find_in_item: function(_id, _item)
@@ -603,9 +636,9 @@ var et2_tree = et2_inputWidget.extend(
 	/**
 	 * getTreeNodeOpenItems
 	 *
-	 * @param _nodeID, the nodeID where to start from (initial node)
-	 * @param mode, the mode to run in: forced fakes the initial node openState to be open
-	 * @return structured array of node ids: array(message-ids)
+	 * @param {string} _nodeID the nodeID where to start from (initial node)
+	 * @param {string} mode the mode to run in: "forced" fakes the initial node openState to be open
+	 * @return {object} structured array of node ids: array(message-ids)
 	 */
 	getTreeNodeOpenItems: function (_nodeID, mode) {
 		if(this.input == null) return null;
@@ -712,10 +745,10 @@ var et2_tree = et2_inputWidget.extend(
 	 * If images contain an extension eg. "leaf.gif" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
 	 * Otherwise they get searched via egw.image() in current app, phpgwapi or can be specified as "app/image".
 	 *
-	 * @param string _leaf leaf image, default "leaf.gif"
-	 * @param string _closed closed folder image, default "folderClosed.gif"
-	 * @param string _open opened folder image, default "folderOpen.gif"
-	 * @param _id if not given, standard images for new nodes are set
+	 * @param {string} _leaf leaf image, default "leaf.gif"
+	 * @param {string} _closed closed folder image, default "folderClosed.gif"
+	 * @param {string} _open opened folder image, default "folderOpen.gif"
+	 * @param {string} _id if not given, standard images for new nodes are set
 	 */
 	setImages: function(_leaf, _closed, _open, _id)
 	{
@@ -745,8 +778,8 @@ var et2_tree = et2_inputWidget.extend(
 	 *
 	 * Both URL start with EGroupware webserverUrl and image_path gets allways appended to images by tree.
 	 *
-	 * @param string _url
-	 * @return string relativ url
+	 * @param {string} _url
+	 * @return {string} relativ url
 	 */
 	_rel_url: function(_url)
 	{

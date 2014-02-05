@@ -63,6 +63,46 @@ class etemplate_widget_tree extends etemplate_widget
 	}
 
 	/**
+	 * Send data as json back to tree
+	 *
+	 * Basicly sends a Content-Type and echos json encoded $data and exit.
+	 *
+	 * As text parameter accepts html in tree, we htmlencode it here!
+	 *
+	 * @param array $data
+	 */
+	public static function send_quote_json(array $data)
+	{
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode(self::htmlencode_node($data));
+		common::egw_exit();
+	}
+
+	/**
+	 * HTML encoding of text and tooltip of node including all children
+	 *
+	 * @param array $item
+	 * @return array
+	 */
+	public static function htmlencode_node(array $item)
+	{
+		$item['text'] = html::htmlspecialchars($item['text']);
+
+		if (!empty($item['tooltip']))
+		{
+			$item['tooltip'] = html::htmlspecialchars($item['tooltip']);
+		}
+		if ($item['child'] && isset($item['item']) && is_array($item['item']))
+		{
+			foreach($item['item'] as &$child)
+			{
+				$child = self::htmlencode_node($child);
+			}
+		}
+		return $item;
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
