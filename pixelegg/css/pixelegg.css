@@ -5226,6 +5226,26 @@ div#divMain input[type*="image"] {
   width: 16px;
   height: 16px;
 }
+/**
+ * admin - site configuration
+ */
+div.admin-config form > table {
+  width: 100%;
+  padding: 5px;
+}
+div.admin-config form > table tr.th td {
+  font-size: 110%;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+div.admin-config form > table td {
+  padding-left: 5px;
+  border-bottom: 1px solid #e0e0e0;
+}
+div.admin-config form > table td b {
+  font-weight: bold;
+}
 /*
 	Printing
 */
