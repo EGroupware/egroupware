@@ -859,6 +859,7 @@ function egw_preferences(name, apps)
 			case 'acl':
 				query.menuaction='preferences.preferences_acl.index';
 				query.acl_app=current_app;
+				query.ajax=true;
 				break;
 
 			case 'cats':
