@@ -1040,7 +1040,7 @@ class calendar_uiforms extends calendar_ui
 		$boical = new calendar_ical();
 		// we need to pass $event[id] so iCal class reads event again,
 		// as event is in user TZ, but iCal class expects server TZ!
-		$ics = $boical->exportVCal(array($event['id']),'2.0','request',false);
+		$ics = $boical->exportVCal(array($event['id']),'2.0','REQUEST',false);
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
@@ -1056,7 +1056,7 @@ class calendar_uiforms extends calendar_ui
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
 			'preset[file]'    => $ics_file,
-			'preset[type]'    => 'text/calendar'.($asrequest?'; method=request':''),
+			'preset[type]'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),
 			'preset[size]'    => filesize($ics_file),
 		);
 		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
