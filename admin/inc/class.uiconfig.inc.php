@@ -81,10 +81,6 @@ class uiconfig
 
 		// fix header templates missing essential parts like display of validation errors
 		$header = $t->get_var('header');
-		if (strpos($header, '{error}') === false)
-		{
-			$header = '<p style="text-align: center; color: red; font-weight: bold;">{error}</p>'."\n".$header;
-		}
 		if (strpos($header, '{hidden_vars}') === false)
 		{
 			if (strpos($header, '<table'))
@@ -153,21 +149,21 @@ class uiconfig
 
 			if(!$errors && !$_POST['apply'])
 			{
+				egw_framework::message(lang('Configuration saved.'), 'success');
 				egw::redirect_link($referer);
 			}
 		}
 
+		$t->set_var('error','');
 		if($errors)
 		{
-			$t->set_var('error',lang('Error') . ': ' . $errors);
-			$t->set_var('th_err','#FF8888');
+			egw_framework::message(lang('Error') . ': ' . $errors, 'error');
 			unset($errors);
 			unset($GLOBALS['config_error']);
 		}
 		else
 		{
-			$t->set_var('error','');
-			$t->set_var('th_err',$GLOBALS['egw_info']['theme']['th_bg']);
+			egw_framework::message(lang('Configuration saved.'), 'success');
 		}
 		$t->set_var('title',lang('Site Configuration'));
 		$t->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
@@ -263,6 +259,9 @@ class uiconfig
 				html::submit_button('save', 'Save').
 				html::submit_button('apply', 'Apply')));
 		$t->set_var('cancel', html::submit_button('cancel', 'Cancel').'</div>');
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration').
+			($appname != 'admin' ? ': '.lang($appname) : '');
 
 		// render the page
 		$GLOBALS['egw']->framework->render(
