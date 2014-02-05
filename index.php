@@ -104,7 +104,7 @@ if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !
 	}
 	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 	{
-		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']));
+		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
 	}
 	else
 	{
