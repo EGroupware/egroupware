@@ -26,6 +26,12 @@
 var et2_toolbar = et2_DOMWidget.extend(
 {
 	attributes: {
+		"view_range": {
+			"name": "View range",
+			"type": "string",
+			"default": "3",
+			"description": "Define minimum action view range to show actions by both icons and caption"
+		},
 	},
 
 	/**
@@ -56,6 +62,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 			.attr('id',this.id +'-'+ 'actionlist');
 
+		this.countActions = 0;
 		this.dropdowns = {};
 		this.preference = {};
 
@@ -93,7 +100,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 
 		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
-
+		this.countActions = Object.keys(actions).length - Object.keys(this.preference).length;
 		var last_group = false;
 		var last_group_id = false;
 		for(var name in actions)
@@ -183,13 +190,16 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('button'),
 			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
 			menulist = jQuery('#'+this.id+'-'+'menulist');
-
+			
 		toolbar.draggable({
 			cancel:true,
 			//revert:"invalid",
 			containment: "document",
 			cursor: "move",
-			helper: "clone"
+			helper: "clone",
+			stop: function(event, ui){
+				that._build_menu(actions);
+			}
 		});
 		menulist.children().draggable({
 			cancel:true,
@@ -205,7 +215,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 					ui.draggable.appendTo(menulist);
 					if (that.actionlist.find(".ui-draggable").length == 1)
 					{
-						that.actionlist.addClass("ui-toolbar_dropShadow");
+						that.preference = {};
+						egw.set_preference(that.egw().getAppName(),that.id,that.preference);
 					}
 			},
 			tolerance:"pointer"
@@ -216,24 +227,13 @@ var et2_toolbar = et2_DOMWidget.extend(
 			drop:function (event,ui) {
 				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"remove");
 				ui.draggable.appendTo(jQuery('#'+that.id+'-'+'actionlist'));
-				that.actionlist.removeClass("ui-toolbar_dropShadow");
+				that._build_menu(actions);
 			}
 		});
 		toolbox.accordion({
 			heightStyle:"fill",
 			collapsible: true,
 			active:'none',
-			activate:function(event,ui)
-			{
-				if (that.actionlist.find(".ui-draggable").length == 0 && ui.oldPanel.length == 0)
-				{
-					that.actionlist.addClass("ui-toolbar_dropShadow");
-				}
-				else if(that.actionlist.find(".ui-draggable").length == 0 && ui.newPanel.length == 0)
-				{
-					that.actionlist.removeClass("ui-toolbar_dropShadow");
-				}
-			}
 		});
 	},
 
@@ -268,20 +268,31 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var button_options = {
 		};
 		var button = $j(document.createElement('button'))
-			.addClass("et2_button")
+			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', action.caption)
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-		if(action.iconUrl)
+		
+		if ( action.iconUrl && this.countActions > this.view_range )
 		{
-			button.prepend("<img src='"+action.iconUrl+"'  class='et2_button_icon'/>");
+			button.attr('style','background-image:url(' + action.iconUrl + ')');
+		}
+		else if (action.caption)
+		{
+			if (action.iconUrl)
+			{
+				button.attr('style','background-image:url(' + action.iconUrl + ')');
+			}
+			button.context.innerText = action.caption;
 		}
 		if(action.icon)
 		{
 			button_options.icon = action.icon;
 		}
-		button.button(button_options);
-
+		if (!jQuery.isEmptyObject(button_options))
+		{
+			button.button(button_options);
+		}
 		// Set up the click action
 		var click = function(e) {
 			var action = this._actionManager.getActionById(e.data);
