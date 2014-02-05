@@ -2391,8 +2391,8 @@ unset($query['actions']);
 
 		$this->mail_bo->reopen($mailbox);
 
-		$message = $this->mail_bo->getMessageRawBody($uid, $partID);
-		$headers = $this->mail_bo->getMessageHeader($uid, $partID);
+		$message = $this->mail_bo->getMessageRawBody($uid, $partID, $mailbox);
+		$headers = $this->mail_bo->getMessageHeader($uid, $partID, true,false, $mailbox);
 
 		$this->mail_bo->closeConnection();
 
@@ -2443,7 +2443,7 @@ unset($query['actions']);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			if ($mb != $this->mail_bo->mailbox) $this->mail_bo->reopen($mb = $mailbox);
-			$message = $this->mail_bo->getMessageRawBody($uid, $partID='');
+			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 				!fwrite($fp,$message))
 			{
@@ -2458,7 +2458,7 @@ unset($query['actions']);
 			if ($succeeded)
 			{
 				translation::add_app('mail');
-				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true);
+				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
 				unset($headers['SUBJECT']);//already in filename
 				$infoSection = mail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
 				$props = array(array('name' => 'comment','val' => $infoSection));
