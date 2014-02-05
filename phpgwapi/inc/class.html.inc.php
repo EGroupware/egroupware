@@ -648,6 +648,23 @@ egw_LAB.wait(function() {
 		return "<input $type name=\"$name\" value=\"".self::htmlspecialchars($value)."\" $options />\n";
 	}
 
+	static protected $default_background_images = array(
+		'save' => '/save(&|\[|\]|$)/',
+		'apply' => '/apply(&|\[|\]|$)/',
+		'cancel' => '/cancel(&|\[|\]|$)/',
+		'delete' => '/delete(&|\[|\]|$)/',
+		'edit' => '/edit(&|\[|\]|$)/',
+		'next' => '/(next|continue)(&|\[|\]|$)/',
+		'finish' => '/finish(&|\[|\]|$)/',
+		'back' => '/(back|previous)(&|\[|\]|$)/',
+		'copy' => '/copy(&|\[|\]|$)/',
+		'more' => '/more(&|\[|\]|$)/',
+		'check' => '/check(&|\[|\]|$)/',
+		'ok' => '/ok(&|\[|\]|$)/',
+		'close' => '/close(&|\[|\]|$)/',
+		'add' => '/(add(&|\[|\]|$)|create)/',	// customfields use create*
+	);
+
 	/**
 	 * represents html's button (input type submit or input type button or image)
 	 *
@@ -672,7 +689,7 @@ egw_LAB.wait(function() {
 		{
 			$image = str_replace(array('.gif','.GIF','.png','.PNG'),'',$image);
 
-			if (!($path = $GLOBALS['egw']->common->image($app,$image)))
+			if (!($path = common::image($app,$image)))
 			{
 				$path = $image;		// name may already contain absolut path
 			}
@@ -696,13 +713,22 @@ egw_LAB.wait(function() {
 		}
 		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
 
-		// <button> is not working in all cases if (self::$user_agent == 'mozilla' && self::$ua_version < 5 || $image)
+		// add default background-image to get et2 like buttons
+		foreach(self::$default_background_images as $img => $reg_exp)
 		{
-			return self::input($name,$label,$image != '' ? 'image' : $buttontype,$options.$image);
+			if (preg_match($reg_exp, $name) && ($url = common::image($GLOBALS['egw_info']['flags']['currentapp'], $img)))
+			{
+				$options .= ' style="background-image: url('.$url.');" class="et2_button et2_button_text et2_button_with_image"';
+				break;
+			}
 		}
-		return '<button type="'.$buttontype.'" name="'.$name.'" value="'.$label.'" '.$options.' />'.
+		if (!isset($url)) $options .= ' class="et2_button et2_button_text"';
+
+		return '<button type="'.$buttontype.'" name="'.htmlspecialchars($name).
+			'" value="'.htmlspecialchars($label).
+			'" '.$options.'>'.
 			($image != '' ? /*self::image($app,$image,$label,$options)*/'<img'.$image.' '.self::$prefered_img_title.'="'.$label.'"> ' : '').
-			($image == '' || $accesskey ? $label_u : '').'</button>';
+			($image == '' || $accesskey ? self::htmlspecialchars($label_u) : '').'</button>';
 	}
 
 	/**

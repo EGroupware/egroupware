@@ -34,7 +34,7 @@ class uiconfig
 		{
 			egw::redirect_link('/index.php');
 		}
-		$referer = $_POST['submit'] || $_POST['cancel'] ? $_POST['referer'] :
+		$referer = $_POST['submit'] || $_POST['save'] || $_POST['apply'] || $_POST['cancel'] ? $_POST['referer'] :
 			common::get_referer('/admin/index.php',$_POST['referer']);
 		list(,$show_app) = explode('/',$referer);
 		if (!$show_app) $show_app = 'admin';
@@ -102,15 +102,17 @@ class uiconfig
 		$t->set_block('config','body','body');
 		$t->set_block('config','footer','footer');
 
+		// fix footer submit buttons to just {submit} {cancel}
+		$t->set_var('footer', preg_replace('/<input[^>]+value="{lang_(submit|cancel)}"[^>]*>/', '{$1}', $t->get_var('footer')));
+
 		$c = new config($config_appname);
 		$c->read_repository();
-
-		if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
+		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
 		{
 			egw::redirect_link($referer);
 		}
 
-		if ($_POST['submit'])
+		if ($_POST['submit'] || $_POST['save'] || $_POST['apply'])
 		{
 			/* Load hook file with functions to validate each config (one/none/all) */
 			$GLOBALS['egw']->hooks->single('config_validate',$appname);
@@ -149,7 +151,7 @@ class uiconfig
 
 			$c->save_repository();
 
-			if(!$errors)
+			if(!$errors && !$_POST['apply'])
 			{
 				egw::redirect_link($referer);
 			}
@@ -219,7 +221,6 @@ class uiconfig
 				*/
 				case 'selected':
 					$configs = array();
-					$config  = '';
 					$newvals = explode(' ',$newval);
 					$setting = end($newvals);
 					for ($i=0;$i<(count($newvals) - 1); $i++)
@@ -257,11 +258,11 @@ class uiconfig
 					break;
 			}
 		}
-		$t->set_var('lang_submit', $GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
-		$t->set_var('lang_cancel', lang('Cancel'));
-
-		// set currentapp to our calling app, to show the right sidebox-menu
-//		$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
+		$t->set_var('submit', '<div class="dialog-footer-toolbar" style="text-align: left">'.
+			($GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? '' :
+				html::submit_button('save', 'Save').
+				html::submit_button('apply', 'Apply')));
+		$t->set_var('cancel', html::submit_button('cancel', lang('Cancel')).'</div>');
 
 		// render the page
 		$GLOBALS['egw']->framework->render(
