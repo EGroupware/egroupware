@@ -514,7 +514,10 @@ var AppJS = Class.extend(
 			$j(this).dialog("close");
 		};
 		buttons[this.egw.lang("cancel")] = function() {
-			self.favorite_popup.group.set_value(null);
+			if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
+			{
+				self.favorite_popup.group.set_value(null);
+			}
 			$j(this).dialog("close");
 		};
 
