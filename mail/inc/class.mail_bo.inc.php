@@ -1780,7 +1780,7 @@ class mail_bo
 			$newFolderName = $parent . $HierarchyDelimiter . $folderName;
 		}
 		if (self::$debug) error_log(__METHOD__.__LINE__.'->'.$newFolderName);
-		if (self::folderExists($newFolderName,true))
+		if ($this->folderExists($newFolderName,true))
 		{
 			error_log(__METHOD__.__LINE__." Folder $newFolderName already exists.");
 			return $newFolderName;
@@ -1993,15 +1993,15 @@ class mail_bo
 						{
 							if ($foldersNameSpace[$type]['prefix'] == $folderName || $foldersNameSpace[$type]['prefix'] == $folderName.$foldersNameSpace[$type]['delimiter']) continue;
 							//echo __METHOD__."Checking $folderName for existence<br>";
-							if (!self::folderExists($folderName,true)) {
+							if (!$this->folderExists($folderName,true)) {
 								//echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
-								if (self::subscribe($folderName, false))
+								if ($this->subscribe($folderName, false))
 								{
 									$r = " success.";
 								} else {
 									$r = " failed.";
 								}
-								error_log(__METHOD__."-> $folderName failed to be here; should be unsubscribed....".$r);
+								error_log(__METHOD__."-> $folderName in NS: $type failed to be here; should be unsubscribed....".$r);
 							}
 						}
 					}
@@ -2138,19 +2138,19 @@ class mail_bo
 								break;
 						}
 						// check for the foldername as constructed with prefix (or not)
-						if ($createfolder && self::folderExists($folderName))
+						if ($createfolder && $this->folderExists($folderName))
 						{
 							$createfolder = false;
 						}
 						// check for the folder as it comes (no prefix)
-						if ($createfolder && $personalFolderName != $folderName && self::folderExists($personalFolderName))
+						if ($createfolder && $personalFolderName != $folderName && $this->folderExists($personalFolderName))
 						{
 							$createfolder = false;
 							$folderName = $personalFolderName;
 						}
 						// check for the folder as it comes with INBOX prefixed
 						$folderWithInboxPrefixed = $folderPrefixAsInbox.$personalFolderName;
-						if ($createfolder && $folderWithInboxPrefixed != $folderName && self::folderExists($folderWithInboxPrefixed))
+						if ($createfolder && $folderWithInboxPrefixed != $folderName && $this->folderExists($folderWithInboxPrefixed))
 						{
 							$createfolder = false;
 							$folderName = $folderWithInboxPrefixed;
@@ -2410,7 +2410,7 @@ class mail_bo
 		//check prefs next
 		//if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
 		// does the folder exist???
-		if ($_checkexistance && $_folderName !='none' && !self::folderExists($_folderName)) {
+		if ($_checkexistance && $_folderName !='none' && !$this->folderExists($_folderName)) {
 			$_folderName = false;
 		}
 		//no (valid) folder found yet; try specialUseFolders
@@ -2421,7 +2421,7 @@ class mail_bo
 			$nameSpace = $this->_getNameSpaces();
 			$prefix='';
 			if (isset($nameSpace['personal'])) $prefix = $nameSpace['personal']['prefix'];
-			if (self::folderExists($prefix.$types[$_type]['autoFolderName'])) $_folderName = $prefix.$types[$_type]['autoFolderName'];
+			if ($this->folderExists($prefix.$types[$_type]['autoFolderName'])) $_folderName = $prefix.$types[$_type]['autoFolderName'];
 		}
 		return $_folderName;
 	}
@@ -2489,7 +2489,7 @@ class mail_bo
 			return false;
 		}
 		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
+		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
 
@@ -2512,7 +2512,7 @@ class mail_bo
 			return false;
 		}
 		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
+		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
 		return true;
@@ -2531,7 +2531,7 @@ class mail_bo
 			return false;
 		}
 		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
+		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
 
@@ -2555,7 +2555,7 @@ class mail_bo
 			return false;
 		}
 		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
+		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
 
@@ -2579,7 +2579,7 @@ class mail_bo
 			return false;
 		}
 		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
+		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
 
@@ -2634,6 +2634,7 @@ class mail_bo
 		if(($this->icServer instanceof defaultimap))
 		{
 			$folderInfo[$this->profileID][$_folder] = $this->icServer->mailboxExist($_folder); //LIST Command, may return OK, but no attributes
+			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.'->'.$_folder.':'.array2string($folderInfo[$this->profileID][$_folder]));
 			if ($folderInfo[$this->profileID][$_folder]==false)
 			{
 				// some servers dont serve the LIST command in certain cases; this is a ServerBUG and

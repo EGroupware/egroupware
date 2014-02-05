@@ -1235,12 +1235,13 @@ unset($query['actions']);
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
 		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
-		if ($this->mail_bo->folderExists($_folderName))
+		if ($this->mail_bo->folderExists($_folderName,true))
 		{
 			$toSchema = $this->mail_bo->isDraftFolder($_folderName)||$this->mail_bo->isSentFolder($_folderName)||$this->mail_bo->isTemplateFolder($_folderName);
 		}
 		else
 		{
+			error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
 			$query['selectedFolder']=$this->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
 		}
 		$this->mail_bo->saveSessionData();
