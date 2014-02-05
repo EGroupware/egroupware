@@ -94,6 +94,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.input = null;
+		// Start at '' to avoid infinite loops while setting value/select options
 		this.value = '';
 
 		// Allow no other widgets inside this one
