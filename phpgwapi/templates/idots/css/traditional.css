@@ -943,10 +943,25 @@ div.client_error_log tr td.stack > div {
 	white-space: pre;
 }
 
+.dialog-footer-toolbar {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color:#006699;
+	border-radius: 5px;
+}
 /**
- * configuration
+ * admin - site configuration
  */
 div.admin-config form > table {
 	width: 100%;
 	padding: 5px;
+}
+div.admin-config form > table tr.th td{
+	font-size: 110%;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+div.admin-config form > table td {
+	padding-left: 5px;
 }
