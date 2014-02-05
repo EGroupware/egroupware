@@ -469,11 +469,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			{
 				uid = app + "::" + _row_ids[i];
 				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+				// grid.deleteRow() changes grid indexes - see below
 				grid_IDs.push(entry.idx);
-				// Trigger controller to remove from internals
-				this.egw().dataStoreUID(uid,null);
-				// Stop caring about this ID
-				this.egw().dataDeleteUID(uid);
+
+				// Delete from internal references
+				this.controller.deleteRow(uid);
 			}
 
 			// Grid indexes change as we delete rows, so go from bottom

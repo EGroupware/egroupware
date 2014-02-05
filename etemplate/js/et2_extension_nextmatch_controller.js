@@ -114,6 +114,43 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		return this._objectManager;
 	},
 
+	/**
+	 * Deletes a row from the grid
+	 *
+	 * @param {string} uid
+	 */
+	deleteRow: function(uid) {
+		var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
+		if(entry && entry.idx)
+		{
+			// Trigger controller to remove from internals
+			this.egw.dataStoreUID(uid,null);
+			// Stop caring about this ID
+			this.egw.dataDeleteUID(uid);
+			// Remove from internal map
+			delete this._indexMap[entry.idx];
+
+			// Update the indices of all elements after the current one
+			for(var mapIndex = entry.idx + 1; typeof this._indexMap[mapIndex] !== 'undefined'; mapIndex++)
+			{
+				var entry = this._indexMap[mapIndex];
+				entry.idx = mapIndex-1;
+				this._indexMap[mapIndex-1] = entry;
+				
+				// Update selection mgr too
+				if(entry.uid && typeof this._selectionMgr._registeredRows[entry.uid] !== 'undefined')
+				{
+					var reg = this._selectionMgr._getRegisteredRowsEntry(entry.uid);
+					reg.idx = entry.idx;
+					if(reg.ao && reg.ao._index) reg.ao.index = entry.idx;
+				}
+			}
+			// Remove last one, it was moved to mapIndex-1 before increment
+			delete this._indexMap[mapIndex-1];
+
+			this._selectionMgr.setIndexMap(this._indexMap);
+		}
+	},
 
 	/** -- PRIVATE FUNCTIONS -- **/
 
@@ -184,7 +221,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		}
 
 		// Call the inherited function
-		this._super.call(this, arguments);
+		this._super.apply(this, arguments);
 	},
 
 	/**
