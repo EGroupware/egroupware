@@ -473,6 +473,7 @@
 						'account_firstname' => html::htmlspecialchars($account['account_firstname']),
 						'account_lastname' => html::htmlspecialchars($account['account_lastname']),
 						'account_email' => html::htmlspecialchars($account['account_email']),
+						'account_status' => $account['account_status'],
 					));
 
 					if ($can_edit)
