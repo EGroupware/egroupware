@@ -60,7 +60,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="200"/>
+		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="290"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="210" overflow="auto" id="participants">
@@ -321,7 +321,7 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" height="210" span="all">
+					<tabbox id="tabs" height="300" span="all">
 						<tabs>
 							<tab id="general" label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab id="description" label="Description" statustext="Full description"/>
