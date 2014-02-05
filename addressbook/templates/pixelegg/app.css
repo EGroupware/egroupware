@@ -335,11 +335,11 @@ fieldset.emailGroup {
     height: 32px;
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-    padding: 0.5em;
-    background-color: #0c5da5 !important;
+    padding: -0.5em;
+    background-color: #679fd2 !important;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
-    content: "+";
+    content: "";
     font-size: 2em;
     color: #ffc200;
     line-height: 0.6em;
@@ -716,11 +716,11 @@ fieldset.emailGroup {
   }
   div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_postalcode,
   div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_postalcode {
-    width: 10%;
+    width: 15%;
   }
   div#addressbook-edit table.addressbook_edit_general input#addressbook-edit_adr_one_locality,
   div#addressbook-search table.addressbook_edit_general input#addressbook-edit_adr_one_locality {
-    width: 83%;
+    width: 78%;
   }
   div#addressbook-edit table.addressbook_edit_general .chzn-container,
   div#addressbook-search table.addressbook_edit_general .chzn-container {
