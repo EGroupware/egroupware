@@ -224,7 +224,7 @@ app.classes.calendar = AppJS.extend(
 					var dataResize = resizeHelper.split("|");
 					var time = dataResize[1].split(":");
 
-					this.dropStart = that.resizeHelper(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top)
+					this.dropStart = that.resizeHelper(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top);
 					this.dropDate = dataResize[0]+"T"+time[0]+time[1];
 					//$j(this).resizable("option","containment",".calendar_calDayCol");
 				},
@@ -439,17 +439,12 @@ app.classes.calendar = AppJS.extend(
 			{
 				ownerId = 'r' + ownerId;
 			}
-			var date = timestamp[0];
-			var hour = timestamp[1];
-			var minute = timestamp[2];
-			if (ownerId == 0)
-			{
-				that.egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute,'_blank','700x700');
-			}
-			else
-			{
-				that.egw.open_link('calendar.calendar_uiforms.edit&date='+date+'&hour='+hour+'&minute='+minute+'&owner='+ownerId,'_blank','700x700');
-			}
+			that.egw.open(null, 'calendar', 'add', {
+				date: timestamp[0],
+				hour: timestamp[1],
+				minute: timestamp[2],
+				owner: ownerId
+			}, '_blank');
 		});
 
 	},
