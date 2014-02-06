@@ -133,7 +133,7 @@
 				<row valign="top" height="200">
 					<groupbox span="all">
 						<caption label="Extended access control list"/>
-						<grid width="100%" overflow="auto">
+						<grid width="100%" overflow="auto" id="eacl">
 							<columns>
 								<column width="80"/>
 								<column width="80"/>
