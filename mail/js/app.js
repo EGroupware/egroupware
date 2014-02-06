@@ -863,6 +863,7 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') egw_message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
+			ftree.setStyle(i, 'font-weight: '+(_status[i]['desc'].match(this._unseen_regexp) ? 'bold' : 'normal'));
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
 			{
@@ -913,9 +914,10 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				egw_message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i] : _status[i].text));
+				egw_message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
+			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
 		}
 
 		var selectedNodeAfter = ftree.getSelectedNode();
@@ -1010,7 +1012,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Regular expression to find (and remove) unseen count from folder-name
 	 */
-	_unseen_regexp: / \([0-9]\)$/,
+	_unseen_regexp: / \([0-9]+\)$/,
 
 	/**
 	 * Delete mails - actually calls the backend function for deletion
@@ -1134,7 +1136,7 @@ app.classes.mail = AppJS.extend(
 			getFolders = true;
 		}
 	//	alert(folder);
-		egw_message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel()));
+		egw_message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
 
 		this.lock_tree();
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders], jQuery.proxy(function() {
@@ -1188,8 +1190,8 @@ app.classes.mail = AppJS.extend(
 		// Get nice folder name for message, if selected is not a profile
 		if(!profile_selected)
 		{
-			var displayname = _widget.getSelectedLabel().replace(this._remove_unseen_regexp, '');
-			var myMsg = (displayname?displayname:_folder)+' '+this.egw.lang('selected');
+			var displayname = _widget.getSelectedLabel();
+			var myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
 			egw_message(myMsg);
 		}
 
@@ -2492,11 +2494,11 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	* Select the right combination of the rights for radio buttons from the selected common right
-	*
-	* @param {widget} widget common right selectBox
-	*
-	*/
+	 * Select the right combination of the rights for radio buttons from the selected common right
+	 *
+	 * @param {widget} widget common right selectBox
+	 *
+	 */
 	acl_common_rights_selector: function(widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
@@ -2509,14 +2511,14 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	*
-	* Choose the right common right option for common ACL selecBox
-	*
-	* @param {widget} widget radioButton rights
-	*
-	*/
-   acl_common_rights: function(widget)
-   {
+	 *
+	 * Choose the right common right option for common ACL selecBox
+	 *
+	 * @param {widget} widget radioButton rights
+	 *
+	 */
+	acl_common_rights: function(widget)
+	{
 
 	   var rowId = widget.id.replace(/[^0-9.]+/g, '');
 	   var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
@@ -2543,70 +2545,76 @@ app.classes.mail = AppJS.extend(
 	   {
 		   aclCommonWidget.set_value(rights);
 	   }
-   },
-   /**
-	*
-	* @todo get the account id and open the relevant sieve, ATM alway open sieve rules which is set in preferences
-	*/
-   edit_sieve: function()
-   {
+	},
+
+	/**
+	 *
+	 * @todo get the account id and open the relevant sieve, ATM alway open sieve rules which is set in preferences
+	 */
+	edit_sieve: function()
+	{
 	   this.egw.open_link('mail.mail_sieve.index');
-   },
+	},
 
-   /**
-	*
-	* @todo get the account id and open the relevant vacation, ATM alway open vacation rules which is set in preferences
-	*/
-   edit_vacation: function()
-   {
+	/**
+	 *
+	 * @todo get the account id and open the relevant vacation, ATM alway open vacation rules which is set in preferences
+	 */
+	edit_vacation: function()
+	{
 	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
-   },
+	},
 
-   /**
-	* Show/Hide unsubscribed folders
-	*
-	* @param {action} _action selected action from tree context menu
-	* @param {sender} _senders
-	*/
-   all_folders: function(_action,_senders)
-   {
+	/**
+	 * Show/Hide unsubscribed folders
+	 *
+	 * @param {action} _action selected action from tree context menu
+	 * @param {sender} _senders
+	 */
+	all_folders: function(_action,_senders)
+	{
 		//console.log(_action,_senders);
-		this.lock_tree();
 		var mailbox = _senders[0].id.split('::');
 		acc_id = mailbox[0];
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
+		this.lock_tree();
 		egw.json('mail.mail_ui.ajax_reloadNode',[acc_id,!_action.checked], jQuery.proxy(function() {
+			egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
 			this.unlock_tree();
 		},this))
 			.sendRequest();
-   },
+	},
 
-   /**
-	* Subscribe selected unsubscribed folder
-	*
-	* @param {action} _action
-	* @param {sender} _senders
-	*/
-   subscribe_folder: function(_action,_senders)
-   {
-	   var mailbox = _senders[0].id.split('::');
-	   var folder = mailbox[1], acc_id = mailbox[0];
-	   egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
+	/**
+	 * Subscribe selected unsubscribed folder
+	 *
+	 * @param {action} _action
+	 * @param {sender} _senders
+	 */
+	subscribe_folder: function(_action,_senders)
+	{
+		var mailbox = _senders[0].id.split('::');
+		var folder = mailbox[1], acc_id = mailbox[0];
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
+		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
 			.sendRequest();
-   },
+	},
 
-   /**
-	* Unsubscribe selected subscribed folder
-	*
-	* @param {action} _action
-	* @param {sender} _senders
-	*/
-   unsubscribe_folder: function(_action,_senders)
-   {
+	/**
+	 * Unsubscribe selected subscribed folder
+	 *
+	 * @param {action} _action
+	 * @param {sender} _senders
+	 */
+	unsubscribe_folder: function(_action,_senders)
+	{
 	  var mailbox = _senders[0].id.split('::');
 	   var folder = mailbox[1], acc_id = mailbox[0];
 	   egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
-   },
+	},
 
 	/**
 	 * Edit a folder acl for account(s)

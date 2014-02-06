@@ -358,6 +358,7 @@ then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP Server configured.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	to do
+toggle all folders view for %1	mail	en	Toggle all Folders view for %1
 trash	mail	en	Trash
 trash folder	mail	en	trash folder
 trust servers seen / unseen info	mail	en	trust servers SEEN / UNSEEN info

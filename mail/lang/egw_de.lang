@@ -359,6 +359,7 @@ then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP Server Konfiguriert
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
+toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1 
 trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
 trust servers seen / unseen info	mail	de	Abruf des Ungelesen/gelesen Status des Mailservers
