@@ -319,7 +319,6 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 /*Input beschränken*/
 #infolog-edit {
   margin: 0;
-  padding: 0.5em;
 }
 #infolog-edit .et2_tabheader {
   background: transparent;

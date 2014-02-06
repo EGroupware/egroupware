@@ -464,7 +464,6 @@ div#calendar-edit{
 
         // Kategorien
         .et2_hbox_right {overflow-y: auto;}
-
         .et2_selectbox .ui-multiselect-checkboxes {min-height: 290px;}
         .et2_selectbox .ui-multiselect-checkboxes li {text-indent: -20px;}
 
@@ -474,22 +473,18 @@ div#calendar-edit{
             border-color: @gray_30;
             .border_radius_button_normal;
 
-
-
             li{
                 .ui-state-hover{
                     font-weight: normal !important;
                     .box_shadow_standard_light_hover;
-
-
-
-
-
                 }
             }
         }
 
-
+        // Kalender Widget
+        div#ui-datepicker-div{
+                        
+        }
 
     }
 
@@ -635,6 +630,15 @@ div#calendar-edit{
         label.et2_label {top: 0px !important;}
 
     }
+
+         // actions
+        #calendar-edit_action {
+                margin-left: 5px;
+                padding-left: 10px;
+                width: 10em;
+                padding: 5px 0 5px 10px;
+
+        }
 
 
 

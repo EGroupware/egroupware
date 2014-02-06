@@ -1085,6 +1085,12 @@ div#calendar-edit #calendar-edit_calendar-edit-history tbody {
 div#calendar-edit tr.dialog-footer-toolbar label.et2_label {
   top: 0px !important;
 }
+div#calendar-edit #calendar-edit_action {
+  margin-left: 5px;
+  padding-left: 10px;
+  width: 10em;
+  padding: 5px 0 5px 10px;
+}
 .calendar_inputFullWidth input {
   width: 60%;
 }
