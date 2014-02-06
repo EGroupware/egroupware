@@ -29,18 +29,28 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var jQuery = _wnd.jQuery;
 	var framework = _wnd.framework;
 	var is_popup = !framework || _wnd.opener;
+	var error_reg_exp;
+
+	// install handler to remove message on click
+	jQuery('body').on('click', 'div#egw_message', function(e) {
+		jQuery('div#egw_message').remove();
+	});
 
 	return {
 		/**
 		 * Display an error or regular message
 		 *
-		 * @param {string} _msg message to show
+		 * @param {string} _msg message to show or empty to remove previous message
 		 * @param {string} _type 'error', 'warning' or 'success' (default)
 		 */
 		message: function(_msg, _type)
 		{
-			if (typeof _type == 'undefined')
-				_type = _msg.match(/error/i) ? 'error' : 'success';
+			if (_msg && typeof _type == 'undefined')
+			{
+				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
+
+				_type = _msg.match(error_reg_exp) ? 'error' : 'success';
+			}
 
 			// if we are NOT in a popup and have a framwork --> let it deal with it
 			if (!is_popup && typeof framework.setMessage != 'undefined')
@@ -66,17 +76,21 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				parent = jQuery('body');
 			}
 			jQuery('div#egw_message').remove();
-			parent.prepend(jQuery(_wnd.document.createElement('div'))
-				.attr('id','egw_message')
-				.text(_msg)
-				.addClass(_type+'_message')
-				.css('position', 'absolute'));
 
-			if (_type != 'error')	// clear message again after some time, if no error
+			if (_msg)	// empty _msg just removes pervious message
 			{
-				message_timer = _wnd.setTimeout(function() {
-					jQuery('div#egw_message').remove();
-				}, 5000);
+				parent.prepend(jQuery(_wnd.document.createElement('div'))
+					.attr('id','egw_message')
+					.text(_msg)
+					.addClass(_type+'_message')
+					.css('position', 'absolute'));
+
+				if (_type != 'error')	// clear message again after some time, if no error
+				{
+					message_timer = _wnd.setTimeout(function() {
+						jQuery('div#egw_message').remove();
+					}, 5000);
+				}
 			}
 		},
 
