@@ -235,6 +235,9 @@ var AppJS = Class.extend(
 		for(var i = 0; i < et2.length; i++)
 		{
 			et2[i].widgetContainer.iterateOver(function(_widget) {
+				// Firefox has trouble with spaces in search
+				if(state.state.search) state.state.search = unescape(state.state.search);
+				
 				// Apply
 				_widget.activeFilters = state.state || state.filter || {};
 				_widget.applyFilters();
@@ -487,6 +490,10 @@ var AppJS = Class.extend(
 				};
 				if(self.sidebox)
 				{
+					// Remove any existing with that name
+					$j('[data-id="'+safe_name+'"]',self.sidebox).remove();
+
+					// Create new item
 					var html = "<li data-id='"+safe_name+"' class='ui-menu-item' role='menuitem'>\n";
 					html += "<a href='#' class='ui-corner-all' tabindex='-1'>";
 					html += "<div class='" + 'sideboxstar' + "'></div>"+
