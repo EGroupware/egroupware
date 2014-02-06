@@ -910,6 +910,21 @@ td.lettersearch {
 	font-weight: bold;
 	background-image: url(../../default/images/dialog_error.png);
 }
+/**
+ * Message in popup
+ */
+body > div#egw_message {
+	background-color: lightyellow;
+	border-radius: 10px;
+	right: 5px;
+	top: 5px;
+	padding: 10px;
+	padding-left: 25px;
+	background-position-x: 5px;
+	border: 2px gray solid;
+	min-width: 100px;
+	z-index: 10;
+}
 
 /**
  * Clientside Javascript error-log

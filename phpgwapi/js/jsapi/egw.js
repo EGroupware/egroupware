@@ -33,7 +33,7 @@
 	egw_data;
 	egw_tail;
 	egw_inheritance;
-//	egw_jquery;
+	egw_message;
 	app_base;
 */
 
@@ -135,11 +135,7 @@
 		// If there's a message & opener, set it
 		if(window.opener && egw_script.getAttribute('data-message'))
 		{
-			var data = {};
-			if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
-			{
-				window.opener.egw_message.apply(window.opener, data);
-			}
+			egw(window.opener).message(JSON.parse(egw_script.getAttribute('data-message')));
 		}
 		window.close();
 	}
@@ -235,14 +231,14 @@
 		}
 		$j(function() {
 			// set app-header
-			if (window.framework && (data = egw_script.getAttribute('data-app-header')))
+			if (window.framework && egw_script.getAttribute('data-app-header'))
 			{
-				window.egw_app_header(data);
+				egw(window).app_header(egw_script.getAttribute('data-app-header'));
 			}
 			// display a message
-			if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
+			if (egw_script.getAttribute('data-message'))
 			{
-				window.egw_message.apply(window, data);
+				egw(window).message(JSON.parse(egw_script.getAttribute('data-message')));
 			}
 		});
 	});

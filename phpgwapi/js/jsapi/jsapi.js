@@ -285,59 +285,25 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 /**
  * Display an error or regular message
  *
- * @param string _msg message to show
- * @param string _type 'error', 'warning' or 'success' (default)
+ * @param {string} _msg message to show
+ * @param {string} _type 'error', 'warning' or 'success' (default)
+ * @deprecated use egw(window).message(_msg, _type)
  */
 function egw_message(_msg, _type)
 {
-	if (typeof _type == 'undefined')
-		_type = _msg.match(/error/i) ? 'error' : 'success';
-
-	var framework = egw_getFramework();
-	if (framework && (typeof framework.setMessage != 'undefined'))
-	{
-		framework.setMessage.call(window.framework, _msg, _type);
-		return;
-	}
-	// handle message display for non-framework templates, eg. idots or jerryr
-	if (window.egw_message_timer)
-	{
-		window.clearTimeout(window.egw_message_timer);
-		delete window.egw_message_timer;
-	}
-
-	$j('div#divAppboxHeader div').remove();
-	$j('div#divAppboxHeader').prepend($j(document.createElement('div')).text(_msg).addClass(_type+'_message').css('position', 'absolute'));
-
-	if (_type != 'error')	// clear message again after some time, if no error
-	{
-		window.egw_message_timer = window.setTimeout(function() {
-			$j('div#divAppboxHeader').text(document.title.replace(/^.*\[(.*)\]$/, '$1'));
-		}, 5000);
-	}
+	egw(window).message(_msg, _type);
 }
 
 /**
  * Update app-header and website-title
  *
- * @param _header
- * @param {_app=null} Application name, if not for the current app
- */
+ * @param {string} _header
+ * @param {string} _app Application name, if not for the current app
+   @deprecated use egw(window).app_header(_header, _app)
+*/
 function egw_app_header(_header,_app)
 {
-	var framework = egw_getFramework();
-	if (framework && !window.opener)	// not for popups
-	{
-		var app = _app || egw_getAppName();
-		var title = document.title.replace(/[.*]$/, '['+_header+']');
-
-		framework.setWebsiteTitle.call(window.framework, app, title, _header);
-		return;
-	}
-
-	$j('div#divAppboxHeader').text(_header);
-
-	document.title = document.title.replace(/[.*]$/, '['+_header+']');
+	egw(window).app_header(_header, _app);
 }
 
 /**
