@@ -72,7 +72,7 @@
  *
  * @param _container is the DOM-Node into which the DOM-Nodes of this instance
  * 	should be inserted
- * @param _submitURL is the URL to which the form data should be submitted.
+ * @param _menuaction is the URL to which the form data should be submitted.
  */
 function etemplate2(_container, _menuaction)
 {
@@ -155,6 +155,8 @@ etemplate2.prototype.clear = function()
  * Creates an associative array containing the data array managers for each part
  * of the associative data array. A part is something like "content", "readonlys"
  * or "sel_options".
+ *
+ * @param {object} _data object with values for attributes content, sel_options, readonlys, modifications
  */
 etemplate2.prototype._createArrayManagers = function(_data)
 {
@@ -234,11 +236,24 @@ etemplate2.prototype.unbind_unload = function()
 
 /**
  * Loads the template from the given URL and sets the data object
+ *
+ * @param {string} _name name of template
+ * @param {string} _url url to load template
+ * @param {object} _data object with attributes content, langRequire, etemplate_exec_id, ...
+ * @param {function} _callback called after tempalte is loaded
  */
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = this.app = _data.currentapp || window.egw_appName;
+
+	// extract $content['msg'] and call egw.message() with it
+	var msg = _data.content.msg;
+	if (typeof msg != 'undefined')
+	{
+		egw(window).message(msg);
+		delete _data.content.msg;
+	}
 
 	// Register a handler for AJAX responses
 	egw(currentapp, window).registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
@@ -445,9 +460,9 @@ etemplate2.prototype.isDirty = function()
 /**
  * Submit form via ajax
  *
- * @param et2_button|string button button widget or string with id
- * @param boolean async true: do an asynchronious submit, default is synchronious
- * @return boolean true if submit was send, false if eg. validation stoped submit
+ * @param {(et2_button|string)} button button widget or string with id
+ * @param {boolean} async true: do an asynchronious submit, default is synchronious
+ * @return {boolean} true if submit was send, false if eg. validation stoped submit
  */
 etemplate2.prototype.submit = function(button, async)
 {
@@ -572,6 +587,8 @@ etemplate2.prototype.postSubmit = function()
  * Fetches all input element values and returns them in an associative
  * array. Widgets which introduce namespacing can use the internal _target
  * parameter to add another layer.
+ *
+ * @param {et2_widget} _root widget to start iterating
  */
 etemplate2.prototype.getValues = function(_root)
 {
@@ -686,15 +703,17 @@ etemplate2.prototype.getValues = function(_root)
  * If there's a message provided, we try to find where it goes and set it directly.  Then
  * we look for a nextmatch widget, and tell it to refresh its data based on that ID.
  *
- * @param msg String Message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
- * @param id String|null Application specific entry ID to try to refresh
- * @param type String|null Type of change.  One of 'update','edit', 'delete', 'add' or null
+ * @param {string} msg message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
+ * @param {string} app app-name
+ * @param {(string|null)} id application specific entry ID to try to refresh
+ * @param {(string|null)} type type of change.  One of 'update','edit', 'delete', 'add' or null
  *
  * @see jsapi.egw_refresh()
  * @see egw_fw.egw_refresh()
  */
 etemplate2.prototype.refresh = function(msg, app, id, type)
 {
+	msg, app;	// unused but required by function signature
 	// Refresh nextmatches
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Trigger refresh
@@ -735,9 +754,8 @@ etemplate2.getByTemplate = function(template)
  *
  * "Associated" is determined by the first part of the template
  *
- * @param template String Name of the template that was loaded
- *
- * @return Array list of etemplate2 that have that app as the first part of their loaded template
+ * @param {string} app app-name
+ * @return {array} list of etemplate2 that have that app as the first part of their loaded template
  */
 etemplate2.getByApplication = function(app)
 {
@@ -860,18 +878,20 @@ function etemplate2_handle_validation_error(_type, _response)
 /**
  * Handle assign for attributes on etemplate2 widgets
  *
- * @param {String} type "assign"
- * @param res Response
- * @param res.data.id {String} Widget ID
- * @param res.data.key {String} Attribute name
- * @param res.data.value New value for widget
- * @param res.data.etemplate_exec_id
- * @param {type} req
+ * @param {string} type "assign"
+ * @param {object} res Response
+ * res.data.id {String} Widget ID
+ * res.data.key {String} Attribute name
+ * res.data.value New value for widget
+ * res.data.etemplate_exec_id
+ * @param {object} req
  * @returns {Boolean} Handled by this plugin
  * @throws Invalid parameters if the required res.data parameters are missing
  */
 function etemplate2_handle_assign(type, res, req)
 {
+	type, req;	// unused, but required by plugin signature
+
 	//Check whether all needed parameters have been passed and call the alertHandler function
 	if ((typeof res.data.id != 'undefined') &&
 		(typeof res.data.key != 'undefined') &&
