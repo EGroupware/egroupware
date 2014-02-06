@@ -249,7 +249,8 @@ div.et2_link_entry{
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    &:hover {
+    min-width: 67px; 
+   &:hover {
         .color_5_gray;
         .background_color_25_gray;
     }
@@ -318,12 +319,17 @@ hr {
  * grid widget
  */
 
-.et2_grid td {
+.et2_grid th,
+.et2_grid tr,
+.et2_grid td{
     /*	border: 1px dashed silver;*/
 
     .gray {
-        padding: 1em; background-color: @color_hint;
-        span {background-color: transparent;}
+        padding: 0px; 
+        .dimension_height_m;
+        /*background-color: @color_hint;*/
+        .gradient_thead;
+        span.et2_label {background-color: transparent;padding-left: 1em;}
         }
 }
 /**
@@ -875,6 +881,7 @@ textarea,
 textarea.description {
     background-color: @color_optional;
     padding: 0.3em 0 0 0.3em;
+    border: none;
 }
 
 /*#################################### ADMIN PART #####################################################*/

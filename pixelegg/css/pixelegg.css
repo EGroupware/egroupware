@@ -111,7 +111,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
   }
   .et2_button_icon {
     height: 16px;
@@ -149,7 +149,7 @@
   }
   /*look in layout_content_elements*/
   .et2_selectbox .ui-multiselect-checkboxes li:hover {
-    background-color: rgba(103, 159, 210, 0.1) !important;
+    background-color: #679fd2 !important;
   }
   .et2_selectbox .ui-multiselect-checkboxes label {
     display: block;
@@ -289,7 +289,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
   }
   div.et2_link_to button:hover {
     /*.background_color_20_gray;*/
@@ -344,6 +344,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    min-width: 67px;
   }
   .et2_tabflag:hover {
     color: #f2f2f2;
@@ -417,15 +418,38 @@
   /**
  * grid widget
  */
+  .et2_grid th,
+  .et2_grid tr,
   .et2_grid td {
     /*	border: 1px dashed silver;*/
   }
+  .et2_grid th .gray,
+  .et2_grid tr .gray,
   .et2_grid td .gray {
-    padding: 1em;
-    background-color: rgba(103, 159, 210, 0.1);
+    padding: 0px;
+    height: 24px;
+    /*background-color: @color_hint;*/
+    /*.background-color-5-gray;*/
+    background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+    /* IE6-9 */
   }
-  .et2_grid td .gray span {
+  .et2_grid th .gray span.et2_label,
+  .et2_grid tr .gray span.et2_label,
+  .et2_grid td .gray span.et2_label {
     background-color: transparent;
+    padding-left: 1em;
   }
   /**
  * Nextmatch widget
@@ -963,6 +987,7 @@
   textarea.description {
     background-color: rgba(255, 221, 115, 0.1);
     padding: 0.3em 0 0 0.3em;
+    border: none;
   }
   /*#################################### ADMIN PART #####################################################*/
   iframe#admin-index_iframe {
@@ -1078,7 +1103,7 @@ option:checked {
 .ui-widget-header .ui-state-focus,
 .ui-widget-content .ui-state-focus {
   border-color: #e6e6e6;
-  background: rgba(103, 159, 210, 0.1);
+  background: #679fd2;
   background-image: none !important;
   color: #000000;
 }
@@ -1090,7 +1115,7 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #e6e6e6;
-  background: rgba(103, 159, 210, 0.1);
+  background: #679fd2;
   background-image: none !important;
   color: #000000;
 }
@@ -1225,7 +1250,7 @@ span.ui-icon-search {
   background-image: none;
 }
 .ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
   font-weight: normal;
 }
 /*###########################################*/
@@ -1252,7 +1277,7 @@ span.ui-icon-search {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1707,7 +1732,7 @@ div#ui-datepicker-div {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   height: 24px;
   padding: 0 5px;
 }
@@ -1763,11 +1788,14 @@ div#egwpopup_message {
   width: 33%;
 }
 /*Calendar ##############*/
+td.message {
+  background-color: #e6e6e6 !important;
+}
 td.message span.message {
   height: 35px;
   border-bottom: 2px solid #e6e6e6;
-  color: white;
-  background: red;
+  color: red;
+  background: #e6e6e6;
   height: auto;
   width: 100%;
 }
@@ -2656,7 +2684,6 @@ button.et2_button_with_image {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-size: 20px auto !important;
@@ -2692,10 +2719,9 @@ button[id="addressbook-edit_button[delete]"],
 button[id="resources-edit_delete"],
 button[id="calendar-edit_button[delete]"],
 button[id="timesheet-edit_button[delete]"] {
-  background-color: #b81f00 !important;
-  background-image: url('../images/delete-hover.png') !important;
+  /*background-color: @color_negative_action_hover !important;*/
+  background-image: url('../images/delete.png') !important;
   margin-left: 3em;
-  /*color: @gray_100;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
   /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
@@ -2714,7 +2740,7 @@ button[id="timesheet-edit_button[delete]"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2722,7 +2748,7 @@ button[id="timesheet-edit_button[delete]"] {
   width: auto;
   height: 32px;
   /*background-color: @color-negative-action !important;*/
-  color: #ffffff !important;
+  /*color: @gray_0 !important;*/
 }
 input[type="submit"][id*="delete"]:hover,
 input[type="button"][id*="delete"]:hover,
@@ -2753,7 +2779,7 @@ button[id="timesheet-edit_button[delete]"]:hover {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2791,7 +2817,7 @@ button[id="timesheet-edit_button[delete]"]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2849,7 +2875,7 @@ button#filemanager-select_button[ok]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2893,7 +2919,7 @@ button#series {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2928,7 +2954,7 @@ button#exception {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -2997,7 +3023,7 @@ button[id="cancel"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3038,7 +3064,7 @@ button[id="cancel"]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3096,7 +3122,7 @@ button[id="add"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -3293,7 +3319,7 @@ table.egwGridView_outer thead tr th.optcol {
   /*width: 32px !important;*/
 }
 table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
@@ -3305,7 +3331,7 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
   display: inline-block;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
 }
 table.egwGridView_outer tbody {
   /*Elements inside td*/
@@ -3558,7 +3584,7 @@ table.nextmatch_header img {
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
   font-size: 1.2em;
-  color: rgba(103, 159, 210, 0.1);
+  color: #679fd2;
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
 }
@@ -3836,6 +3862,7 @@ table.nextmatch_header img {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   background-color: #e6e6e6;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
@@ -5096,7 +5123,10 @@ div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasD
   cursor: pointer;
 }
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs button.et2_button_with_image {
-  height: 24px;
+  background-size: 12px auto !important;
+  margin-left: 32px;
+  padding: 0px;
+  height: 16px;
 }
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
   background-color: #ffffff;
@@ -5167,11 +5197,14 @@ table.dialog-main-view {
 }
 .dialog-header input.et2_textbox {
   font-size: 1.3em;
+  width: 550px;
+  margin-right: 20px;
 }
 .dialog-header .et2_label {
   color: #000000;
-  vertical-align: bottom;
-  padding: 0px 0px 0px 3px !important;
+  vertical-align: middle;
+  padding: 0px 0px 0px 9px !important;
+  margin-right: 57px;
 }
 .dialog-header td.space span img {
   background: #ffffff;
@@ -5194,13 +5227,15 @@ tr.dialog-header4 {
   background-color: #e6e6e6 !important;
   border-top: 2px solid #e6e6e6;
   border-bottom: 2px solid #e6e6e6;
+  vertical-align: middle;
 }
 tr.dialog-header2 .et2_label,
 tr.dialog-header3 .et2_label,
 tr.dialog-header4 .et2_label {
   color: #1a1a1a;
-  vertical-align: bottom;
-  padding: 0px 0px 0px 3px !important;
+  vertical-align: middle;
+  padding: 0px 0px 0px 9px !important;
+  margin-right: 55px;
 }
 /************* Tabs  *********************************/
 .dialog-tabs {
@@ -5244,7 +5279,14 @@ tr.dialog-header4 .et2_label {
   padding: 0px 5px;
 }
 .dialog-footer-toolbar button {
-  height: 32px;
+  height: 24px;
+  min-width: 114px;
+}
+.dialog-footer-toolbar button:hover {
+  height: 24px;
+}
+.dialog-footer-toolbar button:action {
+  height: 24px;
 }
 .dialog-footer-toolbar button[id="addressbook-edit_button[delete]"] {
   float: right;

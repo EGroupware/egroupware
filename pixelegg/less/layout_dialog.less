@@ -84,7 +84,13 @@ div.et2_container {
                             .et2_tabheader {}
                             .et2_tabs {
 
-                                button.et2_button_with_image {.dimension_height_m;}
+                                button.et2_button_with_image {
+                                      background-size: 12px auto !important;
+                                      margin-left: 32px;
+                                      padding: 0px;
+                                      .dimension_height_s;
+                                
+                                }
 
                                 table.et2_grid {.background_color_0_gray;}
 
@@ -173,13 +179,18 @@ table.dialog-main-view {width: 100%;}
 
     }
 
-    input.et2_textbox {font-size: 1.3em;}
+    input.et2_textbox {
+        font-size: 1.3em; 
+        width: 550px;
+        margin-right: 20px;
+    }
 
 
     .et2_label {
         .color_100_gray;
-        vertical-align: bottom;
-        padding: 0px 0px 0px 3px !important;
+        vertical-align: middle;
+        padding: 0px 0px 0px 9px !important;
+        margin-right: 57px;
     }
 
 
@@ -213,13 +224,17 @@ tr.dialog-header4{
     background-color: @gray_10 !important;
     border-top: 2px solid @gray_10;
     border-bottom: 2px solid @gray_10;
+    vertical-align: middle;
 
 
     .et2_label {
         .color_90_gray;
-        vertical-align: bottom;
-        padding: 0px 0px 0px 3px !important;
+        vertical-align: middle;
+        padding: 0px 0px 0px 9px !important;
+        margin-right: 55px;
     }
+
+    
 
 }
 
@@ -260,7 +275,11 @@ tr.dialog-header4{
 
     td {padding: 0px 5px;}
 
-    button { .dimension_height_l;}
+    button {
+        .dimension_height_m; min-width: 114px;
+        &:hover{.dimension_height_m;}
+        &:action{.dimension_height_m;}
+    }
 
     button[id="addressbook-edit_button[delete]"]{
         float: right;
