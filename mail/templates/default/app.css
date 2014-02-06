@@ -367,8 +367,12 @@ input[type=button] {
 	background-position: left;
 	background-repeat: no-repeat;
 }
-
-.mailDisplay, #mail-index_mailPreview {
+.mailDisplay{
+	position: relative;
+	background-color: white;
+	width: 100%;
+}
+#mail-index_mailPreview {
 	overflow: hidden;
 	position: relative;
 	background-color: white;
