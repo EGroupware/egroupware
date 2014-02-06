@@ -59,8 +59,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 				.attr('id',this.id +'-'+ 'actionbox');
 		//actionlist is div for active actions
 		this.actionlist = $j(document.createElement('div'))
-
-			.attr('id',this.id +'-'+ 'actionlist');
+				.addClass("et2_toolbar_actionlist")
+				.attr('id',this.id +'-'+ 'actionlist');
 
 		this.countActions = 0;
 		this.dropdowns = {};
@@ -96,7 +96,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.div.empty();
 		this.actionbox.empty();
 		this.actionlist.empty();
-		this.actionbox.append('<h></h>');
+		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more...')+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 
 		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
@@ -190,13 +190,14 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('button'),
 			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
 			menulist = jQuery('#'+this.id+'-'+'menulist');
-			
+		var that = this;
 		toolbar.draggable({
 			cancel:true,
 			//revert:"invalid",
 			containment: "document",
 			cursor: "move",
 			helper: "clone",
+			appendTo:'body',
 			stop: function(event, ui){
 				that._build_menu(actions);
 			}
@@ -205,10 +206,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 			cancel:true,
 			containment:"document",
 			helper:"clone",
+			appendTo:'body',
 			cursor:"move"
 		});
-		var that = this;
-		toolbox.droppable({
+		toolbox.children().droppable({
 			accept:toolbar,
 			drop:function (event, ui) {
 					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
@@ -219,7 +220,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 						egw.set_preference(that.egw().getAppName(),that.id,that.preference);
 					}
 			},
-			tolerance:"pointer"
+			tolerance:"touch"
 		});
 
 		jQuery('#'+this.id+'-'+'actionlist').droppable({
@@ -272,7 +273,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', action.caption)
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-		
+
 		if ( action.iconUrl && this.countActions > this.view_range )
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
