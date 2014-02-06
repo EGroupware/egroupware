@@ -769,7 +769,7 @@ class mail_hooks
 		$prefs = new preferences($recipient->account_id);
 		$preferences = $prefs->read();
 		// TODO: no possibility to set that at this time; always use INBOX
-		if (empty($preferences['mail']['notify_folders']))$preferences['mail']['notify_folders']='INBOX';
+		if (empty($preferences['mail']['notify_folders'])) return true;//$preferences['mail']['notify_folders']='INBOX';
 		//error_log(__METHOD__.__LINE__.array2string($preferences['mail']['notify_folders']));
 		if(!isset($preferences['mail']['notify_folders'])||empty($preferences['mail']['notify_folders'])||$preferences['mail']['notify_folders']=='none') {
 			return true; //no pref set for notifying - exit
