@@ -3,12 +3,10 @@
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<vbox class="mailDisplayToolbar">
-			<hbox>
-				<toolbar id="displayToolbar" view_range="12"/>
-			</hbox>
-		</vbox>
 		<vbox class="mailDisplay">
+			<hbox>
+				<toolbar id="displayToolbar" width="100%" view_range="12"/>
+			</hbox>
 			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
 				<description value="From"/>
 				<url-email id="FROM" readonly="true"/>
@@ -44,7 +42,7 @@
 				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
 			</hbox>
 		</vbox>
-		<vbox class="mailDisplay" width="100%">
+		<vbox class="mailDisplay">
 			<box class="$cont[mailDisplayContainerClass]">
 				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%" height="100%"/>
 			</box>
