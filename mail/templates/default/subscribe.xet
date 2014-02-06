@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
+		<hbox>
+			<description id="msg" class="message"/>
+		</hbox>
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox>
+						<caption label="Folders"/>
+						<tree id="foldertree" onclick=""  multiple="true"/>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+		<hbox>
+			<button statustext="Saves this ACL" label="Save" id="button[save]"/>
+			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+			<button label="Cancel" id="button[cancel]"/>
+		</hbox>
+	</template>
+</overlay>

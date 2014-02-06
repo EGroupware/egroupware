@@ -36,6 +36,7 @@ class mail_ui
 		'importMessage'	=> True,
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'TestConnection' => True,
+		'subscription'	=> True,
 	);
 
 	/**
@@ -176,6 +177,33 @@ class mail_ui
 		$GLOBALS['egw']->preferences->save_repository(true);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
+	/**
+	 * Subscription popup window
+	 *
+	 * @param array $content
+	 * @param type $msg
+	 */
+	function subscription(array $content=null ,$msg='')
+	{
+		$stmpl = new etemplate_new('mail.subscribe');
+		$profile = $_GET['acc_id'];
+
+		if (!is_array($content))
+		{
+			if ($profile)
+			{
+				$sel_options['foldertree'] = $this->getFolderTree(false, $profile,true);
+			}
+		}
+		else
+		{
+			
+		}
+		$content = array();
+		$readonlys = array();
+
+		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,array(),2);
+	}
 
 	/**
 	 * Main mail page
@@ -309,12 +337,6 @@ class mail_ui
 
 		// Set tree actions
 		$tree_actions = array(
-			'all_folders'	=> array(
-				'caption' => 'Show all folders',
-				'checkbox'	=> true,
-				'onExecute' => 'javaScript:app.mail.all_folders',
-				'group'	=> $group++,
-			),
 			'drop_move_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
@@ -358,9 +380,9 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			),
 			'subscribe' => array(
-				'caption' => 'Subscribe folder',
+				'caption' => 'Subscribe folder ...',
 				//'icon' => 'configure',
-				'onExecute' => 'javaScript:app.mail.subscribe_folder',
+				'onExecute' => 'javaScript:app.mail.edit_subscribe',
 			),
 			'unsubscribe' => array(
 				'caption' => 'Unsubscribe folder',
@@ -379,13 +401,13 @@ class mail_ui
 				'group'	=> $group++,
 			),
 			'edit_account' => array(
-				'caption' => 'Edit account',
+				'caption' => 'Edit account ...',
 				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.edit_account',
 				//'enableId' => '^\\d+$',	// only show action on account itself
 			),
 			'edit_acl'	=> array(
-				'caption' => 'Edit folder ACL',
+				'caption' => 'Edit folder ACL ...',
 				'icon'	=> 'blocks',
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),

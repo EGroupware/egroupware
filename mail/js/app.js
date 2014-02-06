@@ -2585,6 +2585,18 @@ app.classes.mail = AppJS.extend(
 		},this))
 			.sendRequest();
 	},
+	
+	/**
+	 * Popup the subscription dialog
+	 *
+	 * @param {action} _action
+	 * @param {sender} _senders
+	 */
+	edit_subscribe: function (_action,_senders)
+	{
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x500');
+	},
 
 	/**
 	 * Subscribe selected unsubscribed folder
