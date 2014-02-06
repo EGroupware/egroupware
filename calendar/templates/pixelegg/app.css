@@ -924,55 +924,115 @@ div#calendar-edit .et2_tabs {
 div#calendar-edit .et2_tabcntr {
   overflow-y: auto;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general {
+div#calendar-edit input.hasDatepicker,
+div#calendar-edit #calendar-edit_start {
+  width: 129px;
+}
+div#calendar-edit #calendar-edit_whole_day {
+  margin: 0 0.8em 0 23px;
+}
+div#calendar-edit label.et2_label#calendar-edit_calendar_edit_duration {
+  /*margin-left: 20px;*/
+  margin-right: 49px;
+}
+div#calendar-edit select#calendar-edit_duration {
+  width: 133px;
+}
+div#calendar-edit button#calendar-edit_freetime {
+  height: 16px;
+  background-size: 12px auto !important;
+  margin-left: 32px;
+  padding: 0px;
+}
+div#calendar-edit #calendar-edit_id {
+  float: right;
+  margin-right: 5px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-details {
   display: block;
   float: left;
   width: 100%;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid {
-  line-height: 30px;
+div#calendar-edit #calendar-edit_calendar-edit-details table.et2_grid {
+  /*background-color: yellow;*/
+  line-height: 20px;
   width: 60% !important;
-  /*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
 }
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid #calendar-edit_start {
-  margin-top: 5px;
-  margin-right: 5px;
+div#calendar-edit #calendar-edit_calendar-edit-details #calendar-edit_details_category {
+  margin: 0 1em;
+  width: 20em;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid td {
-  padding: 4px;
-}
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid #calendar-edit_duration {
-  float: left;
-}
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid .et2_checkbox,
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid input#calendar-edit_whole_day {
-  margin-left: 5px important;
-  border-left: 10px solid red;
-}
-div#calendar-edit #calendar-edit_calendar-edit-general table.et2_grid .et2_date {
-  float: left;
-}
-div#calendar-edit #calendar-edit_calendar-edit-general .et2_hbox_right {
+div#calendar-edit #calendar-edit_calendar-edit-details .et2_hbox_right {
   overflow-y: auto;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general .et2_selectbox .ui-multiselect-checkboxes {
+div#calendar-edit #calendar-edit_calendar-edit-details .et2_selectbox .ui-multiselect-checkboxes {
   min-height: 290px;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general .et2_selectbox .ui-multiselect-checkboxes li {
+div#calendar-edit #calendar-edit_calendar-edit-details .et2_selectbox .ui-multiselect-checkboxes li {
   text-indent: -20px;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general #calendar-edit_category {
+div#calendar-edit #calendar-edit_calendar-edit-details #calendar-edit_category {
   border: 1px solid;
   border-color: #b4b4b4;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  padding: 0 0.3em 0 0;
 }
-div#calendar-edit #calendar-edit_calendar-edit-general #calendar-edit_category li .ui-state-hover {
+div#calendar-edit #calendar-edit_calendar-edit-details #calendar-edit_category li .ui-state-hover {
   font-weight: normal !important;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+div#calendar-edit #calendar-edit_calendar-edit-details #calendar-edit_details_alarms {
+  background-color: #cdcdcd;
+  display: block !important;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description #calendar-edit_details_category {
+  margin: 0 1em;
+  width: 20em;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description .et2_hbox_right {
+  overflow-y: auto;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description .et2_selectbox .ui-multiselect-checkboxes {
+  min-height: 290px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description .et2_selectbox .ui-multiselect-checkboxes li {
+  text-indent: -20px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description #calendar-edit_category {
+  border: 1px solid;
+  border-color: #b4b4b4;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0 0.3em 0 0;
+}
+div#calendar-edit #calendar-edit_calendar-edit-description #calendar-edit_category li .ui-state-hover {
+  font-weight: normal !important;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants {
+  /*.et2_label {padding: 0 5px 0 0;}*/
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants {
+  margin: 5px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants td {
+  padding: 0.2em 0.5em;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_account {
+  width: 160px;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource select {
+  width: 160px !important;
+}
+div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource input {
+  width: 160px !important;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tr.optional {
   background-color: rgba(255, 221, 115, 0.1);
@@ -1025,7 +1085,8 @@ div#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-s
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody input#calendar-edit_quantity {
   width: 30px;
   position: relative;
-  top: 4px;
+  top: 34px;
+  left: 40px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-edit_resource {
   margin: 5px 0 10px 0;
@@ -1034,10 +1095,16 @@ div#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-e
   margin-right: 3px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody select#calendar-edit_role {
-  margin-top: 6px;
+  /*width: 30px;*/
+  position: relative;
+  top: 6px;
+  left: -177px;
+  width: 135px;
 }
-div#calendar-edit #calendar-edit_calendar-edit-participants .et2_label {
-  padding: 0 5px 0 0;
+div#calendar-edit #calendar-edit_calendar-edit-participants tbody #calendar-edit_add {
+  position: relative;
+  left: -145px;
+  top: 31px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-recurrence tbody {
   display: table;
@@ -1062,6 +1129,9 @@ div#calendar-edit #calendar-edit_calendar-edit-links .et2_file {
 }
 div#calendar-edit #calendar-edit_calendar-edit-links span.et2_label {
   padding: 1em;
+}
+div#calendar-edit #calendar-edit_calendar-edit-links div.delete {
+  background-image: url("https:://192.168.1.100/egroupware2/pixelegg/images/delete.png");
 }
 div#calendar-edit #calendar-edit_calendar-edit-alarms tbody {
   display: table;
@@ -1089,7 +1159,7 @@ div#calendar-edit #calendar-edit_action {
   margin-left: 5px;
   padding-left: 10px;
   width: 10em;
-  padding: 5px 0 5px 10px;
+  padding: 3px 0 5px 10px;
 }
 .calendar_inputFullWidth input {
   width: 60%;
@@ -1233,7 +1303,7 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 }
 /* Calendar Id #
 */
-.calendar_calId:before {
+#calendar-edit_id:before {
   content: "#";
 }
 /* header for the dayCol
@@ -1469,7 +1539,7 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   width: 16px;
   height: 16px;
 }
@@ -1763,7 +1833,7 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
 }
 #delete_series {
   top: 100px;

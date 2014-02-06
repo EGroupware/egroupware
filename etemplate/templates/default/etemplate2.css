@@ -536,7 +536,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 .et2_link_to .progress {
   max-height: 12em;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .et2_link_to .progress > .success input {
   width: 100%;

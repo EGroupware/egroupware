@@ -421,48 +421,55 @@ div#calendar-edit{
     .et2_tabcntr {
         overflow-y: auto;
     }
+    
+    
+    input.hasDatepicker,
+    #calendar-edit_start{width: 129px;}
 
+    //whole day
+    #calendar-edit_whole_day{
+        margin: 0 0.8em 0 23px;
+    }
+    
+    //duration
+    label.et2_label#calendar-edit_calendar_edit_duration{
+            /*margin-left: 20px;*/
+            margin-right: 49px;
+            
+        }
+    select#calendar-edit_duration{width: 133px;}
 
-
+    // Terminsuche
+   button#calendar-edit_freetime {
+       height: 16px; 
+       background-size: 12px auto !important;
+       margin-left: 32px;
+       padding: 0px;
+   }
+       
+   // ID
+   #calendar-edit_id{float: right;margin-right: 5px;}
 
     /*###########################################*/
-    // Tab General
-    #calendar-edit_calendar-edit-general{
+    // Tab Details
+    #calendar-edit_calendar-edit-details{
         display: block;
         float: left;
         width: 100%;
+        
         table.et2_grid{
-
-            line-height: 30px;
-
-			#calendar-edit_start{
-                margin-top: 5px;
-				margin-right: 5px;
-            }
-
+            /*background-color: yellow;*/
+            line-height: 20px;
             width: 60% !important;
 
-            td {
-                padding: 4px;
-            }
 
-            #calendar-edit_duration{
-                float: left;
-            }
-            // Terminsuche
-            /*            button#calendar-edit_freetime {background-image: url('images/add.png') !important;}*/
-            // hole day
-            .et2_checkbox,
-            input#calendar-edit_whole_day {margin-left: 5px important; border-left: 10px solid red;}
-
-            .et2_date{
-                float: left;
-            }
 
         }
 
 
         // Kategorien
+        #calendar-edit_details_category{margin: 0 1em; width: 20em;}
+        
         .et2_hbox_right {overflow-y: auto;}
         .et2_selectbox .ui-multiselect-checkboxes {min-height: 290px;}
         .et2_selectbox .ui-multiselect-checkboxes li {text-indent: -20px;}
@@ -472,6 +479,7 @@ div#calendar-edit{
             border: 1px solid;
             border-color: @gray_30;
             .border_radius_button_normal;
+            padding: 0 0.3em 0 0;
 
             li{
                 .ui-state-hover{
@@ -481,20 +489,72 @@ div#calendar-edit{
             }
         }
 
-        // Kalender Widget
-        div#ui-datepicker-div{
-                        
+        // Alarme
+        #calendar-edit_details_alarms{
+            background-color: @gray_20;
+            display: block !important;
+            
         }
 
     }
 
     /*###########################################*/
     /*Tab Beschreibung*/
+    
+    #calendar-edit_calendar-edit-description{
+        
+              // Kategorien
+        #calendar-edit_details_category{margin: 0 1em; width: 20em;}
+        
+        .et2_hbox_right {overflow-y: auto;}
+        .et2_selectbox .ui-multiselect-checkboxes {min-height: 290px;}
+        .et2_selectbox .ui-multiselect-checkboxes li {text-indent: -20px;}
+
+        //selectbox
+        #calendar-edit_category{
+            border: 1px solid;
+            border-color: @gray_30;
+            .border_radius_button_normal;
+            padding: 0 0.3em 0 0;
+
+            li{
+                .ui-state-hover{
+                    font-weight: normal !important;
+                    .box_shadow_standard_light_hover;
+                }
+            }
+        }
+        
+    }
 
     /*###########################################*/
     // Teilnehmer
 
     #calendar-edit_calendar-edit-participants{
+        
+        table#calendar-edit_participants {
+            
+            margin: 5px;
+        
+            td {padding: 0.2em 0.5em;}
+            
+            // User and Group
+            #calendar-edit_account{ width: 160px;}
+            
+            //Adress
+            #calendar-edit_resource {
+                select{ 
+                width: 160px !important;
+                }
+                // Search
+                input{ 
+                width: 160px !important;
+                }
+            }
+            
+            
+            
+        }
 
         tr.optional {background-color: @color_optional;}
 
@@ -525,7 +585,8 @@ div#calendar-edit{
             input#calendar-edit_quantity {
                 width: 30px;
                 position: relative;
-                top: 4px;
+                top: 34px;
+                left: 40px;
 
             }
 
@@ -540,24 +601,28 @@ div#calendar-edit{
 
             // Rolle
 
-            select#calendar-edit_role {margin-top: 6px;}
+            select#calendar-edit_role {
+                /*width: 30px;*/
+                position: relative;
+                top: 6px;
+                left: -177px;
+                width: 135px;
+            }
 
             // hinzufügen button
 
-            //			#calendar-edit_add {
-            //
-            //					.Complete_Button_add;
-            //					height: 28px;
-            //					padding: 0px !important;
-            //					margin: 0px;
-            //					&:hover {.Complete_Button_add_hover;}
-            //
-            //			}
+            #calendar-edit_add {
+            
+                position: relative;
+                left: -145px;
+                top: 31px;
+            
+            			}
 
         }
 
         // Table
-        .et2_label {padding: 0 5px 0 0;}
+        /*.et2_label {padding: 0 5px 0 0;}*/
 
     }
 
@@ -596,6 +661,8 @@ div#calendar-edit{
 
         .et2_file {margin-left: 100px; width: 357px;}
         span.et2_label {padding:  1em;}
+        
+        div.delete {background-image: url("https:://192.168.1.100/egroupware2/pixelegg/images/delete.png");}
     }
 
     /*###########################################*/
@@ -636,7 +703,7 @@ div#calendar-edit{
                 margin-left: 5px;
                 padding-left: 10px;
                 width: 10em;
-                padding: 5px 0 5px 10px;
+                padding: 3px 0 5px 10px;
 
         }
 
@@ -792,7 +859,8 @@ e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget 
 }
 /* Calendar Id #
 */
-.calendar_calId:before { content:"#" }
+#calendar-edit_id:before { content:"#"}
+
 
 /* header for the dayCol
  */
