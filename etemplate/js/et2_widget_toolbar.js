@@ -274,17 +274,16 @@ var et2_toolbar = et2_DOMWidget.extend(
 			.attr('title', action.caption)
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 
-		if ( action.iconUrl && this.countActions > this.view_range )
+		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
 		}
-		else if (action.caption)
+		if (action.caption)
 		{
-			if (action.iconUrl)
+			if (this.countActions <= this.view_range || this.preference[action.id] )
 			{
-				button.attr('style','background-image:url(' + action.iconUrl + ')');
+				button.context.innerText = action.caption;
 			}
-			button.context.innerText = action.caption;
 		}
 		if(action.icon)
 		{
