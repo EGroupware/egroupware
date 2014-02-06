@@ -2570,9 +2570,13 @@ app.classes.mail = AppJS.extend(
 	*/
    all_folders: function(_action,_senders)
    {
-	   var mailbox = _senders[0].id.split('::');
-	   acc_id = mailbox[0];
-	   egw.json('mail.mail_ui.ajax_foldertree',[acc_id,!_action.checked])
+		//console.log(_action,_senders);
+		this.lock_tree();
+		var mailbox = _senders[0].id.split('::');
+		acc_id = mailbox[0];
+		egw.json('mail.mail_ui.ajax_reloadNode',[acc_id,!_action.checked], jQuery.proxy(function() {
+			this.unlock_tree();
+		},this))
 			.sendRequest();
    },
 

@@ -3488,6 +3488,45 @@ blockquote[type=cite] {
 	}
 
 	/**
+	 * reload node
+	 *
+	 * @param string _folderName  folder to reload
+	 *
+	 * @return void
+	 */
+	function ajax_reloadNode($_folderName,$_subscribedOnly=true)
+	{
+		translation::add_app('mail');
+		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
+		$oA = array();
+		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+		if ($profileID != $this->mail_bo->profileID) return; // only current connection
+		$parentFolder=(!empty($folderName)?$folderName:'INBOX');
+		$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+		if ($folderInfo['unseen'])
+		{
+			$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
+		}
+		if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
+		{
+			$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
+		}
+
+		$refreshData = array(
+			$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
+
+		// Send full info back in the response
+		$response = egw_json_response::get();
+		foreach($refreshData as $folder => &$name)
+		{
+			$name = $this->getFolderTree(true, $folder, $_subscribedOnly);
+		}
+		$response->call('app.mail.mail_reloadNode',$refreshData);
+
+	}
+
+	/**
 	 * move folder
 	 *
 	 * @param string _folderName  folder to vove

@@ -2008,24 +2008,40 @@ class mail_bo
 
 					// fetch and sort all folders
 					//echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
-					$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
-					if( PEAR::isError($allMailboxesExt) )
+					try
 					{
-						error_log(__METHOD__.__LINE__.' Failed to retrieve all Boxes:'.$allMailboxesExt->message);
+						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
+					}
+					catch (Exception $e)
+					{
+						error_log(__METHOD__.__LINE__.' Failed to retrieve all Boxes:'.$e->getMessage());
 						$allMailboxesExt = array();
 					}
 					if (empty($allMailboxesExt) && $type == 'shared')
 					{
-						$allMailboxesExt = $this->icServer->getMailboxes('',0,true);
+						try
+						{
+							$allMailboxesExt = $this->icServer->getMailboxes('',0,true);
+						}
+						catch (Exception $e)
+						{
+							$allMailboxesExt = array();
+						}
 					}
 					else
 					{
 						if ($prefix_present=='forced' && $type=='personal') // you cannot trust dovecots assumed prefix
 						{
-							$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
+							try
+							{
+								$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
+							}
+							catch (Exception $e)
+							{
+								$allMailboxesExtAll=array();
+							}
 							foreach ($allMailboxesExtAll as $kaMEA => $aMEA)
 							{
-								if( PEAR::isError($aMEA) ) continue;
 								if (!in_array($aMEA,$allMailboxesExt)) $allMailboxesExt[] = $aMEA;
 							}
 						}
@@ -2187,6 +2203,8 @@ class mail_bo
 						#echo "$folderName failed to be here <br>";
 						continue;
 					}
+					if (isset($folders[$folderName])) continue;
+					if (isset($autoFolderObjects[$folderName])) continue;
 					$folderParts = explode($delimiter, $folderName);
 					$shortName = array_pop($folderParts);
 
@@ -2227,6 +2245,7 @@ class mail_bo
 					} else {
 						$folders[$folderName] = $folderObject;
 					}
+					//error_log(__METHOD__.__LINE__.':'.$folderObject->folderName);
 				}
 			}
 		}
