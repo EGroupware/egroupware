@@ -96,7 +96,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.div.empty();
 		this.actionbox.empty();
 		this.actionlist.empty();
-		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more...')+'</h>');
+		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 
 		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
