@@ -421,6 +421,18 @@ var AppJS = Class.extend(
 			},this.et2 || null);
 			this.favorite_popup.group.loadingFinished();
 
+			// Creating select-account client side won't have primary group data
+			// so fetch using link system
+			var request = egw.json(self.appname + ".etemplate_widget_link.ajax_link_search.etemplate",
+				['home-accounts', '','', {filter:{group:'groups'}}],
+				function(data) {
+					var result = [];
+					for(var id in data) {
+						result.push({"value": id.trim(), "label":data[id]});
+					}
+					self.favorite_popup.group.set_select_options(result);
+				}
+			).sendRequest();
 		}
 
 		var buttons = {};
@@ -446,9 +458,9 @@ var AppJS = Class.extend(
 				if(typeof self.favorite_popup.group != "undefined" && self.favorite_popup.group.getValue() != '')
 				{
 					// Admin stuff - save preference server side
-					self.egw.jsonq('home.egw_framework.ajax_set_favorite.template'
+					self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
 						[
-							self.options.app,
+							self.appname,
 							name.val(),
 							"add",
 							self.favorite_popup.group.get_value(),
