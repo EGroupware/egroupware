@@ -73,8 +73,28 @@ app.classes.admin = AppJS.extend(
 					self.splitter.resize();
 				}
 			);
+		
+			// Register app refresh now that iframe is available
+			register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 		}
 		this.splitter = this.et2.getWidgetById('splitter');
+	},
+
+	/**
+	 * Special handling for egw_refresh() in admin, to refresh the iframe when
+	 * the framework detects a simple refresh can be used (same URL).
+	 *
+	 * All parameters ignored.
+	 *
+	 * @param {string} _msg Message to display
+	 * @param {string} _app Application being refreshed, should be 'admin'
+	 * @param {string} _id Unique record ID.
+	 * @param {string} _type=null Type of refresh.  Either 'edit', 'delete',
+	 *	'add' or null
+	 */
+	refresh: function(_msg, _app, _id, _type)
+	{
+		this.linkHandler(window.framework.getApplicationByName(_app).browser.currentLocation);
 	},
 
 	/**
