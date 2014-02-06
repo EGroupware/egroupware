@@ -1171,25 +1171,28 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 */
 .et2_toolbar {
 	background: none;
+	margin: 0 !important;
+	padding: 0 !important;
 }
-
+.et2_toolbar button {
+	width: 100%;
+}
 .ui-toolbar-menulist{
 	position: absolute;
 	height: inherit !important;
 	z-index: 999 !important;
 	overflow: auto !important;
-	padding-top: 2em !important;
-	padding-top: 2em !important;
-	border-right: solid black 1px;
-	border-bottom: solid black 1px;
-	border-left: solid gray 1px;
-	border-top: solid gray 1px !important;
-	padding: 1px 1px 1px 1px !important;
+	border: solid black 1px;
+	padding: 0 !important;
+	margin: 0 !important;
+	text-align: left;
+	border-radius: 0;
 }
 .ui-toolbar-menulistHeader{
 	font-size: xx-small;
 	height:100%;
 	margin-top: 2px;
+	direction: ltr;
 }
 .et2_toolbar_activeList{
 	position: relative;
