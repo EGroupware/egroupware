@@ -69,7 +69,7 @@ var et2_taglist = et2_selectbox.extend(
 		},
 
 		"onchange": {
-			"description": "Callback when tags are changed.  Argument is the new selection.",
+			"description": "Callback when tags are changed.  Argument is the new selection."
 		},
 		"onclick": {
 			"description": "Callback when a tag is clicked.  The clicked tag is passed."
@@ -140,7 +140,10 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist = $j('<div/>').appendTo(this.div);
 
 		var options = jQuery.extend( {
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
+			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
+			// --> setting an empty options list instead
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || !this.options.autocomplete_url ?
+				this._options2data(this.options.select_options || {}) : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			method: 'GET',
 			displayField: "label",
@@ -198,7 +201,7 @@ var et2_taglist = et2_selectbox.extend(
 	/**
 	 * convert _options to taglist data [{id:...,label:...},...] format
 	 *
-	 * @param object|array _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
+	 * @param {(object|array)} _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
 	 */
 	_options2data: function(_options)
 	{
@@ -246,20 +249,21 @@ var et2_taglist = et2_selectbox.extend(
 
 	set_autocomplete_url: function(source)
 	{
-		if(source.indexOf('http') != 0)
+		if(source && source.indexOf('http') != 0)
 		{
 			source = this.egw().ajaxUrl(source);
 		}
 		this.options.autocomplete_url = source;
 
-		if(this.taglist == null) return;
+		// do NOT set an empty autocomplete_url, magicsuggest would use page url instead!
+		if(this.taglist == null || !source) return;
 		this.taglist.setData(source);
 	},
 
 	/**
 	 * Set the list of suggested options to a static list.
 	 *
-	 * $param Array _options usual format see _options2data
+	 * @param {array} _options usual format see _options2data
 	 */
 	set_select_options: function(_options)
 	{
@@ -299,7 +303,7 @@ var et2_taglist = et2_selectbox.extend(
 				values[i] = {
 					id: v,
 					label: v
-				}
+				};
 			}
 			else
 			{
@@ -308,11 +312,10 @@ var et2_taglist = et2_selectbox.extend(
 					values[i] = {
 						id: v,
 						label: this.options.select_options[v]
-					}
+					};
 				}
 			}
 		}
-
 
 		this.taglist.addToSelection(values);
 	},
@@ -336,10 +339,10 @@ var et2_taglist_email = et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
-			"default": "home.etemplate_widget_taglist.ajax_email.etemplate",
+			"default": "home.etemplate_widget_taglist.ajax_email.etemplate"
 		},
 		"autocomplete_params": {
-			"default": {},
+			"default": {}
 		},
 		allowFreeEntries: {
 			"default": true,
