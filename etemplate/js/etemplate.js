@@ -12,19 +12,22 @@
 /**
  * Handle HTML5 validation on tabs
  */
-jQuery().ready(function() {
-	jQuery('.tab_body :input').bind('invalid', function(e) {
-		// Activate the appropriate tab
-		var tab = jQuery(this).parentsUntil('.tab_body').last();
-		var alltabs = [tab.attr("id")];
-		tab.siblings('div').each(function() {
-			alltabs.push(this.id);
+egw_LAB.wait(function() {
+	jQuery().ready(function() {
+		jQuery('.tab_body :input').bind('invalid', function(e) {
+			// Activate the appropriate tab
+			var tab = jQuery(this).parentsUntil('.tab_body').last();
+			var alltabs = [tab.attr("id")];
+			tab.siblings('div').each(function() {
+				alltabs.push(this.id);
+			});
+			activate_tab(tab.attr("id"), alltabs.join('|'));
 		});
-		activate_tab(tab.attr("id"), alltabs.join('|'));
+		// focus on input with tabindex=1
+		jQuery('input[tabindex="1"],select[tabindex="1"],textarea[tabindex="1"]').focus();
 	});
-	// focus on input with tabindex=1
-	jQuery('input[tabindex="1"],select[tabindex="1"],textarea[tabindex="1"]').focus();
 });
+
 function submitit(form,name)
 {
 	//alert(name+' pressed');
@@ -405,7 +408,7 @@ function popup_resize()
 	  else
 	  {
 		var positionY = (document.all?window.screenTop:window.screenY);
-		var moveMe = height2grow / 2; 
+		var moveMe = height2grow / 2;
 		if ( moveMe <= positionY )
 		{
 			moveMe = -(moveMe);
