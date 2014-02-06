@@ -1307,7 +1307,7 @@ class calendar_uiforms extends calendar_ui
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 
-		$row = 2;
+		$row = 3;
 		$readonlys = $content['participants'] = $preserv['participants'] = array();
 		// preserve some ui elements, if set eg. under error-conditions
 		foreach(array('quantity','resource','role') as $n)
