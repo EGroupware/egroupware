@@ -46,6 +46,8 @@ function hide_pixelegg_header(_toggle, _delay)
       
 	$j("#egw_fw_topmenu_info_items").css("position", "fixed");
 	$j("#egw_fw_topmenu_info_items").css("z-index", "1000");
+        // Form - Country Switch
+        $j("#egw_fw_topmenu_info_items form").css("display", "none");
         
         $j(".egw_fw_ui_tabs_header").css("height", "34px");
         

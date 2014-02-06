@@ -66,7 +66,8 @@ option:checked {background-color: @egw_color_1_e;}
 .ui-widget-header {
     //	border: 1px solid #4297d7;
     .bordered(0px, 0px, 0px,0px) !important;
-    .gradient_thead !important;
+    /*.gradient_thead !important;*/
+    background-color: @egw_color_2_a;
     /*border-color: @gray_10;*/
     //	background: #5c9ccc url(images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) 50% 50% repeat-x;
     //	color: #ffffff;
@@ -86,7 +87,7 @@ option:checked {background-color: @egw_color_1_e;}
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
     .bordered(1px, 1px, 1px,1px);
-    border-color: @gray_10;
+    border-color: @gray_30;
     //	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
     background: transparent;
     font-weight: bold;
@@ -278,16 +279,81 @@ span.ui-icon-search{
 /*###########################################*/
 /*Dialog: calendar edit series*/
 
+ // Kalender Widget
+ div#ui-datepicker-div{
+        .rounded (3px);
+        border: 1px solid @gray_30;
+        .box_shadow_standard_light_inset;
+        }
+
 .ui-datepicker {
     
-    padding: 1em;
+    /*padding: 1px 0em;*/
 
-    .ui-widget-header .ui-icon {
+/*    .ui-widget-header .ui-icon {
     background-image: url("images/ui-icons_d8e7f3_256x240.png");
+}*/
+    // Kalender Tabelle
+        table.ui-datepicker-calendar{ 
+        
+            //aktiver Tag
+            .ui-state-active {background-color: @egw_color_2_a;color: @gray_0;}
+        }
+
+
+
+div.ui-timepicker-div{
+    
+    padding: 3px;
+    
+    //Uhrzeit - Label
+    dt.ui_tpicker_time_label{font-size: 0.9em}
+    //Uhrzeit
+    dd.ui_tpicker_time{font-size: 1.3em; padding-left: 75px; background-color: @egw_color_1_a;}
+    
+    //Stunde - Label
+    dt.ui_tpicker_time_label{font-size: 0.9em}
+  
+    // Minute - Label
+    dt.ui_tpicker_minute_label {font-size: 0.9em}
+    
+    // Schieberegler 
+    div.ui_tpicker_hour_slider{
+        a.ui-slider-handle {background-color: @egw_color_2_a;}
+    }
+    div.ui_tpicker_minute_slider{
+        a.ui-slider-handle {background-color: @egw_color_2_a;}
+    }
+    
+    
+    
 }
 
-
+    //Buttons
+    div.ui-datepicker-buttonpane{
+        background-color: @color_button_panel_bg_color;
+        
+    }
+    
+    button.ui-datepicker-current .ui-state-hover{
+    background-color: @color_positive_action_active !important;    
+    &:hover {background-color: @color_positive_action_active;}
+    &:active {background-color: @color_positive_action_active;}
+}
 
 }
+
+// Button now
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {    
+    &:hover {background-color: @color_positive_action_active;}
+    &:active {background-color: @color_positive_action_active;}
+}
+
+// Button close
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close  {    
+                &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
+                &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
+}
+
 
 //

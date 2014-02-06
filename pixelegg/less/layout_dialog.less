@@ -173,11 +173,17 @@ table.dialog-main-view {width: 100%;}
 
     }
 
+    input.et2_textbox {font-size: 1.3em;}
+    
+    
     .et2_label {
         .color_100_gray;
         vertical-align: bottom;
         padding: 0px 0px 0px 3px !important;
     }
+    
+
+    
 
     td.space  {
 
@@ -250,18 +256,22 @@ tr.dialog-header4{
 /*Buttons / Toolbar*/
 
 .dialog-footer-toolbar{
-    background-color: @egw_color_2_e;
+    background-color: @color_button_panel_bg_color;
 
     td {padding: 0px 5px;}
 
-    button { height: 32px;}
+    button { .dimension_height_l;}
 
     button[id="addressbook-edit_button[delete]"]{
         float: right;
     }
+    
+    div.et2_hbox {
+    white-space: normal;
+}
 
     // selectbox
-    .et2_selectbox {height: 32px; top: 0px; font-size: 1.2em;}
+    /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 
 
 
