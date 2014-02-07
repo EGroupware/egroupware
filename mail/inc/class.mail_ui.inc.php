@@ -177,6 +177,7 @@ class mail_ui
 		$GLOBALS['egw']->preferences->save_repository(true);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
+	
 	/**
 	 * Subscription popup window
 	 *
@@ -186,23 +187,66 @@ class mail_ui
 	function subscription(array $content=null ,$msg='')
 	{
 		$stmpl = new etemplate_new('mail.subscribe');
-		$profile = $_GET['acc_id'];
-
+		
+		$profileId = $_GET['acc_id'];
+		$sel_options['foldertree'] =  $this->getFolderTree(false, null,false);
+		$unsubscribedFolders = $this->mail_bo->fetchUnSubscribedFolders();
+		$allFolders = $this->mail_bo->getFolderObjects();
+		
 		if (!is_array($content))
 		{
-			if ($profile)
+			if ($profileId)
 			{
-				$sel_options['foldertree'] = $this->getFolderTree(false, $profile,true);
+				
+				$content['foldertree'] = array();
+				$content['profileId'] = $profileId;
+				
+				foreach ($allFolders as $folder)
+				{
+					$folderName = $profileId . self::$delimiter . $folder->folderName;
+					if ($folder->subscribed)
+					{
+						array_push($content['foldertree'], $folderName);
+					}
+				}
 			}
 		}
 		else
 		{
-			
+			list($button) = @each($content['button']);
+			switch ($button)
+			{
+				case 'save':
+				case 'apply':
+				{
+					$unsubs = array();
+					$subs= array();
+					
+					foreach ($allFolders as $folder)
+					{
+						$folderName = $content['profileId'] . self::$delimiter . $folder->folderName;
+						if (!in_array($folderName, $content['foldertree']))
+						{
+							//TODO unsubscribe $folderName
+						}
+						else
+						{
+							//TODO subscribe $folderName
+						}
+					}
+					if ($button == 'apply') break;
+				}
+				case 'cancel':
+				{
+					egw_framework::window_close();
+				}
+			}
 		}
-		$content = array();
+		
+		$preserv['profileId'] = $content['profileId'];
 		$readonlys = array();
 
-		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,array(),2);
+		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -589,9 +633,9 @@ class mail_ui
 	 * Ajax callback to subscribe / unsubscribe a Mailbox of an account
 	 *
 	 *
-	 * @param int $_acc_id profile Id of selected mailbox
-	 * @param string $_folderName name of mailbox needs to be subcribe or unsubscribed
-	 * @param boolean $_status set true for subscribe and false to unsubscribe
+	 * @param {int} $_acc_id profile Id of selected mailbox
+	 * @param {string} $_folderName name of mailbox needs to be subcribe or unsubscribed
+	 * @param {boolean} $_status set true for subscribe and false to unsubscribe
 	 *
 	 */
 	public function ajax_foldersubscription($_acc_id,$_folderName, $_status)
