@@ -366,6 +366,7 @@ class mail_bo
 		// unset the mail_preferences session object, to force the reload/rebuild
 		$GLOBALS['egw']->session->appsession('mail_preferences','mail',serialize(array()));
 		$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
+		mail_bo::resetFolderObjectCache();
 	}
 
 	/**

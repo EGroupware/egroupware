@@ -2564,27 +2564,6 @@ app.classes.mail = AppJS.extend(
 	{
 	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
 	},
-
-	/**
-	 * Show/Hide unsubscribed folders
-	 *
-	 * @param {action} _action selected action from tree context menu
-	 * @param {sender} _senders
-	 */
-	all_folders: function(_action,_senders)
-	{
-		//console.log(_action,_senders);
-		var mailbox = _senders[0].id.split('::');
-		acc_id = mailbox[0];
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
-		this.lock_tree();
-		egw.json('mail.mail_ui.ajax_reloadNode',[acc_id,!_action.checked], jQuery.proxy(function() {
-			egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
-			this.unlock_tree();
-		},this))
-			.sendRequest();
-	},
 	
 	/**
 	 * Popup the subscription dialog
@@ -2609,7 +2588,7 @@ app.classes.mail = AppJS.extend(
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		egw_message(this.egw.lang('Toggle all Folders view for %1',ftree.getLabel(acc_id)));
+		egw_message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
 			.sendRequest();
 	},
@@ -2622,9 +2601,11 @@ app.classes.mail = AppJS.extend(
 	 */
 	unsubscribe_folder: function(_action,_senders)
 	{
-	  var mailbox = _senders[0].id.split('::');
-	   var folder = mailbox[1], acc_id = mailbox[0];
-	   egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
+		var mailbox = _senders[0].id.split('::');
+		var folder = mailbox[1], acc_id = mailbox[0];
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		egw_message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
+		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
 	},
 

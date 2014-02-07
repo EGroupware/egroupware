@@ -303,7 +303,7 @@ class mail_ui
 		}
 
 		//$zstarttime = microtime (true);
-		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial');
+		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial',null,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		//$zendtime = microtime(true) - $zstarttime;
 		//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 //$this->mail_bo->fetchUnSubscribedFolders();
@@ -334,7 +334,7 @@ class mail_ui
 		//if (!isset($content[self::$nm_index]['cat_id'])) $content[self::$nm_index]['cat_id'] = 'All';
 
 		$etpl = new etemplate_new('mail.index');
-
+		$group=0;
 		// Set tree actions
 		$tree_actions = array(
 			'drop_move_mail' => array(
@@ -412,6 +412,12 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
 		);
+		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
+		if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
+		{
+			unset($tree_actions['subscribe']);
+			unset($tree_actions['unsubscribe']);
+		}
 		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
 		if($deleteOptions == 'move_to_trash')
 		{
@@ -450,8 +456,10 @@ class mail_ui
 			unset($tree_actions['add']);
 			unset($tree_actions['move']);
 			unset($tree_actions['delete']);
-			unset($tree_actions['subscribe']);
-			unset($tree_actions['unsubscribe']);
+			// manage folders should not affect the ability to subscribe or unsubscribe
+			// to existing folders, it should only affect add/rename/move/delete
+			//unset($tree_actions['subscribe']);
+			//unset($tree_actions['unsubscribe']);
 		}
 
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
@@ -476,6 +484,7 @@ class mail_ui
 		common::egw_header();
 		parse_navbar();
 		//$GLOBALS['egw']->framework->sidebox();
+		//$GLOBALS['egw_info']['user']['preferences']['mail'];
 		$preferences	=& $this->mail_bo->mailPreferences;
 
 		if ($preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
@@ -593,6 +602,9 @@ class mail_ui
 		if($this->mail_bo->subscribe($_folderName, $_status))
 		{
 			$this->mail_bo->resetFolderObjectCache($_acc_id);
+			// pref -> showAllFoldersInFolderPane
+			//$GLOBALS['egw_info']['user']['preferences']['mail'];
+			$this->ajax_reloadNode($_acc_id,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		}
 		else
 		{
@@ -608,12 +620,12 @@ class mail_ui
 	 * @param string $_GET[id] if of node whos children are requested
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 */
-	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=true)
+	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
 	{
 		//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$_subscribedOnly);
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
-		$subscribedOnly = (bool)$_subscribedOnly;
+		$subscribedOnly = (bool)(!is_null($_subscribedOnly)?$_subscribedOnly:!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
 		$fetchCounters = !is_null($_nodeID);
@@ -3519,10 +3531,24 @@ blockquote[type=cite] {
 	function ajax_reloadNode($_folderName,$_subscribedOnly=true)
 	{
 		translation::add_app('mail');
+		$oldPrefForSubscribedOnly = !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
+/*
+		// prefs are plain prefs; we discussed an approach to have user only prefs, and
+		// set them on rightclick action on foldertree
+		$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'] = !$_subscribedOnly;
+		$GLOBALS['egw']->preferences->add('mail','showAllFoldersInFolderPane',!$_subscribedOnly,'user');
+		// save prefs
+		$GLOBALS['egw']->preferences->save_repository(true);
+*/
+		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
+
 		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		$del = $this->mail_bo->getHierarchyDelimiter(false);
 		$oA = array();
 		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+		// if pref and required mode dont match -> reset the folderObject cache to ensure
+		// that we get what we request
+		if ($_subscribedOnly != $oldPrefForSubscribedOnly) $this->mail_bo->resetFolderObjectCache($profileID);
 		if ($profileID != $this->mail_bo->profileID) return; // only current connection
 		$parentFolder=(!empty($folderName)?$folderName:'INBOX');
 		$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
@@ -3675,7 +3701,7 @@ blockquote[type=cite] {
 				// Send full info back in the response
 				foreach($refreshData as $folder => &$name)
 				{
-					$name = $this->getFolderTree(true, $folder, true);
+					$name = $this->getFolderTree(true, $folder, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				}
 				$response->call('app.mail.mail_reloadNode',$refreshData);
 
@@ -3825,7 +3851,7 @@ blockquote[type=cite] {
 			translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $this->getFolderTree(true, $icServerID, true)
+				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}

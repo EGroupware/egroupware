@@ -898,7 +898,7 @@ class mail_hooks
 	{
 		static $config=null;
 		if (!isset($config)) $config = (array)config::read('mail');
-
+		//error_log(__METHOD__.__LINE__.' '.$feature.':'.array2string($config['deny_'.$feature]));
 		if (!empty($config['deny_'.$feature]))
 		{
 			$denied_groups = explode(',', $config['deny_'.$feature]);
