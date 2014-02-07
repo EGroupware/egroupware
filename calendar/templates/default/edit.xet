@@ -31,15 +31,13 @@
 						<description/>
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 					</row>
-                                  
 				</rows>
 			</grid>
-			<vbox align="right" options="0,0" class="row_on" id="details_category">
+			<vbox align="right" options="0,0" class="calendar_category_details">
 				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9"/>
 			</vbox>
 		</hbox>
-                
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
 		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="317"/>
@@ -55,11 +53,11 @@
 				<column/>
 			</columns>
 			<rows>
-                                <row class="th gray" disabled="@view">
-				<description value="Add new participants or resource" span="all"/>
+				<row class="th gray" disabled="@view">
+					<description value="Add new participants or resource" span="all"/>
 				</row>
 				<row class="row optional" disabled="@no_add">
-                                    <vbox options="0,0" span="2">
+					<vbox options="0,0" span="2">
 						<menulist>
 							<menupopup type="select-account" statustext="User or group" id="account" options="User or group,calendar+,,10"/>
 						</menulist>
@@ -197,8 +195,8 @@
 				<column/>
 			</columns>
 			<rows>
-                                 <row class="th gray" disabled="@view">
-				<description value="Add new alarm" span="all"/>
+				<row class="th gray" disabled="@view">
+					<description value="Add new alarm" span="all"/>
 				</row>
 				<row class="row add_alarm_action" height="50" disabled="@no_add_alarm">
 					<menulist>
@@ -287,48 +285,34 @@
 		<grid width="100%">
 			<columns>
 				<column width="88"/>
+				<column width="80"/>
 				<column/>
-				<column/>
-				<column/>
-                                <column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<html align="center" id="msg" no_lang="1" span="all" class="message"/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
 				<row class="dialog-header" height="28">
-					<hbox needed="1" options="0,0" span="5">
-                                                <description value="Title"/>
-						<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1"/>
-						
-					</hbox>
+					<description value="Title"/>
+					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" span="all"/>
 				</row>
-                                <row class="dialog-header2" height="28">
-                                        <hbox options="2,0" vertical-align="middle">		
-                                                <description for="start" value="Start" width="95"/>
-                                                <date-time id="start" needed="1" class="required"/>
-                                                <checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable"/>
-					</hbox>
+				<row class="dialog-header2" height="28">
+					<description for="start" value="Start" width="95"/>
+					<date-time id="start" needed="1" class="required"/>
+					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable" span="all"/>
 				</row>
-                               <row class="dialog-header2" height="28">
-                                        <hbox options="3,0" vertical-align="middle">		
-                                                <description for="duration" value="Duration" width="0" id="calendar_edit_duration"/>
-                                                <menulist>
-                                                    <menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+				<row class="dialog-header2" height="28">
+					<description for="duration" value="Duration" width="0" id="calendar_edit_duration"/>
+					<hbox>
+						<menulist>
+							<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 						</menulist>
 						<date-time id="end"/>
-                                                <buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
-                                         
 					</hbox>
+					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 				</row>
 				<row>
 					<tabbox id="tabs" height="300" span="all">
 						<tabs>
-                                                        <tab id="description" label="Description" statustext="Full description"/>
-                                                        <tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
+							<tab id="description" label="Description" statustext="Full description"/>
+							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
 							<tab id="details" label="Details" statustext="Location, Start- and Endtimes, ..."/>
 							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
 							<tab id="custom" label="Custom" statustext="Custom fields"/>
@@ -337,8 +321,8 @@
 							<tab id="history" label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
-                                                        <template id="calendar.edit.description"/>
-                                                        <template id="calendar.edit.participants"/>
+							<template id="calendar.edit.description"/>
+							<template id="calendar.edit.participants"/>
 							<template id="calendar.edit.details"/>
 							<template id="calendar.edit.recurrence"/>
 							<template id="calendar.edit.custom"/>
@@ -353,11 +337,12 @@
 					<menulist>
 						<menupopup type="select-account" id="owner" readonly="true"/>
 					</menulist>
-                                       <description value="Updated"/>
-                                        <date-time  id="modified" no_lang="1" readonly="true" class="noBreak"/>
-                                        <menulist>
-					<menupopup type="select-account"  label="by" class="noBreak" id="modifier" readonly="true"/>
-                                        </menulist>
+					<hbox class="et2_nowrap" align="right">
+						<date-time label="Updated" id="modified" no_lang="1" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account"  label="by" class="et2_nowrap" id="modifier" readonly="true"/>
+						</menulist>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
