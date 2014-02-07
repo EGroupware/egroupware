@@ -233,7 +233,7 @@
 			// set app-header
 			if (window.framework && egw_script.getAttribute('data-app-header'))
 			{
-				egw(window).app_header(egw_script.getAttribute('data-app-header'));
+				egw(window).app_header(egw_script.getAttribute('data-app-header'), appname);
 			}
 			// display a message
 			if (egw_script.getAttribute('data-message'))

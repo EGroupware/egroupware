@@ -27,14 +27,22 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	_app;	// not used, but required by function signature
 	var message_timer;
 	var jQuery = _wnd.jQuery;
-	var framework = _wnd.framework;
-	var is_popup = !framework || _wnd.opener;
 	var error_reg_exp;
 
 	// install handler to remove message on click
 	jQuery('body').on('click', 'div#egw_message', function(e) {
 		jQuery('div#egw_message').remove();
 	});
+
+	/**
+	 * Are we running in a popup
+	 *
+	 * @returns {boolean} true: popup, false: main window
+	 */
+	function is_popup()
+	{
+		return !_wnd.framework || _wnd.opener;
+	}
 
 	return {
 		/**
@@ -45,6 +53,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		message: function(_msg, _type)
 		{
+			var framework = _wnd.framework;
+
 			if (_msg && typeof _type == 'undefined')
 			{
 				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
@@ -53,7 +63,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// if we are NOT in a popup and have a framwork --> let it deal with it
-			if (!is_popup && typeof framework.setMessage != 'undefined')
+			if (!is_popup() && typeof framework.setMessage != 'undefined')
 			{
 				// currently not using framework, but top windows message
 				//framework.setMessage.call(framework, _msg, _type);
@@ -95,6 +105,16 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		},
 
 		/**
+		 * Active app independent if we are using a framed template-set or not
+		 *
+		 * @returns {string}
+		 */
+		app_name: function()
+		{
+			return !is_popup() && _wnd.framework ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
+		},
+
+		/**
 		 * Update app-header and website-title
 		 *
 		 * @param {string} _header
@@ -102,12 +122,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		app_header: function(_header,_app)
 		{
-			if (!is_popup)	// not for popups
+			if (!is_popup())	// not for popups
 			{
-				var app = _app || egw_getAppName();
+				var app = _app || this.app_name();
 				var title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
 
-				framework.setWebsiteTitle.call(window.framework, app, title, _header);
+				_wnd.framework.setWebsiteTitle.call(_wnd.framework, app, title, _header);
 				return;
 			}
 			jQuery('div#divAppboxHeader').text(_header);
