@@ -1217,3 +1217,24 @@ div.ui-toolbar-menulist{
 .et2_toolbar_actionlist{
 	float:left;
 }
+
+/**
+ * Do not wrap content of a single widget incl. a label or children of a hbox.
+ * Taking into eg. select-account widget rendered as ul and prefixed with a label
+ * and maintaining some space between widgets.
+ */
+.et2_nowrap{
+	white-space: nowrap;
+}
+ul.et2_nowrap, div.et2_nowrap{
+	display: inline-block;
+}
+.et2_nowrap > *{
+	padding-left: 5px;
+}
+.et2_nowrap > *:first-child{
+	padding-left: 0;
+}
+.et2_nowrap > label > *{
+	padding-left: 5px;
+}
