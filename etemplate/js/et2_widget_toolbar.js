@@ -31,7 +31,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			"type": "string",
 			"default": "3",
 			"description": "Define minimum action view range to show actions by both icons and caption"
-		},
+		}
 	},
 
 	/**
@@ -66,10 +66,6 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.dropdowns = {};
 		this.preference = {};
 
-		if (typeof this.preference != "undefined")
-		{
-			console.log();
-		}
 		this._build_menu(this.default_toolbar);
 	},
 
@@ -99,7 +95,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 
-		this.preference = egw.preference(this.id,this.egw().getAppName())?egw.preference(this.id,this.egw().getAppName()):this.preference;
+		var pref = egw.preference(this.id,this.egw().getAppName());
+		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 		this.countActions = Object.keys(actions).length - Object.keys(this.preference).length;
 		var last_group = false;
 		var last_group_id = false;
@@ -234,7 +231,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		toolbox.accordion({
 			heightStyle:"fill",
 			collapsible: true,
-			active:'none',
+			active:'none'
 		});
 	},
 
@@ -250,7 +247,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		switch(_do)
 		{
 			case "add":
-				this.preference[_action] = _action;
+				this.preference[_action] = true;
 				egw.set_preference(this.egw().getAppName(),this.id,this.preference);
 				break;
 			case "remove":
