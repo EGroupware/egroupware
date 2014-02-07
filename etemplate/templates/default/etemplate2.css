@@ -1180,18 +1180,27 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	padding: 0 !important;
 }
 .et2_toolbar button {
-	
+
 }
-.ui-toolbar-menulist{
+div.ui-toolbar-menulist{
 	position: absolute;
 	height: inherit !important;
 	z-index: 999 !important;
 	overflow: auto !important;
 	border: solid black 1px;
 	padding: 0 !important;
+	margin-top: 3px !important;
+}
+.ui-toolbar-menulist > h {
+	padding-bottom: 7px;
+}
+.ui-toolbar-menulist > button {
+	padding: 0 !important;
 	margin: 0 !important;
 	text-align: left;
-	border-radius: 0;
+	border-radius: 0 !important;
+	width: 100% !important;
+	white-space: nowrap;
 }
 .ui-toolbar-menulistHeader{
 	font-size: xx-small;
@@ -1203,6 +1212,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	position: relative;
 	float:right;
 	direction: rtl;
+	margin-top: 3px;
 }
 .et2_toolbar_actionlist{
 	float:left;
