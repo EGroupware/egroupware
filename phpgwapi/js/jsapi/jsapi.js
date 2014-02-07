@@ -193,6 +193,8 @@ function egw_getApp(_name)
 
 /**
  * Returns the name of the currently active application
+ *
+ * @deprecated use egw(window).app_name()
  */
 function egw_getAppName()
 {
@@ -779,74 +781,15 @@ function dropdown_menu_hack(el)
 }
 
 /**
- * Dummy link handler, which can be overwritten by templates
+ * Use frameworks (framed template) link handler to open a url
  *
  * @param _link
  * @param _app
+ * @deprecated use egw(window).link_handler(_link, _app) instead
  */
 function egw_link_handler(_link, _app)
 {
-	if (window.framework)
-	{
-		window.framework.linkHandler(_link, _app);
-	}
-	else
-	{
-		window.location.href = _link;
-	}
-}
-
-/**
- * Call context / open app specific preferences function
- *
- * @param string name type 'acl', 'prefs', or 'cats'
- * @param array|object apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
- */
-function egw_preferences(name, apps)
-{
-	var current_app = egw_getAppName();
-	var query = {};
-	// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
-	if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' ||
-		!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
-	{
-		egw_message(egw.lang('Not supported by current application!'), 'warning');
-	}
-	else
-	{
-		var url = '/index.php';
-		switch(name)
-		{
-			case 'prefs':
-				query.menuaction ='preferences.preferences_settings.index';
-				if ($j.inArray(current_app, apps) != -1) query.appname=current_app;
-				break;
-
-			case 'acl':
-				query.menuaction='preferences.preferences_acl.index';
-				query.acl_app=current_app;
-				query.ajax=true;
-				break;
-
-			case 'cats':
-				if (typeof apps[current_app] == 'object')
-				{
-					for(var key in apps[current_app])
-					{
-						query[key] = encodeURIComponent(apps[current_app][key]);
-					}
-				}
-				else
-				{
-					query.menuaction='preferences.preferences_categories_ui.index';
-					query.cats_app=current_app;
-					query.ajax=true;
-				}
-				break;
-		}
-		query.current_app = current_app;
-		egw_link_handler(egw.link(url, query), current_app);
-	}
+	egw(window).link_handler(_link, _app);
 }
 
 /**

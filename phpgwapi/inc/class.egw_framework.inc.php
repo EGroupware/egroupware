@@ -1363,7 +1363,7 @@ abstract class egw_framework
 			'id' => $type,
 			'name' => 'preferences',
 			'title' => lang($types[$type]['title']),
-			'url' => "javascript:egw_preferences('$type',".json_encode($apps).')',
+			'url' => "javascript:egw.show_preferences(\"$type\",".json_encode($apps).')',
 		));
 	}
 

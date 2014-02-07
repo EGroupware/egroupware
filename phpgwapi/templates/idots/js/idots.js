@@ -65,21 +65,13 @@ egw_LAB.wait(function() {
 		var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
 		jQuery('#topmenu_items,#thesideboxcolumn').on('click','a[href^="javascript:"]',function(){
 			var matches = this.href.match(href_regexp);
-			if (matches && typeof window[matches[1]] == 'function') {
-				var args = [];
-				if (matches.length > 1 && matches[2] !== undefined) args = JSON.parse('['+matches[2].replace(/'/g,'"')+']');
-				window[matches[1]].apply(window.framework, args);
-			}
-			else if (matches && matches[1].indexOf('app.') == 0)
+			var args = [];
+			if (matches.length > 1 && matches[2] !== undefined)
 			{
-				return et2_call(matches[1],matches[2]);
+				args = JSON.parse('['+matches[2].replace(/'/g,'"')+']');
 			}
-			else
-			{
-				alert('Do NOT know how to execute '+this.href);
-			}
-			// return false to not execute link itself, which would violate CSP
-			return false;
+			args.unshift(matches[1]);
+			return et2_call.apply(this, args);
 		});
 
 		// make sidebox resizable with jQueryUI resizable

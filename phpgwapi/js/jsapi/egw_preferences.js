@@ -31,8 +31,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Setting prefs for an app or 'common'
 		 *
-		 * @param object _data object with name: value pairs to set
-		 * @param string _app application name, 'common' or undefined to prefes of all apps at once
+		 * @param {object} _data object with name: value pairs to set
+		 * @param {string} _app application name, 'common' or undefined to prefes of all apps at once
 		 */
 		set_preferences: function(_data, _app)
 		{
@@ -51,8 +51,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 *
 		 * If a prefernce is not already loaded (only done for "common" by default), it is synchroniosly queryed from the server!
 		 *
-		 * @param string _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
-		 * @param string _app='common'
+		 * @param {string} _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
+		 * @param {string} _app default 'common'
 		 * @return string preference value
 		 * @todo add a callback to query it asynchron
 		 */
@@ -76,9 +76,9 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 *
 		 * Server will silently ignore setting preferences, if user has no right to do so!
 		 *
-		 * @param string _app application name or "common"
-		 * @param string _name name of the pref
-		 * @param string _val value of the pref
+		 * @param {string} _app application name or "common"
+		 * @param {string} _name name of the pref
+		 * @param {string} _val value of the pref
 		 */
 		set_preference: function(_app, _name, _val)
 		{
@@ -86,8 +86,60 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 
 			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
 			if (typeof prefs[_app] != 'undefined') prefs[_app][_name] = _val;
+		},
+
+		/**
+		 * Call context / open app specific preferences function
+		 *
+		 * @param {string} name type 'acl', 'prefs', or 'cats'
+		 * @param {(array|object)} apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
+		 */
+		show_preferences: function (name, apps)
+		{
+			var current_app = this.app_name();
+			var query = {};
+			// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
+			if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' ||
+				!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
+			{
+				egw_message(egw.lang('Not supported by current application!'), 'warning');
+			}
+			else
+			{
+				var url = '/index.php';
+				switch(name)
+				{
+					case 'prefs':
+						query.menuaction ='preferences.preferences_settings.index';
+						if ($j.inArray(current_app, apps) != -1) query.appname=current_app;
+						break;
+
+					case 'acl':
+						query.menuaction='preferences.preferences_acl.index';
+						query.acl_app=current_app;
+						query.ajax=true;
+						break;
+
+					case 'cats':
+						if (typeof apps[current_app] == 'object')
+						{
+							for(var key in apps[current_app])
+							{
+								query[key] = encodeURIComponent(apps[current_app][key]);
+							}
+						}
+						else
+						{
+							query.menuaction='preferences.preferences_categories_ui.index';
+							query.cats_app=current_app;
+							query.ajax=true;
+						}
+						break;
+				}
+				query.current_app = current_app;
+				egw.link_handler(egw.link(url, query), current_app);
+			}
 		}
 	};
-
 });
 

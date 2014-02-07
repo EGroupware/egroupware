@@ -133,7 +133,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		{
 			// Log for debugging purposes - special log tag 'navigation' always
 			// goes in user log, if user log is enabled
-			egw.debug("navigation", 
+			egw.debug("navigation",
 				"egw.open(id_data=%o, app=%s, type=%s, extra=%o, target=%s, target_app=%s)",
 				id_data,app,type,extra,target,target_app
 			);
@@ -247,7 +247,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
 				_link,_target,_popup,_target_app
 			);
-			
+
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
 			{
@@ -280,7 +280,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 
 				return popup_window;
 			}
-			else if (typeof _wnd.egw_link_handler == 'function' && (typeof _target == 'undefined' || _target =='_self' || typeof this.link_app_list()[_target] != "undefined"))
+			else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
 				if(_target == '_self')
 				{
@@ -288,15 +288,29 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 					_target = undefined;
 				}
 				// Use framework's link handler, if present
-				return _wnd.egw_link_handler(url,_target);
-			}
-			else if (_target == '_self')
-			{
-				_wnd.location.href = url;
+				return this.link_handler(url,_target);
 			}
 			else
 			{
 				return _wnd.open(url, _target);
+			}
+		},
+
+		/**
+		 * Use frameworks (framed template) link handler to open a url
+		 *
+		 * @param {string} _url
+		 * @param {string} _target
+		 */
+		link_handler: function(_url, _target)
+		{
+			if (_wnd.framework)
+			{
+				_wnd.framework.linkHandler(_url, _target);
+			}
+			else
+			{
+				_wnd.location.href = _url;
 			}
 		}
 	};
