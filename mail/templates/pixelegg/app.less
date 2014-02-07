@@ -1257,8 +1257,12 @@ input[type=button] {
 //	background-position: left;
 //	background-repeat: no-repeat;
 //}
-
-.mailDisplay, #mail-index_mailPreview {
+.mailDisplay {
+  position: relative;
+  background-color: white;
+  width: 100%;
+}
+#mail-index_mailPreview {
     overflow: hidden;
     position: relative;
     margin-top: 5px;
@@ -1341,9 +1345,9 @@ input[type=button] {
     /* Elemente */
 
            button {
-                .dimension_width_height_m !important;
+                .dimension_height_m !important;
                 background-color: @gray_60;
-
+                
                 img[src$="svg"]{
                     
                 .gradient_vertical (@gray_60, @gray_60);
@@ -1558,7 +1562,23 @@ div.mailComposeHeaders > span:first-child {
 }
 div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > * {
     margin-left: 3px;}
-
+div.mailDisplayHeaders div.mail_extraEmails {
+  display: inline-block;
+  max-height: 1.3em;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.mailDisplayHeaders div.mail_extraEmails.visible {
+  position: fixed;
+  left: 7em;
+  display: block;
+  max-height: 8em;
+  min-width: 30em;
+  z-index: 999;
+  overflow-y: auto;
+  background-color: white;
+}
 #mail-importMessage{
 	.et2_button_icon{
         			height: auto;
