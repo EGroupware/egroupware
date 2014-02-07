@@ -513,7 +513,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 /* Link to */
 .et2_link_to {
   width: 350px;
-  overflow-x: show;
+  overflow-x: visible;
 }
 .et2_link_to button {
   display: inline;
@@ -1186,7 +1186,7 @@ div.ui-toolbar-menulist{
 	position: absolute;
 	height: inherit !important;
 	z-index: 999 !important;
-	overflow: auto !important;
+	overflow: hidden !important;
 	border: solid black 1px;
 	padding: 0 !important;
 	margin-top: 3px !important;
