@@ -247,6 +247,20 @@ app.classes.mail = AppJS.extend(
 		egw(h).ready(function() {
 			h.document.title = subject;
 		});
+		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
+		var messages = {};
+		messages['msg'] = [_id];
+		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
+		{
+			this.mail_removeRowClass(messages,'recent');
+			this.mail_removeRowClass(messages,'unseen');
+			// reduce counter without server roundtrip
+			this.mail_reduceCounterWithoutServerRoundtrip();
+			// not needed, as an explizit read flags the message as seen anyhow
+			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+		}
 	},
 
 	/**
@@ -699,9 +713,14 @@ app.classes.mail = AppJS.extend(
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		this.mail_removeRowClass(messages,'recent');
-		this.mail_removeRowClass(messages,'unseen');
-		egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
+		{
+			this.mail_removeRowClass(messages,'recent');
+			this.mail_removeRowClass(messages,'unseen');
+			// reduce counter without server roundtrip
+			this.mail_reduceCounterWithoutServerRoundtrip();
+			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+		}
 		// Pre-load next email already so user gets it faster
 		// Browser will cache the file for us
 /*
@@ -1007,6 +1026,24 @@ app.classes.mail = AppJS.extend(
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
+	},
+
+	/**
+	 * function to find (and reduce) unseen count from folder-name
+	 */
+	mail_reduceCounterWithoutServerRoundtrip: function()
+	{
+		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var _foldernode = ftree.getSelectedNode();
+		var counter = _foldernode.label.match(this._unseen_regexp);
+		var icounter = parseInt(counter[0].replace(' (','').replace(')',''));
+		if (icounter>0)
+		{
+			var newcounter = icounter-1;
+			if (newcounter>0) _foldernode.label = _foldernode.label.replace(' ('+String(icounter)+')',' ('+String(newcounter)+')');
+			if (newcounter==0) _foldernode.label = _foldernode.label.replace(' ('+String(icounter)+')','');
+			ftree.setLabel(_foldernode.id,_foldernode.label);
+		}
 	},
 
 	/**
