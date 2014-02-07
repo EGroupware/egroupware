@@ -268,7 +268,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var button = $j(document.createElement('button'))
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
-			.attr('title', action.caption)
+			.attr('title', (action.hint ? action.hint : action.caption))
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 
 		if ( action.iconUrl)
