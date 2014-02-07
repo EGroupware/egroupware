@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css');
+
 /**
  * eTemplate tree widget
  *
@@ -32,16 +34,17 @@
  * Please note:
  * - id of root-item has to be 0, ids of sub-items can be strings or numbers
  * - item has to be an array (not json object: numerical keys 0, 1, ...)
- * - im0: leaf image (default: leaf.gif), im1: open folder image (default: folderOpen.gif), im2: closed folder (default: folderClosed.gif)
+ * - im0: leaf image (default: leaf.gif), im1: open folder image (default: folderOpen.gif),
+ *   im2: closed folder (default: folderClosed.gif)
  * - for arbitrary image eg. $icon = common::image($app, 'navbar') use following code:
  * 		list(,$icon) = explode($GLOBALS['egw_info']['server']['webserver_url'], $icon);
  *		$icon = '../../../../..'.$icon;
- * - json autoloading uses identical data-structur
+ * - json autoloading uses identical data-structur and should use etemplate_widget_tree::send_quote_json($data)
+ *   to send data to client, as it takes care of html-encoding of node text
+ * - if autoloading is enabled, you have to validate returned results yourself, as widget does not know (all) valid id's
  */
-egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css');
 class etemplate_widget_tree extends etemplate_widget
 {
-
 	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
@@ -99,6 +102,26 @@ class etemplate_widget_tree extends etemplate_widget
 	}
 
 	/**
+	 * Check if given $id is one of given tree
+	 *
+	 * @param string $id needle
+	 * @param array $item haystack with values for attributes 'id' and 'item' (children)
+	 * @return boolean true if $id is contained in $item or it's children, false otherwise
+	 */
+	public static function in_tree($id, array $item)
+	{
+		if ((string)$id === (string)$item['id'])
+		{
+			return true;
+		}
+		foreach((array)$item['item'] as $child)
+		{
+			if (self::in_tree($id, $child)) return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
@@ -115,25 +138,35 @@ class etemplate_widget_tree extends etemplate_widget
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 
-			$allowed = $this->attrs['multiple'] ? array() : array('' => $this->attrs['options']);
-			$allowed += self::selOptions($form_name);
-			foreach((array) $value as $val)
+			// we can not validate if autoloading is enabled
+			if (!$this->attrs['autoloading'])
 			{
-				if (!($this->attrs['multiple'] && !$val) && !isset($allowed[$val]))
+				$allowed = $this->attrs['multiple'] ? array() : array('' => $this->attrs['options']);
+				$allowed += self::selOptions($form_name);
+				foreach((array) $value as $val)
 				{
-					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
-					$value = '';
-					break;
+					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !isset($allowed[$val]) ||
+						$this->type == 'tree' && !self::in_tree($val, $allowed))
+					{
+						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
+							$this->type == 'tree-cat' ? " ('".implode("','",array_keys($allowed)).')' : ''), '');
+						$value = '';
+						break;
+					}
 				}
 			}
-			if (is_array($value)) $value = implode(',',$value);
+			// return values for cat-tree as string, but not for regular tree as it can have id's with comma!
+			if (is_array($value) && $this->type == 'tree-cat')
+			{
+				$value = implode(',',$value);
+			}
 			if ($ok && $value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
-			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
+			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
 
