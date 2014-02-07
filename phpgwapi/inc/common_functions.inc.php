@@ -67,7 +67,7 @@ function cut_bytes(&$data,$offset,$len=null)
 	{
 		return $func_overload & 2 ? mb_substr($data,$offset,bytes($data),'ascii') : substr($data,$offset);
 	}
-	return $func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
+	return $func_overload & 2 ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 }
 
 if (!function_exists('mb_strlen'))
