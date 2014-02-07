@@ -5376,7 +5376,7 @@ body > div#egw_message {
   background-position-x: 5px;
   border: 2px gray solid;
   min-width: 100px;
-  z-index: 10;
+  z-index: 100000;
 }
 /*
 	Printing
