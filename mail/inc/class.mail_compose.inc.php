@@ -3002,7 +3002,7 @@ class mail_compose
 			$lists = array_filter(
 				$GLOBALS['egw']->contacts->get_lists(EGW_ACL_READ),
 				function($element) use($_searchString) {
-					return (stripos($element, $_searchString) >= 0);
+					return (stripos($element, $_searchString) !== false);
 				}
 			);
 			$list_count = 0;
