@@ -52,7 +52,7 @@
 					<description value="From"/>
 					<url-email id="previewFromAddress" readonly="true"/>
 				</hbox>
-				<hbox width="100%" id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
+				<hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
 					<description value="Subject"/>
 					<description align="left" id="previewSubject" readonly="true"/>
 				</hbox>
