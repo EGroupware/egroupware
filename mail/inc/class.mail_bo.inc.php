@@ -3305,13 +3305,13 @@ class mail_bo
 		// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
 		// sometimes there are 3 parts, when there is an ics/ical attached/included-> we want to show that
 		// as attachment AND as abstracted ical information (we use our notification style here).
-		$partText = $partHTML = null;
+		$partText = $partCalendar = $partHTML = null;
 		if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
 
 		$ignore_first_part = true;
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
-			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
+			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type"." ignoreFirstPart:".$ignore_first_part);
 			if (self::$debug) echo __METHOD__."($_uid, partID=".$_structure->getMimeId().") $mime_id: $mime_type<br>";
 
 			if ($ignore_first_part)
@@ -3328,7 +3328,9 @@ class mail_bo
 					switch($mimePart->getSubType())
 					{
 						case 'calendar':	// only if there is no partText set already
-							if ($partText) break;
+							//if ($partText) break;
+							if ($mimePart->getBytes() > 0) $partCalendar = $mimePart;
+							break;
 							// fall throught
 						case 'plain':
 							if ($mimePart->getBytes() > 0) $partText = $mimePart;
@@ -3362,6 +3364,9 @@ class mail_bo
 					}
 			}
 		}
+		// seems we have a multipart/alternative; as we assume we are able to display events
+		// the text/calendar part has higher precedence then text/plain
+		if ($partCalendar && $partText) $partText = $partCalendar;
 
 		switch($_htmlMode)
 		{
@@ -4441,10 +4446,11 @@ class mail_bo
 		{
 			$part = $_structure->getPart($mime_id);
 			//error_log(__METHOD__.__LINE__.':'.array2string($part->getMimeId()));
-
+			//error_log(__METHOD__.__LINE__.array2string($part->getAllContentTypeParameters()));
 			if ($part->getDisposition() == 'attachment' ||
 				$fetchEmbeddedImages && $part->getDisposition() == 'inline' &&
-					$part->getPrimaryType() == 'image')
+					$part->getPrimaryType() == 'image' ||
+				$fetchTextCalendar && $part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')
 			{
 				// if type is message/rfc822 and _partID is gien, and MimeID equals partID
 				// we attempt to fetch "ourselves"
@@ -4454,6 +4460,13 @@ class mail_bo
 				$attachment['uid'] = $_uid;
 				$attachment['partID'] = $mime_id;
 				if (!isset($attachment['name'])) $attachment['name'] = $part->getName();
+				if ($fetchTextCalendar)
+				{
+					//error_log(__METHOD__.__LINE__.array2string($part->getAllContentTypeParameters()));
+					$method = $part->getContentTypeParameter('method');
+					if ($method) $attachment['method'] = $method;
+					if (!isset($attachment['name'])) $attachment['name'] = 'event.ics';
+				}
 				$attachment['size'] = $part->getBytes();
 				if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
 
@@ -4496,7 +4509,7 @@ class mail_bo
 					$mailStructureObject = $_headerObject->getStructure();
 					$mailStructureObject->contentTypeMap();
 					$part = $mailStructureObject->getPart($_partID);
-					if ($part->getDisposition()=='attachment' || $part->getDisposition()=='inline')
+					if ($part->getDisposition()=='attachment' || $part->getDisposition()=='inline' || $part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
 

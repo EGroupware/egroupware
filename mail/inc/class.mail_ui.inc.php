@@ -2624,13 +2624,14 @@ $this->partID = $partID;
 		$meetingRequest = false;
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true);
+		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true,true,$mailbox);
+		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		foreach ((array)$attachments as $key => $attach)
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
 				(strtolower($attach['method']) == 'request' || strtolower($attach['method']) == 'reply') &&
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
-				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'])))
+				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],0,(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
 			{
 				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				egw_cache::setSession('calendar', 'ical', array(
