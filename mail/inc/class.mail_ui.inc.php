@@ -1210,9 +1210,10 @@ class mail_ui
 */
 					'flagged' => array(
 						'group' => ++$group,
-						'caption' => 'Flagged / Unflagged',
+						'caption' => 'Flag / Unflag',
 						'icon' => 'unread_flagged_small',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
+						'hint' => 'Flag or Unflag a mail',
 						//'disableClass' => 'flagged',
 						//'enabled' => "javaScript:mail_disabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
