@@ -1,3 +1,21 @@
+egroupware-epl (11.1.20140210-1) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Security: fixed arbitrary file overwrite and remote code execution reported by Pedro Ribeiro (pedrib@gmail.com) of Agile Information Security
+  * API: support for mbstring.func_overload=0 (previously we required mbstring.func_overload=7 to correctly support utf-8)
+  * Tracker: dropping unique index(es) on escalations to not limit creating same escalations eg. on different queues
+  * Tracker: allow to filter by private: yes or no
+  * API/Preferences: fixed can NOT unset last (forced) preference of an app, also fixed not working deleting of prefs when deleting a user or group
+  * Adressbook/CardDAV: changed (down-)scaling of images to width of 240px (was 60px) to cater for higher screen resolutions
+  * Calendar,EventMgr: fixed locking of events to work with current browser versions
+  * CalDAV/Resources: fixed only first N resources were available in CalDAV (N = common preference how many entries to show)
+  * Calendar/eSync: fixed caching causing new events on EGroupware side not to appear on device (withing time of a running ping-request)
+  * CalDAV/Calendar: fixed invalid ics file for alarm exactly at the event
+  * InfoLog: query custom-fields for notifications
+  * eMail: completely remove the ui/bo/sofilter classes as they are not effectively used anymore
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 10 Feb 2014 14:15:46 +0100
+
 egroupware-epl (11.1.20140108-1) hardy; urgency=low
 
   * eTemplate: fixed error caused by handling of empty indexes, causing eg. in filemanager-select popup to display in first row / instead of filename
