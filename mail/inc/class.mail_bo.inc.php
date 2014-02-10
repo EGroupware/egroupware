@@ -529,13 +529,14 @@ class mail_bo
 		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
 		{
 			$acc = emailadmin_account::read($acc_id);
+			$userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature']);
 			$identities = $acc->identities($acc_id);
 
 			foreach($identities as $ik => $ident) {
 				//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
 				$identity = emailadmin_account::read_identity($ik);
 				//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($identity));
-				$userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+				if (!isset($userEMailAdresses[$identity['ident_id']])) $userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
 			}
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
@@ -550,13 +551,14 @@ class mail_bo
 	function getAccountIdentities($acc_id) {
 		$userEMailAdresses = array();
 		$acc = emailadmin_account::read($acc_id);
+		$userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature']);
 		$identities = $acc->identities();
 
 		foreach($identities as $ik => $ident) {
 			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($ident));
 			$identity = emailadmin_account::read_identity($ik);
 			//error_log(__METHOD__.__LINE__.':'.$ik.'->'.array2string($identity));
-			$userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
+			if (!isset($userEMailAdresses[$identity['ident_id']])) $userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature']);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($userEMailAdresses));
 		return $userEMailAdresses;
