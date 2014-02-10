@@ -713,7 +713,7 @@ app.classes.mail = AppJS.extend(
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.class != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
 		{
 			this.mail_removeRowClass(messages,'recent');
 			this.mail_removeRowClass(messages,'unseen');
