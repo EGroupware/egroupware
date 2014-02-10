@@ -192,7 +192,7 @@ class mail_ui
 		$sel_options['foldertree'] =  $this->getFolderTree(false, null,false);
 		$unsubscribedFolders = $this->mail_bo->fetchUnSubscribedFolders();
 		$allFolders = $this->mail_bo->getFolderObjects();
-		
+
 		if (!is_array($content))
 		{
 			if ($profileId)
@@ -993,14 +993,16 @@ class mail_ui
 				'group' => $group,
 				'children' => array(
 					'forwardinline' => array(
-						'caption' => 'forward inline',
+						'caption' => 'forward',
 						'icon' => 'mail_forward',
 						'group' => $group,
+						'hint' => 'forward inline',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
 					),
 					'forwardasattach' => array(
-						'caption' => 'forward as attachment',
+						'caption' => 'forward',
+						'hint' => 'forward as attachment',
 						'icon' => 'mail_forward',
 						'group' => $group,
 						'onExecute' => 'javaScript:app.mail.mail_compose',
@@ -1008,8 +1010,9 @@ class mail_ui
 				),
 			),
 			'composeasnew' => array(
-				'caption' => 'Compose as new',
+				'caption' => 'Compose',
 				'icon' => 'new',
+				'hint' => 'Compose as new',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
@@ -1053,7 +1056,7 @@ class mail_ui
 				'icon' => 'fileexport',
 				'children' => array(
 					'save2disk' => array(
-						'caption' => 'Save message to disk',
+						'caption' => 'Save to disk',
 						'hint' => 'Save message to disk',
 						'group' => $group,
 						'icon' => 'fileexport',
@@ -1061,7 +1064,7 @@ class mail_ui
 						'allowOnMultiple' => false,
 					),
 					'save2filemanager' => array(
-						'caption' => 'Save to filemanager',
+						'caption' => 'Filemanager',
 						'hint' => 'Save message to filemanager',
 						'group' => $group,
 						'icon' => 'filemanager/navbar',
@@ -1076,7 +1079,7 @@ class mail_ui
 				'icon' => 'kmmsgread',
 				'children' => array(
 					'header' => array(
-						'caption' => 'Header lines',
+						'caption' => 'Header',
 						'hint' => 'View header lines',
 						'group' => $group,
 						'icon' => 'kmmsgread',
@@ -1084,7 +1087,7 @@ class mail_ui
 						'allowOnMultiple' => false,
 					),
 					'mailsource' => array(
-						'caption' => 'Mail Source',
+						'caption' => 'Source',
 						'hint' => 'View full Mail Source',
 						'group' => $group,
 						'icon' => 'fileexport',
@@ -1092,14 +1095,16 @@ class mail_ui
 						'allowOnMultiple' => false,
 					),
 					'openastext' => array(
-						'caption' => lang('Open in Text mode'),
+						'caption' => lang('Text mode'),
+						'hint' => 'Open in Text mode',
 						'group' => ++$group,
 						'icon' => egw_vfs::mime_icon('text/plain'),
 						'onExecute' => 'javaScript:app.mail.mail_openAsText',
 						'allowOnMultiple' => false,
 					),
 					'openashtml' => array(
-						'caption' => lang('Open in HTML mode'),
+						'caption' => lang('HTML mode'),
+						'hint' => 'Open in HTML mode',
 						'group' => $group,
 						'icon' => egw_vfs::mime_icon('text/html'),
 						'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
@@ -1529,17 +1534,13 @@ unset($query['actions']);
 					break;
 				case 'flagged':
 					$actionsenabled[$act]=array(
-						'group' => $group,
+						'group' => ++$group,
 						'caption' => 'Flagged',
+						'hint' => 'Flagged / Unflagged',
 						'icon' => 'unread_flagged_small',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 					);
-					$actionsenabled['unflagged']=array(
-						'group' => $group,
-						'caption' => 'Unflagged',
-						'icon' => 'read_flagged_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-					);
+					
 					break;
 				default:
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
