@@ -29,7 +29,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		"view_range": {
 			"name": "View range",
 			"type": "string",
-			"default": "3",
+			"default": "5",
 			"description": "Define minimum action view range to show actions by both icons and caption"
 		}
 	},
