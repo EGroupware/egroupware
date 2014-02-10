@@ -22,10 +22,10 @@
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
  * function is provided, which attatches the given node to the DOM if possible.
- * 
+ *
  * @augments et2_DOMWidget
  */
-var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, 
+var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 {
 	attributes: {
 		"statustext": {
@@ -47,10 +47,10 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 			"description": "JS code which is executed when the element is clicked."
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2BaseWidget
 	 */
 	init: function() {
@@ -202,7 +202,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		if (this.node)
 		{
 			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
-				return e.data.click.call(e.data, this);
+				return e.data.click.call(e.data, e, this);
 			});
 			if (typeof this.onclick == 'function') $j(this.node).addClass('et2_clickable');
 		}
@@ -237,7 +237,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 
 	/**
 	 * Click handler calling custom handler set via onclick attribute to this.onclick
-	 * 
+	 *
 	 * @param _ev
 	 * @returns
 	 */
@@ -247,7 +247,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 			// Make sure function gets a reference to the widget, splice it in as 2. argument if not
 			var args = Array.prototype.slice.call(arguments);
 			if(args.indexOf(this) == -1) args.splice(1, 0, this);
-			
+
 			return this.onclick.apply(this, args);
 		}
 
@@ -295,14 +295,14 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 
 /**
  * Simple container object
- * 
+ *
  * @augments et2_baseWidget
  */
 var et2_container = et2_baseWidget.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_container
 	 */
 	init: function() {
@@ -336,14 +336,14 @@ var et2_container = et2_baseWidget.extend(
 
 /**
  * Container object for not-yet supported widgets
- * 
+ *
  * @augments et2_baseWidget
  */
 var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_placeholder
 	 */
 	init: function() {

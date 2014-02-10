@@ -22,10 +22,10 @@
 
 /**
  * Class which implements the "vfs" XET-Tag
- * 
+ *
  * @augments et2_valueWidget
  */
-var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -41,7 +41,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfs
 	 */
 	init: function() {
@@ -112,11 +112,11 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 				.text(text + (i < path_parts.length-1 ? '/' : ''))
 				//.attr('title', egw.decodePath(path))
 				.addClass("et2_clickable et2_link")
-				.click({data:data, egw: this.egw()}, function(e) {	                         
+				.click({data:data, egw: this.egw()}, function(e) {
 					if(!self.onclick) {
 						e.data.egw.open(e.data.data, "file");
 					}
-					else if (self.click())
+					else if (self.click(e))
 					{
 						e.data.egw.open(e.data.data, "file");
 					}
@@ -127,6 +127,8 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Code for implementing et2_IDetachedDOM (data grid)
+	 *
+	 * @param {array} _attrs array of attribute-names to push further names onto
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
@@ -154,14 +156,14 @@ et2_register_widget(et2_vfs, ["vfs"]);
 /**
  * vfs-name
  * filename automatically urlencoded on return (urldecoded on display to user)
- * 
+ *
  * @augments et2_textbox
  */
 var et2_vfsName = et2_textbox.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfsName
 	 */
 	init: function() {
@@ -185,14 +187,14 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
 /**
  * vfs-name
  * filename automatically urlencoded on return (urldecoded on display to user)
- * 
+ *
  * @augments et2_textbox_ro
  */
 var et2_vfsName_ro = et2_textbox_ro.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfsName_ro
 	 */
 	init: function() {
@@ -215,7 +217,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 /**
  * vfs-mime: icon for mimetype of file, or thumbnail
  * incl. optional link overlay icon, if file is a symlink
- * 
+ *
  * Creates following structure
  * <span class="iconOverlayContainer">
  *   <img class="et2_vfs vfsMimeIcon" src="..."/>
@@ -223,12 +225,12 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
  *      <img class="overlay" src="etemplate/templates/default/images/link.png"/>
  *   </span>
  * </span>
- * 
+ *
  * span.overlayContainer is optional and only generated for symlinks
- * 
+ *
  * @augments et2_valueWidget
  */
-var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -247,7 +249,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfsMime
 	 */
 	init: function() {
@@ -283,7 +285,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			if (typeof this.overlayContainer == 'undefined')
 			{
-				
+
 				this.overlayContainer = jQuery(document.createElement('span')).addClass('overlayContainer');
 				this.overlayContainer.append(jQuery(document.createElement('img'))
 					.addClass('overlay').attr('src', this.egw().image('link', 'etemplate')));
@@ -299,6 +301,8 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
 	 * Override to add needed attributes
+	 *
+	 * @param {array} _attrs array of attribute-names to push further names onto
 	 */
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("value", "class");
@@ -324,18 +328,18 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 /**
  * vfs-size
  * Human readable file sizes
- * 
+ *
  * @augments et2_description
  */
 var et2_vfsSize = et2_description.extend({
 	attributes: {
 		"value": {
-			"type": "integer",
+			"type": "integer"
 		}
 	},
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfsSize
 	 */
 	init: function() {
@@ -382,7 +386,7 @@ et2_register_widget(et2_vfsSize, ["vfs-size"]);
 
 /**
  * vfs-mode: textual representation of permissions + extra bits
- * 
+ *
  * @augments et2_description
  */
 var et2_vfsMode = et2_description.extend({
@@ -396,7 +400,7 @@ var et2_vfsMode = et2_description.extend({
 		'b': 0x6000, // Block special
 		'-': 0x8000 // Regular
 	},
-	// Sticky / UID / GID 
+	// Sticky / UID / GID
 	sticky: [
 		{ mask: 0x200, "char": "T", position: 9 }, // Sticky
 		{ mask: 0x400, "char": "S", position: 6 }, // sGID
@@ -407,10 +411,10 @@ var et2_vfsMode = et2_description.extend({
 		'w': 0x2, // Write
 		'r': 0x4  // Read
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_vfsMode
 	 */
 	init: function() {
@@ -422,6 +426,8 @@ var et2_vfsMode = et2_description.extend({
 	 * Get text for file stuff
 	 * Result will be like -rwxr--r--.  First char is type, then read, write, execute (or other bits) for
 	 * user, group, world
+	 *
+	 * @param {number} _value vfs mode
 	 */
 	text_mode: function(_value) {
 		var text = [];
@@ -495,7 +501,7 @@ et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 /**
  * vfs-uid / vfs-gid: Displays the name for an ID.
  * Same as read-only selectAccount, except if there's no user it shows "root"
- * 
+ *
  * @augments et2_selectAccount_ro
  */
 var et2_vfsUid = et2_selectAccount_ro.extend(
@@ -522,11 +528,11 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
  *     and calling app is responsible to move content of that dir to entry directory, after entry is saved
  *   + option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
  *   + if path ends in a slash, multiple files can be uploaded, their original filename is kept then
- *  
+ *
  * @augments et2_file
  */
 var et2_vfsUpload = et2_file.extend(
-{	
+{
 	legacyOptions: ["mime"],
 
 	asyncOptions: {
@@ -535,7 +541,7 @@ var et2_vfsUpload = et2_file.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param attrs
 	 * @memberof et2_vfsUpload
@@ -561,7 +567,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 {
 	// Allowed mode options
 	modes: ['open','open-multiple','saveas','select-dir'],
-		
+
 	attributes: {
 		"mode": {
 			name: "Dialog mode",
@@ -600,10 +606,10 @@ var et2_vfsSelect = et2_inputWidget.extend(
 			"description": "Array of paths (strings)"
 		}
 	},
-		
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _attrs
 	 * @memberOf et2_vfsSelect
@@ -618,15 +624,15 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		this.button = $j(document.createElement("img"))
 			.attr("src", this.egw().image("filemanager/navbar"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
-			.addClass("et2_button et2_button_icon")
+			.addClass("et2_button et2_button_icon");
 		this.setDOMNode(egw.userData.apps.filemanager ? this.button[0]:document.createElement('span'));
 	},
 
 	click: function(e) {
-	
+
 	    // No permission
 	    if(typeof egw.userData.apps.filemanager == 'undefined') return;
-		
+
 		var self = this;
 
 		var attrs = {
@@ -644,7 +650,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		{
 			attrs.mime = this.options.mime;
 		};
-		
+
 		// Open the filemanager select in a popup
 		var popup = this.egw().open_link(
 			this.egw().link('/index.php', attrs),
@@ -658,15 +664,15 @@ var et2_vfsSelect = et2_inputWidget.extend(
 				function() {
 					if(popup.closed) {
 						self.egw().window.clearInterval(poll);
-						
+
 						// Update path to where the user wound up
 						var path = popup.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path') || '';
 						self.options.path = path;
-						
+
 						// Get the selected files
 						var files = popup.selected_files || [];
 						self.value = files;
-						
+
 						// Fire a change event so any handlers run
 						$j(self.node).change();
 					}
@@ -676,9 +682,10 @@ var et2_vfsSelect = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Set the dialog's mode.  
+	 * Set the dialog's mode.
 	 * Valid options are in et2_vfsSelect.modes
-	 * 
+	 *
+	 * @param {string} mode 'open', 'open-multiple', 'saveas' or 'select-dir'
 	 */
 	set_mode: function(mode) {
 		// Check mode
@@ -692,6 +699,8 @@ var et2_vfsSelect = et2_inputWidget.extend(
 
 	/**
 	 * Set the label on the dialog's OK button.
+	 *
+	 * @param {string} label
 	 */
 	set_button_label: function(label)
 	{
@@ -700,6 +709,8 @@ var et2_vfsSelect = et2_inputWidget.extend(
 
 	/**
 	 * Set the ID passed to the server side callback
+	 *
+	 * @param {string} id
 	 */
 	set_method_id: function(id) {
 		this.options.method_id = id;
