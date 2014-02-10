@@ -1594,18 +1594,18 @@ app.classes.mail = AppJS.extend(
 				{
 					windowName = 'maildisplayEvent_'+mailid+'_'+attgrid.partID;
 					reg2 = egw.link_get_registry('calendar');
-					if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+					if (typeof reg2['view'] != 'undefined' && typeof reg2['view_popup'] != 'undefined' )
 					{
-						reg = app_registry['view_popup'];
+						reg = reg2['view_popup'];
 					}
 				}
 				if (attgrid.type.toUpperCase()=='TEXT/X-VCARD' || attgrid.type.toUpperCase()=='TEXT/VCARD')
 				{
 					windowName = 'maildisplayContact_'+mailid+'_'+attgrid.partID;
 					reg2 = egw.link_get_registry('addressbook');
-					if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
+					if (typeof reg2['add'] != 'undefined' && typeof reg2['add_popup'] != 'undefined' )
 					{
-						reg = app_registry['add_popup'];
+						reg = reg2['add_popup'];
 					}
 				}
 				var w_h =reg.split('x');
@@ -1685,18 +1685,18 @@ app.classes.mail = AppJS.extend(
 				{
 					windowName = 'maildisplayEvent_'+attgrid.file.replace(/\//g,"_");
 					reg2 = egw.link_get_registry('calendar');
-					if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+					if (typeof reg2['view'] != 'undefined' && typeof reg2['view_popup'] != 'undefined' )
 					{
-						reg = app_registry['view_popup'];
+						reg = reg2['view_popup'];
 					}
 				}
 				if (attgrid.type.toUpperCase()=='TEXT/X-VCARD' || attgrid.type.toUpperCase()=='TEXT/VCARD')
 				{
 					windowName = 'maildisplayContact_'+attgrid.file.replace(/\//g,"_");
 					reg2 = egw.link_get_registry('addressbook');
-					if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
+					if (typeof reg2['add'] != 'undefined' && typeof reg2['add_popup'] != 'undefined' )
 					{
-						reg = app_registry['add_popup'];
+						reg = reg2['add_popup'];
 					}
 				}
 				var w_h =reg.split('x');
