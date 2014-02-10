@@ -571,6 +571,15 @@ div.mailPreviewHeaders div.mail_extraEmails {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
+  width: 58%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
+  white-space: nowrap;
+}
 div.mailPreviewHeaders div.mail_extraEmails.visible,
 div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   position: absolute;
@@ -684,7 +693,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate 
   margin: 25px 5px 0 0;
 }
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 100%;
+  width: 58%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
+  white-space: nowrap;
 }
 /*##############################################
 #            #                               #
@@ -767,7 +782,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
 }
 .egw_fw_ui_category_content .draggedOver {
-  background-color: #679fd2;
+  background-color: rgba(103, 159, 210, 0.1);
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1002,7 +1017,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1137,7 +1152,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1172,7 +1187,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   float: left;
   width: 47px;
   margin: 3px;

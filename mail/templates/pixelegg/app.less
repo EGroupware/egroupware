@@ -162,8 +162,14 @@ div#mail-index{
 
             // Subject
             div#mail-index_mailPreviewHeadersSubject{
-                width: 100%;
+				width: 58%;
+                text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
             }
+			div#mail-index_mailPreviewHeadersSubject > span{
+				white-space: nowrap;
+			}
 
             // Icons
             div#mail-index_mailPreviewIcons{}
