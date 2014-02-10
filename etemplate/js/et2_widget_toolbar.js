@@ -38,9 +38,9 @@ var et2_toolbar = et2_DOMWidget.extend(
 	 * Default buttons, so there is something for the widget browser / editor to show
 	 */
 	default_toolbar: {
-		view: {caption:'View', icons: {primary: 'ui-icon-check'}, group:1},
-		edit: {caption:'Edit', group:1},
-		save: {caption:'Save', group:2}
+		view: {caption:'View', icons: {primary: 'ui-icon-check'}, group:1, toolbarDefault:true},
+		edit: {caption:'Edit', group:1, toolbarDefault:true},
+		save: {caption:'Save', group:2, toolbarDefault:true}
 	},
 
 	/**
@@ -97,6 +97,17 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		var pref = egw.preference(this.id,this.egw().getAppName());
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
+		
+		//Set the default actions for the first time
+		if (typeof pref === 'undefined')
+		{
+			for (var name in actions)
+			{
+				if (!actions[name].toolbarDefault)
+					this.set_prefered(actions[name].id,'add');
+			}
+		}
+
 		this.countActions = Object.keys(actions).length - Object.keys(this.preference).length;
 		var last_group = false;
 		var last_group_id = false;
