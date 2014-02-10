@@ -121,7 +121,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		app_name: function()
 		{
-			return !this.is_popup() && _wnd.framework ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
+			return !this.is_popup() && _wnd.framework && _wnd.framework.activeApp ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
 		},
 
 		/**
@@ -132,7 +132,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		app_header: function(_header,_app)
 		{
-			if (!this.is_popup() && _wnd.framework)	// not for popups and only for framed templates
+			// not for popups and only for framed templates
+			if (!this.is_popup() && _wnd.framework && _wnd.framework.setWebsiteTitle)
 			{
 				var app = _app || this.app_name();
 				var title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
