@@ -1351,8 +1351,9 @@ class calendar_uiforms extends calendar_ui
 				}
 				$content['participants'][$row]['delete_id'] = strpbrk($uid,'"\'<>') !== false ? md5($uid) : $uid;
 				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
-				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
-				$readonlys["delete[$uid]"] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
+
+				$readonlys['participants'][$row]['status'] = !$this->bo->check_status_perms($uid,$event);
+				$readonlys['participants']['delete'][$uid] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				// todo: make the participants available as links with email as title
 				$content['participants'][$row++]['title'] = $this->get_title($uid);
 				// enumerate group-invitations, so people can accept/reject them
@@ -1371,9 +1372,10 @@ class calendar_uiforms extends calendar_ui
 								'uid'      => $member,
 								'status'   => 'G',
 							);
-							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
+							$readonlys['participants'][$row]['quantity'] = $readonlys['participants']['delete'][$member] = true;
 							// read access is enough to invite participants, but you need edit rights to change status
-							$readonlys[$row.'[status]'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
+							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
+							//$readonlys[$row.'[status]'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
 							$content['participants'][$row++]['title'] = common::grab_owner_name($member);
 						}
 					}
