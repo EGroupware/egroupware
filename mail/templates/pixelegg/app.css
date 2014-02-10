@@ -767,7 +767,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
 }
 .egw_fw_ui_category_content .draggedOver {
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1002,7 +1002,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1137,7 +1137,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1172,7 +1172,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1724,10 +1724,16 @@ pre {
 }
 .mail-index_quotabox {
   position: absolute;
-  top: 8px;
-  right: 74px;
+  top: 29px;
+  right: -72px;
   width: 200px !important;
   z-index: 99;
+}
+.mail-index_quotabox div.et2_progress {
+  background-color: #b4b4b4 !important;
+}
+.mail-index_quotabox div.et2_progress > div {
+  min-height: 4px !important;
 }
 .mail-index_quotaDisplayNone {
   display: none !important;
@@ -1735,20 +1741,20 @@ pre {
 .mail-index_QuotaGreen,
 .mail-index_QuotaYellow,
 .mail-index_QuotaRed {
-  height: 12px !important;
+  height: 4px !important;
   width: 100px !important;
 }
 .mail-index_QuotaGreen > div {
   background-color: green !important;
-  height: 11px !important;
+  height: 4px !important;
 }
 .mail-index_QuotaYellow > div {
   background-color: yellow !important;
-  height: 11px !important;
+  height: 4px !important;
 }
 .mail-index_QuotaRed > div {
   background-color: red !important;
-  height: 11px !important;
+  height: 4px !important;
 }
 /*
  influence the tree display and scrolling behavior

@@ -1184,30 +1184,36 @@ pre {
 }
 .mail-index_quotabox {
     position: absolute;
-    top:8px;
-    right:74px;
+    top:29px;
+    right:-72px;
     width:200px !important;
     z-index:99;
+    
+    div.et2_progress {background-color: @gray_30 !important;}
+    div.et2_progress > div {min-height: 4px !important;}
+    
 }
 .mail-index_quotaDisplayNone {
     display: none !important;
 }
 .mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
-    height:12px !important;
+    height:4px !important;
     width:100px !important;
 }
 .mail-index_QuotaGreen > div {
     background-color: green !important;
-    height:11px !important;
+    height:4px !important;
 }
 .mail-index_QuotaYellow > div {
     background-color: yellow !important;
-    height:11px !important;
+    height:4px !important;
 }
 .mail-index_QuotaRed > div {
     background-color: red !important;
-    height:11px !important;
+    height:4px !important;
 }
+
+
 /*
  influence the tree display and scrolling behavior
 */
@@ -1345,7 +1351,7 @@ input[type=button] {
     /* Elemente */
 
            button {
-                .dimension_height_m !important;
+                height: 24px !important;
                 background-color: @gray_60;
                 
                 img[src$="svg"]{
