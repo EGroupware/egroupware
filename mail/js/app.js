@@ -138,17 +138,15 @@ app.classes.mail = AppJS.extend(
 		if (isDisplay)
 		{
 			var subject = this.et2.getWidgetById('mail_displaysubject');
-			var body = this.et2.getWidgetById('mail_displaybody');
+			var body = this.et2.getWidgetById('mailDisplayBodySrc');
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
-			var app_registry = egw.link_get_registry('mail');//this.appname);
-			//console.log(app_registry);
+			var app_registry = egw.link_get_registry('mail');
 			w=870;
 			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 			{
 				var w_h =app_registry['view_popup'].split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
 			}
-			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
 			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 		}
 		if (isCompose)
