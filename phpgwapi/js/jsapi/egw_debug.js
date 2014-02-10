@@ -237,7 +237,11 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		log_on_client('error', [e.originalEvent.message]);
 		raise_error();
 		// rethrow error to let browser log and show it in usual way too
-		throw e.originalEvent;
+		if (typeof e.originalEvent == 'object' && typeof e.originalEvent.error == 'object')
+		{
+			throw e.originalEvent.error;
+		}
+		throw e.message;
 	});
 
 	/**
