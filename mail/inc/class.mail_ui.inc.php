@@ -1533,14 +1533,7 @@ unset($query['actions']);
 					$actionsenabled[$act]=$actions['view']['children'][$act];
 					break;
 				case 'flagged':
-					$actionsenabled[$act]=array(
-						'group' => ++$group,
-						'caption' => 'Flagged',
-						'hint' => 'Flagged / Unflagged',
-						'icon' => 'unread_flagged_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-					);
-					
+					$actionsenabled[$act]= $actions['mark']['children'][$act];
 					break;
 				default:
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
