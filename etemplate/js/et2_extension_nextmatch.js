@@ -175,6 +175,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Destroys all
 	 */
 	destroy: function() {
+		// Stop autorefresh
+		if(this._autorefresh_timer)
+		{
+			window.clearInterval(this._autorefresh_timer);
+		}
+		
 		// Free the grid components
 		this.dataview.free();
 		this.rowProvider.free();
@@ -422,7 +428,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	refresh: function(_row_ids, _type) {
 		// Framework trying to refresh, but nextmatch not fully initialized
-		if(this.controller === null)
+		if(this.controller === null || !this.div.is(':visible'))
 		{
 			return;
 		}
@@ -1290,6 +1296,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(time > 0)
 		{
 			this._autorefresh_timer = setInterval(jQuery.proxy(this.refresh, this), time * 1000);
+
+			// Bind to tab show/hide events, so that we don't bother refreshing in the background
+			$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
+				window.clearInterval(this._autorefresh_timer);
+				delete this._autorefresh_timer;
+				$j(e.target).off(e);
+			},this));
+			$j(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
+				this._set_autorefresh(this._get_autorefresh());
+				$j(e.target).off(e);
+				// Trigger an immediate refresh
+				this.refresh();
+			},this));
 		}
 	},
 
