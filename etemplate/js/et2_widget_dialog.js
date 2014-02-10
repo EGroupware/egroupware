@@ -588,7 +588,7 @@ jQuery.extend(et2_dialog,
 	 */
 	long_task: function(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
 	{
-		var parent = et2_dialog._create_parent(_egw_or_parent);
+		var parent = et2_dialog._create_parent(_egw_or_appname);
 		var egw = parent._egw;
 
 		// Special action for cancel
