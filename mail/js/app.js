@@ -642,7 +642,7 @@ app.classes.mail = AppJS.extend(
 		//get_class does not exist yet
 		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
 		//console.log(pAAClass);
-		if (this.et2.getWidgetById('previewAttachmentArea'))
+		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='')
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
 		}
