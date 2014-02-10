@@ -644,6 +644,9 @@ app.classes.calendar = AppJS.extend(
 					this.egw.open_link('infolog.infolog_ui.edit&action=calendar&action_id='+($j.isPlainObject(event)?event['id']:event),'_self','700x600','infolog');
 					this.et2._inst.submit();
 					break;
+				case 'ical':
+					this.et2._inst.postSubmit();
+					break;
 				default:
 					this.et2._inst.submit();
 			}
