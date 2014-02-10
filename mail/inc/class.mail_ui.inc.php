@@ -979,6 +979,7 @@ class mail_ui
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
+				'toolbarDefault' => true
 			),
 			'reply_all' => array(
 				'caption' => 'Reply All',
@@ -999,6 +1000,7 @@ class mail_ui
 						'hint' => 'forward inline',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
+						'toolbarDefault' => true
 					),
 					'forwardasattach' => array(
 						'caption' => 'forward',
@@ -1033,6 +1035,7 @@ class mail_ui
 				'url' => 'menuaction=infolog.infolog_ui.import_mail',
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'allowOnMultiple' => false,
+				'toolbarDefault' => true
 			),
 			'tracker' => array(
 				'caption' => 'Tracker',
@@ -1213,6 +1216,7 @@ class mail_ui
 						//'disableClass' => 'flagged',
 						//'enabled' => "javaScript:mail_disabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
+						'toolbarDefault' => true
 					),
 /*
 					'unflagged' => array(
@@ -1260,6 +1264,7 @@ class mail_ui
 				'hint' => $deleteOptions[$this->mail_bo->mailPreferences['deleteOptions']],
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_delete',
+				'toolbarDefault' => true
 			),
 /*
 			'select_all' => array(
