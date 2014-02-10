@@ -267,7 +267,7 @@ app.classes.calendar = AppJS.extend(
 							var dM = this.dropEnd.getAttribute('data-date').split("|")[2];
 						}
 						var dataResize = event.target.getAttribute('data-resize').split("|");
-						this.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span style=" position: absolute; bottom: 0; align: center; ">'+dH+':'+dM+'</span></div>';
+						this.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+dH+':'+dM+'</span></div>';
 					}
 					else
 					{
@@ -328,7 +328,7 @@ app.classes.calendar = AppJS.extend(
 					if (dpOwner == null) dpOwner = dgOwner;
 					if (dpOwner === dgOwner )
 					{
-						ui.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter">'+timeDemo+'</div>';
+						ui.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter"><span>'+timeDemo+'</span></div>';
 					}
 					else
 					{
