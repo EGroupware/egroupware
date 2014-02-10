@@ -34,16 +34,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		jQuery('div#egw_message').remove();
 	});
 
-	/**
-	 * Are we running in a popup
-	 *
-	 * @returns {boolean} true: popup, false: main window
-	 */
-	function is_popup()
-	{
-		return !_wnd.framework || _wnd.opener;
-	}
-
 	return {
 		/**
 		 * Display an error or regular message
@@ -63,7 +53,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// if we are NOT in a popup and have a framwork --> let it deal with it
-			if (!is_popup() && typeof framework.setMessage != 'undefined')
+			if (!this.is_popup() && typeof framework != 'undefined')
 			{
 				// currently not using framework, but top windows message
 				//framework.setMessage.call(framework, _msg, _type);
@@ -105,13 +95,33 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		},
 
 		/**
+		 * Are we running in a popup
+		 *
+		 * @returns {boolean} true: popup, false: main window
+		 */
+		is_popup: function ()
+		{
+			var popup = false;
+			try {
+				if (_wnd.opener && typeof _wnd.opener.top.egw == 'object')
+				{
+					popup = true;
+				}
+			}
+			catch(e) {
+				// ignore SecurityError exception if opener is different security context / cross-origin
+			}
+			return popup;
+		},
+
+		/**
 		 * Active app independent if we are using a framed template-set or not
 		 *
 		 * @returns {string}
 		 */
 		app_name: function()
 		{
-			return !is_popup() && _wnd.framework ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
+			return !this.is_popup() && _wnd.framework ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
 		},
 
 		/**
@@ -122,7 +132,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		app_header: function(_header,_app)
 		{
-			if (!is_popup())	// not for popups
+			if (!this.is_popup() && _wnd.framework)	// not for popups and only for framed templates
 			{
 				var app = _app || this.app_name();
 				var title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
