@@ -1706,9 +1706,9 @@ div#ui-datepicker-div {
   border-width: 9px 0px 0px 0px;
   border-style: solid;
   border-color: #b4b4b4;
-  -webkit-box-shadow: 6px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 6px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 6px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   padding: 1em;
   /*Button*/
 }
@@ -2718,7 +2718,8 @@ button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
 button[id="resources-edit_delete"],
 button[id="calendar-edit_button[delete]"],
-button[id="timesheet-edit_button[delete]"] {
+button[id="timesheet-edit_button[delete]"],
+button[id="displayToolbar-delete"] {
   /*background-color: @color_negative_action_hover !important;*/
   background-image: url('../images/delete.png') !important;
   margin-left: 3em;
@@ -2758,7 +2759,8 @@ button[id="infolog-edit_button[delete]"]:hover,
 button[id="addressbook-edit_button[delete]"]:hover,
 button[id="resources-edit_delete"]:hover,
 button[id="calendar-edit_button[delete]"]:hover,
-button[id="timesheet-edit_button[delete]"]:hover {
+button[id="timesheet-edit_button[delete]"]:hover,
+button[id="displayToolbar-delete"]:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -2796,7 +2798,8 @@ button[id="infolog-edit_button[delete]"]:active,
 button[id="addressbook-edit_button[delete]"]:active,
 button[id="resources-edit_delete"]:active,
 button[id="calendar-edit_button[delete]"]:active,
-button[id="timesheet-edit_button[delete]"]:active {
+button[id="timesheet-edit_button[delete]"]:active,
+button[id="displayToolbar-delete"]:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -5367,14 +5370,32 @@ div.admin-config form > table td b {
  * Message in popup
  */
 body > div#egw_message {
-  background-color: lightyellow;
-  border-radius: 10px;
-  right: 5px;
-  top: 5px;
+  background-color: #ffc200;
+  /*border-radius: 10px;*/
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  -webkit-border-top-left-radius: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  -moz-border-radius-topleft: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 0px;
+  /*.background-clip(padding-box);*/
+  right: 15px;
+  /*top: 5px;*/
+  top: 0px;
   padding: 10px;
   padding-left: 25px;
   background-position-x: 5px;
-  border: 2px gray solid;
+  /*border: 2px gray solid;*/
   min-width: 100px;
   z-index: 100000;
 }
