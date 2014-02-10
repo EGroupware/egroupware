@@ -18,7 +18,6 @@ $GLOBALS['egw_info'] = array(
 		'noappheader' => True,
 		'noappfooter' => True,
 		'nofooter'    => True,
-		'nocachecontrol' => True			// allow cacheing
 	)
 );
 try {
@@ -27,6 +26,8 @@ try {
 catch (egw_exception_no_permission_app $e) {
 	// ignore exception, if home is not allowed, eg. for sitemgr
 }
+// only allow caching, if login succeeds, otherwise we get a cached redirect to login ;-)
+egw_session::cache_control(true);
 
 header('Content-type: text/javascript; charset='.translation::charset());
 translation::add_app('jscalendar');
