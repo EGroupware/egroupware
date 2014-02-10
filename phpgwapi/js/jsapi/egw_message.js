@@ -26,13 +26,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
 	_app;	// not used, but required by function signature
 	var message_timer;
-	var jQuery = _wnd.jQuery;
 	var error_reg_exp;
-
-	// install handler to remove message on click
-	jQuery('body').on('click', 'div#egw_message', function(e) {
-		jQuery('div#egw_message').remove();
-	});
+	var on_click_remove_installed = false;
 
 	return {
 		/**
@@ -44,6 +39,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		message: function(_msg, _type)
 		{
 			var framework = _wnd.framework;
+			var jQuery = _wnd.jQuery;
 
 			if (_msg && typeof _type == 'undefined')
 			{
@@ -79,6 +75,14 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			if (_msg)	// empty _msg just removes pervious message
 			{
+				if (!on_click_remove_installed)
+				{
+					// install handler to remove message on click
+					jQuery('body').on('click', 'div#egw_message', function(e) {
+						jQuery('div#egw_message').remove();
+					});
+					on_click_remove_installed = true;
+				}
 				parent.prepend(jQuery(_wnd.document.createElement('div'))
 					.attr('id','egw_message')
 					.text(_msg)
@@ -141,7 +145,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_wnd.framework.setWebsiteTitle.call(_wnd.framework, app, title, _header);
 				return;
 			}
-			jQuery('div#divAppboxHeader').text(_header);
+			_wnd.jQuery('div#divAppboxHeader').text(_header);
 
 			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
 		}
