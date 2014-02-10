@@ -4363,38 +4363,7 @@ class mail_bo
 				}
 			}
 		}
-		$uidsToFetch = new Horde_Imap_Client_Ids();
-		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
-		$uidsToFetch->add($_uid);
-
-		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->fullText(array('peek'=>true));//always do that as peek -> no seen flag set
-		if ($_partID != '')
-		{
-			$fquery->structure();
-			$fquery->bodyPart($_partID,array('peek'=>true));
-		}
-		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
-			'ids' => $uidsToFetch,
-		));
-		if (is_object($headersNew)) {
-			foreach($headersNew as $id=>$_headerObject) {
-				$body = $_headerObject->getFullMsg();
-				if ($_partID != '')
-				{
-					$mailStructureObject = $_headerObject->getStructure();
-					//_debug_array($mailStructureObject->contentTypeMap());
-					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
-					{
-						if ($mime_id==$_partID)
-						{
-							$body = $_headerObject->getBodyPart($mime_id);
-						}
-					}
-				}
-			}
-		}
-
+		//error_log(__METHOD__.__LINE__."[$this->icServer->ImapServerId][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
 		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
 		return $body;
 	}
@@ -4532,8 +4501,8 @@ class mail_bo
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
 
 						$structure_bytes = $part->getBytes();
-						$structure_mime=$mime_type;
-						$structure_partID=$mime_id;
+						$structure_mime=$part->getType();
+						$structure_partID=$part->getMimeId();
 						$filename=$part->getName();
 						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true);
 						if ($_returnPart) return $part;
