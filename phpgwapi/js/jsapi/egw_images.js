@@ -141,7 +141,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		image_element: function(_url, _alt)
 		{
 			var icon;
-			if (_url.match(/\.svg$/))
+			if (typeof _url == 'string' && _url.match(/\.svg$/))
 			{
 				icon = document.createElement('object');
 				icon.type = 'image/svg+xml';
