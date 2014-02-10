@@ -110,8 +110,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 				last_group = $j('[data-group="' + action.group + '"]',this.actionlist);
 				if(last_group.length == 0)
 				{
-					$j('<span data-group="'+action.group+'">').appendTo(this.actionlist);
-				}
+						$j('<span data-group="'+action.group+'">').appendTo(this.actionlist);
+					}
 				last_group_id = action.group;
 			}
 
@@ -181,6 +181,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 		}
 
 		// ************** Drag and Drop feature for toolbar *****
+		this.actionlist.find('span').sort( function (lg,g){
+			return +lg.dataset.group - +g.dataset.group;
+			}).appendTo(this.actionlist);
+		
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
