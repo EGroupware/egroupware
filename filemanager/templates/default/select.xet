@@ -49,7 +49,7 @@
 									<rows>
 										<row class="row">
 											<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
-											<vfs id="$row" onclick="$row_cont[onclick]"/>
+											<vfs id="$row" onclick="app.filemanager.select_clicked"/>
 											<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
 										</row>
 									</rows>

@@ -113,7 +113,7 @@ class filemanager_select
 						$sel_options['mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
 					}
 				}
-				
+
 				list($content['mime']) = each($sel_options['mime']);
 				error_log(array2string($content['options-mime']));
 			}
@@ -218,7 +218,7 @@ class filemanager_select
 					}
 					common::egw_exit();
 			}
-			
+
 			$sel_options['mime'] = $content['options-mime'];
 		}
 		elseif(isset($content['apps']))
@@ -279,9 +279,6 @@ class filemanager_select
 					'name' => $name,
 					'path' => $path,
 					'mime' => $mime,
-					'onclick' => $is_dir ? "return app.filemanager.select_goto('".addslashes($path)."'".($et2?',widget':'').");" :
-						($content['mode'] != 'open-multiple' ? "return app.filemanager.select_show('".addslashes($name)."');" :
-						"return app.filemanager.select_toggle('".addslashes($name)."',widget);"),
 				);
 				if ($is_dir && $content['mode'] == 'open-multiple')
 				{

@@ -687,14 +687,18 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Functions for select dialog
+	 * Row or filename in select-file dialog clicked
 	 *
-	 * @param {string} to
+	 * @param {jQuery.event} event
 	 * @param {et2_widget} widget
 	 */
-	select_goto: function(to,widget)
+	select_clicked: function(event, widget)
 	{
-		if (widget)
+		if (!widget || typeof widget.value != 'object')
+		{
+
+		}
+		else if (widget.value.mime == 'httpd/unix-directory')
 		{
 			var path = null;
 			// Cannot do this, there are multiple widgets named path
@@ -704,44 +708,30 @@ app.classes.filemanager = AppJS.extend(
 			},null, et2_textbox);
 			if(path)
 			{
-				path.set_value(to);
+				path.set_value(widget.value.path);
 				path.getInstanceManager().postSubmit();
 			}
 		}
-		return false;
-	},
-
-	/**
-	 * Select given file
-	 *
-	 * @param {string} file
-	 */
-	select_show: function(file)
-	{
-		var editfield = this.et2.getWidgetById('name');
-		if(editfield)
+		else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple')
 		{
-			editfield.set_value(file);
-		}
-		return false;
-	},
-
-	/**
-	 * Change selection of given file
-	 *
-	 * @param {string} file
-	 * @param {et2_widget} widget
-	 */
-	select_toggle: function(file,widget)
-	{
-		widget.getParent().iterateOver(function(widget)
-		{
-			if(widget.options.selected_value == file)
+			var editfield = this.et2.getWidgetById('name');
+			if(editfield)
 			{
-				widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
+				editfield.set_value(widget.value.name);
 			}
-		}, null, et2_checkbox);
+		}
+		else
+		{
+			var file = widget.value.name;
+			widget.getParent().iterateOver(function(widget)
+			{
+				if(widget.options.selected_value == file)
+				{
+					widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
+				}
+			}, null, et2_checkbox);
 
+		}
 		// Stop event or it will toggle back off
 		event.preventDefault();
 		event.stopPropagation();
