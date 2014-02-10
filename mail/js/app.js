@@ -642,12 +642,18 @@ app.classes.mail = AppJS.extend(
 		//get_class does not exist yet
 		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
 		//console.log(pAAClass);
-		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='')
+		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
 		}
 		else
 		{
+			// Leave if we're here and there is nothing selected, too many, or no data
+			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
+			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
+			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+			IframeHandle.set_src('about:blank');
+			this.mail_disablePreviewArea(true);
 			return;
 		}
 
@@ -664,19 +670,6 @@ app.classes.mail = AppJS.extend(
 			var widget = this.et2.getWidgetById(id);
 			if(widget == null) continue;
 			widget.set_value(dataElem.data[data_widgets[id]] || "");
-		}
-
-
-		// Leave if we're here and there is nothing selected, too many, or no data
-		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
-		{
-			if (this.et2.getWidgetById('button[showAllAddresses]')) this.et2.getWidgetById('button[showAllAddresses]').set_class('et2_button ui-button mail_DisplayNone');
-			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
-			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
-			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
-			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
-			this.mail_disablePreviewArea(true);
-			return;
 		}
 
 		// Blank first, so we don't show previous email while loading
