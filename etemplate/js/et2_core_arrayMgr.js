@@ -207,6 +207,9 @@ var et2_arrayMgr = Class.extend(
 	 *
 	 * Expands variables inside the given identifier to their values inside the
 	 * content array.
+	 *
+	 * @parm {string} _ident Key used to reference into managed array
+	 * @return {*}
 	 */
 	expandName : function(_ident) {
 		// Check whether the identifier refers to an index in the content array
@@ -366,7 +369,6 @@ var et2_arrayMgr = Class.extend(
  */
 var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 {
-	splitIds: false,
 
 	/**
 	 * @memberOf et2_readonlysArrayMgr
@@ -380,7 +382,12 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 
 		if (_id != null)
 		{
+			if(_id.indexOf('$') >= 0 || _id.indexOf('@') >= 0)
+			{
+				_id = this.expandName(_id);
+			}
 			entry = this.getEntry(_id);
+			
 		}
 
 		// Let the array entry override the read only attribute entry
@@ -404,8 +411,21 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 		// Otherwise return the default value
 		entry = this.getEntry("__ALL__");
 		return entry !== null && (typeof entry != "undefined");
-	}
+	},
 
+	/**
+	 * Override parent to handle cont and row_cont.
+	 *
+	 * Normally these should refer to the readonlys data, but that's not
+	 * useful, so we use the owner inside perspective data to expand using content.
+	 *
+	 * @param {string} ident Key for searching into the array.
+	 * @returns {*}
+	 */
+	expandName: function(ident)
+	{
+		return this.perspectiveData.owner.getArrayMgr('content').expandName(ident)
+	}
 });
 
 /**

@@ -703,7 +703,7 @@ class etemplate_widget
 	 * @param string $idx the index, may contain sub-indices like a[b], see example below
 	 * @param boolean $reference_into default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
 	 * @param bool $skip_empty returns false if $idx is not present in $arr
-	 * @return mixed reference to $arr[$idx] or false if $idx is not set and not $reference_into
+	 * @return mixed reference to $arr[$idx] or null if $idx is not set and not $reference_into
 	 */
 	static function &get_array(&$arr,$idx,$reference_into=False,$skip_empty=False)
 	{
@@ -732,9 +732,9 @@ class etemplate_widget
 			if (!is_array($pos) && (!$reference_into || $reference_into && isset($pos)))
 			{
 				//if ($reference_into) error_log(__METHOD__."(".(strlen($s=array2string($arr))>512?substr($s,0,512).'...':$s).", '$idx', ".array2string($reference_into).", ".array2string($skip_empty).") ".function_backtrace());
-				return False;
+				return null;
 			}
-			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return false;
+			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return null;
 			$pos = &$pos[$idx];
 		}
 		return $pos;
@@ -760,9 +760,14 @@ class etemplate_widget
 			$form_name = self::form_name($cname, $this->id, $expand);
 		}
 		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
-			isset(self::$request->readonlys['__ALL__']) && self::$request->readonlys[$form_name] !== false;
+			self::get_array(self::$request->readonlys,$form_name) === true ||
+			isset(self::$request->readonlys['__ALL__']) && (
+				// Exceptions to all
+				self::$request->readonlys[$form_name] !== false &&
+				self::get_array(self::$request->readonlys,$form_name) !== false
+			);
 
-		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name': attrs[readonly]=".array2string($this->attrs['readonly']).", readonlys['$form_name']=".array2string(self::$request->readonlys[$form_name]).", readonlys['__ALL__']=".array2string(self::$request->readonlys['__ALL__'])." returning ".array2string($readonly));
+		error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name': attrs[readonly]=".array2string($this->attrs['readonly']).", readonlys['$form_name']=".array2string(self::$request->readonlys[$form_name]).", readonlys[$form_name]=".array2string(self::get_array(self::$request->readonlys,$form_name)).", readonlys['__ALL__']=".array2string(self::$request->readonlys['__ALL__'])." returning ".array2string($readonly));
 		return $readonly;
 	}
 	/**
