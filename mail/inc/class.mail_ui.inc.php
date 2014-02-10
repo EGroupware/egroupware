@@ -2388,9 +2388,10 @@ unset($query['actions']);
 		$this->mail_bo->closeConnection();
 
 		$GLOBALS['egw']->session->commit_session();
+		//error_log(__METHOD__.print_r($_GET,true));
 		if ($_GET['mode'] != "save")
 		{
-			if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY')
+			if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY' || empty($attachment['type']))
 			{
 				$sfxMimeType = $attachment['type'];
 				$buff = explode('.',$attachment['filename']);
@@ -2450,10 +2451,12 @@ unset($query['actions']);
 				//Import failed, download content anyway
 			}
 		}
-		header ("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
+		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
+		$filename = ($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part);
+		header ("Content-Type: ".$attachment['type']."; name=\"". $filename ."\"");
 		if($_GET['mode'] == "save") {
 			// ask for download
-			header ("Content-Disposition: attachment; filename=\"". $attachment['filename'] ."\"");
+			header ("Content-Disposition: attachment; filename=\"". $filename ."\"");
 		} else {
 			// display it
 			header ("Content-Disposition: inline; filename=\"". $attachment['filename'] ."\"");
