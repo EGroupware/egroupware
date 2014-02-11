@@ -884,6 +884,98 @@ textarea.description {
     border: none;
 }
 
+/**
+* et2_taglist
+*/
+.ms-ctn,
+.ms-res-ctn {
+  /* It doesn't really work smaller than this */
+  min-width: 150px;
+}
+.ms-ctn .loading {
+  position: relative;
+  margin: 0px auto -16px auto;
+  top: 5px;
+}
+.ms-res-ctn {
+  overflow-x: hidden;
+}
+
+
+
+
+/**
+* et2_toolbar
+*/
+.et2_toolbar {
+	background: none;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.et2_toolbar button {
+
+}
+div.ui-toolbar-menulist{
+	position: absolute;
+	height: inherit !important;
+	z-index: 999 !important;
+	overflow: hidden !important;
+	border: solid black 1px;
+	padding: 0 !important;
+	margin-top: 3px !important;
+}
+.ui-toolbar-menulist > h {
+	padding-bottom: 7px;
+}
+.ui-toolbar-menulist > button {
+	padding: 0 !important;
+	margin: 0 !important;
+	text-align: left;
+	border-radius: 0 !important;
+	width: 100% !important;
+	white-space: nowrap;
+}
+.ui-toolbar-menulistHeader{
+	font-size: xx-small;
+	height:100%;
+	margin-top: 2px;
+	direction: ltr;
+}
+.et2_toolbar_activeList{
+	position: relative;
+	float:right;
+	direction: rtl;
+	margin-top: 3px;
+}
+.et2_toolbar_actionlist{
+	float:left;
+}
+
+/**
+ * Do not wrap content of a single widget incl. a label or children of a hbox.
+ * Taking into eg. select-account widget rendered as ul and prefixed with a label
+ * and maintaining some space between widgets.
+ */
+.et2_nowrap{
+	white-space: nowrap;
+}
+ul.et2_nowrap, div.et2_nowrap{
+	display: inline-block;
+}
+.et2_nowrap > *{
+	padding-left: 5px;
+}
+.et2_nowrap > *:first-child{
+	padding-left: 0;
+}
+.et2_nowrap > label > *{
+	padding-left: 5px;
+}
+
+
+
+
+
 /*#################################### ADMIN PART #####################################################*/
 
 iframe#admin-index_iframe{

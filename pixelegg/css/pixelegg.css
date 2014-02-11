@@ -989,6 +989,86 @@
     padding: 0.3em 0 0 0.3em;
     border: none;
   }
+  /**
+* et2_taglist
+*/
+  .ms-ctn,
+  .ms-res-ctn {
+    /* It doesn't really work smaller than this */
+    min-width: 150px;
+  }
+  .ms-ctn .loading {
+    position: relative;
+    margin: 0px auto -16px auto;
+    top: 5px;
+  }
+  .ms-res-ctn {
+    overflow-x: hidden;
+  }
+  /**
+* et2_toolbar
+*/
+  .et2_toolbar {
+    background: none;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  div.ui-toolbar-menulist {
+    position: absolute;
+    height: inherit !important;
+    z-index: 999 !important;
+    overflow: hidden !important;
+    border: solid black 1px;
+    padding: 0 !important;
+    margin-top: 3px !important;
+  }
+  .ui-toolbar-menulist > h {
+    padding-bottom: 7px;
+  }
+  .ui-toolbar-menulist > button {
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: left;
+    border-radius: 0 !important;
+    width: 100% !important;
+    white-space: nowrap;
+  }
+  .ui-toolbar-menulistHeader {
+    font-size: xx-small;
+    height: 100%;
+    margin-top: 2px;
+    direction: ltr;
+  }
+  .et2_toolbar_activeList {
+    position: relative;
+    float: right;
+    direction: rtl;
+    margin-top: 3px;
+  }
+  .et2_toolbar_actionlist {
+    float: left;
+  }
+  /**
+ * Do not wrap content of a single widget incl. a label or children of a hbox.
+ * Taking into eg. select-account widget rendered as ul and prefixed with a label
+ * and maintaining some space between widgets.
+ */
+  .et2_nowrap {
+    white-space: nowrap;
+  }
+  ul.et2_nowrap,
+  div.et2_nowrap {
+    display: inline-block;
+  }
+  .et2_nowrap > * {
+    padding-left: 5px;
+  }
+  .et2_nowrap > *:first-child {
+    padding-left: 0;
+  }
+  .et2_nowrap > label > * {
+    padding-left: 5px;
+  }
   /*#################################### ADMIN PART #####################################################*/
   iframe#admin-index_iframe {
     background-color: yellow;
@@ -1600,6 +1680,7 @@ div#ui-datepicker-div {
   top: -17px;
   right: 0;
 }
+/*@import "../less/traditional.less";*/
 /**
  * layout_*.less files are Pixelegg template specific
  */
@@ -2391,14 +2472,15 @@ img {
 }
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"] {
-  background-color: #0c5da5;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
-  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: linear-gradient(top, #0c5da5, #0c5da5);
+  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   background-repeat: repeat-x;
 }
 div {
@@ -3218,6 +3300,37 @@ table.table_passord_change tr {
 table.table_passord_change td:first-child {
   padding-right: 4em;
 }
+/*z.b. Dateimanager overlay*/
+.egwGridView_grid span.iconOverlayContainer {
+  margin: 2px 5px 2px 2px;
+  position: relative;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  overflow: visible;
+  display: inline-block;
+}
+.egwGridView_grid span.overlayContainer {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  vertical-align: bottom;
+  text-align: right;
+}
+.egwGridView_grid span.iconContainer {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.egwGridView_grid span.overlayContainer img.overlay {
+  position: relative;
+  top: 1px;
+  margin: 0;
+  padding: 0;
+  height: 9px;
+  width: 11px;
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -3355,14 +3468,14 @@ table.egwGridView_outer tbody td time {
   display: block;
 }
 table.egwGridView_outer tbody td img[src$="svg"] {
-  background-color: #0c5da5;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -ms-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0c5da5), to(#0c5da5));
-  background-image: -webkit-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: -o-linear-gradient(top, #0c5da5, #0c5da5);
-  background-image: linear-gradient(top, #0c5da5, #0c5da5);
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   background-repeat: repeat-x;
 }
 /*########################################################*/
