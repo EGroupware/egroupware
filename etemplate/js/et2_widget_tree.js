@@ -613,6 +613,17 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Get node data by id
+	 *
+	 * @param {string} _id id of node
+	 * @return {object} object with attributes id, im0-2, text, tooltip, ... as set via select_options or autoload url
+	 */
+	getNode: function(_id)
+	{
+		return this._find_in_item(_id, this.options.select_options);
+	},
+
+	/**
 	 * Sets label of an item by id
 	 *
 	 * @param _id ID of the node
