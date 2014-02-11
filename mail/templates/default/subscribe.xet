@@ -2,23 +2,27 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<description id="msg" class="message"/>
-		</hbox>
-		<grid>
+		<grid width="100%">
 			<columns>
+				<column width="100%"/>
 				<column/>
 			</columns>
 			<rows>
+				<row class="th dialog-header" height="28">
+					<menulist>
+						<description value="Mail Account"/>
+						<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
+					</menulist>
+				</row>
 				<row>
-					<groupbox>
+					<box scrolling="auto">
 						<caption label="Folders"/>
 						<tree id="foldertree" onclick=""  multiple="true"/>
-					</groupbox>
+					</box>
 				</row>
 			</rows>
 		</grid>
-		<hbox>
+		<hbox  class="dialog-footer-toolbar">
 			<button statustext="Saves this ACL" label="Save" id="button[save]"/>
 			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 			<button label="Cancel" id="button[cancel]"/>
