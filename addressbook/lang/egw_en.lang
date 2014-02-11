@@ -401,6 +401,7 @@ select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved.
 selected contacts	addressbook	en	Selected contacts
 send emailcopy to receiver	addressbook	en	Send email copy to receiver
+send succeeded to %1	common	en	Send succeeded to %1
 seperator	addressbook	en	Separator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'fileas' field in contacts of all users. Either all or only empty values.
 set only full name	addressbook	en	Set only full name

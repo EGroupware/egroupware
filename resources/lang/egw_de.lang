@@ -14,6 +14,7 @@ add resource	resources	de	Ressource hinzufügen
 add resources	resources	de	Ressourcen hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
+allow ignore conflicts	admin	de	Wer darf Buchungskonflikte ignorieren?
 book	resources	de	Buchen
 book resource	resources	de	Ressource buchen
 book selected resources	resources	de	Ausgewählte Ressourcen buchen
@@ -153,7 +154,9 @@ web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
 which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
 write permissions	resources	de	Schreibberechtigung
+yes, all users can ignore conflicts	resources	de	Alle Benutzer dürfen Konflikte ignorieren
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
+yes, only users with direct booking permission	resources	de	Nur Benutzer mit direkter Buchungserlaubnis
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 you are not permitted to delete this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu löschen!
 you are not permitted to edit this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu bearbeiten!

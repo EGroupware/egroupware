@@ -401,6 +401,7 @@ select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern möchten
 selected contacts	addressbook	de	ausgewählte Kontakte
 send emailcopy to receiver	addressbook	de	Versendet eine Kopie der E-Mail zu dem Empfänger
+send succeeded to %1	common	de	erfolgreich versent an
 seperator	addressbook	de	Feldtrenner
 set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
 set only full name	addressbook	de	Nur vollen Namen setzen

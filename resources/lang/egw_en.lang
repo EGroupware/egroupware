@@ -14,6 +14,7 @@ add resource	resources	en	Add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	All categories
+allow ignore conflicts	admin	en	Allow ignore conflicts
 book	resources	en	Book
 book resource	resources	en	Book resource
 book selected resources	resources	en	Book selected resources
@@ -153,7 +154,9 @@ web-site for this resource	resources	en	Website for this resource
 where to find this resource?	resources	en	Location information
 which category does this resource belong to?	resources	en	Category of the resource
 write permissions	resources	en	Write permissions
+yes, all users can ignore conflicts	resources	en	Yes, all users can ignore conflicts
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
+yes, only users with direct booking permission	resources	en	Yes, only users with direct booking permission
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 you are not permitted to delete this resource!	resources	en	You are not permitted to delete this resource!
 you are not permitted to edit this resource!	resources	en	You are not permitted to edit this resource!
