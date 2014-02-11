@@ -1190,6 +1190,7 @@ div.ui-toolbar-menulist{
 	border: solid black 1px;
 	padding: 0 !important;
 	margin-top: 3px !important;
+	min-width: 150px;
 }
 .ui-toolbar-menulist > h {
 	padding-bottom: 7px;
