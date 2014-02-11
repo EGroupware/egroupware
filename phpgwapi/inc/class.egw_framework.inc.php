@@ -1883,14 +1883,10 @@ abstract class egw_framework
 	{
 		if (preg_match('/^[a-z0-9_]+$/i', $app))
 		{
-			$response = egw_json_response::get();
-			$pref = json_encode($GLOBALS['egw_info']['user']['preferences'][$app] ?
-					$GLOBALS['egw_info']['user']['preferences'][$app] : array());
-
 			// send etag header, if we are directly called (not via jsonq!)
 			if (strpos($_GET['menuaction'], __FUNCTION__) !== false)
 			{
-				$etag = '"'.$app.'-'.md5($pref).'"';
+				$etag = '"'.$app.'-'.md5(json_encode($GLOBALS['egw_info']['user']['preferences'][$app])).'"';
 				if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
 				{
 					header("HTTP/1.1 304 Not Modified");
@@ -1898,7 +1894,8 @@ abstract class egw_framework
 				}
 				header('ETag: '.$etag);
 			}
-			$response->script('window.egw.set_preferences('.$pref.', "'.$app.'");');
+			$response = egw_json_response::get();
+			$response->call('egw.set_preferences', (array)$GLOBALS['egw_info']['user']['preferences'][$app], $app);
 		}
 	}
 
