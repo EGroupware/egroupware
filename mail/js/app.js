@@ -1034,7 +1034,8 @@ app.classes.mail = AppJS.extend(
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var _foldernode = ftree.getSelectedNode();
 		var counter = _foldernode.label.match(this._unseen_regexp);
-		var icounter = parseInt(counter[0].replace(' (','').replace(')',''));
+		var icounter = 0;
+		if ( counter ) icounter = parseInt(counter[0].replace(' (','').replace(')',''));
 		if (icounter>0)
 		{
 			var newcounter = icounter-1;
