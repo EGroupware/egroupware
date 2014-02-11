@@ -1299,15 +1299,24 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// Bind to tab show/hide events, so that we don't bother refreshing in the background
 			$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
+				// Stop
 				window.clearInterval(this._autorefresh_timer);
-				delete this._autorefresh_timer;
 				$j(e.target).off(e);
+
+				// If the autorefresh time is up, bind once to trigger a refresh
+				// (if needed) when tab is activated again
+				this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
+					$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
+						// Important to use anonymous function instead of just 'this.refresh' because
+						// of the parameters passed
+						jQuery.proxy(function() {this.refresh();},this)
+					);
+				},this), time*1000);
 			},this));
 			$j(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
+				// Start normal autorefresh timer again
 				this._set_autorefresh(this._get_autorefresh());
 				$j(e.target).off(e);
-				// Trigger an immediate refresh
-				this.refresh();
 			},this));
 		}
 	},
