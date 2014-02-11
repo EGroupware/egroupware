@@ -412,25 +412,30 @@ class mail_ui
 			),
 			'edit' => array(
 				'caption' => 'Rename Folder',
-				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
+				'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 			),
 			'move' => array(
 				'caption' => 'Move Folder',
 				'type' => 'drag',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'dragType' => array('mailFolder')
 			),
 			'delete' => array(
 				'caption' => 'Delete Folder',
-				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
 			),
 			'subscribe' => array(
 				'caption' => 'Subscribe folder ...',
 				//'icon' => 'configure',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.edit_subscribe',
 			),
 			'unsubscribe' => array(
 				'caption' => 'Unsubscribe folder',
 				//'icon' => 'configure',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
 			),
 			'sieve' => array(
@@ -909,7 +914,7 @@ class mail_ui
 				if ($createMissingParents)
 				{
 					unset($item);
-					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => '**missing**');
+					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => 'no access');
 					$insert['item'][] =& $item;
 					$insert =& $item;
 				}

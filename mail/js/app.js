@@ -853,6 +853,27 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * mail_CheckFolderNoSelect - implementation of the mail_CheckFolderNoSelect action to control right click options on the tree
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	mail_CheckFolderNoSelect: function(action,_senders,_currentNode) {
+		console.log(action,_senders,_currentNode);
+		// Abort if user selected an un-selectable node
+		// Use image over anything else because...?
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		/*
+		if (img.indexOf('NoSelect') !== -1)
+		{
+			//ftree.reSelectItem(_previous);
+			return false;
+		}
+		*/
+		return true;
+	},
+
+	/**
 	 * mail_setFolderStatus, function to set the status for the visible folders
 	 */
 	mail_setFolderStatus: function(_status) {
@@ -1116,18 +1137,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_undeleteMessages: function(_messageList) {
 	// setting class of row, the old style
-	/*
-			for(var i=0;i<_messageList['msg'].length;i++) {
-				_id = _messageList['msg'][i];
-				var dataElem = egw_appWindow('felamimail').mailGrid.dataRoot.getElementById(_id);
-				if (dataElem)
-				{
-					//dataElem.clearData();
-					//dataElem.addClass('deleted');
-					dataElem.removeClass('deleted');
-				}
-			}
-	*/
 	},
 
 	/**
@@ -1155,7 +1164,7 @@ app.classes.mail = AppJS.extend(
 		//	.sendRequest(true);
 		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
-		//this.mail_g();
+		//this.mail_refreshFolderStatus();
 	},
 
 	/**

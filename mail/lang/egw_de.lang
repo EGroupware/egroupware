@@ -232,6 +232,7 @@ never display html emails	mail	de	niemals anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
 no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet Ordner hinterlegt.
+no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger Adresse (To/CC/BCC ) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angegeben!

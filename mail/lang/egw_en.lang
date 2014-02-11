@@ -231,6 +231,7 @@ never display html emails	mail	en	never display html emails
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
+no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no adress, to send this mail to, supplied
