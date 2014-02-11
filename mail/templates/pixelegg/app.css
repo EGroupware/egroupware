@@ -782,7 +782,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
 }
 .egw_fw_ui_category_content .draggedOver {
-  background-color: rgba(103, 159, 210, 0.1);
+  background-color: #679fd2;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1017,7 +1017,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
@@ -1152,7 +1152,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1187,7 +1187,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #b4b4b4;
   float: left;
   width: 47px;
   margin: 3px;
@@ -1871,7 +1871,6 @@ input[type=button] {
 }
 #mail-index_toolbar button {
   height: 24px !important;
-  background-color: #696969;
 }
 #mail-index_toolbar button img[src$="svg"] {
   background-color: #696969;
@@ -2149,13 +2148,14 @@ input[type=button] {
 h.ui-toolbar-menulistHeader,
 #ui-accordion-toolbar-actionbox-header-0 {
   height: 16px;
-  background-color: #696969;
+  background-color: #828282;
   color: #ffffff;
   margin: 0;
 }
 h.ui-toolbar-menulistHeader .ui-accordion .ui-accordion-header .ui-accordion-header-icon,
 #ui-accordion-toolbar-actionbox-header-0 .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
   margin-top: -11px;
+  color: #ffffff;
 }
 div#toolbar-menulist {
   background-color: #828282;
@@ -2164,7 +2164,6 @@ div#toolbar-menulist {
 }
 div#toolbar-menulist button {
   height: 24px !important;
-  background-color: #696969;
 }
 div#toolbar-menulist button img[src$="svg"] {
   background-color: #696969;
