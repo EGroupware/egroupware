@@ -417,12 +417,13 @@ function patch_header($filename,&$user,$password)
 {
 	$header = file_get_contents($filename);
 
-	if (!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_user'] = '")."([^']+)';/m",$header,$umatches) ||
-		!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '")."([^']*)';/m",$header,$pmatches))
+	$umatches = $pmatches = null;
+	if (!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_user'] = '", '/')."([^']+)';/m",$header,$umatches) ||
+		!preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",$header,$pmatches))
 	{
 		bail_out(99,"$filename is no regular EGroupware header.inc.php!");
 	}
-	file_put_contents($filename,preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '")."([^']*)';/m",
+	file_put_contents($filename,preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",
 		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".$password."';",$header));
 
 	$user = $umatches[1];
@@ -445,6 +446,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 	if ($verbose)
 	{
 		echo $cmd."\n";
+		$ret = null;
 		system($cmd,$ret);
 	}
 	else
@@ -485,8 +487,8 @@ function randomstring($len=16)
 		'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
 		'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
 		'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-		'@','!','$','%','&','/','(',')','=','?',';',':','#','_','-','<',
-		'>','|','[',']','}',	// dont add \,'"{ as we have problems dealing with them
+		'@','!','$','%','&','(',')','=','?',';',':','#','_','-','<',
+		'>','|','[',']','}',	// dont add /\,'"{ as we have problems dealing with them
 	);
 
 	$str = '';
@@ -532,6 +534,7 @@ function check_install_pear_packages()
 {
 	global $config;
 
+	$out = $ret = null;
 	exec($config['pear'].' list',$out,$ret);
 	if ($ret)
 	{
@@ -539,8 +542,9 @@ function check_install_pear_packages()
 		exit(95);
 	}
 	$packages_installed = array();
-	foreach($out as $n => $line)
+	foreach($out as $line)
 	{
+		$matches = null;
 		if (preg_match('/^([a-z0-9_]+)\s+([0-9.]+[a-z0-9]*)\s+([a-z]+)/i',$line,$matches))
 		{
 			$packages_installed[$matches[1]] = $matches[2];
@@ -549,6 +553,7 @@ function check_install_pear_packages()
 	// read required packages from apps
 	$packages = array('PEAR' => true, 'HTTP_WebDAV_Server' => '999.egw-pear');	// pear must be the first, to run it's update first!
 	$egw_pear_packages = array();
+	$setup_info = array();
 	foreach(scandir($config['source_dir']) as $app)
 	{
 		if (is_dir($dir=$config['source_dir'].'/'.$app) && file_exists($file=$dir.'/setup/setup.inc.php')) include $file;
