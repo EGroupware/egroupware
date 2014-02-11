@@ -222,12 +222,15 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 		// Specially process the selected index so it shows up right away
 		this._loadTab(this.selected_index,promises);
-		// We can do this and not wind up with 2 because child is a template,
-		// which has special handling
-		this._children[0].loadingFinished();
 		
 		// Apply parent now, which actually puts into the DOM
+		// This has to be before loading the child, so the dom sub-tree is not
+		// disconnected, which causes problems for things like CKEditor
 		this._super.apply(this, arguments);
+		
+		// We can do this and not wind up with 2 because child is a template,
+		// which has special handling
+		this._children[0].loadingFinished(promises);
 		
 		// Defer parsing & loading of other tabs until later
 		window.setTimeout(function() {
