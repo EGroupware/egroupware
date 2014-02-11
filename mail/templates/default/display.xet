@@ -34,8 +34,8 @@
 				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</hbox>
 			<hbox class="mailDisplayHeaders" width="100%">
-				<description value="Date"/>
-				<date-time align="left" id="mail_displaydate" readonly="true"/>
+				<description align= "right" value="Date"/>
+				<date-time align="right" id="mail_displaydate" readonly="true"/>
 			</hbox>
 			<hbox  class="mailDisplayHeaders" width="100%">
 				<description value="Subject"/>
