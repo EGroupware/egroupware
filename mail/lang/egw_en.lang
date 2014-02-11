@@ -163,6 +163,7 @@ from(z->a)	mail	en	from(Z->A)
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	greater than
+header	mail	en	Header
 header lines	mail	en	Header lines
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
@@ -170,6 +171,7 @@ how often to check with the server for new mail	mail	en	How often to check with 
 how should the available information on identities be displayed	admin	en	how should the available information on identities be displayed
 how to forward messages	mail	en	how to forward messages
 html	mail	en	html
+html mode	mail	en	HTML mode
 identity	mail	en	Identity
 identity+signature	mail	en	Identity+Signature
 if	mail	en	IF
@@ -312,6 +314,7 @@ save as ticket	mail	en	Save as ticket
 save as tracker on send	mail	en	Save as tracker on send
 save message to disk	mail	en	Save Message to disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
+save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
 save:	mail	en	Save:
 saving of message %1 failed. destination folder %2 does not exist.	mail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
@@ -347,6 +350,8 @@ size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view
 smtp	mail	en	SMTP
 sort order	mail	en	Sort order
+source	mail	en	Source
+sources	mail	en	Sources
 start new messages with mime type plain/text or html?	mail	en	start new messages with mime type plain/text or html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with mime type plain/text or html or try to use the displayed format (default)?
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail
@@ -361,6 +366,7 @@ templates	mail	en	Templates
 templates folder	mail	en	Templates folder
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
+text mode	mail	en	Text mode
 text/plain	mail	en	text/plain
 the %1 's acl removed from the %2!	mail	en	The %1 's acl removed from the %2!
 the %1 's acl, including its subfolders, removed from the %2!	mail	en	The %1 's acl, including its subfolders, removed from the %2!

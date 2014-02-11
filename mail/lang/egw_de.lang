@@ -164,6 +164,7 @@ from(z->a)	mail	de	Von (Z->A)
 general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	größer als
+header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
@@ -171,6 +172,7 @@ how often to check with the server for new mail	mail	de	Aktualisierungsintervall
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
+html mode	mail	de	Orginal HTML
 identity	mail	de	Identität
 identity+signature	mail	de	Identität+Signature
 if	mail	de	Wenn
@@ -313,6 +315,7 @@ save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save message to disk	mail	de	Nachricht auf Ihrem Computer speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
+save to disk	mail	de	Speichern
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
 save:	mail	de	Speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
@@ -348,6 +351,8 @@ size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
 sort order	mail	de	Sortierreihenfolge
+source	mail	de	HTML Quellcode
+sources	mail	de	HTML Quellcode
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
 step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang konfigurieren
@@ -362,6 +367,7 @@ templates	mail	de	Vorlagen
 templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
+text mode	mail	de	Reiner Text
 text/plain	mail	de	text/plain
 the %1 's acl removed from the %2!	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt!
 the %1 's acl, including its subfolders, removed from the %2!	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt!
@@ -373,7 +379,7 @@ then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP Server Konfiguriert
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	zu erledigen
-toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1 
+toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1
 trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
 trust servers seen / unseen info	mail	de	Abruf des Ungelesen/gelesen Status des Mailservers
