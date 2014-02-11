@@ -26,8 +26,9 @@ include '../header.inc.php';
 
 // use an etag over config and link-registry
 $preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['common']);
+$ab_preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['addressbook']);
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-$etag = '"'.md5($preferences.$user).'"';
+$etag = '"'.md5($preferences.$ab_preferences.$user).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 egw_session::cache_control(86400);	// cache for 1 day
@@ -42,6 +43,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 }
 
 $content = 'egw.set_preferences('.$preferences.", 'common');\n";
+$content .= 'egw.set_preferences('.$ab_preferences.", 'addressbook');\n";
 $content .= 'egw.set_user('.$user.");\n";
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content

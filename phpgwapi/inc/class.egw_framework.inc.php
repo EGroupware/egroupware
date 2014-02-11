@@ -2013,13 +2013,10 @@ abstract class egw_framework
 				'filter' => $filters
 			);
 			$result = $prefs->add($app,$pref_name,$filters,$type);
-			$prefs->save_repository(false,$type);
+			$pref = $prefs->save_repository(false,$type);
 
 			// Update preferences client side, or it could disappear
-			$pref = $GLOBALS['egw']->preferences->read_repository(false);
-			$pref = $pref[$app];
-                        if(!$pref) $pref = Array();
-                        egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
+			egw_json_response::get()->call('egw.set_preferences', (array)$pref[$app], $app);
 
 			egw_json_response::get()->data(isset($result[$app][$pref_name]));
 			return isset($result[$app][$pref_name]);
@@ -2027,13 +2024,10 @@ abstract class egw_framework
 		else if ($action == "delete")
 		{
 			$result = $prefs->delete($app,$pref_name, $type);
-			$prefs->save_repository(false,$type);
+			$pref = $prefs->save_repository(false,$type);
 
 			// Update preferences client side, or it could come back
-			$pref = $GLOBALS['egw']->preferences->read_repository(false);
-			$pref = $pref[$app];
-			if(!$pref) $pref = Array();
-			egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
+			egw_json_response::get()->call('egw.set_preferences', (array)$pref[$app], $app);
 
 			egw_json_response::get()->data(!isset($result[$app][$pref_name]));
 			return !isset($result[$app][$pref_name]);
