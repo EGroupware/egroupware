@@ -2151,7 +2151,7 @@ h.ui-toolbar-menulistHeader,
   height: 16px;
   background-color: #696969;
   color: #ffffff;
-  padding: 3px 0px 3px 2.2em;
+  margin: 0;
 }
 h.ui-toolbar-menulistHeader .ui-accordion .ui-accordion-header .ui-accordion-header-icon,
 #ui-accordion-toolbar-actionbox-header-0 .ui-accordion .ui-accordion-header .ui-accordion-header-icon {

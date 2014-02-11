@@ -1180,7 +1180,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	padding: 0 !important;
 }
 .et2_toolbar button {
-
+	margin: 1px;
 }
 div.ui-toolbar-menulist{
 	position: absolute;
@@ -1194,9 +1194,9 @@ div.ui-toolbar-menulist{
 }
 .ui-toolbar-menulist > h {
 	padding-bottom: 7px;
+	margin: 0;
 }
 .ui-toolbar-menulist > button {
-	padding: 0 !important;
 	margin: 0 !important;
 	text-align: left;
 	border-radius: 0 !important;
@@ -1213,7 +1213,6 @@ div.ui-toolbar-menulist{
 	position: relative;
 	float:right;
 	direction: rtl;
-	margin-top: 3px;
 }
 .et2_toolbar_actionlist{
 	float:left;
