@@ -228,7 +228,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			drop:function (event, ui) {
 					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
 					ui.draggable.appendTo(menulist);
-					if (that.actionlist.find(".ui-draggable").length == 1)
+					if (that.actionlist.find(".ui-draggable").length == 0)
 					{
 						that.preference = {};
 						egw.set_preference(that.egw().getAppName(),that.id,that.preference);
@@ -294,7 +294,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		}
 		if (action.caption)
 		{
-			if (this.countActions <= this.view_range || this.preference[action.id] )
+			if (this.countActions <= parseInt(this.view_range) || this.preference[action.id] )
 			{
 				button[0].textContent = action.caption;
 			}
