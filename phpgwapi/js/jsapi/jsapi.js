@@ -821,7 +821,7 @@ function addOption(id,label,value,do_onchange)
  * Install click handlers for popup and multiple triggers of uiaccountselection
  */
 $j(function(){
-	$j(document).on('click', 'input.uiaccountselection_trigger',function(){
+	$j(document).on('click', '.uiaccountselection_trigger',function(){
 		var selectBox = document.getElementById(this.id.replace(/(_multiple|_popup)$/, ''));
 		if (selectBox)
 		{
