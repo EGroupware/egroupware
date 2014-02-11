@@ -694,6 +694,14 @@ egw_LAB.wait(function() {
 				$path = $image;		// name may already contain absolut path
 			}
 			$image = ' src="'.$path.'"';
+			if (strpos($options, 'class="') !== false)
+			{
+				$options = str_replace('class="', 'class="image_button ', $options);
+			}
+			else
+			{
+				$options .= ' class="image_button"';
+			}
 		}
 		if (!$no_lang)
 		{
@@ -704,7 +712,7 @@ egw_LAB.wait(function() {
 		{
 			$label_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 			$label = str_replace('&','',$label);
-			$options = 'accesskey="'.$accesskey[1].'" '.$options;
+			$options .= ' accesskey="'.$accesskey[1].'" '.$options;
 		}
 		else
 		{

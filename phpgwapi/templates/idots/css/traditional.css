@@ -980,3 +980,8 @@ div.admin-config form > table tr.th td{
 div.admin-config form > table td {
 	padding-left: 5px;
 }
+
+button.image_button {
+	background: none;
+	border: none;
+}
