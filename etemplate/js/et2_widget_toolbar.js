@@ -294,7 +294,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		{
 			if (this.countActions <= this.view_range || this.preference[action.id] )
 			{
-				button.context.innerText = action.caption;
+				button[0].textContent = action.caption;
 			}
 		}
 		if(action.icon)
