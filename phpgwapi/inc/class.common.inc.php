@@ -764,12 +764,23 @@ class common
 	 * @param string $appname
 	 * @param string|array $image one or more image-name in order of precedence
 	 * @param string $extension='' extension to $image, makes sense only with an array
+	 * @param boolean $svg=false should svg images be returned or not:
+	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return string url of image or null if not found
 	 */
-	static function image($app,$image,$extension='')
+	static function image($app,$image,$extension='',$svg=false)
 	{
-		static $image_map;
-		if (is_null($image_map)) $image_map = self::image_map();
+		static $image_map_no_svg = null, $image_map_svg = null;
+		if (is_null($svg)) $svg = self::svg_usable ();
+		if ($svg)
+		{
+			$image_map =& $image_map_svg;
+		}
+		else
+		{
+			$image_map =& $image_map_no_svg;
+		}
+		if (is_null($image_map)) $image_map = self::image_map(null, $svg);
 
 		// array of images in descending precedence
 		if (is_array($image))
@@ -814,6 +825,18 @@ class common
 	}
 
 	/**
+	 * Does browser support svg
+	 *
+	 * All non IE and IE 9+
+	 *
+	 * @return boolean
+	 */
+	static function svg_usable()
+	{
+		return html::$user_agent !== 'msie' || html::$ua_version >= 9;
+	}
+
+	/**
 	 * Scan filesystem for images of all apps
 	 *
 	 * For each application and image-name (without extension) one full path is returned.
@@ -833,7 +856,7 @@ class common
 		}
 		if (is_null($svg))
 		{
-			$svg = html::$user_agent !== 'msie' || html::$ua_version >= 9;
+			$svg = self::svg_usable();
 		}
 		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '');
 		if (($map = egw_cache::getInstance(__CLASS__, $cache_name)))
