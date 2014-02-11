@@ -205,6 +205,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		var that = this;
 		toolbar.draggable({
 			cancel:true,
+			zIndex: 1000,
 			//revert:"invalid",
 			containment: "document",
 			cursor: "move",
@@ -219,6 +220,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			containment:"document",
 			helper:"clone",
 			appendTo:'body',
+			zIndex: 1000,
 			cursor:"move"
 		});
 		toolbox.children().droppable({
