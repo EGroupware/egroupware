@@ -742,12 +742,19 @@ app.classes.mail = AppJS.extend(
 	 * The widget to be expended is set in the event data.
 	 *
 	 * requires: mainWindow, one mail selected for preview
-	 *
+	 * 
+	 * @param {jQuery event} event
+	 * @param {Object} widget
 	 * @param {DOMNode} button
 	 */
-	showAllHeader: function(button) {
+	showAllHeader: function(event,widget,button) {
 		// Show list as a list
 		var list = jQuery(button).prev();
+	/*	if (list.length <= 0)
+		{
+			list = jQuery(button.target).prev();
+		}*/
+		
 		list.toggleClass('visible');
 
 		// Revert if user clicks elsewhere
