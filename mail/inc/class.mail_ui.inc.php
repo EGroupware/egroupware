@@ -914,7 +914,7 @@ class mail_ui
 				if ($createMissingParents)
 				{
 					unset($item);
-					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => 'no access');
+					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => lang('no access'));
 					$insert['item'][] =& $item;
 					$insert =& $item;
 				}
