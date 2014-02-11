@@ -458,6 +458,7 @@ class mail_ui
 			'edit_acl'	=> array(
 				'caption' => 'Edit folder ACL ...',
 				'icon'	=> 'blocks',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
 		);

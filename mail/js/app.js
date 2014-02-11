@@ -863,13 +863,14 @@ app.classes.mail = AppJS.extend(
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		/*
-		if (img.indexOf('NoSelect') !== -1)
+		var node = ftree.getNode(_senders[0].id);
+
+		if (node.im0.indexOf('NoSelect') !== -1)
 		{
 			//ftree.reSelectItem(_previous);
 			return false;
 		}
-		*/
+
 		return true;
 	},
 
