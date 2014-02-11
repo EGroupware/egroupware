@@ -1502,8 +1502,8 @@ app.classes.mail = AppJS.extend(
 		//console.log(this, arguments, widget);
 		var mailid;
 		var attgrid;
-		if (typeof calledForCompose == 'undefined') calledForCompose=false;
-		if (calledForCompose==false)
+		if (typeof calledForCompose == 'undefined' || typeof calledForCompose == 'object') calledForCompose=false;
+		if (calledForCompose===false)
 		{
 			if (this.mail_isMainWindow)
 			{
@@ -1518,7 +1518,7 @@ app.classes.mail = AppJS.extend(
 				attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
 			}
 		}
-		else
+		if (calledForCompose===true)
 		{
 			// CALLED FOR COMPOSE; processedmail_id could hold several IDs seperated by comma
 			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
