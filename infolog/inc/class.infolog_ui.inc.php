@@ -2005,6 +2005,8 @@ class infolog_ui
 		$content['hours_per_workday'] = $this->hours_per_workday;
 		if ($this->prefs['show_id']) $content['info_number'] = $info_id;
 
+		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
+
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 
