@@ -589,7 +589,7 @@ var et2_link_entry = et2_inputWidget.extend(
 				self.cache = {};
 
 				// Update preference with new value
-				egw.set_preference(self.options.value.to_app || this.egw().getAppName(),'link_app',self.app_select.val());
+				egw.set_preference(self.options.value.to_app || self.egw().getAppName(),'link_app',self.app_select.val());
 
 				if(typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
