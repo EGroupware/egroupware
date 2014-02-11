@@ -23,9 +23,16 @@
 */
 
 /**
+ * Date and timepicker
+ *
  * @augments Class
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
  */
-egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	// translate only once
+	var calendar_translated = false,timepicker_translated = false;
 
 	function calendarPreferences(_egw)
 	{
@@ -59,6 +66,11 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	function setupCalendar(_egw, _input, _time, _callback, _context)
 	{
+		if (!calendar_translated)
+		{
+			translateCalendar();
+			calendar_translated = true;
+		}
 		var prefs = calendarPreferences(_egw);
 
 		var params = {
@@ -103,9 +115,17 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	/**
 	 * Set up an input to have a time selection popup
+	 *
+	 * @param {egw} _egw egw object to use
+	 * @param {(node|string)} _input input field to use
 	 */
-	function setupTime(_egw, _input, _callback, _context)
+	function setupTime(_egw, _input)
 	{
+		if (!timepicker_translated)
+		{
+			translateTimepicker();
+			timepicker_translated = true;
+		}
 		_wnd.jQuery(_input).timepicker(timePreferences(_egw));
 	}
 
@@ -113,7 +133,8 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 * Translate, and set as default values
 	 *
 	 */
-	function translateCalendar() {
+	function translateCalendar()
+	{
 		var translate_fields = {
 			// These ones are simple strings
 			"nextText": false,
@@ -198,11 +219,6 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	var css = this.module('css',_wnd);
 	css.css(".et2_date input.hasDatepicker:hover", "background-image: url(" + egw().image('datepopup') + ")");
 
-	// Translate only once
-	var ready = this.module('ready', _wnd);
-	ready.ready(translateCalendar,this);
-	ready.ready(translateTimepicker,this);
-
 	return {
 		/**
 		 * setup a calendar / date-selection
@@ -214,7 +230,8 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * @param _context
 		 * @returns
 		 */
-		calendar: function(_input, _time, _callback, _context) {
+		calendar: function(_input, _time, _callback, _context)
+		{
 			setupCalendar(this, _input, _time, _callback, _context);
 		},
 		/**
@@ -225,7 +242,8 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * @param _context
 		 * @returns
 		 */
-		time: function(_input, _callback, _context) {
+		time: function(_input, _callback, _context)
+		{
 			setupTime(this, _input, _callback, _context);
 		}
 	};
