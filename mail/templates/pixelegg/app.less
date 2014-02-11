@@ -1346,7 +1346,7 @@ input[type=button] {
 }
 
 
-
+// Button Toolbar - always visible
 #mail-index_toolbar {
     padding: 0px;
     background: none;
@@ -1487,6 +1487,43 @@ input[type=button] {
 
 }
 
+// weitere Button
+/*#toolbar-actionbox{.dimension_height_s;}*/
+
+h.ui-toolbar-menulistHeader,
+#ui-accordion-toolbar-actionbox-header-0{
+    
+    .dimension_height_s;
+    background-color: @gray_60;
+    color: @gray_0;
+    padding: 3px 0px 3px 2.2em;
+    
+    // little ICON
+    .ui-accordion .ui-accordion-header .ui-accordion-header-icon {margin-top: -11px;}
+    
+}
+
+// accordion, where Button be placed
+div#toolbar-menulist{
+    background-color: @gray_50;
+    color: @gray_0;
+
+          /* Elemente */
+
+           button {
+                height: 24px !important;
+                background-color: @gray_60;
+                
+                img[src$="svg"]{
+                    
+                                .gradient_vertical (@gray_60, @gray_60);
+                                background-color: @gray_100;
+                                }
+
+                }
+
+}
+
 
 
 /*AN / To*/
@@ -1599,4 +1636,6 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 
 
-//                                                                                                                                                                                                                                                                    
+//
+
+//
