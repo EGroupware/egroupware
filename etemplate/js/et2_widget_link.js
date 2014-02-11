@@ -24,9 +24,9 @@
 
 /**
  * UI widgets for Egroupware linking system
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_link_to = et2_inputWidget.extend(
 {
 	attributes: {
@@ -63,7 +63,7 @@ var et2_link_to = et2_inputWidget.extend(
 		"link_label": {
 			"name": "Link label",
 			"type": "string",
-			"default": "Link",	
+			"default": "Link",
 			"description": "Label for the link button"
 		},
 		"value": {
@@ -77,7 +77,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_to
 	 */
 	init: function() {
@@ -132,7 +132,7 @@ var et2_link_to = et2_inputWidget.extend(
 			.text(this.egw().lang(this.options.link_label))
 			.appendTo(this.div).hide()
 			.click(this, this.createLink);
-		
+
 		// Span for indicating status
 		this.status_span = $j(document.createElement("span"))
 			.appendTo(this.div).addClass("status").hide();
@@ -154,7 +154,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 		// Filemanager link popup
 		this.filemanager_button = $j(document.createElement("div")).appendTo(this.div);
-		
+
 		// Need a div for file upload widget
 		this.file_div = $j(document.createElement("div")).appendTo(this.div);
 
@@ -170,7 +170,7 @@ var et2_link_to = et2_inputWidget.extend(
 			// Already done
 			return false;
 		}
-		
+
 		// Link-to
 		var link_entry_attrs = {
 			id: this.id + '_link_entry',
@@ -210,15 +210,15 @@ var et2_link_to = et2_inputWidget.extend(
 			}
 			self._link_result(values);
 		});
-		
+
 		// File upload
 		var file_attrs = {
 			multiple: true,
 			id: this.id + '_file',
-			
+
 			// Make the whole template a drop target
 			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
-				
+
 			// Change to this tab when they drop
 			onStart: function(event, file_count) {
 				// Find the tab widget, if there is one
@@ -288,12 +288,12 @@ var et2_link_to = et2_inputWidget.extend(
 			}
 			self.comment.val(self.comment.attr("placeholder"));
 		}
-		
+
 		// Files
 		if(!self.options.no_files)
 		{
 			for(var file in self.file_upload.options.value) {
-				
+
 				links.push({
 					app: 'file',
 					id: file,
@@ -308,7 +308,7 @@ var et2_link_to = et2_inputWidget.extend(
 		{
 			return;
 		}
-		
+
 		var request = egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
 			[values.to_app, values.to_id, links],
 			self._link_result,
@@ -382,7 +382,7 @@ var et2_link_to = et2_inputWidget.extend(
 				},
 				this, et2_link_list
 			);
-			
+
 			// If there's an array of data (entry is not yet saved), updating the list will
 			// not work, so add them in explicitly.
 			if(list_widget && success)
@@ -457,7 +457,7 @@ var et2_link_apps = et2_selectbox.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_apps
 	 */
 	init: function() {
@@ -476,7 +476,7 @@ var et2_link_apps = et2_selectbox.extend(
 			}),this);
 		}
 	},
-		
+
 	/**
 	 * We get some minor speedups by overriding parent searching and directly setting select options
 	 */
@@ -543,7 +543,7 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_entry
 	 */
 	init: function() {
@@ -587,10 +587,10 @@ var et2_link_entry = et2_inputWidget.extend(
 			.change(function(e) {
 				// Clear cache when app changes
 				self.cache = {};
-				
+
 				// Update preference with new value
 				egw.set_preference(self.options.value.to_app || window.egw_appName,'link_app',self.app_select.val());
-				
+
 				if(typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
 			});
@@ -602,7 +602,7 @@ var et2_link_entry = et2_inputWidget.extend(
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
 		}
-		if(this.options.only_app) 
+		if(this.options.only_app)
 		{
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
@@ -610,7 +610,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 
 		// Search input
-		this.search = $j(document.createElement("input")) 
+		this.search = $j(document.createElement("input"))
 			// .attr("type", "search") // Fake it for all browsers below
 			.focus(function(){if(!self.options.only_app) {
 				// Adjust width, leave room for app select & link button
@@ -619,7 +619,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			.appendTo(this.div);
 
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
-		
+
 		// Autocomplete
 		this.search.autocomplete({
 			source: function(request, response) { return self.query(request, response);},
@@ -630,8 +630,8 @@ var et2_link_entry = et2_inputWidget.extend(
 				self.select(event,item);
 				return false;
 			},
-			focus: function(event, item) { 
-				event.stopPropagation(); 
+			focus: function(event, item) {
+				event.stopPropagation();
 				self.search.val(item.item.label);
 				return false;
 			},
@@ -639,7 +639,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			disabled: self.options.disabled,
 			appendTo: self.div
 		});
-		
+
 		// Custom display (colors)
 		this.search.data("uiAutocomplete")._renderItem = function(ul, item) {
 			var li = jQuery(document.createElement('li'))
@@ -755,12 +755,12 @@ var et2_link_entry = et2_inputWidget.extend(
 	doLoadingFinished: function() {
 		if(typeof this.options.value == 'object' && !this.options.value.app)
 		{
-			this.options.value.app = egw.preference('link_app',this.options.value.to_app || window.egw_appName);
+			this.options.value.app = egw.preference('link_app',this.options.value.to_app || this.egw().app_name());
 			this.app_select.val(this.options.value.app);
 		}
 		return this._super.apply(this,arguments);
 	},
-		
+
 	getValue: function() {
 		var value = this.options.only_app ? this.options.value.id : this.options.value;
 		if(!this.options.only_app)
@@ -835,7 +835,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.search.val(_value.title+"");
 		}
 		this.options.value = _value;
-		
+
 		jQuery("option[value='"+_value.app+"']",this.app_select).prop("selected",true);
 		this.app_select.hide();
 		this.div.addClass("no_app");
@@ -863,7 +863,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.search.removeAttr("placeholder");
 		}
 	},
-	
+
 	/**
 	 * Ask server for entries matching selected app/type and filtered by search string
 	 */
@@ -961,7 +961,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			});
 			self.search.val("");
 		}
-		
+
 		// If a link array was passed in, don't make the ajax call
 		if(typeof _links == 'undefined')
 		{
@@ -991,9 +991,9 @@ et2_register_widget(et2_link_entry, ["link-entry"]);
 
 /**
  * UI widget for a single (read-only) link
- * 
+ *
  * @augments et2_valueWidget
- */ 
+ */
 var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
@@ -1012,10 +1012,10 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	},
 	legacyOptions: ["only_app"],
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link
 	 */
 	init: function() {
@@ -1035,11 +1035,11 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.link = null;
 		this._super.apply(this, arguments);
 	},
-	set_label: function(label) {		
+	set_label: function(label) {
 		// Remove current label
 		this.label_span.contents()
 			.filter(function(){ return this.nodeType == 3; }).remove();
-		
+
 		var parts = et2_csvSplit(label, 2, "%s");
 		this.label_span.prepend(parts[0]);
 		this.label_span.append(parts[1]);
@@ -1148,10 +1148,10 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
 
 /**
  * UI widget for one or more links, comma separated
- * 
+ *
  * @augments et2_valueWidget
- */ 
-var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"application": {
@@ -1177,10 +1177,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 			"description": "Sub-type key to list only entries of that type"
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_string
 	 */
 	init: function() {
@@ -1202,7 +1202,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	set_value: function(_value) {
 		// Get data
-		if(!_value || _value == null) 
+		if(!_value || _value == null)
 		{
 			this.list.empty();
 			return;
@@ -1211,7 +1211,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			_value = _value.split(',');
 		}
-		if(!_value.to_app && typeof _value == "object" && this.options.application) 
+		if(!_value.to_app && typeof _value == "object" && this.options.application)
 		{
 			_value.to_app = this.options.application;
 		}
@@ -1307,9 +1307,9 @@ et2_register_widget(et2_link_string, ["link-string"]);
 
 /**
  * UI widget for one or more links in a list (table)
- * 
+ *
  * @augments et2_link_string
- */ 
+ */
 var et2_link_list = et2_link_string.extend(
 {
 	attributes: {
@@ -1320,10 +1320,10 @@ var et2_link_list = et2_link_string.extend(
 			"description": "Show links that are marked as deleted, being held for purge"
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_list
 	 */
 	init: function() {
@@ -1339,7 +1339,7 @@ var et2_link_list = et2_link_string.extend(
 		this.context = new egwMenu();
 		this.context.addItem("comment", this.egw().lang("Comment"), "", function() {
 			var link_id = self.context.data.link_id;
-			
+
 			et2_dialog.show_prompt(
 				function(button, comment) {
 					if(button != et2_dialog.OK_BUTTON) return;
@@ -1361,7 +1361,7 @@ var et2_link_list = et2_link_string.extend(
 				},
 				'',self.egw().lang("Comment"),self.context.data.remark||''
 			);
-			
+
 		});
 		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function(menu_item) {
 			var link_data = self.context.data;
@@ -1386,9 +1386,9 @@ var et2_link_list = et2_link_string.extend(
 			self._delete_link(link_id);
 		});
 	},
-		
+
 	destroy: function() {
-		
+
 		this._super.apply(this, arguments);
 		if(this.context)
 		{
@@ -1422,9 +1422,9 @@ var et2_link_list = et2_link_string.extend(
 			if(src)	icon_widget.set_src(src);
 			icon.append(icon_widget.getDOMNode());
 		}
-		
+
 		var columns = ['title','remark'];
-		
+
 		var self = this;
 		for(var i = 0; i < columns.length; i++) {
 			$j(document.createElement("td"))
@@ -1493,9 +1493,9 @@ et2_register_widget(et2_link_list, ["link-list"]);
 
 /**
  * UI widget for one or more links in a list (table)
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_link_add = et2_inputWidget.extend(
 {
 	attributes: {
@@ -1512,7 +1512,7 @@ var et2_link_add = et2_inputWidget.extend(
 	},
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_link_add
 	 */
 	init: function() {
@@ -1540,7 +1540,7 @@ var et2_link_add = et2_inputWidget.extend(
 			self.egw().open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
 		};
 		this.div.append(this.button.getDOMNode());
-		
+
 		return true;
 	},
 	/**
