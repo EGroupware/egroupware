@@ -37,7 +37,7 @@ function phpgwapi_upgrade1_8_003()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
 }
 /**
- * Combiupdate 1.8.004: includes Trunk updates 1.9.001-1.9.010+1.9.013
+ * Combiupdate 1.8.004/5/6: includes Trunk updates 1.9.001-1.9.010+1.9.013
  *
  * @return string
  */
@@ -46,6 +46,10 @@ function phpgwapi_upgrade1_8_004()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.005';
 }
 function phpgwapi_upgrade1_8_005()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.006';
+}
+function phpgwapi_upgrade1_8_006()
 {
 	// run the two not included updates
 	phpgwapi_upgrade1_9_010();
