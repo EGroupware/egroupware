@@ -122,7 +122,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 	set_value: function(_value) {
 		if (!_value) _value = "";
 		if (!this.options.no_lang) _value = this.egw().lang(_value);
-		if (this.options.value && this.options.value.indexOf('%s') != -1)
+		if (this.options.value && (this.options.value+"").indexOf('%s') != -1)
 		{
 			_value = this.options.value.replace(/%s/g, _value);
 		}
