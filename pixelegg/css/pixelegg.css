@@ -5146,6 +5146,10 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   width: 16px;
   height: 16px;
 }
+button.image_button {
+  background: none;
+  border: none;
+}
 /*@import "../less/layout_nextmatch.less";*/
 /**
  * Less-file for egroupware
