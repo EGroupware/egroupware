@@ -713,6 +713,7 @@ class mail_hooks
 			$linkData = array
 			(
 				'menuaction'	=> 'mail.mail_sieve.index',
+				'ajax'			=> 'true'
 			);
 			if(empty($preferences['prefpreventeditfilterrules']) || $preferences['prefpreventeditfilterrules'] == 0)
 				$file['filter rules']	= egw::link('/index.php',$linkData);
@@ -720,6 +721,7 @@ class mail_hooks
 			$linkData = array
 			(
 				'menuaction'	=> 'mail.mail_sieve.editVacation',
+				'ajax'			=> 'true'
 			);
 			if(empty($preferences['prefpreventabsentnotice']) || $preferences['prefpreventabsentnotice'] == 0)
 			{
@@ -728,7 +730,7 @@ class mail_hooks
 			if((empty($preferences['prefpreventnotificationformailviaemail']) ||
 				$preferences['prefpreventnotificationformailviaemail'] == 0))
 			{
-				$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification'); //Added email notifications
+				$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification&ajax=true'); //Added email notifications
 			}
 			if ($sieveEnabledServerCounter>=1)
 			{
