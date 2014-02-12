@@ -461,34 +461,26 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// No next, select previous
 				next = (entry.ao?entry.ao.getPrevious(1):null);
 			}
-			// Select next row
-			if(next && next.id)
-			{
-				this.controller._selectionMgr._handleSelect(next.id);
-			}
-
+			
 			// Stop automatic updating
 			this.dataview.grid.doInvalidate = false;
-			// Collect IDs
-			var grid_IDs = [];
 			for(var i = 0; i < _row_ids.length; i++)
 			{
 				uid = app + "::" + _row_ids[i];
 				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-				// grid.deleteRow() changes grid indexes - see below
-				grid_IDs.push(entry.idx);
 
+				// Unselect
+				this.controller._selectionMgr.setSelected(uid,false);
+				
 				// Delete from internal references
 				this.controller.deleteRow(uid);
 			}
 
-			// Grid indexes change as we delete rows, so go from bottom
-			// Sort to make sure they're in numeric order
-			grid_IDs.sort(function(a,b){return b-a;});
-			for(var i = 0; i < grid_IDs.length; i++)
+			// Select & focus next row
+			if(next && next.id)
 			{
-				// Blank the row
-				this.dataview.grid.deleteRow(grid_IDs[i]);
+				this.controller._selectionMgr.setSelected(next.id,true);
+				this.controller._selectionMgr.setFocused(next.id,true);
 			}
 
 			// Update the count
