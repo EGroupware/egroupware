@@ -115,7 +115,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			switch (e.name)
 			{
 				case 'QuotaExceededError':	// storage quota is exceeded --> delete whole log
-
+				case 'NS_ERROR_DOM_QUOTA_REACHED':	// FF-name
 					clear_client_log();
 					break;
 
