@@ -474,9 +474,11 @@ var et2_tree = et2_inputWidget.extend(
 		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
 		for(var i=0; i < treeObj.children.length; i++)
 		{
-			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
+			if(treeObj.children[i].id == _id)
 			{
-				treeObj.children[i].iface.id = _newItemId;
+				treeObj.children[i].id = _newItemId;
+				if (treeObj.children[i].iface) treeObj.children[i].iface.id = _newItemId;
+				break;
 			}
 		}
 
@@ -497,10 +499,9 @@ var et2_tree = et2_inputWidget.extend(
 		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
 		for(var i=0; i < treeObj.children.length; i++)
 		{
-			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
+			if(treeObj.children[i].id == _id)
 			{
-				delete treeObj.children[i].iface.id;
-				delete treeObj.children[i].iface.node;
+				treeObj.children.splice(i,1);
 			}
 		}
 	},
