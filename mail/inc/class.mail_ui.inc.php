@@ -2648,6 +2648,7 @@ $this->partID = $partID;
 					'sender' => $sender,
 				));
 				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
+				translation::add_app('calendar');
 				return ExecMethod( 'calendar.calendar_uiforms.meeting',
 					array('event'=>null,'msg'=>'','useSession'=>true)
 				);
