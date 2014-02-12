@@ -95,6 +95,10 @@
 #timesheet-index table.egwGridView_outer tbody td .et2_link {
   font-weight: bold;
 }
+#timesheet-index span.timesheet_titleDetails,
+#timesheet-index span[id*="[ts_title]"] {
+  font-weight: bold;
+}
 /*###########################################
 #                                           #
 #       dialog-header                       #

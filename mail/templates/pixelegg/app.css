@@ -1864,11 +1864,14 @@ input[type=button] {
   height: auto;
 }
 #mail-index_toolbar {
-  padding: 0px;
+  /*padding: 0px;*/
   background: none;
-  margin: 5px 5px 0 0;
-  border: none;
+  /*margin: 5px 5px 0 0;*/
+  /*border: none;*/
   /* Elemente */
+}
+#mail-index_toolbar #toolbar-actionlist {
+  margin-top: 3px;
 }
 #mail-index_toolbar button {
   height: 24px !important;
@@ -2277,3 +2280,4 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
   height: auto;
   width: 24px;
 }
+/*//Ende*/
