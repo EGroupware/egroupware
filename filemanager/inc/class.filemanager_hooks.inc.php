@@ -54,6 +54,18 @@ class filemanager_hooks
 		{
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
 			$file = array();
+			if($GLOBALS['egw_info']['apps']['stylite'])
+			{
+				// add "file a file" (upload) dialog
+				$file[] = array(
+					'text' => 'File a file',
+					'link' => "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
+							'menuaction'=>'stylite.stylite_filemanager.upload',
+						),false)."','_blank',550,350)",
+					'app'  => 'phpgwapi',
+					'icon' => 'upload',
+				);
+			}
 			// add selection for available views, if we have more then one
 			if (count(filemanager_ui::init_views()) > 1)
 			{
