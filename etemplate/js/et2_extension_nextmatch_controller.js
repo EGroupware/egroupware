@@ -121,7 +121,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 */
 	deleteRow: function(uid) {
 		var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
-		if(entry && entry.idx)
+		if(entry && entry.idx !== null)
 		{
 			// Trigger controller to remove from internals
 			this.egw.dataStoreUID(uid,null);
