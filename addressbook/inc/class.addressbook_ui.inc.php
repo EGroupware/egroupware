@@ -420,7 +420,7 @@ class addressbook_ui extends addressbook_bo
 				)+array(
 					'icon' => 'foldertree_nolines_minus',
 					'disableClass' => 'rowNoEdit',
-				),	
+				),
 			),
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences']) unset($actions['cats']['children']['cat_edit']);
@@ -2238,8 +2238,9 @@ window.egw_LAB.wait(function() {
 
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
-		// Load JS for infolog actions
-		egw_framework::validate_file('.','app','infolog');
+
+		// load app.css for addressbook explicit, as addressbook_view hooks changes currentapp!
+		egw_framework::includeCSS('addressbook', 'app');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
@@ -2286,7 +2287,7 @@ window.egw_LAB.wait(function() {
 	{
 		if(!empty($_content))
 		{
-			
+
 			$response = egw_json_response::get();
 
 			$query = egw_session::appsession('index','addressbook');
@@ -2314,7 +2315,7 @@ window.egw_LAB.wait(function() {
 			if ($_content['button']['search']) $response->call("app.addressbook.adv_search");
 			if ($_content['button']['cancelsearch']) egw_framework::window_close (); //$response->addScript('this.close();');
 		}
-		
+
 		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
@@ -2369,7 +2370,7 @@ window.egw_LAB.wait(function() {
 		$content['showsearchbuttons'] = true; // enable search operation and search buttons| they're disabled by default
 
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
-		
+
 		$this->tmpl->read('addressbook.edit');
 		$this->tmpl->set_cell_attribute('change_org','disabled',true);
 		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(),2);

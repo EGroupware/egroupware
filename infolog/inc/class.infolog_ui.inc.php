@@ -1952,7 +1952,7 @@ class infolog_ui
 			}
 		}
 		$preserv = $content;
-		
+
 		// Don't preserve message
 		unset($preserv['msg']);
 
@@ -2566,6 +2566,9 @@ class infolog_ui
 	 */
 	function hook_view($args)
 	{
+		// Load JS for infolog actions
+		egw_framework::validate_file('.','app','infolog');
+
 		switch ($args['location'])
 		{
 			case 'addressbook_view':
