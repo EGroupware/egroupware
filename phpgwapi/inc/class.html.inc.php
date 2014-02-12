@@ -649,20 +649,27 @@ egw_LAB.wait(function() {
 	}
 
 	static protected $default_background_images = array(
-		'save' => '/save(&|\[|\]|$)/',
-		'apply' => '/apply(&|\[|\]|$)/',
-		'cancel' => '/cancel(&|\[|\]|$)/',
-		'delete' => '/delete(&|\[|\]|$)/',
-		'edit' => '/edit(&|\[|\]|$)/',
-		'next' => '/(next|continue)(&|\[|\]|$)/',
-		'finish' => '/finish(&|\[|\]|$)/',
-		'back' => '/(back|previous)(&|\[|\]|$)/',
-		'copy' => '/copy(&|\[|\]|$)/',
-		'more' => '/more(&|\[|\]|$)/',
-		'check' => '/check(&|\[|\]|$)/',
-		'ok' => '/ok(&|\[|\]|$)/',
-		'close' => '/close(&|\[|\]|$)/',
-		'add' => '/(add(&|\[|\]|$)|create)/',	// customfields use create*
+		'save'   => '/save(&|\]|$)/',
+		'apply'  => '/apply(&|\]|$)/',
+		'cancel' => '/cancel(&|\]|$)/',
+		'delete' => '/delete(&|\]|$)/',
+		'edit'   => '/edit(&|\]|$)/',
+		'next'   => '/(next|continue)(&|\]|$)/',
+		'finish' => '/finish(&|\]|$)/',
+		'back'   => '/(back|previous)(&|\]|$)/',
+		'copy'   => '/copy(&|\]|$)/',
+		'more'   => '/more(&|\]|$)/',
+		'check'  => '/(yes|check)(&|\]|$)/',
+		'canceled' => '/no(&|\]|$)/',
+		'ok'     => '/ok(&|\]|$)/',
+		'close'  => '/close(&|\]|$)/',
+		'add'    => '/(add(&|\]|$)|create)/',	// customfields use create*
+	);
+
+	static protected $default_classes = array(
+		'et2_button_cancel'   => '/cancel(&|\]|$)/',	// yellow
+		'et2_button_question' => '/(yes|no)(&|\]|$)/',	// yellow
+		'et2_button_delete'   => '/delete(&|\]|$)/'		// red
 	);
 
 	/**
@@ -721,16 +728,35 @@ egw_LAB.wait(function() {
 		}
 		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
 
+		// add et2_classes to "old" buttons
+		$classes = array('et2_button', 'et2_button_text');
 		// add default background-image to get et2 like buttons
 		foreach(self::$default_background_images as $img => $reg_exp)
 		{
 			if (preg_match($reg_exp, $name) && ($url = common::image($GLOBALS['egw_info']['flags']['currentapp'], $img)))
 			{
-				$options .= ' style="background-image: url('.$url.');" class="et2_button et2_button_text et2_button_with_image"';
+				$options .= ' style="background-image: url('.$url.');"';
+				$classes[] = 'et2_button_with_image';
 				break;
 			}
 		}
-		if (!isset($url)) $options .= ' class="et2_button et2_button_text"';
+		// add default class for cancel, delete or yes/no buttons
+		foreach(self::$default_classes as $class => $reg_exp)
+		{
+			if (preg_match($reg_exp, $name))
+			{
+				$classes[] = $class;
+				break;
+			}
+		}
+		if (strpos($options, 'class="'))
+		{
+			$options = str_replace($options, 'class="', 'class="'.implode(' ', $classes).' ', $options);
+		}
+		else
+		{
+			$options .= ' class="'.implode(' ', $classes).'"';
+		}
 
 		return '<button type="'.$buttontype.'" name="'.htmlspecialchars($name).
 			'" value="'.htmlspecialchars($label).
