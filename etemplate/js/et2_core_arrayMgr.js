@@ -208,7 +208,7 @@ var et2_arrayMgr = Class.extend(
 	 * Expands variables inside the given identifier to their values inside the
 	 * content array.
 	 *
-	 * @parm {string} _ident Key used to reference into managed array
+	 * @param {string} _ident Key used to reference into managed array
 	 * @return {*}
 	 */
 	expandName : function(_ident) {
@@ -331,7 +331,9 @@ var et2_arrayMgr = Class.extend(
 	/**
 	 * ?
 	 *
-	 * @param _row [integer?] Key for into the _root for the desired row
+	 * @param {object} _owner owner object
+	 * @param {(string|null|object)} _root string with key, null for whole data or object with data
+	 * @param {number?} _row key for into the _root for the desired row
 	 */
 	openPerspective: function(_owner, _root, _row)
 	{
@@ -387,7 +389,7 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 				_id = this.expandName(_id);
 			}
 			entry = this.getEntry(_id);
-			
+
 		}
 
 		// Let the array entry override the read only attribute entry
@@ -424,7 +426,7 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 	 */
 	expandName: function(ident)
 	{
-		return this.perspectiveData.owner.getArrayMgr('content').expandName(ident)
+		return this.perspectiveData.owner.getArrayMgr('content').expandName(ident);
 	}
 });
 

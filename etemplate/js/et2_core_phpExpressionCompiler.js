@@ -28,7 +28,7 @@
 
 	function _throwParserErr(_p, _err)
 	{
-		throw("Syntax error while parsing '" + _p.expr + "' at " + 
+		throw("Syntax error while parsing '" + _p.expr + "' at " +
 			_p.pos + ", " + _err);
 	}
 
@@ -57,6 +57,13 @@
 							break;
 
 						case '$':
+							// check for '$$' as used in placeholder syntax, it is NOT expanded and returned as is
+							if (_p.expr.charAt(_p.pos) == "$" && state == STATE_DEFAULT)
+							{
+								_p.pos++;
+								str += '$$';
+								break;
+							}
 							if (str)
 							{
 								_tree.push(str); str = "";
@@ -196,6 +203,10 @@
 	/**
 	 * Reads a string delimited by the char _delim or the regExp _delim from the
 	 * current parser context and returns it.
+	 *
+	 * @param {object} _p parser contect
+	 * @param {string} _delim delimiter
+	 * @return {string} string read (or throws an exception)
 	 */
 	function _php_readString(_p, _delim)
 	{
