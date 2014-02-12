@@ -746,7 +746,7 @@ app.classes.mail = AppJS.extend(
 	 * The widget to be expended is set in the event data.
 	 *
 	 * requires: mainWindow, one mail selected for preview
-	 * 
+	 *
 	 * @param {jQuery event} event
 	 * @param {Object} widget
 	 * @param {DOMNode} button
@@ -758,7 +758,7 @@ app.classes.mail = AppJS.extend(
 		{
 			list = jQuery(button.target).prev();
 		}*/
-		
+
 		list.toggleClass('visible');
 
 		// Revert if user clicks elsewhere
@@ -2190,22 +2190,18 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_AddFolder: function(action,_senders) {
+	mail_AddFolder: function(_action,_senders) {
 		//console.log(action,_senders);
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].iface.id);
-		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
-		OldFolderName = OldFolderName.trim();
-		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Add"), id: "add", class: "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
-		var dialog = et2_dialog.show_prompt(function(_button_id, _value) {
-			var senders = this.my_data.data;
+		et2_dialog.show_prompt(function(_button_id, _value) {
 			var NewFolderName = null;
 			if (_value.length>0) NewFolderName = _value;
 			//alert(NewFolderName);
@@ -2214,7 +2210,7 @@ app.classes.mail = AppJS.extend(
 				switch (_button_id)
 				{
 					case "add":
-						egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName])
+						egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].id, NewFolderName])
 							.sendRequest(true);
 						return;
 					case "cancel":
@@ -2224,10 +2220,6 @@ app.classes.mail = AppJS.extend(
 		this.egw.lang("Enter the name for the new Folder:"),
 		this.egw.lang("Add a new Folder to %1:",OldFolderName),
 		'', buttons);
-		// setting required data for callback in as my_data
-		dialog.my_data = {
-			data: _senders,
-		};
 	},
 
 	/**
@@ -2236,22 +2228,18 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_RenameFolder: function(action,_senders) {
+	mail_RenameFolder: function(_action,_senders) {
 		//console.log(action,_senders);
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].iface.id);
-		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
-		OldFolderName = OldFolderName.trim();
-		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
-			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"},
+			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", image: 'edit', "default": true},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
-		var dialog = et2_dialog.show_prompt(function(_button_id, _value) {
-			var senders = this.my_data.data;
+		et2_dialog.show_prompt(function(_button_id, _value) {
 			var NewFolderName = null;
 			if (_value.length>0) NewFolderName = _value;
 			//alert(NewFolderName);
@@ -2260,7 +2248,7 @@ app.classes.mail = AppJS.extend(
 				switch (_button_id)
 				{
 					case "rename":
-						egw.json('mail.mail_ui.ajax_renameFolder',[senders[0].iface.id, NewFolderName])
+						egw.json('mail.mail_ui.ajax_renameFolder',[_senders[0].id, NewFolderName])
 							.sendRequest(true);
 						return;
 					case "cancel":
@@ -2270,10 +2258,6 @@ app.classes.mail = AppJS.extend(
 		this.egw.lang("Rename Folder %1 to:",OldFolderName),
 		this.egw.lang("Rename Folder %1 ?",OldFolderName),
 		OldFolderName, buttons);
-		// setting required data for callback in as my_data
-		dialog.my_data = {
-			data: _senders,
-		};
 	},
 
 	/**
@@ -2296,7 +2280,7 @@ app.classes.mail = AppJS.extend(
 
 		for(var i = 0; i < _senders.length; i++)
 		{
-			egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].iface.id, destination.id],
+			egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].id, destination.id],
 				// Move is done (successfully or not), remove loading
 				function() {load_node.removeClass('loading');}
 			);
@@ -2309,39 +2293,30 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_DeleteFolder: function(action,_senders) {
+	mail_DeleteFolder: function(_action,_senders) {
 		//console.log(action,_senders);
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].iface.id);
-		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
-		OldFolderName = OldFolderName.trim();
-		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Yes"), id: "delete", class: "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
-		var dialog = et2_dialog.show_dialog(function(_button_id, _value) {
-			var senders = this.my_data.data;
+		et2_dialog.show_dialog(function(_button_id, _value) {
 			switch (_button_id)
 			{
 				case "delete":
-					egw.json('mail.mail_ui.ajax_deleteFolder',[senders[0].iface.id])
+					egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].id])
 						.sendRequest(true);
 					return;
 				case "cancel":
 			}
 		},
-		this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" "+(ftree.hasChildren(_senders[0].iface.id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")),
+		this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" "+(ftree.hasChildren(_senders[0].id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")),
 		this.egw.lang("DELETE Folder %1 ?",OldFolderName),
 		OldFolderName, buttons);
-		// setting required data for callback in as my_data
-		dialog.my_data = {
-			data: _senders,
-		};
-
 	},
 
 	/**
@@ -2349,7 +2324,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param _event
 	 * @param _file_count
-	 * @param {string} [_path=current directory] Where the file is uploaded to.
+	 * @param {string?} _path where the file is uploaded to, default current directory
 	 */
 	uploadForImport: function(_event, _file_count, _path)
 	{
@@ -2650,7 +2625,7 @@ app.classes.mail = AppJS.extend(
 	{
 	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
 	},
-	
+
 	/**
 	 * Popup the subscription dialog
 	 *
@@ -2835,5 +2810,16 @@ app.classes.mail = AppJS.extend(
 		{
 			this.unlock_tree();
 		}
+	},
+
+	/**
+	 * Print a mail from list
+
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	mail_print: function(_action, _senders)
+	{
+		this.egw.message('Not yet implemented ;-)');
 	}
 });
