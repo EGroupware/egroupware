@@ -53,7 +53,7 @@ function mailGridGetSelected()
 {
 	// select messagesv from mailGrid
 	var allSelected = mailGrid.dataRoot.actionObject.getSelectedObjects();
-	var messages = {};
+	var messages = {msg:[]};
 	// allSelected[i].id hält die id
 	// zurückseten iteration über allSelected (getSelectedObjects) und dann allSelected[i].setSelected(false);
 	if (allSelected.length>0) messages['msg'] = [];
@@ -61,7 +61,7 @@ function mailGridGetSelected()
 	{
 		if (allSelected[i].id.length>0)
 		{
-			messages['msg'][i] = allSelected[i].id;
+			messages['msg'].push(allSelected[i].id);
 			//alert(i+': ID->'+messages['msg'][i]);
 		}
 	}
