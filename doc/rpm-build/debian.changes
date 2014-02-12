@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20140212-1) hardy; urgency=low
+
+  * eSyncPro: fixed fatal error caused by accidental changes for new release
+  * Calendar: fixed conflict not from a resource could not be ignored (resource conflicts need direct booking permission to ignore)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 12 Feb 2014 15:35:19 +0100
+
 egroupware-epl (11.1.20140210-1) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
