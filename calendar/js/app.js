@@ -1080,7 +1080,7 @@ app.classes.calendar = AppJS.extend(
 
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
-		if (typeof state.state != 'undefined' && state.state.view == 'undefined' || state.state.view == 'listview')
+		if (typeof state.state != 'undefined' && (state.state.view == 'undefined' || state.state.view == 'listview'))
 		{
 			// check if we already use et2 / are in listview
 			if (this.et2 || etemplate2 && etemplate2.getByApplication('calendar'))
