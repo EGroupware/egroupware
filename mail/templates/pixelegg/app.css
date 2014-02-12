@@ -730,6 +730,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"] {
   color: #FFF;
   text-shadow: none;
+  height: 24px;
   /*    height: auto;*/
   background-image: none !important;
   /*.border_radius_button_lefttop;*/
@@ -1022,8 +1023,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   background-image: url(images/attach.png) !important;
   background-color: #fafafa;
   height: 16px;

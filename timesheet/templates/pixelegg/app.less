@@ -3,6 +3,8 @@
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
+ * TIMESHEET
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
@@ -56,6 +58,7 @@
             button#timesheet-index_add{
             .Complete_Button_add_only_plus;
             background-color: @egw_color_2_a;
+            .dimension_height_m;
             
             &:hover {.Complete_Button_add_only_plus_hover;}
             &:active {background-color: @color_positive_action_active !important;}
@@ -98,9 +101,38 @@
         }
     } //nextmatch_header
 
-} // iframe
 }
 
+// Titel: in Bold
+
+table.egwGridView_outer tbody td .et2_link {font-weight: bold;}
+
+
+
+// iframe
+}
+
+
+
+
+/*###########################################
+#                                           #
+#       dialog-header                       #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
 // timesheet-edit
 
 #timesheet-edit{

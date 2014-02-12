@@ -196,7 +196,7 @@ fieldset.emailGroup {
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
-    height: 32px;
+    height: 24px;
     margin-top: 0;
   }
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
@@ -221,7 +221,7 @@ fieldset.emailGroup {
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
-    height: 32px;
+    height: 24px;
     margin-left: 5px;
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
@@ -258,13 +258,13 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
-    width: auto;
-    height: 32px;
+    /*.Button_size_h32_auto;*/
+    height: 24px;
     background-image: url('../../../pixelegg/images/advanced-search.png') !important;
     padding-left: 0px;
   }
@@ -288,16 +288,16 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
-    width: auto;
-    height: 32px;
+    /*.Button_size_h32_auto;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    height: 24px;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
     background-image: url('../../../pixelegg/images/advanced-search.png');
@@ -319,16 +319,16 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
-    width: auto;
-    height: 32px;
+    /*.Button_size_h32_auto;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    height: 24px;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
     width: 32px;
@@ -337,6 +337,7 @@ fieldset.emailGroup {
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #679fd2 !important;
+    height: 24px;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
     content: "";
@@ -600,7 +601,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
   }
   div.addressbook_edit_general_picture img.photo:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -998,6 +999,7 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
+    background-color: #b4b4b4;
     height: 3.1ex;
     background-color: #e6e6e6;
   }
@@ -1144,13 +1146,12 @@ fieldset.emailGroup {
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #e6e6e6;
+    background-color: #b4b4b4;
     padding-left: 30px !important;
     background-position: 6px center !important;
     background-repeat: no-repeat !important;
     background-size: 20px auto !important;
-    width: auto;
-    height: 32px;
+    /*.Button_size_h32_auto;*/
     height: 24px;
     background-image: url('../images/edit.png');
   }

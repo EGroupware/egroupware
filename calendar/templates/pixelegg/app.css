@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 45602 2014-02-06 17:36:03Z ralfbecker $ */
+/* $Id: app.css 45624 2014-02-10 08:53:42Z hnategh $ */
 .calendar_inputFullWidth input {
   width: 100%;
 }
@@ -940,7 +940,7 @@ div#calendar-edit .et2_tabheader {
   background-color: transparent;
 }
 div#calendar-edit .et2_tabs {
-  min-height: 325px;
+  min-height: 246px;
 }
 div#calendar-edit .et2_tabcntr {
   overflow-y: auto;
@@ -954,7 +954,7 @@ div#calendar-edit #calendar-edit_whole_day {
 }
 div#calendar-edit label.et2_label#calendar-edit_calendar_edit_duration {
   /*margin-left: 20px;*/
-  margin-right: 49px;
+  /*margin-right: 49px;*/
 }
 div#calendar-edit select#calendar-edit_duration {
   width: 133px;
@@ -1018,7 +1018,7 @@ div#calendar-edit #calendar-edit_calendar-edit-description .et2_hbox_right {
   overflow-y: auto;
 }
 div#calendar-edit #calendar-edit_calendar-edit-description .et2_selectbox .ui-multiselect-checkboxes {
-  min-height: 290px;
+  min-height: 218px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-description .et2_selectbox .ui-multiselect-checkboxes li {
   text-indent: -20px;
@@ -1047,13 +1047,13 @@ div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_
   padding: 0.2em 0.5em;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_account {
-  width: 160px;
+  width: 143px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource select {
-  width: 160px !important;
+  width: 143px !important;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource input {
-  width: 160px !important;
+  width: 103px !important;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tr.optional {
   background-color: rgba(255, 221, 115, 0.1);
@@ -1105,9 +1105,10 @@ div#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-s
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody input#calendar-edit_quantity {
   width: 30px;
-  position: relative;
-  top: 34px;
-  left: 40px;
+  /*                position: relative;
+                top: 34px;
+                left: 40px;*/
+  margin: 6px 0px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-edit_resource {
   margin: 5px 0 10px 0;
@@ -1117,14 +1118,15 @@ div#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-e
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody select#calendar-edit_role {
   /*width: 30px;*/
-  position: relative;
-  top: 6px;
-  left: -177px;
-  width: 135px;
+  /*                position: relative;
+                top: 6px;
+                left: -168px;*/
+  width: 120px;
+  margin-top: 2px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-participants tbody #calendar-edit_add {
   position: relative;
-  left: -145px;
+  /*left: -145px;*/
   top: 31px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-recurrence tbody {

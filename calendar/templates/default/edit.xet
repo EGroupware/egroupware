@@ -63,10 +63,12 @@
 						</menulist>
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
+                                        <vbox options="0,0" span="2" valign="middle">
 					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
 					<menulist>
 						<menupopup class="selectRole" id="role"/>
 					</menulist>
+                                        </vbox>
 					<button align="center" label="Add" id="add" image="add" background_image="1"/>
 					<description/>
 				</row>
@@ -294,7 +296,7 @@
 					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" span="all"/>
 				</row>
 				<row class="dialog-header2" height="28">
-					<description for="start" value="Start" width="95"/>
+					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required"/>
 					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable" span="all"/>
 				</row>
@@ -309,7 +311,7 @@
 					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 				</row>
 				<row>
-					<tabbox id="tabs" height="300" span="all">
+					<tabbox id="tabs" height="246" span="all">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>

@@ -3,6 +3,8 @@
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
+ * TIMESHEET
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
@@ -16,9 +18,9 @@
 }
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget {
-  /*background-color: @egw_color_blue_lighter !important;*/
   color: #FFF;
   text-shadow: none;
+  height: 24px;
   /*    height: auto;*/
   background-image: none !important;
   /*.border_radius_button_lefttop;*/
@@ -51,16 +53,16 @@
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add {
-  width: 32px;
-  height: 32px;
+  width: 24px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-  padding: 0.5em;
-  background-color: #0c5da5 !important;
+  padding: -0.5em;
+  background-color: #679fd2 !important;
   background-color: #0c5da5;
+  height: 24px;
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:before {
-  content: "+";
+  content: "";
   font-size: 2em;
   color: #ffc200;
   line-height: 0.6em;
@@ -90,6 +92,27 @@
   height: 16px;
   width: 16px;
 }
+#timesheet-index table.egwGridView_outer tbody td .et2_link {
+  font-weight: bold;
+}
+/*###########################################
+#                                           #
+#       dialog-header                       #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                   dialog                  #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
 #timesheet-edit #timesheet-edit_tabs {
   padding: 0 3px;
 }
