@@ -16,6 +16,15 @@
 	egw_core;
 */
 
+/**
+ * Log debug messages to browser console and persistent html5 localStorage
+ *
+ * localStorage is limited by a clientside quota, so we need to deal with
+ * situation that storing something in localStorage will throw an exception!
+ *
+ * @param {string} _app
+ * @param {object} _wnd
+ */
 egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 	/**
@@ -43,7 +52,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 *
 	 * @type Number
 	 */
-	var MAX_LOGS = 1000;
+	var MAX_LOGS = 200;
 	/**
 	 * Number of last old log entry = next one to overwrite
 	 *
@@ -93,38 +102,58 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		{
 			window.localStorage[LASTLOG] = 0;
 		}
+		// check if MAX_LOGS changed in code --> clear whole log
+		if (window.localStorage[LASTLOG] > MAX_LOGS)
+		{
+			clear_client_log();
+		}
 		try {
 			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
+			window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
 		}
 		catch(e) {
-			// one of the args is not JSON.stringify, because it contains circular references eg. an et2 widget
-			for(var i=0; i < data.args.length; ++i)
+			switch (e.name)
 			{
-				try {
-					JSON.stringify(data.args[i]);
-				}
-				catch(e) {
-					// for Class we try removing _parent and _children attributes and try again to stringify
-					if (data.args[i] instanceof Class)
+				case 'QuotaExceededError':	// storage quota is exceeded --> delete whole log
+
+					clear_client_log();
+					break;
+
+				default:
+					// one of the args is not JSON.stringify, because it contains circular references eg. an et2 widget
+					for(var i=0; i < data.args.length; ++i)
 					{
-						data.args[i] = jQuery.extend({}, data.args[i]);
-						delete data.args[i]._parent;
-						delete data.args[i]._children;
 						try {
 							JSON.stringify(data.args[i]);
-							continue;	// stringify worked --> check other arguments
 						}
 						catch(e) {
-							// ignore error and remove whole argument
+							// for Class we try removing _parent and _children attributes and try again to stringify
+							if (data.args[i] instanceof Class)
+							{
+								data.args[i] = jQuery.extend({}, data.args[i]);
+								delete data.args[i]._parent;
+								delete data.args[i]._children;
+								try {
+									JSON.stringify(data.args[i]);
+									continue;	// stringify worked --> check other arguments
+								}
+								catch(e) {
+									// ignore error and remove whole argument
+								}
+							}
+							// if above doesnt work, we remove the attribute
+							data.args[i] = '** removed, circular reference **';
 						}
 					}
-					// if above doesnt work, we remove the attribute
-					data.args[i] = '** removed, circular reference **';
-				}
 			}
-			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
+			try {
+				window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
+				window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
+			}
+			catch(e) {
+				// ignore error, if eg. localStorage exceeds quota on client
+			}
 		}
-		window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
 	}
 
 	/**
@@ -166,7 +195,13 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 		if (!window.localStorage) return false;
 
-		for(var i=0; i < MAX_LOGS; ++i)
+		max = MAX_LOGS;
+		// check if we have more log entries then allowed, happens if MAX_LOGS get changed in code
+		if (window.localStorage[LASTLOG] > MAX_LOGS)
+		{
+			max = 1000;	// this should NOT be changed, if MAX_LOGS get's smaller!
+		}
+		for(var i=0; i < max; ++i)
 		{
 			if (typeof window.localStorage[LOG_PREFIX+i] != 'undefined')
 			{
