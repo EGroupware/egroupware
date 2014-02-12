@@ -387,7 +387,7 @@
             &:hover {.box_shadow_standard_light_hover;}
             &:focus {.box_shadow_standard_light_inset;}
 
-            &:before {content: "| ";font-size: 1em;color: @egw_color_2_a;}
+            /*&:before {content: "";font-size: 1em;color: @egw_color_2_a;}*/
 
         }
 
@@ -431,6 +431,8 @@
         top: 5px;
         .dimension_width_height_s;
         &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
+            &:hover {.box_shadow_standard_light_hover;}
+            &:focus {.box_shadow_standard_light_inset;}
     }
 
     // Country switch
@@ -1336,3 +1338,6 @@ button.image_button {
 	background: none;
 	border: none;
 }
+
+
+//

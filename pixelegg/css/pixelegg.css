@@ -910,6 +910,7 @@
   }
   .sidebox-favorites .ui-menu .ui-menu-item {
     width: 93%;
+    /*&:first-child a{padding-left: 41px;}*/
   }
   .sidebox-favorites .ui-menu .ui-menu-item:hover {
     background-color: #ffdd73;
@@ -928,9 +929,6 @@
   }
   .sidebox-favorites .ui-menu .ui-menu-item a div.ui-icon-heart {
     display: none;
-  }
-  .sidebox-favorites .ui-menu .ui-menu-item:first-child a {
-    padding-left: 41px;
   }
   .sidebox-favorites div.ui-icon-heart {
     position: relative;
@@ -3232,7 +3230,7 @@ button[id="add"]:active {
 }
 /*Button Ende #######################################################*/
 /*dhtml Submenu ##########################################################*/
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item {
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
   /*filter grey*/
   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
   -webkit-filter: grayscale(100%);
@@ -3616,6 +3614,14 @@ table.customfields td span > div {
 table.nextmatch_header img {
   width: 16px;
   height: 16px;
+}
+.egwGridView_empty {
+  text-align: center;
+  border-bottom: 1px solid silver;
+  font-size: 1.5em;
+}
+.egwGridView_empty td {
+  color: #1e1e1e !important;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -4259,6 +4265,7 @@ table.nextmatch_header img {
   position: relative;
   top: 0px;
   display: inline-block;
+  /*&:before {content: "";font-size: 1em;color: @egw_color_2_a;}*/
 }
 #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -4269,11 +4276,6 @@ table.nextmatch_header img {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-#egw_fw_topmenu_info_items .topmenu_info_item:nth-child(3):before {
-  content: "| ";
-  font-size: 1em;
-  color: #0c5da5;
 }
 #egw_fw_topmenu_info_items form {
   height: 0px;
@@ -4297,6 +4299,16 @@ table.nextmatch_header img {
   font-size: 2em;
   color: #ffc200;
   line-height: 0.6em;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add:focus {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add select#quick_add_selectbox {
   visibility: hidden;

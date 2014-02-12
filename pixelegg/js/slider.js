@@ -106,7 +106,7 @@ egw_LAB.wait(function() {
 
 // ADD 
 
-    function addListeners(){
+    function add_quick_Listeners(){
    
         if(window.addEventListener) {
             // ADD
@@ -120,7 +120,7 @@ egw_LAB.wait(function() {
             document.getElementById('quick_add').attachEvent("onmouseover",quick_add_func_over);
             document.getElementById('quick_add').attachEvent("onmouseout",quick_add_func_out);
     }
-    
+}
         // Write your functions here
     
     function quick_add_func_over(){
@@ -141,10 +141,7 @@ egw_LAB.wait(function() {
             quick_add_selectbox.style.visibility = "hidden"; 
     }
     
-
-    
- }
-    window.onload = addListeners; 
+ window.onload = add_quick_Listeners; 
 
 /* #egw_fw_topmenu_info_items {
     bottom: 0;
