@@ -344,7 +344,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    min-width: 67px;
+    min-width: 76px;
   }
   .et2_tabflag:hover {
     color: #f2f2f2;
@@ -449,7 +449,7 @@
   .et2_grid tr .gray span.et2_label,
   .et2_grid td .gray span.et2_label {
     background-color: transparent;
-    padding-left: 1em;
+    padding-left: 3px;
   }
   /**
  * Nextmatch widget
@@ -917,11 +917,10 @@
   .sidebox-favorites .ui-menu .ui-menu-item a {
     line-height: inherit;
     padding: 2px 0px;
-    padding-left: 5px !important;
+    padding-left: 5px;
   }
   .sidebox-favorites .ui-menu .ui-menu-item a:hover {
     text-decoration: underline;
-    /*.Complete_Button_Icon_hover ;*/
   }
   .sidebox-favorites .ui-menu .ui-menu-item a img {
     width: 16px;
@@ -929,6 +928,9 @@
   }
   .sidebox-favorites .ui-menu .ui-menu-item a div.ui-icon-heart {
     display: none;
+  }
+  .sidebox-favorites .ui-menu .ui-menu-item:first-child a {
+    padding-left: 41px;
   }
   .sidebox-favorites div.ui-icon-heart {
     position: relative;
@@ -1362,8 +1364,8 @@ span.ui-icon-search {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 .ui-dialog-buttonset button:hover {
   background-color: #b4b4b4;
@@ -1856,13 +1858,13 @@ div#egwpopup_message {
   -moz-border-radius-topright: 20px;
   border-radius: 3px;
   border-top-right-radius: 20px;
-  padding: 5px 2px 4px 15px;
+  padding: 0px 2px 0px 15px;
   /*font-size: 1em;*/
   font-weight: normal;
   background-color: #f0f0f0;
   color: #408dd2;
   width: 80%;
-  height: 15px;
+  height: auto;
   /*&:before {content: "! "; color: @egw_color_1_a; font-size: 1em; }*/
 }
 .colselection.ui-widget-content {
@@ -2769,8 +2771,8 @@ button.et2_button_with_image {
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   background-repeat: no-repeat !important;
   background-position: 6px center;
   background-size: 20px 20px;
@@ -2828,8 +2830,8 @@ button[id="displayToolbar-delete"] {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   /*background-color: @color-negative-action !important;*/
   /*color: @gray_0 !important;*/
 }
@@ -2868,8 +2870,8 @@ button[id="displayToolbar-delete"]:hover {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   color: #ffffff !important;
 }
 input[type="submit"][id*="delete"]:active,
@@ -2907,8 +2909,8 @@ button[id="displayToolbar-delete"]:active {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   color: #ffffff;
 }
 /* ########################################################################################
@@ -2965,8 +2967,8 @@ button#filemanager-select_button[ok]:active {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 #passwordchange:hover {
   background-color: #1aa200 !important;
@@ -3009,8 +3011,8 @@ button#series {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 button#series:hover {
   background-image: url('../images/edit.svg') !important;
@@ -3044,8 +3046,8 @@ button#exception {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 button#exception:hover {
   background-image: url('../images/edit.svg') !important;
@@ -3113,8 +3115,8 @@ button[id="cancel"] {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
   content: "ID missing";
 }
 button[id="cancel"]:hover {
@@ -3154,8 +3156,8 @@ button[id="cancel"]:active {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 #passwordcancel:hover {
   background-color: #f5b301 !important;
@@ -3177,6 +3179,7 @@ button[id="cancel"]:active {
 button.add {
   color: #FFF;
   text-shadow: none;
+  height: 24px;
   /*    height: auto;*/
   background-image: none !important;
   /*.border_radius_button_lefttop;*/
@@ -3212,8 +3215,8 @@ button[id="add"] {
   background-position: 6px center !important;
   background-repeat: no-repeat !important;
   background-size: 20px auto !important;
-  width: auto;
-  height: 32px;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
 }
 button[id="add"]:active {
   background-color: #1aa200 !important;
@@ -3663,7 +3666,7 @@ table.nextmatch_header img {
 #loginMainDiv div#centerBox {
   margin: 0 auto;
   width: 444px;
-  background-color: #ffc200;
+  background-color: #ffffff;
   z-index: 100;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -3678,10 +3681,11 @@ table.nextmatch_header img {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 25px;
   /*.background-clip(padding-box);*/
-  border-top: solid 1px #0c5da5;
-  border-left: solid 1px #0c5da5;
-  border-right: solid 1px #0c5da5;
-  border-bottom: solid 1px #0c5da5;
+  border-top: solid 1px #ffc200;
+  border-left: solid 1px #679fd2;
+  border-right: solid 1px #ffc200;
+  border-bottom: solid 1px #679fd2;
+  border-width: 14px;
 }
 #loginMainDiv div#centerBox #loginScreenMessage {
   margin: 1em;
@@ -5323,7 +5327,9 @@ table.dialog-main-view {
   color: #000000;
   vertical-align: middle;
   padding: 0px 0px 0px 9px !important;
-  margin-right: 57px;
+  /*margin-right: 57px;*/
+  margin: 0px important;
+  font-size: 1em;
 }
 .dialog-header td.space span img {
   background: #ffffff;
@@ -5354,7 +5360,10 @@ tr.dialog-header4 .et2_label {
   color: #1a1a1a;
   vertical-align: middle;
   padding: 0px 0px 0px 9px !important;
-  margin-right: 55px;
+  /*margin-right: 55px;*/
+  margin: 0px;
+  font-size: 1em;
+  width: 50px !important;
 }
 /************* Tabs  *********************************/
 .dialog-tabs {
@@ -5505,7 +5514,7 @@ body > div#egw_message {
   border-bottom-left-radius: 15px;
   border-top-left-radius: 0px;
   /*.background-clip(padding-box);*/
-  right: 15px;
+  right: 5px;
   /*top: 5px;*/
   top: 0px;
   padding: 10px;
