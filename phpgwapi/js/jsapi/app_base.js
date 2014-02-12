@@ -485,21 +485,16 @@ var AppJS = Class.extend(
 				}
 
 				// Add to list immediately
-				var state = {
-					name: name.val(),
-					group: false,
-					state:self.favorite_popup.state
-				};
 				if(self.sidebox)
 				{
 					// Remove any existing with that name
 					$j('[data-id="'+safe_name+'"]',self.sidebox).remove();
 
 					// Create new item
-					var html = "<li data-id='"+safe_name+"' class='ui-menu-item' role='menuitem'>\n";
+					var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
 					html += "<a href='#' class='ui-corner-all' tabindex='-1'>";
 					html += "<div class='" + 'sideboxstar' + "'></div>"+
-						name.val() /*+(filter['group'] != false ? " ♦" :"")*/;
+						favorite.name +(favorite.group != false ? " ♦" :"");
 					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
 					html += "</a></li>\n";
 					$j(html).on('click.favorites',jQuery.proxy(function(event) {
@@ -509,7 +504,7 @@ var AppJS = Class.extend(
 								return;
 							}
 							app[self.appname].setState(this);
-						},state))
+						},favorite))
 						.insertBefore($j('li',self.sidebox).last());
 					self._init_sidebox(self.sidebox);
 				}
@@ -566,6 +561,7 @@ var AppJS = Class.extend(
 
 		var app = event.data;
 		var id = $j(this).parentsUntil('li').parent().attr("data-id");
+		var group = $j(this).parentsUntil('li').parent().attr("data-group") || '';
 		var line = $j('li[data-id="'+id+'"]',app.sidebox);
 		var name = line.first().text();
 		var trash = this;
@@ -585,9 +581,12 @@ var AppJS = Class.extend(
 
 			// Delete preference server side
 			var request = egw.json(app.appname + ".egw_framework.ajax_set_favorite.template",
-				[app.appname, id, "delete", '', ''],
+				[app.appname, id, "delete", group, ''],
 				function(result) {
-					if(result)
+					// Got the full response from callback, which we don't want
+					if(result.type) return;
+					
+					if(result && typeof result == 'boolean')
 					{
 						// Remove line from list
 						line.slideUp("slow", function() { });

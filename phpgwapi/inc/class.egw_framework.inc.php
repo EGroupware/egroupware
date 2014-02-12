@@ -1957,7 +1957,7 @@ abstract class egw_framework
 		foreach($filters as $name => $filter)
 		{
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
-			$html .= "<li data-id='$name' class='ui-menu-item' role='menuitem'>\n";
+			$html .= "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
 			$html .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'] .($filter['group'] != false ? " ♦" :"");
@@ -2011,7 +2011,7 @@ abstract class egw_framework
 				// This is the name as user entered it, minus tags
 				'name' => $name,
 				'group' => $group ? $group : false,
-				'filter' => $filters
+				'state' => $filters
 			);
 			$result = $prefs->add($app,$pref_name,$filters,$type);
 			$pref = $prefs->save_repository(false,$type);
