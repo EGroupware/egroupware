@@ -408,7 +408,8 @@ class mail_ui
 			// Tree does support this one
 			'add' => array(
 				'caption' => 'Add Folder',
-				'onExecute' => 'javaScript:app.mail.mail_AddFolder'
+				'onExecute' => 'javaScript:app.mail.mail_AddFolder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 			),
 			'edit' => array(
 				'caption' => 'Rename Folder',
@@ -2457,14 +2458,14 @@ unset($query['actions']);
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		$filename = ($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part);
+		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
 		header ("Content-Type: ".$attachment['type']."; name=\"". $filename ."\"");
 		if($_GET['mode'] == "save") {
 			// ask for download
 			header ("Content-Disposition: attachment; filename=\"". $filename ."\"");
 		} else {
 			// display it
-			header ("Content-Disposition: inline; filename=\"". $attachment['filename'] ."\"");
+			header ("Content-Disposition: inline; filename=\"". $filename ."\"");
 		}
 		header("Expires: 0");
 		// the next headers are for IE and SSL

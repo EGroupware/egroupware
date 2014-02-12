@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+/*egw:uses
+	phpgwapi.jquery.jquery.base64;
+*/
+
 /**
  * UI for mail
  *
@@ -1073,6 +1077,21 @@ app.classes.mail = AppJS.extend(
 	_unseen_regexp: / \([0-9]+\)$/,
 
 	/**
+	 * mail_splitRowId
+	 */
+	mail_splitRowId: function(_rowID)
+	{
+		res = _rowID.split('::');
+		// as a rowID is perceeded by app::, should be mail!
+		if (res.length==4 && parseInt(res[0])!=NaN )
+		{
+			// we have an own created rowID; prepend app=mail
+			res.unshift('mail');
+		}
+		return res;
+	},
+
+	/**
 	 * Delete mails - actually calls the backend function for deletion
 	 * takes in all arguments
 	 * @param _msg - message list
@@ -1080,21 +1099,31 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
+		var message, ftree, _foldernode, displayname;
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var _foldernode = ftree.getSelectedNode();
+		if (ftree)
+		{
+			_foldernode = ftree.getSelectedNode();
 
-		var displayname = _foldernode.label.replace(this._unseen_regexp, '');
+			displayname = _foldernode.label.replace(this._unseen_regexp, '');
+		}
+		else
+		{
+			message = this.mail_splitRowId(_msg['msg'][0]);
+			if (message[3]) _foldernode = displayname = jQuery.base64Decode(message[3]);
+		}
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
 
 		// Update list
-		var ids = [];
-		for (var i = 0; i < _msg['msg'].length; i++)
-		{
-			ids.push(_msg['msg'][i].replace(/mail::/,''));
-		}
-		egw_refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,displayname),'mail',ids,'delete');
+		//var ids = [];
+		//for (var i = 0; i < _msg['msg'].length; i++)
+		//{
+		//	ids.push(_msg['msg'][i].replace(/mail::/,''));
+		//}
+		//egw_refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current folder'))),'mail',ids,'delete');
+		egw_message(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current Folder'))));
 	},
 
 	/**
@@ -1104,7 +1133,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_deleteMessagesShowResult: function(_msg)
 	{
-		egw_message(_msg['egw_message']);
+		// Update list
+		var ids = [];
+		for (var i = 0; i < _msg['msg'].length; i++)
+		{
+			ids.push(_msg['msg'][i].replace(/mail::/,''));
+		}
+		//egw_message(_msg['egw_message']);
+		egw_refresh(_msg['egw_message'],'mail',ids,'delete');
 	},
 
 	/**

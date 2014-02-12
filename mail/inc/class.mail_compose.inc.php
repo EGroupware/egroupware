@@ -1875,13 +1875,15 @@ class mail_compose
 				//Import failed, download content anyway
 			}
 		}
-		header ("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
+		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
+		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
+		header ("Content-Type: ".$attachment['type']."; name=\"". $filename ."\"");
 		if($_GET['mode'] == "save") {
 			// ask for download
-			header ("Content-Disposition: attachment; filename=\"". $attachment['filename'] ."\"");
+			header ("Content-Disposition: attachment; filename=\"". $filename ."\"");
 		} else {
 			// display it
-			header ("Content-Disposition: inline; filename=\"". $attachment['filename'] ."\"");
+			header ("Content-Disposition: inline; filename=\"". $filename ."\"");
 		}
 		header("Expires: 0");
 		// the next headers are for IE and SSL
