@@ -1186,7 +1186,7 @@ option:checked {
 .ui-widget-content .ui-state-focus {
   border-color: #e6e6e6;
   background: #679fd2;
-  background-image: none !important;
+  background-image: none;
   color: #000000;
 }
 .ui-state-hover,
@@ -1198,7 +1198,7 @@ option:checked {
   border-bottom: solid 1px 1px;
   border-color: #e6e6e6;
   background: #679fd2;
-  background-image: none !important;
+  background-image: none;
   color: #000000;
 }
 .ui-state-hover a,
@@ -2803,7 +2803,8 @@ button[id="addressbook-edit_button[delete]"],
 button[id="resources-edit_delete"],
 button[id="calendar-edit_button[delete]"],
 button[id="timesheet-edit_button[delete]"],
-button[id="displayToolbar-delete"] {
+button[id="displayToolbar-delete"],
+button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
   background-image: url('../images/delete.png') !important;
   margin-left: 3em;
@@ -2844,7 +2845,8 @@ button[id="addressbook-edit_button[delete]"]:hover,
 button[id="resources-edit_delete"]:hover,
 button[id="calendar-edit_button[delete]"]:hover,
 button[id="timesheet-edit_button[delete]"]:hover,
-button[id="displayToolbar-delete"]:hover {
+button[id="displayToolbar-delete"]:hover,
+button.et2_button_delete:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -2883,7 +2885,8 @@ button[id="addressbook-edit_button[delete]"]:active,
 button[id="resources-edit_delete"]:active,
 button[id="calendar-edit_button[delete]"]:active,
 button[id="timesheet-edit_button[delete]"]:active,
-button[id="displayToolbar-delete"]:active {
+button[id="displayToolbar-delete"]:active,
+button.et2_button_delete:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -2921,7 +2924,8 @@ button[id="displayToolbar-delete"]:active {
 button[id*="save"] img[url*="svg"],
 button[id*="apply"] img[url*="svg"],
 button[id*="copy"] img[url*="svg"],
-button[id*="edit_button[edit]"] img[url*="svg"] {
+button[id*="edit_button[edit]"] img[url*="svg"],
+button.et2_button img[url*="svg"] {
   background-color: #b4b4b4;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
@@ -2936,7 +2940,8 @@ button[id*="edit_button[edit]"] img[url*="svg"] {
 button[id*="save"]:active,
 button[id*="apply"]:active,
 button[id*="copy"]:active,
-button[id*="edit_button[edit]"]:active {
+button[id*="edit_button[edit]"]:active,
+button.et2_button:active {
   background-color: #1aa200;
 }
 button#filemanager-select_button[ok]:active {
@@ -3078,13 +3083,17 @@ button[id*="edit_button[add_alarm]"]:active {
  ######################################################################################## */
 button[id*="cancel"]:hover,
 button[id*="importexport-wizardbox_button[previous]"]:hover,
-button#cancel:hover {
+button#cancel:hover,
+button.et2_button_cancel:hover,
+button.et2_button_question:hover {
   background-color: #f5b301 !important;
   color: #000000;
 }
 button[id*="cancel"]:active,
 button[id*="importexport-wizardbox_button[previous]"]:active,
-button#cancel:active {
+button#cancel:active,
+button.et2_button_cancel:active,
+button.et2_button_question:active {
   background-color: #fecc44 !important;
   color: #373737;
 }
