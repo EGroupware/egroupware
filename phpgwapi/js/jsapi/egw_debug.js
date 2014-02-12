@@ -195,7 +195,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 		if (!window.localStorage) return false;
 
-		max = MAX_LOGS;
+		var max = MAX_LOGS;
 		// check if we have more log entries then allowed, happens if MAX_LOGS get changed in code
 		if (window.localStorage[LASTLOG] > MAX_LOGS)
 		{
