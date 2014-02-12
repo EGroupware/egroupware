@@ -863,13 +863,17 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
 	mail_CheckFolderNoSelect: function(action,_senders,_currentNode) {
-		console.log(action,_senders,_currentNode);
+		//console.log(action,_senders,_currentNode);
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var node = ftree.getNode(_senders[0].id);
+		var ftree, node;
+		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		if (ftree)
+		{
+			node = ftree.getNode(_senders[0].id);
+		}
 
-		if (node.im0.indexOf('NoSelect') !== -1)
+		if (node && node.im0.indexOf('NoSelect') !== -1)
 		{
 			//ftree.reSelectItem(_previous);
 			return false;
