@@ -130,7 +130,7 @@ var AppJS = Class.extend(
 	 * @param _senders
 	 */
 	open: function(_action, _senders) {
-		var id_app = _senders[0].id.split('::')
+		var id_app = _senders[0].id.split('::');
 		egw.open(id_app[1], this.appname);
 	 },
 
@@ -236,8 +236,8 @@ var AppJS = Class.extend(
 		{
 			et2[i].widgetContainer.iterateOver(function(_widget) {
 				// Firefox has trouble with spaces in search
-				if(state.state.search) state.state.search = unescape(state.state.search);
-				
+				if(state.state && state.state.search) state.state.search = unescape(state.state.search);
+
 				// Apply
 				_widget.activeFilters = state.state || state.filter || {};
 				_widget.applyFilters();
@@ -251,7 +251,7 @@ var AppJS = Class.extend(
 		var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 		egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
 
-		return false
+		return false;
 	},
 
 	/**
@@ -284,6 +284,8 @@ var AppJS = Class.extend(
 
 	/**
 	 * Initializes actions and handlers on sidebox (delete)
+	 *
+	 * @param {jQuery} sidebox jQuery of DOM node
 	 */
 	_init_sidebox: function(sidebox)
 	{
@@ -354,7 +356,7 @@ var AppJS = Class.extend(
 				filter_list.push("</li>");
 			});
 			filter_list.push("</ul>");
-		}
+		};
 		add_to_popup(this.favorite_popup.state);
 		$j("#"+this.appname+"_favorites_popup_state",this.favorite_popup)
 			.replaceWith(
@@ -554,6 +556,8 @@ var AppJS = Class.extend(
 	/**
 	 * Delete a favorite from the list and update preferences
 	 * Registered as a handler on the delete icons
+	 *
+	 * @param {jQuery.event} event event object
 	 */
 	delete_favorite: function(event)
 	{
@@ -587,7 +591,7 @@ var AppJS = Class.extend(
 					{
 						// Remove line from list
 						line.slideUp("slow", function() { });
-						
+
 						// Try to update nextmatch favorites too
 						if(etemplate2 && etemplate2.getByApplication)
 						{
@@ -614,7 +618,7 @@ var AppJS = Class.extend(
 				$j(trash).parentsUntil("li").parent()
 			);
 			request.sendRequest(true);
-		}
+		};
 		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " +name +"?"),
 			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 
