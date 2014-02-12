@@ -285,7 +285,7 @@ var splitterCounter = 0;
 					var pw = opts.dockPane[0][opts.pxSplit];
 					if ( pw ) return;
 					// 20px away is too close, reset to 50%
-					if(Math.abs(bar._pos - splitter._DA - bar._DA) < 20) bar._pos =  splitter._DA / 2;
+					if(bar._pos == null || Math.abs(bar._pos - splitter._DA - bar._DA) < 20) bar._pos =  splitter._DA / 2;
 					var x={}; x[opts.origin]=bar._pos+"px";
 					bar.removeClass(opts.barDockedClass)
 						.animate(x, opts.undockSpeed||opts.dockSpeed||1, opts.undockEasing||opts.dockEasing, function(){
