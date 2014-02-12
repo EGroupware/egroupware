@@ -516,8 +516,8 @@ var AppJS = Class.extend(
 					for(var i = 0; i < et2.length; i++)
 					{
 						et2[i].widgetContainer.iterateOver(function(_widget) {
-							var faves = _widget.load_favorites(self.appname);
-							_widget.init_filters(_widget,faves);
+							_widget.stored_filters = _widget.load_favorites(self.appname);
+							_widget.init_filters(_widget);
 						}, self, et2_favorites);
 					}
 				}
