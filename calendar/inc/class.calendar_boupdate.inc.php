@@ -330,7 +330,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				foreach($conflicts as $key => $conflict)
 				{
-					$conflict['participants'] = array_intersect_key($conflict['participants'],$event['participants']);
+						$conflict['participants'] = array_intersect_key((array)$conflict['participants'],$event['participants']);
 					if (!$this->check_perms(EGW_ACL_READ,$conflict))
 					{
 						$conflicts[$key] = array(

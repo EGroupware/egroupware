@@ -1791,13 +1791,13 @@ class calendar_uiforms extends calendar_ui
 				'tooltip_participants' => $is_readable ? implode(', ',$this->bo->participants($conflict)) : '',
 				'time' => $this->bo->long_date($conflict['start'],$conflict['end'],true),
 				'conflicting_participants' => implode(",\n",$this->bo->participants(array(
-					'participants' => array_intersect_key($conflict['participants'],$event['participants']),
+					'participants' => array_intersect_key((array)$conflict['participants'],$event['participants']),
 				),true,true)),	// show group invitations too
 				'icon_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? 'recur' : '',
 				'text_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? lang('Recurring event') : ' ',
 			);
-			$allConflicts += array_intersect_key($conflict['participants'],$event['participants']);
-		}
+				$allConflicts += array_intersect_key((array)$conflict['participants'],$event['participants']);
+			}
 		$content = $event + array(
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
