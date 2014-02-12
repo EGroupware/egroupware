@@ -175,24 +175,25 @@ var et2_dialog = et2_widget.extend({
 		/*
 		Pre-defined Button combos
 		 - button ids copied from et2_dialog static, since the constants are not defined yet
+		 - image get replaced by 'style="background-image: url('+egw.image(image)+')' for an image prefixing text
 		*/
 		//BUTTONS_OK: 0,
-		[{"button_id": 1,"text": 'ok', "default":true}],
+		[{"button_id": 1,"text": 'ok', id: 'dialog[ok]', image: 'check', "default":true}],
 		//BUTTONS_OK_CANCEL: 1,
 		[
-			{"button_id": 1,"text": 'ok', "default":true},
-			{"button_id": 0,"text": 'cancel'}
+			{"button_id": 1,"text": 'ok', id: 'dialog[ok]', image: 'check', "default":true},
+			{"button_id": 0,"text": 'cancel', id: 'dialog[cancel]', image: 'cancel'}
 		],
 		//BUTTONS_YES_NO: 2,
 		[
-			{"button_id": 2,"text": 'yes', "default":true},
-			{"button_id": 3,"text": 'no'}
+			{"button_id": 2,"text": 'yes', id: 'dialog[yes]', image: 'check', "default":true},
+			{"button_id": 3,"text": 'no', id: 'dialog[no]', image: 'cancelled'}
 		],
 		//BUTTONS_YES_NO_CANCEL: 3,
 		[
-			{"button_id": 2,"text": 'yes', "default":true},
-			{"button_id": 3,"text": 'no'},
-			{"button_id": 0,"text": 'cancel'}
+			{"button_id": 2,"text": 'yes', id: 'dialog[yes]', image: 'check', "default":true},
+			{"button_id": 3,"text": 'no', id: 'dialog[no]', image: 'cancelled'},
+			{"button_id": 0,"text": 'cancel', id: 'dialog[cancel]', image: 'cancel'}
 		]
 	],
 
@@ -326,12 +327,40 @@ var et2_dialog = et2_widget.extend({
 		{
 			for (var i = 0; i < buttons.length; i++)
 			{
-				if(!buttons[i].click)
+				var button = buttons[i];
+				if(!button.click)
 				{
-					buttons[i].click = jQuery.proxy(this.click,this,null,buttons[i].id);
+					button.click = jQuery.proxy(this.click,this,null,button.id);
+				}
+				// set a default background image and css class based on buttons id
+				if (button.id && typeof button.class == 'undefined')
+				{
+					for(var name in et2_button.default_classes)
+					{
+						if (button.id.match(et2_button.default_classes[name]))
+						{
+							button.class = (typeof button.class == 'undefined' ? '' : button.class+' ')+name;
+							break;
+						}
+					}
+				}
+				if (button.id && typeof button.image == 'undefined' && typeof button.style == 'undefined')
+				{
+					for(var name in et2_button.default_background_images)
+					{
+						if (button.id.match(et2_button.default_background_images[name]))
+						{
+							button.image = name;
+							break;
+						}
+					}
+				}
+				if (button.image)
+				{
+					button.style = 'background-image: url('+this.egw().image(button.image)+')';
+					delete button.image;
 				}
 			}
-			this.options.buttons = buttons;
 		}
 
 		// If dialog already created, update buttons
@@ -392,10 +421,10 @@ var et2_dialog = et2_widget.extend({
 			this.set_message(this.options.message);
 			this.set_dialog_type(this.options.dialog_type);
 		}
-		this.set_buttons(this.options.buttons);
+		this.set_buttons(typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons);
 		this.div.dialog({
 			// Pass the internal object, not the option
-			buttons: typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons,
+			buttons: this.options.buttons,
 			modal: this.options.modal,
 			resizable: this.options.resizable,
 			width: "auto",
