@@ -1370,13 +1370,13 @@ span.ui-icon-search {
   color: #1e1e1e;
 }
 .ui-dialog-buttonset button.ui-button-text-only {
-  background-color: #cdcdcd !important;
+  background-color: #cdcdcd;
   background: inherit;
   color: #000000 !important;
   font-weight: normal !important;
 }
 .ui-dialog-buttonset button.ui-button-text-only:hover {
-  background-color: #b4b4b4 !important;
+  background-color: #b4b4b4;
 }
 /*###########################################*/
 /*Dialog: calendar edit series*/

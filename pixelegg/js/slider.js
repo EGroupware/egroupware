@@ -104,7 +104,7 @@ egw_LAB.wait(function() {
 
 
 
-// ADD 
+// ADD Button
 
     function add_quick_Listeners(){
    
@@ -112,11 +112,7 @@ egw_LAB.wait(function() {
             // ADD
             document.getElementById('quick_add').addEventListener("mouseover",quick_add_func_over,false);
             document.getElementById('quick_add').addEventListener("mouseout",quick_add_func_out,false);
-
-            
-    
         } else if (window.attachEvent){ // Added For Inetenet Explorer versions previous to IE9
-
             document.getElementById('quick_add').attachEvent("onmouseover",quick_add_func_over);
             document.getElementById('quick_add').attachEvent("onmouseout",quick_add_func_out);
     }
