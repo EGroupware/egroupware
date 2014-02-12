@@ -175,6 +175,7 @@ displays a remider for birthdays on the startpage (page you get when you enter e
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution lists	addressbook	en	Distribution lists
 distribution lists, ...	addressbook	en	Distribution lists, ...
+do you really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want another private address book, which can not be viewed by other users, if you grant access to your personal address book?
 do your really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
 doesn't matter	addressbook	en	Doesn't matter
@@ -189,6 +190,7 @@ each option in its own field	addressbook	en	Each option in its own field
 edit custom field	addressbook	en	Edit custom field
 edit custom fields	admin	en	Edit custom fields
 edit extra account-data in the addressbook	admin	en	Edit extra account data in the address book
+edit phonenumbers	addressbook	en	Edit Phonenumbers
 edit phonenumbers -	addressbook	en	Edit phone numbers -
 either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
@@ -348,7 +350,7 @@ organisations	addressbook	en	Organisations
 organisations by departments	addressbook	en	Organisations by departments
 organisations by location	addressbook	en	Organisations by location
 other number	addressbook	en	Other number
-other phone	addressbook	en	Other phone
+other phone	addressbook	en	Other Phone
 own sorting	addressbook	en	Own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel

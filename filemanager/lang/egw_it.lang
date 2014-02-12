@@ -15,6 +15,8 @@
 %1 successful uploaded.	filemanager	it	%1 caricati con successo.
 %1 the following files into current directory	filemanager	it	%1 i file seguenti nella cartella corrente.
 %1 urls %2 to clipboard.	filemanager	it	%1 URL %2 negli appunti
+%d errors while copying, %d files successfully copied.	filemanager	it	%d errori durante la copia, %d copiati con successo.
+%d errors while moving, %d files successfully moved.	filemanager	it	%d errori durante lo spostamento, %d spostati con successo.
 %d erros while copying, %d files successfully copied.	filemanager	it	%d errori durante la copia, %d file copiati con successo.
 %d erros while moving, %d files successfully moved.	filemanager	it	%d errori durante lo spostamento, %d file spostati con successo.
 %d files successfully copied.	filemanager	it	%d file copiati con successo.
@@ -27,6 +29,7 @@ add to clipboard	filemanager	it	Aggiungi agli appunti.
 all files	common	it	Tutti i file
 allow a maximum of the above configured folderlinks to be configured in settings	admin	it	Numero massimo di collegamenti a cartelle da configurare nelle preferenze
 and all it's childeren	filemanager	it	e tutti i figli
+application fields	filemanager	it	Campi di applicazione
 applications	common	it	Applicazioni
 basedirectory	filemanager	it	Cartella principale
 can't open directory %1!	filemanager	it	Impossibile aprire la cartella %1!
@@ -36,10 +39,12 @@ cautiously rejecting to remove folder '%1'!	filemanager	it	Eliminazione della ca
 check all	filemanager	it	Seleziona tutto
 check virtual filesystem	filemanager	it	Controlla il filesystem virtuale
 clear search	filemanager	it	Reimposta la ricerca
+clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
 comment	filemanager	it	Commento
 copied	filemanager	it	Copiato
 copied %1 to %2	filemanager	it	Ho copiato %1 in %2
 copy	filemanager	it	Copia
+copy into folder	filemanager	it	Copia nella cartella
 copy to	filemanager	it	Copia In
 copy to clipboard	filemanager	it	Copia negli appunti
 could not copy %1 to %2	filemanager	it	Non posso copiare %1 in %2
@@ -72,6 +77,7 @@ directory successfully created.	filemanager	it	Directory creata con successo.
 directory with documents to insert entries	filemanager	it	Cartella con documenti per l'inserimento
 display and modification of content	filemanager	it	Visualizzazione e modifica del contenuto
 display of content	filemanager	it	Visualizzazione del contenuto
+do you want to overwrite existing file %1 in directory %2?	filemanager	it	Vuoi sovrascrivere il file esistente %1 nella cartella %2?
 do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere il file esistente?
 download	filemanager	it	Download
 edit comments	filemanager	it	Modifica commenti
@@ -85,13 +91,19 @@ error creating symlink to target %1!	filemanager	it	Errore di creazione del link
 error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola ACL!
 error uploading file!	filemanager	it	Errore di caricamento file!
 error while creating directory.	filemanager	it	Errore di creazione della cartella
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	it	Esempio {{IF n_prefix~Mr~Salve Sig.~Salve Sig.ra}} - ricerca nel campo "n_prefix", per"Mr", se trovato, scrivere Salve Mr., altrimenti scrivi Salve Sig.ra
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Sig. Dr. Giorgio Rossi
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{NELFNV role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
 executable	filemanager	it	Eseguibile
+export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)
 extended access control list	filemanager	it	Lista di controllo degli accessi (ACL) estesa
 extended acl	filemanager	it	ACL estesa
 failed to change permissions of %1!	filemanager	it	Non è stato possibilile modificare i permessi di %1!
 failed to create directory!	filemanager	it	Non è stato possibile creare la cartella!
 favorites	filemanager	it	Preferiti
 file	filemanager	it	Archivia
+file %1 already exists	filemanager	it	Il file %1 esiste già
 file %1 could not be created.	filemanager	it	Il file %1 non può essere creato.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	it	Il file %1 potrebbe essere troppo grande
 file deleted.	filemanager	it	File eliminato
@@ -100,20 +112,27 @@ file or directory not found!	filemanager	it	File o cartella non trovati!
 file successful uploaded.	filemanager	it	File caricato con successo.
 filemanager	common	it	Filemanager
 filemanager configuration	admin	it	Configurazione filemanager
+filemanager fields:	filemanager	it	Campi del filemanager:
 filename must not be empty!	filemanager	it	Il nome del file non può essere vuoto!
 files from subdirectories	filemanager	it	File da sottocartelle
 files in this directory	filemanager	it	File in questa cartella
 filesystem check reported no problems.	filemanager	it	Non sono stati individuati problemi dopo il controllo del filesystem.
 fix reported problems	filemanager	it	Problemi riparati
 folder up	filemanager	it	Cartella superiore
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	it	Per i file collegati ad una voce di alte applicazioni (in /apps/nomeapp/id) le variabili metasintattiche per quella applicazione sono disponibili pure. Vedi l'applicazione specifica per l'elenco delle variabili metasintattiche disponibili.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	it	Per i file collegati ad una voce di alte applicazioni (in /apps/nomeapp/id) le variabili metasintattiche per quella applicazione sono disponibili pure. Vedi l'applicazione specifica per l'elenco delle variabili metasintattiche disponibili.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 general	filemanager	it	Generale
+general fields:	filemanager	it	Campi generici
 go home	filemanager	it	Vai alla Home
 go to	filemanager	it	Vai A
 go to your home directory	filemanager	it	Vai alla tua directory Home
 go up	filemanager	it	Vai su
 id	filemanager	it	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà un'icona in più per ogni voce. Quell'icona permette di scaricare il documento specificato con i dati inseriti
 if you specify an export definition, it will be used when you export	filemanager	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
+if you specify an export definition, it will be used when you export*	filemanager	it	Verrà usata quando esporti, se specifichi qui una definizione di esportazione
 inherited	filemanager	it	Ereditato
 link	filemanager	it	Collegamento
 link %1: %2	filemanager	it	Collegamento %1: %2
@@ -128,6 +147,7 @@ modified	filemanager	it	Modificato
 modified between	filemanager	it	Modificato tra
 modify all subdirectories and their content	filemanager	it	Modifica tutte le sottocartelle e il loro contenuto
 move	filemanager	it	Sposta
+move into folder	filemanager	it	Sposta nella cartella
 move to	filemanager	it	Sposta in
 moved %1 to %2	filemanager	it	Ho spostato %1 in %2
 name of current user, all other contact fields are valid too	filemanager	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
@@ -157,22 +177,30 @@ rename, change permissions or ownership	filemanager	it	Rinomina, modifica permes
 renamed %1 to %2	filemanager	it	Rinominato %1 in %2
 renamed %1 to %2.	filemanager	it	Rinominato %1 in %2
 replaced %1	filemanager	it	Sostituito %1
+replacements for inserting entries into documents	filemanager	it	Sostituzioni per inserimento voci in documenti
 rights	filemanager	it	Diritti
 root	filemanager	it	Root
 root access granted.	filemanager	it	Accesso root conesso
 root access stopped.	filemanager	it	Accesso root fermato.
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
+save as	filemanager	it	Salva con nome
 save changes	filemanager	it	Salva le modifiche
 saved %1	filemanager	it	Ho salvato %1
 saving properties failed!	filemanager	it	Non è stato possibile salvare le proprietà
+saving setting for document merge failed!	filemanager	it	Salvataggio delle impostazioni per la stampa unione fallito!
 search for '%1'	filemanager	it	Cerca per '%1'
 searchstring	filemanager	it	Stringa di ricerca
 select action...	filemanager	it	Scegli azione...
 select file to upload in current directory	filemanager	it	Seleziona il file da caricare nella cartella corrente
+setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
 show	filemanager	it	Mostra
 show hidden files	filemanager	it	Mostra i file nascosti
 show link "%1" in side box menu?	filemanager	it	Mostra il collegamento "%1" nel menù laterale
+show link "users and groups" in side box menu?	filemanager	it	Mostra collegamento "Utenti e gruppi" nel menù laterale
+show link "users and groups*" in side box menu?*	filemanager	it	Mostra collegamento "Utenti e gruppi*" nel menù laterale *
+show link "your home directory" in side box menu?	filemanager	it	Mostra collegamento "La tua direcroy principale" nel menù laterale
+show link "your home directory*" in side box menu?*	filemanager	it	Mostra collegamento "La tua direcroy principale*" nel menù laterale*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	it	Mostrare il collegamento alla cartella principale (/) nel menù laterale?
 size	filemanager	it	Dimensione
 start search	filemanager	it	Avvia ricerca
@@ -181,6 +209,8 @@ superuser	filemanager	it	Super utente
 symlink to %1 created.	filemanager	it	Link simbolico a %1 creato.
 tag to mark positions for address labels	filemanager	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	it	La cartella di avvio predefinita è quella personale. Se lasci questa voce vuota, immetti un percorso inesistente oppure non hai i diritti di accesso sufficienti, allora verrà utilizzata quella predefinita.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	it	Il documento può contenere variabili metasintattiche come {{%3}}, da sostituire con i dati (%1elenco completo delle variabili%2).
+the following document-types are supported:	filemanager	it	I seguenti tipi di documenti sono supportati:
 the requested path %1 is not available.	filemanager	it	Il percorso %1 non è disponibile!
 there's already a directory with that name!	filemanager	it	Esiste già una cartella con questo nome!
 there's already a file with that name!	filemanager	it	Esiste già un file con questo nome!

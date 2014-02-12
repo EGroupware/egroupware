@@ -193,6 +193,7 @@ search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	Search string
 select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
+select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files

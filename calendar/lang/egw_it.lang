@@ -5,7 +5,9 @@
 %1 records imported	calendar	it	%1 record importato/i
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	it	%1 record letto/i (non ancora importato/i, torna indietro e deseleziona Test Import)
 %1 weeks	calendar	it	%1 settimane
+%s the event	calendar	it	%s l'evento
 (%1 events in %2 seconds)	calendar	it	(%1 eventi in %2 secondi)
+(empty = use global limit, no = no export at all)	admin	it	(vuoto = usa limite globale, no = non esportare nulla)
 , exceptions preserved	calendar	it	, eccezioni preservate.
 , stati of participants reset	calendar	it	, stato dei partecipanti reimpostato.
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	it	<b>Attenzione</b>: l'agenda usa le festività della tua nazione, che è impostata a %1. Puoi cambiarla in %2.<br />Le festività sono %3 automaticamente installate da %4. Puoi cambiarle  in %5.
@@ -45,6 +47,7 @@ allows to edit the event again	calendar	it	Permette di modificare ancora l'event
 always	calendar	it	Sempre
 apply the action on the whole query, not only the shown events	calendar	it	Applica all'intera interrogazione, NON solo agli eventi mostrati
 apply the changes	calendar	it	apllica le modifiche
+appointment settings	calendar	it	Impostazioni appuntamenti
 are you sure you want to delete this country ?	calendar	it	Confermi la cancellazione di questa Nazione ?
 are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività ?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	it	Come alternativa puoi %scaricare un dump del MySQL%2 e importare manualmente nella tabella egw_cal_timezones
@@ -99,7 +102,9 @@ countries	calendar	it	Nazioni
 country	calendar	it	Nazione
 create a new series	calendar	it	Crea nuova serie
 create an exception for the given date	calendar	it	Crea una eccezione per questa data
+create an infolog from this event	calendar	it	Crea una scheda di attività da questo evento
 create exception	calendar	it	Crea eccezione
+create links for participants from addressbook	calendar	it	Crea collegamenti per i partecipanti nella rubrica
 create new links	calendar	it	Crea nuovi collegamenti
 created	calendar	it	Creato
 creator	calendar	it	Creatore
@@ -110,6 +115,7 @@ custom fields	common	it	Personalizza i Campi
 custom_2	common	it	Libero/Impegnato
 daily	calendar	it	Giornaliero
 daily tables	calendar	it	Tabelle giornaliere
+data exchange settings	calendar	it	Impostazioni di scambio dati
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	it	Data per il giorno della settimana, disponibile per la prima voce in ogni giorno della settimana oppure tabella giornaliera nell'intervallo selezionato.
 day	calendar	it	giorno
 day of week tables	calendar	it	Tabelle giorno della settimana
@@ -170,7 +176,9 @@ enddate / -time of the meeting, eg. for more then one day	calendar	it	Data/ora f
 enddate of the export	calendar	it	Data finale dell'esportazione
 ends	calendar	it	finisce
 error adding the alarm	calendar	it	Errore aggiungendo la sveglia
-error: can't delete original series!	calendar	it	Errore! Impossibile cancellare la serie originale!
+error saving the event!	calendar	it	Errore durante il salvataggio dell'evento
+error: can't delete original series!	calendar	it	Errore! Impossibile eliminare  la serie originale!
+error: duration of event longer then recurrence interval!	calendar	it	Errore! Durata dell'evento maggiore dell'intervallo di ricorrenza
 error: importing the ical	calendar	it	Errore: importando iCal
 error: no participants selected !!!	calendar	it	Errore: nessun partecipante selezionato !!!
 error: ressources reservation in private events is not allowed!!!	calendar	it	Errore! La prenotazione di risorse non è consentita per eventi privati.
@@ -184,12 +192,17 @@ event details follow	calendar	it	Dettagli dell'evento
 event saved	calendar	it	Evento salvato
 event will occupy the whole day	calendar	it	L'evento occuperà l'intera giornata
 every user can invite other users and groups	admin	it	Ogni utente può invitare altri utenti o gruppi
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} Esempio: Sig. Dott. Giorgio Rossi
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	it	Esempio {{NELFNV role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 exception	calendar	it	Eccezione
 exception created - you can now edit or delete it	calendar	it	Eccezione creata - adesso puoi modificarla o eliminarla
 exceptions	calendar	it	Eccezioni
 execute a further action for this entry	calendar	it	Esegui ancora una azione per questo inserimento
 existing links	calendar	it	Collegamenti esistenti
 exists	calendar	it	Esiste
+export definition to use for nextmatch export	calendar	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 exports events from your calendar in ical format.	calendar	it	Esporta eventi dalla tua Agenda in formato iCal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
 extended	calendar	it	Esteso
@@ -216,6 +229,8 @@ freetime search	calendar	it	Ricerca Tempo libero
 fri	calendar	it	Ven
 full description	calendar	it	Descrizione completa
 fullname of person to notify	calendar	it	Nome completo della persona da avvisare
+general fields:	calendar	it	Campi generali
+general settings	calendar	it	Impostazioni generali
 global categories	calendar	it	Categorie Globali
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public only	calendar	it	Solo Pubblico Globale
@@ -244,6 +259,7 @@ how many describtion lines should be directly visible. further lines are availab
 how many minutes should each interval last?	calendar	it	Quanti minuti deve durare ogni intervallo?
 how many weeks should the multiple week view show?	calendar	it	Quante settimane dovrebbre mostrare la vista a settimane multiple?
 how much entries to skip	calendar	it	Quanti inserimenti saltare
+html link to the current record	calendar	it	Collegamento HTML al record attuale
 ical	calendar	it	iCal
 ical / rfc2445	calendar	it	iCal / rfc2445
 ical export	calendar	it	Esportazione iCal
@@ -254,6 +270,8 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	it	Se la data di avvio differisce
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	it	Se selezioni un intervallo (mese, settimana, ecc.) al posto di un elenco di voci, questi campi extra sono disponibili.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
 if you specify an export definition, it will be used when you export	calendar	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 ignore conflict	calendar	it	Ignora Conflitto
 import	calendar	it	Importa
@@ -279,7 +297,10 @@ limit number of description lines in list view (default 5, 0 for no limit)	calen
 link	calendar	it	Collegamento ad evento
 link to view the event	calendar	it	Collegamento per visualizzare l'evento
 links	calendar	it	Collegamenti
+links and attached files	calendar	it	Collegamenti e file allegati
+links to specified application.  example: {{links/infolog}}	calendar	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 links, attachments	calendar	it	Collegamenti, Allegati
+list of files linked to the current record	calendar	it	Elenco dei file collegati al record attuale
 listview	calendar	it	Vista elenco
 location	calendar	it	Località
 location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
@@ -290,9 +311,11 @@ manage mapping	calendar	it	Gestisci la mappatura
 max. number of entries to show (leave empty for no restriction)	calendar	it	Numeto massimo di inserimenti da mostrare (lascia vuoto per nessuna restrizione)
 maximum available quantity of %1 exceeded!	calendar	it	Quantità massima di %1 ecceduta!
 meeting request	calendar	it	Richiesta meeting
+meetingrequest to all participants	calendar	it	Richiesta di riunione a tutti i partecipanti
 merge document...	calendar	it	Unire documento...
 minutes	calendar	it	Minuti
 modified	calendar	it	Modificato
+modifier	calendar	it	Modificatore
 mon	calendar	it	Lun
 month	calendar	it	Mese
 monthly	calendar	it	Mensile
@@ -311,8 +334,10 @@ no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
 no meeting requests	calendar	it	Nessuna richiesta di riunione
 no owner selected	calendar	it	Nessun proprietario selezionato
+no preview for ical	calendar	it	Nessuna anteprima per iCal
 no recurrence	calendar	it	Nessuna ricorrenza
 no response	calendar	it	Nessuna Risposta
+no rights to export more than %1 entries!	calendar	it	Diritti insufficienti per esportare più di %1 voci!
 non blocking	calendar	it	non bloccante
 not	calendar	it	non
 not rejected	calendar	it	Non rifiutato
@@ -323,11 +348,13 @@ notification messages for disinvited participants	calendar	it	Messaggi di notifi
 notification messages for modified events	calendar	it	Messaggi di notifica per gli eventi modificati
 notification messages for your alarms	calendar	it	Messaggi di notifica per i tuoi allarmi
 notification messages for your responses	calendar	it	Messaggi di notifica per le tue risposte
+notification settings	calendar	it	Impostazioni di notifica
 notify non-egroupware users about event updates	calendar	it	Invia notifiche a utenti che non appartengono a EGroupware, circa gli aggiornamenti
 number of records to read (%1)	calendar	it	Numero di record da leggere (%1)
 number of weeks to show	calendar	it	Numero di settimane da mostrare
 observance rule	calendar	it	Regola da osservare
 occurence	calendar	it	Occorrenze
+old fixed definition	calendar	it	Vecchia definizione fissa
 old startdate	calendar	it	Vecchia data di partenza
 olddate	calendar	it	Data originale
 on %1 %2 %3 your meeting request for %4	calendar	it	Su %1 %2 %3  la tua richiesta di appuntamento per %4
@@ -381,6 +408,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	it	intervallo di 
 repetition	calendar	it	Ripetizione
 repetitiondetails (or empty)	calendar	it	Dettagli Ripetizione (o vuoto)
 replacements for inserting events into documents	calendar	it	Sostituzion per l'inserimento in documenti
+reply to meeting request	calendar	it	Risposta a richiesta di riunione
 requested	calendar	it	Richiesto
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	it	La data richiesta %1 è al di fuori dell'intervallo di %2 giorni: eventi ricorrenti omessi!
 requested meeting is in the past!	calendar	it	Il meeting richiesto è nel passato!
@@ -454,6 +482,7 @@ startdate / -time	calendar	it	Data/ora iniziale
 startdate and -time of the search	calendar	it	Data/ora iniziale della ricerca
 startdate of the export	calendar	it	Data iniziale dell'esportazione
 startrecord	calendar	it	Primo Record
+status already applied	calendar	it	Stato già applicato
 status changed	calendar	it	Stato modificato
 status for all future scheduled days changed	calendar	it	Stato per tutti gli eventi futuri modificato
 status for this particular day changed	calendar	it	Stato per questo giorno in particolare modificato
@@ -464,7 +493,9 @@ tag to mark positions for address labels	calendar	it	Tagga per marcare le posizi
 tentative	calendar	it	Tentativo
 test import (show importable records <u>only</u> in browser)	calendar	it	Test d'importazione (visualizza nel browser <u>solo</u> i record importabili)
 the apple ical apps use this color to display events from this calendar.	calendar	it	Le applicazioni iCal della Apple useranno questo colore per mostrare eventi da questo calendario
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
 the exceptions are deleted together with the series.	calendar	it	Le eccezioni sono eliminate insieme alla serie
+the following document-types are supported:	calendar	it	I seguenti tipi di documenti sono supportati:
 the original series will be terminated today and a new series be created.	calendar	it	La serie originale terminerà oggi e una nuova serie verrà creata
 the resource you selected is already overbooked:	calendar	it	La risorsa selezionata è già in overbooking
 this day is shown as first day in the week or month view.	calendar	it	Questo giorno è visualizzato come primo giorno nella vista settimanale o in quella mensile.
@@ -475,6 +506,7 @@ this entry is opened by user:	calendar	it	Questa scheda è stata aperta nell'int
 this event is part of a series	calendar	it	Questo evento è parte di una serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	it	Questo gruppo è preselezionato quando entri nel pianificatore. Quando vorrai potrai cambiarlo nel pianificatore.
 this mail contains a meeting request	calendar	it	Questo messaggio contiene una richiesta di riunione
+this mail contains a reply to a meeting request	calendar	it	Questo messaggio contiene una risposta alla richiesta di riunione
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.
 this message is sent for modified or moved events.	calendar	it	Questo messaggio è inviato. per gli eventi modficiati o spostati.
 this message is sent to disinvited participants.	calendar	it	Questo messaggio viene inviato ai partecipanti disinvitati.
@@ -495,8 +527,10 @@ timezone	calendar	it	Fuso orario
 timezone in which recurrences have identical time	calendar	it	Fuso orario in cui le ricorrenze hanno orario identico
 timezone of event exports	calendar	it	Fuso orario dell'esportazione di eventi
 timezone of event ical file import/export	calendar	it	Fuso orario dell'esportazione/importazione iCal
+timezones aliases updated to version %1 (%2 records updated).	calendar	it	Fusi orari aggiornati alla versione %1 (%2 voci aggiornate).
 timezones updated to version %1 (%2 records updated).	calendar	it	Fusi orari aggiornati alla versione %1 (%2 voci aggiornate).
 title of the event	calendar	it	Titolo dell'evento
+titles of any entries linked to the current record, excluding attached files	calendar	it	I titoli delle voci collegate a questa, allegati esclusi
 to many might exceed your execution-time-limit	calendar	it	troppi potrebbero superare il limite del tempo di esecuzione
 to-firstname	calendar	it	A Nome
 to-fullname	calendar	it	A nome completo
@@ -521,6 +555,7 @@ users + groups: inviting both allways requires an invite grant	admin	it	Utenti +
 using already existing event on server.	calendar	it	Viene usato un evento già esistente sul server.
 view exception	calendar	it	Visualizza eccezione
 view series	calendar	it	Visualizza serie
+view settings	calendar	it	Visualizza impostazioni
 view this event	calendar	it	Visualizza questo evento
 views with fixed time intervals	calendar	it	Viste con intervalli di tempo fissi
 wed	calendar	it	Mer
@@ -551,6 +586,7 @@ years	admin	it	anni
 yearview	calendar	it	Vista Annuale
 yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
 yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
+you already replied to this invitation with	calendar	it	Hai già risposto all'invito con
 you are not allowed to book the resource selected:	calendar	it	Non puoi prenotare questa risorsa:
 you are not invited to that event!	calendar	it	Non hai un invito per quell'evento!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	it	Stai tentando di inviare una richiesta di meeting via email ai destinatari qui sopra. In base al programma di posta usato per visualizzare la mail, il destinatario potrebbe vedere o non vedere il messaggio sottostante ma soltanto la richiesta come allegato.
