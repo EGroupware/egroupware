@@ -494,7 +494,7 @@ var AppJS = Class.extend(
 					var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
 					html += "<a href='#' class='ui-corner-all' tabindex='-1'>";
 					html += "<div class='" + 'sideboxstar' + "'></div>"+
-						favorite.name +(favorite.group != false ? " ♦" :"");
+						favorite.name;
 					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
 					html += "</a></li>\n";
 					$j(html).on('click.favorites',jQuery.proxy(function(event) {
@@ -585,7 +585,7 @@ var AppJS = Class.extend(
 				function(result) {
 					// Got the full response from callback, which we don't want
 					if(result.type) return;
-					
+
 					if(result && typeof result == 'boolean')
 					{
 						// Remove line from list

@@ -27,14 +27,8 @@ class resources_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname,lang('Favorites'),array(
-				array(
-					'no_lang' => true,
-					'text'=> egw_framework::favorite_list($appname,'resources.resources_ui.get_rows'),
-					'link'=>false,
-					'icon' => false
-				)
-			));
+			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list($appname, 'nextmatch-resources.show.rows-favorite'));
+
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
 			$file = array(
 				'Resources list' => egw::link('/index.php',array('menuaction' => 'resources.resources_ui.index' )),

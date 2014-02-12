@@ -1907,14 +1907,16 @@ abstract class egw_framework
 	 * get the favorite list when a nextmatch is _not_ on the page.  If
 	 * a nextmatch is on the page, it will update / replace this list.
 	 *
-	 * @param $app String Current application, needed to find preferences
-	 * @param $default String Preference name for default favorite
+	 * @param string $app application, needed to find preferences
+	 * @param string $default=null preference name for default favorite, default "nextmatch-$app.index.rows-favorite"
 	 *
-	 * @return String HTML fragment for the list
+	 * @return array with a single sidebox menu item (array) containing html for favorites
 	 */
-	public static function favorite_list($app, $default)
+	public static function favorite_list($app, $default=null)
 	{
 		if(!$app) return '';
+
+		if (!$default) $default = "nextmatch-$app.index.rows-favorite";
 
 		// This target is used client-side to find & enable adding new favorites
 		$target = 'favorite_sidebox_'.$app;
@@ -1960,7 +1962,7 @@ abstract class egw_framework
 			$html .= "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
 			$html .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
 			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
-				$filter['name'] .($filter['group'] != false ? " ♦" :"");
+				$filter['name'];
 			$html .= ($filter['group'] != false && !$is_admin || $name == 'blank' ? "" :
 				"<div class='ui-icon ui-icon-trash' title='" . lang('Delete') . "'></div>");
 			$html .= "</a></li>\n";
@@ -1972,7 +1974,14 @@ abstract class egw_framework
 
 		$html .= '</ul></span>';
 
-		return $html;
+		return array(
+			array(
+				'no_lang' => true,
+				'text'    => $html,
+				'link'    => false,
+				'icon'    => false,
+			),
+		);
 	}
 
 	/**

@@ -135,11 +135,10 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			// Update sidebox, if there
 			if(self.sidebox_target.length)
 			{
-				self.sidebox_target.find(".ui-icon-heart")
-					.replaceWith("<img class='sideboxstar'/>");
-				$j("li[data-id='"+self.preferred+"'] img",self.sidebox_target)
+				self.sidebox_target.find("div.ui-icon-heart")
+					.replaceWith("<div class='sideboxstar'/>");
+				$j("li[data-id='"+self.preferred+"'] div.sideboxstar",self.sidebox_target)
 					.replaceWith("<div class='ui-icon ui-icon-heart'/>");
-
 			}
 
 			// Close the menu
@@ -221,7 +220,6 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			options[name] = "<input type='radio' name='"+this.internal_ids.menu+"[button][favorite]' value='"+name+"' title='" +
 				this.egw().lang('Set as default') + "'/>"+
 				(filters[name].name != undefined ? filters[name].name : name) +
-				(filters[name].group != false ? " ♦" :"") +
 				(filters[name].group != false && !this.is_admin || name == 'blank' ? "" :
 				"<div class='ui-icon ui-icon-trash' title='" + this.egw().lang('Delete') + "'/>");
 		}
@@ -307,7 +305,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		}
 
 		if(filter_name == 'add') return false;
-		
+
 		app[this.options.app].setState(this.stored_filters[filter_name]);
 		return false;
 	},

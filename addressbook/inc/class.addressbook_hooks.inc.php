@@ -29,14 +29,8 @@ class addressbook_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname,lang('Favorites'),array(
-					array(
-						'no_lang' => true,
-						'text'=> egw_framework::favorite_list('addressbook','addressbook.addressbook_ui.get_rows'),
-						'link'=>false,
-						'icon' => false
-					)
-				));
+			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list('addressbook'));
+
 			$file = array(
 				'Add'             => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit'),false).

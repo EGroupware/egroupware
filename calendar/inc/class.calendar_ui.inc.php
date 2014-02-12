@@ -567,15 +567,7 @@ class calendar_ui
 	{
 		$link_vars = array();
 		// Magic etemplate2 favorites menu (from nextmatch widget)
-		display_sidebox('calendar',lang('Favorites'),array(
-			'menuOpened' => true,	// menu open by default
-			array(
-				'no_lang' => true,
-				'text'=> egw_framework::favorite_list('calendar',false),
-				'link'=>false,
-				'icon' => false
-			)
-		));
+		display_sidebox('calendar', lang('Favorites'), egw_framework::favorite_list('calendar'));
 
 		$file = array('menuOpened' => true);	// menu open by default
 		$n = 0;	// index for file-array
