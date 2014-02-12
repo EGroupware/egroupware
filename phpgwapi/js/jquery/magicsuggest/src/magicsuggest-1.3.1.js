@@ -886,6 +886,7 @@
                 }, cfg.inputCfg)).width(w - (cfg.hideTrigger ? 16 : 42));
 
                 ms.input.focus($.proxy(handlers._onInputFocus, this));
+                ms.input.blur($.proxy(handlers._onBlur, this));
                 ms.input.click($.proxy(handlers._onInputClick, this));
 
                 // holds the trigger on the right side
