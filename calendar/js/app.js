@@ -70,6 +70,16 @@ app.classes.calendar = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
+
+		// Re-init sidebox, since it was probably initialized too soon
+		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
+		if(sidebox.length == 0 && egw_getFramework() != null)
+		{
+			var egw_fw = egw_getFramework();
+			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+		}
+		this._init_sidebox(sidebox);
+
 		var content = this.et2.getArrayMgr('content');
 
 		if (typeof et2.templates['calendar.list'] != 'undefined')
