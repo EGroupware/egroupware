@@ -1,49 +1,81 @@
 %1 attachments	mail	it	%1 allegati
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
+%1 mails selected	mail	it	% messaggi selezionati
+(leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
-(select mails by clicking on the line, like a checkbox)	mail	it	(seleziona i messaggi cliccando sulla riga)
+(select mails by clicking on the line, like a checkbox)	mail	it	(seleziona i messaggi cliccando sulla riga, come se fosse una casella da spuntare)
 (with checkbox enforced)	mail	it	(con checkbox forzato)
+account editable by user	mail	it	account modificabile dall'utente
 acl rights retrive failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
 acl rights retrived successfully!	mail	it	Permessi rilevati correttamente!
+action	mail	it	Azione
 activating by date requires a start- and end-date!	mail	it	L'attivazione per data richiede una data di inizio e una di fine!
+add a new folder to %1:	mail	it	Aggiungi cartella a %1
+add all my aliases	mail	it	Aggiungi tutti i miei alias
+add folder	mail	it	Aggiungi cartella
 add to addressbook	mail	it	aggiungi alla rubrica
+aliases+forwards	mail	it	Alias + Inoltri
+all adresses:	mail	it	Tutti gli indirizzi
 all available info	admin	it	tutte le informazioni
+all messages in the folder will be lost	mail	it	Tutti i messaggi della cartella andranno persi
 all of	mail	it	tutto di
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	it	Tutte le cartelle saranno eliminate pure e tutti i messaggi in tutte le cartelle interessate andranno persi
 allow external images	mail	it	Permetti immagini esterne
 allow images from external sources in html emails	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML
+allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
 allways a new window	mail	it	sempre in una nuova finestra
 always show html emails	mail	it	Visualizza sempre le e-mail HTML
+an error happend while trying to remove acl rights from the account %1.	mail	it	E' stato rilevato un errore durante la rimozione dei permessi dall'account %1
 and the rule with priority %1, now got the priority %2	mail	it	E la regola con priorità %1, ha adesso priorità %2
 any of	mail	it	qualsiasi di
 any status	mail	it	qualsiasi stato
+append	mail	it	apponi
 attach users vcard at compose to every new mail	mail	it	allega la VCard dell'utente ogni volta che componi un nuovo messaggio
 attach vcard	mail	it	Allega vCard
+attachments	mail	it	Allegati
+authentication	mail	it	Autenticazione
 available personal email-accounts/profiles	mail	it	Account email/Profili personali disponibili
 but check shared folders	mail	it	ma controlla le cartelle condivise
 by date	mail	it	Per data
+can not open imap connection	mail	it	Impossibile stabilire una connessione IMAP
 changed profile	mail	it	profilo modificato
+check message against next rule also	mail	it	Controlla il messaggio anche con regola seguente
+common acl	mail	it	Permessi ACL comuni
 compose	mail	it	Componi
+compose as new	mail	it	Componi come nuovo
 compress folder	mail	it	Comprimi cartella
+condition	mail	it	Condizione
 configuration settings	mail	it	Impostazioni di configurazione
 confirm attach message	mail	it	Conferma allegato al messaggio
 confirm move to folder	mail	it	Conferma lo spostamento alla cartella
+connect to profile %1	mail	it	Connetti al profilo %1
 connection status	mail	it	Stato della connessione
 contains	mail	it	contiene
+contains(*)	mail	it	Contiene(*)
 convert mail to item and attach its attachments to this item (standard)	mail	it	converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	it	converti il messaggio email in elemento e allega i suoi allegati  e aggiungi un messaggio "raw" (messaggio/rfc822 (.eml)) come allegato
+convert only mail to item (ignore possible attachments)	mail	it	converti solo Mail a elemento (ignora gli allegati)
 copied %1 message(s) from %2 to %3	mail	it	copiato %1 messaggi(o) da %2  %3
+copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
+could not save the acl! because some names are empty!	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
+create new account	mail	it	creare nuovo account
+currently:	mail	it	Al momento:
 date(newest first)	mail	it	Data (prima più recenti)
 date(oldest first)	mail	it	Data (prima meno recenti)
 deactive	mail	it	Disattiva
 default sorting order	mail	it	Ordinamento predefinito
-deleted	mail	it	cancellato
+delete folder	mail	it	Elimina cartella
+delete folder %1 ?	mail	it	ELIMINARE la cartella %1 ?
+deleted	mail	it	eliminato
 deleted %1 messages in %2	mail	it	eliminato %1 messaggi in %2
 deleted!	mail	it	eliminato!
+disable	mail	it	Disabilita
 disable ruler for separation of mailbody and signature	mail	it	disabilita il righello per la separazione del corpo del messaggio dalla firma
 disabled!	mail	it	diabilitato!
 discard	mail	it	scarta
+discard message	mail	it	Scarta messaggio
 display messages in multiple windows	mail	it	mostra i messaggi in finestre multiple
 display of html emails	mail	it	visualizzazione delle e-mail HTML
 display of identities	admin	it	visualizzazione delle identià
@@ -51,6 +83,7 @@ display only when no plain text is available	mail	it	visualizza solo quando non 
 displaying html messages is disabled	mail	it	la visualizzazione dei messaggi HTML è disabilitata
 displaying plain messages is disabled	mail	it	la visualizzazione dei messaggi in testo semplice è disabilitata
 do not auto create folders	mail	it	non creare automaticamente le cartelle
+do you really want to delete folder %1 ?	mail	it	Si è sicuri di voler ELIMINARE la cartella %1 ?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	it	Vuoi una richiesta di conferma prima di allegare i messaggi selezionati al nuovo email?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	it	Vuoi una richiesta di conferma prima di spostare i messaggi selezionati ad un altra cartella?
 do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione per l'inoltro di email tramite impostazioni, anche se SIEVE è abilitato?
@@ -68,6 +101,12 @@ don't use template folder	mail	it	Non usare la cartella Modelli
 don't use trash	mail	it	Non usare il Cestino
 draft folder	mail	it	Cartella Bozze
 drafts	mail	it	Bozze
+drafts folder	mail	it	Cartella bozze
+edit account	mail	it	Modifica account
+edit account ...	mail	it	Modifica account...
+edit folder acl	mail	it	Modifica i permessi della cartella
+edit folder acl ...	mail	it	Modifica i permessi della cartella...
+edit vacation settings	mail	it	Modifica impostazioni messaggio "ferie"
 effective only if server supports acl at all	admin	it	effettivo solo se il server supporta l'impostazione di permessi ACL
 email notification successfully updated!	mail	it	la notifica per le email è stata aggiornata!
 email notification update failed	mail	it	L'aggiornamento della notifica email è fallita!
@@ -75,60 +114,106 @@ email notification update failed! you need to set an email address!	mail	it	la n
 emailaddress	admin	it	Indirizzo email
 emailadmin: profilemanagement	mail	it	eMailAdmin: Gestione Profili
 empty trash	mail	it	svuota cestino
+enable	mail	it	Abilita
 enabled!	mail	it	abilitato!
+enter the name for the new folder:	mail	it	Modifica il nome per la nuova cartella:
 error saving %1!	mail	it	Errore di salvataggio di %1!
 error:	mail	it	Errore:
+error: could not save acl	mail	it	Errore: Impossibile salvare i permessi
 error: could not save message as draft	mail	it	Errore: Il messaggio non può essere salvato nelle Bozze
 error: could not save rule	mail	it	Errore: la regola non può essere salvata
 error: could not send message.	mail	it	Errore: il messaggio non può essere inviato
 error: message could not be displayed.	mail	it	Errore: il messaggio non può essere visualizzato
+error:could not save the acl! because some names are empty!	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
+esync will fail without a working email configuration!	mail	it	La sincronizzazione via eSync non funzionerà senza una configurazione corretta di eMail
 event details follow	mail	it	Dettagli dell'evento
+every:	mail	it	Ogni:
+everyone	mail	it	Ognuno
+extended	mail	it	Esteso
 extra sent folders	mail	it	Cartelle di posta inviata extra
 failed to delete %1 ! reason: %2	mail	it	impossibile eliminare %1. Causa: %2
-felamimail	admin	it	eMail
-file into	mail	it	file in
+failed to delete %1. server responded:	mail	it	Impossibile eliminare %1. Il server ha risposto:
+failed to move %1 ! reason: %2	mail	it	Impossibile spostare %1. Causa: %2
+failed to rename %1 ! reason: %2	mail	it	Impossibile rinominare %1. Causa: %2
+file into	mail	it	file dentro
+file into:	mail	it	File dentro:
 file rejected, no %2. is:%1	mail	it	File rifiutato, no %2. E': %1
 filemanager	mail	it	Filemanager
+files	mail	it	File
+flag / unflag	mail	it	Spunta / Togli spunta
+flag or unflag a mail	mail	it	Spunta / Togli spunta un messaggio
 flagged	mail	it	contrassegnato
 flagged %1 messages as %2 in %3	mail	it	contrassegnato %1 messaggi come %2 in %3
+flagged / unflagged	mail	it	Spuntato / Non spuntato
 folder	mail	it	Cartella
 folder settings	mail	it	Impostazioni Cartelle
+for e.g.: mpeg	mail	it	p.es.: mpeg
 force html	mail	it	forza HTML
 force plain text	mail	it	forza testo semplica
+forward	mail	it	Inoltra
 forward as attachment	mail	it	Inoltra come allegato
 forward inline	mail	it	Inoltra incorporato nel messaggio
+forward messages:	mail	it	Inoltra messaggi:
 forward to	mail	it	Inoltra a
+forward to address:	mail	it	Inoltra all'indirizzo:
 from	mail	it	Da
 from(a->z)	mail	it	Da (A->Z)
 from(z->a)	mail	it	Da (Z->A)
 general settings	mail	it	Impostazioni generali
 get acl rights failed from imap server!	mail	it	Impossibile rilevare i permessi ACL per il server IMAP
 greater than	mail	it	superiore a
+header	mail	it	Intestazione (header)
+header lines	mail	it	Righe intestazione
 home page folders	mail	it	cartelle della home page
+hostname or ip	mail	it	Nome host oppure IP
 how often to check with the server for new mail	mail	it	Quanto spesso cercare nuova posta sul server?
 how should the available information on identities be displayed	admin	it	come dovrebbero essere visualizzate le informazioni disponibili relative alle identità
 how to forward messages	mail	it	Come inoltrare i messaggi
 html	mail	it	Html
+html mode	mail	it	Modalità HTML
+identity	mail	it	Identità
+identity+signature	mail	it	Identità+Firma
 if	mail	it	SE
+if authentication required	mail	it	se è richiesta l'autenticazione
+if different from email address	mail	it	se diverso dall'indirizzo email
+if from contains:(*)	mail	it	Se il campo "Da" contiene: (*)
+if mail body content / attachment type	mail	it	Se il contenuto del corpo / il tipo di allegato
+if mail body message type	mail	it	Se il tipo di messaggio del corpo dell'email
+if mail header	mail	it	Se intestazione messaggio
+if message size	mail	it	Se dimensione messaggio
 if shown, which folders should appear on the home page	mail	it	se mostrate, quali cartelle dovrebbero apparire sulla Home Page?
+if subject contains:(*)	mail	it	Se l'oggetto contiene: (*)
+if to contains:(*)	mail	it	Se il campo "A" contiene: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	it	Se vuoi vedere l'anteprima di un messaggio cliccando una volta sull'oggetto, abilita questa opzione.
+imap	mail	it	IMAP
+imap - incoming mail	mail	it	IMAP - posta in arrivo
+imap administration	mail	it	Amministrazione IMAP
 imap server	mail	it	Server IMAP
 imap timeout	mail	it	Timeout del server IMAP
+import message	mail	it	importa messaggio
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	it	L'importazione del messaggio %1 è fallita. Il messaggio non è stato salvato nella cartella %2. Causa: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione %2 non esiste
 import of message %1 failed. destination folder not set.	mail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione non esiste
 import of message %1 failed. no contacts to merge and send to specified.	mail	it	L'importazione del messaggio %1 è fallita. Non ci sono contatti da unire e inviare
 importance	mail	it	Importanza
+important	mail	it	importante
 in mailbox: %1, with id: %2, and partid: %3	mail	it	Nella casella: %1, con ID: %2 e PartID: %3
 inbox	mail	it	Posta in arrivo
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	it	Inserisci la firma all'inizio del nuovo messaggio quando ne componi uno
 job	mail	it	compito
 junk	mail	it	Spazzatura
+keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
+kilobytes	mail	it	kilobyte
 later	mail	it	Più tardi
 less than	mail	it	meno di
-mail	mail	it	mail
-mail settings	mail	it	Impostazioni Mail
+mail	common	it	mail
+mail filter	mail	it	Filtro email
+mail settings	mail	it	Impostazioni email
+mail source	mail	it	Sorgente email
+mail-address	mail	it	Indirizzo email
+mailaccount	mail	it	Account email
 mark as deleted	mail	it	Contrassegna come eliminato
+match:	mail	it	Corrispondenza:
 matches	mail	it	corrispondenze
 matches regexp	mail	it	corrispondenze di espressioni regolari
 message body	mail	it	corpo del messaggio
@@ -137,21 +222,30 @@ message saved successfully.	mail	it	Messaggio salvato correttamente
 message send failed: %1	mail	it	L'invio del messaggio non è riuscito: %1
 message send successfully.	mail	it	Messaggio correttamente inviato.
 move selected to	mail	it	Sposta selezionati in
+move to	mail	it	Sposta in
 move to trash	mail	it	Sposta nel cestino
 moved %1 message(s) from %2 to %3	mail	it	spostato %1 messaggi(o) da %2 a %3
+name of account	mail	it	Nome account
 never display html emails	mail	it	Non visualizzare mai le e-mail scritte in HTML
 new mail notification	mail	it	Notifica di nuovo messaggio email
 new message type	mail	it	Nuovo tipo di messaggio
 no (valid) send folder set in preferences	mail	it	Non hai impostato una cartella valida nelle preferenze per la posta inviata!
+no access	mail	it	nessun accesso
 no action defined!	mail	it	Nessuna azione definita!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	it	Nessun indirizzo A/CC/CCN fornito. Nessuna cartella di salvataggio messaggi specificata.
+no adress, to send this mail to, supplied	mail	it	nessun indirizzo fornito, dove inviare questa mail
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	it	Non è stata specificata la cartella di destinazione e di salvataggio messaggi o comunque qualche  modo per salvare il messaggio (salvataggio in attività/tracker)
 no folders	mail	it	Nessuna cartella
+no message body supplied	mail	it	nessun corpo del messaggio fornito
 no plain text part found	mail	it	Non c'è una parte di testo semplice
 no recipient address given!	mail	it	Nessun indirizzo destinatario
 no send folder set in preferences	mail	it	Nessuna cartella per la posta inviata è stata impostata nelle preferenze
 no signature	mail	it	Nessuna firma!
 no subject given!	mail	it	Nessun oggetto!
+no subject supplied	mail	it	Nessun oggetto fornito
+no text body supplied, check attachments for message text	mail	it	nessun corpo del messaggio fornito, controllare allegati per testo messaggio
+no valid %1 folder configured!	mail	it	Nessun cartella valida %1 configurata!
+non	mail	it	Non
 none, create all	mail	it	Nessuno, crea tutti
 notify when new mails arrive in these folders	mail	it	notifica quando arrivano nuovi messaggi in queste cartelle
 on	mail	it	Su
@@ -169,42 +263,76 @@ please contact your administrator to validate if your server supports serverside
 please select a address	mail	it	Prego seleziona un indirizzo
 please select the number of days to wait between responses	mail	it	Prego seleziona il numero di giorni da aspettare tra le risposte
 please supply the message to send with auto-responses	mail	it	Prego fornisci il messaggio ta inviare con la risposta automatica
+post	mail	it	post
 prevent managing filters	mail	it	Inibire la gestione dei filtri
 prevent managing folders	mail	it	Inibire la gestione delle cartelle
 prevent managing forwards	mail	it	Inibire la gestione degli inoltri
 prevent managing notifications	mail	it	Inibire la gestione delle notifiche
 prevent managing vacation notice	mail	it	Inibire l'impostazione del autorisponditore "in vacanza"
+primary profile	mail	it	Profilo primario
 printview	mail	it	Vista stampa
 processing of file %1 failed. failed to meet basic restrictions.	mail	it	Elaborazione del file %1 non riuscita. Non sono state soddisfate le regole di base delle restrizioni di caricamento.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	it	inserire il testo predefinito per l'autorisponditore delle ferie, (usato nei messaggi di vacanza quando non viene prima impostato un messaggio)
 quicksearch	mail	it	Ricerca Veloce
 quota not provided by server	mail	it	Il server non fornisce informazioni sulla quota email
+quota: %1	mail	it	Quota: %1
+read	mail	it	letti
+read / unread	mail	it	Letti / Non letti
+readable	mail	it	leggibili
+reason!	mail	it	motivo!
+recieve notification	mail	it	Ricevi notifica
+recursively	mail	it	Ricorsivamente
 refresh time in minutes	mail	it	Tempo di aggiornamento in minuti
 refused to delete folder inbox	mail	it	rifiutato di eliminare la cartella INBOX
 refused to delete folder with subfolders	mail	it	rifiutato di eliminare la cartella con le sottocartelle
 reject with	mail	it	Rifiuta con
 remove all	mail	it	Rimuovi tutto
 remove immediately	mail	it	Rimuovi immediatamente
+rename folder	mail	it	Rinomina cartella
+rename folder %1 ?	mail	it	Rinominare la cartella %1 ?
+rename folder %1 to:	mail	it	Rinomina cartella %1 in:
 replied	mail	it	risposto
+reply	mail	it	Rispondi
+reply all	mail	it	Rispondi a tutti
 reply message type	mail	it	Tipo di messaggio di riposta
-replyto	mail	it	Rispondi A
+reply to	mail	it	Rispondi a
+replyto	mail	it	risposta a
 required pear class mail/mimedecode.php not found.	mail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata
+respond to mail sent to:	mail	it	Rispondi a email inviate a:
 restrict acl management	admin	it	restringi la gestione dei permessi ACL
 row order style	mail	it	Stile dell'ordinameno per righe
+rule priority position	mail	it	Posizione di priorità della regola
 rule with priority	mail	it	regola con priorità
+rules	mail	it	regole
 save all	mail	it	Salva tutti
 save as	mail	it	Salva come
+save as draft	mail	it	Salva come Bozza
+save as draft and print	mail	it	Salva come Bozza e Stampa
+save as infolog	mail	it	Salva come scheda attività
+save as infolog on send	mail	it	Salva come scheda attività all'invio
+save as ticket	mail	it	Salva come ticket
+save as tracker on send	mail	it	Salva come ticket all'invio
+save message to disk	mail	it	Salva messaggio sul disco
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
+save to disk	mail	it	Salva su disco
+save to filemanager	mail	it	Salva in filemanager
+save:	mail	it	Salva:
 saving of message %1 failed. destination folder %2 does not exist.	mail	it	Salvataggio del messaggio %1 non riuscito. La cartella %2 non esiste.
 saving of message %1 succeeded. check folder %2.	mail	it	Salvataggio del messaggio %1 riuscito. Controlla la cartella %2
 saving the rule failed:	mail	it	Il salvataggio della regola non è riuscito:
+select all	mail	it	Seleziona tutto
+select file(s) from vfs	mail	it	Seleziona file dal sistema virtuale di file (vfs)
 selected	mail	it	selezionato
+send a reject message:	mail	it	Invia un messaggio di rigetto
 send message and move to send folder (if configured)	mail	it	Invia messaggio e spostalo nella cartella della posta inviata
 sender	mail	it	Mittente
 sent	mail	it	Inviata
 sent folder	mail	it	Cartella Posta Inviata
 server supports special-use folders	mail	it	Il server supporta le cartelle speciali
 serverside filterrules (sieve) are not activated	mail	it	Le regole di filtro (sieve) non sono attivate
+set / remove flags	mail	it	Imposta / Rimuovi flag
+set / remove labels	mail	it	Imposta / Rimuovi etichette
+set it as default:	mail	it	imposta come predefinito
 should new messages show up on the home page	mail	it	I nuovi messaggi devono apparire in Home Page
 show all folders	mail	it	mostra tutte le cartelle
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	it	mostra tutte le cartelle (sottoscritte e non) nella schermata principale del pannello delle cartelle
@@ -214,22 +342,34 @@ sieve	mail	it	Sieve
 sieve connection status	mail	it	Salva lo stato della connessione
 sieve not activated	mail	it	Sieve non attivato
 sieve script name	mail	it	Nome script sieve
+sieve server	mail	it	Server sieve
 signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 size(...->0)	mail	it	Dimensione (...->0)
 size(0->...)	mail	it	Dimensione (0->...)
 small view	mail	it	visualizzazione ridotta
+smtp	mail	it	SMTP
 sort order	mail	it	Ordinamento
+source	mail	it	Sorgente
+sources	mail	it	Sorgenti
 start new messages with mime type plain/text or html?	mail	it	Iniziare nuovi messaggi con mime type plain/test o HTML
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	it	Iniziare i messaggi di risposta con mime type plain/text oppure provare a usare il formato mostrato (predefinito)?
+step 1: imap - incoming mail	mail	it	Primo passo: IMAP - posta in arrivo
+store to folder	mail	it	Salva nella cartella
 subject(a->z)	mail	it	Oggetto (A->Z)
 subject(z->a)	mail	it	Oggetto (Z->A)
+subscribe folder	mail	it	Sottoscrivi cartella
+subscribe folder ...	mail	it	Sottoscrivi cartella...
 successfully connected	mail	it	Connesso con successo
 template folder	mail	it	Cartella dei modelli
 templates	mail	it	Modelli
+templates folder	mail	it	Cartella modelli
 test connection	mail	it	Prova connessione attiva
 test connection and display basic information about the selected profile	mail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
-text/plain	mail	it	Text/plain
+text mode	mail	it	Modalità testo
+text/plain	mail	it	text/plain (testo semplice)
+the %1 's acl removed from the %2!	mail	it	I permessi di %1 rimossi dalla %2!
+the %1 's acl, including its subfolders, removed from the %2!	mail	it	I permessi di %1, sottocartelle incluse, rimossi dalla %2!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	it	La cartella <b>%1</b> sarà usata, se non ci fosse nulla qui e non fosse fornito un valore predefinito valido.
 the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a interpretare il messaggio.
 the rule with priority %1 successfully saved!	mail	it	La regola con priorità %1 è stata salvata
@@ -237,6 +377,7 @@ then	mail	it	DI
 there is no imap server configured.	mail	it	Non c'è alcun server IMAP configurato!
 timeout on connections to your imap server	mail	it	Timeout della connessione al server IMAP
 to do	mail	it	da fare
+toggle all folders view for %1	mail	it	Alterna la vista di tutte le cartelle per %1
 trash	mail	it	Cestino
 trash folder	mail	it	Cestino
 trust servers seen / unseen info	mail	it	fidarsi delle informazioni visto/non visto del server
@@ -244,16 +385,24 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	it	Prova di recupero dai dati di sessione
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	it	Rimuovi la linea orizzontale fra firma e messaggio in composizione (in discaccordo con RFC). <br> Se usi i template, questa opzione verrà applicata solo sulla parte testuale del messaggio.
 unable to fetch vacation!	mail	it	Impossibile trovare l'autorisponditore delle ferie!
+undelete	mail	it	Annulla eliminazione
+unflagged	mail	it	Senza flag
 unread	mail	it	da leggere
-urgent	mail	it	urgente
+unsubscribe folder	mail	it	Rimuovi sottoscrizione cartella
 use default timeout (20 seconds)	mail	it	usa il timeout predefinito (20 secondi)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	it	Usa espressioni regolari (v. wikipedia per informazioni sulle espressioni regolari POSIX)
 use source as displayed, if applicable	mail	it	Usa le sorgenti come mostrate, se applicabile
+use username+password from current user	mail	it	Utilizza nome utente+password dell'utente attuale
+vacation messages with start and end date require an admin account to be set!	mail	it	Messaggi di ferie con data inizio e fine, richiedono l'impostazione di un account amministrativo!
 vacation notice	admin	it	notifica assenza
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	it	La notifica "vacanze" non è stata ancora salvata! (Però ho già inserito dei valori predefiniti per coprire alcuni degli errori di cui sopra. Per favore correggi e controlla le tue impostazioni e salva di nuovo).
 vacation notice sucessfully updated.	mail	it	Messaggio ferie aggiornato
 vacation notice update failed	mail	it	Messaggio ferie NON aggiornato
 vacation start-date must be before the end-date!	mail	it	La data di inizio delle vacanze deve essere prima della data di fine
 vacation update failed	mail	it	aggiornamento ferie non riuscito
+valid for	mail	it	Valido per
+validate selected addresses on submit:	mail	it	Convalida gli indirizzi selezionati all'invio:
+view header lines	mail	it	Visualizza righe di intestazione (header)
 what do do with html email	mail	it	Cosa fare con email scritte in HTML
 what order the list columns are in	mail	it	Quale ordine usare per le colonne delle liste
 what to do when you delete a message	mail	it	Cosa fare all'atto dell'eliminazione di un messaggio
@@ -265,6 +414,8 @@ when sending messages	mail	it	Quando si inviano messaggi
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	it	Quali cartelle oltre alla cartella della posta inviata dovrebbe essere mostrata usando lo schema di visualizzazione della posta inviata?
 which folders - in general - should not be automatically created, if not existing	mail	it	Quali cartelle in generale non dovrebbero essere automaticamente create se non esistono?
 which method to use when forwarding a message	mail	it	Quale metodo usare quando si inoltra un messaaggio
+with message:	mail	it	Con il messaggio:
+write	mail	it	scrivi
 wrote	mail	it	scritto
 yes, but mask all passwords	mail	it	sì, però maschera tutte le password
 yes, but mask all usernames and passwords	mail	it	sì, però maschera tutti i nomi utente e le password
@@ -273,3 +424,4 @@ yes, only trigger connection reset	mail	it	Sì, innesca solo la reimpostazione d
 yes, show all debug information available for the user	mail	it	sì mostra le informazioni di debug complete disponibili all'utente
 yes, show basic info only	mail	it	sì, mostra solo le informazioni di base
 you can either choose to save as infolog or tracker, not both.	mail	it	Puoi scegliere di salvare come Attività oppure Tracker, non entrambi
+you've got new mail	mail	it	Hai nuovi messaggi

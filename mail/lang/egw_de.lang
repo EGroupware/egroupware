@@ -172,7 +172,7 @@ how often to check with the server for new mail	mail	de	Aktualisierungsintervall
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
-html mode	mail	de	Orginal HTML
+html mode	mail	de	HTML Modus
 identity	mail	de	Identität
 identity+signature	mail	de	Identität+Signature
 if	mail	de	Wenn
@@ -368,7 +368,7 @@ templates	mail	de	Vorlagen
 templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
-text mode	mail	de	Reiner Text
+text mode	mail	de	Text Modus
 text/plain	mail	de	text/plain
 the %1 's acl removed from the %2!	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt!
 the %1 's acl, including its subfolders, removed from the %2!	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt!
