@@ -71,26 +71,6 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	legacyOptions: ["image", "ro_image"],
 
 	/**
-	 * images to be used as background-image, if none is explicitly applied and id matches given regular expression
-	 */
-	default_background_images: {
-		save: /save(&|\[|$)/,
-		apply: /apply(&|\[|$)/,
-		cancel: /cancel(&|\[|$)/,
-		delete: /delete(&|\[|$)/,
-		edit: /edit(&|\[|$)/,
-		next: /(next|continue)(&|\[|$)/,
-		finish: /finish(&|\[|$)/,
-		back: /(back|previous)(&|\[|$)/,
-		copy: /copy(&|\[|$)/,
-		more: /more(&|\[|$)/,
-		check: /check(&|\[|$)/,
-		ok: /ok(&|\[|$)/,
-		close: /close(&|\[|$)/,
-		add: /(add(&|\[|$)|create)/	// customfields use create*
-	},
-
-	/**
 	 * Constructor
 	 *
 	 * @memberOf et2_button
@@ -130,14 +110,22 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	{
 		if (this.id && typeof _attrs.background_image == 'undefined' && !_attrs.image)
 		{
-			for(var image in this.default_background_images)
+			for(var image in et2_button.default_background_images)
 			{
-				if (this.id.match(this.default_background_images[image]))
+				if (this.id.match(et2_button.default_background_images[image]))
 				{
 					_attrs.image = image;
 					_attrs.background_image = true;
 					break;
 				}
+			}
+		}
+		for(var name in et2_button.default_classes)
+		{
+			if (this.id.match(et2_button.default_classes[name]))
+			{
+				_attrs.class = (typeof _attrs.class == 'undefined' ? '' : _attrs.class+' ')+name;
+				break;
 			}
 		}
 		this._super.apply(this, arguments);
@@ -385,3 +373,37 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 });
 et2_register_widget(et2_button, ["button", "buttononly"]);
 
+// Static class stuff
+jQuery.extend(et2_button,
+/** @lends et2_button */
+{
+	/**
+	 * images to be used as background-image, if none is explicitly applied and id matches given regular expression
+	 */
+	default_background_images: {
+		save: /save(&|\]|$)/,
+		apply: /apply(&|\]|$)/,
+		cancel: /cancel(&|\]|$)/,
+		delete: /delete(&|\]|$)/,
+		edit: /edit(&|\[\]|$)/,
+		next: /(next|continue)(&|\]|$)/,
+		finish: /finish(&|\]|$)/,
+		back: /(back|previous)(&|\]|$)/,
+		copy: /copy(&|\]|$)/,
+		more: /more(&|\]|$)/,
+		check: /(yes|check)(&|\]|$)/,
+		canceled: /no(&|\]|$)/,
+		ok: /ok(&|\]|$)/,
+		close: /close(&|\]|$)/,
+		add: /(add(&|\]|$)|create)/	// customfields use create*
+	},
+
+	/**
+	 * Classnames added automatic to buttons to set certain hover background colors
+	 */
+	default_classes: {
+		et2_button_cancel: /cancel(&|\]|$)/,		// yellow
+		et2_button_question: /(yes|no)(&|\]|$)/,	// yellow
+		et2_button_delete: /delete(&|\]|$)/			// red
+	}
+});
