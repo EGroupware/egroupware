@@ -31,6 +31,12 @@ var et2_toolbar = et2_DOMWidget.extend(
 			"type": "string",
 			"default": "5",
 			"description": "Define minimum action view range to show actions by both icons and caption"
+		},
+		"flat_list": {
+			"name": "Flat list",
+			"type": "boolean",
+			"default": true,
+			"description": "Define whether the actions with children should be shown as dropdown or flat list"
 		}
 	},
 
@@ -97,7 +103,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		var pref = egw.preference(this.id,this.egw().getAppName());
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
-		
+
 		//Set the default actions for the first time
 		if (typeof pref === 'undefined')
 		{
@@ -131,10 +137,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 			if(action.children)
 			{
-				this.dropdowns[action.id] = $j(document.createElement('span'))
-					.addClass("ui-state-default")
-					.appendTo(last_group);
 				var children = {};
+				var toolbar = this;
 				var add_children = function(root, children) {
 					for(var id in root.children)
 					{
@@ -142,6 +146,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 							id: id || root.children[id].id,
 							label: root.children[id].caption
 						};
+						var childaction = {};
 						if(root.children[id].iconUrl)
 						{
 							info.icon = root.children[id].iconUrl;
@@ -151,15 +156,35 @@ var et2_toolbar = et2_DOMWidget.extend(
 							add_children(root.children[id], info);
 						}
 						children[id] = info;
+
+						if (toolbar.flat_list)
+						{
+							childaction = root.children[id];
+							if (typeof root.children[id].group != 'undefined' &&
+									typeof root.group != 'undefined')
+							{
+								childaction.group = root.group;
+							}
+							toolbar._make_button (childaction);
+						}
 					}
 				};
 				add_children(action, children);
+				if (this.flat_list && children)
+				{
+					continue;
+				}
+				
+				this.dropdowns[action.id] = $j(document.createElement('span'))
+					.addClass("ui-state-default")
+					.appendTo(last_group);
+
 				var dropdown = et2_createWidget("dropdown_button", {
 					id: action.id,
 					label: action.caption
 				},this);
 				dropdown.set_select_options(children);
-				var toolbar = this;
+				
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
 					var action = toolbar._actionManager.getActionById(selected.attr('data-id'));
@@ -195,7 +220,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionlist.find('span').sort( function (lg,g){
 			return +lg.dataset.group - +g.dataset.group;
 			}).appendTo(this.actionlist);
-		
+
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
@@ -294,7 +319,9 @@ var et2_toolbar = et2_DOMWidget.extend(
 		}
 		if (action.caption)
 		{
-			if (this.countActions <= parseInt(this.view_range) || this.preference[action.id] )
+			if ((this.countActions <= parseInt(this.view_range) ||
+					this.preference[action.id])	&&
+					typeof button[0] != 'undefined')
 			{
 				button[0].textContent = action.caption;
 			}
