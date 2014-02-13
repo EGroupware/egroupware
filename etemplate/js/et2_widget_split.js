@@ -97,6 +97,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		// Destroy dynamic full-height
 		this.dynheight.free();
 
+		this._super.apply(this, arguments);
+		
 		// Remove placeholder children
 		if(this._children.length == 0)
 		{
