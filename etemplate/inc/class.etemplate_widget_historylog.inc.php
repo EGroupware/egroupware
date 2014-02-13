@@ -16,12 +16,17 @@
  * The widget is encapsulated, and only needs the record's ID, and a map of
  * fields:widgets for display
  */
-
 class etemplate_widget_historylog extends etemplate_widget
 {
 
 	/**
 	 * Fill type options in self::$request->sel_options to be used on the client
+	 *
+	 * Historylog need to use $this->id as namespace, otherwise we overwrite
+	 * sel_options of regular widgets with more general data for historylog!
+	 *
+	 * eg. owner in addressbook.edit contains only accounts user has rights to,
+	 * while it uses select-account for owner in historylog (containing all users).
 	 *
 	 * @param string $cname
 	*/
@@ -43,17 +48,19 @@ class etemplate_widget_historylog extends etemplate_widget
 
 					if(method_exists($widget, 'beforeSendToClient'))
 					{
-						$widget->beforeSendToClient($cname,array());
+						// need to use $form_name as $cname see comment in header
+						$widget->beforeSendToClient($form_name, array());
 					}
 				}
 				else
 				{
-					if (!is_array(self::$request->sel_options[$key])) self::$request->sel_options[$key] = array();
-					self::$request->sel_options[$key] += $type;
+					// need to use self::form_name($form_name, $key) as index into sel_options see comment in header
+					$options =& self::get_array(self::$request->sel_options, self::form_name($form_name, $key), true);
+					if (!is_array($options)) $options = array();
+					$options += $type;
 				}
-				
+
 			}
 		}
 	}
 }
-?>
