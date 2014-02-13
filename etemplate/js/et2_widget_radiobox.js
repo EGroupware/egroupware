@@ -169,6 +169,8 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
+	legacyOptions: ["set_value", "ro_true", "ro_false"],
+
 	/**
 	 * Constructor
 	 *

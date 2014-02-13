@@ -156,7 +156,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 	{
 		if (typeof _val == "string")
 		{
-			return _val;
+			return html_entity_decode(_val);
 		}
 
 		// Handle some less common possibilities
@@ -789,4 +789,15 @@ function et2_call(_func)
 		throw _func+" is not a function!";
 	}
 	return func.apply(parent, args);
+}
+
+/**
+ * Decode html entities so they can be added via .text(_str), eg. html_entity_decode('&amp;') === '&'
+ *
+ * @param {string} _str
+ * @returns {string}
+ */
+function html_entity_decode(_str)
+{
+	return _str && _str.indexOf('&') != -1 ? jQuery('<span>'+_str+'</span>').text() : _str;
 }
