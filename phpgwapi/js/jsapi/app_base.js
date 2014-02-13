@@ -298,6 +298,15 @@ var AppJS = Class.extend(
 				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
 				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
 				.on("click","div.ui-icon-trash", this, this.delete_favorite)
+				// need to install a favorite handler, as we switch original one off with .off()
+				.on('click','li[data-id]', this, function(){
+					var href = jQuery('a[href^="javascript:"]', this).prop('href');
+					var matches = href.match(/^javascript:([^\(]+)\((.*)?\);?$/);
+					if (matches.length > 1 && matches[2] !== undefined)
+					{
+						return self.setState.call(self, JSON.parse(matches[2]));
+					}
+				})
 				.addClass("ui-helper-clearfix");
 			return true;
 		}
