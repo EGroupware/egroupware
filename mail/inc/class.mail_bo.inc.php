@@ -1242,14 +1242,24 @@ class mail_bo
 				//error_log(__METHOD__.__LINE__.' MimeMap:'.array2string($mailStructureObject->contentTypeMap()));
 				//foreach ($_headerObject->getStructure()->getParts() as $p => $part)
 				$headerObject['ATTACHMENTS']=null;
+				$skipParts=array();
 				foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
 				{
 					if ($mime_id==0) $messageMimeType = $mime_type;
 					$part = $mailStructureObject->getPart($mime_id);
 					$partdisposition = $part->getDisposition();
+					$partPrimaryType = $part->getPrimaryType();
 					$cid = $part->getContentId();
-					if ($partdisposition=='attachment' || ($partdisposition=='inline'&&empty($cid)) ||
-						($partdisposition=='inline' && $part->getPrimaryType() != 'image'))
+					if ($mime_type=='message/rfc822')
+					{
+						//error_log(__METHOD__.__LINE__.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
+						foreach($part->contentTypeMap() as $sub_id => $sub_type) if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;
+					}
+					//error_log(__METHOD__.__LINE__.' Uid:'.$uid.'->'.$mime_id.':'.array2string($skipParts));
+					if (array_key_exists($mime_id,$skipParts)) continue;
+					if ($partdisposition=='attachment' ||
+						($partdisposition=='inline'&&$partPrimaryType == 'image'&&empty($cid)) ||
+						($partdisposition=='inline' && $partPrimaryType != 'image' && $partPrimaryType != 'multipart' && $partPrimaryType != 'text'))
 					{
 						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
 						$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=$mime_type;
@@ -3307,7 +3317,7 @@ class mail_bo
 		// as attachment AND as abstracted ical information (we use our notification style here).
 		$partText = $partCalendar = $partHTML = null;
 		if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
-
+		//error_log(__METHOD__.__LINE__);
 		$ignore_first_part = true;
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
@@ -3350,11 +3360,11 @@ class mail_bo
 							if (count($mimePart->getParts()) > 1)
 							{
 								// in a multipart alternative we treat the multipart/related as html part
-								if (self::$debug) error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
+								if (self::$debug) error_log(__METHOD__." process MULTIPART/".$mimePart->getSubType()." with array as subparts");
 								$partHTML = $mimePart;
+								break 3; // GET OUT OF LOOP, will be processed according to type
 							}
 							break;
-
 						case 'alternative':
 							if (count($mimePart->getParts()) > 1)
 							{
@@ -4442,15 +4452,31 @@ class mail_bo
 		}
 		if (!$_structure || !$_structure->contentTypeMap()) return array();
 		if (!empty($_partID)) $_structure = $_structure->getPart($_partID);
+		$skipParts = array();
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			$part = $_structure->getPart($mime_id);
-			//error_log(__METHOD__.__LINE__.':'.array2string($part->getMimeId()));
-			//error_log(__METHOD__.__LINE__.array2string($part->getAllContentTypeParameters()));
-			if ($part->getDisposition() == 'attachment' ||
-				$fetchEmbeddedImages && $part->getDisposition() == 'inline' &&
-					$part->getPrimaryType() == 'image' ||
-				$fetchTextCalendar && $part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')
+			//error_log(__METHOD__.__LINE__.':'.' Uid:'.$uid.' Part:'.$_partID.'->'.array2string($part->getMimeId()));
+			//error_log(__METHOD__.__LINE__.':'.' Uid:'.$uid.' Part:'.$_partID.'->'.$part->getPrimaryType().'/'.$part->getSubType().'->'.$part->getDisposition());
+			//error_log(__METHOD__.__LINE__.':'.' Uid:'.$uid.' Part:'.$_partID.'->'.array2string($part->getAllDispositionParameters()));
+			//error_log(__METHOD__.__LINE__.':'.' Uid:'.$uid.' Part:'.$_partID.'->'.array2string($part->getAllContentTypeParameters()));
+			$partDisposition = $part->getDisposition();
+			$partPrimaryType = $part->getPrimaryType();
+			// we only want to retrieve the attachments of the current mail, not those of possible
+			// attached mails
+			if ($mime_type=='message/rfc822' && $_partID!=$mime_id)
+			{
+				//error_log(__METHOD__.__LINE__.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
+				foreach($part->contentTypeMap() as $sub_id => $sub_type) if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;
+			}
+			//error_log(__METHOD__.__LINE__.' Uid:'.$uid.' Part:'.$_partID.'->'.$mime_id.':'.array2string($skipParts));
+			if (array_key_exists($mime_id,$skipParts)) continue;
+
+			if ($partDisposition == 'attachment' ||
+				(($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType == 'image' && $part->getContentId()=='') ||
+				(($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType != 'image' && $partPrimaryType != 'text' && $partPrimaryType != 'multipart') ||
+				($fetchEmbeddedImages && ($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType == 'image') ||
+				($fetchTextCalendar && $partPrimaryType == 'text' && $part->getSubType() == 'calendar'))
 			{
 				// if type is message/rfc822 and _partID is gien, and MimeID equals partID
 				// we attempt to fetch "ourselves"

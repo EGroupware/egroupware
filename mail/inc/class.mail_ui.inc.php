@@ -1884,6 +1884,7 @@ unset($query['actions']);
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages);
 		//_debug_array($headers);
+		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
 
