@@ -1939,7 +1939,7 @@ window.egw_LAB.wait(function() {
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
-		$readonlys['button[delete]'] = !$content['id'];
+		if (!$content['id']) $readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 		$readonlys['change_org'] = empty($content['org_name']) || $view;
 
