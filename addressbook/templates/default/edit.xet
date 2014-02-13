@@ -52,11 +52,11 @@
 				</row>
 			</rows>
 		</grid>
-	</template>        
+	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-            
+
                                       <!-- <image src="accounts"/> -->
-					
+
 		<grid  class="addressbook_edit_general">
 		<columns>
 				<column width="80%" class="addressbook_edit_general_left"/>
@@ -75,24 +75,24 @@
 				<row>
 					<description value="Name"/>
 					<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="3" tabindex="-1" class="cursorHand"/>
-					
+
 				</row>
 				<row>
 					<description/>
 					<template id="addressbook.edit.name"/>
-					
+
 				</row>
-				
+
                 <row>
 					<description for="title" value="Title"/>
 					<textbox id="title" size="36" maxlength="64" span="2"/>
-					
+
 				</row>
 				<row>
 					<description for="role" value="Role"/>
 					<textbox id="role" size="20" maxlength="64"/>
 					<textbox label="Room" id="room" size="5"/>
-					
+
 				</row>
 				<row>
 				<!-- 	<image src="home"/> -->
@@ -163,7 +163,7 @@
 					</menulist>
 				</row>
 			</rows>
-			
+
 		</grid>
 		<hbox disabled="@hidebuttons" class="addressbook_edit_general_picture">
 			<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
@@ -171,7 +171,7 @@
 		</hbox>
 		</row>
 		</rows>
-	</grid>		
+	</grid>
 	</template>
 	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="286" overflow="auto">
@@ -319,7 +319,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
-            
+
 		<grid width="100%"  overflow="auto">
 			<columns>
 				<column/>
@@ -431,17 +431,17 @@
 				<row>
 					<description for="tel_work2" value="business" class="bold"/>
 					<url-phone id="tel_work2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work2,&amp;hearts;"/>
 				</row>
 				<row>
 					<description for="tel_cell2" value="mobile phone"/>
 					<url-phone id="tel_cell2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell2,&amp;hearts;"/>
 				</row>
 				<row>
-					<description for="tel_fax" value="fax"/>
+					<description for="tel_fax2" value="fax"/>
 					<url-phone id="tel_fax2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax2,&amp;hearts;"/>
 				</row>
 				<row>
 					<description for="tel_car" value="car phone"/>
@@ -471,7 +471,7 @@
 				<row>
 					<description for="tel_home2" value="Private" class="bold"/>
 					<url-phone id="tel_home2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home2,&amp;hearts;"/>
 				</row>
 				<row>
 					<description for="tel_cell_private" value="mobile phone"/>
@@ -492,7 +492,7 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 				</row>
 				<row>
-					<button align="center" label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editphones').css('display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" image="check" background_image="1"/>
+					<button align="center" label="Ok" id="button[ok]" class="button_ok" onclick="app.addressbook.hidephones" span="all" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
@@ -508,7 +508,7 @@
 					<htmlarea id="msg" no_lang="1" readonly="true" span="all" class="redItalic"/>
 					<description/>
 				</row>
-                                
+
 				<row class="dialog-header">
 					<menulist>
 						<menupopup blur="Name" class="fileas" statustext="own sorting" id="fileas_type" no_lang="1"/>
@@ -592,7 +592,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="jQuery('table.editphones').css('display','inline'); if (window.showphones) showphones(this.form); return false;" image="edit" background_image="1"/>
+										<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="app.addressbook.showphones" image="edit" background_image="1"/>
 										<description/>
 									</row>
 								</rows>
@@ -641,7 +641,7 @@
 						<button label="Apply" id="button[apply]" class="button_apply" image="apply" background_image="1"/>
 						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; self.close(); return false;" image="cancel" background_image="1"/>
 						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
-						<button align="left" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
+						<button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
 					</hbox>
 
 				</row>

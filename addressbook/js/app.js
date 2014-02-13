@@ -157,45 +157,63 @@ app.classes.addressbook = AppJS.extend(
 		nm_action(_action, _senders);
 	},
 
-	showphones: function(form)
+	/**
+	 * [More...] in phones clicked: copy allways shown phone numbers to phone popup
+	 *
+	 * @param {jQuery.event} _event
+	 * @param {et2_widget} _widget
+	 */
+	showphones: function(_event, _widget)
 	{
-		if (form) {
-			copyvalues(form,"tel_home","tel_home2");
-			copyvalues(form,"tel_work","tel_work2");
-			copyvalues(form,"tel_cell","tel_cell2");
-			copyvalues(form,"tel_fax","tel_fax2");
-		}
+		this._copyvalues({
+			tel_home: 'tel_home2',
+			tel_work: 'tel_work2',
+			tel_cell: 'tel_cell2',
+			tel_fax:  'tel_fax2',
+		});
+		jQuery('table.editphones').css('display','inline');
+
+		_event.stopPropagation();
+		return false;
 	},
 
-	hidephones: function(form)
+	/**
+	 * [OK] in phone popup clicked: copy phone numbers back to always shown ones
+	 *
+	 * @param {jQuery.event} _event
+	 * @param {et2_widget} _widget
+	 */
+	hidephones: function(_event, _widget)
 	{
-		if (form) {
-			copyvalues(form,"tel_home2","tel_home");
-			copyvalues(form,"tel_work2","tel_work");
-			copyvalues(form,"tel_cell2","tel_cell");
-			copyvalues(form,"tel_fax2","tel_fax");
-		}
+		this._copyvalues({
+			tel_home2: 'tel_home',
+			tel_work2: 'tel_work',
+			tel_cell2: 'tel_cell',
+			tel_fax2:  'tel_fax',
+		});
+		jQuery('table.editphones').css('display','none');
+
+		_event.stopPropagation();
+		return false;
 	},
 
-	copyvalues: function(form,src,dst)
+	/**
+	 * Copy content of multiple fields
+	 *
+	 * @param {object} what object with src: dst pairs
+	 */
+	_copyvalues: function(what)
 	{
-		var srcelement = getElement(form,src);  //ById("exec["+src+"]");
-		var dstelement = getElement(form,dst);  //ById("exec["+dst+"]");
-		if (srcelement && dstelement) {
-			dstelement.value = srcelement.value;
+		for(var name in what)
+		{
+			var src = this.et2.getWidgetById(name);
+			var dst = this.et2.getWidgetById(what[name]);
+			if (src && dst) dst.set_value(src.get_value());
 		}
-	},
-
-	getElement: function(form,pattern)
-	{
-		for (i = 0; i < form.length; i++){
-			if(form.elements[i].name){
-				var found = form.elements[i].name.search("\\["+pattern+"\\]");
-				if (found != -1){
-					return form.elements[i];
-				}
-			}
-		}
+		// change tel_prefer according to what
+		var tel_prefer = this.et2.getWidgetById('tel_prefer');
+		if (tel_prefer && typeof what[tel_prefer.get_value()] != 'undefined')
+			tel_prefer.set_value(what[tel_prefer.get_value()]);
 	},
 
 	/**
@@ -257,7 +275,7 @@ app.classes.addressbook = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 *
 	 * @param {widget} widget widget
@@ -282,7 +300,7 @@ app.classes.addressbook = AppJS.extend(
 			var name = template.widgetContainer.getWidgetById("n_fn");
 			if (typeof name != 'undefined')	name.set_value(value);
 		}
-		
+
 		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
 	},
 
