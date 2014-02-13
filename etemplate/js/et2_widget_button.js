@@ -222,6 +222,24 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			{
 				this.update_image();
 			}
+			// dont show readonly buttons as clickable
+			if (this.btn || this.image)
+			{
+				(this.btn || this.image)
+					.toggleClass('et2_clickable', !_ro)
+					.css('cursor', _ro ? 'default' : 'pointer');	// temp. 'til it is removed from et2_button
+			}
+		}
+	},
+
+	attachToDOM: function() {
+		this._super.apply(this, arguments);
+
+		if (this.options.readonly)
+		{
+			(this.btn || this.image)
+				.removeClass('et2_clickable')
+				.css('cursor', 'default');	// temp. 'til it is removed from et2_button
 		}
 	},
 
@@ -236,6 +254,9 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	 * @returns {Boolean}
 	 */
 	click: function(_ev) {
+		// ignore click on readonly button
+		if (this.options.readonly) return false;
+
 		this.clicked = true;
 
 		if (!this._super.apply(this, arguments))
