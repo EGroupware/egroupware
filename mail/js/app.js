@@ -2708,15 +2708,16 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Display Cc or Bcc fields in compose popup
 	 *
+	 * @param {jQuery event} event
 	 * @param {widget object} widget clicked label (Cc or Bcc) from compose popup
 	 *
 	 */
-	compose_cc_expander: function(widget)
+	compose_cc_expander: function(event,widget)
 	{
 		var Cc = this.et2.getWidgetById('cc_expander');
 		var Bcc = this.et2.getWidgetById('bcc_expander');
 
-		if (typeof widget != "undefined" && widget.id == "mail-compose_cc_expander")
+		if (typeof widget != "undefined" && widget.id == "cc_expander")
 		{
 			jQuery(".mailComposeJQueryCc").show();
 			if (typeof Cc !='undefined')
@@ -2725,7 +2726,7 @@ app.classes.mail = AppJS.extend(
 			}
 
 		}
-		else if (typeof widget != "undefined" && widget.id == "mail-compose_bcc_expander")
+		else if (typeof widget != "undefined" && widget.id == "bcc_expander")
 		{
 			jQuery(".mailComposeJQueryBcc").show();
 			if (typeof Bcc !='undefined')
