@@ -898,7 +898,7 @@ var et2_link_entry = et2_inputWidget.extend(
 	 * User selected a value
 	 */
 	select: function(event, selected) {
-		if(selected.item.value !== null)
+		if(selected.item.value !== null && typeof selected.item.value == "string")
 		{
 			// Correct changed value from server
 			selected.item.value = selected.item.value.trim();
