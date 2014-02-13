@@ -208,11 +208,11 @@ app.classes.addressbook = AppJS.extend(
 		{
 			var src = this.et2.getWidgetById(name);
 			var dst = this.et2.getWidgetById(what[name]);
-			if (src && dst) dst.set_value(src.get_value());
+			if (src && dst) dst.set_value(src.get_value ? src.get_value() : src.value);
 		}
 		// change tel_prefer according to what
 		var tel_prefer = this.et2.getWidgetById('tel_prefer');
-		if (tel_prefer && typeof what[tel_prefer.get_value()] != 'undefined')
+		if (tel_prefer && tel_prefer.get_value && typeof what[tel_prefer.get_value()] != 'undefined')
 			tel_prefer.set_value(what[tel_prefer.get_value()]);
 	},
 
