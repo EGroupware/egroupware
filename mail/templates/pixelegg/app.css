@@ -1408,6 +1408,18 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   display: none;
 }
 /* ##################################################################################
+ *     Dialog: Subscripe Folder
+ *
+ * ##################################################################################
+ */
+#mail-subscribe table.et2_grid tr td {
+  padding: 0px;
+}
+#mail-subscribe table.et2_grid tr td div.et2_box {
+  height: 350px;
+  overflow: auto;
+}
+/* ##################################################################################
  *       E-Mail
  *
  * ##################################################################################

@@ -97,7 +97,7 @@
 }
 #timesheet-index span.timesheet_titleDetails,
 #timesheet-index span[id*="[ts_title]"] {
-  font-weight: bold;
+  font-weight: normal;
 }
 /*###########################################
 #                                           #
