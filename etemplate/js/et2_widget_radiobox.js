@@ -192,6 +192,7 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {string} _value
 	 */
 	set_value: function(_value) {
+		this.value = _value;
 		if(_value == this.options.set_value) {
 			this.span.text(this.options.ro_true);
 		} else {

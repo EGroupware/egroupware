@@ -212,8 +212,11 @@ app.classes.addressbook = AppJS.extend(
 		}
 		// change tel_prefer according to what
 		var tel_prefer = this.et2.getWidgetById('tel_prefer');
-		if (tel_prefer && tel_prefer.get_value && typeof what[tel_prefer.get_value()] != 'undefined')
-			tel_prefer.set_value(what[tel_prefer.get_value()]);
+		if (tel_prefer)
+		{
+			var val = tel_prefer.get_value ? tel_prefer.get_value() : tel_prefer.value;
+			if (typeof what[val] != 'undefined') tel_prefer.set_value(what[val]);
+		}
 	},
 
 	/**
