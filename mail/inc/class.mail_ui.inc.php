@@ -695,6 +695,7 @@ class mail_ui
 	 *			if set to initial, only for initial level of seen (unfolded) folders
 	 * @param string $_nodeID, nodeID to fetch and return
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
+	 * @param boolean $_returnNodeOnly only effective if $_nodeID is set, and $_nodeID is_nummeric
 	 * @return array something like that: array('id'=>0,
 	 * 		'item'=>array(
 	 *			'text'=>'INBOX',
@@ -704,7 +705,7 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true)
+	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true)
 	{
 		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
@@ -752,7 +753,7 @@ class mail_ui
 		}
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' Fetching accounts took: '.$endtime);
-
+		//error_log(__METHOD__.__LINE__.array2string($oA));
 		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
 		$c = 0;
 		$delimiter = $this->mail_bo->getHierarchyDelimiter();
@@ -835,6 +836,12 @@ class mail_ui
 		{
 			$node = self::findNode($out,$_nodeID);
 			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
+			if (is_numeric($_nodeID) && $_returnNodeOnly==false)
+			{
+				$baseNode = array('id' => 0);
+				$this->setOutStructure($node, $baseNode, self::$delimiter);
+				return $baseNode;
+			}
 			return $node;
 		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
@@ -3909,7 +3916,7 @@ blockquote[type=cite] {
 			translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
+				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],$returnNodeOnly=true)
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
