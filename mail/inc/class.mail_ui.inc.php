@@ -1001,7 +1001,7 @@ class mail_ui
 				'group' => $group,
 				'children' => array(
 					'forwardinline' => array(
-						'caption' => 'forward',
+						'caption' => 'Inline',
 						'icon' => 'mail_forward',
 						'group' => $group,
 						'hint' => 'forward inline',
@@ -1010,7 +1010,7 @@ class mail_ui
 						'toolbarDefault' => true
 					),
 					'forwardasattach' => array(
-						'caption' => 'forward',
+						'caption' => 'Attachment',
 						'hint' => 'forward as attachment',
 						'icon' => 'mail_forward',
 						'group' => $group,
@@ -1531,19 +1531,20 @@ unset($query['actions']);
 		$dateToday = date("Y-m-d");
 		$rv = array();
 		$actions = self::get_actions();
-		foreach(array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','header') as $a => $act)
+		foreach(array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','view') as $a => $act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
 			switch ($act)
 			{
 				case 'forward':
-					$actionsenabled[$act]=$actions[$act]['children']['forwardinline'];
+					$actionsenabled[$act]=$actions[$act];
 					break;
 				case 'save':
-					$actionsenabled[$act]=$actions[$act]['children']['save2disk'];
+					$actionsenabled[$act]=$actions[$act];
+
 					break;
-				case 'header':
-					$actionsenabled[$act]=$actions['view']['children'][$act];
+				case 'view':
+					$actionsenabled[$act]=$actions[$act];
 					break;
 				case 'flagged':
 					$actionsenabled[$act]= $actions['mark']['children'][$act];
