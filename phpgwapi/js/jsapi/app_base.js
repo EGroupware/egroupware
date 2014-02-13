@@ -301,8 +301,8 @@ var AppJS = Class.extend(
 				// need to install a favorite handler, as we switch original one off with .off()
 				.on('click','li[data-id]', this, function(){
 					var href = jQuery('a[href^="javascript:"]', this).prop('href');
-					var matches = href.match(/^javascript:([^\(]+)\((.*)?\);?$/);
-					if (matches.length > 1 && matches[2] !== undefined)
+					var matches = href ? href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
+					if (matches && matches.length > 1 && matches[2] !== undefined)
 					{
 						return self.setState.call(self, JSON.parse(matches[2]));
 					}
@@ -486,11 +486,7 @@ var AppJS = Class.extend(
 				else
 				{
 					// Normal user - just save to preferences client side
-					self.egw.set_preference(self.appname,favorite_pref,{
-						name: name.val(),
-						group: false,
-						state:self.favorite_popup.state
-					});
+					self.egw.set_preference(self.appname,favorite_pref,favorite);
 				}
 
 				// Add to list immediately
@@ -501,20 +497,13 @@ var AppJS = Class.extend(
 
 					// Create new item
 					var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
-					html += "<a href='#' class='ui-corner-all' tabindex='-1'>";
+					var href = 'javascript:app.'+self.appname+'.setState('+JSON.stringify(favorite)+');';
+					html += "<a href='"+href+"' class='ui-corner-all' tabindex='-1'>";
 					html += "<div class='" + 'sideboxstar' + "'></div>"+
 						favorite.name;
 					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
 					html += "</a></li>\n";
-					$j(html).on('click.favorites',jQuery.proxy(function(event) {
-							// Don't apply on delete
-							if($j(event.target).hasClass('ui-icon-trash'))
-							{
-								return;
-							}
-							app[self.appname].setState(this);
-						},favorite))
-						.insertBefore($j('li',self.sidebox).last());
+					$j(html).insertBefore($j('li',self.sidebox).last());
 					self._init_sidebox(self.sidebox);
 				}
 
