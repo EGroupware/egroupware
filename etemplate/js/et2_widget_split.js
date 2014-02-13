@@ -169,7 +169,13 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 			dock:	this.dock_side,
 			splitterClass: "et2_split",
 			outline: true,
-			eventNamespace: '.et2_split.'+this.id
+			eventNamespace: '.et2_split.'+this.id,
+
+			// Default sizes, in case the preference doesn't work
+			// Splitter would normally just go to 50%, but our deferred loading
+			// ruins sizing for it
+			sizeTop: this.dynheight.outerNode.height() / 2,
+			sizeLeft: this.dynheight.outerNode.width() / 2
 		};
 		
 		// Check for position preference, load it in
@@ -221,13 +227,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		{
 			var self = this;
 			this.left.on("resize"+options.eventNamespace, function(e) {
-				if(e.namespace == options.eventNamespace.substr(1) && !self.isDocked())
-				{
-					// Store current position in preferences
-					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
-					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
-					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
-				}
+
 				// Force immediate layout, so proper layout & sizes are available
 				// for resize().  Chrome defers layout, so current DOM node sizes
 				// are not available to widgets if they ask. 
@@ -235,7 +235,15 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 				this.style.display = 'none';
 				this.offsetHeight;
 				this.style.display = display;
-
+				
+				if(e.namespace == options.eventNamespace.substr(1) && !self.isDocked())
+				{
+					// Store current position in preferences
+					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
+					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
+					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
+				}
+				
 				// Ok, update children
 				self.iterateOver(function(widget) {
 					if(widget != self)
