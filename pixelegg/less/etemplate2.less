@@ -661,176 +661,54 @@ hr {
 
 
 
-
 // Favoriten
-
-.favorites {
-
-    li {
-
-        &:hover {
-            div.ui-icon {
-                display:inline-block;
-            }
-        }
-
-        span.ui-state-active {
-            border: none;
-        }
-
-    }
-
-    input {margin-right: 1ex;}
-
-    img {
-        margin-right: 1ex;
-        .dimension_width_height_s;
-    }
-
-    div.ui-icon-trash {
-        position: relative;
-        float:right;
-        display:none;
-    }
-
-    // List Icon
-    .sideboxstar{
-        background-image: url("../images/bullet.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-color: egw_color_2_a;
-        .dimension_width_height_xs;
-    }
-
-}
-
-
-
-
 .sidebox-favorites {
 
-    ul.favorites {
-        width: 99%;
-        padding: 0px;
-        border: none;
-        background: white;
+        ul.favorites {
+                    width: 99%;
+                    padding: 0px;
+                    border: none;
+                    background: white;
 
-        li {
-
-            padding-left: 1em !important;
-            margin-left: 0px;
-            line-height: 2em;
-
-
-            img {
-//                margin-right: 1ex;
-                margin: 0px 5px;
-                .dimension_height_s;
-                padding: 3px;
-                .Complete_Button_Icon_normal;
-
-
-                &:hover {
-                    .dimension_height_s;
-                    /*.Complete_Button_Icon_hover ;*/
-                }
-            }
-
-            img.sideboxstar {
-                margin-right: 1ex;
-                .dimension_height_s;
-                .Complete_Button_Icon_normal;
-				background-size: 16px 16px;
-				background-position: center;
-                &:hover {.dimension_height_s; .Complete_Button_Icon_hover ;}
-
-            }
-
-            a {
-                div.sideboxstar {display: none;}
-                div.ui-icon-trash{
-                                    margin-top: -1px;
-                                    margin-right: 2px;
-                }
-            }
-
-        }
-    }
-
-    .ui-state-hover,
-    .ui-widget-content .ui-state-hover,
-    .ui-widget-header .ui-state-hover,
-    .ui-state-focus,
-    .ui-widget-content .ui-state-focus,
-    .ui-widget-header .ui-state-focus {
-        .bordered(1px, 1px, 1px,1px);
-        border-color: @gray_10;
-        background: transparent !important;
-        font-weight: bold;
-        .color_100_gray;
-    }
-
-    .ui-menu-icons {
-        .ui-menu-item {
-
-            a {
-                position: relative;
-                padding-left: 1em;
-                padding: 0.5em 1em 0.5em 0;
-
-                &:hover {.Complete_Button_Icon_hover ;}
-
-            }
-        }
-    }
-
-    /*ul*/
-    .ui-menu {
-        /*li*/
-        .ui-menu-item {
-
-            width: 93%;
-
-            &:hover {background-color: @egw_color_1_e;}
+                    li.ui-menu-item {
+                                    margin-left: 0px;
+                                    min-height: 16px;
+                                    padding: 5px 0px;
             
-            
-            
-            a {
-                line-height: inherit;
-                padding: 2px 0px;
-                padding-left: 5px;
+                                    // gelb
+                                    &:hover{
+                                            .color_100_gray;
+                                            background-color: @egw_color_1_e;
+                                            padding: 0.5em 0;
 
-                &:hover {text-decoration: underline;}
-                img { .dimension_width_height_s ;}
-                div.ui-icon-heart{display: none}
-            }
-            
-            // Einrückung für ""Filter aufheben""
-            /*&:first-child a{padding-left: 41px;}*/
+                                        }
+                                      
+                                        a{
+               
+                                                line-height: inherit;
+                                                padding: 2px 0px;
+                                                
+                                                
+                                                // Heart
+                                                div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
 
-        }
-    }
+                                                // Bulltpoints
+                                                div.sideboxstar {
+                                                                width: 3px; 
+                                                                height: 11px; 
+                                                                margin-left: 3px; 
+                                                                background-image: url(../images/bullet.png); 
+                                                                background-size: 12px 12px;
+                                                                background-position: 0 0; 
+                                                                background-repeat: no-repeat;
+                                                            }
 
-
-
-    div.ui-icon-heart{
-        position: relative;
-        float: left;
-        display:inline-block;
-        margin: -3px 1px 0px 1px;
-        background-image: none;
-    }
-    div.ui-icon-trash{
-        margin-top: 0px;
-        margin-right: 2px;
-        background-image:url(../images/delete.png);
-        background-size: 16px 16px;
-        background-position: 0 0;
-
-        background-color: egw_color_2_a;
-        .box_shadow_standard_light;
-        .rounded;
-    }
+                                             }
+                                        
+                                       // Aktuelle Ansicht als Favorit
+                                       img {.dimension_width_height_xs; margin-left: 4px;} 
+                                        
+                                     } // Ende li
 
 } // sidebox-favorites
 
@@ -1038,4 +916,4 @@ iframe#admin-index_iframe{
 }
 
 //
-//                  
+//
