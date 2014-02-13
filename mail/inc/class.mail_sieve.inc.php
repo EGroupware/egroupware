@@ -733,24 +733,15 @@ class mail_sieve
 		}
 
 		$msg = 'the rule with priority moved from ' . $from . ' to ' . $to;
+		egw_framework::message($msg);
 		$this->rules = $newrules;
 		$this->updateScript();
 		$this->saveSessionData();
 
 		//Calling to referesh after move action
-		$this->sieve_egw_refresh($msg);
-
-	}
-
-	/**
-	 * call the client side refresh method
-	 *
-	 * @param type $msg
-	 */
-	function sieve_egw_refresh($msg)
-	{
 		$response = egw_json_response::get();
-		$response->call('app.mail.sieve_egw_refresh',null,$msg);
+		$response->call('app.mail.sieve_refresh',null,$msg);
+
 	}
 
 	/**
@@ -765,25 +756,11 @@ class mail_sieve
 		$response = egw_json_response::get();
 		$request= etemplate_request::read($execId);
 
-		$content['rg'] = $this->get_rows($rows,$readonlys);
-		$content['msg'] = $msg;
-		$request->content = $content;
-		$data = array(
-			'etemplate_exec_id' => $request->id(),
-
-			'app_header' => $request->app_header,
-			'content' => $request->content,
-			'sel_options' => $request->sel_options,
-			'readonlys' => $request->readonlys,
-			'modifications' => $request->modifications,
-			'validation_errors' => $validation_errors,
-		);
-
-		$response->generic('et2_load', array(
-			'name' => 'mail.sieve.index',
-			'url' => $GLOBALS['egw_info']['server']['webserver_url'].etemplate_widget_template::relPath('mail.sieve.index'),
-			'data' => $data,
-			'DOMNodeID' => 'mail-sieve-index'
+		$response->generic('assign',array(
+				'etemplate_exec_id' => $execId,
+				'id' => 'rg',
+				'key' => 'value',
+				'value' => array('content' => $this->get_rows($rows,$readonlys))
 		));
 		//error_log(__METHOD__. "RESPONSE".array2string($response));
 	}
@@ -796,7 +773,7 @@ class mail_sieve
 	 * @param type $action_msg
 	 * @param type $msg
 	 */
-	function ajax_action($action,$checked,$msg)
+	function ajax_action($exec_id, $action,$checked,$msg)
 	{
 		$this->getRules(null);
 
@@ -826,11 +803,17 @@ class mail_sieve
 				break;
 		}
 
-		$this->updateScript();
+		ob_start();
+		$result = $this->updateScript();
+		if($result)
+		{
+			egw_json_response::get()->error($result);
+			return;
+		}
 		$this->saveSessionData();
 
 		//Refresh the form
-		$this->sieve_egw_refresh($msg);
+		$this->ajax_sieve_egw_refresh($exec_id,$msg);
 	}
 
 	/**
@@ -992,7 +975,7 @@ class mail_sieve
 	{
 		if (!$this->bosieve->setRules($this->scriptToEdit, $this->rules))
 		{
-			print "update failed<br>";exit;
+			return "update failed";
 		}
 	}
 

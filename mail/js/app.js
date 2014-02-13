@@ -2552,7 +2552,7 @@ app.classes.mail = AppJS.extend(
 	{
 		if (_typeID && _data)
 		{
-			var request = egw().json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
+			var request = egw().json('mail.mail_sieve.ajax_action', [this.et2_obj.etemplate_exec_id, _typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
 	},
@@ -2563,10 +2563,9 @@ app.classes.mail = AppJS.extend(
 	* 
 	* 
 	*/
-	sieve_refresh: function(_execid,_msg)
+	sieve_refresh: function()
 	{
-		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id,_msg],null,this.et2_obj,true);
-		console.log(request);
+		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id],null,this.et2_obj,true);
 		request.sendRequest();
 	},
 
@@ -2626,12 +2625,21 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Open seive filter list
+	 * 
+	 * @param {egwAction} action - Action user did to get here
+	 * @param {egwActionObject[]} selected - selected row(s)
 	 *
 	 * @todo get the account id and open the relevant sieve, ATM alway open sieve rules which is set in preferences
 	 */
-	edit_sieve: function()
+	edit_sieve: function(action, selected)
 	{
-	   this.egw.open_link('mail.mail_sieve.index');
+	   this.egw.open_link(this.egw.link('/index.php',
+		   {
+			   'menuaction': 'mail.mail_sieve.index',
+			   'ajax': 'true'
+		   }
+		));
 	},
 
 	/**
