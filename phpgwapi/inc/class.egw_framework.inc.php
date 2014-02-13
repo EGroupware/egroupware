@@ -1860,21 +1860,15 @@ if ($app == 'home') continue;
 	/**
 	 * Set a preference via ajax
 	 *
-	 * User either need run rights for preference app, or setting of preference will be silently ignored!
-	 *
 	 * @param string $app
 	 * @param string $name
 	 * @param string $value
 	 */
 	public static function ajax_set_preference($app, $name, $value)
 	{
-		//error_log(__METHOD__."('$app', '$name', '$value')");
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
-		{
-			$GLOBALS['egw']->preferences->read_repository();
-			$GLOBALS['egw']->preferences->change($app, $name, $value);
-			$GLOBALS['egw']->preferences->save_repository(True);
-		}
+		$GLOBALS['egw']->preferences->read_repository();
+		$GLOBALS['egw']->preferences->add($app, $name, $value);
+		$GLOBALS['egw']->preferences->save_repository(True);
 	}
 
 	/**
