@@ -19,13 +19,13 @@
 
 /**
  * Class which implements the "radiobox" XET-Tag
- * 
+ *
  * A radio button belongs to same group by giving all buttons of a group same id!
- * 
+ *
  * set_value iterates over all of them and (un)checks them depending on given value.
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_radiobox = et2_inputWidget.extend(
 {
 	attributes: {
@@ -48,12 +48,12 @@ var et2_radiobox = et2_inputWidget.extend(
 			"description": "What should be displayed when readonly and not selected"
 		}
 	},
-	
+
 	legacyOptions: ["set_value", "ro_true", "ro_false"],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_radiobox
 	 */
 	init: function() {
@@ -74,10 +74,10 @@ var et2_radiobox = et2_inputWidget.extend(
 
 		this.setDOMNode(this.input[0]);
 	},
-	
+
 	/**
 	 * Overwritten to set different DOM level ids by appending set_value
-	 * 
+	 *
 	 * @param _id
 	 */
 	set_id: function(_id)
@@ -103,8 +103,10 @@ var et2_radiobox = et2_inputWidget.extend(
 
 	/**
 	 * Override default to match against set/unset value AND iterate over all siblings with same id
+	 *
+	 * @param {string} _value
 	 */
-	set_value: function(_value) 
+	set_value: function(_value)
 	{
 		this.getRoot().iterateOver(function(radio)
 		{
@@ -116,13 +118,22 @@ var et2_radiobox = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Override default to return unchecked value
+	 * Override default to iterate over all siblings with same id
+	 *
+	 * @return {string}
 	 */
-	getValue: function() {
-		if(jQuery("input:checked", this._parent.getDOMNode()).val() == this.options.set_value) {
-			return this.options.set_value;
-		}
-		return null;
+	getValue: function()
+	{
+		var val = this.options.value;	// initial value, when form is loaded
+		this.getRoot().iterateOver(function(radio)
+		{
+			if (radio.id == this.id && radio.input && radio.input.prop('checked'))
+			{
+				val = radio.options.set_value;
+			}
+		}, this, et2_radiobox);
+
+		return val;
 	}
 });
 et2_register_widget(et2_radiobox, ["radio"]);
@@ -130,7 +141,7 @@ et2_register_widget(et2_radiobox, ["radio"]);
 /**
  * @augments et2_valueWidget
  */
-var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"set_value": {
@@ -160,7 +171,7 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_radiobox_ro
 	 */
 	init: function() {
@@ -175,6 +186,8 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Override default to match against set/unset value
+	 *
+	 * @param {string} _value
 	 */
 	set_value: function(_value) {
 		if(_value == this.options.set_value) {
@@ -186,6 +199,8 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
@@ -210,10 +225,10 @@ et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
 
 /**
  * A group of radio buttons
- * 
+ *
  * @augments et2_valueWidget
- */ 
-var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -259,7 +274,7 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param parent
 	 * @param attrs
 	 * @memberOf et2_radioGroup
@@ -296,7 +311,8 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Set a bunch of radio buttons
-	 * Options should be {value: label, ...}
+	 *
+	 * @param {object} _options object with value: label pairs
 	 */
 	set_options: function(_options) {
 		for(var key in _options)
@@ -322,6 +338,8 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Set a label on the group of radio buttons
+	 *
+	 * @param {string} _value
 	 */
 	set_label: function(_value) {
 		// Abort if ther was no change in the label
@@ -335,7 +353,7 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = $j(document.createElement("label"))
+				this._labelContainer = $j(document.createElement("label"));
 				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}
 
@@ -360,11 +378,13 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._labelContainer = null;
 		}
 	},
-		
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
 	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+	 *
+	 * @param {object} _attrs
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
