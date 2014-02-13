@@ -6,7 +6,7 @@
 			<hbox>
 				<description id="msg" class="message"/>
 			</hbox>
-			<vbox>
+			<vbox  >
 				<description id="mailbox" align="center"/>
 			</vbox>
 			<grid id="grid">
@@ -26,7 +26,7 @@
 					<column/>
 				</columns>
 				<rows>
-					<row class="th">
+					<row class="th dialog-header">
 						<description value="Name"/>
 						<description value="Common ACL"/>
 						<description align="center" value="L"/>
@@ -62,7 +62,7 @@
 					</row>
 				</rows>
 			</grid>
-			<hbox>
+			<hbox class="dialog-footer-toolbar">
 				<button statustext="Saves this ACL" label="Save" id="button[save]"/>
 				<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 				<button label="Cancel" id="button[cancel]"/>
