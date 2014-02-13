@@ -692,6 +692,9 @@ egw_LAB.wait(function() {
 		{
 			$options .= ' style="cursor: pointer;"';
 		}
+		// add et2_classes to "old" buttons
+		$classes = array('et2_button');
+
 		if ($image != '')
 		{
 			$image = str_replace(array('.gif','.GIF','.png','.PNG'),'',$image);
@@ -701,14 +704,11 @@ egw_LAB.wait(function() {
 				$path = $image;		// name may already contain absolut path
 			}
 			$image = ' src="'.$path.'"';
-			if (strpos($options, 'class="') !== false)
-			{
-				$options = str_replace('class="', 'class="image_button ', $options);
-			}
-			else
-			{
-				$options .= ' class="image_button"';
-			}
+			$classes[] = 'image_button';
+		}
+		else
+		{
+			$classes[] = 'et_button_text';
 		}
 		if (!$no_lang)
 		{
@@ -728,8 +728,6 @@ egw_LAB.wait(function() {
 		}
 		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
 
-		// add et2_classes to "old" buttons
-		$classes = array('et2_button', 'et2_button_text');
 		// add default background-image to get et2 like buttons
 		foreach(self::$default_background_images as $img => $reg_exp)
 		{
@@ -749,9 +747,9 @@ egw_LAB.wait(function() {
 				break;
 			}
 		}
-		if (strpos($options, 'class="'))
+		if (strpos($options, 'class="') !== false)
 		{
-			$options = str_replace($options, 'class="', 'class="'.implode(' ', $classes).' ', $options);
+			$options = str_replace('class="', 'class="'.implode(' ', $classes).' ', $options);
 		}
 		else
 		{
