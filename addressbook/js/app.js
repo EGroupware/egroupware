@@ -51,7 +51,7 @@ app.classes.addressbook = AppJS.extend(
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
 	 *
-	 * @param _et2 etemplate2 Newly ready object
+	 * @param et2 etemplate2 Newly ready object
 	 */
 	et2_ready: function(et2)
 	{
@@ -128,7 +128,7 @@ app.classes.addressbook = AppJS.extend(
 			action: 'addressbook',
 			action_id: [],
 			action_title: _senders.length > 1 ? this.egw.lang('selected contacts') : ''
-		}
+		};
 		// Remove UID prefix for just contact_id
 		var id = _senders[0].id.split('::');
 		extras.action_id = id[1];
@@ -169,7 +169,7 @@ app.classes.addressbook = AppJS.extend(
 			tel_home: 'tel_home2',
 			tel_work: 'tel_work2',
 			tel_cell: 'tel_cell2',
-			tel_fax:  'tel_fax2',
+			tel_fax:  'tel_fax2'
 		});
 		jQuery('table.editphones').css('display','inline');
 
@@ -189,7 +189,7 @@ app.classes.addressbook = AppJS.extend(
 			tel_home2: 'tel_home',
 			tel_work2: 'tel_work',
 			tel_cell2: 'tel_cell',
-			tel_fax2:  'tel_fax',
+			tel_fax2:  'tel_fax'
 		});
 		jQuery('table.editphones').css('display','none');
 
@@ -224,40 +224,40 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	_confirmdialog_callback: function(_data)
 	{
-		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname){
-
-			return et2_createWidget("dialog", {
-					callback: function(_buttons, _value) {
-							if (_buttons == et2_dialog.OK_BUTTON)
+		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname)
+		{
+			return et2_createWidget("dialog",
+			{
+				callback: function(_buttons, _value)
+				{
+					if (_buttons == et2_dialog.OK_BUTTON)
+					{
+						var id = '';
+						var content = this.template.widgetContainer.getArrayMgr('content').data;
+						for (var row in _value.grid)
+						{
+							if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
 							{
-								var id = '';
-								var content = this.template.widgetContainer.getArrayMgr('content').data;
-								for (var row in _value.grid)
-								{
-									if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
-									{
-										id = this.options.value.content.grid[row].confirm;
-										egw.open(id, 'addressbook');
+								id = this.options.value.content.grid[row].confirm;
+								egw.open(id, 'addressbook');
 
-									}
-								}
 							}
-					},
-					title: _title||egw.lang('Input required'),
-					buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
-					value: {
-							content: {
-								grid: _value
-							}
-
-					},
-					template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet',
-
-			}, et2_dialog._create_parent(_egw_or_appname))};
+						}
+					}
+				},
+				title: _title||egw.lang('Input required'),
+				buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+				value: {
+					content: {
+						grid: _value
+					}
+				},
+				template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet'
+			}, et2_dialog._create_parent(_egw_or_appname));
+		};
 
 		if (_data.msg && _data.doublicates)
 		{
-
 			var content = [];
 
 			for(var id in _data.doublicates)
@@ -266,10 +266,10 @@ app.classes.addressbook = AppJS.extend(
 			}
 			confirmdialog('Duplicate warning',content,et2_dialog.BUTTONs_OK_CANCEL);
 		}
-		if (typeof _data.fileas_options == 'object')
+		if (typeof _data.fileas_options == 'object' && this.et2)
 		{
-			var selbox = {};
-			(template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
+			var selbox = this.et2.getWidgetById('fileas_type');
+			if (selbox)
 			{
 				selbox.set_select_options(_data.fileas_sel_options);
 			}
@@ -277,16 +277,14 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 * Callback if certain fields get changed
 	 *
 	 * @param {widget} widget widget
 	 * @param {string} own_id Current AB id
 	 */
 	check_value: function(widget, own_id)
 	{
-		if(typeof etemplate2 != 'undefined') {
-			var template = etemplate2.getByApplication('addressbook')[0];
-			var values = template.getValues(template.widgetContainer);
-		}
+		var values = this.et2._inst.getValues(this.et2);
 
 		if (widget.id.match(/n_/))
 		{
@@ -300,7 +298,6 @@ app.classes.addressbook = AppJS.extend(
 			var name = template.widgetContainer.getWidgetById("n_fn");
 			if (typeof name != 'undefined')	name.set_value(value);
 		}
-
 		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
 	},
 
@@ -381,7 +378,7 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 *
+	 * Method to enable actions by comparing a field with given value
 	 */
 	nm_compare_field: function()
 	{
@@ -408,7 +405,10 @@ app.classes.addressbook = AppJS.extend(
 	 },
 
 	/**
+	 * Mail vCard
 	 *
+	 * @param {object} _action
+	 * @param {array} _elems
 	 */
 	adb_mail_vcard: function(_action, _elems)
 	{
@@ -428,73 +428,6 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 *
-	 */
-	adb_get_selection: function(form)
-	{
-		var use_all = document.getElementById("exec[use_all]");
-		var action = document.getElementById("exec[action]");
-		egw_openWindowCentered(egw().link("/index.php","menuaction=importexport.uiexport.export_dialog&appname=addressbook")+
-				"&selection="+( use_all.checked  ? "use_all" : get_selected(form,"[rows][checked][]")),"Export",400,400);
-		action.value="";
-		use_all.checked = false;
-		return false;
-	},
-
-	/**
-	 *
-	 */
-	do_action: function(selbox)
-	{
-		if (selbox.value != "")
-		{
-			if (selbox.value == "infolog_add" && (ids = get_selected(selbox.form,"[rows][checked][]")) && !document.getElementById("exec[use_all]").checked)
-			{
-				win = window.open(egw().link("/index.php","menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id="+ids),_blank,width=750,height=550,left=100,top=200);
-				win.focus();
-			}
-			else if (selbox.value == "cat_add")
-			{
-				win = window.open(egw().link("/etemplate/process_exec.php","menuaction=addressbook.addressbook_ui.cat_add"),_blank,width=300,height=400,left=100,top=200);
-				win.focus();
-			}
-			else if (selbox.value == "remove_from_list")
-			{
-				if (confirm(lang('Remove selected contacts from distribution list'))) selbox.form.submit();
-			}
-			else if (selbox.value == "delete_list")
-			{
-				if (confirm(lang('Delete selected distribution list!'))) selbox.form.submit();
-			}
-			else if (selbox.value == "delete")
-			{
-				if (confirm(lang('Delete'))) selbox.form.submit();
-			}
-			else
-			{
-				selbox.form.submit();
-			}
-			selbox.value = "";
-		}
-	},
-
-	n_fn_search: function ()
-	{
-		jQuery('table.editname').css('display','inline');
-		//var focElem = document.getElementById(form::name('n_prefix'));
-		if (!(typeof(focElem) == 'undefined') && typeof(focElem.focus)=='function')
-		{
-			//document.getElementById(form::name('n_prefix')).focus();
-		}
-	},
-
-	xajax_et: function()
-	{
-		this.et2.getInstanceManager().submit(this.et2.getWidgetById('button[search]'));
-		return false;
-	},
-
-	/**
 	 * Action function to set business or private mail checkboxes to user preferences
 	 *
 	 * @param {egwAction} action Action user selected.
@@ -502,10 +435,10 @@ app.classes.addressbook = AppJS.extend(
 	mailCheckbox: function(action)
 	{
 		var preferences = {
-			business:(action.getManager().getActionById('email_business').checked?true:false),
-			private:(action.getManager().getActionById('email_home').checked?true:false),
-		}
-		this.egw.set_preference('addressbook','preferredMail', preferences)
+			business: action.getManager().getActionById('email_business').checked ? true : false,
+			private: action.getManager().getActionById('email_home').checked ? true : false
+		};
+		this.egw.set_preference('addressbook','preferredMail', preferences);
 	},
 
 	/**
