@@ -96,6 +96,14 @@ if(@file_exists($tpl_info))
 	}
 }
 
+// until home works again, we redirect to default_app from prefs (if set and not home) or calendar, if allowed, or first app found
+if ($app == 'home')
+{
+	$app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app'];
+	if (!$app || $app == 'home') $app = isset($GLOBALS['egw_info']['user']['apps']['calendar']) ? 'calendar' : key($GLOBALS['egw_info']['user']['apps']);
+	egw::redirect(egw_framework::index($app, $app));
+}
+
 if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
