@@ -4,18 +4,18 @@
 	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="100%"/>
-				<column/>
+				<column width="20%"/>
+				<column width= "80%"/>
 			</columns>
 			<rows>
 				<row class="th dialog-header" height="28">
+					<description value="Mail Account"/>
 					<menulist>
-						<description value="Mail Account"/>
 						<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
 					</menulist>
 				</row>
 				<row>
-					<box scrolling="auto">
+					<box scrolling="auto" span="2">
 						<caption label="Folders"/>
 						<tree id="foldertree" onclick=""  multiple="true"/>
 					</box>
