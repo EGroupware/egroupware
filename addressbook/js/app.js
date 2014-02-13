@@ -295,7 +295,7 @@ app.classes.addressbook = AppJS.extend(
 			if (values.n_family) value += values.n_family+" ";
 			if (values.n_suffix) value += values.n_suffix;
 
-			var name = template.widgetContainer.getWidgetById("n_fn");
+			var name = this.et2.getWidgetById("n_fn");
 			if (typeof name != 'undefined')	name.set_value(value);
 		}
 		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
