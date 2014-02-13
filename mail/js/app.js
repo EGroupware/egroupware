@@ -2446,6 +2446,10 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
+	 * 
+	 * @param {event} _ev 
+	 * @param {object} _widget taglist
+	 * 	
 	 */
 	sieve_focus_radioBtn: function(_ev, _widget)
 	{
@@ -2453,15 +2457,13 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 *
+	 * Select all aliases
+	 * 
 	 */
 	sieve_vac_all_aliases: function()
 	{
 		var addr = this.et2.getWidgetById('addresses');
-
-		console.log('say something');
 		addr.select_all();
-		//addr.set_autocomplete_url('mail.mail_compose.ajax_searchAddress');
 	},
 
 	/**
@@ -2537,16 +2539,30 @@ app.classes.mail = AppJS.extend(
 
 	},
 
+	/**
+	* Send back action resault to server
+	* 
+	* @param {string} _typeId action name
+	* @param {object} _data content
+	* @param {string} _selectedID selected row id
+	* @param {string} _msg message
+	* 
+	*/
 	_do_action: function(_typeID, _data,_selectedID,_msg)
 	{
 		if (_typeID && _data)
 		{
 			var request = egw().json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
-			console.log(request);
 			request.sendRequest();
 		}
 	},
 
+	/**
+	*  
+	* @todo: Need to find a way how to refresh the grid
+	* 
+	* 
+	*/
 	sieve_refresh: function(_execid,_msg)
 	{
 		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id,_msg],null,this.et2_obj,true);
@@ -2557,10 +2573,11 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Select the right combination of the rights for radio buttons from the selected common right
 	 *
+	 * @@param {jQuery event} event
 	 * @param {widget} widget common right selectBox
 	 *
 	 */
-	acl_common_rights_selector: function(widget)
+	acl_common_rights_selector: function(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = (widget.value == "custom")?[]:(widget.value == "akxeilprwts")? widget.value.replace(/[k,x,t,e]/g,"cd").split(""):widget.value.split("");
@@ -2575,12 +2592,12 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * Choose the right common right option for common ACL selecBox
 	 *
+	 * @param {jQuery event} event
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
-	acl_common_rights: function(widget)
+	acl_common_rights: function(event, widget)
 	{
-
 	   var rowId = widget.id.replace(/[^0-9.]+/g, '');
 	   var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
 	   var rights = '';
