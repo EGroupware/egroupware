@@ -29,6 +29,16 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var error_reg_exp;
 	var on_click_remove_installed = false;
 
+	// Register an 'error' plugin, displaying using the message system
+	this.registerJSONPlugin(function(type, res, req) {
+		if (typeof res.data == 'string')
+		{
+			egw.message(res.data,'error');
+			return true;
+		}
+		throw 'Invalid parameters';
+	}, null, 'error');
+
 	return {
 		/**
 		 * Display an error or regular message
