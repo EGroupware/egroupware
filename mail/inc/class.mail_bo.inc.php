@@ -249,9 +249,13 @@ class mail_bo
 					}
 					catch (Exception $e)
 					{
-						throw new egw_exception(__METHOD__." failed to instanciate mail_bo for $newprofileID with error:".$e->getMessage());;
+						throw new egw_exception(__METHOD__." failed to instanciate mail_bo for $newprofileID with error:".$e->getMessage());
 					}
 					$_profileID = $newprofileID;
+				}
+				else
+				{
+					throw new egw_exception(__METHOD__." Loading the Profile for ProfileID >".$_profileID.'< failed for icServer; '.$e->getMessage().' Trigger new instance for Default-Profile >'.$newprofileID.'< failed');
 				}
 			}
 		}
