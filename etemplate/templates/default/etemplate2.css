@@ -161,7 +161,6 @@ a.et2_url.url {
  * Button widget - text only, and icon
  */
 .et2_button {
-  cursor: pointer;
   text-align: center;
   font-size: 9pt;
   text-shadow: 1px 1px #E0E0E0;

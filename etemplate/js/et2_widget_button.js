@@ -227,6 +227,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			{
 				(this.btn || this.image)
 					.toggleClass('et2_clickable', !_ro)
+					.toggleClass('et2_button_ro', _ro)
 					.css('cursor', _ro ? 'default' : 'pointer');	// temp. 'til it is removed from et2_button
 			}
 		}
@@ -239,6 +240,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		{
 			(this.btn || this.image)
 				.removeClass('et2_clickable')
+				.addClass('et2_button_ro')
 				.css('cursor', 'default');	// temp. 'til it is removed from et2_button
 		}
 	},
