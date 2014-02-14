@@ -243,7 +243,14 @@ class mail_bo
 				error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; '.$e->getMessage().' Trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
 				if ($newprofileID)
 				{
-					self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
+					try
+					{
+						self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
+					}
+					catch (Exception $e)
+					{
+						throw new egw_exception(__METHOD__." failed to instanciate mail_bo for $newprofileID with error:".$e->getMessage());;
+					}
 					$_profileID = $newprofileID;
 				}
 			}
@@ -323,11 +330,18 @@ class mail_bo
 			$this->sessionData = array();
 			$this->forcePrefReload();
 		}
-		$this->profileID = self::validateProfileID($_profileID);
-		$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
+		try
+		{
+			$this->profileID = self::validateProfileID($_profileID);
+			$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
-		//error_log(__METHOD__.__LINE__." ProfileID ".$this->profileID.' called from:'.function_backtrace());
-		$acc = emailadmin_account::read($this->profileID);
+			//error_log(__METHOD__.__LINE__." ProfileID ".$this->profileID.' called from:'.function_backtrace());
+			$acc = emailadmin_account::read($this->profileID);
+		}
+		catch (Exception $e)
+		{
+			throw new egw_exception(__METHOD__." failed to instanciate mail_bo for $_profileID / ".$this->profileID." with error:".$e->getMessage());;
+		}
 		//error_log(__METHOD__.__LINE__.array2string($acc->imapServer()));
 		$this->icServer = ($_oldImapServerObject?$acc->oldImapServer():$acc->imapServer());
 		$this->ogServer = $acc->smtpServer();

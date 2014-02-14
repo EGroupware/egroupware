@@ -2588,7 +2588,7 @@ unset($query['actions']);
 	 */
 	function vfsSaveAttachment($ids,$path)
 	{
-		error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
+		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
 
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
@@ -2603,8 +2603,8 @@ unset($query['actions']);
 			$mailbox = $hA['folder'];
 			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($mailbox);
-			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
-
+			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+			//error_log(__METHOD__.__LINE__.array2string($attachment));
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
