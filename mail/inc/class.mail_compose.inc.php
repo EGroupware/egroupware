@@ -1175,7 +1175,7 @@ class mail_compose
 				}
 			}
 		}
-		//error_log(__METHOD__.__LINE__.$content['body']);
+		//error_log(__METHOD__.__LINE__.array2string($content));
 		if($content['mimeType'] == 'html') {
 			$ishtml=1;
 		} else {
@@ -1282,6 +1282,7 @@ class mail_compose
 			// or not work as expected, as a full featured editor that may be wanted in other apps
 			// is way overloading the "normal" needs for composing mails
 			$content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
+			//$content['rtfEditorFeatures']='advanced';//egw_ckeditor_config::get_ckeditor_config();
 			$content['validation_rules']= json_encode(mail_bo::$htmLawed_config);
 			$etpl->setElementAttribute('mail_htmltext','mode',$content['rtfEditorFeatures']);
 			$etpl->setElementAttribute('mail_htmltext','validation_rules',$content['validation_rules']);

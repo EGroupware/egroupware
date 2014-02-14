@@ -1949,6 +1949,14 @@ class mail_bo
 	{
 		if (self::$debug) error_log(__METHOD__.__LINE__.' ServerID:'.$this->icServer->ImapServerId.", subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders, _useCacheIfPossible:$_useCacheIfPossible");
 		static $folders2return;
+		// always use static on single request if info is available;
+		// so if you require subscribed/unsubscribed results on a single request you MUST
+		// set $_useCacheIfPossible to false !
+		if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
+		{
+			return $folders2return[$this->icServer->ImapServerId];
+		}
+			
 		if ($_subscribedOnly && $_getCounters===false)
 		{
 			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);

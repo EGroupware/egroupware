@@ -189,12 +189,18 @@ class mail_ui
 		$stmpl = new etemplate_new('mail.subscribe');
 		
 		$profileId = $_GET['acc_id'];
-		$zstarttime = microtime (true);
+		//$zstarttime = microtime (true);
 		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
-		$zendtime = microtime(true) - $zstarttime;
-		error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
+		//$zendtime = microtime(true) - $zstarttime;
+		//error_log(__METHOD__.__LINE__. " Building tree -> time used: ".$zendtime);
+		//$zstarttime = microtime (true);
 		$unsubscribedFolders = $this->mail_bo->fetchUnSubscribedFolders();
+		//$zendtime = microtime(true) - $zstarttime;
+		//error_log(__METHOD__.__LINE__. " Fetching Unsubscribed -> time used: ".$zendtime);
+		//$zstarttime = microtime (true);
 		$allFolders = $this->mail_bo->getFolderObjects();
+		//$zendtime = microtime(true) - $zstarttime;
+		//error_log(__METHOD__.__LINE__. " getFolderObjects -> time used: ".$zendtime);
 
 		if (!is_array($content))
 		{
