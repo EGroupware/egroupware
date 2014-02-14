@@ -8,7 +8,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description id="msg" class="redItalic"/>
+					<description id="msg" class="message"/>
 				</row>
 				<row>
 					<groupbox>
@@ -135,12 +135,12 @@
 					</groupbox>
 				</row>
 				<row>
-					<hbox>
+					<hbox class="dialog-footer-toolbar">
 						<button statustext="Saves this rule" label="Save" id="button[save]"/>
 						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+                        <button label="Cancel" id="button[cancel]"/>
 						<hbox align="right">
 							<button label="Delete" id="button[delete]" />
-							<button label="Cancel" id="button[cancel]"/>
 						</hbox>
 					</hbox>
 				</row>
