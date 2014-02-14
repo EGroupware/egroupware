@@ -2562,10 +2562,11 @@ unset($query['actions']);
 			$mailbox = $hA['folder'];
 			if ($mb != $this->mail_bo->mailbox) $this->mail_bo->reopen($mb = $mailbox);
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
+			$err=null;
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 				!fwrite($fp,$message))
 			{
-				$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+				$err .= lang('Error saving %1!',$file);
 				$succeeded = false;
 			}
 			else
@@ -2584,8 +2585,8 @@ unset($query['actions']);
 			}
 		}
 		//$this->mail_bo->closeConnection();
-
-		return $err.'window.close();';
+		egw_framework::window_close(($err?$err:null));
+		//return $err.'window.close();';
 	}
 
 	/**
@@ -2603,6 +2604,7 @@ unset($query['actions']);
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
 		}
+		$err=null;
 		foreach((array)$ids as $id)
 		{
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
@@ -2617,13 +2619,13 @@ unset($query['actions']);
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
-				$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+				$err .= lang('Error saving %1!',$file);
 			}
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
-
-		return $err.'window.close();';
+		egw_framework::window_close(($err?$err:null));
+		//return $err.'window.close();';
 	}
 
 
