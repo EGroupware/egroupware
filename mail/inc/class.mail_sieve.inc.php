@@ -291,7 +291,7 @@ class mail_sieve
 
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
 			$ruleID = ($this->rulesByID['priority'] -1) / 2;
-
+            $error = 0;
 			switch ($button)
 			{
 
@@ -391,7 +391,7 @@ class mail_sieve
 		$sel_options['action_folder_text'] = $mailCompose->ajax_searchFolder(0,true);
 
 
-		return $etmpl->exec('mail.mail_sieve.edit',$content,$sel_options,$readonlys,$preserv,2);
+		return $etmpl->exec('mail.mail_sieve.edit',$content,$sel_options,$readonlys,array(),2);
 	}
 
 	/**
@@ -646,7 +646,7 @@ class mail_sieve
 			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
-		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,array(),2);
+		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,array(),array(),2);
 	}
 
 	/**
@@ -755,19 +755,18 @@ class mail_sieve
 	 * Ajax function to handle the server side content for refreshing the form
 	 *
 	 * @param type $execId,
-	 * @param type $msg
-	 */
-	function ajax_sieve_egw_refresh($execId,$msg)
+     *
+     */
+	function ajax_sieve_egw_refresh($execId)
 	{
 		//Need to read the template to use for refreshing the form
 		$response = egw_json_response::get();
-		$request= etemplate_request::read($execId);
 
 		$response->generic('assign',array(
 				'etemplate_exec_id' => $execId,
 				'id' => 'rg',
 				'key' => 'value',
-				'value' => array('content' => $this->get_rows($rows,$readonlys))
+				'value' => array('content' => $this->get_rows($rows))
 		));
 		//error_log(__METHOD__. "RESPONSE".array2string($response));
 	}
@@ -838,7 +837,7 @@ class mail_sieve
 	 */
 	function addScript()
 	{
-		if($scriptName = $_POST['newScriptName'])
+		if(($scriptName = $_POST['newScriptName']))
 		{
 			$this->bosieve->installScript($scriptName, '');
 		}
@@ -1012,7 +1011,7 @@ class mail_sieve
 	 */
 	function getRules($ruleID = null)
 	{
-		if($script = $this->bosieve->getScript($this->scriptName))
+		if(($script = $this->bosieve->getScript($this->scriptName)))
 		{
 			$this->scriptToEdit 	= $this->scriptName;
 			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
@@ -1060,7 +1059,7 @@ class mail_sieve
 	 *
 	 * @return {boolean|array} Array of rows | false if failed
 	 */
-	function get_rows(&$rows,&$readonlys)
+	function get_rows(&$rows)
 	{
 		$rows = array();
 		$this->getRules(null);	/* ADDED BY GHORTH */
@@ -1074,11 +1073,11 @@ class mail_sieve
 			{
 				$row['rules'] = $this->buildRule($row);
 				$row['ruleID'] =(string)(($row['priority'] -1) / 2 );
-				if ($row ['status'] === 'ENABLED')
+				if ($row ['status'] === 'DISABLED')
 				{
-					$row['class'] = 'mail_sieve_ENABLED';
+					$row['class'] = 'mail_sieve_DISABLED';
 				}
-			}
+            }
 		}else
 		{
 			//error_log(__METHOD__.'There are no rules or something is went wrong at getRules()!');
@@ -1092,18 +1091,17 @@ class mail_sieve
 	/**
 	 * Get actions / context menu for index
 	 *
-	 * @param {array} $query
-	 *
 	 * @return {array} returns defined actions as an array
 	 */
-	private function get_actions(array $query=array())
+	private function get_actions()
 	{
 		$actions =array(
 
 			'edit' => array(
 				'caption' => 'Edit',
 				'default' => true,
-				'onExecute' => 'javaScript:app.mail.action'
+				'onExecute' => 'javaScript:app.mail.action',
+                'disableClass' => 'th'
 			),
 			'add' => array(
 				'caption' => 'Add',
@@ -1112,15 +1110,14 @@ class mail_sieve
 			'enable' => array(
 				'caption' => 'Enable',
 				'onExecute' => 'javaScript:app.mail.action',
-				//'enableClass' => 'mail_sieve_ENABLED',
-				//'hideOnDisabled' => true,
+				'enableClass' => 'mail_sieve_DISABLED',
+                'hideOnDisabled' => true
 			),
 			'disable' => array(
 				'caption' => 'Disable',
 				'onExecute' => 'javaScript:app.mail.action',
-				'disableClass' => 'mail_sieve_ENABLED',
-				'hideOnDisabled' => true,
-
+				'disableClass' => 'mail_sieve_DISABLED',
+                'hideOnDisabled' => true
 			),
 			'delete' => array(
 				'caption' => 'Delete',
