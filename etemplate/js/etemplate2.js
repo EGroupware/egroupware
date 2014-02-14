@@ -714,11 +714,16 @@ etemplate2.prototype.getValues = function(_root)
 etemplate2.prototype.refresh = function(msg, app, id, type)
 {
 	msg, app;	// unused but required by function signature
+	var refresh_done = false;
+
 	// Refresh nextmatches
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Trigger refresh
 		_widget.refresh(id,type);
+		refresh_done = true;
 	}, this, et2_nextmatch);
+
+	return refresh_done;
 };
 
 // Some static things to make getting into widget context a little easier //
