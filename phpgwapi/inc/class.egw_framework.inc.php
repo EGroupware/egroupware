@@ -1991,7 +1991,7 @@ if ($app == 'home') continue;
 	 * @param $app Current application, needed to save preference
 	 * @param $name String Name of the favorite
 	 * @param $action String add or delete
-	 * @param $group int|String ID of the group to create the favorite for, or 'all' for all users
+	 * @param $group boolean|int|String ID of the group to create the favorite for, or 'all' for all users
 	 * @param $filters Array of key => value pairs for the filter
 	 *
 	 * @return boolean Success
@@ -2002,18 +2002,38 @@ if ($app == 'home') continue;
 		$name = strip_tags($name);
 		$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
 
-		if($group && $GLOBALS['egw_info']['apps']['admin'])
+		// older group-favorites have just true as their group and are not deletable, if we dont find correct group
+		if ($group === true || $group === '1')
 		{
-			$prefs = new preferences(is_numeric($group) ? $group: $GLOBALS['egw_info']['user']['account_id']);
+			if (isset($GLOBALS['egw']->preferences->default[$app][$pref_name]))
+			{
+				$group = 'all';
+			}
+			else
+			{
+				foreach($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true) as $gid)
+				{
+					$prefs = new preferences($gid);
+					$prefs->read_repository();
+					if (isset($prefs->user[$app][$pref_name]))
+					{
+						$group = $gid;
+						break;
+					}
+				}
+			}
+		}
+		if($group && $GLOBALS['egw_info']['apps']['admin'] && $group !== 'all')
+		{
+			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
 		}
 		else
 		{
 			$prefs = $GLOBALS['egw']->preferences;
-			$type = 'user';
 		}
 		$prefs->read_repository();
-		$type = $group == "all" ? "default" : "user";
-		//error_log(__METHOD__."('$app', '$name', '$action', $group, ...) pref_name=$pref_name, type=$type");
+		$type = $group === "all" ? "default" : "user";
+		//error_log(__METHOD__."('$app', '$name', '$action', ".array2string($group).", ...) pref_name=$pref_name, type=$type");
 		if($action == "add")
 		{
 			$filters = array(
