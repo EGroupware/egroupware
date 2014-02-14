@@ -426,6 +426,11 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 	 */
 	expandName: function(ident)
 	{
+		// this is a temp. workaround to get calendar conflicts working again
+		if (!this.perspectiveData.owner)
+		{
+			return this._super.apply(this, arguments);
+		}
 		return this.perspectiveData.owner.getArrayMgr('content').expandName(ident);
 	}
 });
