@@ -5,18 +5,13 @@
 		<grid width="100%">
 			<columns>
 				<column width="20%"/>
-				<column width= "80%"/>
 			</columns>
 			<rows>
-				<row class="th dialog-header" height="28">
-					<description value="Mail Account"/>
-					<menulist>
-						<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
-					</menulist>
+				<row class="dialog-header" >
+					<description value="Subscription folders" class="mail_subscription_header"/>
 				</row>
 				<row>
-					<box scrolling="auto" span="2">
-						<caption label="Folders"/>
+					<box scrolling="auto">
 						<tree id="foldertree" onclick=""  multiple="true"/>
 					</box>
 				</row>

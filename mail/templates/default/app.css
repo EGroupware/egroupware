@@ -622,3 +622,10 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	background-repeat: no-repeat;
 	background-color: rgba(255,255,255,0.5);
 }
+
+.mail_subscription_header
+{
+  font-weight: bold;
+  font-size: 150%;
+  padding-bottom: 20px;
+}
