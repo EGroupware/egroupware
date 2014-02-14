@@ -65,6 +65,12 @@ var et2_htmlarea = et2_inputWidget.extend(
 			'description': 'Internal configuration - managed by preferences & framework, passed in here',
 			'translate': 'no_lang'
 		},
+		value: {
+			name: "Value",
+			description: "The value of the widget",
+			type: "html",	// "string" would remove html tags by running html_entity_decode
+			default: et2_no_init
+		}
 	},
 
 	legacyOptions: ['mode','height','width','expand_toolbar','base_href'],

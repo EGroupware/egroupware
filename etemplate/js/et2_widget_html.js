@@ -21,7 +21,7 @@
 /**
  * @augments et2_valueWidget
  */
-var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		'label': {
@@ -30,16 +30,22 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
 			ignore: false,
 			name: "Label",
 			translate: true,
-			type: "string",
+			type: "string"
 		},
 		"needed": {
 			"ignore": true
+		},
+		value: {
+			name: "Value",
+			description: "The value of the widget",
+			type: "html",	// "string" would remove html tags by running html_entity_decode
+			default: et2_no_init
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_html
 	 */
 	init: function() {
@@ -84,6 +90,8 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs
 	 */
 	getDetachedAttributes: function(_attrs)
 	{

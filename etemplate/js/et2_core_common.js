@@ -30,7 +30,7 @@ if (typeof Array.prototype.indexOf == "undefined")
 /**
  * Array with all types supported by the et2_checkType function.
  */
-var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js", "dimension"];
+var et2_validTypes = ["boolean", "string", "html", "float", "integer", "any", "js", "dimension"];
 
 /**
  * Object whith default values for the above types. Do not specify array or
@@ -40,6 +40,7 @@ var et2_validTypes = ["boolean", "string", "float", "integer", "any", "js", "dim
 var et2_typeDefaults = {
 	"boolean": false,
 	"string": "",
+	"html": "",
 	"js": null,
 	"float": 0.0,
 	"integer": 0,
@@ -152,11 +153,11 @@ function et2_checkType(_val, _type, _attr, _widget)
 	}
 
 	// Check whether the given value is of the type "string"
-	if (_type == "string")
+	if (_type == "string" || _type == "html")
 	{
 		if (typeof _val == "string")
 		{
-			return html_entity_decode(_val);
+			return _type == "html" ? _val : html_entity_decode(_val);
 		}
 
 		// Handle some less common possibilities
