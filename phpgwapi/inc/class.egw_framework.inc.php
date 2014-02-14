@@ -1927,9 +1927,6 @@ if ($app == 'home') continue;
 				'group' => true
 			)
 		);
-		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
-		if(!$default_filter) $default_filter = "blank";
-
 		$is_admin = $GLOBALS['egw_info']['user']['apps']['admin'];
 		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
 		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
@@ -1944,10 +1941,14 @@ if ($app == 'home') continue;
 						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
 						'state' => $pref,
 					);
+					//error_log(__METHOD__."() old favorite '$pref_name' converted to ".array2string($pref));
 				}
-				$filters[substr($pref_name,strlen($pref_prefix))] = $pref;
+				//else error_log(__METHOD__."() new favorite '$pref_name' ".array2string($pref));
+				$filters[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
 		}
+		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
+		if(!isset($default_filter) || !isset($filters[$default_filter])) $default_filter = "blank";
 
 		// Get link for if there is no nextmatch - this is the fallback
 		$registry = egw_link::get_registry($app,'list');
@@ -1955,13 +1956,15 @@ if ($app == 'home') continue;
 		foreach($filters as $name => $filter)
 		{
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
-			$html .= "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
-			$html .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
-			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
+			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
+			$li .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
+			$li .= "<div class='" . ((string)$name === (string)$default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'];
-			$html .= ($filter['group'] != false && !$is_admin || $name == 'blank' ? "" :
+			$li .= ($filter['group'] != false && !$is_admin || $name === 'blank' ? "" :
 				"<div class='ui-icon ui-icon-trash' title='" . lang('Delete') . "'></div>");
-			$html .= "</a></li>\n";
+			$li .= "</a></li>\n";
+			//error_log(__METHOD__."() $name, filter=".array2string($filter)." --> ".$li);
+			$html .= $li;
 		}
 
 		// If were're here, the app supports favorites, so add a 'Add' link too
@@ -2010,6 +2013,7 @@ if ($app == 'home') continue;
 		}
 		$prefs->read_repository();
 		$type = $group == "all" ? "default" : "user";
+		//error_log(__METHOD__."('$app', '$name', '$action', $group, ...) pref_name=$pref_name, type=$type");
 		if($action == "add")
 		{
 			$filters = array(

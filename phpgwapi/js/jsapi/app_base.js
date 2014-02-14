@@ -592,13 +592,12 @@ var AppJS = Class.extend(
 						// Try to update nextmatch favorites too
 						if(etemplate2 && etemplate2.getByApplication)
 						{
-							var safe_name = name.replace(/[^A-Za-z0-9-_]/g,"_");
 							var et2 = etemplate2.getByApplication(app.appname);
 							for(var i = 0; i < et2.length; i++)
 							{
 								et2[i].widgetContainer.iterateOver(function(_widget) {
 									var faves = _widget.load_favorites(app.appname);
-									delete faves[safe_name];
+									delete faves[id];
 									_widget.init_filters(_widget,faves);
 								}, app, et2_favorites);
 							}
