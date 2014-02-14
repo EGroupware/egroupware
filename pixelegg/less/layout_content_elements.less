@@ -19,6 +19,7 @@
     /**
     * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
     * http://cssreset.com
+    * fieldset legend
     */
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -27,7 +28,7 @@
     small, strike, strong, sub, sup, tt, var,
     b, u, i, center,
     dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
+    form, label, 
     table, caption, tbody, tfoot, thead, tr, th, td,
     article, aside, canvas, details, embed,
     figure, figcaption, footer, header, hgroup,
@@ -934,28 +935,7 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete
 {
-    /*background-color: @color_negative_action_hover !important;*/
-    background-image:url('../images/delete.png')!important;
-    margin-left: 3em;
-    background-color: @gray_30;
-    .Complete_Button_text_icon_before;
-    /*background-color: @color-negative-action !important;*/
-    /*color: @gray_0 !important;*/
-            
-            &:hover {
-
-                background-image:url('../images/delete-hover.png') !important;
-                background-color: @color_negative_action_hover !important;
-                .Complete_Button_text_icon_before;
-                color: @gray_0 !important;;
-            }           
-            &:active {
-
-                background-image:url('../images/delete-hover.png') !important;
-                background-color: @color_negative_action_active !important;
-                .Complete_Button_text_icon_before;
-                color: @gray_0;
-            }            
+ .Complete_Button_delete;           
 }
 
 /* ########################################################################################
@@ -970,10 +950,7 @@ button[id*="copy"],
 button[id*="edit_button[edit]"],
 button.et2_button{
     
-    img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
-    
-    
-    &:active {background-color: @color_positive_action_active;}
+        .Complete_Button_save_apply_copy;
 }
 
 
@@ -993,38 +970,7 @@ button#filemanager-select_button[ok]{
 }
 
 
-/* ########################################################################################
- * 
-/*ui-widget*/
- /*edit series*/
-button#series {
-    background-image:url('../images/edit.svg') !important;
-    .Complete_Button_text_icon_before;
-    &:hover {background-image:url('../images/edit.svg') !important;}
-    &:active {background-color: @color_positive_action_active !important;}
-}
-/*edit exception*/
-button#exception {
-        background-image:url('../images/edit.svg') !important;
-    .Complete_Button_text_icon_before;
-    &:hover {background-image:url('../images/edit.svg') !important;}
-    &:active {background-color: @color_positive_action_active !important;}
-}
 
-/*calendar series add*/
-#calendar-edit_add {
-    &:active {background-color: @color_positive_action_active !important;}
-/*    .Complete_Button_add;
-    &:hover {.Complete_Button_add_hover;} */
-}
-/*calendar search freetime*/
-#calendar-edit_freetime{
-    &:active {background-color: @color_positive_action_active !important;}
-}
-/*calendar search freetime*/
-button[id*="edit_button[add_alarm]"]{
-    &:active {background-color: @color_positive_action_active !important;}
-}
 /* ########################################################################################
  * 
  * Button cancel /  => color-cancel-action // yellow
@@ -1034,6 +980,7 @@ button[id*="edit_button[add_alarm]"]{
 button[id*="cancel"],
 button[id*="importexport-wizardbox_button[previous]"],
 button#cancel,
+#cancel,
 button.et2_button_cancel,
 button.et2_button_question{
 
@@ -1044,15 +991,10 @@ button.et2_button_question{
 
 /* et2_box_widget ###*/
 /*div.et2_box_widget .et2_button_text:last_child,*/
-button[id="cancel"]{
+button[id="cancel"],
+button#cancel{
     
-                 background-image:url('../images/cancel.png') !important;
-                .Complete_Button_text_icon_before;
-                content: "ID missing";
-                
-                
-                &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
-                &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
+               .Complete_Button_cancel;
 }
 
 
@@ -1089,6 +1031,15 @@ button[id="add"]{
 
 /*Button Ende #######################################################*/
 
+
+
+
+
+
+
+
+
+
 /*dhtml Submenu ##########################################################*/
 div.dhtmlxMenu_egw_SubLevelArea_Polygon{
     
@@ -1111,17 +1062,6 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon{
 }
 
 
-
-/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-            select {
-                padding-right: 20px !important;
-                -webkit-appearance:none;
-                margin:0;
-                background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-                background-size: 20px auto;
-            }
-}
 
 
 /**
@@ -1206,5 +1146,18 @@ table.table_passord_change{
         
 }
 
+
+
+
+/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+            select {
+                padding-right: 20px !important;
+                -webkit-appearance:none;
+                margin:0;
+                background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+                background-size: 20px auto;
+            }
+}
  
 // 

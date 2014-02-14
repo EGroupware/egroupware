@@ -461,7 +461,7 @@ hr {
             color: lighten(@egw_color_1, 15%);
             text-decoration: none;
 
-            cursor: pointer;
+            /*cursor: pointer; 14022014 entfernt*/
             padding: 0px;
             margin: 8px 10px;
             margin-left: 0px;
@@ -690,7 +690,7 @@ hr {
                                                 
                                                 
                                                 // Heart
-                                                div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+                                                div.ui-icon-heart {background-image: url(../images/personal.png); background-size: 12px 12px;background-position: 0 0;}
 
                                                 // Bulltpoints
                                                 div.sideboxstar {
@@ -707,12 +707,33 @@ hr {
                                         
                                        // Aktuelle Ansicht als Favorit
                                        img {.dimension_width_height_xs; margin-left: 4px;} 
+                                       
+                                       // Filter aufheben
+                                       [data-id="blank"]{
+                         
+                                                        div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+
+                                                    }
+                                       
                                         
                                      } // Ende li
+                      
+                     // Filter aufheben
+                     li:first-child{
+                         
+                        a div.sideboxstar {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+                         
+                     }
 
+        }
 } // sidebox-favorites
 
-
+// Favorites in nextmatch Header 
+.favorites{
+    
+    img {.dimension_width_height_xs;}
+    
+}  
 
 
 .nextmatch_sortheader.asc {
@@ -915,5 +936,6 @@ iframe#admin-index_iframe{
 
 }
 
+//
 //
 //
