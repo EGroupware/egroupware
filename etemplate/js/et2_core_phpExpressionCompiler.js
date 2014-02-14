@@ -64,6 +64,12 @@
 								str += '$$';
 								break;
 							}
+							// check for '$' as last char, as in PHP "test$" === 'test$', $ as last char is NOT expanded
+							if (_p.pos == _p.expr.length)
+							{
+								str += '$';
+								break;
+							}
 							if (str)
 							{
 								_tree.push(str); str = "";
@@ -401,21 +407,28 @@
 			_vars = [];
 		}
 
-		// Initialize the parser object and create the syntax tree for the given
-		// expression
-		var parser = _php_parser(_expr);
+		try {
+			// Initialize the parser object and create the syntax tree for the given
+			// expression
+			var parser = _php_parser(_expr);
 
-		var syntaxTree = [];
+			var syntaxTree = [];
 
-		// Parse the given expression as if it was a double quoted string
-		_php_parseDoubleQuoteString(parser, syntaxTree);
+			// Parse the given expression as if it was a double quoted string
+			_php_parseDoubleQuoteString(parser, syntaxTree);
 
-		// Transform the generated syntaxTree into a JS string
-		var js = _php_compileJSCode(_vars, syntaxTree);
+			// Transform the generated syntaxTree into a JS string
+			var js = _php_compileJSCode(_vars, syntaxTree);
 
-		// Log the successfull compiling
-		egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
-
+			// Log the successfull compiling
+			egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
+		}
+		catch(e) {
+			// if expression does NOT compile use it literally and log an error, but not stop execution
+			egw.debug("error", "Error compiling PHP "+_expr+" --> using it literally ("+
+				(typeof e == 'string' ? e : e.message)+")!");
+			return function(){ return _expr; };
+		}
 		// Prepate the attributes for the function constuctor
 		var attrs = [];
 		for (var i = 0; i < _vars.length; i++)
