@@ -2497,6 +2497,7 @@ app.classes.mail = AppJS.extend(
 		var  actionData ;
 		var that = this;
 		var typeId = _type.id;
+		var linkData = '';
 		var ruleID = ((_selected[0].id.split("_").pop()) - 1); // subtract the row id from 1 because the first row id is reserved by grid header
 		if (_type)
 		{
@@ -2517,12 +2518,12 @@ app.classes.mail = AppJS.extend(
 
 					break;
 				case 'add'	:
-					$linkData = "mail.mail_sieve.edit";
-					egw.open_link($linkData,'',"600x480");
+					linkData = "mail.mail_sieve.edit";
+					this.egw.open_link(linkData,'_blank',"600x480");
 					break;
 				case 'edit'	:
-					$linkData = "mail.mail_sieve.edit&ruleID="+ruleID;
-					egw.open_link($linkData,'',"600x480");
+					linkData = "mail.mail_sieve.edit&ruleID="+ruleID;
+					this.egw.open_link(linkData,'_blank',"600x480");
 					break;
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
