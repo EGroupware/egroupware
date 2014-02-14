@@ -235,7 +235,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 	attachToDOM: function() {
 		this._super.apply(this, arguments);
 
-		if (this.options.readonly)
+		if (this.options.readonly && (this.btn || this.image))
 		{
 			(this.btn || this.image)
 				.removeClass('et2_clickable')
