@@ -189,7 +189,7 @@ class mail_ui
 		$stmpl = new etemplate_new('mail.subscribe');
 		
 		$profileId = $_GET['acc_id'];
-		$sel_options['foldertree'] =  $this->getFolderTree(false, null,false);
+		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
 		$unsubscribedFolders = $this->mail_bo->fetchUnSubscribedFolders();
 		$allFolders = $this->mail_bo->getFolderObjects();
 
@@ -832,16 +832,10 @@ class mail_ui
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
-		if (!is_null($_nodeID) && $_nodeID !=0)
+		if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
 		{
 			$node = self::findNode($out,$_nodeID);
 			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
-			if (is_numeric($_nodeID) && $_returnNodeOnly==false)
-			{
-				$baseNode = array('id' => 0);
-				$this->setOutStructure($node, $baseNode, self::$delimiter);
-				return $baseNode;
-			}
 			return $node;
 		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
