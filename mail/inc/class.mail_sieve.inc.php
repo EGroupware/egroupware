@@ -59,6 +59,7 @@ class mail_sieve
 	/**
 	 * Constructor
 	 *
+	 *
 	 */
 
 	function __construct()
@@ -74,7 +75,9 @@ class mail_sieve
 		$this->botranslation	=& $GLOBALS['egw']->translation;
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
-				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		{
+			$profileID = (int) $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		}
 		$this->mailbo	= mail_bo::getInstance(false, $profileID, false, $oldIMAPObject=true);
 
 		$this->mailPreferences  =& $this->mailbo->mailPreferences;
@@ -90,22 +93,20 @@ class mail_sieve
 			$this->bosieve	= $icServer;
 			$serverclass = get_class($icServer);
 			$classsupportstimedsieve = false;
-			if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'timedsieve') !== false) $classsupportstimedsieve = true;
+			if (!empty($serverclass) && stripos(constant($serverclass . '::CAPABILITIES'), 'timedsieve') !== false)
+			{
+				$classsupportstimedsieve = true;
+			}
 			$this->timed_vacation = $classsupportstimedsieve && $icServer->enableCyrusAdmin &&
 			$icServer->adminUsername && $icServer->adminPassword;
-		}
-		else
-		{
-			// we intend to die in index, to be able to die graciously
-			//die(lang('Sieve not activated'));
 		}
 	}
 
 	/**
 	 * Sieve rules list
 	 *
-	 * @param array $content=null
-	 * @param string $msg=null
+	 * @param {array} $content=null
+	 * @param {string} $msg=null
 	 */
 	function index(array $content=null,$msg=null)
 	{
@@ -113,12 +114,15 @@ class mail_sieve
 		//Instantiate an etemplate_new object
 		$tmpl = new etemplate_new('mail.sieve.index');
 
-		if ($_GET['msg']) $msg = $_GET['msg'];
-		$content['msg'] = $msg;
+		if ($msg)
+		{
+			$content['msg'] = $msg;
+		}
+
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			//Initializes the Grid contents
-			$content['rg']= $this->get_rows($rows,$readonlys);
+			$content['rg']= $this->get_rows();
 
 			// Set content-menu actions
 			$tmpl->set_cell_attribute('rg', 'actions',$this->get_actions());
@@ -135,14 +139,15 @@ class mail_sieve
 			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
-		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,$readonlys);
+		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,array());
 	}
 
 	/**
 	 * Email Notification Edit
 	 *
-	 * @param type $content
-	 * @param type $msg
+	 *
+	 * @param {array} $content
+	 * @param {string} $msg
 	 */
 	function editEmailNotification($content=null, $msg='')
 	{
@@ -174,7 +179,6 @@ class mail_sieve
 					case 'apply':
 						if (isset($content['status']))
 						{
-							//error_log(__METHOD__. 'content:' . array2string($content));
 							$newEmailNotification = $content;
 							if (empty($preferences->preferences['prefpreventforwarding']) ||
 								$preferences->preferences['prefpreventforwarding'] == 0 )
@@ -197,17 +201,18 @@ class mail_sieve
 							{
 								$msg .= lang("email notification successfully updated!");
 							}
-							//error_log(__METHOD__. '() new email notification : ' . array2string($newEmailNotification));
 						}
 						else
 						{
 							$msg .= lang('email notification update failed! You need to set an email address!');
 							break;
 						}
+						egw_framework::refresh_opener($msg, 'mail');
 						if ($button === 'apply') break;
 
 					case 'cancel':
-						egw::redirect_link('/mail/index.php');
+						egw_framework::window_close();
+						common::egw_exit();
 				}
 				$this->saveSessionData();
 			}
@@ -222,7 +227,6 @@ class mail_sieve
 					1 => lang('Yes'),
 				),
 			);
-			//error_log(__METHOD__. '() new email notification : ' . array2string($content));
 			$content['msg'] = $msg;
 		}
 		else
@@ -236,13 +240,14 @@ class mail_sieve
 	/**
 	 * Sieve rules edit
 	 *
-	 * @param array $content=null
+	 *
+	 * @param {array} $content=null
 	 */
 	function edit ($content=null)
 	{
 		//Instantiate an etemplate_new object, representing sieve.edit template
 		$etmpl = new etemplate_new('mail.sieve.edit');
-		//error_log(__METHOD__.'() content before the action ' .array2string($content));
+
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -263,7 +268,6 @@ class mail_sieve
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
 				}
-				//_debug_array($content);
 			}
 			else // Adding new rule
 			{
@@ -284,6 +288,7 @@ class mail_sieve
 		{
 			$this->restoreSessionData();
 			list($button) = @each($content['button']);
+
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
 			$ruleID = ($this->rulesByID['priority'] -1) / 2;
 
@@ -323,7 +328,7 @@ class mail_sieve
 						if( $newRule['anyof'] )    { $newRule['flg'] += 4; }
 						if( $newRule['keep'] )     { $newRule['flg'] += 8; }
 						if( $newRule['regexp'] )   { $newRule['flg'] += 128; }
-						error_log(__METHOD__ . 'new rules= ' .array2string($newRule));
+
 						if($newRule['action'] && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
@@ -349,19 +354,20 @@ class mail_sieve
 						$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 						$error++;
 					}
-					//refresh the rules list
-					//$this->sieve_egw_refresh($msg);
+					egw_framework::refresh_opener($msg, 'mail');
 					if ($button == "apply") break;
 				//fall through
 
 				case 'delete':
 					if ($button == "delete")
-					$this->ajax_action($button, $ruleID, $msg);
+					$msg  = $this->ajax_action(false,$button, $ruleID, $msg);
+					egw_framework::refresh_opener($msg, 'mail');
 
 				case 'cancel':
 					egw_framework::window_close();
 					common::egw_exit();
 			}
+
 		}
 		$sel_options = array(//array_merge($sel_options,array(
 			'anyof' => array(
@@ -379,8 +385,7 @@ class mail_sieve
 			'ctype' => emailadmin_script::$btransform_ctype_array,
 
 		);
-		//$preserv = $sel_options;
-		//error_log(__METHOD__.'() content'. array2string($content));
+
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
 		$mailCompose = new mail_compose();
 		$sel_options['action_folder_text'] = $mailCompose->ajax_searchFolder(0,true);
@@ -391,6 +396,7 @@ class mail_sieve
 
 	/**
 	 * Read email notification script from the sieve script from server
+	 *
 	 *
 	 * @return type, returns array of email notification data, and in case of failure returns false
 	 */
@@ -425,9 +431,10 @@ class mail_sieve
 	/**
 	 * Fetch Vacation rules and predefined Addresses from mailserver
 	 *
-	 * @param type $vacation
-	 * @param type $msg
-	 * @return type
+	 * @param {array} $vacation
+	 * @param {string} $msg
+	 *
+	 * @return {array} return multi-dimentional array of vacation and aliases
 	 */
 	function getVacation(&$vacation,&$msg)
 	{
@@ -477,11 +484,12 @@ class mail_sieve
 	/**
 	 * Convert the taglist-email contact address "account name<email>" format to sieveRule "email" format
 	 *
-	 * @param type $addresses
+	 * @param {array} $addresses
+	 *
+	 * @return {boolean|array} return false if failed | array of addresses in case of success
 	 */
 	function email_address_converter($addresses)
 	{
-		error_log(__METHOD__. '() emailAddress '. array2string($addresses));
 		$tagmail = array();
 		foreach ($addresses as $key => $adr)
 		{
@@ -489,12 +497,12 @@ class mail_sieve
 			if (preg_match('/(?<=\<)[^<]+(?=\>)/', $adr,$tagmail))
 			{
 				$addressses = $tagmail;
-				error_log(__METHOD__. '() inside the foreach' . array2string($tagmail). 'key is' . $key);
+				//error_log(__METHOD__. '() inside the foreach' . array2string($tagmail). 'key is' . $key);
 			}
 		}
 		if (!empty($addresses))
 		{
-			error_log(__METHOD__. '() emailAddress '. array2string($addresses));
+			//error_log(__METHOD__. '() emailAddress '. array2string($addresses));
 			return $addressses;
 		}
 		else
@@ -507,8 +515,8 @@ class mail_sieve
 	/**
 	 * Vacation edit
 	 *
-	 * @param type $content
-	 * @param type $msg
+	 * @param {array} $content
+	 * @param {string} $msg
 	 */
 	function editVacation($content=null, $msg='')
 	{
@@ -644,8 +652,9 @@ class mail_sieve
 	/**
 	 * Checking vaction validation
 	 *
-	 * @param type $_vacation
-	 * @param type $_checkAddresses
+	 * @param {array} $_vacation
+	 * @param {boolean} $_checkAddresses
+	 *
 	 * @return boolean
 	 */
 	function checkRule($_vacation,$_checkAddresses=true)
@@ -698,7 +707,7 @@ class mail_sieve
 				}
 			}
 		}
-		error_log(__METHOD__. array2string($this->errorStack));
+		//error_log(__METHOD__. array2string($this->errorStack));
 		if(count($this->errorStack) == 0)
 		{
 			return true;
@@ -713,8 +722,8 @@ class mail_sieve
 	/**
 	 * Move rule to an other position in list
 	 *
-	 * @param type $objType
-	 * @param type $orders
+	 * @param {array} $objType
+	 * @param {array} $orders
 	 */
 	function ajax_moveRule($objType, $orders)
 	{
@@ -723,17 +732,15 @@ class mail_sieve
 
 		$this->getRules(null);
 
-		//_debug_array($this->rules);
 		$newrules = $this->rules;
 		$keyloc = 0;
 		foreach($orders as $keys => $ruleID)
 		{
-			error_log(__METHOD__.'() ruleID= '. $ruleID);
 			$newrules[$keys] = $this->rules[$ruleID];
 		}
 
 		$msg = 'the rule with priority moved from ' . $from . ' to ' . $to;
-		egw_framework::message($msg);
+
 		$this->rules = $newrules;
 		$this->updateScript();
 		$this->saveSessionData();
@@ -768,10 +775,11 @@ class mail_sieve
 	/**
 	 * Ajax function to handle actions over sieve rules list on gd
 	 *
-	 * @param type $actions
-	 * @param type $checked
-	 * @param type $action_msg
-	 * @param type $msg
+	 * @param {int|boolean} $exec_id template unique Id | false if we only wants to use serverside actions
+	 * @param {string} $actions name of action
+	 * @param {string} $checked the selected rule id
+	 * @param {string} $msg containing the message comming from the client-side
+	 *
 	 */
 	function ajax_action($exec_id, $action,$checked,$msg)
 	{
@@ -812,12 +820,20 @@ class mail_sieve
 		}
 		$this->saveSessionData();
 
-		//Refresh the form
-		$this->ajax_sieve_egw_refresh($exec_id,$msg);
+		//Refresh the grid
+		if ($exec_id)
+		{
+			$this->ajax_sieve_egw_refresh($exec_id,$msg);
+		}
+		else
+		{
+			return $msg;
+		}
 	}
 
 	/**
 	 * Add script to sieve script
+	 *
 	 *
 	 */
 	function addScript()
@@ -832,8 +848,8 @@ class mail_sieve
 	/**
 	 * Convert an script seive format rule to human readable format
 	 *
-	 * @param type $rule
-	 * @return string,  return the rule as a string.
+	 * @param {array} $rule Array of rules
+	 * @return {string}  return the rule as a string.
 	 */
 	function buildRule($rule)
 	{
@@ -914,10 +930,11 @@ class mail_sieve
 	}
 
 	/**
+	 * Helper function to find the type of content
 	 *
-	 * @param type $matchstr
-	 * @param type $regex
-	 * @return type
+	 * @param {string} $matchstr string that should be compared
+	 * @param {string} $regex regular expresion as pattern to be matched
+	 * @return {string} return the type
 	 */
 	function setMatchType (&$matchstr, $regex = false)
 	{
@@ -942,6 +959,8 @@ class mail_sieve
 
 	/**
 	 * Save sieve script
+	 *
+	 *
 	 */
 	function saveScript()
 	{
@@ -959,6 +978,8 @@ class mail_sieve
 
 	/**
 	 * Save session data
+	 *
+	 *
 	 */
 	function saveSessionData()
 	{
@@ -970,6 +991,8 @@ class mail_sieve
 
 	/**
 	 * Update the sieve script on mail server
+	 *
+	 *
 	 */
 	function updateScript()
 	{
@@ -983,9 +1006,11 @@ class mail_sieve
 	 * getRules()
 	 * Fetched rules save on array()rules.
 	 *
-	 * @return boolean, returns false in case of failure and true in case of success.
+	 * @param {string} $ruleID  Numeric Id of the rule if specify return the specitic rule| otherwise ruleByID would be null
+	 *
+	 * @return {boolean} returns false in case of failure and true in case of success.
 	 */
-	function getRules($ruleID)
+	function getRules($ruleID = null)
 	{
 		if($script = $this->bosieve->getScript($this->scriptName))
 		{
@@ -1003,7 +1028,6 @@ class mail_sieve
 				$this->rulesByID = $this->rules[$ruleID];
 				$this->vacation	= $this->bosieve->getVacation($this->scriptName);
 			}
-			//$ruleslist= preg_match('#rule',$script, $subject)
 			return true;
 		}
 		else
@@ -1018,6 +1042,7 @@ class mail_sieve
 
 	/**
 	 * Restore session data
+	 *
 	 */
 	function restoreSessionData()
 	{
@@ -1028,9 +1053,12 @@ class mail_sieve
 	}
 
 	/**
-	 * Get the data for iterating the rows on rules list grid
 	 *
-	 * @return type
+	 * Get the data for iterating the rows on rules list grid
+ 	 * @param {array} $rows Array of rows
+	 * @param {array} $readonlys Array of readonlys contents
+	 *
+	 * @return {boolean|array} Array of rows | false if failed
 	 */
 	function get_rows(&$rows,&$readonlys)
 	{
@@ -1051,25 +1079,22 @@ class mail_sieve
 					$row['class'] = 'mail_sieve_ENABLED';
 				}
 			}
-
-			//error_log(__METHOD__. array2string($rows));
-			//_debug_array($rows);
 		}else
 		{
 			//error_log(__METHOD__.'There are no rules or something is went wrong at getRules()!');
-			return ;
+			return false;
 		}
+		// Shift one down, because in grid the first row is reserved for header
 		array_unshift($rows,array(''=> ''));
-		//_debug_array($rows);
 		return $rows;
 	}
 
 	/**
 	 * Get actions / context menu for index
 	 *
+	 * @param {array} $query
 	 *
-	 *
-	 * @return array, returns defined actions as an array
+	 * @return {array} returns defined actions as an array
 	 */
 	private function get_actions(array $query=array())
 	{
@@ -1103,7 +1128,6 @@ class mail_sieve
 			),
 
 		);
-		//_debug_array($actions);
 		return $actions;
 	}
 

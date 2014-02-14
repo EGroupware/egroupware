@@ -2528,7 +2528,6 @@ app.classes.mail = AppJS.extend(
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
 					this._do_action(typeId,actionData['data'],ruleID);
-					//window.egw_refresh('refreshed',this.appname);
 					break;
 				case 'disable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
