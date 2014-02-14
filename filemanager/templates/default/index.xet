@@ -14,7 +14,6 @@
 				<column/>
 				<column/>
 				<column/>
-				<column width="70"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -28,10 +27,6 @@
 					<nextmatch-sortheader label="Group" id="gid"/>
 					<nextmatch-header label="Comment" id="comment"/>
 					<nextmatch-customfields id="customfields" readonly="true"/>
-					<hbox options="0,0">
-						<nextmatch-header label="Actions" id="legacy_actions"/>
-						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('filemanager.index.rows').toggleAllSelected(); return false;" image="check"/>
-					</hbox>
 				</row>
 				<row class="row $row_cont[class]">
 					<vfs-mime align="center" id="$row"/>
@@ -44,12 +39,6 @@
 					<vfs-gid id="${row}[gid]" no_lang="1"/>
 					<description id="${row}[comment]"/>
 					<customfields-list id="$row" class="customfields"/>
-					<hbox align="right">
-						<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[$row_cont[path]]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
-						<buttononly align="center" id="mail[$row_cont[path]]" onclick="open_mail('$row_cont[path]'); return false;" options="mail_post_to"/>
-						<button align="center" statustext="Delete this file or directory" label="Delete" id="delete[$row_cont[path]]" onclick="et2_dialog.confirm(widget,'Delete this file or directory','Delete')" image="delete"/>
-						<checkbox align="right" id="checked[]" options="&quot;$row_cont[path]&quot;"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>

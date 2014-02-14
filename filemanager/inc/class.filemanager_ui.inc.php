@@ -762,20 +762,9 @@ class filemanager_ui
 			{
 				$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
 			}
-			$path_quoted = str_replace(array('"',"'"),array('&quot;',"\\'"),$path);
-			if (!$dir_is_writable[$dir])
-			{
-				$readonlys["delete[$path_quoted]"] = true;	// no rights to delete the file
-			}
 			if (egw_vfs::is_dir($path))
 			{
-				$readonlys["mail[$path_quoted]"] = true;
 				$row['class'] = 'isDir';
-			}
-			elseif (!egw_vfs::is_readable($path) ||
-				!$GLOBALS['egw_info']['user']['apps']['felamimail'])
-			{
-				$readonlys["mail[$path_quoted]"] = true;
 			}
 			$row['download_url'] = egw_vfs::download_url($path);
 
@@ -784,7 +773,6 @@ class filemanager_ui
 		}
 		// query comments and cf's for the displayed rows
 		$cols_to_show = explode(',',$GLOBALS['egw_info']['user']['preferences']['filemanager']['nextmatch-filemanager.index.rows']);
-		$cfs = config::get_customfields('filemanager');
 		$all_cfs = in_array('customfields',$cols_to_show) && $cols_to_show[count($cols_to_show)-1][0] != '#';
 		if ($path2n && (in_array('comment',$cols_to_show) || in_array('customfields',$cols_to_show)) &&
 			($path2props = egw_vfs::propfind(array_keys($path2n))))
