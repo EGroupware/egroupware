@@ -869,9 +869,11 @@ abstract class egw_framework
 	 *
 	 * This is similar to the former common::navbar() method - though it returns the vars and does not place them in global scope.
 	 *
+	 * @param boolean $svg=false should svg images be returned or not:
+	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return array
 	 */
-	protected static function _get_navbar_apps()
+	protected static function _get_navbar_apps($svg=false)
 	{
 		list($first) = each($GLOBALS['egw_info']['user']['apps']);
 		if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
@@ -927,13 +929,13 @@ if ($app == 'home') continue;
 				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
 				if ($app != $GLOBALS['egw_info']['flags']['currentapp'])
 				{
-					$apps[$app]['icon']  = common::image($icon_app,Array($icon,'nonav'));
-					$apps[$app]['icon_hover']  = common::image_on($icon_app,Array($icon,'nonav'),'-over');
+					$apps[$app]['icon']  = common::image($icon_app,Array($icon,'nonav'),'',$svg);
+					$apps[$app]['icon_hover']  = common::image_on($icon_app,Array($icon,'nonav'),'-over',$svg);
 				}
 				else
 				{
-					$apps[$app]['icon']  = common::image_on($icon_app,Array($icon,'nonav'),'-over');
-					$apps[$app]['icon_hover']  = common::image($icon_app,Array($icon,'nonav'));
+					$apps[$app]['icon']  = common::image_on($icon_app,Array($icon,'nonav'),'-over',$svg);
+					$apps[$app]['icon_hover']  = common::image($icon_app,Array($icon,'nonav'),'',$svg);
 				}
 			}
 		}

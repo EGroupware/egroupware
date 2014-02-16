@@ -751,11 +751,13 @@ class common
 	 * @param string $appname
 	 * @param string|array $image one or more image-name in order of precedence
 	 * @param string $extension='' extension to $image, makes sense only with an array
+	 * @param boolean $svg=false should svg images be returned or not:
+	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return string url of image or null if not found
 	 */
-	static function image_on($app,$image,$extension='_on')
+	static function image_on($app,$image,$extension='_on',$svg=false)
 	{
-		return ($img = self::image($app,$image,$extension)) ? $img : self::image($app,$image);
+		return ($img = self::image($app,$image,$extension,$svg)) ? $img : self::image($app,$image,'',$svg);
 	}
 
 	/**
