@@ -190,6 +190,7 @@ class mail_ui
 	function setSubscribe ($folderName,$status=true)
 	{
 		$validFolder = true;
+		$result = true;
 		$nameSpaces = $this->mail_bo->_getNameSpaces();
 		
 		foreach($nameSpaces as $key => $value )
@@ -208,6 +209,7 @@ class mail_ui
 				$this->mail_bo->subscribe($folderName, $status);
 			} catch (Exception $ex)
 			{
+				$result = false;
 				error_log(__METHOD__.__LINE__."() error ".$ex."happend while subscribing to folder ". $folderName );
 			}
 
@@ -219,9 +221,11 @@ class mail_ui
 				$this->mail_bo->subscribe($folderName, $status);
 			} catch (Exception $ex)
 			{
+				$result = false;
 				error_log(__METHOD__.__LINE__."() error ".$ex."happend while unsubscribing of folder ". $folderName );
 			}
 		}
+		return $result;
 	}
 	/**
 	 * Subscription popup window
@@ -270,13 +274,29 @@ class mail_ui
 						$folderName = $content['profileId'] . self::$delimiter . $folder->folderName;
 						if (!in_array($folderName, $content['foldertree']))
 						{
-							$this->setSubscribe($folder->folderName, false);
+							if($this->setSubscribe($folder->folderName, false))
+							{
+								$msg = lang('Subscription successfully saved!');
+
+							}
+							else
+							{
+								$msg = lang('Subscription faild!');
+							}
 						}
 						else
 						{
-							$this->setSubscribe($folder->folderName, true);
+							if($this->setSubscribe($folder->folderName, true))
+							{
+								$msg = lang('Subscription successfully saved!');
+							}
+							else
+							{
+								$msg = lang('Subscription faild!');
+							}
 						}
 					}
+					egw_framework::refresh_opener($msg, 'mail');
 					if ($button == 'apply') break;
 				}
 				case 'cancel':
