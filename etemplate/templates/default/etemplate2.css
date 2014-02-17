@@ -412,6 +412,9 @@ action buttons, left aligned for "extra" controls
 /**
  * File upload
  */
+div.et2_file {
+	display: inline-block;
+}
 .et2_file .progress {
   width: 300px;
   max-height: 6em;
