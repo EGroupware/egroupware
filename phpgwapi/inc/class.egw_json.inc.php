@@ -40,8 +40,9 @@ class egw_json_request
 		if (get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
 
 		$json_data = json_decode($input_data,true);
-		if (is_array($json_data) && isset($json_data['request']) && isset($json_data['request']['parameters']))
+		if (is_array($json_data) && isset($json_data['request']) && isset($json_data['request']['parameters']) && is_array($json_data['request']['parameters']))
 		{
+			//error_log(__METHOD__.__LINE__.array2string($json_data['request']).function_backtrace());
 			$parameters =& $json_data['request']['parameters'];
 		}
 		else
