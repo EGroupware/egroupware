@@ -359,7 +359,7 @@ class db_backup
 				$system_config[] = $row;
 			}
 		}
-		$this->db->transaction_begin();
+		if (substr($this->db->Type,0,5) != 'mysql') $this->db->transaction_begin();
 
 		// drop all existing tables
 		foreach($this->adodb->MetaTables('TABLES') as $table)
@@ -616,9 +616,12 @@ class db_backup
 			unlink($name);
 			rmdir($dir.'/database_backup');
 		}
-		if (!$this->db->transaction_commit())
+		if (substr($this->db->Type,0,5) != 'mysql')
 		{
-			return lang('Restore failed');
+			if (!$this->db->transaction_commit())
+			{
+				return lang('Restore failed');
+			}
 		}
 		// flush instance cache
 		egw_cache::flush(egw_cache::INSTANCE);
