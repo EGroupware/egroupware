@@ -177,7 +177,52 @@ class mail_ui
 		$GLOBALS['egw']->preferences->save_repository(true);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
-	
+	/**
+	 * Subscribe or Unsubscribe to a folder
+	 * also it is consider if the folder is valid to un/subscribe
+	 *
+	 * @param {boolean} $status subscribe if true and unsubscribe if false
+	 * @param {string} $folderName folder name
+	 *
+	 * @example setSubscribe('INBOX', true) subscribe to folder INBOX
+	 *
+	 */
+	function setSubscribe ($folderName,$status=true)
+	{
+		$validFolder = true;
+		$nameSpaces = $this->mail_bo->_getNameSpaces();
+		
+		foreach($nameSpaces as $key => $value )
+		{
+			if (str_replace($value['delimiter'],"",$value['prefix']) == $folderName &&
+					$key == 'others' || $key == 'user')
+			{
+				$validFolder = false;
+			}
+		}
+
+		if ($status && $validFolder)
+		{
+			try
+			{
+				$this->mail_bo->subscribe($folderName, $status);
+			} catch (Exception $ex)
+			{
+				error_log(__METHOD__.__LINE__."() error ".$ex."happend while subscribing to folder ". $folderName );
+			}
+
+		}
+		else if($validFolder)
+		{
+			try
+			{
+				$this->mail_bo->subscribe($folderName, $status);
+			} catch (Exception $ex)
+			{
+				error_log(__METHOD__.__LINE__."() error ".$ex."happend while unsubscribing of folder ". $folderName );
+			}
+		}
+	}
 	/**
 	 * Subscription popup window
 	 *
@@ -189,19 +234,11 @@ class mail_ui
 		$stmpl = new etemplate_new('mail.subscribe');
 		
 		$profileId = $_GET['acc_id'];
-		//$zstarttime = microtime (true);
+		
 		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
-		//$zendtime = microtime(true) - $zstarttime;
-		//error_log(__METHOD__.__LINE__. " Building tree -> time used: ".$zendtime);
-		//$zstarttime = microtime (true);
-		$unsubscribedFolders = $this->mail_bo->fetchUnSubscribedFolders();
-		//$zendtime = microtime(true) - $zstarttime;
-		//error_log(__METHOD__.__LINE__. " Fetching Unsubscribed -> time used: ".$zendtime);
-		//$zstarttime = microtime (true);
+		
 		$allFolders = $this->mail_bo->getFolderObjects();
-		//$zendtime = microtime(true) - $zstarttime;
-		//error_log(__METHOD__.__LINE__. " getFolderObjects -> time used: ".$zendtime);
-
+	
 		if (!is_array($content))
 		{
 			if ($profileId)
@@ -217,9 +254,9 @@ class mail_ui
 					{
 						array_push($content['foldertree'], $folderName);
 					}
+					}
 				}
 			}
-		}
 		else
 		{
 			list($button) = @each($content['button']);
@@ -228,19 +265,16 @@ class mail_ui
 				case 'save':
 				case 'apply':
 				{
-					$unsubs = array();
-					$subs= array();
-					
 					foreach ($allFolders as $folder)
 					{
 						$folderName = $content['profileId'] . self::$delimiter . $folder->folderName;
 						if (!in_array($folderName, $content['foldertree']))
 						{
-							//TODO unsubscribe $folderName
+							$this->setSubscribe($folder->folderName, false);
 						}
 						else
 						{
-							//TODO subscribe $folderName
+							$this->setSubscribe($folder->folderName, true);
 						}
 					}
 					if ($button == 'apply') break;
