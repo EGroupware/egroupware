@@ -271,7 +271,9 @@ var et2_arrayMgr = Class.extend(
 				}
 				catch(e)
 				{
-					egw.debug("error", typeof e == 'object' ? e.message : e);
+					// only log error, as they are no real errors but missing data
+					egw.debug("log", typeof e == 'object' ? e.message : e);
+					_ident = null;
 				}
 			}
 		}
