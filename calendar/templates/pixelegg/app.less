@@ -1387,5 +1387,121 @@ tr.prefRow:hover .prefHelp {
     padding-bottom: 5px;
 }
 
-//
+
+/* ###########################################################################################################################################
+*   Calendar specfic
+/* ###########################################################################################################################################
+*/
+
+
+
+
+/*ui-widget*/
+ /*edit series*/
+button#series {
+    background-image:url('../images/edit.png') !important;
+    .Complete_Button_text_icon_before;
+    .Complete_Button_save_apply_copy;
+    &:hover {background-image:url('../images/edit.png') !important; background-color: @color_positive_action_active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
+}
+/*edit exception*/
+button#exception {
+        background-image:url('../images/edit.png') !important;
+    .Complete_Button_text_icon_before;
+    .Complete_Button_save_apply_copy;
+    &:hover {background-image:url('../images/edit.png') !important;background-color: @color_positive_action_active !important;}
+    &:active {background-color: @color_positive_action_active !important;}
+}
+
+/*calendar series add*/
+#calendar-edit_add {
+    &:active {background-color: @color_positive_action_active !important;}
+/*    .Complete_Button_add;
+    &:hover {.Complete_Button_add_hover;} */
+}
+/*calendar search freetime*/
+#calendar-edit_freetime{
+    &:active {background-color: @color_positive_action_active !important;}
+}
+/*calendar search freetime*/
+button[id*="edit_button[add_alarm]"]{
+    &:active {background-color: @color_positive_action_active !important;}
+}
+
+
+
+/*SIDEMENU                   */
+ /*extended for calender app*/
+ 
+ /*distance between picture and select*/
+select#calendar_view{margin-top: 8px;}
+
+/*searchfield*/
+input#calendar_keywords{margin: 5px 0;}
+
+div#calendar-container {
+    margin-left: 0px;
+    /*distance to cal widget*/
+    /*margin-top: 10px;*/
+    
+    select, input, option {font-size: 11px;}
+
+    div.calendar{
+        background-color: inherit;
+        padding: 0px;
+
+
+        table {
+            .background_color_5_gray;
+            .basefontfamily;
+
+            thead {
+                // Month
+                .title {
+                    background-color: @egw_color_1_a;
+                }
+
+                // << today >>
+                .headrow {}
+
+                // daynames
+                .daynames {
+                    background-color: @egw_color_2_e;
+
+                }
+
+
+            }
+
+            tbody {
+                tr.daysrow {
+
+                    &:hover {background-color: @egw_color_1_a;}
+
+                    // fields
+                    .name {}
+
+                    .day {}
+
+                    .weekend {}
+                }
+                // hover tr
+                tr.rowhilite td{background-color: @egw_color_1_a;}
+
+            }
+
+
+        } // table
+    }
+
+}
+
+
+/* ########################################################################################
+/* * Calendar END */ 
+
+
+
+
 //

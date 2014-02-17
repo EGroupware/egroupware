@@ -1922,3 +1922,183 @@ textarea.prefValue {
   display: inline-block;
   padding-bottom: 5px;
 }
+/* ###########################################################################################################################################
+*   Calendar specfic
+/* ###########################################################################################################################################
+*/
+/*ui-widget*/
+/*edit series*/
+button#series {
+  background-image: url('../images/edit.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.box_shadow_standard_light;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
+}
+button#series img[url*="svg"] {
+  background-color: #b4b4b4;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-repeat: repeat-x;
+  fill: red;
+}
+button#series:hover {
+  background-color: #189800 !important;
+  color: #000000;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+button#series:active {
+  background-color: #1aa200;
+}
+button#series:hover {
+  background-image: url('../images/edit.png') !important;
+  background-color: #1aa200 !important;
+}
+button#series:active {
+  background-color: #1aa200 !important;
+}
+/*edit exception*/
+button#exception {
+  background-image: url('../images/edit.png') !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.box_shadow_standard_light;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
+}
+button#exception img[url*="svg"] {
+  background-color: #b4b4b4;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4));
+  background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
+  background-repeat: repeat-x;
+  fill: red;
+}
+button#exception:hover {
+  background-color: #189800 !important;
+  color: #000000;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+button#exception:active {
+  background-color: #1aa200;
+}
+button#exception:hover {
+  background-image: url('../images/edit.png') !important;
+  background-color: #1aa200 !important;
+}
+button#exception:active {
+  background-color: #1aa200 !important;
+}
+/*calendar series add*/
+#calendar-edit_add {
+  /*    .Complete_Button_add;
+    &:hover {.Complete_Button_add_hover;} */
+}
+#calendar-edit_add:active {
+  background-color: #1aa200 !important;
+}
+/*calendar search freetime*/
+#calendar-edit_freetime:active {
+  background-color: #1aa200 !important;
+}
+/*calendar search freetime*/
+button[id*="edit_button[add_alarm]"]:active {
+  background-color: #1aa200 !important;
+}
+/*SIDEMENU                   */
+/*extended for calender app*/
+/*distance between picture and select*/
+select#calendar_view {
+  margin-top: 8px;
+}
+/*searchfield*/
+input#calendar_keywords {
+  margin: 5px 0;
+}
+div#calendar-container {
+  margin-left: 0px;
+  /*distance to cal widget*/
+  /*margin-top: 10px;*/
+}
+div#calendar-container select,
+div#calendar-container input,
+div#calendar-container option {
+  font-size: 11px;
+}
+div#calendar-container div.calendar {
+  background-color: inherit;
+  padding: 0px;
+}
+div#calendar-container div.calendar table {
+  background-color: #fafafa;
+  font-family: Verdana, Helvetica, Sans-Serif;
+  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+}
+div#calendar-container div.calendar table thead .title {
+  background-color: #ffc200;
+}
+div#calendar-container div.calendar table thead .daynames {
+  background-color: #679fd2;
+}
+div#calendar-container div.calendar table tbody tr.daysrow:hover {
+  background-color: #ffc200;
+}
+div#calendar-container div.calendar table tbody tr.rowhilite td {
+  background-color: #ffc200;
+}
+/* ########################################################################################
+/* * Calendar END */
