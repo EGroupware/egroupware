@@ -616,6 +616,11 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   background-repeat: no-repeat;
   background-color: rgba(255, 255, 255, 0.5);
 }
+.mail_subscription_header {
+  font-weight: bold;
+  font-size: 150%;
+  padding-bottom: 20px;
+}
 #popupMainDiv {
   padding: 5px;
 }
@@ -1416,8 +1421,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   padding: 0px;
 }
 #mail-subscribe table.et2_grid tr td div.et2_box {
-  height: 350px;
+  height: 500px;
   overflow: auto;
+}
+.mail_subscription_header {
+  font-weight: bold;
+  font-size: 150%;
+  padding-bottom: 20px;
 }
 /* ##################################################################################
  *       E-Mail
