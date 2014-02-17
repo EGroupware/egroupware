@@ -271,7 +271,7 @@ var et2_arrayMgr = Class.extend(
 				}
 				catch(e)
 				{
-					egw.debug("error", e);
+					egw.debug("error", typeof e == 'object' ? e.message : e);
 				}
 			}
 		}
