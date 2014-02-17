@@ -2,7 +2,6 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
-		<description align="center" id="msg" class="error"/>
 		<grid width="100%">
 			<columns>
 				<column width="32"/>
