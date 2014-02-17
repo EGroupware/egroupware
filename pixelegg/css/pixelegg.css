@@ -829,6 +829,11 @@
     background-size: 12px 12px;
     background-position: 0 0;
   }
+  .sidebox-favorites ul.favorites li:first-child a div.ui-icon-heart {
+    background-image: url(../images/trash.png);
+    background-size: 12px 12px;
+    background-position: 0 0;
+  }
   .sidebox-favorites ul.favorites li:first-child a div.sideboxstar {
     background-image: url(../images/trash.png);
     background-size: 12px 12px;
@@ -4583,9 +4588,6 @@ table.nextmatch_header img {
   /*min-height: 50px;*/
 }
 .egw_fw_ui_category_content:last-child {
-  /*padding:  5px 0.3em 1.5em 0.3em;*/
-  /*margin: 0 0 10px 0;*/
-  /*.background_color_30_gray;*/
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 10px;
@@ -4650,7 +4652,7 @@ table.nextmatch_header img {
   float: right;
 }
 .egw_fw_ui_sidemenu_listitem a {
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0px 5px 5px;
   text-decoration: none;
   min-width: 5em;
 }
