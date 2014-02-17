@@ -1645,6 +1645,7 @@ if ($app == 'home') continue;
 		if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True')
 		{
 			// get used bundles and cache them on tree-level for 2h
+			//$bundles = self::get_bundles(); egw_cache::setTree(__CLASS__, 'bundles', $bundles, 7200);
 			$bundles = egw_cache::getTree(__CLASS__, 'bundles', array(__CLASS__, 'get_bundles'), array(), 7200);
 			$bundles_ts = $bundles['.ts'];
 			unset($bundles['.ts']);
@@ -1740,6 +1741,17 @@ if ($app == 'home') continue;
 	}
 
 	/**
+	 * Maximum number of files in a bundle
+	 *
+	 * We split bundles, if they contain more then these number of files,
+	 * because IE silently stops caching them, if Content-Length get's too big.
+	 *
+	 * IE11 cached 142kb compressed api bundle, but not 190kb et2 bundle.
+	 * Splitting et2 bundle in max 50 files chunks, got IE11 to cache both bundles.
+	 */
+	const MAX_BUNDLE_FILES = 50;
+
+	/**
 	 * Return typical bundes we use:
 	 * - api stuff phpgwapi/js/jsapi/* and it's dependencies incl. jquery
 	 * - etemplate2 stuff not including api bundle, but jquery-ui
@@ -1772,10 +1784,21 @@ if ($app == 'home') continue;
 			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
 		}
 
+		// automatic split bundles with more then MAX_BUNDLE_FILES (=50) files
+		foreach($bundles as $name => $files)
+		{
+			$n = '';
+			while (count($files) > self::MAX_BUNDLE_FILES*(int)$n)
+			{
+				$files80 = array_slice($files, self::MAX_BUNDLE_FILES*(int)$n, self::MAX_BUNDLE_FILES, true);
+				$bundles[$name.$n++] = $files80;
+			}
+		}
+
 		// store timestamp of when bundle-config was created
 		$bundles['.ts'] = time();
 
-		error_log(__METHOD__."() returning ".array2string($bundles));
+		//error_log(__METHOD__."() returning ".array2string($bundles));
 		return $bundles;
 	}
 
