@@ -101,7 +101,7 @@ if ($app == 'home' && !($GLOBALS['egw']->framework instanceof jdots_framework))
 {
 	$app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app'];
 	if (!$app || $app == 'home') $app = isset($GLOBALS['egw_info']['user']['apps']['calendar']) ? 'calendar' : key($GLOBALS['egw_info']['user']['apps']);
-	egw::redirect(egw_framework::index($app, $app));
+	egw::redirect(egw_framework::index($app), $app);
 }
 
 if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
