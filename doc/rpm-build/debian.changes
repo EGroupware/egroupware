@@ -1,3 +1,26 @@
+egroupware (1.8.006.20140217) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Security: fixed arbitrary file overwrite and remote code execution reported by Pedro Ribeiro (pedrib@gmail.com) of Agile Information Security
+  * API: support for mbstring.func_overload=0 (previously we required mbstring.func_overload=7 to correctly support utf-8)
+  * API/Preferences: fixed can NOT unset last (forced) preference of an app, also fixed not working deleting of prefs when deleting a user or group
+  * API/Admin: fixed SQL error on repairing filesystem, if one of required directories has wrong permissions
+  * PostgreSQL/Addressbook: fixed SQL error when sorting by a custom field
+  * PostgreSQL/ProjectManager: fixed SQL error "pm_id is ambigues" when accessing /apps/projectmanager via filemanager
+  * ProjectManager: anonymous access (implicit read rights for everyone) was not cached correctly and therefore sometimes failed
+  * eMail: preference to show external image was only shown to admins
+  * eMail: completely remove the ui/bo/sofilter classes as they are not effectively used anymore
+  * Tracker: give description and replys full width for non-html editing too
+  * CalDAV: fixed wrong http-status for delete in inbox
+  * CalDAV/CardDAV: do NOT use Content-Length header, if zlib.output_compression is enabled, fixes problems with iOS7 eg. eTask app
+  * CalDAV/Calendar: fixed permanent auth request in iCal, if accountselection is set to "selectbox with groupmembers" and rights granted from group without being a member
+  * CalDAV/Resources: fixed only first N resources were available in CalDAV (N = common preference how many entries to show)
+  * CalDAV/Calendar: fixed invalid ics file for alarm exactly at the event
+  * Adressbook/CardDAV: changed (down-)scaling of images to width of 240px (was 60px) to cater for higher screen resolutions
+  * SiteMgr: fixed not working anonymous user and using now a random password
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 17 Feb 2014 11:23:00 +0100
+
 egroupware (1.8.005.20131007) hardy; urgency=low
 
   * IMPORTANT UPDATE fixing various problems of 1.8.005 security release
