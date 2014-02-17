@@ -123,8 +123,15 @@ egw_LAB.wait(function() {
 
 	});
 
-	// Override jdots height calcluation
-	egw_fw.prototype.getIFrameHeight = function()
+	/**
+	 * Callback to calculate height of browser iframe or div
+	 *
+	 * Override jdots height calcluation
+	 *
+	 * @param {object} _iframe dom node of iframe or null for div
+	 * @returns number in pixel
+	 */
+	egw_fw.prototype.getIFrameHeight = function(iframe)
 	{
 		$header = $j(this.tabsUi.appHeaderContainer);
 		var content = $j(this.tabsUi.activeTab.contentDiv);
@@ -133,6 +140,9 @@ egw_LAB.wait(function() {
 			- $header.outerHeight() - $j(this.tabsUi.contHeaderDiv).outerHeight() - (content.outerHeight(true) - content.height())
 			// Not sure where this comes from...
 			+ 5;
+		// can only avoid scrollbar for iframe, if I add here 120px
+		if (iframe) height += 120;
+		//console.log("getIFrameHeight("+iframe+") returning "+height+(iframe?' (iframe)':''));
 		return height;
 	};
 
