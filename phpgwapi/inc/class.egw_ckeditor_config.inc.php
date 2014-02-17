@@ -166,7 +166,7 @@ class egw_ckeditor_config
 		{
 			//Get the skin name
 			$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
-
+			//error_log(__METHOD__.__LINE__.' UserAgent:'.html::$user_agent);
 			//Convert old fckeditor skin names to new ones
 			switch ($skin)
 			{
@@ -178,7 +178,8 @@ class egw_ckeditor_config
 				case 'kama':
 				case 'default':
 					$skin = "kama";
-					if (html::$user_agent != 'firefox') break;
+					// firefox and msie fail on kama skin
+					if (!(html::$user_agent == 'firefox' || html::$user_agent == 'msie')) break;
 				case 'moonocolor':
 					$skin = "moonocolor";
 					break;

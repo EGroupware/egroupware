@@ -69,6 +69,9 @@ class html
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
+		// current IE may report its engine as USER_AGENT string
+		if (self::$user_agent=='trident') self::$user_agent='msie';
+
 		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/i',$_SERVER['HTTP_USER_AGENT']);
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
