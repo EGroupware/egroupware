@@ -45,7 +45,7 @@ app.classes.admin = AppJS.extend(
 	{
 		this.iframe = null;
 		this.splitter = null;
-		
+
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -55,29 +55,38 @@ app.classes.admin = AppJS.extend(
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
 	 *
-	 * @param _et2 etemplate2 Newly ready object
+	 * @param {etemplate2} _et2
+	 * @param {string} _name name of template loaded
 	 */
-	et2_ready: function(_et2)
+	et2_ready: function(_et2, _name)
 	{
 		// call parent
 		this._super.apply(this, arguments);
 
-		var iframe = this.iframe = this.et2.getWidgetById('iframe');
-		if (iframe)
+		switch(_name)
 		{
-			var self = this;
-			jQuery(iframe.getDOMNode()).off('load.admin')
-				.bind('load.admin', function(){
-					self._hide_navbar.call(self);
-					self.splitter.dock();
-					self.splitter.resize();
+			case 'admin.index':
+				var iframe = this.iframe = this.et2.getWidgetById('iframe');
+				if (iframe)
+				{
+					var self = this;
+					jQuery(iframe.getDOMNode()).off('load.admin')
+						.bind('load.admin', function(){
+							self._hide_navbar.call(self);
+							self.splitter.dock();
+							self.splitter.resize();
+						}
+					);
+
+					// Register app refresh now that iframe is available
+					register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 				}
-			);
-		
-			// Register app refresh now that iframe is available
-			register_app_refresh('admin',jQuery.proxy(this.refresh,this));
+				this.splitter = this.et2.getWidgetById('splitter');
+				break;
+
+			case 'admin.categories.index':
+				break;
 		}
-		this.splitter = this.et2.getWidgetById('splitter');
 	},
 
 	/**
@@ -89,7 +98,7 @@ app.classes.admin = AppJS.extend(
 	 * @param {string} _msg Message to display
 	 * @param {string} _app Application being refreshed, should be 'admin'
 	 * @param {string} _id Unique record ID.
-	 * @param {string} _type=null Type of refresh.  Either 'edit', 'delete',
+	 * @param {string} _type Type of refresh.  Either 'edit', 'delete',
 	 *	'add' or null
 	 */
 	refresh: function(_msg, _app, _id, _type)
@@ -105,6 +114,8 @@ app.classes.admin = AppJS.extend(
 	_hide_navbar: function()
 	{
 		var document = this.iframe.getDOMNode().contentDocument;
+
+		if (!document) return;	// nothing we can do ...
 
 		// set white background, as transparent one lets account-list show through
 		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
@@ -140,9 +151,8 @@ app.classes.admin = AppJS.extend(
 	 */
 	linkHandler: function(_url)
 	{
-		var matches;
-		if (_url !='about:blank'&& (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') ||
-			(matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/))))
+		var matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/);
+		if (_url !='about:blank' && (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') || matches))
 		{
 			if (matches)
 			{
@@ -158,8 +168,8 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Run an admin module / onclick callback for tree
 	 *
-	 * @param string _id id of clicked node
-	 * @param et2_tree _widget reference to tree widget
+	 * @param {string} _id id of clicked node
+	 * @param {et2_tree} _widget reference to tree widget
 	 */
 	run: function(_id, _widget)
 	{
@@ -189,8 +199,8 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * View, edit or delete a group callback for tree
 	 *
-	 * @param Object _action egwAction
-	 * @param Object _senders egwActionObject _senders[0].id holds id
+	 * @param {object} _action egwAction
+	 * @param {array} _senders egwActionObject _senders[0].id holds id
 	 */
 	group: function(_action, _senders)
 	{
@@ -222,8 +232,8 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Modify an ACL entry
 	 *
-	 * @param Object _action egwAction
-	 * @param Object _senders egwActionObject _senders[0].id holds the id "admin::app:account:location"
+	 * @param {object} _action egwAction
+	 * @param {array} _senders egwActionObject _senders[0].id holds the id "admin::app:account:location"
 	 */
 	acl: function(_action, _senders)
 	{
@@ -244,7 +254,7 @@ app.classes.admin = AppJS.extend(
 				// need to specify window to get correct opener, as admin has multiple windows open!
 				egw('admin', window).open_link(egw.link('/index.php', {
 					menuaction: 'admin.admin_acl.acl',
-					id: ids[0],
+					id: ids[0]
 				}), 'acl', '300x300');
 				break;
 
@@ -262,7 +272,7 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Callback called on successfull call of serverside ACL handling
 	 *
-	 * @param string _data returned from server
+	 * @param {object} _data returned from server
 	 */
 	_acl_callback: function(_data)
 	{
@@ -277,7 +287,7 @@ app.classes.admin = AppJS.extend(
 	check_owner: function(button) {
 		var select_owner = this.et2.getWidgetById('owner');
 		var diff = [];
-		
+
 		if (typeof select_owner != 'undefined')
 		{
 			var owner = select_owner.get_value();
@@ -304,7 +314,7 @@ app.classes.admin = AppJS.extend(
 		{
 			var cat_original_owner = content.split(",");
 			var selected_groups = select_owner.get_value().toString();
-			
+
 			for(var i =0;i < cat_original_owner.length;i++)
 			{
 				if (selected_groups.search(cat_original_owner[i]) < 0)
@@ -312,7 +322,7 @@ app.classes.admin = AppJS.extend(
 					diff.push(cat_original_owner[i]);
 				}
 			}
-			
+
 			if (diff.length > 0)
 			{
 				var removed_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
@@ -350,6 +360,5 @@ app.classes.admin = AppJS.extend(
 		{
 			img.set_src(widget.getValue());
 		}
-	},
-
+	}
 });
