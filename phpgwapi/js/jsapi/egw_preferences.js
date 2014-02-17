@@ -117,7 +117,6 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 					case 'acl':
 						query.menuaction='preferences.preferences_acl.index';
 						query.acl_app=current_app;
-						query.ajax=true;
 						break;
 
 					case 'cats':
@@ -132,7 +131,6 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 						{
 							query.menuaction='preferences.preferences_categories_ui.index';
 							query.cats_app=current_app;
-							query.ajax=true;
 						}
 						break;
 				}
