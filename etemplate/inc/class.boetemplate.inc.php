@@ -969,12 +969,15 @@ class boetemplate extends soetemplate
 		if (($time = @filemtime($path)))
 		{
 			$templ = new boetemplate(array('name' => '.'.$app,'lang' => '##'));
-			if ($templ->lang != '##' || $templ->modified < $time) // need to import
+			if ($templ->lang != '##' || $templ->version != $GLOBALS['egw_info']['apps'][$app]['version'] ||
+				$templ->modified < $time) // need to import
 			{
+				$templ->delete();	// delete old timestamp
 				//echo "<p>".__METHOD__."($app) import necessary, as app-modified=$templ->modified < filemtime($path)=$time test-tpl=".array2string($templ->as_array(1))."</p>\n";
 				$ret = self::import_dump($app);
 				$templ->modified = $time;
-				$templ->save('.'.$app,'','##');
+				// store new timestamp incl. app version
+				$templ->save('.'.$app,'','##',0,$GLOBALS['egw_info']['apps'][$app]['version']);
 			}
 		}
 		return $ret;
