@@ -112,7 +112,8 @@ class egw_htmLawed
 		// put it back in after purifying; styles are processed for known security risks
 		// in html::getStyles
 		$styles='';
-		if ($Config['hook_tag'] =="hl_email_tag_transform") $styles = html::getStyles($html2check);
+		// we allow filtered style sections now throughout egroupware
+		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/ $styles = html::getStyles($html2check);
 		//error_log(__METHOD__.__LINE__.array2string($styles));
 
 		return ($styles?$styles:'').htmLawed($html2check, $Config, $Spec);
