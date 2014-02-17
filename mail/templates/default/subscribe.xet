@@ -18,7 +18,7 @@
 			</rows>
 		</grid>
 		<hbox  class="dialog-footer-toolbar">
-			<button statustext="Saves this ACL" label="Save" id="button[save]"/>
+			<button statustext="Saves subscription changes" label="Save" id="button[save]"/>
 			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 			<button label="Cancel" id="button[cancel]"/>
 		</hbox>
