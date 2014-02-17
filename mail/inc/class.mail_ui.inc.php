@@ -4183,10 +4183,16 @@ blockquote[type=cite] {
 				$hA = self::splitRowID($rowID);
 				$messageList[] = $hA['msgUID'];
 			}
-
-			$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
 			$response = egw_json_response::get();
-			$response->call('egw_refresh',($_copyOrMove=='copy'?lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder):lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder)),'mail');
+			try
+			{
+				$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+				$response->call('egw_refresh',($_copyOrMove=='copy'?lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder):lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder)),'mail');
+			}
+			catch (Exception $e)
+			{
+				$response->call('egw_message',$e->getMessage(),"error");
+			}
 		}
 		else
 		{
