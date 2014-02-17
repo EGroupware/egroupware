@@ -110,9 +110,10 @@ var AppJS = Class.extend(
 	 * make sure to clean it up in destroy().  Note that this can be called
 	 * several times, with different et2 objects, as templates are loaded.
 	 *
-	 * @param et2 etemplate2 Newly ready object
+	 * @param {etemplate2} et2
+	 * @param {string} name template name
 	 */
-	et2_ready: function(et2) {
+	et2_ready: function(et2,name) {
 		if(this.et2 !== null)
 		{
 			egw.debug('log', "Changed et2 object");

@@ -299,7 +299,9 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		}
 		if(typeof app[appname] == "object")
 		{
-			app_callback = function(et2) {app[appname].et2_ready(et2);};
+			app_callback = function(_et2, _name) {
+				app[appname].et2_ready(_et2, _name);
+			};
 		}
 
 		// Create the document fragment into which the HTML will be injected
@@ -381,11 +383,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				// Tell others about it
 				if(typeof _callback == "function")
 				{
-					_callback.call(window,this);
+					_callback.call(window,this,_name);
 				}
 				if(app_callback && _callback != app_callback)
 				{
-					app_callback.call(window,this);
+					app_callback.call(window,this,_name);
 				}
 
 				$j(this.DOMContainer).trigger('load', this);
