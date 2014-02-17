@@ -63,7 +63,8 @@ egw_LAB.wait(function() {
 
 		// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
 		var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
-		jQuery('#topmenu_items,#thesideboxcolumn').on('click','a[href^="javascript:"]',function(){
+		jQuery('#topmenu_items,#thesideboxcolumn').on('click','a[href^="javascript:"]',function(ev){
+			ev.stopPropagation();	// do NOT execute regular event, as it will violate CSP, when handler does NOT return false
 			var matches = this.href.match(href_regexp);
 			var args = [];
 			if (matches.length > 1 && matches[2] !== undefined)
