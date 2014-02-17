@@ -27,7 +27,14 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 
-include '../header.inc.php';
+try
+{
+	include('../header.inc.php');
+}
+catch (egw_exception_no_permission_app $e)
+{
+	// ignore missing run rights for an app, as translations of other apps are loaded sometimes without run rights
+}
 
 // use an etag with app, lang and a hash over the creation-times of all lang-files
 $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.translation::etag($_GET['app'], $_GET['lang']).'"';
