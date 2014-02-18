@@ -71,9 +71,10 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 *
 	 * @param {String} _level "navigation", "log", "info", "warn", "error"
 	 * @param {Array} _args arguments to egw.debug
+	 * @param {string} _stack
 	 * @returns {Boolean} false if localStorage is NOT supported, null if level requires no logging, true if logged
 	 */
-	function log_on_client(_level, _args)
+	function log_on_client(_level, _args, _stack)
 	{
 		if (!window.localStorage) return false;
 
@@ -94,9 +95,22 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			args: _args
 		};
 		// Add in a trace, if no navigation _level
-		if (_level != 'navigation' && typeof (new Error).stack != 'undefined')
+		if (_level != 'navigation')
 		{
-			data.stack = (new Error).stack;
+			if (_stack)
+			{
+				data.stack = _stack;
+			}
+			else
+			{
+				// IE needs to throw the error to get a stack trace!
+				try {
+					throw new Error;
+				}
+				catch(error) {
+					data.stack = error.stack;
+				}
+			}
 		}
 		if (typeof window.localStorage[LASTLOG] == 'undefined')
 		{
@@ -269,14 +283,16 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	// bind to global error handler
 	jQuery(_wnd).on('error', function(e)
 	{
-		log_on_client('error', [e.originalEvent.message]);
+		// originalEvent does NOT exist in IE
+		var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
+		log_on_client('error', [event.message], typeof event.stack != 'undefined' ? event.stack : null);
 		raise_error();
 		// rethrow error to let browser log and show it in usual way too
-		if (typeof e.originalEvent == 'object' && typeof e.originalEvent.error == 'object')
+		if (typeof event.error == 'object')
 		{
-			throw e.originalEvent.error;
+			throw event.error;
 		}
-		throw e.message;
+		throw event.message;
 	});
 
 	/**
