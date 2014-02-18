@@ -62,6 +62,7 @@ class html
 	static function _init_static()
 	{
 		// should be Ok for all HTML 4 compatible browsers
+		$parts = null;
 		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
 			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts,PREG_SET_ORDER);
@@ -69,9 +70,14 @@ class html
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
-		// current IE may report its engine as USER_AGENT string
-		if (self::$user_agent=='trident') self::$user_agent='msie';
-
+		// IE no longer reports MSIE, but "Trident/7.0; rv:11.0"
+		if (self::$user_agent=='trident')
+		{
+			self::$user_agent='msie';
+			$matches = null;
+			self::$ua_version = preg_match('|Trident/[0-9.]+; rv:([0-9.]+)|i', $_SERVER['HTTP_USER_AGENT'], $matches) ?
+				$matches[1] : 11.0;
+		}
 		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/i',$_SERVER['HTTP_USER_AGENT']);
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
@@ -184,18 +190,18 @@ class html
 		//$optBracket = '(>|&gt;)';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
 
-		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
+		$result2 = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
 		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
 
 		//  Now match things beginning with www.
 		$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
-		$Domain = 'www(\.[\w-.]+)';
-		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
-		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
+		$Domain2 = 'www(\.[\w-.]+)';
+		$Subdir2 = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
+		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain2 . $Subdir2 . '/i';
 		//$optBracket = '(>|&gt;)';
 		//$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . $optBracket . '/i';
 
-		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result );
+		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result2 );
 		//return preg_replace( $Expr, "<a href=\"http://www$1$2\" target=\"_blank\">www$1$2</a>$3 ", $result );
 	}
 
@@ -293,7 +299,7 @@ class html
 				foreach($data as $k => $label)
 				{
 					$out .= self::select_option($k,is_array($label)?$label['label']:$label,$key,$no_lang,
-						is_array($label)?$lable['title']:'');
+						is_array($label)?$label['title']:'');
 				}
 				$out .= "</optgroup>\n";
 			}
@@ -367,6 +373,7 @@ class html
 			}
 			$arr = $selected + $not_selected;
 		}
+		$max_len = 0;
 		foreach($arr as $val => $label)
 		{
 			if (is_array($label))
@@ -414,8 +421,9 @@ class html
 			$found = false;
 			foreach($selected as $sel)
 			{
-				if ($found = (((string) $value) === ((string) $selected[$key]))) break;
+				if (($found = (((string) $value) === ((string) $selected[$key])))) break;
 			}
+			unset($sel);
 		}
 		return '<option value="'.self::htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
 			($title ? ' title="'.self::htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') .
@@ -507,7 +515,7 @@ class html
 	 *
 	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
 	 */
-	static function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
+	static function htmlarea($name,$content='',$style='',$base_href=''/*,$plugins='',$custom_toolbar='',$set_width_height_in_config=false*/)
 	{
 		/*if (!self::htmlarea_availible())
 		{
@@ -1286,7 +1294,7 @@ egw_LAB.wait(function() {
 			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/dhtmlxtree');
 			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/ext/dhtmlxtree_json');
 			$tree_initialised = true;
-			if (!$_folders && !$autoLoading) return $html;
+			if (!$_folders && !$autoLoading) return null;
 		}
 		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
 		$html .= "<script type='text/javascript'>\n";
@@ -1375,7 +1383,7 @@ egw_LAB.wait(function() {
 				if ($_leafImage)
 				{
 					$image1 = $image2 = $image3 = "'".$_leafImage."'";
-					if ($next_item = array_slice($_folders, $n+1, 1, true))
+					if (($next_item = array_slice($_folders, $n+1, 1, true)))
 					{
 						list($next_path) = each($next_item);
 						if (substr($next_path,0,strlen($path)+1) == $path.'/')
@@ -1560,6 +1568,7 @@ egw_LAB.wait(function() {
 	static function getStyles(&$html)
 	{
 		$ct=0;
+		$newStyle = null;
 		if (stripos($html,'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
 		if ($ct>0)
 		{
@@ -1575,7 +1584,7 @@ egw_LAB.wait(function() {
 			if ($test=="null" && strlen($style2buffer)>0)
 			{
 				// this should not be needed, unless something fails with charset detection/ wrong charset passed
-				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.translation::detect_encoding($style2buffer));
+				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Carset Detected:'.translation::detect_encoding($style2buffer));
 				$style2buffer = utf8_encode($style2buffer);
 			}
 		}
@@ -1594,11 +1603,11 @@ egw_LAB.wait(function() {
 		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
-		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
 		//error_log(__METHOD__.__LINE__.$css);
 		// TODO: we may have to strip urls and maybe comments and ifs
 		if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
-		return $css;
+		return $css_no_comment;
 	}
 }
 html::_init_static();
