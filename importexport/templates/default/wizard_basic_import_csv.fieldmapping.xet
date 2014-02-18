@@ -13,7 +13,7 @@
 				<row>
 					<grid overflow="auto" id="mapping">
 						<columns>
-							<column/>
+							<column width="4ex"/>
 							<column/>
 							<column/>
 							<column/>
@@ -22,13 +22,11 @@
 						<rows>
 							<row class="th">
 								<description/>
-								<description/>
 								<description value="CSV Field"/>
 								<description value="Target Field"/>
 								<description value="Translation"/>
 							</row>
 							<row>
-								<description value="${row}[index]" no_lang="1"/>
 								<description value="${row_cont[index]}" no_lang="1"/>
 								<description value="{$row_cont[title]}" no_lang="1"/>
 								<menulist>

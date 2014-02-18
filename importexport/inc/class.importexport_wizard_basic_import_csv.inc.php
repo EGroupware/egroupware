@@ -94,7 +94,7 @@ class importexport_wizard_basic_import_csv
 		// init step30
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step30'];
+			$content['text'] = $this->steps['wizard_step30'];
 			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
@@ -124,7 +124,7 @@ class importexport_wizard_basic_import_csv
 					// Process sample file for fields
 					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
-						error_log($data);
+						//error_log(array2string($data));
 						fclose($handle);
 
 						// Remove & forget file
@@ -191,7 +191,7 @@ class importexport_wizard_basic_import_csv
 		// init step40
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step40'];
+			$content['text'] = $this->steps['wizard_step40'];
 			$content['step'] = 'wizard_step40';
 
 			// If editing an existing definition, these will be in plugin_options
@@ -217,7 +217,7 @@ class importexport_wizard_basic_import_csv
 			if(!$content['update_cats'] && $content['plugin_options']['update_cats']) {
 				$content['update_cats'] = $content['plugin_options']['update_cats'];
 			}
-			if(!array_key_exists('convert', $content) && array_key_exists('convert', $content['plugin_options'])) {
+			if(!array_key_exists('convert', $content) && is_array($content['plugin_options']) && array_key_exists('convert', $content['plugin_options'])) {
 				$content['convert'] = $content['plugin_options']['convert'];
 			}
 			else
@@ -302,7 +302,7 @@ class importexport_wizard_basic_import_csv
 		// init step50
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step50'];
+			$content['text'] = $this->steps['wizard_step50'];
 			$content['step'] = 'wizard_step50';
 
 			$content['mapping'] = array(false);
@@ -375,7 +375,7 @@ class importexport_wizard_basic_import_csv
 			}
 		}
 		// init step55
-		$content['msg'] = $this->steps['wizard_step55'];
+		$content['text'] = $this->steps['wizard_step55'];
 		$content['step'] = 'wizard_step55';
 
 		if(!$content['conditions'] && $content['plugin_options']['conditions']) {

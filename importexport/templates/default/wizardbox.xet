@@ -10,7 +10,7 @@
 				<row valign="top">
 					<hbox no_lang="1">
 						<vbox width="100%">
-							<description/>
+							<description id="text"/>
 							<box class="wizard_content">
 								<template id="@wizard_content"/>
 							</box>
@@ -31,9 +31,9 @@
 		</grid>
 		<styles>
 			.wizard_content {
-   height: 365px;
+   height: 345px;
    width: 100%;
-   max-height:365px;
+   max-height:345px;
    overflow:auto;
 }
 		</styles>

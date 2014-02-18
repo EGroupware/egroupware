@@ -114,7 +114,7 @@ class importexport_wizard_basic_export_csv
 		// init step30
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step30'];
+			$content['text'] = $this->steps['wizard_step30'];
 			$content['step'] = 'wizard_step30';
 			$this->export_fields += array('all_custom_fields' => 'All custom fields');
 			$sel_options['field'] = $this->export_fields;
@@ -176,7 +176,7 @@ class importexport_wizard_basic_export_csv
 		// init step40
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step40'];
+			$content['text'] = $this->steps['wizard_step40'];
 			$content['step'] = 'wizard_step40';
 
 			// If editing an existing definition, these will be in plugin_options
@@ -264,7 +264,7 @@ class importexport_wizard_basic_export_csv
 		} else {
 
 			// Step 50 - filters
-			$content['msg'] = $this->steps['wizard_step80'];
+			$content['text'] = $this->steps['wizard_step80'];
 			$content['step'] = 'wizard_step80';
 			$preserv = $content;
 			unset ($preserv['button']);

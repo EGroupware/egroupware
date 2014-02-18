@@ -664,7 +664,7 @@ class importexport_definitions_ui
 		// init step10
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step10'];
+			$content['text'] = $this->steps['wizard_step10'];
 			foreach ($this->plugins as $appname => $options)
 			{
 				if($GLOBALS['egw_info']['user']['apps'][$appname] || $GLOBALS['egw_info']['user']['apps']['admin']) {
@@ -713,7 +713,7 @@ class importexport_definitions_ui
 		// init step20
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step20'];
+			$content['text'] = $this->steps['wizard_step20'];
 			$config = config::read('phpgwapi');
 			foreach ($this->plugins[$content['application']] as $type => $plugins) {
 				if($config['export_limit'] == 'no' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $type == 'export') continue;
@@ -787,7 +787,7 @@ class importexport_definitions_ui
 		// init step21
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step21'] . ($duplicate ? "\n".$content['duplicate_error'] : '');
+			$content['text'] = $this->steps['wizard_step21'] . ($duplicate ? "\n".$content['duplicate_error'] : '');
 			$content['step'] = 'wizard_step21';
 			unset($content['duplicate_error']);
 			$preserv = $content;
@@ -828,7 +828,7 @@ class importexport_definitions_ui
 		// init step90
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step90'];
+			$content['text'] = $this->steps['wizard_step90'];
 			$content['step'] = 'wizard_step90';
 			$preserv = $content;
 
@@ -864,7 +864,7 @@ class importexport_definitions_ui
 	{
 		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_finish->$content '.print_r($content,true));
 		// Take out some UI leavings
-		unset($content['msg']);
+		unset($content['text']);
 		unset($content['step']);
 		unset($content['button']);
 
