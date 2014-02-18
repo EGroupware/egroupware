@@ -1011,6 +1011,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -1146,6 +1147,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -1181,6 +1183,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -1419,9 +1422,21 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
  */
 #mail-subscribe table.et2_grid tr td {
   padding: 0px;
+  /*Label*/
+}
+#mail-subscribe table.et2_grid tr td .mail_subscription_header {
+  font-size: 250%;
+  line-height: 270%;
+  margin: 0.6em 0 0;
+  font-weight: lighter;
+  line-height: 2em;
+  font-weight: bold;
+  font-size: 150%;
+  padding-bottom: 20px;
 }
 #mail-subscribe table.et2_grid tr td div.et2_box {
-  height: 500px;
+  margin-top: 16px;
+  height: 484px;
   overflow: auto;
 }
 .mail_subscription_header {
@@ -2302,4 +2317,3 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
   height: auto;
   width: 24px;
 }
-/*//Ende*/

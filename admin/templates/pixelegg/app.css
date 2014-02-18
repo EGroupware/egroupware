@@ -81,6 +81,9 @@ td.admin_userAgent span {
   iframe#admin-index_iframe #admin-categories-index {
     padding: 10px;
   }
+  iframe#admin-index_iframe table.egwGridView_grid tr td {
+    color: #000;
+  }
   /*###########################################
 #                                           #
 #       dialog-header                       #

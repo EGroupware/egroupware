@@ -11,6 +11,9 @@
  * @package timesheet
  * @version $Id$
  */
+#timesheet-index {
+  /*Details Bold*/
+}
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
   padding: 0 0em;
@@ -95,9 +98,8 @@
 #timesheet-index table.egwGridView_outer tbody td .et2_link {
   font-weight: bold;
 }
-#timesheet-index span.timesheet_titleDetails,
-#timesheet-index span[id*="[ts_title]"] {
-  font-weight: normal;
+#timesheet-index span.timesheet_titleDetails {
+  font-weight: bold;
 }
 /*###########################################
 #                                           #

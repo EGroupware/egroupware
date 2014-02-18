@@ -13,6 +13,7 @@
  */
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/layout_content_elements.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 @import (less) "../default/app.css";
 
@@ -829,12 +830,26 @@ div#mail-index{
     table.et2_grid tr td {
                             padding: 0px;
     
-                           // Folder List
+                            
+                         /*Label*/
+                           .mail_subscription_header {
+                               .headline_h2; 
+                               line-height: 2em;
+                               font-weight: bold;
+                               font-size: 150%;
+                               padding-bottom: 20px;
+
+                           }
+                      
+                            
+                         // Folder List
                            div.et2_box {
-                               
-                             height: 500px;
+                             margin-top: 16px;
+                             height: 484px;
                              overflow: auto;
                            }
+                           
+              
     
     }
     
@@ -1672,4 +1687,4 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 
 //
-/*//Ende*/
+//
