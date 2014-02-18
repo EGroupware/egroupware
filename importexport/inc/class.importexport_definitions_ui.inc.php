@@ -834,7 +834,8 @@ class importexport_definitions_ui
 
 			// Set owner for non-admins
 			$content['just_me'] = ((!$content['allowed_users'] || !$content['allowed_users'][0] && count($content['allowed_users']) ==1) && $content['owner']);
-			$content['all_users'] = is_array($content['allowed_users']) && array_key_exists('0',$content['allowed_users']) || $content['allowed_users'] == 'all';
+			$content['all_users'] = is_array($content['allowed_users']) && array_key_exists('0',$content['allowed_users']) && $content['allowed_users'][0] == 'all' ||
+				$content['allowed_users'] == 'all';
 			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin'])
 			{
 				$content['allowed_users'] = array();
