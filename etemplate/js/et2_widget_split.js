@@ -186,8 +186,12 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 			var pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
 			if(pref)
 			{
-				options = $j.extend(options, pref);
-				this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
+				if(this.orientation == "v" && pref['sizeLeft'] < this.dynheight.outerNode.width() ||
+					this.orientation == "h" && pref['sizeTop'] < this.dynheight.outerNode.height())
+				{
+					options = $j.extend(options, pref);
+					this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
+				}
 			}
 		}
 
