@@ -704,12 +704,16 @@ var et2_surroundingsMgr = Class.extend(
  * The class extension is different than the widgets
  *
  * @param {et2_DOMWidget} widget
+ * @param {Object} node 
+ * 
  */
-function et2_action_object_impl(widget)
+function et2_action_object_impl(widget, node)
 {
 	var aoi = new egwActionObjectInterface();
+	var objectNode = node;
+
 	aoi.doGetDOMNode = function() {
-		return widget.getDOMNode();
+		return objectNode?objectNode:widget.getDOMNode();
 	};
 
 // _outerCall may be used to determine, whether the state change has been
@@ -732,7 +736,7 @@ function et2_action_object_impl(widget)
 				break;
 		}
 	};
-
+	
 
 	return aoi;
 };

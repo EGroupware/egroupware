@@ -881,9 +881,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		for(var i = 0; i < this.rowData.length; i++)
 		{
 			// Add a new action object to the object manager
-			var aoi = new et2_action_object_impl(this);
 			var row = $j('tr', this.tbody)[i];
-			aoi.doGetDOMNode = function() { return row;};
+			var aoi = new et2_action_object_impl(this, row);
+			
 			var obj = widget_object.addObject("row_"+i, aoi);
 			obj.updateActionLinks(action_links);
 		}
