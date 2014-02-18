@@ -475,7 +475,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				{
 					$type = $widget->attrs['account_type'];
 				}
-				
+
 				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 				if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
@@ -505,6 +505,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				if($select_pref == 'popup') break;
 
 				$no_lang = True;
+				$accs = array();
 				if(!$mygroups)
 				{
 					$accs = $GLOBALS['egw']->accounts->search(array(
@@ -516,7 +517,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				{
 					foreach($mygroups as $group)
 					{
-						$accs = $GLOBALS['egw']->accounts->search(array(
+						$accs += $GLOBALS['egw']->accounts->search(array(
 							'type' => $group,
 							'order' => 'account_fullname',	// order according to pref of how to display accounts
 						));
