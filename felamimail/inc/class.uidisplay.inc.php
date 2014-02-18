@@ -189,7 +189,7 @@
 
 			$linkTextislink = false;
 			// this is the actual url
-			$matches[2] = trim(strip_tags($matches[2]));
+			$matches[2] = trim(strip_tags($matches[2],'<img>'));
 			if ($matches[1]===$matches[2]) $linkTextislink = true;
 			$matches[1] = str_replace(' ','%20',$matches[1]);
 //error_log(__METHOD__.__LINE__.array2string($matches[1]));
