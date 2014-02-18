@@ -621,6 +621,13 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   font-size: 150%;
   padding-bottom: 20px;
 }
+#mail-subscribe table.et2_grid tr td {
+  padding: 0px;
+}
+#mail-subscribe table.et2_grid tr td div.et2_box {
+  height: 500px;
+  overflow: auto;
+}
 #popupMainDiv {
   padding: 5px;
 }
@@ -813,6 +820,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #                                           #
 #                                           #
 ##############################################*/
+#mail-compose_mail_plaintext {
+  white-space: pre !important;
+}
 #mail-compose {
   width: 870px;
   padding: 5px;
