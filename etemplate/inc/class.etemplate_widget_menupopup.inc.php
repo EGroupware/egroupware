@@ -173,7 +173,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 
 			// += to keep further options set by app code
-			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'],
+			self::$request->sel_options[$form_name] += self::typeOptions($this,
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
@@ -340,7 +340,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	/**
 	 * Fetch options for certain select-box types
 	 *
-	 * @param string $widget_type
+	 * @param string|etemplate_widget_menupopup $widget_type Type of widget, or actual widget to get attributes since $legacy_options are legacy
 	 * @param string $legacy_options options string of widget
 	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
 	 * @param boolean $readonly=false for readonly we dont need to fetch all options, only the one for value
@@ -349,14 +349,19 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 */
 	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, &$value=null)
 	{
-		// Have to do this explicitly, since legacy options is not defined on class level
-		$legacy_options = explode(',',$legacy_options);
-		foreach($legacy_options as &$field)
+		if($widget_type && is_object($widget_type))
 		{
-			$field = self::expand_name($field, 0, 0,'','',self::$cont);
+			$widget = $widget_type;
+			$widget_type = $widget->attrs['type'];
+			// Legacy / static support
+			// Have to do this explicitly, since legacy options is not defined on class level
+			$legacy_options = explode(',',$legacy_options);
+			foreach($legacy_options as &$field)
+			{
+				$field = self::expand_name($field, 0, 0,'','',self::$cont);
+			}
+			list($rows,$type,$type2,$type3,$type4,$type5,$type6) = $legacy_options;
 		}
-		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = $legacy_options;
-
 		$no_lang = false;
 		$options = array();
 		switch ($widget_type)
@@ -464,8 +469,14 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 				// Get preference for selection display
-				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 
+				// Get important attributes in a non-legacy way
+				if($widget != null && $widget->attrs['account_type'])
+				{
+					$type = $widget->attrs['account_type'];
+				}
+				
+				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 				if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
 				if ($readonly || $select_pref == 'popup')
@@ -484,20 +495,33 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$owngroups = true;
 					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
 				}
-				elseif (in_array($type, array('accounts', 'both')) && $select_pref == 'primary_group')
+				elseif (in_array($type, array('', 'accounts', 'both')) && $select_pref == 'primary_group')
 				{
 					$owngroups = true;
-					$mygroups[] = $GLOBALS['egw_info']['user']['primary_group'];
+					$mygroups[] = $GLOBALS['egw_info']['user']['account_primary_group'];
 				}
 
 				// Popup is the only preference option that doesn't need more select options
 				if($select_pref == 'popup') break;
 
 				$no_lang = True;
-				$accs = $GLOBALS['egw']->accounts->search(array(
-					'type' => empty($type) ? 'accounts' : $type, // default is accounts
-					'order' => 'account_fullname',	// order according to pref of how to display accounts
-				));
+				if(!$mygroups)
+				{
+					$accs = $GLOBALS['egw']->accounts->search(array(
+						'type' => empty($type) ? 'accounts' : $type, // default is accounts
+						'order' => 'account_fullname',	// order according to pref of how to display accounts
+					));
+				}
+				else
+				{
+					foreach($mygroups as $group)
+					{
+						$accs = $GLOBALS['egw']->accounts->search(array(
+							'type' => $group,
+							'order' => 'account_fullname',	// order according to pref of how to display accounts
+						));
+					}
+				}
 				foreach($accs as $acc)
 				{
 					if ($acc['account_type'] == 'u')
