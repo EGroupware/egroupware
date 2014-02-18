@@ -199,25 +199,30 @@ var et2_selectbox = et2_inputWidget.extend(
 			}
 
 			// Maybe in a row, and options got stuck in ${row} instead of top level
-			var row_stuck = ['${row}','{$row}'];
-			for(var i = 0; i < row_stuck.length; i++)
+			// not sure this code is still needed, as server-side no longer creates ${row} or {$row} for select-options
+			if(!content_options || content_options.length == 0)
 			{
-				if((!content_options || content_options.length == 0) && (
-					// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
-					this.getArrayMgr("sel_options").perspectiveData.row || this.getArrayMgr("sel_options").data[row_stuck[i]]))
+				var row_stuck = ['${row}','{$row}'];
+				for(var i = 0; i < row_stuck.length; i++)
 				{
-					var row_id = this.id.replace(/[0-9]+/,row_stuck[i]);
-					content_options = this.getArrayMgr("sel_options").getEntry(row_id);
-					if(!content_options || content_options.length == 0)
+					// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
+					if(this.getArrayMgr("sel_options").perspectiveData.row || this.getArrayMgr("sel_options").data[row_stuck[i]])
 					{
-						content_options = this.getArrayMgr("sel_options").getEntry(row_stuck[i] + '[' + this.id + ']');
+						var row_id = this.id.replace(/[0-9]+/,row_stuck[i]);
+						content_options = this.getArrayMgr("sel_options").getEntry(row_id);
+						if(!content_options || content_options.length == 0)
+						{
+							content_options = this.getArrayMgr("sel_options").getEntry(row_stuck[i] + '[' + this.id + ']');
+						}
 					}
 				}
 			}
-			if(_attrs["select_options"] && content_options)
+			if(_attrs["select_options"] && !jQuery.isEmptyObject(_attrs['select_options']) && content_options)
 			{
 				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
-			} else if (content_options) {
+			}
+			else if (content_options)
+			{
 				_attrs["select_options"] = content_options;
 			}
 		}

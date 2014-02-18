@@ -148,7 +148,20 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 */
 	public function beforeSendToClient($cname)
 	{
-		$form_name = self::form_name($cname, $this->id);
+		$matches = null;
+		if ($cname == '$row')	// happens eg. with custom-fields: $cname='$row', this->id='#something'
+		{
+			$form_name = $this->id;
+		}
+		// happens with fields in nm-header: $cname='nm', this->id='${row}[something]' or '{$row}[something]'
+		elseif ($cname == 'nm' && preg_match('/(\${row}|{\$row})\[([^]]+)\]$/', $this->id, $matches))
+		{
+			$form_name = $matches[2];
+		}
+		else
+		{
+			$form_name = self::form_name($cname, $this->id);
+		}
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		if ($this->attrs['type'])
 		{
