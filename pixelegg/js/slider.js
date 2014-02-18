@@ -140,9 +140,6 @@ egw_LAB.wait(function() {
 			- $header.outerHeight() - $j(this.tabsUi.contHeaderDiv).outerHeight() - (content.outerHeight(true) - content.height())
 			// Not sure where this comes from...
 			+ 5;
-		// can only avoid scrollbar for iframe, if I add here 120px
-		if (iframe) height += 120;
-		//console.log("getIFrameHeight("+iframe+") returning "+height+(iframe?' (iframe)':''));
 		return height;
 	};
 

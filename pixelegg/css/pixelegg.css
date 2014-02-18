@@ -39,6 +39,9 @@
  */
 /*@import (less) "../../etemplate/templates/default/etemplate2.css";*/
 @media all {
+	html {
+		height: 99% !important;
+	}
   /**
  * Top level
  */
