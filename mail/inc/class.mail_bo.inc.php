@@ -3062,8 +3062,8 @@ class mail_bo
 		{
 			$sourceFolder = $this->icServer->getMailbox($sourceFolder);
 			$target = emailadmin_account::read($_targetProfileID)->imapServer();
-			$_foldername = $target->getMailbox($_foldername);
-			//error_log(__METHOD__.__LINE__.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($_foldername));
+			$foldername = $target->getMailbox($_foldername);
+			//error_log(__METHOD__.__LINE__.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
 			$uidsToFetch = new Horde_Imap_Client_Ids();
 			$uidsToFetch->add($_messageUID);
 
@@ -3085,7 +3085,7 @@ class mail_bo
 					$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$body")), 'flags'=>$flags);
 					if ($c==5)
 					{
-						$ret = $target->append($_foldername,$dataNflags);
+						$ret = $target->append($foldername,$dataNflags);
 						$retUid->add($ret);
 						unset($dataNflags);
 						time_nanosleep(0,500000);// sleep 500 miliseconds
@@ -3094,7 +3094,7 @@ class mail_bo
 				}
 				if (isset($dataNflags))
 				{
-					$ret = $target->append($_foldername,$dataNflags);
+					$ret = $target->append($foldername,$dataNflags);
 					$retUid->add($ret);
 					unset($dataNflags);
 				}

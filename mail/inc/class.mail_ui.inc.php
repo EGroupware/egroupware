@@ -4245,6 +4245,7 @@ blockquote[type=cite] {
 			}
 			catch (Exception $e)
 			{
+				//error_log(__METHOD__.__LINE__.function_backtrace());
 				$response->call('egw_message',$e->getMessage(),"error");
 			}
 		}
