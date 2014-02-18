@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="timesheet.wizard_import_options" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@message">
+					<description id="message" span="all" class="message"/>
+					<description/>
+				</row>
+				<row>
+					<description value="What should be done with unknown values?" span="all"/>
+				</row>
+				<row>
+					<description value="Status"/>
+					<menulist>
+						<menupopup id="translate_status"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Category"/>
+					<menulist>
+						<menupopup id="translate_cat_id"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
