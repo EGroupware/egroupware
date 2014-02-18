@@ -57,6 +57,7 @@
   select {
     margin: 1px;
     padding: 0px;
+    /*-webkit-appearance: none;*/
   }
   /**
  * VBox widget
@@ -99,6 +100,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-appearance: none;
     -webkit-transition-property: background-color;
     -moz-transition-property: background-color;
     -o-transition-property: background-color;
@@ -277,6 +279,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     color: #000000;
+    -webkit-appearance: none;
     -webkit-transition-property: background-color;
     -moz-transition-property: background-color;
     -o-transition-property: background-color;
@@ -1237,6 +1240,7 @@ span.ui-icon-search {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -1693,6 +1697,7 @@ div#ui-datepicker-div {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -1714,7 +1719,7 @@ div#ui-datepicker-div {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: inherit !important;
+  background-color: inherit;
 }
 #egwpopup input#egwpopup_ok_button:active,
 #egwpopup button#desktop_perms:active {
@@ -2001,37 +2006,69 @@ p {
   font-size: 1em;
 }
 h1 {
-  font-size: 1.2em;
-  line-height: 1.28em;
+  font-size: 300%;
+  line-height: 330%;
+  margin: 0.4em 0 0;
+}
+.headline_h1 {
+  font-size: 300%;
+  line-height: 330%;
   margin: 0.4em 0 0;
 }
 h2 {
-  font-size: 1.15em;
-  line-height: 1.2em;
+  font-size: 250%;
+  line-height: 270%;
   margin: 0.6em 0 0;
 }
+.headline_h2 {
+  font-size: 250%;
+  line-height: 270%;
+  margin: 0.6em 0 0;
+  font-weight: lighter;
+}
 h3 {
-  font-size: 1.1em;
-  line-height: 0.8571em;
+  font-size: 200%;
+  line-height: 220%;
+  margin: 0.8571em 0 0;
+}
+.headline_h3 {
+  font-size: 200%;
+  line-height: 220%;
   margin: 0.8571em 0 0;
 }
 h3 a {
   color: #999999;
 }
 h4 {
-  font-size: 110%;
-  line-height: 1.125em;
+  font-size: 150%;
+  line-height: 160%;
+  margin: 1.125em 0 0;
+}
+.headline_h4 {
+  font-size: 150%;
+  line-height: 160%;
   margin: 1.125em 0 0;
 }
 h5 {
   font-size: 100%;
-  line-height: 1.2857em;
+  line-height: 110%;
+  margin: 1.2857em 0 0;
+}
+.headline_h5 {
+  font-size: 100%;
+  line-height: 110%;
   margin: 1.2857em 0 0;
 }
 h6 {
   font-size: 100%;
   font-weight: bold;
-  line-height: 1.5em;
+  line-height: 100%;
+  margin: 1.5em 0 0;
+}
+.headline_h6 {
+  font-size: 100%;
+  font-weight: bold;
+  line-height: 100%;
   margin: 1.5em 0 0;
 }
 /*table {font-size: 16px;}*/
@@ -2600,10 +2637,10 @@ a.textSidebox {
 .pageGenTime > span:last-child:after {
   content: "";
 }
-/*###########################
-#                           #
-#                           #
-############################*/
+/*##########################################
+#      Content Element                     #
+#      Button                              #
+###########################################*/
 button.et2_button_text background-image[src$="svg"],
 input[type=button] background-image[src$="svg"] {
   background-color: #b4b4b4;
@@ -2634,7 +2671,7 @@ input[type=button]:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
 }
 /* ########################################################################################
- * 
+ * Content Element
  * Button mit Bildern 
  *
  ######################################################################################## */
@@ -2645,6 +2682,7 @@ button.et2_button_with_image {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2679,7 +2717,7 @@ button.et2_button_with_image background-color[url$="svg"] {
   background-repeat: repeat-x;
 }
 /* ########################################################################################
- * 
+ * Content Element
  * Button löschen / delete / => color-negative-action // red
  *
  ######################################################################################## */
@@ -2703,6 +2741,7 @@ button.et2_button_delete {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2744,6 +2783,7 @@ button.et2_button_delete:hover {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2784,6 +2824,7 @@ button.et2_button_delete:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2806,7 +2847,7 @@ button.et2_button_delete:active {
   color: #ffffff;
 }
 /* ########################################################################################
- * 
+ * Content Element
  * Button edit + save + apply + copy => color-positive-action // green
  *
  ######################################################################################## */
@@ -2831,7 +2872,7 @@ button[id*="apply"]:hover,
 button[id*="copy"]:hover,
 button[id*="edit_button[edit]"]:hover,
 button.et2_button:hover {
-  background-color: #189800 !important;
+  background-color: #189800;
   color: #000000;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -2855,6 +2896,7 @@ button#filemanager-select_button[ok]:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2921,6 +2963,7 @@ button#cancel {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -2966,6 +3009,7 @@ button#cancel:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -3025,6 +3069,7 @@ button[id="add"] {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -3805,6 +3850,7 @@ table.nextmatch_header img {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #000000;
+  -webkit-appearance: none;
   -webkit-transition-property: background-color;
   -moz-transition-property: background-color;
   -o-transition-property: background-color;
@@ -3828,7 +3874,7 @@ table.nextmatch_header img {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: inherit !important;
+  background-color: inherit;
   color: #000000;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:active {
@@ -4278,6 +4324,8 @@ table.nextmatch_header img {
   padding-top: 0.31em;
   padding-left: 3em;
   color: #999999;
+  font-size: 12px;
+  line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
   background-color: #ffffff;
@@ -4464,7 +4512,8 @@ table.nextmatch_header img {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category h1 {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
-  font-size: 9pt;
+  line-height: 1em;
+  font-size: 12px;
   background-image: url(../images/arrow_left.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -4502,6 +4551,8 @@ table.nextmatch_header img {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
   background-image: url(../images/arrow_down.png);
+  line-height: 1em;
+  font-size: 12px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a {
   color: #FFF;
@@ -4518,7 +4569,7 @@ table.nextmatch_header img {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: inherit !important;
+  background-color: inherit;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover {
   background-color: #408dd2;

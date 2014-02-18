@@ -26,8 +26,9 @@
     /*.box_shadow_standard_light;*/
     .rounded (3px);
     color: @gray_100;
-
-
+    
+    // switch off for Safari + Chrome
+    -webkit-appearance: none;
         -webkit-transition-property: background-color;
        -moz-transition-property: background-color;
          -o-transition-property: background-color;
@@ -47,7 +48,7 @@
 .Complete_Button_hover{
     //	.border_hover;
     .box_shadow_standard_light_hover;
-    background-color: inherit !important;
+    background-color: inherit;
 }
 
 .Complete_Button_active{
@@ -178,7 +179,11 @@
                 img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
                 
                 
-                &:hover {background-color: @color_positive_action !important; color: @gray_100; .box_shadow_standard_light_hover;}
+                &:hover {
+                    background-color: @color_positive_action; 
+                    color: @gray_100; 
+                    .box_shadow_standard_light_hover;
+                }
                 &:active {background-color: @color_positive_action_active;}
 }
 
