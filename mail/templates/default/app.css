@@ -567,7 +567,9 @@ div.mailDisplayHeaders div.mail_extraEmails.visible
 div.mailComposeBody {
 	white-space: normal !important;
 }
-
+#mail-compose_mail_plaintext {
+	white-space: pre !important;
+}
 div.mailPreviewHeaders div.mail_extraEmails {
 	display: inline-block;
 	max-height: 1.3em;
