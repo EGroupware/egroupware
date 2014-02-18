@@ -449,12 +449,20 @@ app.classes.calendar = AppJS.extend(
 			{
 				ownerId = 'r' + ownerId;
 			}
-			that.egw.open(null, 'calendar', 'add', {
-				date: timestamp[0],
-				hour: timestamp[1],
-				minute: timestamp[2],
-				owner: ownerId
-			}, '_blank');
+
+			var eventInfo =
+				{
+					date: timestamp[0],
+					hour: timestamp[1],
+					minute: timestamp[2]
+				};
+
+			if (ownerId != 0)
+			{
+				$j(eventInfo).extend(eventInfo,{owner: ownerId});
+			}
+
+			that.egw.open(null, 'calendar', 'add', eventInfo , '_blank');
 		});
 
 	},
