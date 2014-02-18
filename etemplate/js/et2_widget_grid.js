@@ -82,6 +82,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 		// Keep the template node for later regeneration
 		this.template_node = null;
+
+		// Wrapper div for height & overflow, if needed
+		this.wrapper = null;
 	},
 
 	destroy: function() {
@@ -727,7 +730,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		// outer table.
 		if (_sender == this || typeof _sender == 'undefined')
 		{
-			return this.table[0];
+			return this.wrapper != null ? this.wrapper[0] : this.table[0];
 		}
 
 		// Check whether the _sender object exists inside the management array
@@ -761,6 +764,61 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		}
 
 		return this._super(this, vis);
+	},
+
+	/**
+	 * Set the overflow attribute
+	 *
+	 * Grid needs special handling because HTML tables don't do overflow.  We
+	 * create a wrapper DIV to handle it.
+	 *
+	 * @param {string} _value Overflow value, must be a valid CSS overflow value.
+	 */
+	set_overflow: function(_value) {
+		var wrapper = this.wrapper || this.table.parent('[id$="_grid_wrapper"]');
+
+		this.overflow = _value;
+
+		if(wrapper.length == 0 && _value)
+		{
+			this.wrapper = wrapper = this.table.wrap('<div id="'+this.id+'_grid_wrapper"></div>').parent();
+			if(this.height)
+			{
+				wrapper.css('height', this.height);
+			}
+		}
+		wrapper.css('overflow', _value);
+		
+		if(wrapper.length && (!_value || _value == null))
+		{
+			this.table.unwrap();
+		}
+	},
+
+	/**
+	 * Set the height attribute
+	 *
+	 * Grid needs special handling because HTML tables don't care about height.  We
+	 * create a wrapper DIV to handle it.
+	 *
+	 * @param {string} _value Height value, must be a valid CSS height value.
+	 */
+	set_height: function(_value) {
+
+		this.height = _value;
+
+		// Height without overflow does nothing.
+		// This also makes sure that the wrapper is there.
+		if(!this.overflow)
+		{
+			this.set_overflow('hidden');
+		}
+		var wrapper = this.wrapper || this.table.parent('[id$="_grid_wrapper"]');
+
+		if(wrapper.length > 0 && _value)
+		{
+			wrapper.css('height', this.height);
+		}
 	},
 
 	set_align: function(_value) {
