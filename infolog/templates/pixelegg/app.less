@@ -84,6 +84,8 @@ span#favorite_sidebox_infolog{
 
             div.ui-helper-clearfix,
             div.ui-helper-reset{
+                
+                height: 0px;
 
 
 
@@ -94,21 +96,28 @@ span#favorite_sidebox_infolog{
                     padding: 0 0em;
                     margin-right: 0.2em;
 
+                    // box for add stuff
                     div.et2_box_widget{
-                        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
-                        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+                        border: 1px solid #0C5DA5;
+                        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
                         text-shadow: none;
-                        .dimension_height_l;
-                        margin-top: 5px;
+                        .dimension_height_m;
+                        margin-top: 3px;
+                        padding: 2px;
+                        background-color: @gray_10;
+                        
+                        .border_radius(3px, 3px, 3px, 10px);
                         background-image: none !important;
                         transition: all 0.5s linear;
                         -webkit-transition: all 0.5s linear; /* Safari */
 
                          &:before {
                             content: "+";
-                            font-size: 2em;
+                            font-size: 26px;
                             color: @egw_color_1;
-                            line-height: 0.5em;
+                            line-height: 1px;
+                            position: relative;
+                            top: 6px;
                             }
 
                        /*Text ""hinzufügen" "*/
@@ -152,7 +161,7 @@ span#favorite_sidebox_infolog{
             }
 
             // Anzahl
-            span.header_count ui-corner-all{}
+            span.header_count{top: 0px;}
 
 
             //Favoriten
@@ -201,7 +210,7 @@ span#favorite_sidebox_infolog{
 
                 // 2 Filter
                 select#infolog-index_filter {
-                    /*width: 10%;*/
+                    max-width: 19%;
                 }
 
                 // 3 Filter

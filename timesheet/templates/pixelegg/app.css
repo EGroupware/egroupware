@@ -14,6 +14,10 @@
 #timesheet-index {
   /*Details Bold*/
 }
+#timesheet-index .nextmatch_header div.ui-helper-clearfix,
+#timesheet-index .nextmatch_header div.ui-helper-reset {
+  height: 0px;
+}
 #timesheet-index .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right,
 #timesheet-index .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
   padding: 0 0em;
@@ -56,18 +60,19 @@
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add {
-  width: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: 32px;
+  border: 1px solid #0C5DA5;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   padding: -0.5em;
-  background-color: #679fd2 !important;
-  background-color: #0c5da5;
+  background-color: #e6e6e6 !important;
+  background-size: 16px 16px;
   height: 24px;
+  margin: 6px 2px;
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:before {
   content: "";
   font-size: 2em;
-  color: #ffc200;
+  color: #0c5da5;
   line-height: 0.6em;
   padding-left: 0.1em;
   padding-right: 4em;
@@ -94,6 +99,9 @@
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_favorite"] img {
   height: 16px;
   width: 16px;
+}
+#timesheet-index .nextmatch_header span.header_count {
+  margin: 3px 4px 0 6px;
 }
 #timesheet-index table.egwGridView_outer tbody td .et2_link {
   font-weight: bold;

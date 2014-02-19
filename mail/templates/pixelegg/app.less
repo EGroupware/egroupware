@@ -335,13 +335,29 @@ div#mail-index{
 
         float: left;
         width: 100%;
+        height: 35px !important;
+        padding: 5px 5px 5px 2px !important;
+        
+        .gradient_thead;
+        .color_100_gray;
+        
+        
+        button[id="mail-compose_button[sent]"],
+        button.et2_button{
+/*            background-color: @gray_30;*/
+     
+            /*height: 33px;*/
+            /*margin: 0px 3px 0 !important;*/
+        }
+        
 
         span.email-button-group {
             .span_tool_group;
             height: 27px;
+            
         }
 
-        span.sent {float: left;}
+        span.sent {float: left; background-color: @egw_color_2_a; background-image: none;}
         span.save {float: left;}
         span.file {float: left;}
         span.egw {float: left;
@@ -592,22 +608,30 @@ div#mail-index{
     //	gesamtbreite
     width: 870px;
     padding: 5px;
-    .mailDisplayHeaderSection{
-        top: 0;
-        position: relative;
+    
+    /*.mailDisplayHeaderSection{*/
+        /*top: 0;*/
+        /*position: relative;*/
 
 
 
         /*Toolbar*/
-        #mail-display_toolbar{
-            background-color: @egw_color_2_e;
-            background-image: none;
-            padding: 5px 3px;
-            height: 30px;
-            display: -webkit-box;
+        .et2_toolbar,
+        #mail-display_toolbar,
+        mail-display_displayToolbar{
+            .gradient_thead;
+            .color_100_gray;
+            clear: both;
+/*            padding: 5px 3px;*/
+            height: 36px;
+            /*display: -webkit-box;*/
+            
+            // all buttons
+            div.et2_toolbar_actionlist{margin-top: 3px; margin-left: 3px;}
+            
            button {
                 .Complete_Button_Icon_normal;
-                height: 20px;
+                height: 24px;
             }
 
             button[id*="toolbar-composeasnew"],
@@ -786,7 +810,7 @@ div#mail-index{
 
         }
 
-    }
+    /*}*/
 
 
     // Dateianhänge
@@ -1686,5 +1710,4 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
         		}
 }
 
-//
 //

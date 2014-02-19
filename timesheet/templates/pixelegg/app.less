@@ -28,6 +28,8 @@
 
         div.ui-helper-clearfix,
         div.ui-helper-reset{
+            
+                height: 0px;
 
                 // rechte Box mit add
 
@@ -42,10 +44,7 @@
                         .box_shadow_standard_light;
                         height: 35px;
                         .infolog_headertext{color: #FFF !important;}
-
                         &:hover {.box_shadow_standard_light_hover;}
-
-
                     }
                 }
 
@@ -57,50 +56,40 @@
             
             button#timesheet-index_add{
             .Complete_Button_add_only_plus;
-            background-color: @egw_color_2_a;
             .dimension_height_m;
+            margin: 6px 2px;
             
             &:hover {.Complete_Button_add_only_plus_hover;}
             &:active {background-color: @color_positive_action_active !important;}
 
-        }
-
-
-
-        // Anzahl
-        span.header_count ui-corner-all{}
+            }
 
         // Filter
         div.filters{
-
-
             // 1. Filter
             #timesheet-index_filter{}
-
             // 2. Filter
             #timesheet-index_filter2{}
-
             // Suchfeld
             #timesheet-index_search{}
-
             // Suchen Button
             button{}
-
-
-        }	// Ende Filter
+            }	// Ende Filter
 
         table{}
 
-
         button[id*="timesheet-index_favorite"]{
-            img {
-                height: 16px;
-                width: 16px;
-            }
-
-        }
+                                            img {
+                                                height: 16px;
+                                                width: 16px;
+                                            }
+                      }
     } //nextmatch_header
-
+            // Anzahl / positionieren
+    
+    span.header_count{
+            margin: 3px 4px 0 6px;  
+        }
 }
 
 // Titel: in Bold

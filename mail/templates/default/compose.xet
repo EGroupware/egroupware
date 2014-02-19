@@ -5,9 +5,10 @@
 			<html id="msg" class="message"/>
 			<vbox class="mailCompose mailComposeHeaderSection" width="99%">
 				<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
-
+                   
+                                    <description class="email-button-group sent">                  
 					<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
-
+                                        </description>
                     <description class="email-button-group save">
 		                <buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
 		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
