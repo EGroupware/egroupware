@@ -192,7 +192,7 @@ class mail_ui
 		$validFolder = true;
 		$result = true;
 		$nameSpaces = $this->mail_bo->_getNameSpaces();
-		
+
 		foreach($nameSpaces as $key => $value )
 		{
 			if (str_replace($value['delimiter'],"",$value['prefix']) == $folderName &&
@@ -236,21 +236,21 @@ class mail_ui
 	function subscription(array $content=null ,$msg='')
 	{
 		$stmpl = new etemplate_new('mail.subscribe');
-		
+
 		$profileId = $_GET['acc_id'];
-		
+
 		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
-		
+
 		$allFolders = $this->mail_bo->getFolderObjects();
-	
+
 		if (!is_array($content))
 		{
 			if ($profileId)
 			{
-				
+
 				$content['foldertree'] = array();
 				$content['profileId'] = $profileId;
-				
+
 				foreach ($allFolders as $folder)
 				{
 					$folderName = $profileId . self::$delimiter . $folder->folderName;
@@ -305,7 +305,7 @@ class mail_ui
 				}
 			}
 		}
-		
+
 		$preserv['profileId'] = $content['profileId'];
 		$readonlys = array();
 
@@ -1172,7 +1172,7 @@ class mail_ui
 						'caption' => lang('Text mode'),
 						'hint' => 'Open in Text mode',
 						'group' => ++$group,
-						'icon' => egw_vfs::mime_icon('text/plain'),
+						'icon' => 'textmode',
 						'onExecute' => 'javaScript:app.mail.mail_openAsText',
 						'allowOnMultiple' => false,
 					),
@@ -1180,7 +1180,7 @@ class mail_ui
 						'caption' => lang('HTML mode'),
 						'hint' => 'Open in HTML mode',
 						'group' => $group,
-						'icon' => egw_vfs::mime_icon('text/html'),
+						'icon' => 'htmlmode',
 						'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
 						'allowOnMultiple' => false,
 					),
