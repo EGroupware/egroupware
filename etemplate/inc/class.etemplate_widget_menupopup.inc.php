@@ -489,9 +489,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 					break;
 				}
+	
 				if($type == 'owngroups' || $select_pref == 'groupmembers')
 				{
-					$type = 'groups';
 					$owngroups = true;
 					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
 				}
@@ -512,6 +512,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 						'type' => empty($type) ? 'accounts' : $type, // default is accounts
 						'order' => 'account_fullname',	// order according to pref of how to display accounts
 					));
+				}
+				else if ($type == 'groups')
+				{
+					$accs = $GLOBALS['egw']->accounts->get_list($type);
 				}
 				else
 				{
