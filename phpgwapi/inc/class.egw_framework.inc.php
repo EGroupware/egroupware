@@ -793,7 +793,7 @@ abstract class egw_framework
 	 */
 	protected static function _get_quick_add()
 	{
-		return '<span id="quick_add" />';
+		return '<span id="quick_add"></span>';
 	}
 
 	/**
