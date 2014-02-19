@@ -116,6 +116,21 @@
 		}
 	}
 
+	// call egw.link_handler, if attr specified
+	var egw_redirect = egw_script.getAttribute('data-egw-redirect');
+	if (egw_redirect)
+	{
+		// set sidebox for tabed templates, we need to set it now, as framework will not resent it!
+		var sidebox = egw_script.getAttribute('data-setSidebox');
+		if (window.framework && sidebox)
+		{
+			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
+		}
+		egw_redirect = JSON.parse(egw_redirect);
+		egw.link_handler.apply(egw, egw_redirect);
+		return;	// do NOT execute any further code, as IE(11) will give errors because framework already redirects
+	}
+
 	// call egw_refresh on opener, if attr specified
 	var refresh_opener = egw_script.getAttribute('data-refresh-opener');
 	if (refresh_opener && window.opener)
