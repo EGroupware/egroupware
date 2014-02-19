@@ -428,7 +428,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	refresh: function(_row_ids, _type) {
 		// Framework trying to refresh, but nextmatch not fully initialized
-		if(this.controller === null || !this.div.is(':visible'))
+		if(this.controller === null || !this.div || !this.div.is(':visible'))
 		{
 			return;
 		}

@@ -173,11 +173,6 @@ function nm_action(_action, _senders, _target, _ids)
 					return value;
 				}
 
-				if(_action.data.nm_action == 'open_popup')
-				{
-					// Force nextmatch to re-load affected rows
-					nextmatch.refresh(idsArr);
-				}
 
 				// downloads need a regular submit via POST (no Ajax)
 				if (_action.data.postSubmit)
@@ -191,6 +186,12 @@ function nm_action(_action, _senders, _target, _ids)
 
 				if(_action.data.nm_action == 'open_popup')
 				{
+					// Force nextmatch to re-load affected rows
+					// Must be after submit, so server gives us up to date info
+					// Otherwise, old info will be sent and could overwrite the new,
+					// depending on timing.
+					nextmatch.refresh(idsArr);
+			
 					// Reset action in case there's another one
 					nextmatch.getValue = old_value;
 				}
@@ -325,6 +326,7 @@ function nm_open_popup(_action, _ids)
 						button.onclick.apply(button, e.currentTarget);
 					} : function(e) {
 						dialog.dialog("close");
+						nm_popup_action = null;
 					}
 				});
 			});
