@@ -5,12 +5,19 @@
 		<html id="msg"/>
 		<vbox class="mailDisplay">
 			<hbox>
-				<toolbar id="displayToolbar" width="100%" view_range="12" flat_list="false"/>
+				<toolbar id="displayToolbar" width="100%" view_range="8" flat_list="false"/>
 			</hbox>
-			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
-				<description value="From"/>
-				<url-email id="FROM" readonly="true"/>
+			<hbox>
+				<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
+					<description value="From"/>
+					<url-email id="FROM" readonly="true"/>
+				</hbox>
+				<hbox class="mailDisplayHeaders" align="right" width="30%">
+					<description value="Date"/>
+					<date-time id="mail_displaydate" readonly="true"/>
+				</hbox>
 			</hbox>
+			
 			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
 				<description value="on behalf of"/>
 				<url-email id="SENDER" readonly="true"/>
@@ -32,10 +39,6 @@
 				<hbox id="BCC" class="mail_extraEmails">
 				</hbox>
 				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</hbox>
-			<hbox class="mailDisplayHeaders" width="100%">
-				<description align= "right" value="Date"/>
-				<date-time align="right" id="mail_displaydate" readonly="true"/>
 			</hbox>
 			<hbox  class="mailDisplayHeaders" width="100%">
 				<description value="Subject"/>
