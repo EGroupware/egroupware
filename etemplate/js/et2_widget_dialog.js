@@ -405,7 +405,16 @@ var et2_dialog = et2_widget.extend({
 		}
 
 		this.template = new etemplate2(this.div[0], false);
-		this.template.load("",template,this.options.value||{});
+		if(template.indexOf('.xet') > 0)
+		{
+			// File name provided, fetch from server
+			this.template.load("",template,this.options.value||{});
+		}
+		else
+		{
+			// Just template name, it better be loaded already
+			this.template.load(template,'',this.options.value||{});
+		}
 	},
 
 	/**
