@@ -175,7 +175,6 @@ var et2_toolbar = et2_DOMWidget.extend(
 			if(action.children)
 			{
 				var children = {};
-				var toolbar = this;
 				var add_children = function(root, children) {
 					for(var id in root.children)
 					{
@@ -194,7 +193,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 						}
 						children[id] = info;
 
-						if (toolbar.flat_list)
+						if (that.flat_list)
 						{
 							childaction = root.children[id];
 							if (typeof root.children[id].group != 'undefined' &&
@@ -202,7 +201,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 							{
 								childaction.group = root.group;
 							}
-							toolbar._make_button (childaction);
+							that._make_button (childaction);
 						}
 					}
 				};
@@ -212,19 +211,17 @@ var et2_toolbar = et2_DOMWidget.extend(
 					continue;
 				}
 				
-				this.dropdowns[action.id] = $j(document.createElement('span'))
-					.addClass("ui-state-default")
-					.appendTo(last_group);
-
 				var dropdown = et2_createWidget("dropdown_button", {
-					id: action.id,
-					label: action.caption
+					id: action.id
 				},this);
-				dropdown.set_select_options(children);
 				
+				dropdown.set_select_options(children);
+				dropdown.set_label (action.caption);
+				
+				dropdown.set_image (action.iconUrl);
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
-					var action = toolbar._actionManager.getActionById(selected.attr('data-id'));
+					var action = that._actionManager.getActionById(selected.attr('data-id'));
 					if(action)
 					{
 						if(action)
@@ -236,7 +233,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 				},action);
 				dropdown.onclick = jQuery.proxy(function(selected, dropdown)
 				{
-					var action = toolbar._actionManager.getActionById(this.getValue());
+					var action = that._actionManager.getActionById(this.getValue());
 					if(action)
 					{
 						if(action)
@@ -246,6 +243,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 					}
 					console.debug(selected, this, action);
 				},dropdown);
+				$j(dropdown.getDOMNode())
+						.attr('id',this.id + '-' + dropdown.id)
+						.addClass(this.preference[action.id]?'et2_toolbar-dropdown et2_toolbar-dropdown-menulist':'et2_toolbar-dropdown')
+						.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 			}
 			else
 			{
@@ -261,7 +262,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
-		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('button'),
+		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('span').children(),
 			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
 			menulist = jQuery('#'+this.id+'-'+'menulist');
 		
@@ -396,10 +397,6 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 	getDOMNode: function(asker)
 	{
-		if(asker != this && asker.id && this.dropdowns[asker.id])
-		{
-			return this.dropdowns[asker.id][0];
-		}
 		return this.div[0];
 	}
 });
