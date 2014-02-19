@@ -210,7 +210,7 @@ class calendar_uiviews extends calendar_ui
 		// handle views in other files
 		if (!isset($this->public_functions[$this->view]))
 		{
-			$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>$this->view_menuaction));
+			$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>$this->view_menuaction,'ajax'=>'true'),'calendar');
 		}
 		// get manual to load the right page
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualCalendar'.ucfirst($this->view));

@@ -36,7 +36,7 @@ app.classes.calendar = AppJS.extend(
 		this._super.apply(this, arguments);
 
 		// make calendar object available, even if not running in top window, as sidebox does
-		if (window.top !== window && typeof window.top.app.calendar == 'undefined')
+		if (window.top !== window)
 		{
 			window.top.app.calendar = this;
 		}
@@ -55,7 +55,7 @@ app.classes.calendar = AppJS.extend(
 		// remove top window reference
 		if (window.top !== window && window.top.app.calendar === this)
 		{
-				delete window.top.app.calendar;
+			delete window.top.app.calendar;
 		}
 	},
 
@@ -64,9 +64,10 @@ app.classes.calendar = AppJS.extend(
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
 	 *
-	 * @param et2 etemplate2 Newly ready object
+	 * @param {etemplate2} _et2 newly ready et2 object
+	 * @param {string} _name name of template
 	 */
-	et2_ready: function(et2)
+	et2_ready: function(_et2, _name)
 	{
 		// call parent
 		this._super.apply(this, arguments);
@@ -82,45 +83,39 @@ app.classes.calendar = AppJS.extend(
 
 		var content = this.et2.getArrayMgr('content');
 
-		if (typeof et2.templates['calendar.list'] != 'undefined')
+		switch (_name)
 		{
-			try {
-				// check if listview runs in an iframe --> use linkHandler to open it top-level
-				if (top.egw && top != window && window.framework)
+			case 'calendar.list':
+				this.filter_change();
+				break;
+
+			case 'calendar.edit':
+				if (typeof content.data['conflicts'] == 'undefined')
 				{
-					window.framework.linkHandler(document.location.href+'&ajax=true', 'calendar');
+					$j(document.getElementById('calendar-edit_calendar-delete_series')).hide();
+					//Check if it's fallback from conflict window or it's from edit window
+					if (content.data['button_was'] != 'freetime')
+					{
+						this.set_enddate_visibility();
+						this.check_recur_type();
+						this.et2.getWidgetById('recur_exception').set_disabled(typeof content.data['recur_exception'][0] == 'undefined');
+					}
+					else
+					{
+						this.freetime_search();
+					}
+					//send Syncronus ajax request to the server to unlock the on close entry
+					//set onbeforeunload with json request to send request when the window gets close by X button
+					window.onbeforeunload = function () {
+						this.egw.json('calendar.calendar_uiforms.ajax_unlock'
+						, [content.data['id'],content.data['lock_token']],null,true,null,null).sendRequest(true);
+					};
 				}
-			}
-			catch(e) {
-				// ignore error eg. comming because we have a top not belonging to EGroupware
-			}
-			this.filter_change();
-		}
-		if (typeof et2.templates['calendar.edit'] != 'undefined' && typeof content.data['conflicts'] == 'undefined')
-		{
-			$j(document.getElementById('calendar-edit_calendar-delete_series')).hide();
-			//Check if it's fallback from conflict window or it's from edit window
-			if (content.data['button_was'] != 'freetime')
-			{
+				break;
+
+			case 'calendar.freetimesearch':
 				this.set_enddate_visibility();
-				this.check_recur_type();
-				this.et2.getWidgetById('recur_exception').set_disabled(typeof content.data['recur_exception'][0] == 'undefined');
-			}
-			else
-			{
-				this.freetime_search();
-			}
-			//send Syncronus ajax request to the server to unlock the on close entry
-			//set onbeforeunload with json request to send request when the window gets close by X button
-			window.onbeforeunload = function () {
-				this.egw.json('calendar.calendar_uiforms.ajax_unlock'
-				, [content.data['id'],content.data['lock_token']],null,true,null,null).sendRequest(true);
-			};
-		}
-		//this.replace_eTemplate_onsubmit();
-		if (typeof et2.templates['calendar.freetimesearch'] != 'undefined')
-		{
-			this.set_enddate_visibility();
+				break;
 		}
 	},
 
@@ -790,8 +785,8 @@ app.classes.calendar = AppJS.extend(
 	 */
 	filter_change: function()
 	{
-		var filter = this.et2.getWidgetById('filter');
-		var dates = this.et2.getWidgetById('calendar.list.dates');
+		var filter = this.et2 ? this.et2.getWidgetById('filter') : null;
+		var dates = this.et2 ? this.et2.getWidgetById('calendar.list.dates') : null;
 
 		if (filter && dates)
 		{
