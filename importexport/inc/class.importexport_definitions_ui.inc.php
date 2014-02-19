@@ -132,16 +132,21 @@ class importexport_definitions_ui
 						$action = $content['nm']['action'];
 						if($content['nm']['action'] == 'allowed')
 						{
-							$content['allowed'] = $content['allowed_private'] ? null : ($content['all_users'] ? 'all' : implode(',',$content['allowed']));
+							$content['allowed'] = $content['allowed_popup']['allowed_private'] == 'true' ? null : (
+								$content['allowed_popup']['all_users']=='true' ? 'all' : implode(',',$content['allowed_popup']['allowed'])
+							);
+						}
+						else
+						{
+							$content['owner'] = $content['owner_popup']['owner'];
 						}
 						if(is_array($content[$content['nm']['action']]))
 						{
 							$content[$content['nm']['action']] = implode(',',$content[$content['nm']['action']]);
 						}
-						$content['nm']['action'] .= '_' . $content[$content['nm']['action']];
+						$content['nm']['action'] .= '_' . $content[$action];
 						unset($content[$action]);
-						unset($content['all_users']);
-						unset($content['allowed_private']);
+						unset($content['allowed_popup']);
 					}
 					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 						$success,$failed,$action_msg,'index',$msg))
@@ -285,20 +290,20 @@ class importexport_definitions_ui
 	}
 
 	/**
-         * apply an action to multiple entries
-         *
-         * @param string/int $action 'delete', 'export', etc.
-         * @param array $selected id's to use if !$use_all
-         * @param boolean $use_all if true use all entries of the current selection (in the session)
-         * @param int &$success number of succeded actions
-         * @param int &$failed number of failed actions (not enought permissions)
-         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 entries 'deleted'
-         * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
-         * @return boolean true if all actions succeded, false otherwise
-         */
-        function action($action,$selected,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
-        {
-		//echo __METHOD__."('$action', ".array2string($selected).', '.array2string($use_all).",,, '$session_name')";
+	 * apply an action to multiple entries
+	 *
+	 * @param string/int $action 'delete', 'export', etc.
+	 * @param array $selected id's to use if !$use_all
+	 * @param boolean $use_all if true use all entries of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 entries 'deleted'
+	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function action($action,$selected,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+	{
+		//error_log( __METHOD__."('$action', ".array2string($selected).', '.array2string($use_all).",,, '$session_name')");
 		if ($use_all)
 		{
 			// get the whole selection
