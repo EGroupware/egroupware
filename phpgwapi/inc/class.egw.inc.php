@@ -495,8 +495,16 @@ class egw extends egw_minimal
 			{
 				throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
 			}
-			Header("Location: $url");
-			print("\n\n");
+			if ($GLOBALS['egw']->framework instanceof jdots_framework && !empty($link_app))
+			{
+				egw_framework::set_extra('egw', 'redirect', array($url, $link_app));
+				$GLOBALS['egw']->framework->render('');
+			}
+			else
+			{
+				Header("Location: $url");
+				print("\n\n");
+			}
 		}
 
 		if ($do_flush)
