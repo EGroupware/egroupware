@@ -162,6 +162,7 @@ choose a background style.	common	en	Choose a background style
 choose a text color for the icons	common	en	Choose a text color for the icons
 choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
+choose time	common	en	Choose Time
 chosen parent category no longer exists	common	en	Chosen parent category no longer exists
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
@@ -610,6 +611,7 @@ postal	common	en	Postal
 powered by	common	en	Powered by
 preferences	common	en	Preferences
 preferences for the %1 template set	preferences	en	Preferences for the %1 template set
+prev	common	en	Prev
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page

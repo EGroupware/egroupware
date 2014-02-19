@@ -71,6 +71,11 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			translateCalendar();
 			calendar_translated = true;
 		}
+		if (!timepicker_translated)
+		{
+			translateTimepicker();
+			timepicker_translated = true;
+		}
 		var prefs = calendarPreferences(_egw);
 
 		var params = {

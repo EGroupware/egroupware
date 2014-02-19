@@ -162,6 +162,7 @@ choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
 choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
+choose time	common	de	Uhrzeit auswählen
 chosen parent category no longer exists	common	de	Die ausgewählte Elternkategorie existiert nicht (mehr).
 christmas island	common	de	WEIHNACHTS INSEL
 clear	common	de	Zurücksetzen
@@ -610,6 +611,7 @@ postal	common	de	Postadresse
 powered by	common	de	Powered by
 preferences	common	de	Einstellungen
 preferences for the %1 template set	preferences	de	Einstellungen für das %1 Template
+prev	common	de	Vorheriger
 prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
 prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
