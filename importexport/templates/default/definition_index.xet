@@ -55,8 +55,8 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+				<row>
+					<buttononly align="right" statustext="Add a new definition" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.edit'),'_blank','dependent=yes,width=500,height=500,status=yes'); return false;"/>
 				</row>
 				<row>
 					<nextmatch id="nm" template="importexport.definition_index.row"/>

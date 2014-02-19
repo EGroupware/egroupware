@@ -165,6 +165,7 @@ class importexport_definitions_ui
 				'csv_fields'	=> false,	// Disable CSV export, uses own export
 				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
 				'row_id'	=> 'definition_id',
+				 'placeholder_actions' => array('add')
 			);
 			if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
 		}
