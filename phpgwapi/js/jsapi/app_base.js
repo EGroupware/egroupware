@@ -100,6 +100,8 @@ var AppJS = Class.extend(
 	 */
 	destroy: function() {
 		delete this.et2;
+		if (this.sidebox)
+			this.sidebox.off();
 		delete this.sidebox;
 		delete window.app[this.appname];
 	},

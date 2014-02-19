@@ -118,7 +118,7 @@
 	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
 	 * @param _instances refers to all api instances.
-	 * @param _wnd is the window for which the module instances should get
+	 * @param _window is the window for which the module instances should get
 	 * 	created.
 	 */
 	function getWndModules(_egw, _modules, _moduleInstances, _instances, _window)
@@ -139,8 +139,9 @@
 		// called, we have to delete the module slot created above
 		var fnct = function() {
 			cleanupEgwInstances(_instances, _moduleInstances, function(_w) {
-				return _w.window === _window});
-			};
+				return _w.window === _window;
+			});
+		};
 		if (_window.attachEvent)
 		{
 			_window.attachEvent('onbeforeunload', fnct);
@@ -259,7 +260,7 @@
 		if (typeof _instances[hash] === 'undefined')
 		{
 			_instances[hash] = [];
-			return createEgwInstance(_egw, _modules, _moduleInstances, 
+			return createEgwInstance(_egw, _modules, _moduleInstances,
 				_instances[hash], _instances, _app, _window);
 		}
 		else
@@ -277,7 +278,7 @@
 
 		// If we're still here, no API instance for the given window has been
 		// found -- create a new entry
-		return createEgwInstance(_egw, _modules, _moduleInstances, 
+		return createEgwInstance(_egw, _modules, _moduleInstances,
 			_instances[hash], _instances, _app, _window);
 	}
 
@@ -403,7 +404,7 @@
 			'app': {},
 			'wnd': [],
 			'glo': {}
-		}
+		};
 
 		/**
 		 * instances contains references to all created instances.
@@ -416,7 +417,13 @@
 		 */
 		window.setInterval(function() {
 			cleanupEgwInstances(instances, moduleInstances, function(w) {
-				return w.window && w.window.closed
+				try {
+					return w.window && w.window.closed;
+				}
+				catch(e) {
+					// IE(11) seems to throw a permission denied error, when accessing closed property
+					return true;
+				}
 			});
 		}, 10000);
 
