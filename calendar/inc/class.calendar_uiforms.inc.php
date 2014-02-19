@@ -1804,7 +1804,7 @@ class calendar_uiforms extends calendar_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
 		$resources_config = config::read('resources');
 		$readonlys = array();
-	
+
 		foreach (array_keys($allConflicts) as $pId)
 		{
 			if(substr($pId,0,1) == 'r' && $resources_config ) // resources Allow ignore conflicts
@@ -2361,5 +2361,93 @@ class calendar_uiforms extends calendar_ui
 			$sel_options[$status][$field] = lang($label);
 		}
 		// custom fields are now "understood" directly by historylog widget
+	}
+
+	/**
+	 * moves an event to another date/time
+	 *
+	 * @param string $eventID id of the event which has to be moved
+	 * @param string $calendarOwner the owner of the calendar the event is in
+	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
+	 * @param string $targetOwner the owner of the target calendar
+	 * @param string $durationT the duration to support resizable calendar event
+	 * @return string XML response if no error occurs
+	 */
+	function ajax_moveEvent($eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
+	{
+		// we do not allow dragging into another users calendar ATM
+		if(!$calendarOwner == $targetOwner)
+		{
+			return false;
+		}
+
+		$old_event=$event=$this->bo->read($eventId);
+		if (!$durationT)
+		{
+			$duration=$event['end']-$event['start'];
+		}
+		else
+		{
+			$duration = $durationT;
+		}
+
+		$event['start'] = $this->bo->date2ts($targetDateTime);
+		$event['end'] = $event['start']+$duration;
+		$status_reset_to_unknown = false;
+		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+		foreach((array)$event['participants'] as $uid => $status)
+		{
+			calendar_so::split_status($status,$q,$r);
+			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
+			{
+				$preferences = CreateObject('phpgwapi.preferences',$uid);
+				$part_prefs = $preferences->read_repository();
+				switch ($part_prefs['calendar']['reset_stati'])
+				{
+					case 'no':
+						break;
+					case 'startday':
+						if ($sameday) break;
+					default:
+						$status_reset_to_unknown = true;
+						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+						// todo: report reset status to user
+				}
+			}
+		}
+
+		$conflicts=$this->bo->update($event);
+
+		$response = egw_json_response::get();
+		if(!is_array($conflicts))
+		{
+			$response->redirect(egw::link('/index.php',array(
+				'menuaction' => $this->view_menuaction,
+			)));
+		}
+		else
+		{
+			$response->call(
+				'egw_openWindowCentered2',
+				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
+					&cal_id='.$event['id']
+					.'&start='.$event['start']
+					.'&end='.$event['end']
+					.'&non_interactive=true'
+					.'&cancel_needs_refresh=true',
+				'',750,410);
+		}
+		if ($status_reset_to_unknown)
+		{
+			foreach((array)$event['participants'] as $uid => $status)
+			{
+				if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user)
+				{
+					calendar_so::split_status($status,$q,$r);
+					$status = calendar_so::combine_status('U',$q,$r);
+					$this->bo->set_status($event['id'], $uid, $status, 0, true);
+				}
+			}
+		}
 	}
 }

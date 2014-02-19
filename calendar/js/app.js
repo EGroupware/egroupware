@@ -540,20 +540,20 @@ app.classes.calendar = AppJS.extend(
 		if (_eventFlag == 'S')
 		{
 			et2_dialog.show_dialog(function(_button_id)
-						{
-							if (_button_id == et2_dialog.OK_BUTTON)
-							{
-								xajax_doXMLHTTP(
-									'calendar.calendar_ajax.moveEvent',
-									eventId,
-									calOwner,
-									date,
-									eventOwner,
-									_duration
-								);
-							}
-						},this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
-					this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
+			{
+				if (_button_id == et2_dialog.OK_BUTTON)
+				{
+					egw().json(
+						'calendar.calendar_uiforms.ajax_moveEvent',
+						[eventId,
+						calOwner,
+						date,
+						eventOwner,
+						_duration]
+					).sendRequest();
+				}
+			},this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
+			this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
 		}
 		else
 		{
@@ -561,14 +561,14 @@ app.classes.calendar = AppJS.extend(
 		}
 		if (moveOrder)
 		{
-			xajax_doXMLHTTP(
-					'calendar.calendar_ajax.moveEvent',
-					eventId,
-					calOwner,
-					date,
-					eventOwner,
-					_duration
-				);
+			egw().json(
+				'calendar.calendar_uiforms.ajax_moveEvent',
+				[eventId,
+				calOwner,
+				date,
+				eventOwner,
+				_duration]
+			).sendRequest();
 		}
 	},
 
