@@ -108,7 +108,7 @@ option:checked {background-color: @egw_color_1_e;}
     border-color: @gray_10;
     background: @color_hint;
     background-image: none;
-    .color_100_gray;
+    color: @gray_0;
     
 }
 
@@ -123,7 +123,7 @@ option:checked {background-color: @egw_color_1_e;}
     background: @color_hint;
     background-image: none;
     //	font-size: 105%;
-    .color_100_gray;
+    .color_0_gray;
 //    font-weight: normal !important;
 }
 .ui-state-hover a,
@@ -223,6 +223,23 @@ span.ui-icon-close {margin-top: 0px; top: 5px;}
     }
     
 }
+/*###########################################*/
+/*Menu */
+
+.ui-menu{
+    
+    .ui-menu-item {
+        
+        
+        a {line-height: 26px; padding: 2px 5px;}
+        
+    }
+    
+}
+/*###########################################*/
+/* col selection */
+span.ui-multiselect-header {color: @gray_0;}
+
 
 
 span.ui-icon-search{
@@ -231,12 +248,15 @@ span.ui-icon-search{
     background-size: 10px 10px;
 
 }
-
+ 
+.ui-corner-all{.rounded(3px)}
 
 /*###########################################*/
 /*Dialog: edit row*/
 
 .ui-widget-content {
+    
+    border: 1px solid @egw_color_2_a;
 
     .et2_selectbox {
 

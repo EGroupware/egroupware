@@ -178,6 +178,8 @@ table.dialog-main-view {width: 100%;}
         }
 
     }
+    
+    img {.dimension_height_s !important;}
 
     input.et2_textbox {
         font-size: 1.3em;
@@ -379,10 +381,11 @@ div.admin-config form > table {
  * Message in popup
  */
 body > div#egw_message {
-	background-color: @egw_color_1_a;
+	background-color: @gray_10;
 	/*border-radius: 10px;*/
         .box_shadow_message;
-        .border_normal;
+/*        .border_normal;*/
+         border: 3px solid @egw_color_1_a;
         .border_radius (0px, 15px, 15px, 0px);
 	right: 5px;
 	/*top: 5px;*/

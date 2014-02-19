@@ -334,24 +334,32 @@ hr {
         span.et2_label {background-color: transparent;padding-left: 3px;}
         }
 }
-/**
+/* ################################################################
  * Nextmatch widget
-*/
-
-
+ * ################################################################*/
 .et2_nextmatch {
     .background_color_10_gray;
 }
-
 /* images*/
 .et2_nextmatch > img {.dimension_width_height_s;}
 
-// little rectangle
 
+// area width left and right boxes
+.ui-helper-clearfix{.background_color_10_gray;}
+
+// count
 .nextmatch_header .header_count {
     font-size: 11px;
     position: relative;
-    top: 7px;
+    top: 3px;
+    height: 22px;
+    
+    // count
+    span {
+        font-size: 11px;
+        top: 4px;
+        position: relative;
+    }  
 }
 
 /*################################################################
@@ -362,35 +370,27 @@ hr {
 
 .nextmatch_header > .filters {
 
-    width: 80%;
+    width: 100%;
     margin-bottom: 4px;
-    padding: 0;
+    
+    padding: 0 5px 0 0;
     background-color: @gray_30;
     border: none !important;
     border-color: @gray_100;
     background-image: none !important;
     height: 37px;
-    .border_radius (15px, 3px, 0px, 0px);
-
+    .border_radius (3px, 3px, 0px, 0px);
 
     select {margin-top: 10px;}
 
     .et2_label {
-
-/*        font-size: 0.9em;*/
         padding: 0.2em;
-
-
         select {
             /*.Complete_Button_select;*/
             margin-left: 2px;
             margin-right: 1px;
             margin-top: 8px;
-
             max-width: 14% !important;
-
-
-
             &:hover{
                 .Complete_Button_select_hover;
             }

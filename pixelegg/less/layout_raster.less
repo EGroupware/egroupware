@@ -429,10 +429,25 @@
         position: fixed;
         right: 80px;
         top: 5px;
+        
+        background-image: url(../images/add.png);
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        background-position: 4px 4px;
+        
+        
         .dimension_width_height_s;
-        &:before {content: "+"; font-size: 2em; color: @egw_color_1; line-height: 0.6em}
-            &:hover {.box_shadow_standard_light_hover;}
-            &:focus {.box_shadow_standard_light_inset;}
+        
+        &:before {
+            content: " "; 
+            font-size: 2em; 
+            color: @egw_color_2_a; 
+            line-height: 0.6em;
+            background-color: white;
+        }
+        
+        &:hover {.box_shadow_standard_light_hover;}
+        &:focus {.box_shadow_standard_light_inset;}
     }
 
     // Country switch
@@ -443,7 +458,8 @@
         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
         position: relative !important;
         right: 1px !important;
-        top: -5px;
+        top: -3px;
+        left: 35px;
 
     }
 
