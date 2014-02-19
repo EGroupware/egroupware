@@ -189,9 +189,11 @@ etemplate2.prototype._createArrayManagers = function(_data)
 				break;
 			case "readonlys":
 				result[key] = new et2_readonlysArrayMgr(_data[key]);
+				result[key].perspectiveData.owner = this.widgetContainer;
 				break;
 			default:
 				result[key] = new et2_arrayMgr(_data[key]);
+				result[key].perspectiveData.owner = this.widgetContainer;
 		}
 	}
 
