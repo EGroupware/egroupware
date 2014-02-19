@@ -91,9 +91,11 @@ function etemplate2(_container, _menuaction)
 	// Preset the object variable
 	this.widgetContainer = null;
 
-	// List of templates (XML) that are known, but not used.  Indexed by id.
-	this.templates = {};
 }
+
+// List of templates (XML) that are known, not always used.  Indexed by id.
+etemplate2.prototype.templates = {};
+
 
 /**
  * Calls the resize event of all widgets
