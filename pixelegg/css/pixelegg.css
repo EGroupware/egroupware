@@ -39,9 +39,6 @@
  */
 /*@import (less) "../../etemplate/templates/default/etemplate2.css";*/
 @media all {
-	html {
-		height: 99% !important;
-	}
   /**
  * Top level
  */
@@ -1972,14 +1969,20 @@ table {
 html * {
   font-size: 100%;
 }
+html {
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 99% !important;
+  height: 99% !important;
+}
 body {
   background-image: none;
   background-color: #f0f0f0;
   color: #000000;
   margin: 0px !important;
   padding: 0px !important;
-  width: 100% !important;
-  height: 100% !important;
+  width: 99% !important;
+  height: 99% !important;
   font-size: 11px;
   line-height: 1.28;
 }
@@ -2374,26 +2377,6 @@ td.lettersearch {
         border: none !important;
         width: 99% !important;
 }*/
-.egw_fw_ui_sidemenu_marker {
-  display: block;
-  height: 20px;
-  padding: 2px 5px 2px 34px;
-  margin: 0;
-  border-width: 0px 1px 0px 1px;
-  border-style: solid;
-  border-color: #c6ced6;
-  cursor: pointer;
-  color: gray;
-  background-color: #fafafa;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-.egw_fw_ui_sidemenu_marker h1 {
-  display: inline;
-  /*        font-size: 10pt;*/
-  font-weight: bold;
-}
 .egw_fw_ui_ajaxloader {
   display: inline-block;
   width: 16px;
@@ -4674,7 +4657,7 @@ table.nextmatch_header img {
   margin-right: 5px;
   /*min-height: 50px;*/
 }
-.egw_fw_ui_category_content:last-child {
+.egw_fw_ui_category_content:last-of-type {
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 10px;
