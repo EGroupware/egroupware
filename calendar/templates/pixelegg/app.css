@@ -703,7 +703,7 @@ div.calendar {
   /*padding: 2px;*/
 }
 .calendar thead .title:hover {
-  background-color: #ffffff !important;
+  background-color: #e6e6e6 !important;
 }
 .calendar thead .headrow {
   /* Row <TR> containing navigation buttons */
@@ -728,9 +728,8 @@ div.calendar {
 .calendar thead .hilite {
   /* How do the buttons in header appear when hover */
   background-color: #ffffff;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: none;
+  /*.box_shadow_standard_light_inset;*/
   /*color: #000;*/
   /*border: 0px solid;*/
   border-color: #828282;
@@ -779,14 +778,15 @@ div.calendar {
 }
 .calendar tbody td.selected {
   /* Cell showing today date */
-  /*font-weight: bold;*/
-  /*border: 1px solid #000;*/
+  /*font-weight: normal;*/
+  /*border: 0px solid @gray_50;*/
   /*padding: 1px 3px 1px 1px;*/
+  /*padding: 0px;*/
   background: #fff;
   color: #000;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset 1px 2px 1px #000000;
+  -moz-box-shadow: inset 1px 2px 1px #000000;
+  box-shadow: inset 1px 2px 1px #000000;
 }
 .calendar tbody td.weekend {
   /* Cells showing weekend days */
@@ -809,8 +809,8 @@ div.calendar {
   display: none;
 }
 .calendar table .wn {
-  padding: 2px 3px 2px 2px;
-  border-right: 1px solid #000;
+  /*padding: 2px 3px 2px 2px;*/
+  /*border-right: 1px solid #000;*/
   background-color: #b3b3b3 !important;
 }
 .calendar tfoot .footrow {
@@ -2094,6 +2094,9 @@ div#calendar-container div.calendar table {
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
 }
 div#calendar-container div.calendar table thead .title {
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
   background-color: #ffc200;
 }
 div#calendar-container div.calendar table thead .daynames {
@@ -2105,5 +2108,18 @@ div#calendar-container div.calendar table tbody tr.daysrow:hover {
 div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: #ffc200;
 }
+#calendar_cat_id,
+#calendar_filter,
+#uical_select_owner {
+  font-size: 11px;
+}
+/*#calendar_sidebox_content {
+    .egw_fw_ui_category_content {
+    // Last Element rounded
+    &:last-of-type{
+                    .border_radius (0, 0, 10px, 0);
+                }
+    }
+}*/
 /* ########################################################################################
 /* * Calendar END */

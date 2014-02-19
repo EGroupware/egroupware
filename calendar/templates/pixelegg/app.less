@@ -138,7 +138,7 @@ div.calendar { position: relative; }
             /*color: #000;*/
             /*padding: 2px;*/
 
-            &:hover {background-color: @gray_0 !important;}
+            &:hover {background-color: @gray_10 !important;}
         }
         .headrow { /* Row <TR> containing navigation buttons */
             .background_table_cal_head;
@@ -163,7 +163,8 @@ div.calendar { position: relative; }
 
         .hilite { /* How do the buttons in header appear when hover */
             .background_color_0_gray;
-            .box_shadow_standard_light_inset;
+            border: none;
+            /*.box_shadow_standard_light_inset;*/
             /*color: #000;*/
             /*border: 0px solid;*/
             border-color: @gray_50;
@@ -220,12 +221,15 @@ div.calendar { position: relative; }
         }
 
         td.selected { /* Cell showing today date */
-            /*font-weight: bold;*/
-            /*border: 1px solid #000;*/
+            /*font-weight: normal;*/
+            /*border: 0px solid @gray_50;*/
             /*padding: 1px 3px 1px 1px;*/
+            /*padding: 0px;*/
             background: #fff;
             color: #000;
-            .box_shadow_standard_light_inset;
+            -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 1);
+            -moz-box-shadow:  inset 1px 2px 1px rgba(0, 0, 0, 1);
+            box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 1);
         }
 
         td.weekend { /* Cells showing weekend days */
@@ -251,8 +255,8 @@ div.calendar { position: relative; }
     } // tbody
 
     table .wn {
-        padding: 2px 3px 2px 2px;
-        border-right: 1px solid #000;
+        /*padding: 2px 3px 2px 2px;*/
+        /*border-right: 1px solid #000;*/
         //  background: #bdf;
         .background_color_30_gray;
     }
@@ -1444,7 +1448,9 @@ div#calendar-container {
     /*distance to cal widget*/
     /*margin-top: 10px;*/
     
-    select, input, option {font-size: 11px;}
+    select, 
+    input, 
+    option {font-size: 11px;}
 
     div.calendar{
         background-color: inherit;
@@ -1458,6 +1464,9 @@ div#calendar-container {
             thead {
                 // Month
                 .title {
+                    border: none;
+                    box-shadow: none;
+                    -webkit-box-shadow: none;
                     background-color: @egw_color_1_a;
                 }
 
@@ -1497,6 +1506,21 @@ div#calendar-container {
 }
 
 
+// Select Fields in Sidemenu
+#calendar_cat_id,
+#calendar_filter,
+#uical_select_owner {font-size: 11px;}
+
+
+// Last Element in Sidemenu - rounded
+/*#calendar_sidebox_content {
+    .egw_fw_ui_category_content {
+    // Last Element rounded
+    &:last-of-type{
+                    .border_radius (0, 0, 10px, 0);
+                }
+    }
+}*/
 /* ########################################################################################
 /* * Calendar END */ 
 
