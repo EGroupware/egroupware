@@ -3,24 +3,24 @@
 <overlay>
 	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
-			<grid height="141">
+			<grid height="250" width="500">
 				<columns>
-					<column width="85" />
+					<column width="85"/>
 					<column/>
 				</columns>
 				<rows>
 					<row>
-						<description for="location" value="Location" width="0"/>
+						<description for="location" value="Location"/>
 						<textbox id="location" maxlength="255" class="calendar_inputFullWidth"/>
 					</row>
 					<row class="row_off">
-						<description for="priority" value="Priority" width="0"/>
+						<description for="priority" value="Priority"/>
 						<menulist>
 							<menupopup type="select-priority" id="priority"/>
 						</menulist>
 					</row>
 					<row>
-						<description value="Options" width="0"/>
+						<description value="Options"/>
 						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 					</row>
 					<row>
@@ -33,17 +33,17 @@
 					</row>
 				</rows>
 			</grid>
-			<vbox align="right" options="0,0" class="calendar_category_details">
+			<vbox align="right" options="0,0" class="calendar_category_details" height="240">
 				<description for="category" value="Categories" class="row_on"/>
-				<listbox type="select-cat" id="category" rows="9"/>
+				<listbox type="select-cat" id="category" rows="9" height="230"/>
 			</vbox>
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="317"/>
+		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="250"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
-		<grid width="99%" height="20" overflow="auto" id="participants">
+		<grid width="99%" height="250" overflow="auto" id="participants">
 			<columns>
 				<column width="85"/>
 				<column/>
@@ -97,7 +97,7 @@
 		</styles>
 	</template>
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="210">
+		<grid width="100%" height="250">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -157,7 +157,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="210" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -169,7 +169,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="210" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -191,7 +191,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.alarms" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="210" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column width="120px" height="30px"/>
 				<column/>
@@ -257,7 +257,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" height="210" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -311,7 +311,7 @@
 					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 				</row>
 				<row>
-					<tabbox id="tabs" height="246" span="all">
+					<tabbox id="tabs" height="260" span="all">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
