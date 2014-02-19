@@ -771,15 +771,16 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	 *
 	 * Grid needs special handling because HTML tables don't do overflow.  We
 	 * create a wrapper DIV to handle it.
+	 * No value or default visible needs no wrapper, as table is always overflow visible.
 	 *
-	 * @param {string} _value Overflow value, must be a valid CSS overflow value.
+	 * @param {string} _value Overflow value, must be a valid CSS overflow value, default 'visible'
 	 */
 	set_overflow: function(_value) {
 		var wrapper = this.wrapper || this.table.parent('[id$="_grid_wrapper"]');
 
 		this.overflow = _value;
 
-		if(wrapper.length == 0 && _value)
+		if(wrapper.length == 0 && _value && _value !== 'visible')
 		{
 			this.wrapper = wrapper = this.table.wrap('<div id="'+this.id+'_grid_wrapper"></div>').parent();
 			if(this.height)
@@ -788,36 +789,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			}
 		}
 		wrapper.css('overflow', _value);
-		
-		if(wrapper.length && (!_value || _value == null))
+
+		if(wrapper.length && (!_value || _value == null || _value === 'visible'))
 		{
 			this.table.unwrap();
-		}
-	},
-
-	/**
-	 * Set the height attribute
-	 *
-	 * Grid needs special handling because HTML tables don't care about height.  We
-	 * create a wrapper DIV to handle it.
-	 *
-	 * @param {string} _value Height value, must be a valid CSS height value.
-	 */
-	set_height: function(_value) {
-
-		this.height = _value;
-
-		// Height without overflow does nothing.
-		// This also makes sure that the wrapper is there.
-		if(!this.overflow)
-		{
-			this.set_overflow('hidden');
-		}
-		var wrapper = this.wrapper || this.table.parent('[id$="_grid_wrapper"]');
-
-		if(wrapper.length > 0 && _value)
-		{
-			wrapper.css('height', this.height);
 		}
 	},
 
@@ -941,7 +916,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			// Add a new action object to the object manager
 			var row = $j('tr', this.tbody)[i];
 			var aoi = new et2_action_object_impl(this, row);
-			
+
 			var obj = widget_object.addObject("row_"+i, aoi);
 			obj.updateActionLinks(action_links);
 		}
