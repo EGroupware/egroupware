@@ -33,6 +33,11 @@
 class historylog_widget
 {
 	/**
+	 * Maximum number of log entries to display
+	 */
+	const MAX_DISPLAY = 500;
+
+	/**
 	 * @var array exported methods of this class
 	 */
 	var $public_functions = array(
@@ -161,7 +166,7 @@ class historylog_widget
 		$historylog = new historylog($app);
 		if (!$id || method_exists($historylog,'search'))
 		{
-			$value = $id ? $historylog->search($filter ? array('history_record_id'=>$id) + $filter : $id) : false;
+			$value = $id ? $historylog->search($filter ? array('history_record_id'=>$id) + $filter : $id, 'history_id', 'DESC', self::MAX_DISPLAY) : false;
 		}
 		unset($historylog);
 

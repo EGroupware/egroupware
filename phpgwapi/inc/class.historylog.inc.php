@@ -2,11 +2,6 @@
 /**
  * API - Record history logging
  *
- * This class extends a backend class (at them moment SQL or LDAP) and implements some
- * caching on to top of the backend functions. The cache is share for all instances of
- * the accounts class and for LDAP it is persistent through the whole session, for SQL
- * it's only on a per request basis.
- *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
  * @copyright 2001 by Joseph Engo <jengo@phpgroupware.org>
@@ -147,21 +142,22 @@ class historylog
 	 *
 	 * @param array/int $filter array with filters, or int record_id
 	 * @param string $order='history_id' sorting after history_id is identical to history_timestamp
-	 * @param string $sort='ASC'
+	 * @param string $sort='DESC'
+	 * @param int $limit=null only return this many entries
 	 * @return array of arrays with keys id, record_id, appname, owner (account_id), status, new_value, old_value,
 	 * 	timestamp (Y-m-d H:i:s in servertime), user_ts (timestamp in user-time)
 	 */
-	function search($filter,$order='history_id',$sort='DESC')
+	function search($filter,$order='history_id',$sort='DESC',$limit=null)
 	{
 		if (!is_array($filter)) $filter = is_numeric($filter) ? array('history_record_id' => $filter) : array();
 
-		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
+		if (!$order || !preg_match('/^[a-z0-9_]+$/i',$order) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
 			$orderby = 'ORDER BY history_id DESC';
 		}
 		else
 		{
-			$orderby = "ORDER BY $_orderby $sort";
+			$orderby = "ORDER BY $order $sort";
 		}
 		foreach($filter as $col => $value)
 		{
@@ -177,7 +173,8 @@ class historylog
 		if (!$filter['history_record_id']) return array();
 
 		$rows = array();
-		foreach($this->db->select(self::TABLE,'*',$filter,__LINE__,__FILE__,false,$orderby) as $row)
+		foreach($this->db->select(self::TABLE, '*', $filter, __LINE__, __FILE__,
+			isset($limit) ? 0 : false, $orderby, 'phpgwapi', $limit) as $row)
 		{
 			$row['user_ts'] = $this->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			$rows[] = egw_db::strip_array_keys($row,'history_');
@@ -257,9 +254,9 @@ class historylog
 			$rows[] = egw_db::strip_array_keys($row,'history_');
 		}
 		if ($mysql_calc_rows)
-                {
-                        $total = $GLOBALS['egw']->db->query('SELECT FOUND_ROWS()')->fetchColumn();
-                }
+		{
+			$total = $GLOBALS['egw']->db->query('SELECT FOUND_ROWS()')->fetchColumn();
+		}
 
 		return $total;
 	}
@@ -378,13 +375,11 @@ class historylog
 
 			if ($this->alternate_handlers[$value['status']])
 			{
-				eval('\$s = ' . $this->alternate_handlers[$value['status']] . '(' . $value['new_value'] . ');');
-				$this->template->set_var('row_new_value',$s);
-				unset($s);
+				$this->template->set_var('row_new_value',
+					call_user_func($this->alternate_handlers[$value['status']], array($value['new_value'])));
 
-				eval('\$s = ' . $this->alternate_handlers[$value['status']] . '(' . $value['old_value'] . ');');
-				$this->template->set_var('row_old_value',$s);
-				unset($s);
+				$this->template->set_var('row_old_value',
+					call_user_func($this->alternate_handlers[$value['status']], array($value['old_value'])));
 			}
 			else
 			{
