@@ -489,7 +489,14 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 					break;
 				}
-	
+				// Popup is the only preference option that doesn't need more select options
+				if($select_pref == 'popup') break;
+
+				// Determine if users or groups (or both) are needed
+				$groups = in_array($type, array('owngroups','groups','both')) && $select_pref != 'none';
+				$accounts = ($type == 'both') || (!$groups && $select_pref != 'none');
+
+				// If there are group, type or preference based restrictions, find those
 				if($type == 'owngroups' || $select_pref == 'groupmembers')
 				{
 					$owngroups = true;
@@ -501,11 +508,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$mygroups[] = $GLOBALS['egw_info']['user']['account_primary_group'];
 				}
 
-				// Popup is the only preference option that doesn't need more select options
-				if($select_pref == 'popup') break;
 
-				$no_lang = True;
+error_log("$widget Type $type Pref: $select_pref Groups:".array2string($mygroups));
 				$accs = array();
+
+				// No restrictions, just search for the right type
 				if(!$mygroups)
 				{
 					$accs = $GLOBALS['egw']->accounts->search(array(
@@ -513,33 +520,52 @@ class etemplate_widget_menupopup extends etemplate_widget
 						'order' => 'account_fullname',	// order according to pref of how to display accounts
 					));
 				}
-				else if ($type == 'groups')
-				{
-					$accs = $GLOBALS['egw']->accounts->get_list($type);
-				}
-				else
+
+				// Add restricted groups, and expand restricted groups into users if needed
+				if($owngroups)
 				{
 					foreach($mygroups as $group)
 					{
-						$accs += $GLOBALS['egw']->accounts->search(array(
-							'type' => $group,
-							'order' => 'account_fullname',	// order according to pref of how to display accounts
-						));
+						if($groups)
+						{
+							$accs[$group] = $GLOBALS['egw']->accounts->read($group);
+						}
+						if($accounts)
+						{
+							$accs += $GLOBALS['egw']->accounts->search(array(
+								'type' => $group,
+								'order' => 'account_fullname',	// order according to pref of how to display accounts
+							));
+						}
 					}
 				}
+				
+				// Primary group and search includes users from primary group,
+				// and all groups, not just primary group, so add those in
+				if($groups && $select_pref == 'primary_group')
+				{
+					foreach($GLOBALS['egw']->accounts->membership() as $group)
+					{
+						$accs[$group['account_id']] = $GLOBALS['egw']->accounts->read($group['account_id']);
+					}
+				}
+error_log("$widget Accs: " . implode(',',array_keys($accs)));
+
+				// Go through list of accounts (users & groups) and format them for display
 				foreach($accs as $acc)
 				{
-					if ($acc['account_type'] == 'u')
+					if ($acc['account_type'] == 'u' && $accounts)
 					{
 						$options[$acc['account_id']] = self::accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 					}
 				}
 				foreach($accs as $acc)
 				{
-					if ($acc['account_type'] == 'g' && (!$owngroups || ($owngroups && in_array($acc['account_id'],(array)$mygroups))))
+					if ($acc['account_type'] == 'g' && $groups)
 					{
 						$options[$acc['account_id']] = self::accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 					}
+error_log("   {$acc['account_id']}:" . $options[$acc['account_id']]);
 				}
 
 				// Make sure all values are present, even if not normally sent (according to preferences)
