@@ -352,7 +352,7 @@ size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
 sort order	mail	de	Sortierreihenfolge
-source	mail	de	HTML Quellcode
+source	mail	de	Quelltext
 sources	mail	de	HTML Quellcode
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
