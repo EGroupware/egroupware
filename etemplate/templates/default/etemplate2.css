@@ -1193,12 +1193,30 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	border: 1px solid silver;
 	text-align: left;
 	font-weight: normal !important;
-	font-size: xx-small !important;
+	font-size: 9pt !important;
+	vertical-align: bottom !important;
+	padding: 1px !important;
+}
+.et2_toolbar-dropdown > div{
+	direction: ltr;
+	display: inline;
+	background: #E0E0E0 !important;
+	background-color: #E0E0E0 !important;
+	vertical-align: bottom !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.et2_toolbar-dropdown img{
+	padding-left: 7px;
+    background-repeat: no-repeat;
+    background-position:  5% center;
+    background-size: 16px;
 }
 .et2_toolbar-dropdown button:hover{
 	color: none !important;
 	border: none !important;
 	background-color: none !important;
+	vertical-align: bottom !important;
 }
 
 .et2_toolbar-dropdown button{
@@ -1210,7 +1228,10 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	color:#101010 !important;
 	font-size: 9pt !important;
 	font-weight: normal !important;
-	//padding: 0 !important;
+	vertical-align: bottom !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	min-height: 19px;
 }
 .et2_toolbar-dropdown ul> li{
 	width: 100%
