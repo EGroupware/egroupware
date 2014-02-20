@@ -211,6 +211,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		// detect sync-collection report
 		$sync_collection_report = $filter['sync-collection'];
+		unset($filter['sync-collection']);
 
 		if (isset($filter_in[self::$path_attr]) && !is_array($filter_in[self::$path_attr]))
 		{
