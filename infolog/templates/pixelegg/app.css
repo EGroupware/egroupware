@@ -325,6 +325,9 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
   font-weight: normal;
 }
+#infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid .infolog_fixedHeight {
+  height: 16px;
+}
 #infolog-index #infolog-index_nm span.infolog_infoId {
   background-color: inherit;
 }

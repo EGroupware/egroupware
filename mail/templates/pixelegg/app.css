@@ -564,6 +564,9 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 div.mailComposeBody {
   white-space: normal !important;
 }
+#mail-compose_mail_plaintext {
+  white-space: pre !important;
+}
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
   max-height: 1.3em;
@@ -795,7 +798,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
 }
 .egw_fw_ui_category_content .draggedOver {
-  background-color: #679fd2;
+  background-color: #0c5da5;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1577,6 +1580,113 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-display .mail_DisplayNone {
   display: none;
+}
+/**
+* et2_toolbar
+*/
+.et2_toolbar {
+  background: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.et2_toolbar button {
+  margin: 1px;
+}
+.et2_toolbar-dropdown {
+  margin: 1px;
+  display: inline-block;
+  direction: ltr;
+  /*	background: #E0E0E0 !important;
+	background-color: #E0E0E0 !important;*/
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+  /*border: 1px solid silver;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  text-align: left;
+  font-weight: normal !important;
+  font-size: xx-small !important;
+}
+.et2_toolbar-dropdown button {
+  height: 100% !important;
+  border: none !important;
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+  border-radius: 0 !important;
+  color: #101010 !important;
+  font-size: 9pt !important;
+  font-weight: normal !important;
+}
+.et2_toolbar-dropdown button:hover {
+  color: none !important;
+  border: none !important;
+  background-color: none !important;
+}
+.et2_toolbar-dropdown ul > li {
+  width: 100%;
+}
+.et2_toolbar-dropdown ul {
+  z-index: 1000;
+  position: absolute;
+}
+.et2_toolbar-dropdown-menulist button {
+  height: 100% !important;
+  border: none;
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+}
+.et2_toolbar-dropdown-menulist button:nth-child(2) {
+  float: right;
+  padding: 0;
+}
+.et2_toolbar-dropdown-menulist ul {
+  z-index: 1000;
+  position: relative !important;
+}
+div.ui-toolbar-menulist {
+  position: absolute;
+  height: inherit !important;
+  z-index: 999 !important;
+  overflow: hidden !important;
+  /*border: solid black 1px;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0 !important;
+  margin-top: 3px !important;
+  min-width: 150px;
+}
+.ui-toolbar-menulist h {
+  padding-bottom: 7px;
+  margin: 0;
+}
+.ui-toolbar-menulist button {
+  margin: 0 !important;
+  text-align: left;
+  border-radius: 0 !important;
+  width: 100% !important;
+  white-space: nowrap;
+}
+.ui-toolbar-menulist div {
+  margin: 0 !important;
+  text-align: left;
+  border-radius: 0 !important;
+  width: 100% !important;
+  white-space: nowrap;
+  background-color: #e6e6e6 !important;
+  /*border: 1px solid silver;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.ui-toolbar-menulistHeader {
+  font-size: xx-small;
+  height: 100%;
+  margin-top: 2px;
+  direction: ltr;
+}
+.et2_toolbar_activeList {
+  position: relative;
+  float: right;
+  direction: rtl;
+}
+.et2_toolbar_actionlist {
+  float: left;
 }
 /* ##################################################################################
  *     Dialog: Subscripe Folder

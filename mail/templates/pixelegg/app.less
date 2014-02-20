@@ -768,14 +768,10 @@ div#mail-index{
     // #      #      #     #     #     #     #     #     #     ####
     // ############################################################
     #toolbar-actionlist{
-                    
-                    
-                    
+                         
                     padding: 0px 3px;
-                    
                     span[data-group] {margin: 0px 40px 0 0;}
-
-                   button {
+                     button {
                             .Complete_Button_Icon_normal;
                             height: 27px;
                                 [src*="svg"]{
@@ -842,6 +838,138 @@ div#mail-index{
     
 
 } // Ende Display
+
+
+// Toolbar ...from Hadi
+/**
+* et2_toolbar
+*/
+.et2_toolbar {
+	background: none;
+	margin: 0 !important;
+	padding: 0 !important;
+        
+        button {
+	margin: 1px;
+}
+}
+
+.et2_toolbar-dropdown{
+	margin: 1px;
+	display: inline-block;
+	direction: ltr;
+/*	background: #E0E0E0 !important;
+	background-color: #E0E0E0 !important;*/
+        background: @gray_10 !important;
+        background-color: @gray_10 !important;
+	/*border: 1px solid silver;*/
+        .border_normal;
+	text-align: left;
+	font-weight: normal !important;
+	font-size: xx-small !important;
+        
+        button{
+	height: 100% !important;
+	border: none !important;
+        background: @gray_10 !important;
+        background-color: @gray_10 !important;
+	border-radius: 0 !important;
+	color:#101010 !important;
+	font-size: 9pt !important;
+	font-weight: normal !important;
+	//padding: 0 !important;
+        
+        &:hover{
+                color: none !important;
+                border: none !important;
+                background-color: none !important;
+                }
+        
+        }
+        
+        ul> li{  width: 100%  }
+        
+        ul{
+                        z-index: 1000;
+                        position: absolute;
+          }
+        
+}
+
+.et2_toolbar-dropdown-menulist {
+            button{
+                    height: 100% !important;
+                    border: none;
+                    background: @gray_10 !important;
+                    background-color: @gray_10 !important;
+                    
+                    &:nth-child(2){
+                                    float: right;
+                                    padding: 0;
+                                   }
+            
+                    }
+             ul{
+                        z-index: 1000;
+                        position: relative !important;
+                }   
+
+}
+
+
+div.ui-toolbar-menulist{
+	position: absolute;
+	height: inherit !important;
+	z-index: 999 !important;
+	overflow: hidden !important;
+	/*border: solid black 1px;*/
+        .border_normal;
+	padding: 0 !important;
+	margin-top: 3px !important;
+	min-width: 150px;
+}
+.ui-toolbar-menulist{
+    
+        h {
+	padding-bottom: 7px;
+	margin: 0;
+        }
+        
+        button {
+	margin: 0 !important;
+	text-align: left;
+	border-radius: 0 !important;
+	width: 100% !important;
+	white-space: nowrap;
+        }
+        
+        div{
+	margin: 0 !important;
+	text-align: left;
+	border-radius: 0 !important;
+	width: 100% !important;
+	white-space: nowrap;
+	background-color: @gray_10 !important;
+	/*border: 1px solid silver;*/
+        .border_normal;
+        }
+    
+} 
+
+.ui-toolbar-menulistHeader{
+	font-size: xx-small;
+	height:100%;
+	margin-top: 2px;
+	direction: ltr;
+}
+.et2_toolbar_activeList{
+	position: relative;
+	float:right;
+	direction: rtl;
+}
+.et2_toolbar_actionlist{
+	float:left;
+}
 
 
 /* ##################################################################################

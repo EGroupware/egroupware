@@ -334,10 +334,9 @@ fieldset.emailGroup {
     height: 24px;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-    height: 32px;
     width: 32px;
     border: 1px solid #0C5DA5;
-    margin: 2px;
+    margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
@@ -1105,6 +1104,10 @@ fieldset.emailGroup {
   }
   /*################## Tab 7 Extra ###############################*/
   /*seems to be ok*/
+  #addressbook-edit_addressbook-edit-custom,
+  #addressbook-search_addressbook-edit-custom {
+    max-width: 560px;
+  }
   #addressbook-edit_addressbook-edit-custom .th,
   #addressbook-search_addressbook-edit-custom .th {
     height: 20px;
@@ -1113,6 +1116,10 @@ fieldset.emailGroup {
   #addressbook-search_addressbook-edit-custom tbody {
     display: table-header-group;
     vertical-align: top;
+  }
+  #addressbook-edit_addressbook-edit-custom table#addressbook-edit_custom_fields,
+  #addressbook-search_addressbook-edit-custom table#addressbook-edit_custom_fields {
+    max-width: 550px;
   }
   /*################## Tab 8 Extra Privat###############################*/
   /*seems to be ok*/
