@@ -110,7 +110,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 		{
 			for (var name in actions)
 			{
-				if (!actions[name].toolbarDefault)
+				if (!actions[name].toolbarDefault && 
+						(typeof actions[name].children === 'undefined' || !this.flat_list))
 					this.set_prefered(actions[name].id,'add');
 			}
 		}
@@ -135,7 +136,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 					returnCounter =  count;
 				}
 				return returnCounter;
-			}
+			};
 			for (var nAction in actions)
 			{
 				if (that.flat_list)
@@ -148,7 +149,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 				}
 			}
 			return totalCount;
-		}
+		};
 
 		this.countActions = countActions(actions) - Object.keys(this.preference).length;
 		
@@ -196,8 +197,15 @@ var et2_toolbar = et2_DOMWidget.extend(
 						if (that.flat_list)
 						{
 							childaction = root.children[id];
-							if (typeof root.children[id].group != 'undefined' &&
-									typeof root.group != 'undefined')
+							if (typeof pref === 'undefined')
+							{
+								if (!childaction.toolbarDefault)
+								{
+									that.set_prefered(childaction.id,'add');
+								}
+							}
+							if (typeof root.children[id].group !== 'undefined' &&
+									typeof root.group !== 'undefined')
 							{
 								childaction.group = root.group;
 							}
@@ -359,7 +367,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		{
 			if ((this.countActions <= parseInt(this.view_range) ||
 					this.preference[action.id])	&&
-					typeof button[0] != 'undefined')
+					typeof button[0] !== 'undefined')
 			{
 				button[0].textContent = action.caption;
 			}
