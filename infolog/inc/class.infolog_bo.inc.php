@@ -26,6 +26,11 @@ class infolog_bo
 	 * @var infolog_so
 	 */
 	var $so;
+	/**
+	 * Total from last search call
+	 * @var int
+	 */
+	var $total;
 	var $vfs;
 	var $vfs_basedir='/infolog';
 	/**
@@ -1037,6 +1042,7 @@ class infolog_bo
 		}
 
 		$ret = $this->so->search($query);
+		$this->total = $query['total'];
 
 		if (is_array($ret))
 		{

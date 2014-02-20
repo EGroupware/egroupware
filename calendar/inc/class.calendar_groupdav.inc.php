@@ -197,6 +197,7 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		// process REPORT filters or multiget href's
+		$nresults = null;
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options, $filter, $id, $nresults))
 		{
 			// return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
@@ -223,6 +224,7 @@ class calendar_groupdav extends groupdav_handler
 
 		if (isset($nresults))
 		{
+			unset($filter['no_total']);	// we need the total!
 			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
 
 			// hack to support limit with sync-collection report: events are returned in modified ASC order (oldest first)
@@ -231,6 +233,7 @@ class calendar_groupdav extends groupdav_handler
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
 				--$this->sync_collection_token;
+				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
 			}
 		}
 		else
@@ -333,7 +336,7 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 		// sync-collection report --> return modified of last contact as sync-token
-		if ($sync_collection_report)
+		if ($sync_collection)
 		{
 			$this->sync_collection_token = $event['modified'];
 		}

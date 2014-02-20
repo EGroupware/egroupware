@@ -692,8 +692,24 @@ abstract class groupdav_handler
 	 * @param int $user parameter necessary to call getctag, if no $token specified
 	 * @return string
 	 */
-	public function get_sync_collection_token($path, $user=null)
+	public function get_sync_collection_token($path, $user=null, $more_results=null)
 	{
+		//error_log(__METHOD__."('$path', $user, more_results=$more_results) this->sync_collection_token=".$this->sync_collection_token);
+		if ($more_results)
+		{
+			$error =
+' <D:response>
+  <D:href>'.htmlspecialchars($this->groupdav->base_uri.$this->groupdav->path).'</D:href>
+  <D:status>HTTP/1.1 507 Insufficient Storage</D:status>
+  <D:error><D:number-of-matches-within-limits/></D:error>
+ </D:response>
+';
+			if ($this->groupdav->crrnd)
+			{
+				$error = str_replace(array('<D:', '</D:'),  array('<', '</'), $error);
+			}
+			echo $error;
+		}
 		return $this->get_sync_token($path, $user, $this->sync_collection_token);
 	}
 
