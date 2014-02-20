@@ -393,7 +393,7 @@ class asyncservice
 		{
 			return False;	// cant obtain semaphore
 		}
-		if ($jobs = $this->read())
+		if (($jobs = $this->read()))
 		{
 			foreach($jobs as $id => $job)
 			{
@@ -401,6 +401,8 @@ class asyncservice
 				//
 				if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
 				{
+					// run notifications, before changing account_id of enviroment
+					egw_link::run_notifies();
 					// unset all objects in $GLOBALS, which are created and used by ExecMethod, as they can contain user-data
 					foreach($GLOBALS as $name => $value)
 					{
@@ -410,7 +412,7 @@ class asyncservice
 					$lang   = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 					unset($GLOBALS['egw_info']['user']);
 
-					if ($GLOBALS['egw']->session->account_id = $job['account_id'])
+					if (($GLOBALS['egw']->session->account_id = $job['account_id']))
 					{
 						$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($job['account_id']);
 						$GLOBALS['egw']->session->account_domain = $domain;
