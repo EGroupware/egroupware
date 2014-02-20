@@ -1085,6 +1085,12 @@ class addressbook_groupdav extends groupdav_handler
 			'D' => lang('Distribution lists as groups')
 		) + $addressbooks;
 
+		// allow to force no other addressbooks
+		if ($GLOBALS['type'] === 'forced')
+		{
+			$addressbooks['N'] = lang('None');
+		}
+
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
 		if (!isset($addressbooks[0]))
 		{
