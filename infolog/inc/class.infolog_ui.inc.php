@@ -1148,7 +1148,7 @@ class infolog_ui
 			$this->prefs['default_document']
 		);
 		$actions['ical'] = array(
-			'icon' => egw_vfs::mime_icon('text/calendar'),
+			'icon' => 'ical',
 			'caption' => 'Export iCal',
 			'postSubmit' => true,	// download needs post submit to work
 			'group' => $group,

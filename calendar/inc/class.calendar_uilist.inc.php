@@ -906,7 +906,7 @@ class calendar_uilist extends calendar_ui
 			);
 		}
 		$actions['ical'] = array(
-			'icon' => egw_vfs::mime_icon('text/calendar'),
+			'icon' => 'ical',
 			'caption' => 'Export iCal',
 			'group' => ++$group,
 			'hint' => 'Download this event as iCal',
