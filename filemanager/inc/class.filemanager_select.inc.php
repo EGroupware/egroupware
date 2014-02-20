@@ -238,20 +238,44 @@ class filemanager_select
 		{
 			$content['path'] = '/apps/'.(isset($content['apps'][$app]) ? $content['apps'][$app] : $app);
 		}
-		if ((substr($content['path'],0,strlen('/apps/favorites/')) == '/apps/favorites/' /*||	// favorites the imediatly resolved
-			egw_vfs::is_link($content['path'])*/) &&	// we could replace all symlinks with the link, to save space in the URL
-			$link = egw_vfs::readlink($content['path']))
-		{
-			$content['path'] = $link[0] == '/' ? $link : egw_vfs::concat($content['path'],'../'.$link);
-		}
-		if (!$content['path'] || !egw_vfs::is_dir($content['path']))
+
+		// Set a flag for easy detection as we go
+		$favorites_flag = substr($content['path'],0,strlen('/apps/favorites')) == '/apps/favorites';
+
+		if (!$favorites_flag && (!$content['path'] || !egw_vfs::is_dir($content['path'])))
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
 		$tpl = new etemplate_new('filemanager.select');
 		$et2 = class_exists('etemplate_widget', false) && is_a($tpl, 'etemplate_widget');
 
-		if (!($files = egw_vfs::find($content['path'],array(
+		if ($favorites_flag)
+		{
+			// Display favorites as if they were folders
+			$files = array();
+			$favorites = egw_favorites::get_favorites('filemanager');
+			$n = 0;
+			foreach($favorites as $f_id => $favorite)
+			{
+				$path = $favorite['state']['path'];
+				// Just directories
+				if(!$path) continue;
+				if ($path == $content['path']) continue;	// remove directory itself
+				
+				$mime = egw_vfs::mime_content_type($path);
+				$content['dir'][$n] = array(
+					'name' => $favorite['name'],
+					'path' => $path,
+					'mime' => $mime,
+				);
+				if ($content['mode'] == 'open-multiple')
+				{
+					$readonlys['selected['.$favorite['name'].']'] = true;
+				}
+				++$n;
+			}
+		}
+		else if (!($files = egw_vfs::find($content['path'],array(
 			'dirsontop' => true,
 			'order' => 'name',
 			'sort' => 'ASC',
