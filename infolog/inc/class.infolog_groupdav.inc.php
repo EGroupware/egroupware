@@ -335,7 +335,7 @@ class infolog_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (($id = basename(array_pop($parts))))
+						if (($id = basename(urldecode(array_pop($parts)))))
 						{
 							$cal_filters[self::$path_attr][] = groupdav_handler::$path_extension ?
 								basename($id,groupdav_handler::$path_extension) : $id;

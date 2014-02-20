@@ -397,7 +397,7 @@ class addressbook_groupdav extends groupdav_handler
 				if ($option['name'] == 'href')
 				{
 					$parts = explode('/',$option['data']);
-					if (($id = array_pop($parts)))
+					if (($id = urldecode(array_pop($parts))))
 					{
 						$ids[] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
 					}
