@@ -500,13 +500,14 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param int $userid numerical user-id
 	 * @param array $part_prefs preferces of the user $userid
-	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
+	 * @param int &$msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $old_event Event before the change
 	 * @param array $new_event Event after the change
 	 * @param string $role we treat CHAIR like event owners
+	 * @param string $status of current user
 	 * @return boolean true = update requested, false otherwise
 	 */
-	function update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role)
+	public static function update_requested($userid, $part_prefs, &$msg_type, $old_event ,$new_event, $role, $status=null)
 	{
 		if ($msg_type == MSG_ALARM)
 		{
@@ -553,12 +554,95 @@ class calendar_boupdate extends calendar_bo
 				if (!is_numeric($userid) && $role == 'CHAIR' &&
 					($msg_is_response || in_array($msg_type, array(MSG_ADDED, MSG_DELETED))))
 				{
+					switch($msg_type)
+					{
+						case MSG_DELETED:	// treat deleting event as rejection to organizer
+							$msg_type = MSG_REJECTED;
+							break;
+						case MSG_ADDED:		// new events use added, but organizer needs status
+							switch($status[0])
+							{
+								case 'A': $msg_type = MSG_ACCEPTED; break;
+								case 'R': $msg_type = MSG_REJECTED; break;
+								case 'T': $msg_type = MSG_TENTATIVE; break;
+								case 'D': $msg_type = MSG_DELEGATED; break;
+							}
+							break;
+					}
 					++$want_update;
 				}
 				break;
 		}
 		//error_log(__METHOD__."(userid=$userid, receive_updates='$ru', msg_type=$msg_type, ..., role='$role') msg_is_response=$msg_is_response --> want_update=$want_update");
 		return $want_update > 0;
+	}
+
+	/**
+	 * Get iCal/iMip method from internal nummeric msg-type plus optional notification message and verbose name
+	 *
+	 * @param int $msg_type see MSG_* defines
+	 * @param string& $action=null on return verbose name
+	 * @param string& $msg=null on return notification message
+	 */
+	function msg_type2ical_method($msg_type, &$action=null, &$msg=null)
+	{
+		switch($msg_type)
+		{
+			case MSG_DELETED:
+				$action = 'Canceled';
+				$pref = 'Canceled';
+				$method = 'CANCEL';
+				break;
+			case MSG_MODIFIED:
+				$action = 'Modified';
+				$pref = 'Modified';
+				$method = 'REQUEST';
+				break;
+			case MSG_DISINVITE:
+				$action = 'Disinvited';
+				$pref = 'Disinvited';
+				$method = 'CANCEL';
+				break;
+			case MSG_ADDED:
+				$action = 'Added';
+				$pref = 'Added';
+				$method = 'REQUEST';
+				break;
+			case MSG_REJECTED:
+				$action = 'Rejected';
+				$pref = 'Response';
+				$method = 'REPLY';
+				break;
+			case MSG_TENTATIVE:
+				$action = 'Tentative';
+				$pref = 'Response';
+				$method = 'REPLY';
+				break;
+			case MSG_ACCEPTED:
+				$action = 'Accepted';
+				$pref = 'Response';
+				$method = 'REPLY';
+				break;
+			case MSG_DELEGATED:
+				$action = 'Delegated';
+				$pref = 'Response';
+				$method = 'REPLY';
+				break;
+			case MSG_ALARM:
+				$action = 'Alarm';
+				$pref = 'Alarm';
+				$method = 'PUBLISH';	// duno if thats right
+				break;
+			default:
+				$method = 'PUBLISH';
+		}
+		$msg = $this->cal_prefs['notify'.$pref];
+		if (empty($msg))
+		{
+			$msg = $this->cal_prefs['notifyAdded'];	// use a default
+		}
+		//error_log(__METHOD__."($msg_type) action='$action', $msg='$msg' returning '$method'");
+		return $method;
 	}
 
 	/**
@@ -585,7 +669,6 @@ class calendar_boupdate extends calendar_bo
 		{
 			$to_notify[$owner] = 'OCHAIR';	// always include the event-owner
 		}
-		$version = $GLOBALS['egw_info']['apps']['calendar']['version'];
 
 		// ignore events in the past (give a tolerance of 10 seconds for the script)
 		if($old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10))
@@ -613,71 +696,6 @@ class calendar_boupdate extends calendar_bo
 		$senderid = $this->user;
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 
-		switch($msg_type)
-		{
-			case MSG_DELETED:
-				$action = 'Canceled';
-				$msg = 'Canceled';
-				$msgtype = '"calendar";';
-				$method = 'CANCEL';
-				break;
-			case MSG_MODIFIED:
-				$action = 'Modified';
-				$msg = 'Modified';
-				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
-				$method = 'REQUEST';
-				break;
-			case MSG_DISINVITE:
-				$action = 'Disinvited';
-				$msg = 'Disinvited';
-				$msgtype = '"calendar";';
-				$method = 'CANCEL';
-				break;
-			case MSG_ADDED:
-				$action = 'Added';
-				$msg = 'Added';
-				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
-				$method = 'REQUEST';
-				break;
-			case MSG_REJECTED:
-				$action = 'Rejected';
-				$msg = 'Response';
-				$msgtype = '"calendar";';
-				$method = 'REPLY';
-				break;
-			case MSG_TENTATIVE:
-				$action = 'Tentative';
-				$msg = 'Response';
-				$msgtype = '"calendar";';
-				$method = 'REPLY';
-				break;
-			case MSG_ACCEPTED:
-				$action = 'Accepted';
-				$msg = 'Response';
-				$msgtype = '"calendar";';
-				$method = 'REPLY';
-				break;
-			case MSG_DELEGATED:
-				$action = 'Delegated';
-				$msg = 'Response';
-				$msgtype = '"calendar";';
-				$method = 'REPLY';
-				break;
-			case MSG_ALARM:
-				$action = 'Alarm';
-				$msg = 'Alarm';
-				$msgtype = '"calendar";';
-				$method = 'PUBLISH';	// duno if thats right
-				break;
-			default:
-				$method = 'PUBLISH';
-		}
-		$notify_msg = $this->cal_prefs['notify'.$msg];
-		if (empty($notify_msg))
-		{
-			$notify_msg = $this->cal_prefs['notifyAdded'];	// use a default
-		}
-
 		// add all group-members to the notification, unless they are already participants
 		foreach($to_notify as $userid => $statusid)
 		{
@@ -700,9 +718,10 @@ class calendar_boupdate extends calendar_bo
 		$modified = new egw_time($event['modified']);
 		if ($old_event) $olddate = new egw_time($old_event['start']);
 		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".egw_time::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
+		$owner_prefs = $ics = null;
 		foreach($to_notify as $userid => $statusid)
 		{
-			unset($res_info);
+			$res_info = $quantity = $role = null;
 			calendar_so::split_status($statusid, $quantity, $role);
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
 
@@ -750,6 +769,7 @@ class calendar_boupdate extends calendar_bo
 					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)
 			{
+				$tfn = $tln = $lid = null; //cleanup of lastname and fullname (in case they are set in a previous loop)
 				if (is_numeric($userid))
 				{
 					$preferences = new preferences($userid);
@@ -770,16 +790,21 @@ class calendar_boupdate extends calendar_bo
 					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
 					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
-				if (!$this->update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
+				$m_type = $msg_type;
+				if (!self::update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
+					$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
 				{
 					continue;
 				}
+				$action = $notify_msg = null;
+				$method = $this->msg_type2ical_method($m_type, $action, $notify_msg);
 
 				if ($lang !== $part_prefs['common']['lang'])
 				{
 					translation::init();
 					$lang = $part_prefs['common']['lang'];
 				}
+				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
 				$details['to-fullname'] = $fullname;
@@ -816,11 +841,10 @@ class calendar_boupdate extends calendar_bo
 				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
 
 				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
-
 				switch($part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
-						if (is_null($ics))
+						if (is_null($ics) || $m_type != $msg_type)	// need different ical for organizer notification
 						{
 							$calendar_ical = new calendar_ical();
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
@@ -835,6 +859,7 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
+						if ($m_type != $msg_type) unset($ics);
 						$subject = isset($cleared_event) ? $cleared_event['title'] : $event['title'];
 						// fall through
 					case 'extended':
