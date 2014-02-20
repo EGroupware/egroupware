@@ -65,14 +65,23 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.span.empty().text(_value);
 			return;
 		}
+		this.span.empty();
 		this.value = _value;
 		var path = _value.path ? _value.path : '/';
 		// calculate path as parent of name, which can contain slashes
 		// eg. _value.path=/home/ralf/sub/file, _value.name=sub/file --> path=/home/ralf
 		// --> generate clickable fields for sub/ + file
-		path = path.substr(0, _value.path.length-_value.name.length-1);
-		var path_offset = path.split('/').length;
-		var path_parts = _value.path.split('/');
+		if(_value.path.indexOf(_value.name) >= 0)
+		{
+			path = path.substr(0, _value.path.length-_value.name.length-1);
+			var path_offset = path.split('/').length;
+			var path_parts = _value.path.split('/');
+		}
+		else
+		{
+			var path_offset = 0;
+			var path_parts = [_value.name];
+		}
 
 		var text;
 		for(var i = path_offset; i < path_parts.length; i++)
@@ -100,7 +109,13 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 					case 4:
 						if(!isNaN(text))
 						{
-							text = this.egw().link_title(path_parts[2],path_parts[3]);
+							var link_title = this.egw().link_title(path_parts[2],path_parts[3],
+								function(title) {
+									if(!title || this.value.name == title) return;
+									$j('li',this.span).last().text(title);
+								}, this
+							);
+							if(link_title && typeof link_title !== 'undefined') text = link_title;
 						}
 						break;
 				}
