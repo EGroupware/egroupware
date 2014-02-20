@@ -188,6 +188,9 @@ class infolog_groupdav extends groupdav_handler
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = null;
+
+			$filter['order'] = 'info_datemodified ASC';	// return oldest modifications first
+			$filter['sync-collection'] = true;
 		}
 
 		if (isset($nresults))
@@ -306,15 +309,15 @@ class infolog_groupdav extends groupdav_handler
 			}
 		}
 		// sync-collection report --> return modified of last contact as sync-token
-		$sync_collection_report =  strpos($task_filter, '+deleted') !== false;
+		$sync_collection_report =  $filter['sync-collection'];
 		if ($sync_collection_report)
 		{
-			$this->sync_collection_token = $info['date_modified'];
+			$this->sync_collection_token = $task['date_modified'];
 
 			// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
 			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
-			if ($start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $query['total'] > $start[1])
+			if ($start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $this->bo->total > $start[1])
 			{
 				--$this->sync_collection_token;
 			}
@@ -408,7 +411,6 @@ class infolog_groupdav extends groupdav_handler
 						$sync_token = array_pop($parts);
 						$cal_filters[] = 'info_datemodified>'.(int)$sync_token;
 						$cal_filters['filter'] .= '+deleted';	// to return deleted entries too
-						$cal_filters['order'] = 'info_datemodified ASC';	// return oldest modifications first
 					}
 					break;
 				case 'sync-level':

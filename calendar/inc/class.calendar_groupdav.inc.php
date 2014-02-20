@@ -220,6 +220,11 @@ class calendar_groupdav extends groupdav_handler
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = null;
+
+			$filter['order'] = 'cal_modified ASC';	// return oldest modifications first
+			$filter['sync-collection'] = true;
+			// no end-date / limit into the future, as unchanged entries would never be transferted later on
+			unset($filter['end']);
 		}
 
 		if (isset($nresults))
@@ -267,7 +272,7 @@ class calendar_groupdav extends groupdav_handler
 			$filter['num_rows'] = $start[1];
 		}
 		$requested_multiget_ids = (array)$filter['query'][self::$path_attr];
-		$sync_collection = strpos($filter['query'][0],'cal_modified>') === 0 && $filter['filter'] == 'everything';
+		$sync_collection = $filter['sync-collection'];
 
 		$events =& $this->bo->search($filter);
 
@@ -496,12 +501,9 @@ class calendar_groupdav extends groupdav_handler
 						$sync_token = array_pop($parts);
 						$cal_filters['query'][] = 'cal_modified>'.(int)$sync_token;
 						$cal_filters['filter'] = 'everything';	// to return deleted entries too
-						$cal_filters['order'] = 'cal_modified ASC';	// return oldest modifications first
 						// no standard time-range!
 						unset($cal_filters['start']);
 					}
-					// no end-date / limit into the future, as unchanged entries would never be transferted later on
-					unset($cal_filters['end']);
 					break;
 				case 'sync-level':
 					if ($option['data'] != '1')
