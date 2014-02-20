@@ -533,7 +533,7 @@ class calendar_groupdav extends groupdav_handler
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (($id = array_pop($parts)))
+						if (($id = urldecode(array_pop($parts))))
 						{
 							$cal_filters['query'][self::$path_attr][] = groupdav_handler::$path_extension ?
 								basename($id,groupdav_handler::$path_extension) : $id;
