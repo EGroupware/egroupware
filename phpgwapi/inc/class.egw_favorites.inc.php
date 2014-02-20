@@ -56,27 +56,10 @@ class egw_favorites
 				'state' => array(),
 				'group' => true
 			)
-		);
+		) + self::get_favorites($app);
 		$is_admin = $GLOBALS['egw_info']['user']['apps']['admin'];
 		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
-		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
-		{
-			if(strpos($pref_name, $pref_prefix) === 0)
-			{
-				if(!is_array($pref))	// old favorite
-				{
-					if (!($pref = unserialize($pref))) continue;
-					$pref = array(
-						'name' => substr($pref_name,strlen($pref_prefix)),
-						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
-						'state' => $pref,
-					);
-					//error_log(__METHOD__."() old favorite '$pref_name' converted to ".array2string($pref));
-				}
-				//else error_log(__METHOD__."() new favorite '$pref_name' ".array2string($pref));
-				$filters[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
-			}
-		}
+		
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
 		if(!isset($default_filter) || !isset($filters[$default_filter])) $default_filter = "blank";
 
@@ -111,6 +94,42 @@ class egw_favorites
 				'icon'    => false,
 			),
 		);
+	}
+
+	/**
+	 * Get a list of actual user favorites
+	 * The default 'Blank' favorite is not included here
+	 *
+	 * @param string $app Current application
+	 *
+	 * @return array Favorite information
+	 */
+	public static function get_favorites($app)
+	{
+		$favorites = array();
+		$pref_prefix = 'favorite_';
+
+		// Look through all preferences & pull out favorites
+		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
+		{
+			if(strpos($pref_name, $pref_prefix) === 0)
+			{
+				if(!is_array($pref))	// old favorite
+				{
+					if (!($pref = unserialize($pref))) continue;
+					$pref = array(
+						'name' => substr($pref_name,strlen($pref_prefix)),
+						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
+						'state' => $pref,
+					);
+					//error_log(__METHOD__."() old favorite '$pref_name' converted to ".array2string($pref));
+				}
+				//else error_log(__METHOD__."() new favorite '$pref_name' ".array2string($pref));
+				$favorites[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
+			}
+		}
+
+		return $favorites;
 	}
 
 	/**
