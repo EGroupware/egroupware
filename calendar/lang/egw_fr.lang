@@ -288,7 +288,6 @@ last changed	calendar	fr	Dernière modification
 lastname of person to notify	calendar	fr	Nom de famille de la personne à prévenir
 length of the time interval	calendar	fr	Longueur de l'intervalle de temps
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	fr	Limiter le nombre de lignes de description dans la vue liste.  La valeur par défaut est 5. Mettre 0 pour aucune limite.
-link	calendar	fr	Lien
 link to view the event	calendar	fr	Lien pour voir l'événement
 links	calendar	fr	Liens
 links and attached files	calendar	fr	Liens et fichiers attachés

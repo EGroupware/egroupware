@@ -278,7 +278,6 @@ last changed	calendar	fi	Viimeksi muutettu
 lastname of person to notify	calendar	fi	Huomautettavan henkilön sukunimi
 length of the time interval	calendar	fi	Aikajakson pituus
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	fi	Rajoita Kuvauskentän näkyvien rivien määrää (oletus=5, ei rajoitusta=0)
-link	calendar	fi	Linkki tapahtumaan
 link to view the event	calendar	fi	Tapahtuman linkki
 links	calendar	fi	Linkit
 links and attached files	calendar	fi	Linkit ja liitetyt tiedostot

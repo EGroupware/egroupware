@@ -290,7 +290,6 @@ last changed	calendar	ru	Последние изменения
 lastname of person to notify	calendar	ru	Фамилия человека для оповещения
 length of the time interval	calendar	ru	Длительность интервала времени
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	ru	Ограчение числа строк в списке обзоров (по умолчанию 5, 0 без ограничения)
-link	calendar	ru	Ссылка на событие
 link to view the event	calendar	ru	Ссылка для просмотра события
 links	calendar	ru	Ссылки
 links and attached files	calendar	ru	Ссылки и прикреплённые файлы

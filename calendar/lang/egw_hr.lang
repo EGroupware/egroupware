@@ -88,7 +88,6 @@ interval	calendar	hr	Interval
 last	calendar	hr	poslijednji
 last changed	calendar	hr	Zadnja promjena
 lastname of person to notify	calendar	hr	Prezime osobe za obavijestiti
-link	calendar	hr	Link
 link to view the event	calendar	hr	Link to view the event
 links	calendar	hr	Links
 location	calendar	hr	Lokacija

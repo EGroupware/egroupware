@@ -294,7 +294,6 @@ last changed	calendar	it	Ultima modifica
 lastname of person to notify	calendar	it	Cognome della persona da avvisare
 length of the time interval	calendar	it	Lunghezza dell'intervallo di tempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	it	Limita il numero delle righe di descrizione nella vista ad elenco (predefinito 5, 0 per nessun limite).
-link	calendar	it	Collegamento ad evento
 link to view the event	calendar	it	Collegamento per visualizzare l'evento
 links	calendar	it	Collegamenti
 links and attached files	calendar	it	Collegamenti e file allegati

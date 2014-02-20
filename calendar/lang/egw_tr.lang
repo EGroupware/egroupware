@@ -82,7 +82,6 @@ import csv-file	common	tr	CSV Dosyasý Ýthal Et
 interval	calendar	tr	Ara
 last	calendar	tr	son
 lastname of person to notify	calendar	tr	Uyarýlacak kiþinin soyadý
-link	calendar	tr	Link
 link to view the event	calendar	tr	Etkinliði görüntülemek için link
 location	calendar	tr	Konum
 location to autoload from	admin	tr	Otomatik yükleme yapýlacak konum

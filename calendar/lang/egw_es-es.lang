@@ -256,7 +256,6 @@ last changed	calendar	es-es	Último cambio
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	es-es	Limitar el número de líneas de la descripción en la vista de la lista (predeterminado: 5; 0 para ilimitadas)
-link	calendar	es-es	Enlace
 link to view the event	calendar	es-es	Vínculo para ver el evento
 links	calendar	es-es	Enlaces
 links, attachments	calendar	es-es	Enlaces, adjuntos

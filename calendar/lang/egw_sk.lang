@@ -284,7 +284,6 @@ last changed	calendar	sk	Naposledy zmenené
 lastname of person to notify	calendar	sk	Priezvisko upozorňovanej osoby
 length of the time interval	calendar	sk	Dĺžka časového intervalu
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	sk	Obmedziť počet riadkov popisu v zobrazení zoznamu (predvolené 5, 0 znamená bez obmedzenia)
-link	calendar	sk	Odkaz na udalosť
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
 links and attached files	calendar	sk	Odkazy a priložené súbory
