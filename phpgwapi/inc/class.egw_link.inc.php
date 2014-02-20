@@ -251,14 +251,18 @@ class egw_link extends solink
 	}
 
 	/**
-	 * Called by egw::egw_final to store the title-cache in the session
+	 * Called by egw::shutdown to store the title-cache in session and run notifications
 	 *
+	 * Would probably better called shutdown as well.
 	 */
 	static function save_session_cache()
 	{
 		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
 		$GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi',self::$file_access_cache);
+
+		// send out notifications about added, changed or removed links
+		self::run_notifies();
 	}
 
 	/**
@@ -1343,6 +1347,13 @@ class egw_link extends solink
 	}
 
 	/**
+	 * Stores notifications to run after regular processing is done
+	 *
+	 * @var array
+	 */
+	private static $notifies = array();
+
+	/**
 	 * notify an application about a new or deleted links to own entries or updates in the content of the linked entry
 	 *
 	 * Please note: not all apps supply update notifications
@@ -1359,15 +1370,31 @@ class egw_link extends solink
 	{
 		if ($link_id && isset(self::$app_register[$notify_app]) && isset(self::$app_register[$notify_app]['notify']))
 		{
-			ExecMethod(self::$app_register[$notify_app]['notify'],array(
+			self::$notifies[] = array(
+				'method'     => self::$app_register[$notify_app]['notify'],
 				'type'       => $type,
 				'id'         => $notify_id,
 				'target_app' => $target_app,
 				'target_id'  => $target_id,
 				'link_id'    => $link_id,
 				'data'       => $data,
-			));
+			);
 		}
+	}
+
+	/**
+	 * Run notifications called by egw_link::save_session_cache from egw::shutdown, after regular processing is finished
+	 */
+	static public function run_notifies()
+	{
+		foreach(self::$notifies as $args)
+		{
+			$method = $args['method'];
+			unset($args['method']);
+			//error_log(__METHOD__."() calling $method(".array2string($args).')');
+			ExecMethod($method, $args);
+		}
+		self::$notifies = array();
 	}
 
 	/**
