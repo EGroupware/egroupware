@@ -155,6 +155,9 @@ class addressbook_groupdav extends groupdav_handler
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = null;
+
+			$filter['order'] = 'contact_modified ASC';	// return oldest modifications first
+			$filter['sync-collection'] = true;
 		}
 
 		if (isset($nresults))
@@ -207,7 +210,7 @@ class addressbook_groupdav extends groupdav_handler
 			$order = 'egw_addressbook.contact_id';
 		}
 		// detect sync-collection report
-		$sync_collection_report = isset($filter[0]) && strpos($filter[0], 'contact_modified>') === 0;
+		$sync_collection_report = $filter['sync-collection'];
 
 		if (isset($filter_in[self::$path_attr]) && !is_array($filter_in[self::$path_attr]))
 		{
@@ -484,7 +487,6 @@ class addressbook_groupdav extends groupdav_handler
 						$sync_token = array_pop($parts);
 						$filters[] = 'contact_modified>'.(int)$sync_token;
 						$filters['tid'] = null;	// to return deleted entries too
-						$filters['order'] = 'contact_modified ASC';	// return oldest modifications first
 					}
 					break;
 				case 'sync-level':
