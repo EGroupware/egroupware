@@ -553,7 +553,8 @@ class calendar_boupdate extends calendar_bo
 			case 'no':
 				// always notify externals chairs
 				// EGroupware owner only get notified about responses, if pref is NOT "no"
-				if (!is_numeric($userid) && $msg_is_response && $role == 'CHAIR')
+				if (!is_numeric($userid) && $role == 'CHAIR' &&
+					($msg_is_response || in_array($msg_type, array(MSG_ADDED, MSG_DELETED))))
 				{
 					++$want_update;
 				}
@@ -608,7 +609,7 @@ class calendar_boupdate extends calendar_bo
 				$msg_type = MSG_DELETED;
 				break;
 		}
-		$ret = self::update_requested($acount_id, $prefs, $msg_type, array(), array(), $role);
+		$ret = self::update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
 		//error_log(__METHOD__."('$user_or_email', '$ical_method', '$role') account_id=$account_id --> updated_requested returned ".array2string($ret));
 		return $ret;
 	}
@@ -1419,7 +1420,7 @@ class calendar_boupdate extends calendar_bo
 					if ((string)$alarm['owner'] === (string)$uid)
 					{
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).", '$uid', '$status', ...) deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).", '$uid', '$status', ...) deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
