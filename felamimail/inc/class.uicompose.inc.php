@@ -186,7 +186,7 @@
 				$cachedComposeID = egw_cache::getCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60);
 				egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=60);
 				//error_log(__METHOD__.__LINE__.' '.$formData['subject'].' '.$cachedComposeID.'<->'.$this->composeID);
-				error_log(__METHOD__.__LINE__.' toInfolog:'.$formData['to_infolog'].' toTracker:'.$formData['to_tracker']);
+				//error_log(__METHOD__.__LINE__.' toInfolog:'.$formData['to_infolog'].' toTracker:'.$formData['to_tracker']);
 				if (!empty($cachedComposeID) && $cachedComposeID == $this->composeID)
 				{
 					//already send
