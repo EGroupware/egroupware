@@ -2017,6 +2017,9 @@ unset($query['actions']);
 			'icon' => 'read_flagged_small',
 			'onExecute' => 'javaScript:app.mail.mail_flag',
 		);
+		$actionsenabled['tracker']['toolbarDefault'] = true;
+		$actionsenabled['mark']['toolbarDefault'] = true;
+		$actionsenabled['forward']['toolbarDefault'] = true;
 		$cAN = $actionsenabled['composeasnew'];
 		unset($actionsenabled['composeasnew']);
 		$actionsenabled = array_reverse($actionsenabled,true);
