@@ -301,7 +301,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	set_value: function(filter_name, parent) {
 		if(parent)
 		{
-			return this._super.apply(filter_name);
+			return this._super.call(this, filter_name);
 		}
 
 		if(filter_name == 'add') return false;

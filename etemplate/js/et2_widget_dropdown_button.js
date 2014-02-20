@@ -20,18 +20,18 @@
 
 /**
  * A split button - a button with a dropdown list
- * 
+ *
  * There are several parts to the button UI:
  * - Container: This is what is percieved as the dropdown button, the whole package together
  *   - Button: The part on the left that can be clicked
  *   - Arrow: The button to display the choices
  *   - Menu: The list of choices
  *
- * Menu options are passed via the select_options.  They are normally ID => Title pairs, 
+ * Menu options are passed via the select_options.  They are normally ID => Title pairs,
  * as for a select box, but the title can also be full HTML if needed.
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_dropdown_button = et2_inputWidget.extend(
 {
 	attributes: {
@@ -48,12 +48,12 @@ var et2_dropdown_button = et2_inputWidget.extend(
 			"description": "Button label updates when an option is selected from the menu",
 			"default": true
 		},
-		"image": { 
+		"image": {
 			"name": "Icon",
 			"type": "string",
 			"description": "Add an icon"
 		},
-		"ro_image": { 
+		"ro_image": {
 			"name": "Read-only Icon",
 			"type": "string",
 			"description": "Use this icon instead of hiding for read-only"
@@ -83,7 +83,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		},
 		// No such thing as a required button
 		"required": {
-			"ignore": true,
+			"ignore": true
 		}
 	},
 
@@ -113,7 +113,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_dropdown_button
 	 */
 	init: function() {
@@ -130,13 +130,13 @@ var et2_dropdown_button = et2_inputWidget.extend(
 			.hide()
 			.menu({
 				select: function(event,ui) {
-					self.onselect(event,ui.item);
+					self.onselect.call(self,event,ui.item);
 				}
 			});
 
 		this.buttons = $j(document.createElement("div"))
 			.addClass("et2_dropdown");
-		
+
 		// Main "wrapper" div
 		this.div = $j(document.createElement("div"))
 			.attr("id", this.internal_ids.div)
@@ -182,7 +182,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 				function() {$j(this).addClass("ui-state-hover");},
 				function() {$j(this).removeClass("ui-state-hover");}
 			);
-	
+
 		// Icon
 		this.image = jQuery(document.createElement("img"));
 
@@ -207,7 +207,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	set_id: function(_id) {
 		this._super.apply(this, arguments);
 
-		// Update internal IDs - not really needed since we refer by internal 
+		// Update internal IDs - not really needed since we refer by internal
 		// javascript reference, but good to keep up to date
 		this.internal_ids = {
 			div:	this.dom_id + "_wrapper",
@@ -272,7 +272,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 
 	/**
 	 * Overwritten to maintain an internal clicked attribute
-	 * 
+	 *
 	 * @param _ev
 	 * @returns {Boolean}
 	 */
