@@ -347,7 +347,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    min-width: 76px;
+    min-width: 73px;
   }
   .et2_tabflag:hover {
     color: #f2f2f2;
@@ -387,7 +387,7 @@
     background-image: none;
   }
   .et2_tabheader :first-child {
-    margin-left: 0.3em;
+    margin-left: 1px;
   }
   /**
 * Validation
@@ -767,6 +767,10 @@
     background-color: #ffffff;
     background-image: none;
   }
+  .et2_dropdown button img {
+    width: 12px;
+    height: 12px;
+  }
   .et2_dropdown button > div {
     vertical-align: middle;
   }
@@ -781,20 +785,23 @@
   .et2_dropdown button.ui-state-default {
     background-image: none !important;
     background-repeat: no-repeat !important;
+    /*&:hover {.Complete_Button_save_apply_copy;}*/
   }
   .et2_dropdown button.ui-corner-left img,
   .et2_dropdown button.ui-state-default img {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     text-align: left;
     position: relative;
     right: 1px;
     top: 3px;
   }
+  .et2_dropdown button.ui-corner-left:active,
+  .et2_dropdown button.ui-state-default:active {
+    background-color: #1aa200;
+  }
   .et2_dropdown button.ui-state-hover {
-    background-color: #b4b4b4 !important;
-    background-size: 16px 16px !important;
-    background-position: 10px center !important;
+    background-color: #e6e6e6;
   }
   .sidebox-favorites ul.favorites {
     width: 99%;
@@ -2708,6 +2715,7 @@ button.et2_button_with_image {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
+  background-color: #b4b4b4;
   padding-left: 30px !important;
   background-position: 6px center !important;
   background-size: 20px auto !important;
@@ -2716,7 +2724,7 @@ button.et2_button_with_image {
   background-repeat: no-repeat !important;
   background-position: 6px center;
   background-size: 20px 20px;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
 }
 button.et2_button_with_image background-color[url$="svg"] {
   background-color: #b4b4b4;

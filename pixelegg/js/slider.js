@@ -171,7 +171,7 @@ egw_LAB.wait(function() {
 			if (ev.relatedTarget && ev.relatedTarget.id != 'quick_add_selectbox')
 			{
 				$j(this).css({
-					transition: "0.2s ease-out 0s",
+					transition: "0.6s ease-out 0s",
 					width: "16px",
 					'border-top-left-radius': "0px",
 					'background-color': "transparent"
