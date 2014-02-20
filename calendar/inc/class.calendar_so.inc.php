@@ -695,7 +695,8 @@ class calendar_so
 					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,range_end AS recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
 					if (!$params['enum_recuring'])
 					{
-						$selects[$key]['cols'] = str_replace('cal_start','MIN(cal_start) AS cal_start',$selects[$key]['cols']);
+						$selects[$key]['cols'] = str_replace(array('cal_start','cal_end'),
+							array('range_start AS cal_start','range_end AS cal_end'), $selects[$key]['cols']);
 					}
 				}
 				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);

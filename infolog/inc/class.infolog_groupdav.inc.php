@@ -193,6 +193,15 @@ class infolog_groupdav extends groupdav_handler
 		if (isset($nresults))
 		{
 			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+
+			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
+			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+			// (which might contain further entries with identical modification time)
+			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
+			{
+				--$this->sync_collection_token;
+				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
+			}
 		}
 		else
 		{

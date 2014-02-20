@@ -167,6 +167,7 @@ class addressbook_groupdav extends groupdav_handler
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
 				--$this->sync_collection_token;
+				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
 			}
 		}
 		else
