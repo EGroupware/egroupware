@@ -1193,8 +1193,10 @@ class mail_bo
 		$uidsToFetch->add($sortResult);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-//		$fquery->headers('headers', array('Subject', 'From', 'To', 'Cc', 'Date'), array('peek' => true,'cache' => true));
-		$fquery->envelope();
+		// as we need the prio, we are not using the Envelope (which is not providing it)
+		// fetching both headers and envelope takes too much time
+		$fquery->headerText(array('peek'=>true)); // needed for getHeaderText; needed for X-Priority
+		//$fquery->envelope();
 		$fquery->size();
 		$fquery->structure();
 		$fquery->flags();
@@ -1226,16 +1228,21 @@ class mail_bo
 			if (self::$debug) $starttime = microtime(true);
 			foreach($headersNew->ids() as $id) {
 				$_headerObject = $headersNew->get($id);
-				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
 				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
+				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
 				$headerObject['MSG_NUM'] = $_headerObject->getSeq();
 				$headerObject['SIZE'] = $_headerObject->getSize();
-				$headerObject['DATE'] = $_headerObject->getEnvelope()->date;
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
-				$headerObject['SUBJECT'] = $_headerObject->getEnvelope()->subject;
-				$headerObject['FROM'] = $_headerObject->getEnvelope()->from->addresses;
-				$headerObject['TO'] = $_headerObject->getEnvelope()->to->addresses;
-				$headerObject['CC'] = $_headerObject->getEnvelope()->cc->addresses;
+				// as we need the prio, we are not using the Envelope (which is not providing it)
+				// fetching both headers and envelope takes too much time
+				$headerForPrio = $_headerObject->getHeaderText(0,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+				//error_log(__METHOD__.__LINE__.array2string($headerForPrio));
+				$headerObject['DATE'] = $headerForPrio['Date'];// $_headerObject->getEnvelope()->date;
+				$headerObject['SUBJECT'] = $headerForPrio['Subject'];// $_headerObject->getEnvelope()->subject;
+				$headerObject['FROM'] = (array)$headerForPrio['From'];// $_headerObject->getEnvelope()->from->addresses;
+				$headerObject['TO'] = (array)$headerForPrio['To'];// $_headerObject->getEnvelope()->to->addresses;
+				$headerObject['CC'] = (array)$headerForPrio['Cc'];// $_headerObject->getEnvelope()->cc->addresses;
+				$headerObject['PRIORITY'] = $headerForPrio['X-Priority'];
 				foreach (array('FROM','TO','CC') as $_k => $key)
 				{
 					$address = array();
