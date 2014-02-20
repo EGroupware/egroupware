@@ -1073,7 +1073,8 @@ class etemplate_old extends boetemplate
 			list($name) = explode('=',$name);
 		}
 		$form_name = self::form_name($cname,$name);
-		$value = $this->get_array($content,$name);
+		$value =& $this->get_array($content,$name);
+		$old_value = $value;	// remember value to be able to restore it
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
 			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] && (!is_string($name) || $readonlys[$name] !== false) ||
@@ -1918,6 +1919,10 @@ class etemplate_old extends boetemplate
 			self::$request->unset_to_process($form_name);
 			self::$request->set_to_process($form_name,'ext-'.$ext_type,$to_process);
 		}
+		// restoring value, as it is a reference into content
+		// some widgets change it and rely on it being a reference
+		// using same name for multiple widgets breaks, if we dont restore it now
+		$value = $old_value;
 		// save blur-value to strip it in process_exec
 		if (!empty($blur) && self::$request->isset_to_process($form_name))
 		{
