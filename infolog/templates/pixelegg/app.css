@@ -267,26 +267,6 @@ span#favorite_sidebox_infolog .favorites li img.sideboxstar {
 #infolog-index #infolog-index_nm .nextmatch_header span.header_count {
   top: 0px;
 }
-#infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu {
-  border-color: #b4b4b4;
-  background-color: #ffffff;
-  color: #000000;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu li a {
-  height: 25px;
-  border: none;
-  padding-top: 5px 0 0 5px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu li a img {
-  height: 16px;
-  width: 16px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu li a:hover {
-  background: none;
-  text-indent: -22px;
-  margin-left: 21px;
-  height: 25px;
-}
 #infolog-index #infolog-index_nm .nextmatch_header div.filters select#infolog-index_cat_id {
   /*width: 10%;*/
   margin-left: 1em;

@@ -1584,109 +1584,43 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 /**
 * et2_toolbar
 */
-.et2_toolbar {
-  background: none;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.et2_toolbar button {
-  margin: 1px;
-}
 .et2_toolbar-dropdown {
-  margin: 1px;
-  display: inline-block;
-  direction: ltr;
-  /*	background: #E0E0E0 !important;
-	background-color: #E0E0E0 !important;*/
   background: #e6e6e6 !important;
   background-color: #e6e6e6 !important;
-  /*border: 1px solid silver;*/
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  text-align: left;
-  font-weight: normal !important;
-  font-size: xx-small !important;
 }
 .et2_toolbar-dropdown button {
-  height: 100% !important;
-  border: none !important;
   background: #e6e6e6 !important;
   background-color: #e6e6e6 !important;
-  border-radius: 0 !important;
-  color: #101010 !important;
-  font-size: 9pt !important;
-  font-weight: normal !important;
-}
-.et2_toolbar-dropdown button:hover {
-  color: none !important;
-  border: none !important;
-  background-color: none !important;
-}
-.et2_toolbar-dropdown ul > li {
-  width: 100%;
-}
-.et2_toolbar-dropdown ul {
-  z-index: 1000;
-  position: absolute;
 }
 .et2_toolbar-dropdown-menulist button {
-  height: 100% !important;
-  border: none;
   background: #e6e6e6 !important;
   background-color: #e6e6e6 !important;
 }
-.et2_toolbar-dropdown-menulist button:nth-child(2) {
-  float: right;
-  padding: 0;
-}
-.et2_toolbar-dropdown-menulist ul {
-  z-index: 1000;
-  position: relative !important;
-}
 div.ui-toolbar-menulist {
-  position: absolute;
-  height: inherit !important;
-  z-index: 999 !important;
-  overflow: hidden !important;
-  /*border: solid black 1px;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 0 !important;
-  margin-top: 3px !important;
-  min-width: 150px;
 }
 .ui-toolbar-menulist h {
   padding-bottom: 7px;
   margin: 0;
 }
-.ui-toolbar-menulist button {
-  margin: 0 !important;
-  text-align: left;
-  border-radius: 0 !important;
-  width: 100% !important;
-  white-space: nowrap;
-}
 .ui-toolbar-menulist div {
-  margin: 0 !important;
-  text-align: left;
-  border-radius: 0 !important;
-  width: 100% !important;
-  white-space: nowrap;
   background-color: #e6e6e6 !important;
-  /*border: 1px solid silver;*/
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
-.ui-toolbar-menulistHeader {
-  font-size: xx-small;
-  height: 100%;
-  margin-top: 2px;
-  direction: ltr;
+div#displayToolbar-menulist .et2_dropdown {
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  border: none !important;
 }
-.et2_toolbar_activeList {
-  position: relative;
-  float: right;
-  direction: rtl;
+div#displayToolbar-menulist .et2_dropdown button {
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
 }
-.et2_toolbar_actionlist {
-  float: left;
+div#displayToolbar-menulist img {
+  width: 20px;
+  height: 20px;
 }
 /* ##################################################################################
  *     Dialog: Subscripe Folder
@@ -2459,38 +2393,42 @@ input[type=button] {
   background-color: #ffc200;
 }
 /*#toolbar-actionbox{.dimension_height_s;}*/
+/* 
 h.ui-toolbar-menulistHeader,
-#ui-accordion-toolbar-actionbox-header-0 {
-  height: 16px;
-  background-color: #828282;
-  color: #ffffff;
-  margin: 0;
+#ui-accordion-toolbar-actionbox-header-0{
+    
+    .dimension_height_s;
+    background-color: @gray_50;
+    color: @gray_0;
+    margin:0;
+    
+    // little ICON
+    .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+		margin-top: -11px;
+		color: @gray_0;
+	}
+    
 }
-h.ui-toolbar-menulistHeader .ui-accordion .ui-accordion-header .ui-accordion-header-icon,
-#ui-accordion-toolbar-actionbox-header-0 .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-  margin-top: -11px;
-  color: #ffffff;
-}
-div#toolbar-menulist {
-  background-color: #828282;
-  color: #ffffff;
-  /* Elemente */
-}
-div#toolbar-menulist button {
-  height: 24px !important;
-}
-div#toolbar-menulist button img[src$="svg"] {
-  background-color: #696969;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #696969, #696969);
-  background-image: -ms-linear-gradient(top, #696969, #696969);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
-  background-image: -webkit-linear-gradient(top, #696969, #696969);
-  background-image: -o-linear-gradient(top, #696969, #696969);
-  background-image: linear-gradient(top, #696969, #696969);
-  background-repeat: repeat-x;
-  background-color: #000000;
-}
+
+// accordion, where Button be placed
+div#toolbar-menulist{
+    background-color: @gray_50;
+    color: @gray_0;
+
+           Elemente 
+
+           button {
+                height: 24px !important;
+                
+                img[src$="svg"]{
+                    
+                                .gradient_vertical (@gray_60, @gray_60);
+                                background-color: @gray_100;
+                                }
+
+                }
+
+}*/
 /*AN / To*/
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
