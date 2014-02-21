@@ -1164,7 +1164,7 @@ class mail_ui
 						'caption' => 'Source',
 						'hint' => 'View full Mail Source',
 						'group' => $group,
-						'icon' => 'view',
+						'icon' => 'source',
 						'onExecute' => 'javaScript:app.mail.mail_mailsource',
 						'allowOnMultiple' => false,
 					),
