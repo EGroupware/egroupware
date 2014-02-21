@@ -123,6 +123,16 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Query additional CSP frame-src from current app
+	 *
+	 * @return array
+	 */
+	protected function _get_csp_frame_src()
+	{
+		return $GLOBALS['egw']->hooks->single('csp-frame-src', $GLOBALS['egw_info']['flags']['currentapp']);
+	}
+
+	/**
 	 * Send HTTP headers: Content-Type and Content-Security-Policy
 	 */
 	protected function _send_headers()
@@ -135,7 +145,11 @@ abstract class egw_framework
 		// - "connect-src 'self'" allows ajax requests only to self
 		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
 		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
-		$csp = "script-src 'self' ".($script_attrs=self::csp_script_src_attrs())."; connect-src 'self'; style-src 'self' 'unsafe-inline'; frame-src 'self' manual.egroupware.org";
+		$frame_src = array("'self'", 'manual.egroupware.org');
+		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_merge($frame_src, $additional);
+
+		$csp = "script-src 'self' ".($script_attrs=self::csp_script_src_attrs()).
+			"; connect-src 'self'; style-src 'self' 'unsafe-inline'; frame-src ".implode(' ', $frame_src);
 		//error_log(__METHOD__."() script_attrs=$script_attrs");
 		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
 		header("Content-Security-Policy: $csp");

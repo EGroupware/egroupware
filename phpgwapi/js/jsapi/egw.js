@@ -200,7 +200,7 @@
 		}
 
 		// set sidebox for tabed templates
-		var sidebox = egw_script.getAttribute('data-setSidebox');
+		var sidebox = egw_script.getAttribute('data-setSidebox') || jQuery('#late-sidebox').attr('data-setSidebox');
 		if (window.framework && sidebox)
 		{
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
