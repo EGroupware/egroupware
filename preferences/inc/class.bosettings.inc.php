@@ -294,7 +294,6 @@
 					if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
 				}
 			}
-			$backup = $prefs;
 			//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$appname]); echo "</pre>\n";
 
 			// the following hook can be used to verify the prefs
@@ -313,20 +312,20 @@
 				return $error;
 			}
 
-			// verify hook might have changed $prefs by calling read_repository --> apply changes again
-			foreach($backup as $var => $value)
-			{
-				$prefs[$var] = $value;
-				if (!$only_verify) $GLOBALS['egw']->preferences->add($appname, $var, $value, $type);
-			}
-			foreach(array_diff(array_keys($prefs), array_keys($backup)) as $var)
-			{
-				unset($prefs[$var]);
-				if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
-			}
 
-			if (!$only_verify) $GLOBALS['egw']->preferences->save_repository(True,$type);
-
+			if (!$only_verify)
+			{
+				// verify hook might have changed $prefs by calling read_repository --> apply changes again
+				foreach($prefs as $var => $value)
+				{
+					$GLOBALS['egw']->preferences->add($appname, $var, $value, $type);
+				}
+				foreach(array_diff(array_keys($GLOBALS['egw']->preferences->{$type}[$appname]), array_keys($prefs)) as $var)
+				{
+					$GLOBALS['egw']->preferences->delete($appname, $var, $type);
+				}
+				$GLOBALS['egw']->preferences->save_repository(True,$type);
+			}
 			// certain common prefs (language, template, ...) require the session to be re-created
 			if ($appname == 'common' && !$only_verify)
 			{
