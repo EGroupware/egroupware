@@ -122,7 +122,6 @@ class egw_json_request
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
 			// send message also to the user
 			throw new Exception($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
-			exit;
 		}
 
 		if (isset($template))
@@ -212,7 +211,7 @@ class egw_json_response
 	 */
 	public function haveJSONResponse()
 	{
-		return (boolean) $this->responseArray;
+		return $this->responseArray || $this->beforeSendDataProcs;
 	}
 
 	/**
@@ -220,19 +219,22 @@ class egw_json_response
 	 */
 	private function sendHeader()
 	{
+		$file = $line = null;
 		if (headers_sent($file, $line))
 		{
 			error_log(__METHOD__."() header already sent by $file line $line: ".function_backtrace());
 		}
 		else
-		//Send the character encoding header
-		header('content-type: application/json; charset='.translation::charset());
+		{
+			//Send the character encoding header
+			header('content-type: application/json; charset='.translation::charset());
+		}
 	}
 
 	/**
 	 * Private function which is used to send the result via HTTP
 	 */
-	public function sendResult()
+	public static function sendResult()
 	{
 		$inst = self::get();
 
@@ -265,7 +267,7 @@ class egw_json_response
 	 */
 	public function printOutput()
 	{
-		// do nothing, as output is triggered by destructor
+		// do nothing, as output is triggered by egw::__destruct()
 	}
 
 	/**
@@ -288,7 +290,7 @@ class egw_json_response
 	public function initResponseArray()
 	{
 		$return = $this->responseArray;
-		$this->responseArray = array();
+		$this->responseArray = $this->beforeSendDataProcs = array();
 		$this->hasData = false;
 		return $return;
 	}
@@ -570,16 +572,6 @@ class egw_json_response
 			'proc' => $proc,
 			'params' => $params
 		);
-	}
-
-	/**
-	 * Destructor
-	 */
-	public function __destruct()
-	{
-		//Only send the response if this instance is the singleton instance
-		if ($this == self::get())
-			$this->sendResult();
 	}
 }
 

@@ -171,8 +171,6 @@ class egw extends egw_minimal
 		$this->preferences    = new preferences();
 		$this->applications   = new applications();
 
-		register_shutdown_function(array($this, 'shutdown'));
-
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 		{
 			$this->verify_session();
@@ -210,8 +208,6 @@ class egw extends egw_minimal
 		{
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
-
-		register_shutdown_function(array($this, 'shutdown'));
 
 		$this->define_egw_constants();
 	}
@@ -538,20 +534,70 @@ class egw extends egw_minimal
 	}
 
 	/**
-	 * eGW's shutdown handler
+	 * registered shutdown callbacks and optional arguments
+	 *
+	 * @var array
 	 */
-	function shutdown()
+	private static $shutdown_callbacks = array();
+
+	/**
+	 * Register a callback to run on shutdown AFTER output send to user
+	 *
+	 * Allows eg. static classes (no destructor) to run on shutdown AND
+	 * garanties to run AFTER output send to user.
+	 *
+	 * @param callable $callback use array($classname, $method) for static methods
+	 * @param array $args=array()
+	 */
+	public static function on_shutdown($callback, array $args=array())
+	{
+		array_unshift($args, $callback);
+
+		// prepend new callback, to run them in oposite order they are registered
+		array_unshift(self::$shutdown_callbacks, $args);
+	}
+
+	/**
+	 * Shutdown handler running all registered on_shutdown callbacks and then disconnecting from db
+	 */
+	function __destruct()
 	{
 		if (!defined('EGW_SHUTDOWN'))
 		{
 			define('EGW_SHUTDOWN',True);
 
-			if (class_exists('egw_link',false))	// false = no autoload!
+			// send json response BEFORE flushing output
+			if (egw_json_request::isJSONRequest())
 			{
-				egw_link::save_session_cache();
+				egw_json_response::sendResult();
+			}
+
+			// flush all output to user
+			/* does NOT work on Apache :-(
+			for($i = 0; ob_get_level() && $i < 10; ++$i)
+			{
+				ob_end_flush();
+			}
+			flush();*/
+			// working for fastCGI :-)
+			if (function_exists('fastcgi_finish_request'))
+			{
+				fastcgi_finish_request();
+			}
+
+			// run all on_shutdown, do NOT stop on exceptions
+			foreach(self::$shutdown_callbacks as $data)
+			{
+				try {
+					//error_log(__METHOD__."() running ".array2string($data));
+					$callback = array_shift($data);
+					call_user_func_array($callback, $data);
+				}
+				catch (Exception $ex) {
+					_egw_log_exception($ex);
+				}
 			}
 			// call the asyncservice check_run function if it is not explicitly set to cron-only
-			//
 			if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
 			{
 				ExecMethod('phpgwapi.asyncservice.check_run','fallback');

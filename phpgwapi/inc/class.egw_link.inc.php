@@ -216,6 +216,10 @@ class egw_link extends solink
 		{
 			self::$file_access_cache = array();
 		}
+
+		// register self::save_session_cache to run on shutdown
+		egw::on_shutdown(array(__CLASS__, 'save_session_cache'));
+
 		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 	}
 
@@ -260,9 +264,6 @@ class egw_link extends solink
 		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
 		$GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi',self::$file_access_cache);
-
-		// send out notifications about added, changed or removed links
-		self::run_notifies();
 	}
 
 	/**
@@ -434,7 +435,7 @@ class egw_link extends solink
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
-			if ($vfs_ids = self::list_attached($app,$id))
+			if (($vfs_ids = self::list_attached($app,$id)))
 			{
 				$ids += $vfs_ids;
 			}
@@ -496,7 +497,7 @@ class egw_link extends solink
 				{
 					$links[$id] = array();
 				}
-				if ($vfs_ids = self::list_attached($app,$id))
+				if (($vfs_ids = self::list_attached($app,$id)))
 				{
 					$links[$id] += $vfs_ids;
 				}
@@ -506,7 +507,7 @@ class egw_link extends solink
 		{
 			// agregate links by app
 			$app_ids = array();
-			foreach($links as $src_id => &$targets)
+			foreach($links as &$targets)
 			{
 				foreach($targets as $link)
 				{
@@ -799,7 +800,7 @@ class egw_link extends solink
 		}
 		$method = $reg['title'];
 
-		$title = ExecMethod($method,$id);
+		if (true) $title = ExecMethod($method,$id);
 
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
@@ -858,7 +859,7 @@ class egw_link extends solink
 		}
 		if ($ids_to_query)
 		{
-			for ($n = 0; $ids = array_slice($ids_to_query,$n*self::MAX_TITLES_QUERY,self::MAX_TITLES_QUERY); ++$n)
+			for ($n = 0; ($ids = array_slice($ids_to_query,$n*self::MAX_TITLES_QUERY,self::MAX_TITLES_QUERY)); ++$n)
 			{
 				foreach(ExecMethod(self::$app_register[$app]['titles'],$ids) as $id => $t)
 				{
@@ -1039,6 +1040,7 @@ class egw_link extends solink
 		if ($app == self::VFS_APPNAME && is_array($link) && !empty($link['type']))
 		{
 			$path = self::vfs_path($link['app2'], $link['id2'], $link['id'], true);
+			$p = null;
 			if (self::mime_open($path, $link['type'], $p))
 			{
 				$popup = $p;
@@ -1169,11 +1171,11 @@ class egw_link extends solink
 	 * @param string $file VFS path to link to
 	 * @param string $comment='' comment to add to the link
 	 */
-	static function link_file($app,$id,$file,$comment='')
+	static function link_file($app,$id,$file)//,$comment='')
 	{
 		$app_path = self::vfs_path($app,$id);
 		$ok = true;
-		if (file_exists($app_path) || ($Ok = mkdir($app_path,0,true)))
+		if (file_exists($app_path) || ($ok = mkdir($app_path,0,true)))
 		{
 			if (!egw_vfs::stat($file))
 			{
@@ -1370,6 +1372,10 @@ class egw_link extends solink
 	{
 		if ($link_id && isset(self::$app_register[$notify_app]) && isset(self::$app_register[$notify_app]['notify']))
 		{
+			if (!self::$notifies)
+			{
+				egw::on_shutdown(array(__CLASS__, 'run_notifies'));
+			}
 			self::$notifies[] = array(
 				'method'     => self::$app_register[$notify_app]['notify'],
 				'type'       => $type,
@@ -1383,7 +1389,7 @@ class egw_link extends solink
 	}
 
 	/**
-	 * Run notifications called by egw_link::save_session_cache from egw::shutdown, after regular processing is finished
+	 * Run notifications called by egw::on_shutdown(), after regular processing is finished
 	 */
 	static public function run_notifies()
 	{
@@ -1451,13 +1457,11 @@ class egw_link extends solink
 		//error_log(__METHOD__."($app,$id,$title,$file_access)");
 		if (!is_null($title))
 		{
-			$cache =& self::get_cache($app,$id);
-			$cache = $title;
+			self::$title_cache[$app.':'.$id] = $title;
 		}
 		if (!is_null($file_access))
 		{
-			$cache =& self::get_cache($app,$id,'file_access');
-			$cache = $file_access;
+			self::$file_access_cache[$app.':'.$id] = $file_access;
 		}
 	}
 
