@@ -585,12 +585,14 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-
+		this.label_node = $j(document.createElement("label"))
+			.addClass("et2_label");
 		this.value = "";
 		this.span = $j(document.createElement(this._type == "date-since" || this._type == "date-time_today" ? "span" : "time"))
-			.addClass("et2_date_ro et2_label");
+			.addClass("et2_date_ro et2_label")
+			.appendTo(this.label_node);
 
-		this.setDOMNode(this.span[0]);
+		this.setDOMNode(this.label_node[0]);
 	},
 
 	set_value: function(_value) {
@@ -676,7 +678,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		this.span.attr("datetime", date("Y-m-d H:i:s",this.date)).text(display);
 	},
-
+	
 	/**
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
@@ -685,7 +687,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value", "class");
+		_attrs.push("label", "value","class");
 	},
 
 	/**
@@ -695,7 +697,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @return {array}
 	 */
 	getDetachedNodes: function() {
-		return [this.span[0]];
+		return [this.label_node[0], this.span[0]];
 	},
 
 	/**
@@ -709,9 +711,14 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
-		this.span = jQuery(_nodes[0]);
+		this.label_node = jQuery(_nodes[0]);
+		this.span = jQuery(_nodes[1]);
+		
 		this.set_value(_values["value"]);
-
+		if(_values["label"])
+		{
+			this.set_label(_values["label"]);
+		}
 		if(_values["class"])
 		{
 			this.span.addClass(_values["class"]);
