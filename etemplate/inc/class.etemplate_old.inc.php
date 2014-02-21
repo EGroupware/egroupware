@@ -325,8 +325,9 @@ class etemplate_old extends boetemplate
 			{
 				if((int) $output_mode != 2)
 				{
+					// jdots needs sidebox/navbar data in header call, therefore enable navbar BEFORE calling header
+					$GLOBALS['egw_info']['flags']['nonavbar'] = false;
 					echo $GLOBALS['egw']->framework->header();
-					echo $GLOBALS['egw']->framework->navbar();	// do header too
 				}
 				else
 				{
