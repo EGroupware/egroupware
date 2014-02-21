@@ -148,57 +148,63 @@ app.classes.calendar = AppJS.extend(
 	{
 		var that = this;
 
-		//Draggable
-		jQuery("div[id^='drag_']").draggable(
-			{
-			stack: jQuery("div[id^='drag_']"),
-			revert: "invalid",
-			delay: 50,
+		//Draggable & Resizable selector 
+		jQuery("div[id^='drag_']")
+			//draggable event handler
+			.draggable
+			({
+				stack: jQuery("div[id^='drag_']"),
+				revert: "invalid",
+				delay: 50,
 
-			cursorAt:{top:0,left:0},
-			containment: ".egw_fw_content_browser_iframe",
-			scroll: true,
-			opacity: .6,
-			cursor: "move",
+				cursorAt:{top:0,left:0},
+				containment: ".egw_fw_content_browser_iframe",
+				scroll: true,
+				opacity: .6,
+				cursor: "move",
 
-			/**
-			 * Triggered when the dragging of calEvent stoped.
-			 *
-			 * @param {event} event
-			 * @param {Object} ui
-			 */
-			stop: function(event, ui)
+				/**
+				 * Triggered when the dragging of calEvent stoped.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 */
+				stop: function(event, ui)
+					{
+					ui.helper.width(oldWidth);
+					ui.helper[0].innerHTML = oldInnerHTML;
+				},
+
+				/**
+				 * Triggered while dragging a calEvent.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 *
+				 */
+				drag:function(event, ui)
 				{
-				ui.helper.width(oldWidth);
-				ui.helper[0].innerHTML = oldInnerHTML;
-			},
+					//that.dragEvent();
+				},
 
-			/**
-			 * Triggered while dragging a calEvent.
-			 *
-			 * @param {event} event
-			 * @param {Object} ui
-			 *
-			 */
-			drag:function(event, ui)
-			{
-				//that.dragEvent();
-			},
-
-			/**
-			 * Triggered when the dragging of calEvent started.
-			 *
-			 * @param {event} event
-			 * @param {Object} ui
-			 *
-			 */
-			start: function(event, ui)
-			{
-				oldInnerHTML = ui.helper[0].innerHTML;
-				oldWidth = ui.helper.width();
-				ui.helper.width(jQuery("#calColumn").width());
-			}
-		}).resizable({
+				/**
+				 * Triggered when the dragging of calEvent started.
+				 *
+				 * @param {event} event
+				 * @param {Object} ui
+				 *
+				 */
+				start: function(event, ui)
+				{
+					oldInnerHTML = ui.helper[0].innerHTML;
+					oldWidth = ui.helper.width();
+					ui.helper.width(jQuery("#calColumn").width());
+				}
+			})
+			
+			//Resizable event handler
+			.resizable
+			({
 				distance: 10,
 
 
@@ -281,9 +287,11 @@ app.classes.calendar = AppJS.extend(
 				}
 			});
 
-		//Droppable
-		jQuery("div[id^='drop_']").droppable(
-			{
+		//Droppable selector
+		jQuery("div[id^='drop_']")
+			//Droppable event handler
+			.droppable
+			({
 				/**
 				 * Make all draggable calEvents acceptable
 				 *
@@ -341,10 +349,36 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 			});
+			
+		//jQuery Calendar Event selector
+		jQuery("body")
+			//mouseover event handler for calendar tooltip
+			.on("mouseover", "div[data-tooltip]",function(){
+				var ttp = jQuery(this).tooltip({
+					items: "[data-tooltip]",
+					content: function()
+					{
+						var elem = jQuery(this);
+						if (elem.is("[data-tooltip]"))
+							return this.getAttribute('data-tooltip') ;
+					},
+					track:true,
 
-		//onClick Handler for calender entries
-		jQuery("div.calendar_calEvent").on({
-			click:function(ev){
+					open: function(event,ui){
+						ui.tooltip.removeClass("ui-tooltip");
+						ui.tooltip.addClass("calendar_uitooltip");
+					}
+				});
+				ttp.tooltip("enable");
+			})
+
+			// mousedown event handler for calendar tooltip to remove disable tooltip
+			.on("mousedown", "div[data-tooltip]", function(){
+				jQuery(this).tooltip("disable");	
+			})
+
+			//onClick event handler for calendar Events 
+			.on("click", "div.calendar_calEvent", function(ev){
 				var Id = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
 				var eventId = Id.match(/-?\d+\.?\d*/g)[0];
 				var appName = Id.replace(/-?\d+\.?\d*/g,'');
@@ -358,45 +392,10 @@ app.classes.calendar = AppJS.extend(
 				{
 					that.edit_series(eventId,startDate);
 				}
-			},
-			mouseover: function(){
+			})
 
-				var ttp = jQuery(this).tooltip({
-					items: "[data-tooltip]",
-					content: function()
-					{
-						var elem = jQuery(this);
-						if (elem.is("[data-tooltip]"))
-							return this.getAttribute('data-tooltip') ;
-					},
-					track:true,
-
-					open: function(event,ui){
-						ui.tooltip.removeClass("ui-tooltip");
-						ui.tooltip.addClass("calendar_uitooltip");
-					}
-				});
-				ttp.tooltip("enable");
-			},
-			mousedown: function(){
-				jQuery(this).tooltip("disable");
-			}
-		});
-
-		//Click handler for calendar todos
-		jQuery("div.calendar_calDayTodos").find("[data-todo^='app|']").on({
-			click:function(ev)
-			{
-				var windowSize = ev.currentTarget.getAttribute('data-todo').split("|")[1];
-				var link = ev.currentTarget.getAttribute('href');
-				that.egw.open_link(link,'_blank',windowSize);
-				return false;
-			}
-		});
-
-		//Click Handler for calendar planner
-		jQuery("div.calendar_plannerEvent").on({
-			click:function(ev){
+			//Click event handler for integrated apps
+			.on("click","div.calendar_plannerEvent",function(ev){
 				var eventId = ev.currentTarget.getAttribute('data-date').split("|")[1];
 				var startDate = ev.currentTarget.getAttribute('data-date').split("|")[0];
 				var recurrFlag = ev.currentTarget.getAttribute('data-date').split("|")[2];
@@ -408,58 +407,41 @@ app.classes.calendar = AppJS.extend(
 				{
 					that.edit_series(eventId,startDate);
 				}
-			},
-			mouseover: function(){
+			})
 
-				var ttp = jQuery(this).tooltip({
-					items: "[data-tooltip]",
-					content: function()
-					{
-						var elem = jQuery(this);
-						if (elem.is("[data-tooltip]"))
-							return this.getAttribute('data-tooltip') ;
-					},
-					track:true,
+			//Click event handler for calendar cells
+			.on("click","div.calendar_calAddEvent",function(ev){
+				var timestamp = ev.target.getAttribute('data-date').split("|");
+				var owner = ev.target.getAttribute('id').split("_");
 
-					open: function(event,ui){
-						ui.tooltip.removeClass("ui-tooltip");
-						ui.tooltip.addClass("calendar_uitooltip");
-					}
-				});
-				ttp.tooltip("enable");
-			},
-			mousedown: function(){
-				jQuery(this).tooltip("disable");
-			}
-		});
-
-		//onClick Handler for calendar cells
-		jQuery("div.calendar_calAddEvent").click(function(ev)
-		{
-			var timestamp = ev.target.getAttribute('data-date').split("|");
-			var owner = ev.target.getAttribute('id').split("_");
-
-			var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
-			if (owner[2].match( /Or/g))
-			{
-				ownerId = 'r' + ownerId;
-			}
-
-			var eventInfo =
+				var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
+				if (owner[2].match( /Or/g))
 				{
-					date: timestamp[0],
-					hour: timestamp[1],
-					minute: timestamp[2]
-				};
+					ownerId = 'r' + ownerId;
+				}
 
-			if (ownerId != 0)
-			{
-				$j(eventInfo).extend(eventInfo,{owner: ownerId});
-			}
+				var eventInfo =
+					{
+						date: timestamp[0],
+						hour: timestamp[1],
+						minute: timestamp[2]
+					};
 
-			that.egw.open(null, 'calendar', 'add', eventInfo , '_blank');
-		});
+				if (ownerId != 0)
+				{
+					$j(eventInfo).extend(eventInfo,{owner: ownerId});
+				}
 
+				that.egw.open(null, 'calendar', 'add', eventInfo , '_blank');
+			})
+
+			//Click event handler for calendar todos
+			.on("click", "a[data-todo]",function(ev){
+					var windowSize = ev.currentTarget.getAttribute('data-todo').split("|")[1];
+					var link = ev.currentTarget.getAttribute('href');
+					that.egw.open_link(link,'_blank',windowSize);
+					return false;
+			});
 	},
 
 	/**
