@@ -379,7 +379,7 @@ class config
 			}
 		}
 		// some things need on client-side which are not direct configs
-		$client_config['phpgwapi']['lang_ctimes_md5'] = md5(json_encode(self::$configs['phpgwapi']['lang_ctimes']));
+		$client_config['phpgwapi']['max_lang_time'] = translation::max_lang_time();
 
 		return $client_config;
 	}

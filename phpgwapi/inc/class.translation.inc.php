@@ -326,9 +326,9 @@ class translation
 				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, load_app(_files)() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				if ($loaded || $instance_specific)
 				{
-					$ok=egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
+					egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
 						__CLASS__, $app.':'.$l, $loaded);
-					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded))." egw_cache::setCache() returned ".array2string($ok));
+					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				}
 			}
 			if ($loaded)
@@ -397,10 +397,16 @@ class translation
 		{
 			$file = self::get_lang_file($app, $lang);
 			// check if file has changed compared to what's cached
-			if (file_exists($file) && egw_cache::getTree(__CLASS__, $file) != filectime($file))
+			if (file_exists($file))
 			{
-				//error_log(__METHOD__."() $file modified");
-				self::invalidate_lang_file($app, $lang);
+				$cached_time = egw_cache::getTree(__CLASS__, $file);
+				$file_time = filemtime($file);
+				if ($cached_time != $file_time)
+				{
+					//error_log(__METHOD__."() $file MODIFIED ($cached_time != $file_time)");
+					self::invalidate_lang_file($app, $lang);
+				}
+				//else error_log(__METHOD__."() $file unchanged ($cached_time == $file_time)");
 			}
 		}
 
@@ -416,6 +422,7 @@ class translation
 	{
 		//error_log(__METHOD__."('$app', '$lang') invalidate translations $app:$lang");
 		egw_cache::unsetTree(__CLASS__, $app.':'.$lang);
+		egw_cache::unsetTree(__CLASS__, self::get_lang_file($app, $lang));
 
 		foreach(self::$load_via as $load => $via)
 		{
@@ -424,6 +431,7 @@ class translation
 			{
 				//error_log(__METHOD__."('$app', '$lang') additional invalidate translations $load:$lang");
 				egw_cache::unsetTree(__CLASS__, $load.':'.$lang);
+				egw_cache::unsetTree(__CLASS__, self::get_lang_file($load, $lang));
 			}
 		}
 	}
@@ -431,7 +439,7 @@ class translation
 	/**
 	 * Get a state / etag for a given app's translations
 	 *
-	 * We currently only use a single state for all none-instance-specific apps depending on lang_ctimes.
+	 * We currently only use a single state for all none-instance-specific apps depending on self::max_lang_time().
 	 *
 	 * @param string $_app
 	 * @param string $_lang
@@ -441,7 +449,12 @@ class translation
 	{
 		if (!in_array($_app, translation::$instance_specific_translations))
 		{
-			$etag = md5(json_encode($GLOBALS['egw_info']['server']['lang_ctimes']));
+			// check if cache is NOT invalided by checking if we have a modification time for concerned lang-file
+			$time = egw_cache::getTree(__CLASS__, $file=self::get_lang_file($_app, $_lang));
+			// if we dont have one, cache has been invalidated and we need to load translations
+			if (!isset($time)) self::add_app($_app, $_lang);
+
+			$etag = self::max_lang_time();
 		}
 		else
 		{
@@ -449,6 +462,28 @@ class translation
 		}
 		//error_log(__METHOD__."('$_app', '$_lang') returning '$etag'");
 		return $etag;
+	}
+
+	/**
+	 * Get or set maximum / latest modification-time for files of not instance-specific translations
+	 *
+	 * @param type $time
+	 * @return type
+	 */
+	static function max_lang_time($time=null)
+	{
+		static $max_lang_time = null;
+
+		if (!isset($max_lang_time) || isset($time))
+		{
+			$max_lang_time = egw_cache::getTree(__CLASS__, 'max_lang_time');
+		}
+		if (isset($time) && $time > $max_lang_time)
+		{
+			//error_log(__METHOD__."($time) updating previous max_lang_time=$max_lang_time to $time");
+			egw_cache::setTree(__CLASS__, 'max_lang_time', $max_lang_time=$time);
+		}
+		return $max_lang_time;
 	}
 
 	/**
@@ -462,7 +497,7 @@ class translation
 	 */
 	static function &load_app_files($app,$lang)
 	{
-		$start = microtime(true);
+		//$start = microtime(true);
 		$load_app = isset(self::$load_via[$app]) ? self::$load_via[$app] : $app;
 		$loaded = array();
 		foreach($load_app == 'all-apps' ? scandir(EGW_SERVER_ROOT) : (array)$load_app as $app_dir)
@@ -475,15 +510,16 @@ class translation
 				continue;
 			}
 			// store ctime of file we parse
-			egw_cache::setTree(__CLASS__, $file, filectime($file));
+			egw_cache::setTree(__CLASS__, $file, $time=filemtime($file));
+			self::max_lang_time($time);
 
 			$line_nr = 0;
 			//use fgets and split the line, as php5.3.3 with squeeze does not support splitting lines with fgetcsv while reading properly
 			//if the first letter after the delimiter is a german umlaut (UTF8 representation thereoff)
 			//while(($line = fgetcsv($f, 1024, "\t")))
-			while($line = fgets($f))
+			while(($read = fgets($f)))
 			{
-				$line = explode("\t", trim($line));
+				$line = explode("\t", trim($read));
 				++$line_nr;
 				if (count($line) != 4) continue;
 				list($l_id,$l_app,$l_lang,$l_translation) = $line;
@@ -622,6 +658,7 @@ class translation
 	 */
 	static function get_lang_file($app,$lang)
 	{
+		if ($app == 'common') $app = 'phpgwapi';
 		return EGW_SERVER_ROOT.'/'.$app.'/'.self::LANG_DIR.'/'.self::LANGFILE_PREFIX.$lang.self::LANGFILE_EXTENSION;
 	}
 
@@ -632,7 +669,7 @@ class translation
 	 */
 	static function get_installed_charsets()
 	{
-		static $charsets;
+		static $charsets=null;
 
 		if (!isset($charsets))
 		{
@@ -747,16 +784,16 @@ class translation
 			// iconv can not convert from/to utf7-imap
 			if ($to == 'utf7-imap' && function_exists(imap_utf7_encode))
 			{
-				$convertedData = iconv($from, 'iso-8859-1', $data);
-				$convertedData = imap_utf7_encode($convertedData);
+				$data_iso = iconv($from, 'iso-8859-1', $data);
+				$convertedData = imap_utf7_encode($data_iso);
 
 				return $convertedData;
 			}
 
 			if ($from == 'utf7-imap' && function_exists(imap_utf7_decode))
 			{
-				$convertedData = imap_utf7_decode($data);
-				$convertedData = iconv('iso-8859-1', $to, $convertedData);
+				$data_iso = imap_utf7_decode($data);
+				$convertedData = iconv('iso-8859-1', $to, $data_iso);
 
 				return $convertedData;
 			}
@@ -814,7 +851,7 @@ class translation
 		}
 		else
 		{
-			foreach((array)self::get_installed_langs() as $key => $name)
+			foreach(array_keys((array)self::get_installed_langs()) as $key)
 			{
 				egw_cache::unsetCache(egw_cache::INSTANCE,__CLASS__,$app.':'.$key);
 			}
@@ -1021,8 +1058,6 @@ class translation
 			//error_log(__METHOD__.' Using EndTag:'.$endtag);
 		}
 		// strip tags out of the message completely with their content
-		$taglen=strlen($tag);
-		$endtaglen=strlen($endtag);
 		if ($_body) {
 			if ($singleton)
 			{
@@ -1051,7 +1086,6 @@ class translation
 	static function transform_mailto2text($matches)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($matches));
-		$linkTextislink = false;
 		// this is the actual url
 		$matches[2] = trim(strip_tags($matches[2]));
 		$matches[3] = trim(strip_tags($matches[3]));

@@ -141,7 +141,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 					jss.push(this.webserverUrl +
 						'/phpgwapi/lang.php?app=' + _apps[i].app +
 						'&lang=' + _apps[i].lang +
-						'&etag=' + (_apps[i].etag || this.config('lang_ctimes_md5')));
+						'&etag=' + (_apps[i].etag || this.config('max_lang_time')));
 				}
 				apps.push(_apps[i].app);
 			}
