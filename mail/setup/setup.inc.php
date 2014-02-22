@@ -78,6 +78,12 @@ $setup_info['mail']['check_install'] = array(
 		'value' => 0,
 		'verbose_value' => 'Off',
 	),
+	'mbstring.func_overload' => array(
+		'func' => 'php_ini_check',
+		'value' => 0,
+		'warning' => '<div class="setup_info">' . lang('mbstring.func_overload=0 is required for correct mail processing!') . "</div>",
+		'change' => check_load_extension('mbstring') ? 'mbstring.func_overload = 0' : '',
+	),
 	'tnef' => array(
 		'func' => 'tnef_check',
 	),

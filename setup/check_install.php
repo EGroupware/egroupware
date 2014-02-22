@@ -80,7 +80,7 @@ $checks = array(
 	),
 	'memory_limit' => array(
 		'func' => 'php_ini_check',
-		'value' => '24M',
+		'value' => '128M',
 		'check' => '>=',
 		'error' => lang('memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures','24M'),
 		'change' => 'memory_limit = 24M'
@@ -150,6 +150,7 @@ $checks = array(
 		'func' => 'extension_check',
 		'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','pdo_pgsql','pgSQL')
 	),
+	/* disable checks for other database extensions, as we are not really supporting them anymore
 	'mssql' => array(
 		'func' => 'extension_check',
 		'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL'),
@@ -175,16 +176,10 @@ $checks = array(
 	'pdo_oci' => array(
 		'func' => 'extension_check',
 		'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','pdo_oci','Oracle'),
-	),
+	),*/
 	'mbstring' => array(
 		'func' => 'extension_check',
 		'warning' => lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.')
-	),
-	'mbstring.func_overload' => array(
-		'func' => 'php_ini_check',
-		'value' => 7,
-		'warning' => '<div class="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
-		'change' => check_load_extension('mbstring') ? 'mbstring.func_overload = 7' : '',
 	),
 	'ldap' => array(
 		'func' => 'extension_check',
@@ -429,15 +424,6 @@ function pear_check($package,$args)
 			echo ' '.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
 				'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
 		}
-		elseif ($min_version && !$version_available)
-		{
-			echo ' '.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
-		}
-		elseif ($min_version && version_compare($min_version,$version_available) > 0)
-		{
-			echo ' '.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
-				$package,$version_available,$min_version).' pear update '.$package;
-		}
 		elseif ($package)
 		{
 			echo ' '.lang('You can install it by running:').
@@ -445,6 +431,15 @@ function pear_check($package,$args)
 				' pear install '.$package;
 		}
 		echo "</div>";
+	}
+	elseif ($min_version && !$version_available)
+	{
+		echo '<div class="setup_info">'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version).'</div>';
+	}
+	elseif ($min_version && version_compare($min_version,$version_available) > 0)
+	{
+		echo '<div class="setup_info">'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
+			$package,$version_available,$min_version).' pear update '.$package.'</div>';
 	}
 	echo "\n";
 
