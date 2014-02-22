@@ -76,8 +76,12 @@ class etemplate_widget_tree extends etemplate_widget
 	 */
 	public static function send_quote_json(array $data)
 	{
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode(self::htmlencode_node($data));
+
 		common::egw_exit();
 	}
 

@@ -18,9 +18,24 @@ class egw_json_request
 
 	private static $_hadJSONRequest = false;
 
-	public static function isJSONRequest()
+	/**
+	 * Check if JSON request running or (re)set JSON request flag
+	 *
+	 * Can be used to:
+	 * - detect regular JSON request:
+	 *		egw_json_request::isJSONRequest()
+	 * - switch regular JSON response handling off, which would send arbitrary output via response method "html".
+	 *   Neccessary if json.php is used to send arbitrary JSON data eg. nodes for foldertree!
+	 *		egw_json_request::isJSONRequest(false)
+	 *
+	 * @param boolean $set=null
+	 * @return boolean
+	 */
+	public static function isJSONRequest($set=null)
 	{
-		return self::$_hadJSONRequest;
+		$ret = self::$_hadJSONRequest;
+		if (isset($set)) self::$_hadJSONRequest = $set;
+		return $ret;
 	}
 
 	/**
@@ -249,7 +264,7 @@ class egw_json_response
 		{
 			if (!$inst->haveJSONResponse())
 			{
-				error_log(__METHOD__."() adding output with inst->addGeneric('output', '$output')");
+				error_log(__METHOD__."() adding output with inst->addGeneric('html', '$output')");
 				$inst->addGeneric('html', $output);
 			}
 			else
