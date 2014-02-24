@@ -251,6 +251,9 @@ button.et2_button_with_image {
 /**
  * Multi-select widget
  */
+.et2_selectbox_expand {
+  width: 16px;
+}
 .et2_selectbox .ui-widget-header {
   padding: 0px 6px 0px 6px;
   text-align: center;
