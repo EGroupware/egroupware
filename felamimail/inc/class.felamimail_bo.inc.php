@@ -2943,16 +2943,34 @@ class felamimail_bo
 				if (self::$debug) error_log(__METHOD__.print_r($sortResult,true));
 			} else {
 				if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
+				static $supportsCharset;
+				if (is_null($supportsCharset) || !isset($supportsCharset[$this->profileID]))
+				{
+					$supportsCharset = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsCharset'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+					if (!isset($supportsCharset[$this->profileID])) $supportsCharset[$this->profileID]=true;
+				}
 				$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
+				// if server replies with BAD CHARSET we skip that for the near future
+				if ($supportsCharset[$this->profileID]==false) $advFilter=$filter;
 				$sortResult = $this->icServer->search($advFilter, $resultByUid);
 				if (PEAR::isError($sortResult))
 				{
+					if (stripos(array2string($sortResult->message),'BADCHARSET')!==false)
+					{
+						$supportsCharset[$this->profileID]=false;
+						egw_cache::setCache(egw_cache::INSTANCE,'email','supportsCharset'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsCharset,$expiration=60*60*10);
+						if (self::$debug) error_log(__METHOD__." Mailserver has NO CHARSET Capability:".$sortResult->message);
+					}
+					else
+					{
+						$filter='*';
+					}
 					$sortResult = $this->icServer->search($filter, $resultByUid);
 					if (PEAR::isError($sortResult))
 					{
 						// some servers are not replying on a search for uids, so try this one
 						$resultByUid = false;
-						$sortResult = $this->icServer->search('*', $resultByUid);
+						if ($filter!='*') $sortResult = $this->icServer->search('*', $resultByUid);
 						if (PEAR::isError($sortResult))
 						{
 							error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
