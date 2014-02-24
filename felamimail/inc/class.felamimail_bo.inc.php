@@ -2958,7 +2958,7 @@ class felamimail_bo
 					if (stripos(array2string($sortResult->message),'BADCHARSET')!==false)
 					{
 						$supportsCharset[$this->profileID]=false;
-						egw_cache::setCache(egw_cache::INSTANCE,'email','supportsCharset'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsCharset,$expiration=60*60*10);
+						egw_cache::setCache(egw_cache::INSTANCE,'email','supportsCharset'.trim($GLOBALS['egw_info']['user']['account_id']),$supportsCharset,$expiration=60*60*10);
 						if (self::$debug) error_log(__METHOD__." Mailserver has NO CHARSET Capability:".$sortResult->message);
 					}
 					else
