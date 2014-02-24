@@ -410,14 +410,17 @@ app.classes.calendar = AppJS.extend(
 			})
 
 			//Click event handler for calendar cells
-			.on("click","div.calendar_calAddEvent",function(ev){
+			.on("click","div.calendar_calAddEvent, div.calendar_calTimeRowTime",function(ev){
 				var timestamp = ev.target.getAttribute('data-date').split("|");
-				var owner = ev.target.getAttribute('id').split("_");
-
-				var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
-				if (owner[2].match( /Or/g))
+				if (typeof ev.target.getAttribute('id') != 'undefined' && ev.target.getAttribute('id'))
 				{
-					ownerId = 'r' + ownerId;
+					var owner = ev.target.getAttribute('id').split("_");
+
+					var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
+					if (owner[2].match( /Or/g))
+					{
+						ownerId = 'r' + ownerId;
+					}
 				}
 
 				var eventInfo =
@@ -427,7 +430,7 @@ app.classes.calendar = AppJS.extend(
 						minute: timestamp[2]
 					};
 
-				if (ownerId != 0)
+				if (typeof ownerId !='undefined' && ownerId != 0)
 				{
 					$j(eventInfo).extend(eventInfo,{owner: ownerId});
 				}

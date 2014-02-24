@@ -545,8 +545,8 @@ class calendar_ui
 			$vars['hour'] = $hour;
 			$vars['minute'] = $minute;
 		}
-		return html::a_href($content,'/index.php',$vars,' target="_blank" title="'.html::htmlspecialchars(lang('Add')).
-			'" onclick="'.$this->popup('this.href','this.target').'; return false;"');
+		return html::a_href($content,'',$vars,' data-date="' .$vars['date'].'|'.$vars['hour'].'|'.$vars['minute']
+				. '" title="'.html::htmlspecialchars(lang('Add')).'"');
 	}
 
 	/**
