@@ -260,6 +260,15 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			$value = $value_in =& self::get_array($content, $form_name);
 
+			// Automatically do link if user selected entry but didn't click 'Link' button
+			$link = self::get_array($content, self::form_name($cname, $this->id . '_link_entry'));
+			if($this->type =='link-to' && is_array($link) && $link['app'] && $link['id'] &&
+				is_array($value) && $value['to_id']
+			)
+			{
+				$result = egw_link::link($value['to_app'], $value['to_id'], $link['app'], $link['id']);
+			}
+			
 			// Look for files
 			$files = self::get_array($content, self::form_name($cname, $this->id . '_file'));
 			if(is_array($files) && !(is_array($value) && $value['to_id']))
