@@ -3021,6 +3021,8 @@ class mail_compose
 				if($list_count++ > 5) break;
 			}
 		}
+		 // switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
 
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');

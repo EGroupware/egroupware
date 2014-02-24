@@ -49,6 +49,9 @@ class etemplate_widget_taglist extends etemplate_widget
 		{
 			$results[] = array('id' => $id, 'label' => $name);
 		}
+		 // switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		common::egw_exit();
