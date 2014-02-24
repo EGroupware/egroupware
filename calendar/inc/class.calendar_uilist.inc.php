@@ -821,6 +821,10 @@ class calendar_uilist extends calendar_ui
 	private function get_actions()
 	{
 		$actions = array(
+			'add' => array(
+				'caption' => 'Add',
+				'egw_open' => 'add-calendar'
+			),
 			'open' => array(
 				'caption' => 'Open',
 				'default' => true,
