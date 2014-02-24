@@ -2916,6 +2916,9 @@ class mail_compose
 			foreach ((array)$results as $k => $_result) {$rL[$_result['id']]=$_result['label'];};
 			return $rL;
 		}
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
 		header('Content-Type: application/json; charset=utf-8');
 		//error_log(__METHOD__.__LINE__);
 		echo json_encode($results);
