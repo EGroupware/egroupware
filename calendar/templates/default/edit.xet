@@ -59,7 +59,7 @@
 				<row class="row optional" disabled="@no_add">
 					<vbox options="0,0" span="2">
 						<menulist>
-							<menupopup type="select-account" statustext="User or group" id="account" options="User or group,calendar+,,10"/>
+							<menupopup type="select-account" statustext="User or group" id="account" empty_label="User or group" expand_multiple_rows="10" options=",calendar+"/>
 						</menulist>
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
