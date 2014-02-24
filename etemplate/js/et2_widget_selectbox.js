@@ -33,6 +33,14 @@ var et2_selectbox = et2_inputWidget.extend(
 			"default": false,
 			"description": "Allow selecting multiple options"
 		},
+		"expand_multiple_rows": {
+			"name": "Expand multiple",
+			"type": "integer",
+			"default": et2_no_init,
+			"description": "Shows single select widget, with a button.  If the "+
+				"user clicks the button, the input will toggle to a multiselect,"+
+				"with this many rows.  "
+		},
 		"rows": {
 			"name": "Rows",
 			"type": "any",	// Old options put either rows or empty_label in first space
@@ -136,6 +144,10 @@ var et2_selectbox = et2_inputWidget.extend(
 		if(this.input != null)
 		{
 			this.input.unchosen();
+		}
+		if(this.expand_button)
+		{
+			this.expand_button.off();
 		}
 		this._super.apply(this, arguments);
 
@@ -589,6 +601,40 @@ var et2_selectbox = et2_inputWidget.extend(
 			this.multiOptions.find("li:has(input:checked)").prependTo(this.multiOptions);
 		}
 		this.value = _value;
+	},
+
+	/**
+	 * Add a button to toggle between single select and multi select.
+	 *
+	 * @param {number} _rows How many rows for multi-select
+	 */
+	set_expand_multiple_rows: function(_rows)
+	{
+		this.options.expand_multiple_rows = _rows;
+
+		var surroundings = this.getSurroundings();
+		if(_rows <= 1 )
+		{
+			// Remove
+			surroundings.removeDOMNode(this.expand_button.get(0));
+		}
+		else
+		{
+			var button_id = this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + "_expand";
+			this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand' id='" + button_id + "'/>")
+				.on("click", jQuery.proxy(function(e) {
+					if(typeof this.input.attr('size') !== 'undefined' && this.input.attr('size') != 1)
+					{
+						this.set_multiple(false, 1);
+					}
+					else
+					{
+						this.set_multiple(true, this.options.expand_multiple_rows);
+					}
+				},this));
+			surroundings.appendDOMNode(this.expand_button.get(0));
+		}
+		surroundings.update();
 	},
 
 	/**
