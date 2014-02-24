@@ -93,7 +93,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if($this->getElementAttribute($form_name, 'app'))
 		{
 			$app =& $this->getElementAttribute($form_name, 'app');
-		} else {
+		} else
+		{
 			// Checking creates it even if it wasn't there
 			unset(self::$request->modifications[$form_name]['app']);
 		}
@@ -128,11 +129,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		// Filter fields
 		if($this->attrs['field-names'])
 		{
-				if($this->attrs['field-names'][0] == '!') {
-						$negate_field_filter = true;
-						$this->attrs['field-names'] = substr($this->attrs['field_names'],1);
-				}
-				$field_filter = explode(',', $this->attrs['field_names']);
+			if($this->attrs['field-names'][0] == '!')
+			{
+				$negate_field_filter = true;
+				$this->attrs['field-names'] = substr($this->attrs['field_names'],1);
+			}
+			$field_filter = explode(',', $this->attrs['field_names']);
 		}
 		$fields = $customfields;
 
@@ -155,12 +157,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 		}
 		// check if name refers to a single custom field --> show only that
+		$matches = null;
 		if (($pos=strpos($form_name,self::$prefix)) !== false && // allow the prefixed name to be an array index too
 			preg_match("/$this->prefix([^\]]+)/",$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
 			$value = array($this->prefix.$name => $value);
-			$singlefield = true;
 			$form_name = substr($form_name,0,-strlen("[$this->prefix$name]"));
 		}
 
@@ -175,15 +177,18 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				}
 				$link_types = egw_link::app_list();
 				ksort($link_types);
-				foreach($link_types as $lname => $label) $sel_options[$lname] = '- '.$label;
-
+				foreach($link_types as $lname => $label)
+				{
+					$sel_options[$lname] = '- '.$label;
+				}
 				self::$transformation['type'][$type]['sel_options'] = $sel_options;
 				self::$transformation['type'][$type]['no_lang'] = true;
 				return parent::beforeSendToClient($cname);
 			case 'customfields-list':
 				foreach(array_reverse($fields) as $lname => $field)
 				{
-					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false) continue;    // not for our content type//
+					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) &&
+						strpos(','.$field['type2'].',',','.$field['type2'].',') === false) continue;    // not for our content type//
 					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') //break;
 					{
 						$fields_with_vals[]=$lname;
@@ -210,34 +215,66 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 
 		// Re-format date custom fields from Y-m-d
 		$field_settings =& self::get_array(self::$request->modifications, "{$this->id}[customfields]",true);
-		$field_settings = array();
+		if (true) $field_settings = array();
 		$link_types = egw_link::app_list();
 		foreach($fields as $fname => $field)
 		{
-			if($field['type'] == 'date' && ($d_val = self::$request->content[self::$prefix.$fname]) && !is_numeric($d_val))
-			{
-				self::$request->content[self::$prefix.$fname] = strtotime($d_val);
-			}
-
 			// Run beforeSendToClient for each field
-			$type = $field['type'];
-			// Link-tos needs to change from appname to link-to
-			if($link_types[$field['type']])
-			{
-				$type = 'link-to';
-			}
-			$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
+			$widget = $this->_widget($fname, $field);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
-				$widget->id = self::$prefix.$fname;
-				$widget->attrs['type'] = $type;
-				if($type == 'link-to')
-				{
-					$widget->attrs['only_app'] = $field['type'];
-				}
-				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '':$this->id);
+				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $this->id);
 			}
 		}
+	}
+
+	/**
+	 * Instanciate (server-side) widget used to implement custom-field, to run its beforeSendToClient or validate method
+	 *
+	 * @param string $fname custom field name
+	 * @param array $field custom field data
+	 * @return etemplate_widget
+	 */
+	protected function _widget($fname, array $field)
+	{
+		static $link_types = null;
+		if (!isset($link_types)) $link_types = egw_link::app_list ();
+
+		$type = $field['type'];
+		// Link-tos needs to change from appname to link-to
+		if($link_types[$field['type']])
+		{
+			$type = 'link-to';
+		}
+		$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
+		$widget->id = self::$prefix.$fname;
+		$widget->attrs['type'] = $type;
+
+		// some type-specific (default) attributes
+		switch($type)
+		{
+			case 'date':
+			case 'date-time':
+				$widget->attrs['dataformat'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+				break;
+
+			case 'link-to':
+				$widget->attrs['only_app'] = $field['type'];
+				break;
+
+			case 'select':
+				$this->attrs['multiple'] = $field['rows'] > 1;
+				// fall through
+			case 'radio':
+				if (count($field['values']) == 1 && isset($field['values']['@']))
+				{
+					$field['values'] = self::_get_options_from_file($field['values']['@']);
+				}
+				self::$request->sel_options[self::$prefix.$fname] = $field['values'];
+				//error_log(__METHOD__."('$fname', ".array2string($field).") request->sel_options['".self::$prefix.$fname."']=".array2string(self::$request->sel_options[$this->id]));
+				break;
+		}
+		return $widget;
 	}
 
 	/**
@@ -269,28 +306,65 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value_in = self::get_array($content, $form_name);
-			$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
 			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 			if(is_array($value_in))
 			{
 				foreach($value_in as $field => $value)
 				{
-					$field_settings = $customfields[substr($field,1)];
+					$field_settings = $customfields[$fname=substr($field,1)];
+
+					// run validation method of widget implementing this custom field
+					$widget = $this->_widget($fname, $field_settings);
+					$widget->validate($cname, $expand, $content, $validated);
+
 					if ((string)$value === '' && $field_settings['needed'])
 					{
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
-					$valid = is_array($value) ? implode(',',$value) : $value;
-					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+					if (is_array($valid)) $valid = implode(',', $valid);
+					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($valid));
 				}
 			} elseif ($this->type == 'customfields-types') {
 				// Transformation doesn't handle validation
 				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-				$valid = $value_in;
+				if (true) $valid = $value_in;
 				//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 			}
 		}
+	}
+
+	/**
+	 * Read the options of a 'select' or 'radio' custom field from a file
+	 *
+	 * For security reasons that file has to be relative to the eGW root
+	 * (to not use that feature to explore arbitrary files on the server)
+	 * and it has to be a php file setting one variable called options,
+	 * (to not display it to anonymously by the webserver).
+	 * The $options var has to be an array with value => label pairs, eg:
+	 *
+	 * <?php
+	 * $options = array(
+	 *      'a' => 'Option A',
+	 *      'b' => 'Option B',
+	 *      'c' => 'Option C',
+	 * );
+	 *
+	 * @param string $file file name inside the eGW server root, either relative to it or absolute
+	 * @return array in case of an error we return a single option with the message
+	 */
+	public static function _get_options_from_file($file)
+	{
+		if (!($path = realpath($file{0} == '/' ? $file : EGW_SERVER_ROOT.'/'.$file)) ||	// file does not exist
+			substr($path,0,strlen(EGW_SERVER_ROOT)+1) != EGW_SERVER_ROOT.'/' ||	// we are NOT inside the eGW root
+			basename($path,'.php').'.php' != basename($path) ||	// extension is NOT .php
+			basename($path) == 'header.inc.php')	// dont allow to include our header again
+		{
+			return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
+		}
+		include($path);
+
+		return $options;
 	}
 }

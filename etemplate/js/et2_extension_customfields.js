@@ -23,7 +23,7 @@
 /**
  * @augments et2_dataview
  */
-var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput], 
+var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput],
 {
 	attributes: {
 		'customfields': {
@@ -61,7 +61,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_customfields_list
 	 */
 	init: function() {
@@ -72,7 +72,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		// Allows server side to override prefix - not an attribute though
 		if(typeof this.options.prefix != 'undefined') this.prefix = this.options.prefix;
-		
+
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
 		this.table = $j(document.createElement("table"))
@@ -194,7 +194,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					.appendTo(row);
 				if(!field.type) field.type = 'text";'
 				var setup_function = '_setup_'+(apps[field.type] ? 'link_entry' : field.type.replace("-","_"));
-					
+
 				var attrs = {
 					'id': 		id,
 					'statustext':	field.help,
@@ -204,12 +204,12 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				};
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
 				if(attrs.readonly === true) delete attrs.needed;
-				
+
 				if(this[setup_function]) {
 					var no_skip = this[setup_function].call(this, field_name, field, attrs);
 					if(!no_skip) continue;
 				}
-				
+
 				if(this._type == 'customfields-list') {
 					// No label, cust widget
 					attrs.readonly = true;
@@ -298,7 +298,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			}
 		}
 	},
-	
+
 	loadFromXML: function(_node) {
 		this.loadFields();
 
@@ -340,7 +340,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 	},
 
 	/**
-	 * et2_IInput so the custom field can be it's own widget.  
+	 * et2_IInput so the custom field can be it's own widget.
 	 */
 	getValue: function() {
 		// Not using an ID means we have to grab all the widget values, and put them where server knows to look
@@ -380,7 +380,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			}
 		}
 	},
-		
+
 	isValid: function() {
 		// Individual customfields will handle themselves
 		return true;
@@ -409,15 +409,15 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		delete(attrs.label);
 
 		attrs.rows = field.rows;
-		attrs.select_options = field.values;
+		// select_options are now send from server-side incl. ones defined via a file in EGroupware root
 		attrs.tags = field.tags;
-		
+
 		return true;
 	},
 	_setup_htmlarea: function(field_name, field, attrs) {
 		attrs.config = field.config ? field.config : {};
 		attrs.config.toolbarStartupExpanded = false;
-		if(field.len) 
+		if(field.len)
 		{
 			var options = field.len.split(',');
 			if(options.length) attrs.config.width = options[0];
@@ -434,7 +434,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		return true;
 	},
 	_setup_radio: function(field_name, field, attrs) {
-		// 'Empty' label will be first 
+		// 'Empty' label will be first
 		delete(attrs.label);
 
 		if(field.values && field.values[''])
@@ -482,7 +482,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		return true;
 	},
 
-	/** 
+	/**
 	 * Set which fields are visible, by name
 	 *
 	 * Note: no # prefix on the name
