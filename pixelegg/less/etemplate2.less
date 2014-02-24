@@ -159,16 +159,7 @@ span.et2_date span {
                padding: 1em;
 
             }
-    /*         &:before {
-                            content: "+ ";
-                            font-size: 2em;
-                            color: @egw_color_1_a;
-                            line-height: 0.6em;
-                            padding-left: 0.1em;
-                            padding-right: 0em;
-                            background-color: @egw_color_2_a;
-                            .border_radius_button_lefttop;
-                    }*/
+
              &:hover {background-color: @color_positive_action_active !important;}
              &:active {background-color: @color_positive_action_active !important;}
     }
@@ -236,13 +227,8 @@ div.et2_link_entry{
  */
 
 .et2_tabflag {
-    /*display: inline-block;*/
     margin: 1em 3px -1px 0;
     padding: 4px;
-    /*cursor: pointer;*/
-    /*font-size: 0.8em;*/
-    /*.border_radius(3px,0,0,3px);*/
-
     .background_color_25_gray;
     .inner_shadow(1px, 0px, 0px, 0.5);
     -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
@@ -334,13 +320,22 @@ hr {
         span.et2_label {background-color: transparent;padding-left: 3px;}
         }
 }
-/* ################################################################
+
+
+
+
+
+/* ##################################################################################
  * Nextmatch widget
- * ################################################################*/
+ * ##################################################################################*/
+// 
+// SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
+
+// AREA AROUND CONTENT
 .et2_nextmatch {
     .background_color_10_gray;
 }
-/* images*/
+// ALL images 
 .et2_nextmatch > img {.dimension_width_height_s;}
 
 
@@ -349,14 +344,14 @@ hr {
 
 // count
 .nextmatch_header .header_count {
-    font-size: 11px;
+    .fontsize_normal;
     position: relative;
     top: 3px;
     height: 22px;
     
-    // count
+    // count number
     span {
-        font-size: 11px;
+        .fontsize_normal;
         top: 4px;
         position: relative;
     }  
@@ -408,10 +403,14 @@ hr {
 
 
 // Select -> Option
-.nextmatch_header > .filters > select > option {font-size: 0.9em;}
+.nextmatch_header > .filters > select > option {.fontsize_normal;}
 
 
+
+// ####################################################
 // Search Field
+// 
+//
 .nextmatch_header > .search{
 
     padding: 0 0 0 3px;
@@ -424,28 +423,28 @@ hr {
         /*.background_color_search;*/
         /*background-color: @gray_0;*/
         border: none;
-        font-size: 11px;
-        color: #000;
-
-        /*margin: 0 2px;*/
+        .fontsize_normal;
+        color: @gray_100;
     }
-        input::-webkit-input-placeholder {
+
+    input::-webkit-input-placeholder {
             /* WebKit browsers */
             color: @gray_60;
         }
-        input:-moz-placeholder {
+    input:-moz-placeholder {
             /* Mozilla Firefox 4 to 18 */
-            color:   @gray_60;
+           color:   @gray_60;
         }
-        input::-moz-placeholder {
+   input::-moz-placeholder {
             /* Mozilla Firefox 19+ */
             color:   @gray_60;
         }
-        input:-ms-input-placeholder {
+   input:-ms-input-placeholder {
             /* Internet Explorer 10+ */
             color:  @gray_60;
         }
 
+    // SEARCH BUTTON
     button.et2_button {
             .border_normal;
 
@@ -455,19 +454,11 @@ hr {
             box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 
             width: 45px;
-            /*height: 1.6em;*/
-
             .border_radius_button_righttop;
-            /*.background_color_search;*/
-
-            color: lighten(@egw_color_1, 15%);
-            text-decoration: none;
-
             /*cursor: pointer; 14022014 entfernt*/
             padding: 0px;
             margin: 8px 10px;
             margin-left: 0px;
-
             background-image: url("../images/search.png");
             background-position: center 0;
             background-size: contain;
@@ -476,22 +467,22 @@ hr {
             white-space: nowrap;
             overflow: hidden;
 
-        &:hover{
-            .box_shadow_standard_light_hover;
-            background-color: @egw_color_2_e !important;
-            /*hide arrow*/
-            color: @egw_color_2_e !important;
-        }
+            &:hover{
+                .box_shadow_standard_light_hover;
+                background-color: @egw_color_2_e !important;
+                /*hide arrow*/
+                color: @egw_color_2_e !important;
+            }
 
-        &:active {
-            /*.background_verlauf_diagonal_gray;*/
-            background-color: @color_positive_action_active !important;
-        }
+            &:active {
+                /*.background_verlauf_diagonal_gray;*/
+                background-color: @color_positive_action_active !important;
+            }
 
-        &:focus {
-            .Complete_Button_input_focus;
-            /*background-color: @color_positive_action_active !important;*/
-        }
+            &:focus {
+                .Complete_Button_input_focus;
+                /*background-color: @color_positive_action_active !important;*/
+            }
 
     }
 
@@ -508,9 +499,7 @@ hr {
 }
 
 
-.nextmatch_header .et2_button_icon {
-
-}
+.nextmatch_header .et2_button_icon {}
 
 // Export Button
 .nextmatch_header > .filters .et2_button_icon {
@@ -550,26 +539,31 @@ hr {
 *
 ################################################################*/
 
+
+
+div#admin-categories-index{
+    
+    padding: 0px;
+    
+    // save space above nextmatch 
+    // set height to zero
+    div.ui-helper-clearfix { height: 0px;}
+    
+    // move add button
+    div.et2_hbox_right {
+                        margin-right: 0;
+                        padding: 0;
+                        }
+    
+}
+
 /*ADD Button*/
-#admin-categories-index_add {
-
-    .dimension_width_height_l;
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-                padding: 0.5em;
-
-
-                &:before {
-                        content: "+";
-                        font-size: 2em;
-                        color: @egw_color_1;
-                        line-height: 0.6em;
-                        padding-left: 0.1em;
-                        padding-right: 4em;
-                }
-
-    &:hover {.Complete_Button_add_hover};
-
+button#admin-categories-index_add {
+            .Complete_Button_add_only_plus;
+            .dimension_height_m;
+            margin: 6px 2px;            
+            &:hover {.Complete_Button_add_only_plus_hover;}
+            &:active {background-color: @color_positive_action_active !important;}
 }
 
  #admin-categories-index_filter {top: 8px;}
@@ -762,11 +756,11 @@ div.et2_progress > div {
 * et2_toolbar
 */
 .ui-toolbar_dropShadow {
-	min-height: 30px;
+    min-height: 30px;
     border: dashed;
     border-width: 1px;
     border-color: gray;
-	opacity:0.7;
+    opacity:0.7;
 }
 
 /**
