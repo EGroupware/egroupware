@@ -509,7 +509,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 
 
-error_log("$widget Type $type Pref: $select_pref Groups:".array2string($mygroups));
+				//error_log("$widget Type $type Pref: $select_pref Groups:".array2string($mygroups));
 				$accs = array();
 
 				// No restrictions, just search for the right type
@@ -539,7 +539,7 @@ error_log("$widget Type $type Pref: $select_pref Groups:".array2string($mygroups
 						}
 					}
 				}
-				
+
 				// Primary group and search includes users from primary group,
 				// and all groups, not just primary group, so add those in
 				if($groups && $select_pref == 'primary_group')
@@ -549,7 +549,7 @@ error_log("$widget Type $type Pref: $select_pref Groups:".array2string($mygroups
 						$accs[$group['account_id']] = $GLOBALS['egw']->accounts->read($group['account_id']);
 					}
 				}
-error_log("$widget Accs: " . implode(',',array_keys($accs)));
+				//error_log("$widget Accs: " . implode(',',array_keys($accs)));
 
 				// Go through list of accounts (users & groups) and format them for display
 				foreach($accs as $acc)
@@ -565,7 +565,7 @@ error_log("$widget Accs: " . implode(',',array_keys($accs)));
 					{
 						$options[$acc['account_id']] = self::accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 					}
-error_log("   {$acc['account_id']}:" . $options[$acc['account_id']]);
+					//error_log("   {$acc['account_id']}:" . $options[$acc['account_id']]);
 				}
 
 				// Make sure all values are present, even if not normally sent (according to preferences)
