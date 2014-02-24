@@ -678,7 +678,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		// Bind to enter key to start search early
 		this.search.keydown(function(e) {
 			var keycode = (e.keyCode ? e.keyCode : e.which);
-			if(keycode == '13')
+			if(keycode == '13' && !self.processing)
 			{
 				self.search.autocomplete("option","minLength", 0);
 				self.search.autocomplete("search");
@@ -913,6 +913,9 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 		event.data.options.value.id = selected.item.value;
 
+		// Set a processing flag to filter some events
+		event.data.processing = true;
+
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display','');
@@ -920,6 +923,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		// Fire change event
 		this.search.change();
+
+		// Turn off processing flag when done
+		window.setTimeout(jQuery.proxy(function() {delete this.processing;},event.data));
 	},
 
 	/**
