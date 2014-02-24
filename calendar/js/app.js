@@ -1078,7 +1078,7 @@ app.classes.calendar = AppJS.extend(
 
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
-		if (typeof state.state != 'undefined' && (state.state.view == 'undefined' || state.state.view == 'listview'))
+		if (typeof state.state != 'undefined' && (typeof state.state.view == 'undefined' || state.state.view == 'listview'))
 		{
 			// check if we already use et2 / are in listview
 			if (this.et2 || etemplate2 && etemplate2.getByApplication('calendar'))
@@ -1110,11 +1110,12 @@ app.classes.calendar = AppJS.extend(
 				}
 			}
 			menuaction = 'calendar.calendar_uilist.listview';
-			state.state.ajax = 'true';
 			if (state.name)
 			{
-				state.state.favorite = state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+				// 'blank' is the special name for no filters, send that instead of the nice translated name
+				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 			}
+			state.state.ajax = 'true';
 		}
 		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
 		this.state = state;
