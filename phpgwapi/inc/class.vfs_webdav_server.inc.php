@@ -889,4 +889,38 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		}
 		return $arr;
 	}
+
+	/**
+	 * PUT method handler
+	 *
+	 * Reimplemented to safely rejected PUT with Transfer-Encoding: Chunk, if server does not support it.
+	 * Currently on Apache with mod_php and newer Ngix support it.
+	 * We reject it with "501 Unimplemented" for fastCGI, if SERVER_SOFTWARE does NOT contain Nginx.
+	 * This stops OS X Finder from destroying files.
+	 *
+	 * @param  array  parameter passing array
+	 * @return bool   true on success
+	 */
+	function PUT(&$options)
+	{
+		if (strtolower($_SERVER['HTTP_TRANSFER_ENCODING']) == 'chunked' &&
+			in_array(php_sapi_name(), array('cgi', 'cgi-fcgi', 'fpm-fcgi')) && !preg_match('/nginx/i', $_SERVER['SERVER_SOFTWARE']))
+		{
+			error_log(__METHOD__.'() '.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1');
+			error_log(__METHOD__.'() _SERVER[HTTP_TRANSFER_ENCODING='.$_SERVER['HTTP_TRANSFER_ENCODING'].', php_sapi_name()='.php_sapi_name().', _SERVER[SERVER_SOFTWARE]='.$_SERVER['SERVER_SOFTWARE']);
+			/*foreach($_SERVER as $name => $value)
+			{
+				list($type,$name) = explode('_',$name,2);
+				if ($type == 'HTTP' || $type == 'CONTENT')
+				{
+					error_log(__METHOD__.'() '.str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).
+							': '.($name=='AUTHORIZATION'?'Basic ***************':$value));
+				}
+			}*/
+			error_log(__METHOD__.'() Rejected PUT with Transfer-Encoding: Chunked, as server does NOT support it!');
+			// http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6
+			return '501 Unimplemented (Transfer-Encoding: Chunked)';
+		}
+		return parent::PUT($options);
+	}
 }
