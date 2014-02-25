@@ -1878,19 +1878,7 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
 		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
-		header ("Content-Type: ".$attachment['type']."; name=\"". $filename ."\"");
-		if($_GET['mode'] == "save") {
-			// ask for download
-			header ("Content-Disposition: attachment; filename=\"". $filename ."\"");
-		} else {
-			// display it
-			header ("Content-Disposition: inline; filename=\"". $filename ."\"");
-		}
-		header("Expires: 0");
-		// the next headers are for IE and SSL
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Pragma: public");
-
+		html::content_header($filename,$attachment['type'],0,True,($_GET['mode'] == "save"));
 		echo $attachment['attachment'];
 
 		$GLOBALS['egw']->common->egw_exit();
