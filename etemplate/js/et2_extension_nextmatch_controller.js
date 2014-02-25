@@ -83,6 +83,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// We start with no filters
 		this._filters = {};
 
+		// Keep selection across filter changes
+		this.kept_selection = null;
+		this.kept_focus = null;
+
 		// Directly use the API-Implementation of dataRegisterUID and
 		// dataUnregisterUID
 		this.dataUnregisterUID = _egw.dataUnregisterUID;
@@ -110,6 +114,15 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		this._lastModification = null;
 	},
 
+	/**
+	 * Keep the selection, if possible, across a data fetch and restore it
+	 * after
+	 */
+	keepSelection: function() {
+		this.kept_selection = this._selectionMgr ? this._selectionMgr.getSelected() : null;
+		this.kept_focus = this._selectionMgr ? this._selectionMgr._focusedEntry.uid || null : null;
+	},
+	
 	getObjectManager: function () {
 		return this._objectManager;
 	},
@@ -315,6 +328,25 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 
 		// Call the inherited function
 		this._super.apply(this, arguments);
+
+		// Restore selection, if passed
+		if(this.self && this.self.kept_selection && this.self._selectionMgr)
+		{
+			if(this.self.kept_selection.all)
+			{
+				this.self._selectionMgr.selectAll();
+			}
+			for(var i = 0; i < this.self.kept_selection.ids.length || 0; i++)
+			{
+				this.self._selectionMgr.setSelected(this.self.kept_selection.ids[i],true);
+			}
+			if(this.self.kept_focus)
+			{
+				this.self._selectionMgr.setFocused(this.self.kept_focus,true);
+			}
+			this.self.kept_selection = null;
+			this.self.kept_focus = null;
+		}
 	},
 
 	/**

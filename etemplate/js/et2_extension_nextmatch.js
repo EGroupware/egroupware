@@ -385,6 +385,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 
+		// Keep the selection after applying filters, but only if unchanged
+		if(JSON.stringify(this.controller._filters) == JSON.stringify(this.activeFilters))
+		{
+			this.controller.keepSelection();
+		}
+
 		// Update the filters in the grid controller
 		this.controller.setFilters(this.activeFilters);
 
