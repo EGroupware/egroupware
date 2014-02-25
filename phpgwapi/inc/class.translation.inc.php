@@ -625,6 +625,26 @@ class translation
 	}
 
 	/**
+	 * Transliterate utf-8 filename to ascii, eg. 'Äpfel' --> 'Aepfel'
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	static function to_ascii($str)
+	{
+		static $extra = array(
+			'&szlig;' => 'ss',
+		);
+		$str = htmlentities($str,ENT_QUOTES,self::charset());
+		$str = str_replace(array_keys($extra),array_values($extra),$str);
+		$str = preg_replace('/&([aAuUoO])uml;/','\\1e',$str);	// replace german umlauts with the letter plus one 'e'
+		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of accents
+		$str = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$str);	// remove all other entities
+
+		return $str;
+	}
+
+	/**
 	 * converts a string $data from charset $from to charset $to
 	 *
 	 * @param string/array $data string(s) to convert

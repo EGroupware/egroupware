@@ -1055,7 +1055,7 @@ class html
 	{
 		if (!is_array($options)) $options = explode(',',$options);
 		if (!is_array($names))   $names   = explode(',',$names);
-
+		//if (empty($options)) return "";//this should not be needed
 		foreach($options as $n => $val)
 		{
 			if ($val != '' && $names[$n] != '')
@@ -1368,8 +1368,9 @@ class html
 	 * @param string $mime='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
 	 * @param int $length=0 content length, default 0 = skip that header
 	 * @param boolean $nocache=true send headers to disallow browser/proxies to cache the download
+	 * @param boolean $forceDownload=true send headers to handle as attachment/download
 	 */
-	public static function content_header($fn,$mime='',$length=0,$nocache=True)
+	public static function content_header($fn,$mime='',$length=0,$nocache=True,$forceDownload=true)
 	{
 		// if no mime-type is given or it's the default binary-type, guess it from the extension
 		if(empty($mime) || $mime == 'application/octet-stream')
@@ -1378,18 +1379,22 @@ class html
 		}
 		if($fn)
 		{
+			if ($forceDownload===true)
+			{
+				$attachment = ' attachment;';
+			}
+			else
+			{
+				$attachment = ' inline;';
+			}
 			// limit IE hack (no attachment in Content-disposition header) to IE < 9
 			if(self::$user_agent == 'msie' && self::$ua_version < 9)
 			{
 				$attachment = '';
 			}
-			else
-			{
-				$attachment = ' attachment;';
-			}
 
 			// Show this for all
-			header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
+			self::content_disposition_header($fn,$forceDownload);
 			header('Content-type: '.$mime);
 
 			if($length)
@@ -1405,6 +1410,31 @@ class html
 				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			}
 		}
+	}
+
+	/**
+	 * Output content-disposition header for file downloads
+	 *
+	 * @param string $fn filename
+	 * @param boolean $forceDownload=true send headers to handle as attachment/download
+	 */
+	public static function content_disposition_header($fn,$forceDownload=true)
+	{
+			if ($forceDownload===true)
+			{
+				$attachment = ' attachment;';
+			}
+			else
+			{
+				$attachment = ' inline;';
+			}
+			// limit IE hack (no attachment in Content-disposition header) to IE < 9
+			if(self::$user_agent == 'msie' && self::$ua_version < 9)
+			{
+				$attachment = '';
+			}
+
+			header('Content-disposition:'.$attachment.' filename="'.translation::to_ascii($fn).'"; filename*=utf-8\'\''.rawurlencode($fn));
 	}
 
 	/**
