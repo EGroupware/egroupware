@@ -613,7 +613,7 @@ class calendar_uiviews extends calendar_ui
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
 		$this->use_time_grid = !$this->cal_prefs['use_time_grid'] || $this->cal_prefs['use_time_grid'] == 'all';	// all views
-
+		
 		// Merge print
 		if($weeks)
 		{
@@ -646,15 +646,18 @@ class calendar_uiviews extends calendar_ui
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
 			$this->last = strtotime("+$weeks weeks",$this->first) - 1;
+			$weekNavH = "$weeks weeks";
 		}
 		else
 		{
 			$this->_week_align_month($this->first,$this->last);
+			$weekNavH = "1 month";
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(%1) date=%2: first=%3, last=%4',False,$weeks,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
 		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
-
+		$navHeader = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
+		
 		$days =& $this->bo->search(array(
 			'start'   => $this->first,
 			'end'     => $this->last,
@@ -681,6 +684,18 @@ class calendar_uiviews extends calendar_ui
 
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
+		
+		$navHeader = '<div class="calendar_week_view_navHeader" style="width:auto; margin:0 auto; text-align:center;">'
+				.html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',strtotime("-".$weekNavH,  $weeks? $this->first: $this->bo->date2ts($this->date))),
+				)). '<b>'.$navHeader;
+			
+		$navHeader = $navHeader.'</b>'.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',strtotime("+".$weekNavH, $weeks? $this->first: $this->bo->date2ts($this->date))),
+				)).'</div>';
+		$content = $navHeader.$content;
 		if (!$home)
 		{
 			$this->do_header();
@@ -797,7 +812,8 @@ class calendar_uiviews extends calendar_ui
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
 			$this->last = strtotime("+$days days",$this->first) - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
-		}
+			$navHeader =lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
+		}	
 		else
 		{
 			$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
@@ -814,7 +830,8 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 			$this->last = strtotime("+$days days",$this->first) - 1;
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
+			$GLOBALS['egw_info']['flags']['app_header'] .=': ' .lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
+			$navHeader = lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 
         #	temporarly disabled, because it collides with the title for the website
@@ -833,7 +850,17 @@ class calendar_uiviews extends calendar_ui
 		#
 		#		$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
-
+		
+		$navHeader = '<div class="calendar_week_view_navHeader" style="width:auto; margin:0 auto; text-align:center;">' .html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',$this->first-$days*DAY_s),
+				)). '<b>'.$navHeader;
+			
+		$navHeader = $navHeader.'</b>'.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',$this->last+$days*DAY_s),
+				)).'</div>';
+		
 		$merge = $this->merge();
 		if($merge)
 		{
@@ -858,6 +885,7 @@ class calendar_uiviews extends calendar_ui
 		else
 		{
 			$content = '';
+			$headerCounter = 0;
 			foreach($this->_get_planner_users(false) as $uid => $label)
 			{
 				$search_params['users'] = $uid;
@@ -865,9 +893,16 @@ class calendar_uiviews extends calendar_ui
 				$content .= $this->close_button($uid);
 				$content .= $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),
 					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
+				++$headerCounter;
+				if (count($users) > $headerCounter)
+				{
+					$content .= $navHeader;
+				}	
 			}
 		}
-
+		
+		$content = $navHeader.$content;
+			
 		if (!$home)
 		{
 			$this->do_header();
