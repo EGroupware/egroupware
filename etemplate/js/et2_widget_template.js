@@ -90,9 +90,12 @@ var et2_template = et2_DOMWidget.extend(
 			if(!(xml = templates[template_name]))
 			{
 				// Check to see if ID is short form --> prepend parent/top-level name
-				var root = _parent ? _parent.getRoot() : null;
-				var top_name = root && root._inst ? root._inst.name : null;
-				if (top_name) template_name = top_name+'.'+template_name;
+				if(template_name.indexOf('.') < 0)
+				{
+					var root = _parent ? _parent.getRoot() : null;
+					var top_name = root && root._inst ? root._inst.name : null;
+					if (top_name && template_name.indexOf('.') < 0) template_name = top_name+'.'+template_name;
+				}
 				xml = templates[template_name];
 				if(!xml)
 				{
