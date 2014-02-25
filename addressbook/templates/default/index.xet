@@ -146,9 +146,9 @@
 						<description id="${row}[adr_one_street]" no_lang="1"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
 						<hbox orient="0" options="0,0">
-							<description id="${row}[adr_one_locality]" no_lang="1"/>
+							<description id="${row}[adr_one_postalcode]" no_lang="1"/>
+							<description value=" " id="${row}[adr_one_locality]" no_lang="1" class="leftPad5"/>
 							<description id="${row}[adr_one_region]" no_lang="1" class="leftPad5"/>
-							<description value=" " id="${row}[adr_one_postalcode]" no_lang="1" class="leftPad5"/>
 						</hbox>
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
 						<menulist>
@@ -159,9 +159,9 @@
 						<description id="${row}[adr_two_street]" no_lang="1"/>
 						<description id="${row}[adr_two_street2]" no_lang="1"/>
 						<hbox options="0,0">
-							<description id="${row}[adr_two_locality]" no_lang="1"/>
+							<description id="${row}[adr_two_postalcode]" no_lang="1"/>
+							<description value=" " id="${row}[adr_two_locality]" no_lang="1" class="leftPad5"/>
 							<description id="${row}[adr_two_region]" no_lang="1" class="leftPad5"/>
-							<description value=" " id="${row}[adr_two_postalcode]" no_lang="1" class="leftPad5"/>
 						</hbox>
 						<description id="${row}[adr_two_countryname]" no_lang="1"/>
 						<menulist>
