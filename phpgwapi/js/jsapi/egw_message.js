@@ -167,8 +167,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		*
 		* @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
 		* @param {string} _app application name
-		* @param {(string|number)} _id=null id of entry to refresh
-		* @param {string} _type=null either 'update', 'edit', 'delete', 'add' or null
+		* @param {(string|number)} _id id of entry to refresh or null
+		* @param {string} _type either 'update', 'edit', 'delete', 'add' or null
 		* - update: request just modified data from given rows.  Sorting is not considered,
 		*		so if the sort field is changed, the row will not be moved.
 		* - edit: rows changed, but sorting may be affected.  Requires full reload.
