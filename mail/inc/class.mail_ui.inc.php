@@ -1846,6 +1846,7 @@ unset($query['actions']);
 					else $data["flags"][$flag] = $flag;
 				}
 			}
+			unset($actionsenabled['drag_mail']);
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['toolbaractions'] = json_encode($actionsenabled);
@@ -2005,6 +2006,7 @@ unset($query['actions']);
 		unset($actionsenabled['mark']['children']['read']);
 		unset($actionsenabled['mark']['children']['unread']);
 		unset($actionsenabled['mark']['children']['undelete']);
+		unset($actionsenabled['drag_mail']);
 		$actionsenabled['mark']['children']['flagged']=array(
 			'group' => $actionsenabled['mark']['children']['flagged']['group'],
 			'caption' => 'Flagged',

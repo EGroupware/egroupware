@@ -5,7 +5,7 @@
 		<html id="msg"/>
 		<vbox class="mailDisplay">
 			<hbox>
-				<toolbar id="displayToolbar" width="100%" view_range="8" flat_list="false"/>
+				<toolbar id="displayToolbar" width="100%" view_range="6" flat_list="false"/>
 			</hbox>
 			<hbox>
 				<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
