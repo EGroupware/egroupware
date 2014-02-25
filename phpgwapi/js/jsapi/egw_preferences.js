@@ -42,7 +42,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 			}
 			else
 			{
-				prefs[_app] = _data;
+				prefs[_app] = jQuery.extend({}, _data);
 			}
 		},
 
