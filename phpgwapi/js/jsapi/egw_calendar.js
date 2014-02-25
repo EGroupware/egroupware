@@ -68,6 +68,9 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	{
 		if (!calendar_translated)
 		{
+			// Set template's icon for date popup - could probably use jquery-ui icons
+			this.css(".et2_date input.hasDatepicker:hover", "background-image: url(" + egw().image('datepopup') + ")");
+
 			translateCalendar();
 			calendar_translated = true;
 		}
@@ -217,12 +220,6 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 		_wnd.jQuery.timepicker.setDefaults(regional);
 	};
-
-	// Static initialization
-
-	// Set template's icon for date popup - could probably use jquery-ui icons
-	var css = this.module('css',_wnd);
-	css.css(".et2_date input.hasDatepicker:hover", "background-image: url(" + egw().image('datepopup') + ")");
 
 	return {
 		/**

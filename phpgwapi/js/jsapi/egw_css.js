@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:uses
 	egw_core;
@@ -20,8 +20,10 @@
  * Module which allows to add stylesheet rules at runtime. Exports the following
  * functions:
  * - css
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
  */
-egw.extend('css', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
+egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	/**
 	 * Assoziative array which stores the current css rule for a given selector.
@@ -32,14 +34,7 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	 * Variable used to calculate unique id for the selectors.
 	 */
 	var selectorCount = 0;
-
-	// Generate a style tag, which will be used to hold the newly generated css
-	// rules.
-	var style = _wnd.document.createElement('style');
-	_wnd.document.getElementsByTagName('head')[0].appendChild(style);
-
-	// Obtain the reference to the styleSheet object of the generated style tag
-	var sheet = style.sheet ? style.sheet : style.styleSheet;
+	var sheet;
 
 	return {
 		/**
@@ -55,6 +50,17 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		css: function(_selector, _rule) {
 			// Set the current index to the maximum index
 			var index = selectorCount;
+
+			if (!sheet)
+			{
+				// Generate a style tag, which will be used to hold the newly generated css
+				// rules.
+				var style = _wnd.document.createElement('style');
+				_wnd.document.getElementsByTagName('head')[0].appendChild(style);
+
+				// Obtain the reference to the styleSheet object of the generated style tag
+				sheet = style.sheet ? style.sheet : style.styleSheet;
+			}
 
 			// Remove any existing rule first, of no rule exists for the
 			if (typeof selectors[_selector] !== "undefined")
@@ -93,7 +99,6 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				selectors[_selector] = index;
 			}
 		}
-	}
-
+	};
 });
 
