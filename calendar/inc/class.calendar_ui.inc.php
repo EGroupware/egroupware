@@ -419,26 +419,24 @@ class calendar_ui
 					$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
 					$GLOBALS['egw']->preferences->save_repository(false,'user',true);
 				}
-				// only run for calendar views
-				if (in_array(gettype($this), array('calendar_uilist', 'calendar_uiviews')))
+
+				// store state in request for clientside favorites to use
+				// remove date and other states never stored in a favorite
+				$states = array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false));
+				if (strpos($_GET['menuaction'], 'ajax_sidebox') !== false)
 				{
-					// store state in request for clientside favorites to use
-					// remove date and other states never stored in a favorite
-					$states = array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false));
-					if (strpos($_GET['menuaction'], 'ajax_sidebox') !== false)
-					{
-						// sidebox request is from top frame, which has app.calendar NOT loaded by time response arrives
-					}
-					elseif (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
-					{
-						$response = egw_json_response::get();
-						$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
-					}
-					else
-					{
-						egw_framework::set_extra('calendar', 'state', $states);
-					}
+					// sidebox request is from top frame, which has app.calendar NOT loaded by time response arrives
 				}
+				elseif (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
+				{
+					$response = egw_json_response::get();
+					$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
+				}
+				else
+				{
+					egw_framework::set_extra('calendar', 'state', $states);
+				}
+				
 			}
 		}
 	}
