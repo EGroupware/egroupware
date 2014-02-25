@@ -21,21 +21,29 @@
  * Register the drag and drop handlers
  */
 if (typeof window._egwActionClasses == "undefined")
-	window._egwActionClasses = {}
+	window._egwActionClasses = {};
 _egwActionClasses["drag"] = {
 	"actionConstructor": egwDragAction,
 	"implementation": getDragImplementation
-}
+};
 _egwActionClasses["drop"] = {
 	"actionConstructor": egwDropAction,
 	"implementation": getDropImplementation
-}
+};
 
 /**
  * The egwDragAction class overwrites the egwAction class and adds the new
  * "dragType" propery. The "onExecute" event of the drag action will be called
  * whenever dragging starts. The onExecute JS handler should return the
  * drag-drop helper object - otherwise an default helper will be generated.
+ *
+ * @param {egwAction} _id
+ * @param {string} _handler
+ * @param {string} _caption
+ * @param {string} _icon
+ * @param {(string|function)} _onExecute
+ * @param {bool} _allowOnMultiple
+ * @returns {egwDragAction}
  */
 function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
@@ -47,7 +55,7 @@ function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMulti
 
 	action.set_dragType = function(_value) {
 		action.dragType = _value;
-	}
+	};
 
 	return action;
 }
@@ -62,7 +70,7 @@ function getDragImplementation()
 	{
 		_dragActionImpl = new egwDragActionImplementation();
 	}
-	return _dragActionImpl
+	return _dragActionImpl;
 }
 
 function egwDragActionImplementation()
@@ -90,7 +98,7 @@ function egwDragActionImplementation()
 				// No DnD support
 				return;
 			}
-			
+
 			// It shouldn't be so hard to get the action...
 			var action = null;
 			var groups = _context.getActionImplementationGroups();
@@ -111,23 +119,23 @@ function egwDragActionImplementation()
 				 * key & dragging, user can drag from browser to system.
 				 * The global data store must provide a full, absolute URL in 'download_url'
 				 * and a mime in 'mime'.
-				 * 
+				 *
 				 * Unfortunately, Native DnD to drag the file conflicts with jQueryUI draggable,
 				 * which handles all the other DnD actions.  We get around this by:
 				 * 1.  Require the user indicate a file drag with Ctrl key
 				 * 2.  Disable jQueryUI draggable, then turn on native draggable attribute
-				 * This way we can at least toggle which one is operating, so they 
+				 * This way we can at least toggle which one is operating, so they
 				 * both work alternately if not together.
 				 */
 			// Native DnD - Doesn't play nice with jQueryUI Sortable
 			// Tell jQuery to include this property
 			jQuery.event.props.push('dataTransfer');
-			
+
 			$j(node).off("mousedown")
 				.on("mousedown", function(event) {
 					$j(node).draggable("option","disabled",event.ctrlKey || event.metaKey);
-					$j(this).attr("draggable", event.ctrlKey || event.metaKey ? "true" : "")
-					
+					$j(this).attr("draggable", event.ctrlKey || event.metaKey ? "true" : "");
+
 					// Disabling draggable adds some UI classes, but we don't care so remove them
 					$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
 					if(!(event.ctrlKey || event.metaKey) || !this.addEventListener) return;
@@ -136,7 +144,7 @@ function egwDragActionImplementation()
 					if(event.dataTransfer == null) {
 						return;
 					}
-					event.dataTransfer.effectAllowed="copy"; 
+					event.dataTransfer.effectAllowed="copy";
 
 					// Get all selected
 					// Multiples aren't supported by event.dataTransfer, yet, so
@@ -145,7 +153,7 @@ function egwDragActionImplementation()
 					var selected = [_context];
 					_context.parent.setAllSelected(false);
 					_context.setSelected(true);
-					
+
 					// Set file data
 					for(var i = 0; i < selected.length; i++)
 					{
@@ -153,12 +161,12 @@ function egwDragActionImplementation()
 						if(data && data.data.mime && data.data.download_url)
 						{
 							var url = data.data.download_url;
-							
+
 							// NEED an absolute URL
 							if (url[0] == '/') url = egw.link(url);
 							// egw.link adds the webserver, but that might not be an absolute URL - try again
 							if (url[0] == '/') url = window.location.origin+url;
-							
+
 							// Unfortunately, dragging files is currently only supported by Chrome
 							if(navigator && navigator.userAgent.indexOf('Chrome'))
 							{
@@ -177,7 +185,7 @@ function egwDragActionImplementation()
 						event.preventDefault();
 						return;
 					}
-					
+
 					// Create drag icon
 					_callback.call(_context, _context, ai);
 					// Drag icon must be visible for setDragImage() - we'll remove it on drag
@@ -235,12 +243,12 @@ function egwDragActionImplementation()
 					"iframeFix": true
 				}
 			);
-			
+
 
 			return true;
 		}
 		return false;
-	}
+	};
 
 	ai.doUnregisterAction = function(_aoi)
 	{
@@ -249,10 +257,14 @@ function egwDragActionImplementation()
 		if (node && $j(node).data("uiDraggable")){
 			$j(node).draggable("destroy");
 		}
-	}
+	};
 
 	/**
 	 * Builds the context menu and shows it at the given position/DOM-Node.
+	 *
+	 * @param {string} _context
+	 * @param {array} _selected
+	 * @param {object} _links
 	 */
 	ai.doExecuteImplementation = function(_context, _selected, _links)
 	{
@@ -301,7 +313,7 @@ function egwDragActionImplementation()
 		}
 
 		return true;
-	}
+	};
 
 	return ai;
 }
@@ -310,8 +322,15 @@ function egwDragActionImplementation()
 
 /**
  * The egwDropAction class overwrites the egwAction class and adds the "acceptedTypes"
- * property. This array should contain all "dragTypes" the drop action is allowed
- * to
+ * property. This array should contain all "dragTypes" the drop action is allowed to
+ *
+ * @param {egwAction} _id
+ * @param {string} _handler
+ * @param {string} _caption
+ * @param {string} _icon
+ * @param {(string|function)} _onExecute
+ * @param {bool} _allowOnMultiple
+ * @returns {egwDropAction}
  */
 function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
@@ -326,19 +345,21 @@ function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMulti
 
 	action.set_default = function(_value) {
 		action["default"] = _value;
-	}
+	};
 
 	action.set_order = function(_value) {
 		action.order = _value;
-	}
+	};
 
 	action.set_group = function(_value) {
 		action.group = _value;
-	}
+	};
 
 	/**
 	 * The acceptType property allows strings as well as arrays - strings are
 	 * automatically included in an array.
+	 *
+	 * @param {(string|array)} _value
 	 */
 	action.set_acceptedTypes = function(_value) {
 		if (_value instanceof Array)
@@ -349,7 +370,7 @@ function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMulti
 		{
 			action.acceptedTypes = [_value];
 		}
-	}
+	};
 
 	return action;
 }
@@ -363,7 +384,7 @@ function getDropImplementation()
 	{
 		_dropActionImpl = new egwDropActionImplementation();
 	}
-	return _dropActionImpl
+	return _dropActionImpl;
 }
 
 var EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is for events used with drag stuff
@@ -419,12 +440,13 @@ function egwDropActionImplementation()
 						{
 							var accepted = links[k].actionObj.acceptedTypes;
 
-							var enabled = false
+							var enabled = false;
 							for (var i = 0; i < ddTypes.length; i++)
 							{
 								if (accepted.indexOf(ddTypes[i]) != -1)
 								{
 									enabled = true;
+									break;
 								}
 							}
 							// Check for allowing multiple selected
@@ -435,10 +457,7 @@ function egwDropActionImplementation()
 							if(!enabled)
 							{
 								links[k].enabled = false;
-								if (links[k].actionObj.hideOnDisabled)
-								{
-									links[k].visible = true;
-								}
+								links[k].visible = !links[k].actionObj.hideOnDisabled;
 							}
 						}
 
@@ -493,14 +512,14 @@ function egwDropActionImplementation()
 					activeClass: "ui-state-hover",
 					hoverClass: "ui-state-active",
 					// Greedy is for nested droppables - children consume the action
-					greedy: true,
+					greedy: true
 				}
 			);
 
 			return true;
 		}
 		return false;
-	}
+	};
 
 	ai.doUnregisterAction = function(_aoi)
 	{
@@ -509,7 +528,7 @@ function egwDropActionImplementation()
 		if (node && $j(node).data("uiDroppable")) {
 			$j(node).droppable("destroy");
 		}
-	}
+	};
 
 	ai._fetchAccepted = function(_links)
 	{
@@ -529,10 +548,14 @@ function egwDropActionImplementation()
 		}
 
 		return accepted;
-	}
+	};
 
 	/**
 	 * Builds the context menu and shows it at the given position/DOM-Node.
+	 *
+	 * @param {string} _context
+	 * @param {array} _selected
+	 * @param {object} _links
 	 */
 	ai.doExecuteImplementation = function(_context, _selected, _links)
 	{
@@ -540,8 +563,7 @@ function egwDropActionImplementation()
 		{
 			return _links;
 		}
-	}
+	};
 
 	return ai;
 }
-
