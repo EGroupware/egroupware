@@ -2034,13 +2034,7 @@ blockquote[type=cite] {
 			if ($display==false)
 			{
 				$subject = str_replace('$$','__',felamimail_bo::decode_header($headers['SUBJECT']));
-				header ("Content-Type: message/rfc822; name=\"". $subject .".eml\"");
-				header ("Content-Disposition: attachment; filename=\"". $subject .".eml\"");
-				header("Expires: 0");
-				// the next headers are for IE and SSL
-				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-				header("Pragma: public");
-
+				html::content_header($subject .".eml",'message/rfc822',0,True,($display==false));
 				echo $message;
 
 				$GLOBALS['egw']->common->egw_exit();
