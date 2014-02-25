@@ -226,6 +226,8 @@ function egw_getAppName()
  * @param string|RegExp _replace regular expression to replace in url
  * @param string _with
  * @param string _msg_type 'error', 'warning' or 'success' (default)
+ * @todo move code to egw_message / egw.refresh()
+ * @deprecated use egw.refresh() instead
  */
 function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 {

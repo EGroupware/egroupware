@@ -158,6 +158,31 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			_wnd.jQuery('div#divAppboxHeader').text(_header);
 
 			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
-		}
+		},
+
+		/**
+		* Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+		*
+		* Default implementation here only reloads window with it's current url with an added msg=_msg attached
+		*
+		* @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+		* @param {string} _app application name
+		* @param {(string|number)} _id=null id of entry to refresh
+		* @param {string} _type=null either 'update', 'edit', 'delete', 'add' or null
+		* - update: request just modified data from given rows.  Sorting is not considered,
+		*		so if the sort field is changed, the row will not be moved.
+		* - edit: rows changed, but sorting may be affected.  Requires full reload.
+		* - delete: just delete the given rows clientside (no server interaction neccessary)
+		* - add: requires full reload for proper sorting
+		* @param {string} _targetapp which app's window should be refreshed, default current
+		* @param {(string|RegExp)} _replace regular expression to replace in url
+		* @param {string} _with
+		* @param {string} _msg_type 'error', 'warning' or 'success' (default)
+		* @todo move code from jsapi to here to deprecate egw_refresh in favor of egw.refresh()
+		*/
+	   refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
+	   {
+		   _wnd.egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
+	   }
 	};
 });
