@@ -248,6 +248,8 @@ etemplate2.prototype.unbind_unload = function()
  */
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
+	this.name = _name;	// store top-level template name to have it available in widgets
+
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = this.app = _data.currentapp || window.egw_appName;
 
@@ -349,7 +351,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			etemplate2._byTemplate[_name].push(this);
 
 			// Read the XML structure of the requested template
-			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
+			this.widgetContainer.loadFromXML(this.templates[this.name]);
 
 			// List of Promises from widgets that are not quite fully loaded
 			var deferred = [];
@@ -425,7 +427,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 					var template = _xmldoc.childNodes[i];
 					if(template.nodeName.toLowerCase() != "template") continue;
 					this.templates[template.getAttribute("id")] = template;
-					if(!_name) missing_name = template.getAttribute("id");
+					if(!_name) this.name = template.getAttribute("id");
 				}
 				_load.apply(this,[]);
 			}, this);

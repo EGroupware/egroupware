@@ -22,11 +22,9 @@
  * the template class checks whether another template with this id already
  * exists. If yes, this template is removed from the DOM tree, copied and
  * inserted in place of this template.
- * 
- * TODO: Check whether this widget behaves as it should.
- * 
+ *
  * @augments et2_DOMWidget
- */ 
+ */
 var et2_template = et2_DOMWidget.extend(
 {
 	attributes: {
@@ -57,15 +55,17 @@ var et2_template = et2_DOMWidget.extend(
 			"name": "Content index",
 			"default": et2_no_init,
 			"description": "Used for passing in specific content to the template other than what it would get by ID."
-		},
+		}
 	},
 
 	createNamespace: true,
 
 	/**
 	 * Initializes this template widget as a simple container.
-	 * 
+	 *
 	 * @memberOf et2_template
+	 * @param {et2_widget} _parent
+	 * @param {object} _attrs
 	 */
 	init: function(_parent, _attrs) {
 		// Set this early, so it's available for creating namespace
@@ -76,7 +76,7 @@ var et2_template = et2_DOMWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.div = document.createElement("div");
-		
+
 		// Deferred object so we can load via AJAX
 		this.loading = jQuery.Deferred();
 
@@ -89,17 +89,11 @@ var et2_template = et2_DOMWidget.extend(
 			var templates = this.getRoot().getInstanceManager().templates;
 			if(!(xml = templates[template_name]))
 			{
-				// Check to see if ID is short form
-				// eg: row instead of app.something.row
-				for(var key in templates)
-				{
-					var splitted = key.split('.');
-					if(splitted[splitted.length-1] == template_name)
-					{
-						xml = templates[key];
-						break;
-					}
-				}
+				// Check to see if ID is short form --> prepend parent/top-level name
+				var root = _parent ? _parent.getRoot() : null;
+				var top_name = root && root._inst ? root._inst.name : null;
+				if (top_name) template_name = top_name+'.'+template_name;
+				xml = templates[template_name];
 				if(!xml)
 				{
 					// Ask server
@@ -119,10 +113,10 @@ var et2_template = et2_DOMWidget.extend(
 
 							// Read the XML structure of the requested template
 							this.loadFromXML(templates[template_name]);
-							
+
 							// Update flag
 							this.loading.resolve();
-							
+
 						}, this);
 					}
 					return;
@@ -134,7 +128,7 @@ var et2_template = et2_DOMWidget.extend(
 				this.loadFromXML(xml);
 				// Don't call this here - done by caller, or on whole widget tree
 				//this.loadingFinished();
-				
+
 				// But resolve the promise
 				this.loading.resolve();
 			}
@@ -169,17 +163,17 @@ var et2_template = et2_DOMWidget.extend(
 	getDOMNode: function() {
 		return this.div;
 	},
-		
+
 	/**
 	 * Override to return the promise for deferred loading
 	 */
 	doLoadingFinished: function() {
 		// Apply parent now, which actually puts into the DOM
 		this._super.apply(this, arguments);
-		
+
 		// Fire load event when done loading
 		this.loading.done(jQuery.proxy(function() {$j(this).trigger("load");},this.div));
-		
+
 		// Not done yet, but widget will let you know
 		return this.loading.promise();
 	}
