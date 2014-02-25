@@ -685,13 +685,13 @@ class calendar_uiviews extends calendar_ui
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
 		
-		$navHeader = '<div class="calendar_week_view_navHeader" style="width:auto; margin:0 auto; text-align:center;">'
-				.html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+		$navHeader = '<div class="calendar_calMonth">'
+				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("-".$weekNavH,  $weeks? $this->first: $this->bo->date2ts($this->date))),
-				)). '<b>'.$navHeader;
+				)). ' &nbsp'.$navHeader;
 			
-		$navHeader = $navHeader.'</b>'.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+		$navHeader = $navHeader.'&nbsp '.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("+".$weekNavH, $weeks? $this->first: $this->bo->date2ts($this->date))),
 				)).'</div>';
@@ -851,12 +851,13 @@ class calendar_uiviews extends calendar_ui
 		#		$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
 		
-		$navHeader = '<div class="calendar_week_view_navHeader" style="width:auto; margin:0 auto; text-align:center;">' .html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+		$navHeader = '<div class="calendar_calWeek">'
+				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->first-$days*DAY_s),
-				)). '<b>'.$navHeader;
+				)). ' &nbsp'.$navHeader;
 			
-		$navHeader = $navHeader.'</b>'.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+		$navHeader = $navHeader.' &nbsp'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->last+$days*DAY_s),
 				)).'</div>';
