@@ -102,7 +102,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 		else
 		{
-			_wnd.$j(_input).datepicker(params);
+			_wnd.jQuery(_input).datepicker(params);
 		}
 /*
 				onClose:	function(date_text, picker) {
