@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - general JSON handler for EGroupware
+ * EGroupware - general JSON handler for EGroupware
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -11,16 +11,17 @@
  */
 
 /**
- * callback if the session-check fails, redirects via xajax to login.php
+ * callback if the session-check fails, redirects to login.php
  *
  * @param array &$anon_account anon account_info with keys 'login', 'passwd' and optional 'passwd_type'
- * @return boolean/string true if we allow anon access and anon_account is set, a sessionid or false otherwise
+ * @return boolean|string true if we allow anon access and anon_account is set, a sessionid or false otherwise
  */
-function xajax_redirect(&$anon_account)
+function login_redirect(&$anon_account)
 {
+	unset($anon_account);
+	egw_json_request::isJSONRequest(true);	// because egw_json_request::parseRequest() is not (yet) called
 	$response = egw_json_response::get();
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
-	$response->printOutput();
 
 	common::egw_exit();
 }
@@ -35,6 +36,7 @@ function xajax_redirect(&$anon_account)
 function ajax_exception_handler(Exception $e)
 {
 	// logging all exceptions to the error_log
+	$message = null;
 	if (function_exists('_egw_log_exception'))
 	{
 		_egw_log_exception($e,$message);
@@ -48,7 +50,6 @@ function ajax_exception_handler(Exception $e)
 		$message .= "\n\n".$e->getTraceAsString();
 	}
 	$response->alert($message);
-	$response->printOutput();
 
 	if (is_object($GLOBALS['egw']))
 	{
@@ -78,14 +79,13 @@ if (isset($_GET['menuaction']))
 			'currentapp'			=> $appName,
 			'noheader'		=> True,
 			'disable_Template_class'	=> True,
-			'autocreate_session_callback' => 'xajax_redirect',
+			'autocreate_session_callback' => 'login_redirect',
 			'no_exception_handler' => true,	// we already installed our own
 			'no_dla_update' => $appName == 'notifications',	// otherwise session never time out
 		)
 	);
-	//if ($_GET['menuaction'] !='notifications.notifications_ajax.get_notifications') error_log(__METHOD__.__LINE__.' Appname:'.$appName.' Action:'.print_r($_GET['menuaction'],true));
-	if 	($_GET['menuaction']=='felamimail.ajaxfelamimail.refreshMessageList' ||
-			$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList')
+	if ($_GET['menuaction']=='felamimail.ajaxfelamimail.refreshMessageList' ||
+		$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList')
 	{
 		$GLOBALS['egw_info']['flags']['no_dla_update']=true;
 	}
