@@ -1161,29 +1161,8 @@ class groupdav_principals extends groupdav_handler
 		$displayname = translation::convert($resource['name'],	translation::charset(), 'utf-8');
 
 		return ($is_location ? 'locations/' : 'resources/').$resource['res_id'].'-'.
-			preg_replace('/[^a-z0-9]+/i','-', self::to_ascii($resource['name']));
+			preg_replace('/[^a-z0-9]+/i','-', translation::to_ascii($resource['name']));
 	}
-
-	/**
-	 * Transliterate utf-8 filename to ascii, eg. 'Äpfel' --> 'Aepfel'
-	 *
-	 * @param string $str
-	 * @return string
-	 */
-	protected static function to_ascii($str)
-	{
-		static $extra = array(
-			'&szlig;' => 'ss',
-		);
-		$str = htmlentities($str,ENT_QUOTES,translation::charset());
-		$str = str_replace(array_keys($extra),array_values($extra),$str);
-		$str = preg_replace('/&([aAuUoO])uml;/','\\1e',$str);	// replace german umlauts with the letter plus one 'e'
-		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of accents
-		$str = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$str);	// remove all other entities
-
-		return $str;
-	}
-
 
 	/**
 	 * Check if resource is a location

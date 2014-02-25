@@ -692,7 +692,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			}
 			if ($this->force_download)
 			{
-				header('Content-disposition: attachment; filename="'.egw_vfs::basename($options['path']).'"');
+				html::content_disposition_header(egw_vfs::basename($options['path']),true);
 			}
 		}
 		return $ok;

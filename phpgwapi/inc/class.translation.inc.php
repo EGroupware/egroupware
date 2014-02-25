@@ -689,6 +689,26 @@ class translation
 	}
 
 	/**
+	 * Transliterate utf-8 filename to ascii, eg. 'Äpfel' --> 'Aepfel'
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	static function to_ascii($str)
+	{
+		static $extra = array(
+			'&szlig;' => 'ss',
+		);
+		$str = htmlentities($str,ENT_QUOTES,self::charset());
+		$str = str_replace(array_keys($extra),array_values($extra),$str);
+		$str = preg_replace('/&([aAuUoO])uml;/','\\1e',$str);	// replace german umlauts with the letter plus one 'e'
+		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of accents
+		$str = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$str);	// remove all other entities
+
+		return $str;
+	}
+
+	/**
 	 * converts a string $data from charset $from to charset $to
 	 *
 	 * @param string/array $data string(s) to convert
@@ -1068,13 +1088,13 @@ class translation
 			{
 				if ($addbracesforendtag === true )
 				{
-					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'[\s]*>~simU','',$_body);
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*?)</'.$endtag.'[\s]*>~simU','',$_body);
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 				}
 				if ($addbracesforendtag === false )
 				{
-					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~simU','',$_body);
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*?)'.$endtag.'~simU','',$_body);
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 					$_body = preg_replace('~'.$endtag.'~','',$_body);
@@ -1227,7 +1247,7 @@ class translation
 		self::replaceEmailAdresses($_html);
 		//convert hrefs to description -> URL
 		//$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
-		$_html = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','self::transform_url2text',$_html);
+		$_html = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*?)</a>~si','self::transform_url2text',$_html);
 
 		// reducing double \r\n to single ones, dont mess with pre sections
 		if ($stripcrl === true && $isHTML)
