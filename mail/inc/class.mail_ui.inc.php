@@ -459,11 +459,14 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.mail_copy'
 			),
 			'drop_cancel' => array(
+				'icon' => 'cancel',
 				'caption' => 'Cancel',
 				'acceptedTypes' => 'mail',
 				'type' => 'drop',
 			),
 			'drop_move_folder' => array(
+				'caption' => 'Move folder',
+				'hideOnDisabled' => true,
 				'type' => 'drop',
 				'acceptedTypes' => 'mailFolder',
 				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
