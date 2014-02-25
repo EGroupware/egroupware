@@ -1395,7 +1395,7 @@ class calendar_uiviews extends calendar_ui
 			if ($this->allowEdit)
 			{
 				$title = html::a_href($title,$day_view,'',
-					!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
+					!isset($this->holidays[$day_ymd])?' title="'.$this->bo->long_date($ts,0,false,true).'"':'');
 			}
 		}
 		elseif ($short_title === false)
