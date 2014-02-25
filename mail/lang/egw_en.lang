@@ -34,6 +34,7 @@ any status	mail	en	any status
 append	mail	en	append
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
+attachment	mail	en	Attachment
 attachments	mail	en	Attachments
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
@@ -72,6 +73,7 @@ delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
+deny certain groups access to following features	mail	en	Deny certain groups access to following features
 disable	mail	en	Disable
 disable ruler for separation of mailbody and signature	mail	en	disable Ruler for separation of mailbody and signature
 disabled!	mail	en	disabled!
@@ -200,6 +202,7 @@ importance	mail	en	importance
 important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 inbox	mail	en	INBOX
+inline	mail	en	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
 junk	mail	en	Junk
@@ -314,6 +317,7 @@ save as infolog on send	mail	en	Save as Infolog on send
 save as ticket	mail	en	Save as ticket
 save as tracker on send	mail	en	Save as tracker on send
 save message to disk	mail	en	Save Message to disk
+save message to filemanager	mail	en	Save message to filemanager
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
@@ -339,6 +343,7 @@ show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
 show new messages on home page	mail	en	show new messages on home page
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
+show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
@@ -361,6 +366,7 @@ subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
+subscription folders	mail	en	Subscription folders
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
 templates	mail	en	Templates
@@ -404,6 +410,7 @@ vacation start-date must be before the end-date!	mail	en	Vacation start-date mus
 vacation update failed	mail	en	vacation update failed
 valid for	mail	en	Valid for
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
+view full mail source	mail	en	View full Mail Source
 view header lines	mail	en	View header lines
 what do do with html email	mail	en	What do do with html email
 what order the list columns are in	mail	en	What order the list columns are in
