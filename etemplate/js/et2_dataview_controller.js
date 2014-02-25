@@ -126,7 +126,8 @@ var et2_dataview_controller = Class.extend({
 	 * managed index range -- those changes are then merged into the current
 	 * view without a complete rebuild of every row.
 	 * 
-	 * @param {boolean} clear
+	 * @param {boolean} clear Skip the fancy stuff, dump everything and start again.
+	 *		Completely clears the grid and selection.
 	 */
 	update: function (clear) {
 
