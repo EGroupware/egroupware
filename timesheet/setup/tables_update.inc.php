@@ -93,7 +93,6 @@ function timesheet_upgrade1_9_001()
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_project',array(
 		'type' => 'varchar',
 		'precision' => '255',
-		'nullable' => False,
 		'comment' => 'project title'
 	));
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_title',array(
