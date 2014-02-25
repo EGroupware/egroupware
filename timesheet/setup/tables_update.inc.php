@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -79,3 +79,40 @@ function timesheet_upgrade1_8()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.9.001';
 }
+
+
+/**
+ * Change titel and project title to varchar(255) to not loose content when creating a timesheet eg. from an InfoLog
+ *
+ * Change description to varchar(16384) to not force full table-scan on search
+ *
+ * @return string
+ */
+function timesheet_upgrade1_9_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_project',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'nullable' => False,
+		'comment' => 'project title'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_title',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'nullable' => False,
+		'comment' => 'title of the timesheet entry'
+	));
+	// change description to varchar(16384), if there is no longer content already
+	$max_description_length = $GLOBALS['egw']->db->query('SELECT MAX(CHAR_LENGTH(ts_description)) FROM egw_timesheet')->fetchColumn();
+	// returns NULL, if there are no rows!
+	if ((int)$max_description_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_description',array(
+			'type' => 'varchar',
+			'precision' => '16384',
+			'comment' => 'description of the timesheet entry'
+		));
+	}
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.9.002';
+}
+

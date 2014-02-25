@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -15,9 +15,9 @@ $phpgw_baseline = array(
 	'egw_timesheet' => array(
 		'fd' => array(
 			'ts_id' => array('type' => 'auto','nullable' => False,'comment' => 'id of the timesheet entry'),
-			'ts_project' => array('type' => 'varchar','precision' => '80','comment' => 'project title'),
-			'ts_title' => array('type' => 'varchar','precision' => '80','nullable' => False,'comment' => 'title of the timesheet entry'),
-			'ts_description' => array('type' => 'text','comment' => 'description of the timesheet entry'),
+			'ts_project' => array('type' => 'varchar','precision' => '255','comment' => 'project title'),
+			'ts_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'title of the timesheet entry'),
+			'ts_description' => array('type' => 'varchar','precision' => '16384','comment' => 'description of the timesheet entry'),
 			'ts_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the startdate'),
 			'ts_duration' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'duration of the timesheet-entry'),
 			'ts_quantity' => array('type' => 'float','precision' => '8','nullable' => False,'comment' => 'quantity'),
