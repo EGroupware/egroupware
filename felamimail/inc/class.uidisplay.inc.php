@@ -1427,19 +1427,7 @@ blockquote[type=cite] {
 					//Import failed, download content anyway
 				}
 			}
-			header ("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
-			if($_GET['mode'] == "save") {
-				// ask for download
-				header ("Content-Disposition: attachment; filename=\"". $attachment['filename'] ."\"");
-			} else {
-				// display it
-				header ("Content-Disposition: inline; filename=\"". $attachment['filename'] ."\"");
-			}
-			header("Expires: 0");
-			// the next headers are for IE and SSL
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Pragma: public");
-
+			html::content_header($attachment['filename'],$attachment['type'],0,True,($_GET['mode'] == "save"));
 			echo $attachment['attachment'];
 
 			$GLOBALS['egw']->common->egw_exit();
