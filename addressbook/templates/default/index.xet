@@ -143,30 +143,30 @@
 					<image src="${row}[photo]" class="iphoto"/>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
-						<description id="${row}[adr_one_countryname]" no_lang="1"/>
-						<menulist>
-							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
-						</menulist>
+						<description id="${row}[adr_one_street]" no_lang="1"/>
+						<description id="${row}[adr_one_street2]" no_lang="1"/>
 						<hbox orient="0" options="0,0">
 							<description id="${row}[adr_one_locality]" no_lang="1"/>
 							<description id="${row}[adr_one_region]" no_lang="1" class="leftPad5"/>
 							<description value=" " id="${row}[adr_one_postalcode]" no_lang="1" class="leftPad5"/>
 						</hbox>
-						<description id="${row}[adr_one_street]" no_lang="1"/>
-						<description id="${row}[adr_one_street2]" no_lang="1"/>
+						<description id="${row}[adr_one_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
+						</menulist>
 					</vbox>
 					<vbox options="0,0">
-						<description id="${row}[adr_two_countryname]" no_lang="1"/>
-						<menulist>
-							<menupopup type="select-country" id="${row}[adr_two_countrycode]" readonly="true"/>
-						</menulist>
+						<description id="${row}[adr_two_street]" no_lang="1"/>
+						<description id="${row}[adr_two_street2]" no_lang="1"/>
 						<hbox options="0,0">
 							<description id="${row}[adr_two_locality]" no_lang="1"/>
 							<description id="${row}[adr_two_region]" no_lang="1" class="leftPad5"/>
 							<description value=" " id="${row}[adr_two_postalcode]" no_lang="1" class="leftPad5"/>
 						</hbox>
-						<description id="${row}[adr_two_street]" no_lang="1"/>
-						<description id="${row}[adr_two_street2]" no_lang="1"/>
+						<description id="${row}[adr_two_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_two_countrycode]" readonly="true"/>
+						</menulist>
 					</vbox>
 					<vbox options="0,0">
 						<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
