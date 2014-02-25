@@ -1288,7 +1288,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		if(time > 0)
 		{
-			this._autorefresh_timer = setInterval(jQuery.proxy(this.refresh, this), time * 1000);
+			this._autorefresh_timer = setInterval(jQuery.proxy(this.controller.update, this.controller), time * 1000);
 
 			// Bind to tab show/hide events, so that we don't bother refreshing in the background
 			$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
