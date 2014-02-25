@@ -260,16 +260,30 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			$value = $value_in =& self::get_array($content, $form_name);
 
+			// Link widgets can share IDs, make sure to preserve values from others
+			$already = self::get_array($validated,$form_name);
+			if($already != null)
+			{
+				$value = array_merge($value,$already);
+			}
 			// Automatically do link if user selected entry but didn't click 'Link' button
 			$link = self::get_array($content, self::form_name($cname, $this->id . '_link_entry'));
-			if($this->type =='link-to' && is_array($link) && $link['app'] && $link['id'] &&
-				is_array($value) && $value['to_id']
-			)
+			if($this->type =='link-to' && is_array($link) && $link['app'] && $link['id'] )
 			{
-				$result = egw_link::link($value['to_app'], $value['to_id'], $link['app'], $link['id']);
+				// Do we have enough information to link automatically?
+				if(is_array($value) && $value['to_id'])
+				{
+					$result = egw_link::link($value['to_app'], $value['to_id'], $link['app'], $link['id']);
+				}
+				else
+				{
+					// Not enough information, leave it to the application
+					if(!is_array($value['to_id'])) $value['to_id'] = array();
+					$value['to_id'][] = $link;
+				}
 			}
 			
-			// Look for files
+			// Look for files - normally handled by ajax
 			$files = self::get_array($content, self::form_name($cname, $this->id . '_file'));
 			if(is_array($files) && !(is_array($value) && $value['to_id']))
 			{
@@ -284,6 +298,7 @@ class etemplate_widget_link extends etemplate_widget
 				}
 				foreach($files as $name => $attrs)
 				{
+					if(!is_array($value['to_id'])) $value['to_id'] = array();
 					$value['to_id'][] = array(
 						'app'	=> egw_link::VFS_APPNAME,
 						'id'	=> array(
@@ -296,6 +311,8 @@ class etemplate_widget_link extends etemplate_widget
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
+			error_log($this);
+			error_log("   " . array2string($valid));
 		}
 	}
 }
