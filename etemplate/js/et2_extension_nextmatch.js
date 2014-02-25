@@ -483,9 +483,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				this.controller._selectionMgr.setFocused(next.id,true);
 			}
 
-			// Update the count
+			// Update the count, but don't use setTotalCount() since that will
+			// remove more rows (from the end).
 			var total = this.dataview.grid._total - _row_ids.length;
-			this.dataview.grid.setTotalCount(total);
+			this.dataview.grid._total = total;
 			// Re-enable automatic updating
 			this.dataview.grid.doInvalidate = true;
 			this.dataview.grid.invalidate();
