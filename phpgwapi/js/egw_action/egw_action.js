@@ -101,6 +101,9 @@ function egw_getObjectManager(_id, _create, _search_depth) {
 
 /**
  * Returns the object manager for the current application
+ *
+ * @param {boolean} _create
+ * @return {egwActionObjectManager}
  */
 function egw_getAppObjectManager(_create) {
 	return egw_getObjectManager(egw_getAppName(), _create,1);
@@ -108,6 +111,9 @@ function egw_getAppObjectManager(_create) {
 
 /**
  * Returns the action manager for the current application
+ *
+ * @param {boolean} _create
+ * @return {egwActionManager}
  */
 function egw_getAppActionManager(_create) {
 	return egw_getActionManager(egw_getAppName(), _create,1);
@@ -120,6 +126,9 @@ function egw_getAppActionManager(_create) {
 /**
  * Constructor for the egwActionHandler interface which (at least) should have the
  * execute function implemented.
+ *
+ * @param {function} _executeEvent
+ * @return {egwActionHandler}
  */
 function egwActionHandler(_executeEvent)
 {
@@ -145,6 +154,17 @@ _egwActionClasses["actionManager"] = {
 	"implementation": null
 };
 
+/**
+ * Constructor for egwAction object
+ *
+ * @param {egwAction} _parent
+ * @param {string} _id
+ * @param {string} _caption
+ * @param {string} _iconUrl
+ * @param {(string|function)} _onExecute
+ * @param {boolean} _allowOnMultiple
+ * @returns {egwAction}
+ */
 function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
 {
 	//Default and check the values
@@ -195,16 +215,16 @@ egwAction.prototype.remove = function () {
 			this.parent.children.splice(idx, 1);
 		}
 	}
-}
+};
 
 /**
  * Searches for a specific action with the given id
- * 
- * @param {string|number} id ID of the action to find
+ *
+ * @param {(string|number)} _id ID of the action to find
  * @param {number} [_search_depth=Infinite] How deep into existing action children
  *	to search.
  *
- * @return {egwAction|null}
+ * @return {(egwAction|null)}
  */
 egwAction.prototype.getActionById = function(_id,_search_depth)
 {
@@ -232,15 +252,15 @@ egwAction.prototype.getActionById = function(_id,_search_depth)
 	}
 
 	return null;
-}
+};
 
 /**
  * Searches for actions having an attribute with a certain value
  *
  * Example: actionManager.getActionsByAttr("checkbox", true) returns all checkbox actions
  *
- * @param string _attr attribute name
- * @param mixed _val attribute value
+ * @param {string} _attr attribute name
+ * @param _val attribute value
  * @return array
  */
 egwAction.prototype.getActionsByAttr = function(_attr, _val)
@@ -263,10 +283,17 @@ egwAction.prototype.getActionsByAttr = function(_attr, _val)
 	}
 
 	return _actions;
-}
+};
 
 /**
  * Adds a new action to the child elements.
+ *
+ * @param {string} _type
+ * @param {string} _id
+ * @param {string} _caption
+ * @param {string] _iconUrl
+ * @param {(string|function)} _onExecute
+ * @param {boolean} _allowOnMultiple
  */
 egwAction.prototype.addAction = function(_type, _id, _caption, _iconUrl,
 	_onExecute, _allowOnMultiple)
@@ -317,14 +344,14 @@ egwAction.prototype.defaultIcons = {
 	copy: 'copy',
 	move: 'move',
 	cut: 'cut',
-	paste: 'editpaste',
+	paste: 'editpaste'
 };
 
 /**
  * Updates the children of this element
  *
- * @param Object _actions { id: action, ...}
- * @param string _app defaults to egw_getAppname()
+ * @param {object} _actions { id: action, ...}
+ * @param {string} _app defaults to egw_getAppname()
  */
 egwAction.prototype.updateActions = function(_actions, _app)
 {
@@ -488,6 +515,8 @@ egwAction.prototype.enableId = function(_action, _senders, _target)
 /**
  * Applys the same onExecute handler to all actions which don't have an execute
  * handler set.
+ *
+ * @param {(string|function)} _value
  */
 egwAction.prototype.setDefaultExecute = function(_value)
 {
@@ -505,13 +534,13 @@ egwAction.prototype.setDefaultExecute = function(_value)
 			this.children[i].setDefaultExecute(_value);
 		}
 	}
-}
+};
 
 /**
  * Executes this action by using the method specified in the onExecute setter.
  *
- * @param array _senders array with references to the objects which caused the action
- * @param object _target is an optional parameter which may represent e.g. an drag drop target
+ * @param {array} _senders array with references to the objects which caused the action
+ * @param {object} _target is an optional parameter which may represent e.g. an drag drop target
  */
 egwAction.prototype.execute = function(_senders, _target)
 {
@@ -564,49 +593,53 @@ egwAction.prototype.execute = function(_senders, _target)
  * In all possible situation, the called function will get the following parameters:
  * 	1. A reference to this action
  * 	2. The senders, an array of all objects (JS)/object ids (PHP) which evoked the event
+ *
+ * @param {(string|function|boolean)} _value
  */
 egwAction.prototype.set_onExecute = function(_value)
 {
 	this.onExecute.setValue(_value);
-}
+};
 
 egwAction.prototype.set_caption = function(_value)
 {
 	this.caption = _value;
-}
+};
 
 egwAction.prototype.set_iconUrl = function(_value)
 {
 	this.iconUrl = _value;
-}
+};
 
 egwAction.prototype.set_enabled = function(_value)
 {
 	this.enabled.setValue(_value);
-}
+};
 
 /**
  * The allowOnMultiple property may be true, false or "only"
+ *
+ * @param {(boolean|string)} _value
  */
 egwAction.prototype.set_allowOnMultiple = function(_value)
 {
 	this.allowOnMultiple = _value;
-}
+};
 
 egwAction.prototype.set_hideOnDisabled = function(_value)
 {
 	this.hideOnDisabled = _value;
-}
+};
 
 egwAction.prototype.set_data = function(_value)
 {
 	this.data = _value;
-}
+};
 
 egwAction.prototype.updateAction = function(_data)
 {
 	egwActionStoreJSON(_data, this, "data");
-}
+};
 
 function _egwActionTreeContains(_tree, _elem)
 {
@@ -634,10 +667,10 @@ function _egwActionTreeContains(_tree, _elem)
  * The appendToGraph function generates an action tree which automatically contains
  * all parent elements. If the appendToGraph function is called for a
  *
- * @param array _tree contains the tree structure - pass an object containing
+ * @param {array} _tree contains the tree structure - pass an object containing
  * 	the empty array "root" to this function {"root": []}. The result will be stored in
  * 	this array.
- * @param boolean _addChildren is used internally to prevent parent elements from
+ * @param {boolean} _addChildren is used internally to prevent parent elements from
  * 	adding their children automatically to the tree.
  */
 egwAction.prototype.appendToTree = function(_tree, _addChildren)
@@ -717,7 +750,7 @@ egwAction.prototype.appendToTree = function(_tree, _addChildren)
 	}
 
 	return cntr;
-}
+};
 
 /**
  * Returns the parent action manager
@@ -730,7 +763,7 @@ egwAction.prototype.getManager = function() {
 	} else {
 		return null;
 	}
-}
+};
 
 
 /** egwActionManager Object **/
@@ -738,6 +771,10 @@ egwAction.prototype.getManager = function() {
 /**
  * egwActionManager manages a list of actions - it overwrites the egwAction class
  * and allows child actions to be added to it.
+ *
+ * @param {egwAction} _parent
+ * @param {string} _id
+ * @return {egwActionManager}
  */
 function egwActionManager(_parent, _id)
 {
@@ -768,6 +805,8 @@ function egwActionManager(_parent, _id)
  * which replaces "this" with a "new egwActionImplementation" and implement your
  * code in "doRegisterAction" und "doUnregisterAction".
  * Register your own implementation within the _egwActionClasses object.
+ *
+ * @return {egwActionImplementation}
  */
 function egwActionImplementation()
 {
@@ -781,12 +820,12 @@ function egwActionImplementation()
  * Injects the implementation code into the DOM tree by using the supplied
  * actionObjectInterface.
  *
- * @param object _actionObjectInterface is the AOI in which the implementation
+ * @param {object} _actionObjectInterface is the AOI in which the implementation
  * 	should be registered.
- * @param function _triggerCallback is the callback function which will be triggered
+ * @param {function} _triggerCallback is the callback function which will be triggered
  * 	when the user triggeres this action implementatino (e.g. starts a drag-drop or
  * 	right-clicks on an object.)
- * @param object context in which the triggerCallback should get executed.
+ * @param {object} _context in which the triggerCallback should get executed.
  * @returns true if the Action had been successfully registered, false if it
  * 	had not.
  */
@@ -796,25 +835,26 @@ egwActionImplementation.prototype.registerAction = function(_actionObjectInterfa
 		_context = null;
 
 	return this.doRegisterAction(_actionObjectInterface, _triggerCallback, _context);
-}
+};
 
 /**
  * Unregister action will be called before an actionObjectInterface is destroyed,
  * which gives the egwActionImplementation the opportunity to remove the previously
  * injected code.
  *
+ * @param {egwActionObjectInterface} _actionObjectInterface
  * @returns true if the Action had been successfully unregistered, false if it
  * 	had not.
  */
 egwActionImplementation.prototype.unregisterAction = function(_actionObjectInterface)
 {
 	return this.doUnregisterAction(_actionObjectInterface);
-}
+};
 
 egwActionImplementation.prototype.executeImplementation = function(_context, _selected, _links)
 {
 	return this.doExecuteImplementation(_context, _selected, _links);
-}
+};
 
 
 /** egwActionLink Object **/
@@ -839,17 +879,17 @@ function egwActionLink(_manager)
 egwActionLink.prototype.updateLink = function (_data)
 {
 	egwActionStoreJSON(_data, this, true);
-}
+};
 
 egwActionLink.prototype.set_enabled = function(_value)
 {
 	this.enabled = _value;
-}
+};
 
 egwActionLink.prototype.set_visible = function(_value)
 {
 	this.visible = _value;
-}
+};
 
 egwActionLink.prototype.set_actionId = function(_value)
 {
@@ -858,7 +898,7 @@ egwActionLink.prototype.set_actionId = function(_value)
 
 	if (!this.actionObj)
 		throw "Action object with id '"+_value+"' does not exist!"
-}
+};
 
 /** egwActionObject Object **/
 
@@ -892,14 +932,14 @@ var EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
  * egwActionObjectInterface (AOI), which is passed in the constructor.
  * egwActionObjects are organized in a tree structure.
  *
- * @param string _id is the identifier of the object which
- * @param object _parent is the parent object in the hirachy. This may be set to NULL
- * @param object _iface is the egwActionObjectInterface which connects the object
+ * @param {string} _id is the identifier of the object which
+ * @param {egwActionObject} _parent is the parent object in the hirachy. This may be set to NULL
+ * @param {egwActionObjectInterface} _iface is the egwActionObjectInterface which connects the object
  * 	to the outer world.
- * @param object _manager is the action manager this object is connected to
+ * @param {egwActionManager} _manager is the action manager this object is connected to
  * 	this object to the DOM tree. If the _manager isn't supplied, the parent manager
  * 	is taken.
- * @param int _flags a set of additional flags being applied to the object,
+ * @param {number} _flags a set of additional flags being applied to the object,
  * 	defaults to 0
  */
 function egwActionObject(_id, _parent, _iface, _manager, _flags)
@@ -932,6 +972,8 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 /**
  * Sets the action object interface - if "NULL" is given, the iface is set
  * to a dummy interface which is used to store the temporary data.
+ *
+ * @param {egwActionObjectInterface} _aoi
  */
 egwActionObject.prototype.setAOI = function(_aoi)
 {
@@ -950,12 +992,16 @@ egwActionObject.prototype.setAOI = function(_aoi)
 	this.iface = _aoi;
 	this.iface.setStateChangeCallback(this._ifaceCallback, this);
 	this.iface.setReconnectActionsCallback(this._reconnectCallback, this);
-}
+};
 
 /**
  * Returns the object from the tree with the given ID
+ *
+ * @param {string} _id
+ * @param {number} _search_depth
+ * @return {egwActionObject} description
+ * @todo Add search function to egw_action_commons.js
  */
-//TODO: Add search function to egw_action_commons.js
 egwActionObject.prototype.getObjectById = function(_id, _search_depth)
 {
 	if (this.id == _id)
@@ -976,38 +1022,38 @@ egwActionObject.prototype.getObjectById = function(_id, _search_depth)
 	}
 
 	return null;
-}
+};
 
 /**
  * Adds an object as child to the actionObject and returns it - if the supplied
  * parameter is a object, the object will be added directly, otherwise an object
  * with the given id will be created.
  *
- * @param string/object _id Id of the object which will be created or the object
+ * @param {(string|object)} _id Id of the object which will be created or the object
  * 	that will be added.
- * @param object if _id was an string, _interface defines the interface which
+ * @param {object} _interface if _id was an string, _interface defines the interface which
  * 	will be connected to the newly generated object.
- * @param int _flags are the flags will which be supplied to the newly generated
+ * @param {number} _flags are the flags will which be supplied to the newly generated
  * 	object. May be omitted.
  * @returns object the generated object
  */
 egwActionObject.prototype.addObject = function(_id, _interface, _flags)
 {
 	return this.insertObject(false, _id, _interface, _flags);
-}
+};
 
 /**
  * Inserts an object as child to the actionObject and returns it - if the supplied
  * parameter is a object, the object will be added directly, otherwise an object
  * with the given id will be created.
  *
- * @param int _index Position where the object will be inserted, "false" will add it
+ * @param {number} _index Position where the object will be inserted, "false" will add it
  * 	to the end of the list.
- * @param string/object _id Id of the object which will be created or the object
+ * @param {string}/object _id Id of the object which will be created or the object
  * 	that will be added.
- * @param object _iface if _id was an string, _iface defines the interface which
+ * @param {object} _iface if _id was an string, _iface defines the interface which
  * 	will be connected to the newly generated object.
- * @param int _flags are the flags will which be supplied to the newly generated
+ * @param {number} _flags are the flags will which be supplied to the newly generated
  * 	object. May be omitted.
  * @returns object the generated object
  */
@@ -1031,7 +1077,7 @@ egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
 	}
 	else if (typeof _id == "string")
 	{
-		obj = new egwActionObject(_id, this, _iface, this.manager, _flags)
+		obj = new egwActionObject(_id, this, _iface, this.manager, _flags);
 	}
 
 	if (obj)
@@ -1045,7 +1091,7 @@ egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
 	}
 
 	return obj;
-}
+};
 
 /**
  * Deletes all children of the egwActionObject
@@ -1062,7 +1108,7 @@ egwActionObject.prototype.clear = function() {
 
 	// Remove links
 	this.actionLinks = [];
-}
+};
 
 /**
  * Deletes this object from the parent container
@@ -1089,7 +1135,7 @@ egwActionObject.prototype.remove = function() {
 			this.parent.children.splice(idx, 1);
 		}
 	}
-}
+};
 
 /**
  * Searches for the root object in the action object tree and returns it.
@@ -1104,7 +1150,7 @@ egwActionObject.prototype.getRootObject = function()
 	{
 		return this.parent.getRootObject();
 	}
-}
+};
 
 /**
  * Returns a list with all parents of this object.
@@ -1121,7 +1167,7 @@ egwActionObject.prototype.getParentList = function()
 		list.unshift(this.parent);
 		return list;
 	}
-}
+};
 
 /**
  * Returns the first parent which has the container flag
@@ -1136,14 +1182,14 @@ egwActionObject.prototype.getContainerRoot = function()
 	{
 		return this.parent.getContainerRoot();
 	}
-}
+};
 
 /**
  * Returns all selected objects which are in the current subtree.
  *
- * @param function _test is a function, which gets an object and checks whether
+ * @param {function} _test is a function, which gets an object and checks whether
  * 	it will be added to the list.
- * @param array _list is internally used to fetch all selected elements, please
+ * @param {array} _list is internally used to fetch all selected elements, please
  * 	omit this parameter when calling the function.
  */
 egwActionObject.prototype.getSelectedObjects = function(_test, _list)
@@ -1153,7 +1199,7 @@ egwActionObject.prototype.getSelectedObjects = function(_test, _list)
 
 	if (typeof _list == "undefined")
 	{
-		_list = {"elements": []}
+		_list = {"elements": []};
 	}
 
 	if ((!_test || _test(this)) && this.getSelected())
@@ -1163,12 +1209,12 @@ egwActionObject.prototype.getSelectedObjects = function(_test, _list)
 	{
 		for (var i = 0; i < this.selectedChildren.length; i++)
 		{
-			this.selectedChildren[i].getSelectedObjects(_test, _list)
+			this.selectedChildren[i].getSelectedObjects(_test, _list);
 		}
 	}
 
 	return _list.elements;
-}
+};
 
 /**
  * Returns whether all objects in this tree are selected
@@ -1190,7 +1236,7 @@ egwActionObject.prototype.getAllSelected = function()
 	}
 
 	return false;
-}
+};
 
 /**
  * Toggles the selection of all objects.
@@ -1206,13 +1252,15 @@ egwActionObject.prototype.toggleAllSelected = function(_select)
 	}
 
 	this.setAllSelected(_select);
-}
+};
 
 /**
  * Creates a list which contains all items of the element tree.
  *
- * @param object _obj is used internally to pass references to the array inside
+ * @param {boolean} _visibleOnly
+ * @param {object} _obj is used internally to pass references to the array inside
  * 	the object.
+ * @return {array}
  */
 egwActionObject.prototype.flatList = function(_visibleOnly, _obj)
 {
@@ -1220,7 +1268,7 @@ egwActionObject.prototype.flatList = function(_visibleOnly, _obj)
 	{
 		_obj = {
 			"elements": []
-		}
+		};
 	}
 
 	if (typeof(_visibleOnly) == "undefined")
@@ -1239,14 +1287,17 @@ egwActionObject.prototype.flatList = function(_visibleOnly, _obj)
 	}
 
 	return _obj.elements;
-}
+};
 
 /**
  * Returns a traversal list with all objects which are in between the given object
  * and this one. The operation returns an empty list, if a container object is
  * found on the way.
+ *
+ * @param {object} _to
+ * @return {array}
+ * @todo Remove flatList here!
  */
-//TODO: Remove flatList here!
 egwActionObject.prototype.traversePath = function(_to)
 {
 	var contRoot = this.getContainerRoot();
@@ -1271,7 +1322,7 @@ egwActionObject.prototype.traversePath = function(_to)
 	}
 
 	return [];
-}
+};
 
 /**
  * Returns the index of this object in the children list of the parent object.
@@ -1286,7 +1337,7 @@ egwActionObject.prototype.getIndex = function()
 	{
 		return this.parent.children.indexOf(this);
 	}
-}
+};
 
 /**
  * Returns the deepest object which is currently focused. Objects with the
@@ -1295,16 +1346,18 @@ egwActionObject.prototype.getIndex = function()
 egwActionObject.prototype.getFocusedObject = function()
 {
 	return this.focusedChild || null;
-}
+};
 
 /**
  * Internal function which is connected to the ActionObjectInterface associated
  * with this object in the constructor. It gets called, whenever the object
  * gets (de)selected.
  *
- * @param int _newState is the new state of the object
- * @param int _shiftState is the status of extra keys being pressed during the
+ * @param {number} _newState is the new state of the object
+ * @param {number} _changedBit
+ * @param {number} _shiftState is the status of extra keys being pressed during the
  * 	selection process.
+ * @param {number}
  */
 egwActionObject.prototype._ifaceCallback = function(_newState, _changedBit, _shiftState)
 {
@@ -1377,10 +1430,16 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _changedBit, _shi
 	}
 
 	return _newState;
-}
+};
 
 /**
  * Handler for key presses
+ *
+ * @param {number} _keyCode
+ * @param {boolean} _shift
+ * @param {boolean} _ctrl
+ * @param {boolean} _alt
+ * @returns {boolean}
  */
 egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _alt) {
 	switch (_keyCode) {
@@ -1452,7 +1511,7 @@ egwActionObject.prototype.handleKeyPress = function(_keyCode, _shift, _ctrl, _al
 	}
 
 	return false;
-}
+};
 
 egwActionObject.prototype.getPrevious = function(_intval)
 {
@@ -1473,7 +1532,7 @@ egwActionObject.prototype.getPrevious = function(_intval)
 	}
 
 	return this;
-}
+};
 
 egwActionObject.prototype.getNext = function(_intval)
 {
@@ -1494,7 +1553,7 @@ egwActionObject.prototype.getNext = function(_intval)
 	}
 
 	return this;
-}
+};
 
 /**
  * Returns whether the object is currently selected.
@@ -1502,7 +1561,7 @@ egwActionObject.prototype.getNext = function(_intval)
 egwActionObject.prototype.getSelected = function()
 {
 	return egwBitIsSet(this.getState(), EGW_AO_STATE_SELECTED);
-}
+};
 
 /**
  * Returns whether the object is currently focused.
@@ -1510,7 +1569,7 @@ egwActionObject.prototype.getSelected = function()
 egwActionObject.prototype.getFocused = function()
 {
 	return egwBitIsSet(this.getState(), EGW_AO_STATE_FOCUSED);
-}
+};
 
 /**
  * Returns whether the object currently is visible - visible means, that the
@@ -1519,7 +1578,7 @@ egwActionObject.prototype.getFocused = function()
 egwActionObject.prototype.getVisible = function()
 {
 	return egwBitIsSet(this.getState(), EGW_AO_STATE_VISIBLE);
-}
+};
 
 /**
  * Returns the complete state of the object.
@@ -1527,14 +1586,14 @@ egwActionObject.prototype.getVisible = function()
 egwActionObject.prototype.getState = function()
 {
 	return this.iface.getState();
-}
+};
 
 
 /**
  * Sets the focus of the element. The formerly focused element in the tree will
  * be de-focused.
  *
- * @param boolean _focused - whether to remove or set the focus. Defaults to true
+ * @param {boolean} _focused - whether to remove or set the focus. Defaults to true
  */
 egwActionObject.prototype.setFocused = function(_focused)
 {
@@ -1563,11 +1622,13 @@ egwActionObject.prototype.setFocused = function(_focused)
 	{
 		this.focusedChild.setFocused(false);
 	}
-}
+};
 
 /**
  * Sets the selected state of the element.
- * TODO: Callback
+ *
+ * @param {boolean} _selected
+ * @TODO Callback
  */
 egwActionObject.prototype.setSelected = function(_selected)
 {
@@ -1582,10 +1643,13 @@ egwActionObject.prototype.setSelected = function(_selected)
 			this.parent.updateSelectedChildren(this, _selected || this.selectedChildren.length > 0);
 		}
 	}
-}
+};
 
 /**
  * Sets the selected state of all elements, including children
+ *
+ * @param {boolean} _selected
+ * @param {boolean} _informParent
  */
 egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 {
@@ -1626,13 +1690,16 @@ egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
 
 	// Call the setSelectedCallback
 	egwQueueCallback(this.setSelectedCallback, [], this, "setSelectedCallback");
-}
+};
 
 
 /**
  * Updates the selectedChildren array each actionObject has in order to determine
  * all selected children in a very fast manner.
- * TODO: Has also to be updated, if an child is added/removed!
+ *
+ * @param {(string|egwActionObject} _child
+ * @param {boolean} _selected
+ * @todo Has also to be updated, if an child is added/removed!
  */
 egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 {
@@ -1658,10 +1725,13 @@ egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 
 	// Call the setSelectedCallback
 	egwQueueCallback(this.setSelectedCallback, this.getContainerRoot().getSelectedObjects(), this, "setSelectedCallback");
-}
+};
 
 /**
  * Updates the focusedChild up to the container boundary.
+ *
+ * @param {(string|egwActionObject} _child
+ * @param {boolean} _focused
  */
 egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
 {
@@ -1681,12 +1751,12 @@ egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
 	{
 		this.parent.updateFocusedChild(_child, _focused);
 	}
-}
+};
 
 /**
  * Updates the actionLinks of the given ActionObject.
  *
- * @param array _actionLinks contains the information about the actionLinks which
+ * @param {array} _actionLinks contains the information about the actionLinks which
  * 	should be updated as an array of objects. Example
  * 	[
  * 		{
@@ -1696,9 +1766,9 @@ egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
  * 	]
  * 	If an supplied link doesn't exist yet, it will be created (if _doCreate is true)
  * 	and added to the list. Otherwise the information will just be updated.
- * @param boolean _recursive If true, the settings will be applied to all child
+ * @param {boolean} _recursive If true, the settings will be applied to all child
  * 	object (default false)
- * @param boolean _doCreate If true, not yet existing links will be created (default true)
+ * @param {boolean} _doCreate If true, not yet existing links will be created (default true)
  */
 egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive, _doCreate)
 {
@@ -1747,7 +1817,7 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 	{
 		this.registerActions();
 	}
-}
+};
 
 /**
  * Reconnects the actions.
@@ -1756,7 +1826,7 @@ egwActionObject.prototype._reconnectCallback = function()
 {
 	this.registeredImpls = [];
 	this.registerActions();
-}
+};
 
 /**
  * Registers the action implementations inside the DOM-Tree.
@@ -1785,7 +1855,7 @@ egwActionObject.prototype.registerActions = function()
 			}
 		}
 	}
-}
+};
 
 /**
  * Unregisters all action implementations registerd to this element
@@ -1798,7 +1868,7 @@ egwActionObject.prototype.unregisterActions = function()
 			impl.unregisterAction(this.iface);
 		}
 	}
-}
+};
 
 
 /**
@@ -1811,7 +1881,7 @@ egwActionObject.prototype.triggerCallback = function()
 		return this.onBeforeTrigger();
 	}
 	return true;
-}
+};
 
 /**
  * Calls the corresponding function of the AOI which tries to make the object
@@ -1820,7 +1890,7 @@ egwActionObject.prototype.triggerCallback = function()
 egwActionObject.prototype.makeVisible = function()
 {
 	this.iface.makeVisible();
-}
+};
 
 var EGW_AO_EXEC_SELECTED = 0;
 var EGW_AO_EXEC_THIS = 1;
@@ -1828,12 +1898,12 @@ var EGW_AO_EXEC_THIS = 1;
 /**
  * Executes the action implementation which is associated to the given action type.
  *
- * @param object _implContext is data which should be delivered to the action implementation.
+ * @param {object} _implContext is data which should be delivered to the action implementation.
  * 	E.g. in case of the popup action implementation, the x and y coordinates where the
  * 	menu should open are transmitted.
- * @param string _implType is the action type for which the implementation should be
+ * @param {string} _implType is the action type for which the implementation should be
  * 	executed.
- * @param int _execType specifies in which context the execution should take place.
+ * @param {number} _execType specifies in which context the execution should take place.
  * 	defaults to EGW_AO_EXEC_SELECTED
  */
 egwActionObject.prototype.executeActionImplementation = function(_implContext, _implType, _execType)
@@ -1858,7 +1928,7 @@ egwActionObject.prototype.executeActionImplementation = function(_implContext, _
 			}
 			var selectedActions = this.getSelectedLinks(_implType.type);
 		}
-		else if (_execType = EGW_AO_EXEC_THIS)
+		else if (_execType == EGW_AO_EXEC_THIS)
 		{
 			selectedActions = this._getLinks([this], _implType.type);
 		}
@@ -1871,7 +1941,7 @@ egwActionObject.prototype.executeActionImplementation = function(_implContext, _
 	}
 
 	return false;
-}
+};
 
 /**
  * Forces the object to be inside the currently selected objects. If this is
@@ -1892,7 +1962,7 @@ egwActionObject.prototype.forceSelection = function()
 	}
 
 	this.setFocused(true);
-}
+};
 
 /**
  * Returns all selected objects, and all action links of those objects, which are
@@ -1912,10 +1982,13 @@ egwActionObject.prototype.getSelectedLinks = function(_actionType)
 	var selected = this.getContainerRoot().getSelectedObjects();
 
 	return this._getLinks(selected, _actionType);
-}
+};
 
 /**
  *
+ * @param {array} _objs
+ * @param {string} _actionType
+ * @return {object} with attributes "selected" and "links"
  */
 egwActionObject.prototype._getLinks = function(_objs, _actionType)
 {
@@ -1934,7 +2007,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 					"enabled": (testedSelected.length == 1),
 					"visible": false,
 					"cnt": 0
-				}
+				};
 			}
 
 			// Accumulate the action link properties
@@ -1994,14 +2067,14 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 	return {
 		"selected": testedSelected,
 		"links": actionLinks
-	}
-}
+	};
+};
 
 /**
  * Returns the action link, which contains the association to the action with
  * the given actionId.
  *
- * @param string _actionId name of the action associated to the link
+ * @param {string} _actionId name of the action associated to the link
  */
 egwActionObject.prototype.getActionLink = function(_actionId)
 {
@@ -2014,15 +2087,15 @@ egwActionObject.prototype.getActionLink = function(_actionId)
 	}
 
 	return null;
-}
+};
 
 /**
  * Returns all actions associated to the object tree, grouped by type.
  *
- * @param function _test gets an egwActionObject and should return, whether the
+ * @param {function} _test gets an egwActionObject and should return, whether the
  * 	actions of this object are added to the result. Defaults to a "always true"
  * 	function.
- * @param object _groups is an internally used parameter, may be omitted.
+ * @param {object} _groups is an internally used parameter, may be omitted.
  */
 egwActionObject.prototype.getActionImplementationGroups = function(_test, _groups)
 {
@@ -2031,7 +2104,7 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
 	if (typeof _groups == "undefined")
 		_groups = {};
 	if (typeof _test == "undefined")
-		_test = function(_obj) {return true};
+		_test = function(_obj) {return true;};
 
 	for (var i = 0; i < this.actionLinks.length; i++)
 	{
@@ -2060,7 +2133,7 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
 	}
 
 	return _groups;
-}
+};
 
 
 /** egwActionObjectInterface Interface **/
@@ -2073,12 +2146,14 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
  * object, and to do object specific stuff like highlighting the object in the
  * correct way and to route state changes (like: "object has been selected")
  * to the egwActionObject object the interface is associated to.
+ *
+ * @return {egwActionObjectInterface}
  */
 function egwActionObjectInterface()
 {
 	//Preset the interface functions
 
-	this.doGetDOMNode = function() {return null};
+	this.doGetDOMNode = function() {return null;};
 
 	// _outerCall may be used to determine, whether the state change has been
 	// evoked from the outside and the stateChangeCallback has to be called
@@ -2088,7 +2163,7 @@ function egwActionObjectInterface()
 	// The doTiggerEvent function may be overritten by the aoi if it wants to
 	// support certain action implementation specific events like EGW_AI_DRAG_OVER
 	// or EGW_AI_DRAG_OUT
-	this.doTriggerEvent = function(_event, _data) {return false;}
+	this.doTriggerEvent = function(_event, _data) {return false;};
 
 	this.doMakeVisible = function() {};
 
@@ -2103,22 +2178,28 @@ function egwActionObjectInterface()
 /**
  * Sets the callback function which will be called when a user interaction changes
  * state of the object.
+ *
+ * @param {function} _callback
+ * @param {object} _context
  */
 egwActionObjectInterface.prototype.setStateChangeCallback = function(_callback, _context)
 {
 	this.stateChangeCallback = _callback;
 	this.stateChangeContext = _context;
-}
+};
 
 /**
  * Sets the reconnectActions callback, which will be called by the AOI if its
  * DOM-Node has been replaced and the actions have to be re-registered.
+ *
+ * @param {function} _callback
+ * @param {object} _context
  */
 egwActionObjectInterface.prototype.setReconnectActionsCallback = function(_callback, _context)
 {
 	this.reconnectActionsCallback = _callback;
 	this.reconnectActionsContext = _context;
-}
+};
 
 /**
  * Will be called by the aoi if the actions have to be re-registered due to a
@@ -2130,15 +2211,16 @@ egwActionObjectInterface.prototype.reconnectActions = function()
 	{
 		this.reconnectActionsCallback.call(this.reconnectActionsContext);
 	}
-}
+};
 
 /**
  * Internal function which should be used whenever the select status of the object
  * has been changed by the user. This will automatically calculate the new state of
  * the object and call the stateChangeCallback (if it has been set)
  *
- * @param int _stateBit is the bit in the state bit which should be changed
- * @param boolean _set specifies whether the state bit should be set or not
+ * @param {number} _stateBit is the bit in the state bit which should be changed
+ * @param {boolean} _set specifies whether the state bit should be set or not
+ * @param {boolean} _shiftState
  */
 egwActionObjectInterface.prototype.updateState = function(_stateBit, _set, _shiftState)
 {
@@ -2155,7 +2237,7 @@ egwActionObjectInterface.prototype.updateState = function(_stateBit, _set, _shif
 	{
 		this._state = newState;
 	}
-}
+};
 
 /**
  * Returns the DOM-Node the ActionObject is actually a representation of.
@@ -2165,7 +2247,7 @@ egwActionObjectInterface.prototype.updateState = function(_stateBit, _set, _shif
 egwActionObjectInterface.prototype.getDOMNode = function()
 {
 	return this.doGetDOMNode();
-}
+};
 
 /**
  * Sets the state of the object.
@@ -2182,7 +2264,7 @@ egwActionObjectInterface.prototype.setState = function(_state)
 		this._state = _state;
 		this.doSetState(_state);
 	}
-}
+};
 
 /**
  * Returns the current state of the object. The state is maintained by the
@@ -2192,13 +2274,16 @@ egwActionObjectInterface.prototype.setState = function(_state)
 egwActionObjectInterface.prototype.getState = function()
 {
 	return this._state;
-}
+};
 
 /**
  * The trigger event function can be called by the action implementation in order
- * to tell the AOI to performe some action.
+ * to tell the AOI to perform some action.
  * In the drag/drop handler this function is e.g. used for telling the droppable
  * element that there was a drag over/out event.
+ *
+ * @param {object} _event
+ * @param _data
  */
 egwActionObjectInterface.prototype.triggerEvent = function(_event, _data)
 {
@@ -2208,7 +2293,7 @@ egwActionObjectInterface.prototype.triggerEvent = function(_event, _data)
 	}
 
 	return this.doTriggerEvent(_event, _data);
-}
+};
 
 /**
  * Scrolls the element into a visble area if it is currently hidden
@@ -2216,7 +2301,7 @@ egwActionObjectInterface.prototype.triggerEvent = function(_event, _data)
 egwActionObjectInterface.prototype.makeVisible = function()
 {
 	return this.doMakeVisible();
-}
+};
 
 /** -- egwActionObjectDummyInterface Class -- **/
 
@@ -2227,6 +2312,10 @@ var egwActionObjectDummyInterface = egwActionObjectInterface;
 /**
  * The egwActionObjectManager is a dummy class which only contains a dummy
  * AOI. It may be used as root object or as object containers.
+ *
+ * @param {egwAction} _id
+ * @param {string} _manager
+ * @return {egwActionObjectManager}
  */
 function egwActionObjectManager(_id, _manager)
 {
@@ -2238,4 +2327,3 @@ function egwActionObjectManager(_id, _manager)
 
 	return ao;
 }
-
