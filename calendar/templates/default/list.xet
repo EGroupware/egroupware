@@ -24,7 +24,6 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -53,10 +52,6 @@
 						<description value="Last changed"/>
 					</vbox>
 					<nextmatch-customfields label="Custom fields" id="cfs" readonly="true"/>
-					<hbox class="noPrint" label="Actions">
-						<nextmatch-header statustext="Check all" label="Actions" id="legacy_actions" class="noPrint"/>
-						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('calendar.list.rows').toggleAllSelected(); return false;" image="check"/>
-					</hbox>
 				</row>
 				<row class="$row_cont[category] $row_cont[class]" valign="top">
 					<vbox id="start">
@@ -101,19 +96,6 @@
 						<date-time id="${row}[modified]" readonly="true"/>
 					</vbox>
 					<customfields-list id="$row"/>
-					<vbox options="0,0" class="noPrint">
-						<hbox class="noPrint">
-							<button statustext="View this event" label="View" id="view[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;" image="view"/>
-							<button statustext="Edit this event" label="Edit" id="edit[$row_cont[id]]" onclick="$row_cont[edit_link]" image="edit"/>
-							<button statustext="Delete this event" label="Delete" id="delete[$row_cont[id]]" onclick="return confirm('Delete this event');" image="delete"/>
-							<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[id]:$row_cont[recur_date]"/>
-						</hbox>
-						<hbox options="0,0">
-							<button label="merge" id="document[$row_cont[id]:$row_cont[recur_date]]" image="etemplate/merge"/>
-							<button label="Filemanager" id="filemanager[$row_cont[id]]" onclick="window.location.href=egw::link('/index.php','menuaction=filemanager.filemanager_ui.index&amp;path=/apps/calendar/$row_cont[id]'); return false;" image="filemanager/navbar" class="image16"/>
-							<button label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=$row_cont[app]&amp;cat_id=$row_cont[category]&amp;link_id[]=$row_cont[app_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="timesheet"/>
-						</hbox>
-					</vbox>
 				</row>
 			</rows>
 		</grid>
@@ -135,13 +117,6 @@
 				</row>
 				<row>
 					<nextmatch id="nm" template="calendar.list.rows" span="all"/>
-				</row>
-				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
-					<description/>
-					<hbox align="right">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('calendar.list.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('calendar.list.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>

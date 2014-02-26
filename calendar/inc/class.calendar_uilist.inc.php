@@ -155,7 +155,7 @@ class calendar_uilist extends calendar_ui
 				'filter'          => 'after',
 				'order'           => 'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
-				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id,legacy_actions',
+				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
 				'filter_onchange' => "app.calendar.filter_change",
 				'header_left'     => 'calendar.list.dates',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
@@ -377,15 +377,13 @@ class calendar_uilist extends calendar_ui
 		$rows = $js_integration_data = array();
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
-			if (($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event)))
+			if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
 				$event['class'] .= 'rowNoEdit ';
 			}
-			// show only edit or view icon, not both
-			$readonlys['view['.$event['id'].']'] = !$readonlys['edit['.$event['id'].']'];
 
 			// Delete disabled for other applications
-			if (($readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id'])))
+			if (!$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']))
 			{
 				$event['class'] .= 'rowNoDelete ';
 			}
@@ -395,9 +393,7 @@ class calendar_uilist extends calendar_ui
 			{
 				$event['class'] .= 'rowDeleted ';
 			}
-			// Filemanager disabled for other applications
-			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
-
+			
 			$event['recure'] = $this->bo->recure2string($event);
 			if ($params['csv_export'])
 			{
@@ -437,7 +433,6 @@ class calendar_uilist extends calendar_ui
 			}
 			if ($is_private)
 			{
-				$readonlys['filemanager['.$event['id'].']'] = $readonlys['view['.$event['id'].']'] = true;	// no view icon
 				$event['class'] .= 'rowNoView ';
 			}
 
