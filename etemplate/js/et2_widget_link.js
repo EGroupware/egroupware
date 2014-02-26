@@ -1272,7 +1272,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Now that link is created, get title from server & update
 		if(!_link_data.title) {
 			this.egw().link_title(_link_data.app, _link_data.id, function(title) {
-				this.removeClass("loading").text(title);
+				if (title)
+					this.removeClass("loading").text(title);
+				else
+					this.remove();	// no rights or not found
 			}, link);
 		}
 	},
