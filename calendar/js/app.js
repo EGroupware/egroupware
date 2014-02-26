@@ -148,7 +148,7 @@ app.classes.calendar = AppJS.extend(
 	{
 		var that = this;
 
-		//Draggable & Resizable selector 
+		//Draggable & Resizable selector
 		jQuery("div[id^='drag_']")
 			//draggable event handler
 			.draggable
@@ -201,7 +201,7 @@ app.classes.calendar = AppJS.extend(
 					ui.helper.width(jQuery("#calColumn").width());
 				}
 			})
-			
+
 			//Resizable event handler
 			.resizable
 			({
@@ -349,7 +349,7 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 			});
-			
+
 		//jQuery Calendar Event selector
 		jQuery("body")
 			//mouseover event handler for calendar tooltip
@@ -374,10 +374,10 @@ app.classes.calendar = AppJS.extend(
 
 			// mousedown event handler for calendar tooltip to remove disable tooltip
 			.on("mousedown", "div[data-tooltip]", function(){
-				jQuery(this).tooltip("disable");	
+				jQuery(this).tooltip("disable");
 			})
 
-			//onClick event handler for calendar Events 
+			//onClick event handler for calendar Events
 			.on("click", "div.calendar_calEvent", function(ev){
 				var Id = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
 				var eventId = Id.match(/-?\d+\.?\d*/g)[0];
@@ -1080,6 +1080,13 @@ app.classes.calendar = AppJS.extend(
 		var menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.state != 'undefined' && (typeof state.state.view == 'undefined' || state.state.view == 'listview'))
 		{
+			if (state.name)
+			{
+				// 'blank' is the special name for no filters, send that instead of the nice translated name
+				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			}
+			menuaction = 'calendar.calendar_uilist.listview';
+			state.state.ajax = 'true';
 			// check if we already use et2 / are in listview
 			if (this.et2 || etemplate2 && etemplate2.getByApplication('calendar'))
 			{
@@ -1099,9 +1106,34 @@ app.classes.calendar = AppJS.extend(
 							if (state.state[attr] != current_state[attr])
 							{
 								need_redirect = true;
+								// reset of attributes managed on server-side
+								if (state.state.favorite === 'blank')
+								{
+									switch(attr)
+									{
+										case 'cat_id':
+											state.state.cat_id = 0;
+											break;
+										case 'owner':
+											state.state.owner = egw.user('account_id');
+											break;
+										case 'filter':
+											state.state.filter = 'default';
+											break;
+									}
+								}
 								break;
 							}
 							break;
+
+						case 'view':
+							// "No filter" (blank) favorite: if not in listview --> stay in that view
+							if (state.state.favorite === 'blank' && current_state.view != 'listview')
+							{
+								menuaction = 'calendar.calendar_uiviews.index';
+								delete state.state.ajax;
+								need_redirect = true;
+							}
 					}
 				}
 				if (!need_redirect)
@@ -1109,13 +1141,6 @@ app.classes.calendar = AppJS.extend(
 					return this._super.apply(this, [state]);
 				}
 			}
-			menuaction = 'calendar.calendar_uilist.listview';
-			if (state.name)
-			{
-				// 'blank' is the special name for no filters, send that instead of the nice translated name
-				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
-			}
-			state.state.ajax = 'true';
 		}
 		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
 		this.state = state;
