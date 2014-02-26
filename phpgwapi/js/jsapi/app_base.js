@@ -298,8 +298,7 @@ var AppJS = Class.extend(
 			this.sidebox = sidebox;
 			sidebox
 				.off()
-				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
-				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
+				// removed .on("mouse(enter|leave)" (wrapping trash icon), as it stalls delete in IE11
 				.on("click","div.ui-icon-trash", this, this.delete_favorite)
 				// need to install a favorite handler, as we switch original one off with .off()
 				.on('click','li[data-id]', this, function(){
