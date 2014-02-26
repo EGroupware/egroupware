@@ -40,10 +40,17 @@ class etemplate_widget_taglist extends etemplate_widget
 	 */
 	public static function ajax_search() {
 		$app = $_REQUEST['app'];
+		$type = $_REQUEST['type'];
 		$query = $_REQUEST['query'];
 		$options = array();
-		$links = egw_link::query($app, $query, $options);
-
+		if ($type == "account")
+		{
+			$links = accounts::link_query($query, $options);
+		}
+		else
+		{
+			$links = egw_link::query($app, $query, $options);
+		}
 		$results = array();
 		foreach($links as $id => $name)
 		{

@@ -329,6 +329,36 @@ var et2_taglist = et2_selectbox.extend(
 et2_register_widget(et2_taglist, ["taglist"]);
 
 /**
+ * Taglist customized specificlly for egw acccounts, fetches accounts and groups list,
+ * free entries are allowed 
+ * 
+ */
+var et2_taglist_account = et2_taglist.extend(
+{
+	attributes: {
+		"autocomplete_url": {
+			"default": "home.etemplate_widget_taglist.ajax_search.etemplate"
+		},
+		allowFreeEntries: {
+			"default": true,
+			ignore: true
+		},
+	},
+	lib_options: {
+		minChars: 2
+	},
+	
+	init:function ()
+	{
+		this._super.apply(this, arguments);
+		
+		this.options.autocomplete_params.type = "account";
+	},
+	
+});
+et2_register_widget(et2_taglist_account, ["taglist-account"]);
+
+/**
  * Taglist customized specifically for emails, which it pulls from the mail application,
  * or addressbook if mail is not available.  Free entries are allowed, and we render
  * invalid free entries differently (but still accept them).
@@ -413,7 +443,7 @@ var et2_taglist_ro = et2_selectbox_ro.extend(
 		$j('li',this.span).addClass('ms-sel-item');
 	}
 });
-et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro" ]);
+et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_account_ro" ]);
 
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
