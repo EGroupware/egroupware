@@ -77,7 +77,8 @@ egw_LAB.wait(function() {
 				}
 			}
 			args.unshift(matches[1]);
-			return et2_call.apply(this, args);
+			et2_call.apply(this, args);
+			return false;	// IE11 seems to require this, ev.stopPropagation() does NOT stop link from being executed
 		});
 
 		// make sidebox resizable with jQueryUI resizable
