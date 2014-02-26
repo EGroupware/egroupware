@@ -171,8 +171,6 @@ foreach(array(
 	),__LINE__,__FILE__);
 }
 
-$oProc->query("INSERT INTO egw_interserv(server_name,server_host,server_url,trust_level,trust_rel,server_mode) VALUES ('eGW demo',NULL,'http://www.egroupware.org/egroupware/xmlrpc.php',99,0,'xmlrpc')");
-
 // make sure the required sqlfs dirs are there and have the following id's
 $dirs = array(
 	'/' => 1,
