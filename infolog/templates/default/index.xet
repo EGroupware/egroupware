@@ -25,7 +25,6 @@
 				<column/>
 				<column width="8%" disabled="@no_info_owner_info_responsible"/>
 				<column width="12%"/>
-				<column width="3%" disabled="@no_actions"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -75,7 +74,6 @@
 						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="infolog_user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<nextmatch-header label="Action" id="actions" class="noPrint"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<hbox align="center">
@@ -141,21 +139,6 @@
 							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox class="noPrint">
-						<hbox class="noPrint">
-							<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="edit"/>
-							<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[info_id]]" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');" image="delete"/>
-							<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[info_id]"/>
-						</hbox>
-						<hbox class="noPrint">
-							<button statustext="Sets the status of this entry to done" label="Set status to done" id="close[$row_cont[info_id]]" image="done"/>
-							<button statustext="Sets the status of this entry and its subs to done" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" image="done_all"/>
-						</hbox>
-						<hbox class="image16">
-							<button label="Insert in document" id="document[$row_cont[info_id]]" image="etemplate/merge"/>
-							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="infolog_image16"/>
-						</hbox>
-					</vbox>
 				</row>
 			</rows>
 		</grid>
@@ -179,16 +162,6 @@
 				</row>
 				<row>
 					<nextmatch id="nm" template="infolog.index.rows" span="all"/>
-				</row>
-				<row class="noPrint" disabled="!@nm[selectcols]=/actions/">
-					<hbox>
-						<button statustext="Add a new Entry" label="Add" id="add[note]" onclick="egw.open('','infolog','add',{type:'note',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:$cont[cat_id])"/>
-						<button statustext="Back to main list" label="Cancel" id="cancel"/>
-					</hbox>
-					<hbox align="right" orient="0" span="all">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('infolog.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('infolog.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
-					</hbox>
 				</row>
 				<row>
 					<hbox class=" ">

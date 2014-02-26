@@ -200,7 +200,7 @@ class infolog_ui
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
 			!$editrights && !$isresposible &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
-		if (($readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE)))
+		if (!$this->bo->check_access($info,EGW_ACL_DELETE))
 		{
 			$info['class'] .= 'rowNoDelete ';
 		}
@@ -211,10 +211,7 @@ class infolog_ui
 		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
 		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
 
-		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
-		$readonlys['view[0]'] = True;	// no parent
 		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
-		$readonlys["document[$id]"] = !$this->prefs['default_document'];
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
@@ -453,8 +450,6 @@ class infolog_ui
 			// dont show owner, responsible in the columnselection
 			$query['options-selectcols']['info_owner'] = $query['options-selectcols']['info_responsible'] = false;
 		}
-		//echo "<p>readonlys = "; _debug_array($readonlys);
-		//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
 		// if filtered by type, show only the stati of the filtered type
 		$rows['sel_options']['info_status'] = $this->bo->get_status($query['col_filter']['info_type']);
@@ -477,8 +472,6 @@ class infolog_ui
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
 		}
-		// disable filemanager icon, if user has no access to it
-		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
 
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
 
