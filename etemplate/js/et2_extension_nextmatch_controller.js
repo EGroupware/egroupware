@@ -120,9 +120,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 */
 	keepSelection: function() {
 		this.kept_selection = this._selectionMgr ? this._selectionMgr.getSelected() : null;
-		this.kept_focus = this._selectionMgr ? this._selectionMgr._focusedEntry.uid || null : null;
+		this.kept_focus = this._selectionMgr && this._selectionMgr._focusedEntry ?
+			this._selectionMgr._focusedEntry.uid || null : null;
 	},
-	
+
 	getObjectManager: function () {
 		return this._objectManager;
 	},
@@ -149,7 +150,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				var entry = this._indexMap[mapIndex];
 				entry.idx = mapIndex-1;
 				this._indexMap[mapIndex-1] = entry;
-				
+
 				// Update selection mgr too
 				if(entry.uid && typeof this._selectionMgr._registeredRows[entry.uid] !== 'undefined')
 				{
