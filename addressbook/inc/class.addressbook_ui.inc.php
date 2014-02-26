@@ -1456,10 +1456,8 @@ window.egw_LAB.wait(function() {
 
 				if ($query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE))
 				{
-					$readonlys["delete[$row[id]]"] = true;
 					$row['class'] .= 'rowNoDelete ';
 				}
-				$readonlys["infolog[$row[id]]"] = !$GLOBALS['egw_info']['user']['apps']['infolog'];
 				$row['class'] .= 'rowNoEdit ';	// no edit in OrgView
 			}
 			else
@@ -1484,12 +1482,10 @@ window.egw_LAB.wait(function() {
 				}
 				if (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
 				{
-					$readonlys["delete[$row[id]]"] = true;
 					$row['class'] .= 'rowNoDelete ';
 				}
 				if (!$this->check_perms(EGW_ACL_EDIT,$row))
 				{
-					$readonlys["edit[$row[id]]"] = true;
 					$row['class'] .= 'rowNoEdit ';
 				}
 
@@ -1525,7 +1521,6 @@ window.egw_LAB.wait(function() {
 					}
 				}
 			}
-			$readonlys["document[$row[id]]"] = !$this->prefs['default_document'];
 
 			// hide region for address format 'postcode_city'
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
@@ -1553,10 +1548,7 @@ window.egw_LAB.wait(function() {
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
 
-		// disable filemanger icon if user has no access to filemanager
-		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
-		$readonlys['calendar'] = !isset($GLOBALS['egw_info']['user']['apps']['calendar']);
-
+		
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
 		$rows['customfields'] = array_values($this->customfields);

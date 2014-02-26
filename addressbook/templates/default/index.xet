@@ -52,7 +52,6 @@
 				<column/>
 				<column/>
 				<column/>
-				<column width="75"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -124,10 +123,6 @@
 						<nextmatch-sortheader label="Created" id="contact_created"/>
 						<nextmatch-sortheader label="Last modified" id="contact_modified"/>
 					</vbox>
-					<hbox align="center" class="noPrint">
-						<nextmatch-header align="center" label="Actions" id="legacy_actions"/>
-						<button align="right" statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('addressbook.index.rows').toggleAllSelected(); return false;" image="check"/>
-					</hbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
 					<image align="center" label="$row_cont[type_label]" src="${row}[type]" no_lang="1"/>
@@ -200,19 +195,6 @@
 						<menulist>
 							<menupopup type="select-account" id="${row}[modifier]" readonly="true"/>
 						</menulist>
-					</vbox>
-					<vbox class="noPrint" options="0,0">
-						<hbox>
-							<image label="View" src="view" href="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]"/>
-							<button label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=870,height=460,scrollbars=yes,status=yes'); return false;" image="edit"/>
-							<button statustext="Delete this contact" label="Delete" id="delete[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this contact','Delete')" image="delete"/>
-							<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[id]"/>
-						</hbox>
-						<hbox>
-							<button label="Insert in document" id="document[$row_cont[id]]" image="etemplate/merge" class="image16"/>
-							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16"/>
-							<button label="Add appointment" id="calendar" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=c$row_cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" image="calendar/navbar" class="image16"/>
-						</hbox>
 					</vbox>
 				</row>
 			</rows>
