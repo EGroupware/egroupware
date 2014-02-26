@@ -984,8 +984,21 @@ class calendar_uiviews extends calendar_ui
 			unset($holidays);
 
 			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
-
-
+			
+			if (count($users) > 1)
+			{
+				$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
+				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',$this->first-1),
+				)). ' &nbsp'.$this->bo->long_date($this->first,0,false,true);
+			
+				$navHeader = $navHeader.' &nbsp'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => date('Ymd',$this->last+1),
+				)).'</div>';
+			}
+			
 			// only show todo's for a single user
 			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
 			{
@@ -1010,9 +1023,10 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{
+				$cols[0] = $navHeader . $cols[0];
 				echo $cols[0];
 			}
-
+			
 		}
 		else
 		{
