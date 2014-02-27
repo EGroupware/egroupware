@@ -706,6 +706,7 @@ class mail_bo
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
+		if (self::$debugTimes) $starttime = microtime (true);
 		$mailbox=null;
 		if($this->folderExists($this->sessionData['mailbox'])) $mailbox = $this->sessionData['mailbox'];
 		if (empty($mailbox)) $mailbox = $this->icServer->getCurrentMailbox();
@@ -728,6 +729,7 @@ class mail_bo
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
 		$hD = $this->getHierarchyDelimiter(false);
 		self::$specialUseFolders = $this->getSpecialUseFolders();
+		if (self::$debugTimes) self::logRunTimes($starttime,null,'ProfileID:'.$_icServerID,__METHOD__.__LINE__);
 	}
 
 	/**
@@ -1956,12 +1958,14 @@ class mail_bo
 	function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false,$_useCacheIfPossible=true)
 	{
 		if (self::$debug) error_log(__METHOD__.__LINE__.' ServerID:'.$this->icServer->ImapServerId.", subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders, _useCacheIfPossible:$_useCacheIfPossible");
+		if (self::$debugTimes) $starttime = microtime (true);
 		static $folders2return;
 		// always use static on single request if info is available;
 		// so if you require subscribed/unsubscribed results on a single request you MUST
 		// set $_useCacheIfPossible to false !
 		if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 		{
+			if (self::$debugTimes) self::logRunTimes($starttime,null,'using static',__METHOD__.__LINE__);
 			return $folders2return[$this->icServer->ImapServerId];
 		}
 			
@@ -1971,6 +1975,7 @@ class mail_bo
 			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects'.array2string($folders2return[$this->icServer->ImapServerId]));
+				if (self::$debugTimes) self::logRunTimes($starttime,null,'from Cache',__METHOD__.__LINE__);
 				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
@@ -2310,6 +2315,7 @@ class mail_bo
 		{
 			egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return,$expiration=60*60*1);
 		}
+		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.__LINE__);
 		return $folders2return[$this->icServer->ImapServerId];
 	}
 

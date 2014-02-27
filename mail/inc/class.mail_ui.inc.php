@@ -325,7 +325,7 @@ class mail_ui
 	function index(array $content=null,$msg=null)
 	{
 		//error_log(__METHOD__.__LINE__.function_backtrace());
-		$starttime = microtime (true);
+		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		$this->mail_bo->restoreSessionData();
 		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
 		//$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
@@ -587,9 +587,7 @@ class mail_ui
 
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
-		$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);
-
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -777,6 +775,7 @@ class mail_ui
 	 */
 	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true)
 	{
+		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
 			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
@@ -906,8 +905,10 @@ class mail_ui
 		{
 			$node = self::findNode($out,$_nodeID);
 			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
+			if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'return subtree for:'.$_nodeID,__METHOD__.__LINE__);
 			return $node;
 		}
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,function_backtrace(),__METHOD__.__LINE__);
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 	}
 
