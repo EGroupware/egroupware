@@ -1,6 +1,11 @@
 <?php
 /**
- * eGroupWare API - LDAP Authentication
+ * EGroupware API - LDAP Authentication
+ *
+ * To be able to use SSL or TLS you either need:
+ * a) ldap to have certificate store INCL. used certificate!
+ * b) add to /etc/openldap/ldap.conf: TLS_REQCERT     never
+ *    to tell ldap not to validate certificates (insecure)
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
