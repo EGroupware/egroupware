@@ -643,7 +643,7 @@ var et2_widget = Class.extend(
 		var readonly = attributes["readonly"] =
 			this.getArrayMgr("readonlys").isReadOnly(
 				_node.getAttribute("id"), _node.getAttribute("readonly"),
-				this.readonly);
+				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly );
 
 		// Check to see if modifications change type
 		var modifications = this.getArrayMgr("modifications");
