@@ -853,15 +853,18 @@ class etemplate_widget
 	/**
 	 * Set an attribute in a named cell if val is not NULL else return the attribute
 	 *
+	 * Can be called static, in which case it only sets modifications.
+	 *
 	 * @param string $name cell-name
 	 * @param string $attr attribute-name
 	 * @param mixed $val if not NULL sets attribute else returns it
 	 * @return reference to attribute
 	 */
-	public function &setElementAttribute($name,$attr,$val)
+	public static function &setElementAttribute($name,$attr,$val)
 	{
+		error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
 		$ref =& self::$request->modifications[$name][$attr];
-		if(self::$request && self::$response && $val != $this->attrs[$attr])
+		if(self::$request && self::$response && (!isset($this) || $val != $this->attrs[$attr]))
 		{
 			// In an AJAX response - automatically add
 			self::$response->generic('assign',array(
@@ -870,8 +873,9 @@ class etemplate_widget
 				'key' => $attr,
 				'value' => $val
 			));
+			error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
 		}
-		$this->attrs[$attr] = $val;
+		if (isset($this)) $this->attrs[$attr] = $val;
 		if (!is_null($val)) $ref = $val;
 
 		//error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
