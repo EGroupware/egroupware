@@ -1443,17 +1443,13 @@ class mail_bo
 		// this indicates, that there is no Filter set, and the returned set/subset should not contain DELETED Messages, nor filtered for UNDELETED
 		if ($setSession==true && ((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
 		{
-			$starttime = microtime(true);
-			//$deletedMessages = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('DELETED')),$byUid=true,false);
+			if (self::$debugTimes) $starttime = microtime(true);
 			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
 			//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
-			$endtime = microtime(true);
-			$r = ($endtime-$starttime);
-			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
-			error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
+			if (self::$debugTimes) self::logRunTimes($starttime,null,'setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName],__METHOD__.__LINE__);			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
 		}
 		$try2useCache = false;
 		$filter = $this->createIMAPFilter($_folderName, $_filter);
