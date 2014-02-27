@@ -1251,6 +1251,11 @@ egwActionObject.prototype.toggleAllSelected = function(_select)
 		_select = !this.getAllSelected();
 	}
 
+	// Check for a select_all action
+	if(_select && this.manager && this.manager.getActionById('select_all'))
+	{
+		return this.manager.getActionById('select_all').execute(this);
+	}
 	this.setAllSelected(_select);
 };
 
