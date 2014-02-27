@@ -103,9 +103,7 @@
 					</grid>
 					<buttononly class="et2_button ui-button" label="Show all attachments" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
-				<hbox id="mailPreviewIcons">
-					<toolbar id="toolbar"/>
-				</hbox>
+				<toolbar id="toolbar" class="mailPreviewIcons"/>
 				<box id="mailPreviewContainer">
 					<iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
 				</box>

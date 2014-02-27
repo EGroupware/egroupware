@@ -2079,7 +2079,7 @@ input[type=button] {
   padding: 0px;
   height: 16px !important;
 }
-#mail-index_mailPreviewIcons {
+.mailPreviewIcons {
   position: absolute;
   right: 0;
   top: 0;
@@ -2393,21 +2393,21 @@ input[type=button] {
   background-color: #ffc200;
 }
 /*#toolbar-actionbox{.dimension_height_s;}*/
-/* 
+/*
 h.ui-toolbar-menulistHeader,
 #ui-accordion-toolbar-actionbox-header-0{
-    
+
     .dimension_height_s;
     background-color: @gray_50;
     color: @gray_0;
     margin:0;
-    
+
     // little ICON
     .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
 		margin-top: -11px;
 		color: @gray_0;
 	}
-    
+
 }
 
 // accordion, where Button be placed
@@ -2415,13 +2415,13 @@ div#toolbar-menulist{
     background-color: @gray_50;
     color: @gray_0;
 
-           Elemente 
+           Elemente
 
            button {
                 height: 24px !important;
-                
+
                 img[src$="svg"]{
-                    
+
                                 .gradient_vertical (@gray_60, @gray_60);
                                 background-color: @gray_100;
                                 }

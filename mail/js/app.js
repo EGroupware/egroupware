@@ -697,8 +697,6 @@ app.classes.mail = AppJS.extend(
 			this.mail_selectedMails.push(_id);
 		}
 		this.mail_disablePreviewArea(false);
-		var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.toolbaractions != 'undefined')?JSON.parse(dataElem.data.toolbaractions):undefined);
-		if (toolbaractions) this.et2.getWidgetById('toolbar').set_actions(toolbaractions);
 
 		// Request email body from server
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
@@ -2444,10 +2442,10 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
-	 * 
-	 * @param {event} _ev 
+	 *
+	 * @param {event} _ev
 	 * @param {object} _widget taglist
-	 * 	
+	 *
 	 */
 	sieve_focus_radioBtn: function(_ev, _widget)
 	{
@@ -2456,7 +2454,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Select all aliases
-	 * 
+	 *
 	 */
 	sieve_vac_all_aliases: function()
 	{
@@ -2539,12 +2537,12 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Send back action resault to server
-	* 
+	*
 	* @param {string} _typeId action name
 	* @param {object} _data content
 	* @param {string} _selectedID selected row id
 	* @param {string} _msg message
-	* 
+	*
 	*/
 	_do_action: function(_typeID, _data,_selectedID,_msg)
 	{
@@ -2556,10 +2554,10 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	*  
+	*
 	* @todo: Need to find a way how to refresh the grid
-	* 
-	* 
+	*
+	*
 	*/
 	sieve_refresh: function()
 	{
@@ -2624,7 +2622,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Open seive filter list
-	 * 
+	 *
 	 * @param {egwAction} action - Action user did to get here
 	 * @param {egwActionObject[]} selected - selected row(s)
 	 *

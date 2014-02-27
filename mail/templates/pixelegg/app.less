@@ -118,7 +118,7 @@ div#mail-index{
                 .border_none;
             }
             tr.mail td img[src*="svg"]{ .gradient_vertical (@gray_70, @gray_70);}
-            
+
             tr.mail div span {.dimension_height_xs;.box_shadow_none; display: table-cell; }
 
 
@@ -171,10 +171,6 @@ div#mail-index{
 			div#mail-index_mailPreviewHeadersSubject > span{
 				white-space: nowrap;
 			}
-
-            // Icons
-            div#mail-index_mailPreviewIcons{}
-
 
             // Email Inhalt
             div#mail-index_mailPreviewContainer{
@@ -337,24 +333,24 @@ div#mail-index{
         width: 100%;
         height: 35px !important;
         padding: 5px 5px 5px 2px !important;
-        
+
         .gradient_thead;
         .color_100_gray;
-        
-        
+
+
         button[id="mail-compose_button[sent]"],
         button.et2_button{
 /*            background-color: @gray_30;*/
-     
+
             /*height: 33px;*/
             /*margin: 0px 3px 0 !important;*/
         }
-        
+
 
         span.email-button-group {
             .span_tool_group;
             height: 27px;
-            
+
         }
 
         span.sent {float: left; background-color: @egw_color_2_a; background-image: none;}
@@ -608,7 +604,7 @@ div#mail-index{
     //	gesamtbreite
     width: 870px;
     padding: 5px;
-    
+
     /*.mailDisplayHeaderSection{*/
         /*top: 0;*/
         /*position: relative;*/
@@ -625,10 +621,10 @@ div#mail-index{
 /*            padding: 5px 3px;*/
             height: 36px;
             /*display: -webkit-box;*/
-            
+
             // all buttons
             div.et2_toolbar_actionlist{margin-top: 3px; margin-left: 3px;}
-            
+
            button {
                 .Complete_Button_Icon_normal;
                 height: 24px;
@@ -760,15 +756,15 @@ div#mail-index{
                     }
                 }
             }
-            
-            
+
+
      /*OPEN SINGLE WINDOW AFTER CLICK ON MAIL*/
     // ###################### buttons##############################
     // #      #      #     #     #     #     #     #     #     ####
     // #      #      #     #     #     #     #     #     #     ####
     // ############################################################
     #toolbar-actionlist{
-                         
+
                     padding: 0px 3px;
                     span[data-group] {margin: 0px 40px 0 0;}
                      button {
@@ -776,8 +772,8 @@ div#mail-index{
                             height: 27px;
                                 [src*="svg"]{
                                  .gradient_vertical (@gray_90, @gray_90);
-                                            } 
-                            } 
+                                            }
+                            }
                     button[id*="toolbar-composeasnew"],
                     button[id*="toolbar-reply"],
                     button[id*="toolbar-reply_all"],
@@ -799,10 +795,10 @@ div#mail-index{
                     button[id*="toolbar-tracker"]{
                         &:hover {background-color: @egw_color_1_a;}
                         &:active {background-color: .background_color_15_gray;}
-                    }        
-                            
+                    }
+
         }
-            
+
 
         }
 
@@ -832,10 +828,10 @@ div#mail-index{
     .mail_DisplayNone{
         display: none;
     }
-    
-    
 
-    
+
+
+
 
 } // Ende Display
 
@@ -845,7 +841,7 @@ div#mail-index{
 * et2_toolbar
 */
 .et2_toolbar {
-       
+
         button {
 }
 }
@@ -853,30 +849,30 @@ div#mail-index{
 .et2_toolbar-dropdown{
         background: @gray_10 !important;
         background-color: @gray_10 !important;
-        
+
         button{
         background: @gray_10 !important;
         background-color: @gray_10 !important;
-        
+
         &:hover{}
-        
+
         }
-        
+
         ul> li{  }
-        
+
         ul{          }
-        
+
 }
 
 .et2_toolbar-dropdown-menulist {
             button{
                     background: @gray_10 !important;
                     background-color: @gray_10 !important;
-                    
+
                     &:nth-child(2){}
-                    
+
                     }
-             ul{ }   
+             ul{ }
 
 }
 
@@ -885,22 +881,22 @@ div.ui-toolbar-menulist{
         .border_normal;
 }
 .ui-toolbar-menulist{
-    
+
         h {
 	padding-bottom: 7px;
 	margin: 0;
         }
-        
+
         button {
 
         }
-        
+
         div{
 	background-color: @gray_10 !important;
         .border_normal;
         }
-    
-} 
+
+}
 
 .ui-toolbar-menulistHeader{
 }
@@ -912,14 +908,14 @@ div.ui-toolbar-menulist{
 
 // aufgeklappte Toolbar
 div#displayToolbar-menulist{
-    
+
     .et2_dropdown{
         .box_shadow_none;
         border: none !important;
         button {.box_shadow_none;}
     }
         img {.dimension_width_height_sm; }
-    
+
 }
 
 /* ##################################################################################
@@ -928,33 +924,33 @@ div#displayToolbar-menulist{
  * ##################################################################################
  */
 #mail-subscribe{
-    
+
     table.et2_grid tr td {
                             padding: 0px;
-    
-                            
+
+
                          /*Label*/
                            .mail_subscription_header {
-                               .headline_h2; 
+                               .headline_h2;
                                line-height: 2em;
                                font-weight: bold;
                                font-size: 150%;
                                padding-bottom: 20px;
 
                            }
-                      
-                            
+
+
                          // Folder List
                            div.et2_box {
                              margin-top: 16px;
                              height: 484px;
                              overflow: auto;
                            }
-                           
-              
-    
+
+
+
     }
-    
+
 } // #mail-subscribe
 
 .mail_subscription_header
@@ -1337,10 +1333,10 @@ pre {
     right:-72px;
     width:200px !important;
     z-index:99;
-    
+
     div.et2_progress {background-color: @gray_30 !important;}
     div.et2_progress > div {min-height: 4px !important;}
-    
+
 }
 .mail-index_quotaDisplayNone {
     display: none !important;
@@ -1448,7 +1444,7 @@ input[type=button] {
 
 
 
-#mail-index_mailPreviewIcons {
+.mailPreviewIcons {
     position: absolute;
     right: 0;
     top: 0;
@@ -1495,13 +1491,13 @@ input[type=button] {
     background: none;
     /*margin: 5px 5px 0 0;*/
     /*border: none;*/
-    
-    
+
+
     // alle Buttons / drag + drop
     #toolbar-actionlist{
-        
+
         margin-top: 3px;
-        
+
     }
 
 
@@ -1509,10 +1505,10 @@ input[type=button] {
 
            button {
                 height: 24px !important;
-               
-                
+
+
                 img[src$="svg"]{
-                    
+
                 .gradient_vertical (@gray_60, @gray_60);
                 background-color: @gray_100;
                 }
@@ -1542,97 +1538,97 @@ input[type=button] {
             button[id*="toolbar-save"],
             button[id*="toolbar-header"]{
                 &:focus {
-                    background-color: @color_positive_action; 
+                    background-color: @color_positive_action;
                     .gradient_vertical (@color_positive_action, @color_positive_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_positive_action, @color_positive_action);
                            background-color: @color_positive_action;
                            }
-                
+
                 }
                 &:hover {
-                    background-color: @color_positive_action; 
+                    background-color: @color_positive_action;
                     .gradient_vertical (@color_positive_action, @color_positive_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_positive_action, @color_positive_action);
                            background-color: @color_positive_action;
                            }
-                
+
                 }
                 &:active {
-                    background-color: @color_positive_action; 
+                    background-color: @color_positive_action;
                     .gradient_vertical (@color_positive_action, @color_positive_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_positive_action, @color_positive_action);
                            background-color: @color_positive_action;
                            }
-                
+
                 }
-               
-                
-                
+
+
+
             }
 
             button[id*="toolbar-unflagged"],
             button[id*="toolbar-delete"]{
                                 &:focus {
-                    background-color: @color_negative_action;; 
+                    background-color: @color_negative_action;;
                     .gradient_vertical (@color_negative_action, @color_negative_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_negative_action, @color_negative_action);
                            background-color: @color_negative_action;
                            }
-                
+
                 }
                 &:hover {
-                    background-color: @color_negative_action; 
+                    background-color: @color_negative_action;
                     .gradient_vertical (@color_negative_action, @color_negative_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_negative_action, @color_negative_action);
                            background-color: @color_negative_action;
                            }
-                
+
                 }
                 &:active {
-                    background-color: @color_negative_action;; 
+                    background-color: @color_negative_action;;
                     .gradient_vertical (@color_negative_action, @color_negative_action);
                             img[src$="svg"]{
                            .gradient_vertical (@color_negative_action, @color_negative_action);
                            background-color: @color_negative_action;
                            }
-                
+
                 }
             }
 
             button[id*="toolbar-infolog"],
             button[id*="toolbar-tracker"]{
                                 &:focus {
-                    background-color: @egw_color_1_a; 
+                    background-color: @egw_color_1_a;
                     .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                             img[src$="svg"]{
                            .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                            background-color: @egw_color_1_a;
                            }
-                
+
                 }
                 &:hover {
-                    background-color: @egw_color_1_a; 
+                    background-color: @egw_color_1_a;
                     .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                             img[src$="svg"]{
                            .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                            background-color: @egw_color_1_a;
                            }
-                
+
                 }
                 &:active {
-                    background-color: @egw_color_1_a; 
+                    background-color: @egw_color_1_a;
                     .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                             img[src$="svg"]{
                            .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
                            background-color: @egw_color_1_a;
                            }
                 }
-                
+
             }
 
 
@@ -1640,21 +1636,21 @@ input[type=button] {
 
 // weitere Button
 /*#toolbar-actionbox{.dimension_height_s;}*/
-/* 
+/*
 h.ui-toolbar-menulistHeader,
 #ui-accordion-toolbar-actionbox-header-0{
-    
+
     .dimension_height_s;
     background-color: @gray_50;
     color: @gray_0;
     margin:0;
-    
+
     // little ICON
     .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
 		margin-top: -11px;
 		color: @gray_0;
 	}
-    
+
 }
 
 // accordion, where Button be placed
@@ -1662,13 +1658,13 @@ div#toolbar-menulist{
     background-color: @gray_50;
     color: @gray_0;
 
-           Elemente 
+           Elemente
 
            button {
                 height: 24px !important;
-                
+
                 img[src$="svg"]{
-                    
+
                                 .gradient_vertical (@gray_60, @gray_60);
                                 background-color: @gray_100;
                                 }

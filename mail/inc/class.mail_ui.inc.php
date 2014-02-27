@@ -585,6 +585,9 @@ class mail_ui
 
 		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
+		// sending preview toolbar actions
+		$etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
@@ -1584,25 +1587,13 @@ unset($query['actions']);
 	}
 
 	/**
-	 * function header2gridelements - to populate the grid elements with the collected Data
+	 * Get actions for preview toolbar
 	 *
-	 * @param array $_headers, headerdata to process
-	 * @param array $cols, cols to populate
-	 * @param array $_folderName, used to ensure the uniqueness of the uid over all folders
-	 * @param array $_folderType=0, foldertype, used to determine if we need to populate from/to
-	 * @param array $previewMessage=0, the message previewed
-	 * @return array populated result array
+	 * @return array
 	 */
-	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0, $previewMessage=0)
+	function get_toolbar_actions()
 	{
-		if (mail_bo::$debugTimes) $starttime = microtime(true);
-		$timestamp7DaysAgo =
-			mktime(date("H"), date("i"), date("s"), date("m"), date("d")-7, date("Y"));
-		$timestampNow =
-			mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
-		$dateToday = date("Y-m-d");
-		$rv = array();
-		$actions = self::get_actions();
+		$actions = $this->get_actions();
 		foreach(array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','view') as $a => $act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
@@ -1625,6 +1616,30 @@ unset($query['actions']);
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
 			}
 		}
+		unset($actionsenabled['drag_mail']);
+
+		return $actionsenabled;
+	}
+
+	/**
+	 * function header2gridelements - to populate the grid elements with the collected Data
+	 *
+	 * @param array $_headers, headerdata to process
+	 * @param array $cols, cols to populate
+	 * @param array $_folderName, used to ensure the uniqueness of the uid over all folders
+	 * @param array $_folderType=0, foldertype, used to determine if we need to populate from/to
+	 * @param array $previewMessage=0, the message previewed
+	 * @return array populated result array
+	 */
+	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0, $previewMessage=0)
+	{
+		if (mail_bo::$debugTimes) $starttime = microtime(true);
+		$timestamp7DaysAgo =
+			mktime(date("H"), date("i"), date("s"), date("m"), date("d")-7, date("Y"));
+		$timestampNow =
+			mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
+		$dateToday = date("Y-m-d");
+		$rv = array();
 
 		$i=0;
 		$firstuid = null;
@@ -1854,15 +1869,17 @@ unset($query['actions']);
 					else $data["flags"][$flag] = $flag;
 				}
 			}
-			unset($actionsenabled['drag_mail']);
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
-			$data['toolbaractions'] = json_encode($actionsenabled);
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
+
+		// ToDo: call this ONLY if labels change
+		etemplate_widget::setElementAttribute('toolbar', 'actions', $this->get_toolbar_actions());
+
 		return $rv;
 	}
 
