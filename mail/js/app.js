@@ -2161,9 +2161,7 @@ app.classes.mail = AppJS.extend(
 			.sendRequest();
 		var nm = this.et2.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
-		nm.refresh(messages['msg'],'delete')
-		//for (var i = 0; i < messages['msg'].length; i++) egw.dataDeleteUID(messages['msg'][i]);
-		this.mail_refreshMessageGrid();
+		// Server response contains refresh
 	},
 	/**
 	 * mail_copy - implementation of the copy action from drag n drop
@@ -2181,7 +2179,7 @@ app.classes.mail = AppJS.extend(
 		// as the "onNodeSelect" function!
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
 			.sendRequest();
-		this.mail_refreshMessageGrid();
+		// Server response contains refresh
 	},
 
 	/**
