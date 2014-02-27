@@ -459,7 +459,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(_type == "delete")
 		{
 			// Record current & next index
-			var uid = app + "::" + _row_ids[0];
+			var uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 			var next = (entry.ao?entry.ao.getNext(_row_ids.length):null);
 			if(next == null || !next.id)
@@ -472,7 +472,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.dataview.grid.doInvalidate = false;
 			for(var i = 0; i < _row_ids.length; i++)
 			{
-				uid = app + "::" + _row_ids[i];
+				uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
 				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 
 				// Unselect
@@ -501,7 +501,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
 		{
-			var uid = app + "::" + _row_ids[i];
+			var uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
 			switch(_type)
 			{
 				case "update":
