@@ -175,7 +175,7 @@ class infolog_ui
 		$info['info_percent'] = (int) $info['info_percent'].'%';
 		$editrights = $this->bo->check_access($info,EGW_ACL_EDIT);
 		$isresposible = $this->bo->is_responsible($info);
-		if (($readonlys["edit[$id]"] = !($editrights || // edit rights or more then standard responsible rights
+		if ((!($editrights || // edit rights or more then standard responsible rights
 			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')))))
 		{
 			$info['class'] .= 'rowNoEdit ';
@@ -184,34 +184,27 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoUndelete ';
 		}
-		if (($readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
-			!($editrights || $isresposible))))
+		if (($done || (!($editrights || $isresposible))))
 		{
 			$info['class'] .= 'rowNoClose ';
 		}
 		// this one is supressed, when you are not allowed to edit, or not responsible, or the entry is closed
 		// and has no children. If you want that this one is shown if there are children regardless of the status of the current or its childs,
 		// then modify ($done) to ($done && !$info['info_anz_subs'])
-		if (($readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
-			!($editrights || $isresposible))))
+		if ($done || !$info['info_anz_subs'] || (!($editrights || $isresposible)))
 		{
 			$info['class'] .= 'rowNoCloseAll ';
 		}
-		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
-			!$editrights && !$isresposible &&
-			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
 		if (!$this->bo->check_access($info,EGW_ACL_DELETE))
 		{
 			$info['class'] .= 'rowNoDelete ';
 		}
-		if (($readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD)))
+		if (!$this->bo->check_access($info,EGW_ACL_ADD))
 		{
 			$info['class'] .= 'rowNoSubs ';
 		}
 		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
 		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
-
-		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
@@ -374,7 +367,7 @@ class infolog_ui
 			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true);
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
-		$readonlys = $rows = array();
+		$rows = array();
 
 		// Don't add parent in if info_id_parent (expanding to show subs)
 		if ($query['action_id'] && !$query['col_filter']['info_id_parent'])
@@ -905,7 +898,6 @@ class infolog_ui
 			if (!isset($this->bo->grants[$group])) unset($sel_options['info_type'][$type]);
 		}
 
-		egw_framework::validate_file('.','index','infolog');
 
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
 	}
