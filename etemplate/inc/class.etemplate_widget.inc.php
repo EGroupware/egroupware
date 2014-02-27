@@ -862,7 +862,7 @@ class etemplate_widget
 	 */
 	public static function &setElementAttribute($name,$attr,$val)
 	{
-		error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
+		//error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
 		$ref =& self::$request->modifications[$name][$attr];
 		if(self::$request && self::$response && (!isset($this) || $val != $this->attrs[$attr]))
 		{
