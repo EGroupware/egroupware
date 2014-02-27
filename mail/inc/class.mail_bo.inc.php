@@ -883,7 +883,8 @@ class mail_bo
 				//error_log(__METHOD__.__LINE__);
 				try
 				{
-					$ret = $this->icServer->getSpecialUseFolders();
+					// do not query IMAP Server for SPECIAL-USE Folders, as we assume thev wizard already did that
+					$ret = null;//$this->icServer->getSpecialUseFolders();
 				} catch (Exception $e)
 				{
 					$ret=null;
@@ -891,6 +892,10 @@ class mail_bo
 				if (empty($ret))
 				{
 					$_specialUseFolders[$this->icServer->ImapServerId]=array();
+					if (!empty($this->icServer->acc_folder_trash)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_trash]='Trash';
+					if (!empty($this->icServer->acc_folder_drafts)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_draft]='Drafts';
+					if (!empty($this->icServer->acc_folder_sent)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_sent]='Sent';
+					if (!empty($this->icServer->acc_folder_templates)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]='Templates';
 				}
 				else
 				{
