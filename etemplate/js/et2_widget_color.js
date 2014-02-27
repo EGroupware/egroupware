@@ -106,7 +106,7 @@ var et2_color = et2_inputWidget.extend(
 
 		// Initialize jPicker
 
-		this.options.color.active = new jQuery.jPicker.Color({hex:this.value});
+		this.options.color.active = new jQuery.jPicker.Color(this.value ? {hex:this.value} : {});
 
 		// Do this to get a reference to the actual jPicker used, so we can fully remove it in destroy()
 		var list_id = jQuery.jPicker.List.length ? jQuery.jPicker.List.length : 0;
