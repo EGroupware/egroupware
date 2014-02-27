@@ -19,11 +19,6 @@
 					<nextmatch-filterheader id="application" options="Application" class="lr_padding"/>
 					<nextmatch-accountfilter align="center" label="Allowed users" id="allowed_users" options="All,groups" class="lr_padding"/>
 					<nextmatch-accountfilter label="Owner" id="owner"/>
-					<nextmatch-header align="center" label="Actions" id="actions" class="lr_padding"/>
-					<hbox>
-						<button statustext="delete ALL selected definitions" label="Delete" id="delete_selected" onclick="return confirm('Do you really want to DELETE this definitions?');" image="delete"/>
-						<button statustext="export ALL selected definitions" label="Export" id="export_selected" image="fileexport"/>
-					</hbox>
 				</row>
 				<row class="row $row_cont[class]">
 					<image src="${row}[type]" no_lang="1" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.{$row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[name]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button"/>
@@ -33,11 +28,6 @@
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
 					</menulist>
-					<hbox align="center">
-						<button label="Edit" id="edit[{$row_cont[definition_id]}]" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.edit&amp;definition=$row_cont[name]'),'','dependent=yes,width=500,height=500,location=no,menubar=no,toolbar=no,scrollbars=yes,resizable=1,status=yes'); return false; return false;" image="edit"/>
-						<button statustext="Delete this eTemplate" label="Delete" id="delete[$row_cont[definition_id]]" onclick="return confirm('Delete this definition');" image="delete"/>
-					</hbox>
-					<checkbox align="center" statustext="select this eTemplate to delete it" id="selected[]" options="$row_cont[definition_id]"/>
 				</row>
 			</rows>
 		</grid>

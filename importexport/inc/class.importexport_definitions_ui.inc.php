@@ -435,7 +435,8 @@ class importexport_definitions_ui
 		$rows = array();
 		egw_session::appsession('index','importexport',$query);
 		$bodefinitions = new importexport_definitions_bo($query['col_filter'], true);
-		return $bodefinitions->get_rows($query, $rows, $readonlys);
+		// We don't care about readonlys for the UI
+		return $bodefinitions->get_rows($query, $rows, $discard);
 	}
 
 	/**

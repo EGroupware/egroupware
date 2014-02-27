@@ -70,7 +70,7 @@ class importexport_definitions_bo {
 				!$GLOBALS['egw_info']['user']['apps']['admin'];
 			if($readonlys["edit[{$row['definition_id']}]"])
 			{
-				$row['class'] .= 'rowNoEdit';
+				$row['class'] .= 'rowNoEdit rowNoDelete';
 				$ro_count++;
 			}
 			$row['class'] .= ' ' . $row['type'];
