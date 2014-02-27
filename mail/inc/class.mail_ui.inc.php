@@ -101,7 +101,7 @@ class mail_ui
 	 */
 	function __construct()
 	{
-		//$starttime = microtime (true);
+		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
 			//error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
@@ -128,8 +128,11 @@ class mail_ui
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
-			//openConnection gathers SpecialUseFolderInformation and Delimiter Info
-			$this->mail_bo->openConnection(self::$icServerID);
+			if ($_GET['menuaction'] != 'mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate')
+			{
+				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
+				$this->mail_bo->openConnection(self::$icServerID);
+			}
 		}
 		catch (Exception $e)
 		{
@@ -147,8 +150,7 @@ class mail_ui
 
 		//$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
-		//$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__. " time used: ".$endtime);
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
 	/**
@@ -158,6 +160,7 @@ class mail_ui
 	 */
 	function changeProfile($_icServerID,$unsetCache=false)
 	{
+		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (self::$icServerID != $_icServerID)
 		{
 		}
@@ -176,6 +179,7 @@ class mail_ui
 		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
 		$GLOBALS['egw']->preferences->save_repository(true);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 	/**
 	 * Subscribe or Unsubscribe to a folder

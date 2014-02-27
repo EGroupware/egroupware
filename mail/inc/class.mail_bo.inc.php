@@ -675,7 +675,7 @@ class mail_bo
 	 */
 	function reopen($_foldername)
 	{
-		if (self::$debug||self::$debugTimes) $starttime = microtime (true);
+		if (self::$debugTimes) $starttime = microtime (true);
 
 		//error_log(__METHOD__.__LINE__."('$_foldername') ".function_backtrace());
 		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
@@ -690,7 +690,7 @@ class mail_bo
 			}
 			$folderOpened = $_foldername;
 		//}
-		if (self::$debug||self::$debugTimes) self::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
+		if (self::$debugTimes) self::logRunTimes($starttime,null,'Folder:'.$_foldername,__METHOD__.__LINE__);
 	}
 
 
@@ -5045,7 +5045,7 @@ class mail_bo
 	{
 		if (is_null($_endtime)) $_endtime = microtime(true);
 		$usagetime = microtime(true) - $_starttime;
-		if (self::$debugTimes) error_log($_methodNline.' took:'.$usagetime.'(s) '.($_message?'Details:'.$_message:''));
+		if (self::$debugTimes) error_log($_methodNline.' took:'.number_format($usagetime,5).'(s) '.($_message?'Details:'.$_message:''));
 	}
 
 	/**
