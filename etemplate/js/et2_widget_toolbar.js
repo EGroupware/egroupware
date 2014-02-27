@@ -101,7 +101,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
-		
+
 		var pref = egw.preference(this.id,this.egw().getAppName());
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
@@ -110,7 +110,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		{
 			for (var name in actions)
 			{
-				if (!actions[name].toolbarDefault && 
+				if (!actions[name].toolbarDefault &&
 						(typeof actions[name].children === 'undefined' || !this.flat_list))
 					this.set_prefered(actions[name].id,'add');
 			}
@@ -152,7 +152,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		};
 
 		this.countActions = countActions(actions) - Object.keys(this.preference).length;
-		
+
 		var last_group = false;
 		var last_group_id = false;
 		for(var name in actions)
@@ -218,14 +218,14 @@ var et2_toolbar = et2_DOMWidget.extend(
 				{
 					continue;
 				}
-				
+
 				var dropdown = et2_createWidget("dropdown_button", {
 					id: action.id
 				},this);
-				
+
 				dropdown.set_select_options(children);
 				dropdown.set_label (action.caption);
-				
+
 				dropdown.set_image (action.iconUrl);
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
@@ -270,10 +270,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
-		var toolbar =jQuery('#'+this.id+'-'+'actionlist').find('span').children(),
-			toolbox = jQuery('#'+this.id+'-'+'actionbox'),
-			menulist = jQuery('#'+this.id+'-'+'menulist');
-		
+		var toolbar = this.actionlist.find('span').children(),
+			toolbox = this.actionbox,
+			menulist = jQuery(this.actionlist.children()[1]);
+
 		toolbar.draggable({
 			cancel:true,
 			zIndex: 1000,
