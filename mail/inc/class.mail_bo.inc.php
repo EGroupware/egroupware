@@ -80,6 +80,7 @@ class mail_bo
 	 * @var boolean
 	 */
 	static $debug = false; //true;
+	static $debugTimes = true; //true;
 
 	/**
 	 * static used to hold the mail Config values
@@ -674,6 +675,8 @@ class mail_bo
 	 */
 	function reopen($_foldername)
 	{
+		if (self::$debug||self::$debugTimes) $starttime = microtime (true);
+
 		//error_log(__METHOD__.__LINE__."('$_foldername') ".function_backtrace());
 		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
 		// eMails when not in "current-Folder" (folder that is selected by UI)
@@ -687,6 +690,7 @@ class mail_bo
 			}
 			$folderOpened = $_foldername;
 		//}
+		if (self::$debug||self::$debugTimes) self::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
 	}
 
 
@@ -1091,13 +1095,7 @@ class mail_bo
 		if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
 		$reverse = (bool)$_reverse;
 		// get the list of messages to fetch
-		if (self::$debug) $starttime = microtime (true);
 		$this->reopen($_folderName);
-		if (self::$debug)
-		{
-			$endtime = microtime(true) - $starttime;
-			error_log(__METHOD__. " time used for reopen: ".$endtime.' for Folder:'.$_folderName);
-		}
 		//$currentFolder = $this->icServer->getCurrentMailbox();
 		//if ($currentFolder != $_folderName); $this->icServer->openMailbox($_folderName);
 		$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
@@ -1115,16 +1113,13 @@ class mail_bo
 				//$_filter['range'] ="$_startMessage:*";
 			}
 			if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName, $_sort, $reverse, ".array2string($_filter).", $rByUid");
-			if (self::$debug) $starttime = microtime (true);
+			if (self::$debug||self::$debugTimes) $starttime = microtime (true);
 			//see this example below for a 12 week datefilter (since)
 			//$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $starttime-(3600*24*7*12)));
 			$_sortResult = $this->getSortedList($_folderName, $_sort, $reverse, $_filter, $rByUid, $_cacheResult);
 			$sortResult = $_sortResult['match']->ids;
-			if (self::$debug)
-			{
-				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__. " time used for getSortedList: ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_thisUIDOnly));
-			}
+			if (self::$debug||self::$debugTimes) self::logRunTimes($starttime,null,' call getSortedList for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_thisUIDOnly),__METHOD__.__LINE__);
+
 			if (self::$debug) error_log(__METHOD__.__LINE__.array2string($sortResult));
 			#$this->icServer->setDebug(false);
 			#print "</pre>";
@@ -1188,7 +1183,7 @@ class mail_bo
 
 		//$queryString = implode(',', $sortResult);
 		// fetch the data for the selected messages
-		if (self::$debug) $starttime = microtime(true);
+		if (self::$debug||self::$debugTimes) $starttime = microtime(true);
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uidsToFetch->add($sortResult);
 
@@ -1210,11 +1205,10 @@ class mail_bo
 			$headersNew = array();
 			$sortResult = array();
 		}
-		if (self::$debug)
+		if (self::$debug||self::$debugTimes)
 		{
-			$endtime = microtime(true) - $starttime;
-			error_log(__METHOD__. " time used for getSummary: ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
-			error_log(__METHOD__.__LINE__.' Query:'.$queryString.' Result:'.array2string($headersNew));
+			self::logRunTimes($starttime,null,'HordeFetch: for Folder:'.$_folderName.' Filter:'.array2string($_filter),__METHOD__.__LINE__);
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Query:'.$queryString.' Result:'.array2string($headersNew));
 		}
 
 		$count = 0;
@@ -1225,7 +1219,7 @@ class mail_bo
 
 		$count = 0;
 		if (is_object($headersNew)) {
-			if (self::$debug) $starttime = microtime(true);
+			if (self::$debug||self::$debugTimes) $starttime = microtime(true);
 			foreach($headersNew->ids() as $id) {
 				$_headerObject = $headersNew->get($id);
 				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
@@ -1357,11 +1351,7 @@ class mail_bo
 
 				$count++;
 			}
-			if (self::$debug)
-			{
-				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
-			}
+			if (self::$debug||self::$debugTimes) self::logRunTimes($starttime,null,' fetching Headers and stuff for Folder:'.$_folderName,__METHOD__.__LINE__);
 			//self::$debug=false;
 			// sort the messages to the requested displayorder
 			if(is_array($retValue['header'])) {
@@ -1434,7 +1424,17 @@ class mail_bo
 	 */
 	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
 	{
-		$folderStatus = $this->icServer->examineMailbox($_folderName);
+		static $cachedFolderStatus;
+		// in the past we needed examineMailbox to figure out if the server with the serverID support keywords
+		// this information is filled/provided by examineMailbox; but caching within one request seems o.k.
+		if (is_null($cachedFolderStatus) || !isset($cachedFolderStatus[$this->profileID][$_folderName]) )
+		{
+			$folderStatus = $cachedFolderStatus[$this->profileID][$_folderName] = $this->icServer->examineMailbox($_folderName);
+		}
+		else
+		{
+			$folderStatus = $cachedFolderStatus[$this->profileID][$_folderName];
+		}
 		//error_log(__METHOD__.__LINE__.' F:'.$_folderName.' S:'.array2string($folderStatus));
 		//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
 		$try2useCache = true;
@@ -1443,17 +1443,17 @@ class mail_bo
 		// this indicates, that there is no Filter set, and the returned set/subset should not contain DELETED Messages, nor filtered for UNDELETED
 		if ($setSession==true && ((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
 		{
-			//$starttime = microtime(true);
+			$starttime = microtime(true);
 			//$deletedMessages = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('DELETED')),$byUid=true,false);
 			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
 			//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
-			//$endtime = microtime(true);
-			//$r = ($endtime-$starttime);
+			$endtime = microtime(true);
+			$r = ($endtime-$starttime);
 			//error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
-			//error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
+			error_log(__METHOD__.__LINE__.' Took:'.$r.'(s) setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName]);
 		}
 		$try2useCache = false;
 		$filter = $this->createIMAPFilter($_folderName, $_filter);
@@ -5033,6 +5033,23 @@ class mail_bo
 	static function detect_qp(&$sting) {
 		$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
 		return preg_match("$needle",$string);
+	}
+
+	/**
+	 * logRunTimes
+	 *	logs to the error log all parameters given; output only if self::$debugTimes is true
+	 *
+	 * @param int $_starttime starttime of the action measured based on microtime(true)
+	 * @param int $_endtime endtime of the action measured, if not given microtime(true) is used
+	 * @param string $_message message to output details or params, whatever seems neccesary
+	 * @param string $_methodNline - Information where the log was taken
+	 * @return void
+	 */
+	static function logRunTimes($_starttime,$_endtime=null,$_message='',$_methodNline='')
+	{
+		if (is_null($_endtime)) $_endtime = microtime(true);
+		$usagetime = microtime(true) - $_starttime;
+		if (self::$debugTimes) error_log($_methodNline.' took:'.$usagetime.'(s) '.($_message?'Details:'.$_message:''));
 	}
 
 	/**

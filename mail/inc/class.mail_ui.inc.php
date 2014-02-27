@@ -1389,7 +1389,7 @@ unset($query['actions']);
 //_debug_array($query);
 //error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
 //error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
-		$starttime = microtime(true);
+		if (mail_bo::$debugTimes) $starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
 
@@ -1521,8 +1521,7 @@ unset($query['actions']);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 
-		$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
 //ajax_get_rows
 //error_log(__METHOD__.__LINE__.' MenuactionCalled:'.$_GET['menuaction'].'->'.function_backtrace());
 		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
@@ -1591,6 +1590,7 @@ unset($query['actions']);
 	 */
 	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0, $previewMessage=0)
 	{
+		if (mail_bo::$debugTimes) $starttime = microtime(true);
 		$timestamp7DaysAgo =
 			mktime(date("H"), date("i"), date("s"), date("m"), date("d")-7, date("Y"));
 		$timestampNow =
@@ -1857,6 +1857,7 @@ unset($query['actions']);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
+		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
 		return $rv;
 	}
 
