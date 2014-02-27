@@ -153,6 +153,7 @@ var et2_taglist = et2_selectbox.extend(
 			noSuggestionText: this.egw().lang("No suggestions"),
 			required: this.options.required,
 			allowFreeEntries: this.options.allowFreeEntries,
+			useTabKey: true,
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
