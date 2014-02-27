@@ -269,10 +269,10 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
-
+		
 		var toolbar = this.actionlist.find('span').children(),
 			toolbox = this.actionbox,
-			menulist = jQuery(this.actionlist.children()[1]);
+			menulist = jQuery(this.actionbox.children()[1]);
 
 		toolbar.draggable({
 			cancel:true,
@@ -308,11 +308,11 @@ var et2_toolbar = et2_DOMWidget.extend(
 			tolerance:"touch"
 		});
 
-		jQuery('#'+this.id+'-'+'actionlist').droppable({
+		this.actionlist.droppable({
 			tolerance:"pointer",
 			drop:function (event,ui) {
 				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"remove");
-				ui.draggable.appendTo(jQuery('#'+that.id+'-'+'actionlist'));
+				ui.draggable.appendTo(that.actionlist);
 				that._build_menu(actions);
 			}
 		});
@@ -322,7 +322,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			active:'none'
 		});
 	},
-
+	
 	/**
 	 * Add/Or remove an action from prefence
 	 *
@@ -358,7 +358,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', (action.hint ? action.hint : action.caption))
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-
+		
 		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
