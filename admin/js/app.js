@@ -103,7 +103,22 @@ app.classes.admin = AppJS.extend(
 	 */
 	refresh: function(_msg, _app, _id, _type)
 	{
-		this.linkHandler(window.framework.getApplicationByName(_app).browser.currentLocation);
+		// Try for intelligent et2 refresh inside iframe
+		var node = null;
+		if(_app && _id && this.iframe != null &&
+			(node = this.iframe.getDOMNode(this.iframe)) &&
+			node && node.contentWindow && node.contentWindow.etemplate2)
+		{
+			var templates = node.contentWindow.etemplate2.getByApplication('admin');
+			for(var i = 0; i < templates.length; i++)
+			{
+				templates[i].refresh(_msg,_app,_id,_type);
+			}
+		}
+		else
+		{
+			this.linkHandler(window.framework.getApplicationByName(_app).browser.currentLocation);
+		}
 	},
 
 	/**
