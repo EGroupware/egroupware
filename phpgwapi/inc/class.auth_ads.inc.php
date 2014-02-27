@@ -1,6 +1,11 @@
 <?php
 /**
- * eGroupWare API - ADS Authentication
+ * EGroupware API - ADS Authentication
+ *
+ * To be able to use SSL or TLS you either need:
+ * a) ldap to have certificate store INCL. used certificate!
+ * b) add to /etc/openldap/ldap.conf: TLS_REQCERT     never
+ *    to tell ldap not to validate certificates (insecure)
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <ralfbecker@outdoor-training.de> based on auth_ldap from:
@@ -31,6 +36,7 @@ class auth_ads implements auth_backend
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
+		unset($passwd_type);	// not used by required in function signature
 		if (preg_match('/[()|&=*,<>!~]/',$username))
 		{
 			return False;
@@ -71,12 +77,15 @@ class auth_ads implements auth_backend
 			{
 				if($allValues[0]['samaccountname'][0] != $username)
 				{
+					error_log(__METHOD__."('$username') username has wrong case!");
 					return false;
 				}
 			}
 			if (($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')))
 			{
-				return $GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
+				$ret = $GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
+				if (!$ret) error_log(__METHOD__."('$username') account_status check returning ".array2string($ret));
+				return $ret;
 			}
 			// store homedirectory for egw_session->read_repositories
 			$GLOBALS['auto_create_acct'] = array();
@@ -102,6 +111,7 @@ class auth_ads implements auth_backend
 				return True;
 			}
 		}
+		error_log(__METHOD__."('$username') authenticated, but user NOT found!");
 		/* dn not found or password wrong */
 		return False;
 	}
@@ -140,6 +150,7 @@ class auth_ads implements auth_backend
 	 */
 	static function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
 	{
+		unset($passwd);	// not used but required by function signature
 		if (!($adldap = accounts_ads::get_adldap())) return false;
 
 		if ($lastpwdchange)
@@ -225,8 +236,7 @@ class auth_ads implements auth_backend
 				$GLOBALS['egw_info']['server']['force_pwd_length'] ? $GLOBALS['egw_info']['server']['force_pwd_length'] : 7,
 				'yes',	// always check with "passwd_forbid_name" enabled
 				$account_id);
-			$msg = $e->getMessage();
-			$msg = strtr($msg, $tr=array(		// translate possible adLDAP and LDAP error
+			$msg = strtr($e->getMessage(), array(		// translate possible adLDAP and LDAP error
 				'Error' => lang('Error'),
 				'Server is unwilling to perform.' => lang('Server is unwilling to perform.'),
 				'Your password might not match the password policy.' => lang('Your password might not match the password policy.'),
