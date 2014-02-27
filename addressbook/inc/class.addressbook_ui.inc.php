@@ -204,7 +204,6 @@ class addressbook_ui extends addressbook_bo
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
-				'options-cat_id' => array(lang('none')),
 				'search'         =>	'',			// IO search pattern
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
@@ -241,6 +240,8 @@ class addressbook_ui extends addressbook_bo
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
+		$content['nm']['options-cat_id'] = array(lang('none'));
+
 		// Delete list action depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
 		{
@@ -1148,7 +1149,13 @@ window.egw_LAB.wait(function() {
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
-			$old_state = egw_session::appsession($what,'addressbook',$query);
+			$store_query = $query;
+			// Do not store these
+			foreach(array('options-cat_id','actions') as $key)
+			{
+				unset($store_query[$key]);
+			}
+			$old_state = egw_session::appsession($what,'addressbook',$store_query);
 		}
 		else
 		{
