@@ -2041,7 +2041,7 @@ class mail_bo
 					//_debug_array($foldersNameSpace);
 					if ($_subscribedOnly == true) {
 						$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
-						//continue;
+						continue;
 					}
 					// only check for Folder in FolderMaintenance for Performance Reasons
 					if(!$_subscribedOnly) {
