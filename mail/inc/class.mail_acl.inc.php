@@ -114,7 +114,12 @@ class mail_acl
 				}
 				//error_log(__METHOD__."() acl=".array2string($acl).' --> grid='.array2string($content['grid']));
 			}
-			array_push($content['grid'], array('acc_id'=>''));
+            //Set the acl entry in the last row with lrs as default ACL
+			array_push($content['grid'], array(
+                'acc_id'=>'',
+                'acl_l' => true,
+                'acl_r' => true,
+                'acl_s' => true));
 		}
 		else
 		{
@@ -200,7 +205,7 @@ class mail_acl
 			unset($value['acl']);
 
 			$options = array();
-			foreach ($value as $key => $val)
+			foreach (array_keys($value) as $key)
 			{
 				if ($value[$key] == true)
 				{
@@ -262,7 +267,7 @@ class mail_acl
 	function remove_acl($content, &$msg)
 	{
 		$row_num = array_keys($content['grid']['delete'],"pressed");
-		$row_num = $row_num[0];
+		if ($row_num) $row_num = $row_num[0];
 		$recursive = $content['grid'][$row_num]['acl_recursive'];
 		$identifier = $content['grid'][$row_num]['acc_id'][0];
 
