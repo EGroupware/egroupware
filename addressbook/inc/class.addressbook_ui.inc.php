@@ -1555,7 +1555,7 @@ window.egw_LAB.wait(function() {
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
 
-		
+
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
 		$rows['customfields'] = array_values($this->customfields);
@@ -1943,7 +1943,7 @@ window.egw_LAB.wait(function() {
 		$readonlys['change_org'] = empty($content['org_name']) || $view;
 
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
-		if (!$content['owner'] && !$this->is_admin($content))
+		if (!$content['owner'] && !$this->check_perms(EGW_ACL_EDIT, $content))
 		{
 			$this->_set_readonlys_for_own_account_acl($readonlys,$id);
 		}

@@ -344,6 +344,13 @@ class addressbook_so
 				// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
 				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= EGW_ACL_DELETE;
 			}
+			// allow certain groups to edit contact-data of accounts
+			if ($GLOBALS['egw_info']['server']['allow_account_edit'] &&
+				array_intersect($GLOBALS['egw_info']['server']['allow_account_edit'],
+					$GLOBALS['egw']->accounts->memberships($user, true)))
+			{
+				$grants[0] |= EGW_ACL_READ|EGW_ACL_EDIT;
+			}
 		}
 		else
 		{

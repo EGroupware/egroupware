@@ -71,10 +71,19 @@ select[multiple] { width:100%;}
      </select>
     </td>
    </tr>
+   <tr class="th">
+    <td colspan="2">
+    	&nbsp;<b>{lang_Security}</b>
+    </td>
+   </tr>
    <tr class="row_on">
-    <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_contacts_should_non-admins_be_able_to_export}
+    <td>&nbsp;{lang_How_many_contacts_should_non-admins_be_able_to_export}
     {lang_(empty_=_use_global_limit,_no_=_no_export_at_all)}:</td>
     <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
+   </tr>
+   <tr class="row_off">
+    <td>&nbsp;{lang_Allow_following_groups_to_edit_contact-data_of_accounts}:</td>
+    <td>{call_addressbook_hooks::allow_account_edit}</td>
    </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>

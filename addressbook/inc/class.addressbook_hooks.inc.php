@@ -455,4 +455,17 @@ class addressbook_hooks
 	{
 		return true;
 	}
+
+	/**
+	 * Hook returning options for deny_acl groups
+	 *
+	 * @param array $config
+	 */
+	public static function allow_account_edit($config)
+	{
+		$accountsel = new uiaccountsel();
+
+		return '<input type="hidden" value="" name="newsettings[allow_account_edit]" />'.
+			$accountsel->selection('newsettings[allow_account_edit]', 'allow_account_edit', $config['allow_account_edit'], 'groups', 4);
+	}
 }
