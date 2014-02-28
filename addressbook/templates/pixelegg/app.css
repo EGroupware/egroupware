@@ -181,12 +181,10 @@ fieldset.emailGroup {
     overflow: auto;
   }
   div#addressbook-index div.et2_hbox_left {
-    padding: 4px 0px;
+    padding: 0px 17px 0 13px;
   }
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view {
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    /*.box_shadow_standard_light;*/
     width: auto;
     margin: 5px 0em 5px 5px;
     padding: 3px;
@@ -198,6 +196,9 @@ fieldset.emailGroup {
     cursor: pointer;
     height: 24px;
     margin-top: 0;
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   }
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -205,13 +206,13 @@ fieldset.emailGroup {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
   div#addressbook-index div.et2_hbox_right {
+    padding: 0px 11px 0px 0px;
     width: auto;
-    margin-right: 1em;
+    margin-right: 0em;
+    margin-top: -5px;
   }
   div#addressbook-index div.et2_hbox_right select.et2_selectbox {
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    /*.box_shadow_standard_light;*/
     width: auto;
     margin: 5px 0em 5px 5px;
     padding: 3px;
