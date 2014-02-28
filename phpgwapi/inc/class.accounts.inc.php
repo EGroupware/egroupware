@@ -346,6 +346,8 @@ class accounts
 	 *
 	 * @param string|array $pattern
 	 * @param array $options
+	 *  $options['filter']['group'] only return members of that group
+	 *  $options['account_type'] "accounts", "groups", "both" or "groupmembers"
 	 * @return array with id - title pairs of the matching entries
 	 */
 	public static function link_query($pattern, array &$options = array())
@@ -368,11 +370,28 @@ class accounts
 				$order = 'account_lid';
 				break;
 		}
+		$only_own = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'groupmembers' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
+		switch($options['account_type'])
+		{
+			case 'accounts':
+				$type = $only_own ? 'groupmembers' : 'accounts';
+				break;
+			case 'groups':
+				$type = $only_own ? 'memberships' : 'groups';
+				break;
+			case 'groupmembers':
+			case 'memberships':
+				$type = $options['account_type'];
+				break;
+			case 'both':
+			default:
+				$type = $only_own ? 'groupmembers+memberships' : 'both';
+				break;
+		}
 		$accounts = array();
-		$type = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
-                                !isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'groupmembers+memberships' : 'both';
 		foreach(self::getInstance()->search(array(
-			'type' => $options['filter']['group'] ? $options['filter']['group'] : $type,
+			'type' => $options['filter']['group'] < 0 ? $options['filter']['group'] : $type,
 			'query' => $pattern,
 			'query_type' => 'all',
 			'order' => $order,

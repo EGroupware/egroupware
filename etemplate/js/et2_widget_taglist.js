@@ -347,6 +347,12 @@ var et2_taglist_account = et2_taglist.extend(
 		allowFreeEntries: {
 			"default": true,
 			ignore: true
+		},
+		account_type: {
+			name: 'Account type',
+			'default': 'accounts',
+			type: 'string',
+			description: 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
 		}
 	},
 	lib_options: {
@@ -358,6 +364,18 @@ var et2_taglist_account = et2_taglist.extend(
 		this._super.apply(this, arguments);
 
 		this.options.autocomplete_params.type = "account";
+	},
+
+	/**
+	 * Set if accounts, groups or both are supported
+	 *
+	 * Option get's passed on to autocomplete_params.
+	 *
+	 * @param {string} value "accounts" (default), "groups", "both", "owngroups"
+	 */
+	set_account_type: function(value)
+	{
+		this.options.autocomplete_params.account_type = this.options.account_type = value;
 	},
 
 	int_reg_exp: /^[0-9]+$/,

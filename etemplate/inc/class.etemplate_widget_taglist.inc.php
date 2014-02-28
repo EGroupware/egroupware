@@ -45,6 +45,7 @@ class etemplate_widget_taglist extends etemplate_widget
 		$options = array();
 		if ($type == "account")
 		{
+			$options['account_type'] = $_REQUEST['account_type'];
 			$links = accounts::link_query($query, $options);
 		}
 		else
@@ -116,7 +117,7 @@ class etemplate_widget_taglist extends etemplate_widget
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
