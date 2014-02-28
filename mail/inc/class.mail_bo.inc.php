@@ -80,7 +80,7 @@ class mail_bo
 	 * @var boolean
 	 */
 	static $debug = false; //true;
-	static $debugTimes = true; //true;
+	static $debugTimes = false; //true;
 
 	/**
 	 * static used to hold the mail Config values
@@ -848,6 +848,7 @@ class mail_bo
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getDelimiter();
 			if (PEAR::isError($HierarchyDelimiter[$this->icServer->ImapServerId])) $HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
+//TODO: check if $this->icServer->mailboxDelimiter is used at all
 		$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
 		return $HierarchyDelimiter[$this->icServer->ImapServerId];
 	}
@@ -1976,7 +1977,7 @@ class mail_bo
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects'.array2string($folders2return[$this->icServer->ImapServerId]));
 				if (self::$debugTimes) self::logRunTimes($starttime,null,'from Cache',__METHOD__.__LINE__);
-				return $folders2return[$this->icServer->ImapServerId];
+				//return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
@@ -2022,22 +2023,25 @@ class mail_bo
 
 				if(is_array($singleNameSpace)) {
 					// fetch and sort the subscribed folders
-					$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($foldersNameSpace[$type]['prefix']);
-					if (empty($subscribedMailboxes) && $type == 'shared')
+					try
 					{
-						$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0);
+						$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($foldersNameSpace[$type]['prefix']);
+						if (empty($subscribedMailboxes) && $type == 'shared')
+						{
+							$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0);
+						}
 					}
-
-					//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
-					if( PEAR::isError($subscribedMailboxes) ) {
+					catch(Exception $e)
+					{
 						continue;
 					}
+					//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
 					$foldersNameSpace[$type]['subscribed'] = $subscribedMailboxes;
 					//if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
 					//_debug_array($foldersNameSpace);
 					if ($_subscribedOnly == true) {
 						$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
-						continue;
+						//continue;
 					}
 					// only check for Folder in FolderMaintenance for Performance Reasons
 					if(!$_subscribedOnly) {
@@ -2062,13 +2066,19 @@ class mail_bo
 					//echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
 					try
 					{
-						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
+						// calling with 2 lists all mailboxes on that level with fetches all
+						// we switch to all, to avoid further calls for subsequent levels
+						// that may produce problems, when encountering recursions probably
+						// horde is handling that, so we do not; keep that in mind!
+						//$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],2,true);
+						$allMailboxesExt = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix'],0,true);
 					}
 					catch (Exception $e)
 					{
 						error_log(__METHOD__.__LINE__.' Failed to retrieve all Boxes:'.$e->getMessage());
 						$allMailboxesExt = array();
 					}
+/*
 					if (empty($allMailboxesExt) && $type == 'shared')
 					{
 						try
@@ -2105,6 +2115,7 @@ class mail_bo
 						continue;
 						//$allMailboxesExt=array();
 					}
+*/
 					foreach ($allMailboxesExt as $mbx) {
 						//echo __METHOD__;_debug_array($mbx);
 						//error_log(__METHOD__.__LINE__.array2string($mbx));
@@ -2117,10 +2128,13 @@ class mail_bo
 						$allMailBoxesExtSorted[$mbx['MAILBOX']] = $mbx;
 					}
 					if (is_array($allMailBoxesExtSorted)) ksort($allMailBoxesExtSorted);
-					//_debug_array($allMailBoxesExtSorted);
+					//_debug_array(array_keys($allMailBoxesExtSorted));
 					$allMailboxes = array();
 					foreach ((array)$allMailBoxesExtSorted as $mbx) {
 						//echo $mbx['MAILBOX']."<br>";
+						// this is not used when we are callinglistMailboxes with $restriction_search = 0
+						// this lists all mailboxes so fetching mailboxes for each level would be obsolete
+						/*
 						if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"]) || in_array('\haschildren',$mbx["ATTRIBUTES"])) {
 							unset($buff);
 							//$buff = $this->icServer->getMailboxes($mbx['MAILBOX'].$delimiter,0,false);
@@ -2131,6 +2145,7 @@ class mail_bo
 							#_debug_array($buff);
 							if (is_array($buff)) $allMailboxes = array_merge($allMailboxes,$buff);
 						}
+						*/
 						if (!in_array($mbx['MAILBOX'],$allMailboxes)) $allMailboxes[] = $mbx['MAILBOX'];
 						//echo "Result:";_debug_array($allMailboxes);
 					}
