@@ -60,6 +60,7 @@ addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all contacts	addressbook	de	Alle Kontakte
 all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben
+allow members of following groups to edit contact-data of accounts	addressbook	de	Erlaube Mitgliedern der folgenden Gruppen die Kontaktdaten von Benutzern zu bearbeiten
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
 always	addressbook	de	immer

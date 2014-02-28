@@ -82,7 +82,7 @@ select[multiple] { width:100%;}
     <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
    </tr>
    <tr class="row_off">
-    <td>&nbsp;{lang_Allow_following_groups_to_edit_contact-data_of_accounts}:</td>
+    <td>&nbsp;{lang_Allow_members_of_following_groups_to_edit_contact-data_of_accounts}:</td>
     <td>{call_addressbook_hooks::allow_account_edit}</td>
    </tr>
    <tr class="th">
