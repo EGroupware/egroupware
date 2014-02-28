@@ -878,8 +878,8 @@ class soetemplate
 		if (!is_writeable($dir))
 		{
 			// if dir is not writable, download file
-			html::content_header('etemplates.inc.php','application/octet-stream');
-			$file = 'php://stdout';
+			html::content_header('etemplates.inc.php');
+			$file = 'php://output';
 		}
 		else
 		{
