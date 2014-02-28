@@ -178,10 +178,12 @@ class mail_acl
 					egw_framework::refresh_opener($msg, 'mail', 'update');
 			}
 		}
+		$readonlys = $sel_options = array();
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
 		$readonlys['grid']['delete[1]'] = true;
 		$preserv ['mailbox'] = $content['mailbox'];
 		$content['msg'] = $msg;
+		$content['grid']['account_type'] = $this->mail_bo->icServer->supportsGroupAcl() ? 'both' : 'accounts';
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
 	}
 
