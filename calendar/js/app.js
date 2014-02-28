@@ -1084,6 +1084,9 @@ app.classes.calendar = AppJS.extend(
 			{
 				// 'blank' is the special name for no filters, send that instead of the nice translated name
 				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+				// set date for "No Filter" (blank) favorite to todays date
+				if (state.state.favorite == 'blank')
+					state.state.date = jQuery.datepicker.formatDate('yymmdd', new Date);
 			}
 			menuaction = 'calendar.calendar_uilist.listview';
 			state.state.ajax = 'true';
