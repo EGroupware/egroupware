@@ -416,7 +416,7 @@ input[type=button] {
 	width: 16px;
 	height: 16px;
 }
-#mail-index_mailPreviewIcons {
+.mailPreviewIcons {
 	position: absolute;
 	right: 0;
 	top: 0;
