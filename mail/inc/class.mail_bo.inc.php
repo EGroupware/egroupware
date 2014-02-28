@@ -1977,7 +1977,7 @@ class mail_bo
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects'.array2string($folders2return[$this->icServer->ImapServerId]));
 				if (self::$debugTimes) self::logRunTimes($starttime,null,'from Cache',__METHOD__.__LINE__);
-				//return $folders2return[$this->icServer->ImapServerId];
+				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
