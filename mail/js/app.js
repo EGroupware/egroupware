@@ -2610,9 +2610,13 @@ app.classes.mail = AppJS.extend(
 		   if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
 			   rights = this.aclCommonRights[i];
 	   }
-	   if (jQuery.inArray(rights,this.aclCommonRights ) == -1)
+	   if (jQuery.inArray(rights,this.aclCommonRights ) == -1 && rights !='lrswipcda')
 	   {
 		   aclCommonWidget.set_value('custom');
+	   }
+	   else if (rights =='lrswipcda')
+	   {
+           aclCommonWidget.set_value('akxeilprwts');
 	   }
 	   else
 	   {
