@@ -31,8 +31,8 @@ class mail_acl
 		'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
 		'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
 		'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
-		'ilprws'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
-		'akxeilprwts'=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
+		'ilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
+		'aeiklprstwx'=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
 		'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
 	);
 
@@ -93,6 +93,7 @@ class mail_acl
 					$content['grid'][$n]['acl_c'] = array_diff($virtuals['c'],array_intersect($rights,$virtuals['c']))? false: true; //c=kx more information rfc4314, Obsolote Rights
 					$content['grid'][$n]['acl_d'] = array_diff($virtualD,array_intersect($rights,$virtuals['d']))? false: true; //d=et more information rfc4314, Obsolote Rights
 
+					sort($rights);
 					$acl_abbrvs = implode('',$rights);
 
 					if (array_key_exists($acl_abbrvs, $this->aclRightsAbbrvs))

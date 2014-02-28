@@ -50,7 +50,7 @@ app.classes.mail = AppJS.extend(
 	 * @array
 	 *
 	 */
-	aclCommonRights:['lrs','lprs','ilprs',	'ilprws', 'akxeilprwts', 'custom'],
+	aclCommonRights:['lrs','lprs','ilprs',	'ilprsw', 'aeiklprstwx', 'custom'],
 	/**
 	 * Demonstrates ACL rights
 	 * @array
@@ -2575,7 +2575,7 @@ app.classes.mail = AppJS.extend(
 	acl_common_rights_selector: function(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var rights = (widget.get_value() == "custom")?[]:(widget.get_value() == "akxeilprwts")? widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
+		var rights = (widget.get_value() == "custom")?[]:(widget.get_value() == "aeiklprstwx")? widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
 		for (var i=0;i<this.aclRights.length;i++)
 		{
 			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
@@ -2616,7 +2616,7 @@ app.classes.mail = AppJS.extend(
 	   }
 	   else if (rights =='lrswipcda')
 	   {
-           aclCommonWidget.set_value('akxeilprwts');
+           aclCommonWidget.set_value('aeiklprstwx');
 	   }
 	   else
 	   {
