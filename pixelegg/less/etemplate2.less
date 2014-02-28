@@ -340,14 +340,27 @@ hr {
 
 
 // area width left and right boxes
-.ui-helper-clearfix{.background_color_10_gray;}
+.ui-helper-clearfix{ background-color: gray_20;}
 
 // count
 .nextmatch_header .header_count {
-    .fontsize_normal;
+
     position: relative;
     top: 3px;
     height: 22px;
+    .dimension_height_m;
+    border: 1px solid #E0E0E0;
+    float: right;
+    margin: 6px 11px 0;
+    padding: 0 20px;
+    text-align: center;
+    
+    .fontsize_normal;
+    .border_normal;
+    .rounded (3px);
+    color: @gray_100;
+    
+    
     
     // count number
     span {
@@ -373,7 +386,7 @@ hr {
     border: none !important;
     border-color: @gray_100;
     background-image: none !important;
-    height: 37px;
+    min-height: 37px;
     .border_radius (3px, 3px, 0px, 0px);
 
     select {margin-top: 10px;}
@@ -415,8 +428,9 @@ hr {
 
     padding: 0 0 0 3px;
     margin-right: 3px;
+    margin-left: 15px;
 
-    .background_color_search;
+    /*.background_color_search;*/
     .border_radius_button_righttop;
 
     input {
@@ -425,6 +439,7 @@ hr {
         border: none;
         .fontsize_normal;
         color: @gray_100;
+        padding: 3px;
     }
 
     input::-webkit-input-placeholder {
@@ -506,6 +521,7 @@ hr {
     margin-top: 8px;
     vertical-align: middle;
     .Complete_Button_Icon_normal;
+    box-shadow: none;
     margin-right: 1em;
     .dimension_width_height_s;
     padding: 2px;
@@ -520,8 +536,9 @@ hr {
 .et2_nextmatch .nextmatch_header {
     border: none;
     background-image: none;
-    //	background-color: transparent;
+    background-color: @gray_20;
     margin-bottom: 3px;
+    margin: 0;
     //	margin-right: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
@@ -577,7 +594,7 @@ button#admin-categories-index_add {
 .nextmatch_header div[id$=favorite_wrapper] {
 /*    margin-top: 6px;
     vertical-align: middle;*/
-    .box_shadow_standard_light;
+    /*.box_shadow_standard_light;*/
     .border_radius_button_normal;
     .background_color_25_gray;
 }
@@ -588,7 +605,7 @@ button#admin-categories-index_add {
     .et2_dropdown{
 
         button {
-            height: 3.0ex;
+            .dimension_height_m;
             display: inline-block;
             vertical-align: middle;
             margin-right: -2px;

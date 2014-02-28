@@ -20,12 +20,13 @@ function show_pixelegg_header(_toggle, _delay)
 
     $j("#egw_fw_sidebar").animate({'top':'52px'},_delay);
         $j("#egw_fw_tabs").animate({'margin-top':'12px'},_delay);
+        $j(".egw_fw_ui_tabs_header").css("padding", "1px 1px 0px 1px");
         $j(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% -3000px");
 	$j(_toggle).parent().removeClass("slidedown");
 	$j(_toggle).parent().addClass("slideup");
 }
 
-//closed
+//closed = Topmenu is gone
 function hide_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
@@ -33,7 +34,7 @@ function hide_pixelegg_header(_toggle, _delay)
 	$j("#egw_fw_topmenu_info_items").show();
 	$j("#egw_fw_logout").show();
 	$j("#egw_fw_print").show();
-        $j("#egw_fw_tabs").animate({'margin-top':'0px', "top": "0px"},_delay);
+        $j("#egw_fw_tabs").animate({'margin-top':'2px', "top": "0px"},_delay);
 	$j("#egw_fw_topmenu_info_items").animate({
 			"bottom": "3px",
                         "right": "5px",
@@ -50,6 +51,7 @@ function hide_pixelegg_header(_toggle, _delay)
         $j("#egw_fw_topmenu_info_items form").css("display", "none");
 
         $j(".egw_fw_ui_tabs_header").css("height", "34px");
+
 
         //Tab
         $j(".egw_fw_ui_tab_header").css("height", "24px");
