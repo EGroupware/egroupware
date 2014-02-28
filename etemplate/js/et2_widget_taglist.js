@@ -299,7 +299,11 @@ var et2_taglist = et2_selectbox.extend(
 		for(var i=0; i < values.length; ++i)
 		{
 			var v = values[i];
-			if (typeof this.options.select_options[v] == 'undefined')
+			if (v && typeof v == 'object' && typeof v.id != 'undefined' && typeof v.label != 'undefined')
+			{
+				// alread in correct format
+			}
+			else if (typeof this.options.select_options[v] == 'undefined')
 			{
 				values[i] = {
 					id: v,
@@ -331,8 +335,8 @@ et2_register_widget(et2_taglist, ["taglist"]);
 
 /**
  * Taglist customized specificlly for egw acccounts, fetches accounts and groups list,
- * free entries are allowed 
- * 
+ * free entries are allowed
+ *
  */
 var et2_taglist_account = et2_taglist.extend(
 {
@@ -343,19 +347,56 @@ var et2_taglist_account = et2_taglist.extend(
 		allowFreeEntries: {
 			"default": true,
 			ignore: true
-		},
+		}
 	},
 	lib_options: {
 		minChars: 2
 	},
-	
+
 	init:function ()
 	{
 		this._super.apply(this, arguments);
-		
+
 		this.options.autocomplete_params.type = "account";
 	},
-	
+
+	int_reg_exp: /^[0-9]+$/,
+
+	/**
+	 * Set value(s) of taglist, reimplemented to automatic resolve numerical account_id's
+	 *
+	 * @param value (array of) ids
+	 */
+	set_value: function(value)
+	{
+		if(!value) return this._super.call(this, value);
+
+		var values = jQuery.isArray(value) ? value : [value];
+		for(var i=0; i < values.length; ++i)
+		{
+			var v = values[i];
+			if (typeof v == 'object' && v.id === v.label) v = v.id;
+			if (typeof v != 'object'  && !isNaN(v) && (typeof v != 'string' || v.match(this.int_reg_exp)))
+			{
+				v = parseInt(v);
+				var label = this.egw().link_title('home-accounts', v);
+				if (label)	// already cached on client-side --> replace it
+				{
+					values[i] = {
+						id: v,
+						label: label
+					};
+				}
+				else	// call set_value again, after result has arrived from server
+				{
+					this.egw().link_title('home-accounts', v, function(label) {
+						if (label) this.set_value(values);
+					}, this);
+				}
+			}
+		}
+		this._super.call(this, values);
+	}
 });
 et2_register_widget(et2_taglist_account, ["taglist-account"]);
 
