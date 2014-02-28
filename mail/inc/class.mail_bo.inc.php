@@ -1005,29 +1005,41 @@ class mail_bo
 		}
 */
 		// does the folder exist???
-		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName])) $folderInfoCache[$_folderName] = $this->icServer->getMailboxes('', $_folderName, true);
+		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName]))
+		{
+			$ret = $this->icServer->getMailboxes('', $_folderName, true);
+			//error_log(__METHOD__.__LINE__.$_folderName.' '.array2string($ret));
+			if (is_array($ret))
+			{
+				$retkeys = array_keys($ret);
+				if ($retkeys[0]==$_folderName) $folderInfoCache[$_folderName] = $ret[$retkeys[0]];
+			}
+			else
+			{
+				$folderInfoCache[$_folderName]=false;
+			}
+		}
 		$folderInfo = $folderInfoCache[$_folderName];
 		//error_log(__METHOD__.__LINE__.array2string($folderInfo).'->'.function_backtrace());
-		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
-			if (self::$debug||$folderInfo instanceof PEAR_Error) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
-			if ( ($folderInfo instanceof PEAR_Error) || PEAR::isError($r = $this->_getStatus($_folderName)) || $r == 0) return false;
-			if (!is_array($folderInfo[0]))
+		if(!$folderInfo|| !is_array($folderInfo)) {
+			$folderInfo = $this->_getStatus($_folderName);
+			if (!is_array($folderInfo))
 			{
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo[0] = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+				$folderInfo = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
 					'ATTRIBUTES' => '');
-				if (empty($folderInfo[0]['HIERACHY_DELIMITER']) || (isset($folderInfo[0]['delimiter']) && empty($folderInfo[0]['delimiter'])))
+				if (empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
 				{
 					//error_log(__METHOD__.__LINE__.array2string($folderInfo));
-					$folderInfo[0]['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
+					$folderInfo['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
 				}
 			}
 		}
-		#if(!is_array($folderInfo[0])) {
+		#if(!is_array($folderInfo)) {
 		#	return false;
 		#}
-		$retValue['delimiter']		= ($folderInfo[0]['HIERACHY_DELIMITER']?$folderInfo[0]['HIERACHY_DELIMITER']:$folderInfo[0]['delimiter']);
-		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
+		$retValue['delimiter']		= ($folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
+		$retValue['attributes']		= ($folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $_folderName;
@@ -1043,21 +1055,30 @@ class mail_bo
 		}
 		if (!($folderInfo instanceof PEAR_Error)) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__.' '.$_folderName.array2string($retValue['attributes']));
 		if ($basicInfoOnly || (isset($retValue['attributes']) && stripos(array2string($retValue['attributes']),'noselect')!==false))
 		{
 			return $retValue;
 		}
-		$subscribedFolders = $this->icServer->listSubscribedMailboxes('', $_folderName);
-		if(is_array($subscribedFolders) && count($subscribedFolders) == 1) {
+		// fetch all in one go for one request, instead of querying them one by one
+		// this should reduce communication to the imap server
+		static $subscribedFolders;
+		static $nameSpace;
+		static $prefix;
+		if (is_null($nameSpace) || empty($nameSpace[$this->profileID])) $nameSpace[$this->profileID] = $this->_getNameSpaces();
+		if (isset($nameSpace[$this->profileID]['personal'])) unset($nameSpace[$this->profileID]['personal']);
+		if (is_null($prefix) || empty($prefix[$this->profileID]) || empty($prefix[$this->profileID][$_folderName])) $prefix[$this->profileID][$_folderName] = $this->getFolderPrefixFromNamespace($nameSpace[$this->profileID], $_folderName);
+
+		//$subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes('', $_folderName);
+		if (is_null($subscribedFolders) || empty($subscribedFolders[$this->profileID])) $subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes();
+
+		if(is_array($subscribedFolders[$this->profileID]) && in_array($_folderName,$subscribedFolders[$this->profileID])) {
 			$retValue['subscribed'] = true;
 		}
 
 		if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache)) ) {
 			if (self::$debug) error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($folderStatus->message,true));
 		} else {
-			$nameSpace = $this->_getNameSpaces();
-			if (isset($nameSpace['personal'])) unset($nameSpace['personal']);
-			$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
 			$retValue['messages']		= $folderStatus['MESSAGES'];
 			$retValue['recent']		= $folderStatus['RECENT'];
 			$retValue['uidnext']		= $folderStatus['UIDNEXT'];
@@ -1068,7 +1089,7 @@ class mail_bo
 				$this->mailPreferences['trustServersUnseenInfo']==false) ||
 				(isset($this->mailPreferences['trustServersUnseenInfo']) &&
 				$this->mailPreferences['trustServersUnseenInfo']==2 &&
-				$prefix != '' && stripos($_folderName,$prefix) !== false)
+				$prefix[$this->profileID][$_folderName] != '' && stripos($_folderName,$prefix[$this->profileID][$_folderName]) !== false)
 			)
 			{
 				//error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($prefix,true).' TS:'.$this->mailPreferences['trustServersUnseenInfo']);
@@ -1961,6 +1982,7 @@ class mail_bo
 		if (self::$debug) error_log(__METHOD__.__LINE__.' ServerID:'.$this->icServer->ImapServerId.", subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders, _useCacheIfPossible:$_useCacheIfPossible");
 		if (self::$debugTimes) $starttime = microtime (true);
 		static $folders2return;
+		//$_subscribedOnly=false;
 		// always use static on single request if info is available;
 		// so if you require subscribed/unsubscribed results on a single request you MUST
 		// set $_useCacheIfPossible to false !
@@ -1980,6 +2002,10 @@ class mail_bo
 				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
+		// use $folderBasicInfo for holding attributes and other basic folderinfo $folderBasicInfo[$this->icServer->ImapServerId]
+		static $folderBasicInfo;
+		if (is_null($folderBasicInfo)) $folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__.array2string(array_keys($folderBasicInfo[$this->icServer->ImapServerId])));
 		$isUWIMAP = false;
 
 		$delimiter = $this->getHierarchyDelimiter();
@@ -2023,26 +2049,46 @@ class mail_bo
 
 				if(is_array($singleNameSpace)) {
 					// fetch and sort the subscribed folders
-					try
+					// we alway fetch the subscribed, as this provides the only way to tell
+					// if a folder is subscribed or not
+					if ($_subscribedOnly == true);
 					{
-						$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($foldersNameSpace[$type]['prefix']);
-						if (empty($subscribedMailboxes) && $type == 'shared')
+						try
 						{
-							$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0);
+							$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($foldersNameSpace[$type]['prefix'],0,true);
+							if (empty($subscribedMailboxes) && $type == 'shared')
+							{
+								$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0,true);
+							}
+						}
+						catch(Exception $e)
+						{
+							continue;
+						}
+						//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
+						$foldersNameSpace[$type]['subscribed'] = (!empty($subscribedMailboxes)?array_keys($subscribedMailboxes):array());
+						//if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
+						//_debug_array($foldersNameSpace);
+						if (!empty($foldersNameSpace[$type]['subscribed']))
+						{
+							//error_log(__METHOD__.__LINE__." $type / subscribed:". array2string($subscribedMailboxes));
+							foreach ($subscribedMailboxes as $k => $finfo)
+							{
+								$folderBasicInfo[$this->icServer->ImapServerId][$k]=array(
+									'MAILBOX'=>$finfo['MAILBOX'],
+									'ATTRIBUTES'=>$finfo['ATTRIBUTES'],
+									'delimiter'=>$finfo['delimiter'],//lowercase for some reason???
+									'SUBSCRIBED'=>true);
+							}
+						}
+						if ($_subscribedOnly == true) {
+							$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
+							continue;
 						}
 					}
-					catch(Exception $e)
-					{
-						continue;
-					}
-					//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
-					$foldersNameSpace[$type]['subscribed'] = $subscribedMailboxes;
-					//if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
-					//_debug_array($foldersNameSpace);
-					if ($_subscribedOnly == true) {
-						$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
-						continue;
-					}
+					// skip the checks here completely; we rely on Hordes code/results as for now
+					// this improves speed tremendously for the !$_subscribedOnly - mode
+					/*
 					// only check for Folder in FolderMaintenance for Performance Reasons
 					if(!$_subscribedOnly) {
 						foreach ((array)$foldersNameSpace[$type]['subscribed'] as $folderName)
@@ -2061,6 +2107,7 @@ class mail_bo
 							}
 						}
 					}
+					*/
 
 					// fetch and sort all folders
 					//echo $type.'->'.$foldersNameSpace[$type]['prefix'].'->'.($type=='shared'?0:2)."<br>";
@@ -2109,14 +2156,24 @@ class mail_bo
 						}
 					}
 					$allMailBoxesExtSorted = array();
+*/
 					if (!is_array($allMailboxesExt))
 					{
 						//error_log(__METHOD__.__LINE__.' Expected Array but got:'.array2string($allMailboxesExt). 'Type:'.$type.' Prefix:'.$foldersNameSpace[$type]['prefix']);
 						continue;
 						//$allMailboxesExt=array();
 					}
-*/
+
+					//error_log(__METHOD__.__LINE__.' '.$type.'->'.array2string($allMailboxesExt));
 					foreach ($allMailboxesExt as $mbx) {
+						if (!isset($folderBasicInfo[$this->icServer->ImapServerId][$mbx['MAILBOX']]))
+						{
+							$folderBasicInfo[$this->icServer->ImapServerId][$mbx['MAILBOX']]=array(
+								'MAILBOX'=>$mbx['MAILBOX'],
+								'ATTRIBUTES'=>$mbx['ATTRIBUTES'],
+								'delimiter'=>$mbx['delimiter'],//lowercase for some reason???
+								'SUBSCRIBED'=>false);
+						}
 						//echo __METHOD__;_debug_array($mbx);
 						//error_log(__METHOD__.__LINE__.array2string($mbx));
 						if (isset($allMailBoxesExtSorted[$mbx['MAILBOX']])||
@@ -2137,7 +2194,6 @@ class mail_bo
 						/*
 						if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"]) || in_array('\haschildren',$mbx["ATTRIBUTES"])) {
 							unset($buff);
-							//$buff = $this->icServer->getMailboxes($mbx['MAILBOX'].$delimiter,0,false);
 							if (!in_array($mbx['MAILBOX'],$allMailboxes)) $buff = self::getMailBoxesRecursive($mbx['MAILBOX'],$delimiter,$foldersNameSpace[$type]['prefix'],1);
 							if( PEAR::isError($buff) ) {
 								continue;
@@ -2286,6 +2342,7 @@ class mail_bo
 					}
 
 					if($_getCounters == true) {
+						//error_log(__METHOD__.__LINE__.' getCounter forFolder:'.$folderName);
 						$folderObject->counter = $this->getMailBoxCounters($folderName);
 					}
 					if(strtoupper($folderName) == 'INBOX') {
@@ -2330,6 +2387,7 @@ class mail_bo
 		{
 			egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return,$expiration=60*60*1);
 		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.__LINE__);
 		return $folders2return[$this->icServer->ImapServerId];
 	}
@@ -2434,27 +2492,28 @@ class mail_bo
 		$_mailbox = preg_replace('~'.($delimiter == '.' ? "\\".$delimiter:$delimiter).'+~s',$delimiter,$_mailbox);
 		//get that mailbox in question
 		$mbx = $this->icServer->getMailboxes($_mailbox,1,true);
+		$mbxkeys = array_keys($mbx);
 		#_debug_array($mbx);
 //error_log(__METHOD__.__LINE__.' Delimiter:'.array2string($delimiter));
 //error_log(__METHOD__.__LINE__.array2string($mbx));
-		if (is_array($mbx[0]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[0]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[0]["ATTRIBUTES"]) || in_array('\haschildren',$mbx[0]["ATTRIBUTES"]))) {
+		if (is_array($mbx[$mbxkeys[0]]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[$mbxkeys[0]]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[0]["ATTRIBUTES"]) || in_array('\haschildren',$mbx[0]["ATTRIBUTES"]))) {
 			// if there are children fetch them
-			//echo $mbx[0]['MAILBOX']."<br>";
+			//echo $mbx[$mbxkeys[0]]['MAILBOX']."<br>";
 			unset($buff);
-			$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'].($mbx[0]['MAILBOX'] == $prefix ? '':$delimiter),2,false);
-			//$buff = $this->icServer->getMailboxes($mbx[0]['MAILBOX'],2,false);
+			$buff = $this->icServer->getMailboxes($mbx[$mbxkeys[0]]['MAILBOX'].($mbx[$mbxkeys[0]]['MAILBOX'] == $prefix ? '':$delimiter),2,false);
+			//$buff = $this->icServer->getMailboxes($mbx[$mbxkeys[0]]['MAILBOX'],2,false);
 			//_debug_array($buff);
 			$allMailboxes = array();
 			foreach ($buff as $mbxname) {
 //error_log(__METHOD__.__LINE__.array2string($mbxname));
 				$mbxname = preg_replace('~'.($delimiter == '.' ? "\\".$delimiter:$delimiter).'+~s',$delimiter,$mbxname['MAILBOX']);
 				#echo "About to recur in level $reclevel:".$mbxname."<br>";
-				if ( $mbxname != $mbx[0]['MAILBOX'] && $mbxname != $prefix  && $mbxname != $mbx[0]['MAILBOX'].$delimiter)
+				if ( $mbxname != $mbx[$mbxkeys[0]]['MAILBOX'] && $mbxname != $prefix  && $mbxname != $mbx[$mbxkeys[0]]['MAILBOX'].$delimiter)
 				{
 					$allMailboxes = array_merge($allMailboxes, self::getMailBoxesRecursive($mbxname, $delimiter, $prefix, $reclevel));
 				}
 			}
-			if (!(in_array('\NoSelect',$mbx[0]["ATTRIBUTES"]) || in_array('\Noselect',$mbx[0]["ATTRIBUTES"]) || in_array('\noselect',$mbx[0]["ATTRIBUTES"]))) $allMailboxes[] = $mbx[0]['MAILBOX'];
+			if (!(in_array('\NoSelect',$mbx[$mbxkeys[0]]["ATTRIBUTES"]) || in_array('\Noselect',$mbx[$mbxkeys[0]]["ATTRIBUTES"]) || in_array('\noselect',$mbx[$mbxkeys[0]]["ATTRIBUTES"]))) $allMailboxes[] = $mbx[$mbxkeys[0]]['MAILBOX'];
 			return $allMailboxes;
 		} else {
 			return array($_mailbox);
