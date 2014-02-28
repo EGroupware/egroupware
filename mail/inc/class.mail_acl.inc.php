@@ -103,10 +103,16 @@ class mail_acl
 					{
 						$content['grid'][$n]['acl'] = 'custom';
 					}
-
-					$content['grid'][$n++]['acc_id'] = $keys;
-
+					if (($account_id = $this->mail_bo->icServer->getMailBoxAccountId($keys)))
+					{
+						$content['grid'][$n++]['acc_id'] = $account_id;
+					}
+					else
+					{
+						$content['grid'][$n++]['acc_id'] = $keys;
+					}
 				}
+				//error_log(__METHOD__."() acl=".array2string($acl).' --> grid='.array2string($content['grid']));
 			}
 			array_push($content['grid'], array('acc_id'=>''));
 		}
@@ -204,9 +210,15 @@ class mail_acl
 					$options['rights'] .=  $right[1];
 				}
 			}
-			if (!empty($content['grid'][$keys]['acc_id'][0]))
+			$username = $content['grid'][$keys]['acc_id'][0];
+			if (is_numeric($username) && ($u = $this->mail_bo->icServer->getMailBoxUserName($username)))
 			{
-				$this->setACL($content['mailbox'], $content['grid'][$keys]['acc_id'][0], $options,$recursive);
+				$username = $u;
+			}
+			if (!empty($username))
+			{
+				//error_log(__METHOD__."() setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
+				$this->setACL($content['mailbox'], $username, $options, $recursive);
 			}
 			else
 			{

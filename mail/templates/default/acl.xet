@@ -42,7 +42,7 @@
 						<description value="Action"/>
 					</row>
 					<row class="row">
-						<taglist-email id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" />
+						<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" />
 						<menulist>
 							<menupopup id="${row}[acl]"  onchange="app.mail.acl_common_rights_selector"/>
 						</menulist>
