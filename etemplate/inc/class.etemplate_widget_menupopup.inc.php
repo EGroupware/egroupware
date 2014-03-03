@@ -132,7 +132,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					// ToDo: unavailable cats need to be merged in again
 			}
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 		else
@@ -154,7 +154,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$form_name = $this->id;
 		}
 		// happens with fields in nm-header: $cname='nm', this->id='${row}[something]' or '{$row}[something]'
-		elseif ($cname == 'nm' && preg_match('/(\${row}|{\$row})\[([^]]+)\]$/', $this->id, $matches))
+		elseif (preg_match('/(\${row}|{\$row})\[([^]]+)\]$/', $this->id, $matches))
 		{
 			$form_name = $matches[2];
 		}
@@ -173,6 +173,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 
 			// += to keep further options set by app code
+			$no_lang = null;
 			self::$request->sel_options[$form_name] += self::typeOptions($this,
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
@@ -360,7 +361,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			{
 				$field = self::expand_name($field, 0, 0,'','',self::$cont);
 			}
-			list($rows,$type,$type2,$type3,$type4,$type5,$type6) = $legacy_options;
+			list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options;
 		}
 		$no_lang = false;
 		$options = array();
@@ -485,7 +486,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					foreach(is_array($value) ? $value : array($value) as $id)
 					{
 						$options[$id] = !$id && !is_numeric($rows) ? lang($rows) :
-							self::accountInfo($id,$acc,$type2,$type=='both');
+							self::accountInfo($id, null, $type2, $type=='both');
 					}
 					break;
 				}
@@ -500,7 +501,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 				if($type == 'owngroups' || $select_pref == 'groupmembers')
 				{
 					$owngroups = true;
-					foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
+					foreach($GLOBALS['egw']->accounts->membership() as $group)
+					{
+						$mygroups[] = $group['account_id'];
+					}
 				}
 				elseif (in_array($type, array('', 'accounts', 'both')) && $select_pref == 'primary_group')
 				{
@@ -652,7 +656,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 				$value_in = $value;
 				$value = array();
-				foreach($options as $val => $lable)
+				foreach(array_keys($options) as $val)
 				{
 					if (($value_in & $val) == $val)
 					{
@@ -666,11 +670,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 						}
 					}
 				}
-				if (!$readonly)
-				{
-					self::$request->set_to_process($name,'ext-select-dow');
-				}
-				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				break;
 
 			case 'select-day':
@@ -783,8 +782,14 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 	/**
 	 * internal function to format account-data
+	 *
+	 * @param int $id
+	 * @param array $acc=null optional values for keys account_(type|lid|lastname|firstname) to not read them again
+	 * @param int $longnames
+	 * @param boolean $show_type true: return array with values for keys label and icon, false: only label
+	 * @return string|array
 	 */
-	private static function accountInfo($id,$acc=0,$longnames=0,$show_type=0)
+	private static function accountInfo($id,$acc=null,$longnames=0,$show_type=false)
 	{
 		if (!$id)
 		{
