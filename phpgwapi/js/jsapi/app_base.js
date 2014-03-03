@@ -452,82 +452,86 @@ var AppJS = Class.extend(
 		}
 
 		var buttons = {};
-		buttons[this.egw.lang("save")] =  function() {
-			// Add a new favorite
-			var name = $j("#name",this);
+		buttons['save'] = {
+			text: this.egw.lang('save'),
+			default: true,
+			click: function() {
+				// Add a new favorite
+				var name = $j("#name",this);
 
-			if(name.val())
-			{
-				// Add to the list
-				name.val(name.val().replace(/(<([^>]+)>)/ig,""));
-				var safe_name = name.val().replace(/[^A-Za-z0-9-_]/g,"_");
-				var favorite = {
-					name: name.val(),
-					group: (typeof self.favorite_popup.group != "undefined" &&
-						self.favorite_popup.group.get_value() ? self.favorite_popup.group.get_value() : false),
-					state: self.favorite_popup.state
-				};
-
-				var favorite_pref = favorite_prefix+safe_name;
-
-				// Save to preferences
-				if(typeof self.favorite_popup.group != "undefined" && self.favorite_popup.group.getValue() != '')
+				if(name.val())
 				{
-					// Admin stuff - save preference server side
-					self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
-						[
-							self.appname,
-							name.val(),
-							"add",
-							self.favorite_popup.group.get_value(),
-							self.favorite_popup.state
-						]
-					);
-					self.favorite_popup.group.set_value('');
-				}
-				else
-				{
-					// Normal user - just save to preferences client side
-					self.egw.set_preference(self.appname,favorite_pref,favorite);
-				}
+					// Add to the list
+					name.val(name.val().replace(/(<([^>]+)>)/ig,""));
+					var safe_name = name.val().replace(/[^A-Za-z0-9-_]/g,"_");
+					var favorite = {
+						name: name.val(),
+						group: (typeof self.favorite_popup.group != "undefined" &&
+							self.favorite_popup.group.get_value() ? self.favorite_popup.group.get_value() : false),
+						state: self.favorite_popup.state
+					};
 
-				// Add to list immediately
-				if(self.sidebox)
-				{
-					// Remove any existing with that name
-					$j('[data-id="'+safe_name+'"]',self.sidebox).remove();
+					var favorite_pref = favorite_prefix+safe_name;
 
-					// Create new item
-					var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
-					var href = 'javascript:app.'+self.appname+'.setState('+JSON.stringify(favorite)+');';
-					html += "<a href='"+href+"' class='ui-corner-all' tabindex='-1'>";
-					html += "<div class='" + 'sideboxstar' + "'></div>"+
-						favorite.name;
-					html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
-					html += "</a></li>\n";
-					$j(html).insertBefore($j('li',self.sidebox).last());
-					self._init_sidebox(self.sidebox);
-				}
-
-				// Try to update nextmatch favorites too
-				if(etemplate2 && etemplate2.getByApplication)
-				{
-					var et2 = etemplate2.getByApplication(self.appname);
-					for(var i = 0; i < et2.length; i++)
+					// Save to preferences
+					if(typeof self.favorite_popup.group != "undefined" && self.favorite_popup.group.getValue() != '')
 					{
-						et2[i].widgetContainer.iterateOver(function(_widget) {
-							_widget.stored_filters = _widget.load_favorites(self.appname);
-							_widget.init_filters(_widget);
-						}, self, et2_favorites);
+						// Admin stuff - save preference server side
+						self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
+							[
+								self.appname,
+								name.val(),
+								"add",
+								self.favorite_popup.group.get_value(),
+								self.favorite_popup.state
+							]
+						);
+						self.favorite_popup.group.set_value('');
+					}
+					else
+					{
+						// Normal user - just save to preferences client side
+						self.egw.set_preference(self.appname,favorite_pref,favorite);
+					}
+
+					// Add to list immediately
+					if(self.sidebox)
+					{
+						// Remove any existing with that name
+						$j('[data-id="'+safe_name+'"]',self.sidebox).remove();
+
+						// Create new item
+						var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
+						var href = 'javascript:app.'+self.appname+'.setState('+JSON.stringify(favorite)+');';
+						html += "<a href='"+href+"' class='ui-corner-all' tabindex='-1'>";
+						html += "<div class='" + 'sideboxstar' + "'></div>"+
+							favorite.name;
+						html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
+						html += "</a></li>\n";
+						$j(html).insertBefore($j('li',self.sidebox).last());
+						self._init_sidebox(self.sidebox);
+					}
+
+					// Try to update nextmatch favorites too
+					if(etemplate2 && etemplate2.getByApplication)
+					{
+						var et2 = etemplate2.getByApplication(self.appname);
+						for(var i = 0; i < et2.length; i++)
+						{
+							et2[i].widgetContainer.iterateOver(function(_widget) {
+								_widget.stored_filters = _widget.load_favorites(self.appname);
+								_widget.init_filters(_widget);
+							}, self, et2_favorites);
+						}
 					}
 				}
-			}
-			// Reset form
-			delete self.favorite_popup.state;
-			name.val("");
-			$j("#filters",self.favorite_popup).empty();
+				// Reset form
+				delete self.favorite_popup.state;
+				name.val("");
+				$j("#filters",self.favorite_popup).empty();
 
-			$j(this).dialog("close");
+				$j(this).dialog("close");
+			},
 		};
 		buttons[this.egw.lang("cancel")] = function() {
 			if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
@@ -544,6 +548,19 @@ var AppJS = Class.extend(
 			close: function() {
 			}
 		});
+
+		// Bind handler for enter keypress
+		this.favorite_popup.off('keydown').on('keydown', jQuery.proxy(function(e) {
+			 var tagName = e.target.tagName.toLowerCase();
+			tagName = (tagName === 'input' && e.target.type === 'button') ? 'button' : tagName;
+
+			if(e.keyCode == jQuery.ui.keyCode.ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !=='button')
+			{
+				e.preventDefault();
+				$j('button[default]',this.favorite_popup.parent()).trigger('click');
+				return false;
+			}
+		},this));
 
 		return false;
 	},
