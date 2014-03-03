@@ -898,7 +898,10 @@ class so_sql
 						}
 						if (is_array($val) && count($val) > 1)
 						{
-							foreach($val as &$v) $v = $this->db->quote($v, $type);
+							foreach($val as &$v)
+							{
+								$v = $this->db->quote($v, $type);
+							}
 							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
 						}
 						else
@@ -1484,6 +1487,7 @@ class so_sql
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
 	{
+		unset($readonlys);	// required by function signature, but not used in this default implementation
 		if ((int) $this->debug >= 4)
 		{
 			echo "<p>so_sql::get_rows(".print_r($query,true).",,)</p>\n";
@@ -1538,7 +1542,7 @@ class so_sql
 			}
 			foreach($this->db->select($this->table_name,$this->db_key_cols,$query,__LINE__,__FILE__,false,'',$this->app) as $other)
 			{
-				foreach($this->db_key_cols as $db_key_col => $key_col)
+				foreach($this->db_key_cols as $key_col)
 				{
 					if ($data[$key_col] != $other[$key_col])
 					{
@@ -1582,6 +1586,7 @@ class so_sql
 		$cols = $ret = array();
 		foreach($value_col as $key => $col)
 		{
+			$matches = null;
 			$cols[$key] = preg_match('/AS ([a-z_0-9]+)$/i',$col,$matches) ? $matches[1] : $col;
 		}
 		if (!$order) $order = current($cols);
@@ -1624,7 +1629,7 @@ class so_sql
 	 */
 	public function get_comments($column=null)
 	{
-		static $comments;
+		static $comments=null;
 
 		if (is_null($comments))
 		{

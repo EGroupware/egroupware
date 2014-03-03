@@ -135,10 +135,14 @@ class so_sql_cf extends so_sql
 		{
 			$prefix = substr($prefix,0,-1);	// remove trailing underscore from column prefix parameter
 		}
-		foreach(array('extra_id','extra_key','extra_value') as $col)
+		foreach(array(
+			'extra_id' => $extra_id,
+			'extra_key' => $extra_key,
+			'extra_value' => $extra_value
+		) as $col => $val)
 		{
-			$this->$col = $col_name = $$col;
-			if ($col_name[0] == '_') $this->$col = $prefix . $$col;
+			$this->$col = $col_name = $val;
+			if ($col_name[0] == '_') $this->$col = $prefix . $val;
 		}
 		// some sanity checks, maybe they should be active only for development
 		if (!($extra_defs = $this->db->get_table_definitions($app,$extra_table)))
@@ -211,7 +215,7 @@ class so_sql_cf extends so_sql
 	*/
 	function save_customfields($data, array $extra_cols=array())
 	{
-		foreach ((array)$this->customfields as $name => $options)
+		foreach (array_keys((array)$this->customfields) as $name)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
@@ -253,7 +257,7 @@ class so_sql_cf extends so_sql
 
 		if ($this->customfields)
 		{
-			foreach($this->customfields as $name => $data)
+			foreach(array_keys($this->customfields) as $name)
 			{
 				if (isset($new[$field = $this->get_cf_field($name)]))
 				{
@@ -515,7 +519,7 @@ class so_sql_cf extends so_sql
 		{
 			// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
 			$fields2order = explode(',',$order_by);
-			foreach($fields2order as $k => $v)
+			foreach($fields2order as $v)
 			{
 				if (strpos($v,self::CF_PREFIX) !== false)
 				{
@@ -542,6 +546,7 @@ class so_sql_cf extends so_sql
 		if (is_array($filter))
 		{
 			$_cfnames = array_keys($this->customfields);
+			$extra_filter = null;
 			foreach($filter as $name => $val)
 			{
 				// replace ambiguous auto-id with (an exact match of) table_name.autoid
@@ -613,7 +618,7 @@ class so_sql_cf extends so_sql
 				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
 				{
 					$_cf = explode(' ',$val);
-					foreach($_cf as $ci => $cf_np)
+					foreach($_cf as $cf_np)
 					{
 						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
 						$tcf_name = ($tcf_name?$tcf_name.' ':'').$cf_np;
@@ -651,42 +656,21 @@ class so_sql_cf extends so_sql
 	}
 
 	/**
-	 * Return criteria array for a given search pattern
-	 * Reimplemented to search custom fields
+	 * Get a default list of columns to search
 	 *
-	 * @param string $pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
-	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
-	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
-	 * @param string $extra_col=null extra column to search
-	 * @param array $search_cols=array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
-	 * @return array or column => value pairs
+	 * Reimplemented to search custom fields by default.
+	 *
+	 * @return array of column names
 	 */
-	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	protected function get_default_search_columns()
 	{
-		// This function can get called multiple times.  Make sure it doesn't re-process.
-		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CAST(COALESCE(') !== false)
+		$cols = parent::get_default_search_columns();
+		if ($this->customfields && !isset($this->columns_to_search))
 		{
-			return $pattern;
+			$cols[] = $this->extra_table.'.'.$this->extra_value;
 		}
-
-		$pattern = trim($pattern);
-		$filter = array();
-		if(!$search_cols)
-		{
-			$search_cols = $this->get_default_search_columns();
-		}
-
-		// Add in custom field column, if it is not already there
-		if($this->customfields && !in_array($this->extra_table.'.'.$this->extra_value, $search_cols))
-		{
-			$search_cols[] = $this->extra_table.'.'.$this->extra_value;
-		}
-
-		// Let parent deal with the normal stuff
-		$criteria = parent::search2criteria($pattern, $wildcard, $op, $extra_col, $search_cols);
-
-		return $criteria;
+		//error_log(__METHOD__."() this->columns_to_search=".array2string($this->columns_to_search).' returning '.array2string($cols));
+		return $cols;
 	}
 
 	/**
