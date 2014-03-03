@@ -47,9 +47,8 @@ class admin_acl
 	 * Edit or add an ACL entry
 	 *
 	 * @param array $content
-	 * @param string $msg
 	 */
-	public function acl(array $content=null, $msg='')
+	public function acl(array $content=null)
 	{
 		$state = (array)egw_cache::getSession(__CLASS__, 'state');
 		$tpl = new etemplate_new('admin.acl.edit');	// auto-repeat of acl & label not working with etemplate_new!
@@ -115,7 +114,8 @@ class admin_acl
 				$content['right'][] = $right;
 				$content['label'][] = lang($label);
 			}
-			foreach($state['filter'] == 'run' ? $GLOBALS['egw_info']['apps'] : $acl_rights as $app => $data)
+			$sel_options['acl_appname'] = array();
+			foreach(array_keys($state['filter'] == 'run' ? $GLOBALS['egw_info']['apps'] : $acl_rights) as $app)
 			{
 				$sel_options['acl_appname'][$app] = lang($app);
 			}
@@ -159,7 +159,6 @@ class admin_acl
 	protected function save_run_rights(array $content)
 	{
 		$old_apps = array_keys($this->acl->get_user_applications($content['acl_account'], false, false));
-		$ids = array();
 		// add new apps
 		$added_apps = array_diff($content['apps'], $old_apps);
 		foreach($added_apps as $app)
@@ -241,7 +240,7 @@ class admin_acl
 	 * @param array &$rows=null
 	 * @return int total number of rows available
 	 */
-	public static function get_rows(array $query, array &$rows=null, array &$sel_options=null)
+	public static function get_rows(array $query, array &$rows=null)
 	{
 		$so_sql = new so_sql('phpgwapi', acl::TABLE, null, '', true);
 
@@ -319,9 +318,10 @@ class admin_acl
 				$query['col_filter']['acl_appname'] = array_keys($query['acl_rights']);
 			}
 		}
+		$readonlys = array();
 		$total = $so_sql->get_rows($query, $rows, $readonlys);
 
-		foreach($rows as $n => &$row)
+		foreach($rows as &$row)
 		{
 			// generate a row-id
 			$row['id'] = $row['acl_appname'].':'.$row['acl_account'].':'.$row['acl_location'];
@@ -362,8 +362,8 @@ class admin_acl
 	 */
 	public static function check_access($account_id, $location=null, $throw=true)
 	{
-		static $admin_access;
-		static $own_access;
+		static $admin_access=null;
+		static $own_access=null;
 		if (is_null($admin_access))
 		{
 			$admin_access = isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
@@ -433,13 +433,14 @@ class admin_acl
 	 * New index page
 	 *
 	 * @param array $content
-	 * @param string $msg
 	 */
-	public function index(array $content=null, $msg='')
+	public function index(array $content=null)
 	{
 		$tpl = new etemplate_new('admin.acl');
 
 		$content = array();
+		$account_id = isset($_GET['account_id']) && (int)$_GET['account_id'] ?
+			(int)$_GET['account_id'] : $GLOBALS['egw_info']['user']['account_id'];
 		$content['nm'] = array(
 			'get_rows' => 'admin_acl::get_rows',
 			'no_cat' => true,
@@ -451,12 +452,11 @@ class admin_acl
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
-			'account_id' => isset($_GET['account_id']) && (int)$_GET['account_id'] ? (int)(int)$_GET['account_id'] :
-				$GLOBALS['egw_info']['user']['account_id'],
+			'account_id' => $account_id,
 			'actions' => self::get_actions(),
 			'acl_rights' => $GLOBALS['egw']->hooks->process(array(
 				'location' => 'acl_rights',
-				'owner' => $query['account_id'],
+				'owner' => $account_id,
 			), array(), true),
 		);
 		$user = common::grab_owner_name($content['nm']['account_id']);
