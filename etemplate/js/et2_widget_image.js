@@ -238,3 +238,24 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 
 et2_register_widget(et2_image, ["image"]);
 
+/**
+ * Widget displaying an application icon
+ */
+var et2_appicon = et2_image.extend(
+{
+	attributes: {
+		default_src: {
+			name: "Default image",
+			type: "string",
+			default: "nonav",
+			description: "Image to use if there is no application icon"
+		}
+	},
+
+	set_src: function(_app)
+	{
+		this._super.call(this, _app == 'sitemgr-link' ? 'sitemgr/sitemgr-link' :	// got removed from jdots
+			(this.egw().app(_app, 'icon_app') || _app)+'/'+(this.egw().app(_app, 'icon') || 'navbar'));
+	}
+});
+et2_register_widget(et2_appicon, ["appicon"]);
