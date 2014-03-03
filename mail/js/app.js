@@ -145,7 +145,7 @@ app.classes.mail = AppJS.extend(
 			var body = this.et2.getWidgetById('mailDisplayBodySrc');
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
 			var app_registry = egw.link_get_registry('mail');
-			w=870;
+			var w=870;
 			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 			{
 				var w_h =app_registry['view_popup'].split('x');
@@ -445,7 +445,7 @@ app.classes.mail = AppJS.extend(
 		{
 			cbAllMessages = cbAllVisibleMessages = Check = false;
 		}
-		if (typeof prefAskForMultipleForward == 'undefined') prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
+		if (typeof this.prefAskForMultipleForward == 'undefined') this.prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
 		if (cbAllMessages == true || cbAllVisibleMessages == true)
 		{
 			Check = confirm(this.egw.lang('multiple forward of all mesages'));
@@ -469,9 +469,9 @@ app.classes.mail = AppJS.extend(
 				//sMessageList.concat(',');
 			}
 		}
-		if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
+		if (this.prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
 		{
-			askme = this.egw.lang('multipleforward');
+			var askme = this.egw.lang('multipleforward');
 			//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
 			Check = confirm(askme);
 		}
@@ -1059,7 +1059,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_reduceCounterWithoutServerRoundtrip: function()
 	{
-		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var _foldernode = ftree.getSelectedNode();
 		var counter = _foldernode.label.match(this._unseen_regexp);
 		var icounter = 0;
@@ -1083,7 +1083,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_splitRowId: function(_rowID)
 	{
-		res = _rowID.split('::');
+		var res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
 		if (res.length==4 && parseInt(res[0])!=NaN )
 		{
@@ -1155,8 +1155,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var reason = responseObject['response'];
 		var messageList = responseObject['messageList'];
-		Check = confirm(reason);
-		if (Check==true)
+		if (confirm(reason))
 		{
 			this.mail_deleteMessages(messageList,'remove_immediately');
 		}
@@ -1342,7 +1341,7 @@ app.classes.mail = AppJS.extend(
 				if ( _action.id=='unlabel') // this means all labels should be removed
 				{
 					var labels = ['labelone','labeltwo','labelthree','labelfour','labelfive'];
-					for (i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
+					for (var i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
 					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 				}
 				else
@@ -1359,7 +1358,7 @@ app.classes.mail = AppJS.extend(
 				var dataElem;
 				var flags;
 				var classes = '';
-				for (i=0; i<msg.msg.length; i++)
+				for (var i=0; i<msg.msg.length; i++)
 				{
 					dataElem = egw.dataGetUIDdata(msg.msg[i]);
 					if(typeof dataElem.data.flags == 'undefined')
@@ -1583,7 +1582,7 @@ app.classes.mail = AppJS.extend(
 			mailid = mailida[widget.id.replace(/\[name\]/,'')];
 			if (typeof attgrid.uid != 'undefined' && attgrid.uid && mailid.indexOf(attgrid.uid)==-1)
 			{
-				for (i=0; i<mailida.length; i++)
+				for (var i=0; i<mailida.length; i++)
 				{
 					if (mailida[i].indexOf('::'+attgrid.uid)>-1) mailid = mailida[i];
 				}
@@ -1865,7 +1864,7 @@ app.classes.mail = AppJS.extend(
 		url += '&mode=select-dir';
 		url += '&method=mail.mail_ui.vfsSaveAttachment';
 		url += '&label='+egw.lang('Save all');
-		for (i=0;i<attgrid.length;i++)
+		for (var i=0;i<attgrid.length;i++)
 		{
 			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
 		}
@@ -2191,7 +2190,7 @@ app.classes.mail = AppJS.extend(
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Add"), id: "add", class: "ui-priority-primary", "default": true},
@@ -2229,7 +2228,7 @@ app.classes.mail = AppJS.extend(
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", image: 'edit', "default": true},
@@ -2294,7 +2293,7 @@ app.classes.mail = AppJS.extend(
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Yes"), id: "delete", class: "ui-priority-primary", "default": true},
