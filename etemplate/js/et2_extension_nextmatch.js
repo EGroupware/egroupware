@@ -473,10 +473,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			for(var i = 0; i < _row_ids.length; i++)
 			{
 				uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
-				entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
-
-				// Unselect
-				this.controller._selectionMgr.setSelected(uid,false);
 				
 				// Delete from internal references
 				this.controller.deleteRow(uid);
@@ -489,10 +485,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				this.controller._selectionMgr.setFocused(next.id,true);
 			}
 
-			// Update the count, but don't use setTotalCount() since that will
-			// remove more rows (from the end).
+			// Update the count
 			var total = this.dataview.grid._total - _row_ids.length;
-			this.dataview.grid._total = total;
+			// This will remove the last row!
+			// That's OK, because grid adds one in this.controller.deleteRow()
+			this.dataview.grid.setTotalCount(total);
 			// Re-enable automatic updating
 			this.dataview.grid.doInvalidate = true;
 			this.dataview.grid.invalidate();

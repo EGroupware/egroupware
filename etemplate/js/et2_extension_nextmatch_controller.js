@@ -135,8 +135,16 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 */
 	deleteRow: function(uid) {
 		var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
+		
+		// Unselect
+		this._selectionMgr.setSelected(uid,false);
+		
 		if(entry && entry.idx !== null)
 		{
+			// This will remove the row, but add an empty to the end.
+			// That's OK, because it will be removed when we update the row count
+			this._grid.deleteRow(entry.idx);
+			
 			// Trigger controller to remove from internals
 			this.egw.dataStoreUID(uid,null);
 			// Stop caring about this ID
@@ -162,7 +170,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			// Remove last one, it was moved to mapIndex-1 before increment
 			delete this._indexMap[mapIndex-1];
 
-			this._selectionMgr.setIndexMap(this._indexMap);
+			// Not needed, they share by reference
+			// this._selectionMgr.setIndexMap(this._indexMap);
 		}
 	},
 
