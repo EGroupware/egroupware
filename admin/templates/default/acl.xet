@@ -33,7 +33,7 @@
 					<nextmatch-header label="Custom 3" id="custom3"/>
 				</row>
 				<row>
-					<image align="center" src="$row_cont[acl_appname]/navbar" class="admin_aclApp"/>
+					<appicon align="center" src="$row_cont[acl_appname]" class="admin_aclApp"/>
 					<menulist>
 						<menupopup type="select-app" id="${row}[acl_appname]" readonly="true"/>
 					</menulist>
