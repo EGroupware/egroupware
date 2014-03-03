@@ -2918,42 +2918,40 @@ class mail_compose
 		$_searchString = trim($_REQUEST['query']);
 		$include_lists = (boolean)$_REQUEST['include_lists'];
 
-		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength) {
+		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength)
+		{
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
-			if (method_exists($GLOBALS['egw']->contacts,'search')) {
-				// 1.3+
-				$showAccounts = empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']);
-				//error_log(__METHOD__.__LINE__.$_searchString);
-				$seStAr = explode(' ',$_searchString);
-				foreach ($seStAr as $k => $v) if (strlen($v)<3) unset($seStAr[$k]);
-				$_searchString = trim(implode(' AND ',$seStAr));
-				//error_log(__METHOD__.__LINE__.$_searchString);
-				$filter = ($showAccounts?array():array('account_id' => null));
-				$filter['cols_to_search']=array('n_prefix','n_given','n_family','org_name','email','email_home');
-				$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
-				// additionally search the accounts, if the contact storage is not the account storage
-				if ($showAccounts && $GLOBALS['egw']->contacts->so_accounts)
-				{
-					$accounts = $GLOBALS['egw']->contacts->search(array(
-						'n_prefix'       => $_searchString,
-						'n_given'       => $_searchString,
-						'n_family'       => $_searchString,
-						'org_name'       => $_searchString,
-						'email'      => $_searchString,
-						'email_home' => $_searchString,
-					),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
+			$showAccounts = empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']);
+			$search = explode(' ', $_searchString);
+			foreach ($search as $k => $v)
+			{
+				if (mb_strlen($v) < 3) unset($search[$k]);
+			}
+			$search_str = implode(' +', $search);	// tell contacts/so_sql to AND search patterns
+			//error_log(__METHOD__.__LINE__.$_searchString);
+			$filter = $showAccounts ? array() : array('account_id' => null);
+			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home');
+			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home');
+			$contacts = $GLOBALS['egw']->contacts->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
+			// additionally search the accounts, if the contact storage is not the account storage
+			if ($showAccounts && $GLOBALS['egw']->contacts->so_accounts)
+			{
+				$filter['owner'] = 0;
+				$accounts = $GLOBALS['egw']->contacts->search($search_str, $cols, 'n_fn', '', '%', false,'OR', array(0,100), $filter);
 
-					if ($contacts && $accounts)
+				if ($contacts && $accounts)
+				{
+					$contacts = array_merge($contacts,$accounts);
+					usort($contacts,function($a, $b)
 					{
-						$contacts = array_merge($contacts,$accounts);
-						usort($contacts,create_function('$a,$b','return strcasecmp($a["n_fn"],$b["n_fn"]);'));
-					}
-					elseif($accounts)
-					{
-						$contacts =& $accounts;
-					}
-					unset($accounts);
+						return strcasecmp($a['n_fn'], $b['n_fn']);
+					});
 				}
+				elseif($accounts)
+				{
+					$contacts =& $accounts;
+				}
+				unset($accounts);
 			}
 		}
 		$results = array();
