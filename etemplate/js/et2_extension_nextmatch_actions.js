@@ -108,6 +108,27 @@ function nm_action(_action, _senders, _target, _ids)
 			// egw_open will be used instead.
 			if(idsArr.length > 1 || typeof _action.data.egw_open == 'undefined')
 			{
+				if(_ids.all)
+				{
+
+					var nextmatch = mgr.data.nextmatch;
+					if(nextmatch && nextmatch.controller && nextmatch.controller._grid &&nextmatch.controller._grid.getTotalCount() > idsArr.length)
+					{
+						// Need to actually fetch all (TODO: just ids) to do this client side
+						nextmatch.controller.dataFetch({start:0,num_rows:-1}, function(data) {
+							var idsArr = [];
+							if(data && data.order)
+							{
+								for(var i = 0; i < data.order.length; i++)
+								{
+									idsArr[i] = data.order[i].split("::").pop();
+								}
+								et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+							}
+						},_action);
+						return;
+					}
+				}
 				et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
 				break;
 			}
