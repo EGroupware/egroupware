@@ -123,6 +123,15 @@ class idots_framework extends egw_framework
 			}
 			self::validate_file('/phpgwapi/templates/idots/js/idots.js');
 		}
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover' && !html::$ua_mobile)
+		{
+			$show_menu_event = 'mouseover';
+		}
+		else
+		{
+			$show_menu_event = 'click';
+		}
+		$extra['slide-out'] = $show_menu_event;
 
 		$this->tpl->set_var($this->_get_header($extra));
 

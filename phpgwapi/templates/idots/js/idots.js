@@ -18,7 +18,14 @@ egw_LAB.wait(function() {
 	var quick_add = document.getElementById('quick_add');
 	if (quick_add) egw.link_quick_add(quick_add);
 
-	// instanciate slideout menus via "data-slide-out" of egw.js script tag
+	// Handle sliding menues of extra apps and sidebox
+	var egw_script = document.getElementById('egw_script_id');
+	var mouseHandler = 'click';
+	if (egw_script)
+	{
+		var data_slide_out = egw_script.getAttribute('data-slide-out');
+		mouseHandler = data_slide_out == 'mouseover'?'mouseover':'click';
+	}	
 	var extra_icons_show = 	jQuery('#extra_icons_show');
 	var menu1Container = jQuery('#menu1Container')
 			.width(180)
@@ -26,10 +33,9 @@ egw_LAB.wait(function() {
 	var menu2show = jQuery('#menu2show');
 	var menu2Container = jQuery('#menu2Container');
 	//Click handler for extra apps menu
-	extra_icons_show.on({
-		click:function (event){
+	extra_icons_show.on(mouseHandler,function (event){
 			var extraIcon = event;
-			$j('html').on('click',function(event) {
+			$j('html').on(mouseHandler,function(event) {
 				if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target) 
 				{
 					menu1Container.slideUp();
@@ -38,10 +44,9 @@ egw_LAB.wait(function() {
 			});
 			menu1Container.slideToggle();
 		}
-	});
+	);
 	// Click handler for sidebox menu
-	menu2show.on({
-		click:function (event){
+	menu2show.on(mouseHandler,function (event){
 			var m2showIcon = event;
 			var options = {
 				direction: "left"
@@ -55,7 +60,7 @@ egw_LAB.wait(function() {
 			});
 			menu2Container.toggle("slide",options);
 		}
-	});
+	);
 
 	/**
 	 * Initialisation, when DOM is ready
