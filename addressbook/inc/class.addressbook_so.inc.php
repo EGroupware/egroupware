@@ -120,7 +120,8 @@ class addressbook_so
 	var $sql_cols_not_to_search = array(
 		'jpegphoto','owner','tid','private','cat_id','etag',
 		'modified','modifier','creator','created','tz','account_id',
-		'uid',
+		'uid','carddav_name','freebusy_uri','calendar_uri',
+		'geo','pubkey',
 	);
 	/**
 	 * columns to search, if we search for a single pattern
@@ -193,7 +194,6 @@ class addressbook_so
 	 */
 	var $soextra;
 	var $sodistrib_list;
-	var $backend;
 
 	/**
 	 * Constructor
@@ -217,6 +217,7 @@ class addressbook_so
 		{
 			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
 		}
+		$this->customfields = config::get_customfields('addressbook');
 		// contacts backend (contacts in LDAP require accounts in LDAP!)
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
 		{
@@ -234,6 +235,10 @@ class addressbook_so
 
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
+			if ($this->customfields)	// add custom fields, if configured
+			{
+				$this->columns_to_search[] = addressbook_sql::EXTRA_TABLE.'.'.addressbook_sql::EXTRA_VALUE;
+			}
 		}
 		if ($this->user)
 		{
@@ -276,7 +281,6 @@ class addressbook_so
 			$this->soextra = new addressbook_sql($db);
 		}
 
-		$this->customfields = config::get_customfields('addressbook');
 		$this->content_types = config::get_content_types('addressbook');
 		if (!$this->content_types)
 		{
@@ -642,7 +646,9 @@ class addressbook_so
 
 				foreach($cols as $key => &$col)
 				{
-					if(!array_key_exists($col, $backend->db_cols))
+					if($col != addressbook_sql::EXTRA_VALUE &&
+						$col != addressbook_sql::EXTRA_TABLE.'.'.addressbook_sql::EXTRA_VALUE &&
+						!array_key_exists($col, $backend->db_cols))
 					{
 						if(!($col = array_search($col, $backend->db_cols)))
 						{
@@ -817,7 +823,7 @@ class addressbook_so
 	 *
 	 * @param array|string|int $keys=null
 	 * @param int $owner=null account_id of owner or 0 for accounts
-	 * @return object
+	 * @return addressbook_sql
 	 */
 	function get_backend($keys=null,$owner=null)
 	{

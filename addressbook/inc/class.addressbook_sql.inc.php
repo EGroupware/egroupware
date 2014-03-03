@@ -55,6 +55,7 @@ class addressbook_sql extends so_sql_cf
 	var $ab2list_table = 'egw_addressbook2list';
 
 	const EXTRA_TABLE = 'egw_addressbook_extra';
+	const EXTRA_VALUE = 'contact_value';
 
 	/**
 	 * Constructor
