@@ -135,7 +135,7 @@ abstract class egw_framework
 	/**
 	 * Send HTTP headers: Content-Type and Content-Security-Policy
 	 */
-	protected function _send_headers()
+	public function send_headers()
 	{
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.translation::charset());
@@ -1011,51 +1011,43 @@ if ($app == 'home') continue;
 	public function _get_css()
 	{
 		$app_css = '';
-
-		// Load these first
-		// Cascade should go:
-		//  Libs < etemplate2 < framework/theme < app < print (?)
-		// Enhanced selectboxes (et1)
-		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
-
-		// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-		self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
-
-		// eTemplate2 - load in top so sidebox has styles too
-		self::includeCSS('/etemplate/templates/default/etemplate2.css');
-
-		if(isset($_GET['menuaction']))
-		{
-			list($app,$class,$method) = explode('.',$_GET['menuaction']);
-			if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
-			{
-				error_log("Deprecated functionality in $app class $class: using of public_function css, use \$GLOBALS['egw_info']['flags']['css'] or an app.css file!");
-				$app_css .= $GLOBALS[$class]->css();
-			}
-		}
 		if (isset($GLOBALS['egw_info']['flags']['css']))
 		{
-			$app_css .= $GLOBALS['egw_info']['flags']['css'];
+			$app_css = $GLOBALS['egw_info']['flags']['css'];
 		}
 
-		$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
-		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+		if (self::$load_default_css)
 		{
-			$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
+			// Load these first
+			// Cascade should go:
+			//  Libs < etemplate2 < framework/theme < app < print (?)
+			// Enhanced selectboxes (et1)
+			self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
+
+			// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
+			self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
+
+			// eTemplate2 - load in top so sidebox has styles too
+			self::includeCSS('/etemplate/templates/default/etemplate2.css');
+
+			$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+			if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+			{
+				$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
+			}
+			$print_css = $this->template_dir.'/print.css';
+			if(!file_exists(EGW_SERVER_ROOT.$print_css))
+			{
+				$print_css = '/phpgwapi/templates/idots/print.css';
+			}
+
+			// search for app specific css file
+			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+
+			// sending template/theme and print css last, so they can overwrite anything
+			self::includeCSS($theme_css);
+			self::includeCSS($print_css);
 		}
-		$print_css = $this->template_dir.'/print.css';
-		if(!file_exists(EGW_SERVER_ROOT.$print_css))
-		{
-			$print_css = '/phpgwapi/templates/idots/print.css';
-		}
-
-		// search for app specific css file
-		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
-
-		// sending template/theme and print css last, so they can overwrite anything
-		self::includeCSS($theme_css);
-		self::includeCSS($print_css);
-
 		// add all css files from self::includeCSS
 		$max_modified = 0;
 		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
@@ -1824,15 +1816,28 @@ if ($app == 'home') continue;
 	protected static $css_include_files = array();
 
 	/**
+	 *
+	 * @var boolean
+	 */
+	protected static $load_default_css = true;
+
+	/**
 	 * Include a css file, either speicified by it's path (relative to EGW_SERVER_ROOT) or appname and css file name
 	 *
 	 * @param string $app path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
 	 * @param string $name=null name of css file in $app/templates/{default|$this->template}/$name.css
 	 * @param boolean $append=true true append file, false prepend (add as first) file used eg. for template itself
+	 * @param boolean $no_default_css=false true do NOT load any default css, only what app explicitly includes
 	 * @return boolean false: css file not found, true: file found
 	 */
-	public static function includeCSS($app, $name=null, $append=true)
+	public static function includeCSS($app, $name=null, $append=true, $no_default_css=false)
 	{
+		if ($no_default_css)
+		{
+			self::$load_default_css = false;
+			self::$css_include_files = array();
+		}
+
 		if (!is_null($name))
 		{
 			$path = '/'.$app.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/'.$name.'.css';

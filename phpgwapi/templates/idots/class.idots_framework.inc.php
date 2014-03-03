@@ -91,7 +91,7 @@ class idots_framework extends egw_framework
 		if (self::$header_done) return '';
 		self::$header_done = true;
 
-		self::_send_headers();
+		$this->send_headers();
 
 		// catch error echo'ed before the header, ob_start'ed in the header.inc.php
 		$content = ob_get_contents();
