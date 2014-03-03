@@ -127,7 +127,7 @@ function _egw_nodeIsInInput(_node)
 	if ((_node != null) && (_node != document))
 	{
 		var tagName = _node.tagName.toLowerCase();
-		if (tagName == "input" || tagName == "select")
+		if (tagName == "input" || tagName == "select" || tagName == 'textarea' || tagName == 'button')
 		{
 			return true;
 		}
