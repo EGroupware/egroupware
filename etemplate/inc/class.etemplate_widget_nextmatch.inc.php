@@ -854,6 +854,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array($content, $form_name);
+
+		// Some (most) extmatch settings are set in its value, not attributes, which aren't in
+		// $content.  Fetch them from the request, so we actually have them.
+		$content_value = self::get_array(self::$request->content, $form_name);
+
 		list($app) = explode('.',$this->attrs['template']);
 
 		unset($value['favorite']);
@@ -872,7 +877,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Save current column settings as default, clear, or force (admins only)
 		if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
 		{
-			$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
+			$pref_name = 'nextmatch-' . (isset($content_value['columnselection_pref']) ? $content_value['columnselection_pref'] : $this->attrs['template']);
 			$refresh_pref_name = $pref_name.'-autorefresh';
 			$pref_level = $value['nm_col_preference'] == 'force' ? 'forced' : 'default';
 
