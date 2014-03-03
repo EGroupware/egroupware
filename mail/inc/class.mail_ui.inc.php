@@ -2696,7 +2696,7 @@ unset($query['actions']);
 	}
 
 
-	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null,$fullHeader=true)
+	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null)
 	{
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
@@ -2738,8 +2738,8 @@ $this->partID = $partID;
 //_debug_array($bodyParts); die(__METHOD__.__LINE__);
 		// Compose the content of the frame
 		$frameHtml =
-			$this->get_email_header($this->mail_bo->getStyles($bodyParts),$fullHeader).
-			$this->showBody($this->getdisplayableBody($bodyParts), false,$fullHeader);
+			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
+			$this->showBody($this->getdisplayableBody($bodyParts), false);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
 		$this->mail_bo->htmlOptions = $bufferHtmlOptions;
@@ -2747,30 +2747,19 @@ $this->partID = $partID;
 		return $frameHtml;
 	}
 
-	static function get_email_header($additionalStyle='',$fullHeader=true)
+	static function get_email_header($additionalStyle='')
 	{
-		//error_log(__METHOD__.__LINE__.$additionalStyle);
-		$header = ($fullHeader?'
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />':'').'
-		<style>
-			body, td, textarea {
-				font-family: Verdana, Arial, Helvetica,sans-serif;
-				font-size: 11px;
-			}
-		</style>'.$additionalStyle.'
-		<script type="text/javascript">
-			function GoToAnchor(aname)
-			{
-				window.location.hash=aname;
-			}
-		</script>'.($fullHeader?'
-	</head>
-	<body>
-':'');
-		return $header;
+		// egw_info[flags][css] already include <style> tags
+		$GLOBALS['egw_info']['flags']['css'] = preg_replace('|</?style[^>]*>|i', '', $additionalStyle);
+
+		// do NOT include any default CSS
+		egw_framework::includeCSS('mail', 'preview', true, true);
+
+		// load preview.js to activate mailto links
+		egw_framework::validate_file('/mail/js/preview.js');
+
+		// send CSP and content-type header
+		return $GLOBALS['egw']->framework->header();
 	}
 
 	function showBody(&$body, $print=true,$fullPageTags=true)
@@ -2817,8 +2806,6 @@ blockquote[type=cite] {
 	function &getdisplayableBody($_bodyParts,$modifyURI=true)
 	{
 		$bodyParts	= $_bodyParts;
-
-		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
@@ -2902,7 +2889,6 @@ blockquote[type=cite] {
 			}
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			#$CharSetUsed = mb_detect_encoding($singleBodyPart['body'] . 'a' , strtoupper($singleBodyPart['charSet']).','.strtoupper(mail_bo::$displayCharset).',UTF-8, ISO-8859-1');
-
 			if($singleBodyPart['mimeType'] == 'text/plain')
 			{
 				//$newBody	= $singleBodyPart['body'];
@@ -2986,18 +2972,7 @@ blockquote[type=cite] {
 					$newBody = preg_replace_callback("/url\(cid:(.*)\);/iU",array($this,'image_callback_url'),$newBody);
 					$newBody = preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback_background'),$newBody);
 				}
-				$addAction = egw_link::get_registry('mail','add');
-
-				// create links for email addresses
-				if ($modifyURI)
-				{
-					$link = egw::link('/index.php',array('menuaction'    => $addAction['menuaction']));
-					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
-						"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
-					//print "<pre>".htmlentities($newBody)."</pre><hr>";
-				}
-				// replace emails within the text with clickable links.
-				//TODO:$this->parseEmail($newBody);
+				// email addresses / mailto links get now activated on client-side
 			}
 
 			$body .= $newBody;
@@ -3397,19 +3372,18 @@ blockquote[type=cite] {
 	 *
 	 * @return xajax response
 	 */
-	function loadEmailBody($_messageID=null,$_partID=null,$_htmloptions=null,$_fullHeader=true)
+	function loadEmailBody($_messageID=null,$_partID=null,$_htmloptions=null)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
 		if (!$_partID && !empty($_GET['_partID'])) $_partID = $_GET['_partID'];
 		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
-		if (!$_fullHeader && !empty($_GET['_fullHeader'])) $_fullHeader = $_GET['_fullHeader'];
 		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions,$_fullHeade");
 		if (empty($_messageID)) return "";
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
-		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions,$_fullHeader);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions);
 		egw_session::cache_control(true);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;

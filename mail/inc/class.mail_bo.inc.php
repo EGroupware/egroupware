@@ -529,7 +529,7 @@ class mail_bo
 		$identities = $acc->identities();
 
 		$userEMailAdresses = array($acc['ident_email']=>$acc['ident_realname']);
-		
+
 		foreach($identities as $ik => $ident) {
 			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
 			$identity = emailadmin_account::read_identity($ik);
@@ -2043,7 +2043,7 @@ class mail_bo
 			if (self::$debugTimes) self::logRunTimes($starttime,null,'using static',__METHOD__.' ('.__LINE__.') ');
 			return $folders2return[$this->icServer->ImapServerId];
 		}
-			
+
 		if ($_subscribedOnly && $_getCounters===false)
 		{
 			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
@@ -4509,7 +4509,7 @@ class mail_bo
 
 		// CSS Security
 		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
-		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
+		$css = preg_replace('/(javascript|expression|-moz-binding)/i','',$style);
 		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it

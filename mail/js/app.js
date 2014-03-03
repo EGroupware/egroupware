@@ -635,7 +635,7 @@ app.classes.mail = AppJS.extend(
 		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
-		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",subject:"",attachmentsBlock:""}};
+		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
