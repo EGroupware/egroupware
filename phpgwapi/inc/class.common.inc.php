@@ -854,7 +854,7 @@ class common
 	{
 		if (is_null($template_set))
 		{
-			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+			$template_set = $GLOBALS['egw_info']['server']['template_set'];
 		}
 		if (is_null($svg))
 		{

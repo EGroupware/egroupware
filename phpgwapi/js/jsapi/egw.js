@@ -255,6 +255,11 @@
 			{
 				egw(window).message(JSON.parse(egw_script.getAttribute('data-message')));
 			}
+			// hide location bar for mobile browsers
+			if (egw_script.getAttribute('data-mobile'))
+			{
+				window.scrollTo(0, 1);
+			}
 		});
 	});
 

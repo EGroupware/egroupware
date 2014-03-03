@@ -99,7 +99,6 @@ class idots_framework extends egw_framework
 
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
-		if (!is_object($this->tpl)) ;
 		$this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
@@ -107,8 +106,7 @@ class idots_framework extends egw_framework
 		if (html::$ua_mobile)
 		{
 			self::$css_include_files[] = '/phpgwapi/templates/idots/mobile.css';
-			// hide location bar
-			egw_framework::set_onload('window.setTimeout(function(){window.scrollTo(0, 1);}, 100);');
+			$extra['mobile'] = true;
 		}
 
 		// load idots specific javascript files, if we are not in login or logout

@@ -1144,8 +1144,8 @@ if ($app == 'home') continue;
 				'etag' => md5(json_encode(config::clientConfigs()).egw_link::json_registry()),
 			));
 			self::validate_file('/phpgwapi/images.php', array(
-				'template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set'],
-				'etag' => md5(json_encode(common::image_map($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))),
+				'template' => $GLOBALS['egw_info']['server']['template_set'],
+				'etag' => md5(json_encode(common::image_map($GLOBALS['egw_info']['server']['template_set']))),
 				'svg' => 0,	// always load non-svg image map
 			));
 			self::validate_file('/phpgwapi/user.php', array(
