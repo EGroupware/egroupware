@@ -19,29 +19,43 @@ egw_LAB.wait(function() {
 	if (quick_add) egw.link_quick_add(quick_add);
 
 	// instanciate slideout menus via "data-slide-out" of egw.js script tag
-	var egw_script = document.getElementById('egw_script_id');
-	if (egw_script)
-	{
-		var data_slide_out = egw_script.getAttribute('data-slide-out');
-		if (data_slide_out)
-		{
-			data_slide_out = JSON.parse(data_slide_out);
-			for(var i=0; i < data_slide_out.length; ++i)
-			{
-				var args=data_slide_out[i];
-
-				new ypSlideOutMenu(args.id, args.dir, args.left, args.top, args.width, args.height, args.pos);
-				for(var selector in args.bind)
+	var extra_icons_show = 	jQuery('#extra_icons_show');
+	var menu1Container = jQuery('#menu1Container')
+			.width(180)
+			.offset({top:extra_icons_show.offset().top+extra_icons_show.height()});
+	var menu2show = jQuery('#menu2show');
+	var menu2Container = jQuery('#menu2Container');
+	//Click handler for extra apps menu
+	extra_icons_show.on({
+		click:function (event){
+			var extraIcon = event;
+			$j('html').on('click',function(event) {
+				if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target) 
 				{
-					var data = args.bind[selector];
-					jQuery(selector).on(data.event, {menu: args.id, method: data.method}, function(event){
-						window.ypSlideOutMenu[event.data.method].call(window, event.data.menu);
-						event.preventDefault();
-					});
+					menu1Container.slideUp();
+					$j(this).unbind(event);
 				}
-			}
+			});
+			menu1Container.slideToggle();
 		}
-	}
+	});
+	// Click handler for sidebox menu
+	menu2show.on({
+		click:function (event){
+			var m2showIcon = event;
+			var options = {
+				direction: "left"
+			};
+			$j('html').on('click',function(event) {
+				if (event.target !== m2showIcon.target) 
+				{
+					menu2Container.toggle('slide',options);
+					$j(this).unbind(event);
+				}
+			});
+			menu2Container.toggle("slide",options);
+		}
+	});
 
 	/**
 	 * Initialisation, when DOM is ready

@@ -125,15 +125,6 @@ class idots_framework extends egw_framework
 			}
 			self::validate_file('/phpgwapi/templates/idots/js/idots.js');
 		}
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover' && !html::$ua_mobile)
-		{
-			$show_menu_event = 'mouseover';
-		}
-		else
-		{
-			$show_menu_event = 'click';
-		}
-		$extra['slide-out'] = $this->slide_out_menus($show_menu_event);
 
 		$this->tpl->set_var($this->_get_header($extra));
 
@@ -142,43 +133,6 @@ class idots_framework extends egw_framework
 		$this->sidebox_content = '';	// need to be emptied here, as the object get's stored in the session
 
 		return $content;
-	}
-
-	/**
-	 * Return slide-out-menu config for idots.js
-	 *
-	 * @param string $show_menu_event='click'
-	 * @return array
-	 */
-	protected function slide_out_menus($show_menu_event='click')
-		{
-		return array(
-			array(
-				'id' => 'menu1',
-				'dir' => 'down',
-				'left' => 10,
-				'top' => html::$ua_mobile ? 0 : 114,
-				'width' => 180,
-				'height' => 200,
-				'pos' => 'right',
-				'bind' => array(
-					'#extra_icons_show' => array('event' => $show_menu_event, 'method' => 'showMenu'),
-					'#menu1close' => array('event' => $show_menu_event, 'method' => 'hide'),
-				),
-			),
-			array(
-				'id' => 'menu2',
-				'dir' => 'right',
-				'left' => 0,
-				'top' => html::$ua_mobile ? 0 : 105,
-				'width' => 100,
-				'height' => 200,
-				'bind' => array(
-					'#menu2show' => array('event' => $show_menu_event, 'method' => 'showMenu'),
-					'#menu2close' => array('event' => 'click', 'method' => 'hide'),
-				),
-			),
-		);
 	}
 
 	/**

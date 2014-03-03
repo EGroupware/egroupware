@@ -132,3 +132,12 @@ a:link, a:visited, select, input, textarea {
 .divLoginboxHeader {
 	background-image: url(../images/gradient22.png);
 }
+#menu1Container{
+	position: absolute;
+	top: 3px;
+	right: -16px;
+	z-index: 10000;
+}
+#menu2Container{
+	z-index: 10000;
+}

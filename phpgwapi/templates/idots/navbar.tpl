@@ -2,10 +2,9 @@
 <div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="EGroupware"/></a></div></div>
 
 <!-- BEGIN app_extra_icons_div -->
-<div id="menu1Container" style="visibility: hidden; position:absolute;">
-	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
+<div id="menu1Container" style="display: none; position:absolute;">
+	<div id="menu1Content" style="position: relative; text-align: left;">
 		<div id="extraIcons">
-			<a id="menu1close" href="#" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
 <!-- BEGIN app_extra_block -->
 				<tr>
@@ -80,7 +79,7 @@
 		<a id="menu2show" href="#" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
-	<div id="menu2Container" style="visibility: hidden; position:absolute;">
+	<div id="menu2Container" style="display: none; position:absolute;">
 	<!--[if lte IE 6.5]><div class="selectbg" id="dd3"><div class="bdforselection"><![endif]-->
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
