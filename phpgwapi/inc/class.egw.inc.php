@@ -258,7 +258,7 @@ class egw extends egw_minimal
 		// output the header unless the developer turned it off
 		if (!@$GLOBALS['egw_info']['flags']['noheader'])
 		{
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 		}
 
 		// Load the (depricated) app include files if they exists
@@ -706,7 +706,7 @@ class egw_minimal
 				}
 				break;
 			case 'template':	// need to be instancated for the current app
-				if (!($tpl_dir = $GLOBALS['egw']->common->get_tpl_dir($this->currentapp)))
+				if (!($tpl_dir = common::get_tpl_dir($this->currentapp)))
 				{
 					return null;
 				}
