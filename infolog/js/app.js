@@ -51,16 +51,19 @@ app.classes.infolog = AppJS.extend(
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
 	 *
-	 * @param et2 etemplate2 Newly ready object
+	 * @param {etemplate2} _et2 newly ready object
+	 * @param {string} _name template name
 	 */
-	et2_ready: function(et2)
+	et2_ready: function(_et2, _name)
 	{
 		// call parent
 		this._super.apply(this, arguments);
 
-		if(typeof et2.templates['infolog.index'] != 'undefined')
+		switch(_name)
 		{
-			this.filter_change();
+			case 'infolog.index':
+				this.filter_change();
+				break;
 		}
 	},
 
@@ -78,7 +81,6 @@ app.classes.infolog = AppJS.extend(
 			temp_header_left.set_disabled(filter.value !== "bydate");
 
 		}
-
 	},
 
 	/**
@@ -100,7 +102,7 @@ app.classes.infolog = AppJS.extend(
 			nm.options.settings.columnselection_pref = 'infolog.index.rows'+(filter2.value == 'all' ? '-details' :'');
 
 			// Load new preferences
-			var colData = []
+			var colData = [];
 			for(var i = 0; i < nm.columns.length; i++) colData[i] = {disabled: true, width: '0'};
 			nm._applyUserPreferences(nm.columns, colData);
 			for(var i = 0; i < colData.length; i++)
@@ -143,12 +145,12 @@ app.classes.infolog = AppJS.extend(
 			child_button.style.display = children ? 'block' : 'none';
 		}
 		var callbackDeleteDialog = function (button_id)
-					{
-						if (button_id == et2_dialog.YES_BUTTON )
-						{
+		{
+			if (button_id == et2_dialog.YES_BUTTON )
+			{
 
-						}
-					}
+			}
+		};
 		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 	},
@@ -213,16 +215,16 @@ app.classes.infolog = AppJS.extend(
 	/**
 	* If one of info_status, info_percent or info_datecompleted changed --> set others to reasonable values
 	*
-	* @param string changed_id id of changed element
-	* @param string status_id
-	* @param string percent_id
-	* @param string datecompleted_id
+	* @param {string} changed_id id of changed element
+	* @param {string} status_id
+	* @param {string} percent_id
+	* @param {string} datecompleted_id
 	*/
 	status_changed: function(changed_id, status_id, percent_id, datecompleted_id)
 	{
 		// Make sure this doesn't get executed while template is loading
 		if(this.et2 == null || this.et2.getInstanceManager() == null) return;
-		
+
 		var status = document.getElementById(status_id);
 		var percent = document.getElementById(percent_id);
 		var datecompleted = document.getElementById(datecompleted_id+'[str]');
