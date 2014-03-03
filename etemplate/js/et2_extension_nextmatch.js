@@ -2426,6 +2426,9 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 	 */
 	set_sortmode: function(_mode)
 	{
+		// Set via nextmatch after setup
+		if(this.nextmatch) return;
+		
 		this.setSortmode(_mode);
 	},
 
