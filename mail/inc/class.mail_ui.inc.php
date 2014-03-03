@@ -2301,7 +2301,7 @@ unset($query['actions']);
 					}
 					$addAction = egw_link::get_registry('mail','add');
 					$linkData = array (
-						'menuaction'	=> $addAction,
+						'menuaction'	=> $addAction['menuaction'],
 						'send_to'	=> base64_encode($newSenderAddress)
 					);
 					$link = egw::link('/index.php',$linkData);
@@ -2353,7 +2353,7 @@ unset($query['actions']);
 					$addAction = egw_link::get_registry('mail','add');
 					if ($decode) $addrEMail = mail_bo::decode_header($addrEMail,true);
 					$linkData = array (
-						'menuaction'	=> $addAction,
+						'menuaction'	=> $addAction['menuaction'],
 						'send_to'	=> base64_encode($addressData['EMAIL'])
 					);
 					$link = egw::link('/index.php',$linkData);
@@ -2987,10 +2987,11 @@ blockquote[type=cite] {
 					$newBody = preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback_background'),$newBody);
 				}
 				$addAction = egw_link::get_registry('mail','add');
+
 				// create links for email addresses
 				if ($modifyURI)
 				{
-					$link = egw::link('/index.php',array('menuaction'    => $addAction));
+					$link = egw::link('/index.php',array('menuaction'    => $addAction['menuaction']));
 					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
 						"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
 					//print "<pre>".htmlentities($newBody)."</pre><hr>";
