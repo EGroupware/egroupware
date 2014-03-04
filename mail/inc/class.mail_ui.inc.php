@@ -2764,34 +2764,7 @@ $this->partID = $partID;
 
 	function showBody(&$body, $print=true,$fullPageTags=true)
 	{
-		$BeginBody = '<style type="text/css">
-body,html {
-    height:100%;
-    width:100%;
-    padding:0px;
-    margin:0px;
-}
-.td_display {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 120%;
-    color: black;
-    background-color: #FFFFFF;
-}
-pre {
-	white-space: pre-wrap; /* Mozilla, since 1999 */
-	white-space: -pre-wrap; /* Opera 4-6 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	width: 99%;
-}
-blockquote[type=cite] {
-	margin: 0;
-	border-left: 2px solid blue;
-	padding-left: 10px;
-	margin-left: 0;
-	color: blue;
-}
-</style>
-<div class="mailDisplayBody">
+		$BeginBody = '<div class="mailDisplayBody">
  <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';

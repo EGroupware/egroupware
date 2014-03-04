@@ -1,0 +1,40 @@
+/**
+ * EGroupware - Mail - CSS for message preview
+ *
+ * @link http://www.egroupware.org
+ * @package mail
+ * @subpackage setup
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
+
+body, td, textarea {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+body,html {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+}
+.td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    color: black;
+    background-color: #FFFFFF;
+}
+pre {
+	white-space: pre-wrap;
+	width: 99%;
+}
+blockquote[type=cite] {
+	margin: 0;
+	border-left: 2px solid blue;
+	padding-left: 10px;
+	margin-left: 0;
+	color: blue;
+}
