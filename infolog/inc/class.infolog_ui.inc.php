@@ -455,7 +455,7 @@ class infolog_ui
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog')
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog');
-			if ($query['filter'] != '')
+			if ($query['filter'] != '' && !empty($this->filters[$query['filter']]))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
