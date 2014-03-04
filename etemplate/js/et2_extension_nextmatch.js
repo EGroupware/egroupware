@@ -453,11 +453,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	refresh: function(_row_ids, _type) {
 		// Framework trying to refresh, but nextmatch not fully initialized
-		if(this.controller === null || !this.div || !this.div.is(':visible'))
+		if(this.controller === null || !this.div)
 		{
 			return;
 		}
-
+		if (!this.div.is(':visible'))	// run refresh, once we become visible again
+		{
+			$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
+				// Important to use anonymous function instead of just 'this.refresh' because
+				// of the parameters passed
+				jQuery.proxy(function() {this.refresh();},this)
+			);
+			return;
+		}
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 		if (typeof _row_ids == "undefined" || _row_ids === null)
