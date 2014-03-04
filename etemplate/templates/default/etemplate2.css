@@ -204,6 +204,18 @@ button.et2_button_with_image {
          background-position:  5% center;
          background-size: 16px;
  }
+/* et2_box_widget ###*/
+button[id="cancel"],
+button#cancel {
+	padding-left: 6px;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+.ui-dialog-buttonset button {
+	padding-left: 6px !important;
+	background-position: left !important;
+	background-repeat: no-repeat !important;
+}
 /**
  * Drop down button
  */
