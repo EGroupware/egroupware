@@ -248,6 +248,7 @@ class mail_compose
 		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
 
 		// Process different places we can use as a start for composing an email
+		$actionToProcess = 'compose';
 		if($_GET['from'] && $replyID)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(
@@ -256,6 +257,7 @@ class mail_compose
 				// Additionally may be changed
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
+			$actionToProcess = $_GET['from'];
 			unset($_GET['from']);
 			unset($_GET['reply_id']);
 			unset($_GET['part_id']);
@@ -280,7 +282,11 @@ class mail_compose
 		}
 		else
 		{
-			$isFirstLoad = true;
+			// as we use isFirstLoad to trigger the initalStyle on ckEditor, we
+			// respect that composeasnew may not want that, as we assume there
+			// is some style already set and our initalStyle always adds a span with &nbsp;
+			// and we want to avoid that
+			$isFirstLoad = !($actionToProcess=='composeasnew');//true;
 			$this->composeID = $_content['composeID'] = $this->getComposeID();
 			if (!is_array($_content))
 			{
