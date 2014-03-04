@@ -1714,7 +1714,7 @@ if ($app == 'home') continue;
 		{
 			if ($path == '/phpgwapi/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
 
-			$query = '';
+			unset($query);
 			list($path,$query) = explode('?',$path,2);
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
 
@@ -1771,9 +1771,22 @@ if ($app == 'home') continue;
 
 		// generate api bundle
 		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery-ui.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/jsapi.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_json.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/egw.js');
+		// dhtmlx tree & menu
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxcommon.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxtree.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxMenu/sources/dhtmlxmenu.js');
+		// actions
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_keymanager.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action_popup.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action_dragdrop.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu_dhtmlx.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
 
 		// generate et2 bundle (excluding files in api bundle)

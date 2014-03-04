@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+/*egw:uses
+	egw_action;
+*/
+
 /**
 * This file contains an egw_actionObjectInterface which allows a dhtmlx tree
 * row to be a drag target and contains a function which transforms a complete

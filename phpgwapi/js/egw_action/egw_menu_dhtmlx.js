@@ -11,9 +11,9 @@
 
 /*egw:uses
 	egw_menu;
-	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/dhtmlxcommon.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/dhtmlxmenu.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxTenu/sources/dhtmlxcommon.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/sources/dhtmlxmenu.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js;
 */
 
 // Need CSS, or it doesn't really work
