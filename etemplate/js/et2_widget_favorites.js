@@ -239,8 +239,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	{
 		if(this.nextmatch)
 		{
-			this.nextmatch.activeFilters = filters;
-			this.nextmatch.applyFilters();
+			this.nextmatch.applyFilters(filters);
 		}
 		else
 		{
@@ -252,7 +251,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		// Apply preferred filter - make sure it's an object, and not a reference
 		if(this.preferred && this.stored_filters[this.preferred])
 		{
-			this.set_nm_filters(jQuery.extend({},this.stored_filters[this.preferred].filter));
+			this.set_nm_filters(jQuery.extend({},this.stored_filters[this.preferred].state));
 		}
 		else
 		{
