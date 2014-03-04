@@ -319,7 +319,20 @@ var et2_toolbar = et2_DOMWidget.extend(
 		toolbox.accordion({
 			heightStyle:"fill",
 			collapsible: true,
-			active:'none'
+			active:'none',
+			activate: function (event, ui) {
+				var menubox = event.target;
+				if (ui.oldHeader.length == 0)
+				{
+					$j('html').on('click.outsideOfMenu', function (event){
+						$j(menubox).accordion( "option", "active", 2);
+						$j(this).unbind(event);
+					});
+				}
+			},	
+			create: function (event, ui) {
+				$j('html').unbind('click.outsideOfMenu');
+			}
 		});
 	},
 	
