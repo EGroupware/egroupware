@@ -88,16 +88,6 @@ tr.infolog_rowHasParent > td:first-child {
   background-repeat: no-repeat;
   background-position: 6px -2px;
 }
-span#favorite_sidebox_infolog .favorites li a div.ui-icon-heart {
-  background-image: none;
-}
-span#favorite_sidebox_infolog .favorites li img.sideboxstar {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  border: 0px;
-  background-size: contain;
-}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
