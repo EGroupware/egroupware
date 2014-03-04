@@ -1938,8 +1938,9 @@ class infolog_ui
 		}
 		$preserv = $content;
 
-		// Don't preserve message
+		// Don't preserve message or links
 		unset($preserv['msg']);
+		unset($preserv['links']); unset($preserv['link_to']);
 
 		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
 		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$undelete)
