@@ -180,7 +180,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			window.clearInterval(this._autorefresh_timer);
 		}
-		
+
 		// Free the grid components
 		this.dataview.free();
 		this.rowProvider.free();
@@ -314,12 +314,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}
 
-		// Update the entry in the activeFilters object
-		this.activeFilters["sort"] = {
-			"id": _id,
-			"asc": _asc
-		};
-
 		// Set the sortmode display
 		this.iterateOver(function(_widget) {
 			_widget.setSortmode((_widget.id == _id) ? (_asc ? "asc": "desc") : "none");
@@ -327,7 +321,15 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		if (_update)
 		{
-			this.applyFilters();
+			this.applyFilters({sort: { id: _id, asc: _asc}});
+		}
+		else
+		{
+			// Update the entry in the activeFilters object
+			this.activeFilters["sort"] = {
+				"id": _id,
+				"asc": _asc
+			};
 		}
 	},
 
@@ -345,8 +347,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}, this, et2_INextmatchSortable);
 
 			// Delete the "sort" filter entry
-			delete(this.activeFilters["sort"]);
-			this.applyFilters();
+			this.applyFilters({sort: undefined});
 		}
 	},
 
@@ -365,6 +366,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.activeFilters.col_filter = {};
 		}
 
+		var changed = false;
 		if (typeof _set == 'object')
 		{
 			for(var s in _set)
@@ -373,12 +375,24 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				{
 					for(var c in _set.col_filter)
 					{
-						this.activeFilters.col_filter[c] = _set.col_filter[c];
+						if (this.activeFilters.col_filter[c] !== _set.col_filter[c])
+						{
+							if (_set.col_filter[c])
+							{
+								this.activeFilters.col_filter[c] = _set.col_filter[c];
+							}
+							else
+							{
+								delete this.activeFilters.col_filter[c];
+							}
+							changed = true;
+						}
 					}
 				}
-				else
+				else if (this.activeFilters[s] !== _set[s])
 				{
 					this.activeFilters[s] = _set[s];
+					changed = true;
 				}
 			}
 		}
@@ -386,7 +400,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 
 		// Keep the selection after applying filters, but only if unchanged
-		if(JSON.stringify(this.controller._filters) == JSON.stringify(this.activeFilters))
+		if(!changed)
 		{
 			this.controller.keepSelection();
 		}
@@ -438,7 +452,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			return;
 		}
-		
+
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 		if (typeof _row_ids == "undefined" || _row_ids === null)
@@ -467,13 +481,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// No next, select previous
 				next = (entry.ao?entry.ao.getPrevious(1):null);
 			}
-			
+
 			// Stop automatic updating
 			this.dataview.grid.doInvalidate = false;
 			for(var i = 0; i < _row_ids.length; i++)
 			{
 				uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
-				
+
 				// Delete from internal references
 				this.controller.deleteRow(uid);
 			}
@@ -1792,8 +1806,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
 		this.search_button.onclick = function(event) {
-			self.nextmatch.activeFilters.search = self.search.getValue();
-			self.nextmatch.applyFilters();
+			self.nextmatch.applyFilters({search: self.search.getValue()});
 		};
 
 
@@ -1829,9 +1842,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				// this is the lettersearch table
 				jQuery("td",this).removeClass("lettersearch_active");
 				jQuery(event.target).addClass("lettersearch_active");
-				var letter = event.target.id;
-				event.data.activeFilters.searchletter = (letter == "" ? false : letter);
-				event.data.applyFilters();
+				event.data.applyFilters({searchletter: event.target.id || false});
 			});
 			// Set activeFilters to current value
 			this.nextmatch.activeFilters.searchletter = current_letter;
@@ -1939,8 +1950,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		{
 			// Make sure to get the new value for filtering
 			input.change(this.nextmatch, function(event) {
-				event.data.activeFilters[name] = select.getValue();
-				event.data.applyFilters();
+				var set = {};
+				set[name] = select.getValue();
+				event.data.applyFilters(set);
 			});
 
 			// Get the onchange function string
@@ -1959,8 +1971,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		else	// default request changed rows with new filters, previous this.form.submit()
 		{
 			input.change(this.nextmatch, function(event) {
-				event.data.activeFilters[name] = select.getValue();
-				event.data.applyFilters();
+				var set = {};
+				set[name] = select.getValue();
+				event.data.applyFilters(set);
 			});
 		}
 		return select;
@@ -2428,7 +2441,7 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 	{
 		// Set via nextmatch after setup
 		if(this.nextmatch) return;
-		
+
 		this.setSortmode(_mode);
 	},
 
@@ -2470,20 +2483,12 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 				// Not fully set up yet
 				return;
 			}
-			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
-				event.data.nextmatch.activeFilters.col_filter = {};
-			if(event.data.input.val())
-			{
-				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val();
-			}
-			else
-			{
-				delete (event.data.nextmatch.activeFilters["col_filter"][event.data.id]);
-			}
+			var col_filter = {};
+			col_filter[event.data.id] = event.data.input.val();
 			// Set value so it's there for response (otherwise it gets cleared if options are updated)
 			event.data.set_value(event.data.input.val());
 
-			event.data.nextmatch.applyFilters();
+			event.data.nextmatch.applyFilters({col_filter: col_filter});
 		});
 
 	},
@@ -2537,18 +2542,9 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 				// Not fully set up yet
 				return;
 			}
-			if(typeof event.data.nextmatch.activeFilters.col_filter == 'undefined')
-				event.data.nextmatch.activeFilters.col_filter = {};
-			if(event.data.getValue())
-			{
-				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.getValue();
-			}
-			else
-			{
-				delete (event.data.nextmatch.activeFilters["col_filter"][event.data.id]);
-			}
-
-			event.data.nextmatch.applyFilters();
+			var col_filter = {};
+			col_filter[event.data.id] = event.data.getValue();
+			event.data.nextmatch.applyFilters({col_filter: col_filter});
 		});
 
 	},
@@ -2598,25 +2594,22 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 	 */
 	select: function(event, selected) {
 		this._super.apply(this, arguments);
-		if(typeof this.nextmatch.activeFilters.col_filter == 'undefined')
-			this.nextmatch.activeFilters.col_filter = {};
+		var col_filter = {};
 		if(selected && selected.item.value) {
 			if(event.data.options.only_app)
 			{
 				// Only one application, just give the ID
-				this.nextmatch.activeFilters["col_filter"][this.id] = selected.item.value;
+				col_filter[this.id] = selected.item.value;
 			}
 			else
 			{
 				// App is expecting app:id
-				this.nextmatch.activeFilters["col_filter"][this.id] =
-					event.data.app_select.val() + ":"+ selected.item.value;
-
+				col_filter[this.id] = event.data.app_select.val() + ":"+ selected.item.value;
 			}
 		} else {
-			delete (this.nextmatch.activeFilters["col_filter"][this.id]);
+			col_filter[this.id] = '';
 		}
-		this.nextmatch.applyFilters.call(this.nextmatch);
+		this.nextmatch.applyFilters.call(this.nextmatch, {col_filter: col_filter});
 	},
 
 	/**
