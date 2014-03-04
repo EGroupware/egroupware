@@ -2064,12 +2064,28 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				 * is to warn & not set it, but for nextmatch we'll just add it
 				 * in, and let the server either set it properly, or ignore.
 				 */
-				if(value && child.instanceOf(et2_selectbox) && typeof child.options.select_options[value] == 'undefined')
+				if(value && child.instanceOf(et2_selectbox))
 				{
-					var old_options = child.options.select_options;
-					// Actual label is not available, obviously, or it would be there
-					old_options[value] = child.egw().lang("Loading");
-					child.set_select_options(old_options);
+					var found = typeof child.options.select_options[value] != 'undefined';
+					// options is array of objects with attribute value&label
+					if (jQuery.isArray(child.options.select_options))
+					{
+						for(var o=0; o < child.options.select_options.length; ++o)
+						{
+							if (child.options.select_options[o].value == value)
+							{
+								found = true;
+								break;
+							}
+						}
+					}
+					if (!found)
+					{
+						var old_options = child.options.select_options;
+						// Actual label is not available, obviously, or it would be there
+						old_options[value] = child.egw().lang("Loading");
+						child.set_select_options(old_options);
+					}
 				}
 				child.set_value(value);
 			}
