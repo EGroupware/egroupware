@@ -179,7 +179,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		var stored_filters = {
 			'blank': {
 				name: this.egw().lang("No filters"),
-				state: {},
+				state: {}
 			}
 		};
 
@@ -194,7 +194,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				// Keep older favorites working - they used to store nm filters in 'filters',not state
 				if(preferences[pref_name].filters)
 				{
-					stored_filters[pref_name].state = preferences[pref_name].filters
+					stored_filters[pref_name].state = preferences[pref_name].filters;
 				}
 			}
 		}
@@ -251,7 +251,15 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		// Apply preferred filter - make sure it's an object, and not a reference
 		if(this.preferred && this.stored_filters[this.preferred])
 		{
-			this.set_nm_filters(jQuery.extend({},this.stored_filters[this.preferred].state));
+			// use app[appname].setState if available to allow app to overwrite it (eg. change to non-listview in calendar)
+			if (typeof app[this.options.app] != 'undefined')
+			{
+				app[this.options.app].setState(this.stored_filters[this.preferred]);
+			}
+			else
+			{
+				this.set_nm_filters(jQuery.extend({},this.stored_filters[this.preferred].state));
+			}
 		}
 		else
 		{
@@ -317,6 +325,8 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	/**
 	 * Set the nextmatch to filter
 	 * From et2_INextmatchHeader interface
+	 *
+	 * @param {et2_nextmatch} nextmatch
 	 */
 	setNextmatch: function(nextmatch)
 	{
