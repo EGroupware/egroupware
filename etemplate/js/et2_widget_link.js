@@ -1465,7 +1465,10 @@ var et2_link_list = et2_link_string.extend(
 			.appendTo(delete_button)
 			// We don't use ui-icon because it assigns a bg image
 			.addClass("delete icon")
-			.bind( 'click', function() {self._delete_link(_link_data.link_id||_link_data, row);});
+			.bind( 'click', function() {self._delete_link(
+				self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id:_link_data,
+				row
+			);});
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
@@ -1491,11 +1494,26 @@ var et2_link_list = et2_link_string.extend(
 			// No link ID means a link on an unsaved entry.
 			// Just remove the row, but need to adjust the link_to value also
 			row.slideUp(row.remove);
-			var value = link_id.widget.getValue();
-			if(value && value.to_id)
+
+			// Look for a link-to with the same ID, refresh it
+			if(link_id.link_id)
+			{
+				var self = this;
+				var _widget = link_id.widget || null;
+				this.getRoot().iterateOver(
+					function(widget) {
+						if(widget.id == self.id) {
+							_widget = widget;
+						}
+					},
+					this, et2_link_to
+				);
+				var value = _widget != null ? _widget.getValue() : false;
+				if(_widget && value && value.to_id)
 				{
-				delete value.to_id[link_id.value_index];
-				link_id.widget.set_value(value);
+					delete value.to_id[link_id.link_id];
+					_widget.set_value(value);
+				}
 			}
 		}
 	}
