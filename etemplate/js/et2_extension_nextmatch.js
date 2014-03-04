@@ -51,6 +51,8 @@ var et2_INextmatchHeader = new Interface({
 	 * The 'setNextmatch' function is called by the parent nextmatch widget
 	 * and tells the nextmatch header widgets which widget they should direct
 	 * their 'sort', 'search' or 'filter' calls to.
+	 *
+	 * @param {et2_nextmatch} _nextmatch
 	 */
 	setNextmatch: function(_nextmatch) {}
 });
@@ -192,6 +194,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Loads the nextmatch settings
+	 *
+	 * @param {object} _attrs
 	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
@@ -284,10 +288,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	/**
 	 * Sorts the nextmatch widget by the given ID.
 	 *
-	 * @param _id is the id of the data entry which should be sorted.
-	 * @param _asc if true, the elements are sorted ascending, otherwise
+	 * @param {string} _id is the id of the data entry which should be sorted.
+	 * @param {boolean} _asc if true, the elements are sorted ascending, otherwise
 	 * 	descending. If not set, the sort direction will be determined
 	 * 	automatically.
+	 * @param {boolean} _update true/undefined: call applyFilters, false: only set sort
 	 */
 	sortBy: function(_id, _asc, _update) {
 		if (typeof _update == "undefined")
@@ -685,6 +690,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Apply stored user preferences to discovered columns
+	 *
+	 * @param {array} _row
+	 * @param {array} _colData
 	 */
 	_applyUserPreferences: function(_row, _colData) {
 		var prefs = this._getPreferences();
@@ -1132,7 +1140,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			select.set_value(columns_selected);
 
 			var autoRefresh = et2_createWidget("select", {
-				"empty_label":"Refresh",
+				"empty_label":"Refresh"
 			}, this);
 			autoRefresh.set_id("nm_autorefresh");
 			autoRefresh.set_select_options({
@@ -1345,6 +1353,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	/**
 	 * When the template attribute is set, the nextmatch widget tries to load
 	 * that template and to fetch the grid which is inside of it. It then calls
+	 *
+	 * @param {string} _value template name
 	 */
 	set_template: function(_value) {
 		if(this.template)
@@ -1422,7 +1432,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		};
 
 		// Template might not be loaded yet, defer parsing
-		var promise = []
+		var promise = [];
 		template.loadingFinished(promise);
 
 		// Wait until template (& children) are done
@@ -1449,7 +1459,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	set_no_filter: function(bool, filter_name) {
 		if(typeof filter_name == 'undefined')
 		{
-			filter_name = 'filter'
+			filter_name = 'filter';
 		}
 
 		var filter = this.header[filter_name];
@@ -1469,6 +1479,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	/**
 	 * Actions are handled by the controller, so ignore these during init.
+	 *
+	 * @param {object} actions
 	 */
 	set_actions: function(actions) {
 		if(actions != this.options.actions && this.controller != null && this.controller._actionManager)
@@ -1499,6 +1511,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * all our drop actions.  So we side-step the issue by registering an additional
 	 * drop handler on the rows parent.  If the row/actions itself doesn't handle
 	 * the drop, it should bubble and get handled here.
+	 *
+	 * @param {object} event
+	 * @param {object} target
 	 */
 	 handle_drop: function(event, target) {
 		// Check to see if we can handle the link
@@ -1534,7 +1549,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var link_value = {
 			to_app: split.shift(),
 			to_id: split.join('::')
-		}
+		};
 		// Create widget and mangle to our needs
 		var link = et2_createWidget("link-to", {value: link_value}, this);
 		link.loadingFinished();
@@ -1624,8 +1639,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			idsArr[i] = idsArr[i].split("::").pop();
 		}
 		var value = {
-			"selected": idsArr,
-		}
+			"selected": idsArr
+		};
 		jQuery.extend(value, this.activeFilters, this.value);
 		return value;
 	},
@@ -1717,6 +1732,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 	/**
 	 * Actions are handled by the controller, so ignore these
+	 *
+	 * @param {object} actions
 	 */
 	set_actions: function(actions) {},
 
@@ -1880,6 +1897,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	/**
 	 * Build the selectbox filters in the header bar
 	 * Sets value, options, labels, and change handlers
+	 *
+	 * @param {string} name
+	 * @param {string} type
+	 * @param {string} value
+	 * @param {string} lang
 	 */
 	_build_select: function(name, type, value, lang) {
 		var widget_options = {
@@ -2081,6 +2103,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 	/**
 	 * Help out nextmatch / widget stuff by checking to see if sender is part of header
+	 *
+	 * @param {et2_widget} _sender
 	 */
 	getDOMNode: function(_sender) {
 		var filters = [this.category, this.filter, this.filter2];
@@ -2174,6 +2198,8 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
 	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
+	 *
+	 * @param {et2_nextmatch} _nextmatch
 	 */
 	setNextmatch: function(_nextmatch) {
 		this.nextmatch = _nextmatch;
@@ -2325,6 +2351,8 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 
 	/**
 	 * Override parent so we can update the nextmatch row too
+	 *
+	 * @param {array} _fields
 	 */
 	set_visible: function(_fields) {
 		this._super.apply(this, arguments);
@@ -2436,6 +2464,8 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 
 	/**
 	 * Wrapper to join up interface * framework
+	 *
+	 * @param {string} _mode
 	 */
 	set_sortmode: function(_mode)
 	{
@@ -2447,6 +2477,8 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 
 	/**
 	 * Function which implements the et2_INextmatchSortable function.
+	 *
+	 * @param {string} _mode
 	 */
 	setSortmode: function(_mode) {
 		// Remove the last sortmode class and add the new one
@@ -2496,6 +2528,8 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
+	 *
+	 * @param {et2_nextmatch} _nextmatch
 	 */
 	setNextmatch: function(_nextmatch) {
 		this.nextmatch = _nextmatch;
@@ -2558,6 +2592,8 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
+	 *
+	 * @param {et2_nextmatch} _nextmatch
 	 */
 	setNextmatch: function(_nextmatch) {
 		this.nextmatch = _nextmatch;
@@ -2590,7 +2626,9 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 	/**
 	 * Override to add change handler
 	 *
-	 * @memberOf et2_link_entry
+	 * @memberOf et2_nextmatch_entryheader
+	 * @param {object} event
+	 * @param {object} selected
 	 */
 	select: function(event, selected) {
 		this._super.apply(this, arguments);
@@ -2628,6 +2666,8 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
+	 *
+	 * @param {et2_nextmatch} _nextmatch
 	 */
 	setNextmatch: function(_nextmatch) {
 		this.nextmatch = _nextmatch;
@@ -2669,7 +2709,7 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 			"type": "any",
 			"description": "The options for the actual widget",
 			"default": {}
-		},
+		}
 	},
 	legacyOptions: ["widget_type","widget_options"],
 
