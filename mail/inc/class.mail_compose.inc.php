@@ -273,12 +273,14 @@ class mail_compose
 		$composeCache = array();
 		if (isset($_content['composeID'])&&!empty($_content['composeID']))
 		{
+			$isFirstLoad = false;
 			$composeCache = egw_cache::getCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$_content['composeID'],$callback=null,$callback_params=array(),$expiration=60*60*2);
 			$this->composeID = $_content['composeID'];
 			//error_log(__METHOD__.__LINE__.array2string($composeCache));
 		}
 		else
 		{
+			$isFirstLoad = true;
 			$this->composeID = $_content['composeID'] = $this->getComposeID();
 			if (!is_array($_content))
 			{
@@ -516,6 +518,8 @@ class mail_compose
 		}
 		if ($content['is_plain'] && $content['mimeType']=='html')
 		{
+			// the possible font span should only be applied on first load or on switch plain->html
+			$isFirstLoad = true;
 			//error_log(__METHOD__.__LINE__.$content['mail_plaintext']);
 			$suppressSigOnTop = true;
 			$content['mail_plaintext'] = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$content['mail_plaintext']);
@@ -1101,9 +1105,12 @@ class mail_compose
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 			$font_size = egw_ckeditor_config::font_size_from_prefs();
-			$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">'.'&nbsp;'.'</span>';
+			$font_part = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
+			$font_span = $font_part.'&nbsp;'.'</span>';
 			if (empty($font) && empty($font_size)) $font_span = '';
 		}
+		// the font span should only be applied on first load or on switch plain->html and the absence of the font_part of the span
+		if (!$isFirstLoad && !empty($font_span) && stripos($content['body'],$font_part)===false) $font_span = '';
 		//remove possible html header stuff
 		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
 		//error_log(__METHOD__.__LINE__.array2string($this->preferencesArray));
