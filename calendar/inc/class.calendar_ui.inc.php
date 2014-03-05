@@ -436,7 +436,7 @@ class calendar_ui
 				{
 					egw_framework::set_extra('calendar', 'state', $states);
 				}
-				
+
 			}
 		}
 	}
@@ -509,9 +509,9 @@ class calendar_ui
 	* Create a select-box item in the sidebox-menu
 	* @privat used only by sidebox_menu !
 	*/
-	function _select_box($title,$name,$options)
+	function _select_box($title,$name,$options,$width='99%')
 	{
-		$select = ' <select style="width: 99%;" name="'.$name.'" id="calendar_'.$name.'" title="'.
+		$select = " <select style=\"width: $width;\" name=\"".$name.'" id="calendar_'.$name.'" title="'.
 			lang('Select a %1',lang($title)).'">'.
 			$options."</select>\n";
 
@@ -686,12 +686,12 @@ class calendar_ui
 		{
 			$options .= '<option value="'.$data['value'].'"'.($data['selected'] ? ' selected="1"' : '').'>'.html::htmlspecialchars($data['text'])."</option>\n";
 		}
-		$file[++$n] = $this->_select_box('displayed view','view',$options,egw::link('/index.php','',false));
+		$file[++$n] = $this->_select_box('displayed view','view',$options);
 
 		// Search
 		$file[++$n] = array(
 			'text' => html::input('keywords', '', 'text',
-					'id="calendar_keywords" style="width: 97.5%;" placeholder="'.html::htmlspecialchars(lang('Search').'...').'"'),
+					'id="calendar_keywords" style="width: 96.5%;" placeholder="'.html::htmlspecialchars(lang('Search').'...').'"'),
 			'no_lang' => True,
 			'link' => False,
 			'icon' => false,
@@ -748,7 +748,7 @@ class calendar_ui
 		// Category Selection
 		$cat_id = explode(',',$this->cat_id);
 
-		$select = ' <select style="width: 87%;" id="calendar_cat_id" name="cat_id" title="'.
+		$select = ' <select style="width: 86%;" id="calendar_cat_id" name="cat_id" title="'.
 			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
 			'<option value="0">'.lang('All categories').'</option>'.
 				$this->categories->formatted_list('select','all',$cat_id,'True').
@@ -760,34 +760,6 @@ class calendar_ui
 			'link' => False,
 			'icon' => false,
 		);
-
-
-		// Filter all or hideprivate
-		$filter_options = '';
-		foreach(array(
-			'default'     => array(lang('Not rejected'), lang('Show all status, but rejected')),
-			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
-			'unknown'     => array(lang('Invitations'), lang('Show only invitations, not yet accepted or rejected')),
-			'tentative'   => array(lang('Tentative'), lang('Show only tentative accepted events')),
-			'delegated'   => array(lang('Delegated'), lang('Show only delegated events')),
-			'rejected'    => array(lang('Rejected'),lang('Show only rejected events')),
-			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
-			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),
-			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
-			'showonlypublic' =>  array(lang('Hide private events'),lang('Show only events flagged as public, (not checked as private)')),
-			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
-			'not-unknown' => array(lang('No meeting requests'),lang('Show all status, but unknown')),
-		) as $value => $label)
-		{
-			list($label,$title) = $label;
-			$filter_options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
-		}
-		// add deleted filter, if history logging is activated
-		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
-		{
-			$filter_options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
-		}
-		$file[] = $this->_select_box('Filter','filter',$filter_options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
@@ -814,13 +786,40 @@ class calendar_ui
 					"\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
 
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
-					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '99%' : '86%').';"'.
+					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '86%' : '86%').';"'.
 					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
 				'no_lang' => True,
 				'link' => False,
 				'icon' => false,
 			);
 		}
+
+		// Filter all or hideprivate
+		$filter_options = '';
+		foreach(array(
+			'default'     => array(lang('Not rejected'), lang('Show all status, but rejected')),
+			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
+			'unknown'     => array(lang('Invitations'), lang('Show only invitations, not yet accepted or rejected')),
+			'tentative'   => array(lang('Tentative'), lang('Show only tentative accepted events')),
+			'delegated'   => array(lang('Delegated'), lang('Show only delegated events')),
+			'rejected'    => array(lang('Rejected'),lang('Show only rejected events')),
+			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
+			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),
+			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
+			'showonlypublic' =>  array(lang('Hide private events'),lang('Show only events flagged as public, (not checked as private)')),
+			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
+			'not-unknown' => array(lang('No meeting requests'),lang('Show all status, but unknown')),
+		) as $value => $label)
+		{
+			list($label,$title) = $label;
+			$filter_options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
+		}
+		// add deleted filter, if history logging is activated
+		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
+		{
+			$filter_options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
+		}
+		$file[] = $this->_select_box('Filter','filter',$filter_options,'86%');
 
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
@@ -840,7 +839,7 @@ class calendar_ui
 			}
 			if($options != '') {
 				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
-				$select = ' <select style="width: 99%;" name="merge" id="calendar_merge" title="'.
+				$select = ' <select style="width: 86%;" name="merge" id="calendar_merge" title="'.
 					html::htmlspecialchars(lang('Select a %1',lang('merge document...'))).'">'.
 					$options."</select>\n";
 
