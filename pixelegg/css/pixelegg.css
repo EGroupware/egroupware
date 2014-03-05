@@ -4120,44 +4120,28 @@ table.nextmatch_header img {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #egw_fw_print {
-  background-image: url(../images/print.png);
-  background-size: 16px 16px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  display: inline-block;
-  float: right;
-  margin-right: 5px;
-  margin-top: 0px;
-  position: fixed;
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 0.5em;
-  top: 5px;
-  right: 40px;
-  z-index: 200;
-}
-#egw_fw_print:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-#egw_fw_print:active {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-#egw_fw_print:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  display: none;
+  /*    background-image: url(../images/print.png);
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+    margin-top: 0px;
+    position: fixed;
+    .Button_size_square_16;
+    .border_normal;
+    .box_shadow_standard_light;
+    .border_radius_button_normal;
+    padding: 0.5em;
+    top: 5px;
+    right: 40px;
+    z-index: 200;
+    &:hover {.box_shadow_standard_light_hover;}
+    &:active {.Complete_Button_active;}
+    &:focus {.box_shadow_standard_light_inset;}*/
 }
 /*#################################################
 /* Second Line  
@@ -4238,7 +4222,7 @@ table.nextmatch_header img {
   float: right;
   padding: 0.5em;
   position: fixed;
-  right: 80px;
+  right: 45px;
   top: 5px;
   background-image: url(../images/add.png);
   background-repeat: no-repeat;
@@ -4287,7 +4271,7 @@ table.nextmatch_header img {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   padding: 5px;
   top: 6px;
-  right: 115px;
+  right: 88px;
   z-index: 200;
   background-color: #ff0000;
   -moz-transition: all 1s ease-in-out;
