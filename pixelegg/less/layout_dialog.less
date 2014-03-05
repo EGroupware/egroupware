@@ -19,12 +19,13 @@
 /*@import (reference) "def_content_elements.less";*/
 @import (reference) "def_design_pattern_color_font_shadow.less";
 
-
+body {background-color: @gray_0;}
 
 // Dialoge Allgemeine Definition
 
 div#popupMainDiv {
 	padding: 8px;
+        
 }
 
 div.et2_container {
@@ -125,7 +126,7 @@ table.dialog-main-view {width: 100%;}
 
 /*###########################################
 #                                           #
-#     dialog-header                         #
+#     dialogHeader                         #
 #############################################
 #                                           #
 #                                           #
@@ -136,7 +137,7 @@ table.dialog-main-view {width: 100%;}
 #                                           #
 #                                           #
 #############################################
-#   dialog-operators                        #
+#   dialogOperators                        #
 #############################################
 #                                           #
 #    buttons                                #
@@ -152,6 +153,7 @@ table.dialog-main-view {width: 100%;}
     /*background-color: @egw_color_2_d;*/
     .gradient_thead;
     .color_100_gray;
+    height: 40px;
 
 
     table.et2_grid {
@@ -225,9 +227,9 @@ table.dialog-main-view {width: 100%;}
 tr.dialogHeader2,
 tr.dialogHeader3,
 tr.dialogHeader4{
-    background-color: @gray_10 !important;
-    border-top: 2px solid @gray_10;
-    border-bottom: 2px solid @gray_10;
+    background-color: @gray_0 !important;
+    border-top: 2px solid @gray_0;
+    border-bottom: 2px solid @gray_0;
     vertical-align: middle;
 
 
@@ -258,7 +260,7 @@ tr.dialogHeader4{
 /************* Main  **********************************/
 
 // Terminsuche
-.dialog-main-timeframe {
+.dialogMainTimeframe {
 
     div {min-height: 100px;}
 

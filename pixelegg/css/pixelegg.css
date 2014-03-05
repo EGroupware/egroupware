@@ -874,15 +874,23 @@
     width: 12px;
     height: 12px;
   }
+  .nextmatch_sortheader {
+    /*    background-position: right center;
+    background-repeat: no-repeat;
+    color: #003075;
+    cursor: pointer;
+    margin-right: 10px;*/
+    padding-right: 18px;
+  }
   .nextmatch_sortheader.asc {
-    /*    font-weight: bold;
-    background-image: url(../images/up.png);*/
-    background-size: 12px 12px;
+    font-weight: bold;
+    background-image: url(../images/selectarrowup.png);
+    background-size: 16px 16px;
   }
   .nextmatch_sortheader.desc {
-    /*    font-weight: bold;
-    background-image: url(../images/down.png);*/
-    background-size: 12px 12px;
+    font-weight: bold;
+    background-image: url(../images/selectarrowdown.png);
+    background-size: 16px 16px;
   }
   /* End of hierarchy */
   /* Mangled link-to widget inside a nextmatch - used for DnD uploads */
@@ -2050,9 +2058,9 @@ select {
   /*.Complete_Button_select;*/
   padding: 3px;
   margin: 0;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 select:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -5150,6 +5158,9 @@ button.image_button {
  * @version $Id$
  */
 /*@import (reference) "def_content_elements.less";*/
+body {
+  background-color: #ffffff;
+}
 div#popupMainDiv {
   padding: 8px;
 }
@@ -5206,7 +5217,7 @@ table.dialog-main-view {
 }
 /*###########################################
 #                                           #
-#     dialog-header                         #
+#     dialogHeader                         #
 #############################################
 #                                           #
 #                                           #
@@ -5217,7 +5228,7 @@ table.dialog-main-view {
 #                                           #
 #                                           #
 #############################################
-#   dialog-operators                        #
+#   dialogOperators                        #
 #############################################
 #                                           #
 #    buttons                                #
@@ -5225,7 +5236,7 @@ table.dialog-main-view {
 #                                           #
 ##############################################*/
 /**********    Header Part ********************/
-.dialog-header {
+.dialogHeader {
   /*background-color: @egw_color_2_d;*/
   /*.background-color-5-gray;*/
   background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
@@ -5243,32 +5254,33 @@ table.dialog-main-view {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
   /* IE6-9 */
   color: #000000;
+  height: 40px;
 }
-.dialog-header table.et2_grid {
+.dialogHeader table.et2_grid {
   border-top: none;
 }
-.dialog-header table.et2_grid .th {
+.dialogHeader table.et2_grid .th {
   background-color: #0c5da5 !important;
 }
-.dialog-header table.et2_grid tr {
+.dialogHeader table.et2_grid tr {
   height: 30px;
 }
-.dialog-header table.et2_grid td {
+.dialogHeader table.et2_grid td {
   padding: 0px 0px 0px 3px;
   color: #000000;
 }
-.dialog-header table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
+.dialogHeader table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
   float: left;
 }
-.dialog-header img {
+.dialogHeader img {
   height: 16px !important;
 }
-.dialog-header input.et2_textbox {
+.dialogHeader input.et2_textbox {
   font-size: 1.3em;
   width: 550px;
   margin-right: 20px;
 }
-.dialog-header .et2_label {
+.dialogHeader .et2_label {
   color: #000000;
   vertical-align: middle;
   padding: 0px 0px 0px 9px !important;
@@ -5276,7 +5288,7 @@ table.dialog-main-view {
   margin: 0px important;
   font-size: 1em;
 }
-.dialog-header td.space span img {
+.dialogHeader td.space span img {
   background: #ffffff;
   border: 2px solid #ffffff;
   /*filter grey*/
@@ -5291,17 +5303,17 @@ table.dialog-main-view {
   filter: gray;
   /* IE 6-9 */
 }
-tr.dialog-header2,
-tr.dialog-header3,
-tr.dialog-header4 {
-  background-color: #e6e6e6 !important;
-  border-top: 2px solid #e6e6e6;
-  border-bottom: 2px solid #e6e6e6;
+tr.dialogHeader2,
+tr.dialogHeader3,
+tr.dialogHeader4 {
+  background-color: #ffffff !important;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
   vertical-align: middle;
 }
-tr.dialog-header2 .et2_label,
-tr.dialog-header3 .et2_label,
-tr.dialog-header4 .et2_label {
+tr.dialogHeader2 .et2_label,
+tr.dialogHeader3 .et2_label,
+tr.dialogHeader4 .et2_label {
   color: #1a1a1a;
   vertical-align: middle;
   padding: 0px 0px 0px 9px !important;
@@ -5311,7 +5323,7 @@ tr.dialog-header4 .et2_label {
   width: 50px !important;
 }
 /************* Tabs  *********************************/
-.dialog-tabs {
+.dialogTabs {
   /*.background-color-5-gray;*/
   background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
   /* FF3.6+ */
@@ -5330,44 +5342,44 @@ tr.dialog-header4 .et2_label {
   color: #000000;
 }
 /************* Main  **********************************/
-.dialog-main-timeframe div {
+.dialogMainTimeframe div {
   min-height: 100px;
 }
 /**********    Operators *******************************/
-.dialog-operators {
+.dialogOperators {
   background-color: rgba(230, 230, 230, 0.02);
   border-top: 0px solid #e6e6e6;
   border-bottom: 0px solid #e6e6e6;
 }
-.dialog-operators td {
+.dialogOperators td {
   padding: 2px;
 }
 /**********    Footer  *******************************/
 /*Buttons / Toolbar*/
-.dialog-footer-toolbar {
+.dialogFooterToolbar {
   background-color: #679fd2;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 }
-.dialog-footer-toolbar td {
+.dialogFooterToolbar td {
   padding: 0px 5px;
 }
-.dialog-footer-toolbar button {
+.dialogFooterToolbar button {
   height: 24px;
   min-width: 114px;
 }
-.dialog-footer-toolbar button:hover {
+.dialogFooterToolbar button:hover {
   height: 24px;
 }
-.dialog-footer-toolbar button:action {
+.dialogFooterToolbar button:action {
   height: 24px;
 }
-.dialog-footer-toolbar button[id="addressbook-edit_button[delete]"] {
+.dialogFooterToolbar button[id="addressbook-edit_button[delete]"] {
   float: right;
 }
-.dialog-footer-toolbar div.et2_hbox {
+.dialogFooterToolbar div.et2_hbox {
   white-space: normal;
 }
-.dialog-footer-toolbar label.et2_label {
+.dialogFooterToolbar label.et2_label {
   /*        .Complete_Button_input;
         .border_normal;
 	.box_shadow_standard_light;
@@ -5377,7 +5389,7 @@ tr.dialog-header4 .et2_label {
   position: relative;
   top: 11px;
 }
-.dialog-footer-toolbar input.et2_checkbox {
+.dialogFooterToolbar input.et2_checkbox {
   top: 0px;
 }
 /*Dialog Calendar - Resourcen suchen*/
