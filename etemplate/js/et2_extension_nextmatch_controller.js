@@ -327,6 +327,11 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 					{
 						select.set_select_options(_response.rows.sel_options[id]);
 					}
+					// Clear rowProvider internal cache so it uses new values
+					if(id == 'cat_id')
+					{
+						this.self._rowProvider.categories = null;
+					}
 				}
 			}
 			else
