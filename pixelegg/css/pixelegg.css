@@ -1976,7 +1976,7 @@ body {
 }
 ol,
 ul {
-  list-style: none;
+  /*list-style: none;*/
 }
 blockquote,
 q {
@@ -2176,139 +2176,6 @@ div.selectbox-wrapper ul li {
   padding: 2px;
   cursor: pointer;
 }
-/* --- Lists | Listen  -------------------------------------------------------------------------------- */
-ul,
-ol,
-dl {
-  line-height: 1.5em;
-  margin: 0 0 1em 1em;
-}
-ul {
-  list-style-type: disc;
-}
-ul ul {
-  list-style-type: circle;
-  margin-bottom: 0;
-}
-ol {
-  list-style-type: decimal;
-}
-ol ol {
-  list-style-type: lower-latin;
-  margin-bottom: 0;
-}
-li {
-  margin-left: 0.8em;
-  line-height: 1.5em;
-}
-dt {
-  font-weight: bold;
-}
-dd {
-  margin: 0 0 1em 0.8em;
-}
-/* --- general text formatting | Allgemeine Textauszeichnung ------------------------------------------ */
-p {
-  line-height: 1.5em;
-  margin: 0 0 1em 0;
-}
-blockquote,
-cite,
-q {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  font-style: italic;
-}
-blockquote {
-  margin: 0 0 1em 1.6em;
-  color: #666;
-}
-strong,
-b {
-  font-weight: bold;
-}
-em,
-i {
-  font-style: italic;
-}
-big {
-  font-size: 116.667%;
-}
-small {
-  font-size: 91.667%;
-}
-pre {
-  line-height: 1.5em;
-  margin: 0 0 1em 0;
-}
-pre,
-code,
-kbd,
-tt,
-samp,
-var {
-  font-size: 100%;
-}
-pre,
-code {
-  color: #800;
-}
-kbd,
-samp,
-var,
-tt {
-  color: #666;
-  font-weight: bold;
-}
-var,
-dfn {
-  font-style: italic;
-}
-acronym,
-abbr {
-  border-bottom: 1px #aaa dotted;
-  font-variant: small-caps;
-  letter-spacing: .07em;
-  cursor: help;
-}
-sub,
-sup {
-  font-size: 91.6667%;
-  line-height: 0;
-}
-hr {
-  color: #fff;
-  background: transparent;
-  margin: 0 0 0.5em 0;
-  padding: 0 0 0.5em 0;
-  border: 0;
-  border-bottom: 1px #eee solid;
-}
-/**
-  * ------------------------------------------------------------------------------------------------- #
-  *
-  * Tables | Tabellen
-  *
-  * (en) Generic classes for table-width and design definition
-  * (de) Generische Klassen für die Tabellenbreite und Gestaltungsvorschriften für Tabellen
-  *
-  * @section content-tables
-  */
-/*  table { width:auto; border-collapse:collapse; margin-bottom:0.5em; border-top:2px #888 solid; border-bottom:2px #888 solid; }
-  table caption { font-variant:small-caps; }
-  table.full { width:100%; }
-  table.fixed { table-layout:fixed; }
-
-  th,td { padding:0.5em; }
-  thead th { color:#000; border-bottom:2px #800 solid; }
-  tbody th { background:#e0e0e0; color:#333; }
-  tbody th[scope="row"], tbody th.sub { background:#f0f0f0; }
-
-  tbody th { border-bottom:1px solid #fff; text-align:left; }
-  tbody td { border-bottom:1px solid #eee; }
-
-  tbody tr:hover th[scope="row"],
-  tbody tr:hover tbody th.sub { background:#f0e8e8; }
-  tbody tr:hover td { background:#fff8f8; }*/
 .sbHolder {
   /*.box_shadow_standard_light;*/
   width: auto;
@@ -5413,8 +5280,6 @@ table.dialog-main-view {
 }
 .dialogHeader input.et2_textbox {
   font-size: 1.3em;
-  width: 550px;
-  margin-right: 20px;
 }
 .dialogHeader .et2_label {
   color: #000000;
