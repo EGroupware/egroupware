@@ -825,12 +825,12 @@
   .sidebox-favorites ul.favorites li.ui-menu-item {
     margin-left: 0px;
     min-height: 16px;
-    padding: 5px 0px;
+    padding: 3px 0px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover {
     color: #000000;
     background-color: #ffdd73;
-    padding: 0.5em 0;
+    padding: 3px 0;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a {
     line-height: inherit;
