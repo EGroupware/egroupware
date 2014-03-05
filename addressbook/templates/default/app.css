@@ -49,3 +49,10 @@ tr.dialogOperators td,.dialogFooterToolbar {
 	padding: 5px 0 5px 0;
 	vertical-align: middle;
 }
+
+/**
+ * Index page
+ */
+img.iphoto {
+	width: 100%;
+}

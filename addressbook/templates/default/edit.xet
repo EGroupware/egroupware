@@ -161,17 +161,41 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.002">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="200" overflow="auto">
 			<columns>
+				<column disabled="!@cat_tab=Tree"/>
+				<column disabled="@cat_tab=Tree"/>
 				<column/>
 			</columns>
 			<rows>
-				<row valign="top" disabled="@cat_tab=Tree">
-					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
-				</row>
-				<row valign="top" disabled="!@cat_tab=Tree">
+				<row valign="top">
 					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
+					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
+					<grid width="100%" height="200">
+						<columns>
+							<column width="80"/>
+							<column/>
+						</columns>
+						<rows>
+							<row valign="top">
+								<description value="Notes"/>
+								<textbox multiline="true" id="note" rows="10" class="et2_fullWidth"/>
+							</row>
+							<row disabled="@hidebuttons">
+								<description value="Last date"/>
+								<link id="last_link"/>
+							</row>
+							<row disabled="@hidebuttons">
+								<description value="Next date"/>
+								<link id="next_link"/>
+							</row>
+							<row valign="top">
+								<description for="pubkey" value="Public key"/>
+								<textbox multiline="true" id="pubkey" rows="4" class="et2_fullWidth"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 			</rows>
 		</grid>
@@ -279,36 +303,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="200">
-			<columns>
-				<column width="80"/>
-				<column width="700"/>
-			</columns>
-			<rows>
-				<row valign="top" disabled="@cat_tab">
-					<description value="Categories"/>
-					<listbox type="select-cat" id="cat_id" rows="3" class="et2_fullWidth"/>
-				</row>
-				<row valign="top">
-					<description value="Notes"/>
-					<textbox multiline="true" id="note" rows="6" class="et2_fullWidth"/>
-				</row>
-				<row valign="top">
-					<description for="pubkey" value="Public key"/>
-					<textbox multiline="true" id="pubkey" rows="4" class="et2_fullWidth"/>
-				</row>
-				<row disabled="@hidebuttons">
-					<description value="Last date"/>
-					<link id="last_link"/>
-				</row>
-				<row disabled="@hidebuttons">
-					<description value="Next date"/>
-					<link id="next_link"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="200" overflow="auto">
 			<columns>
@@ -404,7 +398,6 @@
 						<tabs>
 							<tab id="general" label="Organisation"/>
 							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="cats" label="Categories" statustext="Categories"/>
 							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
 							<tab id="links" label="Links" statustext="Links"/>
 							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
@@ -415,7 +408,6 @@
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
 							<template id="addressbook.edit.home"/>
-							<template id="addressbook.edit.cats"/>
 							<template id="addressbook.edit.details"/>
 							<template id="addressbook.edit.links"/>
 							<template id="addressbook.edit.distribution_list"/>
@@ -485,87 +477,4 @@
 			</rows>
 		</grid>
 	</template>
-<!--
-							<row disabled="@no_tid">
-								<menulist>
-									<menupopup class="" label="Type" id="tid" no_lang="1" onchange="1"/>
-								</menulist>
-								<html label=" " id="typegfx" needed="1" no_lang="1" readonly="true" class="space"/>
-							</row>
-					<vbox class="addressbook_edit_right_td">
-
-						<groupbox class="phoneGroup">
-							<caption label="Phone Numbers"/>
-							<grid>
-								<columns>
-									<column width="20"/>
-									<column width="90"/>
-									<column/>
-									<column/>
-								</columns>
-								<rows>
-									<row>
-										<image src="phone"/>
-										<description for="tel_work" value="business"/>
-										<url-phone id="tel_work" options="24,40" class="telNumbers"/>
-										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
-									</row>
-									<row>
-										<description/>
-										<description for="tel_cell" value="mobile phone"/>
-										<url-phone id="tel_cell" options="24,40" class="telNumbers"/>
-										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
-									</row>
-									<row>
-										<description/>
-										<description for="tel_home" value="Private"/>
-										<url-phone id="tel_home" options="24,40" class="telNumbers"/>
-										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
-									</row>
-									<row>
-										<description/>
-										<description value="Fax"/>
-										<url-phone id="tel_fax" options="24,40" class="telNumbers"/>
-										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
-									</row>
-									<row>
-										<description/>
-										<description/>
-																				<description/>
-									</row>
-								</rows>
-							</grid>
-						</groupbox>
-						<groupbox class="emailGroup">
-							<caption label="Email &amp; Internet"/>
-							<grid>
-								<columns>
-									<column width="20"/>
-									<column width="90"/>
-									<column/>
-								</columns>
-								<rows>
-									<row>
-										<image src="internet"/>
-										<description for="email" value="email"/>
-										<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
-										<description for="url" value="url"/>
-										<url id="url" options="28,128"/>
-									</row>
-									<row>
-										<description/>
-										<image src="internet"/>
-									</row>
-									<row>
-										<image src="email.png"/>
-									</row>
-									<row>
-										<description/>
-									</row>
-								</rows>
-							</grid>
-						</groupbox>
-					</vbox>
-				</row>
--->
 </overlay>
