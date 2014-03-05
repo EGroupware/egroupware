@@ -1341,3 +1341,10 @@ ul.et2_nowrap, div.et2_nowrap{
 .et2_nowrap > label > *{
 	padding-left: 5px;
 }
+
+/**
+ * Some general styles usable for all apps (and widgets)
+ */
+.et2_fullWidth, .et2_fullWidth input, .et2_fullWidth select, .et2_fullWidth textarea {
+	width: 100%;
+}
