@@ -1346,5 +1346,15 @@ ul.et2_nowrap, div.et2_nowrap{
  * Some general styles usable for all apps (and widgets)
  */
 .et2_fullWidth, .et2_fullWidth input, .et2_fullWidth select, .et2_fullWidth textarea {
-	width: 100%;
+	width: 99%;
+}
+/* position icons behind input */
+.et2_fullWidth {
+	position: relative;
+}
+.et2_fullWidth a.et2_url {
+	position: absolute;
+	height: 16px;
+	right: -16px;
+	top: 8px;
 }
