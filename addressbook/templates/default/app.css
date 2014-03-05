@@ -7,34 +7,45 @@
 /**
  * new addressbook.edit
  */
+div#addressbook-edit.et2_container {
+	width: 842px;
+}
 div.addressbook_edit_general_picture {
 	position: relative;
 }
 div.addressbook_edit_general_picture img {
 	position: absolute;
 	width: auto;
-	height: 65px;
+	max-width: 80px;
+	height: 105px;
+	left: 2px;
 }
 .uploadphoto{
-  position: absolute;
-  top: 70px;
-  left: 0;
-  display:none;
-  border: 2px solid black;
-  background-color: #ffffff;
-  padding: 4px;
+	position: absolute;
+	top: 70px;
+	left: 0;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	z-index: 1;
 }
 .typeIcon { height: 16px; width: 16px; }
-.editphones,.editname{
-  position: absolute;
-  top: 10%;
-  left: 30%;
-  display:none;
-  border: 2px solid black;
-  background-color: #ffffff;
-  padding: 4px;
-}
 .editname{
-  top: 97px;
-  left: 173px;
+	position: absolute;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 1;
+}
+.custom_country {
+	display: none;
+}
+tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
+tr.dialogOperators td,.dialogFooterToolbar {
+	padding: 5px 0 5px 0;
+	vertical-align: middle;
 }
