@@ -3472,6 +3472,16 @@ table.egwGridView_grid tr td span {
 table.egwGridView_grid tr td span[id*="[info_subject]"] {
   margin-right: 30px;
 }
+table.egwGridView_grid tr td span.high {
+  color: red;
+}
+table.egwGridView_grid tr td span.urgent {
+  color: red;
+  background-color: #ffdd73;
+}
+table.egwGridView_grid tr td span.low {
+  color: #373737;
+}
 table.egwGridView_grid tr td table.customfields tbody {
   border-bottom: 0px;
 }
