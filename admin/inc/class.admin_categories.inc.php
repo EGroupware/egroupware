@@ -147,6 +147,12 @@ class admin_categories
 					if($content['owner'] == '') $content['owner'] = 0;
 					if ($content['id'] && self::$acl_edit)
 					{
+
+						// If color changed, we need to do an edit 'refresh' instead of 'update'
+						// to reload the whole nextmatch instead of just the row
+						$data = $cats->id2name($content['id'],'data');
+						$change_color = ($data['color'] != $content['data']['color']);
+						
 						try {
 							$cats->edit($content);
 							$msg = lang('Category saved.');
@@ -170,7 +176,7 @@ class admin_categories
 					}
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, 'admin', $content['id']);
+						egw_framework::refresh_opener($msg, 'admin', $content['id'], $change_color ? 'edit' : 'update');
 						egw_framework::window_close();
 					}
 					break;
@@ -181,7 +187,7 @@ class admin_categories
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
 						// Refresh internally looks for template name, which starts with 'admin'
-						egw_framework::refresh_opener($msg, 'admin', $content['id']);
+						egw_framework::refresh_opener($msg, 'admin', $content['id'],'delete');
 						egw_framework::window_close();
 						return;
 					}
@@ -193,7 +199,7 @@ class admin_categories
 					break;
 			}
 			// Refresh internally looks for template name, which starts with 'admin'
-			egw_framework::refresh_opener($msg, 'admin', $content['id']);
+			egw_framework::refresh_opener($msg, 'admin', $content['id'], $change_color ? 'edit' : 'update');
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -374,6 +380,11 @@ class admin_categories
 		// make appname available for actions
 		$rows['appname'] = $query['appname'];
 		$rows['edit_link'] = $this->edit_link;
+
+		// Send categories to make sure row colors stay up to date
+		// We use update types to prevent nm from doing unneeded calls to get_rows()
+		// TODO: figure out how to only send this if a category color has changed
+		$rows['sel_options']['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', ',,,'.$query['appname'].',0');
 
 		// disable access column for global categories
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'admin') $rows['no_access'] = true;
