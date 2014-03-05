@@ -1061,7 +1061,7 @@ option:checked {
 .ui-widget textarea,
 .ui-widget button {
   font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-  font-size: 1em;
+  font-size: 11px;
 }
 .ui-widget-content {
   /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
@@ -1249,9 +1249,25 @@ span.ui-icon-close {
 }
 /*###########################################*/
 /*Menu */
+.ui-menu .ui-menu-item {
+  padding: 0px;
+}
 .ui-menu .ui-menu-item a {
-  line-height: 26px;
+  line-height: 24px;
+  margin: 0px;
   padding: 2px 5px;
+}
+.ui-menu .ui-menu-item a input {
+  padding: 0;
+}
+.ui-menu .ui-menu-item a img {
+  padding: 0;
+}
+.ui-menu .ui-menu-item a.ui-state-focus {
+  margin: 0px !important;
+  line-height: 24px;
+  padding: 2px 5px;
+  border: none;
 }
 /*###########################################*/
 /* col selection */
@@ -5344,6 +5360,8 @@ tr.dialogHeader4 .et2_label {
 /*Buttons / Toolbar*/
 .dialogFooterToolbar {
   background-color: #679fd2;
+  margin: 10px 0 0 0;
+  padding: 3px;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 }
 .dialogFooterToolbar td {
