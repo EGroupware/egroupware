@@ -564,7 +564,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					{
 						foreach($options as $key => &$label)
 						{
-							$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+							if(!is_array($label))
+							{
+								$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+							}
+							else if ($label['label'])
+							{
+								$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+							}
 						}
 					}
 				}
