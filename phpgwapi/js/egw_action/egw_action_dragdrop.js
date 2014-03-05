@@ -509,8 +509,7 @@ function egwDropActionImplementation()
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT);
 					},
 					"tolerance": "pointer",
-					activeClass: "ui-state-hover",
-					hoverClass: "ui-state-active",
+					hoverClass: "drop-hover",
 					// Greedy is for nested droppables - children consume the action
 					greedy: true
 				}
