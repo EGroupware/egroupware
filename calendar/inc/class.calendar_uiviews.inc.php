@@ -689,9 +689,9 @@ class calendar_uiviews extends calendar_ui
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("-".$weekNavH,  $weeks? $this->first: $this->bo->date2ts($this->date))),
-				)). ' &nbsp'.$navHeader;
+				)). ' <span>'.$navHeader;
 			
-		$navHeader = $navHeader.'&nbsp '.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
+		$navHeader = $navHeader.'</span> '.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("+".$weekNavH, $weeks? $this->first: $this->bo->date2ts($this->date))),
 				)).'</div>';
@@ -855,9 +855,9 @@ class calendar_uiviews extends calendar_ui
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->first-$days*DAY_s),
-				)). ' &nbsp'.$navHeader;
+				)). '<span>'.$navHeader;
 			
-		$navHeader = $navHeader.' &nbsp'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
+		$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->last+$days*DAY_s),
 				)).'</div>';
@@ -991,9 +991,9 @@ class calendar_uiviews extends calendar_ui
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->first-1),
-				)). ' &nbsp'.$this->bo->long_date($this->first,0,false,true);
+				)). '<span>'.$this->bo->long_date($this->first,0,false,true);
 			
-				$navHeader = $navHeader.' &nbsp'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
+				$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->last+1),
 				)).'</div>';
@@ -1418,20 +1418,20 @@ class calendar_uiviews extends calendar_ui
 			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
 			if ($this->allowEdit)
 			{
-				$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+				$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' <span> '.$title;
 			}
 			else
 			{
-				$title = $day_view.' &nbsp; '.$title;
+				$title = $day_view.' <span> '.$title;
 			}
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
 			if ($this->allowEdit)
 			{
-				$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+				$title .= ' </span> '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
 			}
 			else
 			{
-				$title .= ' &nbsp; '.$day_view;
+				$title .= ' </span> '.$day_view;
 			}
 		}
 		if (is_bool($short_title) || ($short_title != "")) {
