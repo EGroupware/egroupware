@@ -2,40 +2,28 @@
  * Give space to both contact view & infolog list
  */
 #addressbook-index  {height: 100%}
-#addressbook-edit { height: 390px; min-height: 390px;}
 .et2_container[id^="infolog-index-addressbook"] {min-height: 250px}
 
-/* Give enough (static) width to edit dialog tabs, or it will auto-size and flex */
-#addressbook-edit .et2_tabbox {min-width: 535px;}
-.cursorHand { cursor: hand; }
-.countrySelect select { width: 150px; }
-.custom_country input {display: none; }
-.contactid:before { content:"#" }
-.emailCol div { width: 100%; }
-.fixedHeight,.telNumbers { height: 12px; overflow: hidden; text-overflow: ellipsis}
-.telNumbers { white-space: nowrap; }
-.leftPad5 { padding-left: 5px; }
-.bold { font-weight: bold; }
-.fileas select,.fileas,.owner select,.owner {
-  width: 100%;
-  font-weight: bold;
+/**
+ * new addressbook.edit
+ */
+div.addressbook_edit_general_picture {
+	position: relative;
 }
-.photo img, .iphoto img {
-  width: 60px;
-}
-.photo img {
-  cursor: hand;
+div.addressbook_edit_general_picture img {
+	position: absolute;
+	width: auto;
+	height: 65px;
 }
 .uploadphoto{
   position: absolute;
-  top: 168px;
-  left: 48px;
+  top: 70px;
+  left: 0;
   display:none;
   border: 2px solid black;
   background-color: #ffffff;
   padding: 4px;
 }
-.checkAllArrow { padding-right: 5px; }
 .typeIcon { height: 16px; width: 16px; }
 .editphones,.editname{
   position: absolute;
@@ -49,54 +37,4 @@
 .editname{
   top: 97px;
   left: 173px;
-}
-.windowheader{
-  background-image:url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
-  background-repeat:repeat-x;
-  height: 20px;
-  border-spacing: 0px;
-  border-collapse:collapse;
-  border-bottom: #9c9c9c 1px solid;
-}
-fieldset.phoneGroup {
-  margin-top: 12px;
-  font-size: 110%;
-  height: 140px;
-  border: solid black 2px;
-  margin-bottom: 0px;
-}
-.phoneGroup table{
-  height: 122px;
-}
-fieldset.emailGroup {
-  margin-top: 10px;
-  font-size: 110%;
-  height: 112px;
-  border: solid black 2px;
-  margin-bottom: 0px;
-}
-.emailGroup table{
-  height: 87px;
-}
-.space{
-   width: 80px;
-}
-.noWrap{
-  white-space: nowrap;
-}
-.customfields{
-}
-.customfields td{
-  white-space: nowrap;
-  line-height: 12px;
-}
-.image16 img {
-  height: 16px;
-}
-
-/* changes from pixelegg 11/12/13 - upload foto in right column */
-#addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
-widtH: 20%;
-vertical-align: top;
-text-align: center;
 }

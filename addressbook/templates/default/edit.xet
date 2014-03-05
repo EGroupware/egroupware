@@ -54,273 +54,254 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-
-                                      <!-- <image src="accounts"/> -->
-
-		<grid  class="addressbook_edit_general">
-		<columns>
-				<column width="80%" class="addressbook_edit_general_left"/>
-				<column width="20%" class="addressbook_edit_general_right"/>
-		</columns>
-		<rows>
-		<row>
-		<grid width="auto">
+		<grid width="100%" height="200">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
+				<column width="80"/>
+				<column width="300"/>
+				<column width="30"/>
+				<column width="90"/>
+				<column width="300"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description value="Name"/>
-					<textbox id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" rows="1" size="36" span="3" tabindex="-1" class="cursorHand"/>
-
-				</row>
-				<row>
-					<description/>
-					<template id="addressbook.edit.name"/>
-
-				</row>
-
-                <row>
-					<description for="title" value="Title"/>
-					<textbox id="title" size="36" maxlength="64" span="2"/>
-
-				</row>
 				<row>
 					<description for="role" value="Role"/>
-					<textbox id="role" size="20" maxlength="64"/>
-					<textbox label="Room" id="room" size="5"/>
-
-				</row>
-				<row>
-				<!-- 	<image src="home"/> -->
-					<description value="Organisation"/>
-					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="45" maxlength="128" colspan="3"/>
-				</row>
-				<row>
-					<description for="org_unit" value="department"/>
-					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" size="45" maxlength="64"/>
-				</row>
-				<row>
-				<!-- 	<image src="gohome"/> -->
+					<hbox width="100%">
+						<textbox id="role" width="200" maxlength="64"/>
+						<textbox label="Room" id="room" width="50" align="right"/>
+					</hbox>
+					<description/>
 					<description for="adr_one_street" value="street"/>
-					<textbox id="adr_one_street" size="45" maxlength="64"/>
+					<textbox id="adr_one_street" class="et2_fullWidth" maxlength="64"/>
+					<description/>
 				</row>
 				<row>
-
+					<description for="assistent" value="Assistent"/>
+					<textbox id="assistent" class="et2_fullWidth"/>
 					<description/>
-					<textbox statustext="address line 2" id="adr_one_street2" size="45" maxlength="64"/>
+					<description/>
+					<textbox statustext="address line 2" id="adr_one_street2" class="et2_fullWidth" maxlength="64"/>
+					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-
+					<description for="tel_assistent" value="number"/>
+					<url-phone id="tel_assistent" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description for="adr_one_locality" value="city"/>
-					<hbox options="0,0">
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64"/>
-						<textbox statustext="City" id="adr_one_locality" size="35" maxlength="64" class="leftPad5"/>
+					<hbox>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="40" maxlength="64"/>
+						<textbox statustext="City" id="adr_one_locality" maxlength="64" align="right" width="250"/>
 					</hbox>
+					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
+					<description for="tel_fax" value="fax"/>
+					<url-phone id="tel_fax" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+					<vbox width="100%">
+						<menulist class="et2_fullWidth">
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
 						</menulist>
-						<textbox id="adr_one_countryname" class="custom_country"/>
-					</hbox>
+						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth"/>
+					</vbox>
+					<description/>
 				</row>
-
 				<row disabled="@addr_format=city_state_postcode">
+					<description/>
+					<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="app.addressbook.showphones" image="edit" background_image="1"/>
+					<description/>
 					<description value="Region"/>
-					<textbox statustext="State" id="adr_one_region" size="19" maxlength="64" class="leftPad5"/>
-				</row>
-
-				<row disabled="!@addr_format=city_state_postcode">
+					<textbox statustext="State" id="adr_one_region" maxlength="64" class="et2_fullWidth"/>
 					<description/>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description for="tel_assistent" value="number"/>
+					<url-phone id="tel_assistent" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description value="City"/>
-					<hbox options="0,0">
+					<hbox>
 						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64"/>
-						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" class="leftPad5"/>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" class="leftPad5"/>
+						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64"/>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64"/>
 					</hbox>
+					<description/>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description for="tel_fax" value="fax"/>
+					<url-phone id="tel_fax" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
+					<description for="adr_one_countryname" value="country"/>
+					<vbox width="100%">
+						<menulist>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+						</menulist>
+						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth"/>
+					</vbox>
+					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description/>
-					<description for="adr_one_countryname" value="country"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
-						</menulist>
-						<textbox id="adr_one_countryname" class="custom_country"/>
-					</hbox>
-				</row>
-				<row valign="bottom" height="25">
-				<!-- 	<image src="private.png"/> -->
-					<description value="Addressbook"/>
-					<menulist>
-						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
-					</menulist>
+					<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="app.addressbook.showphones" image="edit" background_image="1"/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 			</rows>
-
 		</grid>
-		<hbox disabled="@hidebuttons" class="addressbook_edit_general_picture">
-			<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-			<template id="addressbook.edit.upload"/>
-		</hbox>
-		</row>
-		</rows>
-	</grid>
 	</template>
 	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="286" overflow="auto">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column/>
-				<column/>
-				<column disabled="@cat_tab=Tree"/>
-				<column disabled="!@cat_tab=Tree"/>
 			</columns>
 			<rows>
-				<row valign="top">
-					<image src="folder"/>
-					<description value="Categories"/>
+				<row valign="top" disabled="@cat_tab=Tree">
 					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
+				</row>
+				<row valign="top" disabled="!@cat_tab=Tree">
 					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="286">
+		<grid width="100%" height="200">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
+				<column width="80"/>
+				<column width="300"/>
+				<column width="30"/>
+				<column width="90"/>
+				<column width="300"/>
 			</columns>
 			<rows>
 				<row>
-					<image src="accounts"/>
+					<description for="tel_home" value="Phone"/>
+					<url-phone id="tel_home" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
 					<description for="adr_two_street" value="street"/>
-					<textbox id="adr_two_street" size="45" maxlength="64"/>
+					<textbox id="adr_two_street" class="et2_fullWidth" maxlength="64"/>
+					<description/>
 				</row>
 				<row>
+					<description for="tel_cell_private" value="mobile phone"/>
+					<url-phone id="tel_cell_private" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell_private,&amp;hearts;"/>
 					<description/>
-					<description for="adr_two_street2"/>
-					<textbox statustext="address line 2" id="adr_two_street2" size="45" maxlength="64"/>
+					<textbox statustext="address line 2" id="adr_two_street2" class="et2_fullWidth" maxlength="64"/>
+					<description/>
 				</row>
-				<row disabled="@addr_format2=city_state_postcode">
-					<description/>
+				<row disabled="@addr_format=city_state_postcode">
+					<description for="tel_fax_home" value="fax"/>
+					<url-phone id="tel_fax_home" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description for="adr_two_locality" value="city"/>
-					<hbox options="0,0">
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"/>
-						<textbox statustext="City" id="adr_two_locality" size="35" maxlength="64" class="leftPad5"/>
+					<hbox>
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64"/>
+						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="250" align="right"/>
 					</hbox>
+					<description/>
 				</row>
-				<row disabled="@addr_format2=city_state_postcode">
+				<row disabled="@addr_format=city_state_postcode">
+					<description for="email_home" value="EMail"/>
+					<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth"/>
 					<description/>
 					<description for="adr_two_countryname" value="country"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+					<vbox width="100%">
+						<menulist class="et2_fullWidth">
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
 						</menulist>
-						<textbox id="adr_two_countryname" class="custom_country"/>
-						<textbox statustext="State" id="adr_two_region" size="19" maxlength="64" class="leftPad5"/>
-					</hbox>
-				</row>
-				<row disabled="!@addr_format2=city_state_postcode">
+						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth"/>
+					</vbox>
 					<description/>
-					<description for="adr_two_locality" value="city"/>
-					<hbox options="0,0">
+				</row>
+				<row disabled="@addr_format=city_state_postcode">
+					<description for="url_home" value="URL"/>
+					<url id="url_home" class="et2_fullWidth"/>
+					<description/>
+					<description value="Region"/>
+					<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth"/>
+					<description/>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description for="tel_fax_home" value="fax"/>
+					<url-phone id="tel_fax_home" class="et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
+					<description value="City"/>
+					<hbox>
 						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"/>
-						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64" class="leftPad5"/>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" class="leftPad5"/>
+						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64"/>
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"/>
 					</hbox>
-				</row>
-				<row disabled="!@addr_format2=city_state_postcode">
 					<description/>
-					<description value="Country"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
-						</menulist>
-						<textbox id="adr_two_countryname" class="custom_country"/>
-					</hbox>
 				</row>
-				<row height="30" class="add_bday_timezone">
-					<image src="gear"/>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description for="email_home" value="EMail"/>
+					<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth"/>
+					<description/>
+					<description for="adr_two_countryname" value="country"/>
+					<vbox width="100%">
+						<menulist>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+						</menulist>
+						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth"/>
+					</vbox>
+					<description/>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description for="url_home" value="URL"/>
+					<url id="url_home" class="et2_fullWidth"/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
 					<description for="bday" value="Birthday"/>
-					<hbox options="0,0">
-						<date id="bday" options="Y-m-d"/>
-						<menulist>
-							<menupopup align="right" label="Timezone" id="tz" no_lang="1"/>
-						</menulist>
-					</hbox>
-				</row>
-				<row valign="top">
-					<image src="private.png"/>
-					<description for="pubkey" value="Public key"/>
-					<textbox multiline="true" id="pubkey" rows="4" cols="40"/>
+					<date id="bday" options="Y-m-d" class="et2_fullWidth"/>
+					<description/>
+					<description for="tz" value="Timezone"/>
+					<menulist>
+						<menupopup align="right" id="tz" no_lang="1"/>
+					</menulist>
+					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="286" overflow="auto">
+		<grid width="100%" height="200">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
+				<column width="80"/>
+				<column width="700"/>
 			</columns>
 			<rows>
 				<row valign="top" disabled="@cat_tab">
-					<image src="folder"/>
 					<description value="Categories"/>
-					<listbox type="select-cat" id="cat_id" rows="3" options=",width:99%"/>
+					<listbox type="select-cat" id="cat_id" rows="3" class="et2_fullWidth"/>
 				</row>
-				<row class="row_off" valign="top">
-					<image src="edit"/>
+				<row valign="top">
 					<description value="Notes"/>
-					<textbox multiline="true" id="note" rows="6" cols="50"/>
+					<textbox multiline="true" id="note" rows="6" class="et2_fullWidth"/>
+				</row>
+				<row valign="top">
+					<description for="pubkey" value="Public key"/>
+					<textbox multiline="true" id="pubkey" rows="4" class="et2_fullWidth"/>
 				</row>
 				<row disabled="@hidebuttons">
-					<image src="home"/>
 					<description value="Last date"/>
 					<link id="last_link"/>
 				</row>
 				<row disabled="@hidebuttons">
-					<description/>
 					<description value="Next date"/>
 					<link id="next_link"/>
-				</row>
-				<row disabled="@hidebuttons" class="row_off" valign="top">
-					<image src="gear"/>
-					<menulist>
-						<menupopup type="select-account" label="Created" readonly="true"/>
-					</menulist>
-					<hbox readonly="true" options="0,0">
-						<menulist>
-							<menupopup type="select-account" id="creator" readonly="true"/>
-						</menulist>
-						<date-time id="created" readonly="true" class="leftPad5"/>
-					</hbox>
-				</row>
-				<row disabled="@hidebuttons" class="row_on">
-					<description/>
-					<description value="Last modified"/>
-					<hbox readonly="true" options="0,0">
-						<menulist>
-							<menupopup type="select-account" id="modifier" readonly="true"/>
-						</menulist>
-						<date-time id="modified" readonly="true" class="leftPad5"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
-
-		<grid width="100%"  overflow="auto">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -341,70 +322,22 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="286" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th">
-					<description value="Distribution lists"/>
-				</row>
-				<row>
-					<grid>
-						<columns>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description id="distrib_lists" span="all"/>
-							</row>
-						</rows>
-					</grid>
-				</row>
-			</rows>
-		</grid>
+		<box height="200" width="100%" overflow="auto">
+			<description id="distrib_lists" span="all"/>
+		</box>
 	</template>
 	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th" height="20">
-					<description value="Custom fields"/>
-				</row>
-				<row valign="top" height="100%">
-					<customfields options="$cont[tid],$cont[no_private_cfs]"/>
-				</row>
-			</rows>
-		</grid>
+		<box height="200" width="100%" overflow="auto">
+			<customfields options="$cont[tid],$cont[no_private_cfs]"/>
+		</box>
 	</template>
 	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="286" class="row_on" spacing="0" padding="0" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th" height="20">
-					<description value="Custom fields"/>
-				</row>
-				<row valign="top" height="100%">
-					<customfields id="private_cfs" options="$cont[tid],1"/>
-				</row>
-			</rows>
-		</grid>
+		<box height="200" width="100%" overflow="auto">
+			<customfields id="private_cfs" options="$cont[tid],1"/>
+		</box>
 	</template>
 	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="286" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<historylog id="history"/>
-				</row>
-			</rows>
-		</grid>
+		<historylog id="history" height="200" width="100%" overflow="hidden"/>
 	</template>
 	<template id="addressbook.editphones" template="" lang="" group="0" version="1.9.001">
 		<grid class="editphones">
@@ -429,19 +362,9 @@
 					<description value="pref"/>
 				</row>
 				<row>
-					<description for="tel_work2" value="business" class="bold"/>
-					<url-phone id="tel_work2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work2,&amp;hearts;"/>
-				</row>
-				<row>
-					<description for="tel_cell2" value="mobile phone"/>
-					<url-phone id="tel_cell2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell2,&amp;hearts;"/>
-				</row>
-				<row>
-					<description for="tel_fax2" value="fax"/>
-					<url-phone id="tel_fax2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax2,&amp;hearts;"/>
+					<description for="tel_other" value=" Other Phone"/>
+					<url-phone id="tel_other" options="30"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 				</row>
 				<row>
 					<description for="tel_car" value="car phone"/>
@@ -454,86 +377,69 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 				</row>
 				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description for="assistent" value="Assistent" class="bold"/>
-					<textbox id="assistent" size="35" span="2"/>
-				</row>
-				<row>
-					<description for="tel_assistent" value="number"/>
-					<url-phone id="tel_assistent" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description for="tel_home2" value="Private" class="bold"/>
-					<url-phone id="tel_home2" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home2,&amp;hearts;"/>
-				</row>
-				<row>
-					<description for="tel_cell_private" value="mobile phone"/>
-					<url-phone id="tel_cell_private" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell_private,&amp;hearts;"/>
-				</row>
-				<row>
-					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description for="tel_other" value=" Other Phone"/>
-					<url-phone id="tel_other" options="30"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
-				</row>
-				<row>
 					<button align="center" label="Ok" id="button[ok]" class="button_ok" onclick="app.addressbook.hidephones" span="all" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
-		<grid class="addressbook_edit">
+		<template id="addressbook.edit.name"/>
+		<template id="addressbook.editphones"/>
+		<grid class="addressbook_edit" border="1">
 			<columns>
-				<column width="c_Left"/>
-				<column width="c_Right"/>
+				<column width="90"/>
+				<column width="90"/>
+				<column width="210"/>
+				<column width="30"/>
+				<column width="90"/>
+				<column width="300"/>
+				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<htmlarea id="msg" no_lang="1" readonly="true" span="all" class="redItalic"/>
+				<row class="dialogHeader">
+					<description for="n_fn" value="Name"/>
+					<textbox id="n_fn" no_lang="1" span="2" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();"/>
+					<description/>
+					<description for="org_name" value="Organisation"/>
+					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" class="et2_fullWidth"/>
+					<appicon/>
+				</row>
+				<row class="dialogHeader2">
+					<hbox disabled="@hidebuttons" class="addressbook_edit_general_picture" rowSpan="3">
+						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+						<template id="addressbook.edit.upload"/>
+					</hbox>
+					<description for="tel_work" value="business"/>
+					<url-phone id="tel_work" class="telNumbers et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
+					<description for="org_unit" value="department"/>
+					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
 					<description/>
 				</row>
-
-				<row class="dialog-header">
-					<menulist>
-						<menupopup blur="Name" class="fileas" statustext="own sorting" id="fileas_type" no_lang="1"/>
-					</menulist>
-					<grid>
-						<columns>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row disabled="@no_tid">
-								<menulist>
-									<menupopup class="leftPad5" label="Type" id="tid" no_lang="1" onchange="1"/>
-								</menulist>
-								<html label=" " id="typegfx" needed="1" no_lang="1" readonly="true" class="space"/>
-							</row>
-						</rows>
-					</grid>
+				<row class="dialogHeader3">
+					<description/>
+					<description for="tel_cell" value="mobile phone"/>
+					<url-phone id="tel_cell" class="telNumbers et2_fullWidth"/>
+					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
+					<description for="title" value="Title"/>
+					<textbox id="title" size="36" maxlength="64" class="et2_fullWidth"/>
+					<description/>
 				</row>
-				<row valign="top" class="addressbook_edit_left_tr">
-					<tabbox id="tabs" class="addressbook_edit_left_td">
+				<row class="dialogHeader4">
+					<description/>
+					<description for="email" value="email"/>
+					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth"/>
+					<description/>
+					<description for="url" value="url"/>
+					<url id="url" class="et2_fullWidth"/>
+					<description/>
+				</row>
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
 						<tabs>
-							<tab id="general" label="General" statustext="Name, Address"/>
-							<tab id="cats" label="Categories" statustext="Categories"/>
+							<tab id="general" label="Organisation"/>
 							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
+							<tab id="cats" label="Categories" statustext="Categories"/>
 							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
 							<tab id="links" label="Links" statustext="Links"/>
 							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
@@ -543,8 +449,8 @@
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
-							<template id="addressbook.edit.cats"/>
 							<template id="addressbook.edit.home"/>
+							<template id="addressbook.edit.cats"/>
 							<template id="addressbook.edit.details"/>
 							<template id="addressbook.edit.links"/>
 							<template id="addressbook.edit.distribution_list"/>
@@ -553,8 +459,76 @@
 							<template id="addressbook.edit.history"/>
 						</tabpanels>
 					</tabbox>
+				</row>
+				<row class="dialogOperators">
+					<description value="Addressbook"/>
+					<menulist span="2" class="et2_fullWidth">
+						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
+					</menulist>
+					<description/>
+					<description value="own sorting"/>
+					<menulist span="2">
+						<menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row class="dialogOperators">
+					<description value="Created"/>
+					<hbox span="2" width="100%">
+						<menulist>
+							<menupopup type="select-account" id="creator" readonly="true"/>
+						</menulist>
+						<date-time id="created" readonly="true" align="right"/>
+					</hbox>
+					<description/>
+					<description value="Last modified"/>
+					<hbox width="100%" span="2">
+						<menulist>
+							<menupopup type="select-account" id="modifier" readonly="true"/>
+						</menulist>
+						<date-time id="modified" readonly="true" align="right"/>
+					</hbox>
+				</row>
+				<row disabled="@hidebuttons" class="dialogFooterToolbar">
+					<hbox span="all" width="100%">
+						<button label="Edit" id="button[edit]" class="button_edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="edit" background_image="1"/>
+						<button label="Copy" id="button[copy]" class="button_copy" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="copy" background_image="1"/>
+						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]" image="vcard" background_image="1"/>
+						<button accesskey="s" label="Save" id="button[save]" class="button_save" image="save" background_image="1"/>
+						<button label="Apply" id="button[apply]" class="button_apply" image="apply" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; self.close(); return false;" image="cancel" background_image="1"/>
+						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
+						<button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
+					</hbox>
+
+				</row>
+				<row disabled="!@showsearchbuttons" class="dialogOperators">
+					<hbox span="all">
+						<menulist>
+							<menupopup label="Operator" id="operator" no_lang="1"/>
+						</menulist>
+						<menulist>
+							<menupopup id="meth_select" no_lang="1"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row disabled="!@showsearchbuttons" class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Search" id="button[search]" image="search" background_image="1"/>
+						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+<!--
+							<row disabled="@no_tid">
+								<menulist>
+									<menupopup class="" label="Type" id="tid" no_lang="1" onchange="1"/>
+								</menulist>
+								<html label=" " id="typegfx" needed="1" no_lang="1" readonly="true" class="space"/>
+							</row>
 					<vbox class="addressbook_edit_right_td">
-						<template id="addressbook.editphones"/>
+
 						<groupbox class="phoneGroup">
 							<caption label="Phone Numbers"/>
 							<grid>
@@ -592,8 +566,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button accesskey="m" label="More ..." id="button[more]" class="button_more" onclick="app.addressbook.showphones" image="edit" background_image="1"/>
-										<description/>
+																				<description/>
 									</row>
 								</rows>
 							</grid>
@@ -609,59 +582,25 @@
 								<rows>
 									<row>
 										<image src="internet"/>
+										<description for="email" value="email"/>
+										<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
 										<description for="url" value="url"/>
 										<url id="url" options="28,128"/>
 									</row>
 									<row>
 										<description/>
-										<description for="url_home" value="Private"/>
-										<url id="url_home" options="28,128"/>
+										<image src="internet"/>
 									</row>
 									<row>
 										<image src="email.png"/>
-										<description for="email" value="email"/>
-										<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
 									</row>
 									<row>
 										<description/>
-										<description for="email_home" value="Private"/>
-										<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" options="28,128"/>
 									</row>
 								</rows>
 							</grid>
 						</groupbox>
 					</vbox>
 				</row>
-				<row disabled="@hidebuttons" class="dialog-footer-toolbar">
-					<hbox>
-						<button label="Edit" id="button[edit]" class="button_edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="edit" background_image="1"/>
-						<button label="Copy" id="button[copy]" class="button_copy" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=900,height=560,scrollbars=yes,status=yes'); return false;" image="copy" background_image="1"/>
-						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]" image="vcard" background_image="1"/>
-						<button accesskey="s" label="Save" id="button[save]" class="button_save" image="save" background_image="1"/>
-						<button label="Apply" id="button[apply]" class="button_apply" image="apply" background_image="1"/>
-						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; self.close(); return false;" image="cancel" background_image="1"/>
-						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
-						<button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
-					</hbox>
-
-				</row>
-				<row disabled="!@showsearchbuttons" class="dialog-operators">
-					<hbox span="all">
-						<menulist>
-							<menupopup label="Operator" id="operator" no_lang="1"/>
-						</menulist>
-						<menulist>
-							<menupopup id="meth_select" no_lang="1"/>
-						</menulist>
-					</hbox>
-				</row>
-				<row disabled="!@showsearchbuttons" class="dialog-footer-toolbar">
-					<hbox span="all">
-						<button label="Search" id="button[search]" image="search" background_image="1"/>
-						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
-					</hbox>
-				</row>
-			</rows>
-		</grid>
-	</template>
+-->
 </overlay>
