@@ -1050,8 +1050,7 @@ option:checked {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
   font-size: 1.1em;
 }
 .ui-widget .ui-widget {
@@ -1061,8 +1060,7 @@ option:checked {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
   font-size: 1em;
 }
 .ui-widget-content {
@@ -2038,8 +2036,7 @@ body {
 }
 body,
 textarea {
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 }
 #egw_fw_basecontainer {
   position: fixed;
@@ -2047,8 +2044,7 @@ textarea {
   height: 100%;
   padding: 0px;
   margin: 0px;
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
   background-color: #fafafa;
 }
 input {
@@ -2058,7 +2054,6 @@ input {
     &:focus{.Complete_Button_input_focus;}*/
 }
 select {
-  /*.Complete_Button_select;*/
   padding: 3px;
   margin: 0;
   -webkit-border-radius: 3px;
@@ -2187,8 +2182,7 @@ div.selectbox-wrapper ul li {
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
   font-size: 1.2em;
   font-weight: normal;
   height: 30px;
@@ -4745,9 +4739,6 @@ table.nextmatch_header img {
 .egw_fw_ui_category_content input#uical_select_owner_multiple {
   height: 16px;
   vertical-align: middle;
-}
-.egw_fw_ui_category_content select#calendar_filter {
-  margin-top: 4px;
 }
 .egw_fw_ui_sidemenu_listitem {
   padding: 0.5em 0;
