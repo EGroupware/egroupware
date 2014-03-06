@@ -681,7 +681,7 @@ class addressbook_bo extends addressbook_so
 				$data[$name] = egw_time::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto']);
+		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'],'',$data['etag']);
 
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
@@ -701,14 +701,18 @@ class addressbook_bo extends addressbook_so
 	 * @param int $id contact_id
 	 * @param boolean $jpeg=false jpeg exists or not
 	 * @param string $default='' image-name to use if !$jpeg, eg. 'template'
+	 * @param string $etag=null etag to set in url to allow caching with Expires header
 	 * @return string/array
 	 */
-	function photo_src($id,$jpeg,$default='')
+	function photo_src($id,$jpeg,$default='',$etag=null)
 	{
+		error_log(__METHOD__."($id, ..., etag=$etag) ".  function_backtrace());
 		return $jpeg ? array(
 			'menuaction' => 'addressbook.addressbook_ui.photo',
 			'contact_id' => $id,
-		) : $default;
+		)+(isset($etag) ? array(
+			'etag'       => $etag,
+		) : array()) : $default;
 	}
 
 	/**

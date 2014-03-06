@@ -1982,7 +1982,7 @@ window.egw_LAB.wait(function() {
 		// Enable history
 		$this->setup_history($content, $sel_options);
 
-		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'photo');
+		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'photo',$content['etag']);
 
 		if ($content['private']) $content['owner'] .= 'p';
 
@@ -2392,12 +2392,29 @@ window.egw_LAB.wait(function() {
 		{
 			egw::redirect(common::image('addressbook','photo'));
 		}
+		// use an etag over the image mapp
+		$etag = '"'.$contact['id'].':'.$contact['etag'].'"';
 		if (!ob_get_contents())
 		{
 			header('Content-type: image/jpeg');
-			header('Content-length: '.(extension_loaded(mbstring) ? mb_strlen($contact['jpegphoto'],'ascii') : strlen($contact['jpegphoto'])));
-			echo $contact['jpegphoto'];
-			exit;
+			header('ETag: '.$etag);
+			// if etag parameter given in url, we can allow browser to cache picture via an Expires header
+			// different url with different etag parameter will force a reload
+			if (isset($_GET['etag']))
+			{
+				egw_session::cache_control(30*86400);	// cache for 30 days
+			}
+			// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
+			if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
+			{
+				header("HTTP/1.1 304 Not Modified");
+			}
+			else
+			{
+				header('Content-length: '.bytes($contact['jpegphoto']));
+				echo $contact['jpegphoto'];
+			}
+			common::egw_exit();
 		}
 	}
 
