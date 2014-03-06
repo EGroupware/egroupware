@@ -509,7 +509,7 @@ function et2_activateLinks(_content)
 		}
 	}
 
-	var mail_regExp = /mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i;
+	var mail_regExp = /(mailto:)?([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i;
 
 	//  First match things beginning with http:// (or other protocols)
 	var protocol = '(http:\\/\\/|(ftp:\\/\\/|https:\\/\\/))';	// only http:// gets removed, other protocolls are shown
@@ -535,8 +535,8 @@ function et2_activateLinks(_content)
 		// No need make emailaddress spam-save, as it gets dynamically created
 		_splitPush(_content.match(mail_regExp), function(_matches) {
 			arr.push({
-				"href": _matches[0],
-				"text": _matches[1] + "@" + _matches[2] + "." + _matches[3]
+				"href": (_matches[1]?'':'mailto:')+_matches[0],
+				"text": _matches[2] + "@" + _matches[3] + "." + _matches[4]
 			});
 		});
 
@@ -610,9 +610,19 @@ function et2_insertLinkText(_text, _node, _target)
 				.attr("href", s.href)
 				.text(s.text);
 
-			if (typeof _target != "undefined" && _target && _target != "_self")
+			if (typeof _target != "undefined" && _target && _target != "_self" && s.href.substr(0, 7) != "mailto:")
 			{
 				a.attr("target", _target);
+			}
+			// open mailto links depending on preferences in mail app
+			if (s.href.substr(0, 7) == "mailto:" &&
+				(egw.user('apps').mail || egw.user('apps').felamimail) &&
+				egw.preference('force_mailto','addressbook') != '1')
+			{
+				a.click(function(event){
+					egw.open_link(this.href);
+					return false;
+				});
 			}
 
 			a.appendTo(_node);

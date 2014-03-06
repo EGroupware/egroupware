@@ -182,7 +182,7 @@ var et2_url = et2_textbox.extend(
 					value = "mailto:"+value;
 				}
 				if((this.egw().user('apps').mail || this.egw().user('apps').felamimail) &&
-					this.egw().preference('force_mailto','addressbook') == '0' )
+					this.egw().preference('force_mailto','addressbook') != '1' )
 				{
 					return function() {egw.open_link(value);};
 				}
