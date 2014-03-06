@@ -106,7 +106,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
 		//Set the default actions for the first time
-		if (typeof pref === 'undefined')
+		if (typeof pref === 'undefined' || jQuery.isEmptyObject(pref))
 		{
 			for (var name in actions)
 			{
@@ -158,6 +158,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 		for(var name in actions)
 		{
 			var action = actions[name];
+			if (typeof action == 'string') action = {id: name, caption: action};
 
 			// Add in divider
 			if(last_group_id != action.group)
@@ -269,7 +270,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
-		
+
 		var toolbar = this.actionlist.find('span').children(),
 			toolbox = this.actionbox,
 			menulist = jQuery(this.actionbox.children()[1]);
@@ -329,13 +330,13 @@ var et2_toolbar = et2_DOMWidget.extend(
 						$j(this).unbind(event);
 					});
 				}
-			},	
+			},
 			create: function (event, ui) {
 				$j('html').unbind('click.outsideOfMenu');
 			}
 		});
 	},
-	
+
 	/**
 	 * Add/Or remove an action from prefence
 	 *
@@ -371,7 +372,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', (action.hint ? action.hint : action.caption))
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-		
+
 		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
@@ -399,7 +400,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			if(action)
 			{
 				action.data.event = e;
-				action.onExecute.exec(action);
+				action.execute([]);
 			}
 		};
 
