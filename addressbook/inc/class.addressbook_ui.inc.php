@@ -60,6 +60,13 @@ class addressbook_ui extends addressbook_bo
 	);
 
 	/**
+	 * Instance of eTemplate class
+	 *
+	 * @var etemplate_new
+	 */
+	protected $tmpl;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $contact_app
@@ -2199,12 +2206,13 @@ window.egw_LAB.wait(function() {
 		{
 			$content['no_tid'] = true;
 		}
-		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
+		$this->tmpl->read('addressbook.view');
+		/*if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
 		{
 			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
 			$this->tmpl->read('addressbook.edit');
-		}
+		}*/
 		if ($this->private_addressbook && $content['private'] && $content['owner'] == $this->user)
 		{
 			$content['owner'] .= 'p';
@@ -2240,6 +2248,30 @@ window.egw_LAB.wait(function() {
 
 		// load app.css for addressbook explicit, as addressbook_view hooks changes currentapp!
 		egw_framework::includeCSS('addressbook', 'app');
+
+		$this->tmpl->setElementAttribute('toolbar', 'actions', array(
+			'edit' => array(
+				'caption' => 'Edit',
+				'toolbarDefault' => true,
+			),
+			'copy' => 'Copy',
+			'delete' => array(
+				'caption' => 'Delete',
+				'confirm' => 'Delete this entry',
+			),
+			'cancel' => array(
+				'caption' => 'Cancel',
+				'toolbarDefault' => true,
+			),
+			'back' => array(
+				'caption' => 'Back',
+				'toolbarDefault' => true,
+			),
+			'next' => array(
+				'caption' => 'Next',
+				'toolbarDefault' => true,
+			),
+		));
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 

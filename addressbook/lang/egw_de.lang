@@ -117,6 +117,7 @@ configuration	common	de	Konfiguration
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
 contact copied	addressbook	de	Kontakt kopiert
+contact data	addressbook	de	Kontaktdaten
 contact deleted	addressbook	de	Kontakt gelöscht
 contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
 contact fields:	addressbook	de	Kontaktfelder:

@@ -1,8 +1,28 @@
 /**
- * Give space to both contact view & infolog list
+ * CRM view with contact data in sidebox
  */
-#addressbook-index  {height: 100%}
-.et2_container[id^="infolog-index-addressbook"] {min-height: 250px}
+.addressbook_sidebox_name {
+	font-weight: bold;
+}
+.addressbook_sidebox_name, .addressbook_sidebox_org {
+	font-size: 130%;
+	padding: 2px 0 2px 0;
+}
+td.addressbook_sidebox_header {
+	font-weight: bold;
+	height: 20px;
+	vertical-align: bottom;
+}
+div#addressbook-view.et2_container {
+	height: 0;
+}
+td.addressbook_sidebox_toolbar {
+	vertical-align: bottom;
+	height: 32px;
+}
+div#divGenTime_addressbook {
+	display: none;
+}
 
 /**
  * new addressbook.edit

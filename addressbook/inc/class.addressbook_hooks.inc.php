@@ -28,6 +28,18 @@ class addressbook_hooks
 
 		if ($location == 'sidebox_menu')
 		{
+			if ($_GET['menuaction'] == 'addressbook.addressbook_ui.view')
+			{
+				display_sidebox($appname, lang('Contact data'), array(
+					array(
+						'text'    => '<div id="addressbook_view_sidebox"/>',
+						'no_lang' => true,
+						'link'    => false,
+						'icon'    => false,
+					),
+					'menuOpened'  => true,	// display it open by default
+				));
+			}
 			// Magic etemplate2 favorites menu (from nextmatch widget)
 			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list('addressbook'));
 
