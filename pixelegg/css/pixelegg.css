@@ -442,104 +442,41 @@
   }
   /* ##################################################################################
  * Nextmatch widget
+ *
+ * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
+ *
  * ##################################################################################*/
   .et2_nextmatch {
     background-color: #f0f0f0;
+  }
+  .et2_nextmatch .nextmatch_header {
+    border: none;
+    background-image: none;
+    background-color: #cdcdcd;
+    margin-bottom: 3px;
+    margin: 0;
   }
   .et2_nextmatch > img {
     width: 16px;
     height: 16px;
   }
   .ui-helper-clearfix {
-    background-color: gray_20;
-  }
-  .nextmatch_header .header_count {
-    position: relative;
-    top: 3px;
-    height: 22px;
-    height: 24px;
-    border: 1px solid #E0E0E0;
-    float: right;
-    margin: 6px 11px 0;
-    padding: 0 20px;
-    text-align: center;
-    font-size: 11px;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    color: #000000;
-  }
-  .nextmatch_header .header_count span {
-    font-size: 11px;
-    top: 4px;
-    position: relative;
+    background-color: #cdcdcd;
   }
   /*################################################################
 *
-* Filters
+* Search Field
 *
 ################################################################*/
-  .nextmatch_header > .filters {
-    width: 100%;
-    margin-bottom: 4px;
-    padding: 0 5px 0 0;
-    background-color: #b4b4b4;
-    border: none !important;
-    border-color: #000000;
-    background-image: none !important;
-    min-height: 37px;
-    -webkit-border-top-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -webkit-border-bottom-left-radius: 0px;
-    -webkit-border-top-left-radius: 0px;
-    -moz-border-radius-topright: 3px;
-    -moz-border-radius-bottomright: 3px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-topleft: 0px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
-    /*.background-clip(padding-box);*/
-  }
-  .nextmatch_header > .filters select {
-    margin-top: 10px;
-  }
-  .nextmatch_header > .filters .et2_label {
-    padding: 0.2em;
-  }
-  .nextmatch_header > .filters .et2_label select {
-    /*.Complete_Button_select;*/
-    margin-left: 2px;
-    margin-right: 1px;
-    margin-top: 8px;
-    max-width: 14% !important;
-    /*Dialog - Addressbook - View */
-  }
-  .nextmatch_header > .filters .et2_label select:hover {
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  }
-  .nextmatch_header > .filters .et2_label select #infolog-index_cat_id,
-  .nextmatch_header > .filters .et2_label select #infolog-index_filter {
-    width: 50% !important;
-  }
-  .nextmatch_header > .filters > select > option {
-    font-size: 11px;
-  }
   .nextmatch_header > .search {
-    padding: 0 0 0 3px;
+    padding: 0 0 0 0px;
     margin-right: 3px;
     margin-left: 15px;
+    width: 200px;
+    z-index: 100;
+    white-space: nowrap;
     /*.background_color_search;*/
-    -webkit-border-radius: 3px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topright: 20px;
-    border-radius: 3px;
-    border-top-right-radius: 20px;
+    /*.border_radius_button_righttop;*/
   }
   .nextmatch_header > .search input {
     /*.background_color_search;*/
@@ -548,6 +485,7 @@
     font-size: 11px;
     color: #000000;
     padding: 3px;
+    width: 150px;
   }
   .nextmatch_header > .search input::-webkit-input-placeholder {
     /* WebKit browsers */
@@ -612,6 +550,54 @@
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     /*background-color: @color_positive_action_active !important;*/
   }
+  /*################################################################
+*
+* Filters
+*
+################################################################*/
+  .nextmatch_header > .filters {
+    /*width: 83%;*/
+    z-index: 7;
+    margin-bottom: 4px;
+    top: 0px;
+    padding: 0 5px 0 0;
+    /*background-color: @gray_30;*/
+    background: transparent;
+    border: none !important;
+    /*border-color: @gray_100;*/
+    background-image: none !important;
+    min-height: 37px;
+    margin-left: 224px;
+    margin-right: 119px;
+    /*    .border_radius (3px, 3px, 0px, 0px);*/
+  }
+  .nextmatch_header > .filters select {
+    margin-top: 10px;
+  }
+  .nextmatch_header > .filters .et2_label {
+    padding: 0.2em;
+  }
+  .nextmatch_header > .filters .et2_label select {
+    /*.Complete_Button_select;*/
+    margin-left: 2px;
+    margin-right: 1px;
+    margin-top: 8px;
+    width: 20%;
+    max-width: 20% !important;
+    /*Dialog - Addressbook - View */
+  }
+  .nextmatch_header > .filters .et2_label select:hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  }
+  .nextmatch_header > .filters .et2_label select #infolog-index_cat_id,
+  .nextmatch_header > .filters .et2_label select #infolog-index_filter {
+    width: 50% !important;
+  }
+  .nextmatch_header > .filters > select > option {
+    font-size: 11px;
+  }
   .nextmatch_header > .filters input {
     margin-right: 2ex;
     width: 15%;
@@ -640,6 +626,11 @@
     -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   }
+  /*################################################################
+*
+* Export Button
+*
+################################################################*/
   .nextmatch_header > .filters .et2_button_icon {
     margin-top: 8px;
     vertical-align: middle;
@@ -678,20 +669,40 @@
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #1aa200;
   }
-  .et2_nextmatch .nextmatch_header {
-    border: none;
-    background-image: none;
-    background-color: #cdcdcd;
-    margin-bottom: 3px;
-    margin: 0;
-  }
-  .et2_nextmatch .nextmatch_header > .filters {
-    border: 1px solid #e6e6e6;
-    background-color: #cdcdcd;
+  /*.et2_nextmatch .nextmatch_header > .filters {
+    border: 1px solid @gray_10;
+    background-color: @gray_20;
     background-image: url(../images/header_overlay.png);
     background-position: center;
     background-repeat: repeat-x;
     margin-bottom: 3px;
+}*/
+  /*################################################################
+*
+* count
+*
+################################################################*/
+  .nextmatch_header .header_count {
+    position: relative;
+    top: 1px;
+    height: 22px;
+    height: 24px;
+    border: 1px solid #E0E0E0;
+    float: right;
+    margin: 6px 11px 0;
+    padding: 0 20px;
+    text-align: center;
+    font-size: 11px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #000000;
+  }
+  .nextmatch_header .header_count span {
+    font-size: 11px;
+    top: 4px;
+    position: relative;
   }
   /*################################################################
 *
@@ -755,13 +766,11 @@
 *
 ################################################################*/
   .nextmatch_header div[id$=favorite_wrapper] {
-    /*    margin-top: 6px;
-    vertical-align: middle;*/
-    /*.box_shadow_standard_light;*/
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     background-color: #bfbfbf;
+    z-index: 200;
   }
   /**
     * Drop down button
