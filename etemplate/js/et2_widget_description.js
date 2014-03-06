@@ -43,7 +43,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 				" renders the text bold and/or italic."
 		},
 		"href": {
-			"name": "Link Target",
+			"name": "Link URL",
 			"type": "string",
 			"description": "Link URL, empty if you don't wan't to display a link."
 		},
@@ -63,7 +63,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			"name": "Link target",
 			"type": "string",
 			"default": "_self",
-			"description": "Link target descriptor"
+			"description": "Link target for href attribute"
 		},
 		"extra_link_popup": {
 			"name": "Popup",
@@ -100,7 +100,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 
 		et2_insertLinkText(this._parseText(this.options.value), this.span[0],
-			this.options.extra_link_target);
+			this.options.href ? this.options.extra_link_target : '_blank');
 
 		this.setDOMNode(this.span[0]);
 	},
@@ -128,7 +128,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 		et2_insertLinkText(this._parseText(_value),
 			this.span[0],
-			this.options.extra_link_target
+			this.options.href ? this.options.extra_link_target : '_blank'
 		);
 		if(this.options.extra_link_popup)
 		{
