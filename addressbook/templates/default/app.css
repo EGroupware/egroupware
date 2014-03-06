@@ -49,7 +49,13 @@ tr.dialogOperators td,.dialogFooterToolbar {
 	padding: 5px 0 5px 0;
 	vertical-align: middle;
 }
-
+input.et2_radiobox {
+	position: relative;
+	left: -16px;
+}
+#addressbook-edit_tel_prefer-tel_work, #addressbook-edit_tel_prefer-tel_cell {
+	left: -13px;
+}
 /**
  * Index page
  */

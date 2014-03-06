@@ -84,7 +84,7 @@
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_assistent" value="number"/>
+					<description for="tel_assistent" value="Assistent phone"/>
 					<url-phone id="tel_assistent" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description for="adr_one_locality" value="city"/>
@@ -108,7 +108,7 @@
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_other" value=" Other Phone"/>
+					<description for="tel_other" value="Other phone"/>
 					<url-phone id="tel_other" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description value="Region"/>
@@ -116,7 +116,7 @@
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_assistent" value="number"/>
+					<description for="tel_assistent" value="Assistent phone"/>
 					<url-phone id="tel_assistent" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description value="City"/>
@@ -212,7 +212,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description for="tel_home" value="Phone"/>
+					<description for="tel_home" value="Home phone"/>
 					<url-phone id="tel_home" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
 					<description for="adr_two_street" value="street"/>
@@ -368,7 +368,7 @@
 				</row>
 				<row class="dialogHeader2">
 					<description/>
-					<description for="tel_work" value="business"/>
+					<description for="tel_work" value="Business phone"/>
 					<url-phone id="tel_work" class="telNumbers et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
 					<description for="org_unit" value="department"/>
