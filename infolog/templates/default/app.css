@@ -1,4 +1,7 @@
 /* $Id$ */
+div#infolog-edit.et2_container {
+	width: 842px;
+}
 .infolog_headertext { color: black; font-size: 120%; }
 .infolog_lpadding5 { padding-left: 5px; }
 .low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
@@ -20,7 +23,7 @@ table.infolog_fullWidth { width: 100%; }
 .inputFullWidth input { width: 100%; }
 .infolog_image16 img { height: 16px; }
 td.infolog_searchParent input[type=search] { width: 90%; }
-.infolog_responsible &gt; select {width: 550px;}
+.infolog_responsible select {width: 120px;}
 #info_contact select { width: 117px; }
 #info_contact input {width: 134px;}
 #info_subject {width: 100%;}
@@ -28,4 +31,9 @@ tr.infolog_rowHasParent > td:first-child {
 	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
 	background-repeat: no-repeat;
 	background-position: 6px -2px;
+}
+tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
+tr.dialogOperators td,.dialogFooterToolbar {
+	padding: 5px 0 5px 0;
+	vertical-align: middle;
 }

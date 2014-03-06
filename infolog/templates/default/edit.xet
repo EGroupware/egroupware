@@ -2,16 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<grid width="100%" height="245" border="0">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<textbox multiline="true" id="info_des" no_lang="1" rows="12" cols="70" width="99%"/>
-				</row>
-			</rows>
-		</grid>
+		<textbox multiline="true" id="info_des" no_lang="1" rows="18" cols="70" width="99%"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" height="245" overflow="auto">
@@ -38,7 +29,7 @@
 	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%" height="245">
 			<columns>
-				<column width="100"/>
+				<column width="90"/>
 				<column/>
 			</columns>
 			<rows>
@@ -87,153 +78,147 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" height="245" overflow="auto">
+		<historylog id="history" height="245" width="100%" overflow="hidden"/>
+	</template>
+	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
+		<grid height="245" width="100%">
 			<columns>
-				<column/>
+					<column width="400"/>
+					<column width="445"/>
 			</columns>
 			<rows>
-				<row valign="top">
-					<historylog id="history"/>
+				<row height="20" class="th">
+					<description value="Delegation" class="et2_fullWidth"/>
+					<description value="Details" class="et2_fullWidth"/> 
+				</row>
+				<row>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description value="CC"/>
+								<grid width="100%" border="0">
+									<columns>
+										<column/>
+										<column width="16"/>
+									</columns>
+									<rows>
+										<row>
+											<textbox id="info_cc" maxlength="254" class="inputFullWidth"/>
+											<buttononly label="Add from Addressbook" onclick="return app.infolog.add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
+										</row>
+										<row class="hiddenRow">
+											<link-entry blur="Search" id="ab" options="addressbook-email" span="all"/>
+										</row>
+									</rows>
+								</grid>
+							</row>
+							<row class="row" valign="top">
+								<description value="Responsible" for="info_responsible"/>
+								<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" account_type="both" class="responsible"/>
+							</row>
+							<row class="row" disabled="1">
+								<description value="Confirm" for="info_confirm"/>
+								<menulist>
+									<menupopup statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" id="info_confirm"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description value="Category" for="info_cat"/>
+								<menulist>
+									<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
+								</menulist>
+							</row>
+							<row >
+								<description value="Parent" font_style="1"/>
+								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap infolog_searchParent"/>
+							</row>
+							<row class="row">
+								<description value="Priority" for="info_priority"/>
+								<menulist>
+									<menupopup statustext="select a priority for this task" id="info_priority"/>
+								</menulist>
+							</row>
+							<row>
+								<description value="Date completed" for="info_datecompleted"/>
+								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+							</row>
+							<row class="row">
+								<description value="Location" for="info_location"/>
+								<textbox id="info_location" size="60" maxlength="255"/>
+							</row>
+							<row>
+								<description value="Contact" for="info_from"/>
+								<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
+							</row>
+							<row>
+								<description value="Phone/Email" for="info_addr"/>
+								<hbox>
+									<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="_inputFullWidth"/>
+								</hbox>
+							</row>	
+							<row>
+								<description value="Private" for="info_access"/>
+								<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
-		<grid height="245" width="100%">
-				<columns>
-					<column width="50%"/>
-					<column width="50%"/>
-				</columns>
-				<rows>
-					<row height="20" class="th">
-						<description value="Delegation" class="et2_fullWidth"/>
-						<description value="Details" class="et2_fullWidth"/> 
-					</row>
-					<row>
-						<grid>
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<description value="CC"/>
-									<grid width="100%" border="0">
-										<columns>
-											<column/>
-											<column width="16"/>
-										</columns>
-										<rows>
-											<row>
-												<textbox id="info_cc" maxlength="254" class="inputFullWidth"/>
-												<buttononly label="Add from Addressbook" onclick="return app.infolog.add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
-											</row>
-											<row class="hiddenRow">
-												<link-entry blur="Search" id="ab" options="addressbook-email" span="all"/>
-											</row>
-										</rows>
-									</grid>
-								</row>
-								<row class="row" valign="top">
-									<description value="Responsible" for="info_responsible"/>
-									<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" account_type="both" class="responsible"/>
-								</row>
-								<row class="row" disabled="1">
-									<description value="Confirm" for="info_confirm"/>
-									<menulist>
-										<menupopup statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" id="info_confirm"/>
-									</menulist>
-								</row>
-							</rows>
-						</grid>
-						<grid>
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<description value="Category" for="info_cat"/>
-									<menulist>
-										<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
-									</menulist>
-								</row>
-								<row >
-									<description value="Parent" font_style="1"/>
-									<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap infolog_searchParent"/>
-								</row>
-								<row class="row">
-									<description value="Priority" for="info_priority"/>
-									<menulist>
-										<menupopup statustext="select a priority for this task" id="info_priority"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="Date completed" for="info_datecompleted"/>
-									<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
-								</row>
-								<row class="row">
-									<description value="Location" for="info_location"/>
-									<textbox id="info_location" size="60" maxlength="255"/>
-								</row>
-								<row>
-									<description value="Contact" for="info_from"/>
-									<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
-								</row>
-								<row>
-									<description value="Phone/Email" for="info_addr"/>
-									<hbox>
-										<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="_inputFullWidth"/>
-									</hbox>
-								</row>	
-								<row>
-									<description value="Private" for="info_access"/>
-									<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
-								</row>
-							</rows>
-						</grid>
-					</row>
-				</rows>
-			</grid>
-	</template>
 	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
 			<columns>
-				<column width="10%"/>
-				<column width="60%"/>
-				<column width="1%"/>
-				<column width="15%"/>
-				<column width="14%"/>
+				<column width="78"/>
+				<column width="122"/>
+				<column width="180"/>
+				<column width="78"/>
+				<column width="122"/>
+				<column width="30"/>
+				<column width="50"/>
+				<column width="30"/>
 			</columns>
 			<rows>
-				<row height="28" class="dialog-header">
+				<row>
 					<description value="Title" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" size="80" maxlength="255" span="2" tabindex="1"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="5" tabindex="1"/>
 					<appicon src="infolog" for="info_number"/>
 					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
 				</row>
-				<row class="row dialog-header2" valign="top">
-					<description value="Type" for="info_type" vertical-align="center"/>
-					<hbox options="0,0" span="2">
+				<row>
+					<description value="Type" for="info_type"/>
+					<hbox options="0,0" class="et2_fullWidth">
 						<menulist>
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
 					</hbox>
+					<description/>
 					<description value="Contact"/>
-					<vbox options="0,0" span="2">
-						<hbox options="0,0">
-							<link-entry id="info_contact" class="noWrap"/>
-						</hbox>
-					</vbox>
+					<link-entry id="info_contact" span="3"/>
 				</row>
-				<row class="row dialog-header3">
+				<row>
 					<description value="Startdate" for="info_startdate"/>
-					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" span="2"/>
+					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate"  class="et2_fullWidth"/>
+					<description/>
 					<description value="Enddate" for="info_enddate"/>
-					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"/>
+					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth"/>
+					<description span="2"/>
+					
 				</row>
-				<row valign="top" height="250">
-					<tabbox id="tabs" span="all">
+				<row height="250">
+					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
 						<tabs>
 							<tab id="description" label="Description" statustext="longer textual description"/>
 							<tab id="details" label="Details" statustext="Location, priority , ..."/>
@@ -255,24 +240,27 @@
 				<row class="th" disabled="1">
 					<description value="Dates, Status, Access" span="all"/>
 				</row>
-				<row class="row dialog-operators">
+				<row>
 					<description value="Status" for="info_status"/>
-					<menulist span="2">
+					<menulist class="et2_fullWidth">
 						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
+					<description/>
 					<description value="Completed" for="info_percent"/>
-					<menulist>
+					<menulist class="et2_fullWidth">
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
+					<description span="all"/>
 				</row>
-				<row class="row dialog-operators" disabled="!@info_owner">
+				<row disabled="!@info_owner">
 					<description value="Owner"/>
-					<vbox options="0,0" span="2">
+					<vbox options="0,0">
 						<menulist>
 							<menupopup type="select-account" id="info_owner" readonly="true"/>
 						</menulist>
 						<date-time id="info_created" readonly="true"/>
 					</vbox>
+					<description/>
 					<description value="Last modified"/>
 					<vbox options="0">
 						<menulist>
@@ -280,20 +268,20 @@
 						</menulist>
 						<date-time id="info_datemodified" readonly="true"/>
 					</vbox>
+					<description/>
 				</row>
-				<row class="dialog-footer-toolbar">
-					<hbox span="3">
+				<row>
+					<hbox span="5">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>
 						</menulist>
+						<checkbox label="Do not notify of these changes" id="no_notifications"/>
 					</hbox>
-					<hbox span="2">
-						<checkbox label="Do not notify of these changes" id="no_notifications"/> 
-						<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1"/>
-					</hbox>
+					 
+					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 				</row>
 			</rows>
 		</grid>
