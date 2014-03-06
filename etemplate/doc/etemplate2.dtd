@@ -1,0 +1,2364 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    
+	AUTHOR: Hadi Nategh <hn[AT]stylite.de>
+	COPYRIGHT: 2014 by Stylite AG
+    PUBLIC ID: 
+    SYSTEM ID: 
+	Version: 1.0
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE overlay SYSTEM "etemplate2.dtd">
+
+    <overlay>
+    ...
+    </overlay>
+-->
+<!ENTITY % Widgets "ajax_select|appicon|box|button|buttononly|caption|checkbox
+					|colorpicker|customfields|customfields-list|date|date-duration
+					|date-since|date-time|date-time_today|date-timeonly|description
+					|dialog|diff|dropdown_button|favorites|file|float|grid|groupbox
+					|hbox|historylog|hrule|html|htmlarea|iframe|image|int|integer|itempicker
+					|label|link|link-add|link-apps|link-entry|link-list|link-string|link-to|listbox
+					|menulist|menupopup|nextmatch|nextmatch-accountfilter|nextmatch-customfields|nextmatch-customfilter
+					|nextmatch-entryheader|nextmatch-filterheader|nextmatch-header|nextmatch-sortheader|nextmatch_header_bar
+					|passwd|portlet|progress|radio|radiogroup|select|select-access|select-account
+					|select-app|select-bool|select-cat
+					|select-country|select-day|select-dow|select-hour
+					|select-lang|select-month|select-number
+					|select-percent|select-priority|select-state
+					|select-timezone|select-year|split|styles|tabbox|taglist
+					|taglist-account|taglist-email|template|textbox
+					|toolbar|tree|tree-cat|url|url-email|url-phone|vbox|vfs
+					|vfs-gid|vfs-mime|vfs-mode|vfs-name|vfs-select|vfs-size|vfs-uid|vfs-upload|grid"
+>
+<!ENTITY % InheritedAttrs "class CDATA #IMPLIED
+							id ID #IMPLIED
+							width CDATA #IMPLIED
+							overflow CDATA #IMPLIED
+							height CDATA #IMPLIED
+">
+<!ENTITY grid "<grid><columns><column/></columns><rows><row></row></rows></grid>" >
+<!ELEMENT overlay (%Widgets;)*>
+
+
+<!ELEMENT template (%Widgets;)*>
+
+<!ATTLIST template
+	template CDATA #IMPLIED
+	group CDATA #IMPLIED
+	version CDATA #IMPLIED
+	lang CDATA #IMPLIED
+	content CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+    id CDATA #IMPLIED
+>
+<!ELEMENT grid (columns,rows)>
+<!ATTLIST grid
+	%InheritedAttrs;
+    align CDATA "left"
+	sortable CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+	padding CDATA #IMPLIED
+    spacing CDATA #IMPLIED
+	border CDATA #IMPLIED
+  >
+<!ELEMENT columns (column)*>
+
+<!ELEMENT column EMPTY >
+<!ATTLIST column
+    disabled CDATA #IMPLIED
+    class CDATA #IMPLIED
+    width CDATA #IMPLIED
+>
+<!ELEMENT rows (row)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT row (%Widgets;)>
+<!ATTLIST row
+	%InheritedAttrs;
+    class CDATA #IMPLIED
+    height CDATA #IMPLIED
+    valign CDATA #IMPLIED
+    disabled CDATA #IMPLIED
+ >
+
+ <!ELEMENT ajax_select EMPTY>
+ <!ATTLIST ajax_select
+	%InheritedAttrs;
+	get_rows CDATA #IMPLIED
+	get_title CDATA #IMPLIED
+	id_field CDATA #IMPLIED
+	template CDATA #IMPLIED
+	filter CDATA #IMPLIED
+	filter2 CDATA #IMPLIED
+	link (true|false) "true"
+	icon CDATA #IMPLIED
+	values CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT appicon EMPTY>
+ <!ATTLIST appicon
+	%InheritedAttrs;
+	default_src CDATA "nonav"
+	src CDATA #IMPLIED
+	href CDATA #IMPLIED
+	extra_link_target CDATA "_self"
+	extra_link_popup CDATA #IMPLIED
+	imagemap CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT box EMPTY>
+ <!ATTLIST box
+	%InheritedAttrs;
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT button EMPTY>
+ <!ATTLIST button
+	%InheritedAttrs;
+	label CDATA #IMPLIED
+	image CDATA #IMPLIED
+	ro_image CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	accesskey CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT buttononly EMPTY>
+ <!ATTLIST buttononly
+	%InheritedAttrs;
+	label CDATA #IMPLIED
+	image CDATA #IMPLIED
+	ro_image CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	accesskey CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT caption EMPTY>
+ <!ATTLIST caption
+	%InheritedAttrs;
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT checkbox EMPTY>
+ <!ATTLIST checkbox
+	%InheritedAttrs;
+	selected_value CDATA "true"
+	unselected_value CDATA "false"
+	ro_true CDATA "x"
+	ro_false CDATA #IMPLIED
+	value CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT colorpicker EMPTY>
+ <!ATTLIST colorpicker
+	%InheritedAttrs;
+	alphaSupport (true|false) "false"
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT customfields EMPTY>
+ <!ATTLIST customfields
+	%InheritedAttrs;
+	customfields CDATA #IMPLIED
+	fields CDATA #IMPLIED
+	value CDATA #IMPLIED
+	type_filter CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT customfields-list EMPTY>
+ <!ATTLIST customfields-list
+	%InheritedAttrs;
+	customfields CDATA #IMPLIED
+	fields CDATA #IMPLIED
+	value CDATA #IMPLIED
+	type_filter CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date EMPTY>
+ <!ATTLIST date
+	%InheritedAttrs;
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date-duration EMPTY>
+ <!ATTLIST date-duration
+	%InheritedAttrs;
+	display_format CDATA "dh"
+	percent_allowed (true|false) "false"
+	hours_per_day CDATA #IMPLIED
+	empty_not_0 (true|false) "false"
+	short_labels (true|false) "false"
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date-since EMPTY>
+ <!ATTLIST date-since
+	%InheritedAttrs;
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date-time EMPTY>
+ <!ATTLIST date-time
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date-time_today EMPTY>
+ <!ATTLIST date-time_today
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT date-timeonly EMPTY>
+ <!ATTLIST date-timeonly
+	value CDATA #IMPLIED
+	type CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT description EMPTY>
+ <!ATTLIST description
+	value CDATA #IMPLIED
+	font_style CDATA #IMPLIED
+	href CDATA #IMPLIED
+	activate_links (true|false) "false"
+	for CDATA #IMPLIED
+	extra_link_target CDATA "_self"
+	extra_link_popup CDATA #IMPLIED
+	extra_link_title CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+	span CDATA #IMPLIED
+ >
+ <!ELEMENT dialog EMPTY>
+ <!ATTLIST dialog
+	callback CDATA #IMPLIED
+	message CDATA "Somebody forgot to set this..."
+	dialog_type CDATA #IMPLIED
+	buttons CDATA #IMPLIED
+	icon CDATA #IMPLIED
+	title CDATA #IMPLIED
+	modal (true|false) "true"
+	resizable (true|false) "true"
+	value CDATA #IMPLIED
+	template CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT diff EMPTY>
+ <!ATTLIST diff
+	value CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT dropdown_button EMPTY>
+ <!ATTLIST dropdown_button
+	label CDATA "Select..."
+	label_updates (true|false) "true"
+	image CDATA #IMPLIED
+	ro_image CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	accesskey CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT favorites EMPTY>
+ <!ATTLIST favorites
+	default_pref CDATA #IMPLIED
+	sidebox_target CDATA "favorite_sidebox"
+	app CDATA #IMPLIED
+	filters CDATA #IMPLIED
+	id CDATA "favorite"
+	label CDATA #IMPLIED
+	label_updates (true|false) "false"
+	image CDATA "etemplate/fav_filter"
+	statustext CDATA "Favorite queries"
+	ro_image CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	accesskey CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	value CDATA #IMPLIED
+	align CDATA "left"
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT file EMPTY>
+ <!ATTLIST file
+	multiple (true|false) "false"
+	max_file_size CDATA "8388608"
+	mime CDATA #IMPLIED
+	blur CDATA #IMPLIED
+	progress CDATA #IMPLIED
+	onStart CDATA #IMPLIED
+	onFinish CDATA #IMPLIED
+	drop_target CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT float EMPTY>
+ <!ATTLIST float
+	value CDATA #IMPLIED
+	size CDATA #IMPLIED
+	min CDATA #IMPLIED
+	max CDATA #IMPLIED
+	multiline (true|false) "false"
+	maxlength CDATA #IMPLIED
+	blur CDATA #IMPLIED
+	rows CDATA #IMPLIED
+	cols CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT groupbox EMPTY>
+ <!ATTLIST groupbox
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT hbox EMPTY>
+ <!ATTLIST hbox
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT historylog EMPTY>
+ <!ATTLIST historylog
+	value CDATA #IMPLIED
+	status_id CDATA "status"
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT hrule EMPTY>
+ <!ATTLIST hrule
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT html EMPTY>
+ <!ATTLIST html
+	label CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT iframe EMPTY>
+ <!ATTLIST iframe
+	label CDATA #IMPLIED
+	seamless (true|false) "true"
+	name CDATA #IMPLIED
+	value CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT image EMPTY>
+ <!ATTLIST image
+	src CDATA #IMPLIED
+	default_src CDATA #IMPLIED
+	href CDATA #IMPLIED
+	extra_link_target CDATA "_self"
+	extra_link_popup CDATA #IMPLIED
+	imagemap CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT int EMPTY>
+ <!ATTLIST int
+	value CDATA #IMPLIED
+	size CDATA #IMPLIED
+	min CDATA #IMPLIED
+	max CDATA #IMPLIED
+	multiline (true|false) "false"
+	maxlength CDATA #IMPLIED
+	blur CDATA #IMPLIED
+	rows CDATA #IMPLIED
+	cols CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT integer EMPTY>
+ <!ATTLIST integer
+	value CDATA #IMPLIED
+	size CDATA #IMPLIED
+	min CDATA #IMPLIED
+	max CDATA #IMPLIED
+	multiline (true|false) "false"
+	maxlength CDATA #IMPLIED
+	blur CDATA #IMPLIED
+	rows CDATA #IMPLIED
+	cols CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT itempicker EMPTY>
+ <!ATTLIST itempicker
+	action CDATA #IMPLIED
+	action_label CDATA "Action"
+	application CDATA #IMPLIED
+	blur CDATA #IMPLIED
+	value CDATA #IMPLIED
+	query CDATA #IMPLIED
+	needed (true|false) "false"
+	onchange CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	validation_error CDATA #IMPLIED
+	tabindex CDATA #IMPLIED
+	label CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT label EMPTY>
+ <!ATTLIST label
+	value CDATA #IMPLIED
+	font_style CDATA #IMPLIED
+	href CDATA #IMPLIED
+	activate_links (true|false) "false"
+	for CDATA #IMPLIED
+	extra_link_target CDATA "_self"
+	extra_link_popup CDATA #IMPLIED
+	extra_link_title CDATA #IMPLIED
+	statustext CDATA #IMPLIED
+	align CDATA "left"
+	onclick CDATA #IMPLIED
+	disabled (true|false) "false"
+	width CDATA #IMPLIED
+	height CDATA #IMPLIED
+	class CDATA #IMPLIED
+	overflow CDATA #IMPLIED
+	parent_node CDATA #IMPLIED
+	actions CDATA #IMPLIED
+	id CDATA #IMPLIED
+	no_lang (true|false) "false"
+ >
+ <!ELEMENT link EMPTY>
+ <!ATTLIST link
+ only_app CDATA #IMPLIED
+ value CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-add EMPTY>
+ <!ATTLIST link-add
+ value CDATA #IMPLIED
+ application CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-apps EMPTY>
+ <!ATTLIST link-apps
+ only_app CDATA #IMPLIED
+ application_list CDATA #IMPLIED
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-entry EMPTY>
+ <!ATTLIST link-entry
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ application_list CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ query CDATA #IMPLIED
+ select CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-list EMPTY>
+ <!ATTLIST link-list
+ show_deleted (true|false) "false"
+ application CDATA #IMPLIED
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ link_type CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-string EMPTY>
+ <!ATTLIST link-string
+ application CDATA #IMPLIED
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ link_type CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT link-to EMPTY>
+ <!ATTLIST link-to
+ only_app CDATA #IMPLIED
+ application_list CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ no_files (true|false) "false"
+ search_label CDATA #IMPLIED
+ link_label CDATA "Link"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT listbox EMPTY>
+ <!ATTLIST listbox
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT menulist EMPTY>
+ <!ATTLIST menulist
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT menupopup EMPTY>
+ <!ATTLIST menupopup
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-accountfilter EMPTY>
+ <!ATTLIST nextmatch-accountfilter
+ account_type CDATA "accounts"
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-customfields EMPTY>
+ <!ATTLIST nextmatch-customfields
+ customfields CDATA #IMPLIED
+ fields CDATA #IMPLIED
+ value CDATA #IMPLIED
+ type_filter CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-customfilter EMPTY>
+ <!ATTLIST nextmatch-customfilter
+ widget_type CDATA #IMPLIED
+ widget_options CDATA "[object Object]"
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-entryheader EMPTY>
+ <!ATTLIST nextmatch-entryheader
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ application_list CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ query CDATA #IMPLIED
+ select CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-filterheader EMPTY>
+ <!ATTLIST nextmatch-filterheader
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-header EMPTY>
+ <!ATTLIST nextmatch-header
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT nextmatch-sortheader EMPTY>
+ <!ATTLIST nextmatch-sortheader
+ sortmode CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT passwd EMPTY>
+ <!ATTLIST passwd
+ multiline (true|false) "false"
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT portlet EMPTY>
+ <!ATTLIST portlet
+ title CDATA #IMPLIED
+ edit_template CDATA "/egroupware/home/templates/default/edit.xet"
+ settings CDATA #IMPLIED
+ height CDATA #IMPLIED
+ row CDATA #IMPLIED
+ col CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT progress EMPTY>
+ <!ATTLIST progress
+ href CDATA #IMPLIED
+ extra_link_target CDATA "_self"
+ extra_link_popup CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT radio EMPTY>
+ <!ATTLIST radio
+ set_value CDATA "true"
+ ro_true CDATA "x"
+ ro_false CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT radiogroup EMPTY>
+ <!ATTLIST radiogroup
+ label CDATA #IMPLIED
+ value CDATA "true"
+ ro_true CDATA "x"
+ ro_false CDATA #IMPLIED
+ options CDATA #IMPLIED
+ needed (true|false) "false"
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select EMPTY>
+ <!ATTLIST select
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-access EMPTY>
+ <!ATTLIST select-access
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-account EMPTY>
+ <!ATTLIST select-account
+ account_type CDATA "accounts"
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-app EMPTY>
+ <!ATTLIST select-app
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-bool EMPTY>
+ <!ATTLIST select-bool
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-cat EMPTY>
+ <!ATTLIST select-cat
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-country EMPTY>
+ <!ATTLIST select-country
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-day EMPTY>
+ <!ATTLIST select-day
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-dow EMPTY>
+ <!ATTLIST select-dow
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-hour EMPTY>
+ <!ATTLIST select-hour
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-lang EMPTY>
+ <!ATTLIST select-lang
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-month EMPTY>
+ <!ATTLIST select-month
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-number EMPTY>
+ <!ATTLIST select-number
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-percent EMPTY>
+ <!ATTLIST select-percent
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-priority EMPTY>
+ <!ATTLIST select-priority
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-state EMPTY>
+ <!ATTLIST select-state
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-timezone EMPTY>
+ <!ATTLIST select-timezone
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT select-year EMPTY>
+ <!ATTLIST select-year
+ multiple (true|false) "false"
+ expand_multiple_rows CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ tags (true|false) "false"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT split EMPTY>
+ <!ATTLIST split
+ orientation CDATA "v"
+ outline (true|false) "false"
+ dock_side CDATA #IMPLIED
+ width CDATA "100%"
+ disabled (true|false) "false"
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ >
+ <!ELEMENT styles EMPTY>
+ <!ATTLIST styles
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT taglist EMPTY>
+ <!ATTLIST taglist
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ value CDATA #IMPLIED
+ autocomplete_url CDATA "etemplate_widget_taglist.ajax_search.etemplate"
+ autocomplete_params CDATA "[object Object]"
+ allowFreeEntries (true|false) "true"
+ onchange CDATA #IMPLIED
+ onclick CDATA #IMPLIED
+ tagRenderer CDATA #IMPLIED
+ listRenderer CDATA #IMPLIED
+ width CDATA "100%"
+ maxSelection CDATA #IMPLIED
+ expand_multiple_rows CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ needed (true|false) "false"
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ disabled (true|false) "false"
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT taglist-account EMPTY>
+ <!ATTLIST taglist-account
+ autocomplete_url CDATA "home.etemplate_widget_taglist.ajax_search.etemplate"
+ account_type CDATA "accounts"
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ value CDATA #IMPLIED
+ autocomplete_params CDATA "[object Object]"
+ onchange CDATA #IMPLIED
+ onclick CDATA #IMPLIED
+ tagRenderer CDATA #IMPLIED
+ listRenderer CDATA #IMPLIED
+ width CDATA "100%"
+ maxSelection CDATA #IMPLIED
+ expand_multiple_rows CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ needed (true|false) "false"
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ disabled (true|false) "false"
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT taglist-email EMPTY>
+ <!ATTLIST taglist-email
+ autocomplete_url CDATA "home.etemplate_widget_taglist.ajax_email.etemplate"
+ autocomplete_params CDATA #IMPLIED
+ include_lists (true|false) "false"
+ empty_label CDATA #IMPLIED
+ select_options CDATA #IMPLIED
+ value CDATA #IMPLIED
+ onchange CDATA #IMPLIED
+ onclick CDATA #IMPLIED
+ tagRenderer CDATA #IMPLIED
+ listRenderer CDATA #IMPLIED
+ width CDATA "100%"
+ maxSelection CDATA #IMPLIED
+ expand_multiple_rows CDATA #IMPLIED
+ selected_first (true|false) "true"
+ search (true|false) "false"
+ needed (true|false) "false"
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ disabled (true|false) "false"
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT textbox EMPTY>
+ <!ATTLIST textbox
+ multiline (true|false) "false"
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT toolbar EMPTY>
+ <!ATTLIST toolbar
+ view_range CDATA "5"
+ flat_list (true|false) "true"
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT tree EMPTY>
+ <!ATTLIST tree
+ multiple (true|false) "false"
+ select_options CDATA "[object Object]"
+ onclick CDATA #IMPLIED
+ onselect CDATA #IMPLIED
+ oncheck CDATA #IMPLIED
+ onopenstart CDATA #IMPLIED
+ onopenend CDATA #IMPLIED
+ image_path CDATA "/egroupware/phpgwapi/templates/default/images/dhtmlxtree/"
+ value CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ autoloading CDATA #IMPLIED
+ std_images CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT url EMPTY>
+ <!ATTLIST url
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT url-email EMPTY>
+ <!ATTLIST url-email
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT url-phone EMPTY>
+ <!ATTLIST url-phone
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vbox EMPTY>
+ <!ATTLIST vbox
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs EMPTY>
+ <!ATTLIST vfs
+ value CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-gid EMPTY>
+ <!ATTLIST vfs-gid
+ empty_label CDATA #IMPLIED
+ application CDATA #IMPLIED
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ link_type CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-mime EMPTY>
+ <!ATTLIST vfs-mime
+ value CDATA #IMPLIED
+ size CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-name EMPTY>
+ <!ATTLIST vfs-name
+ multiline (true|false) "false"
+ size CDATA #IMPLIED
+ maxlength CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ rows CDATA #IMPLIED
+ cols CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-mode EMPTY>
+ <!ATTLIST vfs-mode
+ value CDATA #IMPLIED
+ font_style CDATA #IMPLIED
+ href CDATA #IMPLIED
+ activate_links (true|false) "false"
+ for CDATA #IMPLIED
+ extra_link_target CDATA "_self"
+ extra_link_popup CDATA #IMPLIED
+ extra_link_title CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-select EMPTY>
+ <!ATTLIST vfs-select
+ mode CDATA "open-multiple"
+ method CDATA #IMPLIED
+ method_id CDATA #IMPLIED
+ path CDATA #IMPLIED
+ mime CDATA #IMPLIED
+ button_label CDATA "open"
+ value CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-size EMPTY>
+ <!ATTLIST vfs-size
+ value CDATA #IMPLIED
+ font_style CDATA #IMPLIED
+ href CDATA #IMPLIED
+ activate_links (true|false) "false"
+ for CDATA #IMPLIED
+ extra_link_target CDATA "_self"
+ extra_link_popup CDATA #IMPLIED
+ extra_link_title CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-uid EMPTY>
+ <!ATTLIST vfs-uid
+ empty_label CDATA #IMPLIED
+ application CDATA #IMPLIED
+ value CDATA #IMPLIED
+ only_app CDATA #IMPLIED
+ link_type CDATA #IMPLIED
+ label CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
+ <!ELEMENT vfs-upload EMPTY>
+ <!ATTLIST vfs-upload
+ multiple (true|false) "false"
+ max_file_size CDATA "8388608"
+ mime CDATA #IMPLIED
+ blur CDATA #IMPLIED
+ progress CDATA #IMPLIED
+ onStart CDATA #IMPLIED
+ onFinish CDATA #IMPLIED
+ drop_target CDATA #IMPLIED
+ needed (true|false) "false"
+ onchange CDATA #IMPLIED
+ onfocus CDATA #IMPLIED
+ validation_error CDATA #IMPLIED
+ tabindex CDATA #IMPLIED
+ label CDATA #IMPLIED
+ value CDATA #IMPLIED
+ statustext CDATA #IMPLIED
+ align CDATA "left"
+ onclick CDATA #IMPLIED
+ disabled (true|false) "false"
+ width CDATA #IMPLIED
+ height CDATA #IMPLIED
+ class CDATA #IMPLIED
+ overflow CDATA #IMPLIED
+ parent_node CDATA #IMPLIED
+ actions CDATA #IMPLIED
+ id CDATA #IMPLIED
+ no_lang (true|false) "false"
+ >
