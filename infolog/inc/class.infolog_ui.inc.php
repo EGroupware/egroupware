@@ -287,10 +287,6 @@ class infolog_ui
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		if ($query['csv_export'] && $query['csv_export'] === true)
-		{
-			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
-		}
 		// handle linked filter (show only entries linked to a certain other entry)
 		if ($query['col_filter']['linked'])
 		{
@@ -860,7 +856,6 @@ class infolog_ui
 		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
-		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
 
 		// store whole $values[nm] in etemplate request
 		unset($values['nm']['rows']);

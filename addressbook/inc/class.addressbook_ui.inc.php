@@ -232,10 +232,6 @@ class addressbook_ui extends addressbook_bo
 				'favorites'      => true,
 				'placeholder_actions' => array('add')
 			);
-			$csv_export = new addressbook_csv($this);
-			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ?
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] :
-				$csv_export->csv_fields(null,true);
 
 			if ($do_email)
 			{
