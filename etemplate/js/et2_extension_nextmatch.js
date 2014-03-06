@@ -489,7 +489,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 			var next = (entry.ao?entry.ao.getNext(_row_ids.length):null);
-			if(next == null || !next.id)
+			if(next == null || !next.id || next.id == uid)
 			{
 				// No next, select previous
 				next = (entry.ao?entry.ao.getPrevious(1):null);

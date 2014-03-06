@@ -345,7 +345,7 @@ var et2_dataview_selectionManager = Class.extend(
 			var count = Math.max(1,Math.min(self._total,50));
 			var element = null;
 			var idx = _entry.idx;
-			while(element == null && count > 0)
+			while(element == null && count > 0 && max_index > 0)
 			{
 				count--;
 				element = getIndexAO(Math.max(0,
