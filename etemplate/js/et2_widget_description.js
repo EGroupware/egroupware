@@ -182,8 +182,9 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs
 	 */
-
 	getDetachedAttributes: function(_attrs)
 	{
 		_attrs.push("value", "class", "href");
