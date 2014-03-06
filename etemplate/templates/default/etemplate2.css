@@ -201,7 +201,7 @@ input[type=button]:focus {
 button.et2_button_with_image {
          padding-left: 20px;
          background-repeat: no-repeat;
-         background-position:  5% center;
+         background-position:  4px center;
          background-size: 16px;
  }
 /* et2_box_widget ###*/
@@ -1204,6 +1204,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 * et2_toolbar
 */
 .et2_toolbar {
+	border: none;
 	background: none;
 	margin: 0 !important;
 	padding: 0 !important;
