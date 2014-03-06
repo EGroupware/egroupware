@@ -69,6 +69,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			"type": "any",
 			"default": et2_no_init,
 			"description": "List of egw actions that can be done on the widget.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+		},
+		default_execute: {
+			name: "Default onExecute for actions",
+			type: "js",
+			default: et2_no_init,
+			description: "Set default onExecute javascript method for action not specifying their own"
 		}
 	},
 
@@ -426,6 +432,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			}
 		}
 		this._actionManager.updateActions(actions);
+		if (this.options.default_execute) this._actionManager.setDefaultExecute(this.options.default_execute);
 
 		// Put a reference to the widget into the action stuff, so we can
 		// easily get back to widget context from the action handler
@@ -433,6 +440,13 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		// Link the actions to the DOM
 		this._link_actions(actions);
+	},
+
+	set_default_execute: function(_default_execute)
+	{
+		this.options.default_execute = _default_execute;
+
+		if (this._actionManager) this._actionManager.setDefaultExecute(null, _default_execute);
 	},
 
 	/**
@@ -704,8 +718,8 @@ var et2_surroundingsMgr = Class.extend(
  * The class extension is different than the widgets
  *
  * @param {et2_DOMWidget} widget
- * @param {Object} node 
- * 
+ * @param {Object} node
+ *
  */
 function et2_action_object_impl(widget, node)
 {
@@ -736,7 +750,7 @@ function et2_action_object_impl(widget, node)
 				break;
 		}
 	};
-	
+
 
 	return aoi;
 };
