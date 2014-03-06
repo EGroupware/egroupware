@@ -2167,7 +2167,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					_widget._oldValue = _widget.getValue();
 
 					var value = this.getInstanceManager().getValues(header);
-					// Filter now
+
+					// Filter now, but reset - handles nulled values
+					header.nextmatch.activeFilters = {};
 					header.nextmatch.applyFilters(value[header.nextmatch.id]);
 				}
 				// In case this gets bound twice, it's important to return
