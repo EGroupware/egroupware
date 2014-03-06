@@ -108,8 +108,6 @@ var et2_date = et2_inputWidget.extend(
 			// allow 0 as empty-value for date and date-time widgets, as that is used a lot eg. in InfoLog
 			_value == 0 && (this._type == 'date-time' || this._type == 'date'))
 		{
-			_value = null;
-
 			if(this.input_date)
 			{
 				this.input_date.val("");
