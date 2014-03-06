@@ -74,13 +74,21 @@ app.classes.infolog = AppJS.extend(
 	{
 
 		var filter = this.et2.getWidgetById('filter');
-		var temp_header_left = this.et2.getWidgetById('infolog.index.dates');
-
-		if (filter && temp_header_left)
+		var nm = this.et2.getWidgetById('nm');
+		if(nm && filter)
 		{
-			temp_header_left.set_disabled(filter.value !== "bydate");
-
+			switch(filter.getValue())
+			{
+				case 'bydate':
+				case 'duedate':
+					nm.set_header_left('infolog.index.dates');
+					break;
+				default:
+					nm.set_header_left('infolog.index.header_left');
+					break;
+			}
 		}
+		
 	},
 
 	/**

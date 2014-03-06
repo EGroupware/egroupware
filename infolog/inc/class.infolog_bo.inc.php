@@ -154,6 +154,7 @@ class infolog_bo
 		'upcoming'                 => 'upcoming',
 		'open-upcoming'			   => 'open and upcoming',
 		'bydate'                   => 'startdate',
+		'duedate'                  => 'enddate'
 	);
 
 	/**
@@ -1026,6 +1027,11 @@ class infolog_bo
 		{
 			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
 			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
+		}
+		elseif ($query['filter'] == 'duedate')
+		{
+			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_enddate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
+			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_enddate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
 		}
 		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
