@@ -413,7 +413,7 @@ input[type=button] {
   width: 16px;
   height: 16px;
 }
-#mail-index_mailPreviewIcons {
+.mailPreviewIcons {
   position: absolute;
   right: 0;
   top: 0;
@@ -658,7 +658,7 @@ div#mail-index {
   margin: 0 1% 0 0 !important;
 }
 div#mail-index div#mail-index_nm div.nextmatch_header div.filters select {
-  margin-top: 6px;
+  margin-top: 9px;
 }
 div#mail-index div#mail-index_nm div.nextmatch_header div.filters input#mail-index_search {
   /*height: 20px !important;*/
@@ -737,6 +737,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
     span.standartTreeRow b {color: @egw_color_2_a;}
   */
   /*move Mail*/
+  /*    .draggedOver {
+        background-color: @color_hint;
+    }*/
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate {
   margin-left: 0px;
@@ -794,11 +797,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   max-height: 50%;
 }
 .egw_fw_ui_category_content .dtree {
-  font-family: Verdana, Helvetica, Sans-Serif;
-  /*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 }
-.egw_fw_ui_category_content .draggedOver {
-  background-color: #0c5da5;
+.egw_fw_ui_category_content .selectedTreeRow {
+  background-color: #ffc200;
+  color: #1e1e1e;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
