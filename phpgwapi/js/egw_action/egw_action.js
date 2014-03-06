@@ -344,7 +344,16 @@ egwAction.prototype.defaultIcons = {
 	copy: 'copy',
 	move: 'move',
 	cut: 'cut',
-	paste: 'editpaste'
+	paste: 'editpaste',
+	save: 'save',
+	apply: 'apply',
+	cancel: 'cancel',
+	'continue': 'continue',
+	next: 'continue',
+	finish: 'finish',
+	back: 'back',
+	previous: 'back',
+	close: 'close'
 };
 
 /**
@@ -368,8 +377,10 @@ egwAction.prototype.updateActions = function(_actions, _app)
 		{
 			var elem = _actions[i];
 
-			if (typeof elem == "string") elem = { caption: elem };
-
+			if (typeof elem == "string")
+			{
+				_actions[i] = elem = { caption: elem };
+			}
 			if (typeof elem == "object")
 			{
 				// use attr name as id, if none given
