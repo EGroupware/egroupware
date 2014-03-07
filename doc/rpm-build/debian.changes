@@ -1,4 +1,4 @@
-egroupware (1.8.002.20140307) hardy; urgency=low
+egroupware (1.8.006.20140307) hardy; urgency=low
 
   * CalDAV/Calendar: sending now iMip response to external organizer when initialy accepting invitation via CalDAV client (before only status changes where sent)
   * CalDAV/CardDAV: entries with urls containing url-encoded chars, eg. from Google calendar, were not send to clients (missing urldecoding in multiget report)
