@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    
+
 	AUTHOR: Hadi Nategh <hn[AT]stylite.de>
 	COPYRIGHT: 2014 by Stylite AG
-    PUBLIC ID: 
-    SYSTEM ID: 
+    PUBLIC ID:
+    SYSTEM ID:
 	Version: 1.0
 -->
 
@@ -145,7 +145,7 @@
 	actions CDATA #IMPLIED
 	no_lang (true|false) "false"
  >
- <!ELEMENT box EMPTY>
+ <!ELEMENT box (%Widgets;)*>
  <!ATTLIST box
 	%InheritedAttrs;
 	statustext CDATA #IMPLIED
@@ -567,7 +567,7 @@
 	id CDATA #IMPLIED
 	no_lang (true|false) "false"
  >
- <!ELEMENT groupbox EMPTY>
+ <!ELEMENT groupbox (%Widgets;)*>
  <!ATTLIST groupbox
 	statustext CDATA #IMPLIED
 	align CDATA "left"
@@ -582,7 +582,7 @@
 	id CDATA #IMPLIED
 	no_lang (true|false) "false"
  >
- <!ELEMENT hbox EMPTY>
+ <!ELEMENT hbox (%Widgets;)*>
  <!ATTLIST hbox
 	statustext CDATA #IMPLIED
 	align CDATA "left"
@@ -2138,7 +2138,7 @@
  id CDATA #IMPLIED
  no_lang (true|false) "false"
  >
- <!ELEMENT vbox EMPTY>
+ <!ELEMENT vbox (%Widgets;)*>
  <!ATTLIST vbox
  statustext CDATA #IMPLIED
  align CDATA "left"

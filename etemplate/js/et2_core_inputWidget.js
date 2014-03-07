@@ -57,6 +57,12 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 			"type": "integer",
 			"default": et2_no_init,
 			"description": "Specifies the tab order of a widget when the 'tab' button is used for navigating."
+		},
+		readonly: {
+			name: "readonly",
+			type: "boolean",
+			"default": false,
+			description: "Does NOT allow user to enter data, just displays existing data"
 		}
 	},
 
