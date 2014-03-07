@@ -38,3 +38,9 @@ blockquote[type=cite] {
 	margin-left: 0;
 	color: blue;
 }
+.pageGenTime {
+	display: none;
+}
+#divAppboxHeader {
+	display: none;
+}

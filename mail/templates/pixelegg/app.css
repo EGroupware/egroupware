@@ -495,21 +495,6 @@ input[type=button] {
   -moz-opacity: 1;
   filter: alpha(opacity=100);
 }
-/*
-#divGenTime {
-	background-color:#efefdf;
-	max-height: 10%;
-	position: fixed;
-	bottom: 1px;
-	border: 1px solid red;
-	border-top: 1px solid black;
-	left: 3px;
-	right: 3px;
-	opacity: 1;
-	-moz-opacity:1:
-	filter: Alpha(opacity=100);
-}
-*/
 div.mail-display > div:first-parent > div.first-parent {
   height: 99%;
 }
@@ -1582,6 +1567,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   width: 16px;
 }
 #mail-display .mail_DisplayNone {
+  display: none;
+}
+#divGenTime_mail {
   display: none;
 }
 /**

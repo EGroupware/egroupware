@@ -1617,6 +1617,9 @@ unset($query['actions']);
 			}
 		}
 		unset($actionsenabled['drag_mail']);
+		//error_log(array2string($actionsenabled['view']));
+		unset($actionsenabled['view']['children']['openastext']);//not supported in preview
+		unset($actionsenabled['view']['children']['openashtml']);//not supported in preview
 
 		return $actionsenabled;
 	}
@@ -2751,7 +2754,8 @@ $this->partID = $partID;
 	{
 		// egw_info[flags][css] already include <style> tags
 		$GLOBALS['egw_info']['flags']['css'] = preg_replace('|</?style[^>]*>|i', '', $additionalStyle);
-
+		$GLOBALS['egw_info']['flags']['nofooter']=true;
+		$GLOBALS['egw_info']['flags']['nonavbar']=true;
 		// do NOT include any default CSS
 		egw_framework::includeCSS('mail', 'preview', true, true);
 
