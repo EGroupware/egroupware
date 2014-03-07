@@ -824,7 +824,9 @@ div.message.floating {
 }
 .nextmatch_header > .search {
 	float: left;
-	width: 14%;
+	width: 16%;
+	position: relative;
+	z-index: 1;
 }
 .nextmatch_header > .search > input {
 	width: 75%;
@@ -864,6 +866,8 @@ div.message.floating {
 .nextmatch_header div[id$=favorite_wrapper] {
   margin-top: 6px;
   vertical-align: middle;
+  position: relative;
+  z-index: 1;
 }
 #nm_favorites_popup_filters .filter_id,
 #nm_favorites_popup_filters .filter_value {
