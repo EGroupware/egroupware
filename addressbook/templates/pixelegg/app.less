@@ -91,7 +91,7 @@ div#addressbook-index{
     // ###########################
     div.et2_hbox_right {
         padding: 0px 11px 0px 0px;
-        
+
         width: auto;
         margin-right: 0em;
         margin-top: -5px;
@@ -124,16 +124,16 @@ div#addressbook-index{
 
         // hinzufügen
         button#addressbook-index_add{
-           
+
             .Complete_Button_add_only_plus;
             .dimension_height_m;
             margin-right: 0px;
-            
+
             &:hover {.Complete_Button_add_only_plus_hover;}
             &:active {background-color: @color_positive_action_active !important;}
-            
+
         }
-           
+
 
 
 
@@ -193,37 +193,37 @@ div#addressbook-index{
 .et2_container[id^="infolog-index-addressbook"] {
 
     /*height: auto;*/
-    padding: 1em;
+    /*padding: 1em;*/
     /*min-height: 250px;*/
-       
-    
+
+
 /*ADD Button */
 /*        div.et2_hbox,
         div.et2_box_widget*/
         .et2_hbox_right[id*="_infolog-index-header_right"]{
 
-                
+
                     div.et2_box_widget{
                         /*border: 1px solid rgba(0, 0, 0, 0.15);*/
                         /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
-                        text-shadow: none;                      
+                        text-shadow: none;
                         .dimension_height_l;
                         margin-top: 5px;
                         background-image: none !important;
                         transition: all 0.5s linear;
                         -webkit-transition: all 0.5s linear; /* Safari */
-                        
+
                          &:before {
                             content: "+";
                             font-size: 2em;
-                            color: @egw_color_1; 
+                            color: @egw_color_1;
                             line-height: 0.5em;
                             }
-                            
+
                        /*Text ""hinzufügen" "*/
                        span {display: none;}
 
-                      
+
                       // IMG
                         img {
                             .Complete_Button_Icon_normal;
@@ -231,38 +231,38 @@ div#addressbook-index{
                             margin-left: 0.5em;
                             padding: 0px;
                             margin-top: 0px;
-                            vertical-align: middle;                            
+                            vertical-align: middle;
                             /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
 
                             &:hover{.Complete_Button_Icon_hover ;}
 
                             &:active { .Complete_Button_Icon_active ;}
                         }
-                        
+
                         img:last-child {margin-right: 5px;};
-                      
-                        
-                        
+
+
+
                 /*MouseOver*/
                       &:hover {
-                          .box_shadow_standard_light_hover; 
+                          .box_shadow_standard_light_hover;
                           background-color: @egw_color_2_a !important;
                           .border_radius_button_lefttop;
                           .dimension_height_l;
                           &:before {content: ""; font-size: 1em;padding-left: 5px;}
                           /*Text*/
                           span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0.5em; background: @gray_0;} 
+                         img {.scale; margin: 0.5em; background: @gray_0;}
                       }
-                    }  
+                    }
 
 
-                
-                
+
+
         }
 
         // Scrollarea in Infolog
-        .egwGridView_scrollarea{ 
+        .egwGridView_scrollarea{
             overflow-y: scroll !important;
             overflow-x: hidden !important;
         }
@@ -325,7 +325,7 @@ div#addressbook-index{
         width:100%;
         height:286px;
     td.addressbook_edit_general_right {
-    	widtH: 20%;
+    	width: 20%;
 		vertical-align: top;
 		text-align: center;
 
@@ -342,7 +342,7 @@ div#addressbook-index{
 button[id="addressbook-edit_button[delete]"]{
     /*position: absolute;*/
     right: 0.5em;
-    
+
 }
 
 
@@ -445,7 +445,7 @@ div.addressbook_edit_general_picture {
             .bordered(@gray_100, @gray_100, @gray_100, @gray_100);
             left: 30%;
             top: 289px;
-            
+
         }
 
 
@@ -562,10 +562,10 @@ div#addressbook-search{
         table.et2_grid {
             margin-left: -7px;
             tr:nth-child(even) {background: @color_even;}
-            tr:nth-child(odd) {background: @color_odd;} 
+            tr:nth-child(odd) {background: @color_odd;}
             td {padding: 3px 0px;}
         }
-        
+
         table.et2_grid td.telNumbers{
             width: 155px;
             input { width: 140px !important; }
@@ -602,7 +602,7 @@ div#addressbook-search{
         table.et2_grid {
             margin-left: -7px;
             tr:nth-child(even) {background: @color_even;}
-            tr:nth-child(odd) {background: @color_odd;}   
+            tr:nth-child(odd) {background: @color_odd;}
             td {padding: 3px 0px;}
         }
 
@@ -649,41 +649,41 @@ div#addressbook-search{
         //		background-color: red !important;
         padding-top: 1em;
     }
-    
+
     td.addressbook_edit_general_left {
-        
-        
+
+
         // table Addressfield
         table.et2_grid{
-           
+
             margin-left: 2px;
 /*            tr:nth-child(even) {background: @color-even;}
             tr:nth-child(odd) {background:  @color-odd;} */
             td {padding: 5px 0px 5px 3px;}
-            
-            
+
+
             // Edit Name
             div#addressbook-edit_addressbook-edit-name{
-                
+
                  table.et2_grid{
-                     
+
                 background-color: @gray_30;
                 .bordered (@gray_30,@gray_30,@gray_30,@gray_30);
                 .rounded (5px);
-                     
+
                         margin-left: 2px;
                         border-top: 1px solid @gray_30 !important;
                         /*tr:nth-child(even) {background: @color_even;}*/
-                        /*tr:nth-child(odd) {background: @color_odd;}*/ 
+                        /*tr:nth-child(odd) {background: @color_odd;}*/
                         td {padding: 5px 0px 5px 3px;}
                  }
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
 }
 
 
@@ -747,19 +747,19 @@ div#addressbook-edit_addressbook-edit-cats {overflow: scroll;}
  /*################## Tab 4 Details ###############################*/
 
  #addressbook-edit_addressbook-edit-details {
-     
+
                       table.et2_grid{
                         margin-left: 2px;
                         border-top: 1px solid @gray_30 !important;
                         /*tr:nth-child(even) {background: @color_even;}*/
-                        /*tr:nth-child(odd) {background: @color_odd;}*/ 
+                        /*tr:nth-child(odd) {background: @color_odd;}*/
                         td {padding: 5px 0px 5px 3px;}
                  }
-     
-     
+
+
      // Kategorie List
      .et2_selectbox .ui-multiselect-checkboxes li {text-indent: -17px;}
-     
+
  }
 
  /*################## Tab 5  Verknüpfungen ###############################*/
@@ -791,22 +791,22 @@ div#addressbook-edit_addressbook-edit-links {
 
     /*neue verknüpfung erstellen - div*/
     div#addressbook-edit_link_to {
-       
+
         width: 550px;
-        
-         // Comment                            
+
+         // Comment
         input {width: 86%;}
-        
-        
+
+
         // Button
         button {
-        .Complete_Button_normal; 
+        .Complete_Button_normal;
         height: 3.1ex;
         background-color: @gray_10;
         background-image[src$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
-    
-        &:hover{ 
-            /*background-color: @gray_30;*/ 
+
+        &:hover{
+            /*background-color: @gray_30;*/
             text-shadow: 0px 0px;
             color: @gray_0;
             .box_shadow_standard_light_hover;
@@ -815,28 +815,28 @@ div#addressbook-edit_addressbook-edit-links {
            }
 
         &:active {.box_shadow_standard_light_active !important;}
-            
+
         }
-        
-        div#addressbook-edit_link_to_link_entry{ 
+
+        div#addressbook-edit_link_to_link_entry{
             margin-top: 11px;
             width: 100%;
 
-        
+
         // APP Selector
         /*div.et2_link_entry {*/
-            
+
             select {width: 39%;}
-        
+
         // Input Field
             input.ui-autocomplete-input {
                                     width: 56%;
                                     padding-bottom: 1px;
                                     }
 
-                                    
-            /*}*/                        
-                                    
+
+            /*}*/
+
        }
 
         // 2. Icon
@@ -885,18 +885,18 @@ div#addressbook-edit_addressbook-edit-links {
 // Extra
 #addressbook-edit_addressbook-edit-custom,
 #addressbook-search_addressbook-edit-custom{
-    
+
     max-width: 560px;
-    
+
     .th{ height: 20px;}
     tbody{
         display: table-header-group;
         vertical-align: top;
     }
-    
+
     // Table Customfields
     table#addressbook-edit_custom_fields{max-width: 550px;}
-    
+
 }
  /*################## Tab 8 Extra Privat###############################*/
 /*seems to be ok*/
@@ -1021,10 +1021,11 @@ div.addressbook.edit.general{
     font-weight: bold;
     width: 100%;
 }
-.photo img, .iphoto img {
+.iphoto img {
     width: 60px;
 }
 .photo img {
+	height: auto;
 }
 
 // Dialog Upload photo

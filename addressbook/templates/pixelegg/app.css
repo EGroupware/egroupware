@@ -12,142 +12,96 @@
  * @version $Id$
  */
 /**
- * Give space to both contact view & infolog list
+ * CRM view with contact data in sidebox
  */
-#addressbook-index {
-  height: 100%;
+.addressbook_sidebox_name {
+  font-weight: bold;
 }
-#addressbook-edit {
-  height: 390px;
-  min-height: 390px;
+.addressbook_sidebox_name,
+.addressbook_sidebox_org {
+  font-size: 130%;
+  padding: 2px 0 2px 0;
 }
-.et2_container[id^="infolog-index-addressbook"] {
-  min-height: 250px;
+td.addressbook_sidebox_header {
+  font-weight: bold;
+  height: 20px;
+  vertical-align: bottom;
 }
-/* Give enough (static) width to edit dialog tabs, or it will auto-size and flex */
-#addressbook-edit .et2_tabbox {
-  min-width: 535px;
+div#addressbook-view.et2_container {
+  height: 0;
 }
-.cursorHand {
-  cursor: hand;
+td.addressbook_sidebox_toolbar {
+  vertical-align: bottom;
+  height: 32px;
 }
-.countrySelect select {
-  width: 150px;
-}
-.custom_country input {
+div#divGenTime_addressbook {
   display: none;
 }
-.contactid:before {
-  content: "#";
+/**
+ * new addressbook.edit
+ */
+div#addressbook-edit.et2_container {
+  width: 842px;
 }
-.emailCol div {
-  width: 100%;
+div.addressbook_edit_general_picture {
+  position: relative;
 }
-.fixedHeight,
-.telNumbers {
-  height: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.telNumbers {
-  white-space: nowrap;
-}
-.leftPad5 {
-  padding-left: 5px;
-}
-.bold {
-  font-weight: bold;
-}
-.fileas select,
-.fileas,
-.owner select,
-.owner {
-  width: 100%;
-  font-weight: bold;
-}
-.photo img,
-.iphoto img {
-  width: 60px;
-}
-.photo img {
-  cursor: hand;
+div.addressbook_edit_general_picture img {
+  position: absolute;
+  width: auto;
+  max-width: 80px;
+  height: 105px;
+  left: 2px;
 }
 .uploadphoto {
   position: absolute;
-  top: 168px;
-  left: 48px;
+  top: 70px;
+  left: 0;
   display: none;
   border: 2px solid black;
   background-color: #ffffff;
   padding: 4px;
-}
-.checkAllArrow {
-  padding-right: 5px;
+  z-index: 1;
 }
 .typeIcon {
   height: 16px;
   width: 16px;
 }
-.editphones,
 .editname {
   position: absolute;
-  top: 10%;
-  left: 30%;
   display: none;
   border: 2px solid black;
   background-color: #ffffff;
   padding: 4px;
+  top: 55px;
+  left: 102px;
+  z-index: 1;
 }
-.editname {
-  top: 97px;
-  left: 173px;
+.custom_country {
+  display: none;
 }
-.windowheader {
-  background-image: url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
-  background-repeat: repeat-x;
-  height: 20px;
-  border-spacing: 0px;
-  border-collapse: collapse;
-  border-bottom: #9c9c9c 1px solid;
+tr.dialogHeader td,
+tr.dialogHeader2 td,
+tr.dialogHeader3 td,
+tr.dialogHeader4 td,
+tr.dialogOperators td,
+.dialogFooterToolbar {
+  padding: 5px 0 5px 0;
+  vertical-align: middle;
 }
-fieldset.phoneGroup {
-  margin-top: 12px;
-  font-size: 110%;
-  height: 140px;
-  border: solid black 2px;
-  margin-bottom: 0px;
+input.et2_radiobox {
+  position: relative;
+  left: -16px;
 }
-.phoneGroup table {
-  height: 122px;
+#addressbook-edit_tel_prefer-tel_work,
+#addressbook-edit_tel_prefer-tel_cell {
+  left: -13px;
 }
-fieldset.emailGroup {
-  margin-top: 10px;
-  font-size: 110%;
-  height: 112px;
-  border: solid black 2px;
-  margin-bottom: 0px;
-}
-.emailGroup table {
-  height: 87px;
-}
-.space {
-  width: 80px;
-}
-.noWrap {
-  white-space: nowrap;
-}
-.customfields td {
-  white-space: nowrap;
-  line-height: 12px;
-}
-.image16 img {
-  height: 16px;
-}
-/* changes from pixelegg 11/12/13 - upload foto in right column */
-#addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
-  widtH: 20%;
-  vertical-align: top;
-  text-align: center;
+/**
+ * Index page
+ */
+img.iphoto {
+  width: 100%;
 }
 @media all {
   /* #############################################################################
@@ -196,6 +150,7 @@ fieldset.emailGroup {
     cursor: pointer;
     height: 24px;
     margin-top: 0;
+    margin-left: 2px;
     -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
     -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -389,7 +344,7 @@ fieldset.emailGroup {
   /*Infolog*/
   .et2_container[id^="infolog-index-addressbook"] {
     /*height: auto;*/
-    padding: 1em;
+    /*padding: 1em;*/
     /*min-height: 250px;*/
     /*ADD Button */
     /*        div.et2_hbox,
@@ -496,7 +451,7 @@ fieldset.emailGroup {
   }
   /*###########################################
 #                                           #
-#       dialog-header                       #
+#       dialogHeader                       #
 #############################################
 #                                           #
 #                                           #
@@ -517,11 +472,11 @@ fieldset.emailGroup {
     height: 286px;
   }
   #addressbook-edit_addressbook-edit-general table.addressbook_edit_general td.addressbook_edit_general_right {
-    widtH: 20%;
+    width: 20%;
     vertical-align: top;
     text-align: center;
   }
-  #addressbook-edit tr.dialog-footer-toolbar label.et2_label {
+  #addressbook-edit tr.dialogFooterToolbar label.et2_label {
     top: 0px !important;
   }
   button[id="addressbook-edit_button[delete]"] {
@@ -1211,9 +1166,11 @@ fieldset.emailGroup {
     font-weight: bold;
     width: 100%;
   }
-  .photo img,
   .iphoto img {
     width: 60px;
+  }
+  .photo img {
+    height: auto;
   }
   .uploadphoto {
     background-color: #cdcdcd;
