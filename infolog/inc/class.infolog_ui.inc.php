@@ -1544,8 +1544,6 @@ class infolog_ui
 			$action_id = $content['action_id']; unset($content['action_id']);
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
-			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
-			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
 			list($button) = @each($content['button']);
 			if (!$button && $action) $button = $action;	// action selectbox
@@ -1675,7 +1673,6 @@ class infolog_ui
 								'info_from'    => $content['info_from'],
 								'info_type'    => $content['info_type'],
 								'info_owner'   => $content['info_owner'],
-								'info_custom_from' => $content['info_custom_from'],
 							);
 							//echo "<p>updating info_link_id: ".print_r($to_write,true)."</p>\n";
 							$this->bo->write($to_write,False,true,true,true);	// last true = no notifications, as no real change
@@ -1958,7 +1955,6 @@ class infolog_ui
 		// ToDo: use the old status before the delete
 		if ($undelete) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 
-		$content['hide_from_css'] = $content['info_custom_from'] ? '' : 'hideFrom';
 
 		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
 		{
@@ -2265,7 +2261,6 @@ class infolog_ui
 			'info_price' => 'price',
 			'info_percent' => 'completed',
 			'info_datecompleted' => 'date completed',
-			'info_custom_from' => 'from',
 			'info_replanned_time' => 're-planned time',
 			'info_cc' => 'CC',
 		);
