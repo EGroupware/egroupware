@@ -1,3 +1,11 @@
+egroupware (1.8.002.20140307) hardy; urgency=low
+
+  * CalDAV/Calendar: sending now iMip response to external organizer when initialy accepting invitation via CalDAV client (before only status changes where sent)
+  * CalDAV/CardDAV: entries with urls containing url-encoded chars, eg. from Google calendar, were not send to clients (missing urldecoding in multiget report)
+  * WebDAV/Filemanager: reject to save files by clients using chunked transfer-encoding on servers which does not support that (eg. OS X Finder with server using FastCGI PHP)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 07 Mar 2014 13:20:33 +0100
+
 egroupware (1.8.006.20140217) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
