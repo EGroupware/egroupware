@@ -219,14 +219,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_open: function(_action, _senders, _mode) {
 		//console.log("mail_open",_action, _senders);
-		if (typeof _senders == 'undefined')
+		if (typeof _senders == 'undefined' || _senders.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _senders = [];
 				_senders.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _senders == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _senders == 'undefined' || _senders.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -297,7 +297,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_compose: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			//console.log(this.et2.getArrayMgr('content').data,this.et2.getArrayMgr("content").getEntry('mail_id'));
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -305,7 +305,7 @@ app.classes.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1030,7 +1030,7 @@ app.classes.mail = AppJS.extend(
 	mail_delete: function(_action,_elems)
 	{
 		var calledFromPopup = false;
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			calledFromPopup = true;
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -1038,7 +1038,7 @@ app.classes.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1303,7 +1303,7 @@ app.classes.mail = AppJS.extend(
 			var _foldernode = ftree.getSelectedNode();
 			_folder = _foldernode.id;
 		}
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined'|| _elems.length==0)
 		{
 			do_nmactions = false;//indicates that this action is probably a popup?
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -1311,7 +1311,7 @@ app.classes.mail = AppJS.extend(
 				msg = {};
 				msg['msg'] = [this.et2.getArrayMgr('content').getEntry('mail_id') || ''];
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1451,14 +1451,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_header: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined'|| _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1482,14 +1482,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_mailsource: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1514,14 +1514,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_save: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1879,14 +1879,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_save2fm: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1920,14 +1920,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_infolog: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
@@ -1968,14 +1968,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_tracker: function(_action, _elems)
 	{
-		if (typeof _elems == 'undefined')
+		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
