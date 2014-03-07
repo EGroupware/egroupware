@@ -17,13 +17,6 @@
 app.classes.addressbook = AppJS.extend(
 {
 	appname: 'addressbook',
-	/**
-	 * et2 widget container
-	 */
-	et2: null,
-	/**
-	 * path widget
-	 */
 
 	/**
 	 * Constructor
@@ -51,31 +44,30 @@ app.classes.addressbook = AppJS.extend(
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
 	 *
-	 * @param et2 etemplate2 Newly ready object
+	 * @param {etemplate2} et2 newly ready object
+	 * @param {string} name
 	 */
-	et2_ready: function(et2)
+	et2_ready: function(et2, name)
 	{
 		// call parent
 		this._super.apply(this, arguments);
 
-		if (typeof et2.templates['addressbook.edit'] != 'undefined') // addressbook_ui.edit
+		switch (name)
 		{
-			var content = this.et2.getArrayMgr('content').data;
-			if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
-			{
-				this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
-				this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
-
-				// Instanciate infolog JS too - wrong app, so it won't be done automatically
-				if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
+			case 'addressbook.edit':
+				var content = this.et2.getArrayMgr('content').data;
+				if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
 				{
-					window.app.infolog = new window.app.classes.infolog();
+					this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
+					this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
+
+					// Instanciate infolog JS too - wrong app, so it won't be done automatically
+					if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
+					{
+						window.app.infolog = new window.app.classes.infolog();
+					}
 				}
-			}
-			else // addressbook_ui.search
-			{
-				//Any changes specificaly on AB search popup implement here
-			}
+				break;
 		}
 
 		jQuery('select[id*="adr_one_countrycode"]').each(function() {
@@ -84,6 +76,40 @@ app.classes.addressbook = AppJS.extend(
 		jQuery('select[id*="adr_two_countrycode"]').each(function() {
 			app.addressbook.show_custom_country(this);
 		});
+	},
+
+	/**
+	 * Run an action from CRM view toolbar
+	 *
+	 * @param {object} _action
+	 */
+	view_actions: function(_action)
+	{
+		// no idea why this.et2 is sometimes not initialised
+		if (!this.et2 && typeof etemplate2 == 'object')
+		{
+			var template = etemplate2.getByApplication('addressbook.view')[0];
+			this.et2 = template.widgetContainer;
+		}
+		var template = this.et2._inst;
+		var id = this.et2.getArrayMgr('content').data.id;
+
+		switch(_action.id)
+		{
+			case 'edit':
+				this.egw.open(id, 'addressbook', 'edit');
+				break;
+			case 'copy':
+				this.egw.open(id, 'addressbook', 'edit', { makecp: 1});
+				break;
+			case 'cancel':
+			default:
+				this.egw.open(null, 'addressbook', 'list', null, '_self', 'addressbook');
+				break;
+			//default:
+				template.submit(_action.id);
+				break;
+		}
 	},
 
 	/**
