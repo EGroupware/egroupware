@@ -159,7 +159,7 @@
 					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row disabled="1">
-					<template id="header_left"/>
+					<template id="dates"/>
 					<template id="header_right"/>
 				</row>
 				<row>

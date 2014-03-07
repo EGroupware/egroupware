@@ -84,7 +84,7 @@ app.classes.infolog = AppJS.extend(
 					nm.set_header_left('infolog.index.dates');
 					break;
 				default:
-					nm.set_header_left('infolog.index.header_left');
+					nm.set_header_left();
 					break;
 			}
 		}
