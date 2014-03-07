@@ -525,7 +525,7 @@ class mail_compose
 		if ($content['is_plain'] && $content['mimeType']=='html')
 		{
 			// the possible font span should only be applied on first load or on switch plain->html
-			$isFirstLoad = true;
+			$isFirstLoad = "switchedplaintohtml";
 			//error_log(__METHOD__.__LINE__.$content['mail_plaintext']);
 			$suppressSigOnTop = true;
 			$content['mail_plaintext'] = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$content['mail_plaintext']);
@@ -1106,7 +1106,7 @@ class mail_compose
 		{
 			$disableRuler = true;
 		}
-		$font_span ='';
+		$font_span = $font_part = '';
 		if($content['mimeType'] == 'html' /*&& trim($content['body'])==''*/) {
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
@@ -1160,7 +1160,7 @@ class mail_compose
 		}
 		else
 		{
-			$content['body'] = ($font_span?$font_span:/*($content['mimeType'] == 'html'?'&nbsp;':'')*/'').$content['body'];
+			$content['body'] = ($font_span?($isFirstLoad == "switchedplaintohtml"?$font_part:$font_span):/*($content['mimeType'] == 'html'?'&nbsp;':'')*/'').$content['body'].($isFirstLoad == "switchedplaintohtml"?"</span>":"");
 		}
 		//error_log(__METHOD__.__LINE__.$content['body']);
 
