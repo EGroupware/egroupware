@@ -2088,7 +2088,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_move: function(_action,_senders,_target) {
 		//console.log(_action,_senders,_target);
-		//egw.preference('prefaskformove','mail');
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');

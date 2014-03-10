@@ -425,6 +425,7 @@ class mail_hooks
 				'name'   => 'prefaskformove',
 				'values' => $no_yes_copy,
 				'xmlrpc' => True,
+				'default'=> 2,
 				'admin'  => False,
 				'forced' => '1',
 			),

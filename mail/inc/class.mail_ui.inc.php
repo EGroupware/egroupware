@@ -533,6 +533,25 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.edit_acl',
 			),
 		);
+		// the preference prefaskformove controls actually if there is a popup on target or not
+		// if there are multiple options there is a popup on target, 0 for prefaskformove means
+		// that only move is available; 1 stands for move and cancel; 2 (should be the default if
+		// not set); so we are assuming this, when not set
+		if (isset($this->mail_bo->mailPreferences['prefaskformove']))
+		{
+			switch ($this->mail_bo->mailPreferences['prefaskformove'])
+			{
+				case 0:
+					unset($tree_actions['drop_copy_mail']);
+					unset($tree_actions['drop_cancel']);
+					break;
+				case 1:
+					unset($tree_actions['drop_copy_mail']);
+					break;
+				default:
+					// everything is fine
+			}
+		}
 		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
 		if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
 		{
