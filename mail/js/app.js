@@ -427,68 +427,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Compose, reply or forward a message
-	 *
-	 * @param _url url to open
-	 * @param forwardByCompose boolean to decide about the method
-	 */
-	mail_openComposeWindow: function(_url,forwardByCompose,_elems) {
-		var Check=true;
-		var alreadyAsked=false;
-		var _messageList;
-		var sMessageList='';
-		// check if mailgrid exists, before accessing it
-		var cbAllVisibleMessages;
-		var cbAllMessages = false;
-		if (typeof forwardByCompose == 'undefined') forwardByCompose = true;
-		if (forwardByCompose == false)
-		{
-			cbAllMessages = cbAllVisibleMessages = Check = false;
-		}
-		if (typeof this.prefAskForMultipleForward == 'undefined') this.prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
-		if (cbAllMessages == true || cbAllVisibleMessages == true)
-		{
-			Check = confirm(this.egw.lang('multiple forward of all mesages'));
-			alreadyAsked=true;
-		}
-
-		if ((cbAllMessages == true || cbAllVisibleMessages == true ) && Check == true)
-		{
-			//_messageList = 'all'; // all is not supported by now, only visibly selected messages are chosen
-			_messageList = this.mail_getFormData(_elems);
-		}
-		else
-		{
-			if (Check == true) _messageList = this.mail_getFormData(_elems);
-		}
-		if (typeof _messageList != 'undefined')
-		{
-			for (var i in _messageList['msg']) {
-				//alert('eigenschaft:'+_messageList['msg'][i]);
-				sMessageList=sMessageList+_messageList['msg'][i]+',';
-				//sMessageList.concat(',');
-			}
-		}
-		if (this.prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
-		{
-			var askme = this.egw.lang('multipleforward');
-			//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
-			Check = confirm(askme);
-		}
-		//alert("Check:"+Check+" MessageList:"+sMessageList+"#");
-		if (Check != true) sMessageList=''; // deny the appending off selected messages to new compose -> reset the sMessageList
-		if (Check == true || sMessageList=='')
-		{
-			if (sMessageList.length >0) {
-				sMessageList= 'AsForward&from=forward&mode=asattach&reply_id='+sMessageList.substring(0,sMessageList.length-1);
-			}
-			//alert(sMessageList);
-			egw_openWindowCentered(window.egw_webserverUrl+'/index.php?'+_url+sMessageList,'compose',870,egw_getWindowOuterHeight());
-		}
-		//ToDo: reset message selection
-	},
-
-	/**
 	 * mail_disablePreviewArea - implementation of the disablePreviewArea action
 	 *
 	 * @param _value
@@ -2140,6 +2078,7 @@ app.classes.mail = AppJS.extend(
 		//console.log(action,_senders);
 		return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>");
 	},
+
 	/**
 	 * mail_move - implementation of the move action from drag n drop
 	 *
@@ -2149,6 +2088,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_move: function(_action,_senders,_target) {
 		//console.log(_action,_senders,_target);
+		//egw.preference('prefaskformove','mail');
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
@@ -2160,6 +2100,7 @@ app.classes.mail = AppJS.extend(
 		this.mail_setRowClass(_senders,'deleted');
 		// Server response contains refresh
 	},
+
 	/**
 	 * mail_copy - implementation of the copy action from drag n drop
 	 *
@@ -2404,39 +2345,6 @@ app.classes.mail = AppJS.extend(
 	saveAsDraftAndPrint: function(_egw, _widget, _window)
 	{
 		this.et2_obj.submit();
-	},
-
-	signature_open: function(_egw, _widget)
-	{
-		var id = _widget[0].id.replace(/row_/,'');
-		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
-		console.log(_egw, _widget,siggrid,id);
-	},
-
-	signature_delete: function(_egw, _widget)
-	{
-		var id = _widget[0].id.replace(/row_/,'');
-		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
-		console.log(_egw, _widget,siggrid,id);
-		egw.json('mail.mail_signatures.ajax_deleteSignature',[siggrid.row_id])
-			.sendRequest();
-	},
-
-	profile_open: function(_egw, _widget)
-	{
-		var id = _widget[0].id.replace(/row_/,'');
-		var accgrid = this.et2.getArrayMgr("content").getEntry('acc')[id];
-		console.log(_egw, _widget,accgrid,id);
-	},
-
-	profile_delete: function(_egw, _widget)
-	{
-		var id = _widget[0].id.replace(/row_/,'');
-		var accgrid = this.et2.getArrayMgr("content").getEntry('acc')[id];
-		console.log(_egw, _widget,accgrid,id);
-		egw.json('mail.mail_uipreferences.ajax_deleteMailProfile',[accgrid.row_id])
-			.sendRequest();
-
 	},
 
 	/**

@@ -428,6 +428,8 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '1',
 			),
+/*
+			// option requested by customer, removed for the new client
 			'prefaskformultipleforward' => array(
 				'type'   => 'select',
 				'label'  => 'Confirm attach message',
@@ -438,6 +440,7 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '1',
 			),
+*/
 /*
 			'mainscreen_showmail' => array(
 				'type'   => 'select',
