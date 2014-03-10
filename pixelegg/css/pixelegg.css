@@ -5268,6 +5268,7 @@ table.dialog-main-view {
   /* IE6-9 */
   color: #000000;
   height: 40px;
+  /*img {.dimension_height_s;}*/
 }
 .dialogHeader table.et2_grid {
   border-top: none;
@@ -5284,9 +5285,6 @@ table.dialog-main-view {
 }
 .dialogHeader table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
   float: left;
-}
-.dialogHeader img {
-  height: 16px !important;
 }
 .dialogHeader input.et2_textbox {
   font-size: 1.3em;
