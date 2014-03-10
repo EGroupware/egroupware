@@ -27,6 +27,8 @@ div#divGenTime_addressbook {
 div#addressbook_view_sidebox img.photo {
 	width: 68px;
 	padding-right: 3px;
+	height: auto;
+	vertical-align: bottom;
 }
 
 /**
