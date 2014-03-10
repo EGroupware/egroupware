@@ -83,8 +83,8 @@
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid height="245" width="100%">
 			<columns>
-					<column width="400"/>
-					<column width="445"/>
+					<column width="45%"/>
+					<column width="54%"/>
 			</columns>
 			<rows>
 				<row height="20" class="th">
@@ -94,35 +94,35 @@
 				<row>
 					<grid>
 						<columns>
-							<column/>
-							<column/>
+							<column width="56"/>
+							<column width="300"/>
 						</columns>
 						<rows>
 							<row>
 								<description value="CC"/>
-								<grid width="100%" border="0">
+								<grid  border="0"  class="et2_fullWidth">
 									<columns>
 										<column/>
 										<column width="16"/>
 									</columns>
 									<rows>
 										<row>
-											<textbox id="info_cc" maxlength="254" class="inputFullWidth"/>
+											<textbox id="info_cc" maxlength="254" class="et2_fullWidth inputFullWidth"/>
 											<buttononly label="Add from Addressbook" onclick="return app.infolog.add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
 										</row>
 										<row class="hiddenRow">
-											<link-entry blur="Search" id="ab" options="addressbook-email" span="all"/>
+											<link-entry blur="Search" id="ab" options="addressbook-email" span="all" class="et2_fullWidth"/>
 										</row>
 									</rows>
 								</grid>
 							</row>
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
-								<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" account_type="both" class="responsible"/>
+								<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" account_type="both" class="infolog_responsible"/>
 							</row>
 							<row class="row" disabled="1">
 								<description value="Confirm" for="info_confirm"/>
-								<menulist>
+								<menulist class="et2_fullWidth">
 									<menupopup statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both" id="info_confirm"/>
 								</menulist>
 							</row>
@@ -136,36 +136,36 @@
 						<rows>
 							<row>
 								<description value="Category" for="info_cat"/>
-								<menulist>
+								<menulist class="et2_fullWidth">
 									<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
 								</menulist>
 							</row>
 							<row >
 								<description value="Parent" font_style="1"/>
-								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="noWrap infolog_searchParent"/>
+								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth noWrap infolog_searchParent"/>
 							</row>
 							<row class="row">
 								<description value="Priority" for="info_priority"/>
-								<menulist>
+								<menulist class="et2_fullWidth">
 									<menupopup statustext="select a priority for this task" id="info_priority"/>
 								</menulist>
 							</row>
 							<row>
 								<description value="Date completed" for="info_datecompleted"/>
-								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))" class="et2_fullWidth"/>
 							</row>
 							<row class="row">
 								<description value="Location" for="info_location"/>
-								<textbox id="info_location" size="60" maxlength="255"/>
+								<textbox id="info_location" size="60" maxlength="255" class="et2_fullWidth"/>
 							</row>
 							<row>
 								<description value="Contact" for="info_from"/>
-								<textbox blur="@blur_title" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
+								<textbox blur="@blur_title" class="et2_fullWidth" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
 							</row>
 							<row>
 								<description value="Phone/Email" for="info_addr"/>
 								<hbox>
-									<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="_inputFullWidth"/>
+									<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="et2_fullWidth _inputFullWidth"/>
 								</hbox>
 							</row>	
 							<row>
@@ -182,9 +182,8 @@
 		<grid width="100%">
 			<columns>
 				<column width="78"/>
-				<column width="122"/>
-				<column width="180"/>
-				<column width="78"/>
+				<column width="302"/>
+				<column width="80"/>
 				<column width="122"/>
 				<column width="30"/>
 				<column width="50"/>
@@ -193,29 +192,23 @@
 			<rows>
 				<row>
 					<description value="Title" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="5" tabindex="1"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"/>
 					<appicon src="infolog" for="info_number"/>
 					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
 				</row>
 				<row>
 					<description value="Type" for="info_type"/>
-					<hbox options="0,0" class="et2_fullWidth">
-						<menulist>
-							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
-						</menulist>
-					</hbox>
-					<description/>
+					<menulist class="et2_fullWidth">
+						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1" />
+					</menulist>
 					<description value="Contact"/>
-					<link-entry id="info_contact" span="3"/>
+					<link-entry id="info_contact" span="all"/>
 				</row>
 				<row>
 					<description value="Startdate" for="info_startdate"/>
-					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate"  class="et2_fullWidth"/>
-					<description/>
+					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
 					<description value="Enddate" for="info_enddate"/>
-					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth"/>
-					<description span="2"/>
-					
+					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="all"/>
 				</row>
 				<row height="250">
 					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
@@ -245,30 +238,26 @@
 					<menulist class="et2_fullWidth">
 						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
-					<description/>
 					<description value="Completed" for="info_percent"/>
-					<menulist class="et2_fullWidth">
+					<menulist class="et2_fullWidth" span="all">
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
-					<description span="all"/>
 				</row>
 				<row disabled="!@info_owner">
 					<description value="Owner"/>
-					<vbox options="0,0">
-						<menulist>
+					<hbox>
+						<menulist class="et2_nowrap">
 							<menupopup type="select-account" id="info_owner" readonly="true"/>
 						</menulist>
-						<date-time id="info_created" readonly="true"/>
-					</vbox>
-					<description/>
+						<date-time id="info_created" readonly="true" class="et2_nowrap"/>
+					</hbox>
 					<description value="Last modified"/>
-					<vbox options="0">
+					<hbox span="all">
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
 						<date-time id="info_datemodified" readonly="true"/>
-					</vbox>
-					<description/>
+					</hbox>
 				</row>
 				<row>
 					<hbox span="5">
