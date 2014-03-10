@@ -25,7 +25,7 @@ egw_LAB.wait(function() {
 	{
 		var data_slide_out = egw_script.getAttribute('data-slide-out');
 		mouseHandler = data_slide_out == 'mouseover'?'mouseover':'click';
-	}	
+	}
 	var extra_icons_show = 	jQuery('#extra_icons_show');
 	var menu1Container = jQuery('#menu1Container')
 			.width(180)
@@ -36,7 +36,7 @@ egw_LAB.wait(function() {
 	extra_icons_show.on(mouseHandler,function (event){
 			var extraIcon = event;
 			$j('html').on(mouseHandler,function(event) {
-				if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target) 
+				if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target)
 				{
 					menu1Container.slideUp();
 					$j(this).unbind(event);
@@ -52,7 +52,7 @@ egw_LAB.wait(function() {
 				direction: "left"
 			};
 			$j('html').on('click',function(event) {
-				if (event.target !== m2showIcon.target) 
+				if (event.target !== m2showIcon.target)
 				{
 					menu2Container.toggle('slide',options);
 					$j(this).unbind(event);
@@ -73,7 +73,7 @@ egw_LAB.wait(function() {
 				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
 			//console.log('setting height of '+appbox_height);
 			$j('#divAppbox').css('min-height', appbox_height+'px');
-			$j('.et2_container').height(appbox_height-7);
+			$j('.et2_container').last().height(appbox_height-7);
 		});
 		$j(window).resize();
 		$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
