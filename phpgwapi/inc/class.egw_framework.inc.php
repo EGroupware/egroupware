@@ -332,6 +332,14 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Clear all extra data
+	 */
+	public static function clear_extra()
+	{
+		self::$extra = array();
+	}
+
+	/**
 	 * Allow eg. ajax to query content set via refresh_opener or window_close
 	 *
 	 * @return array content of egw_framework::$extra

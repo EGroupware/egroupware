@@ -169,6 +169,7 @@ class etemplate_new extends etemplate_widget_template
 		{
 			//error_log("Ajax " . __LINE__);
 			self::$response->generic('et2_load', $load_array+egw_framework::get_extra());
+			egw_framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 		}
 		else	// first call
 		{
