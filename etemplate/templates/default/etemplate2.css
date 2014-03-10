@@ -704,6 +704,9 @@ ul.et2_vfs {
 .et2_required, [required] {
   background-color: #ffffd0;
 }
+td.et2_required {
+	background-color: inherit;
+}
 .invalid {
   border: 1px solid #a6261d;
   background-color: #faecec;

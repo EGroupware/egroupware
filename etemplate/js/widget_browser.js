@@ -40,7 +40,7 @@ function widget_browser(list_div, widget_div)
 
 	// Create and popuplate the widget list
 	this._init_list();
-	
+
 }
 
 /**
@@ -67,6 +67,7 @@ widget_browser.prototype._init_list = function()
 	for(var i = 0; i < types.length; i++)
 	{
 		list.append('<li>'+types[i]+'</li>');
+		this.dump_attributes(types[i]);
 	}
 
 	// Build attribute table
@@ -83,9 +84,41 @@ widget_browser.prototype._init_list = function()
 	);
 };
 
+widget_browser.prototype.dump_attributes = function(_type)
+{
+	console.log(_type);
+
+	try {
+		var attrs = {};
+		window.wb_widget = this.widget = et2_createWidget(_type, attrs, this.et2.widgetContainer);
+		this.widget.loadingFinished();
+
+		if(this.widget !== null && this.widget.attributes)
+		{
+			for(var attr in this.widget.attributes)
+			{
+				console.log(attr, this.widget.attributes[attr]);
+			}
+		}
+	}
+	catch(e) {
+		console.log('*** '+_type+' error '+(typeof e.message != 'undefined' ? e.message : e));
+	}
+	try {
+		if (this.widget)
+		{
+			this.widget.destroy();
+			delete this.widget;
+		}
+	}
+	catch(e) {
+
+	}
+};
+
 /**
  * User selected a widget from the list
- * 
+ *
  * Create an instance of the widget, get its attributes, and display it.
  */
 widget_browser.prototype.select_widget = function(e,f)
