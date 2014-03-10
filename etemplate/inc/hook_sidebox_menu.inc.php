@@ -30,6 +30,10 @@
 	$docs = $GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/doc/';
 	$file = Array(
 		array(
+			'text'   => 'eTemplate2 Reference',
+			'link'   => egw::link('/index.php','menuaction=etemplate.etemplate_et2_widgets.index', 'etemplate'),
+		),
+		array(
 			'text'   => 'eTemplate Tutorial',
 			'link'   => $docs.'etemplate.html',
 			'target' => 'docs'
@@ -38,11 +42,6 @@
 			'text'   => 'eTemplate Reference',
 			'link'   => $docs.'reference.html',
 			'target' => 'docs'
-		),
-		array(
-			'text'   => 'eTemplate2 Reference',
-			'link'   => egw_framework::link('/index.php','menuaction=etemplate.etemplate_et2_widgets.index'),
-			'target' => '_blank'
 		),
 		array(
 			'text'   => 'eGroupWare '.lang('Documentation'),
