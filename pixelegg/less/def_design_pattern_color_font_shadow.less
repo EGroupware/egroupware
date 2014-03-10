@@ -139,7 +139,7 @@
 /*Listenausgabe*/   
 
 @color_even : @gray_0;
-@color_odd : darken(@gray_0, 2%); 
+@color_odd : darken(@gray_0, 5%); 
 
 
 // aktiverte Zeilen in allen APP mit Listenausgabe
@@ -186,7 +186,7 @@
 
 
 // cal Heute // in Sidebar
-.background_table_cal_head { background-color : @egw_color_1_e;}
+.background_table_cal_head { background-color : @egw_color_1_a;}
 
 @color_progress : @egw_color_1_e;
 
@@ -194,9 +194,7 @@
 // Schriften
 
 .basefontfamily{
-    font-family: Verdana, Helvetica, Sans-Serif;
-/*    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;*/
-    //	 font-size: 16px;
+    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 
 }
 
@@ -426,7 +424,7 @@
 
 
   /*Icon Buttons   ##################  */
-  
+  @mass_xxs : 8px;
   @mass_xs : 12px;
   @mass_s  : 16px;
   @mass_sm  : 20px;
@@ -449,6 +447,7 @@
 .dimension_width_height_sm{width: @mass_sm; height: @mass_sm;}
 .dimension_width_height_s{width: @mass_s; height: @mass_s;}
 .dimension_width_height_xs{width: @mass_xs; height: @mass_xs;}
+.dimension_width_height_xxs{width: @mass_xxs; height: @mass_xxs;}
 
 /* only Buttons   ##################  */ 
 
@@ -467,9 +466,7 @@
 .dimension_height_sm{ height: @mass_sm;}
 .dimension_height_s{ height: @mass_s;}
 .dimension_height_xs{ height: @mass_xs;}
-
-
-
+.dimension_height_xxs{ height: @mass_xxs;}
 
 // Rahmen für Schaltflächen
 

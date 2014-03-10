@@ -308,7 +308,8 @@
 // Button Print
 
 #egw_fw_print {
-    background-image: url(../images/print.png);
+    display: none;
+/*    background-image: url(../images/print.png);
     background-size: 16px 16px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -328,7 +329,7 @@
     z-index: 200;
     &:hover {.box_shadow_standard_light_hover;}
     &:active {.Complete_Button_active;}
-    &:focus {.box_shadow_standard_light_inset;}
+    &:focus {.box_shadow_standard_light_inset;}*/
 
 }
 
@@ -443,7 +444,7 @@
         float: right;
         padding: 0.5em;
         position: fixed;
-        right: 80px;
+        right: 45px;
         top: 5px;
         
         background-image: url(../images/add.png);
@@ -496,7 +497,7 @@
                             .box_shadow_standard_light;
                             padding: 5px;
                             top: 6px;
-                            right: 115px;
+                            right: 88px;
                             z-index: 200;
                             &:hover {.box_shadow_standard_light_hover;}
                             &:active {.Complete_Button_active;}
@@ -915,9 +916,7 @@
         .dimension_height_s;
         vertical-align: middle;
     }
-    select#calendar_filter{
-        margin-top: 4px;
-    }
+
     // Favoriten anlegen und löschen
     .sidebox-favorites{} // ist in etemplate2.less definiert
 

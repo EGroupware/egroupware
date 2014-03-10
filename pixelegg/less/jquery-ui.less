@@ -47,7 +47,7 @@ option:checked {background-color: @egw_color_1_e;}
 .ui-widget button {
     .basefontfamily;
     //	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
-    font-size: 1em;
+    .fontsize_m;
 }
 .ui-widget-content {
     /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
@@ -232,9 +232,22 @@ span.ui-icon-close {margin-top: 0px; top: 5px;}
     
     .ui-menu-item {
         
+        padding: 0px;
         
-        a {line-height: 26px; padding: 2px 5px;}
+        a {
+            line-height: 24px; 
+            margin: 0px;
+            padding: 2px 5px;
         
+            input {padding: 0;}
+            img {padding: 0;}
+        }
+        a.ui-state-focus {
+            margin: 0px !important;
+            line-height: 24px; 
+            padding: 2px 5px;
+            border: none;
+        }
     }
     
 }

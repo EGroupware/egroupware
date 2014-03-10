@@ -135,7 +135,7 @@ This descripes the structure of the less files.
 
 /*###########################################
 #                                           #
-#     dialog-header                         #
+#     dialogHeader                         #
 #############################################
 #                                           #
 #                                           #
@@ -146,7 +146,7 @@ This descripes the structure of the less files.
 #                                           #
 #                                           #
 #############################################
-#   dialog-operators                        #
+#   dialogOperators                        #
 #############################################
 #                                           #
 #    buttons                                #

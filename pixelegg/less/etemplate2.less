@@ -327,111 +327,51 @@ hr {
 
 /* ##################################################################################
  * Nextmatch widget
+ *
+ * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
+ *
  * ##################################################################################*/
-// 
-// SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
 
 // AREA AROUND CONTENT
 .et2_nextmatch {
     .background_color_10_gray;
 }
+
+// complete nextmatch....Background color!
+.et2_nextmatch .nextmatch_header {
+    border: none;
+    background-image: none;
+    background-color: @gray_20;
+    margin-bottom: 3px;
+    margin: 0;
+    //	margin-right: 3px;
+}
+
+
 // ALL images 
 .et2_nextmatch > img {.dimension_width_height_s;}
 
 
 // area width left and right boxes
-.ui-helper-clearfix{ background-color: gray_20;}
+.ui-helper-clearfix{ background-color: @gray_20;}
 
-// count
-.nextmatch_header .header_count {
-
-    position: relative;
-    top: 3px;
-    height: 22px;
-    .dimension_height_m;
-    border: 1px solid #E0E0E0;
-    float: right;
-    margin: 6px 11px 0;
-    padding: 0 20px;
-    text-align: center;
-    
-    .fontsize_normal;
-    .border_normal;
-    .rounded (3px);
-    color: @gray_100;
-    
-    
-    
-    // count number
-    span {
-        .fontsize_normal;
-        top: 4px;
-        position: relative;
-    }  
-}
 
 /*################################################################
 *
-* Filters
+* Search Field
 *
 ################################################################*/
-
-.nextmatch_header > .filters {
-
-    width: 100%;
-    margin-bottom: 4px;
-    
-    padding: 0 5px 0 0;
-    background-color: @gray_30;
-    border: none !important;
-    border-color: @gray_100;
-    background-image: none !important;
-    min-height: 37px;
-    .border_radius (3px, 3px, 0px, 0px);
-
-    select {margin-top: 10px;}
-
-    .et2_label {
-        padding: 0.2em;
-        select {
-            /*.Complete_Button_select;*/
-            margin-left: 2px;
-            margin-right: 1px;
-            margin-top: 8px;
-            max-width: 14% !important;
-            &:hover{
-                .Complete_Button_select_hover;
-            }
-
-            &:after {}
-
-             /*Dialog - Addressbook - View */
-              #infolog-index_cat_id,
-              #infolog-index_filter {width: 50% !important;}
-
-        }
-
-    }
-}
-
-
-// Select -> Option
-.nextmatch_header > .filters > select > option {.fontsize_normal;}
-
-
-
-// ####################################################
-// Search Field
-// 
-//
 .nextmatch_header > .search{
 
-    padding: 0 0 0 3px;
+    padding: 0 0 0 0px;
     margin-right: 3px;
     margin-left: 15px;
+    width: 200px;
+    z-index: 100;
+    white-space: nowrap;
 
     /*.background_color_search;*/
-    .border_radius_button_righttop;
+    /*.border_radius_button_righttop;*/
 
     input {
         /*.background_color_search;*/
@@ -440,6 +380,7 @@ hr {
         .fontsize_normal;
         color: @gray_100;
         padding: 3px;
+        width: 150px;
     }
 
     input::-webkit-input-placeholder {
@@ -503,8 +444,60 @@ hr {
 
 }
 
-// Input Field
 
+/*################################################################
+*
+* Filters
+*
+################################################################*/
+
+.nextmatch_header > .filters {
+
+    /*width: 83%;*/
+    z-index: 7;
+    margin-bottom: 4px;
+    top: 0px; // fix for stylite template
+    padding: 0 5px 0 0;
+    /*background-color: @gray_30;*/
+    background: transparent;
+    border: none !important;
+    /*border-color: @gray_100;*/
+    background-image: none !important;
+    min-height: 37px;
+    margin-left: 224px; // fix for stylite
+    margin-right: 119px; // fix for stylite
+/*    .border_radius (3px, 3px, 0px, 0px);*/
+
+    select {margin-top: 10px;}
+
+    .et2_label {
+        padding: 0.2em;
+        select {
+            /*.Complete_Button_select;*/
+            margin-left: 2px;
+            margin-right: 1px;
+            margin-top: 8px;
+            width: 20%;
+            max-width: 20% !important; // fix for stylite template
+            &:hover{
+                .Complete_Button_select_hover;
+            }
+
+            &:after {}
+
+             /*Dialog - Addressbook - View */
+              #infolog-index_cat_id,
+              #infolog-index_filter {width: 50% !important;}
+        }
+
+    }
+}
+
+
+// Select -> Option
+.nextmatch_header > .filters > select > option {.fontsize_normal;}
+
+// Input Field
 .nextmatch_header > .filters input {
     margin-right: 2ex;
     width: 15%;
@@ -513,6 +506,13 @@ hr {
     &:focus{ .Complete_Button_input_focus;   }
 }
 
+
+
+/*################################################################
+*
+* Export Button
+*
+################################################################*/
 
 .nextmatch_header .et2_button_icon {}
 
@@ -533,22 +533,50 @@ hr {
 
 
 
-.et2_nextmatch .nextmatch_header {
-    border: none;
-    background-image: none;
-    background-color: @gray_20;
-    margin-bottom: 3px;
-    margin: 0;
-    //	margin-right: 3px;
-}
-.et2_nextmatch .nextmatch_header > .filters {
+/*.et2_nextmatch .nextmatch_header > .filters {
     border: 1px solid @gray_10;
     background-color: @gray_20;
     background-image: url(../images/header_overlay.png);
     background-position: center;
     background-repeat: repeat-x;
     margin-bottom: 3px;
+}*/
+
+/*################################################################
+*
+* count
+*
+################################################################*/
+
+.nextmatch_header .header_count {
+
+    position: relative;
+    top: 1px;
+    height: 22px;
+    .dimension_height_m;
+    border: 1px solid #E0E0E0;
+    float: right;
+    margin: 6px 11px 0;
+    padding: 0 20px;
+    text-align: center;
+    
+    .fontsize_normal;
+    .border_normal;
+    .rounded (3px);
+    color: @gray_100;
+    
+    
+    
+    // count number
+    span {
+        .fontsize_normal;
+        top: 4px;
+        position: relative;
+    }  
 }
+
+
+
 
 /*################################################################
 *
@@ -592,11 +620,10 @@ button#admin-categories-index_add {
 ################################################################*/
 
 .nextmatch_header div[id$=favorite_wrapper] {
-/*    margin-top: 6px;
-    vertical-align: middle;*/
-    /*.box_shadow_standard_light;*/
+
     .border_radius_button_normal;
     .background_color_25_gray;
+    z-index: 200;
 }
 
    /**
@@ -679,13 +706,13 @@ button#admin-categories-index_add {
                     li.ui-menu-item {
                                     margin-left: 0px;
                                     min-height: 16px;
-                                    padding: 5px 0px;
+                                    padding: 3px 0px;
             
                                     // gelb
                                     &:hover{
                                             .color_100_gray;
                                             background-color: @egw_color_1_e;
-                                            padding: 0.5em 0;
+                                            padding: 3px 0;
 
                                         }
                                       
