@@ -214,7 +214,7 @@
 			{
 				// Resize popup when et2 load is done
 				jQuery(node).one("load",function() {
-					window.resizeTo(jQuery(document).width()+20,jQuery(document).height()+70);
+					window.resizeTo(jQuery(document).width()+25,jQuery(document).height()+70);
 				});
 			}
 			var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
