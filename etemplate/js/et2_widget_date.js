@@ -304,14 +304,17 @@ var et2_date_duration = et2_date.extend(
 
 	createInputWidget: function() {
 		// Create nodes
-		this.node = $j(document.createElement("span"));
+		this.node = $j(document.createElement("span"))
+						.addClass('et2_date_duration');
 		this.duration = $j(document.createElement("input"))
-			.attr({type: 'number', size: 3, style: 'width: 3em'});
+						.addClass('et2_date_duration')
+						.attr({type: 'number', size: 3, style: 'width: 3em'});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)
 		{
-			this.format = $j(document.createElement("select"));
+			this.format = $j(document.createElement("select"))
+							.addClass('et2_date_duration');
 			this.node.append(this.format);
 
 			for(var i = 0; i < this.options.display_format.length; i++) {
