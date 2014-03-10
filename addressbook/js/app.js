@@ -85,13 +85,12 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	view_actions: function(_action)
 	{
-		// no idea why this.et2 is sometimes not initialised
-		if (!this.et2 && typeof etemplate2 == 'object')
+		// no idea why this.et2 is sometimes not initialised correctly
+//		if (!(this.et2 && this.et2 instanceof et2_container) && typeof etemplate2 != 'undefined')
 		{
-			var template = etemplate2.getByApplication('addressbook.view')[0];
+			var template = etemplate2.getByTemplate('addressbook.view')[0];
 			this.et2 = template.widgetContainer;
 		}
-		var template = this.et2._inst;
 		var id = this.et2.getArrayMgr('content').data.id;
 
 		switch(_action.id)
@@ -107,7 +106,7 @@ app.classes.addressbook = AppJS.extend(
 				this.egw.open(null, 'addressbook', 'list', null, '_self', 'addressbook');
 				break;
 			//default:
-				template.submit(_action.id);
+				this.et2._inst.template.submit(_action.id);
 				break;
 		}
 	},
