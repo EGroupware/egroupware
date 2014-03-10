@@ -201,6 +201,7 @@ class etemplate_new extends etemplate_widget_template
 				}
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+egw_framework::get_extra());
+				egw_framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 				self::$request = null;
 				return;
 			}
