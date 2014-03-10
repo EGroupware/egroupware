@@ -4,51 +4,65 @@
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" height="165">
 			<columns>
-				<column width="95"/>
-				<column width="120"/>
-				<column width="80" disabled="@ts_viewtype"/>
-				<column disabled="@ts_viewtype"/>
+				<column width="102"/>
+				<column width="200"/>
+				<column width="102" disabled="@ts_viewtype"/>
+				<column width="200" disabled="@ts_viewtype"/>
+				<column width="220"/>
 			</columns>
 			<rows>
 				<row class="row" disabled="@ts_viewtype">
 					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth" tabindex="1"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1"/>
+					<description/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
 					<description value="comment"/>
-					<textbox multiline="true" id="ts_description" rows="5" cols="50" span="all" class="fullWidth"/>
+					<textbox multiline="true" id="ts_description" rows="5" cols="50" class="et2_fullWidth"/>
+					<description/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row">
 					<description value="Category" for="cat_id"/>
-					<menulist span="all">
-						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"/>
+					<menulist>
+						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"  class="et2_fullWidth"/>
 					</menulist>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row">
 					<description value="Date" for="ts_start"/>
-					<date id="ts_start" needed="1" options=",8"/>
+					<date id="ts_start" needed="1" options=",8" class="et2_fullWidth"/>
 					<description value="Starttime"/>
-					<date-timeonly id="start_time" options="H:i"/>
+					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth"/>
+					<description/>
 				</row>
 				<row class="row">
 					<description value="Duration" for="ts_duration"/>
-					<date-duration id="ts_duration" options=",hm"/>
+					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth"/>
 					<description value="or endtime" class="noWrap"/>
-					<date-timeonly id="end_time" options="H:i"/>
+					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth"/>
+					<description/>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
 					<description value="Quantity" for="ts_quantity"/>
-					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" span="all"/>
+					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" class="et2_fullWidth"/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row" disabled="@no_ts_status">
 					<description value="Status"/>
-					<menulist span="all">
-						<menupopup statustext="select a status of the timesheet" id="ts_status" options="please select"/>
+					<menulist>
+						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" options="please select"/>
 					</menulist>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 			</rows>
 		</grid>
@@ -60,7 +74,7 @@
 			</columns>
 			<rows>
 				<row class="row" valign="top">
-					<textbox multiline="true" id="ts_description" rows="11" cols="70" class="fullWidth"/>
+					<textbox multiline="true" id="ts_description" rows="11" cols="70" class="et2_fullWidth"/>
 				</row>
 			</rows>
 		</grid>
@@ -90,61 +104,54 @@
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" height="165" overflow="auto">
 			<columns>
-				<column/>
+				<column width="102"/>
+				<column width="224"/>
+				<column width="520"/>
 			</columns>
 			<rows>
 				<row>
-					<customfields/>
+					<customfields class="et2_fullWidth" span="2"/>
+					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="165" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<historylog id="history"/>
-				</row>
-			</rows>
-		</grid>
+		<historylog id="history" overflow="auto" height="165"/>
 	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
-				<column width="100"/>
-				<column/>
+				<column width="107"/>
+				<column width="200"/>
+				<column width="534"/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
-					<description/>
-				</row>
 				<row class="th dialog-header" height="28">
 					<description value="User" for="ts_owner"/>
-					<menulist span="all">
-						<menupopup id="ts_owner" no_lang="1"/>
+					<menulist >
+						<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
 					</menulist>
+					<description/>
 				</row>
-				<row class="row dialog-header2">
+				<row>
 					<description value="Project" for="ts_project"/>
-					<grid spacing="1" padding="1">
+					<grid>
 						<columns>
 							<column/>
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=none">
-								<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None'/>
+								<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None' class="et2_fullWidth"/>
 							</row>
 							<row disabled="@pm_integration=full">
-								<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="fullWidth"/>
+								<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="et2_fullWidth"/>
 							</row>
 						</rows>
 					</grid>
+					<description/>
 				</row>
-				<row class="row dialog-header3" disabled="@ts_viewtype">
+				<row disabled="@ts_viewtype">
 					<description value="Unitprice" for="ts_unitprice"/>
 					<grid>
 						<columns>
@@ -154,13 +161,14 @@
 						<rows>
 							<row>
 								<projectmanager-pricelist id="pl_id" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
-								<textbox type="float" id="ts_unitprice" span="all"/>
+								<textbox type="float" id="ts_unitprice" span="all" class="et2_fullWidth"/>
 							</row>
 						</rows>
 					</grid>
+					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all">
 						<tabs>
 							<tab id="general" label="General"/>
 							<tab id="notes" label="Notes"/>
@@ -185,9 +193,10 @@
 							<menupopup type="select-account" label="by" id="ts_modifier" readonly="true"/>
 						</menulist>
 					</hbox>
+					<description/>
 				</row>
-				<row class="dialog-footer-toolbar">
-					<hbox orient="0" span="2">
+				<row>
+					<hbox orient="0" span="3">
 						<hbox>
 							<button statustext="Edit this entry" label="Edit" id="button[edit]" image="edit" background_image="1"/>
 							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
