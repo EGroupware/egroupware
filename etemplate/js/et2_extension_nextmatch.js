@@ -2016,7 +2016,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 *	additional fields/settings to add in to the favorite.
 	 */
 	_setup_favorites: function(filters) {
-		if(typeof filters == "undefined")
+		if(typeof filters == "undefined" || filters === false)
 		{
 			// No favorites configured
 			return;

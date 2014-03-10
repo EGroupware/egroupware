@@ -820,8 +820,16 @@ class infolog_ui
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
 		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
 
-		// Allow saving parent ID into favorites
-		$values['nm']['favorites'] = array('action','action_id');
+		// disable favories dropdown button, if not running as infolog
+		if ($called_as && $called_as != 'infolog')
+		{
+			$values['nm']['favorites'] = false;
+		}
+		else
+		{
+			// Allow saving parent ID into favorites
+			$values['nm']['favorites'] = array('action','action_id');
+		}
 
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
