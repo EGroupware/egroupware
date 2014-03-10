@@ -36,7 +36,13 @@
 	border: 1px solid #d3d3d3;
 	border-top: none;
 }
-
+/*
+ ** Popups
+ */
+#popupMainDiv
+{
+	width:auto;
+}
 .divSideboxHeader {
 	background-image: url(../images/gradient22.png);
 	border: none;
