@@ -2269,6 +2269,12 @@ window.egw_LAB.wait(function() {
 			),
 		));
 
+		// always show sidebox, as it contains contact-data
+		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+
+		// need to load infolog's app.js now, as it exec calls header before infolog can include it
+		egw_framework::validate_file('/infolog/js/app.js');
+
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
 		$GLOBALS['egw']->hooks->process(array(
