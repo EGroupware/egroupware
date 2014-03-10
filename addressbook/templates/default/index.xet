@@ -232,7 +232,7 @@
 				<row>
 					<nextmatch id="nm" template="addressbook.index.rows" span="all"/>
 				</row>
-				<row class="noPrint dialog-footer-toolbar" disabled="!@nm[selectcols]=/legacy_actions/">
+				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right" span="all">
 						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('addressbook.'+({$cont[nm][do_email]} ? 'email' : 'index') + '.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
