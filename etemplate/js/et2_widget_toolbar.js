@@ -23,7 +23,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_toolbar = et2_DOMWidget.extend(
+var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 {
 	attributes: {
 		"view_range": {
@@ -48,6 +48,11 @@ var et2_toolbar = et2_DOMWidget.extend(
 		edit: {caption:'Edit', group:1, toolbarDefault:true},
 		save: {caption:'Save', group:2, toolbarDefault:true}
 	},
+
+	/**
+	 * id of last action executed / value of toolbar if submitted
+	 */
+	value: null,
 
 	/**
 	 * Constructor
@@ -233,24 +238,20 @@ var et2_toolbar = et2_DOMWidget.extend(
 					var action = that._actionManager.getActionById(selected.attr('data-id'));
 					if(action)
 					{
-						if(action)
-						{
-							action.onExecute.exec(action);
-						}
+						this.value = action.id;
+						action.execute([]);
 					}
-					console.debug(selected, this, action);
+					//console.debug(selected, this, action);
 				},action);
 				dropdown.onclick = jQuery.proxy(function(selected, dropdown)
 				{
 					var action = that._actionManager.getActionById(this.getValue());
 					if(action)
 					{
-						if(action)
-						{
-							action.onExecute.exec(action);
-						}
+						this.value = action.id;
+						action.execute([]);
 					}
-					console.debug(selected, this, action);
+					//console.debug(selected, this, action);
 				},dropdown);
 				$j(dropdown.getDOMNode())
 						.attr('id',this.id + '-' + dropdown.id)
@@ -395,10 +396,12 @@ var et2_toolbar = et2_DOMWidget.extend(
 			button.button(button_options);
 		}
 		// Set up the click action
-		var click = function(e) {
+		var click = function(e)
+		{
 			var action = this._actionManager.getActionById(e.data);
 			if(action)
 			{
+				this.value = action.id;
 				action.data.event = e;
 				action.execute([]);
 			}
@@ -420,6 +423,50 @@ var et2_toolbar = et2_DOMWidget.extend(
 	getDOMNode: function(asker)
 	{
 		return this.div[0];
+	},
+
+	/**
+	 * getValue has to return the value of the input widget
+	 */
+	getValue: function()
+	{
+		return this.value;
+	},
+
+	/**
+	 * Is dirty returns true if the value of the widget has changed since it
+	 * was loaded.
+	 */
+	isDirty: function()
+	{
+		return this.value != null;
+	},
+
+	/**
+	 * Causes the dirty flag to be reseted.
+	 */
+	resetDirty: function()
+	{
+		this.value = null;
+	},
+
+	/**
+	 * Checks the data to see if it is valid, as far as the client side can tell.
+	 * Return true if it's not possible to tell on the client side, because the server
+	 * will have the chance to validate also.
+	 *
+	 * The messages array is to be populated with everything wrong with the data,
+	 * so don't stop checking after the first problem unless it really makes sense
+	 * to ignore other problems.
+	 *
+	 * @param {String[]} messages List of messages explaining the failure(s).
+	 *	messages should be fairly short, and already translated.
+	 *
+	 * @return {boolean} True if the value is valid (enough), false to fail
+	 */
+	isValid: function(messages)
+	{
+		return true;
 	}
 });
 et2_register_widget(et2_toolbar, ["toolbar"]);
