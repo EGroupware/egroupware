@@ -1,21 +1,24 @@
 <?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.view" template="" lang="" group="0" version="1.9.001">
 		<grid class="addressbook_view" parent_node="addressbook_view_sidebox" width="100%">
 			<columns>
-				<column width="80"/>
+				<column width="70"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<image src="photo" class="photo"/>
-					<vbox>
-						<description id="n_fn" class="addressbook_sidebox_name"/>
-						<description id="org_name" class="addressbook_sidebox_org"/>
-						<description id="org_unit"/>
-						<description id="adr_one_locality"/>
-					</vbox>
+				<row span="all">
+					<hbox>
+						<image src="photo" class="photo"/>
+						<vbox>
+							<description id="n_fn" class="addressbook_sidebox_name"/>
+							<description id="org_name" class="addressbook_sidebox_org"/>
+							<description id="org_unit"/>
+							<description id="adr_one_locality"/>
+						</vbox>
+					</hbox>
 				</row>
 				<row>
 					<description span="2" value="Phone numbers" class="addressbook_sidebox_header"/>

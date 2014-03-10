@@ -24,6 +24,11 @@ div#divGenTime_addressbook {
 	display: none;
 }
 
+div#addressbook_view_sidebox img.photo {
+	width: 68px;
+	padding-right: 3px;
+}
+
 /**
  * new addressbook.edit
  */
