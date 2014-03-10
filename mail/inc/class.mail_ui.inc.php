@@ -4218,14 +4218,28 @@ $this->partID = $partID;
 			}
 			foreach($_messageList['msg'] as $rowID)
 			{
+				//error_log(__METHOD__.__LINE__.$rowID);
 				$hA = self::splitRowID($rowID);
 				$messageList[] = $hA['msgUID'];
+				if ($_copyOrMove=='move')
+				{
+					$helpvar = explode(self::$delimiter,$rowID);
+					array_shift($helpvar);
+					$messageListForRefresh[]= implode(self::$delimiter,$helpvar);
+				}
 			}
 			$response = egw_json_response::get();
 			try
 			{
 				$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
-				$response->call('egw_refresh',($_copyOrMove=='copy'?lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder):lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder)),'mail');
+				if ($_copyOrMove=='copy')
+				{
+					$response->call('egw_message',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder));
+				}
+				else
+				{
+					$response->call('egw_refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
+				}
 			}
 			catch (Exception $e)
 			{
