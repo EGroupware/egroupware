@@ -206,44 +206,21 @@
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}
 
-		// load et2
-		var data = egw_script.getAttribute('data-etemplate');
-		if (data)
-		{
-			// Initialize application js
-			var callback = null;
-			// Only initialize once
-			if(typeof app[window.egw_appName] == "object")
+		// load etemplate2 template(s)
+		$j('div.et2_container[data-etemplate]').each(function(index, node){
+			var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
+			var currentapp = data.data.currentapp || window.egw_appName;
+			if(popup || window.opener)
 			{
-				callback = function(et2) {app[window.egw_appName].et2_ready(et2);};
+				// Resize popup when et2 load is done
+				jQuery(node).one("load",function() {
+					window.resizeTo(jQuery(document).width()+20,jQuery(document).height()+70);
+				});
 			}
-			else
-			{
-				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName);
-			}
-			// Wait until DOM loaded before we load the etemplate to make sure the target is there
-			$j(function() {
-				// Re-load data here, as later code may change the variable
-				var data = JSON.parse(egw_script.getAttribute('data-etemplate')) || {};
-				var node = document.getElementById(data.DOMNodeID);
-				if(!node)
-				{
-					egw.debug("error", "Could not find target node %s", data.DOMNodeID);
-				}
-				else
-				{
-					if(popup || window.opener)
-					{
-						// Resize popup when et2 load is done
-						jQuery(node).one("load",function() {
-							window.resizeTo(jQuery(document).width()+20,jQuery(document).height()+70);
-						});
-					}
-					var et2 = new etemplate2(node, window.egw_appName+".etemplate_new.ajax_process_content.etemplate");
-					et2.load(data.name,data.url,data.data,callback);
-				}
-			});
-		}
+			var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
+			et2.load(data.name,data.url,data.data);
+		});
+
 		$j(function() {
 			// set app-header
 			if (window.framework && egw_script.getAttribute('data-app-header'))

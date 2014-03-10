@@ -46,9 +46,12 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	function __construct($name='',$load_via='')
 	{
+		// we do NOT call parent consturctor, as we only want to enherit it's (static) methods
+		if (false) parent::__construct ($name);	// satisfy IDE, as we dont call parent constructor
+
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 
-		if ($name) $this->read($name,$template='default',$lang='default',$group=0,$version='',$load_via);
+		if ($name) $this->read($name,$template='default','default',0,'',$load_via);
 
 		// generate new etemplate request object, if not already existing
 		if(!isset(self::$request)) self::$request = etemplate_request::read();
@@ -185,9 +188,6 @@ class etemplate_new extends etemplate_widget_template
 				egw_framework::validate_file('.','app',$app,false);
 			}
 
-			$header = $GLOBALS['egw']->framework->header(array(
-				'etemplate' => $load_array
-			));
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
@@ -203,38 +203,21 @@ class etemplate_new extends etemplate_widget_template
 				self::$request = null;
 				return;
 			}
-			else if (!$header)
+			echo $GLOBALS['egw']->framework->header();
+			if ($output_mode != 2)
 			{
-				// Headers already sent, another etemplate
-				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
-				echo '<script type="text/javascript">window.egw_LAB.wait(function() {
-
-					var data = ' . json_encode($load_array) . ';
-					$j(".et2_container").not("#'.$dom_id.'").on("load", function() {
-						var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "'.$currentapp.'.etemplate_new.ajax_process_content.etemplate");
-						et2.load(data.name,data.url,data.data);
-					});
-				})</script>';
+				parse_navbar();
 			}
-			else
+			else	// mark popups as such, by enclosing everything in div#popupMainDiv
 			{
-				//error_log("NON-Ajax " . __LINE__);
-				echo $header;
-				if ($output_mode != 2)
-				{
-					parse_navbar();
-				}
-				else	// mark popups as such, by enclosing everything in div#popupMainDiv
-				{
-					echo '<div id="popupMainDiv">'."\n";
-				}
-				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
+				echo '<div id="popupMainDiv">'."\n";
+			}
+			echo '<div id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(json_encode($load_array), true).'"></div>';
 
-				if ($output_mode == 2)
-				{
-					echo "\n</div>\n";
-					echo $GLOBALS['egw']->framework->footer();
-				}
+			if ($output_mode == 2)
+			{
+				echo "\n</div>\n";
+				echo $GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
 
@@ -329,7 +312,7 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	static public function process_exec()
 	{
-		$etemplate_exec_id = $_POST['etemplate_exec_id'];
+		if (get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
 		$content = json_decode($_POST['value'],true);
 		if($content == null && $_POST['exec'])
 		{
@@ -340,8 +323,6 @@ class etemplate_new extends etemplate_widget_template
 		error_log(__METHOD__."(".array2string($content).")");
 
 		self::$request = etemplate_request::read($_POST['etemplate_exec_id']);
-		if (get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
-		$content = json_decode($_POST['value'],true);
 
 		if (!($template = self::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
@@ -400,6 +381,7 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
+		unset($lang); unset($group);	// not used, but in old signature
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);
 		//error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
@@ -551,7 +533,7 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	static public function number_format($number,$num_decimal_places=2,$readonly=true)
 	{
-		static $dec_separator,$thousands_separator;
+		static $dec_separator=null,$thousands_separator=null;
 		if (is_null($dec_separator))
 		{
 			$dec_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];
@@ -624,7 +606,7 @@ class etemplate_new extends etemplate_widget_template
 	}
 }
 // default etemplate class has to be defined by either extending etemplate_new or etemplate_old
-class etemplate extends etemplate_old {};
+class etemplate extends etemplate_old {}
 
 // Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
 $files = scandir(EGW_INCLUDE_ROOT . '/etemplate/inc');
