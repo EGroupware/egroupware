@@ -2115,12 +2115,17 @@ window.egw_LAB.wait(function() {
 		egw_json_response::get()->data($ret);
 	}
 
-	function view($content=null)
+	/**
+	 * CRM view
+	 *
+	 * @param array $content
+	 */
+	function view(array $content=null)
 	{
 		if(is_array($content))
 		{
 			list($button) = each($content['button']);
-			switch ($button)
+			switch ($content['toolbar'] ? $content['toolbar'] : $button)
 			{
 				case 'vcard':
 					egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
@@ -2151,7 +2156,7 @@ window.egw_LAB.wait(function() {
 		// make everything not explicit mentioned readonly
 		$readonlys['__ALL__'] = true;
 		$readonlys['photo'] = $readonlys['button[cancel]'] = $readonlys['button[copy]'] =
-			$readonlys['button[ok]'] = $readonlys['button[more]'] = false;
+			$readonlys['button[ok]'] = $readonlys['button[more]'] = $readonlys['toolbar'] = false;
 
 		foreach(array_keys($this->contact_fields) as $key)
 		{
@@ -2244,6 +2249,9 @@ window.egw_LAB.wait(function() {
 
 		// load app.css for addressbook explicit, as addressbook_view hooks changes currentapp!
 		egw_framework::includeCSS('addressbook', 'app');
+
+		// dont show an app-header
+		$GLOBALS['egw_info']['flags']['app_header'] = '';
 
 		$this->tmpl->setElementAttribute('toolbar', 'actions', array(
 			'edit' => array(

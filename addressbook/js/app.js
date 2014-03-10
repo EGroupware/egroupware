@@ -102,11 +102,10 @@ app.classes.addressbook = AppJS.extend(
 				this.egw.open(id, 'addressbook', 'edit', { makecp: 1});
 				break;
 			case 'cancel':
-			default:
 				this.egw.open(null, 'addressbook', 'list', null, '_self', 'addressbook');
 				break;
-			//default:
-				this.et2._inst.template.submit(_action.id);
+			default:	// submit all other buttons back to server
+				this.et2._inst.submit();
 				break;
 		}
 	},
