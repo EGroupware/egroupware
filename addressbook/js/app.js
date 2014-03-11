@@ -85,12 +85,6 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	view_actions: function(_action)
 	{
-		// no idea why this.et2 is sometimes not initialised correctly
-//		if (!(this.et2 && this.et2 instanceof et2_container) && typeof etemplate2 != 'undefined')
-		{
-			var template = etemplate2.getByTemplate('addressbook.view')[0];
-			this.et2 = template.widgetContainer;
-		}
 		var id = this.et2.getArrayMgr('content').data.id;
 
 		switch(_action.id)
