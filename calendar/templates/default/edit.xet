@@ -30,6 +30,7 @@
 				</rows>
 			</grid>
 			<vbox align="right" options="0,0" class="calendar_category_details">
+				<description height="25"/>
 				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9" />
 			</vbox>
