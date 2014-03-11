@@ -1194,6 +1194,7 @@ class so_sql
 	 */
 	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
 	{
+		$pattern = trim($pattern);
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
 		if(strpos($pattern, 'CAST(COALESCE(') !== false)
@@ -1201,7 +1202,6 @@ class so_sql
 			return $pattern;
 		}
 
-		$pattern = trim($pattern);
 		$criteria = array();
 		$filter = array();
 		$columns = array();
