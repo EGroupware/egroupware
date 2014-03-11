@@ -197,7 +197,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th gray" disabled="@view">
+				<row class="th gray" disabled="@view" height="28">
 					<description value="Add new alarm" span="all"/>
 				</row>
 				<row class="row add_alarm_action" height="50" disabled="@no_add_alarm">
@@ -289,22 +289,26 @@
 				<column width="88"/>
 				<column width="80"/>
 				<column/>
+				<column width="50"/>
+				<column width="50"/>
 			</columns>
 			<rows>
-				<row class="dialog-header" height="28">
+				<row class="dialogHeader" height="28">
 					<description value="Title"/>
-					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" span="all"/>
+					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="2"/>
+					<appicon/>
+					<description id="cal_id_titlebar"/>
 				</row>
-				<row class="dialog-header2" height="28">
+				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required"/>
 					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable" span="all"/>
 				</row>
-				<row class="dialog-header2" height="28">
-					<description for="duration" value="Duration" width="0" id="calendar_edit_duration"/>
+				<row class="dialogHeader2" height="28">
+					<description for="duration" value="Duration" width="0" id="calendar_edit_duration" />
 					<hbox>
-						<menulist>
-							<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+						<menulist >
+							<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 						</menulist>
 						<date-time id="end"/>
 					</hbox>
@@ -334,7 +338,7 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row disabled="!@owner" class="dialog-operators">
+				<row disabled="!@owner" class="dialogOperators">
 					<description value="Owner"/>
 					<menulist>
 						<menupopup type="select-account" id="owner" readonly="true"/>
@@ -348,7 +352,7 @@
 				</row>
 			</rows>
 		</grid>
-		<hbox class="dialog-footer-toolbar">
+		<hbox class="dialogFooterToolbar">
 			<button statustext="saves the changes made" label="Save" id="button[save]" image="save" background_image="1" onclick="app.calendar.move_edit_series"/>
 			<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1" onclick="app.calendar.move_edit_series"/>
 			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
