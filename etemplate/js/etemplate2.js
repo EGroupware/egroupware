@@ -784,6 +784,30 @@ etemplate2.getByApplication = function(app)
 };
 
 /**
+ * Get a etemplate2 object from the given DOM ID
+ *
+ * @param {string} id DOM ID of the container node
+ * @returns {etemplate2|null}
+ */
+etemplate2.getById = function(id)
+{
+	for( var name in etemplate2._byTemplate)
+	{
+		console.log(name, etemplate2._byTemplate[name]);
+		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
+		{
+			var et = etemplate2._byTemplate[name][i];
+
+			if(et.DOMContainer.getAttribute("id") == id)
+			{
+				return et;
+			}
+		}
+	}
+	return null;
+}
+
+/**
  * Plugin for egw.json type "et2_load"
  *
  * @param _type
