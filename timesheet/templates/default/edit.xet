@@ -81,7 +81,7 @@
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
 		<box height="165" width="100%" overflow="auto">
 			<customfields class="et2_fullWidth" height="165"/>
-		</box>	
+		</box>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
 		<box height="165" width="100%" overflow="auto">
@@ -101,8 +101,12 @@
 				<column width="4"/>
 			</columns>
 			<rows>
-				<row class="dialogHeader" disabled="@ts_viewtype">
+				<row disabled="@ts_viewtype" class="dialogHeader">
 					<description value="Title" for="ts_title"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="3"/>
+					<textbox type="integer" id="ts_id" readonly="true" class="timesheet_timesheetId"/>
+					<appicon src="timesheet"/>
+                                        <description />
 					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="4"/>
 					<description font_style="n" id="ts_id" />
 					<appicon class="timesheet_appicon"/>
@@ -116,7 +120,7 @@
 					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth" span="3"/>
 					<description/>
 				</row>
-				<row class="dialogHeader2">
+				<row class="row dialogHeader3">
 					<description value="Duration" for="ts_duration"/>
 					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth" />
 					<description/>
@@ -124,7 +128,7 @@
 					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth" span="3"/>
 					<description/>
 				</row>
-				
+
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all">
 						<tabs>
@@ -155,7 +159,8 @@
 					</menulist>
 					<description/>
 				</row>
-				<row class="dialogOperators" disabled="!@ts_modified">
+				<row disabled="!@ts_modified" class="dialogOperators">
+
 					<description value="Last modified"/>
 					<hbox width="100%">
 						<menulist>
