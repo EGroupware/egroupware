@@ -27,15 +27,11 @@
 						<description/>
 						<checkbox label="Private" id="public" options="0,1"/>
 					</row>
-					<row>
-						<description/>
-						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
-					</row>
 				</rows>
 			</grid>
-			<vbox align="right" options="0,0" class="calendar_category_details" height="240">
+			<vbox align="right" options="0,0" class="calendar_category_details">
 				<description for="category" value="Categories" class="row_on"/>
-				<listbox type="select-cat" id="category" rows="9" height="230"/>
+				<listbox type="select-cat" id="category" rows="9" />
 			</vbox>
 		</hbox>
 	</template>
@@ -106,8 +102,7 @@
 			</columns>
 			<rows>
 				<row class="th gray">
-					<description value="Repeating Event Information" span="3"/>
-					<description font_style="n" id="id"/>
+					<description value="Repeating Event Information" span="all"/>
 				</row>
 				<row disabled="!@reference">
 					<description value="Exception"/>
@@ -296,8 +291,8 @@
 				<row class="dialogHeader" height="28">
 					<description value="Title"/>
 					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="2"/>
+					<description font_style="n" id="id"/>
 					<appicon/>
-					<description id="cal_id_titlebar"/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
@@ -359,6 +354,7 @@
 			<menulist>
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
+			<checkbox label="Do not notify of these changes" id="no_notifications"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 		</hbox>
 	</template>

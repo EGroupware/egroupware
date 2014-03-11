@@ -92,7 +92,6 @@ app.classes.calendar = AppJS.extend(
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
-					this.cal_id_titlebar(content.data['id']);
 					$j(document.getElementById('calendar-edit_calendar-delete_series')).hide();
 					//Check if it's fallback from conflict window or it's from edit window
 					if (content.data['button_was'] != 'freetime')
@@ -1162,15 +1161,5 @@ app.classes.calendar = AppJS.extend(
 		// Stop the normal bubbling if this is called on click
 		return false;
 	},
-	
-	/**
-	 * Show calendar Id in edit popup's titlebar after the cal icon
-	 * 
-	 * @param {string} _id cal_id
-	 */
-	cal_id_titlebar: function (_id)
-	{
-		var calId = this.et2.getWidgetById('cal_id_titlebar');
-		calId.set_value('#'+_id);
-	}
+
 });
