@@ -1,5 +1,40 @@
-/* $Id$ */
+/**
+ * Styles for etemplate2 widgets
+ *
+ * @version: $Id$
+ */
+
 .timesheet_titleSum,.timesheet_titleDetails { font-weight: bold; }
-div#timesheet-edit.et2_container {
-	width: 842px;
+
+div#timesheet-edit.et2_container
+{
+	width: 688px;
+}
+
+//** add # sign behind the ts_id
+.timesheet_timesheetId:before span { content:"#"; }
+
+//** Fit the duration selectbox and input fields together
+#timesheet-edit_ts_duration, #timesheet-edit_ts_duration select
+{
+	width:74%;
+	white-space: noWrap;
+}
+
+#timesheet-edit_ts_duration input
+{
+	width:4em !important;
+}
+
+//** make the modifier inline
+.timesheet_modifier label
+{
+	display: inline-block;
+	float: right;
+}
+
+.timesheet_modifier ul
+{
+	display: inline-block;
+	float: left;
 }
