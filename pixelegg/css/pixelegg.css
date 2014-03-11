@@ -90,6 +90,28 @@
     color: #1e1e1e;
   }
   /**
+ * img Icons
+ */
+  a.et2_url {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    cursor: pointer;
+    margin: -4px;
+    padding: 2px;
+    padding-left: 16px;
+    margin-left: -10px;
+  }
+  a.et2_url.email {
+    background-image: url(../images/email.png);
+  }
+  a.et2_url.phone {
+    background-image: url(../images/phone.png);
+  }
+  a.et2_url.url {
+    background-image: url(../images/url.png);
+  }
+  /**
  * Button widget - text only, and icon
  */
   .et2_button {
@@ -320,61 +342,61 @@
   /**
  * Tabs widget
  */
-  .et2_tabflag {
+  /*.et2_tabflag {
     margin: 1em 3px -1px 0;
     padding: 4px;
-    background-color: #bfbfbf;
-    -webkit-box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.5);
+    .background_color_25_gray;
+    .inner_shadow(1px, 0px, 0px, 0.5);
     -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     min-width: 73px;
-  }
-  .et2_tabflag:hover {
-    color: #f2f2f2;
-    background-color: #bfbfbf;
-  }
-  .et2_tabflag:active {
-    background-color: #ffffff;
-    color: #ffffff;
-  }
-  .et2_tabflag.active {
+   &:hover {
+        .color_5_gray;
+        .background_color_25_gray;
+    }
+    &:active{
+        .background_color_0_gray;
+        .color_0_gray;
+    }
+}
+
+
+.et2_tabflag.active {
     border-spacing: 0px;
     background-color: white;
-    color: #000000;
+    .color_100_gray;
     border-width: 1px 1px 0px 1px;
     border-style: solid;
-    border-color: #505050;
-  }
-  .et2_tabflag.active:hover {
-    color: #000000;
-    background-color: white;
-  }
-  .et2_tabs {
-    /*border-width: 0px 1px 1px 1px;*/
-    /*border-style: solid;*/
-    border-color: #505050;
-    /*padding: 5px;*/
-    /*overflow-y: auto;*/
-    background-color: #ffffff;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-  }
-  .et2_tabheader {
+    border-color: @gray_70;
+    &:hover {
+        .color_100_gray;
+        //			border: 1px solid gray;
+        background-color: white;
+    }
+}
+
+.et2_tabs {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: @gray_70;
+    padding: 5px;
+    overflow-y: auto;
+    background-color: @gray_0;
+    .border_radius_button_normal;
+}*/
+  /*.et2_tabheader {
     padding-left: 0em;
     border-bottom: 1px solid #bfbfbf;
     margin: 0 2px;
-    background-image: none;
-  }
-  .et2_tabheader :first-child {
-    margin-left: 1px;
-  }
+	background-image: none;
+    :first-child {
+        margin-left: 1px;
+    }
+}*/
   /**
 * Validation
 */
@@ -443,7 +465,7 @@
   /* ##################################################################################
  * Nextmatch widget
  *
- * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
+ * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT
  *
  * ##################################################################################*/
   .et2_nextmatch {
@@ -2337,10 +2359,10 @@ input,
 button {
   color: #000000;
   /*font-size:99%;*/
-  padding: 1px;
+  padding: 2px 0px;
   border-width: 1px;
   border-style: solid;
-  border-color: #cdcdcd;
+  border-color: #e6e6e6;
 }
 select {
   /*font-size:100%;*/
@@ -2752,7 +2774,7 @@ input[type=button]:active {
 }
 /* ########################################################################################
  * Content Element
- * Button mit Bildern 
+ * Button mit Bildern
  *
  ######################################################################################## */
 button.et2_button_with_image {
@@ -3011,7 +3033,7 @@ button#filemanager-select_button[ok]:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 /* ########################################################################################
- * 
+ *
  * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
@@ -3124,8 +3146,8 @@ button#cancel:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 /* ########################################################################################
- * 
- * Button hinzufügen 
+ *
+ * Button hinzufügen
  *
  ######################################################################################## */
 button.add {
@@ -5173,6 +5195,8 @@ button.image_button {
 /*@import (reference) "def_content_elements.less";*/
 body {
   background-color: #ffffff;
+  background-image: url(../images/bgDialog.png);
+  background-repeat: repeat-x;
 }
 div#popupMainDiv {
   padding: 8px;
@@ -5230,7 +5254,16 @@ table.dialog-main-view {
 }
 /*###########################################
 #                                           #
-#     dialogHeader                         #
+#     dialogHeader                 app-img  #
+#############################################
+#                                           #
+#     dialogHeader2                         #
+#############################################
+#                                           #
+#     dialogHeader3                         #
+#############################################
+#                                           #
+#     dialogHeader4                         #
 #############################################
 #                                           #
 #                                           #
@@ -5244,31 +5277,29 @@ table.dialog-main-view {
 #   dialogOperators                        #
 #############################################
 #                                           #
-#    buttons                                #
-#                                           #
-#                                           #
+#  button | button | button         delete  #
 ##############################################*/
+tr.dialogHeader td,
+tr.dialogHeader2 td,
+tr.dialogHeader3 td,
+tr.dialogHeader4 td,
+tr.dialogOperators td {
+  padding: 5px 6px 5px 0;
+  vertical-align: middle;
+}
 /**********    Header Part ********************/
 .dialogHeader {
-  /*background-color: @egw_color_2_d;*/
-  /*.background-color-5-gray;*/
-  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
-  /* IE6-9 */
+  /*.gradient_thead;*/
   color: #000000;
   height: 40px;
-  /*img {.dimension_height_s;}*/
+}
+.dialogHeader img[src*="navbar"] {
+  padding: 0 0 0 15px;
+}
+.dialogHeader input[type="radio"],
+.dialogHeader input.et2_radiobox {
+  -webkit-appearance: none;
+  border: none;
 }
 .dialogHeader table.et2_grid {
   border-top: none;
@@ -5292,10 +5323,11 @@ table.dialog-main-view {
 .dialogHeader .et2_label {
   color: #000000;
   vertical-align: middle;
-  padding: 0px 0px 0px 9px !important;
+  padding: 0px 0px 0px 0px !important;
   /*margin-right: 57px;*/
   margin: 0px important;
   font-size: 1em;
+  text-align: right;
 }
 .dialogHeader td.space span img {
   background: #ffffff;
@@ -5312,12 +5344,11 @@ table.dialog-main-view {
   filter: gray;
   /* IE 6-9 */
 }
+/**********    Header Row2 - 4 ********************/
 tr.dialogHeader2,
 tr.dialogHeader3,
 tr.dialogHeader4 {
-  background-color: #ffffff !important;
-  border-top: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
+  background-color: #f2f2f2 !important;
   vertical-align: middle;
 }
 tr.dialogHeader2 .et2_label,
@@ -5325,54 +5356,114 @@ tr.dialogHeader3 .et2_label,
 tr.dialogHeader4 .et2_label {
   color: #1a1a1a;
   vertical-align: middle;
-  padding: 0px 0px 0px 9px !important;
+  padding: 0px 0px 0px 0px !important;
   /*margin-right: 55px;*/
   margin: 0px;
   font-size: 1em;
   width: 50px !important;
 }
 /************* Tabs  *********************************/
-.dialogTabs {
-  /*.background-color-5-gray;*/
-  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
-  /* IE6-9 */
+/**
+ * Tabs widget
+ */
+.et2_tabheader {
+  padding-left: 0em;
+  border-bottom: 1px solid #bfbfbf;
+  margin: 0;
+  background-image: none;
+  background-color: #ffffff;
+}
+.et2_tabheader :first-child {
+  margin-left: 0px;
+}
+.et2_tabflag {
+  margin: 1em 3px -1px 0;
+  padding: 4px;
+  background-color: #b4b4b4;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  min-width: 73px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 3px;
+  /*.background-clip(padding-box);*/
+}
+.et2_tabflag:hover {
+  color: #808080;
+  background-color: #bfbfbf;
+}
+.et2_tabflag:active {
+  background-color: #ffffff;
+  color: #ffffff;
+}
+.et2_tabflag.active {
+  border-spacing: 0px;
+  background-color: white;
   color: #000000;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #505050;
+}
+.et2_tabflag.active:hover {
+  color: #000000;
+  background-color: white;
+}
+.et2_tabs {
+  /*border-width: 0px 1px 1px 1px;*/
+  /*border-style: solid;*/
+  border-color: #b4b4b4;
+  /*padding: 5px;*/
+  /*overflow-y: auto;*/
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 11px;
 }
 /************* Main  **********************************/
 .dialogMainTimeframe div {
   min-height: 100px;
 }
 /**********    Operators *******************************/
+/*#############################################
+#   dialogOperators                        #
+#############################################*/
 .dialogOperators {
-  background-color: rgba(230, 230, 230, 0.02);
+  background-color: #e6e6e6;
   border-top: 0px solid #e6e6e6;
   border-bottom: 0px solid #e6e6e6;
 }
 .dialogOperators td {
-  padding: 2px;
+  padding: 2px 2px;
+}
+.dialogOperators .et2_label {
+  margin-left: 6px;
+  display: block;
 }
 /**********    Footer  *******************************/
-/*Buttons / Toolbar*/
+/*#############################################*/
+/*#  Toolbar                                  #*/
+/*#  button | button | button         delete  #*/
+/*##############################################*/
 .dialogFooterToolbar {
   background-color: #679fd2;
   margin: 10px 0 0 0;
   padding: 3px;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
+  /*label.et2_label {}*/
 }
 .dialogFooterToolbar td {
-  padding: 0px 5px;
+  padding: 0px 5px 0px 0px;
 }
 .dialogFooterToolbar button {
   height: 24px;
@@ -5389,16 +5480,6 @@ tr.dialogHeader4 .et2_label {
 }
 .dialogFooterToolbar div.et2_hbox {
   white-space: normal;
-}
-.dialogFooterToolbar label.et2_label {
-  /*        .Complete_Button_input;
-        .border_normal;
-	.box_shadow_standard_light;
-	.color-100-gray;
-        .background-color-10-gray;*/
-  padding: 6px 5px 6px 0;
-  position: relative;
-  top: 11px;
 }
 .dialogFooterToolbar input.et2_checkbox {
   top: 0px;

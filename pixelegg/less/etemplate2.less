@@ -72,6 +72,31 @@ div.et2_hbox_right {
 }
 
 /**
+ * img Icons
+ */
+a.et2_url {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  cursor: pointer;
+  margin: -4px;
+  padding: 2px;
+  padding-left: 16px;
+  margin-left: -10px;
+}
+a.et2_url.email {
+  background-image: url(../images/email.png);
+}
+a.et2_url.phone {
+  background-image: url(../images/phone.png);
+}
+a.et2_url.url {
+  background-image: url(../images/url.png);
+}
+
+
+
+/**
  * Button widget - text only, and icon
  */
 .et2_button {
@@ -221,12 +246,12 @@ div.et2_link_entry{
 
 
 
-
+// defined in layout-dialog.less
 /**
  * Tabs widget
  */
 
-.et2_tabflag {
+/*.et2_tabflag {
     margin: 1em 3px -1px 0;
     padding: 4px;
     .background_color_25_gray;
@@ -237,7 +262,7 @@ div.et2_link_entry{
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    min-width: 73px; 
+    min-width: 73px;
    &:hover {
         .color_5_gray;
         .background_color_25_gray;
@@ -264,17 +289,17 @@ div.et2_link_entry{
 }
 
 .et2_tabs {
-    /*border-width: 0px 1px 1px 1px;*/
-    /*border-style: solid;*/
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
     border-color: @gray_70;
-    /*padding: 5px;*/
-    /*overflow-y: auto;*/
+    padding: 5px;
+    overflow-y: auto;
     background-color: @gray_0;
     .border_radius_button_normal;
-}
+}*/
 
-
-.et2_tabheader {
+// defined in layout-dialog.less
+/*.et2_tabheader {
     padding-left: 0em;
     border-bottom: 1px solid #bfbfbf;
     margin: 0 2px;
@@ -282,7 +307,7 @@ div.et2_link_entry{
     :first-child {
         margin-left: 1px;
     }
-}
+}*/
 
 /**
 * Validation
@@ -313,7 +338,7 @@ hr {
     /*	border: 1px dashed silver;*/
 
     .gray {
-        padding: 0px; 
+        padding: 0px;
         .dimension_height_m;
         /*background-color: @color_hint;*/
         .gradient_thead;
@@ -328,7 +353,7 @@ hr {
 /* ##################################################################################
  * Nextmatch widget
  *
- * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT 
+ * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT
  *
  * ##################################################################################*/
 
@@ -348,7 +373,7 @@ hr {
 }
 
 
-// ALL images 
+// ALL images
 .et2_nextmatch > img {.dimension_width_height_s;}
 
 
@@ -559,20 +584,20 @@ hr {
     margin: 6px 11px 0;
     padding: 0 20px;
     text-align: center;
-    
+
     .fontsize_normal;
     .border_normal;
     .rounded (3px);
     color: @gray_100;
-    
-    
-    
+
+
+
     // count number
     span {
         .fontsize_normal;
         top: 4px;
         position: relative;
-    }  
+    }
 }
 
 
@@ -587,26 +612,26 @@ hr {
 
 
 div#admin-categories-index{
-    
+
     padding: 0px;
-    
-    // save space above nextmatch 
+
+    // save space above nextmatch
     // set height to zero
     div.ui-helper-clearfix { height: 0px;}
-    
+
     // move add button
     div.et2_hbox_right {
                         margin-right: 0;
                         padding: 0;
                         }
-    
+
 }
 
 /*ADD Button*/
 button#admin-categories-index_add {
             .Complete_Button_add_only_plus;
             .dimension_height_m;
-            margin: 6px 2px;            
+            margin: 6px 2px;
             &:hover {.Complete_Button_add_only_plus_hover;}
             &:active {background-color: @color_positive_action_active !important;}
 }
@@ -670,7 +695,7 @@ button#admin-categories-index_add {
                 right: 1px;
                 top: 3px;
                 }
-                
+
              /*&:hover {.Complete_Button_save_apply_copy;}*/
              &:active {background-color: @color_positive_action_active;}
 
@@ -707,7 +732,7 @@ button#admin-categories-index_add {
                                     margin-left: 0px;
                                     min-height: 16px;
                                     padding: 3px 0px;
-            
+
                                     // gelb
                                     &:hover{
                                             .color_100_gray;
@@ -715,58 +740,58 @@ button#admin-categories-index_add {
                                             padding: 3px 0;
 
                                         }
-                                      
+
                                         a{
-               
+
                                                 line-height: inherit;
                                                 padding: 2px 0px;
-                                                
-                                                
+
+
                                                 // Heart
                                                 div.ui-icon-heart {background-image: url(../images/personal.png); background-size: 12px 12px;background-position: 0 0;}
 
                                                 // Bulltpoints
                                                 div.sideboxstar {
-                                                                width: 3px; 
-                                                                height: 11px; 
-                                                                margin-left: 3px; 
-                                                                background-image: url(../images/bullet.png); 
+                                                                width: 3px;
+                                                                height: 11px;
+                                                                margin-left: 3px;
+                                                                background-image: url(../images/bullet.png);
                                                                 background-size: 12px 12px;
-                                                                background-position: 0 0; 
+                                                                background-position: 0 0;
                                                                 background-repeat: no-repeat;
                                                             }
 
                                              }
-                                        
+
                                        // Aktuelle Ansicht als Favorit
-                                       img {.dimension_width_height_xs; margin-left: 4px;} 
-                                       
+                                       img {.dimension_width_height_xs; margin-left: 4px;}
+
                                        // Filter aufheben
                                        [data-id="blank"]{
-                         
+
                                                         div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
 
                                                     }
-                                       
-                                        
+
+
                                      } // Ende li
-                      
+
                      // Filter aufheben
                      li:first-child{
-                        a div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;} 
+                        a div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
                         a div.sideboxstar {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
-                         
+
                      }
 
         }
 } // sidebox-favorites
 
-// Favorites in nextmatch Header 
+// Favorites in nextmatch Header
 .favorites{
-    
+
     img {.dimension_width_height_xs;}
-    
-}  
+
+}
 
 
 // Arrow up and down for sorting

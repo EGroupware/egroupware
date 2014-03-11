@@ -28,7 +28,7 @@
     small, strike, strong, sub, sup, tt, var,
     b, u, i, center,
     dl, dt, dd, ol, ul, li,
-    form, label, 
+    form, label,
     table, caption, tbody, tfoot, thead, tr, th, td,
     article, aside, canvas, details, embed,
     figure, figcaption, footer, header, hgroup,
@@ -66,7 +66,7 @@
 
     *::-webkit-input-placeholder {
         color:@gray_60;
-    }    
+    }
     *:-moz-placeholder {
         /* FF 4-18 */
         color: @gray_60;
@@ -74,7 +74,7 @@
     *::-moz-placeholder {
         /* FF 19+ */
         color: @gray_60;
-    }    
+    }
     *:-ms-input-placeholder {
         /* IE 10+ */
         color: @gray_60;
@@ -103,12 +103,12 @@ html * {
 
 // verhindert Scrollbars und gibt content volle höhe
 html {
-    
+
     margin: 0px !important;
     padding: 0px !important;
     width: 99% !important;
     height: 99% !important;
-    
+
 }
 
 body{
@@ -123,10 +123,10 @@ body{
     height: 99% !important;
     font-size: 11px;
     line-height: 1.28;
-    
+
 }
 
-body, 
+body,
 textarea {
     .basefontfamily;
 }
@@ -289,9 +289,9 @@ div.selectbox-wrapper {
 }
 
 
-  
-  
-  
+
+
+
 
 
 
@@ -438,10 +438,10 @@ select,input,button
 {
     .color_100_gray;
     /*font-size:99%;*/
-    padding: 1px;
+    padding: 2px 0px;
     border-width: 1px;
     border-style: solid;
-    border-color: @gray_20;
+    border-color: @gray_10;
 }
 
 select
@@ -520,7 +520,7 @@ a.textSidebox,
 
 
 hr.clearer {
-    
+
     clear: both;
     height: 20px;
     width: 100%;
@@ -594,7 +594,7 @@ form
 img
 {
     border:0;
-    
+
 }
 
 /*SVG Filter / not for Logo */
@@ -602,7 +602,7 @@ img
             .gradient_vertical (@gray_60, @gray_60);
             .rounded(3px);
             border: 1px solid @gray_0;;
-}     
+}
 
 #egw_fw_main img[src$="svg"],
 #egw_fw_footer img[src$="svg"]{
@@ -866,8 +866,8 @@ a.textSidebox
     border-top:solid 1px #9c9c9c;
     border-left:solid 1px #9c9c9c;
     border-right:solid 1px #9c9c9c;
-    
-    
+
+
    table img {.dimension_height_s;}
 }
 
@@ -889,22 +889,22 @@ a.textSidebox
 
 .pageGenTime,#divPoweredBy
  	  	 {
- 	         font-size: 80%; 	         
- 	         color: #ff0000; 	        
+ 	         font-size: 80%;
+ 	         color: #ff0000;
  	  	 text-align: center;
  	  	 }
- 	  	 
+
  	  	 .pageGenTime {
  	  	         margin-top: 1em;
  	  	 }
- 	  	 
+
  	  	 .pageGenTime > span:after {
  	  	         content: ", ";
  	  	 }
- 	  	 
+
  	  	 .pageGenTime > span:last-child:after {
  	  	         content: "";
- 	 } 
+ 	 }
 
 
 // Button global for all and everything:
@@ -919,13 +919,13 @@ button{
  // siehe etemplate2.less
 }
 
-button.et2_button_text, 
+button.et2_button_text,
 input[type=button] {
-    
+
         background-image[src$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
-    
-        &:hover{ 
-            /*background-color: @gray_30;*/ 
+
+        &:hover{
+            /*background-color: @gray_30;*/
             text-shadow: 0px 0px;
             color: @gray_0;
             .box_shadow_standard_light_hover;
@@ -934,29 +934,29 @@ input[type=button] {
            }
 
         &:active {.box_shadow_standard_light_active !important;}
-    
+
 }
 
 /* ########################################################################################
  * Content Element
- * Button mit Bildern 
+ * Button mit Bildern
  *
  ######################################################################################## */
-button.et2_button_with_image{ 
+button.et2_button_with_image{
         .Complete_Button_text_icon_before;
         background-repeat: no-repeat !important;
         background-position: 6px center;
         background-size: 20px 20px;
         background-color: @gray_10;
         background-color[url$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
-    
+
 }
 
 /* ########################################################################################
  * Content Element
  * Button löschen / delete / => color-negative-action // red
  *
- ######################################################################################## */ 
+ ######################################################################################## */
 
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
@@ -970,21 +970,21 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete
 {
- .Complete_Button_delete;           
+ .Complete_Button_delete;
 }
 
 /* ########################################################################################
  * Content Element
  * Button edit + save + apply + copy => color-positive-action // green
  *
- ######################################################################################## */            
- 
+ ######################################################################################## */
+
 button[id*="save"],
 button[id*="apply"],
 button[id*="copy"],
 button[id*="edit_button[edit]"],
 button.et2_button{
-    
+
         .Complete_Button_save_apply_copy;
 }
 
@@ -997,21 +997,21 @@ button#filemanager-select_button[ok]{
 #passwordchange {
      background-image:url('../images/cancel.png') !important;
     .Complete_Button_text_icon_before;
-    
+
     &:hover {background-color: @color_positive_action_active !important; .box_shadow_standard_light_hover;}
     &:active {background-color: @color_positive_action_active !important; .box_shadow_standard_light_inset;}
 
-    
+
 }
 
 
 
 /* ########################################################################################
- * 
+ *
  * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
- 
+
 button[id*="cancel"],
 button[id*="importexport-wizardbox_button[previous]"],
 button#cancel,
@@ -1028,7 +1028,7 @@ button.et2_button_question{
 /*div.et2_box_widget .et2_button_text:last_child,*/
 button[id="cancel"],
 button#cancel{
-    
+
                .Complete_Button_cancel;
 }
 
@@ -1037,16 +1037,16 @@ button#cancel{
 #passwordcancel {
      background-image:url('../images/cancel.png') !important;
     .Complete_Button_text_icon_before;
-    
+
     &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
     &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
 
-    
+
 }
 
 /* ########################################################################################
- * 
- * Button hinzufügen 
+ *
+ * Button hinzufügen
  *
  ######################################################################################## */
 
@@ -1057,7 +1057,7 @@ button.add {
 button[id="add"]{
                 background-image:url('../images/add.png') !important;
                 .Complete_Button_text_icon_before;
-                
+
                 &:active {background-color: @color_positive_action_active !important;}
 }
 
@@ -1077,23 +1077,23 @@ button[id="add"]{
 
 /*dhtml Submenu ##########################################################*/
 div.dhtmlxMenu_egw_SubLevelArea_Polygon{
-    
+
     table.dhtmlxMebu_SubLevelArea_Tbl{
-        
+
         tr.sub_item  {
-                
-        
+
+
                 td.sub_item_icon{
                                 img[src*="svg"]{background-color: @gray_100; .gradient_vertical (@gray_90, @gray_90);}
                                 .img_filter_gray;
                                 }
         }
-        
+
         tr.sub_item_selected  {
-            background-color: @egw_color_1_a !important; 
+            background-color: @egw_color_1_a !important;
             background-image: none !important;}
     }
-    
+
 }
 
 
@@ -1140,12 +1140,12 @@ table.table_passord_change{
     margin: 1em;
     tr {height: 50px;}
     td:first-child{ padding-right: 4em;}
-    
+
 }
 
 
- /*z.b. Dateimanager overlay*/ 
- 
+ /*z.b. Dateimanager overlay*/
+
 .egwGridView_grid span.iconOverlayContainer {
 	margin: 2px 5px 2px 2px;
 	position: relative;
@@ -1178,7 +1178,7 @@ table.table_passord_change{
 	padding: 0;
         height: 9px;
         width: 11px;
-        
+
 }
 
 
@@ -1194,5 +1194,5 @@ table.table_passord_change{
                 background-size: 20px auto;
             }
 }
- 
+
 // 
