@@ -1084,8 +1084,8 @@ abstract class bo_merge
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
-				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2>$4</table:table-cell>';
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2 calcext:value-type="float"><$3>$4</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':		// tables in open office writer
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
