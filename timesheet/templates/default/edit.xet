@@ -4,10 +4,11 @@
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" height="165">
 			<columns>
-				<column width="102"/>
+				<column width="90"/>
 				<column width="200"/>
-				<column width="102" disabled="@ts_viewtype"/>
-				<column width="200" disabled="@ts_viewtype"/>
+				<column width="10"/>
+				<column width="95" disabled="@ts_viewtype"/>
+				<column width="130" disabled="@ts_viewtype"/>
 				<column width="40"/>
 				<column width="30"/>
 			</columns>
@@ -17,6 +18,7 @@
 					<hbox disabled="@pm_integration=none">
 						<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None' class="et2_fullWidth"/>
 					</hbox>
+					<description/>
 					<hbox disabled="@pm_integration=full" span="all">
 						<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="et2_fullWidth"/>
 					</hbox>
@@ -26,6 +28,7 @@
 					<hbox disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
 					</hbox>
+					<description/>
 					<hbox disabled="@pm_integration=none">
 						<textbox type="float" id="ts_unitprice" span="all" class="et2_fullWidth"/>
 					</hbox>
@@ -40,6 +43,7 @@
 				<row class="row" disabled="@ts_viewtype">
 					<description value="Quantity" for="ts_quantity"/>
 					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" class="et2_fullWidth"/>
+					<description/>
 					<description value="Category" for="cat_id"/>
 					<menulist span="all">
 						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"  class="et2_fullWidth"/>
@@ -87,10 +91,11 @@
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
-				<column width="107"/>
+				<column width="97"/>
 				<column width="200"/>
-				<column width="107"/>
-				<column width="200"/>
+				<column width="10"/>
+				<column width="97"/>
+				<column width="130"/>
 				<column width="40"/>
 				<column width="30"/>
 				<column width="4"/>
@@ -98,22 +103,24 @@
 			<rows>
 				<row class="dialogHeader" disabled="@ts_viewtype">
 					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="3"/>
-					<appicon src="timesheet"/>
-					<textbox type="integer" id="ts_id" readonly="true" class="timesheet_timesheetId"/>
-					<description />
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="4"/>
+					<description font_style="n" id="ts_id" />
+					<appicon class="timesheet_appicon"/>
+					<description/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Date" for="ts_start"/>
 					<date id="ts_start" needed="1" options=",8" class="et2_fullWidth"/>
+					<description/>
 					<description value="Starttime"/>
 					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth" span="3"/>
 					<description/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Duration" for="ts_duration"/>
-					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth noWrap" />
-					<description value="or endtime" class="noWrap"/>
+					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth" />
+					<description/>
+					<description value="or endtime" class="et2_noWrap"/>
 					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth" span="3"/>
 					<description/>
 				</row>
@@ -141,6 +148,7 @@
 					<menulist >
 						<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
 					</menulist>
+					<description/>
 					<description value="Status"/>
 					<menulist span="3">
 						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" options="please select" />
@@ -149,12 +157,13 @@
 				</row>
 				<row class="dialogOperators" disabled="!@ts_modified">
 					<description value="Last modified"/>
-					<hbox width="100%" class="timesheet_modifier">
+					<hbox width="100%">
 						<menulist>
 							<menupopup type="select-account" id="ts_modifier" readonly="true"/>
 						</menulist>
-						<date-time id="ts_modified" readonly="true"/>
+						<date-time id="ts_modified" readonly="true" align="right"/>
 					</hbox>
+					<description/>
 					<description span="all"/>
 				</row>
 				<row class="dialogFooterToolbar">

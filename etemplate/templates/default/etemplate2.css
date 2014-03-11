@@ -1377,6 +1377,10 @@ ul.et2_nowrap, div.et2_nowrap{
 	top: 8px;
 }
 
+.et2_fullWidth input.et2_date_duration {
+	float: left;
+}
 .et2_fullWidth select.et2_date_duration {
-	width: 79%;
+	width: 77%;
+	float: right;
 }

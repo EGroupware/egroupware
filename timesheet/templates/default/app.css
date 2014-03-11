@@ -15,23 +15,11 @@ tr.dialogOperators td,.dialogFooterToolbar {
 
 div#timesheet-edit.et2_container
 {
-	width: 688px;
+	width: 628px;
 }
 
 //** add # sign behind the ts_id
-.timesheet_timesheetId:before span { content:"#"; }
-
-//** Fit the duration selectbox and input fields together
-#timesheet-edit_ts_duration, #timesheet-edit_ts_duration select
-{
-	width:74%;
-	white-space: noWrap;
-}
-
-#timesheet-edit_ts_duration input
-{
-	width:4em !important;
-}
+.timesheet_timesheetId:before span{ content:"#"; }
 
 //** make the modifier inline
 .timesheet_modifier label
