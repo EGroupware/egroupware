@@ -5459,6 +5459,7 @@ tr.dialogHeader4 .et2_label {
   background-color: #679fd2;
   margin: 10px 0 0 0;
   padding: 3px;
+  white-space: nowrap;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
   /*label.et2_label {}*/
 }
@@ -5480,6 +5481,9 @@ tr.dialogHeader4 .et2_label {
 }
 .dialogFooterToolbar div.et2_hbox {
   white-space: normal;
+}
+.dialogFooterToolbar div.et2_box_widget {
+  white-space: nowrap;
 }
 .dialogFooterToolbar input.et2_checkbox {
   top: 0px;
