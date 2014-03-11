@@ -2285,10 +2285,15 @@ window.egw_LAB.wait(function() {
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
-		$GLOBALS['egw']->hooks->process(array(
-			'location' => 'addressbook_view',
-			'ab_id'    => $content['id']
-		));
+		// Only load this on first time - we're using AJAX, so it stays there through submits.
+		// Sending it again (via ajax) will break the addressbook.view etemplate2
+		if($contact_id)
+		{
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'addressbook_view',
+				'ab_id'    => $content['id']
+			));
+		}
 	}
 
 	/**
