@@ -455,4 +455,32 @@ img.iphoto {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
   }
+  /*###########################################
+#                                           #
+#      dialogHeader                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#      dialog                               #
+#                                           #
+#                                           #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+  div.addressbook_edit_general_picture img {
+    top: -4px;
+    width: 70px;
+    height: auto;
+    left: 7px;
+  }
+  #addressbook-edit_addressbook-edit-general .et2_label {
+    margin-right: 6px;
+    display: block;
+  }
 }
