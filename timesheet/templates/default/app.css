@@ -4,6 +4,13 @@
  * @version: $Id$
  */
 
+// Header classes
+tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
+tr.dialogOperators td,.dialogFooterToolbar {
+	padding: 5px 0 5px 0;
+	vertical-align: middle;
+}
+
 .timesheet_titleSum,.timesheet_titleDetails { font-weight: bold; }
 
 div#timesheet-edit.et2_container
