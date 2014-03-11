@@ -85,13 +85,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		"header_left": {
 			"name": "Left custom template",
 			"type": "string",
-			"description": "Customise the nextmatch - left side.  Provided template becomes a child of nextmatch, and any input widgets with onChange can trigger the nextmatch to refresh by returning true.",
+			"description": "Customise the nextmatch - left side.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
 		"header_right": {
 			"name": "Right custom template",
 			"type": "string",
-			"description": "Customise the nextmatch - right side.  Provided template becomes a child of nextmatch, and any input widgets with onChange can trigger the nextmatch to refresh by returning true.",
+			"description": "Customise the nextmatch - right side.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
+			"default": ""
+		},
+		"header_row": {
+			"name": "Inline custom template",
+			"type": "string",
+			"description": "Customise the nextmatch - inline, after row count.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
 		"onselect": {
@@ -1459,10 +1465,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	set_header_left: function(template) {
-		this.header._build_left_right("left",template);
+		this.header._build_header("left",template);
 	},
 	set_header_right: function(template) {
-		this.header._build_left_right("right",template);
+		this.header._build_header("right",template);
+	},
+	set_header_row: function(template) {
+		this.header._build_header("row",template);
 	},
 	set_no_filter: function(bool, filter_name) {
 		if(typeof filter_name == 'undefined')
@@ -1753,27 +1762,22 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		this.div.prependTo(nm_div);
 
-		// Record count
-		this.count = jQuery(document.createElement("span"))
-			.addClass("header_count ui-corner-all");
-
-		// Need to figure out how to update this as grid scrolls
-		// this.count.append("? - ? ").append(egw.lang("of")).append(" ");
-		this.count_total = jQuery(document.createElement("span"))
-			.appendTo(this.count)
-			.text(settings.total + "");
-		this.count.prependTo(this.div);
-
-		// Set up so if row count changes, display is updated
-		// Register the handler which will update the "totalCount" display
-
-		// Left & Right headers
+		// Left & Right (& row) headers
 		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
-		this.headers = [{id:this.nextmatch.options.header_left}, {id:this.nextmatch.options.header_right}];
+		this.headers = [
+			{id:this.nextmatch.options.header_left},
+			{id:this.nextmatch.options.header_right},
+			{id:this.nextmatch.options.header_row}
+		];
+
+		// The rest of the header
+		this.row_div = jQuery(document.createElement("div"))
+			.addClass("nextmatch_header_row")
+			.appendTo(this.div);
 
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
-			.appendTo(this.div)
+			.appendTo(this.row_div)
 			.addClass("search");
 		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
 		this.search.input.attr("type", "search");
@@ -1784,9 +1788,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					self.nextmatch.applyFilters({search: self.search.getValue()});
 				}
 			});
-
-		this.filters = jQuery(document.createElement("div")).appendTo(this.div)
-			.addClass("filters");
 
 		// Add category
 		if(!settings.no_cat) {
@@ -1804,6 +1805,21 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
 		}
 
+		// Other stuff
+		this.icons_div = jQuery(document.createElement("div"))
+			.addClass('icons').appendTo(this.row_div);
+
+		// Record count
+		this.count = jQuery(document.createElement("span"))
+			.addClass("header_count ui-corner-all");
+
+		// Need to figure out how to update this as grid scrolls
+		// this.count.append("? - ? ").append(egw.lang("of")).append(" ");
+		this.count_total = jQuery(document.createElement("span"))
+			.appendTo(this.count)
+			.text(settings.total + "");
+		this.count.prependTo(this.icons_div);
+
 		// Favorites
 		this._setup_favorites(settings['favorites']);
 
@@ -1815,8 +1831,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().getAppName());
 			}
-			var button = et2_createWidget("buttononly", {id: "export", "label": "Export", image:"phpgwapi/filesave"}, this.nextmatch);
-			jQuery(button.getDOMNode()).appendTo(this.filters).css("float", "right")
+			var button = et2_createWidget("buttononly", {id: "export", "label": "Export", image:"phpgwapi/filesave"}, this);
+			jQuery(button.getDOMNode())
 				.click(this.nextmatch, function(event) {
 					egw_openWindowCentered2( egw.link('/index.php', {
 						'menuaction':	'importexport.importexport_export_ui.export_dialog',
@@ -1834,6 +1850,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			self.nextmatch.applyFilters({search: self.search.getValue()});
 		};
 
+		// Another place to customize nextmatch
+		this.header_row = jQuery(document.createElement("div"))
+			.addClass('header_row').appendTo(this.row_div);
 
 		// Letter search
 		var current_letter = this.nextmatch.options.settings.searchletter ?
@@ -1881,20 +1900,27 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	},
 
 
-	_build_left_right: function(left_or_right, template_name)
+	/**
+	 * Build & bind to a sub-template into the header
+	 *
+	 * @param {string} location One of left, right, or row
+	 * @param {string} template_name Name of the template to load into the location
+	 */
+	_build_header: function(location, template_name)
 	{
-		var existing = this.headers[left_or_right == "left" ? 0 : 1];
+		var id = location == "left" ? 0 : (location == "right" ? 1 : 2);
+		var existing = this.headers[id];
 		if(existing && existing._type)
 		{
 			if(existing.id == template_name) return;
 			existing.free();
-			this.headers[this.headers.indexOf(existing)] = '';
+			this.headers[id] = '';
 		}
 
 		// Load the template
 		var header = et2_createWidget("template", {"id": template_name}, this);
-		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
-		this.headers[left_or_right == "left" ? 0 : 1] = header;
+		jQuery(header.getDOMNode()).addClass(location == "left" ? "et2_hbox_left": location=="right" ?"et2_hbox_right":'').addClass("nm_header");
+		this.headers[id] = header;
 		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
 			//header.loadingFinished();
 			this._bindHeaderInput(header);
@@ -2032,7 +2058,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
 		// Add into header
-		$j(this.favorites.getDOMNode(this.favorites)).insertAfter(this.count).css("float","right");
+		$j(this.favorites.getDOMNode(this.favorites)).appendTo(this.icons_div).css("float","right");
 	},
 
 	/**
@@ -2136,17 +2162,18 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		{
 			if(_sender == filters[i])
 			{
-				// Give them the filter div
-				return this.filters[0];
+				// Give them the row div
+				return this.row_div[0];
 			}
 		}
 		if(_sender == this.search || _sender == this.search_button) return this.search_box[0];
+		if(_sender.id == 'export') return this.icons_div[0];
 
 		if(_sender && _sender._type == "template")
 		{
 			for(var i = 0; i < this.headers.length; i++)
 			{
-				if(_sender.id == this.headers[i].id && _sender._parent == this) return this.header_div[0];
+				if(_sender.id == this.headers[i].id && _sender._parent == this) return i == 2 ? this.header_row[0] : this.header_div[0];
 			}
 		}
 		return null;

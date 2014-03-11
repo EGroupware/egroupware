@@ -856,14 +856,8 @@ div.message.floating {
   background-color: transparent;
   margin-bottom: 3px;
 }
-.et2_nextmatch .nextmatch_header > .filters {
-/* no background
-  border: 1px solid silver;
-  background-color: #E0E0E0;
-  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
-  background-position: center;
-  background-repeat: repeat-x;
-  margin-bottom: 3px;*/
+.et2_nextmatch .nextmatch_header_row > div {
+	display: inline-block;
 }
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
