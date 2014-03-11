@@ -142,7 +142,7 @@
 							</row>
 							<row >
 								<description value="Parent" font_style="1"/>
-								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth noWrap infolog_searchParent"/>
+								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth"/>
 							</row>
 							<row class="row">
 								<description value="Priority" for="info_priority"/>
@@ -190,13 +190,13 @@
 				<column width="30"/>
 			</columns>
 			<rows>
-				<row>
+				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"/>
 					<appicon src="infolog" for="info_number"/>
 					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
 				</row>
-				<row>
+				<row class="dialogHeader2">
 					<description value="Type" for="info_type"/>
 					<menulist class="et2_fullWidth">
 						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1" />
@@ -204,7 +204,7 @@
 					<description value="Contact"/>
 					<link-entry id="info_contact" span="all"/>
 				</row>
-				<row>
+				<row class="dialogHeader2">
 					<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
 					<description value="Enddate" for="info_enddate"/>
@@ -233,7 +233,7 @@
 				<row class="th" disabled="1">
 					<description value="Dates, Status, Access" span="all"/>
 				</row>
-				<row>
+				<row class="dialogOperators">
 					<description value="Status" for="info_status"/>
 					<menulist class="et2_fullWidth">
 						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
@@ -243,7 +243,7 @@
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 				</row>
-				<row disabled="!@info_owner">
+				<row class="dialogOperators" disabled="!@info_owner">
 					<description value="Owner"/>
 					<hbox>
 						<menulist class="et2_nowrap">
@@ -259,7 +259,7 @@
 						<date-time id="info_datemodified" readonly="true"/>
 					</hbox>
 				</row>
-				<row>
+				<row class="dialogFooterToolbar">
 					<hbox span="5">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
