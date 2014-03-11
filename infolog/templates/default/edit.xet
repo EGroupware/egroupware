@@ -89,7 +89,7 @@
 			<rows>
 				<row height="20" class="th">
 					<description value="Delegation" class="et2_fullWidth"/>
-					<description value="Details" class="et2_fullWidth"/> 
+					<description value="Details" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<grid>
@@ -167,7 +167,7 @@
 								<hbox>
 									<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="et2_fullWidth _inputFullWidth"/>
 								</hbox>
-							</row>	
+							</row>
 							<row>
 								<description value="Private" for="info_access"/>
 								<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
@@ -193,8 +193,8 @@
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"/>
-					<appicon src="infolog" for="info_number"/>
 					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
+                                        <appicon src="infolog" for="info_number"/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Type" for="info_type"/>
@@ -204,8 +204,8 @@
 					<description value="Contact"/>
 					<link-entry id="info_contact" span="all"/>
 				</row>
-				<row class="dialogHeader2">
-					<description value="Startdate" for="info_startdate"/>
+				<row class="dialogHeader3">
+                			<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
 					<description value="Enddate" for="info_enddate"/>
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="all"/>
@@ -243,7 +243,7 @@
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 				</row>
-				<row class="dialogOperators" disabled="!@info_owner">
+				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
 					<hbox>
 						<menulist class="et2_nowrap">
@@ -269,7 +269,7 @@
 						</menulist>
 						<checkbox label="Do not notify of these changes" id="no_notifications"/>
 					</hbox>
-					 
+
 					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 				</row>
 			</rows>
