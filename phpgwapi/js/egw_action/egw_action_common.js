@@ -343,12 +343,14 @@ function egwFnct(_context, _default, _acceptedTypes)
 	this.acceptedTypes = _acceptedTypes;
 	this.fnct = null;
 	this.value = null;
+	// Flag for if this action is using a default handler
+	this.isDefault = false;
 	this.setValue(_default);
 }
 
 egwFnct.prototype.hasHandler = function()
 {
-	return this.fnct !== null;
+	return this.fnct !== null && !this.isDefault;
 }
 
 /**

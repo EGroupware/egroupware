@@ -534,6 +534,7 @@ egwAction.prototype.setDefaultExecute = function(_value)
 	// Check whether the onExecute handler of this action should be set
 	if (this.type != "actionManager" && !this.onExecute.hasHandler())
 	{
+		this.onExecute.isDefault = true;
 		this.onExecute.setValue(_value);
 	}
 
