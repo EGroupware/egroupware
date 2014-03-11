@@ -301,12 +301,14 @@ var AppJS = Class.extend(
 				// removed .on("mouse(enter|leave)" (wrapping trash icon), as it stalls delete in IE11
 				.on("click","div.ui-icon-trash", this, this.delete_favorite)
 				// need to install a favorite handler, as we switch original one off with .off()
-				.on('click','li[data-id]', this, function(){
+				.on('click','li[data-id]', this, function(event) {
 					var href = jQuery('a[href^="javascript:"]', this).prop('href');
 					var matches = href ? href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
 					if (matches && matches.length > 1 && matches[2] !== undefined)
 					{
-						return self.setState.call(self, JSON.parse(matches[2]));
+						event.stopImmediatePropagation();
+						self.setState.call(self, JSON.parse(matches[2]));
+						return false;
 					}
 				})
 				.addClass("ui-helper-clearfix");
@@ -531,7 +533,7 @@ var AppJS = Class.extend(
 				$j("#filters",self.favorite_popup).empty();
 
 				$j(this).dialog("close");
-			},
+			}
 		};
 		buttons[this.egw.lang("cancel")] = function() {
 			if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
