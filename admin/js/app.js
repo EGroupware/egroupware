@@ -258,6 +258,7 @@ app.classes.admin = AppJS.extend(
 			ids.push(_senders[i].id.split('::').pop());	// remove "admin::" prefix
 		}
 		var app = egw.app_name();	// can be either admin or preferences!
+		if (app != 'admin') app = 'preferences';
 		var className = app+'_acl';
 
 		switch(_action.id)
