@@ -191,10 +191,12 @@ class felamimail_bo
 	 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 	 * @param object $_icServerObject=null
+	 * @param boolean $_reuseCache=null if null it is set to the value of $_restoreSession
 	 * @return object instance of felamimail_bo
 	 */
-	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true, $_icServerObject=null)
+	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true, $_icServerObject=null, $_reuseCache=null)
 	{
+		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
 		//special case; we get the desired object passed as we need it for the occasion.
 		if (!is_null($_icServerObject)&&(!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
@@ -366,9 +368,11 @@ class felamimail_bo
 	 * @param boolean $_restoreSession=true
 	 * @param int $_profileID=0
 	 * @param object $_icServerObject=null
+	 * @param boolean $_reuseCache=null if null it is set to the value of $_restoreSession
 	 */
 	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_icServerObject=null)
 	{
+		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
 		$this->profileID = $_profileID;
 		if (!is_null($_icServerObject))
 		{
@@ -392,8 +396,8 @@ class felamimail_bo
 			$lv_mailbox = $this->sessionData['mailbox'];
 			$firstMessage = $this->sessionData['previewMessage'];
 			$this->sessionData = array();
-			$this->forcePrefReload();
 		}
+		if (!$_reuseCache) $this->forcePrefReload();
 		//error_log(array2string(array($firstMessage,$lv_mailbox)));
 		// FIXME: this->foldername seems to be unused
 		//$this->foldername	= $this->sessionData['mailbox'];

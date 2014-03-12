@@ -158,7 +158,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$identities = array();
 		if (!isset($params['setup']))
 		{
-			if (!$this->mail) $this->mail = felamimail_bo::getInstance(true,(self::$profileID=='G'?emailadmin_bo::getUserDefaultProfileID():self::$profileID));
+			if (!$this->mail) $this->mail = felamimail_bo::getInstance(true,(self::$profileID=='G'?emailadmin_bo::getUserDefaultProfileID():self::$profileID),true,null,true);
 			$selectedID = $this->mail->getIdentitiesWithAccounts($identities);
 			if (self::$profileID=='G')
 			{
@@ -305,7 +305,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		{
 			$this->account = $account;
 			// todo: tell fmail which account to use
-			$this->mail = felamimail_bo::getInstance(false,self::$profileID);
+			$this->mail = felamimail_bo::getInstance(false,self::$profileID,true,null,true);
 			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			if (!$this->mail->openConnection(self::$profileID,false))
@@ -342,19 +342,20 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
 				if ($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'] > $this->waitOnFailureLimit )
 				{
-					header("HTTP/1.1 500 Internal Server Error");
 					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+					header("HTTP/1.1 500 Internal Server Error");
 					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
 				}
 				else
 				{
 					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.$this->backend->_devid.' should wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-					header("HTTP/1.1 503 Service Unavailable");
-					header("Retry-After: ".$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']);
+					$waitaslongasthis = $waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'];
 					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>(empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) * 2,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
+					header("HTTP/1.1 503 Service Unavailable");
+					header("Retry-After: ".$waitaslongasthis);
+					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 					_egw_log_exception($ethrown);
 					exit;
 				}
@@ -463,7 +464,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			return false;
 		}
 		// initialize our felamimail_bo
-		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID,true,null,true);
 		$activeMailProfile = $this->mail->mailPreferences->getIdentity(self::$profileID, true);
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
@@ -1452,7 +1453,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID,true,null,true);
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part);
@@ -1478,7 +1479,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false, self::$profileID);
+		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false, self::$profileID,true,null,true);
 
 		$this->mail->reopen($folder);
 		$att = $this->mail->getAttachment($id,$part);
@@ -1543,7 +1544,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$this->splitID($folderid, $account, $srcFolder);
 		$this->splitID($newfolderid, $account, $destFolder);
 		debugLog("IMAP-MoveMessage: (SourceFolder: '$srcFolder'  id: '$id'  DestFolder: '$destFolder' )");
-		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID,true,null,true);
 		$this->mail->reopen($destFolder);
 		$status = $this->mail->getFolderStatus($destFolder);
 		$uidNext = $status['uidnext'];
@@ -1878,7 +1879,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		if (is_numeric($account)) $type = 'felamimail';
 		if ($type != 'felamimail') return false;
 
-		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = felamimail_bo::getInstance(false,self::$profileID,true,null,true);
 
 		$changes = array();
         debugLog("AlterPingChanges on $folderid ($folder) stat: ". $syncstate);
