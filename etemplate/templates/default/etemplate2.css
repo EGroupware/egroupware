@@ -827,7 +827,7 @@ div.message.floating {
 .nextmatch_header .search {
 	padding-left: 1ex;
 }
-.nextmatch_header_row select {
+.nextmatch_header_row > select,.nextmatch_header_row > label > select {
 	max-width: 14%;
 	margin-right: 2ex;
 }
