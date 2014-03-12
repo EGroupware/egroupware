@@ -160,7 +160,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if (!isset($params['setup']))
 		{
 			$profileID=(self::$profileID=='G'?emailadmin_bo::getDefaultAccID():self::$profileID);
-			if (!$this->mail) $this->mail = mail_bo::getInstance(true,$profileID);
+			if (!$this->mail) $this->mail = mail_bo::getInstance(true,$profileID,true,false,true);
 			foreach($allIdentities as $key => $singleIdentity) {
 				if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
 				$iS = mail_bo::generateIdentityString($singleIdentity);
@@ -276,6 +276,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	private function _connect($account=0, $verify_mode=false)
 	{
 		static $waitOnFailure;
+		if (is_null($account)) $account = 0;
 		if ($this->mail && $this->account != $account) $this->_disconnect();
 
 		$hereandnow = egw_time::to('now','ts');
@@ -284,7 +285,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 		$connectionFailed = false;
 
-		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][$this->backend->_devid]))) $waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
+		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][$this->backend->_devid])))
+		{
+			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
+		}
 		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']))
 		{
 			if ($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']<$hereandnow)
@@ -303,7 +307,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			try
 			{
-				$this->mail = mail_bo::getInstance(false,self::$profileID);
+				$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 				if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 				$this->mail->openConnection(self::$profileID,false);
 				$connectionFailed = false;
@@ -335,7 +339,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			// in verify_moode, we want the exeption, but not the exit
 			if ($verify_mode)
 			{
-				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain']);
 			}
 			else
@@ -346,19 +349,20 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
 				if ($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'] > $this->waitOnFailureLimit )
 				{
-					header("HTTP/1.1 500 Internal Server Error");
 					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+					header("HTTP/1.1 500 Internal Server Error");
 					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
 				}
 				else
 				{
 					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.$this->backend->_devid.' should wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-					header("HTTP/1.1 503 Service Unavailable");
-					header("Retry-After: ".$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']);
+					$waitaslongasthis = $waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'];
 					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>(empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) * 2,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
+					header("HTTP/1.1 503 Service Unavailable");
+					header("Retry-After: ".$waitaslongasthis);
+					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 					_egw_log_exception($ethrown);
 					exit;
 				}
@@ -468,7 +472,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			return false;
 		}
 		// initialize our mail_bo
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
 		$activeMailProfile = array_shift($activeMailProfiles);
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
@@ -1031,7 +1035,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
 		//$this->debugLevel=4;
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$rv = $this->splitID($folderid,$account,$_folderName,$xid);
 		$this->mail->reopen($_folderName);
@@ -1468,7 +1472,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part);
@@ -1494,7 +1498,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false, self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false, self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
 		$att = $this->mail->getAttachment($id,$part);
@@ -1559,7 +1563,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$this->splitID($folderid, $account, $srcFolder);
 		$this->splitID($newfolderid, $account, $destFolder);
 		debugLog("IMAP-MoveMessage: (SourceFolder: '$srcFolder'  id: '$id'  DestFolder: '$destFolder' )");
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		$this->mail->reopen($destFolder);
 		$status = $this->mail->getFolderStatus($destFolder);
 		$uidNext = $status['uidnext'];
@@ -1894,7 +1898,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if (is_numeric($account)) $type = 'mail';
 		if ($type != 'mail') return false;
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$changes = array();
         debugLog("AlterPingChanges on $folderid ($folder) stat: ". $syncstate);
