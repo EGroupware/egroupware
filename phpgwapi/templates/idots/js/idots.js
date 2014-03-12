@@ -27,24 +27,27 @@ egw_LAB.wait(function() {
 		mouseHandler = data_slide_out == 'mouseover'?'mouseover':'click';
 	}
 	var extra_icons_show = 	jQuery('#extra_icons_show');
-	var menu1Container = jQuery('#menu1Container')
+	if (extra_icons_show.length)
+	{
+		var menu1Container = jQuery('#menu1Container')
 			.width(180)
 			.offset({top:extra_icons_show.offset().top+extra_icons_show.height()});
+		//Click handler for extra apps menu
+		extra_icons_show.on(mouseHandler,function (event){
+				var extraIcon = event;
+				$j('html').on(mouseHandler,function(event) {
+					if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target)
+					{
+						menu1Container.slideUp();
+						$j(this).unbind(event);
+					}
+				});
+				menu1Container.slideToggle();
+			}
+		);
+	}
 	var menu2show = jQuery('#menu2show');
 	var menu2Container = jQuery('#menu2Container');
-	//Click handler for extra apps menu
-	extra_icons_show.on(mouseHandler,function (event){
-			var extraIcon = event;
-			$j('html').on(mouseHandler,function(event) {
-				if ($j(event.target).parents('#menu1Container').length==0 && event.target !== extraIcon.target)
-				{
-					menu1Container.slideUp();
-					$j(this).unbind(event);
-				}
-			});
-			menu1Container.slideToggle();
-		}
-	);
 	// Click handler for sidebox menu
 	menu2show.on(mouseHandler,function (event){
 			var m2showIcon = event;
