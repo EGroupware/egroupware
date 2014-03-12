@@ -18,11 +18,6 @@
 class admin_acl
 {
 	/**
-	 * Appname we are running as
-	 */
-	const APPNAME = 'preferences';
-
-	/**
 	 * Methods callable via menuaction
 	 * @var array
 	 */
@@ -184,15 +179,15 @@ class admin_acl
 		}
 		elseif (!$old_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL added.'), static::APPNAME, null, 'add');
+			egw_framework::refresh_opener(lang('ACL added.'), 'admin', null, 'add');
 		}
 		elseif (!$added_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL deleted.'), static::APPNAME, $deleted_ids, 'delete');
+			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $deleted_ids, 'delete');
 		}
 		else
 		{
-			egw_framework::refresh_opener(lang('ACL updated.'), static::APPNAME, null, 'edit');
+			egw_framework::refresh_opener(lang('ACL updated.'), 'admin', null, 'edit');
 		}
 	}
 
@@ -220,18 +215,18 @@ class admin_acl
 		elseif (!$rights)	// all rights removed --> delete it
 		{
 			$this->acl->delete_repository($content['acl_appname'], $content['acl_location'], $content['acl_account']);
-			egw_framework::refresh_opener(lang('ACL deleted.'), static::APPNAME, $id, 'delete');
+			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
 		}
 		else
 		{
 			$this->acl->add_repository($content['acl_appname'], $content['acl_location'], $content['acl_account'], $rights);
 			if ($content['id'])
 			{
-				egw_framework::refresh_opener(lang('ACL updated.'), static::APPNAME, $id, 'edit');
+				egw_framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
 			}
 			else
 			{
-				egw_framework::refresh_opener(lang('ACL added.'), static::APPNAME, $id, 'add');
+				egw_framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
 			}
 		}
 	}

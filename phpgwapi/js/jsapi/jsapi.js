@@ -257,10 +257,13 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 		}
 
 		// Refresh target or current app too
-		var et2 = etemplate2.getByApplication(_targetapp || egw_appName);
-		for(var i = 0; i < et2.length; i++)
+		if ((_targetapp || egw_appName) != _app)
 		{
-			et2[i].refresh(_msg,_app,_id,_type);
+			var et2t = etemplate2.getByApplication(_targetapp || egw_appName);
+			for(var i = 0; i < et2t.length; i++)
+			{
+				et2t[i].refresh(_msg,_app,_id,_type);
+			}
 		}
 		//In case that we have etemplate2 ready but it's empty
 		if (et2.length >= 1)
