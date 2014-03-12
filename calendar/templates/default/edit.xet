@@ -355,7 +355,7 @@
 			<menulist>
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
-			<checkbox label="Do not notify of these changes" id="no_notifications"/>
+			<checkbox label="Do not notify" id="no_notifications"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 		</hbox>
 	</template>
