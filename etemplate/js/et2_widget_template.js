@@ -31,7 +31,7 @@ var et2_template = et2_DOMWidget.extend(
 		"template": {
 			"name": "Template",
 			"type": "string",
-			"description": "Name / ID of template",
+			"description": "Name / ID of template with optional cache-buster ('?'+filemtime of template on server)",
 			"default": et2_no_init
 		},
 		"group": {
@@ -82,7 +82,9 @@ var et2_template = et2_DOMWidget.extend(
 
 		if (this.id != "" || this.options.template)
 		{
-			var template_name = this.options.template || this.id;
+			var parts = (this.options.template || this.id).split('?');
+			var cache_buster = parts.length > 1 ? parts.pop() : null;
+			var template_name = parts.pop();
 
 			// Check to see if XML is known
 			var xml = null;
@@ -101,7 +103,8 @@ var et2_template = et2_DOMWidget.extend(
 				{
 					// Ask server
 					var splitted = template_name.split('.');
-					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" + splitted.join('.') + ".xet";
+					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" +
+						splitted.join('.')+ ".xet" + (cache_buster ? '?'+cache_buster : '');
 
 					if(splitted.length)
 					{
