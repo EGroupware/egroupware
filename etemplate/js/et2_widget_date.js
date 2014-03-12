@@ -308,7 +308,7 @@ var et2_date_duration = et2_date.extend(
 						.addClass('et2_date_duration');
 		this.duration = $j(document.createElement("input"))
 						.addClass('et2_date_duration')
-						.attr({type: 'number', size: 3, style: 'width: 3em'});
+						.attr({type: 'number', size: 3});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)

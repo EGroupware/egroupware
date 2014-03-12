@@ -374,6 +374,9 @@ span.et2_date span {
   text-align: center;
   font-size: 9pt;
 }
+span.et2_date_duration input.et2_date_duration{
+	width: 3em;
+}
 /**
  * Dialog widget
  * It uses jQueryUI, so this is just our little bits - icon on left
