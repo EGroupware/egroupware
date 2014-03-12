@@ -79,6 +79,20 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 * Open CRM view
+	 *
+	 * @param _action
+	 * @param _senders
+	 */
+	view: function(_action, _senders)
+	{
+		var index = _senders[0]._index;
+		var id = _senders[0].id.split('::').pop();
+
+		this.egw.open(id, 'addressbook', 'view', {index: index}, '_self', 'addressbook');
+	},
+
+	/**
 	 * Run an action from CRM view toolbar
 	 *
 	 * @param {object} _action

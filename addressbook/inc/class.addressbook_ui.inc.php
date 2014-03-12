@@ -353,17 +353,15 @@ class addressbook_ui extends addressbook_bo
 					'caption' => 'View',
 					'default' => true,
 					'allowOnMultiple' => false,
-					'url' => 'menuaction=addressbook.addressbook_ui.view&contact_id=$id&ajax=true',
-					'popup' => egw_link::get_registry('addressbook', 'view_popup'),
 					'group' => $group=1,
+					'onExecute' => 'javaScript:app.addressbook.view',
 				),
-				'edit' => array(
-					'caption' => 'Edit',
+				'open' => array(
+					'caption' => 'Open',
 					'allowOnMultiple' => false,
 					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
 					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
 					'group' => $group,
-					'disableClass' => 'rowNoEdit',
 				),
 				'add' => array(
 					'caption' => 'Add',
@@ -1024,7 +1022,6 @@ window.egw_LAB.wait(function() {
 
 				case 'email':
 				case 'email_home':
-					error_log(__METHOD__. "() email");
 					$action == 'email' ? $action_fallback = 'email_home' : $action_fallback = 'email';
 					$action_msg = lang('added');
 					if($contact = $this->read($id))
@@ -1737,7 +1734,6 @@ window.egw_LAB.wait(function() {
 						egw_link::link('addressbook',$content['id'],$links);
 					}
 					$currentApp = $GLOBALS['egw']->currentapp;
-					error_log(__METHOD__. "() currentapp:" . $currentApp);
 					egw_framework::refresh_opener($content['msg'], 'addressbook',$content['id'],  ($content['id'] ? 'update' : 'add'));
 					if ($button == 'save')
 					{
@@ -1777,6 +1773,10 @@ window.egw_LAB.wait(function() {
 			if ($contact_id && is_array($content = $this->read($contact_id)))
 			{
 				$contact_id = $content['id'];	// it could have been: "account:$account_id"
+				if (!$this->check_perms(EGW_ACL_EDIT, $content))
+				{
+					$view = true;
+				}
 			}
 			else // not found
 			{
@@ -1915,6 +1915,7 @@ window.egw_LAB.wait(function() {
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
+		$readonlys['button[save]'] = $readonlys['button[apply]'] = $view;
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_ADD);
@@ -2138,6 +2139,30 @@ window.egw_LAB.wait(function() {
 						'menuaction' => 'addressbook.addressbook_ui.index',
 						'msg' => $this->delete($content) ? lang('Contact deleted') : lang('Error deleting the contact !!!'),
 					));
+
+				case 'next':
+					$inc = 1;
+					// fall through
+				case 'back':
+					if (!isset($inc)) $inc = -1;
+					// get next/previous contact in selection
+					$query = egw_session::appsession('index', 'addressbook');
+					$query['start'] = $content['index'] + $inc;
+					$query['num_rows'] = 1;
+					$rows = $readonlys = array();
+					$num_rows = $this->get_rows($query, $rows, $readonlys, true);
+					//error_log(__METHOD__."() get_rows()=$num_rows rows=".array2string($rows));
+					$contact_id = $rows[0];
+					if(!$contact_id || !is_array($content = $this->read($contact_id)))
+					{
+						egw::redirect_link('/index.php',array(
+							'menuaction' => 'addressbook.addressbook_ui.index',
+							'msg' => $content,
+							'ajax' => 'true'
+						));
+					}
+					$content['index'] = $query['start'];
+					break;
 			}
 		}
 		else
@@ -2150,6 +2175,16 @@ window.egw_LAB.wait(function() {
 					'msg' => $content,
 					'ajax' => 'true'
 				));
+			}
+			if (isset($_GET['index']))
+			{
+				$content['index'] = (int)$_GET['index'];
+				// get number of rows to determine if we can have a next button
+				$query = egw_session::appsession('index', 'addressbook');
+				$query['start'] = $content['index'];
+				$query['num_rows'] = 1;
+				$rows = $readonlys = array();
+				$num_rows = $this->get_rows($query, $rows, $readonlys, true);
 			}
 		}
 
@@ -2253,9 +2288,9 @@ window.egw_LAB.wait(function() {
 		// dont show an app-header
 		$GLOBALS['egw_info']['flags']['app_header'] = '';
 
-		$this->tmpl->setElementAttribute('toolbar', 'actions', array(
-			'edit' => array(
-				'caption' => 'Edit',
+		$actions = array(
+			'open' => array(
+				'caption' => 'Open',
 				'toolbarDefault' => true,
 			),
 			'copy' => 'Copy',
@@ -2275,7 +2310,16 @@ window.egw_LAB.wait(function() {
 				'caption' => 'Next',
 				'toolbarDefault' => true,
 			),
-		));
+		);
+		if (!isset($content['index']) || !$content['index'])
+		{
+			unset($actions['back']);
+		}
+		if (!isset($content['index']) || $content['index'] >= $num_rows-1)
+		{
+			unset($actions['next']);
+		}
+		$this->tmpl->setElementAttribute('toolbar', 'actions', $actions);
 
 		// always show sidebox, as it contains contact-data
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
@@ -2283,7 +2327,10 @@ window.egw_LAB.wait(function() {
 		// need to load infolog's app.js now, as it exec calls header before infolog can include it
 		egw_framework::validate_file('/infolog/js/app.js');
 
-		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
+		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
+			'id' => $content['id'],
+			'index' => $content['index'],
+		));
 
 		// Only load this on first time - we're using AJAX, so it stays there through submits.
 		// Sending it again (via ajax) will break the addressbook.view etemplate2
@@ -2357,7 +2404,6 @@ window.egw_LAB.wait(function() {
 
 			// store the advanced search in the session to call it again
 			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
-			error_log(__METHOD__. "() call ADV"  );
 			if ($_content['button']['search']) $response->call("app.addressbook.adv_search");
 			if ($_content['button']['cancelsearch']) egw_framework::window_close (); //$response->addScript('this.close();');
 		}
