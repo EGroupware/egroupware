@@ -188,6 +188,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			window.clearInterval(this._autorefresh_timer);
 		}
+		// Unbind handler used for toggling autorefresh
+		$j(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
 
 		// Free the grid components
 		this.dataview.free();
