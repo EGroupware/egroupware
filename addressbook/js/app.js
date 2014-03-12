@@ -93,21 +93,24 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 * Set link filter for the already open & rendered infolog list
+	 * Set link filter for the already open & rendered  list
 	 *
+	 * @param {string} col_filter_name Name of the column filter to set
 	 * @param {string} contact_id New contact ID
 	 */
-	view_set_infolog: function(contact_id)
+	view_set_list: function(col_filter_name, contact_id)
 	{
 		// Find the infolog list
-		var infolog = etemplate2.getById(
+		var list = etemplate2.getById(
 			$j(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id')
 		);
-		var nm = infolog ? infolog.widgetContainer.getWidgetById('nm') : null;
-		if(nm)
+		var nm = null;
+		if(list != null && (nm = list.widgetContainer.getWidgetById('nm')))
 		{
 			// Update the link filter to new contact
-			nm.applyFilters({col_filter: {linked: 'addressbook:'+contact_id}});
+			var filter = {col_filter:{}};
+			filter.col_filter[col_filter_name] = 'addressbook:'+contact_id;
+			nm.applyFilters(filter);
 		}
 	},
 

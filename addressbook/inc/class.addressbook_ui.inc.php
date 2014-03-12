@@ -2163,12 +2163,21 @@ window.egw_LAB.wait(function() {
 					}
 					$content['index'] = $query['start'];
 
-					// Infolog nextmatch is already there, just update the filter
+					// List nextmatch is already there, just update the filter
 					if($contact_id && egw_json_request::isJSONRequest())
 					{
-						egw_json_response::get()->apply('app.addressbook.view_set_infolog',Array($contact_id));
+						switch($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'])
+						{
+							case 'infolog':
+								egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
+								break;
+							case 'tracker':
+								// TODO - what's the filter?
+								//egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
+								break;
+						}
 
-						// Clear contact_id, it's used as a flag to send infolog
+						// Clear contact_id, it's used as a flag to send the list
 						unset($contact_id);
 					}
 					break;
@@ -2345,10 +2354,10 @@ window.egw_LAB.wait(function() {
 		// Sending it again (via ajax) will break the addressbook.view etemplate2
 		if($contact_id)
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			$GLOBALS['egw']->hooks->single(array(
 				'location' => 'addressbook_view',
 				'ab_id'    => $content['id']
-			));
+			),$GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list']);
 		}
 	}
 

@@ -206,6 +206,23 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
+		$crm_list_options = array(
+			'infolog' => lang('infolog')
+		);
+		if($GLOBALS['egw_info']['user']['apps']['tracker'])
+		{
+			$crm_list_options['tracker'] = lang('tracker');
+		}
+		$settings['crm_list'] = array(
+			'type'   => 'select',
+			'label'  => 'CRM view list',
+			'name'   => 'crm_list',
+			'values' => $crm_list_options,
+			'help'   => 'When viewing a contact, show linked entries from the selected application',
+			'xmlrpc' => True,
+			'admin'  => false,
+			'default'=> 'infolog',
+		);
 		$settings[] = array(
 			'type'  => 'section',
 			'title' => lang('Data exchange settings'),
