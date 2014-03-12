@@ -103,7 +103,7 @@
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
 					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="4"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth et2_required" tabindex="1" span="4"/>
 					<textbox type="integer" id="ts_id" readonly="true" class="timesheet_timesheetId"/>
 					<appicon src="timesheet"/>
                     <description/>
@@ -156,7 +156,6 @@
 					<description/>
 				</row>
 				<row disabled="!@ts_modified" class="dialogOperators">
-
 					<description value="Last modified"/>
 					<hbox width="100%">
 						<menulist>
