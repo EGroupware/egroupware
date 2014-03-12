@@ -15,13 +15,13 @@
 /*egw:uses
 	jsapi.egw;
 	jquery.jquery;
-	et2_core_widget;
+	et2_core_valueWidget;
 */
 
 /**
  * Class which implements the tabbox-tag
  *
- * @augments et2_DOMWidget
+ * @augments et2_valueWidget
  */
 var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 {
