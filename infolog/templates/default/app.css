@@ -15,7 +15,7 @@ div#infolog-edit.et2_container {
 .private { font-style:italic; }
 .infolog_planned { font-style:italic; }
 table.infolog_fullWidth { width: 100%; }
-.infolog_infoId:before span{ content:"#" }
+#infolog-edit_info_number:before { content:"#" }
 #infolog-edit_info_contact { width: 98%;}
 .infolog_fixedHeight { height: 12px; }
 .infolog_normalWrap { white-space: normal; }

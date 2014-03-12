@@ -202,7 +202,7 @@
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
 					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="5" tabindex="1"/>
-					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
+					<textbox type="integer" id="info_number" readonly="true"/>
                     <appicon src="infolog" for="info_number"/>
 					<description/>
 				</row>
