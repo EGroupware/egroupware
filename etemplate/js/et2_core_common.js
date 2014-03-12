@@ -490,14 +490,15 @@ function et2_activateLinks(_content)
 				}
 			}
 
-			// Split the content string at the given position
-			var splitted = _content.split(_matches[0], 2);
+			// Split the content string at the given position(s)
+			// but we only handle the first occurence
+			var splitted = _content.split(_matches[0]);
 
 			// Push the not-matched part
 			if (splitted[0])
 			{
 				// activate the links of the left string
-				arr = arr.concat(et2_activateLinks(splitted[0]));
+				arr = arr.concat(et2_activateLinks(splitted.shift()));
 			}
 
 			// Call the callback function which converts the matches into an object
@@ -505,7 +506,7 @@ function et2_activateLinks(_content)
 			_proc(_matches);
 
 			// Set the new working string to the right part
-			_content = splitted[1];
+			_content = splitted.join(_matches[0]);
 		}
 	}
 
