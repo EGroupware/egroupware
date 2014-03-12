@@ -26,6 +26,17 @@ table.infolog_fullWidth { width: 100%; }
 #info_contact select { width: 117px; }
 #info_contact input {width: 134px;}
 #info_subject {width: 100%;}
+
+// date-duration styling in project manager tab
+.infolog_date_duration:first-child input.et2_date_duration{
+	float: left;
+	width:88px;
+}
+.infolog_date_duration select.et2_date_duration {
+	width: 52%;
+	margin-left: 2px;
+}
+
 tr.infolog_rowHasParent > td:first-child {
 	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
 	background-repeat: no-repeat;

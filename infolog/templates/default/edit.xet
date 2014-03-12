@@ -50,17 +50,17 @@
 				</row>
 				<row class="row">
 					<description value="planned time" for="info_planned_time"/>
-					<date-duration id="info_planned_time" display_format="$cont[duration_format]"  class="et2_fullWidth" hours_per_day="$cont[hours_per_workday]" span="2"/>
+					<date-duration id="info_planned_time" display_format="$cont[duration_format]"  class="infolog_date_duration" hours_per_day="$cont[hours_per_workday]" span="2"/>
 					<description/>
 				</row>
 				<row class="row">
 					<description value="Re-planned time" for="info_replanned_time"/>
-					<date-duration id="info_replanned_time" display_format="$cont[duration_format]"  class="et2_fullWidth" hours_per_day="$cont[hours_per_workday]" span="2"/>
+					<date-duration id="info_replanned_time" display_format="$cont[duration_format]"  class="infolog_date_duration" hours_per_day="$cont[hours_per_workday]" span="2"/>
 					<description/>
 				</row>
 				<row class="row" valign="top" height="60%">
 					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"/>
-					<date-duration id="info_used_time" span="2" class="et2_fullWidth"/>
+					<date-duration id="info_used_time" span="2" class="infolog_date_duration"/>
 					<description/>
 				</row>
 			</rows>
