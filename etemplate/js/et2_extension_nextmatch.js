@@ -1806,8 +1806,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Other stuff
-		this.icons_div = jQuery(document.createElement("div"))
-			.addClass('icons').appendTo(this.row_div);
+		this.right_div = jQuery(document.createElement("div"))
+			.addClass('header_row_right').appendTo(this.row_div);
 
 		// Record count
 		this.count = jQuery(document.createElement("span"))
@@ -1818,7 +1818,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.count_total = jQuery(document.createElement("span"))
 			.appendTo(this.count)
 			.text(settings.total + "");
-		this.count.prependTo(this.icons_div);
+		this.count.prependTo(this.right_div);
 
 		// Favorites
 		this._setup_favorites(settings['favorites']);
@@ -1852,7 +1852,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Another place to customize nextmatch
 		this.header_row = jQuery(document.createElement("div"))
-			.addClass('header_row').appendTo(this.row_div);
+			.addClass('header_row').appendTo(this.right_div);
 
 		// Letter search
 		var current_letter = this.nextmatch.options.settings.searchletter ?
@@ -2058,7 +2058,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
 		// Add into header
-		$j(this.favorites.getDOMNode(this.favorites)).appendTo(this.icons_div).css("float","right");
+		$j(this.favorites.getDOMNode(this.favorites)).prependTo(this.right_div);
 	},
 
 	/**
@@ -2167,7 +2167,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			}
 		}
 		if(_sender == this.search || _sender == this.search_button) return this.search_box[0];
-		if(_sender.id == 'export') return this.icons_div[0];
+		if(_sender.id == 'export') return this.right_div[0];
 
 		if(_sender && _sender._type == "template")
 		{

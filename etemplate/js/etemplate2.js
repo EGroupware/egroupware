@@ -805,7 +805,7 @@ etemplate2.getById = function(id)
 		}
 	}
 	return null;
-}
+};
 
 /**
  * Plugin for egw.json type "et2_load"

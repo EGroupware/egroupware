@@ -819,42 +819,29 @@ div.message.floating {
 }
 .nextmatch_header .header_count {
   padding: 0px 20px;
-  margin: 6px 6px 0px;
+  margin: 0px 6px 0px;
   border: 1px solid #E0E0E0;
-  float: right;
   font-size: 150%;
   text-align: center;
 }
-.nextmatch_header > .search {
-	float: left;
-	width: 16%;
-	position: relative;
-	z-index: 1;
+.nextmatch_header .search {
+	padding-left: 1ex;
 }
-.nextmatch_header > .search > input {
-	width: 75%;
+.nextmatch_header_row select {
+	max-width: 14%;
+	margin-right: 2ex;
 }
-.nextmatch_header > .filters {
-  padding-left: 5px;
-  position: relative;
-  top: 7px;
-  white-space: nowrap;
+.nextmatch_header_row > .header_row_right {
+	float: right;
+	padding-right: 1ex;
 }
-.nextmatch_header > .filters select {
-  width: 14%;
-  margin-right: 2ex;
-}
-.nextmatch_header .et2_button_icon {
-  vertical-align: middle;
-}
-.nextmatch_header > .filters .et2_button_icon {
-  margin-right: 1ex;
+.nextmatch_header_row > .header_row_right > * {
+	display: inline-block;
 }
 .et2_nextmatch .nextmatch_header {
   border: none;
   background-image: none;
   background-color: transparent;
-  margin-bottom: 3px;
 }
 .et2_nextmatch .nextmatch_header_row > div {
 	display: inline-block;
@@ -862,9 +849,7 @@ div.message.floating {
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
   margin-top: 6px;
-  vertical-align: middle;
   position: relative;
-  z-index: 1;
 }
 #nm_favorites_popup_filters .filter_id,
 #nm_favorites_popup_filters .filter_value {
