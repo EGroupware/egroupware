@@ -25,7 +25,6 @@
 				<column disabled="@no_owner_col"/>
 				<column disabled="@no_ts_status"/>
 				<column/>
-				<column/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -66,10 +65,6 @@
 					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
 					<nextmatch-filterheader id="ts_status" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
-					<hbox class="noPrint">
-						<nextmatch-header align="right" label="Actions" id="legacy_actions" class="noPrint"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('timesheet.index.rows').toggleAllSelected(); return false;" image="check"/>
-					</hbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
@@ -92,19 +87,11 @@
 						<menupopup id="${row}[ts_status]" readonly="true"/>
 					</menulist>
 					<customfields-list id="$row" readonly="true"/>
-					<hbox align="right" class="noPrint">
-						<button statustext="View this entry" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="view"/>
-						<button statustext="Edit this entry" label="Edit" id="edit[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" image="edit"/>
-						<button label="Insert in document" id="document[$row_cont[ts_id]]" image="etemplate/merge" class="image16"/>
-						<button statustext="Delete this entry" label="Delete" id="delete[$row_cont[ts_id]]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete"/>
-						<checkbox statustext="Select multiple timeshhets for a further action" id="checked[]" options="$row_cont[ts_id]"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
-		<description align="center" id="msg" no_lang="1" class="message"/>
-		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates" header_right="timesheet.index.add"/>
+		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
 	</template>
 </overlay>

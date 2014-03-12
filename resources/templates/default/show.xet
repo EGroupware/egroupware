@@ -2,16 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="resources.show.nm_right" template="" lang="" group="0" version="1.9.002">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
-				</row>
-			</rows>
-		</grid>
+		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
 	</template>
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">

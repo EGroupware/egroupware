@@ -700,17 +700,12 @@ class timesheet_ui extends timesheet_bo
 			$row['class'] = 'row';
 			if ($row['ts_id'] <= 0)	// sums
 			{
-				$readonlys["view[$row[ts_id]]"] = $readonlys["edit[$row[ts_id]]"] = $readonlys["delete[$row[ts_id]]"] = true;
-				$readonlys["checked[{$row[ts_id]}]"] = true;
-				$readonlys["document[{$row[ts_id]}]"] = true;
 				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
 						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.common::show_date($row['ts_start'],
 						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
-						// For some reason day sum checkbox on the etemplate is checked[1] instead of checked[0]
-						$readonlys["checked[1]"] = true;
 						$row['ts_id'] = 'sum-day-'.$row['ts_start'];
 						break;
 					case -1:	// week-sum
@@ -734,17 +729,14 @@ class timesheet_ui extends timesheet_bo
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{
-				$readonlys["edit[$row[ts_id]]"] = true;
 				$row['class'] .= ' rowNoEdit ';
 			}
 			if (!$this->check_statusForEditRights($row))
 			{
-				$readonlys["edit[$row[ts_id]]"] = true;
 				$row['class'] .= ' rowNoEdit ';
 			}
 			if (!$this->check_acl(EGW_ACL_DELETE,$row))
 			{
-				$readonlys["delete[$row[ts_id]]"] = true;
 				$row['class'] .= ' rowNoDelete ';
 			}
 			if($row['ts_status'] != self::DELETED_STATUS)
@@ -767,7 +759,6 @@ class timesheet_ui extends timesheet_bo
 					}
 				}
 			}
-			$readonlys["document[{$row['ts_id']}]"] = !$GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'];
 			if (!$query['filter2'])
 			{
 				unset($row['ts_description']);
@@ -876,7 +867,7 @@ class timesheet_ui extends timesheet_bo
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_left'    => 'timesheet.index.dates',
-				'header_right'   => 'timesheet.index.add',
+				'header_row'     => 'timesheet.index.add',
 				'filter_onchange' => "app.timesheet.filter_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
