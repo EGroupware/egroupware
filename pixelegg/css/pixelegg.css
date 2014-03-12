@@ -5468,7 +5468,7 @@ tr.dialogHeader4 .et2_label {
 }
 .dialogFooterToolbar button {
   height: 24px;
-  min-width: 114px;
+  min-width: 86px;
 }
 .dialogFooterToolbar button:hover {
   height: 24px;
