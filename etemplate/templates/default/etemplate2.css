@@ -1350,7 +1350,7 @@ ul.et2_nowrap, div.et2_nowrap{
 	width: 99%;
 }
 /* position icons behind input */
-.et2_fullWidth, .et2_fullWidth span {
+.et2_fullWidth, .et2_fullWidth span.et2_url_span {
 	position: relative;
 }
 .et2_fullWidth a.et2_url {
