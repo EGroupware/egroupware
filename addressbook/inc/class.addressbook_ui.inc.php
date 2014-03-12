@@ -2162,6 +2162,15 @@ window.egw_LAB.wait(function() {
 						));
 					}
 					$content['index'] = $query['start'];
+
+					// Infolog nextmatch is already there, just update the filter
+					if($contact_id && egw_json_request::isJSONRequest())
+					{
+						egw_json_response::get()->apply('app.addressbook.view_set_infolog',Array($contact_id));
+
+						// Clear contact_id, it's used as a flag to send infolog
+						unset($contact_id);
+					}
 					break;
 			}
 		}
