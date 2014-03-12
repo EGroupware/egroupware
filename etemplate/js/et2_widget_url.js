@@ -219,6 +219,13 @@ var et2_url = et2_textbox.extend(
 					e.data.showMessage("Invalid email","validation_error",true);
 				}
 		}
+	},
+
+	attachToDOM: function()
+	{
+		this._super.apply(this, arguments);
+
+		if (this.input[0].parentNode) jQuery(this.input[0].parentNode).addClass('et2_url_span');
 	}
 });
 et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
