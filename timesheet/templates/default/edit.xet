@@ -4,9 +4,9 @@
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" height="165">
 			<columns>
-				<column width="90"/>
+				<column width="72"/>
 				<column width="200"/>
-				<column width="10"/>
+				<column width="30"/>
 				<column width="95" disabled="@ts_viewtype"/>
 				<column width="130" disabled="@ts_viewtype"/>
 				<column width="40"/>
@@ -91,11 +91,11 @@
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
-				<column width="97"/>
+				<column width="78"/>
 				<column width="200"/>
-				<column width="10"/>
+				<column width="30"/>
 				<column width="97"/>
-				<column width="130"/>
+				<column width="120"/>
 				<column width="40"/>
 				<column width="30"/>
 				<column width="4"/>
@@ -103,14 +103,10 @@
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
 					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="3"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="4"/>
 					<textbox type="integer" id="ts_id" readonly="true" class="timesheet_timesheetId"/>
 					<appicon src="timesheet"/>
-                                        <description />
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth" tabindex="1" span="4"/>
-					<description font_style="n" id="ts_id" />
-					<appicon class="timesheet_appicon"/>
-					<description/>
+                    <description/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Date" for="ts_start"/>
