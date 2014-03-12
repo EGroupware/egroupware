@@ -20,16 +20,16 @@
 
 /**
  * Class which implements the tabbox-tag
- * 
+ *
  * @augments et2_DOMWidget
- */ 
+ */
 var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 {
 	attributes: {
 		'tabs': {
 			'name': 'Tabs',
 			'default': et2_no_init,
-			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are hidden and id, for access into content array"
+			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are prepend, hidden and id, for access into content array"
 		},
 		'add_tabs': {
 			'name': 'Add tabs',
@@ -45,7 +45,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @memberOf et2_tabbox
 	 */
 	init: function() {
@@ -169,10 +169,10 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			{
 				var tabs = tabsElems[0];
 				var tabpanels = tabpanelsElems[0];
-	
+
 				// Parse the "tabs" tag
 				this._readTabs(tabData, tabs);
-	
+
 				// Read and create the widgets defined in the "tabpanels"
 				this._readTabPanels(tabData, tabpanels);
 			}
@@ -193,7 +193,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 				{
 					tab_options.content = tab.id;
 				}
-				tabData.push({
+				tabData[tab.prepend ? 'unshift' : 'push'].call(tabData, {
 					"id": tab.id,
 					"label": this.egw().lang(tab.label),
 					"widget": null,
@@ -222,16 +222,16 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 		// Specially process the selected index so it shows up right away
 		this._loadTab(this.selected_index,promises);
-		
+
 		// Apply parent now, which actually puts into the DOM
 		// This has to be before loading the child, so the dom sub-tree is not
 		// disconnected, which causes problems for things like CKEditor
 		this._super.apply(this, arguments);
-		
+
 		// We can do this and not wind up with 2 because child is a template,
 		// which has special handling
 		this._children[0].loadingFinished(promises);
-		
+
 		// Defer parsing & loading of other tabs until later
 		window.setTimeout(function() {
 			for (var i = 0; i < tabs.tabData.length; i++)
@@ -248,6 +248,9 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	/**
 	 * Load & render a tab's content
+	 *
+	 * @param {number} index numerical index of tab in this.tabData array
+	 * @param {array} promises
 	 */
 	_loadTab: function(index,promises) {
 		var tabData = this.tabData[index];
@@ -255,7 +258,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 		if(tabData.XMLNode != null)
 		{
 			tabData.widget = this.createElementFromNode(tabData.XMLNode,tabData.XMLNode.nodeName.toLowerCase());
-			
+
 			// Release the XML node
 			tabData.XMLNode = null;
 		}
@@ -273,6 +276,8 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	/**
 	 * Check for custom tabs
+	 *
+	 * @param {object} _attrs
 	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
@@ -326,7 +331,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 				}
 			}
 		}
-		
+
 		this.setActiveTab(this.selected_index);
 	},
 
@@ -388,7 +393,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 	/**
 	 * Causes the dirty flag to be reseted.
 	 */
-	resetDirty: function() 
+	resetDirty: function()
 	{
 		this.value = this.selected_index;
 	},
