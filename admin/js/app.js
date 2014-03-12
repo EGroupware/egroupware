@@ -255,20 +255,22 @@ app.classes.admin = AppJS.extend(
 		var ids = [];
 		for(var i=0; i < _senders.length; ++i)
 		{
-			ids.push(_senders[i].id.substr(7));	// remove "admin::" prefix
+			ids.push(_senders[i].id.split('::').pop());	// remove "admin::" prefix
 		}
+		var app = egw.app_name();	// can be either admin or preferences!
+		var className = app+'_acl';
 
 		switch(_action.id)
 		{
 			case 'delete':
-				var request = egw.json('admin_acl::ajax_change_acl', [ids], this._acl_callback,this,false,this)
+				var request = egw.json(className+'::ajax_change_acl', [ids], this._acl_callback,this,false,this)
 					.sendRequest();
 				break;
 
 			case 'edit':
 				// need to specify window to get correct opener, as admin has multiple windows open!
 				egw('admin', window).open_link(egw.link('/index.php', {
-					menuaction: 'admin.admin_acl.acl',
+					menuaction: app+'.'+className+'.acl',
 					id: ids[0]
 				}), 'acl', '300x300');
 				break;
@@ -276,7 +278,7 @@ app.classes.admin = AppJS.extend(
 			case 'add':
 				var current = ids[0].split(':');
 				egw('admin', window).open_link(egw.link('/index.php', {
-					menuaction: 'admin.admin_acl.acl',
+					menuaction: app+'.'+className+'.acl',
 					app: current[0],
 					account: current[1]
 				}), 'acl', '250x250');

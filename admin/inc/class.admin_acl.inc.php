@@ -10,15 +10,18 @@
  * @version $Id$
  */
 
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
-
 /**
- * UI for admin
+ * UI for admin ACL
  *
- * @todo acl needs to use etemplate_old, as auto-repeat does not work for acl & label
+ * Will also be extended by preferences_acl for user ACL
  */
 class admin_acl
 {
+	/**
+	 * Appname we are running as
+	 */
+	const APPNAME = 'preferences';
+
 	/**
 	 * Methods callable via menuaction
 	 * @var array
@@ -148,7 +151,7 @@ class admin_acl
 		}
 
 		//error_log(__METHOD__."() _GET[id]=".array2string($_GET['id'])." --> content=".array2string($content));
-		$tpl->exec('admin.admin_acl.acl', $content, $sel_options, $readonlys, $content);
+		$tpl->exec('admin.admin_acl.acl', $content, $sel_options, $readonlys, $content, 2);
 	}
 
 	/**
@@ -181,15 +184,15 @@ class admin_acl
 		}
 		elseif (!$old_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL added.'), 'admin', null, 'add');
+			egw_framework::refresh_opener(lang('ACL added.'), static::APPNAME, null, 'add');
 		}
 		elseif (!$added_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $deleted_ids, 'delete');
+			egw_framework::refresh_opener(lang('ACL deleted.'), static::APPNAME, $deleted_ids, 'delete');
 		}
 		else
 		{
-			egw_framework::refresh_opener(lang('ACL updated.'), 'admin', null, 'edit');
+			egw_framework::refresh_opener(lang('ACL updated.'), static::APPNAME, null, 'edit');
 		}
 	}
 
@@ -217,18 +220,18 @@ class admin_acl
 		elseif (!$rights)	// all rights removed --> delete it
 		{
 			$this->acl->delete_repository($content['acl_appname'], $content['acl_location'], $content['acl_account']);
-			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
+			egw_framework::refresh_opener(lang('ACL deleted.'), static::APPNAME, $id, 'delete');
 		}
 		else
 		{
 			$this->acl->add_repository($content['acl_appname'], $content['acl_location'], $content['acl_account'], $rights);
 			if ($content['id'])
 			{
-				egw_framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
+				egw_framework::refresh_opener(lang('ACL updated.'), static::APPNAME, $id, 'edit');
 			}
 			else
 			{
-				egw_framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
+				egw_framework::refresh_opener(lang('ACL added.'), static::APPNAME, $id, 'add');
 			}
 		}
 	}

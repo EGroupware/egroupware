@@ -17,9 +17,16 @@
  */
 class preferences_acl extends admin_acl
 {
+	/**
+	 * Appname we are running as
+	 */
+	const APPNAME = 'preferences';
+
 	function __construct()
 	{
 		translation::add_app('admin');
 		egw_framework::includeCSS('admin', 'app');
+
+		parent::__construct();
 	}
 }
