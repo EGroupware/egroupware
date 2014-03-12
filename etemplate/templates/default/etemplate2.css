@@ -637,6 +637,7 @@ ul.et2_link_string {
   display: inline-block;
   margin-right: 5px;
   padding: 5px;
+  min-width: 70px;
   cursor: pointer;
   border: 1px solid silver;
   background-color: #E0E0E0;
