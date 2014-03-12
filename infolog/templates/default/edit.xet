@@ -29,7 +29,9 @@
 	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%" height="245">
 			<columns>
+				<column width="80" class="infolog_normalWrap"/>
 				<column width="90"/>
+				<column width="100"/>
 				<column/>
 			</columns>
 			<rows>
@@ -42,22 +44,24 @@
 				</row>
 				<row class="row">
 					<description value="Price"/>
-					<hbox span="all">
-						<projectmanager-pricelist id="pl_id" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
-						<textbox type="float" id="info_price" span="all"/>
-					</hbox>
+					<projectmanager-pricelist id="pl_id" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None" class="et2_fullWidth"/>
+					<textbox type="float" id="info_price" class="et2_fullWidth"/>
+					<description/>
 				</row>
 				<row class="row">
 					<description value="planned time" for="info_planned_time"/>
-					<date-duration id="info_planned_time" display_format="$cont[duration_format]" hours_per_day="$cont[hours_per_workday]"/>
+					<date-duration id="info_planned_time" display_format="$cont[duration_format]"  class="et2_fullWidth" hours_per_day="$cont[hours_per_workday]" span="2"/>
+					<description/>
 				</row>
 				<row class="row">
 					<description value="Re-planned time" for="info_replanned_time"/>
-					<date-duration id="info_replanned_time" display_format="$cont[duration_format]" hours_per_day="$cont[hours_per_workday]"/>
+					<date-duration id="info_replanned_time" display_format="$cont[duration_format]"  class="et2_fullWidth" hours_per_day="$cont[hours_per_workday]" span="2"/>
+					<description/>
 				</row>
 				<row class="row" valign="top" height="60%">
 					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"/>
-					<date-duration id="info_used_time"/>
+					<date-duration id="info_used_time" span="2" class="et2_fullWidth"/>
+					<description/>
 				</row>
 			</rows>
 		</grid>
@@ -83,18 +87,20 @@
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid height="245" width="100%">
 			<columns>
-					<column width="45%"/>
-					<column width="54%"/>
+					<column width="46%"/>
+					<column width="4%"/>
+					<column width="49%"/>
 			</columns>
 			<rows>
 				<row height="20" class="th">
 					<description value="Delegation" class="et2_fullWidth"/>
+					<description/>
 					<description value="Details" class="et2_fullWidth"/>
 				</row>
-				<row>
+				<row valign="top">
 					<grid>
 						<columns>
-							<column width="56"/>
+							<column width="78"/>
 							<column width="300"/>
 						</columns>
 						<rows>
@@ -128,9 +134,10 @@
 							</row>
 						</rows>
 					</grid>
+					<description/>
 					<grid>
 						<columns>
-							<column/>
+							<column width="78"/>
 							<column/>
 						</columns>
 						<rows>
@@ -181,34 +188,41 @@
 	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
 			<columns>
-				<column width="78"/>
+				<column width="88"/>
 				<column width="302"/>
-				<column width="80"/>
+				<column width="30"/>
+				<column width="88"/>
 				<column width="122"/>
 				<column width="30"/>
 				<column width="50"/>
 				<column width="30"/>
+				<column width="12"/>
 			</columns>
 			<rows>
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="5" tabindex="1"/>
 					<textbox type="integer" id="info_number" readonly="true" class="infolog_infoId"/>
-                                        <appicon src="infolog" for="info_number"/>
+                    <appicon src="infolog" for="info_number"/>
+					<description/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Type" for="info_type"/>
 					<menulist class="et2_fullWidth">
 						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1" />
 					</menulist>
+					<description/>
 					<description value="Contact"/>
-					<link-entry id="info_contact" span="all"/>
+					<link-entry id="info_contact" span="4"/>
+					<description/>
 				</row>
 				<row class="dialogHeader3">
-                			<description value="Startdate" for="info_startdate"/>
+                	<description value="Startdate" for="info_startdate"/>
 					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
+					<description/>
 					<description value="Enddate" for="info_enddate"/>
-					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="all"/>
+					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
+					<description/>
 				</row>
 				<row height="250">
 					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
@@ -238,26 +252,30 @@
 					<menulist class="et2_fullWidth">
 						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
+					<description/>
 					<description value="Completed" for="info_percent"/>
-					<menulist class="et2_fullWidth" span="all">
+					<menulist class="et2_fullWidth" span="4">
 						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
+					<description/>
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
-					<hbox>
-						<menulist class="et2_nowrap">
+					<hbox  width="100%">
+						<menulist>
 							<menupopup type="select-account" id="info_owner" readonly="true"/>
 						</menulist>
-						<date-time id="info_created" readonly="true" class="et2_nowrap"/>
+						<date-time id="info_created" readonly="true" align="right"/>
 					</hbox>
+					<description/>
 					<description value="Last modified"/>
-					<hbox span="all">
+					<hbox  width="100%" span="4">
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
-						<date-time id="info_datemodified" readonly="true"/>
+						<date-time id="info_datemodified" readonly="true" align="right"/>
 					</hbox>
+					<description/>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox span="5">
@@ -267,9 +285,8 @@
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>
 						</menulist>
-						<checkbox label="Do not notify of these changes" id="no_notifications"/>
+						<checkbox label="Do not notify" id="no_notifications"/>
 					</hbox>
-
 					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 				</row>
 			</rows>

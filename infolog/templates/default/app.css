@@ -18,7 +18,7 @@ table.infolog_fullWidth { width: 100%; }
 .infolog_infoId:before span{ content:"#" }
 #infolog-edit_info_contact { width: 98%;}
 .infolog_fixedHeight { height: 12px; }
-.noWrap { white-space: nowrap; }
+.infolog_normalWrap { white-space: normal; }
 .infolog_user_filter select { width: 100px; }
 .inputFullWidth input { width: 100%; }
 .infolog_image16 img { height: 16px; }
