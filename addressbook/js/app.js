@@ -122,7 +122,7 @@ app.classes.addressbook = AppJS.extend(
 
 		switch(_action.id)
 		{
-			case 'edit':
+			case 'open':
 				this.egw.open(id, 'addressbook', 'edit');
 				break;
 			case 'copy':
