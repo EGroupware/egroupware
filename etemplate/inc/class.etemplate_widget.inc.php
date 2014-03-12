@@ -873,7 +873,7 @@ class etemplate_widget
 				'key' => $attr,
 				'value' => $val
 			));
-			error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
+			//error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
 		}
 		if (isset($this)) $this->attrs[$attr] = $val;
 		if (!is_null($val)) $ref = $val;
