@@ -27,7 +27,7 @@ table.infolog_fullWidth { width: 100%; }
 #info_contact input {width: 134px;}
 #info_subject {width: 100%;}
 
-// date-duration styling in project manager tab
+/* date-duration styling in project manager tab */
 .infolog_date_duration:first-child input.et2_date_duration{
 	float: left;
 	width:88px;
