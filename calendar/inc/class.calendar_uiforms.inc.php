@@ -1078,6 +1078,10 @@ class calendar_uiforms extends calendar_ui
 		}
 		elseif (($info = $this->bo->resource_info($uid)))
 		{
+			if ($uid[0] == 'e' && $info['name'] && $info['name'] != $info['email'])
+			{
+				return $info['name'].' <'.$info['email'].'>';
+			}
 			return $info['name'] ? $info['name'] : $info['email'];
 		}
 		return '#'.$uid;
