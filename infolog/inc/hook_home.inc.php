@@ -64,5 +64,6 @@ if (($showevents = $GLOBALS['egw_info']['user']['preferences']['infolog']['homeS
 	unset($portalbox);
 	unset($html);
 	$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
+	$GLOBALS['egw_info']['flags']['app_header']= lang($save_app);
 }
 unset($showevents);
