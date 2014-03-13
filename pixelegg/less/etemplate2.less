@@ -322,10 +322,7 @@ div.et2_link_entry{
  */
 
 hr {
-    /*border-style: none;*/
     border-top: 1px solid @gray_10;
-    /*height: 1px;*/
-    /*margin: 10px 0px 10px 0px;*/
 }
 
 /**
@@ -357,6 +354,16 @@ hr {
  *
  * ##################################################################################*/
 
+
+
+div.header_row_right{
+
+    //favoriten
+    div[id$=favorite_wrapper]{margin-top: 0px; top: 6px;}
+
+}
+
+
 // AREA AROUND CONTENT
 .et2_nextmatch {
     .background_color_10_gray;
@@ -364,12 +371,17 @@ hr {
 
 // complete nextmatch....Background color!
 .et2_nextmatch .nextmatch_header {
+    padding: 5px;
     border: none;
     background-image: none;
     background-color: @gray_20;
-    margin-bottom: 3px;
-    margin: 0;
-    //	margin-right: 3px;
+}
+
+// complete nextmatch....Background color!
+.et2_nextmatch .nextmatch_header_row {
+
+    padding-bottom: 6px;
+
 }
 
 
@@ -386,7 +398,7 @@ hr {
 * Search Field
 *
 ################################################################*/
-.nextmatch_header > .search{
+.nextmatch_header_row > .search{
 
     padding: 0 0 0 0px;
     margin-right: 3px;
@@ -476,7 +488,7 @@ hr {
 *
 ################################################################*/
 
-.nextmatch_header > .filters {
+.nextmatch_header_row > .filters {
 
     /*width: 83%;*/
     z-index: 7;
@@ -581,7 +593,7 @@ hr {
     .dimension_height_m;
     border: 1px solid #E0E0E0;
     float: right;
-    margin: 6px 11px 0;
+    margin: 6px 5px 0 10px;
     padding: 0 20px;
     text-align: center;
 
@@ -647,7 +659,7 @@ button#admin-categories-index_add {
 .nextmatch_header div[id$=favorite_wrapper] {
 
     .border_radius_button_normal;
-    .background_color_25_gray;
+    /*.background_color_25_gray;*/
     z-index: 200;
 }
 
@@ -656,13 +668,16 @@ button#admin-categories-index_add {
     */
     .et2_dropdown{
 
+        position: relative;
+        /*top: -5px;*/
+
         button {
             .dimension_height_m;
             display: inline-block;
             vertical-align: middle;
             margin-right: -2px;
             padding: 0px 1ex;
-            .background_color_0_gray;
+            background-color: @gray_0;
             background-image: none;
 //            width: 50px;
 

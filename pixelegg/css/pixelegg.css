@@ -421,10 +421,7 @@
  * hrule widget
  */
   hr {
-    /*border-style: none;*/
     border-top: 1px solid #e6e6e6;
-    /*height: 1px;*/
-    /*margin: 10px 0px 10px 0px;*/
   }
   /**
  * grid widget
@@ -468,15 +465,21 @@
  * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT
  *
  * ##################################################################################*/
+  div.header_row_right div[id$=favorite_wrapper] {
+    margin-top: 0px;
+    top: 6px;
+  }
   .et2_nextmatch {
     background-color: #f0f0f0;
   }
   .et2_nextmatch .nextmatch_header {
+    padding: 5px;
     border: none;
     background-image: none;
     background-color: #cdcdcd;
-    margin-bottom: 3px;
-    margin: 0;
+  }
+  .et2_nextmatch .nextmatch_header_row {
+    padding-bottom: 6px;
   }
   .et2_nextmatch > img {
     width: 16px;
@@ -490,7 +493,7 @@
 * Search Field
 *
 ################################################################*/
-  .nextmatch_header > .search {
+  .nextmatch_header_row > .search {
     padding: 0 0 0 0px;
     margin-right: 3px;
     margin-left: 15px;
@@ -500,7 +503,7 @@
     /*.background_color_search;*/
     /*.border_radius_button_righttop;*/
   }
-  .nextmatch_header > .search input {
+  .nextmatch_header_row > .search input {
     /*.background_color_search;*/
     /*background-color: @gray_0;*/
     border: none;
@@ -509,23 +512,23 @@
     padding: 3px;
     width: 150px;
   }
-  .nextmatch_header > .search input::-webkit-input-placeholder {
+  .nextmatch_header_row > .search input::-webkit-input-placeholder {
     /* WebKit browsers */
     color: #696969;
   }
-  .nextmatch_header > .search input:-moz-placeholder {
+  .nextmatch_header_row > .search input:-moz-placeholder {
     /* Mozilla Firefox 4 to 18 */
     color: #696969;
   }
-  .nextmatch_header > .search input::-moz-placeholder {
+  .nextmatch_header_row > .search input::-moz-placeholder {
     /* Mozilla Firefox 19+ */
     color: #696969;
   }
-  .nextmatch_header > .search input:-ms-input-placeholder {
+  .nextmatch_header_row > .search input:-ms-input-placeholder {
     /* Internet Explorer 10+ */
     color: #696969;
   }
-  .nextmatch_header > .search button.et2_button {
+  .nextmatch_header_row > .search button.et2_button {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-color: #b4b4b4;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
@@ -550,7 +553,7 @@
     white-space: nowrap;
     overflow: hidden;
   }
-  .nextmatch_header > .search button.et2_button:hover {
+  .nextmatch_header_row > .search button.et2_button:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -558,11 +561,11 @@
     /*hide arrow*/
     color: #679fd2 !important;
   }
-  .nextmatch_header > .search button.et2_button:active {
+  .nextmatch_header_row > .search button.et2_button:active {
     /*.background_verlauf_diagonal_gray;*/
     background-color: #1aa200 !important;
   }
-  .nextmatch_header > .search button.et2_button:focus {
+  .nextmatch_header_row > .search button.et2_button:focus {
     outline: 0;
     border-width: 1px;
     border-style: solid;
@@ -577,7 +580,7 @@
 * Filters
 *
 ################################################################*/
-  .nextmatch_header > .filters {
+  .nextmatch_header_row > .filters {
     /*width: 83%;*/
     z-index: 7;
     margin-bottom: 4px;
@@ -593,13 +596,13 @@
     margin-right: 119px;
     /*    .border_radius (3px, 3px, 0px, 0px);*/
   }
-  .nextmatch_header > .filters select {
+  .nextmatch_header_row > .filters select {
     margin-top: 10px;
   }
-  .nextmatch_header > .filters .et2_label {
+  .nextmatch_header_row > .filters .et2_label {
     padding: 0.2em;
   }
-  .nextmatch_header > .filters .et2_label select {
+  .nextmatch_header_row > .filters .et2_label select {
     /*.Complete_Button_select;*/
     margin-left: 2px;
     margin-right: 1px;
@@ -608,13 +611,13 @@
     max-width: 20% !important;
     /*Dialog - Addressbook - View */
   }
-  .nextmatch_header > .filters .et2_label select:hover {
+  .nextmatch_header_row > .filters .et2_label select:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
-  .nextmatch_header > .filters .et2_label select #infolog-index_cat_id,
-  .nextmatch_header > .filters .et2_label select #infolog-index_filter {
+  .nextmatch_header_row > .filters .et2_label select #infolog-index_cat_id,
+  .nextmatch_header_row > .filters .et2_label select #infolog-index_filter {
     width: 50% !important;
   }
   .nextmatch_header > .filters > select > option {
@@ -711,7 +714,7 @@
     height: 24px;
     border: 1px solid #E0E0E0;
     float: right;
-    margin: 6px 11px 0;
+    margin: 6px 5px 0 10px;
     padding: 0 20px;
     text-align: center;
     font-size: 11px;
@@ -791,13 +794,15 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background-color: #bfbfbf;
+    /*.background_color_25_gray;*/
     z-index: 200;
   }
   /**
     * Drop down button
     */
   .et2_dropdown {
+    position: relative;
+    /*top: -5px;*/
     /*left Button*/
     /*right Button*/
     /* hover */
@@ -1869,20 +1874,14 @@ div#egwpopup_message {
   border-style: solid;
   border-color: #b4b4b4;
   background-color: #cdcdcd;
+  height: auto;
 }
 .egw_fw_ui_app_header_container .egw_fw_ui_app_header {
-  /*border-width: 0px 0px 0px 0px;*/
-  /*border-style: solid;*/
-  /*border-color: @gray_10;*/
-  /*.border_radius_button_righttop;*/
   padding: 7px 2px 6px 20px;
-  /*font-size: 1em;*/
   font-weight: normal;
-  /*background-color: @gray_20;*/
   color: #408dd2;
-  /*width: 80%;*/
-  height: auto;
-  /*&:before {content: "! "; color: @egw_color_1_a; font-size: 1em; }*/
+  overflow: hidden;
+  line-height: 2em;
 }
 .colselection.ui-widget-content {
   width: 33%;
@@ -3332,8 +3331,7 @@ table.table_passord_change td:first-child {
   overflow: hidden;
   /*padding: 0;*/
 }
-.egwGridView_grid tr.th > td,
-.nextmatch_header {
+.egwGridView_grid tr.th > td {
   background-color: #d9d9d9;
   font-weight: normal;
   padding: 0 2px 2px 0;

@@ -36,8 +36,8 @@ table.et2_grid {
 }
 // Table Head in Listen
 
-.egwGridView_grid tr.th > td, /*legacy*/
-.nextmatch_header {
+.egwGridView_grid tr.th > td /*legacy*/
+{
     .background_color_15_gray;
     font-weight: normal;
     padding: 0 2px 2px 0;
@@ -129,7 +129,7 @@ table.egwGridView_outer{
 
                 span.selectcols {
                     height: 9px;
-                    padding: 4px 10px 0px 2px; 
+                    padding: 4px 10px 0px 2px;
                     margin-top: 4px;
                     background-image: url(../images/selectcols_small.png);
                     background-repeat: no-repeat;
@@ -155,25 +155,25 @@ table.egwGridView_outer{
             /*padding: 0px 5px; no need*/
 
         }
-        
-        
+
+
     /*Elements inside td*/
         td{
-        
+
             .et2_link {margin-left: 0px; color: @link_color;}
-            
+
             img {border: 1px solid transparent; box-shadow: none;}
-            
+
             time {display: block;}
-        
-        
+
+
         img[src$="svg"]  {
             .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
         }
-        
-        
+
+
     }
-    
+
     }
 
 }
@@ -205,12 +205,12 @@ table.egwGridView_grid{
         // Reihen ohne Border left und right
 /*        tr:nth-child(even) {background: @color_even;}
         tr:nth-child(odd) {background: @color_odd;}*/
-        
+
         /*multiple choise*/
         tr.selected{
             background-image: none;
             /*background-color: @egw_color_1_e !important;*/
-            background-color: fade(@color_active_row, 50%); 
+            background-color: fade(@color_active_row, 50%);
         }
 
         // is active
@@ -248,21 +248,21 @@ table.egwGridView_grid{
             span{
                 color: @gray_70;
             }
-            
+
             span[id*="[info_subject]"]{
                 margin-right: 30px;
             }
-            
+
             span.high {color: red;}
-            
+
             span.urgent {color: red; background-color: @egw_color_1_e;}
-            
+
             span.low {color: @gray_80;}
-            
-            
+
+
             table.customfields{
                 tbody{
-                    border-bottom: 0px; 
+                    border-bottom: 0px;
                     tr{
                         border-bottom: 0px;
                         td{
@@ -275,16 +275,16 @@ table.egwGridView_grid{
             }
         }
     }
-    
-    
+
+
     /*subentry*/
-    
+
     tr.subentry {
-        background: fade(@color_selected_row, 20%) !important;  
-        
+        background: fade(@color_selected_row, 20%) !important;
+
         &:hover {background: @color_selected_row !important;}
     }
-    
+
 
     span.arrow {
         -moz-user-select: none;
@@ -335,23 +335,23 @@ table.egwGridView_grid{
 
  /*Custom Fields*/
  table.customfields{
-     
+
      tbody tr:nth-child(2n) {background: inherit;}
-     
+
      tr {background-color: inherit !important;}
-     
+
      td {
          line-height: 11px;
-         
+
          span > div {display: inherit; margin: 0px;}
      }
  }
- 
+
 /*########################################################*/
 // Tabelle der APP Ausgabe
 
 table.nextmatch_header{
-    
+
     img{ .dimension_width_height_s;}
 }
 
@@ -360,9 +360,9 @@ table.nextmatch_header{
 	text-align: center;
 	border-bottom: 1px solid silver;
         font-size: 1.5em;
-        
+
         td{ color: @gray_90 !important;}
-        
+
 }
 
 //

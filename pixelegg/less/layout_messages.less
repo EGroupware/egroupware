@@ -18,38 +18,38 @@
 
 
 #egwpopup{
-    
+
     .background_color_5_gray;
     .border_radius_button_righttop;
     		border-width: 9px 0px 0px 0px;
 		border-style: solid;
 		border-color: @gray_30;
-     
-     .box_shadow_message;          
+
+     .box_shadow_message;
      padding: 1em;
-     
+
      /*Button*/
      input#egwpopup_ok_button,
      button#desktop_perms{
          .Complete_Button_normal;
          .dimension_height_m;
          padding: 0 5px;
-         
+
          &:hover {.Complete_Button_hover;}
          &:active {background-color: @color_positive_action_active !important;}
-         
+
      }
-    
+
 }
 
 /*popup Messsage*/
  div#egwpopup_message {
-     
+
      background-color: .color_gray_0;
      padding: 1em;
      overflow-y: auto;
-     
-     
+
+
  }
 
 
@@ -63,30 +63,22 @@
 
 // Container für Meldungen / Message Container
 .egw_fw_ui_app_header_container {
-
 		border-width: 9px 0px 0px 0px;
 		border-style: solid;
 		border-color: @gray_30;
 		background-color: @gray_20;
+                height: auto;
 
 
-                                // Statusmeldung 
+                                // Statusmeldung
 				// Meldung oberhalb iFrame
 				.egw_fw_ui_app_header {
-				//	display: none !important;
-					/*border-width: 0px 0px 0px 0px;*/
-					/*border-style: solid;*/
-					/*border-color: @gray_10;*/
-					/*.border_radius_button_righttop;*/
 					padding: 7px 2px 6px 20px;
-					/*font-size: 1em;*/
 					font-weight: normal;
-					/*background-color: @gray_20;*/
 					color: @egw_color_2_d;
-					/*width: 80%;*/
-                                        height: auto;
-                                        
-					/*&:before {content: "! "; color: @egw_color_1_a; font-size: 1em; }*/
+                                        overflow: hidden;
+                                        line-height: 2em;
+
 				}
 
 
@@ -100,9 +92,9 @@
 
 		}
 
-                
+
  /*Calendar ##############*/
- 
+
  td.message {
         background-color: @gray_10 !important;
      span.message {
@@ -113,9 +105,9 @@
                  height: auto;
                  width: 100%;
      }
-     
+
  }
- 
- 
- 
+
+
+
  //
