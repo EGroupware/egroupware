@@ -102,13 +102,13 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 */
 	var files = [];
 	// add already included scripts
-	var tags = $j('script');
+	var tags = jQuery('script', _wnd.document);
 	for(var i=0; i < tags.length; ++i)
 	{
 		files.push(removeTS(tags[i].src));
 	}
 	// add already included css
-	tags = $j('link[type="text/css"]');
+	tags = jQuery('link[type="text/css"]', _wnd.document);
 	for(var i=0; i < tags.length; ++i)
 	{
 		files.push(removeTS(tags[i].href));
