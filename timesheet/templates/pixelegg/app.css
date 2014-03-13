@@ -62,12 +62,12 @@
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add {
   width: 32px;
   border: 1px solid #0C5DA5;
+  margin: 6px 2px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   padding: -0.5em;
   background-color: #e6e6e6 !important;
   background-size: 16px 16px;
   height: 24px;
-  margin: 6px 2px;
 }
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button#timesheet-index_add:before {
   content: "";
@@ -103,6 +103,10 @@
 #timesheet-index .nextmatch_header span.header_count {
   margin: 3px 4px 0 6px;
 }
+#timesheet-index div#timesheet-index_favorite_wrapper {
+  top: -5px;
+  right: 6px;
+}
 #timesheet-index table.egwGridView_outer tbody td .et2_link {
   font-weight: bold;
 }
@@ -111,7 +115,7 @@
 }
 /*###########################################
 #                                           #
-#       dialog-header                       #
+#       dialogHeader                       #
 #############################################
 #                                           #
 #                                           #
