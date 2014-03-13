@@ -183,9 +183,20 @@ app.classes.addressbook = AppJS.extend(
 			action_id: [],
 			action_title: _senders.length > 1 ? this.egw.lang('selected contacts') : ''
 		};
-		// Remove UID prefix for just contact_id
-		var id = _senders[0].id.split('::');
-		extras.action_id = id[1];
+		for(var i = 0; i < _senders.length; i++)
+		{
+			// Remove UID prefix for just contact_id
+			var ids = _senders[i].id.split('::');
+			ids.shift();
+			ids = ids.join('::');
+
+			// Orgs go through the server to get all IDs
+			if (ids.substr(0,9) == 'org_name:')
+			{
+				return nm_action(_action,_senders);
+			}
+			extras.action_id.push(ids);
+		}
 
 		egw.open('', 'infolog', 'list', extras, 'infolog');
 	},

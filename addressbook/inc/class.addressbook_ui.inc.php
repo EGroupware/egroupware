@@ -517,8 +517,7 @@ class addressbook_ui extends addressbook_bo
 					'infolog' => array(
 						'caption' => lang('View linked InfoLog entries'),
 						'icon' => 'infolog/navbar',
-						'onExecute' => 'javaScript:app.addressbook.view_infolog',
-						'allowOnMultiple' => false
+						'onExecute' => 'javaScript:app.addressbook.view_infolog'
 					),
 					'infolog_add' => array(
 						'caption' => 'Add a new Infolog',
@@ -778,7 +777,7 @@ window.egw_LAB.wait(function() {
 			'action' => 'addressbook',
 			'action_id' => implode(',',$checked),
 			'action_title' => $org,
-		));
+		),'infolog');
 	}
 
 	function ajax_add_whole_list($list, $email_type = 'email')
@@ -1273,7 +1272,7 @@ window.egw_LAB.wait(function() {
 
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
-			if($query['actions'] && $query['actions']['edit'])
+			if($query['actions'] && $query['actions']['open'])
 			{
 				// Just switched from contact view, update actions
 				$query['actions'] = $this->get_actions($query['col_filter']['tid'], $query['org_view']);
