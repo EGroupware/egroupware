@@ -263,7 +263,7 @@ class calendar_bo
 		{
 			$email = $id;
 			$name = '';
-			if (preg_match('/^(.*) *<([a-z0-9_.@-]{8,})>$/i',$email,$matches))
+			if (preg_match('/^(.*) *<([a-z0-9_.@-]{8,})>$/iU',$email,$matches))
 			{
 				$name = $matches[1];
 				$email = $matches[2];
@@ -1477,7 +1477,7 @@ class calendar_bo
 				$id2email[$id] = $GLOBALS['egw']->accounts->id2name($id,'account_email');
 			}
 		}
-		return $id2lid[$id].($append_email && $id2email[$id] ? ' <'.$id2email[$id].'>' : '');
+		return $id2lid[$id].(($append_email || $id[0] == 'e') && $id2email[$id] ? ' <'.$id2email[$id].'>' : '');
 	}
 
 	/**
