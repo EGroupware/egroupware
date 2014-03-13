@@ -1639,6 +1639,10 @@ class calendar_uiforms extends calendar_ui
 				return;
 			}
 			$event = array_shift($events);
+
+			// convert event from servertime returned by calendar_ical to user-time
+			$this->bo->server2usertime($event);
+
 			if (($existing_event = $this->bo->read($event['uid'])) && !$existing_event['deleted'])
 			{
 				switch(strtolower($ical_method))
