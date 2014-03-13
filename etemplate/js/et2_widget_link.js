@@ -776,11 +776,11 @@ var et2_link_entry = et2_inputWidget.extend(
 			if(typeof _value == 'string' && _value.indexOf(",") > 0) _value = _value.replace(",",":");
 			if(typeof _value == 'string' && _value.indexOf(":") >= 0)
 			{
-				var split = et2_csvSplit(_value, 2,":");
+				var split = _value.split(":");
 
 				_value = {
-					app: split[0],
-					id: split[1]
+					app: split.shift(),
+					id: split
 				};
 			}
 			else if(_value && this.options.only_app)
