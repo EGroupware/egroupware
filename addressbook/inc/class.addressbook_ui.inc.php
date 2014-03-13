@@ -2169,6 +2169,7 @@ window.egw_LAB.wait(function() {
 						switch($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'])
 						{
 							case 'infolog':
+							default:
 								egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
 								break;
 							case 'tracker':
