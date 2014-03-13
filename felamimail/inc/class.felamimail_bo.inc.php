@@ -201,8 +201,9 @@ class felamimail_bo
 		if (!is_null($_icServerObject)&&(!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
 			self::unsetInstance($_profileID); //make sure we reconstruct it
-			emailadmin_bo::unsetCachedObjects($_profileID);
-			self::$instances[$_profileID] = new felamimail_bo('utf-8',$_restoreSession,$_profileID,$_icServerObject);
+			// emailadmin_bo::unsetCachedObjects is calling felamimail_bo::resetConnectionErrorCache
+			if (!$_reuseCache) emailadmin_bo::unsetCachedObjects($_profileID);
+			self::$instances[$_profileID] = new felamimail_bo('utf-8',$_restoreSession,$_profileID,$_icServerObject,$_reuseCache);
 //error_log(__METHOD__.__LINE__.array2string(self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID)));
 			return self::$instances[$_profileID];
 		}
@@ -313,7 +314,7 @@ class felamimail_bo
 	public static function validateProfileID($_restoreSession=true, $_profileID=0)
 	{
 		$identities = array();
-		$mail = felamimail_bo::getInstance($_restoreSession, $_profileID, $validate=false); // we need an instance of felamimail_bo
+		$mail = felamimail_bo::getInstance($_restoreSession, $_profileID, $validate=false, null, true); // we need an instance of felamimail_bo
 		$selectedID = $mail->getIdentitiesWithAccounts($identities);
 		if (is_object($mail->mailPreferences)) $activeIdentity =& $mail->mailPreferences->getIdentity($_profileID, true);
 		// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
@@ -397,7 +398,11 @@ class felamimail_bo
 			$firstMessage = $this->sessionData['previewMessage'];
 			$this->sessionData = array();
 		}
-		if (!$_reuseCache) $this->forcePrefReload();
+		if (!$_reuseCache)
+		{
+			$this->forcePrefReload();
+			felamimail_bo::resetConnectionErrorCache($this->profileID,$doActiveSyncWaitOnFailure=true);
+		}
 		//error_log(array2string(array($firstMessage,$lv_mailbox)));
 		// FIXME: this->foldername seems to be unused
 		//$this->foldername	= $this->sessionData['mailbox'];
@@ -1962,7 +1967,7 @@ class felamimail_bo
 		return $retValue;
 	}
 
-	static function resetConnectionErrorCache($_ImapServerId=null)
+	static function resetConnectionErrorCache($_ImapServerId=null, $_doActiveSyncWaitOnFailure=true)
 	{
 		//error_log(__METHOD__.__LINE__.' for Profile:'.array2string($_ImapServerId) .' for user:'.trim($GLOBALS['egw_info']['user']['account_id']));
 		$account_id = $GLOBALS['egw_info']['user']['account_id'];
@@ -1999,7 +2004,7 @@ class felamimail_bo
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($account_id),$buff,$expiration=60*15);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id),$isConError,$expiration=60*15);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+		if ($_doActiveSyncWaitOnFailure) egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 	}
 
 	static function resetFolderObjectCache($_ImapServerId=null)
@@ -4175,6 +4180,7 @@ class felamimail_bo
 		if ($_icServerID==0 && !empty($this->profileID))$_icServerID = $this->profileID;
 		//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
 		if (is_null($isError)) $isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+		//if ($_icServerID<0) unset($isError[$_icServerID]);
 		if ( isset($isError[$_icServerID]) || (($this->icServer instanceof defaultimap) && PEAR::isError($this->icServer->_connectionErrorObject)))
 		{
 			if (trim($isError[$_icServerID])==',' || trim($this->icServer->_connectionErrorObject->message) == ',')
