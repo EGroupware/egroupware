@@ -532,7 +532,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
     				case 'ORGANIZER':
-	    				if (!$organizerCN)
+	    				if (!$organizerURL)
 	    				{
 	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
 			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
@@ -2676,8 +2676,15 @@ class calendar_ical extends calendar_boupdate
 					{
 						$role = $attributes['params']['ROLE'];
 					}
-					// parse email and cn from attendee
-					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					// CN explicit given --> use it
+					if (strtoupper(substr($attributes['value'], 0, 7)) == 'MAILTO:' &&
+						!empty($attributes['params']['CN']))
+					{
+						$email = substr($attributes['value'], 7);
+						$cn = $attributes['params']['CN'];
+					}
+					// try parsing email and cn from attendee
+					elseif (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$email = $matches[1] ? $matches[1] : $matches[3];
@@ -2716,7 +2723,7 @@ class calendar_ical extends calendar_boupdate
 							$uid = $this->user;
 					}
 					// check principal url from CalDAV here after X-EGROUPWARE-UID and to get optional X-EGROUPWARE-QUANTITY
-					if (!$uid) $uid = groupdav_principals::url2uid($attributes['value']);
+					if (!$uid) $uid = groupdav_principals::url2uid($attributes['value'], null, $cn);
 
 					// try to find an email address
 					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))

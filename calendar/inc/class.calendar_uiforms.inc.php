@@ -1144,6 +1144,10 @@ class calendar_uiforms extends calendar_ui
 		}
 		elseif (($info = $this->bo->resource_info($uid)))
 		{
+			if ($uid[0] == 'e' && $info['name'] && $info['name'] != $info['email'])
+			{
+				return $info['name'].' <'.$info['email'].'>';
+			}
 			return $info['name'] ? $info['name'] : $info['email'];
 		}
 		return '#'.$uid;
@@ -1875,7 +1879,7 @@ class calendar_uiforms extends calendar_ui
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
-		
+
 		$resources_config = config::read('resources');
 		$readonlys = array();
 		foreach (array_keys($allConflicts) as $pId)
