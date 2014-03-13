@@ -2706,14 +2706,22 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 	},
 
 	/**
-	 * Override to always return a string appname:id (or just id), parent returns an object
+	 * Override to always return a string appname:id (or just id) for simple (one real selection)
+	 * cases, parent returns an object.  If multiple are selected, or anything other than app and
+	 * id, the original parent value is returned.
 	 */
 	getValue: function() {
 		var value = this._super.apply(this, arguments);
 		if(typeof value == "object" && value != null)
 		{
 			if(!value.app || !value.id) return null;
-			value = value.app +":"+value.id;
+
+			// If simple value, format it legacy string style, otherwise
+			// we return full value
+			if(typeof value.id == 'string')
+			{
+				value = value.app +":"+value.id;
+			}
 		}
 		return value;
 	},
