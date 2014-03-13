@@ -77,7 +77,7 @@
 								</row>
 							</rows>
 						</grid>
-						<description value="(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check &quot;Use regular expressions&quot; you must use valid regular expressions."/>
+						<description value='(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check &quot;Use regular expressions&quot; you must use valid regular expressions.  In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)'/>
 					</groupbox>
 				</row>
 				<row>

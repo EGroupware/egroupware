@@ -938,21 +938,28 @@ class mail_sieve
 	function setMatchType (&$matchstr, $regex = false)
 	{
 		$match = lang('contains');
-		if (preg_match("/\s*!/", $matchstr))
-			$match = lang('does not contain');
-		if (preg_match("/\*|\?/", $matchstr))
-		{
-			$match = lang('matches');
-			if (preg_match("/\s*!/", $matchstr))
-				$match = lang('does not match');
-		}
-		if ($regex)
-		{
-			$match = lang('matches regexp');
-			if (preg_match("/\s*!/", $matchstr))
-				$match = lang('does not match regexp');
-		}
-		$matchstr = preg_replace("/^\s*!/","",$matchstr);
+		if (preg_match("/^\s*!/", $matchstr))
+				$match = lang('does not contain');
+			if (preg_match("/\*|\?/", $matchstr))
+			{
+				$match = lang('matches');
+				if (preg_match("/^\s*!/", $matchstr))
+					$match = lang('does not match');
+			}
+			if ($regex)
+			{
+				$match = lang('matches regexp');
+				if (preg_match("/^\s*!/", $matchstr))
+					$match = lang('does not match regexp');
+			}
+			if ($regex && preg_match("/^\s*\\\\!/", $matchstr))
+			{
+				$matchstr = preg_replace("/^\s*\\\\!/","!",$matchstr);
+			}
+			else
+			{
+				$matchstr = preg_replace("/^\s*!/","",$matchstr);
+			}
 		return $match;
 	}
 
