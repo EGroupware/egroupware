@@ -290,14 +290,31 @@ class infolog_ui
 		// handle linked filter (show only entries linked to a certain other entry)
 		if ($query['col_filter']['linked'])
 		{
-			list($app,$id) = explode(':',$query['col_filter']['linked']);
-			if (!($links = egw_link::get_links($app,$id,'infolog')))
+			if(!is_array($query['col_filter']['linked']))
+			{
+				// Legacy string style
+				list($app,$id) = explode(':',$query['col_filter']['linked']);
+			}
+			else
+			{
+				// Full info
+				$app = $query['col_filter']['linked']['app'];
+				$id = $query['col_filter']['linked']['id'];
+			}
+			if(!is_array($id)) $id = explode(',',$id);
+			if (!($links = egw_link::get_links_multiple($app,$id,true,'infolog')))
 			{
 				$rows = array();	// no infologs linked to project --> no rows to return
 				return 0;
 			}
-			$query['col_filter']['info_id'] = array_values(array_unique($links));
-			$linked = $query['col_filter']['linked'];
+
+			$query['col_filter']['info_id'] = array();
+			foreach($links as $infos)
+			{
+				$query['col_filter']['info_id'] = array_merge($query['col_filter']['info_id'],$infos);
+			}
+			$query['col_filter']['info_id'] = array_unique($query['col_filter']['info_id']);
+			$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? egw_link::title($app, $id) : lang('multiple')));
 		}
 		unset($query['col_filter']['linked']);
 
@@ -463,7 +480,7 @@ class infolog_ui
 		}
 
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
-
+error_log(__LINE__ . 'col filter: ' . array2string($query['col_filter']));
 		return $query['total'];
 	}
 
@@ -798,6 +815,10 @@ class infolog_ui
 			default:
 				if(in_array($action, array_keys(egw_link::app_list())))
 				{
+					if(is_array($action_id))
+					{
+						$action_id = implode(',',$action_id);
+					}
 					$values['nm']['col_filter']['linked'] = "$action:$action_id";
 				}
 		}
