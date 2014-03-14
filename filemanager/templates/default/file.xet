@@ -251,7 +251,7 @@
 				<row disabled="!@msg">
 					<description id="msg" span="all" class="redItalic"/>
 				</row>
-				<row class="dialog-tabs">
+				<row class="dialogTabs">
 					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
@@ -269,7 +269,7 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row class="dialog-footer-toolbar">
+				<row class="dialogFooterToolbar">
 					<hbox>
 						<hbox>
 							<button label="Save" id="button[save]" image="save" background_image="1"/>

@@ -26,31 +26,32 @@
 // iframe*/
 
 #filemanager-index_filemanager-index-header_left {
-    float: left;
-    height: 42px;
-    width: 100%;
+   loat: left;
+    height: 36px;
+    width: 98%;
+    margin: 0 17px;
 }
 
 div.filemanager_navigation {
     position: relative;
     width: 100%;
 
-    
-    img { 
+
+    img {
         .dimension_width_height_s;
         .Complete_Button_Icon_normal;
         padding: 0.2em;
-        
+
         &:hover {.Complete_Button_Icon_hover;}
     }
-    
+
     img#filemanager-index_tarp {
-                border: none;                
+                border: none;
                 -webkit-box-shadow: none;
                 -moz-box-shadow: none;
                 box-shadow: none;
         &:hover {
-                border: none; 
+                border: none;
                 -webkit-box-shadow: none;
                 -moz-box-shadow: none;
                 box-shadow: none;
@@ -66,7 +67,7 @@ div.filemanager_navigation {
   /*Home img*/
  img#filemanager-index_home {position: relative; top: 5px;}
 
- 
+
  /*Pfad */
 div.filemanager_navigation > label {
     float: left;
@@ -88,7 +89,7 @@ div.filemanager_navigation > label {
     right: 30%;
     position: relative;*/
     top: 0px;
-    
+
     float: left;
     position: absolute;
     right: 0;
@@ -117,26 +118,26 @@ div.filemanager_navigation > label > input {
             width: 250px;
             background-color: @egw_color_2_a;
         &:hover {.Complete_Button_add_only_plus_hover;}
-        &:active {background-color: @color_positive_action_active !important;}  
+        &:active {background-color: @color_positive_action_active !important;}
         }
-        
+
         div.progress {width: 0px;}
   }
 
 
     #filemanager-index_tarp {
-        width: 32px !important; 
+        width: 32px !important;
         height: 32px !important;
         position: relative;
         top: 0px;
     }
-    
-    
-    
+
+
+
     .filters{
-        
+
         vertical-align: center;
-        
+
         #filemanager-index_filter{ margin-top: 0.5em;}
     }
 
@@ -150,13 +151,13 @@ div.filemanager_navigation > label > input {
 
 
 /*// #####################################################*/
-/*Dialog filemanager*/ 
+/*Dialog filemanager*/
 
 #filemanager-select{
 
     padding: 0px 8px 0 0;
 
-    .dialog-header{
+    .dialogHeader{
         .et2_button_icon{
             margin: 4px 4px 0 4px;
             .bordered (@gray_0, @gray_0, @gray_0, @gray_0);
@@ -186,10 +187,10 @@ div.filemanager_navigation > label > input {
     }
     table#filemanager-select_dir{
        	.border_normal;
-        
+
         tr:nth-child(even) {background: @color_even;}
         tr:nth-child(odd) {background: @color_odd;}
-        
+
     }
 
     //Icon in Table
@@ -202,54 +203,54 @@ div.filemanager_navigation > label > input {
 
 
 /*// #####################################################*/
-/*Dialog filemanager edit POPUP WINDOW*/ 
+/*Dialog filemanager edit POPUP WINDOW*/
 
 div#filemanager-file {margin: 0.5em;}
 
 div#filemanager-file_tabs {
-    
+
     width: 564px;
 
     .et2_tabs{width: 554px;}
-    
+
     img {.dimension_width_height_m;}
-    
-    span.ui-icon-search { 
+
+    span.ui-icon-search {
                 .Complete_Button_Icon_normal;
                 position: relative;
                 top: 3px;
                 margin-left: 3px;
-            
+
                 &:hover {.Complete_Button_Icon_hover;}
                 &:active {.Complete_Button_Icon_active;}
             }
-    
-    
+
+
     /*eacl*/
     #filemanager-file_filemanager-file-eacl{
-        
+
         /*Owner*/
         td.filemanager-file_filemanager-file-eaclowner{
-            
+
             span {display: flex; margin-right: 1px;}
-                span.ui-icon-search { 
+                span.ui-icon-search {
                 position: relative;
                 top: 15px;
                 margin-left: -3px;
                 margin-right: 3px;
                 }
-            
+
         }
-        
+
     }
-    
-    
+
+
     /*Abonements*/
     td.eaclAccount {width: 200px;}
 }
 
 /*// #####################################################*/
-/*Dialog filemanager upload POPUP WINDOW*/ 
+/*Dialog filemanager upload POPUP WINDOW*/
 
 div#stylite-filemanager-upload{
     margin: 0.5em;
@@ -261,11 +262,11 @@ div#stylite-filemanager-upload{
             width: 250px;
             background-color: @egw_color_2_a;
         &:hover {.Complete_Button_add_only_plus_hover;}
-        &:active {background-color: @color_positive_action_active !important;}  
+        &:active {background-color: @color_positive_action_active !important;}
         }
-        
+
         div.progress {width: 0px;}
-  }                           
+  }
 
 
 }

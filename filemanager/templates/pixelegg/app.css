@@ -120,9 +120,10 @@ input.displayNone {
 /*//******************************************************************
 // iframe*/
 #filemanager-index_filemanager-index-header_left {
-  float: left;
-  height: 42px;
-  width: 100%;
+  loat: left;
+  height: 36px;
+  width: 98%;
+  margin: 0 17px;
 }
 div.filemanager_navigation {
   position: relative;
@@ -248,7 +249,7 @@ div.filemanager_navigation > label > input {
 #filemanager-select {
   padding: 0px 8px 0 0;
 }
-#filemanager-select .dialog-header .et2_button_icon {
+#filemanager-select .dialogHeader .et2_button_icon {
   margin: 4px 4px 0 4px;
   border-top: solid 1px #ffffff;
   border-left: solid 1px #ffffff;
@@ -261,13 +262,13 @@ div.filemanager_navigation > label > input {
   height: auto;
   width: 24px;
 }
-#filemanager-select .dialog-header .selectPathContainer {
+#filemanager-select .dialogHeader .selectPathContainer {
   overflow: auto;
   width: 470px;
   margin_top: 0px;
   height: 32px;
 }
-#filemanager-select .dialog-header .selectPathContainer input {
+#filemanager-select .dialogHeader .selectPathContainer input {
   height: 20px;
 }
 #filemanager-select #filemanager-select_apps {
@@ -285,7 +286,7 @@ div.filemanager_navigation > label > input {
   background: #ffffff;
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
-  background: #fafafa;
+  background: #f2f2f2;
 }
 #filemanager-select .vfsMimeIcon {
   width: 16px;
