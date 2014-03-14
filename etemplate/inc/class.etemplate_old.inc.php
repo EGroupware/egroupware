@@ -1526,7 +1526,7 @@ class etemplate_old extends boetemplate
 				{
 					$cname .= $cname == '' ? $name : '['.str_replace('[','][',str_replace(']','',$name)).']';
 				}
-				$html .= $this->show_grid($cell,$name ? $value : $content,$readonlys,$cname,$show_c,$show_row,$path);
+				$html .= $this->show_grid($cell,$name ? $value : $content,$readonlys+(array)$readonlys[$name],$cname,$show_c,$show_row,$path);
 				if ($set_readonlys_all) unset($readonlys['__ALL__']);
 				break;
 			case 'template':	// size: index in content-array (if not full content is past further on)
