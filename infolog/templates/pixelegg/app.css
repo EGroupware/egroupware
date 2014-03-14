@@ -12,6 +12,9 @@
  * @version $Id$
  */
 /* $Id$ */
+div#infolog-edit.et2_container {
+  width: 842px;
+}
 .infolog_headertext {
   color: black;
   font-size: 120%;
@@ -62,7 +65,7 @@
 table.infolog_fullWidth {
   width: 100%;
 }
-td.infolog_infoId:before {
+#infolog-edit_info_number:before {
   content: "#";
 }
 #infolog-edit_info_contact {
@@ -71,8 +74,8 @@ td.infolog_infoId:before {
 .infolog_fixedHeight {
   height: 12px;
 }
-.noWrap {
-  white-space: nowrap;
+.infolog_normalWrap {
+  white-space: normal;
 }
 .infolog_user_filter select {
   width: 100px;
@@ -83,10 +86,40 @@ td.infolog_infoId:before {
 .infolog_image16 img {
   height: 16px;
 }
+.infolog_responsible select {
+  width: 120px;
+}
+#info_contact select {
+  width: 117px;
+}
+#info_contact input {
+  width: 134px;
+}
+#info_subject {
+  width: 100%;
+}
+/* date-duration styling in project manager tab */
+.infolog_date_duration:first-child input.et2_date_duration {
+  float: left;
+  width: 88px;
+}
+.infolog_date_duration select.et2_date_duration {
+  width: 52%;
+  margin-left: 2px;
+}
 tr.infolog_rowHasParent > td:first-child {
   background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
   background-repeat: no-repeat;
   background-position: 6px -2px;
+}
+tr.dialogHeader td,
+tr.dialogHeader2 td,
+tr.dialogHeader3 td,
+tr.dialogHeader4 td,
+tr.dialogOperators td,
+.dialogFooterToolbar {
+  padding: 5px 0 5px 0;
+  vertical-align: middle;
 }
 /* #############################################################################
 // iframe
@@ -126,134 +159,6 @@ tr.infolog_rowHasParent > td:first-child {
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset {
   height: 0px;
 }
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
-  padding: 0 0em;
-  margin-right: 0.2em;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget {
-  border: 1px solid #0C5DA5;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-  text-shadow: none;
-  height: 24px;
-  margin-top: 3px;
-  padding: 2px;
-  background-color: #e6e6e6;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 10px;
-  /*.background-clip(padding-box);*/
-  background-image: none !important;
-  transition: all 0.5s linear;
-  -webkit-transition: all 0.5s linear;
-  /* Safari */
-  /*Text ""hinzufügen" "*/
-  /*MouseOver*/
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:before,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:before {
-  content: "+";
-  font-size: 26px;
-  color: #ffc200;
-  line-height: 1px;
-  position: relative;
-  top: 6px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget span,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget span {
-  display: none;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img {
-  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  width: 16px;
-  height: 16px;
-  margin-left: 0.5em;
-  padding: 0px;
-  margin-top: 0px;
-  vertical-align: middle;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img:hover,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img:hover {
-  /*.background_color_20_gray;*/
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img:active,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img:active {
-  /*.background_color_30_gray;*/
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #1aa200;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget img:last-child,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget img:last-child {
-  margin-right: 5px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: rgba(12, 93, 165, 0.8) !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
-  height: 32px;
-  /*Text*/
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover:before,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover:before {
-  content: "";
-  font-size: 1em;
-  padding-left: 5px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover span,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover span {
-  visibility: hidden;
-  display: none;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover img,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover img {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  transform: scale(1.5);
-  margin: 0.5em;
-  background: #ffffff;
-}
 #infolog-index #infolog-index_nm .nextmatch_header span.header_count {
   top: 0px;
 }
@@ -275,6 +180,125 @@ tr.infolog_rowHasParent > td:first-child {
                     &:focus{
                         .Complete_Button_input_focus;
                     }*/
+}
+#infolog-index #infolog-index_nm #infolog-index_favorite_wrapper {
+  position: relative;
+  top: 5px;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget {
+  border: 1px solid #0C5DA5;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  text-shadow: none;
+  height: 24px;
+  margin-top: 0px;
+  margin-left: 12px;
+  padding: 4px;
+  background-color: #e6e6e6;
+  position: relative;
+  top: 5px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 10px;
+  /*.background-clip(padding-box);*/
+  background-image: none !important;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
+  /* Safari */
+  /*Text ""hinzufügen" "*/
+  /*MouseOver*/
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:before {
+  content: "+";
+  font-size: 18px;
+  color: #ffc200;
+  line-height: 1px;
+  position: relative;
+  top: 2px;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget span {
+  display: none;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget img {
+  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+  /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+  margin-left: 0.5em;
+  padding: 0px;
+  margin-top: 0px;
+  vertical-align: middle;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget img:hover {
+  /*.background_color_20_gray;*/
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget img:active {
+  /*.background_color_30_gray;*/
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  background-color: #1aa200;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget img:last-child {
+  margin-right: 5px;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  background-color: rgba(12, 93, 165, 0.8) !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
+  height: 24px;
+  /*Text*/
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover:before {
+  content: "";
+  font-size: 1em;
+  padding-left: 5px;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover span {
+  visibility: hidden;
+  display: none;
+}
+#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover img {
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
+  margin: 0 5px;
+  background: #ffffff;
 }
 #infolog-index #infolog-index_nm table.egwGridView_outer thead tr th.optcol .selectcols {
   margin-top: 1.5%;
@@ -303,7 +327,7 @@ tr.infolog_rowHasParent > td:first-child {
 }
 /*###########################################
 #                                           #
-#       dialog-header                       #
+#       dialogHeader                       #
 #############################################
 #                                           #
 #                                           #

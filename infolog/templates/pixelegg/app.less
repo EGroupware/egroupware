@@ -65,74 +65,7 @@
 
 
 
-           // ################################################################
-           // right Box with add item
 
-                div.et2_hbox_right{
-                    padding: 0 0em;
-                    margin-right: 0.2em;
-
-                    // box for add stuff
-                    div.et2_box_widget{
-                        border: 1px solid #0C5DA5;
-                        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-                        text-shadow: none;
-                        .dimension_height_m;
-                        margin-top: 3px;
-                        padding: 2px;
-                        background-color: @gray_10;
-
-                        .border_radius(3px, 3px, 3px, 10px);
-                        background-image: none !important;
-                        transition: all 0.5s linear;
-                        -webkit-transition: all 0.5s linear; /* Safari */
-
-                         &:before {
-                            content: "+";
-                            font-size: 26px;
-                            color: @egw_color_1;
-                            line-height: 1px;
-                            position: relative;
-                            top: 6px;
-                            }
-
-                       /*Text ""hinzufügen" "*/
-                       span {display: none;}
-
-
-                      // IMG
-                        img {
-                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
-                            .Complete_Button_Icon_normal;
-                            .dimension_width_height_s;
-                            margin-left: 0.5em;
-                            padding: 0px;
-                            margin-top: 0px;
-                            vertical-align: middle;
-
-
-                            &:hover{.Complete_Button_Icon_hover ;}
-
-                            &:active { .Complete_Button_Icon_active ;}
-                        }
-
-                        img:last-child {margin-right: 5px;};
-
-
-
-                /*MouseOver*/
-                      &:hover {
-                          .box_shadow_standard_light_hover;
-                          background-color: fade(@egw_color_2_a, 80%) !important;
-                          .border_radius_button_lefttop;
-                          .dimension_height_l;
-                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
-                          /*Text*/
-                          span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0.5em; background: @gray_0;}
-                      }
-                    }
-                }
 
             }
 
@@ -180,6 +113,86 @@
 
             table{}
         } //nextmatch_header
+
+
+// ################################################################
+// right Box with add item
+
+// FILTER
+#infolog-index_favorite_wrapper{
+
+    position: relative;
+    top: 5px;
+
+}
+
+// box for add stuff
+#infolog-index_infolog-index-header_right{
+
+div.et2_box_widget{
+                  border: 1px solid #0C5DA5;
+                  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+                  text-shadow: none;
+                 .dimension_height_m;
+                   margin-top: 0px;
+                   margin-left: 12px;
+                   padding: 4px;
+                   background-color: @gray_10;
+                   position: relative;
+                   top: 5px;
+                 .border_radius(3px, 3px, 3px, 10px);
+                   background-image: none !important;
+                   transition: all 0.5s linear;
+                   -webkit-transition: all 0.5s linear; /* Safari */
+
+                         &:before {
+                            content: "+";
+                            font-size: 18px;
+                            color: @egw_color_1;
+                            line-height: 1px;
+                            position: relative;
+                            top: 2px;
+                            }
+
+                       /*Text ""hinzufügen" "*/
+                       span {display: none;}
+
+
+                      // IMG
+                        img {
+                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_s;
+                            margin-left: 0.5em;
+                            padding: 0px;
+                            margin-top: 0px;
+                            vertical-align: middle;
+
+
+                            &:hover{.Complete_Button_Icon_hover ;}
+
+                            &:active { .Complete_Button_Icon_active ;}
+                        }
+
+                        img:last-child {margin-right: 5px;};
+
+
+
+                /*MouseOver*/
+                      &:hover {
+                          .box_shadow_standard_light_hover;
+                          background-color: fade(@egw_color_2_a, 80%) !important;
+                          .border_radius_button_lefttop;
+                          .dimension_height_m;
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+                          /*Text*/
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0 5px; background: @gray_0;}
+                      }
+        }
+}// END BOX WIDGET
+
+
 
 
 // ##################################
@@ -237,7 +250,7 @@
 
 /*###########################################
 #                                           #
-#       dialog-header                       #
+#       dialogHeader                       #
 #############################################
 #                                           #
 #                                           #
