@@ -364,8 +364,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		}
 		else
 		{
-			$waitOnFailure[self::$profileID][$this->backend->_devid] = array();
-			egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+			if (!empty($waitOnFailure[self::$profileID][$this->backend->_devid]))
+			{
+				$waitOnFailure[self::$profileID][$this->backend->_devid] = array();
+				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+			}
 		}
 		$this->_wasteID = $this->mail->getTrashFolder(false);
 		//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
