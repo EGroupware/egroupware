@@ -314,9 +314,14 @@ class etemplate_old extends boetemplate
 
 		if($output_mode == 2)
 		{
-			$html .= "\n".'<script language="javascript">'."\n";
-			$html .= 'egw_LAB.wait($j(document).ready(function() { popup_resize();}));'."\n";
-			$html .= '</script>';
+			$html .= '
+<script language="javascript">
+	egw_LAB.wait(function(){
+		$j().ready(function() {
+			popup_resize();
+		});
+	});
+</script>'."\n";
 		}
 
 		if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
