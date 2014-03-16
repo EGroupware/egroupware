@@ -1862,6 +1862,8 @@ class etemplate_old extends boetemplate
 				{
 					$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".$html."\n\n<!-- END $cell[type] -->\n\n";
 				}
+				// we need noPrint on td
+				if (strpos($cell['span'], 'noPrint')) $class .= ' noPrint';
 				$extra_label = False;
 				break;
 			case 'deck':
