@@ -47,7 +47,8 @@ class etemplate_widget_template extends etemplate_widget
 	 */
 	public static function instance($name, $template_set=null, $version='', $load_via='')
 	{
-		$start = microtime(true);
+		//$start = microtime(true);
+		list($name) = explode('?', $name);	// remove optional cache-buster
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
 		{
 			if ((!$path || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
@@ -60,7 +61,7 @@ class etemplate_widget_template extends etemplate_widget
 			{
 				foreach(self::$cache as $c_name => $c_template)
 				{
-					list($c_app, $c_main, $c_sub) = explode('.',$c_name, 3);
+					list(,, $c_sub) = explode('.',$c_name, 3);
 					if($name == $c_sub)
 					{
 						//error_log(__METHOD__ . "('$name' loaded from cache ($c_name)");
@@ -124,6 +125,7 @@ class etemplate_widget_template extends etemplate_widget
 	 */
 	public static function relPath($name, $template_set=null, $version='')
 	{
+		unset($version);	// not used currently
 		list($app, $rest) = explode('.', $name, 2);
 
 		if (empty($template_set))
