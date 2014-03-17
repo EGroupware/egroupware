@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="resources.edit_tabs.general" template="" lang="" group="0" version="">
-		<grid width="100%" height="245" overflow="auto">
+		<grid width="100%" height="245">
 			<columns>
 				<column width="80"/>
 				<column width="200"/>
