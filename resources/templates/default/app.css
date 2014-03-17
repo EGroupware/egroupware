@@ -1,6 +1,23 @@
-.buttonbox {vertical-align: top;}
-.tdAppbox {width: 100%;}
-.big {font-weight: bold;}
-.sel select {width: 100%;}
-.selTable { float: left; width: 80%; }
-.selSelection { float: right; width: 20%; }
+/**
+ * Styles for Resources app
+ *
+ * @version: $Id$
+ */
+
+/* Header classes*/
+tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
+tr.dialogOperators td,.dialogFooterToolbar {
+	padding: 5px 0 5px 0;
+	vertical-align: middle;
+}
+
+div#resources-edit.et2_container
+{
+	width:848px;
+}
+#resources-edit_res_id:before {content:"#"}
+
+div.resources_pictureFile div.progress{
+	position: absolute;
+	width:226px;
+}

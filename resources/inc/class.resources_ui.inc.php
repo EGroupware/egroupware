@@ -517,7 +517,7 @@ class resources_ui
 		}
 		$sel_options['status'] = resources_bo::$field2label;
 
-		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
+		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
 			array('' => lang('select one')) + $sel_options['cat_id'];

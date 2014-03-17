@@ -2,128 +2,91 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="resources.edit_tabs.general" template="" lang="" group="0" version="">
-		<grid width="700" height="380">
+		<grid width="100%" height="245" overflow="auto">
 			<columns>
-				<column/>
-				<column/>
+				<column width="80"/>
+				<column width="200"/>
+				<column width="75"/>
+				<column width="90"/>
 				<column width="10"/>
-				<column/>
+				<column width="30"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row>
+					<description value="Inventory number"/>
+					<textbox  id="inventory_number" class="et2_fullWidth"/>
+					<description/>
+					<description value="Accessory of"/>
+					<vbox span="all" class="et2_fullWidth">
+						<menulist class="et2_fullWidth">
+							<menupopup id="accessory_of" no_lang="1" />
+						</menulist>
+						<description id="accessory_label"/>
+					</vbox>
+				</row>
+				<row>
 					<description value="Description (short)"/>
-					<textbox statustext="Short description of resource" id="short_description" size="50" maxlength="100" span="2"/>
-					<description value="Short description of resource"/>
+					<textbox statustext="Short description of resource" id="short_description" size="50" maxlength="100" class="et2_fullWidth"/>
+					<description/>
+					<description value="Storage information"/>
+					<textbox statustext="Information about storage" id="storage_info" size="50" maxlength="100" class="et2_fullWidth" span="all"/>
 				</row>
 				<row>
 					<description value="Location"/>
-					<textbox statustext="Location of resource" id="location" size="50" maxlength="100" span="2"/>
-					<description value="Where to find this resource?"/>
-				</row>
-				<row>
-					<description value="Storage information"/>
-					<textbox statustext="Information about storage" id="storage_info" size="50" maxlength="100" span="2"/>
-					<description value="Information about storage"/>
-				</row>
-				<row>
-					<description value="Quantity"/>
-					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10" span="2"/>
-					<description value="Quantity of resource"/>
-				</row>
-				<row>
-					<description value="Useable"/>
-					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" span="2"/>
-					<description value="How many of the resources are useable?"/>
-				</row>
-				<row>
-					<description value="Bookable"/>
-					<checkbox statustext="Is resource bookable?" id="bookable" span="2"/>
-					<description value="Is this resource bookable?"/>
-				</row>
-				<row>
-					<description value="Accessory sdfsdfof"/>
-					<menulist>
-						<menupopup id="accessory_of" no_lang="1" span="2"/>
-					</menulist>
-					<description id="accessory_label"/>
-				</row>
-				<row>
+					<textbox statustext="Where to find this resource?" id="location" size="50" maxlength="100" class="et2_fullWidth" />
+					<description/>
 					<description disabled="true" value="Buyable"/>
-					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable" span="2"/>
-					<description disabled="true" value="Is this resource buyable?"/>
+					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable" span="all" class="et2_fullWidth" />
 				</row>
-				<row height="100%">
+				<row>
+					<description value="Picture"/>
+					<grid width="100%">
+						<columns>
+							<column width="10%"/>
+							<column width="90%"/>
+						</columns>
+						<rows>
+							<row>
+								<radio id="picture_src" options="gen_src"/>
+								<description value="Use general resources icon"/>
+							</row>
+							<row>
+								<radio id="picture_src" options="cat_src"/>
+								<description value="Use the category's icon"/>
+							</row>
+							<row>
+								<radio id="picture_src" options="own_src"/>
+								<description value="Use own picture"/>
+							</row>
+							<row>
+								<description/>
+								<file id="own_file" class="resources_pictureFile et2_fullWidth"/>
+							</row>
+						</rows>
+					</grid>
 					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<vbox>
+						<image src="resource_picture" align="center" />
+					</vbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="resources.edit_tabs.page" template="" lang="" group="0" version="">
-		<grid width="100%" height="380">
+		<grid width="100%" height="100%" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row valign="top">
-					<htmlarea statustext="Web-Site for this resource" id="long_description" height="350px" width="700px" toolbar="true"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="resources.edit_tabs.pictures" template="" lang="" group="0" version="">
-		<grid width="700" height="380">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<hbox>
-						<vbox>
-							<image src="resource_picture"/>
-							<description/>
-						</vbox>
-						<groupbox>
-							<caption label="picture source"/>
-							<grid>
-								<columns>
-									<column/>
-									<column/>
-									<column/>
-								</columns>
-								<rows>
-									<row>
-										<description align="right" value="Use general resources icon"/>
-										<radio id="picture_src" options="gen_src"/>
-										<menulist>
-											<menupopup id="gen_src_list" no_lang="1"/>
-										</menulist>
-									</row>
-									<row>
-										<description align="right" value="Use the category's icon"/>
-										<radio id="picture_src" options="cat_src"/>
-										<description/>
-									</row>
-									<row>
-										<description align="right" value="Use own picture"/>
-										<radio id="picture_src" options="own_src"/>
-										<file id="own_file"/>
-									</row>
-								</rows>
-							</grid>
-						</groupbox>
-					</hbox>
-				</row>
-				<row height="100%">
-					<description/>
+					<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="resources.edit_tabs.links" template="" lang="" group="0" version="">
-		<grid width="700" height="380">
+		<grid width="100%" height="245"  overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -138,111 +101,110 @@
 				<row class="th">
 					<description value="Existing links" span="all"/>
 				</row>
-				<row class="row_off" valign="top" height="164">
+				<row class="row_off" valign="top">
 					<link-list id="link_to" span="all"/>
-				</row>
-				<row height="100%">
-					<description/>
-					<description/>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</template> 
 	<template id="resources.edit_tabs.custom" template="" lang="" group="0" version="">
-		<grid width="700" height="380">
+		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
+				<row class="th" height="20">
+					<description value="Custom fields"/>
+				</row>
 				<row valign="top">
 					<customfields/>
-				</row>
-				<row>
-					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="resources.edit_tabs.history" template="" lang="" group="0" version="">
-		<historylog cols="1" id="history" rows="1"/>
+		<historylog cols="1" id="history" rows="1"  width="100%"/>
 	</template>
-	<template id="resources.edit_tabs" template="" lang="" group="0" version="">
-		<grid height="380">
+	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%">
 			<columns>
-				<column width="700"/>
-				<column/>
-				<column/>
+				<column width="90"/>
+				<column width="200"/>
+				<column width="80"/>
+				<column width="90"/>
+				<column width="120"/>
+				<column width="30"/>
+				<column width="50"/>
+				<column width="4"/>
 			</columns>
 			<rows>
-				<row class="row_off">
-					<tabbox id="tabs" span="all">
+				<row class="dialogHeader">
+					<description value="Name"/>
+					<textbox statustext="Name of resource" id="name" needed="1" class="et2_fullWidth et2_required" span="4"/>
+					<textbox type="integer" id="res_id" readonly="true"/>
+					<appicon/>
+					<description/>
+				</row>
+				<row class="dialogHeader2">
+					<description value="Quantity"/>
+					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10" class="et2_fullWidth"/>
+					<description/>
+					<description value="Category"/>
+					<menulist span="3">
+						<menupopup align="right" statustext="Which category does this resource belong to?" id="cat_id" needed="1" no_lang="1" class="et2_fullWidth" />
+					</menulist>
+					<description/>
+				</row>
+				<row class="dialogHeader3">
+					<description value="Usable"/>
+					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" class="et2_fullWidth"/>
+					<description/>
+					<description value="Bookable"/>
+					<checkbox statustext="Is resource bookable?" id="bookable" span="3"/>
+					<description/>
+				</row>
+				<row>
+					<tabbox id="tabs" span="all" width="100%">
 						<tabs>
-							<tab id="general" label="General" statustext="General informations about resource"/>
 							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
-							<tab id="pictures" label="Picture" statustext="Prizeing information for booking or buying"/>
+							<tab id="general" label="Details" statustext="General informations about resource"/>
 							<tab id="links" label="Links" statustext="Web-Page of resource"/>
 							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
 							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
-							<template id="resources.edit_tabs.general"/>
 							<template id="resources.edit_tabs.page"/>
-							<template id="resources.edit_tabs.pictures"/>
+							<template id="resources.edit_tabs.general"/>
 							<template id="resources.edit_tabs.links"/>
 							<template id="resources.edit_tabs.custom"/>
 							<template id="resources.edit_tabs.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row height="100%">
-					<description span="all"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="resources.edit_buttons" template="" lang="" group="0" version="">
-		<grid width="100%" id="button">
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<hbox span="3">
-						<button statustext="Saves entry and exits" label="Save" id="save" image="save" background_image="1"/>
-						<button label="Apply" id="apply" image="apply" background_image="1"/>
-						<button label="Cancel" id="cancel" onclick="window.close();" image="close" background_image="1"/>
-					</hbox>
-					<button align="right" label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
-		<grid>
-			<columns>
-				<column width="700"/>
-			</columns>
-			<rows>
-				<row disabled="!@msg">
-					<description id="msg" no_lang="1" span="all" class="message"/>
-				</row>
-				<row class="th dialog-header">
+				<row class="dialogOperators">
+					<description value="Created by"/>
 					<hbox>
-						<textbox statustext="Name of resource" label="Name" id="name" needed="1"/>
-						<textbox label="Inventory number" id="inventory_number"/>
 						<menulist>
-							<menupopup align="right" statustext="Which category does this resource belong to?" label="Category" id="cat_id" needed="1" no_lang="1"/>
+							<menupopup type="select-account" id="" readonly="true"/>
 						</menulist>
+						<date-time id="info_created" readonly="true" align="right"/>
+					</hbox>
+					<description/>
+					<description value="Last modified"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" id="" readonly="true"/>
+						</menulist>
+							<date-time  readonly="true" align="right"/>
 					</hbox>
 				</row>
-				<row>
-					<template id="resources.edit_tabs"/>
-				</row>
-				<row class="dialog-footer-toolbar">
-					<template id="resources.edit_buttons"/>
+				<row class="dialogFooterToolbar">
+					<hbox span="3">
+						<button statustext="Saves entry and exits" label="Save" id="button[save]" image="save" background_image="1"/>
+						<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" onclick="window.close();" image="close" background_image="1"/>
+					</hbox>
+					<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
 				</row>
 			</rows>
 		</grid>
