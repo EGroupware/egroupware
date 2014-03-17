@@ -1808,7 +1808,7 @@ class mail_compose
 			'type'		=> $_type,
 			'size'		=> $_size,
 			'folder'	=> $_folder,
-			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid),
+			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid).'_'.(!empty($_partID)?$_partID:count($this->sessionData['attachments'])+1),
 		);
 	}
 
