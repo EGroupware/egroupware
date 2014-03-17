@@ -250,7 +250,7 @@ var et2_taglist = et2_selectbox.extend(
 
 	set_autocomplete_url: function(source)
 	{
-		if(source && source.indexOf('http') != 0)
+		if(source && source[0] != '/' && source.indexOf('http') != 0)
 		{
 			source = this.egw().ajaxUrl(source);
 		}
@@ -345,7 +345,7 @@ var et2_taglist_account = et2_taglist.extend(
 			"default": "home.etemplate_widget_taglist.ajax_search.etemplate"
 		},
 		allowFreeEntries: {
-			"default": true,
+			"default": false,
 			ignore: true
 		},
 		account_type: {
