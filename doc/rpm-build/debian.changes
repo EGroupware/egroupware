@@ -1,5 +1,25 @@
 egroupware-epl (11.1.20140317-1) hardy; urgency=low
 
+  * All apps: run link notifications after processing and returning control to user to speed up saving of entries with links to (big) projects
+  * eTemplate/all apps: limit displayed history to 500 entries
+  * CardDAV/Addressbook: add "None" to forced preferences of addressbooks to sync in addition to personal one
+  * CalDAV/Calendar: sending now iMip response to external organizer when initialy accepting invitation via CalDAV client (before only status changes where sent)
+  * CalDAV/Calendar: store and therefore keep external organizer if he has no common name (just email) and also store its common name
+  * CalDAV/CardDAV: entries with urls containing url-encoded chars, eg. from Google calendar, were not send to clients (missing urldecoding in multiget report)
+  * CalDAV/CardDAV: fixed support for limited sync-collection report used eg. by Marten Gajdas Android apps
+  * WebDAV/Filemanager: reject to save files by clients using chunked transfer-encoding on servers which does not support that (eg. OS X Finder with server using FastCGI PHP)
+  * Tracker: improve detection of related/existing tickets by subject when importing mails to tracker
+  * Tracker: allow to deny global category, version, status, ... on a per tracker base (eg. create single category for all queues but one)
+  * Tracker/Mailhandling: fix broken linking to addressbook entrys for prepare_import_mail
+  * eSync: fix a problem with a non working global profile, when verifying settings
+  * Sieve/Felamimail|Mail:Make exclamation mark (\!) in the begining of sieve rule query escapable from always bien used as NOT conditon
+  * Calendar/EMail: wrong timezone conversation when accepting meeting requests (happening if server- and user-timezone are different!)
+  * EMail(Admin): inetOrgPerson schema support reported all accounts as inactive
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 17 Mar 2014 15:47:55 +0100
+
+egroupware-epl (11.1.20140317-1) hardy; urgency=low
+
   * Tracker: improve detection of related/existing tickets by subject when importing mails to tracker
   * All apps: run link notifications after processing and returning control to user to speed up saving of entries with links to (big) projects
   * eTemplate/all apps: limit displayed history to 500 entries
