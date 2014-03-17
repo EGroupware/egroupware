@@ -137,3 +137,12 @@
 #timesheet-edit #timesheet-edit_tabs .et2_tabheader {
   background: none;
 }
+#timesheet-edit #timesheet-edit_ts_id:before {
+  content: "#";
+}
+#timesheet-edit_pm_id input {
+  width: 99% !important;
+}
+div#timesheet-edit.et2_container {
+  width: 668px;
+}
