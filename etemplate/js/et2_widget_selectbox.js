@@ -159,7 +159,9 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		// If select_options are already known, skip the rest
 		if(this.options && this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ||
-			_attrs.select_options && !jQuery.isEmptyObject(_attrs.select_options)
+			_attrs.select_options && !jQuery.isEmptyObject(_attrs.select_options) ||
+			// Allow children to skip select_options - check to make sure default got set to something (should be {})
+			typeof _attrs.select_options == 'undefined' || _attrs.select_options === null
 		)
 		{
 			return;

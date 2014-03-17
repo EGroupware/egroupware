@@ -376,6 +376,11 @@ var et2_taglist_account = et2_taglist.extend(
 	set_account_type: function(value)
 	{
 		this.options.autocomplete_params.account_type = this.options.account_type = value;
+		if(this.taglist != null)
+		{
+			// Update taglist too, since it already copied the params
+			this.taglist.setDataUrlParams(this.options.autocomplete_params);
+		}
 	},
 
 	int_reg_exp: /^[0-9]+$/,
