@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -1776,6 +1776,7 @@ window.egw_LAB.wait(function() {
 				{
 					$view = true;
 				}
+				$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 			}
 			else // not found
 			{
@@ -1997,7 +1998,41 @@ window.egw_LAB.wait(function() {
 			$content['msg'] .= lang('Please update the templatename in your customfields section!');
 			$this->tmpl->read('addressbook.edit');
 		}
-		return $this->tmpl->exec('addressbook.addressbook_ui.edit',$content,$sel_options,$readonlys,$content, 2);
+
+		// allow other apps to add tabs to addressbook edit
+		$preserve = $content;
+		$this->tmpl->setElementAttribute('tabs', 'add_tabs', true);
+		$tabs =& $this->tmpl->getElementAttribute('tabs', 'tabs');
+		if (true) $tabs = array();
+		$hook_data = $GLOBALS['egw']->hooks->process(array('location' => 'addressbook_edit')+$content);
+		//error_log(__METHOD__."() hook_data=".array2string($hook_data));
+		foreach($hook_data as $extra_tabs)
+		{
+			if (!$extra_tabs) continue;
+
+			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
+			{
+				$tabs[] = array(
+					'label' =>	$extra_tab['label'],
+					'template' =>	$extra_tab['name'],
+					'prepend' => $extra_tab['prepend'],
+				);
+				//error_log(__METHOD__."() changed tabs=".array2string($tabs));
+				if ($extra_tab['data'] && is_array($extra_tab['data']))
+				{
+					$content = array_merge($content, $extra_tab['data']);
+				}
+				if ($extra_tab['preserve'] && is_array($extra_tab['preserve']))
+				{
+					$preserve = array_merge($preserve, $extra_tab['preserve']);
+				}
+				if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
+				{
+					$readonlys = array_merge($readonlys, $extra_tab['readonlys']);
+				}
+			}
+		}
+		return $this->tmpl->exec('addressbook.addressbook_ui.edit', $content, $sel_options, $readonlys, $preserve, 2);
 	}
 
 	/**

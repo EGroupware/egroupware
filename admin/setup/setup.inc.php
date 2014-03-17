@@ -42,8 +42,11 @@ $setup_info['admin']['hooks'] = array(
 	'group_manager' => 'admin.uiaccounts.edit_group_hook',
 	'topmenu_info'
 );
-$setup_info['admin']['hooks']['admin'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
-$setup_info['admin']['hooks']['sidebox_menu'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['admin']['hooks']['admin'] = 'admin.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['admin']['hooks']['sidebox_menu'] = 'admin.admin_prefs_sidebox_hooks.all_hooks';
+
+// add account tab to addressbook.edit
+$setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.addressbook_edit';
 
 /* Dependencies for this app to work */
 $setup_info['admin']['depends'][] = array(

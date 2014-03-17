@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.account" template="" lang="" group="0" version="1.9.003">
+		<grid width="100%" height="200">
+			<columns>
+				<column width="82"/>
+				<column width="300"/>
+				<column width="28"/>
+				<column width="85"/>
+				<column width="300"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Login ID" for="account_lid"/>
+					<textbox id="account_lid" class="et2_fullWidth"/>
+					<description/>
+					<description value="Expires" for="account_expires"/>
+					<hbox>
+						<date id="account_expires"/>
+						<checkbox id="account_status" selected_value="A" label="Account active"/>
+					</hbox>
+					<description/>
+				</row>
+				<row>
+					<description value="Password" for="account_passwd"/>
+					<textbox id="account_passwd" class="et2_fullWidth"/>
+					<description/>
+					<description value="Re-enter password" for="account_passwd2"/>
+					<textbox id="account_passwd2" class="et2_fullWidth"/>
+					<description/>
+				</row>
+				<row valign="top">
+					<description/>
+					<vbox span="3">
+						<checkbox id="mustchangepassword" label="Must change password upon next login"/>
+						<checkbox id="changepassword" label="Can change password"/>
+					</vbox>
+					<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
+					<description/>
+				</row>
+				<row>
+					<description value="Groups" for="groups"/>
+					<taglist-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth"/>
+					<description/>
+					<description value="Primary group" for="account_primary_group"/>
+					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
+					<description/>
+				</row>
+				<row>
+					<description value="Last login"/>
+					<hbox>
+						<date-time id="account_lastlogin" readonly="true"/>
+						<description id="account_lastloginfrom" readonly="true" align="right"/>
+					</hbox>
+					<description/>
+					<description value="Last password change"/>
+					<date-time id="account_lastpwd_change" readonly="true"/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
