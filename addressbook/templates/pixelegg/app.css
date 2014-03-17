@@ -473,6 +473,9 @@ img.iphoto {
 #                                           #
 #                                           #
 ##############################################*/
+  div#addressbook-edit.et2_container {
+    width: 842px;
+  }
   div.addressbook_edit_general_picture img {
     top: -4px;
     width: 70px;
