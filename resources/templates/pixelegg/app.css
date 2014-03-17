@@ -15,18 +15,20 @@
   font-size: 1.15em !important;
 }
 button#resources-show_add {
+  height: 24px;
   width: 32px;
-  height: 32px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #0C5DA5;
+  margin: 6px 2px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-  padding: 0.5em;
-  background-color: #0c5da5 !important;
+  padding: -0.5em;
+  background-color: #e6e6e6 !important;
+  background-size: 16px 16px;
   background-color: #0c5da5;
 }
 button#resources-show_add:before {
-  content: "+";
+  content: "";
   font-size: 2em;
-  color: #ffc200;
+  color: #0c5da5;
   line-height: 0.6em;
   padding-left: 0.1em;
   padding-right: 4em;
@@ -50,6 +52,16 @@ button#resources-show_add:hover {
 button#resources-show_add:active {
   background-color: #1aa200 !important;
 }
+#resources-edit_res_id:before {
+  content: "#";
+}
+div.resources_pictureFile div.progress {
+  position: absolute;
+  width: 226px;
+}
 div#resources-edit {
   margin: 0.5em;
+}
+div#resources-edit .et2_container {
+  width: 848px;
 }
