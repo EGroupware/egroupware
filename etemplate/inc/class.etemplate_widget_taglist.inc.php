@@ -43,10 +43,15 @@ class etemplate_widget_taglist extends etemplate_widget
 		$type = $_REQUEST['type'];
 		$query = $_REQUEST['query'];
 		$options = array();
+		$links = array();
 		if ($type == "account")
 		{
-			$options['account_type'] = $_REQUEST['account_type'];
-			$links = accounts::link_query($query, $options);
+			// Only search if a query was provided - don't search for all accounts
+			if($query)
+			{
+				$options['account_type'] = $_REQUEST['account_type'];
+				$links = accounts::link_query($query, $options);
+			}
 		}
 		else
 		{

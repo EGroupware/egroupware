@@ -254,11 +254,14 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			source = this.egw().ajaxUrl(source);
 		}
-		this.options.autocomplete_url = source;
+		if(this.options.autocomplete_url != source)
+		{
+			this.options.autocomplete_url = source;
 
-		// do NOT set an empty autocomplete_url, magicsuggest would use page url instead!
-		if(this.taglist == null || !source) return;
-		this.taglist.setData(source);
+			// do NOT set an empty autocomplete_url, magicsuggest would use page url instead!
+			if(this.taglist == null || !source) return;
+			this.taglist.setData(source);
+		}
 	},
 
 	/**
@@ -303,14 +306,14 @@ var et2_taglist = et2_selectbox.extend(
 			{
 				// alread in correct format
 			}
-			else if (typeof this.options.select_options[v] == 'undefined')
+			else if (this.options.select_options && typeof this.options.select_options[v] == 'undefined')
 			{
 				values[i] = {
 					id: v,
 					label: v
 				};
 			}
-			else
+			else(this.options.select_options)
 			{
 				if (typeof values[i].id == 'undefined')
 				{
@@ -362,6 +365,9 @@ var et2_taglist_account = et2_taglist.extend(
 	init:function ()
 	{
 		this._super.apply(this, arguments);
+		
+		// Counter to prevent infinite looping while fetching account names
+		this.deferred_loading = 0;
 
 		this.options.autocomplete_params.type = "account";
 	},
@@ -410,15 +416,21 @@ var et2_taglist_account = et2_taglist.extend(
 						label: label
 					};
 				}
-				else	// call set_value again, after result has arrived from server
+				else if (!this.deferred_loading)	// call set_value again, after result has arrived from server
 				{
+					this.deferred_loading++;
 					this.egw().link_title('home-accounts', v, function(label) {
+						this.deferred_loading--;
 						if (label) this.set_value(values);
 					}, this);
 				}
 			}
 		}
-		this._super.call(this, values);
+		// Don't proceed if waiting for labels
+		if(this.deferred_loading <=0)
+		{
+			this._super.call(this, values);
+		}
 	}
 });
 et2_register_widget(et2_taglist_account, ["taglist-account"]);
