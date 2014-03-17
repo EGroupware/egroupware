@@ -43,13 +43,13 @@
 
 
         #divLogo {
-            margin-left:auto;
-            margin-right:auto;
+            margin-left:-2%;
+            margin-right:-2%;
             margin-bottom: 2em;
             position: relative;
             top: 1px;
             background-color: @egw_color_2_e;
-            
+
             img {width: 70%;margin-left: 15%; }
             img[src$="svg"]{
             .gradient_vertical (@egw_color_2_e, @egw_color_2_e);
@@ -60,12 +60,12 @@
 
     // Anmeldefenster / Box mit Mesaage + Form
     div#centerBox{
-        margin: 0 auto;
+        margin: 2% 14% auto auto;
         width: 444px;
         background-color: @gray_0;
         z-index: 100;
         .border_radius (5px, 5px, 5px, 25px);
-        
+
         .bordered (@egw_color_1_a, @egw_color_1_a, @egw_color_2_e, @egw_color_2_e );
         border-width: 14px;
 
@@ -79,7 +79,7 @@
 
         // Message
         #loginCdMessage{
-                 margin: 1em;							    
+                 margin: 1em;
                  .border_radius_button_lefttop;
                  color: red;
                  text-align: center;
@@ -165,42 +165,42 @@
     background-color:transparent;
     width: 100%;*/
 
-    div.animation_login{ 
+    div.animation_login{
         margin: 0.3em;
         position: fixed;
         width: 100%;
         bottom: 0;
    }
-    
+
     img[src$="svg"],
     background-image[url$="svg"]{
         .gradient_vertical (@egw_color_2_e, @egw_color_2_e);
-    }    
+    }
 
 }
-    
+
  #img1, #img2, #img3, #img4 , #img5 , #img6 , #img7 , #img8 {
         width:12%;
         /*height:100%;*/
         /*position:fixed;*/
         /*top: 10em;*/
         z-index:-1;
-        
+
         animation-name: test;
         animation-duration: 8s;
         animation-iteration-count: infinite;
-        
+
         -webkit-animation-name: test;
         -webkit-animation-duration: 8s;
         -webkit-animation-iteration-count: infinite;
-        
+
         opacity:0;
     }
      #img1 {
         animation-delay:0s;
         -webkit-animation-delay:0s
-    }  
-    
+    }
+
     #img2 {
         animation-delay:3s;
         -webkit-animation-delay:3s
@@ -229,9 +229,9 @@
         animation-delay:21s;
         -webkit-animation-delay:21s
     }
-    
 
-    
+
+
     @-webkit-keyframes test {
         0% {
             opacity: 0;
@@ -243,7 +243,7 @@
             opacity: 0;
         }
     }
-    
+
     @keyframes test {
         0% {
             opacity: 0;

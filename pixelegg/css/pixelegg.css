@@ -1708,7 +1708,26 @@ div#ui-datepicker-div {
   top: -17px;
   right: 0;
 }
-/*@import "../less/traditional.less";*/
+/**
+ * EGroupware: CSS with less preprocessor
+
+ * traditional.less
+ * included in pixelegg.less since 17/03/2014
+
+
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+/*
+	font styling
+	allowed attributes: font-family,font-size,color,font-weight
+*/
 /**
  * layout_*.less files are Pixelegg template specific
  */
@@ -3632,8 +3651,8 @@ table.nextmatch_header img {
   background: transparent;
 }
 #loginMainDiv #divAppIconBar #divLogo {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: -2%;
+  margin-right: -2%;
   margin-bottom: 2em;
   position: relative;
   top: 1px;
@@ -3655,7 +3674,7 @@ table.nextmatch_header img {
   background-repeat: repeat-x;
 }
 #loginMainDiv div#centerBox {
-  margin: 0 auto;
+  margin: 2% 14% auto auto;
   width: 444px;
   background-color: #ffffff;
   z-index: 100;
@@ -5191,11 +5210,11 @@ button.image_button {
  * @version $Id$
  */
 /*@import (reference) "def_content_elements.less";*/
-body {
-  background-color: #ffffff;
-  background-image: url(../images/bgDialog.png);
-  background-repeat: repeat-x;
-}
+/*body {
+    background-color: @gray_0;
+    background-image: url(../images/bgDialog.png);
+    background-repeat: repeat-x;
+}*/
 div#popupMainDiv {
   padding: 8px;
 }
