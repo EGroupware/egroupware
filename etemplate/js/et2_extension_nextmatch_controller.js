@@ -109,9 +109,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 * Updates the filter instance.
 	 */
 	setFilters: function (_filters) {
-		// Update the filters, reset the "lastModification"
+		// Update the filters
 		this._filters = _filters;
-		this._lastModification = null;
 	},
 
 	/**

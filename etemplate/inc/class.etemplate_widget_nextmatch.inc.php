@@ -385,6 +385,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$result['order'][] = $id;
 
 				// check if we need to send the data
+				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . egw_time::to($row[$row_modified]) . ' > ' . egw_time::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
 				{

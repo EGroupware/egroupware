@@ -811,6 +811,8 @@ var et2_dataview_controller = Class.extend({
 	},
 
 	_fetchCallback: function (_response) {
+		this.self._lastModification = _response.lastModification;
+		
 		// Do nothing if _response.order evaluates to false
 		if (!_response.order)
 		{
