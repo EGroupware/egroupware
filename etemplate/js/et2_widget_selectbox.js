@@ -509,7 +509,7 @@ var et2_selectbox = et2_inputWidget.extend(
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == "string" && this.options.multiple && _value.match(/[,0-9A-Za-z]+$/) !== null)
+		if(typeof _value == "string" && this.options.multiple && _value.match(/^[,0-9A-Za-z]+$/) !== null)
 		{
 			_value = _value.split(',');
 		}
@@ -877,58 +877,43 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 					_options[key] = this.egw().lang(_options[key]);
 				}
 			}
-			// Allow some special extras for objects by passing the whole thing - value might not be key
-			var option_id = _options[key] == null ? key : _options[key].value || _options[key].id || key;
-			if(option_id != key) {
-				egw.debug('log', 'Options not indexed.  TODO: what is up?', this);
-			}
-			this.optionValues[option_id] = _options[key];
 		}
+		this.optionValues = _options;
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == "string" && _value.match(/[,0-9A-Za-z]+$/) !== null)
-		{
-			_value = _value.split(',');
-		}
 		this.value = _value;
-		if(typeof _value == "object")
+
+		if(typeof _value == "string")
 		{
-			this.span.empty();
-			if(_value)
+			_value = _value.match(/^[,0-9A-Za-z]+$/) !== null ? _value.split(',') : [_value];
+		}
+		this.span.empty();
+
+		if(_value)
+		{
+			for(var i = 0; i < _value.length; i++)
 			{
-				for(var i = 0; i < _value.length; i++)
+				for(var o in this.optionValues)
 				{
-					var option = this.optionValues[_value[i]];
-					if(typeof option === "object" && option != null)
+					var option = this.optionValues[o];
+					var key = typeof option == 'object' && typeof option.value != 'undefined' ? option.value : o;
+					if (key != _value[i]) continue;
+					var label = typeof option == 'object' ? option.label : option;
+					if (_value.length == 1)
 					{
-						option = option.label;
+						this.span.text(label);
+						if (typeof option == 'object' && option.title) this.set_statustext(option.title);
 					}
-					else if (typeof option == 'undefined')
+					else
 					{
-						// Not a valid option
-						continue;
+						$j('<li>')
+							.text(label)
+							.attr('data-value', _value[i])
+							.appendTo(this.span);
 					}
-					$j("<li>"+option+"</li>")
-						.attr('data-value', _value[i])
-						.appendTo(this.span);
 				}
 			}
-			return;
-		}
-		var option = this.optionValues[_value];
-		if (typeof option === 'object' && option != null)
-		{
-			this.span.text(option.label);
-			this.set_statustext(option.title);
-		}
-		else if (typeof option === 'string')
-		{
-			this.span.text(option);
-		}
-		else
-		{
-			this.span.text("");
 		}
 	},
 
