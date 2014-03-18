@@ -477,7 +477,6 @@ class resources_ui
 		if ($res_id > 0)
 		{
 			$content = $this->bo->read($res_id);
-			$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
 			$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
 			$content['link_to'] = array(
 				'to_id' => $res_id,

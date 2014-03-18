@@ -323,7 +323,7 @@ class resources_bo
 			case 'cat_src':
 				break;
 			case 'gen_src':
-				$resource['picture_src'] = $resource['gen_src_list'];
+				$resource['picture_src'] = 'gen_src';
 				break;
 			default:
 				if($resource['own_file']['size'] > 0)
