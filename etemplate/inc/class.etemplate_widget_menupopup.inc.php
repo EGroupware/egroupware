@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-13 by RalfBecker@outdoor-training.de
+ * @copyright 2002-14 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -148,6 +148,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 */
 	public function beforeSendToClient($cname)
 	{
+		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
 		$matches = null;
 		if ($cname == '$row')	// happens eg. with custom-fields: $cname='$row', this->id='#something'
 		{
@@ -163,7 +164,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$form_name = self::form_name($cname, $this->id);
 		}
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-		if ($this->attrs['type'])
+		$type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
+		if ($type != 'select')
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
@@ -342,21 +344,21 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Fetch options for certain select-box types
 	 *
 	 * @param string|etemplate_widget_menupopup $widget_type Type of widget, or actual widget to get attributes since $legacy_options are legacy
-	 * @param string $legacy_options options string of widget
+	 * @param string $_legacy_options options string of widget
 	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
 	 * @param boolean $readonly=false for readonly we dont need to fetch all options, only the one for value
 	 * @param mixed $value=null value for readonly
 	 * @return array with value => label pairs
 	 */
-	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, &$value=null)
+	public static function typeOptions($widget_type, $_legacy_options, &$no_lang=false, $readonly=false, &$value=null)
 	{
 		if($widget_type && is_object($widget_type))
 		{
 			$widget = $widget_type;
-			$widget_type = $widget->attrs['type'];
+			$widget_type = $widget->attrs['type'] ? $widget->attrs['type'] : $widget->type;
 			// Legacy / static support
 			// Have to do this explicitly, since legacy options is not defined on class level
-			$legacy_options = explode(',',$legacy_options);
+			$legacy_options = explode(',',$_legacy_options);
 			foreach($legacy_options as &$field)
 			{
 				$field = self::expand_name($field, 0, 0,'','',self::$cont);
@@ -739,7 +741,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			unset($options['']);
 		}
 
-		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
+		//error_log(__METHOD__."('$widget_type', '$_legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
 	}
 
