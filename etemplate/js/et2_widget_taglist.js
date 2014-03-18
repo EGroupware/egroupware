@@ -306,8 +306,14 @@ var et2_taglist = et2_selectbox.extend(
 			{
 				// alread in correct format
 			}
-			else if (this.options.select_options && typeof this.options.select_options[v] == 'undefined')
+			else if (this.options.select_options && typeof this.options.select_options[v] == 'undefined' || typeof v == 'string')
 			{
+				// Options should have been provided, but they weren't
+				// This can happen for ajax source with an existing value
+				if(this.options.select_options == null)
+				{
+					this.options.select_options = {};
+				}
 				values[i] = {
 					id: v,
 					label: v
