@@ -1190,6 +1190,9 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
   overflow-x: hidden;
 }
+div.ms-sel-ctn {
+	padding-right: 0px;
+}
 /**
 * et2_toolbar
 */
