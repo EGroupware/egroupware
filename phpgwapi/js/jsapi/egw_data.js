@@ -90,7 +90,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					"order": _result.order,
 					"total": parseInt(_result.total),
 					"readonlys": _result.readonlys,
-					"rows": _result.rows
+					"rows": _result.rows,
+					"lastModification": lastModification
 				});
 			}
 		}
