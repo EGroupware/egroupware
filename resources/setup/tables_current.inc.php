@@ -29,7 +29,11 @@ $phpgw_baseline = array(
 			'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1'),
 			'storage_info' => array('type' => 'varchar','precision' => '200'),
 			'inventory_number' => array('type' => 'varchar','precision' => '20'),
-			'deleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8')
+			'deleted' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
+			'res_creator' => array('type' => 'int','meta' => 'user','precision' => '11'),
+			'res_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
+			'res_modifier' => array('type' => 'int','meta' => 'user','precision' => '11'),
+			'res_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8')
 		),
 		'pk' => array('res_id'),
 		'fk' => array(),

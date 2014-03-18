@@ -185,17 +185,17 @@
 					<description value="Created by"/>
 					<hbox>
 						<menulist>
-							<menupopup type="select-account" id="" readonly="true"/>
+							<menupopup type="select-account" id="res_owner" readonly="true"/>
 						</menulist>
-						<date-time id="info_created" readonly="true" align="right"/>
+						<date-time id="res_created" readonly="true" align="right"/>
 					</hbox>
 					<description/>
 					<description value="Last modified"/>
 					<hbox>
 						<menulist>
-							<menupopup type="select-account" id="" readonly="true"/>
+							<menupopup type="select-account" id="res_modifier" readonly="true"/>
 						</menulist>
-							<date-time  readonly="true" align="right"/>
+							<date-time  id="res_modified" readonly="true" align="right"/>
 					</hbox>
 				</row>
 				<row class="dialogFooterToolbar">

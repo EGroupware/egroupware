@@ -350,3 +350,29 @@ function resources_upgrade1_9_002()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.003';
 }
+function resources_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','res_creator',array(
+		'type' => 'int',
+		'meta' => 'user',
+		'precision' => '11'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','res_created',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','res_modifier',array(
+		'type' => 'int',
+		'meta' => 'user',
+		'precision' => '11'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','res_modified',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8'
+	));
+
+	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.004';
+}
+

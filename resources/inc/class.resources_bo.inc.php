@@ -295,10 +295,14 @@ class resources_bo
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
+			$resource['res_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			$resource['res_created'] = egw_time::server2user(time(),'ts');
 			$resource['res_id'] = $this->so->save($resource);
 		}
 		else
 		{
+			$resource['res_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+			$resource['res_modified'] = egw_time::server2user(time(),'ts');
 			$old = $this->read($resource['res_id']);
 		}
 
@@ -389,7 +393,7 @@ class resources_bo
 				$this->so->save();
 			}
 		}
-
+			
 		$res_id = $this->so->save($resource);
 
 		// History & notifications
