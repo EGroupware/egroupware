@@ -172,7 +172,7 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 * View infolog entries linked to selected contact - just one, infolog fails with multiple
+	 * View infolog entries linked to selected contact
 	 * @param {egwAction} _action Select action
 	 * @param {egwActionObject[]} _senders Selected contact(s)
 	 */
@@ -183,6 +183,7 @@ app.classes.addressbook = AppJS.extend(
 			action_id: [],
 			action_title: _senders.length > 1 ? this.egw.lang('selected contacts') : ''
 		};
+		var orgs = [];
 		for(var i = 0; i < _senders.length; i++)
 		{
 			// Remove UID prefix for just contact_id
@@ -190,15 +191,32 @@ app.classes.addressbook = AppJS.extend(
 			ids.shift();
 			ids = ids.join('::');
 
-			// Orgs go through the server to get all IDs
+			// Orgs need to get all the contact IDs first
 			if (ids.substr(0,9) == 'org_name:')
 			{
-				return nm_action(_action,_senders);
+				orgs.push(ids);
 			}
-			extras.action_id.push(ids);
+			else
+			{
+				extras.action_id.push(ids);
+			}
 		}
 
-		egw.open('', 'infolog', 'list', extras, 'infolog');
+		if(orgs.length > 0)
+		{
+			// Get organisation contacts, then show infolog list
+			this.egw.json('addressbook.addressbook_ui.ajax_organisation_contacts',
+				[orgs],
+				function(contacts) {
+					extras.action_id = extras.action_id.concat(contacts);
+					this.egw.open('','infolog','list',extras,'infolog');
+				},this,true,this
+			).sendRequest();
+		}
+		else
+		{
+			egw.open('', 'infolog', 'list', extras, 'infolog');
+		}
 	},
 
 	/**

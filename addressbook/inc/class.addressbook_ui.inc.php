@@ -517,7 +517,8 @@ class addressbook_ui extends addressbook_bo
 					'infolog' => array(
 						'caption' => lang('View linked InfoLog entries'),
 						'icon' => 'infolog/navbar',
-						'onExecute' => 'javaScript:app.addressbook.view_infolog'
+						'onExecute' => 'javaScript:app.addressbook.view_infolog',
+						'allowOnMultiple' => true,
 					),
 					'infolog_add' => array(
 						'caption' => 'Add a new Infolog',
@@ -742,6 +743,36 @@ window.egw_LAB.wait(function() {
 ";
 		}
 		return $this->index($content,$msg,true);
+	}
+
+	/**
+	 * Return the contacts in an organisation via AJAX
+	 *
+	 * @param string|string[] $org Organisation ID
+	 * @param mixed $query Query filters (category, etc) to use, or null to use session
+	 * @return array
+	 */
+	public function ajax_organisation_contacts($org, $query = null)
+	{
+		$org_contacts = array();
+		$query = $query == null ? egw_session::appsession('index','addressbook') : $query;
+		$query['num_rows'] = -1;	// all
+		if(!is_array($query['col_filter'])) $query['col_filter'] = array();
+		
+		if(!is_array($org)) $org = array($org);
+		foreach($org as $org_name)
+		{
+			error_log("Org: $org_name");
+			$query['org_view'] = $org_name;
+			$checked = array();
+			$count = $this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+			error_log("Count: $count " . array2string($checked));
+			if($checked[0])
+			{
+				$org_contacts = array_merge($org_contacts,$checked);
+			}
+		}
+		egw_json_response::get()->data(array_unique($org_contacts));
 	}
 
 	/**
