@@ -950,7 +950,6 @@
                         break;
                 }
 
-                self._processSuggestions();
                 if(cfg.value !== null) {
                     ms.setValue(cfg.value);
                     self._renderSelection();
