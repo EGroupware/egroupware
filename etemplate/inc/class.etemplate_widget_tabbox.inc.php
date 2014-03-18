@@ -13,6 +13,16 @@
 
 /**
  * eTemplate Tabs widget stacks multiple sub-templates and lets you switch between them
+ *
+ * Available attributes:
+ * - add_tabs: true: tabs contain addtional tabs, false: tabs replace tabs in template
+ * - tabs: array with (additional) tabs with values for following keys
+ *   + label:    label of tab
+ *   + template: template name with optional '?'.filemtime as cache-buster
+ *   optional:
+ *   + prepend:  true prepend tab to existing ones, false (default) append tabs
+ *   + hidden:
+ *   + id:       optinal namespace (content attribute of template)
  */
 class etemplate_widget_tabbox extends etemplate_widget
 {
@@ -23,6 +33,7 @@ class etemplate_widget_tabbox extends etemplate_widget
 	 */
 	public function beforeSendToClient($cname)
 	{
+		unset($cname);
 		if($this->attrs['tabs'])
 		{
 			// add_tabs toggles replacing or adding to existing tabs
@@ -32,17 +43,10 @@ class etemplate_widget_tabbox extends etemplate_widget
 			}
 			foreach($this->attrs['tabs'] as $tab)
 			{
-				if($tab['id'])
-				{
-					$template= clone etemplate_widget_template::instance($tab['template']);
-					$template->attrs['content'] = $tab['id'];
-					$this->children[1]->children[] = $template;
-					unset($template);
-					/* This doesn't work for some reason
-					$tab_valid =& self::get_array($validated, $tab['id'], true);
-					$tab_valid = $content[$tab['id']];
-					*/
-				}
+				$template= clone etemplate_widget_template::instance($tab['template']);
+				if($tab['id']) $template->attrs['content'] = $tab['id'];
+				$this->children[1]->children[] = $template;
+				unset($template);
 			}
 		}
 	}
@@ -64,7 +68,7 @@ class etemplate_widget_tabbox extends etemplate_widget
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 
 			if(!$this->attrs['tabs'])
 			{
@@ -80,25 +84,11 @@ class etemplate_widget_tabbox extends etemplate_widget
 			}
 			foreach($this->attrs['tabs'] as $tab)
 			{
-				if($tab['id'] && $content[$tab['id']])
-				{
-					$template= clone etemplate_widget_template::instance($tab['template']);
-					$template->attrs['content'] = $tab['id'];
-					$this->children[1]->children[] = $template;
-					unset($template);
-					/* This doesn't work for some reason
-					$tab_valid =& self::get_array($validated, $tab['id'], true);
-					$tab_valid = $content[$tab['id']];
-					*/
-				}
-				else
-				{
-					$template= clone etemplate_widget_template::instance($tab['template']);
-					$this->children[1]->children[] = $template;
-					unset($template);
-				}
+				$template= clone etemplate_widget_template::instance($tab['template']);
+				if($tab['id'] && $content[$tab['id']]) $template->attrs['content'] = $tab['id'];
+				$this->children[1]->children[] = $template;
+				unset($template);
 			}
-			$valid = $value;
 		}
 	}
 }
