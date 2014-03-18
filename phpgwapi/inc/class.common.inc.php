@@ -358,7 +358,7 @@ class common
 
 		if ($firstname && $lastname)
 		{
-			$delimiter = ', ';
+			$delimiter = $is_group ? ' ' : ', ';
 		}
 		else
 		{
