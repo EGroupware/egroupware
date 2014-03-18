@@ -339,10 +339,10 @@
 					<menulist>
 						<menupopup type="select-account" id="owner" readonly="true"/>
 					</menulist>
-					<hbox class="et2_nowrap" align="right">
+					<hbox align="right">
 						<date-time label="Updated" id="modified" no_lang="1" readonly="true"/>
 						<menulist>
-							<menupopup type="select-account"  label="by" class="et2_nowrap" id="modifier" readonly="true"/>
+							<menupopup type="select-account"  label="by" class="et2_nowrap" id="modifier" align="right" readonly="true"/>
 						</menulist>
 					</hbox>
 				</row>
