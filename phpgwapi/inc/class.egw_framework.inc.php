@@ -1028,7 +1028,7 @@ if ($app == 'home') continue;
 		{
 			// Load these first
 			// Cascade should go:
-			//  Libs < etemplate2 < framework/theme < app < print (?)
+			//  Libs < etemplate2 < framework/theme < app < print
 			// Enhanced selectboxes (et1)
 			self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
 
@@ -1038,22 +1038,23 @@ if ($app == 'home') continue;
 			// eTemplate2 - load in top so sidebox has styles too
 			self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
+			// Theme likes to override eTemplate2
 			$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 			if(!file_exists(EGW_SERVER_ROOT.$theme_css))
 			{
 				$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
 			}
+			self::includeCSS($theme_css);
+
+			// search for app specific css file, so it can customize the theme
+			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+
+			// sending print css last, so it can overwrite anything
 			$print_css = $this->template_dir.'/print.css';
 			if(!file_exists(EGW_SERVER_ROOT.$print_css))
 			{
 				$print_css = '/phpgwapi/templates/idots/print.css';
 			}
-
-			// search for app specific css file
-			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
-
-			// sending template/theme and print css last, so they can overwrite anything
-			self::includeCSS($theme_css);
 			self::includeCSS($print_css);
 		}
 		// add all css files from self::includeCSS
