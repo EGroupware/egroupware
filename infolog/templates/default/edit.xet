@@ -124,7 +124,9 @@
 							</row>
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
-								<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" account_type="both" class="infolog_responsible"/>
+								<menulist>
+									<menupopup  type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" multiple="true" no_lang="1" tags="true" class="et2_fullWidth"/>
+								</menulist>
 							</row>
 							<row class="row" disabled="1">
 								<description value="Confirm" for="info_confirm"/>
