@@ -129,6 +129,8 @@ class admin_account
 		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account);
 		$cmd->run();
 
+		egw_json_response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');
+
 		// for a new account a new contact was created, need to merge that data with $content
 		if (!$content['account_id'])
 		{

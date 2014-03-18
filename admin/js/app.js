@@ -103,21 +103,40 @@ app.classes.admin = AppJS.extend(
 	 */
 	refresh: function(_msg, _app, _id, _type)
 	{
+		var refresh_done = false;
+
 		// Try for intelligent et2 refresh inside iframe
-		var node = null;
-		if(_app && _id && this.iframe != null &&
-			(node = this.iframe.getDOMNode(this.iframe)) &&
-			node && node.contentWindow && node.contentWindow.etemplate2)
+		var node = _app && _id && this.iframe ? this.iframe.getDOMNode(this.iframe) : null;
+		if(node && node.contentWindow && node.contentWindow.etemplate2)
 		{
 			var templates = node.contentWindow.etemplate2.getByApplication('admin');
 			for(var i = 0; i < templates.length; i++)
 			{
 				templates[i].refresh(_msg,_app,_id,_type);
+				refresh_done = true;
 			}
 		}
-		else
+
+		// update of account list eg. from addressbook.edit
+		if(!refresh_done && _app == 'admin' && _id)
 		{
-			this.linkHandler(window.framework.getApplicationByName(_app).browser.currentLocation);
+			var templates = etemplate2.getByApplication('admin');
+			for(var i = 0; i < templates.length; i++)
+			{
+				templates[i].refresh(_msg,_app,_id,_type);
+				refresh_done = true;
+			}
+		}
+
+		// update iframe
+		if (!refresh_done && framework)
+		{
+			var app = framework.getApplicationByName(_app);
+
+			if (app && app.browser && app.browser.currentLocation)
+			{
+				this.linkHandler(app.browser.currentLocation);
+			}
 		}
 	},
 
@@ -378,5 +397,28 @@ app.classes.admin = AppJS.extend(
 		{
 			img.set_src(widget.getValue());
 		}
+	},
+
+
+	/**
+	 * Add / edit an account
+	 *
+	 * @param {object} _action egwAction
+	 * @param {array} _senders egwActionObject _senders[0].id holds account_id
+	 */
+	account: function(_action, _senders)
+	{
+		var params = jQuery.extend({}, this.egw.link_get_registry('addressbook', 'edit'));
+		var popup = this.egw.link_get_registry('addressbook', 'edit_popup');
+
+		if (_action.id == 'add')
+		{
+			params.owner = '0';
+		}
+		else
+		{
+			params.account_id = _senders[0].id.substr(7);	// remove admin::
+		}
+		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
 	}
 });

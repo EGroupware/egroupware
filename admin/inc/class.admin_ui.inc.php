@@ -91,11 +91,7 @@ class admin_ui
 				'enableId' => '^/groups/-\\d+',
 				'icon' => 'lock',
 			),
-			'add' => array(
-				'caption' => 'Add user',
-				'url' => egw::link('/index.php?menuaction=admin.uiaccounts.edit_user'),
-				'onExecute' => 'javaScript:app.admin.iframe_location',
-			),
+			'add' => $content['nm']['actions']['add'],
 			'delete' => array(
 				'onExecute' => 'javaScript:app.admin.group',
 				'confirm' => 'Delete this group',
@@ -133,16 +129,13 @@ class admin_ui
 				'caption' => 'Open',
 				'default' => true,
 				'allowOnMultiple' => false,
-				'popup' => egw_link::is_popup('addressbook', 'edit'),
-				'url' => '',
+				'onExecute' => 'javaScript:app.admin.account',
 				'group' => $group=0,
 			),
 			'add' => array(
 				'caption' => 'Add user',
-				'url' => 'menuaction=admin.uiaccounts.edit_user',
+				'onExecute' => 'javaScript:app.admin.account',
 				'group' => $group,
-				'popup' => egw_link::is_popup('addressbook', 'add'),
-				'url' => '',
 			),
 			'acl' => array(
 				'caption' => 'Access control',
