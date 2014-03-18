@@ -5465,7 +5465,7 @@ tr.dialogHeader4 .et2_label {
 }
 .dialogOperators .et2_label {
   margin-left: 6px;
-  display: block;
+  display: inline-block;
 }
 /**********    Footer  *******************************/
 /*#############################################*/
