@@ -28,9 +28,6 @@ $setup_info['mail']['maintainer_email'] 	= 'info@stylite.de';
 $setup_info['mail']['tables']    = array(); // former felamimail tables are used by mail_sopreferences
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['mail']['hooks']['addaccount']	= 'mail_hooks::accountHooks';
-$setup_info['mail']['hooks']['deleteaccount']	= 'mail_hooks::accountHooks';
-$setup_info['mail']['hooks']['editaccount']	= 'mail_hooks::accountHooks';
 $setup_info['mail']['hooks']['search_link'] = 'mail_hooks::search_link';
 $setup_info['mail']['hooks']['admin'] = 'mail_hooks::admin';
 $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';

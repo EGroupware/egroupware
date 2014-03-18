@@ -15,33 +15,6 @@
  */
 class mail_hooks
 {
-/**
- * Several hooks calling an instanciated mail_bo, which need to use the mail_bo::getInstance() singelton
- *
- * @param string|array $hookData
- */
-	static public function accountHooks($hookData)
-	{
-		if (($default_profile_id = emailadmin_bo::getDefaultAccID()))
-		{
-			$mail_bo = mail_bo::forceEAProfileLoad($default_profile_id);
-
-			switch(is_array($hookData) ? $hookData['location'] : $hookData)
-			{
-				case 'addaccount':
-					$mail_bo->addAccount($hookData);
-					break;
-				case 'deleteaccount':
-					$mail_bo->deleteAccount($hookData);
-					break;
-				case 'editaccount':
-					$mail_bo->updateAccount($hookData);
-					break;
-			}
-			emailadmin_bo::unsetCachedObjects($default_profile_id);
-		}
-	}
-
 	/**
 	 * Menu for Admin >> Edit accounts
 	 */
