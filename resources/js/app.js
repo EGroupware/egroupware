@@ -111,5 +111,18 @@ app.classes.resources = AppJS.extend(
 		this.egw.open_link('calendar.calendar_uiforms.edit&participants=r'+res_ids.join(',r'),'_blank','700x700');
 
 	},
+	
+	/**
+	 * set the picture_src to own_src by uploding own file
+	 * 
+	 */
+	select_picture_src: function ()
+	{
+		var rBtn = this.et2.getWidgetById('picture_src');
+		if (typeof rBtn != 'undefined')
+		{
+			rBtn.set_value('own_src');
+		}
+	},
 
 });

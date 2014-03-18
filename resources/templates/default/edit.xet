@@ -61,7 +61,7 @@
 							</row>
 							<row>
 								<description/>
-								<file id="own_file" class="resources_pictureFile et2_fullWidth"/>
+								<file id="own_file" class="resources_pictureFile et2_fullWidth" onchange="app.resources.select_picture_src"/>
 							</row>
 						</rows>
 					</grid>
