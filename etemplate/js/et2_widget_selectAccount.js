@@ -1,6 +1,6 @@
 /**
  * EGroupware eTemplate2 - JS Select account widget
- * 
+ *
  * Selecting accounts needs special UI, and displaying needs special consideration
  * to avoid sending the entire user list to the client.
  *
@@ -29,7 +29,7 @@
  * - 'popup'         => No selectbox, just search.  No popup, the search replaces the selectbox
  *
  * Only primary_group and popup need anything different from a normal selectbox
- * 
+ *
  * @augments et2_selectbox
  */
 var et2_selectAccount = et2_selectbox.extend(
@@ -49,7 +49,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _attrs
 	 * @memberOf et2_selectAccount
@@ -59,7 +59,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		// Type in rows or somewhere else?
 		if(jQuery.inArray(_attrs['empty_label'], this.account_types) > 0 && (
-			jQuery.inArray(_attrs['account_type'], this.account_types) < 0 || 
+			jQuery.inArray(_attrs['account_type'], this.account_types) < 0 ||
 			_attrs['account_type'] == this.attributes.account_type['default'])
 		)
 		{
@@ -69,12 +69,6 @@ var et2_selectAccount = et2_selectbox.extend(
 		if(jQuery.inArray(_attrs['account_type'], this.account_types) < 0)
 		{
 			this.egw().debug("warn", "Invalid account_type: %s Valid options:",_attrs['account_type'], this.account_types);
-		}
-		
-		// If not required, make sure there's an empty label
-		if(_attrs['rows'] == 1 && !_attrs['empty_label'] && !_attrs['needed'])
-		{
-			_attrs['empty_label'] = 'None';
 		}
 
 		// Holder for search jQuery nodes
@@ -108,7 +102,7 @@ var et2_selectAccount = et2_selectbox.extend(
 	/**
 	 *  Single selection - override to add search button
 	 */
-	createInputWidget: function() 
+	createInputWidget: function()
 	{
 		this._super.apply(this, arguments);
 
@@ -178,7 +172,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 				// Fix ID as sent from server - must be numeric
 				selected.item.value = parseInt(selected.item.value);
-				
+
 				// This one is important, it makes sure the option is there
 				old_select.apply(this, arguments);
 
@@ -200,7 +194,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			this.search = jQuery(document.createElement("li"))
 				.appendTo(this.multiOptions.prev().find('ul'));
 			this.options.multiple = true;
-			
+
 			// Add search button
 			var button = jQuery(document.createElement("li"))
 				.addClass("et2_clickable")
@@ -296,14 +290,14 @@ var et2_selectAccount = et2_selectbox.extend(
 		table.css("width", "100%").css("height", "100%");
 		var search_col = jQuery('#search_col',table);
 		var select_col = jQuery('#selection_col',table);
-		
+
 		// Search / Selection
 		search_col.append(widget._create_search());
-		
+
 		// Currently selected
 		select_col.append(widget._create_selected());
-		
-		var ok_click = function() { 
+
+		var ok_click = function() {
 			jQuery(this).dialog("close");
 			// Update widget with selected
 			var ids = [];
@@ -349,7 +343,7 @@ var et2_selectAccount = et2_selectbox.extend(
 				click: update_function
 				},{
 				text: this.egw().lang("cancel"),
-				click: function() { 
+				click: function() {
 					jQuery(this).dialog("close");
 					jQuery(this).dialog("destroy");
 				}}
@@ -421,7 +415,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			.css("height", "100%")
 			.append(results)
 			.appendTo(search);
-		
+
 		// Override link-entry auto-complete for custom display
 		// Don't show normal drop-down
 		search_widget.search.data("ui-autocomplete")._suggest = function(items) {
@@ -508,7 +502,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			node = jQuery(document.createElement('li'));
 		}
 		node.attr("data-id", item.value);
-		
+
 		jQuery('<span class="ui-icon ui-icon-arrow-1-e et2_clickable"/>')
 			.css("float", "right")
 			.appendTo(node)
@@ -535,7 +529,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		var label = jQuery(document.createElement('label'))
 			.addClass("loading")
 			.appendTo(node);
-		
+
 		this.egw().link_title('home-accounts', item.value, function(name) {
 			label.text(name).removeClass("loading");
 		}, label);
@@ -596,7 +590,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			there.show();
 			return;
 		}
-		
+
 		var option = jQuery(document.createElement('li'))
 			.attr("data-id",value)
 			.appendTo(list);
@@ -624,10 +618,10 @@ et2_register_widget(et2_selectAccount, ["select-account"]);
  * et2_selectAccount_ro is the readonly implementation of select account
  * It extends et2_link to avoid needing the whole user list on the client.
  * Instead, it just asks for the names of the ones needed, as needed.
- * 
+ *
  * @augments et2_link_string
  */
-var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], 
+var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"empty_label": {
@@ -642,7 +636,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param options
 	 * @memberOf et2_selectAccount_ro
@@ -650,7 +644,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 	init: function(_parent, options) {
 		/**
 		Resolve some circular dependency problems here
-		selectAccount extends link, link is in a file that needs select, 
+		selectAccount extends link, link is in a file that needs select,
 		select has menulist wrapper, which needs to know about selectAccount before it allows it
 		*/
 		if(_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0)
@@ -660,7 +654,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 
 		this._super.apply(this, arguments);
 
-		// Legacy options could have row count or empty label in first slot      
+		// Legacy options could have row count or empty label in first slot
 		if(typeof this.options.empty_label == "string")
 		{
 			if(isNaN(this.options.empty_label))
@@ -681,7 +675,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 
 	set_value: function(_value) {
 		// Explode csv
-		if(typeof _value == 'string' && _value.indexOf(',') > 0) 
+		if(typeof _value == 'string' && _value.indexOf(',') > 0)
 		{
 			_value = _value.split(',');
 		}
