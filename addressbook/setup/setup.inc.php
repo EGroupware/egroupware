@@ -42,7 +42,6 @@ $setup_info['addressbook']['hooks']['deletegroup'] = 'addressbook.addressbook_bo
 $setup_info['addressbook']['hooks']['delete_category'] = 'addressbook.addressbook_bo.delete_category';
 $setup_info['addressbook']['hooks']['search_link'] = 'addressbook_hooks::search_link';
 $setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook_hooks::calendar_resources';
-$setup_info['addressbook']['hooks']['edit_user']    = 'addressbook_hooks::edit_user';
 $setup_info['addressbook']['hooks'][] = 'config';
 $setup_info['addressbook']['hooks']['group_acl'] = 'addressbook_hooks::group_acl';
 $setup_info['addressbook']['hooks']['not_enum_group_acls'] = 'addressbook_hooks::not_enum_group_acls';

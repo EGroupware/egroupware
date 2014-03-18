@@ -133,22 +133,16 @@ class admin_ui
 				'caption' => 'Open',
 				'default' => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=admin.uiaccounts.edit_user&account_id=$id',
+				'popup' => egw_link::is_popup('addressbook', 'edit'),
+				'url' => '',
 				'group' => $group=0,
-				'onExecute' => 'javaScript:app.admin.iframe_location',
-			),
-			'view' => array(
-				'caption' => 'View',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=admin.uiaccounts.view_user&account_id=$id',
-				'group' => $group,
-				'onExecute' => 'javaScript:app.admin.iframe_location',
 			),
 			'add' => array(
 				'caption' => 'Add user',
 				'url' => 'menuaction=admin.uiaccounts.edit_user',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.admin.iframe_location',
+				'popup' => egw_link::is_popup('addressbook', 'add'),
+				'url' => '',
 			),
 			'acl' => array(
 				'caption' => 'Access control',
@@ -159,6 +153,19 @@ class admin_ui
 				'icon' => 'lock',
 			),
 		);
+		// generate urls for add/edit accounts via addressbook
+		$edit = egw_link::get_registry('addressbook', 'edit');
+		$edit['account_id'] = '$id';
+		foreach($edit as $name => $val)
+		{
+			$actions['edit']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
+		}
+		unset($edit['account_id']);
+		$edit['owner'] = 0;
+		foreach($edit as $name => $val)
+		{
+			$actions['add']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
+		}
 		++$group;
 		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
 		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));

@@ -1693,9 +1693,47 @@ window.egw_LAB.wait(function() {
 							$content[$c_prefix.'_countrycode'] = null;
 						}
 					}
-					if ($this->save($content))
+					$content['msg'] = '';
+					$this->error = false;
+					foreach((array)$content['pre_save_callbacks'] as $callback)
 					{
-						$content['msg'] = lang('Contact saved');
+						try {
+							if (($success_msg = call_user_func_array($callback, array(&$content))))
+							{
+								$content['msg'] .= ($content['msg'] ? ', ' : '').$success_msg;
+							}
+						}
+						catch (Exception $ex) {
+							$content['msg'] .= ($content['msg'] ? ', ' : '').$ex->getMessage();
+							$button = 'apply';	// do not close dialog
+							$this->error = true;
+							break;
+						}
+					}
+					if ($this->error)
+					{
+						// error in pre_save_callbacks
+					}
+					elseif ($this->save($content))
+					{
+						$content['msg'] .= ($content['msg'] ? ', ' : '').lang('Contact saved');
+
+						foreach((array)$content['post_save_callbacks'] as $callback)
+						{
+							try {
+								if (($success_msg = call_user_func_array($callback, array(&$content))))
+								{
+									$content['msg'] .= ', '.$success_msg;
+								}
+							}
+							catch (Exception $ex) {
+								$content['msg'] .= ', '.$ex->getMessage();
+								$button = 'apply';	// do not close dialog
+								$this->error = true;
+								break;
+							}
+						}
+
 						if ($content['change_org'] && $old_org_entry && ($changed = $this->changed_fields($old_org_entry,$content,true)) &&
 							($members = $this->org_similar($old_org_entry['org_name'],$changed)))
 						{
@@ -1732,11 +1770,16 @@ window.egw_LAB.wait(function() {
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					$currentApp = $GLOBALS['egw']->currentapp;
-					egw_framework::refresh_opener($content['msg'], 'addressbook',$content['id'],  ($content['id'] ? 'update' : 'add'));
+					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'update' : 'add',
+						null, null, null, $this->error ? 'error' : 'success');
 					if ($button == 'save')
 					{
 						egw_framework::window_close();
+					}
+					else
+					{
+						egw_framework::message($content['msg'], $this->error ? 'error' : 'success');
+						unset($content['msg']);
 					}
 					$content['link_to']['to_id'] = $content['id'];
 					break;
@@ -2029,6 +2072,14 @@ window.egw_LAB.wait(function() {
 				if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
 				{
 					$readonlys = array_merge($readonlys, $extra_tab['readonlys']);
+				}
+				if (!empty($extra_tab['pre_save_callback']))
+				{
+					$preserve['pre_save_callbacks'][] = $extra_tab['pre_save_callback'];
+				}
+				if (!empty($extra_tab['post_save_callback']))
+				{
+					$preserve['post_save_callbacks'][] = $extra_tab['post_save_callback'];
 				}
 			}
 		}

@@ -706,7 +706,7 @@ class addressbook_bo extends addressbook_so
 	 */
 	function photo_src($id,$jpeg,$default='',$etag=null)
 	{
-		error_log(__METHOD__."($id, ..., etag=$etag) ".  function_backtrace());
+		//error_log(__METHOD__."($id, ..., etag=$etag) ".  function_backtrace());
 		return $jpeg ? array(
 			'menuaction' => 'addressbook.addressbook_ui.photo',
 			'contact_id' => $id,

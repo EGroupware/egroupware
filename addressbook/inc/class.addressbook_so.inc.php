@@ -345,7 +345,7 @@ class addressbook_so
 			{
 				$grants[0] = EGW_ACL_READ;	// admins always have read-access
 				if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $grants[0] |= EGW_ACL_EDIT;
-				// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
+				if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $grants[0] |= EGW_ACL_ADD;
 				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= EGW_ACL_DELETE;
 			}
 			// allow certain groups to edit contact-data of accounts

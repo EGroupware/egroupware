@@ -26,10 +26,10 @@
 				</row>
 				<row>
 					<description value="Password" for="account_passwd"/>
-					<textbox id="account_passwd" class="et2_fullWidth"/>
+					<passwd id="account_passwd" class="et2_fullWidth"/>
 					<description/>
 					<description value="Re-enter password" for="account_passwd2"/>
-					<textbox id="account_passwd2" class="et2_fullWidth"/>
+					<passwd id="account_passwd2" class="et2_fullWidth"/>
 					<description/>
 				</row>
 				<row valign="top">
@@ -42,14 +42,19 @@
 					<description/>
 				</row>
 				<row>
-					<description value="Groups" for="groups"/>
-					<taglist-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth"/>
-					<description/>
 					<description value="Primary group" for="account_primary_group"/>
 					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
 					<description/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row>
+					<description value="Groups" for="groups"/>
+					<taglist-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4"/>
+					<description/>
+				</row>
+				<row disabled="!@account_id">
 					<description value="Last login"/>
 					<hbox>
 						<date-time id="account_lastlogin" readonly="true"/>

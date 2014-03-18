@@ -652,13 +652,17 @@ abstract class admin_cmd
 	/**
 	 * Parse a boolean value
 	 *
-	 * @param string $value
+	 * @param string|boolean|int $value
 	 * @param boolean $default=null
 	 * @return boolean
 	 * @throws egw_exception_wrong_userinput(lang('Invalid value "%1" use yes or no!',$value),998);
 	 */
 	static function parse_boolean($value,$default=null)
 	{
+		if (is_bool($value) || is_int($value))
+		{
+			return (boolean)$value;
+		}
 		if (is_null($value) || (string)$value === '')
 		{
 			return $default;

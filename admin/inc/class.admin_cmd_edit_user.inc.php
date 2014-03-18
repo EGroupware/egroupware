@@ -27,6 +27,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	{
 		if (!is_array($account))
 		{
+			//error_log(__METHOD__."(".array2string($account).', '.array2string($set).", ...)");
 			$account = array(
 				'account' => $account,
 				'set' => $set,
@@ -59,6 +60,8 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		if ($this->account)	// existing account
 		{
 			$data['account_id'] = admin_cmd::parse_account($this->account);
+			//error_log(__METHOD__."($check_only) this->account=".array2string($this->account).', data[account_id]='.array2string($data['account_id']).", ...)");
+
 			$data['old_loginid'] = admin_cmd::$accounts->id2name($data['account_id']);
 		}
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
@@ -77,7 +80,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			throw new egw_exception_wrong_userinput(lang('You must enter a lastname'),9);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','u')) &&
-			$id !== $data['account_id'])
+			(string)$id !== (string)$data['account_id'])
 		{
 			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
 		}
@@ -140,6 +143,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			//_debug_array($data);
 			throw new egw_exception_db(lang("Error saving account!"),11);
 		}
+		// make new account_id available to caller
+		if (!$this->account) $this->account = $data['account_id'];
+
 		if ($data['account_groups'])
 		{
 			admin_cmd::$accounts->set_memberships($data['account_groups'],$data['account_id']);

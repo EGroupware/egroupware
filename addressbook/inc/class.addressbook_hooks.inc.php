@@ -345,22 +345,6 @@ class addressbook_hooks
 	}
 
 	/**
-	 * add an Addressbook tab to Admin >> Edit user
-	 */
-	static function edit_user()
-	{
-		global $menuData;
-
-		$menuData[] = array(
-			'description' => 'Addressbook',
-			'url'         => '/index.php',
-			'extradata'   => 'menuaction=addressbook.addressbook_ui.edit',
-			'options'     => "onclick=\"egw_openWindowCentered2(this,'_blank',870,440,'yes'); return false;\"".
-				' title="'.htmlspecialchars(lang('Edit extra account-data in the addressbook')).'"',
-		);
-	}
-
-	/**
 	 * Hook called by link-class to include calendar in the appregistry of the linkage
 	 *
 	 * @param array/string $location location and other parameters (not used)
