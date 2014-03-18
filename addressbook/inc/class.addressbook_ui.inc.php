@@ -229,6 +229,7 @@ class addressbook_ui extends addressbook_bo
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
+				'row_modified'   => 'modified',
 				'favorites'      => true,
 				'placeholder_actions' => array('add')
 			);

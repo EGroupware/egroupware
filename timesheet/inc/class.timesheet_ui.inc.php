@@ -871,6 +871,7 @@ class timesheet_ui extends timesheet_bo
 				'filter_onchange' => "app.timesheet.filter_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
+				'row_modified'   => 'ts_modified',
 				//'actions'        => $this->get_actions(),
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 			);
