@@ -2,31 +2,28 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-			<html id="msg" class="message"/>
-			<vbox class="mailCompose mailComposeHeaderSection" width="99%">
-				<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
-                   
-                                    <description class="email-button-group sent">                  
-					<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
-                                        </description>
-                    <description class="email-button-group save">
+		
+			<vbox class="mailCompose mailComposeHeaderSection" width="100%">
+				<hbox class="ui-widget-header ui-corner-all mail-compose_toolbar" width="100%">
+					<description class="email-button-group sent">                  
+						<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
+                    </description>
+                   <description class="email-button-group save">
 		                <buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
 		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
                     </description>
 					<description class="email-button-group file">
-						<vfs-select class="$cont[vfsNotAvailable]" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
+						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 						<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 					</description>
                     <description class="email-button-group egw">
 		                <description class="$cont[noSaveAsAvailable]" value="Save:"/>
-
 		                <hbox class="$cont[noInfologAvailable]">
-							<image class="et2_button ui-button et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
+							<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
 							<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
 						</hbox>
-
 						<hbox class="$cont[noTrackerAvailable]">
-							<image class="et2_button ui-button et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
+							<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
 							<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
 						</hbox>
 					</description>
@@ -34,7 +31,6 @@
 						<description value="Recieve notification"/>
 						<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
 					</description>
-
 					<description class="email-button-group priority">
 						<description value="Priority"/>
 						<menulist>
@@ -101,7 +97,7 @@
 					<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="320px" width="100%" />
 				</hbox>
 				<hbox disabled="@is_html" class="mailComposeBody">
-					<textbox multiline="true" rows="15" cols="120" width="99%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
+					<textbox multiline="true" rows="15" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
 				</hbox>
 				<groupbox class="mailSignature">
 					<menulist>
@@ -111,7 +107,7 @@
 				</groupbox>
 				<groupbox class="et2_file mailUploadSection">
 					<caption label="Files"/>
-					<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
+					<box class="mailUploadProgress" id="mailUploadProgress" width="99%"/>
 					<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">
 					  <columns>
 					   <column disabled="!@showtempname"/>

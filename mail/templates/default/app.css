@@ -346,7 +346,9 @@ input[type=button] {
 	height: 100%;
 	border: 0;
 }
-
+/*********************************
+ ************  mailCompose  ******
+ *********************************/
 #mail-index_button\[mailcreate\] {
 	width: 99%;
 	text-align: left;
@@ -356,13 +358,30 @@ input[type=button] {
 	background-position: left;
 	background-repeat: no-repeat;
 }
-
+.mail-compose_toolbar{
+	background:#c0d2ec ;
+}
+.mail-compose_toolbar > span {
+	padding: 10px;
+	border-right:#efefdf solid 1px;
+	white-space: nowrap;
+}
+.mail-compose_toolbar > span.priority {
+	border-right: none;
+}
+.compose_egw_icons {
+	height: 24px;
+	width: 24px;
+	vertical-align: middle;
+}
+.mail-compose_fileselector div.progress {
+	display: none;
+}
 #mail-compose_button\[send\] {
 	text-align: left;
 	font-weight: bold;
 	padding-left: 30px;
 	width: 80px;
-	margin: 0px !important;
 	background-image: url(images/mail_send.png) !important;
 	background-position: left;
 	background-repeat: no-repeat;
@@ -381,9 +400,6 @@ input[type=button] {
 	max-height: 245px !important;
 	overflow:scroll;
 	overflow-x:hidden;
-}
-#mail-compose_fileselector {
-	width: 245px !important;
 }
 #mail-compose_toolbar {
 	padding: 0px !important;
