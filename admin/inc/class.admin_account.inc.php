@@ -181,7 +181,7 @@ class admin_account
 			{
 				$content = array('account_id' => (int)$_GET['account_id']);
 			}
-			error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
+			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || !($content['account_id'] > 0) ||
 			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'])
@@ -204,5 +204,18 @@ class admin_account
 		}
 		$tpl = new etemplate_new('admin.account.delete');
 		$tpl->exec('admin_account::delete', $content, array(), array(), $content, 2);
+	}
+
+	/**
+	 * Delete a group via ajax
+	 *
+	 * @param int $account_id
+	 */
+	public static function ajax_delete_group($account_id)
+	{
+		$cmd = new admin_cmd_delete_account(accounts::id2name(accounts::id2name($account_id)), null, false);
+		$msg = $cmd->run();
+
+		egw_json_response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');
 	}
 }

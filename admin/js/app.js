@@ -105,6 +105,24 @@ app.classes.admin = AppJS.extend(
 	{
 		var refresh_done = false;
 
+		// group deleted, added or updated
+		if (_app === 'admin' && _id < 0)
+		{
+			var tree = this.et2.getWidgetById('tree');
+			switch(_type)
+			{
+				case 'delete':
+					tree.deleteItem('/groups/'+_id, false);
+					break;
+
+				case 'edit':
+				case 'update':
+				case 'add':
+					tree.refreshItem('/groups');
+					break;
+			}
+		}
+
 		// Try for intelligent et2 refresh inside iframe
 		var node = _app && _id && this.iframe ? this.iframe.getDOMNode(this.iframe) : null;
 		if(node && node.contentWindow && node.contentWindow.etemplate2)
@@ -245,12 +263,16 @@ app.classes.admin = AppJS.extend(
 				break;
 
 			case 'edit':
-			case 'delete':
 				this.splitter.dock();
 				this.iframe.set_src(egw.link('/index.php', {
-					menuaction: _action.id == 'edit' ? 'admin.uiaccounts.edit_group' : 'admin.uiaccounts.delete_group',
+					menuaction: 'admin.uiaccounts.edit_group',
 					account_id: _senders[0].id.split('/')[2]
 				}));
+				break;
+
+			case 'delete':
+				var account_id = _senders[0].id.split('/')[2];
+				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
 				break;
 
 			case 'acl':
