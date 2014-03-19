@@ -984,7 +984,7 @@ class addressbook_ldap
 	 */
 	function _error($line,$ds=null)
 	{
-		return ldap_error($ds ? $ds : $this->ds).': so_ldap: '.$line;
+		return ldap_error($ds ? $ds : $this->ds).': '.__FILE__.': '.$line;
 	}
 
 	/**
