@@ -209,7 +209,7 @@ input[type=image]
 {
 	position:relative;
   	border: #9c9c9c 1px solid;
-	overflow:auto;
+	overflow:hidden;
 }
 
 .divSideboxHeader,.divLoginboxHeader
@@ -291,7 +291,6 @@ body {
 	margin: 8px;
 	border: solid 1px #7e7e7e;
 	padding-bottom: 0px;
-	width:98%;
 }
 
 #divLogo
@@ -565,6 +564,26 @@ div.prompt, table.prompt {
 
 .th {
 	color: black; background-color: #D3DCE3;
+}
+.dialogHeader {
+	border-left: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-color: gray;
+	background-image: url(../../default/images/egw_action/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+}
+.dialogHeader, .dialogHeader td {
+	font-size: 120% !important;
+	font-weight: bold;
+}
+.dialogHeader td {
+	font-weight: normal;
+}
+.dialogHeader1, .dialogHeader2 {
+	font-size: 120%;
 }
 
 .row_on {
