@@ -713,7 +713,7 @@ ul.et2_vfs {
   background-color: #ffffd0;
 }
 td.et2_required {
-	background-color: inherit;
+	background-color: transparent;
 }
 .invalid {
   border: 1px solid #a6261d;
