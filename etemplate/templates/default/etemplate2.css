@@ -336,10 +336,14 @@ button#cancel {
 .et2_selectbox .ui-multiselect-checkboxes li:hover div.ui-icon-close {
   visibility: visible;
 }
-/* Read-only multi-select */
+/* Read-only (multi-)select */
 ul.et2_selectbox {
   margin: 0px;
   padding: 0px;
+  display: inline-block;
+}
+label.et2_label > ul.et2_selectbox {
+	padding-left: 5px;
 }
 .et2_selectbox li {
   text-decoration: none;
