@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
@@ -44,10 +45,9 @@
 	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
-		<description id="msg" class="message"/>
 		<split dock_side="topDock" id="splitter" orientation="h">
 			<nextmatch id="nm" template="admin.index.rows"/>
-			<iframe frameborder="1" height="500px" id="iframe" scrolling="auto" width="100%"/>
+			<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%"/>
 		</split>
 	</template>
 </overlay>

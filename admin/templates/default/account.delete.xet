@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.account.delete" template="" lang="" group="0" version="1.9.003">
+		<vbox class="admin_account_delete">
+			<box class="dialogHeader">
+				<select-account id="account_id" readonly="true" label="Delete account %1"/>
+			</box>
+			<description value="Who would you like to transfer ALL records owned by the deleted user to?" class="dialogHeader2"/>
+			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>
+			<hbox class="dialogFooterToolbar">
+				<button id="delete" label="Delete"/>
+				<button id="cancel" label="Cancel" onclick="window.close()"/>
+			</hbox>
+		</vbox>
+	</template>
+</overlay>

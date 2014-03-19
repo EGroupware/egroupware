@@ -200,8 +200,8 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 		$actions['delete'] = array(
 			'caption' => 'Delete',
 			'group' => ++$group,
-			'url' => 'menuaction=admin.uiaccounts.delete_user&account_id=$id',
-			'onExecute' => 'javaScript:app.admin.iframe_location',
+			'popup' => '400x200',
+			'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
 		);
 		//error_log(__METHOD__."() actions=".array2string($actions));
 		return $actions;

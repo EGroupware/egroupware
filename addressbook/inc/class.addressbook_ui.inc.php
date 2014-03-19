@@ -660,6 +660,19 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'rowNoDelete',
 			);
 		}
+		if ($this->grants[0] & EGW_ACL_DELETE)
+		{
+			$actions['delete_account'] = array(
+				'caption' => 'Delete',
+				'icon' => 'delete',
+				'group' => $group,
+				'enableClass' => 'rowAccount',
+				'hideOnDisabled' => true,
+				'popup' => '400x200',
+				'url' => 'menuaction=admin.admin_account.delete&contact_id=$id',
+			);
+			$actions['delete']['hideOnDisabled'] = true;
+		}
 		if($tid_filter == 'D')
 		{
 			$actions['undelete'] = array(
@@ -759,7 +772,7 @@ window.egw_LAB.wait(function() {
 		$query = $query == null ? egw_session::appsession('index','addressbook') : $query;
 		$query['num_rows'] = -1;	// all
 		if(!is_array($query['col_filter'])) $query['col_filter'] = array();
-		
+
 		if(!is_array($org)) $org = array($org);
 		foreach($org as $org_name)
 		{
@@ -1030,7 +1043,7 @@ window.egw_LAB.wait(function() {
 						elseif (count($checked) == 1 && $contact['account_id'])
 						{
 							egw::redirect_link('/index.php',array(
-								'menuaction' => 'admin.uiaccounts.delete_user',
+								'menuaction' => 'admin.admin_account.delete',
 								'account_id' => $contact['account_id'],
 							));
 							// this does NOT return!
@@ -1518,7 +1531,11 @@ window.egw_LAB.wait(function() {
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
 				}
-				if (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
+				if (!$row['owner'])
+				{
+					$row['class'] .= 'rowAccount rowNoDelete';
+				}
+				elseif (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
 				{
 					$row['class'] .= 'rowNoDelete ';
 				}

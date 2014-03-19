@@ -1,7 +1,7 @@
 /**
  * EGroupware: CSS with less preprocessor
 
- * ADMIN 
+ * ADMIN
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
  *
@@ -58,6 +58,9 @@ td.admin_userAgent span {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.admin_account_delete > * {
+  padding: 8px;
 }
 @media all {
   /* #############################################################################

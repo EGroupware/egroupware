@@ -15,6 +15,22 @@
  */
 class admin_account
 {
+	/**
+	 * Functions callable via menuaction
+	 *
+	 * @var array
+	 */
+	public $public_functions = array(
+		'delete' => true,
+	);
+
+	/**
+	 * Hook to edit account data via "Account" tab in addressbook edit dialog
+	 *
+	 * @param array $content
+	 * @return array
+	 * @throws egw_exception_not_found
+	 */
 	public function addressbook_edit(array $content)
 	{
 		if ((string)$content['owner'] === '0' && $GLOBALS['egw_info']['user']['apps']['admin'])
@@ -143,5 +159,50 @@ class admin_account
 			}
 			$content = array_merge($contact, $content);
 		}
+	}
+
+	/**
+	 * Delete an account
+	 *
+	 * @param array $content=null
+	 */
+	public static function delete(array $content=null)
+	{
+		if (!is_array($content))
+		{
+			if (isset($_GET['contact_id']) && ($account_id = $GLOBALS['egw']->accounts->name2id((int)$_GET['contact_id'], 'person_id')))
+			{
+				$content = array(
+					'account_id' => $account_id,
+					'contact_id' => (int)$_GET['contact_id'],
+				);
+			}
+			else
+			{
+				$content = array('account_id' => (int)$_GET['account_id']);
+			}
+			error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
+		}
+		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || !($content['account_id'] > 0) ||
+			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'])
+		{
+			egw_framework::window_close(lang('Permission denied!!!'));
+		}
+		if ($content['delete'])
+		{
+			$cmd = new admin_cmd_delete_account(accounts::id2name($content['account_id']), $content['new_owner'], true);
+			$msg = $cmd->run();
+			if ($content['contact_id'])
+			{
+				egw_framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
+			}
+			else
+			{
+				egw_framework::refresh_opener($msg, 'admin', $content['account_id'], 'delete');
+			}
+			egw_framework::window_close();
+		}
+		$tpl = new etemplate_new('admin.account.delete');
+		$tpl->exec('admin_account::delete', $content, array(), array(), $content, 2);
 	}
 }
