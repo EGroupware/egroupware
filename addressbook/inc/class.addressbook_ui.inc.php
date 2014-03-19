@@ -2303,12 +2303,9 @@ window.egw_LAB.wait(function() {
 						switch($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'])
 						{
 							case 'infolog':
+							case 'tracker':
 							default:
 								egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
-								break;
-							case 'tracker':
-								// TODO - what's the filter?
-								//egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
 								break;
 						}
 
@@ -2477,8 +2474,8 @@ window.egw_LAB.wait(function() {
 		// always show sidebox, as it contains contact-data
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
-		// need to load infolog's app.js now, as it exec calls header before infolog can include it
-		egw_framework::validate_file('/infolog/js/app.js');
+		// need to load list's app.js now, as exec calls header before other app can include it
+		egw_framework::validate_file('/'.$GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'].'/js/app.js');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
