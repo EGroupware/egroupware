@@ -187,6 +187,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(this._autorefresh_timer)
 		{
 			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_timer = null;
 		}
 		// Unbind handler used for toggling autorefresh
 		$j(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
@@ -1340,6 +1341,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// If the autorefresh time is up, bind once to trigger a refresh
 				// (if needed) when tab is activated again
 				this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
+					// Check in case it was stopped / destroyed since
+					if(!this._autorefresh_timer) return;
+					
 					$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 						// Important to use anonymous function instead of just 'this.refresh' because
 						// of the parameters passed
