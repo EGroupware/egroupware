@@ -325,6 +325,100 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
 
+		if($no_rows) $rows = Array();
+
+		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
+		$row_modified = $value['row_modified'];
+
+		foreach($rows as $n => $row)
+		{
+			$kUkey = false;
+			if (is_int($n) && $row)
+			{
+				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
+				if (!isset($row[$row_modified])) unset($row_modified);
+
+				$id = $row_id ? $row[$row_id] : $n;
+				$result['order'][] = $id;
+
+				// check if we need to send the data
+				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . egw_time::to($row[$row_modified]) . ' > ' . egw_time::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
+				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
+					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
+				{
+					$result['data'][$id] = $row;
+				}
+				if ($kUkey !== false) unset($knownUids[$kUkey]);
+			}
+			else	// non-row data set by get_rows method
+			{
+				$result['rows'][$n] = $row;
+			}
+		}
+		// check knowUids outside of range for modification - includes deleted
+		/*
+		if ($knownUids)
+		{
+			// row_id not set for nextmatch --> just skip them, we can't identify the rows
+			if (!$row_id)	
+			{
+				foreach($knownUids as $uid)
+				{
+					// Just don't send it back for now
+					unset($result['data'][$uid]);
+					//$result['data'][$uid] = null;
+				}
+			}
+			else
+			{
+				error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
+				// check if they are up to date: we create a query similar to csv-export without any filters
+				$uid_query = $value;
+				$uid_query['csv_export'] = 'knownUids';	// do not store $value in session
+				$uid_query['filter'] = $uid_query['filter2'] = $uid_query['cat_id'] = $uid_query['search'] = '';
+				$uid_query['col_filter'] = array($row_id => $knownUids);
+				// if we know name of modification column and have a last-modified date
+				if ($row_modified && $lastModified)	// --> set filter to return only modified entries
+				{
+					$uid_query['col_filter'][] = $row_modified.' > '.(int)$lastModified;
+				}
+				$uid_query['start'] = 0;
+				$uid_query['num_rows'] = count($knownUids);
+				$rows = array();
+				try
+				{
+					if (self::call_get_rows($uid_query, $rows))
+					{
+						foreach($rows as $n => $row)
+						{
+							if (!is_int($n)) continue;	// ignore non-row data set by get_rows method
+
+							if (!$row_modified || !isset($row[$row_modified]) ||
+								!isset($lastModified) || $row[$row_modified] > $lastModified)
+							{
+								$result['data'][$row[$row_id]] = $row;
+								$kUkey = array_search($id, $knownUids);
+								if ($kUkey !== false) unset($knownUids[$kUkey]);
+							}
+						}
+					}
+				}
+				catch (Exception $e)
+				{
+					unset($value['row_modified']);
+					error_log("Error trying to find changed rows with {$value['get_rows']}, falling back to all rows. ");
+					error_log($e);
+				}
+
+				// Remove any remaining knownUIDs from the grid
+				foreach($knownUids as $uid)
+				{
+					$result['data'][$uid] = null;
+				}
+			}
+		}
+		 */
+
 		// Check for anything changed in the query
 		// Tell the client about the changes
 		$request_value =& self::get_array(self::$request->content, $form_name,true);
@@ -368,82 +462,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->content = array();
 			self::$request->content = $content;
 		}
-		if($no_rows) $rows = Array();
 
-		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
-		$row_modified = $value['row_modified'];
-
-		foreach($rows as $n => $row)
-		{
-			$kUkey = false;
-			if (is_int($n) && $row)
-			{
-				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
-				if (!isset($row[$row_modified])) unset($row_modified);
-
-				$id = $row_id ? $row[$row_id] : $n;
-				$result['order'][] = $id;
-
-				// check if we need to send the data
-				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . egw_time::to($row[$row_modified]) . ' > ' . egw_time::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
-				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
-					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
-				{
-					$result['data'][$id] = $row;
-				}
-				if ($kUkey !== false) unset($knownUids[$kUkey]);
-			}
-			else	// non-row data set by get_rows method
-			{
-				$result['rows'][$n] = $row;
-			}
-		}
-		// check knowUids outside of range for modification
-		if ($knownUids)
-		{
-			// commenting out trying to validate knowUids not returned in current list,
-			// as this generates a second db search and they might not be visible anyway
-			// --> for now we tell the grid to purge them
-			//if (!$row_id)	// row_id not set by nextmatch user --> tell client to delete data, as we cant identify rows
-			{
-				foreach($knownUids as $uid)
-				{
-					// Just don't send it back for now
-					unset($result['data'][$uid]);
-					//$result['data'][$uid] = null;
-				}
-			}
-			/*else
-			{
-				//error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
-				// check if they are up to date: we create a query similar to csv-export without any filters
-				$value['csv_export'] = 'knownUids';	// do not store $value in session
-				$value['filter'] = $value['filter2'] = $value['cat_id'] = $value['search'] = '';
-				$value['col_filter'] = array($row_id => $knownUids);
-				// if we know name of modification column and have a last-modified date
-				if ($row_modified && $lastModified)	// --> set filter to return only modified entries
-				{
-					$value['col_filter'][] = $row_modified.' > '.(int)$lastModified;
-				}
-				$value['start'] = 0;
-				$value['num_rows'] = count($knownUids);
-				$rows = array();
-				if (self::call_get_rows($value, $rows))
-				{
-					foreach($rows as $n => $row)
-					{
-						if (!is_int($n)) continue;	// ignore non-row data set by get_rows method
-
-						if (!$row_modified || !isset($row[$row_modified]) ||
-							!isset($lastModified) || $row[$row_modified] > $lastModified)
-						{
-							$result['data'][$row[$row_id]] = $row;
-						}
-					}
-				}
-			}*/
-		}
-
+		// Send back data
 		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
 

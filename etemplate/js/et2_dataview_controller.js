@@ -756,7 +756,6 @@ var et2_dataview_controller = Class.extend({
 		// index entry
 		for (var i = mapIdx; i < _idxMap.length; i++)
 		{
-			this._grid.deleteRow(i);
 			if(typeof _idxMap[i] != 'undefined')
 			{
 				_idxMap[i].uid = null;
@@ -824,9 +823,18 @@ var et2_dataview_controller = Class.extend({
 		var order = this.count != 0 ? _response.order.splice(0, this.count) : _response.order;
 
 		// Remove from queue, or it will not be fetched again
-		for(var i = this.start; i < this.start + order.length; i++)
-			delete this.self._queue[i];
-
+		if(_response.total < this.count)
+		{
+			// Less rows than we expected
+			// Clear the queue, or the remnants will never be loaded again
+			this.self._queue = {};
+		}
+		else
+		{
+			for(var i = this.start; i < this.start + order.length; i++)
+				delete this.self._queue[i];
+		}
+		
 		// Get the current index map for the updated region
 		var idxMap = this.self._getIndexMapping(this.start, order.length);
 

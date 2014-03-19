@@ -340,6 +340,15 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			}
 		}
 
+		// If we're doing an autorefresh and the count decreases, preserve the
+		// selection or it will be lost when the grid rows are shuffled.  Increases
+		// are fine though.
+		if(this.self && this.self.kept_selection == null &&
+			!this.refresh && this.self._grid.getTotalCount() > _response.total)
+		{
+			this.self.keepSelection();
+		}
+
 		// Call the inherited function
 		this._super.apply(this, arguments);
 
