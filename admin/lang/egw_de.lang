@@ -24,6 +24,7 @@ access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffskontrolle
 access to %1 data by others	admin	de	Zugriff auf Daten von %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
+account	admin	de	Benutzerkonto
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2

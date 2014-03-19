@@ -24,6 +24,7 @@ access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
+account	admin	en	Account
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
 account %1 %2	admin	en	Account %1 %2
