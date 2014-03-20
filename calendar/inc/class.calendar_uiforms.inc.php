@@ -993,7 +993,7 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
-	 * return javascript to open felamimail compose window with preset content to mail all participants
+	 * return javascript to open mail compose window with preset content to mail all participants
 	 *
 	 * @param array $event
 	 * @param boolean $added
@@ -1006,9 +1006,9 @@ class calendar_uiforms extends calendar_ui
 		foreach($event['participants'] as $uid => $status)
 		{
 			$toadd = '';
-			if ($status['status'] == 'R' || $status['uid'] == $this->user) continue;
+			if ((isset($status['status']) && $status['status'] == 'R') || (isset($status['uid']) && $status['uid'] == $this->user)) continue;
 
-			if (is_numeric($status['uid']) && $GLOBALS['egw']->accounts->get_type($status['uid']) == 'u')
+			if (isset($status['uid']) && is_numeric($status['uid']) && $GLOBALS['egw']->accounts->get_type($status['uid']) == 'u')
 			{
 				if (!($email = $GLOBALS['egw']->accounts->id2name($status['uid'],'account_email'))) continue;
 
@@ -1036,7 +1036,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
-		#error_log(__METHOD__.print_r($event,true));
+		//error_log(__METHOD__.print_r($event,true));
 		$boical = new calendar_ical();
 		// we need to pass $event[id] so iCal class reads event again,
 		// as event is in user TZ, but iCal class expects server TZ!
@@ -1501,7 +1501,7 @@ class calendar_uiforms extends calendar_ui
 			'history' => !$event['id'],
 			'alarms' => $readonlys['tabs']['alarms'],
 		);
-		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))	// no mail without mail-app
+		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))	// no mail without mail-app
 		{
 			unset($sel_options['action']['mail']);
 			unset($sel_options['action']['sendmeetingrequest']);

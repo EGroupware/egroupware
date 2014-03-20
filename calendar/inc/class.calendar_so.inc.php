@@ -1506,8 +1506,8 @@ ORDER BY cal_user_type, cal_usre_id
 	{
 		$quantity = 1;
 		$role = 'REQ-PARTICIPANT';
-
-		if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
+		//error_log(__METHOD__.__LINE__.array2string($status));
+		if (is_string($status) && strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
 		{
 			if ((int)$matches[1] > 0) $quantity = (int)$matches[1];
 			if ($matches[2]) $role = $matches[2];

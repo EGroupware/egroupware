@@ -272,7 +272,15 @@ class calendar_ui
 			if (isset($_REQUEST['json_data']) && ($json_data = json_decode($_REQUEST['json_data'], true)) &&
 				!empty($json_data['request']['parameters'][0]))
 			{
-				parse_str(substr($json_data['request']['parameters'][0], 10), $set_states);	// cut off "/index.php?"
+				if (is_array($json_data['request']['parameters'][0]))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($json_data['request']['parameters'][0]));
+					$set_states = $json_data['request']['parameters'][0];
+				}
+				else
+				{
+					parse_str(substr($json_data['request']['parameters'][0], 10), $set_states);	// cut off "/index.php?"
+				}
 			}
 			else
 			{

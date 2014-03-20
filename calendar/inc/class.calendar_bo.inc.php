@@ -1500,10 +1500,11 @@ class calendar_bo
 	*/
 	function participants($event,$long_status=false,$show_group_invitation=false)
 	{
-		//_debug_array($event);
+		//error_log(__METHOD__.__LINE__.array2string($event['participants']));
 		$names = array();
 		foreach((array)$event['participants'] as $id => $status)
 		{
+			if (!is_string($status)) continue;
 			calendar_so::split_status($status,$quantity,$role);
 
 			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation

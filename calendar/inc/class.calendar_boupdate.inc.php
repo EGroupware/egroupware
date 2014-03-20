@@ -1758,7 +1758,7 @@ class calendar_boupdate extends calendar_bo
 			'data'	=> $event['public'] ? lang('Public') : lang('Private')
 		);
 
-		if (isset($event['participants']) && is_array($event['participants']))
+		if (isset($event['participants']) && is_array($event['participants']) && !empty($event['participants']))
 		{
 			$participants = $this->participants($event,true);
 		}
