@@ -58,6 +58,9 @@ window.app = {classes: {}};
  *		// Underscore private by convention
  *	}
  * });
+ *
+ * @class AppJS
+ * @augments Class
  */
 var AppJS = Class.extend(
 {
@@ -68,11 +71,15 @@ var AppJS = Class.extend(
 
 	/**
 	 * Internal reference to etemplate2 widget tree
+	 *
+	 * @var {et2_container}
 	 */
 	et2: null,
 
 	/**
 	 * Internal reference to egw client-side api object for current app and window
+	 *
+	 * @var {egw}
 	 */
 	egw: null,
 

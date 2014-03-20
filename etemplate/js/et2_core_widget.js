@@ -102,9 +102,9 @@ function et2_createWidget(_name, _attrs, _parent)
 /**
  * The et2 widget base class.
  *
- * @augments Class
+ * @augments ClassWithAttributes
  */
-var et2_widget = Class.extend(
+var et2_widget = ClassWithAttributes.extend(
 {
 	attributes: {
 		"id": {

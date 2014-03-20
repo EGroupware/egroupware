@@ -503,7 +503,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
  *
  * @augments Class
  */
-var et2_surroundingsMgr = Class.extend(
+var et2_surroundingsMgr = ClassWithAttributes.extend(
 {
 	/**
 	 * Constructor

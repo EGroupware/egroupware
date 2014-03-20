@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:uses
 	jquery.jquery;
@@ -30,10 +30,10 @@
  * A container does not know where it resides inside the grid, or whether it is
  * currently visible or not -- this information is efficiently managed by the
  * et2_dataview_grid container.
- * 
+ *
  * @augments Class
  */
-var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, 
+var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 {
 	/**
 	 * Initializes the container object.
@@ -77,6 +77,9 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 	 * Sets the "destroyCallback" -- the given function gets called whenever
 	 * the container is destroyed. This instance is passed as an parameter to
 	 * the callback.
+	 *
+	 * @param {function} _callback
+	 * @param {object} _context
 	 */
 	setDestroyCallback: function(_callback, _context) {
 		this._destroyCallback = _callback;
@@ -182,6 +185,8 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 
 	/**
 	 * Removes a certain node from the container
+	 *
+	 * @param {DOMElement} _node
 	 */
 	removeNode: function(_node) {
 		// Get the index of the node in the nodes array
@@ -296,6 +301,8 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 
 	/**
 	 * Sets the top of the element.
+	 *
+	 * @param {number} _value
 	 */
 	setTop: function(_value) {
 		this._top = _value;
@@ -303,6 +310,8 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 
 	/**
 	 * Sets the index of the element.
+	 *
+	 * @param {number} _value
 	 */
 	setIndex: function(_value) {
 		this._index = _value;
@@ -355,46 +364,16 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 		}
 
 		return true;
-	}
+	},
 
-});
-
-/**
- * Returns the height of a node in pixels and zero if the element is not
- * visible. The height is clamped to positive values.
- * The browser switch is placed at this position as the _nodeHeight function is
- * one of the most frequently called functions in the whole grid code and should
- * stay quite fast.
- */
-/*if ($j.browser.mozilla)
-{
-	et2_dataview_container.prototype._nodeHeight = function(_node)
-	{
-		var height = 0;
-		// Firefox sometimes provides fractional pixel values - we are
-		// forced to use those - we can obtain the fractional pixel height
-		// by using the window.getComputedStyle function
-		var compStyle = getComputedStyle(_node, null);
-		if (compStyle)
-		{
-			var styleHeightStr = compStyle.getPropertyValue("height");
-			height = parseFloat(styleHeightStr.substr(0,
-				styleHeightStr.length - 2));
-
-			if (isNaN(height) || height < 1)
-			{
-				height = 0;
-			}
-		}
-
-		return height;
-	}
-}
-else
-{*/
-	et2_dataview_container.prototype._nodeHeight = function(_node)
+	/**
+	 * Returns the height of a node in pixels and zero if the element is not
+	 * visible. The height is clamped to positive values.
+	 *
+	 * @param {DOMElement} _node
+	 */
+	_nodeHeight: function(_node)
 	{
 		return _node.offsetHeight;
-	};
-//}
-
+	}
+});

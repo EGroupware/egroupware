@@ -17,7 +17,7 @@
  * ----------------------------------
  *
  * To create a class write
- * 
+ *
  * MyClass = Class.extend([interfaces, ] functions);
  *
  * where "interfaces" is a single interface or an array of interfaces and
@@ -28,7 +28,7 @@
  * var IBreathingObject = new Interface({
  * 		breath: function() {}
  * });
- * 
+ *
  * var Human = Class.extend(IBreathingObject, {
  * 		walk: function() {
  * 			console.log("Walking");
@@ -37,13 +37,13 @@
  * 			console.log(_words);
  * 		}
  * });
- * 
+ *
  * As "Human" does not implement the function "breath", "Human" is treated as
  * abstract. Trying to create an instance of "Human" will throw an exception.
  * However
- * 
+ *
  * Human.prototype.implements(IBreathingObject);
- * 
+ *
  * will return true. Lets create a specific class of "Human":
  *
  * var ChuckNorris = Human.extend({
@@ -57,17 +57,20 @@
  * });
  */
 
-// The following code is mostly taken from 
+// The following code is mostly taken from
 // http://ejohn.org/blog/simple-javascript-inheritance/
 // some parts were slightly changed for better understanding. Added possiblity
 // to use interfaces.
 
-/* Simple JavaScript Inheritance
+/**
+ * Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed
+ *
+ * Inspired by base2 and Prototype
  */
-// Inspired by base2 and Prototype
-(function(){
+(function()
+{
 	var initializing = false;
 
 	/**
@@ -78,11 +81,16 @@
 	var tracedObjects = {};
 
 	// Check whether "function decompilation" works - fnTest is normally used to
-	// check whether a 
+	// check whether a
 	var fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
-	// Base "Class" for interfaces - needed to check whether an object is an
-	// interface
+	/**
+	 * Base "Class" for interfaces - needed to check whether an object is an
+	 * interface
+	 *
+	 * @param {object} fncts
+	 * @class {Interface}
+	 */
 	this.Interface = function(fncts) {
 		for (var key in fncts)
 		{
@@ -93,6 +101,9 @@
 	/**
 	 * The addInterfaceFunctions function adds all interface functions the class has
 	 * to implement to the class prototype.
+	 *
+	 * @param {Class} prototype
+	 * @param {array} interfaces
 	 */
 	function addInterfaceFunctions(prototype, interfaces)
 	{
@@ -159,24 +170,32 @@
 			attributes[key] = _copyMerge({}, prototype.attributes[key]);
 		}
 
-		if(prototype._validate_attributes)
-		{
-			prototype._validate_attributes(prototype, attributes)
-		}
-
 		// Add the old attributes to the new ones. If the attributes already
 		// exist, they are merged.
 		for (var key in _super.attributes)
 		{
 			var _old = _super.attributes[key];
-			var _new = {};
 
 			attributes[key] = _copyMerge(attributes[key], _old);
+		}
+
+		if(prototype._validate_attributes)
+		{
+			prototype._validate_attributes(attributes);
 		}
 
 		prototype.attributes = attributes;
 	};
 
+	/**
+	 * Create a new Class that inherits from this class. The first parameter
+	 * is an array which defines a set of interfaces the object has to
+	 * implement. An interface is simply an object with named functions.
+	 *
+	 * @param {array} interfaces
+	 * @param {object} prop
+	 * @return {Class}
+	 */
 	function classExtend(interfaces, prop) {
 
 		if (typeof prop == "undefined")
@@ -243,7 +262,11 @@
 		// attributes
 		addAttributeFunctions(prototype, _super);
 
-		// The dummy class constructor
+		/**
+		 * The dummy class constructor
+		 *
+		 * @constructor {Class}
+		 */
 		function Class() {
 			// All construction is actually done in the init method
 			if (!initializing)
@@ -254,7 +277,7 @@
 					var func = this._ifacefuncs[i];
 					if (!(typeof this[func] == "function"))
 					{
-						throw("Trying to create abstract object, interface " + 
+						throw("Trying to create abstract object, interface " +
 							"function '" + func + "' not implemented.");
 					}
 				}
@@ -267,7 +290,7 @@
 					tracedObjects[this.__OBJ_UID] = {
 						"created": new Date().getTime(),
 						"class": className
-					}
+					};
 					egw.debug("log", "*" + this.__OBJ_UID + " (" + className + ")");
 				}
 
@@ -284,7 +307,15 @@
 		// Enforce the constructor to be what we expect
 		Class.prototype.constructor = Class;
 
-		// And make this class extendable
+		/**
+		 * Create a new Class that inherits from this class. The first parameter
+		 * is an array which defines a set of interfaces the object has to
+		 * implement. An interface is simply an object with named functions.
+		 *
+		 * @param {array} interfaces
+		 * @param {object} prop
+		 * @return {Class}
+		 */
 		Class.extend = classExtend;
 
 		return Class;
@@ -293,9 +324,15 @@
 	// The base Class implementation (does nothing)
 	this.Class = function(){};
 
-	// Create a new Class that inherits from this class. The first parameter
-	// is an array which defines a set of interfaces the object has to
-	// implement. An interface is simply an object with named functions.
+	/**
+	 * Create a new Class that inherits from this class. The first parameter
+	 * is an array which defines a set of interfaces the object has to
+	 * implement. An interface is simply an object with named functions.
+	 *
+	 * @param {array} interfaces
+	 * @param {object} prop
+	 * @return {Class}
+	 */
 	Class.extend = classExtend;
 
 	// The base class has no attributes
@@ -356,12 +393,14 @@
 			}
 
 			return "?";
-		}
+		};
 	}
 
 	/**
 	 * The implements function can be used to check whether the object
 	 * implements the given interface.
+	 *
+	 * @param {Class} _iface interface to check
 	 */
 	Class.prototype.implements = function(_iface) {
 		for (var key in _iface)
@@ -378,6 +417,8 @@
 	 * The instanceOf function can be used to check for both - classes and
 	 * interfaces. Please don't change the case of this function as this
 	 * affects IE and Opera support.
+	 *
+	 * @param {Class} _obj object to check
 	 */
 	Class.prototype.instanceOf = function(_obj) {
 		if (_obj instanceof Interface)

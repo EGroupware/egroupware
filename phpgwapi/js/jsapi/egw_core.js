@@ -16,7 +16,7 @@
  * This code setups the egw namespace and adds the "extend" function, which is
  * used by extension modules to inject their content into the egw object.
  */
-(function(_parent) {
+(function() {
 
 	var instanceUid = 0;
 
@@ -46,7 +46,7 @@
 		{
 			if (_cond(_arr[i]))
 			{
-				_arr.splice(i, 1)
+				_arr.splice(i, 1);
 			}
 		}
 	}
@@ -173,19 +173,20 @@
 	/**
 	 * Creates an api instance for the given application and the given window.
 	 *
-	 * @param _egw is the global _egw instance which should be used.
-	 * @param _modules is the hash map which contains references to all module
+	 * @param {globalEgw} _egw is the global _egw instance which should be used.
+	 * @param {object} _modules is the hash map which contains references to all module
 	 * 	descriptors.
-	 * @param _moduleInstances is the the object which contains the application
+	 * @param {object} _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
-	 * @param _list is the overall instances list, to which the module should be
+	 * @param {array} _list is the overall instances list, to which the module should be
 	 * 	added.
-	 * @param _instances refers to all api instances.
-	 * @param _app is the application for which the instance should be created.
-	 * @param _wnd is the window for which the instance should be created.
+	 * @param {object} _instances is the overall instances list, to which the module should be
+	 * 	added.
+	 * @param {string} _app is the application for which the instance should be created.
+	 * @param {DOMElement} _window is the window for which the instance should be created.
+	 * @return {egw}
 	 */
-	function createEgwInstance(_egw, _modules, _moduleInstances, _list,
-			_instances, _app, _window)
+	function createEgwInstance(_egw, _modules, _moduleInstances, _list, _instances, _app, _window)
 	{
 		// Clone the global object
 		var instance = cloneObject(_egw);
@@ -237,18 +238,18 @@
 	 * Returns a egw instance for the given application and the given window. If
 	 * the instance does not exist now, the instance will be created.
 	 *
-	 * @param _egw is the global _egw instance which should be used.
-	 * @param _modules is the hash map which contains references to all module
+	 * @param {globalEgw} _egw is the global _egw instance which should be used.
+	 * @param {object} _modules is the hash map which contains references to all module
 	 * 	descriptors.
-	 * @param _moduleInstances is the the object which contains the application
+	 * @param {object} _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
-	 * @param _list is the overall instances list, to which the module should be
+	 * @param {object} _instances is the overall instances list, to which the module should be
 	 * 	added.
-	 * @param _app is the application for which the instance should be created.
-	 * @param _wnd is the window for which the instance should be created.
+	 * @param {string} _app is the application for which the instance should be created.
+	 * @param {DOMElement} _window is the window for which the instance should be created.
+	 * @return {egw}
 	 */
-	function getEgwInstance(_egw, _modules, _moduleInstances, _instances, _app,
-		_window)
+	function getEgwInstance(_egw, _modules, _moduleInstances, _instances, _app, _window)
 	{
 		// Generate the hash key for the instance descriptor object
 		var hash = _app ? _app : '~global~';
@@ -435,6 +436,8 @@
 		 * function and/or a window object. If you specify both, the app name
 		 * has to preceed the window object reference. If no window object is
 		 * given, the root window will be used.
+		 *
+		 * @return {egw}
 		 */
 		var egw = function() {
 
@@ -471,7 +474,7 @@
 			// Generate an API instance
 			return getEgwInstance(egw, modules, moduleInstances, instances,
 					_app, _window);
-		}
+		};
 
 		var globalEgw = {
 
@@ -686,9 +689,8 @@
 				return {
 					'instances': instances,
 					'moduleInstances': moduleInstances
-				}
+				};
 			}
-
 		};
 
 		// Merge the globalEgw functions into the egw object.

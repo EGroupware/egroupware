@@ -49,7 +49,7 @@ var et2_dataview_controller = Class.extend({
 	 * requesting action links for a row. The row data, the index of the row and
 	 * the uid are passed as parameters to the function.
 	 * uid is passed to the function.
-	 * @param _context is the context in which the _rowCallback and the 
+	 * @param _context is the context in which the _rowCallback and the
 	 * _linkCallback are called.
 	 * @param _actionObjectManager is the object that manages the action
 	 * objects.
@@ -64,7 +64,7 @@ var et2_dataview_controller = Class.extend({
 		this._rowCallback = _rowCallback;
 		this._linkCallback = _linkCallback;
 		this._context = _context;
-		
+
 		// Initialize list of child controllers
 		this._children = [];
 
@@ -91,7 +91,7 @@ var et2_dataview_controller = Class.extend({
 				this._makeIndexVisible,
 				this
 		);
-			
+
 		// Record the child
 		if(this._parentController != null)
 		{
@@ -106,7 +106,7 @@ var et2_dataview_controller = Class.extend({
 
 		// Clear the selection timeout
 		this._clearTimer();
-		
+
 		// Remove the child from the child list
 		if(this._parentController != null)
 		{
@@ -125,7 +125,7 @@ var et2_dataview_controller = Class.extend({
 	 * The update function queries the server for changes in the currently
 	 * managed index range -- those changes are then merged into the current
 	 * view without a complete rebuild of every row.
-	 * 
+	 *
 	 * @param {boolean} clear Skip the fancy stuff, dump everything and start again.
 	 *		Completely clears the grid and selection.
 	 */
@@ -147,7 +147,7 @@ var et2_dataview_controller = Class.extend({
 
 			// Free selection manager
 			this._selectionMgr.clear();
-			
+
 			// Clear the map
 			this._indexMap = {}
 			// Update selection manager, it uses this by reference
@@ -211,7 +211,7 @@ var et2_dataview_controller = Class.extend({
 		{
 			// Skip any extra keys
 			if(typeof data[key] != "object" || data[key] == null || typeof data[key][uid_key] == "undefined") continue;
-			
+
 			// Add to row / uid map
 			var entry = this._getIndexEntry(idx++);
 			entry.uid = data[key][uid_key]+"";
@@ -252,7 +252,7 @@ var et2_dataview_controller = Class.extend({
 
 	/**
 	 * Returns the row information of the passed node, or null if not available
-	 * 
+	 *
 	 * @param {DOMNode} node
 	 * @return {string|false} UID, or false if not found
 	 */
@@ -260,7 +260,7 @@ var et2_dataview_controller = Class.extend({
 		// Whatever the node, find a TR
 		var row_node = $j(node).closest('tr');
 		var row = false
-		
+
 		// Check index map - simple case
 		var indexed = this._getIndexEntry(row_node.index());
 		if(indexed && indexed.row && indexed.row.getDOMNode() == row_node[0])
@@ -280,7 +280,7 @@ var et2_dataview_controller = Class.extend({
 				}
 			}
 		}
-		
+
 		// Check children
 		for(var i = 0; !row && i < this._children.length; i++)
 		{
@@ -612,7 +612,7 @@ var et2_dataview_controller = Class.extend({
 			{
 				$j(tr).addClass("subentry");
 				$j("td:first",tr).children("div").last().addClass("level_" + d + " indentation");
-				
+
 				if(this.entry.idx == 0)
 				{
 					// Set the CSS for the level - required so columns line up
@@ -811,7 +811,7 @@ var et2_dataview_controller = Class.extend({
 
 	_fetchCallback: function (_response) {
 		this.self._lastModification = _response.lastModification;
-		
+
 		// Do nothing if _response.order evaluates to false
 		if (!_response.order)
 		{
@@ -834,7 +834,7 @@ var et2_dataview_controller = Class.extend({
 			for(var i = this.start; i < this.start + order.length; i++)
 				delete this.self._queue[i];
 		}
-		
+
 		// Get the current index map for the updated region
 		var idxMap = this.self._getIndexMapping(this.start, order.length);
 
@@ -860,11 +860,11 @@ var et2_dataview_controller = Class.extend({
 
 		// Now it's OK to invalidate, if it wasn't before
 		this.self._grid.doInvalidate = true;
-		
+
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
 		this.self._selectionMgr.setTotalCount(_response.total);
-		
+
 		// Schedule an invalidate, in case total is the same
 		this.self._grid.invalidate();
 	},
@@ -892,7 +892,7 @@ var et2_dataview_controller = Class.extend({
 					this._context,
 					{},
 					0,
-					""	
+					""
 				);
 			}
 			this._selectionMgr.registerRow("",0,placeholder.get(0), links);

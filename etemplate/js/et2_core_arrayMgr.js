@@ -14,7 +14,7 @@
 
 /*egw:uses
 	et2_core_common;
-	et2_core_inheritance;
+	egw_inheritance;
 	et2_core_phpExpressionCompiler;
 */
 

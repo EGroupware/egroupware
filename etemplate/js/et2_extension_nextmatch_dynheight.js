@@ -21,7 +21,7 @@
  * Object which resizes an inner node to the maximum extend of an outer node
  * (without creating a scrollbar) - it achieves that by performing some very
  * nasty and time consuming calculations.
- * 
+ *
  * @augments Class
  */
 var et2_dynheight = Class.extend(
@@ -51,6 +51,9 @@ var et2_dynheight = Class.extend(
 	/**
 	 * Resizes the inner node. When this is done, the callback function is
 	 * called.
+	 *
+	 * @param {function} _callback
+	 * @param {object} _context
 	 */
 	update: function(_callback, _context) {
 		// Check whether the inner node is actually visible - if not, don't
@@ -103,7 +106,7 @@ var et2_dynheight = Class.extend(
 			var h = Math.max(this.minHeight, oh + ot - it - bh -
 				this.innerMargin - this.outerMargin);
 			this.innerNode.height(h);
-			
+
 			// Update the width
 			// Some checking to make sure it doesn't overflow the width when user
 			// resizes the window
@@ -117,7 +120,7 @@ var et2_dynheight = Class.extend(
 			{
 				this.innerNode.width(w);
 			}
-			
+
 			// Call the callback function
 			if (typeof _callback != "undefined")
 			{
@@ -129,6 +132,9 @@ var et2_dynheight = Class.extend(
 	/**
 	 * Function used internally which collects all DOM-Nodes which are located
 	 * below this element.
+	 *
+	 * @param {DOMElement} _node
+	 * @param {number} _bottom
 	 */
 	_collectBottomNodes: function(_node, _bottom) {
 		// Calculate the bottom position of the inner node

@@ -339,16 +339,17 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Query a title of _app/_id
 		 *
-		 * @param string _app
-		 * @param string|int _id
-		 * @param function _callback optinal callback, required if for responses from the server
-		 * @param object _context context for the callback
+		 * @param {string} _app
+		 * @param {(string|int)} _id
+		 * @param {function} _callback optinal callback, required if for responses from the server
+		 * @param {object} _context context for the callback
+		 * @param {boolean} _force_reload true load again from server, even if already cached
 		 * @return string|boolean|null string with title if it exist in local cache or null if not
 		 */
-		link_title: function(_app, _id, _callback, _context)
+		link_title: function(_app, _id, _callback, _context, _force_reload)
 		{
 			// check if we have a cached title --> return it direct
-			if (typeof title_cache[_app] != 'undefined' && typeof title_cache[_app][_id] != 'undefined')
+			if (typeof title_cache[_app] != 'undefined' && typeof title_cache[_app][_id] != 'undefined' && _force_reload !== true)
 			{
 				if (typeof _callback == 'function')
 				{

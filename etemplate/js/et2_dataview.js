@@ -28,7 +28,7 @@
  * header, etc.) and contains the root container: an instance of
  * et2_dataview_view_grid, which can be accessed using the "grid" property of
  * this object.
- * 
+ *
  * @augments Class
  */
 var et2_dataview = Class.extend({
@@ -55,7 +55,9 @@ var et2_dataview = Class.extend({
 
 	/**
 	 * Constructor for the grid container
-	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
+	 *
+	 * @param {DOMElement} _parentNode is the DOM-Node into which the grid view will be inserted
+	 * @param {egw} _egw
 	 * @memberOf et2_dataview
 	 */
 	init: function(_parentNode, _egw) {
@@ -158,7 +160,7 @@ var et2_dataview = Class.extend({
 	resize: function(_w, _h) {
 		// Not fully initialized yet...
 		if (!this.columnMgr) return;
-		
+
 		if (this.width != _w)
 		{
 			this.width = _w;
@@ -192,7 +194,7 @@ var et2_dataview = Class.extend({
 	/**
 	 * Recalculates the stylesheets which determine the column visibility and
 	 * width.
-	 * 
+	 *
 	 * @param setDefault boolean Allow admins to save current settings as default for all users
 	 */
 	updateColumns: function(setDefault) {
@@ -297,11 +299,11 @@ var et2_dataview = Class.extend({
 				this.visibleColumnCount++;
 
 				// Update the visibility of the column
-				this.egw.css("." + col.tdClass, 
-					"display: table-cell; " + 
+				this.egw.css("." + col.tdClass,
+					"display: table-cell; " +
 					"!important;");
 
-				// Ugly browser dependant code - each browser seems to treat the 
+				// Ugly browser dependant code - each browser seems to treat the
 				// right (collapsed) border of the row differently
 				var subBorder = 0;
 				var subHBorder = 0;
@@ -336,12 +338,12 @@ var et2_dataview = Class.extend({
 
 				// Write the width of the header columns
 				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth - subHBorder));
-				this.egw.css(".egwGridView_outer ." + col.divClass, 
+				this.egw.css(".egwGridView_outer ." + col.divClass,
 					"width: " + headerWidth + "px;");
 
 				// Write the width of the body-columns
 				var columnWidth = Math.max(0, (col.width  - this.columnBorderWidth - subBorder));
-				this.egw.css(".egwGridView_grid ." + col.divClass, 
+				this.egw.css(".egwGridView_grid ." + col.divClass,
 					"width: " + columnWidth + "px;");
 
 				totalWidth += col.width;
@@ -486,7 +488,7 @@ var et2_dataview = Class.extend({
 	 * Reads the scrollbar width
 	 */
 	_getScrollbarWidth: function(_table) {
-		// Create a temporary td and two divs, which are inserted into the 
+		// Create a temporary td and two divs, which are inserted into the
 		// DOM-Tree. The outer div has a fixed size and "overflow" set to auto.
 		// When the second div is inserted, it will be forced to display a scrollbar.
 		var div_inner = $j(document.createElement("div"))

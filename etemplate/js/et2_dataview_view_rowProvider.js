@@ -19,15 +19,15 @@
 */
 
 /**
- * The row provider contains prototypes (full clonable dom-trees) 
+ * The row provider contains prototypes (full clonable dom-trees)
  * for all registered row types.
- * 
+ *
  * @augments Class
  */
 var et2_dataview_rowProvider = Class.extend(
 {
 	/**
-	 * 
+	 *
 	 * @param _outerId
 	 * @param _columnIds
 	 * @memberOf et2_dataview_rowProvider
@@ -57,6 +57,10 @@ var et2_dataview_rowProvider = Class.extend(
 	 * Returns a clone of the prototype with the given name. If the generator
 	 * callback function is given, this function is called if the prototype
 	 * does not yet registered.
+	 *
+	 * @param {string} _name
+	 * @param {function} _generator
+	 * @param {object} _context
 	 */
 	getPrototype: function(_name, _generator, _context) {
 		if (typeof this._prototypes[_name] == "undefined")

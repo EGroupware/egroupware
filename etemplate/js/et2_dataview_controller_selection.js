@@ -24,14 +24,14 @@
  * manage an external action object interface for each visible row and proxy all
  * state changes between an dummy action object, that does no selection handling,
  * and the external action object interface.
- * 
+ *
  * @augments Class
  */
 var et2_dataview_selectionManager = Class.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _indexMap
 	 * @param _actionObjectManager
@@ -214,10 +214,10 @@ var et2_dataview_selectionManager = Class.extend(
 		this.resetSelection();
 
 		this._selectAll = true;
-		
+
 		// Tell action manager to do all
 		this._actionObjectManager.setAllSelected(true);
-		
+
 		// Update the selection
 		for (var key in this._registeredRows)
 		{
@@ -519,7 +519,7 @@ var et2_dataview_selectionManager = Class.extend(
 		// Query all unknown ranges from the server
 		for (var i = 0; i < queryRanges.length; i++)
 		{
-			this._queryRangeCallback.call(this._context, queryRanges[i], 
+			this._queryRangeCallback.call(this._context, queryRanges[i],
 				function (_order) {
 					for (var j = 0; j < _order.length; j++)
 					{

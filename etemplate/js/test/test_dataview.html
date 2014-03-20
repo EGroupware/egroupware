@@ -22,6 +22,7 @@
 		<script src="../../../phpgwapi/js/jsapi/egw_css.js"></script>
 		<script src="../../../phpgwapi/js/jsapi/egw_debug.js"></script>
 
+		<script src="../../../phpgwapi/js/jsapi/egw_inheritance.js"></script>
 		<script src="../et2_core_inheritance.js"></script>
 		<script src="../et2_core_interfaces.js"></script>
 		<script src="../et2_core_common.js"></script>
@@ -98,7 +99,7 @@
 				data[i] = "uid_" + i;
 			}
 
-			var dataprovider = Class.extend(et2_IDataProvider, {
+			var dataprovider = ClassWithAttributes.extend(et2_IDataProvider, {
 
 				dataFetch: function (_queriedRange, _callback, _context) {
 					var response = {

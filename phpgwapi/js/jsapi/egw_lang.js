@@ -35,8 +35,8 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Set translation for a given application
 		 *
-		 * @param string _app
-		 * @param object _message message => translation pairs
+		 * @param {string} _app
+		 * @param {object} _messages message => translation pairs
 		 * @memberOf egw
 		 */
 		set_lang_arr: function(_app, _messages)
@@ -50,8 +50,9 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Translate a given phrase replacing optional placeholders
 		 *
-		 * @param string _msg message to translate
-		 * @param string _arg1 ... _argN
+		 * @param {string} _msg message to translate
+		 * @param {...string} _arg1 ... _argN
+		 * @return {string}
 		 */
 		lang: function(_msg, _arg1)
 		{
@@ -91,10 +92,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Load default langfiles for an application: common, _appname, custom
 		 *
-		 * @param _window
+		 * @param {DOMElement} _window
 		 * @param {string} _appname name of application to load translations for
 		 * @param {function} _callback
-		 * @param _context
+		 * @param {object} _context
 		 */
 		langRequireApp: function(_window, _appname, _callback, _context)
 		{
@@ -114,17 +115,17 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 * Includes the language files for the given applications -- if those
 		 * do not already exist, include them.
 		 *
-		 * @param _window is the window which needs the language -- this is
+		 * @param {DOMElement} _window is the window which needs the language -- this is
 		 * 	needed as the "ready" event has to be postponed in that window until
 		 * 	all lang files are included.
-		 * @param _apps is an array containing the applications for which the
+		 * @param {array} _apps is an array containing the applications for which the
 		 * 	data is needed as objects of the following form:
 		 * 		{
 		 * 			app: <APPLICATION NAME>,
 		 * 			lang: <LANGUAGE CODE>
 		 * 		}
-		 * @param function _callback called after loading, if not given ready event will be postponed instead
-		 * @param object _context for callback
+		 * @param {function} _callback called after loading, if not given ready event will be postponed instead
+		 * @param {object} _context for callback
 		 */
 		langRequire: function(_window, _apps, _callback, _context) {
 			// Get the ready and the files module for the given window

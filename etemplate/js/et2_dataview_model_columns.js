@@ -26,10 +26,10 @@ var ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
 
 /**
  * Class which stores the data of a single column.
- * 
+ *
  * @augments Class
  */
-var et2_dataview_column = Class.extend({
+var et2_dataview_column = ClassWithAttributes.extend({
 
 	attributes: {
 		"id": {
@@ -72,7 +72,7 @@ var et2_dataview_column = Class.extend({
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _attrs
 	 * @memberOf et2_dataview_column
 	 */
@@ -114,7 +114,7 @@ var et2_dataview_column = Class.extend({
 	set_visibility: function(_value) {
 		// If visibility is always, don't turn it off
 		if(this.visibility == ET2_COL_VISIBILITY_ALWAYS || this.visibility == ET2_COL_VISIBILITY_ALWAYS_NOSELECT) return;
-		 
+
 		if(_value === true)
 		{
 			this.visibility = ET2_COL_VISIBILITY_VISIBLE;
@@ -167,6 +167,8 @@ var et2_dataview_columns = Class.extend({
 
 	/**
 	 * Set the total width of the header row
+	 *
+	 * @param {(string|number)} _width
 	 */
 	setTotalWidth: function(_width) {
 		if (_width != this.totalWidth && _width > 0)
@@ -178,6 +180,8 @@ var et2_dataview_columns = Class.extend({
 
 	/**
 	 * Returns the index of the colum with the given id
+	 *
+	 * @param {string} _id
 	 */
 	getColumnIndexById: function(_id) {
 		for (var i = 0; i < this.columns.length; i++)
@@ -192,6 +196,8 @@ var et2_dataview_columns = Class.extend({
 
 	/**
 	 * Returns the column with the given id
+	 *
+	 * @param {string} _id
 	 */
 	getColumnById: function(_id) {
 		var idx = this.getColumnIndexById(_id);
@@ -200,6 +206,8 @@ var et2_dataview_columns = Class.extend({
 
 	/**
 	 * Returns the width of the column with the given index
+	 *
+	 * @param {number} _idx
 	 */
 	getColumnWidth: function(_idx) {
 		if (this.totalWidth > 0 && _idx >= 0 && _idx < this.columns.length)
@@ -262,6 +270,8 @@ var et2_dataview_columns = Class.extend({
 
 	/**
 	 * Sets a column visiblity set
+	 *
+	 * @param {object} _set
 	 */
 	setColumnVisibilitySet: function(_set) {
 		for (var k in _set)
@@ -331,7 +341,7 @@ var et2_dataview_columns = Class.extend({
 			}
 		}
 		remRelWidth -= fixedTotal / tw;
-		
+
 		// Check whether the width of columns with relative width is larger than their
 		// maxWidth
 		var done;
@@ -419,13 +429,13 @@ var et2_dataview_columns = Class.extend({
 			this.columnWidths.push(w);
 			usedTotal += w;
 		}
-		
+
 		// Deal with any accumulated rounding errors
 		if(usedTotal != tw)
 		{
 		    var column, columnIndex;
 			var remaining_width = (usedTotal - tw);
-		    
+
 			// Pick the first relative column and use it
 			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
 			{
@@ -452,7 +462,7 @@ var et2_dataview_columns = Class.extend({
 				for(var i = 0; i < this.columns.length; i++)
 				{
 					var col = this.columns[i];
-					col.fixedWidth -= Math.round(this.columnWidths[i] / tw * remaining_width)
+					col.fixedWidth -= Math.round(this.columnWidths[i] / tw * remaining_width);
 					this.columnWidths[i] = Math.max(0, Math.min(col.fixedWidth,tw));
 				}
 			}

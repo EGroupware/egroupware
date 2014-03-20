@@ -19,16 +19,19 @@
 */
 
 /**
- * The row provider contains prototypes (full clonable dom-trees) 
+ * The row provider contains prototypes (full clonable dom-trees)
  * for all registered row types.
- * 
+ *
  * @augments Class
  */
-var et2_nextmatch_rowProvider = Class.extend(
+var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 {
 	/**
 	 * Creates the nextmatch row provider.
-	 * 
+	 *
+	 * @param {et2_nextmatch_rowProvider} _rowProvider
+	 * @param {function} _subgridCallback
+	 * @param {object} _context
 	 * @memberOf et2_nextmatch_rowProvider
 	 */
 	init: function (_rowProvider, _subgridCallback, _context) {
@@ -77,7 +80,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 		// interface or do not support all attributes listed in the et2_IDetachedDOM
 		// interface. A warning is issued for all those widgets as they heavily
 		// degrade the performance of the dataview
-		var seperated = rowTemplate.seperated = 
+		var seperated = rowTemplate.seperated =
 			this._seperateWidgets(variableAttributes);
 
 		// Remove all DOM-Nodes of all widgets inside the "remaining" slot from
@@ -169,7 +172,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 		tr.appendChild(row);
 
 		// Make the row expandable
-		if (typeof _data.content["is_parent"] !== "undefined" 
+		if (typeof _data.content["is_parent"] !== "undefined"
 		    && _data.content["is_parent"])
 		{
 			_row.makeExpandable(true, function () {
@@ -189,12 +192,12 @@ var et2_nextmatch_rowProvider = Class.extend(
 	 * Placeholder for empty row
 	 *
 	 * The empty row placeholder is used when there are no results to display.
-	 * This allows the user to still have a drop target, or use actions that 
+	 * This allows the user to still have a drop target, or use actions that
 	 * do not require a row ID, such as 'Add new'.
 	 */
 	_createEmptyPrototype: function() {
 		var label = this._context && this._context.options && this._context.options.settings.placeholder;
-		
+
 		var placeholder = $j(document.createElement("td"))
                                 .attr("colspan",this._rowProvider.getColumnCount())
                                 .css("height","19px")
@@ -208,6 +211,8 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 	/**
 	 * Returns an array containing objects which have variable attributes
+	 *
+	 * @param {et2_widget} _widget
 	 */
 	_getVariableAttributeSet: function(_widget) {
 		var variableAttributes = [];
@@ -337,6 +342,8 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 	/**
 	 * Removes to DOM code for all widgets in the "remaining" slot
+	 *
+	 * @param {object} _rowTemplate
 	 */
 	_stripTemplateRow: function(_rowTemplate) {
 		_rowTemplate.placeholders = [];
@@ -347,7 +354,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 			// Issue a warning - widgets which do not implement et2_IDOMNode
 			// are very slow
-			egw.debug("warn", "Non-clonable widget '"+ entry.widget._type + "' in dataview row - this " + 
+			egw.debug("warn", "Non-clonable widget '"+ entry.widget._type + "' in dataview row - this " +
 				"might be slow", entry);
 
 			// Set the placeholder for the entry to null
@@ -374,7 +381,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 	},
 
 	_nodeIndex: function(_node) {
-		if(_node.parentNode == null) 
+		if(_node.parentNode == null)
 		{
 			return 0;
 		}
@@ -391,6 +398,9 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 	/**
 	 * Returns a function which does a relative access on the given DOM-Node
+	 *
+	 * @param {DOMElement} _root
+	 * @param {DOMElement} _target
 	 */
 	_compileDOMAccessFunc: function(_root, _target) {
 		function recordPath(_root, _target, _path)
@@ -427,6 +437,8 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 	/**
 	 * Builds relative paths to the DOM-Nodes and compiles fast-access functions
+	 *
+	 * @param {object} _rowTemplate
 	 */
 	_buildNodeAccessFuncs: function(_rowTemplate) {
 		for (var i = 0; i < _rowTemplate.seperated.detachable.length; i++)
@@ -448,6 +460,10 @@ var et2_nextmatch_rowProvider = Class.extend(
 
 	/**
 	 * Applies additional row data (like the class) to the tr
+	 *
+	 * @param {object} _data
+	 * @param {DOMElement} _tr
+	 * @param {object} _mgrs
 	 */
 	_setRowData: function (_data, _tr, _mgrs) {
 		// TODO: Implement other fields than "class"
@@ -479,7 +495,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 					// If not using category (tracker, calendar list) look for sel_options in the rows
 					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry(category_location);
 					if(!categories) categories = _mgrs["sel_options"].getEntry("${row}["+category_location + "]");
-					
+
 					// Cache
 					if(categories) this.categories = categories;
 				}
@@ -525,11 +541,11 @@ var et2_nextmatch_rowProvider = Class.extend(
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode, 
+var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _mgrs
 	 * @param _row
 	 * @memberOf et2_nextmatch_rowWidget
@@ -549,6 +565,8 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 	/**
 	 * Copies the given array manager and clones the given widgets and inserts
 	 * them into the row which has been passed in the constructor.
+	 *
+	 * @param {array} _widgets
 	 */
 	createWidgets: function(_widgets) {
 		// Clone the given the widgets with this element as parent
@@ -557,7 +575,7 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 		{
 			// Disabled columns might be missing widget - skip it
 			if(!_widgets[i]) continue;
-			
+
 			this._widgets[i] = _widgets[i].clone(this);
 			this._widgets[i].loadingFinished();
 			// Set column alignment from widget
@@ -570,6 +588,9 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 
 	/**
 	 * Returns the column node for the given sender
+	 *
+	 * @param {et2_widget} _sender
+	 * @return {DOMElement}
 	 */
 	getDOMNode: function(_sender) {
 		for (var i = 0; i < this._widgets.length; i++)
@@ -588,11 +609,11 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, 
+var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode,
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _root
 	 * @param _row
 	 * @memberOf et2_nextmatch_rowTemplateWidget
@@ -632,6 +653,9 @@ var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode,
 
 	/**
 	 * Returns the column node for the given sender
+	 * 
+	 * @param {et2_widget} _sender
+	 * @return {DOMElement}
 	 */
 	getDOMNode: function(_sender) {
 
