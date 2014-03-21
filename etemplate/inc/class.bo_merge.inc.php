@@ -1831,7 +1831,7 @@ abstract class bo_merge
 		);
 
 		// egw.open() used if only 1 row selected
-		$action['egw_open'] = 'edit-mail-'.implode('&',$extra);
+		$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
 		$action['target'] = 'compose_' .$file['path'];
 		
 		// long_task runs menuaction once for each selected row
