@@ -359,11 +359,17 @@ input[type=button] {
 	background-repeat: no-repeat;
 }
 .mail-compose_toolbar{
-	background:#c0d2ec ;
+	border-left: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+	background-color: #c0d2ec;
+	background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
 }
 .mail-compose_toolbar > span {
 	padding: 10px;
-	border-right:#efefdf solid 1px;
 	white-space: nowrap;
 }
 .mail-compose_toolbar > span.priority {
@@ -373,6 +379,12 @@ input[type=button] {
 	height: 24px;
 	width: 24px;
 	vertical-align: middle;
+}
+.mail-compose_fileselector span.et2_file_span {
+	background-repeat: no-repeat;
+	background-image: url(images/attach.png);
+	background-size: inherit;
+	background-position: left;
 }
 .mail-compose_fileselector div.progress {
 	display: none;
