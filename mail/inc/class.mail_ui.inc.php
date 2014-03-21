@@ -654,6 +654,7 @@ class mail_ui
 		if ($preferences['prefcontroltestconnection'] == 'reset') exit;
 
 		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
+
 		$this->mail_bo->reopen('INBOX');
 /*
 		unset($imapServer->_connectionErrorObject);
@@ -687,11 +688,6 @@ class mail_ui
 		if ($eO && $eO->message)
 		{
 			_debug_array($eO->message);
-			$lE = true;
-		}
-		$isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
-		if ($isError[$icServerID]) {
-			_debug_array($isError[$icServerID]);
 			$lE = true;
 		}
 		_debug_array(($lE?'':lang('Successfully connected')));

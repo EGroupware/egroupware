@@ -239,7 +239,7 @@ class mail_compose
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
 		//lang('compose'),lang('from') // needed to be found by translationtools
-		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
+		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 		$_contentHasSigID = array_key_exists('signatureid',(array)$_content);
 		$_contentHasMimeType = array_key_exists('mimeType',(array)$_content);
@@ -893,7 +893,7 @@ class mail_compose
 				{
 					foreach(array_keys($content) as $k)
 					{
-						if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))) $remember[$k] = $sessionData[$k];
+						if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))&&isset($this->sessionData[$k])) $remember[$k] = $this->sessionData[$k];
 					}
 				}
 				if(!empty($remember)) $content = array_merge($content,$remember);
@@ -1759,6 +1759,8 @@ class mail_compose
 	 */
 	function addAttachment($_formData,&$_content,$eliminateDoubleAttachments=false)
 	{
+		//error_log(__METHOD__.__LINE__.' Formdata:'.array2string($_formData).' Content:'.array2string($_content));
+
 		$attachfailed = false;
 		// to guard against exploits the file must be either uploaded or be in the temp_dir
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
@@ -1771,6 +1773,7 @@ class mail_compose
 			$attachfailed = true;
 			$alert_msg = $e->getMessage();
 		}
+		//error_log(__METHOD__.__LINE__.array2string($tmpFileName));
 
 		if ($eliminateDoubleAttachments == true)
 			foreach ((array)$_content['attachments'] as $k =>$attach)
@@ -1787,10 +1790,10 @@ class mail_compose
 				'size'	=> $_formData['size']
 			);
 			// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
-			$attachmentID = md5(time().serialize($buffer));
+			//$attachmentID = md5(time().serialize($buffer));
 			//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
 			if (!is_array($_content['attachments'])) $_content['attachments']=array();
-			$_content['attachments'][$attachmentID] = $buffer;
+			$_content['attachments'][] = $buffer;
 			unset($buffer);
 		}
 		else
