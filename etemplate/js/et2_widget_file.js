@@ -72,6 +72,12 @@ var et2_file = et2_inputWidget.extend(
 			"type": "string",
 			"default": et2_no_init,
 			"description": "The ID of an additional drop target for HTML5 drag-n-drop file uploads"
+		},
+		label: {
+			"name": "Label of file upload",
+			"type": "string",
+			"default": "Choose file...",
+			"description": "String caption to be displayed on file upload span"
 		}
 	},
 
@@ -88,6 +94,7 @@ var et2_file = et2_inputWidget.extend(
 		this.node = null;
 		this.input = null;
 		this.progress = null;
+		this.span = null;
 
 		if(!this.options.id) {
 			console.warn("File widget needs an ID.  Used 'file_widget'.");
@@ -150,14 +157,32 @@ var et2_file = et2_inputWidget.extend(
 		this.set_drop_target(null);
 		this.node = null;
 		this.input = null;
+		this.span = null;
 		this.progress = null;
 	},
 	
 	createInputWidget: function() {
 		this.node = $j(document.createElement("div")).addClass("et2_file");
+		this.span = $j(document.createElement("span"))
+			.addClass('et2_file_span et2_button et2_button_text')
+			.appendTo (this.node);
+		var span = this.span;
 		this.input = $j(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)
-			.appendTo(this.node);
+			.addClass ("et2_file_upload")
+			.appendTo(this.node)
+			.hover(function(e){
+				$j(span)
+					.toggleClass('et2_file_spanHover');
+			})	
+			.on({
+				mousedown:function (e){
+					$j(span).addClass('et2_file_spanActive');
+				},
+				mouseup:function (e){
+					$j(span).removeClass('et2_file_spanActive');
+				}
+			});
 
 		// Check for File interface, should fall back to normal form submit if missing
 		if(typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined")
@@ -301,6 +326,20 @@ var et2_file = et2_inputWidget.extend(
 		if(typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name)
 		{
 			this.input[0].files = value;
+		}
+	},
+	
+	/**
+	 * Set the value for label
+	 * The label is used as caption for span tag which customize the HTML file upload styling
+	 *  
+	 * @param {string} value text value of label
+	 */
+	set_label: function (value)
+	{
+		if (this.span != null && value != null)
+		{
+			this.span.text(value);
 		}
 	},
 

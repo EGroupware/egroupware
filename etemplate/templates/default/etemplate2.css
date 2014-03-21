@@ -182,6 +182,7 @@ input[type=button] {
   padding: 0px;
 }
 button.et2_button_text:hover,
+.et2_file_spanHover,
 input[type=button]:hover {
   color: #050505;
   border: 1px solid gray;
@@ -193,6 +194,7 @@ input[type=button]:active {
   background-color: #D0D0E0;
 }
 button.et2_button_text:focus,
+.et2_file_spanActive,
 input[type=button]:focus {
   border: 1px solid #2c3d6f;
   color: #202d52;
@@ -436,6 +438,10 @@ action buttons, left aligned for "extra" controls
  */
 div.et2_file {
 	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	overflow: hidden;
+	width: 150px;
 }
 .et2_file .progress {
   width: 300px;
@@ -472,6 +478,27 @@ div.et2_file {
 /* Hide progress bar when completed */
 .et2_file .progress li.success > span.progressBar {
   display: none;
+}
+/* Customize file upload styling */
+span.et2_file_span{
+	display: block;
+	background-position: left;
+	background-image: url(images/upload.png);
+	background-repeat: no-repeat;
+	background-size: 16px;
+	cursor: pointer;
+	
+	height: 15px;
+	text-align: left;
+	text-indent: 20px;
+}
+div.et2_file input.et2_file_upload{
+	position: absolute;
+	top: 4px;
+	padding-right: 100%;
+	cursor: pointer;
+	margin-left: -84px;
+	opacity: 0;
 }
 /**
  * Autocomplete - used in link widget
@@ -1352,7 +1379,7 @@ ul.et2_nowrap, div.et2_nowrap{
 /**
  * Some general styles usable for all apps (and widgets)
  */
-.et2_fullWidth, .et2_fullWidth input, .et2_fullWidth select,
+.et2_fullWidth, .et2_fullWidth input, .et2_fullWidth select,et2_fullWidth.et2_file
 .et2_fullWidth textarea , .et2_fullWidth input.et2_link_entry {
 	width: 99%;
 }
