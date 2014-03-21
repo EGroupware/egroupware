@@ -330,7 +330,7 @@ div#mail-index{
     // ##################################
     //	Toolbar
 
-    .mail-compose_toolbar{
+	.mail-compose_toolbar{
 
         float: left;
         width: 100%;
@@ -365,6 +365,7 @@ div#mail-index{
                         padding: 1px;
                         margin: 3px;
                         vertical-align: middle;
+						width :auto;
                   }
         }
         span.notification {float: left;
@@ -442,6 +443,7 @@ div#mail-index{
             margin: 3px;
             vertical-align: middle;
             float: left;
+			width: auto;
             .Complete_Button_Icon_normal;
             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
@@ -453,16 +455,15 @@ div#mail-index{
 
             float: left;
             vertical-align: middle;
+			margin:-3px;
+            span.et2_file_span{
 
-            input#mail-compose_uploadForCompose{
-
-                        /*font-size: 0.7em;*/
+                        font-size: 1.1em;
+						font-weight: normal;
                         .Complete_Button_text_icon_before;
                         background-image: url(images/attach.png) !important;
                         .background_color_5_gray;
                         height: 16px;
-                        margin-left: 2px;
-                        margin-top: 2px;
                         &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
 
                         &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}

@@ -345,6 +345,9 @@ input[type=button] {
   height: 100%;
   border: 0;
 }
+/*********************************
+ ************  mailCompose  ******
+ *********************************/
 #mail-index_button\[mailcreate\] {
   width: 99%;
   text-align: left;
@@ -354,12 +357,42 @@ input[type=button] {
   background-position: left;
   background-repeat: no-repeat;
 }
+.mail-compose_toolbar {
+  border-left: 1px solid silver;
+  border-top: 1px solid silver;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: #c0d2ec;
+  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+  background-position: center;
+  background-repeat: repeat-x;
+}
+.mail-compose_toolbar > span {
+  padding: 10px;
+  white-space: nowrap;
+}
+.mail-compose_toolbar > span.priority {
+  border-right: none;
+}
+.compose_egw_icons {
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+}
+.mail-compose_fileselector span.et2_file_span {
+  background-repeat: no-repeat;
+  background-image: url(images/attach.png);
+  background-size: inherit;
+  background-position: left;
+}
+.mail-compose_fileselector div.progress {
+  display: none;
+}
 #mail-compose_button\[send\] {
   text-align: left;
   font-weight: bold;
   padding-left: 30px;
   width: 80px;
-  margin: 0px !important;
   background-image: url(images/mail_send.png) !important;
   background-position: left;
   background-repeat: no-repeat;
@@ -378,9 +411,6 @@ input[type=button] {
   max-height: 245px !important;
   overflow: scroll;
   overflow-x: hidden;
-}
-#mail-compose_fileselector {
-  width: 245px !important;
 }
 #mail-compose_toolbar {
   padding: 0px !important;
@@ -494,6 +524,9 @@ input[type=button] {
   opacity: 1;
   -moz-opacity: 1;
   filter: alpha(opacity=100);
+}
+#divGenTime_mail {
+  display: none;
 }
 div.mail-display > div:first-parent > div.first-parent {
   height: 99%;
@@ -900,6 +933,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   padding: 1px;
   margin: 3px;
   vertical-align: middle;
+  width: auto;
 }
 #mail-compose .mail-compose_toolbar span.notification {
   float: left;
@@ -1003,6 +1037,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin: 3px;
   vertical-align: middle;
   float: left;
+  width: auto;
   /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -1028,10 +1063,12 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector {
   float: left;
   vertical-align: middle;
+  margin: -3px;
 }
-#mail-compose .mail-compose_toolbar .et2_file input#mail-compose_uploadForCompose,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector input#mail-compose_uploadForCompose {
-  /*font-size: 0.7em;*/
+#mail-compose .mail-compose_toolbar .et2_file span.et2_file_span,
+#mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span {
+  font-size: 1.1em;
+  font-weight: normal;
   border: 1px solid rgba(0, 0, 0, 0.15);
   /*.box_shadow_standard_light;*/
   -webkit-border-radius: 3px;
@@ -1061,18 +1098,16 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-image: url(images/attach.png) !important;
   background-color: #fafafa;
   height: 16px;
-  margin-left: 2px;
-  margin-top: 2px;
 }
-#mail-compose .mail-compose_toolbar .et2_file input#mail-compose_uploadForCompose:hover,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector input#mail-compose_uploadForCompose:hover {
+#mail-compose .mail-compose_toolbar .et2_file span.et2_file_span:hover,
+#mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
 }
-#mail-compose .mail-compose_toolbar .et2_file input#mail-compose_uploadForCompose:focus,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector input#mail-compose_uploadForCompose:focus {
+#mail-compose .mail-compose_toolbar .et2_file span.et2_file_span:focus,
+#mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -1086,31 +1121,31 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin-right: 5px !important;
 }
 #mail-compose .mail-compose_toolbar #mail-compose_to_infolog:hover {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  transform: scale(1.5);
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
 }
 #mail-compose .mail-compose_toolbar input[id="mail-compose_to_tracker"] {
   margin-right: 5px !important;
 }
 #mail-compose .mail-compose_toolbar input[id="mail-compose_to_tracker"]:hover {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  transform: scale(1.5);
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
 }
 #mail-compose .mail-compose_toolbar #mail-compose_disposition {
   margin-right: 0px !important;
 }
 #mail-compose .mail-compose_toolbar #mail-compose_disposition:hover {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  transform: scale(1.5);
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
 }
 #mail-compose .mail-compose_toolbar #mail-compose_priority {
   margin-right: 0px;
@@ -1259,6 +1294,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   border: none;
   margin: 8px 0;
   background-color: #d9d9d9;
+}
+#divGenTime_mail {
+  display: none;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Ansehen"
@@ -1567,9 +1605,6 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   width: 16px;
 }
 #mail-display .mail_DisplayNone {
-  display: none;
-}
-#divGenTime_mail {
   display: none;
 }
 /**
