@@ -503,7 +503,10 @@ app.classes.addressbook = AppJS.extend(
 		var link = egw().link("/index.php","menuaction="+app_registry['add']['menuaction']);
 		for (var i = 0; i < _elems.length; i++)
 		{
-			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+_elems[i].id+"/.entry");
+			var idToUse = _elems[i].id;
+			var idToUseArray = idToUse.split('::');
+			idToUse = idToUseArray[1];
+			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 		}
 		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 		{
