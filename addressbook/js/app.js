@@ -498,8 +498,9 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	adb_mail_vcard: function(_action, _elems)
 	{
-		var app_registry = egw.link_get_registry('felamimail');
-		var link = egw().link("/index.php","menuaction=felamimail.uicompose.compose");
+		var app_registry = egw.link_get_registry('mail');
+		if (typeof app_registry['view'] == 'undefined') app_registry = egw.link_get_registry('felamimail');
+		var link = egw().link("/index.php","menuaction="+app_registry['add']['menuaction']);
 		for (var i = 0; i < _elems.length; i++)
 		{
 			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+_elems[i].id+"/.entry");

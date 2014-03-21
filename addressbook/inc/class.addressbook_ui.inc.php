@@ -640,7 +640,7 @@ class addressbook_ui extends addressbook_bo
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
 			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
-		if (isset($GLOBALS['egw_info']['apps']['stylite']) && $GLOBALS['egw_info']['user']['apps']['felamimail'])
+		if (isset($GLOBALS['egw_info']['apps']['stylite']) && ($GLOBALS['egw_info']['user']['apps']['felamimail']||$GLOBALS['egw_info']['user']['apps']['mail']))
 		{
 			$actions['mail'] = array(
 				'caption' => lang('Mail VCard'),
@@ -2503,6 +2503,13 @@ window.egw_LAB.wait(function() {
 	{
 		if (strpos($email,'@') == false) return '';
 
+		if($GLOBALS['egw_info']['user']['apps']['mail'])
+		{
+			return array(
+				'menuaction' => 'mail.mail_compose.compose',
+				'send_to'    => base64_encode($email)
+			);
+		}
 		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{
 			return array(
