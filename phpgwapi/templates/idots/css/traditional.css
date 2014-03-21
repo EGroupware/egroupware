@@ -978,7 +978,7 @@ div.client_error_log tr td.stack > div {
 	white-space: pre;
 }
 
-.dialog-footer-toolbar {
+.dialogFooterToolbar {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-color:#006699;
