@@ -852,6 +852,7 @@ class mail_compose
 					//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
 					if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 					{
+						//egw_vfs::load_wrapper('vfs');
 						$type = egw_vfs::mime_content_type($path);
 						// special handling for attaching vCard of iCal --> use their link-title as name
 						if (substr($path,-7) != '/.entry' ||
@@ -1787,6 +1788,7 @@ class mail_compose
 				'name'	=> $_formData['name'],
 				'type'	=> $_formData['type'],
 				'file'	=> $tmpFileName,
+				'tmp_name'	=> $tmpFileName,
 				'size'	=> $_formData['size']
 			);
 			// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
