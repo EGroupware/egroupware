@@ -1,3 +1,10 @@
+/**
+ * jquery-html5-upload
+ *
+ * @author Mikhail Dektyarev <mihail.dektyarow@gmail.com>
+ * @link https://github.com/mihaild/jquery-html5-upload
+ */
+
 (function($) {
         jQuery.fn.html5_upload = function(options) {
 
@@ -36,8 +43,8 @@
                         headers: {
                                 "Cache-Control":"no-cache",
                                 "X-Requested-With":"XMLHttpRequest",
-                                "X-File-Name": function(file){return file.fileName ? file.fileName : file.name},
-                                "X-File-Size": function(file){return file.fileSize ? file.fileSize : file.size},
+                                "X-File-Name": function(file){return encodeURIComponent(file.fileName ? file.fileName : file.name);},
+                                "X-File-Size": function(file){return file.fileSize ? file.fileSize : file.size;},
                                 "Content-Type": function(file){
                                         if (!options.sendBoundary) return 'multipart/form-data';
                                         return false;
@@ -175,7 +182,7 @@
                                                 builder += crlf;
 
 						// Give eGW a chance to interfere
-						if(typeof(options.beforeSend) == "function") { 
+						if(typeof(options.beforeSend) == "function") {
 							builder += dashdash;
 							builder += boundary;
 							builder += crlf;
