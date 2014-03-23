@@ -284,7 +284,7 @@ class db_tools
 		{
 			echo 'editor.edit: content ='; _debug_array($content);
 		}
-		$tpl = new etemplate_old('etemplate.db-tools.edit');
+		$tpl = new etemplate('etemplate.db-tools.edit');
 		$tpl->exec('etemplate.db_tools.edit',$content,$sel_options,$no_button,
 			array('posted_table' => $this->table,'posted_app' => $this->app,'changes' => $this->changes));
 	}
@@ -376,7 +376,7 @@ class db_tools
 		$new_version[$minor] = sprintf('%03d',1+$new_version[$minor]);
 		$content['new_version'] = implode('.',$new_version);
 
-		$tmpl = new etemplate_old('etemplate.db-tools.ask_save');
+		$tmpl = new etemplate('etemplate.db-tools.ask_save');
 
 		if (!file_exists(EGW_SERVER_ROOT."/$posted_app/setup/tables_current.inc.php"))
 		{

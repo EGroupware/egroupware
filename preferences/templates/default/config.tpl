@@ -2,7 +2,7 @@
 <!-- BEGIN header -->
 <p style="text-align: center; color: red; font-weight: bold;">{error}</p>
 <form method="POST" action="{action_url}">
-<table align="center" width="85%" callspacing="0" style="{ border: 1px solid #000000; }">
+<table align="center" width="85%">
    <tr class="th">
     <td colspan="2">&nbsp;<b>{title}</b></td>
    </tr>

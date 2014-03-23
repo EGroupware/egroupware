@@ -106,7 +106,7 @@ class editor
 
 	function __construct()
 	{
-		$this->etemplate = new etemplate_old();
+		$this->etemplate = new etemplate();
 
 		$this->extensions = $GLOBALS['egw']->session->appsession('extensions','etemplate');
 	}
@@ -280,7 +280,7 @@ class editor
 		{
 			$content[$row] = $param;
 		}
-		$list_result = new etemplate_old('etemplate.editor.list_result');
+		$list_result = new etemplate('etemplate.editor.list_result');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 		$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 			'result' => $result,
@@ -484,7 +484,7 @@ class editor
 			'xml' => $xml ? '<pre>'.html::htmlspecialchars($xml)."</pre>\n" : '',
 		);
 
-		$editor = new etemplate_old('etemplate.editor.new');
+		$editor = new etemplate('etemplate.editor.new');
 		if (isset($content['values']) && !isset($content['vals']))
 		{
 			$r = 1;
@@ -1154,7 +1154,7 @@ class editor
 	/**
 	 * edit dialog for a widget
 	 *
-	 * @param array $content the submitted content of the etemplate_old::exec function, default null
+	 * @param array $content the submitted content of the etemplate::exec function, default null
 	 * @param string $msg msg to display, default ''
 	 */
 	function widget($content=null,$msg='')
@@ -1360,8 +1360,8 @@ class editor
 
 		$content['cell']['options'] = explode(',',$content['cell']['size']);
 
-		$editor = new etemplate_old('etemplate.editor.widget');
-		$type_tmpl = new etemplate_old;
+		$editor = new etemplate('etemplate.editor.widget');
+		$type_tmpl = new etemplate;
 
 		list($ext_type) = explode('-',$widget['type']);
 		// allow to read template of app-specific widgets from their app: eg. "infolog-value" --> "infolog.widget.infolog-value"
@@ -1475,7 +1475,7 @@ class editor
 	/**
 	 * edit dialog for the styles of a templat or app
 	 *
-	 * @param array $content the submitted content of the etemplate_old::exec function, default null
+	 * @param array $content the submitted content of the etemplate::exec function, default null
 	 * @param string $msg msg to display, default ''
 	 */
 	function styles($content=null,$msg='')
@@ -1545,7 +1545,7 @@ class editor
 			'java_script' => $js ? '<script>'.$js.'</script>' : '',
 			'msg' => $msg
 		);
-		$tmpl = new etemplate_old('etemplate.editor.styles');
+		$tmpl = new etemplate('etemplate.editor.styles');
 
 		if ($content['from'])
 		{

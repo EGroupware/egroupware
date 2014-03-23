@@ -341,7 +341,7 @@ class etemplate extends boetemplate
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
-						$manual = new etemplate_old('etemplate.popup.manual');
+						$manual = new etemplate('etemplate.popup.manual');
 						echo $manual->show(array());
 						unset($manual);
 						echo '<style type="text/css">.ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
@@ -488,7 +488,7 @@ class etemplate extends boetemplate
 					foreach(explode('|',$tabs) as $tab)
 					{
 						if (strpos('.',$tab) === false) $tab = $this->name.'.'.$tab;
-						$tab_tpl = new etemplate_old($tab);
+						$tab_tpl = new etemplate($tab);
 						if ($tab_tpl->get_widget_by_name($name))
 						{
 							$content[$tab_name] = $tab;
@@ -1546,7 +1546,7 @@ class etemplate extends boetemplate
 				$obj_read = 'already loaded';
 				if (is_array($cell['obj']))
 				{
-					$obj = new etemplate_old();
+					$obj = new etemplate();
 					$obj->init($cell['obj']);
 					$cell['obj'] =& $obj;
 					unset($obj);
@@ -1559,12 +1559,12 @@ class etemplate extends boetemplate
 						$obj_read = is_object($cell['obj']) ? 'obj from content' : 'obj read, obj-name from content';
 						if (!is_object($cell['obj']))
 						{
-							$cell['obj'] = new etemplate_old($cell['obj'],$this->as_array());
+							$cell['obj'] = new etemplate($cell['obj'],$this->as_array());
 						}
 					}
 					else
 					{  $obj_read = 'obj read';
-						$cell['obj'] = new etemplate_old($name,$this->as_array());
+						$cell['obj'] = new etemplate($name,$this->as_array());
 					}
 				}
 				if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
@@ -2187,7 +2187,7 @@ class etemplate extends boetemplate
 			// inserts the styles of a named template
 			if (preg_match('/template::styles\(["\']{1}(.*)["\']{1}\)/U',$on,$matches))
 			{
-				$tpl = $matches[1] == $this->name ? $this : new etemplate_old($matches[1]);
+				$tpl = $matches[1] == $this->name ? $this : new etemplate($matches[1]);
 				$on = str_replace($matches[0],"'<style>".str_replace(array("\n","\r"),'',$tpl->style)."</style>'",$on);
 			}
 		}
@@ -2514,5 +2514,3 @@ class etemplate extends boetemplate
 		}
 	}
 }
-
-class etemplate_old extends etemplate {}

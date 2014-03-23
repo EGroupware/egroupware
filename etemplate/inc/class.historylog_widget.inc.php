@@ -170,7 +170,7 @@ class historylog_widget
 		}
 		unset($historylog);
 
-		$tpl = new etemplate_old;
+		$tpl = new etemplate;
 		$tpl->init('*** generated fields for historylog','','',0,'',0,0);	// make an empty template
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;

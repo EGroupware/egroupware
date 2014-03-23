@@ -320,7 +320,7 @@ class etemplate_new extends etemplate_widget_template
 		{
 			// Old etemplate submit
 			error_log("Old etemplate submitted");
-			return ExecMethod('etemplate.etemplate_old.process_exec');
+			return ExecMethod('etemplate.etemplate.process_exec');
 		}
 		error_log(__METHOD__."(".array2string($content).")");
 

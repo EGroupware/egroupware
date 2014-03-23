@@ -480,7 +480,7 @@ class vfs_widget
 					{
 						if (!egw_vfs::unlink($extension_data['path'].$file))
 						{
-							etemplate_old::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'].$file)));
+							etemplate::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'].$file)));
 						}
 						break;
 					}
@@ -488,7 +488,7 @@ class vfs_widget
 			}
 			elseif (!egw_vfs::unlink($extension_data['path']))
 			{
-				etemplate_old::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'])));
+				etemplate::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'])));
 			}
 			$loop = true;
 			return false;
@@ -505,8 +505,8 @@ class vfs_widget
 		$error = boetemplate::get_array($_FILES['exec']['error'],$name);
 		if ($error)
 		{
-			etemplate_old::set_validation_error($name,lang('Error uploading file!')."\n".
-				etemplate_old::max_upload_size_message());
+			etemplate::set_validation_error($name,lang('Error uploading file!')."\n".
+				etemplate::max_upload_size_message());
 			$loop = true;
 			return false;
 		}
@@ -521,7 +521,7 @@ class vfs_widget
 			$is_preg = $extension_data['mimetype'][0] == '/';
 			if (!$is_preg && strcasecmp($extension_data['mimetype'],$type) || $is_preg && !preg_match($extension_data['mimetype'],$type))
 			{
-				etemplate_old::set_validation_error($name,lang('File is of wrong type (%1 != %2)!',$type,$extension_data['mimetype']));
+				etemplate::set_validation_error($name,lang('File is of wrong type (%1 != %2)!',$type,$extension_data['mimetype']));
 				return false;
 			}
 		}
@@ -541,12 +541,12 @@ class vfs_widget
 		}
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
-			etemplate_old::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
+			etemplate::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
 			return false;
 		}
 		if (!copy($tmp_name,egw_vfs::PREFIX.$path))
 		{
-			etemplate_old::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
+			etemplate::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
 			return false;
 		}
 		$value = $path;	// return path of file, important if only a temporary location is used

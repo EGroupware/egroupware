@@ -1232,7 +1232,7 @@ class soetemplate
 			case 'template':
 				if (!isset($widget['obj']) && $widget['name'][0] != '@')
 				{
-					$widget['obj'] = new etemplate_old;
+					$widget['obj'] = new etemplate;
 					if (!$widget['obj']->read($widget['name'])) $widget['obj'] = false;
 				}
 				if (!is_object($widget['obj'])) break;	// cant descent into template

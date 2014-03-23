@@ -183,7 +183,7 @@ class ajax_select_widget
 		$cell['size'] = $cell['name'];
 		$value = array('value' => $current_value, 'search' => $title);
 
-		$widget = new etemplate_old('etemplate.ajax_select_widget');
+		$widget = new etemplate('etemplate.ajax_select_widget');
 		$widget->no_onclick = True;
 
 		// Link if readonly & link is set
@@ -278,7 +278,7 @@ class ajax_select_widget
 						$value = $results[0][$extension_data['options']['id_field']];
 						return true;
 					} elseif ($count > 1) {
-						etemplate_old::set_validation_error($name,lang("More than 1 match for '%1'",$value_in['search']));
+						etemplate::set_validation_error($name,lang("More than 1 match for '%1'",$value_in['search']));
 						$loop = true;
 						return false;
 					} else {
@@ -299,7 +299,7 @@ class ajax_select_widget
 
 			if(!$return) {
 				$value = $extension_data['old_value'];
-				etemplate_old::set_validation_error($name,lang('Required'));
+				etemplate::set_validation_error($name,lang('Required'));
 				$loop = true;
 			}
 

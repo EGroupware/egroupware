@@ -828,7 +828,7 @@ class mail_hooks
 			}
 
 			// create etemplate
-			$tpl = new etemplate_old('mail.checkmailbox');
+			$tpl = new etemplate('mail.checkmailbox');
 			$notification_message = $tpl->exec(false, $values, array(), array(), array(), 1);
 			//error_log(__METHOD__.__LINE__.array2string($notification_message));
 			// send notification

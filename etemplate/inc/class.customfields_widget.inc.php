@@ -463,7 +463,7 @@ class customfields_widget
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
 						// register post-processing of link widget to get eg. needed/required validation
-						etemplate_old::$request->set_to_process(etemplate_old::form_name($form_name,$this->prefix.$lname), 'ext-link');
+						etemplate::$request->set_to_process(etemplate::form_name($form_name,$this->prefix.$lname), 'ext-link');
 				}
 				$cell['data'][0]['c'.$n++] = $row_class.',top';
 

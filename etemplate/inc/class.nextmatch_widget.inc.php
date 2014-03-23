@@ -324,8 +324,8 @@ class nextmatch_widget
 		if (!is_array($readonlys)) $readonlys = array();
 		if (($total = $extension_data['total'] = $value['total'] = self::call_get_rows($value,$rows,$readonlys['rows'])) === false)
 		{
-			//error_log(__METHOD__."() etemplate_old::set_validation_error('$name') '$value[get_rows]' is no valid method!!!");
-			etemplate_old::set_validation_error($name,__METHOD__."($cell[name]): '$value[get_rows]' is no valid method !!!");
+			//error_log(__METHOD__."() etemplate::set_validation_error('$name') '$value[get_rows]' is no valid method!!!");
+			etemplate::set_validation_error($name,__METHOD__."($cell[name]): '$value[get_rows]' is no valid method !!!");
 		}
 		// allow the get_rows function to override / set sel_options
 		if (isset($rows['sel_options']) && is_array($rows['sel_options']))
@@ -347,7 +347,7 @@ class nextmatch_widget
 		}
 		if (!is_object($value['template']))
 		{
-			$value['template'] = new etemplate_old($value['template'],$tmpl->as_array());
+			$value['template'] = new etemplate($value['template'],$tmpl->as_array());
 		}
 		if (is_array($value['rows'][0]))	// pad 0 based arrays with rows-1 false values
 		{
@@ -370,7 +370,7 @@ class nextmatch_widget
 		{											// disable whole nextmatch line if no scrolling necessary
 			if ($value['header_left'] || $value['header_right'])
 			{
-				$nextmatch = new etemplate_old('etemplate.nextmatch_widget.header_only');
+				$nextmatch = new etemplate('etemplate.nextmatch_widget.header_only');
 				$cell['size'] = $cell['name'];
 				$cell['obj'] = &$nextmatch;
 				$cell['name'] = $nextmatch->name;
@@ -385,7 +385,7 @@ class nextmatch_widget
 		}
 		else
 		{
-			$nextmatch = new etemplate_old('etemplate.nextmatch_widget');
+			$nextmatch = new etemplate('etemplate.nextmatch_widget');
 			// keep the editor away from the generated tmpls
 			$nextmatch->no_onclick = true;
 
@@ -405,7 +405,7 @@ class nextmatch_widget
 				{
 					// make each letter internally behave like a button
 					$form_name = $name.'[searchletter]['.($key === 'all' ? $key : $letter).']';
-					etemplate_old::$request->set_to_process($form_name,'button');
+					etemplate::$request->set_to_process($form_name,'button');
 
 					if (!$key) $letterbox =& $lettersearch[1];	// to re-use the first child
 					$letterbox = boetemplate::empty_cell('label',$letter,array(
@@ -414,13 +414,13 @@ class nextmatch_widget
 							$key === 'all' && !$value['searchletter'] ? '_active' : ''),
 						'no_lang' => 2,
 						'align'   => $key == 'all' ? 'right' : '',
-						'onclick' => 'return submitit('.etemplate_old::$name_form.",'$form_name');",
+						'onclick' => 'return submitit('.etemplate::$name_form.",'$form_name');",
 					));
 					// if not the first (re-used) child, add it to the parent
 					if ($key) boetemplate::add_child($lettersearch,$letterbox);
 					unset($letterbox);
 				}
-				//_debug_array(etemplate_old::$request->to_process);
+				//_debug_array(etemplate::$request->to_process);
 			}
 			if(isset($value['no_search'])) $value['no_start_search'] = $value['no_search'];
 			foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2', 'no_search' => 'search', 'no_start_search' => 'start_search' ) as $val_name => $cell_name)
@@ -536,7 +536,7 @@ class nextmatch_widget
 		}
 		$value['bottom'] = $value;	// copy the values for the bottom-bar
 
-		// pass actions and row_id to etemplate_old::show_grid()
+		// pass actions and row_id to etemplate::show_grid()
 		$value['rows']['_actions'] =& $value['actions'];
 		$value['rows']['_action_links'] =& $value['action_links'];
 		$value['rows']['_row_id']  =& $value['row_id'];
@@ -873,7 +873,7 @@ class nextmatch_widget
 	/**
 	 * Return HTML to initialise actions, if called without arguments only CSS and JS get loaded
 	 *
-	 * Gets called from etemplate_old::show_grid() and addressbook_ui::view (without arguments).
+	 * Gets called from etemplate::show_grid() and addressbook_ui::view (without arguments).
 	 *
 	 * @param array $actions=null
 	 * @param array $action_links=null
@@ -917,8 +917,8 @@ class nextmatch_widget
 
 		actionCntr.updateActions('.json_encode($enc_actions).');
 		actionCntr.setDefaultExecute("javaScript:nm_action");
-		actionCntr.etemplate_var_prefix="'.etemplate_old::$name_vars.'";
-		actionCntr.etemplate_form=document.forms.'.etemplate_old::$name_form.';
+		actionCntr.etemplate_var_prefix="'.etemplate::$name_vars.'";
+		actionCntr.etemplate_form=document.forms.'.etemplate::$name_form.';
 
 		var actionLinks = ["'.implode('","', $action_links).'"];
 
@@ -1159,7 +1159,7 @@ class nextmatch_widget
 	}
 
 	/**
-	 * Extract the column names and labels from the template (callback for etemplate_old::widget_tree_walk())
+	 * Extract the column names and labels from the template (callback for etemplate::widget_tree_walk())
 	 *
 	 * @param array &$widget
 	 * @param array &$cols here we add the column-name/-label
@@ -1491,7 +1491,7 @@ class nextmatch_widget
 			}
 			if (!$exportLimitExempted && (!bo_merge::hasExportLimit($export_limit,'ISALLOWED') || (bo_merge::hasExportLimit($export_limit) && (int)$export_limit < $total)))
 			{
-				etemplate_old::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',(int)$export_limit));
+				etemplate::set_validation_error($name,lang('You are not allowed to export more than %1 entries!',(int)$export_limit));
 				return false;
 			}
 			if (!isset($value['no_csv_support'])) $value['no_csv_support'] = !is_array($value['csv_fields']);
@@ -1579,7 +1579,7 @@ class nextmatch_widget
 	 */
 	private static function csv_encode($data,$fields,$use_type=true,$extra_sel_options=null,$charset_out=null,$charset=null,$separator=';')
 	{
-		$sel_options =& etemplate_old::$request->sel_options;
+		$sel_options =& etemplate::$request->sel_options;
 
 		$out = array();
 		foreach($fields as $field => $label)
