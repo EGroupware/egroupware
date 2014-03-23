@@ -5,7 +5,7 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Ralf Becker <RalfBecker@outdoor-training.de>
-* @copyright 2002-13 by RalfBecker@outdoor-training.de
+* @copyright 2002-14 by RalfBecker@outdoor-training.de
 * @package etemplate
 * @subpackage api
 * @version $Id$
@@ -333,6 +333,7 @@ class etemplate_old extends boetemplate
 					// jdots needs sidebox/navbar data in header call, therefore enable navbar BEFORE calling header
 					$GLOBALS['egw_info']['flags']['nonavbar'] = false;
 					echo $GLOBALS['egw']->framework->header();
+					echo $GLOBALS['egw']->framework->navbar();
 				}
 				else
 				{
