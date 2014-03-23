@@ -2514,3 +2514,5 @@ class etemplate extends boetemplate
 		}
 	}
 }
+
+class etemplate_old extends etemplate {}
