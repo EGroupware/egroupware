@@ -250,8 +250,6 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 			}
 			else
 			{
-				$prefs = array();
-
 				if (isset($GLOBALS['egw_info']['user']['preferences'][$GLOBALS['egw_info']['flags']['currentapp']]['idotssideboxwidth']))
 				{
 					$sideboxwidth = $GLOBALS['egw_info']['user']['preferences'][$GLOBALS['egw_info']['flags']['currentapp']]['idotssideboxwidth'];
@@ -288,7 +286,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 		// ToDo: check if it can be removed
 		if(!@$GLOBALS['egw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
 		{
-			list($app,$class,$method) = explode('.',$_GET['menuaction']);
+			list(, $class) = explode('.',$_GET['menuaction']);
 			if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
 			{
 				ob_start();
@@ -377,6 +375,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 		$this->tpl->set_var('tdwidth',round($tdwidth));
 
 		// not shown in the navbar
+		$i = 0;
 		foreach($apps as $app => $app_data)
 		{
 			if ($app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual' &&
@@ -464,6 +463,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	*/
 	function _add_topmenu_info_item($content, $id=null)
 	{
+		unset($id);	// unused, but required in function signature
 		$this->tplsav2->menuinfoitems[] = $content;
 	}
 
@@ -519,7 +519,7 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	*/
 	function footer()
 	{
-		static $footer_done;
+		static $footer_done=0;
 		if ($footer_done++) return;	// prevent multiple footers, not sure we still need this (RalfBecker)
 
 		if (!isset($GLOBALS['egw_info']['flags']['nofooter']) || !$GLOBALS['egw_info']['flags']['nofooter'])
