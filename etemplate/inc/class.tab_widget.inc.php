@@ -122,7 +122,7 @@
 					}
 				}
 			}
-			$tab_widget = new etemplate_old('etemplate.tab_widget');
+			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 
 			if ($value && strpos($value,'.') === false)
@@ -188,7 +188,7 @@
 				foreach($names as $n => $name)
 				{
 					$bcell = boetemplate::empty_cell('template',$name);
-					$bcell['obj'] = new etemplate_old(empty($templates[$n]) ? $name : $templates[$n],$tmpl->as_array());
+					$bcell['obj'] = new etemplate(empty($templates[$n]) ? $name : $templates[$n],$tmpl->as_array());
 					// hack to set id / content attribute on first grid, as it's not supported on template itself
 					if (!empty($ids[$n]) && $bcell['obj']->children[0]['type'] == 'grid')
 					{
@@ -203,7 +203,7 @@
 			}
 			else
 			{
-				$stab = new etemplate_old($selected_tab,$tmpl->as_array());
+				$stab = new etemplate($selected_tab,$tmpl->as_array());
 				$tab_widget->set_cell_attribute('body','type','template');
 				$tab_widget->set_cell_attribute('body','size','');	// the deck has a '1' there
 				$tab_widget->set_cell_attribute('body','obj',$stab);
