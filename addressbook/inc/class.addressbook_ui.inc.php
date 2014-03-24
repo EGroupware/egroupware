@@ -1912,7 +1912,7 @@ window.egw_LAB.wait(function() {
 					$content['owner'] = $state['filter'];
 				}
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
-				if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
+				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
 				{
 					$content['owner'] = $this->default_addressbook;
 					$content['private'] = (int)$this->default_private;
