@@ -55,71 +55,6 @@
   top: 16px;
   z-index: 1;
 }
-table.TabHeader {
-  background-color: #d9d9d9;
-}
-.etemplate_tab {
-  white-space: nowrap;
-  width: auto;
-  display: inline-block;
-  margin: 1em 5px 1em 0;
-  padding: 5px;
-  cursor: pointer;
-  background-color: #f0f0f0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-.etemplate_tab:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: inherit !important;
-}
-.etemplate_tab:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-}
-.etemplate_tab_active {
-  white-space: nowrap;
-  width: auto;
-  display: inline-block;
-  margin: 1em 5px 1em 0;
-  padding: 5px;
-  cursor: pointer;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  background-color: #808080;
-  border-width: 0 0 3px 0;
-  border-style: solid;
-  border-spacing: 0px;
-  border-color: #408dd2;
-  color: #f2f2f2;
-}
-.etemplate_tab_active .th {
-  background-color: #808080;
-  border-width: 0 0 3px 0;
-  border-style: solid;
-  border-spacing: 0px;
-  border-color: #408dd2;
-  color: #f2f2f2;
-}
 .etemplate_tab row_on,
 td.etemplate_tab_active:focus {
   background-color: #808080;
@@ -128,10 +63,6 @@ td.etemplate_tab_active:focus {
   border-spacing: 0px;
   border-color: #408dd2;
   color: #f2f2f2;
-}
-.tab_body {
-  border: 2px solid none;
-  border-color: #f0f0f0;
 }
 .nextmatch_header {
   border: 1px solid black;
@@ -175,4 +106,15 @@ td.etemplate_tab_active:focus {
 }
 .eTdate {
   white-space: nowrap;
+}
+/**
+ * Limit size of icons in old eTemplate apps to 16px of idots
+ */
+a[onclick] > img {
+  width: 16px;
+}
+button.et2_button {
+  height: 24px;
+  padding-left: 3px;
+  padding-right: 3px;
 }

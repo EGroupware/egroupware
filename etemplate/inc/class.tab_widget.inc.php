@@ -174,7 +174,7 @@
 					$tcell['onchange'] = '1';
 					$tcell['name'] = $cell_name.'['.$name.']';
 				}
-				$tcell['label'] = $labels[$k];
+				$tcell['label'] = '<div>'.lang($labels[$k]).'</div>';
 				$tcell['help'] = $helps[$k];
 
 				$tab_widget->set_cell_attribute('tabs',1+$k,$tcell);
