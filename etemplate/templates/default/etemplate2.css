@@ -729,6 +729,10 @@ ul.et2_link_string {
   background-repeat: no-repeat;
   font-weight: bold;
 }
+/* min-height to fix calculations done while hidden */
+.et2_taglist > div {
+	min-height: 2em;
+}
 /**
  * VFS widget(s)
  */
