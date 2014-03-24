@@ -318,7 +318,7 @@ class etemplate extends boetemplate
 <script language="javascript">
 	egw_LAB.wait(function(){
 		$j().ready(function() {
-			popup_resize();
+			window.setTimeout(popup_resize, 150);
 		});
 	});
 </script>'."\n";
@@ -1135,7 +1135,7 @@ class etemplate extends boetemplate
 			}
 			if (!$ext_type) $ext_type = $type;
 			// if readonlys[__ALL__] is set, also set readonlys[$name] (extensions can mark themselfs as 'noReadonlysALL', eg. tab-widget!)
-			if ($readonlys['__ALL__'] && !$this->haveExtension($type,'noReadonlysALL'))
+			if ($readonlys['__ALL__'] && $readonlys[$name] !== false && !$this->haveExtension($type,'noReadonlysALL'))
 			{
 				$readonlys[$name] = true;
 			}
