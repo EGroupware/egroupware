@@ -113,7 +113,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		{
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
-				.click(this, this._open_search)
+				.click(this, this.options.multiple ? this._open_multi_search : this._open_search)
 				.attr("title", egw.lang("popup with search"))
 				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
 
@@ -308,9 +308,13 @@ var et2_selectAccount = et2_selectbox.extend(
 				ids.push(id);
 
 				// Make sure option is there
-				if(jQuery('input[id$="_opt_'+id+'"]',widget.multiOptions).length == 0)
+				if(!widget.options.multiple && jQuery('input[id$="_opt_'+id+'"]',widget.multiOptions).length == 0)
 				{
 					widget._appendMultiOption(id,jQuery('label',this).text());
+				}
+				else if (widget.options.multiple && jQuery('option[value="'+id+'"]',widget.node).length == 0)
+				{
+					widget._appendOptionElement(id,jQuery('label',this).text());
 				}
 			});
 
@@ -436,6 +440,9 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		var node = null;
 		var self = this;
+		
+		// Make sure value is numeric
+		if(item.value) item.value = parseInt(item.value);
 
 		// (containter of) Currently selected users / groups
 		var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", this.dialog);
