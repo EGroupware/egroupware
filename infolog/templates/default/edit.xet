@@ -113,8 +113,7 @@
 									</columns>
 									<rows>
 										<row>
-											<textbox id="info_cc" maxlength="254" class="et2_fullWidth inputFullWidth"/>
-											<buttononly label="Add from Addressbook" onclick="return app.infolog.add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
+											<taglist-email id="info_cc" class="et2_fullWidth inputFullWidth"/>
 										</row>
 										<row class="hiddenRow">
 											<link-entry blur="Search" id="ab" options="addressbook-email" span="all" class="et2_fullWidth"/>
@@ -125,7 +124,7 @@
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
 								<menulist>
-									<menupopup  type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" multiple="true" no_lang="1" tags="true" class="et2_fullWidth"/>
+									<menupopup type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" multiple="true" no_lang="1" tags="true" class="et2_fullWidth" account_type="both"/>
 								</menulist>
 							</row>
 							<row class="row" disabled="1">
