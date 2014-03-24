@@ -344,12 +344,11 @@ class infolog_ui
 		//_debug_array($columselection);
 		if ($columselection)
 		{
-			$query['selectcols'] = $columselection;
-			$columselection = explode(',',$columselection);
+			$columselection = is_array($columnselection) ? $columnselection : explode(',',$columselection);
 		}
 		else
 		{
-			$columselection = $query['selectcols'] ? explode(',',$query['selectcols']) : array();
+			$columselection = $query['selectcols'] ? (is_array($query['selectcols']) ? $query['selectcols'] : explode(',',$query['selectcols'])) : array();
 		}
 		// do we need to query the cf's
 		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
@@ -363,16 +362,16 @@ class infolog_ui
 		// add a '-details' to the name of the columnselection pref
 		if ($details)
 		{
-			$query['columnselection_pref'] = (is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
+			$columnselection_pref = (is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
 			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
 		}
 		else
 		{
-			$query['columnselection_pref'] = 'infolog.index.rows';
+			$columnselection_pref = 'infolog.index.rows';
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$columnselection_pref],'info_used_time_info_planned_time') !== false;
 
 		// query all links and sub counts in one go
 		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
@@ -405,7 +404,7 @@ class infolog_ui
 			{
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
-				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2']);
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
 			if ( $parent_first && ($main = $this->bo->read($query['action_id'])) ||
@@ -480,7 +479,7 @@ class infolog_ui
 		}
 
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
-error_log(__LINE__ . 'col filter: ' . array2string($query['col_filter']));
+
 		return $query['total'];
 	}
 
