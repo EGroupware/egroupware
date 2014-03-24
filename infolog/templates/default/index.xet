@@ -58,9 +58,9 @@
 					<nextmatch-customfields id="customfields"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox>
-						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
-						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
-						<nextmatch-sortheader label="Date completed" id="info_datecompleted"/>
+						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
+						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
+						<nextmatch-sortheader label="Date completed" id="info_datecompleted" sortmode="DESC"/>
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Times" id="info_used_time"/>

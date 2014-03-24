@@ -20,7 +20,7 @@
 					<nextmatch-header statustext="Status" label="St." id="status"/>
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
-					<nextmatch-sortheader align="center" label="date" id="date"/>
+					<nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
 					<nextmatch-sortheader label="mail-address" id="address"/>
 					<nextmatch-sortheader label="to" id="toaddress"/>
 					<nextmatch-sortheader label="from" id="fromaddress"/>
