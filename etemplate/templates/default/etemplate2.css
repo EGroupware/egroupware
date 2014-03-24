@@ -415,6 +415,15 @@ action buttons, left aligned for "extra" controls
 .et2_customfield_list input {
 	max-width: 100ex;
 }
+/* Custom field list inside nextmatch rows gets an icon for each row */
+.et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
+	background-image: url('images/hint.png');
+	background-repeat: no-repeat;
+	background-size: 1em;
+}
+.et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr > td:first-child {
+	padding-left: 1.2em;
+}
 
 /**
  * Diff widget
