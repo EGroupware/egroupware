@@ -70,6 +70,27 @@ var et2_number = et2_textbox.extend(
 		this.setDOMNode(this.input[0]);
 	},
 
+	/**
+	 * Set input widget size
+	 *
+	 * Overwritten from et2_textbox as input type=number seems to ignore size,
+	 * therefore we set width in em instead, if not et2_fullWidth given.
+	 *
+	 * @param _size Rather arbitrary size units, approximately characters
+	 */
+	set_size: function(_size) {
+		if (typeof _size != 'undefined' && _size != this.input.attr("size"))
+		{
+			this.size = _size;
+			this.input.attr("size", this.size);
+
+			if (typeof this.options.class == 'undefined' || this.options.class.search('et2_fullWidth') == -1)
+			{
+				this.input.css('width', _size+'em');
+			}
+		}
+	},
+
 	set_min: function(_value) {
 		this.min = _value;
 		if(this.min == null) {
