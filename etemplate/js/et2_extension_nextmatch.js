@@ -71,6 +71,7 @@ var et2_INextmatchSortable = new Interface({
 var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 {
 	attributes: {
+		// These normally set in settings, but broken out into attributes to allow run-time changes
 		"template": {
 			"name": "Template",
 			"type": "string",
@@ -100,6 +101,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			"description": "Customise the nextmatch - inline, after row count.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
+		"no_filter": {
+			"name": "No filter",
+			"type": "boolean",
+			"description": "Hide the first filter",
+			"default": et2_no_init,
+		},
+		"no_filter2": {
+			"name": "No filter2",
+			"type": "boolean",
+			"description": "Hide the second filter",
+			"default": et2_no_init,
+		},
+		
 		"onselect": {
 			"name": "onselect",
 			"type": "js",
@@ -322,6 +336,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Determine the sort direction automatically if it is not set
 		if (typeof _asc == "undefined")
 		{
+			_asc = true;
 			if (this.activeFilters["sort"].id == _id)
 			{
 				_asc = !this.activeFilters["sort"].asc;
@@ -1499,7 +1514,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	set_no_filter2: function(bool) {
 		this.set_no_filter(bool,'filter2');
 	},
-
+	
 	/**
 	 * Actions are handled by the controller, so ignore these during init.
 	 *
@@ -2514,7 +2529,8 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 	click: function() {
 		if (this.nextmatch && this._super.apply(this, arguments))
 		{
-			this.nextmatch.sortBy(this.id);
+			// Send default sort mode if not sorted, otherwise send undefined to calculate
+			this.nextmatch.sortBy(this.id, this.sortmode == "none" ? !(this.options.sortmode.toUpperCase() == "DESC") : undefined);
 			return true;
 		}
 
