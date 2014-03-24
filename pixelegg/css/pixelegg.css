@@ -5304,6 +5304,17 @@ tr.dialogOperators td {
   padding: 5px 6px 5px 0;
   vertical-align: middle;
 }
+/*** dialogHeader on a box not table ***/
+div.dialogHeader {
+  background-color: #0c5da5 !important;
+  vertical-align: middle;
+  font-size: 150%;
+}
+.dialogHeader2,
+.dialogHeader3,
+.dialogHeader4 {
+  font-size: 120%;
+}
 /**********    Header Part ********************/
 .dialogHeader {
   /*.gradient_thead;*/
@@ -5393,7 +5404,9 @@ tr.dialogHeader4 .et2_label {
 .et2_tabheader :first-child {
   margin-left: 0px;
 }
-.et2_tabflag {
+.et2_tabflag,
+.etemplate_tab > div,
+.etemplate_tab_active > div {
   margin: 1em 3px -1px 0;
   padding: 4px;
   background-color: #b4b4b4;
@@ -5415,15 +5428,23 @@ tr.dialogHeader4 .et2_label {
   border-top-left-radius: 3px;
   /*.background-clip(padding-box);*/
 }
-.et2_tabflag:hover {
+.et2_tabflag:hover,
+.etemplate_tab > div:hover,
+.etemplate_tab_active > div:hover {
   color: #808080;
   background-color: #bfbfbf;
 }
-.et2_tabflag:active {
+.et2_tabflag:active,
+.etemplate_tab > div:active,
+.etemplate_tab_active > div:active {
   background-color: #ffffff;
   color: #ffffff;
 }
-.et2_tabflag.active {
+td.etemplate_tab_active.th {
+  background-color: transparent;
+}
+.et2_tabflag.active,
+.etemplate_tab_active > div {
   border-spacing: 0px;
   background-color: white;
   color: #000000;
@@ -5431,20 +5452,28 @@ tr.dialogHeader4 .et2_label {
   border-style: solid;
   border-color: #505050;
 }
-.et2_tabflag.active:hover {
+.et2_tabflag.active:hover,
+.etemplate_tab_active > div:hover {
   color: #000000;
   background-color: white;
 }
-.et2_tabs {
-  /*border-width: 0px 1px 1px 1px;*/
-  /*border-style: solid;*/
+.et2_tabs,
+.tab_body {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
   border-color: #b4b4b4;
-  /*padding: 5px;*/
+  padding: 5px;
   /*overflow-y: auto;*/
   background-color: #ffffff;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  margin-bottom: 11px;
+}
+.tab_body {
+  border-top-width: 1px;
+}
+div#etemplate\.tab_widget {
   margin-bottom: 11px;
 }
 /************* Main  **********************************/

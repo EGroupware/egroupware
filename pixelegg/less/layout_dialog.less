@@ -165,7 +165,15 @@ padding: 5px 6px 5px 0;
 vertical-align: middle;
 }
 
-
+/*** dialogHeader on a box not table ***/
+div.dialogHeader {
+	background-color: @egw_color_2_a !important;
+    vertical-align: middle;
+	font-size: 150%
+}
+.dialogHeader2, .dialogHeader3, .dialogHeader4 {
+	font-size: 120%;
+}
 
 
 /**********    Header Part ********************/
@@ -290,7 +298,7 @@ tr.dialogHeader4{
     }
 }
 
-.et2_tabflag {
+.et2_tabflag, .etemplate_tab > div, .etemplate_tab_active > div {
     margin: 1em 3px -1px 0;
     padding: 4px;
     background-color: @gray_30;
@@ -308,9 +316,12 @@ tr.dialogHeader4{
         .color_0_gray;
     }
 }
+td.etemplate_tab_active.th {
+	background-color: transparent;
+}
 
 
-.et2_tabflag.active {
+.et2_tabflag.active, .etemplate_tab_active > div {
     border-spacing: 0px;
     background-color: white;
     .color_100_gray;
@@ -326,17 +337,23 @@ tr.dialogHeader4{
 
 
 // field for content
-.et2_tabs {
-    /*border-width: 0px 1px 1px 1px;*/
-    /*border-style: solid;*/
+.et2_tabs, .tab_body {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
     border-color: @gray_30;
-    /*padding: 5px;*/
+    padding: 5px;
     /*overflow-y: auto;*/
     background-color: @gray_0;
     .rounded(3px);
     margin-bottom: 11px;
 }
 
+.tab_body {
+	border-top-width: 1px;
+}
+div#etemplate\.tab_widget {
+	margin-bottom: 11px;
+}
 
 
 
