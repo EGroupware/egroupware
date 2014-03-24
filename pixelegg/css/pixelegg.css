@@ -3350,7 +3350,7 @@ table.table_passord_change td:first-child {
   overflow: hidden;
   /*padding: 0;*/
 }
-.egwGridView_grid tr.th > td {
+.egwGridView_grid > tbody > tr.th > td {
   background-color: #d9d9d9;
   font-weight: normal;
   padding: 0 2px 2px 0;
@@ -3444,25 +3444,25 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
 table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
   background-color: #0c5da5;
 }
-table.egwGridView_outer tbody {
+table.egwGridView_outer > tbody > tr {
   /*Elements inside td*/
 }
-table.egwGridView_outer tbody td.frame {
+table.egwGridView_outer > tbody > tr td.frame {
   /*border: 1px solid @gray_10; can't have - breaks grid scroll calculations'
             /*padding: 0px 5px; no need*/
 }
-table.egwGridView_outer tbody td .et2_link {
+table.egwGridView_outer > tbody > tr > td .et2_link {
   margin-left: 0px;
   color: #26537c;
 }
-table.egwGridView_outer tbody td img {
+table.egwGridView_outer > tbody > tr > td img {
   border: 1px solid transparent;
   box-shadow: none;
 }
-table.egwGridView_outer tbody td time {
+table.egwGridView_outer > tbody > tr > td time {
   display: block;
 }
-table.egwGridView_outer tbody td img[src$="svg"] {
+table.egwGridView_outer > tbody > tr > td img[src$="svg"] {
   background-color: rgba(0, 0, 0, 0.5);
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
   background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
@@ -3489,7 +3489,7 @@ table.egwGridView_grid img.iphoto {
   margin: 0.2em;
   max-height: 60px;
 }
-table.egwGridView_grid tbody {
+table.egwGridView_grid > tbody {
   border-bottom: 1px solid #000000;
   /*padding: 2px 3px 2px 4px;*/
   margin: 0;
@@ -3498,24 +3498,24 @@ table.egwGridView_grid tbody {
         tr:nth-child(odd) {background: @color_odd;}*/
   /*multiple choise*/
 }
-table.egwGridView_grid tbody tr.selected {
+table.egwGridView_grid > tbody tr:hover {
+  background: rgba(103, 159, 210, 0.2);
+}
+table.egwGridView_grid > tbody tr.selected {
   background-image: none;
   /*background-color: @egw_color_1_e !important;*/
   background-color: rgba(255, 194, 0, 0.5);
 }
-table.egwGridView_grid tbody tr.focused {
+table.egwGridView_grid > tbody tr.focused {
   background-image: url(../images/yellow-stripe-a.png);
   background-repeat: repeat;
   background-color: rgba(255, 194, 0, 0.5);
 }
-table.egwGridView_grid tr {
+table.egwGridView_grid > tr {
   border-bottom: 1px solid;
   border-color: #828282;
 }
-table.egwGridView_grid tr:hover {
-  background: rgba(103, 159, 210, 0.2);
-}
-table.egwGridView_grid tr td {
+table.egwGridView_grid > tr > td {
   border-left: 0px;
   border-right: 0px;
   /*padding: 0.3em 0 0.3em 0.3em;*/
@@ -3523,36 +3523,36 @@ table.egwGridView_grid tr td {
   color: #e6e6e6;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
 }
-table.egwGridView_grid tr td:active {
+table.egwGridView_grid > tr > td:active {
   /*background-color: @egw_color_2_a;*/
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   color: #ffffff;
 }
-table.egwGridView_grid tr td span {
+table.egwGridView_grid > tr > td span {
   color: #505050;
 }
-table.egwGridView_grid tr td span[id*="[info_subject]"] {
+table.egwGridView_grid > tr > td span[id*="[info_subject]"] {
   margin-right: 30px;
 }
-table.egwGridView_grid tr td span.high {
+table.egwGridView_grid > tr > td span.high {
   color: red;
 }
-table.egwGridView_grid tr td span.urgent {
+table.egwGridView_grid > tr > td span.urgent {
   color: red;
   background-color: #ffdd73;
 }
-table.egwGridView_grid tr td span.low {
+table.egwGridView_grid > tr > td span.low {
   color: #373737;
 }
-table.egwGridView_grid tr td table.customfields tbody {
+table.egwGridView_grid > tr > td table.customfields tbody {
   border-bottom: 0px;
 }
-table.egwGridView_grid tr td table.customfields tbody tr {
+table.egwGridView_grid > tr > td table.customfields tbody tr {
   border-bottom: 0px;
 }
-table.egwGridView_grid tr td table.customfields tbody tr td {
+table.egwGridView_grid > tr > td table.customfields tbody tr td {
   border-bottom: 0px;
 }
 table.egwGridView_grid tr.subentry {
