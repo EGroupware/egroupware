@@ -590,7 +590,7 @@
 			}
 			$uiwidgets	=& CreateObject('felamimail.uiwidgets',EGW_APP_TPL);
 			$boemailadmin	= new emailadmin_bo();
-
+$this->timed_vacation=true;
 			if ($this->timed_vacation)
 			{
 				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
@@ -643,13 +643,15 @@
 				{
 					if (isset($_POST['start_date']))
 					{
+						//input2date returns a timestap for the day selected at noon if nothing else is specified
 						$date = $jscal->input2date($_POST['start_date']);
-						if ($date['raw']) $newVacation['start_date'] = $date['raw']-12*3600;
+						if ($date['raw']) $newVacation['start_date'] = egw_time::user2server($date['raw']-12*3600,'ts');
 					}
 					if (isset($_POST['end_date']))
 					{
+						//input2date returns a timestap for the day selected at noon if nothing else is specified
 						$date = $jscal->input2date($_POST['end_date']);
-						if ($date['raw']) $newVacation['end_date'] = $date['raw']-12*3600;
+						if ($date['raw']) $newVacation['end_date'] = egw_time::user2server($date['raw']-12*3600,'ts');
 					}
 				}
 				if(isset($_POST['save']) || isset($_POST['apply']))
@@ -775,9 +777,11 @@
 
 			if ($this->timed_vacation)
 			{
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i');
 				$this->t->set_var('by_date','<input type="radio" name="vacationStatus" value="by_date" id="status_by_date" '.
 					($vacation['status']=='by_date'?' checked':'').' /> <label for="status_by_date">'.lang('by date').'</label>: '.
-					$jscal->input('start_date',$vacation['start_date']).' - '.$jscal->input('end_date',$vacation['end_date']));
+					$jscal->input('start_date',egw_time::server2user($vacation['start_date'],'ts')).' - '.$jscal->input('end_date',egw_time::server2user($vacation['end_date'],'ts')).' '.
+					($vacation['status']=='by_date'?lang('Vacation notice is active').($vacation['status']=='by_date'? ' '.common::show_date($vacation['start_date'],$dtfrmt,true).'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):''));
 				$this->t->set_var('lang_help_start_end_replacement','<br />'.lang('You can use %1 for the above start-date and %2 for the end-date.','$$start$$','$$end$$'));
 			}
 			$this->t->pfp('out','vacation');
