@@ -123,11 +123,22 @@ function nm_action(_action, _senders, _target, _ids)
 					}
 					else
 					{
-						// Discard
-						params.shift(params[2]);
+						// Discard , special handling when from=merge is involved
+						if(params.length>1 && params[0]=='' && params[1].indexOf('from=merge')!=-1)
+						{
+							params.shift();
+						}
+						else
+						{
+							params.shift(params[2]);
+						}
 					}
 			}
-
+			//special handling when from=merge is involved
+			if(params.length>1 && params[0]=='' && params[1].indexOf('from=merge')!=-1)
+			{
+				params.shift();
+			}
 			// Re-join, in case extra has a -
 			var extra = params.join('-');
 			egw(app,window).open(egw_open_id,app,type,extra,target);
