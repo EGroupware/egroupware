@@ -120,8 +120,8 @@
 						<nextmatch-header label="Next date" id="calendar"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-sortheader label="Created" id="contact_created"/>
-						<nextmatch-sortheader label="Last modified" id="contact_modified"/>
+						<nextmatch-sortheader label="Created" id="contact_created" sortmode="DESC"/>
+						<nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
 					</vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
