@@ -213,6 +213,12 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				if(this._type == 'customfields-list') {
 					// No label, cust widget
 					attrs.readonly = true;
+					// Widget tooltips don't work in nextmatch because of the creation / binding separation
+					// Set title to field label so browser will show something
+					// Add field label & help as data attribute to row, so it can be stylied with CSS (title should be disabled)
+					row.attr('title', field.label);
+					row.attr('data-label', field.label);
+					row.attr('data-help', field.help);
 					this.detachedNodes.push(cf[0]);
 				} else {
 					// Label in first column, widget in 2nd
