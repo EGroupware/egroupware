@@ -47,7 +47,7 @@
 					<nextmatch-sortheader label="Location" id="cal_location"/>
 					<nextmatch-accountfilter label="Participants" id="participant" options="All"/>
 					<vbox>
-						<nextmatch-sortheader label="Created" id="cal_created"/>
+						<nextmatch-sortheader label="Created" id="cal_created" sortmode="DESC"/>
 						<nextmatch-header label="Creator" id="cal_creator" options="Creator"/>
 						<description value="Last changed"/>
 					</vbox>
