@@ -590,7 +590,7 @@
 			}
 			$uiwidgets	=& CreateObject('felamimail.uiwidgets',EGW_APP_TPL);
 			$boemailadmin	= new emailadmin_bo();
-$this->timed_vacation=true;
+
 			if ($this->timed_vacation)
 			{
 				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
