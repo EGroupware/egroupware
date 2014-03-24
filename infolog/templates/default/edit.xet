@@ -106,20 +106,7 @@
 						<rows>
 							<row>
 								<description value="CC"/>
-								<grid  border="0"  class="et2_fullWidth">
-									<columns>
-										<column/>
-										<column width="16"/>
-									</columns>
-									<rows>
-										<row>
-											<taglist-email id="info_cc" class="et2_fullWidth inputFullWidth"/>
-										</row>
-										<row class="hiddenRow">
-											<link-entry blur="Search" id="ab" options="addressbook-email" span="all" class="et2_fullWidth"/>
-										</row>
-									</rows>
-								</grid>
+								<taglist-email id="info_cc" class="et2_fullWidth inputFullWidth"/>
 							</row>
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
