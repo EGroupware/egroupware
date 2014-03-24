@@ -518,9 +518,9 @@
 			}
 			if(is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
 			{
-				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
 				$this->t->set_var('vacation_warning',
-					html::image('phpgwapi','dialog_warning',false,'style="vertical-align: middle; width: 16px;"').lang('Vacation notice is active').($vacation['status']=='by_date'? ' '.common::show_date($vacation['start_date'],$dtfrmt,true).'->'.common::show_date($vacation['end_date'],$dtfrmt,true):''));
+					html::image('phpgwapi','dialog_warning',false,'style="vertical-align: middle; width: 16px;"').lang('Vacation notice is active').($vacation['status']=='by_date'? ' '.common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):''));
 			}
 			else
 			{
