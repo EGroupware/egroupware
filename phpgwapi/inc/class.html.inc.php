@@ -759,7 +759,7 @@ class html
 	 */
 	static function form_1button($name,$label,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
 	{
-		return self::form(self::submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
+		return self::form(self::submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,' style="display: inline-block"',$method);
 	}
 
 	const THEAD = 1;
