@@ -404,7 +404,7 @@ class infolog_ui
 			{
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
-				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2']);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],false,$details);
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
 			if ( $parent_first && ($main = $this->bo->read($query['action_id'])) ||
