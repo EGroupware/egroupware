@@ -19,5 +19,4 @@
  */
 class mail_bo extends emailadmin_imapbase
 {
-	
 }

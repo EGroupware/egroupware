@@ -3,7 +3,7 @@
  * EGroupware EMail - timed vacation
  *
  * @link http://www.stylite.de
- * @package felamimail
+ * @package mail
  * @author Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$

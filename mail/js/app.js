@@ -650,6 +650,27 @@ app.classes.mail = AppJS.extend(
 			this.mail_removeRowClass(messages,'unseen');
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
+			if (typeof dataElem.data.dispositionnotificationto != 'undefined' && typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
+			{
+				var buttons = [
+					{text: this.egw.lang("Yes"), id: "mdnsent"},
+					{text: this.egw.lang("No"), id:"mdnnotsent"}
+				];
+				et2_dialog.show_dialog(function(_button_id, _value) {
+					switch (_button_id)
+					{
+						case "mdnsent":
+							egw.jsonq('mail.mail_ui.ajax_sendMDN',[messages]);
+							egw.jsonq('mail.mail_ui.ajax_flagMessages',['mdnsent', messages, true]);
+							return;
+						case "mdnnotsent":
+							egw.jsonq('mail.mail_ui.ajax_flagMessages',['mdnnotsent', messages, true]);
+					}
+				},
+				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
+				this.egw.lang("Confirm"),
+				messages, buttons);
+			}
 			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		}
 		// Pre-load next email already so user gets it faster

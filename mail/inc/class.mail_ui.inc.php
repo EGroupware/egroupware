@@ -1887,6 +1887,10 @@ unset($query['actions']);
 					else $data["flags"][$flag] = $flag;
 				}
 			}
+			$data['dispositionnotificationto'] = $header['DISPOSITION-NOTIFICATION-TO'];
+			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
+			if ($header['mdnsent']) $data["flags"]['mdnsent'];
+			if ($header['mdnnotsent']) $data["flags"]['mdnnotsent'];
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
@@ -4075,6 +4079,21 @@ $this->partID = $partID;
 			$response = egw_json_response::get();
 			$response->call('egw_refresh',lang('compress folder').': '.$folderName,'mail');
 		}
+	}
+
+	/**
+	 * sendMDN, ...
+	 *
+	 * @param array _messageList list of UID's
+	 *
+	 * @return nothing
+	 */
+	function ajax_sendMDN($_messageList)
+	{
+		if(mail_bo::$debug); error_log(__METHOD__."->".array2string($_messageList));
+		$uidA = self::splitRowID($_messageList['msg'][0]);
+		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+		$this->mail_bo->sendMDN($uidA['msgUID'],$folder);
 	}
 
 	/**
