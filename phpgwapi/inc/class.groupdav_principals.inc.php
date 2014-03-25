@@ -973,9 +973,10 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $url
 	 * @param string|array $only_type=null allowed types, return false for other (valid) types, eg. "users", "groups" or "resources", default all
+	 * @param string $cn=null common name to be stored in case of an "e" uid
 	 * @return int|string|boolean integer account_id, string calendar uid or false if not a supported uid
 	 */
-	static public function url2uid($url, $only_type=null)
+	static public function url2uid($url, $only_type=null, $cn=null)
 	{
 		if (!$only_type) $only_type = array('users', 'groups', 'resources', 'locations', 'mailto');
 
@@ -1026,7 +1027,7 @@ class groupdav_principals extends groupdav_handler
 				}
 				else	// just store email-address
 				{
-					$uid = 'e'.$rest;
+					$uid = $cn && $rest[0] != '<' && $cn != $rest ? 'e'.$cn.' <'.$rest.'>' : 'e'.$rest;
 					$type = 'users';
 				}
 				break;
