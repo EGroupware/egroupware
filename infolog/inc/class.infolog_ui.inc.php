@@ -1995,8 +1995,11 @@ class infolog_ui
 			$readonlys['action'] = true;
 		}
 		// ToDo: use the old status before the delete
-		if ($undelete) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-
+		if ($undelete)
+		{
+			$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
+		}
 
 		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
 		{
