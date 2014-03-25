@@ -351,11 +351,13 @@ class addressbook_ui extends addressbook_bo
 		{
 			$actions = array(
 				'view' => array(
-					'caption' => 'View',
+					'caption' => 'CRM-View',
 					'default' => true,
 					'allowOnMultiple' => false,
 					'group' => $group=1,
 					'onExecute' => 'javaScript:app.addressbook.view',
+					// Children added below
+					'children' => array()
 				),
 				'open' => array(
 					'caption' => 'Open',
@@ -384,6 +386,23 @@ class addressbook_ui extends addressbook_bo
 					),
 				),
 			);
+			// CRM view options
+			$crm_count = 0;
+			$crm_apps = array('infolog','tracker');
+			foreach($crm_apps as $app)
+			{
+				if ($GLOBALS['egw_info']['user']['apps'][$app]) $crm_count++;
+			}
+			if($crm_count > 1)
+			{
+				foreach($crm_apps as $app)
+				{
+					$actions['view']['children']["view-$app"] = array(
+						'caption' => $app,
+						'icon' => "$app/navbar"
+					);
+				}
+			}
 		}
 		else	// org view
 		{
@@ -2261,6 +2280,10 @@ window.egw_LAB.wait(function() {
 	 */
 	function view(array $content=null)
 	{
+		// CRM list comes from content, request, or preference
+		$crm_list = $content['crm_list'] ? $content['crm_list'] :
+			($_GET['crm_list'] ? $_GET['crm_list'] : $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list']);
+
 		if(is_array($content))
 		{
 			list($button) = each($content['button']);
@@ -2304,7 +2327,7 @@ window.egw_LAB.wait(function() {
 					// List nextmatch is already there, just update the filter
 					if($contact_id && egw_json_request::isJSONRequest())
 					{
-						switch($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'])
+						switch($crm_list)
 						{
 							case 'infolog':
 							case 'tracker':
@@ -2479,11 +2502,12 @@ window.egw_LAB.wait(function() {
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 		// need to load list's app.js now, as exec calls header before other app can include it
-		egw_framework::validate_file('/'.$GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'].'/js/app.js');
+		egw_framework::validate_file('/'.$crm_list.'/js/app.js');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
 			'index' => $content['index'],
+			'crm_list' => $crm_list
 		));
 
 		// Only load this on first time - we're using AJAX, so it stays there through submits.
@@ -2493,7 +2517,7 @@ window.egw_LAB.wait(function() {
 			$GLOBALS['egw']->hooks->single(array(
 				'location' => 'addressbook_view',
 				'ab_id'    => $content['id']
-			),$GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list']);
+			),$crm_list);
 		}
 	}
 

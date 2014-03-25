@@ -88,8 +88,17 @@ app.classes.addressbook = AppJS.extend(
 	{
 		var index = _senders[0]._index;
 		var id = _senders[0].id.split('::').pop();
+		var extras = {
+			index: index
+		};
 
-		this.egw.open(id, 'addressbook', 'view', {index: index}, '_self', 'addressbook');
+		// CRM list
+		if(_action.id != 'view')
+		{
+			extras.crm_list = _action.id.replace('view-','');
+		}
+
+		this.egw.open(id, 'addressbook', 'view', extras, '_self', 'addressbook');
 	},
 
 	/**
