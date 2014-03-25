@@ -50,7 +50,8 @@ function hide_pixelegg_header(_toggle, _delay)
         // Form - Country Switch
         $j("#egw_fw_topmenu_info_items form").css("display", "none");
 
-        $j(".egw_fw_ui_tabs_header").css("height", "34px");
+        $j(".egw_fw_ui_tabs_header").css("height", "34px")
+			.css("padding", "1px 75px 0px 20px");
 
 
         //Tab
@@ -110,10 +111,14 @@ egw_LAB.wait(function() {
 		$j('#slidetoggle').click(function(){
 			if ($j('#egw_fw_header').css('display') === 'none') {
 				show_pixelegg_header(this, 1000);
+				// Check for too many tabs, and adjust width if needed
+				window.setTimeout(function() {egw_getFramework().checkTabOverflow();},1000);
 				egw.set_preference('common', 'pixelegg_header_hidden', '');
 			}
 			else {
 				hide_pixelegg_header(this, 1000);
+				// Check for too many tabs, and adjust width if needed
+				window.setTimeout(function() {egw_getFramework().checkTabOverflow();},1000);
 				egw.set_preference('common', 'pixelegg_header_hidden', 'true');
 			}
 		});
