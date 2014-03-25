@@ -148,6 +148,8 @@ var et2_selectbox = et2_inputWidget.extend(
 		if(this.expand_button)
 		{
 			this.expand_button.off();
+			this.expand_button.remove();
+			this.expand_button = null;
 		}
 		this._super.apply(this, arguments);
 
@@ -622,18 +624,21 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		else
 		{
-			var button_id = this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + "_expand";
-			this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand' id='" + button_id + "'/>")
-				.on("click", jQuery.proxy(function(e) {
-					if(typeof this.input.attr('size') !== 'undefined' && this.input.attr('size') != 1)
-					{
-						this.set_multiple(false, 1);
-					}
-					else
-					{
-						this.set_multiple(true, this.options.expand_multiple_rows);
-					}
-				},this));
+			if (!this.expand_button)
+			{
+				var button_id = this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + "_expand";
+				this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand' id='" + button_id + "'/>")
+					.on("click", jQuery.proxy(function(e) {
+						if(typeof this.input.attr('size') !== 'undefined' && this.input.attr('size') != 1)
+						{
+							this.set_multiple(false, 1);
+						}
+						else
+						{
+							this.set_multiple(true, this.options.expand_multiple_rows);
+						}
+					},this));
+			}
 			surroundings.appendDOMNode(this.expand_button.get(0));
 		}
 		surroundings.update();
