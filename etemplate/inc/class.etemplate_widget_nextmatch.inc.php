@@ -713,11 +713,15 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			if ($action['children'])
 			{
 				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open','allowOnMultiple','confirm','confirm_multiple');
+				$inherit_keys = array_flip($inherit_attrs);
 				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length,
-					array_intersect_key($action, array_flip($inherit_attrs)));
+					array_intersect_key($action, $inherit_keys));
 
 				unset($action['prefix']);
-				$action = array_diff_key($action, array_flip($inherit_attrs));
+
+				// Allow default actions to keep their onExecute
+				if($action['default']) unset($inherit_keys['onExecute']);
+				$action = array_diff_key($action, $inherit_keys);
 			}
 
 			// link or popup action
