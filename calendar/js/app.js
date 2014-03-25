@@ -939,8 +939,9 @@ app.classes.calendar = AppJS.extend(
 		var whole_day = this.et2.getWidgetById('whole_day').get_value();
 		var button = _button;
 		var that = this;
-		if (typeof content != 'undefined' && typeof content.recur_type != 'undefined' 
-				&& content.recur_type != null && content.id != null)
+		if (typeof content != 'undefined' && content.id != null &&
+			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0
+		)
 		{
 			if (content.start != start_date || content.whole_day.toString() != whole_day)
 			{
