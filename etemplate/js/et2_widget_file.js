@@ -120,10 +120,11 @@ var et2_file = et2_inputWidget.extend(
 				return self.onStart(event, file_count); 
 			},
 			onFinish: function(event, file_count) { 
-				self.onFinish.apply(self, [event, file_count]);
-
-				// Fire legacy change action when done
-				self.change(self.input);
+				if(self.onFinish.apply(self, [event, file_count]))
+				{
+					// Fire legacy change action when done
+					self.change(self.input);
+				}
 			},
 			onStartOne: function(event, file_name, index, file_count) { 
 				// Here 'this' is the input
@@ -426,7 +427,11 @@ var et2_file = et2_inputWidget.extend(
 	onFinish: function(event, file_count) {
 		this.disabled_buttons.attr("disabled", false);
 		event.data = this;
-		if(this.options.onFinish) return et2_call(this.options.onFinish, event, file_count);
+		if(this.options.onFinish && !jQuery.isEmptyObject(this.getValue()))
+		{
+			return et2_call(this.options.onFinish, event, file_count);
+		}
+		return (file_count == 0 || !jQuery.isEmptyObject(this.getValue()));
 	},
 
 	
