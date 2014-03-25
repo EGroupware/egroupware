@@ -64,9 +64,6 @@ class idots_framework extends egw_framework
 	{
 		parent::__construct($template);		// call the constructor of the extended class
 
-		// js stuff is not needed by login page and gives errors
-		$GLOBALS['egw_info']['flags']['js_link_registry'] = $GLOBALS['egw_info']['flags']['currentapp'] !== 'login';
-
 		$this->tplsav2 = new tplsavant2();
 		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
 	}
@@ -91,6 +88,12 @@ class idots_framework extends egw_framework
 		if (self::$header_done) return '';
 		self::$header_done = true;
 
+		// js stuff is not needed by login page or in popups
+		$GLOBALS['egw_info']['flags']['js_link_registry'] =
+			!(in_array($GLOBALS['egw_info']['flags']['currentapp'], array('login', 'logout', 'setup')) ||
+				$GLOBALS['egw_info']['flags']['nonavbar'] === 'popup');
+		//error_log(__METHOD__."() ".__LINE__.' js_link_registry='.array2string($GLOBALS['egw_info']['flags']['js_link_registry']).' '.function_backtrace());
+
 		$this->send_headers();
 
 		// catch error echo'ed before the header, ob_start'ed in the header.inc.php
@@ -112,15 +115,6 @@ class idots_framework extends egw_framework
 		// load idots specific javascript files, if we are not in login or logout
 		if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('login', 'logout')))
 		{
-			// include regular include slidereffects.js
-			if (!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
-			{
-				self::validate_file('/phpgwapi/templates/idots/js/slidereffects.js');
-			}
-			else
-			{
-				self::validate_file('/phpgwapi/templates/idots/js/simple_show_hide.js');
-			}
 			self::validate_file('/phpgwapi/templates/idots/js/idots.js');
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover' && !html::$ua_mobile)
@@ -191,16 +185,6 @@ class idots_framework extends egw_framework
 		$apps = $this->_get_navbar_apps();
 		$vars = $this->_get_navbar($apps);
 
-		// add link registry to non-popup windows
-		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
-		{
-			self::validate_file('/phpgwapi/config.php');
-			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
-			$content .= '<script type="text/javascript">
-egw_LAB.wait(function() {egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");
-egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');});
-</script>'."\n";
-		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox' && !html::$ua_mobile)
 		{
 			$content .= $this->topmenu($vars,$apps);

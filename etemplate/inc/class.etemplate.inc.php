@@ -328,16 +328,15 @@ class etemplate extends boetemplate
 		{
 			if (!@self::$hooked)
 			{
+				// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
+				$GLOBALS['egw_info']['flags']['nonavbar'] = $output_mode == 2 ? 'popup' : false;
+				echo $GLOBALS['egw']->framework->header();
 				if((int) $output_mode != 2)
 				{
-					// jdots needs sidebox/navbar data in header call, therefore enable navbar BEFORE calling header
-					$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-					echo $GLOBALS['egw']->framework->header();
 					echo $GLOBALS['egw']->framework->navbar();
 				}
 				else
 				{
-					echo $GLOBALS['egw']->framework->header();
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
