@@ -206,7 +206,6 @@ div.filemanager_navigation > label > input {
 }
 #filemanager-index .et2_file {
   /*background-color: @egw_color_2_a;*/
-  height: 24px;
 }
 #filemanager-index .et2_file input#filemanager-index_upload {
   color: #ffffff;
@@ -230,7 +229,7 @@ div.filemanager_navigation > label > input {
   background-color: #1aa200 !important;
 }
 #filemanager-index .et2_file div.progress {
-  width: 0px;
+  z-index: 1;
 }
 #filemanager-index #filemanager-index_tarp {
   width: 32px !important;
