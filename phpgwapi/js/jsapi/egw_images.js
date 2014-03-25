@@ -150,7 +150,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			else
 			{
 				icon = document.createElement('img');
-				icon.src = _url;
+				if (_url) icon.src = _url;
 				if (_alt) icon.alt = _alt;
 			}
 			return icon;

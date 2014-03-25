@@ -795,7 +795,7 @@ var et2_tree = et2_inputWidget.extend(
 			var image = images[i];
 			if (!image.match(image_extensions))
 			{
-				images[i] = this._rel_url(this.egw().image(image));
+				images[i] = this._rel_url(this.egw().image(image) || image);
 			}
 		}
 		if (typeof _id == 'undefined')
