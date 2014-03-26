@@ -72,9 +72,6 @@ var et2_link_to = et2_inputWidget.extend(
 		}
 	},
 
-	search_timeout: 200, //ms after change to send query
-	minimum_characters: 2, // Don't send query unless there's at least this many chars
-
 	/**
 	 * Constructor
 	 *
@@ -538,7 +535,7 @@ var et2_link_entry = et2_inputWidget.extend(
 	},
 
 	legacyOptions: ["only_app", "application_list"],
-	search_timeout: 200, //ms after change to send query
+	search_timeout: 500, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 
 	/**
@@ -561,6 +558,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.options.value = {};
 		}
 		this.cache = {};
+		this.request = null;
 
 		this.createInputWidget();
 	},
@@ -575,6 +573,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 		this.search = null;
 		this.app_select = null;
+		this.request = null;
 	},
 
 	createInputWidget: function() {
@@ -622,7 +621,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		// Autocomplete
 		this.search.autocomplete({
-			source: function(request, response) { return self.query(request, response);},
+			source: function(request, response) {
+				return self.query(request, response);
+			},
 			select: function(event, item) {
 				event.data = self;
 				// Correct changed value from server
@@ -636,6 +637,7 @@ var et2_link_entry = et2_inputWidget.extend(
 				return false;
 			},
 			minLength: self.minimum_characters,
+			delay: self.search_timeout,
 			disabled: self.options.disabled,
 			appendTo: self.div
 		});
@@ -868,6 +870,13 @@ var et2_link_entry = et2_inputWidget.extend(
 	 * Ask server for entries matching selected app/type and filtered by search string
 	 */
 	query: function(request, response) {
+		// If there is a pending request, abort it
+		if(this.request)
+		{
+			this.request.abort();
+			this.request = null;
+		}
+
 		// Remember last search
 		this.last_search = this.search.val();
 
@@ -880,18 +889,19 @@ var et2_link_entry = et2_inputWidget.extend(
 		if((typeof request.no_cache == 'undefined' && !request.no_cache) && request.term in this.cache) {
 			return response(this.cache[request.term]);
 		}
+		
+		// Remember callback
+		this.response = response;
 
 		this.search.addClass("loading");
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display','');
-		var request = egw.json(this.egw().getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
+		this.request = egw.json(this.egw().getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
 			[this.app_select.val(), '', request.term, request.options],
 			this._results,
 			this,true,this
-		);
-		this.response = response;
-		request.sendRequest();
+		).sendRequest();
 	},
 
 	/**
@@ -932,6 +942,10 @@ var et2_link_entry = et2_inputWidget.extend(
 	 * Server found some results
 	 */
 	_results: function(data) {
+		if(this.request)
+		{
+			this.request = null;
+		}
 		this.search.removeClass("loading");
 		var result = [];
 		for(var id in data) {
