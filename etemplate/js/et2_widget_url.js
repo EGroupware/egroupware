@@ -249,6 +249,10 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.value = "";
 		this.span = $j(document.createElement("a"))
 			.addClass("et2_textbox readonly");
+		if(this._type == 'url-email')
+		{
+			this.span.addClass('et2_email');
+		}
 		this.setDOMNode(this.span[0]);
 	},
 
@@ -324,9 +328,43 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		if (typeof _values["class"] != "undefined")
 		{
-				_nodes[0].setAttribute("class", _values["class"]);
+			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
 });
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
 
+// Bind a mouseenter event once for every read-only email
+$j(function() {
+	var addressbook = egw.user('apps').addressbook;
+	if(typeof addressbook == 'undefined' || !addressbook.enabled) return;
+
+	$j('body').on('mouseenter', 'a.et2_email', function() {
+		$j(this).tooltip({
+			items: 'a.et2_email',
+			position: {my:"left top", at:"left bottom", collision:"flipfit"},
+			tooltipClass: "et2_email_popup",
+			content: function() {
+				// Here we could do all sorts of things
+				var extra = {
+					'presets[email]': $j(this).text()
+				};
+				return $j('<a href="#">'+ egw.lang('Add a new contact') + '</a>')
+					.on('click', function() {
+						egw.open('','addressbook','add',extra);
+					});
+			},
+			close: function( event, ui ) {
+				ui.tooltip.hover(
+					function () {
+						$j(this).stop(true).fadeTo(400, 1);
+						//.fadeIn("slow"); // doesn't work because of stop()
+					},
+					function () {
+						$j(this).fadeOut("400", function(){ $j(this).remove(); })
+					}
+				);
+			}
+		}).tooltip("open");
+	});
+});
