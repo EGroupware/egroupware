@@ -347,6 +347,51 @@ class egw_json_response
 	}
 
 	/**
+	 * Allows to call a global javascript function with given parameters: window[$func].apply(window, $parameters)
+	 *
+	 * @param string $func name of the global (window) javascript function to call
+	 * @param array $parameters=array()
+	 */
+	public function apply($function,array $parameters=array())
+	{
+		if (is_string($function))
+		{
+			$this->addGeneric('apply', array(
+				'func'  => $function,
+				'parms' => $parameters,
+			));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
+	 * Allows to call a global javascript function with given parameters: window[$func].call(window[, $param1[, ...]])
+	 *
+	 * @param string $func name of the global (window) javascript function to call
+	 * @param mixed $parameters variable number of parameters
+	 */
+	public function call($function)
+	{
+		$parameters = func_get_args();
+		array_shift($parameters);	// shift off $function
+
+		if (is_string($function))
+		{
+			$this->addGeneric('apply', array(
+				'func'  => $function,
+				'parms' => $parameters,
+			));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
 	 * Allows to add a global javascript function with giben parameters
 	 *
 	 * @param string $script the script code which should be executed upon receiving

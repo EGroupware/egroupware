@@ -87,7 +87,7 @@ function egw_json_encode(input)
 	{
 		switch (input.constructor)
 		{
-			case Array:		
+			case Array:
 				var buf = [];
 				for (var k in input)
 				{
@@ -189,7 +189,7 @@ function _egw_json_plugin_handle(_type, _response) {
  *   which handles the actual request. If the menuaction is a full featured
  *   url, this one will be used instead.
  * @param array _parameters which should be passed to the menuaction function.
- * @param object _context is the context which will be used for the callback function 
+ * @param object _context is the context which will be used for the callback function
  */
 function egw_json_request(_menuaction, _parameters, _context)
 {
@@ -267,12 +267,12 @@ egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
 */
 egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 {
-	//Store the sender and callback parameter inside this class	
+	//Store the sender and callback parameter inside this class
 	this.sender = _sender;
 	if (typeof _callback != "undefined")
 		this.callback = _callback;
 
-	//Copy the async parameter which defaults to "true"	
+	//Copy the async parameter which defaults to "true"
 	var is_async = true;
 	if (typeof _async != "undefined")
 		is_async = _async;
@@ -293,7 +293,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		context: this,
 		data: request_obj,
 		dataType: 'json',
-		type: 'POST', 
+		type: 'POST',
 		success: this.handleResponse,
 		error: function(_xmlhttp,_err) { window.console.error('Ajax request to ' + this.url + ' failed: ' + _err); }
 	});
@@ -339,15 +339,15 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		{
 			try
 			{
-				var res = data.response[i];				
+				var res = data.response[i];
 
 				switch (data.response[i].type)
 				{
 					case 'alert':
 						//Check whether all needed parameters have been passed and call the alertHandler function
-						if ((typeof res.data.message != 'undefined') && 
+						if ((typeof res.data.message != 'undefined') &&
 							(typeof res.data.details != 'undefined'))
-						{					
+						{
 							this.alertHandler(
 								res.data.message,
 								res.data.details)
@@ -357,10 +357,10 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						break;
 					case 'assign':
 						//Check whether all needed parameters have been passed and call the alertHandler function
-						if ((typeof res.data.id != 'undefined') && 
+						if ((typeof res.data.id != 'undefined') &&
 							(typeof res.data.key != 'undefined') &&
 							(typeof res.data.value != 'undefined'))
-						{					
+						{
 							var obj = document.getElementById(res.data.id);
 							if (obj)
 							{
@@ -401,6 +401,22 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						} else
 							throw 'Invalid parameters';
 						break;
+					case 'apply':
+						if (typeof res.data.func == 'string' && typeof window[res.data.func] == 'function')
+						{
+							try
+							{
+								window[res.data.func].apply(window, res.data.parms);
+							}
+							catch (e)
+							{
+								e.code = res.data.func;
+								_egw_json_debug_log(e);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
 					case 'jquery':
 						if (typeof res.data.select == 'string' &&
 							typeof res.data.func == 'string')
@@ -412,7 +428,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							catch (e)
 							{
-								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.params});
+								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.parms});
 							}
 							hasResponse = true;
 						} else
@@ -540,8 +556,8 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 
 		/* If no explicit response has been specified, call the callback (if one was set) */
 		if (!hasResponse && this.callback && data.response[i])
-		{			
-			this.callback.call(this.sender, data.response[i].data);			
+		{
+			this.callback.call(this.sender, data.response[i].data);
 		}
 
 		this.handleResponseDone = true;
@@ -642,7 +658,7 @@ window.xajax = {
  * run over all form elements
  * @param serialized is the object which will contain the form data
  * @param children is the children node of the form we're runing over
- * @param string _filterClass if given only return 
+ * @param string _filterClass if given only return
  */
 function _egw_json_getFormValues(serialized, children, _filterClass)
 {
@@ -673,19 +689,19 @@ function _egw_json_getObjectLength(_obj)
 }
 
 /**
- * used internally to serialize 
+ * used internally to serialize
  */
 function _egw_json_getFormValue(serialized, child)
 {
 	//Return if the child doesn't have a name, is disabled, or is a radio-/checkbox and not checked
-	if ((typeof child.name == "undefined") || (child.disabled && child.disabled == true) ||				
+	if ((typeof child.name == "undefined") || (child.disabled && child.disabled == true) ||
 		(child.type && (child.type == 'radio' || child.type == 'checkbox' || child.type == 'button' || child.type == 'submit') && (!child.checked)))
 	{
 		return;
 	}
-	
+
 	var name = child.name;
-	var values = null;	
+	var values = null;
 
  	if ('select-multiple' == child.type)
 	{
@@ -715,10 +731,10 @@ function _egw_json_getFormValue(serialized, child)
 		var p = serialized; // pointer reset
 		while (a.length != 0) {
 			var sa = a.substr(0, a.indexOf(']')+1);
-			
+
 			var lk = k; //save last key
 			var lp = p; //save last pointer
-			
+
 			a = a.substr(a.indexOf(']')+1);
 			p = p[k];
 			k = sa.substr(1, sa.length-2);
@@ -732,7 +748,7 @@ function _egw_json_getFormValue(serialized, child)
 			}
 			if (typeof p[k] == 'undefined')
 			{
-				p[k] = new Object; 
+				p[k] = new Object;
 			}
 		}
 		p[k] = values;
