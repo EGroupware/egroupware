@@ -70,6 +70,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 * Sends the assembled request to the server
 	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
 	 * @param {string} method='POST' allow to eg. use a (cachable) 'GET' request instead of POST
+	 *
+	 * @return {jqXHR} jQuery jqXHR request object
 	 */
 	json_request.prototype.sendRequest = function(async,method) {
 		if(typeof async != "undefined")
@@ -89,7 +91,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		// Send the request via AJAX using the jquery ajax function
 		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
 		// (causing eg. apply from server with app.$app.method to run in main window instead of popup)
-		(this.egw.window?this.egw.window.$j:$j).ajax({
+		this.request = (this.egw.window?this.egw.window.$j:$j).ajax({
 			url: this.url,
 			async: this.async,
 			context: this,
@@ -98,10 +100,15 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			type: method || 'POST',
 			success: this.handleResponse,
 			error: function(_xmlhttp, _err) {
-				this.egw.debug('error', 'Ajax request to', this.url, ' failed:',
-					_err);
+				// Don't error about an abort
+				if(_err !== 'abort')
+				{
+					this.egw.debug('error', 'Ajax request to', this.url, ' failed:', _err);
+				}
 			}
 		});
+
+		return this.request;
 	}
 
 	json_request.prototype.handleResponse = function(data) {
@@ -167,6 +174,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				this.callback.call(this.context,res);
 			}
 		}
+		this.request = null;
 	}
 
 	var json = {
