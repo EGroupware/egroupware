@@ -188,7 +188,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Initialize the action manager and add some actions to it
 		// Only look 1 level deep
 		var gam = egw_getActionManager(this.egw.appName,true,1);
-		this._actionManager = gam.addAction("actionManager", uid);
+		if(this._actionManager == null)
+		{
+			this._actionManager = gam.addAction("actionManager", uid);
+		}
 		this._actionManager.updateActions(_actions, this.egw.appName);
 		var data = this._actionManager.data;
 		if (data == 'undefined' || !data)

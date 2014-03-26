@@ -1525,7 +1525,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			this.options.actions = actions;
 			this.options.settings.action_links = this.controller._actionLinks = this._get_action_links(actions);
-			this.controller._actionManager.updateActions(actions,this.controller.egw.appName);
+			this.controller._initActions(actions);
 		}
 	},
 
