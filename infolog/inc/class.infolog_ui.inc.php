@@ -273,7 +273,10 @@ class infolog_ui
 			unset($query['no_actions']);
 			$parent_id = $query['col_filter']['parent_id'];
 			unset($query['col_filter']['parent_id']);
-			egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
+			if(!$query['action'])
+			{
+				egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
+			}
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
 			$query['row_modified'] = 'info_datemodified';
@@ -287,36 +290,55 @@ class infolog_ui
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		// handle linked filter (show only entries linked to a certain other entry)
+		// handle action and linked filter (show only entries linked to a certain other entry)
+		$link_filters = array();
+		$links = array();
 		if ($query['col_filter']['linked'])
 		{
-			if(!is_array($query['col_filter']['linked']))
+			$link_filters['linked'] = $query['col_filter']['linked'];
+			$links['linked'] = array();
+			unset($query['col_filter']['linked']);
+		}
+		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
+		{
+			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
+			$links['action'] = array();
+		}
+		foreach($link_filters as $key => $link)
+		{
+			if(!is_array($link))
 			{
 				// Legacy string style
-				list($app,$id) = explode(':',$query['col_filter']['linked']);
+				list($app,$id) = explode(':',$link);
 			}
 			else
 			{
 				// Full info
-				$app = $query['col_filter']['linked']['app'];
-				$id = $query['col_filter']['linked']['id'];
+				$app = $link['app'];
+				$id = $link['id'];
 			}
 			if(!is_array($id)) $id = explode(',',$id);
-			if (!($links = egw_link::get_links_multiple($app,$id,true,'infolog')))
+			if (!($linked = egw_link::get_links_multiple($app,$id,true,'infolog')))
 			{
-				$rows = array();	// no infologs linked to project --> no rows to return
+				$rows = array();	// no infologs linked to selected link --> no rows to return
 				return 0;
 			}
 
-			$query['col_filter']['info_id'] = array();
-			foreach($links as $infos)
+
+			foreach($linked as $infos)
 			{
-				$query['col_filter']['info_id'] = array_merge($query['col_filter']['info_id'],$infos);
+				$links[$key] = array_merge($links[$key],$infos);
 			}
-			$query['col_filter']['info_id'] = array_unique($query['col_filter']['info_id']);
-			$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? egw_link::title($app, $id) : lang('multiple')));
+			$links[$key] = array_unique($links[$key]);
+			if($key == 'linked')
+			{
+				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? egw_link::title($app, $id) : lang('multiple')));
+			}
 		}
-		unset($query['col_filter']['linked']);
+		if(count($links))
+		{
+			$query['col_filter']['info_id'] = count($links) > 1 ? call_user_func_array('array_intersect', $links) : $links[$key];
+		}
 
 		// check if we have a custom, type-specific template
 		unset($query['template']);
@@ -394,7 +416,7 @@ class infolog_ui
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
-		if($parent_first || $query['action'] = 'sp' && is_array($query['action_id'])) $query['total']++;
+		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id'])) $query['total']++;
 
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
@@ -812,14 +834,7 @@ class infolog_ui
 				}
 				break;
 			default:
-				if(in_array($action, array_keys(egw_link::app_list())))
-				{
-					if(is_array($action_id))
-					{
-						$action_id = implode(',',$action_id);
-					}
-					$values['nm']['col_filter']['linked'] = "$action:$action_id";
-				}
+				// Nothing
 		}
 		$readonlys['cancel'] = $action != 'sp';
 
