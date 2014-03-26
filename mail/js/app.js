@@ -650,7 +650,8 @@ app.classes.mail = AppJS.extend(
 			this.mail_removeRowClass(messages,'unseen');
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
-			if (typeof dataElem.data.dispositionnotificationto != 'undefined' && typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
+			if (typeof dataElem.data.dispositionnotificationto != 'undefined' && dataElem.data.dispositionnotificationto &&
+				typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
 			{
 				var buttons = [
 					{text: this.egw.lang("Yes"), id: "mdnsent"},
