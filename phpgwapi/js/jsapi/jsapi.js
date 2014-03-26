@@ -66,7 +66,7 @@ if (typeof window.console == 'undefined')
 egw_seperateJavaScript = function(_html)
 {
 	var html = _html.html;
-	
+
 	var in_pos = html.search(/<script/im);
 	var out_pos = html.search(/<\/script>/im);
 	while (in_pos > -1 && out_pos > -1)
@@ -78,7 +78,7 @@ egw_seperateJavaScript = function(_html)
 		/*js_str = js_str.substring(js_str.search(/>/) + 1);*/
 		_html.js += js_str;
 
-		
+
 		html = html.substring(0, in_pos) + html.substring(out_pos + 9);
 
 		var in_pos = html.search(/<script/im);
@@ -159,7 +159,7 @@ function egw_topWindow()
 }
 
 /**
- * Returns the window object of the current application 
+ * Returns the window object of the current application
  * @param string _app is the name of the application which requests the window object
  */
 function egw_appWindow(_app)
@@ -206,9 +206,9 @@ function egw_getAppName()
 
 /**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
- * 
+ *
  * Default implementation here only reloads window with it's current url with an added msg=_msg attached
- * 
+ *
  * @param string _msg message (already translated) to show, eg. 'Entry deleted'
  * @param string _app application name
  * @param string|int _id=null id of entry to refresh
@@ -229,12 +229,12 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 		return;
 	}
 	var href = win.location.href;
-	
+
 	if (typeof _replace != 'undefined')
 	{
 		href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, typeof _with != 'undefined' ? _with : '');
 	}
-	
+
 	if (href.indexOf('msg=') != -1)
 	{
 		href = href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
@@ -249,13 +249,13 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 
 /**
  * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
- * 
- * Examples: 
+ *
+ * Examples:
  * - egw_open(123,'infolog') or egw_open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
  * - egw_open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
  * - egw_open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
  * - egw_open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
- * 
+ *
  * @param string|int id either just the id or "app:id" if app==""
  * @param string app app-name or empty (app is part of id)
  * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
@@ -279,7 +279,7 @@ function egw_open(id, app, type, extra, target)
 	if (!app || typeof registry[app] != 'object')
 	{
 		alert('egw_open() app "'+app+'" NOT defined in link registry!');
-		return;	
+		return;
 	}
 	var app_registry = registry[app];
 	if (typeof type == 'undefined') type = 'edit';
@@ -287,7 +287,7 @@ function egw_open(id, app, type, extra, target)
 	if (typeof app_registry[type] == 'undefined')
 	{
 		alert('egw_open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
-		return;	
+		return;
 	}
 	var url = egw_webserverUrl+'/index.php';
 	var delimiter = '?';
@@ -311,7 +311,7 @@ function egw_open(id, app, type, extra, target)
 	{
 		for(var attr in extra)
 		{
-			url += delimiter+attr+'='+encodeURIComponent(extra[attr]);			
+			url += delimiter+attr+'='+encodeURIComponent(extra[attr]);
 		}
 	}
 	else if (typeof extra == 'string')
@@ -372,7 +372,7 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 			ms.style.backgroundColor = "#EEEEEE";
 			label_color = "gray"
 		}
-		
+
 		//Enable/Disable all children input elements
 		for (var i = 0; i <ms.childNodes.length; i++)
 		{
@@ -403,7 +403,7 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 
 	if (is_ie) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');	// IE fails, if name contains eg. a dash (-)
 
-	windowID = window.open(_url, _windowName, "width=" + _width + ",height=" + _height +
+	windowID = window.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
@@ -431,7 +431,7 @@ function egw_getWindowLeft()
 		if(is_mozilla) return window.screenX;
 	}
 	catch (e) {}
-	
+
 	return window.screenLeft;
 }
 
@@ -443,7 +443,7 @@ function egw_getWindowTop()
 		if(is_mozilla) return window.screenY;
 	}
 	catch (e) {}
-	
+
 	return window.screenTop-90;
 }
 
@@ -499,12 +499,12 @@ function egw_getWindowOuterHeight()
 		if (is_mozilla) return window.outerHeight;
 	}
 	catch (e) {}
-	
+
 	return egw_getWindowInnerHeight();
 }
 
 // ie selectbox dropdown menu hack. as ie is not able to resize dropdown menus from selectboxes, we
-// read the content of the dropdown menu and present it as popup resized for the user. if the user 
+// read the content of the dropdown menu and present it as popup resized for the user. if the user
 // clicks/seleckts a value, the selection is posted back to the origial selectbox
 function dropdown_menu_hack(el)
 {
@@ -638,7 +638,7 @@ function dropdown_menu_hack(el)
 					this.style.background="#333366";this.style.color="white";
 				}
 				mb.options[i].onmouseout = function(){this.style.background="white";this.style.color="black";}
-				if (mb.options[i].value != 'i-opt-group-lable-i') 
+				if (mb.options[i].value != 'i-opt-group-lable-i')
 				{
 					mb.options[i].onmousedown = function(){selectMenu(this); }
 					mb.options[i].onkeydown = function(){selectMenu(this); }
