@@ -344,13 +344,13 @@ class etemplate extends boetemplate
 		{
 			if (!@self::$hooked)
 			{
+				echo $GLOBALS['egw']->framework->header();
 				if((int) $output_mode != 2)
 				{
-					echo $GLOBALS['egw']->framework->navbar();	// do header too
+					echo $GLOBALS['egw']->framework->navbar();
 				}
 				else
 				{
-					echo $GLOBALS['egw']->framework->header();
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
