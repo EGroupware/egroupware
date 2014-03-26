@@ -76,7 +76,7 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 			ms.style.backgroundColor = "#EEEEEE";
 			label_color = "gray"
 		}
-		
+
 		//Enable/Disable all children input elements
 		for (var i = 0; i <ms.childNodes.length; i++)
 		{
@@ -107,7 +107,7 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 
 	if (is_ie) _windowName = _windowName.replace(/[^a-z0-9_]+/,'');	// IE fails, if name contains eg. a dash (-)
 
-	windowID = window.open(_url, _windowName, "width=" + _width + ",height=" + _height +
+	windowID = window.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
@@ -135,7 +135,7 @@ function egw_getWindowLeft()
 		if(is_mozilla) return window.screenX;
 	}
 	catch (e) {}
-	
+
 	return window.screenLeft;
 }
 
@@ -147,7 +147,7 @@ function egw_getWindowTop()
 		if(is_mozilla) return window.screenY;
 	}
 	catch (e) {}
-	
+
 	return window.screenTop-90;
 }
 
@@ -203,12 +203,12 @@ function egw_getWindowOuterHeight()
 		if (is_mozilla) return window.outerHeight;
 	}
 	catch (e) {}
-	
+
 	return egw_getWindowInnerHeight();
 }
 
 // ie selectbox dropdown menu hack. as ie is not able to resize dropdown menus from selectboxes, we
-// read the content of the dropdown menu and present it as popup resized for the user. if the user 
+// read the content of the dropdown menu and present it as popup resized for the user. if the user
 // clicks/seleckts a value, the selection is posted back to the origial selectbox
 function dropdown_menu_hack(el)
 {
@@ -342,7 +342,7 @@ function dropdown_menu_hack(el)
 					this.style.background="#333366";this.style.color="white";
 				}
 				mb.options[i].onmouseout = function(){this.style.background="white";this.style.color="black";}
-				if (mb.options[i].value != 'i-opt-group-lable-i') 
+				if (mb.options[i].value != 'i-opt-group-lable-i')
 				{
 					mb.options[i].onmousedown = function(){selectMenu(this); }
 					mb.options[i].onkeydown = function(){selectMenu(this); }
