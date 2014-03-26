@@ -1995,7 +1995,7 @@ class infolog_ui
 			$readonlys['action'] = true;
 		}
 		// ToDo: use the old status before the delete
-		if ($undelete)
+		if ($info_id && $undelete)
 		{
 			$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
