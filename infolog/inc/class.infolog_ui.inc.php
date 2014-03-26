@@ -1605,16 +1605,17 @@ class infolog_ui
 				}
 				if (($button == 'save' || $button == 'apply') && $info_id)
 				{
+					$old = $this->bo->read($info_id);
 					if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
 					{
-						$old = $this->bo->read($info_id);
 						$status_only = $this->bo->is_responsible($old);
 						$undelete = $this->bo->check_access($old,EGW_ACL_UNDELETE);
 					}
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
-					$operation = $info_id ? 'update' : 'add';
+					// Most changes we can just update, but un-delete needs an edit
+					$operation = $info_id ? ($old['info_status'] == 'deleted' ? 'edit' : 'update') : 'add';
 					if ($content['info_contact'])
 					{
 						$old_link_id = (int)$content['info_link_id'];
