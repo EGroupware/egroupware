@@ -15,22 +15,29 @@
  * @augments AppJS
  */
 app.classes.admin = AppJS.extend(
+/**
+ * @lends app.classes.admin
+ */
 {
 	appname: 'admin',
 	/**
 	 * reference to splitter
+	 *
+	 * {et2_splitter}
 	 */
 	splitter: null,
 
 	/**
 	 * reference to splitter
+	 *
+	 * {et2_iframe}
 	 */
 	iframe: null,
 
 	/**
 	 * Constructor
 	 *
-	 * @memberOf app.filemanager
+	 * @memberOf app.classes.admin
 	 */
 	init: function()
 	{
@@ -262,14 +269,6 @@ app.classes.admin = AppJS.extend(
 				this.run(_senders[0].id, this.et2.getWidgetById('tree'));
 				break;
 
-			case 'edit':
-				this.splitter.dock();
-				this.iframe.set_src(egw.link('/index.php', {
-					menuaction: 'admin.uiaccounts.edit_group',
-					account_id: _senders[0].id.split('/')[2]
-				}));
-				break;
-
 			case 'delete':
 				var account_id = _senders[0].id.split('/')[2];
 				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
@@ -281,6 +280,28 @@ app.classes.admin = AppJS.extend(
 					menuaction: 'admin.admin_acl.index',
 					account_id: _senders[0].id.split('/')[2]
 				}));
+				break;
+
+			default:
+				if (!_action.data.url)
+				{
+					alert('Missing url in action '+_action.id+'!');
+					break;
+				}
+				var url = _action.data.url.replace('$id', _senders[0].id.split('/')[2]);
+				if (url[0] != '/' && url.substr(0, 4) != 'http')
+				{
+					url = this.egw.link('/index.php', url);
+				}
+				if (_action.data.popup)
+				{
+					this.egw.open_link(url, '_blank', _action.data.popup);
+				}
+				else
+				{
+					this.splitter.dock();
+					this.iframe.set_src(url);
+				}
 				break;
 		}
 	},
@@ -385,15 +406,15 @@ app.classes.admin = AppJS.extend(
 			if (diff.length > 0)
 			{
 				var removed_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
-								{
-									for (j=0; j <= diff.length;j++)
-									{
-										if (diff[j] == val.value)
-										{
-											return val.label;
-										}
-									}
-								});
+				{
+					for (var j=0; j <= diff.length;j++)
+					{
+						if (diff[j] == val.value)
+						{
+							return val.label;
+						}
+					}
+				});
 
 				// Somebody will lose permission, give warning.
 				if(removed_cat_label)

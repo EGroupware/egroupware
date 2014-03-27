@@ -73,33 +73,7 @@ class admin_ui
 		$sel_options['account_primary_group'] = $sel_options['filter'];
 		unset($sel_options['account_primary_group']['']);
 
-		$actions = array(
-			'view' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Show members',
-				'enableId' => '^/groups/-\\d+',
-				'default' => true,
-			),
-			'edit' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Edit group',
-				'enableId' => '^/groups/-\\d+',
-			),
-			'acl' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Access control',
-				'enableId' => '^/groups/-\\d+',
-				'icon' => 'lock',
-			),
-			'add' => $content['nm']['actions']['add'],
-			'delete' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'confirm' => 'Delete this group',
-				'caption' => 'Delete group',
-				'enableId' => '^/groups/-\\d+',
-			),
-		);
-		$tpl->setElementAttribute('tree', 'actions', $actions);
+		$tpl->setElementAttribute('tree', 'actions', self::tree_actions());
 
 		if (!empty($_GET['load']))
 		{
@@ -118,56 +92,49 @@ class admin_ui
 	}
 
 	/**
-	 * Actions on users
+	 * Actions on tree / groups
 	 *
 	 * @return array
 	 */
-	public static function user_actions()
+	public static function tree_actions()
 	{
+		$user_actions = self::user_actions();
+
 		$actions = array(
-			'edit' => array(
-				'caption' => 'Open',
+			'view' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Show members',
+				'enableId' => '^/groups/-\\d+',
 				'default' => true,
-				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:app.admin.account',
-				'group' => $group=0,
+				'group' => $group=1,
 			),
 			'add' => array(
-				'caption' => 'Add user',
-				'onExecute' => 'javaScript:app.admin.account',
 				'group' => $group,
+			)+$user_actions['add'],
+			'edit' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Edit group',
+				'enableId' => '^/groups/-\\d+',
+				'url' => 'menuaction=admin.uiaccounts.edit_group&account_id=$id',
+				'group' => 2,
 			),
 			'acl' => array(
+				'onExecute' => 'javaScript:app.admin.group',
 				'caption' => 'Access control',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
-				'group' => $group,
-				'onExecute' => 'javaScript:app.admin.iframe_location',
+				'enableId' => '^/groups/-\\d+',
 				'icon' => 'lock',
+				'group' => 2,
 			),
 		);
-		// generate urls for add/edit accounts via addressbook
-		$edit = egw_link::get_registry('addressbook', 'edit');
-		$edit['account_id'] = '$id';
-		foreach($edit as $name => $val)
-		{
-			$actions['edit']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
-		}
-		unset($edit['account_id']);
-		$edit['owner'] = 0;
-		foreach($edit as $name => $val)
-		{
-			$actions['add']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
-		}
-		++$group;
+		$group = 5;	// allow to place actions in different groups by hook, this is the default
 		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
-		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
+		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_group')));
 		foreach($apps as $app)
 		{
-if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
 			$GLOBALS['menuData'] = $data = array();
-			$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
+			$data = $GLOBALS['egw']->hooks->single('edit_group', $app, true);
 			if (!is_array($data)) $data = $GLOBALS['menuData'];
+			//error_log(__METHOD__."() app $app returned ".array2string($data));
 			foreach($data as $item)
 			{
 				// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
@@ -192,17 +159,108 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 				}
 				if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
 				if (empty($item['group'])) $item['group'] = $group;
-				if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.iframe_location';
+				if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.group';
+				if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
+				if (!isset($item['enableId'])) $item['enableId'] = '^/groups/-\\d+';
 
 				$actions[$item['id']] = $item;
 			}
 		}
-		$actions['delete'] = array(
-			'caption' => 'Delete',
-			'group' => ++$group,
-			'popup' => '400x200',
-			'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
-		);
+		return $actions;
+	}
+
+	/**
+	 * Actions on users
+	 *
+	 * @return array
+	 */
+	public static function user_actions()
+	{
+		static $actions = null;
+
+		if (!isset($actions))
+		{
+			$actions = array(
+				'edit' => array(
+					'caption' => 'Open',
+					'default' => true,
+					'allowOnMultiple' => false,
+					'onExecute' => 'javaScript:app.admin.account',
+					'group' => $group=0,
+				),
+				'add' => array(
+					'caption' => 'Add user',
+					'onExecute' => 'javaScript:app.admin.account',
+					'group' => $group,
+				),
+				'acl' => array(
+					'caption' => 'Access control',
+					'allowOnMultiple' => false,
+					'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
+					'group' => $group,
+					'onExecute' => 'javaScript:app.admin.iframe_location',
+					'icon' => 'lock',
+				),
+			);
+			// generate urls for add/edit accounts via addressbook
+			$edit = egw_link::get_registry('addressbook', 'edit');
+			$edit['account_id'] = '$id';
+			foreach($edit as $name => $val)
+			{
+				$actions['edit']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
+			}
+			unset($edit['account_id']);
+			$edit['owner'] = 0;
+			foreach($edit as $name => $val)
+			{
+				$actions['add']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
+			}
+			++$group;
+			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
+			$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
+			foreach($apps as $app)
+			{
+if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
+				$GLOBALS['menuData'] = $data = array();
+				$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
+				if (!is_array($data)) $data = $GLOBALS['menuData'];
+				foreach($data as $item)
+				{
+					// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
+					if (empty($item['caption']))
+					{
+						$item['caption'] = $item['description'];
+						unset($item['description']);
+					}
+					if (isset($item['url']) && isset($item['extradata']))
+					{
+						$item['url'] = $item['extradata'].'&account_id=$id';
+						$item['id'] = substr($item['extradata'], 11);
+						unset($item['extradata']);
+						$matches = null;
+						if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
+						{
+							$item['popup'] = $matches[2].'x'.$matches[3];
+							$item['onExecute'] = 'javaScript:nm_action';
+							if (isset($matches[5])) $item['tooltip'] = $matches[5];
+							unset($item['options']);
+						}
+					}
+					if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
+					if (empty($item['group'])) $item['group'] = $group;
+					if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.iframe_location';
+					if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
+
+					$actions[$item['id']] = $item;
+				}
+			}
+			$actions['delete'] = array(
+				'caption' => 'Delete',
+				'group' => ++$group,
+				'popup' => '400x200',
+				'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
+			);
+		}
 		//error_log(__METHOD__."() actions=".array2string($actions));
 		return $actions;
 	}

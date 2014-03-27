@@ -46,6 +46,8 @@ class admin_account
 
 			if ($content['id'])	// existing account
 			{
+				// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
+				accounts::cache_invalidate((int)$content['account_id']);
 				if (!($account = $GLOBALS['egw']->accounts->read($content['account_id'])))
 				{
 					throw new egw_exception_not_found('Account data NOT found!');
@@ -74,8 +76,11 @@ class admin_account
 					'changepassword' => true,	//old default: (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'],
 					'mustchangepassword' => false,
 					'account_primary_group' => $GLOBALS['egw']->accounts->name2id('Default'),
+					'homedirectory' => $GLOBALS['egw_info']['server']['ldap_account_home'],
+					'loginshell' => $GLOBALS['egw_info']['server']['ldap_account_shell'],
 				);
 			}
+			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'];
 			$readonlys = array();
 
 			if ($deny_edit)

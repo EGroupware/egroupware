@@ -41,6 +41,14 @@
 					<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
 					<description/>
 				</row>
+				<row disabled="!@ldap_extra_attributes">
+					<description value="Home directory" for="homedirectory"/>
+					<passwd id="homedirectory" class="et2_fullWidth"/>
+					<description/>
+					<description value="Login shell" for="loginshell"/>
+					<passwd id="Login shell" class="et2_fullWidth"/>
+					<description/>
+				</row>
 				<row>
 					<description value="Primary group" for="account_primary_group"/>
 					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
@@ -51,7 +59,7 @@
 				</row>
 				<row>
 					<description value="Groups" for="groups"/>
-					<taglist-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4"/>
+					<select-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
 					<description/>
 				</row>
 				<row disabled="!@account_id">

@@ -37,13 +37,10 @@ $setup_info['admin']['hooks'] = array(
 	'after_navbar',
 	'config_validate',
 	'deleteaccount',
-	'view_user' => 'admin.uiaccounts.edit_view_user_hook',
-	'edit_user' => 'admin.uiaccounts.edit_view_user_hook',
-	'group_manager' => 'admin.uiaccounts.edit_group_hook',
 	'topmenu_info'
 );
-$setup_info['admin']['hooks']['admin'] = 'admin.admin_prefs_sidebox_hooks.all_hooks';
-$setup_info['admin']['hooks']['sidebox_menu'] = 'admin.admin_prefs_sidebox_hooks.all_hooks';
+$setup_info['admin']['hooks']['admin'] = 'admin.admin_hooks.all_hooks';
+$setup_info['admin']['hooks']['sidebox_menu'] = 'admin.admin_hooks.all_hooks';
 
 // add account tab to addressbook.edit
 $setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.addressbook_edit';
