@@ -1887,7 +1887,7 @@ unset($query['actions']);
 					else $data["flags"][$flag] = $flag;
 				}
 			}
-			$data['dispositionnotificationto'] = $header['DISPOSITION-NOTIFICATION-TO'];
+			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			if ($header['mdnsent']) $data["flags"]['mdnsent'];
 			if ($header['mdnnotsent']) $data["flags"]['mdnnotsent'];
@@ -1895,7 +1895,7 @@ unset($query['actions']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
 			$rv[] = $data;
-			//error_log(__METHOD__.__LINE__.array2string($result));
+			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
 
