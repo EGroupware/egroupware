@@ -282,7 +282,7 @@ class etemplate_widget_link extends etemplate_widget
 					$value['to_id'][] = $link;
 				}
 			}
-			
+
 			// Look for files - normally handled by ajax
 			$files = self::get_array($content, self::form_name($cname, $this->id . '_file'));
 			if(is_array($files) && !(is_array($value) && $value['to_id']))
@@ -311,8 +311,8 @@ class etemplate_widget_link extends etemplate_widget
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
-			error_log($this);
-			error_log("   " . array2string($valid));
+			//error_log($this);
+			//error_log("   " . array2string($valid));
 		}
 	}
 }
