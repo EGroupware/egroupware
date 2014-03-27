@@ -291,8 +291,18 @@ class admin_acl
 						$sql = '(CASE acl_appname';
 						foreach($not_enum_group_acls as $app => $groups)
 						{
+							if ($groups === true)
+							{
+								$check = $query['account_id'];
+							}
+							else
+							{
+								$check = array_diff($memberships, $groups);
+								//error_log(__METHOD__."() app=$app, array_diff(memberships=".array2string($memberships).", groups=".array2string($groups).")=".array2string($check));
+								if (!$check) continue;	// would give sql error otherwise!
+							}
 							$sql .= ' WHEN '.$GLOBALS['egw']->db->quote($app).' THEN '.$GLOBALS['egw']->db->expression(acl::TABLE, array(
-								'acl_account' => $groups === true ? $query['account_id'] : array_diff($memberships, $groups),
+								'acl_account' => $check,
 							));
 						}
 						$sql .= ' ELSE ';
