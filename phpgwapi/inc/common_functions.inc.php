@@ -70,6 +70,44 @@ function cut_bytes(&$data,$offset,$len=null)
 	return $func_overload & 2 ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 }
 
+if (!function_exists('imap_rfc822_parse_adrlist'))
+{
+	/**
+	 * parses an address string
+	 * Examples: Joe Doe <doe@example.com>, "Doe, Joe" <doe@example.com> , "\'Joe Doe\'" <doe@example.com>, postmaster@example.com, root;
+	 *			 "Giant; \"Big\" Box" <sysservices@example.net>, sysservices@example.net <sysservices@example.net>, ...
+	 * Invalid addresses, if detected, set host to '.SYNTAX-ERROR.'
+	 * @param string $address - A string containing addresses
+	 * @param string $default_host - The default host name
+	 * @return array of objects. The objects properties are:
+	 *		mailbox - the mailbox name (username)
+	 *		host - the host name
+	 *		personal - the personal name
+	 *		adl - at domain source route
+	 */
+	//function imap_rfc822_parse_adrlist(string $address, string $default_host)
+	//{
+	//	return array();
+	//}
+}
+
+if (!function_exists('imap_rfc822_write_address'))
+{
+	/**
+	 * Returns a properly formatted email address given the mailbox, host, and personal info
+	 * @param string $mailbox - The mailbox name, see imap_open() for more information
+	 * @param string $host - The email host part
+	 * @param string $personal - The name of the account owner
+	 * @return string properly formatted email address as defined in » RFC2822.
+	 */
+	function imap_rfc822_write_address(string $mailbox , string $host , string $personal)
+	{
+		// ToDo: correctly handle personal strings like "Giant; \"Big\" Box" or Fuzzy, Brain
+		if (stripos($personal,',')) $personal = '"'.$personal.'"'; // probably too simplistic
+		return (!empty($personal)?$personal.' ':'').'<'.$mailbox.'@'.$host.'>';
+	}
+}
+
 if (!function_exists('mb_strlen'))
 {
 	/**
