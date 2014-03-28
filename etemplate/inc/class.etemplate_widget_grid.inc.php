@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-14 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -184,20 +184,26 @@ class etemplate_widget_grid extends etemplate_widget_box
 								substr($pat,0,4) == 'col_');
 							break;
 						case 'row':
-							$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || substr($pat,0,4) == 'row_');
+							$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' ||
+								substr($pat,0,4) == 'row_' && substr($pat,0,8) != 'row_cont');
+							//error_log(__METHOD__."() pat='$pat' --> Ok=".array2string($Ok));
 							break;
 						default:
 							return false;
 					}
-					if ($Ok && ($value = self::get_array(self::$request->content,
-						$fname=self::form_name($cname, $child->id, $expand))) !== false && isset($value))
+					if ($Ok && ($fname=self::form_name($cname, $child->id, $expand)) &&
+						// need to break if fname ends in [] as get_array() will ignore it and returns whole array
+						// for an id like "run[$row_cont[appname]]"
+						substr($fname, -2) != '[]' &&
+						($value = self::get_array(self::$request->content,$fname)) !== null)	// null = not found (can be false!)
 					{
-						//error_log(__METHOD__."('$method_name', ) $this autorepeating row $expand[row] because of $child->id = '$fname' is ".array2string($value));
+						//error_log(__METHOD__."('$cname', ) $this autorepeating row $expand[row] because of $child->id = '$fname' is ".array2string($value));
 						return true;
 					}
 				}
 			}
 		}
+		//error_log(__METHOD__."('$cname', ) $this NOT autorepeating row $expand[row]");
 		return false;
 	}
 }
