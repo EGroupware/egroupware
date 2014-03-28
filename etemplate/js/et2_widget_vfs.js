@@ -640,13 +640,13 @@ var et2_vfsSelect = et2_inputWidget.extend(
 			.attr("src", this.egw().image("filemanager/navbar"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
 			.addClass("et2_button et2_button_icon");
-		this.setDOMNode(egw.userData.apps.filemanager ? this.button[0]:document.createElement('span'));
+		this.setDOMNode(egw.app('filemanager') ? this.button[0]:document.createElement('span'));
 	},
 
 	click: function(e) {
 
 	    // No permission
-	    if(typeof egw.userData.apps.filemanager == 'undefined') return;
+	    if(!egw.app('filemanager')) return;
 
 		var self = this;
 
