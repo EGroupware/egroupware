@@ -496,7 +496,7 @@ span.et2_file_span{
 	background-repeat: no-repeat;
 	background-size: 16px;
 	cursor: pointer;
-	
+
 	height: 15px;
 	text-align: left;
 	text-indent: 20px;
@@ -1366,6 +1366,9 @@ div.ui-toolbar-menulist{
 }
 .et2_toolbar_actionlist{
 	float:left;
+}
+.et2_label > input.et2_checkbox {
+	margin-right: 5px;
 }
 
 /**
