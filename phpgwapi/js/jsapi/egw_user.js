@@ -23,7 +23,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.user(_field) or egw.app(_app)
 	 */
-	var userData = {};
+	var userData = {apps: {}};
 
 	return {
 		/**
