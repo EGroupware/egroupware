@@ -144,6 +144,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			throw new egw_exception_db(lang("Error saving account!"),11);
 		}
 		// make new account_id available to caller
+		$update = (boolean)$this->account;
 		if (!$this->account) $this->account = $data['account_id'];
 
 		if ($data['account_groups'])
@@ -184,11 +185,11 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		$data['account_passwd'] = $this->password;
 		$GLOBALS['hook_values'] =& $data;
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-			'location' => $this->account && $this->run_addaccount_hook !== true ? 'editaccount' : 'addaccount'
+			'location' => $update && $this->run_addaccount_hook !== true ? 'editaccount' : 'addaccount'
 		),False,True);	// called for every app now, not only enabled ones)
 
-		return lang("Account %1 %2",$this->account ? $this->account : $data['account_lid'],
-			$this->account ? lang('updated') : lang("created with id #%1",$data['account_id']));
+		return lang("Account %1 %2", $data['account_lid'] ? $data['account_lid'] : accounts::id2name($this->account),
+			$update ? lang('updated') : lang("created with id #%1", $this->account));
 	}
 
 	/**

@@ -81,7 +81,7 @@ class admin_cmd_edit_group extends admin_cmd
 		}
 		if ($check_only) return true;
 
-		if ($this->account)
+		if (($update = $this->account))
 		{
 			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
 			accounts::cache_invalidate($data['account_id']);
@@ -102,15 +102,18 @@ class admin_cmd_edit_group extends admin_cmd
 		}
 		$GLOBALS['hook_values'] =& $data;
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-			'location' => $this->account ? 'editgroup' : 'addgroup'
+			'location' => $update ? 'editgroup' : 'addgroup'
 		),False,True);	// called for every app now, not only enabled ones)
 
 		if ($data['account_members'])
 		{
 			admin_cmd::$accounts->set_members($data['account_members'],$data['account_id']);
 		}
-		return lang("Account %1 %2",$this->account ? $this->account : $data['account_lid'],
-			$this->account ? lang('updated') : lang("created with id #%1",$data['account_id']));
+		// make new account_id available to caller
+		$this->account = $data['account_id'];
+
+		return lang("Account %1 %2", $data['account_lid'] ? $data['account_lid'] : accounts::id2name($this->account),
+			$update ? lang('updated') : lang("created with id #%1", $this->account));
 	}
 
 	/**

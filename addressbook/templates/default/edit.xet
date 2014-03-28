@@ -48,7 +48,7 @@
 				</row>
 				<row>
 					<description/>
-					<button label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;" image="check" background_image="1"/>
+					<button label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); jQuery('#'+form::name('org_name')).focus(); return false;" image="check" background_image="1"/>
 				</row>
 			</rows>
 		</grid>

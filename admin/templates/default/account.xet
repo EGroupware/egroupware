@@ -15,7 +15,7 @@
 			<rows>
 				<row>
 					<description value="Login ID" for="account_lid"/>
-					<textbox id="account_lid" class="et2_fullWidth"/>
+					<textbox id="account_lid" class="et2_fullWidth" onchange="app.addressbook.account_change" needed="true"/>
 					<description/>
 					<description value="Expires" for="account_expires"/>
 					<hbox>
@@ -28,8 +28,8 @@
 					<description value="Password" for="account_passwd"/>
 					<passwd id="account_passwd" class="et2_fullWidth"/>
 					<description/>
-					<description value="Re-enter password" for="account_passwd2"/>
-					<passwd id="account_passwd2" class="et2_fullWidth"/>
+					<description value="Re-enter password" for="account_passwd_2"/>
+					<passwd id="account_passwd_2" class="et2_fullWidth" onchange="app.addressbook.account_change"/>
 					<description/>
 				</row>
 				<row valign="top">

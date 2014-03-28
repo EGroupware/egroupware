@@ -113,8 +113,8 @@ app.classes.addressbook = AppJS.extend(
 		var list = etemplate2.getById(
 			$j(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id')
 		);
-		var nm = null;
-		if(list != null && (nm = list.widgetContainer.getWidgetById('nm')))
+		var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
+		if(nm)
 		{
 			// Update the link filter to new contact
 			var filter = {col_filter:{}};
@@ -379,6 +379,12 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	check_value: function(widget, own_id)
 	{
+		// if we edit an account, call account_change to let it do it's stuff too
+		if (this.et2.getWidgetById('account_lid'))
+		{
+			this.account_change(null, widget);
+		}
+
 		var values = this.et2._inst.getValues(this.et2);
 
 		if (widget.id.match(/n_/))
@@ -653,6 +659,44 @@ app.classes.addressbook = AppJS.extend(
 			return false;
 		}
 		return this._super.apply(this, arguments);
-	}
+	},
 
+	/**
+	 * Field changed, call server validation
+	 *
+	 * @param {jQuery.Event} _ev
+	 * @param {et2_button} _widget
+	 */
+	account_change: function(_ev, _widget)
+	{
+		switch(_widget.id)
+		{
+			case 'account_lid':
+			case 'n_family':
+			case 'n_given':
+			case 'email':
+			case 'account_passwd_2':
+				var values = this.et2._inst.getValues(this.et2);
+				var data = {
+					account_id: this.et2.getArrayMgr('content').data.account_id,
+					account_lid: values.account_lid,
+					account_firstname: values.n_given,
+					account_lastname: values.n_family,
+					account_email: values.email,
+					account_passwd: values.account_passwd,
+					account_passwd_2: values.account_passwd_2
+				};
+
+				this.egw.message('');
+				this.egw.json('admin_account::ajax_check', [data], function(_msg)
+				{
+					if (_msg && typeof _msg == 'string')
+					{
+						egw(window).message(_msg, 'error');	// context get's lost :(
+						_widget.getDOMNode().focus();
+					}
+				}, this).sendRequest();
+				break;
+		}
+	}
 });

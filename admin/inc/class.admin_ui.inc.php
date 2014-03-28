@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2013 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-14 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */

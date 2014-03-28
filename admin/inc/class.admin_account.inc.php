@@ -223,4 +223,33 @@ class admin_account
 
 		egw_json_response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');
 	}
+
+	/**
+	 * Check entered data and return error-msg via json data or null
+	 *
+	 * @param array $data values for account_id and account_lid
+	 */
+	public static function ajax_check(array $data)
+	{
+		// generate default email address
+		if (empty($data['account_email']) || !$data['account_id'])
+		{
+			$email = common::email_address($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
+			if ($email) egw_json_response::get()->assign('addressbook-edit_email', 'value', $email);
+		}
+
+		if (!$data['account_lid'] && !$data['account_id']) return;	// makes no sense to check before
+
+		// set dummy membership to get no error about no members yet
+		$data['account_memberships'] = array($data['account_primary_user'] = $GLOBALS['egw_info']['user']['account_primary_group']);
+
+		try {
+			$cmd = new admin_cmd_edit_user($data['account_id'], $data);
+			$cmd->run(null, false, false, true);
+		}
+		catch(Exception $e)
+		{
+			egw_json_response::get()->data($e->getMessage());
+		}
+	}
 }

@@ -4,7 +4,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2013 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2013-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -122,9 +122,7 @@ app.classes.admin = AppJS.extend(
 					tree.deleteItem('/groups/'+_id, false);
 					break;
 
-				case 'edit':
-				case 'update':
-				case 'add':
+				default:	// add, update, edit, null
 					tree.refreshItem('/groups');
 					break;
 			}
