@@ -111,13 +111,6 @@ class admin_ui
 			'add' => array(
 				'group' => $group,
 			)+$user_actions['add'],
-			'edit' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Edit group',
-				'enableId' => '^/groups/-\\d+',
-				'url' => 'menuaction=admin.uiaccounts.edit_group&account_id=$id',
-				'group' => 2,
-			),
 			'acl' => array(
 				'onExecute' => 'javaScript:app.admin.group',
 				'caption' => 'Access control',
@@ -422,10 +415,6 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 				$tree['item'][] = self::fix_userdata(array(
 					'text' => $group['account_lid'],
 					'id' => $root.'/'.$group['account_id'],
-					'link' => egw::link('/index.php', array(
-						'menuaction' => 'admin.uiaccounts.edit_group',
-						'account_id' => $group['account_id'],
-					)),
 				));
 			}
 		}

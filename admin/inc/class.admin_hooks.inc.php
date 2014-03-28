@@ -60,15 +60,6 @@ class admin_hooks
 				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
-			{
-				$file['User Accounts']              = array(
-					'id' => '/accounts',
-					'icon' => common::image('addressbook', 'accounts'),
-					'link' => egw::link('/index.php','menuaction=admin.uiaccounts.list_users'),
-				);
-			}
-
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
 				$file['Bulk password reset']        = egw::link('/index.php','menuaction=admin.admin_passwordreset.index');

@@ -64,7 +64,7 @@
 					$this->template->set_var('app_name',$GLOBALS['egw_info']['apps'][$app]['title']);
 					$this->template->set_var('a_name',$appname);
 					$this->template->set_var('app_icon',$icon);
-	
+
 					if ($icon)
 					{
 						$this->template->fp('rows','app_row',True);
@@ -73,7 +73,7 @@
 					{
 						$this->template->fp('rows','app_row_noicon',True);
 					}
-	
+
 					if (is_array($locations))
 					{
 						foreach($locations as $loc => $value)
@@ -84,18 +84,18 @@
 								'acl_app'    => $app,
 								'account_id' => $this->account_id
 							);
-		
+
 							$this->template->set_var('link_location',$GLOBALS['egw']->link('/index.php',$link_values));
 							$this->template->set_var('lang_location',lang($value['name']));
 							$this->template->fp('rows','link_row',True);
 						}
 					}
-	
+
 					$this->template->parse('rows','spacer_row',True);
 				}
 			}
 			$this->template->set_var(array(
-				'cancel_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
+				'cancel_action' => $GLOBALS['egw']->link('/admin/index.php'),
 				'lang_cancel'   => lang('Cancel')
 			));
 			$this->template->pfp('out','list');
