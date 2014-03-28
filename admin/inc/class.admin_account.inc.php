@@ -96,6 +96,10 @@ class admin_account
 				'prepend' => true,
 				'label' => 'Account',
 				'data' => $account,
+				// save old values to only trigger save, if one of the following values change (contact data get saved anyway)
+				'preserve' => array('old_account' => array_intersect_key($account, array_flip(array(
+					'account_lid', 'account_status', 'memberships', 'anonymous', 'changepassword',
+					'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell')))),
 				'readonlys' => $readonlys,
 				'pre_save_callback' => $deny_edit ? null : 'admin_account::addressbook_pre_save',
 			);
@@ -111,6 +115,10 @@ class admin_account
 	 */
 	public static function addressbook_pre_save(&$content)
 	{
+		if ($content['old_account'] && !array_diff_assoc($content['old_account'], $content))
+		{
+			return '';	// no need to save account data, if nothing changed
+		}
 		//error_log(__METHOD__."(".array2string($content).")");
 		$account = array();
 		foreach(array(
