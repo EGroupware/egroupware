@@ -336,8 +336,7 @@ et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
 
 // Bind a mouseenter event once for every read-only email
 $j(function() {
-	var addressbook = egw.user('apps').addressbook;
-	if(typeof addressbook == 'undefined' || !addressbook.enabled) return;
+	if(!egw.app('addressbook')) return;
 
 	$j('body').on('mouseenter', 'a.et2_email', function() {
 		$j(this).tooltip({
