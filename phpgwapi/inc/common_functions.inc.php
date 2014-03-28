@@ -74,8 +74,9 @@ if (!function_exists('imap_rfc822_parse_adrlist'))
 {
 	/**
 	 * parses an address string
-	 * Examples: Joe Doe <doe@example.com>, "Doe, Joe" <doe@example.com> , "\'Joe Doe\'" <doe@example.com>, postmaster@example.com, root;
-	 *			 "Giant; \"Big\" Box" <sysservices@example.net>, sysservices@example.net <sysservices@example.net>, ...
+	 * Examples: Joe Doe <doe@example.com>, "Doe, Joe" <doe@example.com> , "\'Joe Doe\'" <doe@example.com>,
+	 *			postmaster@example.com, root, "Joe on its way Down Under :-\)" <doe@example.com>,
+	 *			 "Giant; \"Big\" Box" <sysservices@example.net>, sysservices@example.net <sysservices@example.net>,
 	 * Invalid addresses, if detected, set host to '.SYNTAX-ERROR.'
 	 * @param string $address - A string containing addresses
 	 * @param string $default_host - The default host name
