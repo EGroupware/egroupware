@@ -176,4 +176,33 @@ class admin_hooks
 
 		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
+
+	/**
+	 * Actions for context menu of users
+	 *
+	 * @return array of actions
+	 */
+	public static function edit_user()
+	{
+		$actions = array();
+
+		if (!$GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))	// no rights to view
+		{
+			$actions[] = array(
+				'description' => 'Login History',
+				'url'         => '/index.php',
+				'extradata'   => 'menuaction=admin.admin_accesslog.index'
+			);
+		}
+
+		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		{
+			$actions[] = array(
+				'description' => 'Deny access',
+				'url'         => '/index.php',
+				'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
+			);
+		}
+		return $actions;
+	}
 }
