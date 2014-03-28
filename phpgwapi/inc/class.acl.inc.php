@@ -18,7 +18,8 @@
  * This can manage rights to 'run' applications, and limit certain features within an application.
  * It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
  * It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
- * $acl =& CreateObject('phpgwapi.acl',5);  // 5 is the user id
+ *
+ * $acl = new acl(5);  // 5 is the user id
  */
 class acl
 {
@@ -54,7 +55,7 @@ class acl
 	const DELETE    = 8;	// EGW_ACL_DELETE
 	const PRIVAT    = 16;	// EGW_ACL_PRIVATE can NOT use PRIVATE as it is a PHP keyword, using German PRIVAT instead!
 	const GROUPMGRS = 32;	// EGW_ACL_GROUP_MANAGERS
-	const CUSTOM1  = 64;	// EGW_ACL_CUSTOM_1
+	const CUSTOM1  = 64;		// EGW_ACL_CUSTOM_1
 	const CUSTOM2  = 128;	// EGW_ACL_CUSTOM_2
 	const CUSTOM3  = 256;	// EGW_ACL_CUSTOM_3
 
@@ -110,7 +111,7 @@ class acl
 		switch($_type)
 		{
 			case 'xmlrpc':
-			$xml_functions = array(
+				$xml_functions = array(
 					'read_repository' => array(
 						'function'  => 'read_repository',
 						'signature' => array(array(xmlrpcStruct)),
@@ -129,13 +130,12 @@ class acl
 					)
 				);
 				return $xml_functions;
-				break;
+
 			case 'soap':
 				return $this->soap_functions;
-				break;
+
 			default:
 				return array();
-				break;
 		}
 	}
 
@@ -300,7 +300,7 @@ class acl
 			return True;
 		}
 		$rights = 0;
-		foreach($this->data as $idx => $value)
+		foreach($this->data as $value)
 		{
 			if ($value['appname'] == $appname)
 			{
@@ -350,7 +350,7 @@ class acl
 		}
 		$rights = 0;
 
-		foreach($this->data as $idx => $value)
+		foreach($this->data as $value)
 		{
 			if ($value['appname'] == $appname &&
 				($value['location'] == $location ||	$value['location'] == 'everywhere') &&
@@ -423,7 +423,7 @@ class acl
 	 */
 	function delete_repository($app, $location, $accountid='')
 	{
-		static $cache_accountid;
+		static $cache_accountid = array();
 
 		$where = array(
 			'acl_appname'  => $app,
@@ -531,9 +531,9 @@ class acl
 	 */
 	function get_app_list_for_id($location, $required, $accountid = '')
 	{
-		static $cache_accountid;
+		static $cache_accountid = array();
 
-		if($cache_accountid[$accountid])
+		if(isset($cache_accountid[$accountid]))
 		{
 			$account_id = $cache_accountid[$accountid];
 		}
@@ -572,9 +572,9 @@ class acl
 	 */
 	function get_location_list_for_id($app, $required, $accountid = '')
 	{
-		static $cache_accountid;
+		static $cache_accountid = array();
 
-		if($cache_accountid[$accountid])
+		if(isset($cache_accountid[$accountid]))
 		{
 			$accountid = $cache_accountid[$accountid];
 		}
@@ -655,9 +655,9 @@ class acl
 	 */
 	function get_user_applications($accountid = '', $use_memberships=true, $add_implicit_apps=true)
 	{
-		static $cache_accountid;
+		static $cache_accountid = array();
 
-		if($cache_accountid[$accountid])
+		if(isset($cache_accountid[$accountid]))
 		{
 			$account_id = $cache_accountid[$accountid];
 		}
@@ -719,7 +719,6 @@ class acl
 			{
 				$grantor    = $row['acl_account'];
 				$rights     = $row['acl_rights'];
-				$granted_to = (int) $row['acl_location'];
 
 				if(!isset($grants[$grantor]))
 				{
