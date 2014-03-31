@@ -1590,6 +1590,20 @@ class infolog_ui
 
 			list($button) = @each($content['button']);
 			if (!$button && $action) $button = $action;	// action selectbox
+			//info_cc expects an comma separated string
+			//error_log(__METHOD__.__LINE__.array2string($content));
+			if (empty($content['info_cc'])) $content['info_cc'] = "";
+			if (is_array($content['info_cc']))
+			{
+				foreach($content['info_cc'] as $i => $value)
+				{
+					//imap_rfc822 should not be used, but it works reliable here, until we have some regex solution or use horde stuff
+					$addresses = imap_rfc822_parse_adrlist($value, '');
+					//error_log(__METHOD__.__LINE__.$value.'->'.array2string($addresses[0]));
+					$content['info_cc'][$i]=$addresses[0]->host ? $addresses[0]->mailbox.'@'.$addresses[0]->host : $addresses[0]->mailbox;
+				}
+				if (!empty($content['info_cc'])) $content['info_cc'] = implode(',',$content['info_cc']);
+			}
 			unset($content['button']);
 			if ($button)
 			{
@@ -1655,20 +1669,6 @@ class infolog_ui
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
 					$active_tab = $content['tabs'];
-					//info_cc expects an comma separated string
-					//error_log(__METHOD__.__LINE__.array2string($content));
-					if (empty($content['info_cc'])) $content['info_cc'] = "";
-					if (is_array($content['info_cc']))
-					{
-						foreach($content['info_cc'] as $i => $value)
-						{
-							//imap_rfc822 should not be used, but it works reliable here, until we have some regex solution or use horde stuff
-							$addresses = imap_rfc822_parse_adrlist($value, '');
-							//error_log(__METHOD__.__LINE__.$value.'->'.array2string($addresses[0]));
-							$content['info_cc'][$i]=$addresses[0]->host ? $addresses[0]->mailbox.'@'.$addresses[0]->host : $addresses[0]->mailbox;
-						}
-						$content['info_cc'] = implode(',',$content['info_cc']);
-					}
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
 						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
@@ -2119,6 +2119,7 @@ class infolog_ui
 		//error_log(substr($content['info_des'],1793,10));
 		//$content['info_des'] = substr($content['info_des'],0,1793);
 		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
+		//$content['info_cc'] is expected (by the widget) to be an array of emailaddresses, but is stored as comma separated string
 		if (!empty($content['info_cc'])&&!is_array($content['info_cc']))$content['info_cc'] = explode(',',$content['info_cc']);
 		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
