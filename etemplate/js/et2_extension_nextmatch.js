@@ -2746,6 +2746,11 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 		{
 			if(!value.app || !value.id) return null;
 
+			// If array with just one value, use a string instead for legacy server handling
+			if(typeof value.id == 'object' && value.id.shift && value.id.length == 1)
+			{
+				value.id = value.id.shift();
+			}
 			// If simple value, format it legacy string style, otherwise
 			// we return full value
 			if(typeof value.id == 'string')
