@@ -148,8 +148,10 @@ flag / unflag	mail	de	Markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	markiert
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
+flagged %1 messages as flagged in %2	mail	de	Markierung zugefügt %1 Nachrichten als  in %2
+flagged %1 messages as unflagged in %2	mail	de	Markierung von %1 Nachrichten entfernt %2
 flagged / unflagged	mail	de	Markierung
-folder	mail	de	Ablageordner
+folder	mail	de	Ordner
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 force html	mail	de	erzwinge HTML

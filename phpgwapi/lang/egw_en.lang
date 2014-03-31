@@ -160,6 +160,7 @@ choose a background color for the icons	common	en	Choose a background color for 
 choose a background image.	common	en	Choose a background image
 choose a background style.	common	en	Choose a background style
 choose a text color for the icons	common	en	Choose a text color for the icons
+choose file...	common	en	Choose file...
 choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
 choose time	common	en	Choose Time
@@ -813,6 +814,7 @@ tuvalu	common	en	TUVALU
 type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
+un-delete	common	en	Un-Delete
 unconnected nodes will be moved to %1.	admin	en	Unconnected nodes will be moved to %1.
 underline	common	en	Underline
 unicode	common	en	Unicode

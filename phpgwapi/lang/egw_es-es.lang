@@ -1,6 +1,9 @@
+%1 active file(s) with same name as directory inactivated!	admin	es-es	¡%1 ficheros activos con el mismo nombre como directorio inactivos!
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo
 %1 file	common	es-es	fichero %1
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
+%1 proxy of %2	common	es-es	%1 proxy de %2
+%1 to sync	groupdav	es-es	%1 para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
@@ -33,23 +36,33 @@ account is expired	common	es-es	La cuenta ha expirado
 accounts	common	es-es	Cuentas
 acl	common	es-es	LCA
 action	common	es-es	Acción
+action when category is an email address	groupdav	es-es	Acción cuando la categoría es una dirección de correo electrónico
 actions	common	es-es	Acciones
 active	common	es-es	Activo
+active directory requires ssl or tls to change passwords!	common	es-es	¡El directorio activo requiere SSL o TLS para cambiar las contraseñas!
 add	common	es-es	Añadir
 add %1 category for	common	es-es	Añadir %1 categoría para
 add category	common	es-es	Añadir categoría
+add current	common	es-es	Añadir actual
 add shortcut	common	es-es	Añadir acceso directo
 add sub	common	es-es	Añadir sub
+add user to responsibles	groupdav	es-es	Añadir usuario a los responsables
+add user to responsibles, removing evtl. previous category user	groupdav	es-es	Añadir usuario a los responsables, eliminando al usuario de la categoría anterior
 addressbook	common	es-es	Libreta de direcciones
+addressbooks to sync in addition to personal addressbook	groupdav	es-es	Libretas de direcciones a sincronizar además de la libreta personal
 admin	common	es-es	Administración
 administration	common	es-es	Administración
 afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
 all	common	es-es	Todos
+all addressbooks	groupdav	es-es	Todas las libretas de direcciones
 all fields	common	es-es	todos los campos
+all in one	groupdav	es-es	Todo en uno
 all languages	common	es-es	todos los idiomas
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	es-es	Permite modificar usuarios responsables de dispositivos que no los soportan, poniendo el correo electrónico de un usuario como categoría
 alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
+alt	common	es-es	Alt
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 american samoa	common	es-es	AMERICAN SAMOA
 an admin required that you must change your password upon login.	common	es-es	un administrador le ha solicitado que cambie su contraseña al iniciar la sesión.
@@ -63,6 +76,7 @@ antarctica	common	es-es	ANTARCTICA
 antigua and barbuda	common	es-es	ANTIGUA AND BARBUDA
 application	common	es-es	Aplicación
 apply	common	es-es	Aplicar
+apply the action on the whole query, not only the shown entries	common	es-es	Aplicar la acción a toda la consulta, NO solo a las entradas mostradas
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
 are you sure you want to delete this entry ?	common	es-es	¿Está seguro de querer borrar esta entrada?
@@ -111,11 +125,15 @@ bulgarian	common	es-es	Búlgaro
 burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
+calendars to sync in addition to personal calendar	groupdav	es-es	Calendarios a sincronizar además del calendario personal
 cambodia	common	es-es	CAMBODIA
 cameroon	common	es-es	Camerún
+can't create directory %1 to connect found unconnected nodes to it!	admin	es-es	¡No se puede crear el directorio %1 para conectarle los nodos encontrados sin conectar!
 canada	common	es-es	Canadá
 cancel	common	es-es	Cancelar
 cannot replace %1 because it is a directory	common	es-es	No se puede sustituir %1 porque es un directorio
+cannot set a category as parent, which is part of this categorys subtree!	common	es-es	¡No se puede establecar una categoría como superior que es parte del subárbol de la misma categoría!
+cannot set this cat as its own parent!	common	es-es	¡No se puede poner una categoría como superior de sí misma!
 cant open %1, needs ziparchive	common	es-es	No se puede abrir %1, se necesita ZipArchive
 cant open '%1' for %2	common	es-es	No se puede abrir '%1' para '%2'
 cape verde	common	es-es	Cabo Verde
@@ -143,14 +161,18 @@ choose a background style.	common	es-es	Elegir un estilo para el fondo
 choose a text color for the icons	common	es-es	Elegir un color del texto para los iconos
 choose the category	common	es-es	Elija la categoría
 choose the parent category	common	es-es	Elija la categoría superior
+choose time	common	es-es	Elegir hora
+chosen parent category no longer exists	common	es-es	La categoría superior elegida ya no existe
 christmas island	common	es-es	CHRISTMAS ISLAND
 clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
+clear window	common	es-es	Limpiar la ventana
 click	common	es-es	Al pulsar
 click here to resume your egroupware session.	common	es-es	Pulse aquí para continuar su sesión de eGroupWare.
 click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
 click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de navegación: %1
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	es-es	Los clientes que no indiquen explícitamente un quedan limitados a esta cantidad de días. Un límite demasiado alto puede causar problemas con algunos clientes.
 close	common	es-es	Cerrar
 close sidebox	common	es-es	Cerrar caja lateral
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
@@ -160,6 +182,7 @@ colombia	common	es-es	COLOMBIA
 common preferences	common	es-es	Preferencias comunes
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
+confirmation required	common	es-es	Se necesita confirmación
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 contacting server...	common	es-es	Conectando con el servidor...
@@ -172,6 +195,7 @@ could not contact server. operation timed out!	common	es-es	No se pudo conectar 
 create	common	es-es	Crear
 created by	common	es-es	Creado por
 croatia	common	es-es	CROACIA
+ctrl	common	es-es	Ctrl
 cuba	common	es-es	CUBA
 currency	common	es-es	Cambio
 current	common	es-es	Actual
@@ -188,9 +212,12 @@ december	common	es-es	Diciembre
 default category	common	es-es	Categoría predeterminada
 default height for the windows	common	es-es	Altura predeterminada para las ventanas
 default width for the windows	common	es-es	Ancho predeterminado para las ventanas
+del	common	es-es	Supr
 delete	common	es-es	Eliminar
 delete category	common	es-es	Borrar categoría
+delete file	common	es-es	Borrar fichero
 delete row	common	es-es	Eliminar una fila
+delete these entries	common	es-es	Borrar estas entradas
 delete this entry	common	es-es	eliminar esta entrada
 denmark	common	es-es	DINAMARCA
 description	common	es-es	Descripción
@@ -206,7 +233,9 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del parche para Internet Explorer 5.5 y superiores para mostrar transparencia en imágenes PNG?
 disabled	common	es-es	Deshabilitado
 display %s first	jscalendar	es-es	Mostrar %s primero
+distribution lists as groups	groupdav	es-es	Listas de distribución como grupos
 djibouti	common	es-es	DJIBOUTI
+do not notify	common	es-es	No notificar
 do not notify of these changes	common	es-es	No notificar estos cambios
 do you also want to delete all subcategories ?	common	es-es	¿Desea eliminar también todas las subcategorías?
 doctype:	common	es-es	DOCTYPE:
@@ -218,6 +247,7 @@ domestic	common	es-es	Doméstico
 dominica	common	es-es	DOMINICA
 dominican republic	common	es-es	REPUBLICA DOMINICANA
 done	common	es-es	Hecho
+dos international	common	es-es	DOS internacional
 download	common	es-es	Descargar
 drag to move	jscalendar	es-es	Arrastre para mover
 e-mail	common	es-es	Correo electrónico
@@ -235,7 +265,10 @@ egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
 email	common	es-es	Correo electrónico
 email-address of the user, eg. "%1"	common	es-es	Dirección de correo electrónico del usuario, ej. '%1'
+empty file	common	es-es	Fichero vacío
+enable logging	groupdav	es-es	Activar registro
 enabled	common	es-es	Habilitado
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	es-es	Activa el registro de tráfico CalDAV/CardDAV para diagnosticar problemas con los dispositivos.
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
@@ -249,18 +282,28 @@ error creating %1 %2 directory	common	es-es	Error creando el directorio %1 %2
 error deleting %1 %2 directory	common	es-es	Error eliminando el directorio %1 %2
 error renaming %1 %2 directory	common	es-es	Error renombrando el directorio %1 %2
 estonia	common	es-es	ESTONIA
+etag	common	es-es	ETag
 ethiopia	common	es-es	ETIOPIA
 everything	common	es-es	Todo
 exact	common	es-es	exacto
+failed to change mode of required directory "%1" to %2!	admin	es-es	¡Fallo al cambiar el modo del directorio requerido "%1" a "%2"!
+failed to change password.	common	es-es	Fallo al cambiar la contraseña.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	es-es	No se pudo conectar con el servidor, o se obtuvo una respuesta no válida. Intente volver a iniciar la sesión. Póngase en contacto con el administrador en caso de fallo.
+failed to create required directory "%1"!	admin	es-es	¡Fallo al crear el directorio requerido "%1"!
+failed to move unconnected %1 %2 to %3!	admin	es-es	¡Fallo al mover los desconectados %1 %2 a %3!
 falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	ISLAS FEROE
+favorite queries	common	es-es	Consultas favoritas
 fax number	common	es-es	Fax
 features of the editor?	common	es-es	¿Características del editor?
 february	common	es-es	Febrero
 fields	common	es-es	Campos
 fiji	common	es-es	FIJI
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	es-es	El fichero %1 no tiene contenido en el filesystem físico %2 -> ¡Fallo al renombrar el fichero!
+file %1 has no content in physical filesystem %2 --> file removed!	admin	es-es	El fichero %1 no tiene contenidos en el filesystem físico %2 ¡Se ha eliminado el fichero!
+file %1 has no content in physical filesystem %2!	admin	es-es	¡El fichero %1 no tiene contenidos en el filesystem físico %2!
 files	common	es-es	Ficheros:
+files without content in physical filesystem will be removed.	admin	es-es	Los ficheros sin contenido en el filesystem físico se eliminarán.
 filter	common	es-es	Filtro
 finland	common	es-es	FINLANDIA
 first name	common	es-es	Nombre de pila
@@ -271,6 +314,7 @@ fixme!	common	es-es	¡Corríjame!
 folder already exists.	common	es-es	La carpeta ya existe
 force selectbox	common	es-es	Forzar cuadro de selección
 forever	common	es-es	Para siempre
+found unconnected %1 %2!	admin	es-es	¡Se encontró desconexión %1 %2!
 france	common	es-es	FRANCIA
 french guiana	common	es-es	GUAYANA FRANCESA
 french polynesia	common	es-es	FRENCH POLYNESIA

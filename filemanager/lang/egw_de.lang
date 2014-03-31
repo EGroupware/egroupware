@@ -141,6 +141,7 @@ link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
+mail paste	filemanager	de	per Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert

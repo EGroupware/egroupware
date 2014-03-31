@@ -147,6 +147,8 @@ flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or Unflag a mail
 flagged	mail	en	flagged
 flagged %1 messages as %2 in %3	mail	en	flagged %1 messages as %2 in %3
+flagged %1 messages as flagged in %2	mail	en	flagged %1 messages as flagged in %2
+flagged %1 messages as unflagged in %2	mail	en	flagged %1 messages as unflagged in %2
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder settings	mail	en	Folder settings

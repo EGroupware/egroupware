@@ -160,6 +160,7 @@ choose a background color for the icons	common	de	Wählen Sie eine Hintergrundfa
 choose a background image.	common	de	Wählen Sie ein Hintergrundbild.
 choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
 choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
+choose file...	common	de	Dateien auswählen...
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 choose time	common	de	Uhrzeit auswählen
@@ -236,7 +237,7 @@ disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
-do not notify	common	de	Nicht Benachrichtigung
+do not notify	common	de	Nicht Benachrichtigen
 do not notify of these changes	common	de	Keine Benachrichtigung
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
@@ -813,6 +814,7 @@ tuvalu	common	de	TUVALU
 type	common	de	Typ
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
+un-delete	common	de	Gelöschte Einträge wiederherstellen
 unconnected nodes will be moved to %1.	admin	de	Nicht Verbundene Knoten werden nach %1 verschoben.
 underline	common	de	Unterstrichen
 unicode	common	de	Unicode

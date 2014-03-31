@@ -141,6 +141,7 @@ link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
 log out as superuser	filemanager	en	Log out as super user
 mail files	filemanager	en	Mail files
+mail paste	filemanager	en	Mail paste
 max folderlinks	admin	en	Max folder links
 mime type	filemanager	en	Mime type
 modified	filemanager	en	Modified

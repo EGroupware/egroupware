@@ -44,6 +44,7 @@ comment	filemanager	es-es	Comentario
 copied	filemanager	es-es	copiado
 copied %1 to %2	filemanager	es-es	Se ha copiado "%1" a "%2"
 copy	filemanager	es-es	Copiar
+copy into folder	filemanager	es-es	Copiar en la carpeta
 copy to	filemanager	es-es	Copiar a
 copy to clipboard	filemanager	es-es	Copiar al portapapeles
 could not copy %1 to %2	filemanager	es-es	No se pudo copiar "%1" a "%2"
@@ -76,6 +77,7 @@ directory successfully created.	filemanager	es-es	El directorio se ha creado cor
 directory with documents to insert entries	filemanager	es-es	Directorio con documentos para insertar entradas
 display and modification of content	filemanager	es-es	Mostrar y modificar el contenido
 display of content	filemanager	es-es	Mostar el contenido
+do you want to overwrite existing file %1 in directory %2?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1 en el directorio %2?
 do you want to overwrite the existing file %1?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1?
 download	filemanager	es-es	Descargar
 edit comments	filemanager	es-es	Editar comentarios
@@ -101,6 +103,7 @@ failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permi
 failed to create directory!	filemanager	es-es	¡Fallo al crear el directorio!
 favorites	filemanager	es-es	Favoritos
 file	filemanager	es-es	Archivo
+file %1 already exists	filemanager	es-es	El fichero %1 ya existe
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1
 file %1 may be too big. contact your systemadministrator for further info	filemanager	es-es	El fichero %1 puede ser demasiado grande. Póngase en contacto con su administrador para más información.
 file deleted.	filemanager	es-es	Se ha borrado el fichero
@@ -144,6 +147,7 @@ modified	filemanager	es-es	Modificado
 modified between	filemanager	es-es	Modificado entre
 modify all subdirectories and their content	filemanager	es-es	Modificar todos los subdirectorios y su contenido
 move	filemanager	es-es	Mover
+move into folder	filemanager	es-es	Mover dentro de la carpeta
 move to	filemanager	es-es	Mover a
 moved %1 to %2	filemanager	es-es	Se ha movido %1 a %2
 name of current user, all other contact fields are valid too	filemanager	es-es	Nombre del usuario actual, los demás campos del contacto también son válidos
@@ -184,14 +188,19 @@ save as	filemanager	es-es	Guardar como
 save changes	filemanager	es-es	Guardar cambios
 saved %1	filemanager	es-es	Guardado %1
 saving properties failed!	filemanager	es-es	¡Fallo al guardar las propiedades!
+saving setting for document merge failed!	filemanager	es-es	¡Fallo al guardar la configuración para mezcla de documentos!
 search for '%1'	filemanager	es-es	Buscar '%1'
 searchstring	filemanager	es-es	cadena de búsqueda
 select action...	filemanager	es-es	Seleccionar acción...
 select file to upload in current directory	filemanager	es-es	Seleccionar el fichero a subir al directorio actual
+select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
+setting for document merge saved.	filemanager	es-es	Se ha guardado la configuración para mezclar documentos.
 show	filemanager	es-es	Mostrar
 show hidden files	filemanager	es-es	Mostrar los ficheros ocultos
 show link "%1" in side box menu?	filemanager	es-es	Mostrar el enlace "%1" en el menú lateral
+show link "users and groups" in side box menu?	filemanager	es-es	¿Mostrar el enlace "Usuarios y grupos" en el menú lateral?
 show link "users and groups*" in side box menu?*	filemanager	es-es	¿Mostrar el enlace "Usuarios y grupos" en el menú del recuadro lateral?
+show link "your home directory" in side box menu?	filemanager	es-es	¿Mostrar el enlace "Su directorio de inicio" en el menú lateral?
 show link "your home directory*" in side box menu?*	filemanager	es-es	¿Mostrar el enlace "Directorio personal" en el menú del recuadro lateral?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	es-es	¿Mostrar enlace al directorio base del administrador de archivos (/) en el menú lateral?
 size	filemanager	es-es	Tamaño

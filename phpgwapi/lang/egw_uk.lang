@@ -138,7 +138,7 @@ email-address of the user, eg. "%1"	common	uk	email адреса користу�
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL eGroupWare.<br>наприклад: http://www.domain.com/egroupware &nbsp; або &nbsp; /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL eGroupWare.<br>наприклад: http://www.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно
 error	common	uk	Помилка
@@ -423,7 +423,7 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	uk	зверху
 total	common	uk	Всього
 trinidad and tobago	common	uk	ТРІНІДАД І ТОБАГО
-tuesday	common	uk	Середа
+tuesday	common	uk	вівторок
 tunisia	common	uk	ТУНІС
 turkey	common	uk	ТУРЦІЯ
 turkmenistan	common	uk	ТУРКМЕНІСТАН
