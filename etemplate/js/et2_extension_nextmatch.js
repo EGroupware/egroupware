@@ -1745,6 +1745,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header");
 		this._createHeader();
+
+		// Flag to avoid loops while updating filters
+		this.update_in_progress = false;
 	},
 
 	destroy: function() {
@@ -2092,6 +2095,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 */
 	setFilters: function(filters) {
 
+		// Avoid loops cause by change events
+		if(this.update_in_progress) return;
+		this.update_in_progress = true;
+
 		// Use an array mgr to hande non-simple IDs
 		var mgr = new et2_arrayMgr(filters);
 
@@ -2170,6 +2177,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			// Set activeFilters to current value
 			filters.searchletter = $j("td.lettersearch_active").attr("id");
 		}
+
+		// Reset flag
+		this.update_in_progress = false;
 	},
 
 	/**
@@ -2209,8 +2219,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				// Call previously set change function
 				var result = widget_change.call(_widget,_node);
 
-				// Update filters
-				if(result && _widget.isDirty()) {
+				// Update filters, if we're not already doing so
+				if(result && _widget.isDirty() && !header.update_in_progress) {
 					// Update dirty
 					_widget._oldValue = _widget.getValue();
 
