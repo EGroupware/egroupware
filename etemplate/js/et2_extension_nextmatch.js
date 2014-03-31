@@ -752,7 +752,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					{
 						if(columnDisplay[j].indexOf(_row[i].widget.id) == 0) {
 							_row[i].widget.options.fields = {};
-							for(var k = i; k < columnDisplay.length; k++)
+							for(var k = j; k < columnDisplay.length; k++)
 							{
 								if(columnDisplay[k].indexOf(_row[i].widget.prefix) == 0)
 								{
