@@ -782,7 +782,7 @@ var et2_link_entry = et2_inputWidget.extend(
 
 				_value = {
 					app: split.shift(),
-					id: split
+					id: split.length == 1 ? split[0] : split
 				};
 			}
 			else if(_value && this.options.only_app)
