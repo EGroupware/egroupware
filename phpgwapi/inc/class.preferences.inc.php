@@ -743,7 +743,12 @@ class preferences
 					'preference_app'   => $row['preference_app'],
 				),__LINE__,__FILE__);
 				// update instance-wide cache
-				egw_cache::setInstance(__CLASS__, $row['preference_owner'], $value);
+				$cached = egw_cache::getInstance(__CLASS__, $row['preference_owner']);
+				if($cached && $cached[$row['preference_app']])
+				{
+					$cached[$row['preference_app']] = $value;
+					egw_cache::setInstance(__CLASS__, $row['preference_owner'], $cached);
+				}
 			}
 		}
 		$GLOBALS['egw']->db->transaction_commit();
