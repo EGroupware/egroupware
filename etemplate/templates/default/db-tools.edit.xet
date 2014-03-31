@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="1.9.001">
+	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="1.9.002">
 		<grid>
 			<columns>
 				<column/>
 				<column/>
+				<column width="80"/>
+				<column width="80"/>
 				<column/>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="30"/>
+				<column width="40"/>
 				<column/>
 				<column/>
 				<column/>
@@ -21,22 +21,22 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="nmh">
+				<row class="th">
 					<description align="center" value="#" no_lang="1"/>
 					<description value="ColumnName"/>
 					<description value="Type"/>
 					<description value="Meta-type"/>
 					<description value="Precision"/>
 					<description value="Scale"/>
-					<description value="NOT NULL"/>
-					<description value="Primary Key"/>
+					<description align="center" value="NOT NULL"/>
+					<description align="center" value="Primary Key"/>
 					<description value="Unique"/>
 					<description value="Indexed"/>
 					<description value="Default"/>
 					<description value="Comment"/>
 					<description value="Indexoptions"/>
 					<description value="Foreign Key"/>
-					<button align="center" statustext="Add a new column (after the existing ones)" label="Add Column" id="add_column"/>
+					<button align="center" statustext="Add a new column (after the existing ones)" label="Add Column" id="add_column" image="new"/>
 				</row>
 				<row class="nmr">
 					<description align="center" id="Row${row}[n]" no_lang="1"/>
@@ -44,8 +44,8 @@
 					<menulist>
 						<menupopup statustext="type of the column" id="Row${row}[type]" no_lang="1"/>
 					</menulist>
-					<menulist class="selectboxFullWidth">
-						<menupopup statustext="meta-type of the column" id="Row${row}[meta]" no_lang="1" options=",,,,,,,0"/>
+					<menulist>
+						<menupopup statustext="meta-type of the column" id="Row${row}[meta]" no_lang="1" options=",,,,,,,0" class="selectboxFullWidth"/>
 					</menulist>
 					<textbox type="integer" align="center" statustext="length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8" id="Row${row}[precision]"/>
 					<textbox type="integer" statustext="scale for float" id="Row${row}[scale]"/>
@@ -57,7 +57,7 @@
 					<textbox id="Row${row}[comment]" size="20"/>
 					<textbox statustext="DB-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col" id="Row${row}[options]" size="8"/>
 					<textbox align="center" statustext="name of other table where column is a key from" id="Row${row}[fk]" size="8"/>
-					<button align="center" statustext="Deletes this column" label="Delete Column" id="delete[$row]"/>
+					<button align="center" statustext="Deletes this column" label="Delete Column" id="delete[$row]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
