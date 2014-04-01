@@ -272,6 +272,7 @@ class mail_compose
 			}
 			//error_log(__METHOD__.__LINE__.array2string($_content));
 		}
+
 		$composeCache = array();
 		if (isset($_content['composeID'])&&!empty($_content['composeID']))
 		{
@@ -357,6 +358,13 @@ class mail_compose
 		// someone clicked something like send, or saveAsDraft
 		// make sure, we are connected to the correct server for sending and storing the send message
 		$activeProfile = $composeProfile = $this->mail_bo->profileID; // active profile may not be the profile uised in/for compose
+		$activeFolderCache = egw_cache::getCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		if (!empty($activeFolderCache[$this->mail_bo->profileID]))
+		{
+			//error_log(__METHOD__.__LINE__.' CurrentFolder:'.$activeFolderCache[$this->mail_bo->profileID]);
+			$activeFolder = $activeFolderCache[$this->mail_bo->profileID];
+		}
+
 		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
 			($_content['button']['send'] || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
 		)
@@ -415,12 +423,57 @@ class mail_compose
 			}
 			if ($sendOK)
 			{
-				egw_framework::refresh_opener(lang('Message send successfully.'),'mail');
+				$workingFolder = $activeFolder;
+				$mode = 'compose';
+				if (isset($_content['mode']) && !empty($_content['mode']))
+				{
+					$mode = $_content['mode'];
+					if ($_content['mode']=='forward' && !empty($_content['processedmail_id']))
+					{
+						$_content['processedmail_id'] = explode(',',$_content['processedmail_id']);
+						foreach ($_content['processedmail_id'] as $k =>$rowid)
+						{
+							$fhA = mail_ui::splitRowID($rowid);
+							//$this->sessionData['uid'][] = $fhA['msgUID'];
+							//$this->sessionData['forwardedUID'][] = $fhA['msgUID'];
+							if (!empty($fhA['folder'])) $workingFolder = $fhA['folder'];
+						}
+					}
+					if ($_content['mode']=='reply' && !empty($_content['processedmail_id']))
+					{
+						$rhA = mail_ui::splitRowID($_content['processedmail_id']);
+						//$this->sessionData['uid'] = $rhA['msgUID'];
+						$workingFolder = $rhA['folder'];
+					}
+				}
+				$response = egw_json_response::get();
+				if ($activeProfile != $composeProfile)
+				{
+					// we need a message only, when account ids (composeProfile vs. activeProfile) differ
+					$response->call('opener.egw_message',lang('Message send successfully.'));
+				}
+				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
+				{
+					if ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder))
+					{
+						// we may need a refresh when on sent folder or in drafts, as drafted messages will/should be deleted after succeeded send action
+						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail');
+					}
+					else
+					{
+						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail',$_content['processedmail_id'],'update');
+					}
+				}
+				else
+				{
+					$response->call('opener.egw_message',lang('Message send successfully.'));
+				}
+				//egw_framework::refresh_opener(lang('Message send successfully.'),'mail');
 				egw_framework::window_close();
 			}
 			if ($sendOK == false)
 			{
-				egw_framework::refresh_opener(lang('Message send failed: %1',$message),'mail');
+				egw_framework::message(lang('Message send failed: %1',$message),'warning');// maybe error is more appropriate
 			}
 		}
 		if ($_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
@@ -430,7 +483,7 @@ class mail_compose
 			try
 			{
 				$_content['isDraft'] = 1;
-				$previouslyDrafted = $_content['lastdrafted'];
+				$previouslyDrafted = $_content['lastDrafted'];
 				// save as draft
 				$folder = $this->mail_bo->getDraftFolder();
 				$this->mail_bo->reopen($folder);
@@ -449,7 +502,7 @@ class mail_compose
 				if ($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder))
 				{
 					$draft_id = mail_ui::createRowID($folder, $messageUid);
-					error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$draft_id.'/'.$previouslyDrafted.' in folder:'.$folder);
+					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$draft_id.'/'.$previouslyDrafted.' in folder:'.$folder);
 					if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id)
 					{
 						$dhA = mail_ui::splitRowID($previouslyDrafted);
@@ -457,7 +510,7 @@ class mail_compose
 						$dmailbox = $dhA['folder'];
 						try
 						{
-							error_log(__METHOD__.__LINE__."->".print_r($duid,true).' folder:'.$dmailbox.' Method:'.'remove_immediately');
+							//error_log(__METHOD__.__LINE__."->".print_r($duid,true).' folder:'.$dmailbox.' Method:'.'remove_immediately');
 							$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
 						}
 						catch (egw_exception $e)
@@ -466,21 +519,25 @@ class mail_compose
 							error_log(__METHOD__.__LINE__.$error);
 						}
 					}
-					$_content['lastdrafted'] = $draft_id;
+					$_content['lastDrafted'] = $draft_id;
 					//$draftContent = $this->bocompose->getDraftData($this->mail_bo->icServer, $folder, $messageUid);
 					//$this->compose($draftContent,null,'to',true);
 					//return true;
 				}
-
-
 			}
 			catch (egw_exception_wrong_userinput $e)
 			{
+				$error = str_replace('"',"'",$e->getMessage());
+				error_log(__METHOD__.__LINE__.$error);
 				$savedOK = false;
 			}
+			//error_log(__METHOD__.__LINE__.' :'.$draft_id.'->'.$savedOK);
 			if ($savedOK)
 			{
 				egw_framework::message(lang('Message saved successfully.'),'mail');
+				$response = egw_json_response::get();
+				if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id) $response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$previouslyDrafted,'delete');
+				$response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$draft_id,'add');
 			}
 		}
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
@@ -1316,7 +1373,7 @@ class mail_compose
 			$content['serverID'] = $this->mail_bo->profileID;
 		}
 		$preserv['serverID'] = $content['serverID'];
-		$preserv['lastdrafted'] = $content['lastdrafted'];
+		$preserv['lastDrafted'] = $content['lastDrafted'];
 		$preserv['processedmail_id'] = $content['processedmail_id'];
 		$preserv['mode'] = $content['mode'];
 		// convert it back to checkbox expectations
@@ -1555,7 +1612,7 @@ class mail_compose
 			}
 		}
 		// if the message is located within the draft folder, add it as last drafted version (for possible cleanup on abort))
-		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = array('uid'=>$_uid,'folder'=>$_folder);
+		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = mail_ui::createRowID($_folder, $_uid);//array('uid'=>$_uid,'folder'=>$_folder);
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
@@ -1709,7 +1766,7 @@ class mail_compose
 		//_debug_array($headers); exit;
 		// check for Re: in subject header
 		$this->sessionData['subject'] 	= "[FWD] " . $mail_bo->decode_header($headers['SUBJECT']);
-		// the three arrtibutes below are substituted by processedmail_id and mode
+		// the three attributes below are substituted by processedmail_id and mode
 		//$this->sessionData['sourceFolder']=$_folder;
 		//$this->sessionData['forwardFlag']='forwarded';
 		//$this->sessionData['forwardedUID']=$_uid;
@@ -2506,9 +2563,9 @@ class mail_compose
 		$this->sessionData['to_tracker'] = $_formData['to_tracker'];
 		$this->sessionData['attachments']  = $_formData['attachments'];
 
-		if (isset($_formData['lastdrafted']) && !empty($_formData['lastdrafted']))
+		if (isset($_formData['lastDrafted']) && !empty($_formData['lastDrafted']))
 		{
-			$this->sessionData['lastdrafted'] = $_formData['lastdrafted'];
+			$this->sessionData['lastDrafted'] = $_formData['lastDrafted'];
 		}
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_formData['mode'].' PID:'.$_formData['processedmail_id']);
 		if (isset($_formData['mode']) && !empty($_formData['mode']))
@@ -2735,7 +2792,7 @@ class mail_compose
 		if (isset($this->sessionData['lastDrafted']))
 		{
 			$lastDrafted=array();
-			$dhA = mail_ui::splitRowID($this->sessionData['lastdrafted']);
+			$dhA = mail_ui::splitRowID($this->sessionData['lastDrafted']);
 			$lastDrafted['uid'] = $dhA['msgUID'];
 			$lastDrafted['folder'] = $dhA['folder'];
 			if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
