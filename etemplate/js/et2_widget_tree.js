@@ -393,7 +393,10 @@ var et2_tree = et2_inputWidget.extend(
 		if (treeObj == null) {
 			// Add a new container to the object manager which will hold the tree
 			// objects
-			treeObj = objectManager.addObject(this.id, null, EGW_AO_FLAG_IS_CONTAINER);
+			treeObj = objectManager.addObject(
+				new egwActionObject(this.id, objectManager, null, this._actionManager, EGW_AO_FLAG_IS_CONTAINER),
+				null, EGW_AO_FLAG_IS_CONTAINER
+			);
 		}
 
 		// Delete all old objects
