@@ -230,7 +230,8 @@
 			// display a message
 			if (egw_script.getAttribute('data-message'))
 			{
-				egw(window).message(JSON.parse(egw_script.getAttribute('data-message')));
+				var params = JSON.parse(egw_script.getAttribute('data-message')) || [''];
+				egw(window).message.apply(egw(window), params);
 			}
 			// hide location bar for mobile browsers
 			if (egw_script.getAttribute('data-mobile'))
