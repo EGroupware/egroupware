@@ -96,21 +96,8 @@ class preferences_settings
 				}
 				if (in_array($button, array('save','cancel')))
 				{
-					if ($content['current_app'] && ($app_data = $GLOBALS['egw_info']['user']['apps'][$content['current_app']]))
-					{
-						if ($app_data['index'])
-						{
-							egw::redirect_link('/index.php', 'menuaction='.$app_data['index'], $content['current_app']);
-						}
-						else
-						{
-							egw::redirect_link('/'.$content['current_app'].'/index.php', null, $content['current_app']);
-						}
-					}
-					else
-					{
-						egw::redirect_link('/index.php');
-					}
+					egw_json_response::get()->call('egw.message', $msg, $msg_type);
+					egw_framework::window_close();
 				}
 			}
 			$appname = $content['appname'] ? $content['appname'] : 'common';
@@ -130,7 +117,9 @@ class preferences_settings
 			$old_tab = $content['tabs'];
 		}
 		// we need to run under calling app, to be able to restore it to it's index page after
-		$GLOBALS['egw_info']['flags']['currentapp'] = $preserve['current_app'] = $content['current_app'];
+		$preserve['current_app'] = $content['current_app'];
+		$GLOBALS['egw_info']['flags']['currentapp'] = $content['current_app'] == 'common' ?
+			'preferences' : $content['current_app'];
 		egw_framework::includeCSS('preferences','app');
 
 		$sel_options = $readonlys = null;
@@ -148,7 +137,7 @@ class preferences_settings
 		}
 		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 
-		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve);
+		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve, 2);
 	}
 
 	/**

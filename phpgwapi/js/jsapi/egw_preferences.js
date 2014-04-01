@@ -97,7 +97,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		show_preferences: function (name, apps)
 		{
 			var current_app = this.app_name();
-			var query = {};
+			var query = {current_app: current_app};
 			// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
 			if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' ||
 				!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
@@ -112,11 +112,13 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 					case 'prefs':
 						query.menuaction ='preferences.preferences_settings.index';
 						if ($j.inArray(current_app, apps) != -1) query.appname=current_app;
+						egw.open_link(egw.link(url, query), '_blank', '900x450');
 						break;
 
 					case 'acl':
 						query.menuaction='preferences.preferences_acl.index';
 						query.acl_app=current_app;
+						egw.open_link(egw.link(url, query), '_blank', '900x450');
 						break;
 
 					case 'cats':
@@ -132,10 +134,9 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 							query.menuaction='preferences.preferences_categories_ui.index';
 							query.cats_app=current_app;
 						}
+						egw.link_handler(egw.link(url, query), current_app);
 						break;
 				}
-				query.current_app = current_app;
-				egw.link_handler(egw.link(url, query), current_app);
 			}
 		}
 	};

@@ -115,6 +115,8 @@ class admin_ui
 				'onExecute' => 'javaScript:app.admin.group',
 				'caption' => 'Access control',
 				'enableId' => '^/groups/-\\d+',
+				'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
+				'popup' => '900x450',
 				'icon' => 'lock',
 				'group' => 2,
 			),
@@ -186,14 +188,6 @@ class admin_ui
 					'onExecute' => 'javaScript:app.admin.account',
 					'group' => $group,
 				),
-				'acl' => array(
-					'caption' => 'Access control',
-					'allowOnMultiple' => false,
-					'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
-					'group' => $group,
-					'onExecute' => 'javaScript:app.admin.iframe_location',
-					'icon' => 'lock',
-				),
 			);
 			// generate urls for add/edit accounts via addressbook
 			$edit = egw_link::get_registry('addressbook', 'edit');
@@ -234,14 +228,14 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 						if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
 						{
 							$item['popup'] = $matches[2].'x'.$matches[3];
-							$item['onExecute'] = 'javaScript:nm_action';
 							if (isset($matches[5])) $item['tooltip'] = $matches[5];
 							unset($item['options']);
 						}
 					}
 					if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
 					if (empty($item['group'])) $item['group'] = $group;
-					if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.iframe_location';
+					if (empty($item['onExecute'])) $item['onExecute'] = $item['popup'] ?
+						'javaScript:nm_action' : 'javaScript:app.admin.iframe_location';
 					if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
 
 					$actions[$item['id']] = $item;

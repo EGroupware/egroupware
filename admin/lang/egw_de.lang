@@ -199,6 +199,7 @@ delete this user	admin	de	Benutzer löschen
 deleted	admin	de	gelöscht
 deletes this field	admin	de	löscht dieses Feld
 deliver extern	admin	de	Extern ausliefern
+deny access	admin	de	Zugriff verweigern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten

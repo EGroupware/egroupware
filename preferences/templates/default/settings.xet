@@ -36,8 +36,8 @@
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
 		</tabbox>
-		<button label="Save" id="button[save]" image="save" background_image="1"/>
-		<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
-		<button label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+		<button label="Save" id="button[save]"/>
+		<button label="Apply" id="button[apply]"/>
+		<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
 	</template>
 </overlay>

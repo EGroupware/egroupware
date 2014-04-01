@@ -433,9 +433,10 @@ class preferences_hooks
 		global $menuData;
 
 		$menuData[] = array(
-				'description'   => 'Preferences',
-				'url'           => '/index.php',
-				'extradata'     => 'menuaction=preferences.preferences_settings.index'
+			'description'   => 'Preferences',
+			'url'           => '/index.php',
+			'extradata'     => 'menuaction=preferences.preferences_settings.index',
+			'popup'         => '900x450',
 		);
 	}
 
@@ -446,6 +447,7 @@ class preferences_hooks
 	 */
 	static function admin($args)
 	{
+		unset($args);	// unused, but required by function signature
 		$appname = 'preferences';
 		$file = Array(
 			'Site configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),

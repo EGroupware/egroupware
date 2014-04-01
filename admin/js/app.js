@@ -272,14 +272,6 @@ app.classes.admin = AppJS.extend(
 				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
 				break;
 
-			case 'acl':
-				this.splitter.dock();
-				this.iframe.set_src(egw.link('/index.php', {
-					menuaction: 'admin.admin_acl.index',
-					account_id: _senders[0].id.split('/')[2]
-				}));
-				break;
-
 			default:
 				if (!_action.data.url)
 				{

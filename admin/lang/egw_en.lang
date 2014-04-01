@@ -199,6 +199,7 @@ delete this user	admin	en	Delete this user
 deleted	admin	en	deleted
 deletes this field	admin	en	Deletes this field
 deliver extern	admin	en	Deliver extern
+deny access	admin	en	Deny access
 deny access to access log	admin	en	Deny access to access log
 deny access to application registery	admin	en	Deny access to application registery
 deny access to applications	admin	en	Deny access to applications

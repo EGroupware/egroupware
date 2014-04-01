@@ -185,12 +185,21 @@ class admin_hooks
 	{
 		$actions = array();
 
+		$actions[] = array(
+			'id' => 'acl',
+			'caption' => 'Access control',
+			'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
+			'popup' => '900x450',
+			'icon' => 'lock',
+		);
+
 		if (!$GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))	// no rights to view
 		{
 			$actions[] = array(
 				'description' => 'Login History',
 				'url'         => '/index.php',
-				'extradata'   => 'menuaction=admin.admin_accesslog.index'
+				'extradata'   => 'menuaction=admin.admin_accesslog.index',
+				'icon'        => 'timesheet',
 			);
 		}
 
@@ -199,7 +208,8 @@ class admin_hooks
 			$actions[] = array(
 				'description' => 'Deny access',
 				'url'         => '/index.php',
-				'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
+				'extradata'   => 'menuaction=admin.uiaclmanager.list_apps',
+				'icon'        => 'cancel',
 			);
 		}
 		return $actions;
