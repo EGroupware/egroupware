@@ -594,7 +594,7 @@ jQuery.extend(et2_dialog,
 		};
 		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
-},
+	},
 
 
 	/**
