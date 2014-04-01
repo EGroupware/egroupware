@@ -4503,6 +4503,9 @@ table.nextmatch_header img {
   /*.background-clip(padding-box);*/
   border-color: #b4b4b4;
 }
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content > div {
+  background-color: #b3b3b3 !important;
+}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category:nth-last-of-type(-n+3) {
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
