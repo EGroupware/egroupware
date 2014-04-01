@@ -34,15 +34,15 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="dialog-header">
+				<row class="dialogHeader">
 					<description class="calendar_size120b" value="Freetime Search"/>
 					<description class="message" no_lang="1" id="msg"/>
 				</row>
-				<row class="dialog-operators high">
+				<row class="dialogOperators high">
 					<description value="Startdate / -time"/>
 					<date-time id="start" statustext="Startdate and -time of the search"/>
 				</row>
-				<row class="dialog-operators">
+				<row class="dialogOperators">
 					<description value="Duration"/>
 					<hbox>
 						<menulist>
@@ -51,7 +51,7 @@
 						<date-time id="end" statustext="Enddate / -time of the meeting, eg. for more then one day"/>
 					</hbox>
 				</row>
-				<row class="dialog-operators">
+				<row class="dialogOperators">
 					<description value="Timeframe"/>
 					<hbox>
 						<date-timeonly id="start_time" statustext="Timeframe to search"/>
@@ -61,7 +61,7 @@
 						<listbox type="select-dow" rows="3" id="weekdays" statustext="Weekdays to use in search"/>
 					</hbox>
 				</row>
-				<row class="dialog-operators">
+				<row class="dialogOperators">
 					<button label="New search" id="search" statustext="new search with the above parameters"/>
 					<hbox>
 						<menulist>
@@ -70,7 +70,7 @@
 						<button id="cancel" label="Cancel" statustext="Close the window" onclick="window.close();"/>
 					</hbox>
 				</row>
-				<row class="dialog-operators">
+				<row class="dialogOperators">
 					<template content="freetime" span="all" id="calendar.freetimesearch.rows"/>
 				</row>
 			</rows>

@@ -3,7 +3,7 @@
 <overlay>
 	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.003">
 		<vbox rows="1" cols="1" id="edit_series">
-			<hbox id="dialog-header" class="promptheader">
+			<hbox id="dialogHeader" class="promptheader">
 				<description value="This event is part of a series"/>
 			</hbox>
 			<vbox class="prompt" id="dialog-content">
