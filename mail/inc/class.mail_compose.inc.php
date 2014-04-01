@@ -1267,14 +1267,22 @@ class mail_compose
 			{
 				if (!empty($content[$destination])) $content[$destination] = (array)$content[$destination];
 			}
-			foreach((array)$content[$destination] as $key => $value) {
+			$addr_content = $content[strtolower($destination)];
+			// we clear the given address array and rebuild it
+			unset($content[strtolower($destination)]);
+			foreach((array)$addr_content as $key => $value) {
 				if ($value=="NIL@NIL") continue;
-				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
+				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)]))
+				{
+					// preserve/restore the value to content.
+					$content[strtolower($destination)][]=$value;
+					continue;
+				}
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
 				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
-				unset($content[strtolower($destination)]);
+				//unset($content[strtolower($destination)]);
 				foreach((array)$address_array as $addressObject) {
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
@@ -1284,7 +1292,6 @@ class mail_compose
 				}
 			}
 		}
-
 		if ($_content)
 		{
 			//input array of _content had no signature information but was seeded later, and content has a valid setting
@@ -1382,6 +1389,7 @@ class mail_compose
 		} else {
 			$content['mimeType']=0;
 		}
+
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
