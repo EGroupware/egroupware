@@ -46,6 +46,6 @@ tr.prefRow:hover .prefHelp {
 }
 .prefType, .prefApp {
 	font-size: 150%;
-	display: inline-block;
-	padding-bottom: 5px;
+	margin-top: 10px;
+	margin-right: 5px;
 }

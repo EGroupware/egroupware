@@ -22,12 +22,14 @@
 		</grid>
 	</template>
 	<template id="preferences.settings" template="" lang="" group="0" version="1.9.002">
-		<menulist>
-			<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
-		</menulist>
-		<menulist>
-			<menupopup id="type" onchange="1" class="prefType"/>
-		</menulist>
+		<hbox class="dialogHeader">
+			<menulist>
+				<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
+			</menulist>
+			<menulist>
+				<menupopup id="type" onchange="1" class="prefType"/>
+			</menulist>
+		</hbox>
 		<tabbox id="tabs">
 			<tabs>
 				<tab id="tab1" label="Settings"/>
@@ -36,8 +38,10 @@
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
 		</tabbox>
-		<button label="Save" id="button[save]"/>
-		<button label="Apply" id="button[apply]"/>
-		<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
+		<hbox class="dialogFooterToolbar" width="100%">
+			<button label="Save" id="button[save]"/>
+			<button label="Apply" id="button[apply]"/>
+			<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
+		</hbox>
 	</template>
 </overlay>
