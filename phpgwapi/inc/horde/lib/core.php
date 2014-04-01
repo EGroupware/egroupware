@@ -23,14 +23,14 @@ ini_set('magic_quotes_runtime', 0);
 // ini_set('include_path', dirname(__FILE__) . PATH_SEPARATOR . ini_get('include_path'));
 //set_include_path(dirname(__FILE__). '/../../horde/' . PATH_SEPARATOR . dirname(__FILE__). '/../../../../egw-pear/' . PATH_SEPARATOR . get_include_path());
 
-@define('EGW_BASE', dirname(dirname(__FILE__) . '/../../../../rpc.php'));
+@define('EGW_BASE', realpath(dirname(dirname(__FILE__) . '/../../../../rpc.php')));
 // Check for a prior definition of HORDE_BASE (perhaps by an
 // auto_prepend_file definition for site customization).
 if (!defined('HORDE_BASE')) {
     @define('HORDE_BASE', EGW_BASE . '/phpgwapi/inc/horde/');
 }
 
-set_include_path(HORDE_BASE . PATH_SEPARATOR . EGW_BASE . '/egw-pear/' . PATH_SEPARATOR . get_include_path());
+$save_include_path = set_include_path(HORDE_BASE . PATH_SEPARATOR . EGW_BASE . '/egw-pear/' . PATH_SEPARATOR . get_include_path());
 /* PEAR base class. */
 include_once 'PEAR.php';
 
@@ -52,3 +52,5 @@ if (class_exists('Browser')) {
     $browser = &Browser::singleton();
 }
 */
+// restore EGroupware include path to NOT conflict with new Horde code installed in include-path
+set_include_path($save_include_path);
