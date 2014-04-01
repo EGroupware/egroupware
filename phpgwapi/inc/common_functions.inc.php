@@ -1486,10 +1486,12 @@ function __autoload($class)
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
 		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
 		// include PEAR and PSR0 classes from include_path
-		!isset($GLOBALS['egw_info']['apps'][$app]) && @include_once($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
+		// need to use include (not include_once) as eg. a previous included EGW_API_INC/horde/Horde/String.php causes
+		// include_once('Horde/String.php') to return true, even if the former was included with an absolute path
+		!isset($GLOBALS['egw_info']['apps'][$app]) && @include($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
 	{
-		//error_log("autoloaded class $class from $file");
 		include_once($file);
+		//error_log("autoloading class $class by include_once($file)");
 	}
 	// allow apps to define an own autoload method
 	elseif (isset($GLOBALS['egw_info']['flags']['autoload']) && is_callable($GLOBALS['egw_info']['flags']['autoload']))
