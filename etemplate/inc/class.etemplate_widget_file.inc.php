@@ -31,7 +31,6 @@ class etemplate_widget_file extends etemplate_widget
 		{
 			$this->setElementAttribute($this->id, 'multiple', true);
 		}
-		$this->setElementAttribute($this->id, 'max_file_size', egw_vfs::int_size(ini_get('upload_max_filesize')));
 	}
 
 	/**
@@ -113,6 +112,13 @@ class etemplate_widget_file extends etemplate_widget
 	 */
 	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
 	{
+		// Chunks get mangled a little
+		if($file['name'] == 'blob' && $file['type'] == 'application/octet-stream')
+		{
+			$file['name'] = $_POST['resumableFilename'];
+			$file['type'] = $_POST['resumableType'];
+		}
+
 		if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0 && is_uploaded_file($file['tmp_name'])) {
 			// Mime check
 			if($mime)
@@ -127,15 +133,31 @@ class etemplate_widget_file extends etemplate_widget
 					return false;
 				}
 			}
-			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+			
+			// Resumable / chunked uploads
+			// init the destination file (format <filename.ext>.part<#chunk>
+			// the file is stored in a temporary directory
+			$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/'.str_replace('/','_',$_POST['resumableIdentifier']);
+			$dest_file = $temp_dir.'/'.str_replace('/','_',$_POST['resumableFilename']).'.part'.(int)$_POST['resumableChunkNumber'];
+
+			// create the temporary directory
+			if (!is_dir($temp_dir))
 			{
-				$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
+				mkdir($temp_dir, 0755, true);
+			}
+
+			// move the temporary file
+			if (!move_uploaded_file($file['tmp_name'], $dest_file))
+			{
+				$file_date[$file['name']] = 'Error saving (move_uploaded_file) chunk '.(int)$_POST['resumableChunkNumber'].' for file '.$_POST['resumableFilename'];
 			}
 			else
 			{
-				$new_file = $file['tmp_name'].'+';
+				// check if all the parts present, and create the final destination file
+				$new_file = self::createFileFromChunks($temp_dir, str_replace('/','_',$_POST['resumableFilename']),
+						$_POST['resumableChunkSize'], $_POST['resumableTotalSize']);
 			}
-			if(move_uploaded_file($file['tmp_name'], $new_file)) {
+			if( $new_file) {
 				$file['tmp_name'] = $new_file;
 
 				// Data to send back to client
@@ -148,6 +170,86 @@ class etemplate_widget_file extends etemplate_widget
 			}
 		}
 	}
+
+	/**
+	 *
+	 * Check if all the parts exist, and
+	 * gather all the parts of the file together
+	 *
+	 * From Resumable samples - http://resumablejs.com/
+	 * @param string $dir - the temporary directory holding all the parts of the file
+	 * @param string $fileName - the original file name
+	 * @param string $chunkSize - each chunk size (in bytes)
+	 * @param string $totalSize - original file size (in bytes)
+	 */
+	private static function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize) {
+
+		// count all the parts of this file
+		$total_files = 0;
+		foreach(scandir($temp_dir) as $file) {
+			if (stripos($file, $fileName) !== false) {
+				$total_files++;
+			}
+		}
+
+		// check that all the parts are present
+		// the size of the last part is between chunkSize and 2*$chunkSize
+		if ($total_files * $chunkSize >=  ($totalSize - $chunkSize + 1)) {
+			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+			{
+				$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
+			}
+			else
+			{
+				$new_file = $file['tmp_name'].'+';
+			}
+
+			// create the final destination file
+			if (($fp = fopen($new_file, 'w')) !== false) {
+				for ($i=1; $i<=$total_files; $i++) {
+					fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
+				}
+				fclose($fp);
+			} else {
+				_log('cannot create the destination file');
+				return false;
+			}
+
+			// rename the temporary directory (to avoid access from other
+			// concurrent chunks uploads) and than delete it
+			if (rename($temp_dir, $temp_dir.'_UNUSED')) {
+				self::rrmdir($temp_dir.'_UNUSED');
+			} else {
+				self::rrmdir($temp_dir);
+			}
+
+			return $new_file;
+		}
+
+		return false;
+	}
+
+	/**
+	* Delete a directory RECURSIVELY
+	* @param string $dir - directory path
+	* @link http://php.net/manual/en/function.rmdir.php
+	*/
+   private static function rrmdir($dir) {
+	   if (is_dir($dir)) {
+		   $objects = scandir($dir);
+		   foreach ($objects as $object) {
+			   if ($object != "." && $object != "..") {
+				   if (filetype($dir . "/" . $object) == "dir") {
+					   rrmdir($dir . "/" . $object);
+				   } else {
+					   unlink($dir . "/" . $object);
+				   }
+			   }
+		   }
+		   reset($objects);
+		   rmdir($dir);
+	   }
+   }
 
 	/**
 	 * Validate input

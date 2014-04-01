@@ -53,6 +53,10 @@ div.filemanager_navigation > label > input {
 input#filemanager-index_upload {
 	width: 315px;
 }
+#filemanager-index-buttons div.et2_file .progress {
+  position: absolute;
+  right: 0px;
+}
 
 /**
  * Select file dialog

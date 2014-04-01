@@ -31,7 +31,6 @@ class etemplate_widget_link extends etemplate_widget
 		if($xml) {
 			parent::__construct($xml);
 		}
-		$this->setElementAttribute($this->id.'_file', 'max_file_size', egw_vfs::int_size(ini_get('upload_max_filesize')));
 	}
 
 	/* Changes all link widgets to template

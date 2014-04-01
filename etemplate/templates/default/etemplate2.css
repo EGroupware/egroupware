@@ -449,7 +449,6 @@ div.et2_file {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
-	overflow: hidden;
 	width: 150px;
 }
 .et2_file .progress {
@@ -466,9 +465,11 @@ div.et2_file {
 }
 /* Remove icon displayed when hovering */
 .et2_file .progress li div.remove {
-  display: none;
+  display: inline-block;
   cursor: pointer;
   margin: 0px;
+  width: 16px;
+  height: 16px;
 }
 .et2_file .progress li:hover div.remove {
   width: 16px;
@@ -844,6 +845,7 @@ div.message.floating {
   background-image: url(images/tick.png);
   background-repeat: no-repeat;
   padding-left: 20px;
+  white-space: nowrap;
 }
 .message.hint {
   font-style: normal;

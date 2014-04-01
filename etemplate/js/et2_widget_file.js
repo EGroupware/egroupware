@@ -14,7 +14,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
-	phpgwapi.jquery.jquery.html5_upload;
+	phpgwapi.Resumable.resumable;
 */
 
 /**
@@ -34,8 +34,8 @@ var et2_file = et2_inputWidget.extend(
 		"max_file_size": {
 			"name": "Maximum file size",
 			"type": "integer",
-			"default":"8388608",
-			"description": "Largest file accepted, in bytes.  Subject to server limitations.  8Mb = 8388608"
+			"default":0,
+			"description": "Largest file accepted, in bytes.  Subject to server limitations.  8MB = 8388608"
 		},
 		"mime": {
 			"name": "Allowed file types",
@@ -115,39 +115,24 @@ var et2_file = et2_inputWidget.extend(
 		this.asyncOptions = jQuery.extend({
 			// Callbacks
 			onStart: function(event, file_count) { 
-				// Hide any previous errors
-				self.hideMessage(); 
 				return self.onStart(event, file_count); 
 			},
 			onFinish: function(event, file_count) { 
-				if(self.onFinish.apply(self, [event, file_count]))
-				{
-					// Fire legacy change action when done
-					self.change(self.input);
-				}
+				self.onFinish.apply(self, [event, file_count])
 			},
 			onStartOne: function(event, file_name, index, file_count) { 
-				// Here 'this' is the input
-				if(self.checkMime(this.files[index]))
-				{
-					return self.createStatus(event,file_name, index,file_count);
-				}
-				else
-				{
-					// Wrong mime type - show in the list of files
-					return self.createStatus(
-						self.egw().lang("File is of wrong type (%1 != %2)!", this.files[index].type, self.options.mime),
-						file_name
-					);
-				}
+				
 			},
 			onFinishOne: function(event, response, name, number, total) { return self.finishUpload(event,response,name,number,total);},
 			onProgress: function(event, progress, name, number, total) { return self.onProgress(event,progress,name,number,total);},
 			onError: function(event, name, error) { return self.onError(event,name,error);},
-			sendBoundary: window.FormData || jQuery.browser.mozilla,
 			beforeSend: function(form) { return self.beforeSend(form);},
-			url: egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_file.ajax_upload.etemplate"),
-			autoclear: !(this.options.onchange)
+
+
+			target: egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_file.ajax_upload.etemplate"),
+			query: function(file) {return self.beforeSend(file);},
+			// Disable checking for already uploaded chunks
+			testChunks: false
 		},this.asyncOptions);
 		this.asyncOptions.fieldName = this.options.id;
 		this.createInputWidget();
@@ -188,7 +173,12 @@ var et2_file = et2_inputWidget.extend(
 		// Check for File interface, should fall back to normal form submit if missing
 		if(typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined")
 		{
-			this.input.html5_upload(this.asyncOptions);
+			this.resumable = new Resumable(this.asyncOptions);
+			this.resumable.assignBrowse(this.input);
+			this.resumable.on('fileAdded', jQuery.proxy(this._fileAdded, this));
+			this.resumable.on('fileProgress', jQuery.proxy(this._fileProgress, this));
+			this.resumable.on('fileSuccess', jQuery.proxy(this.finishUpload, this));
+			this.resumable.on('complete', jQuery.proxy(this.onFinish, this));
 		}
 		else
 		{
@@ -229,7 +219,10 @@ var et2_file = et2_inputWidget.extend(
 		{
 			var widget = this.getRoot().getWidgetById(this.options.drop_target);
 			var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
-			$j(drop_target).off("."+this.id);
+			if(drop_target)
+			{
+				this.resumable.unAssignDrop(drop_target);
+			}
 		}
 		
 		this.options.drop_target = new_target;
@@ -241,48 +234,7 @@ var et2_file = et2_inputWidget.extend(
 		var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
 		if(drop_target)
 		{
-			// Tell jQuery to include this property
-			jQuery.event.props.push('dataTransfer');
-			var self = this;
-			drop_target.ondrop =function(event) {
-					return false;
-			};
-			$j(drop_target)
-				.on("drop."+this.id, jQuery.proxy(function(event) {
-					event.stopPropagation();
-					event.preventDefault();
-					this.input.removeClass("ui-state-active");
-					if(event.dataTransfer && event.dataTransfer.files.length > 0)
-					{
-						this.input[0].files = event.dataTransfer.files;
-					}
-					return false;
-				}, this))
-				.on("dragenter."+this.id,function(e) {
-					// Accept the drop if at least one mimetype matches
-					// Individual files will be rejected later
-					var mime_ok = false;
-					for(var file in e.dataTransfer.files)
-					{
-						mime_ok = mime_ok || self.checkMime(file);
-					}
-					if(!self.disabled && mime_ok)
-					{
-						self.input.addClass("ui-state-active");
-					}
-					// Returning true cancels, return false to allow
-					return self.disabled || !mime_ok;
-				})
-				.on("dragleave."+this.id, function(e) {
-					self.input.removeClass("ui-state-active");
-					// Returning true cancels, return false to allow
-					return self.disabled
-				})
-				.on("dragover."+this.id, function(e) {
-					// Returning true cancels, return false to allow
-					return self.disabled;
-				})
-				.on("dragend."+this.id, false);
+			this.resumable.assignDrop(drop_target);
 		}
 		else
 		{
@@ -396,27 +348,58 @@ var et2_file = et2_inputWidget.extend(
 		return false;
 	},
 
+	_fileAdded: function(file,event) {
+		// Trigger start of uploading, calls callback
+		if(!this.resumable.isUploading())
+		{
+			if (!(this.onStart(event,this.resumable.files.length))) return;
+		}
+
+		// Here 'this' is the input
+		if(this.checkMime(file.file))
+		{
+			if(this.createStatus(event,file))
+			{
+				// Actually start uploading
+				this.resumable.upload();
+			}
+		}
+		else
+		{
+			// Wrong mime type - show in the list of files
+			return self.createStatus(
+				self.egw().lang("File is of wrong type (%1 != %2)!", this.files[index].type, self.options.mime),
+				file_name
+			);
+		}
+
+	},
+	
 	/**
 	 * Add in the request id
 	 */
 	beforeSend: function(form) {
 		var instance = this.getInstanceManager();
-		// Form object available, mess with it directly
-		if(form) {
-			return form.append("request_id", instance.etemplate_exec_id);
-		}
-
-		// No Form object, add in as string
-		return 'Content-Disposition: form-data; name="request_id"\r\n\r\n'+instance.etemplate_exec_id+'\r\n';
+		
+		return {
+			request_id: instance.etemplate_exec_id,
+			widget_id: this.id
+		};
 	},
 
 	/**
 	 * Disables submit buttons while uploading
 	 */
 	onStart: function(event, file_count) {
+		// Hide any previous errors
+		this.hideMessage();
+
+		// Disable buttons
 		this.disabled_buttons = $j("input[type='submit'], button").not("[disabled]").attr("disabled", true);
 
 		event.data = this;
+
+		// Callback
 		if(this.options.onStart) return et2_call(this.options.onStart, event, file_count);
 		return true;
 	},
@@ -424,14 +407,34 @@ var et2_file = et2_inputWidget.extend(
 	/**
 	 * Re-enables submit buttons when done
 	 */
-	onFinish: function(event, file_count) {
+	onFinish: function() {
 		this.disabled_buttons.attr("disabled", false);
+		
+		var file_count = this.resumable.files.length;
+
+		// Remove files from list
+		for(var i = 0; i < this.resumable.files.length; i++)
+		{
+			this.resumable.removeFile(this.resumable.files[i]);
+		}
+
+		var event = new Event('upload');
 		event.data = this;
+
+		var result = false;
 		if(this.options.onFinish && !jQuery.isEmptyObject(this.getValue()))
 		{
-			return et2_call(this.options.onFinish, event, file_count);
+			result =  et2_call(this.options.onFinish, event, file_count);
 		}
-		return (file_count == 0 || !jQuery.isEmptyObject(this.getValue()));
+		else
+		{
+			result = (file_count == 0 || !jQuery.isEmptyObject(this.getValue()));
+		}
+		if(result)
+		{
+			// Fire legacy change action when done
+			this.change(this.input);
+		}
 	},
 
 	
@@ -441,14 +444,13 @@ var et2_file = et2_inputWidget.extend(
 	 *
 	 * @param _event Either the event, or an error message
 	 */
-	createStatus: function(_event, file_name, index, file_count) {
+	createStatus: function(_event, file) {
 		var error = (typeof _event == "object" ? "" : _event);
-		if(this.input[0].files[index]) {
-			var file = this.input[0].files[index];
-			if(file.size > this.options.max_file_size) {
-				error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
-			}
+
+		if(this.options.max_file_size && file.size > this.options.max_file_size) {
+			error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
 		}
+		
 		if(this.options.progress)
 		{
 			var widget = this.getRoot().getWidgetById(this.options.progress);
@@ -460,10 +462,11 @@ var et2_file = et2_inputWidget.extend(
 		}
 		if(this.progress)
 		{
-			var status = $j("<li file='"+file_name+"'>"+file_name
+			var fileName = file.fileName || 'file';
+			var status = $j("<li data-file='"+fileName+"'>"+fileName
 					+"<div class='remove'/><span class='progressBar'><p/></span></li>")
 				.appendTo(this.progress);
-			$j("div.remove",status).click(this, this.cancel);
+			$j("div.remove",status).on('click', file, jQuery.proxy(this.cancel,this));
 			if(error != "")
 			{
 				status.addClass("message ui-state-error");
@@ -474,10 +477,10 @@ var et2_file = et2_inputWidget.extend(
 		return error == "";
 	},
 
-	onProgress: function(event, percent, name, number, total) {
+	_fileProgress: function(file) {
 		if(this.progress)
 		{
-			$j("li[file='"+name+"'] > span.progressBar > p").css("width", Math.ceil(percent*100)+"%");
+			$j("li[data-file='"+file.fileName+"'] > span.progressBar > p").css("width", Math.ceil(file.progress()*100)+"%");
 
 		}
 		return true;
@@ -490,7 +493,9 @@ var et2_file = et2_inputWidget.extend(
 	/**
 	 * A file upload is finished, update the UI
 	 */
-	finishUpload: function(event, response, name, number, total) {
+	finishUpload: function(file, response) {
+		var name = file.fileName || 'file';
+
 		if(typeof response == 'string') response = jQuery.parseJSON(response);
 		if(response.response[0] && typeof response.response[0].data.length == 'undefined') {
 			if(typeof this.options.value != 'object') this.options.value = {};
@@ -498,7 +503,7 @@ var et2_file = et2_inputWidget.extend(
 				if(typeof response.response[0].data[key] == "string")
 				{
 					// Message from server - probably error
-					$j("[file='"+name+"']",this.progress)
+					$j("[data-file='"+name+"']",this.progress)
 						.addClass("error")
 						.css("display", "block")
 						.text(response.response[0].data[key]);
@@ -508,21 +513,23 @@ var et2_file = et2_inputWidget.extend(
 					this.options.value[key] = response.response[0].data[key];
 					if(this.progress)
 					{
-						$j("[file='"+name+"']",this.progress).addClass("message success");
+						$j("[data-file='"+name+"']",this.progress).addClass("message success");
 					}
 				}
 			}
 		}
 		else if (this.progress)
 		{
-			$j("[file='"+name+"']",this.progress)
+			$j("[data-file='"+name+"']",this.progress)
 				.addClass("ui-state-error")
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
 		}
+
+		// Callback
 		if(this.options.onFinishOne)
 		{
-			return et2_call(this.options.onFinishOne,event,response,name,number,total);
+			return et2_call(this.options.onFinishOne,event,response,name);
 		}
 		return true;
 	},
@@ -530,18 +537,19 @@ var et2_file = et2_inputWidget.extend(
 	/**
 	 * Remove a file from the list of values
 	 */
-	remove_file: function(filename)
+	remove_file: function(file)
 	{
 		//console.info(filename);
 		for(var key in this.options.value)
 		{
-			if(this.options.value[key].name == filename)
+			if(this.options.value[key].name == file.fileName)
 			{
 				delete this.options.value[key];
-				$j('[file="'+filename+'"]',this.node).remove();
+				$j('[data-file="'+file.fileName+'"]',this.node).remove();
 				return;
 			}
 		}
+		if(!file.isComplete()) file.cancel();
 	},
 
 	/**
@@ -551,8 +559,10 @@ var et2_file = et2_inputWidget.extend(
 	{
 		e.preventDefault();
 		// Look for file name in list
-		var target = $j(e.target).parents("li.message");
-		e.data.remove_file.apply(e.data,[target.attr("file")]);
+		var target = $j(e.target).parents("li");
+		
+		this.remove_file(e.data);
+
 		// In case it didn't make it to the list (error)
 		target.remove();
 		$j(e.target).remove();
