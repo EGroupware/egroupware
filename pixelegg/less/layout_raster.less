@@ -42,6 +42,7 @@
 
     width: 100%;
     float: left;
+    background-color: @egw_color_2_e;
 
     /* Logo EGW or Company - left top*/
     #egw_divLogo {
@@ -51,7 +52,7 @@
                     margin-left: -8px;
                     text-align: center;
                     height: 45px;
-                    .background_color_5_gray;
+                    /*.background_color_5_gray;*/
 
                     img {
                         width: 209px;
@@ -59,7 +60,7 @@
                         position: absolute;
                         top: 0.41em;
                         left: 1em;
-                        .background_color_5_gray;
+                        /*.background_color_5_gray;*/
                     }
 
                 }
@@ -80,36 +81,47 @@
 
     #egw_fw_topmenu{
 
-        
-        
+
+
         #egw_fw_topmenu_items {
             float: left;
-            padding-top: 10px;
+            padding-top: 14px;
             width: 70%;
 
             ul {
+                margin: 5px 2px;
+
                 li{
-                    .color_100_gray;
+                    color: @gray_0;
                     /*.Button_size_square_32;*/
-                    padding: 0.3em 0.4em;
-                    .Complete_Button_normal;
-                    background-color: @gray_10;
+                    padding: 8px 10px;
+                    /*.Complete_Button_normal;*/
+                    /*background-color: @gray_10;*/
 
 
-                    &:hover{.Complete_Button_hover; color: @gray_100;}
+                    &:hover{.Complete_Button_hover; color: @gray_0;}
                     &:active {.Complete_Button_active;}
                     .transition (0.2s, ease-out);
 
                     a {
-                        .color_100_gray;
+                        color: @gray_100;
                         text-decoration: none;
-                        .dimension_height_s;
+                        .dimension_height_l;
                         /*font-size: 1.1em;*/
+                        .fontsize_l;
+                        line-height: 1.5em;
+
 
                         &:hover {
-                            .color_50_gray;
+                            color: @gray_10;
                             border-color: @gray_50;
                             text-decoration: none !important;
+                        }
+
+                        &:before {
+                                /*.img_filter_gray;*/
+                                /*-webkit-filter: grayscale(100%) brightness(100%) contrast(100%);*/
+                                /*-webkit-filter: invert(100%);*/
                         }
                     }
 
@@ -126,10 +138,12 @@
                     margin-left: 0px;
                     &:before {
                         padding-right: 20px;
+                        .fontsize_l;
                         content: " ";
                         background-image: url(../images/topmenu_items/home.png);
                         background-repeat: no-repeat;
-                        .dimension_width_height_xs;
+                        background-size: 20px 20px;
+                        .dimension_width_height_m;
                     }
 
                 }
@@ -143,6 +157,7 @@
                         content: "";
                         background-image: url(../images/topmenu_items/setup.png);
                         background-repeat: no-repeat;
+/*                        background-size: 20px 20px;*/
                         .dimension_width_height_xs;
                     }
                 }
@@ -246,6 +261,7 @@
     float: left;
     position: relative;
     left: -5px;
+    cursor: pointer;
 }
 
 /*Icon ARROW UP*/
@@ -257,6 +273,7 @@
     display: block;
     margin-top: -36px;
     margin-left: 40px;
+    cursor: pointer;
 
 }
 
@@ -289,9 +306,9 @@
     margin-top: 0px;
     z-index: 200;
     .Button_size_square_16;
-    .border_normal;
-    .box_shadow_standard_light;
-    .border_radius_button_normal;
+    /*.border_normal;*/
+    /*.box_shadow_standard_light;*/
+    /*.border_radius_button_normal;*/
     padding: 0.5em;
     top: 5px;
     position: fixed;
@@ -335,14 +352,14 @@
 
 
 /*#################################################
-/* Second Line  
+/* Second Line
 /* e.g. Name / Datum / angemeldete User
 ###################################################*/
 
 
 #egw_fw_topmenu_info_items {
 
-    bottom: 0px;
+/*    bottom: 0px;
     right: 0px;
     padding-right: 0px;
     position: relative;
@@ -362,19 +379,15 @@
     -webkit-flex-direction: row;
     -webkit-justify-content: flex-start;
     -ms-flex-direction: row;
-    -ms-justify-content: flex-start;
-    
-    
+    -ms-justify-content: flex-start;*/
+
+
     // move to bottom of the page
-/*    bottom: 3px;
-    display: flex;
-    float: right;
-    height: 0;
-    margin-right: 20px;
-    padding-right: 20px;
     position: fixed;
+    z-index: 1000;
+    bottom: -8px;
     right: 5px;
-    z-index: 1000;*/
+    padding-right: 20px;
 
 
     .topmenu_info_item {
@@ -439,30 +452,30 @@
     // Fist you see an ADD Icon, via Mouseover it expand right, to an select field
 
     span#quick_add {
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
         float: right;
         padding: 0.5em;
         position: fixed;
         right: 45px;
         top: 5px;
-        
+
         background-image: url(../images/add.png);
         background-repeat: no-repeat;
         background-size: 20px 20px;
         background-position: 4px 4px;
-        
+
         .border_radius_button_normal;
         .dimension_width_height_s;
-        
+
         &:before {
-            content: " "; 
-            font-size: 2em; 
-            color: @egw_color_2_a; 
+            content: " ";
+            font-size: 2em;
+            color: @egw_color_2_a;
             line-height: 0.6em;
             background-color: white;
         }
-        
+
         &:hover {.box_shadow_standard_light_hover;}
         &:focus {.box_shadow_standard_light_inset;}
     }
@@ -542,11 +555,11 @@
 #egw_fw_sidebar {
     position: fixed;
     overflow: hidden;
-    top: 57px;
+    top: 43px;
     left: 0px;
     bottom: 20px;
     width: 225px;
-    .background_color_5_gray;
+    /*.background_color_5_gray;*/
 
     //SIDE AREA
     #egw_fw_sidemenu {
@@ -559,7 +572,7 @@
         z-index: 0;
         padding-top: 0.6em;
         font-size: 0.9em;
- 
+
         // SIDE AREA
         .egw_fw_ui_scrollarea_outerdiv{
             .background_color_5_gray;
@@ -576,7 +589,7 @@
                 }
             }
 
-            
+
             //####################################################
             // All Tabs
             // DRAG AND DROP
@@ -668,26 +681,26 @@
             // ##                                    ##
             // ##                                    ##
             // ########################################
-            
+
             // ########################################
             // ##                                    ##
             // ##                                    ##
             // ########################################
-            
+
             // ########################################
             // ##                                    ##
             // ##                                    ##
-            // ######################################## 
-            
+            // ########################################
+
             // ########################################
             //  ##        div.egw_fw_ui_category     ##
             //   ##       &:nth-last-of-type(-n+3)   ##
-            //    #####################################   
-            
-            
-            
-            
-            
+            //    #####################################
+
+
+
+
+
             .egw_fw_ui_sidemenu_entry_content {
                 display: block;
                 background-image: none;
@@ -697,7 +710,7 @@
                 border-width: 0px;
                 margin: 0 0 2em 0;
 
-                
+
                 // rounded Corner on bottom
                 &:nth-last-of-type(-n+3)   {
                     padding:  5px 0.3em 1.5em 0.3em;
@@ -707,8 +720,8 @@
                     border-color: @gray_30;
                 }
 
-                
-                
+
+
                 //###################################################
                 // *letztes Element   */
                 // has round corners
@@ -750,7 +763,7 @@
                 }
 
                 //#################################
-                // Hover 
+                // Hover
                 // on Mouse over change color
                 .egw_fw_ui_category:hover {
                     .background_color_40_gray;
@@ -783,7 +796,7 @@
 
 
                             img {.dimension_width_height_s;}
-                            
+
                             &:hover {
                                     padding: 5px 30px 5px 0px;
                                     width: 200px;
@@ -792,7 +805,7 @@
                                     .Complete_Button_hover;
                                 }
                             }
-                        
+
                          }
 
                     &:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
@@ -873,18 +886,18 @@
             // ##  #############################     ##
             // ##                                    ##
             // ########################################
-            
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-            
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ######################################## 
 
-            
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+
 
 .egw_fw_ui_category_content {
     .background_color_0_gray;
@@ -939,18 +952,18 @@
             // ##  #############################     ##
             // ##                                    ##
             // ########################################
-            
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-            
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ######################################## 
 
-     
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+
 
 // Sub Sub Menu Item
 
@@ -1072,7 +1085,7 @@
 
 // ##############################################################
 // ##                          ##
-// ##                          ## 
+// ##                          ##
 // Scrollarea
 
 .egw_fw_ui_scrollarea
@@ -1133,6 +1146,8 @@
     display: block;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0 10px;
+  background-color: @gray_20;
     /*	background-color: RGB(240, 240, 255);*/
 }
 
@@ -1280,7 +1295,7 @@
 
                     .img_filter_gray;
                 }
-                
+
                 // FOR SVG IMG
                 object {
                 .dimension_width_height_s;
@@ -1347,8 +1362,8 @@
         }
         // Ende Tabs
     }
-    
-    
+
+
     // ################################
     // Hover
     // no effect ?

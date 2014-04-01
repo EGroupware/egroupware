@@ -22,11 +22,11 @@
 //#####################
 
 .Complete_Button_normal{
-    .border_normal;
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    .rounded (3px);
+    /*.rounded (3px);*/
     color: @gray_100;
-    
+
     // switch off for Safari + Chrome
     -webkit-appearance: none;
         -webkit-transition-property: background-color;
@@ -102,7 +102,8 @@
                         color: @egw_color_2_a;
                         line-height: 0.6em;
                         padding-left: 0.1em;
-                        padding-right: 4em;
+                        padding-right: 100em;
+                        
                 }
 
                 &:active {background-color: @color_positive_action_active;}
@@ -124,10 +125,10 @@
     border-left-color: @lightgray;
 }
 /* ########################################################################################
- * 
+ *
  * Button löschen / delete / => color-negative-action // red
  *
- ######################################################################################## */ 
+ ######################################################################################## */
 
 .Complete_Button_delete{
     /*background-color: @color_negative_action_hover !important;*/
@@ -137,54 +138,54 @@
     .Complete_Button_text_icon_before;
     /*background-color: @color-negative-action !important;*/
     /*color: @gray_0 !important;*/
-            
+
             &:hover {
 
                 background-image:url('../images/delete-hover.png') !important;
                 background-color: @color_negative_action_hover !important;
                 .Complete_Button_text_icon_before;
                 color: @gray_0 !important;;
-            }           
+            }
             &:active {
 
                 background-image:url('../images/delete-hover.png') !important;
                 background-color: @color_negative_action_active !important;
                 .Complete_Button_text_icon_before;
                 color: @gray_0;
-            }            
+            }
 }
 
 /* ########################################################################################
- * 
+ *
  * Button cancel /  => color-cancel-action // yellow
  *
  ######################################################################################## */
 .Complete_Button_cancel{
-    
+
                 background-image:url('../images/cancel.png') !important;
                 .Complete_Button_text_icon_before;
                 content: "ID missing";
-                
-                
+
+
                 &:hover {background-color: @color_cancel_action_hover !important; color: @gray_100; .box_shadow_standard_light_hover;}
                 &:active {background-color: @color_cancel_action_active !important; color: @gray_100; .box_shadow_standard_light_inset;}
-    
+
 }
 
 /* ########################################################################################
- * 
+ *
  * Button edit + save + apply + copy => color-positive-action // green
  *
- ######################################################################################## */ 
+ ######################################################################################## */
 
 .Complete_Button_save_apply_copy{
-    
+
                 img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
-                
-                
+
+
                 &:hover {
-                    background-color: @color_positive_action; 
-                    color: @gray_100; 
+                    background-color: @color_positive_action;
+                    color: @gray_100;
                     .box_shadow_standard_light_hover;
                 }
                 &:active {background-color: @color_positive_action_active;}

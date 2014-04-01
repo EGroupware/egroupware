@@ -13,13 +13,13 @@ function show_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
 
-	$j("#egw_fw_topmenu_info_items").animate({"margin-right": "20px","bottom": "0px","padding-right" : "0", "height": "0px"},_delay);
-	$j("#egw_fw_topmenu_info_items").css("position", "relative");
-        $j("#egw_fw_topmenu_info_items").css("display", "flex");
-        $j("#egw_fw_topmenu_info_items").css("float", "right");
+//	$j("#egw_fw_topmenu_info_items").animate({"margin-right": "20px","bottom": "0px","padding-right" : "0", "height": "0px"},_delay);
+//	$j("#egw_fw_topmenu_info_items").css("position", "relative");
+//        $j("#egw_fw_topmenu_info_items").css("display", "flex");
+//        $j("#egw_fw_topmenu_info_items").css("float", "right");
 
-    $j("#egw_fw_sidebar").animate({'top':'52px'},_delay);
-        $j("#egw_fw_tabs").animate({'margin-top':'12px'},_delay);
+    $j("#egw_fw_sidebar").animate({'top':'43px'},_delay);
+        $j("#egw_fw_tabs").animate({'margin-top':'3px'},_delay);
         $j(".egw_fw_ui_tabs_header").css("padding", "1px 1px 0px 1px");
         $j(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% -3000px");
 	$j(_toggle).parent().removeClass("slidedown");
@@ -31,24 +31,24 @@ function hide_pixelegg_header(_toggle, _delay)
 {
 	$j("#egw_fw_header").slideToggle();
 	$j("#egw_fw_sidebar").animate({'top':'-3px'},_delay);
-	$j("#egw_fw_topmenu_info_items").show();
+//	$j("#egw_fw_topmenu_info_items").show();
 	$j("#egw_fw_logout").show();
 	$j("#egw_fw_print").show();
         $j("#egw_fw_tabs").animate({'margin-top':'2px', "top": "0px"},_delay);
-	$j("#egw_fw_topmenu_info_items").animate({
-			"bottom": "3px",
-                        "right": "5px",
-			"display": "flex",
-			"padding-right" : "20px",
-			"text-align": "right",
-			"white-space": "nowrap",
-			},_delay);
+//	$j("#egw_fw_topmenu_info_items").animate({
+//			"bottom": "3px",
+//                        "right": "5px",
+//			"display": "flex",
+//			"padding-right" : "20px",
+//			"text-align": "right",
+//			"white-space": "nowrap",
+//			},_delay);
 	$j(".egw_fw_ui_sidemenu_entry_header_active").css("background-position","95% 50%");
 
-	$j("#egw_fw_topmenu_info_items").css("position", "fixed");
-	$j("#egw_fw_topmenu_info_items").css("z-index", "1000");
+//	$j("#egw_fw_topmenu_info_items").css("position", "fixed");
+//	$j("#egw_fw_topmenu_info_items").css("z-index", "1000");
         // Form - Country Switch
-        $j("#egw_fw_topmenu_info_items form").css("display", "none");
+//        $j("#egw_fw_topmenu_info_items form").css("display", "none");
 
         $j(".egw_fw_ui_tabs_header").css("height", "34px")
 			// Padding to adjust for icons left & right of the tabs

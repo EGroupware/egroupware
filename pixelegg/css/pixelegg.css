@@ -116,11 +116,9 @@
  */
   .et2_button {
     text-shadow: 0px 0px !important;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    /*.rounded (3px);*/
     color: #000000;
     -webkit-appearance: none;
     -webkit-transition-property: background-color;
@@ -285,11 +283,9 @@
  * Link_entry_widget
  */
   div.et2_link_to button {
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    /*.rounded (3px);*/
     color: #000000;
     -webkit-appearance: none;
     -webkit-transition-property: background-color;
@@ -488,7 +484,7 @@
 ################################################################*/
   .nextmatch_header_row > .search {
     padding: 0 0 0 0px;
-    margin-right: 3px;
+    margin-right: 15px;
     margin-left: 15px;
     width: 200px;
     z-index: 100;
@@ -754,7 +750,7 @@
     color: #0c5da5;
     line-height: 0.6em;
     padding-left: 0.1em;
-    padding-right: 4em;
+    padding-right: 100em;
   }
   button#admin-categories-index_add:active {
     background-color: #1aa200;
@@ -1359,11 +1355,9 @@ span.ui-icon-search {
   background-color: #679fd2;
 }
 .ui-dialog-buttonset button {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1835,11 +1829,9 @@ div#ui-datepicker-div {
 }
 #egwpopup input#egwpopup_ok_button,
 #egwpopup button#desktop_perms {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1928,91 +1920,25 @@ td.message span.message {
     * http://cssreset.com
     * fieldset legend
     */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-form,
-label,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-}
+/*    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    form, label,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    }*/
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -2789,11 +2715,9 @@ input[type=button]:active {
  *
  ######################################################################################## */
 button.et2_button_with_image {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -2849,11 +2773,9 @@ button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
   background-image: url('../images/delete.png') !important;
   margin-left: 3em;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -2891,11 +2813,9 @@ button[id="displayToolbar-delete"]:hover,
 button.et2_button_delete:hover {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -2932,11 +2852,9 @@ button[id="displayToolbar-delete"]:active,
 button.et2_button_delete:active {
   background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -3004,11 +2922,9 @@ button#filemanager-select_button[ok]:active {
 }
 #passwordchange {
   background-image: url('../images/cancel.png') !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -3071,11 +2987,9 @@ button.et2_button_question:active {
 button[id="cancel"],
 button#cancel {
   background-image: url('../images/cancel.png') !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -3117,11 +3031,9 @@ button#cancel:active {
 }
 #passwordcancel {
   background-image: url('../images/cancel.png') !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -3177,11 +3089,9 @@ button.add:before {
 }
 button[id="add"] {
   background-image: url('../images/add.png') !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -3637,6 +3547,8 @@ table.nextmatch_header img {
   height: 100%;
   width: auto;
   border-bottom: 0px solid #7E7E7E;
+  margin: 0 -2%;
+  background-color: #679fd2;
 }
 #loginMainDiv #divAppIconBar {
   margin-left: auto;
@@ -3667,7 +3579,7 @@ table.nextmatch_header img {
   background-repeat: repeat-x;
 }
 #loginMainDiv div#centerBox {
-  margin: 2% 14% auto auto;
+  margin: 0% auto;
   width: 444px;
   background-color: #ffffff;
   z-index: 100;
@@ -3684,10 +3596,7 @@ table.nextmatch_header img {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 25px;
   /*.background-clip(padding-box);*/
-  border-top: solid 1px #ffc200;
-  border-left: solid 1px #679fd2;
-  border-right: solid 1px #ffc200;
-  border-bottom: solid 1px #679fd2;
+  /*.bordered (@egw_color_1_a, @egw_color_1_a, @egw_color_2_e, @egw_color_2_e );*/
   border-width: 14px;
 }
 #loginMainDiv div#centerBox #loginScreenMessage {
@@ -3917,6 +3826,7 @@ table.nextmatch_header img {
 #egw_fw_header {
   width: 100%;
   float: left;
+  background-color: #679fd2;
   /* Logo EGW or Company - left top*/
   /*  ###########################################################################################################################################
     Topmenu / Home / Einstellungen / Zugriff / Kategorien usw..
@@ -3930,7 +3840,7 @@ table.nextmatch_header img {
   margin-left: -8px;
   text-align: center;
   height: 45px;
-  background-color: #fafafa;
+  /*.background_color_5_gray;*/
 }
 #egw_fw_header #egw_divLogo img {
   width: 209px;
@@ -3938,7 +3848,7 @@ table.nextmatch_header img {
   position: absolute;
   top: 0.41em;
   left: 1em;
-  background-color: #fafafa;
+  /*.background_color_5_gray;*/
 }
 #egw_fw_header #egw_fw_topmenu ul,
 #egw_fw_header #egw_fw_topmenu > * > ul > li,
@@ -3949,10 +3859,11 @@ table.nextmatch_header img {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items {
   float: left;
-  padding-top: 10px;
+  padding-top: 14px;
   width: 70%;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul {
+  margin: 5px 2px;
   /*Home*/
   /*home*/
   /*Setup / Einstellungen*/
@@ -3964,29 +3875,11 @@ table.nextmatch_header img {
   /*logout*/
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li {
+  color: #ffffff;
   /*.Button_size_square_32;*/
-  padding: 0.3em 0.4em;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #000000;
-  -webkit-appearance: none;
-  -webkit-transition-property: background-color;
-  -moz-transition-property: background-color;
-  -o-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  -webkit-transition-timing-function: linear;
-  -moz-transition-timing-function: linear;
-  -o-transition-timing-function: linear;
-  transition-timing-function: linear;
-  background-color: #b4b4b4;
-  background-color: #e6e6e6;
+  padding: 8px 10px;
+  /*.Complete_Button_normal;*/
+  /*background-color: @gray_10;*/
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
@@ -3997,7 +3890,7 @@ table.nextmatch_header img {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: inherit;
-  color: #000000;
+  color: #ffffff;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4007,13 +3900,20 @@ table.nextmatch_header img {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
   text-decoration: none;
-  height: 16px;
+  height: 32px;
   /*font-size: 1.1em;*/
+  font-size: 12.100000000000001px;
+  line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
-  color: #808080;
+  color: #e6e6e6;
   border-color: #828282;
   text-decoration: none !important;
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:before {
+  /*.img_filter_gray;*/
+  /*-webkit-filter: grayscale(100%) brightness(100%) contrast(100%);*/
+  /*-webkit-filter: invert(100%);*/
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child {
   margin-left: 10px;
@@ -4026,11 +3926,13 @@ table.nextmatch_header img {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
+  font-size: 12.100000000000001px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
+  background-size: 20px 20px;
+  width: 24px;
+  height: 24px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
   margin-left: 0px;
@@ -4040,6 +3942,7 @@ table.nextmatch_header img {
   content: "";
   background-image: url(../images/topmenu_items/setup.png);
   background-repeat: no-repeat;
+  /*                        background-size: 20px 20px;*/
   width: 12px;
   height: 12px;
 }
@@ -4115,6 +4018,7 @@ table.nextmatch_header img {
   float: left;
   position: relative;
   left: -5px;
+  cursor: pointer;
 }
 /*Icon ARROW UP*/
 #egw_fw_topmenu_slide.slideup {
@@ -4125,6 +4029,7 @@ table.nextmatch_header img {
   display: block;
   margin-top: -36px;
   margin-left: 40px;
+  cursor: pointer;
 }
 #slidetoggle {
   width: 20px;
@@ -4149,13 +4054,9 @@ table.nextmatch_header img {
   z-index: 200;
   width: 16px;
   height: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.border_radius_button_normal;*/
   padding: 0.5em;
   top: 5px;
   position: fixed;
@@ -4201,36 +4102,36 @@ table.nextmatch_header img {
     &:focus {.box_shadow_standard_light_inset;}*/
 }
 /*#################################################
-/* Second Line  
+/* Second Line
 /* e.g. Name / Datum / angemeldete User
 ###################################################*/
 #egw_fw_topmenu_info_items {
-  bottom: 0px;
-  right: 0px;
-  padding-right: 0px;
-  position: relative;
-  z-index: 1000;
-  margin-right: 4px;
-  float: right;
-  display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  flex-direction: row;
-  justify-content: flex-start;
-  -webkit-flex-direction: row;
-  -webkit-justify-content: flex-start;
-  -ms-flex-direction: row;
-  -ms-justify-content: flex-start;
-  /*    bottom: 3px;
-    display: flex;
+  /*    bottom: 0px;
+    right: 0px;
+    padding-right: 0px;
+    position: relative;
+    z-index: 1000;
+    margin-right: 4px;
+
     float: right;
-    height: 0;
-    margin-right: 20px;
-    padding-right: 20px;
-    position: fixed;
-    right: 5px;
-    z-index: 1000;*/
+
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+
+    flex-direction: row;
+    justify-content: flex-start;
+
+    -webkit-flex-direction: row;
+    -webkit-justify-content: flex-start;
+    -ms-flex-direction: row;
+    -ms-justify-content: flex-start;*/
+  position: fixed;
+  z-index: 1000;
+  bottom: -8px;
+  right: 5px;
+  padding-right: 20px;
   /*Notification*/
   /*user info*/
   /*current user info*/
@@ -4274,8 +4175,8 @@ table.nextmatch_header img {
   padding: 0px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
   float: right;
   padding: 0.5em;
   position: fixed;
@@ -4411,11 +4312,11 @@ table.nextmatch_header img {
 #egw_fw_sidebar {
   position: fixed;
   overflow: hidden;
-  top: 57px;
+  top: 43px;
   left: 0px;
   bottom: 20px;
   width: 225px;
-  background-color: #fafafa;
+  /*.background_color_5_gray;*/
   /*#################################*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu {
@@ -4917,6 +4818,8 @@ table.nextmatch_header img {
   display: block;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0 10px;
+  background-color: #cdcdcd;
   /*	background-color: RGB(240, 240, 255);*/
 }
 .egw_fw_content_browser_div_loading {
@@ -5158,7 +5061,7 @@ button.image_button {
  *
  * Version 08.2013
  * Author Stefan Reinhardt, Wolfgang Ott
- * 
+ *
  */
 /* #################################################
 * FOOTER
@@ -5167,7 +5070,7 @@ button.image_button {
 #egw_fw_footer {
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  width: 50%;
   text-align: left;
   padding: 3px;
   clear: both;
@@ -5211,6 +5114,12 @@ button.image_button {
 }*/
 div#popupMainDiv {
   padding: 8px;
+  background-color: #ffffff;
+  background-image: url(../images/bgDialog.png);
+  background-repeat: repeat-x;
+}
+div#popupMainDiv > * {
+  margin: 0px;
 }
 div.et2_container {
   padding: 0;
