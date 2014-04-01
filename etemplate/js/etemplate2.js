@@ -949,6 +949,12 @@ function etemplate2_handle_assign(type, res, req)
 			this.etemplate_exec_id = res.data.value;
 			return true;
 		}
+		if(this.widgetContainer == null)
+		{
+			// Right etemplate, but it's already been cleared.
+			egw.debug('warn', "Tried to call assign on an un-loaded etemplate", res.data);
+			return false;
+		}
 		var widget = this.widgetContainer.getWidgetById(res.data.id);
 		if (widget)
 		{
