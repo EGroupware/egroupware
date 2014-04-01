@@ -82,7 +82,8 @@ class Horde_iCalendar {
         $type = String::lower($type);
         $class = 'Horde_iCalendar_' . $type;
         if (!class_exists($class)) {
-            include 'Horde/iCalendar/' . $type . '.php';
+			// include relative from current dir, as we no longer set (old) Horde dir in include path
+            include 'iCalendar/' . $type . '.php';
         }
         if (class_exists($class)) {
             $component = new $class();
