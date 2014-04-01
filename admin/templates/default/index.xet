@@ -45,9 +45,7 @@
 	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
-		<split dock_side="topDock" id="splitter" orientation="h">
-			<nextmatch id="nm" template="admin.index.rows"/>
-			<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%"/>
-		</split>
+		<nextmatch id="nm" template="admin.index.rows"/>
+		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
 	</template>
 </overlay>

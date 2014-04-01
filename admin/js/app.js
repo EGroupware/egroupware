@@ -20,15 +20,9 @@ app.classes.admin = AppJS.extend(
  */
 {
 	appname: 'admin',
-	/**
-	 * reference to splitter
-	 *
-	 * {et2_splitter}
-	 */
-	splitter: null,
 
 	/**
-	 * reference to splitter
+	 * reference to iframe
 	 *
 	 * {et2_iframe}
 	 */
@@ -51,7 +45,6 @@ app.classes.admin = AppJS.extend(
 	destroy: function()
 	{
 		this.iframe = null;
-		this.splitter = null;
 
 		// call parent
 		this._super.apply(this, arguments);
@@ -74,21 +67,19 @@ app.classes.admin = AppJS.extend(
 		{
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
+				this.nm = this.et2.getWidgetById('nm');
 				if (iframe)
 				{
 					var self = this;
 					jQuery(iframe.getDOMNode()).off('load.admin')
 						.bind('load.admin', function(){
 							self._hide_navbar.call(self);
-							self.splitter.dock();
-							self.splitter.resize();
 						}
 					);
 
 					// Register app refresh now that iframe is available
 					register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 				}
-				this.splitter = this.et2.getWidgetById('splitter');
 				break;
 
 			case 'admin.categories.index':
@@ -234,7 +225,8 @@ app.classes.admin = AppJS.extend(
 
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
-			this.splitter.undock();
+			this.nm.set_disabled(false);
+			this.iframe.set_disabled(true);
 			var parts = _id.split('/');
 			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
 		}
@@ -244,7 +236,8 @@ app.classes.admin = AppJS.extend(
 		}
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
-			this.splitter.dock();
+			this.nm.set_disabled(true);
+			this.iframe.set_disabled(false);
 			this.iframe.set_src(link+(link.match(/\?/)?'&':'?')+'nonavbar=1');
 		}
 		else if (link.substr(0,11) == 'javascript:')
@@ -289,7 +282,8 @@ app.classes.admin = AppJS.extend(
 				}
 				else
 				{
-					this.splitter.dock();
+					this.nm.set_disabled(true);
+					this.iframe.set_disabled(false);
 					this.iframe.set_src(url);
 				}
 				break;
