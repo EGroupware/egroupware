@@ -43,8 +43,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Display an error or regular message
 		 *
+		 * Alle messages but type "success" are displayed 'til next message or user clicks on it.
+		 *
 		 * @param {string} _msg message to show or empty to remove previous message
-		 * @param {string} _type 'error', 'warning' or 'success' (default)
+		 * @param {string} _type 'help', 'info', 'error', 'warning' or 'success' (default)
 		 */
 		message: function(_msg, _type)
 		{
@@ -99,7 +101,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.addClass(_type+'_message')
 					.css('position', 'absolute'));
 
-				if (_type != 'error')	// clear message again after some time, if no error
+				if (_type == 'success')	// clear message again after some time, if no error
 				{
 					message_timer = _wnd.setTimeout(function() {
 						jQuery('div#egw_message').remove();

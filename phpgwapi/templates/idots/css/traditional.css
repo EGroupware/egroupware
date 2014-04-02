@@ -574,6 +574,8 @@ div.prompt, table.prompt {
 	background-image: url(../../default/images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
+	height: 46px;
+	vertical-align: middle;
 }
 .dialogHeader, .dialogHeader td {
 	font-size: 120% !important;
@@ -911,7 +913,7 @@ td.lettersearch {
 /**
  * Styles for different egw_message-types
  */
-.success_message, .warning_message, .error_message {
+.success_message, .warning_message, .error_message, .info_message, .help_message {
 	color: red;
 	font-weight: normal;
 	font-style: italic;
@@ -929,6 +931,12 @@ td.lettersearch {
 .error_message {
 	font-weight: bold;
 	background-image: url(../../default/images/dialog_error.png);
+}
+.info_message {
+	background-image: url(../../default/images/dialog_info.png);
+}
+.help_message {
+	background-image: url(../../default/images/dialog_help.png);
 }
 /**
  * Message in popup
