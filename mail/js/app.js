@@ -794,11 +794,15 @@ app.classes.mail = AppJS.extend(
 	{
 		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
 		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
-		//console.log(_data,quotabox);
-		//try to set it via set_value and set label
-		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_class(_data.data.quotaclass);
-		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_value(_data.data.quotainpercent);
-		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_label(_data.data.quota);
+		
+		// Check to make sure it's there
+		if(quotabox)
+		{
+			//try to set it via set_value and set label
+			quotabox.set_class(_data.data.quotaclass);
+			quotabox.set_value(_data.data.quotainpercent);
+			quotabox.set_label(_data.data.quota);
+		}
 	},
 
 	/**
