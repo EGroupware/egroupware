@@ -63,7 +63,7 @@
 		</grid>
 	</template>
 	<template id="etemplate.db-tools.indices" template="" lang="" group="0" version="1.5.001">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -73,7 +73,7 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
+				<column width="40"/>
 				<column/>
 			</columns>
 			<rows>
@@ -90,33 +90,33 @@
 					<description value="ColumnName"/>
 					<description value="ColumnName"/>
 					<description value="Unique"/>
-					<button align="center" statustext="Add a new multi-column index" label="Add Index" id="add_index"/>
+					<button align="center" statustext="Add a new multi-column index" label="Add Index" id="add_index" image="new"/>
 				</row>
 				<row class="row">
 					<description align="center" id="Index[$row][n]" no_lang="1"/>
 					<menulist>
-						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][0]" no_lang="1" options="none"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][0]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][1]" no_lang="1" options="none"/>
+						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][1]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][2]" no_lang="1" options="none"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][2]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][3]" no_lang="1" options="none"/>
+						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][3]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][4]" no_lang="1" options="none"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][4]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][5]" no_lang="1" options="none"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][5]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<menulist>
-						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][6]" no_lang="1" options="none"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][6]" no_lang="1" options="none" class="selectboxFullWidth"/>
 					</menulist>
 					<checkbox align="center" statustext="DB ensures that every row has a unique value in that column" id="Index[$row][unique]"/>
-					<button align="center" statustext="Deletes this index" label="Delete Index" id="delete_index[$row]"/>
+					<button align="center" statustext="Deletes this index" label="Delete Index" id="delete_index[$row]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -153,7 +153,7 @@
 					<button statustext="Create a new table for the application" label="Add Table" id="add_table"/>
 					<button statustext="Import table-definitions from existing db-table" label="Import" id="import"/>
 					<button disabled="true" statustext="Drop a table - this can NOT be undone" label="Drop Table" id="drop_table"/>
-					<button statustext="Write &lt;app&gt;/setup/tables_current.inc.php" label="Write Tables" id="write_tables"/>
+					<button align="right" statustext="Write &lt;app&gt;/setup/tables_current.inc.php" label="Write Tables" id="write_tables"/>
 				</row>
 				<row>
 					<template id="etemplate.db-tools.cols" span="all"/>
