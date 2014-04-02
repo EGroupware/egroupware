@@ -1092,6 +1092,14 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.link.text("").unbind();
 			return;
 		}
+		var self = this;
+		this.link.unbind();
+		if(_value.id && _value.app)
+		{
+			this.link.click( function(){
+				self.egw().open(_value, "", "view",null,_value.app,_value.app);
+			});
+		}
 		if(!_value.title) {
 			var self = this;
 			var node = this.link[0];
@@ -1113,12 +1121,6 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 		}
 		this.set_title(this.link, _value.title);
-		var self = this;
-		this.link.unbind();
-		if(_value.id && _value.app)
-		{
-			this.link.click( function(){self.egw().open(_value, "", "view",null,_value.app,_value.app);});
-		}
 	},
 
 	/**
