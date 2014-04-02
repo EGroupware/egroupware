@@ -316,10 +316,9 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					// run validation method of widget implementing this custom field
 					$widget = $this->_widget($fname, $field_settings);
 					$widget->validate($cname, $expand, $content, $validated);
-
-					if ((string)$value === '' && $field_settings['needed'])
+					if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
 					{
-						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
+						self::set_validation_error($field,lang('Field must not be empty !!!'),'');
 					}
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
