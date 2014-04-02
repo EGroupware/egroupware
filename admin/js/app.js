@@ -105,6 +105,10 @@ app.classes.admin = AppJS.extend(
 		{
 			this.iframe.set_src(_url);
 		}
+		else
+		{
+			this.egw.app_header('');
+		}
 		this.iframe.set_disabled(!_url);
 		this.nm.set_disabled(!!_url);
 	},
@@ -369,7 +373,7 @@ app.classes.admin = AppJS.extend(
 				this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
 			}
 		}
-		
+
 		switch(_action.id)
 		{
 			case 'delete':

@@ -81,12 +81,12 @@ class admin_ui
 			$vars['menuaction'] = $vars['load'];
 			unset($vars['ajax']);
 			unset($vars['load']);
+			$content['iframe'] = egw::link('/index.php', $vars);
 		}
 		else
 		{
-			$vars = array('menuaction' => 'admin.uiconfig.index', 'appname' => 'admin');
+			$content['iframe'] = 'about:blank';	// we show accounts-list be default now
 		}
-		$content['iframe'] = egw::link('/index.php', $vars);
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
 	}
