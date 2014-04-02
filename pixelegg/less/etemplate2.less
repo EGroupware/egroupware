@@ -163,11 +163,13 @@ span.et2_date span {
 /*Link to / Selector Widget*/
 .et2_link_to {
 
+
+    // Link to Filesystem
     .et2_button_icon {
             .Complete_Button_Icon_normal;
             float: left;
-            margin: 10px 20px;
-            padding: 3px;
+            margin: 0px 20px;
+            /*padding: 3px;*/
             .dimension_width_height_m;
             background-color: @gray_30;
             &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
@@ -176,8 +178,19 @@ span.et2_date span {
     .et2_file{
            background-color: @gray_0 !important;
            .rounded (5px);
-            margin-top: 1em;
-            padding-top: 0.2em;
+           left: 0px;
+           margin-left: 60px;
+            /*margin-top: 1em;*/
+            /*padding-top: 0.2em;*/
+            /*width: auto;*/
+
+            span {
+            background-image: url("../images/upload.png");
+            background-position: 4px 2px;
+            background-size: 16px 16px;
+            background-repeat: no-repeat;
+
+            }
 
            input{
                border: none;
@@ -189,7 +202,12 @@ span.et2_date span {
              &:active {background-color: @color_positive_action_active !important;}
     }
 
-    button {}
+    button {
+        .Complete_Button_normal; padding: 3px; .dimension_height_sm;
+         &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+         &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+
+    }
 
 }
 
@@ -197,15 +215,37 @@ span.et2_date span {
 .et2_link {
     color: @egw_color_2_a;
 }
-.et2_link_list tr {
-    cursor: pointer;
-    &:hover {background-color: @color_hover_row;}
-     &:active {background-color: @color_active_row;}
+.et2_link_list{
+                tr {
+                    cursor: pointer;
+                    &:hover {background-color: @color_hover_row;}
+                     &:active {background-color: @color_active_row;}
+                }
+
+                .icon img,
+                .icon {
+                            width: 14px !important;
+                            height: 14px !important;
+                        }
+
+                  td {
+                      div.delete {
+                            visibility: hidden;
+                            background-image: url("../images/close.png");
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: 16px 16px;
+                            background-color: @color_negative_action;
+                            padding: 0px;
+
+                            &:hover {background-color: @color_negative_action_active !important;}
+                            &:active {background-color: @color_negative_action_active !important;}
+
+                      }
+
+                        }
 }
-.et2_link_list .icon img, .et2_link_list .icon {
-    width: 14px !important;
-    height: 14px !important;
-}
+
 
 .egw_tooltip
 {
@@ -217,15 +257,16 @@ span.et2_date span {
  */
 div.et2_link_to{
 
+    width: auto;
+
 
     button {
+            .Complete_Button_normal;
+            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+            }
 
-    .Complete_Button_normal;
-    &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
-    &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
-    }
-
-    input{width: 72% !important;}
+    /*input{width: 72% !important;}*/
 }
 
 // defined in layout-dialog.less

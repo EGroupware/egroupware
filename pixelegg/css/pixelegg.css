@@ -212,8 +212,8 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     float: left;
-    margin: 10px 20px;
-    padding: 3px;
+    margin: 0px 20px;
+    /*padding: 3px;*/
     width: 24px;
     height: 24px;
     background-color: #b4b4b4;
@@ -246,8 +246,17 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    margin-top: 1em;
-    padding-top: 0.2em;
+    left: 0px;
+    margin-left: 60px;
+    /*margin-top: 1em;*/
+    /*padding-top: 0.2em;*/
+    /*width: auto;*/
+  }
+  .et2_link_to .et2_file span {
+    background-image: url("../images/upload.png");
+    background-position: 4px 2px;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
   }
   .et2_link_to .et2_file input {
     border: none;
@@ -257,6 +266,51 @@
     background-color: #1aa200 !important;
   }
   .et2_link_to .et2_file:active {
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to button {
+    /*.border_normal;*/
+    /*.box_shadow_standard_light;*/
+    /*.rounded (3px);*/
+    color: #000000;
+    -webkit-appearance: none;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    background-color: #b4b4b4;
+    padding: 3px;
+    height: 20px;
+  }
+  .et2_link_to button:hover {
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to button:active {
+    /*.background_color_30_gray;*/
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
     background-color: #1aa200 !important;
   }
   .et2_link {
@@ -276,12 +330,31 @@
     width: 14px !important;
     height: 14px !important;
   }
+  .et2_link_list td div.delete {
+    visibility: hidden;
+    background-image: url("../images/close.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-color: #ae1d00;
+    padding: 0px;
+  }
+  .et2_link_list td div.delete:hover {
+    background-color: #e12500 !important;
+  }
+  .et2_link_list td div.delete:active {
+    background-color: #e12500 !important;
+  }
   .egw_tooltip {
     background-color: #ffffff;
   }
   /**
  * Link_entry_widget
  */
+  div.et2_link_to {
+    width: auto;
+    /*input{width: 72% !important;}*/
+  }
   div.et2_link_to button {
     /*.border_normal;*/
     /*.box_shadow_standard_light;*/
@@ -324,9 +397,6 @@
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #1aa200;
     background-color: #1aa200 !important;
-  }
-  div.et2_link_to input {
-    width: 72% !important;
   }
   /**
  * Tabs widget
@@ -1893,6 +1963,8 @@ div#egwpopup_message {
 /*Calendar ##############*/
 td.message {
   background-color: #e6e6e6 !important;
+  height: 0px;
+  padding: 0px;
 }
 td.message span.message {
   height: 35px;
@@ -2017,6 +2089,7 @@ body {
   height: 99% !important;
   font-size: 11px;
   line-height: 1.28;
+  font-weight: normal;
 }
 body,
 textarea {
@@ -2071,6 +2144,7 @@ h1 {
   font-size: 300%;
   line-height: 330%;
   margin: 0.4em 0 0;
+  font-weight: normal;
 }
 .headline_h1 {
   font-size: 300%;
@@ -3612,6 +3686,7 @@ table.nextmatch_header img {
   border-top-left-radius: 10px;
   color: red;
   text-align: center;
+  padding-top: 1em;
 }
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
