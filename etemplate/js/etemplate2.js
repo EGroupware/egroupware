@@ -551,7 +551,7 @@ etemplate2.prototype.submit = function(button, async, no_validation)
 			this.unbind_unload();
 
 			var api = this.widgetContainer.egw();
-			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this, async);
+			var request = api.json(this.menuaction, [this.etemplate_exec_id, values, no_validation], null, this, async);
 			request.sendRequest();
 		}
 		else

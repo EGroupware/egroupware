@@ -241,8 +241,13 @@ class etemplate_new extends etemplate_widget_template
 
 	/**
 	 * Process via Ajax submitted content
+	 *
+	 * @param string $etemplate_exec_id
+	 * @param array $content
+	 * @param boolean $no_validation
+	 * @throws egw_exception_wrong_parameter
 	 */
-	static public function ajax_process_content($etemplate_exec_id, array $content)
+	static public function ajax_process_content($etemplate_exec_id, array $content, $no_validation)
 	{
 		//error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($content).")");
 
@@ -271,7 +276,11 @@ class etemplate_new extends etemplate_widget_template
 		);
 		$template->run('validate', array('', $expand, $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
 
-		if (self::validation_errors(self::$request->ignore_validation))
+		if ($no_validation)
+		{
+			self::$validation_errors = array();
+		}
+		elseif (self::validation_errors(self::$request->ignore_validation))
 		{
 			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));
 			self::$response->generic('et2_validation_error', self::$validation_errors);
