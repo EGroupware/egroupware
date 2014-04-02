@@ -59,7 +59,7 @@
 		<vbox>
 			<description id="msg" class="message"/>
 			<nextmatch id="nm" template="admin.acl.rows"/>
-			<description/>
+			<button label="Close" id="cancel" onclick="window.close();"/>
 		</vbox>
 	</template>
 </overlay>
