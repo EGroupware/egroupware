@@ -352,7 +352,7 @@ app.classes.admin = AppJS.extend(
 		if(content.acl_appname)
 		{
 			content.apps = content.acl_appname;
-			content.acl_rights = content.acl_rights ? parseInt(acl_rights) : null;
+			content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
 			jQuery.extend(content, {acl:[],right:[],label:[]});
 			for( var right in acl_rights[content.acl_appname])
 			{
