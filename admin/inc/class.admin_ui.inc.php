@@ -86,6 +86,11 @@ class admin_ui
 		else
 		{
 			$content['iframe'] = 'about:blank';	// we show accounts-list be default now
+
+			// Switch these, in this case there is nothing else specified
+			// and we show the user list
+			$tpl->setElementAttribute('nm','disabled',false);
+			$tpl->setElementAttribute('iframe','disabled',true);
 		}
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
