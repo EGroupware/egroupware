@@ -1514,6 +1514,22 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	set_no_filter2: function(bool) {
 		this.set_no_filter(bool,'filter2');
 	},
+
+	/**
+	 * If nextmatch starts disabled, it will need a resize after being shown
+	 * to get all the sizing correct.  Override the parent to add the resize
+	 * when enabling.
+	 */
+	set_disabled: function(_value)
+	{
+		var previous = this.disabled;
+		this._super.apply(this, arguments);
+
+		if(previous && !_value)
+		{
+			this.resize();
+		}
+	},
 	
 	/**
 	 * Actions are handled by the controller, so ignore these during init.
