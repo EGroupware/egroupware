@@ -29,6 +29,13 @@ app.classes.admin = AppJS.extend(
 	iframe: null,
 
 	/**
+	 * reference to nextmatch
+	 *
+	 * {et2_extension_nextmatch}
+	 */
+	nm: null,
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -85,6 +92,21 @@ app.classes.admin = AppJS.extend(
 			case 'admin.categories.index':
 				break;
 		}
+	},
+
+	/**
+	 * Show given url in (visible) iframe or nextmatch with accounts (!_url)
+	 *
+	 * @param {string} [_url=] url to show in iframe or nothing for showing
+	 */
+	load: function(_url)
+	{
+		if (_url)
+		{
+			this.iframe.set_src(_url);
+		}
+		this.iframe.set_disabled(!_url);
+		this.nm.set_disabled(!!_url);
 	},
 
 	/**
@@ -188,7 +210,7 @@ app.classes.admin = AppJS.extend(
 		var id = _senders[0].id.split('::');
 		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
 
-		this.iframe.set_src(url);
+		this.load(url);
 	},
 
 	/**
@@ -206,7 +228,7 @@ app.classes.admin = AppJS.extend(
 			{
 				_url = _url.replace(/menuaction=admin.admin_ui.index/, 'menuaction='+matches[1]).replace(/&(ajax=true|load=[^&]+)/g, '');
 			}
-			this.iframe.set_src(_url);
+			this.load(_url);
 			return true;
 		}
 		// can not load our own index page, has to be done by framework
@@ -225,8 +247,7 @@ app.classes.admin = AppJS.extend(
 
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
-			this.nm.set_disabled(false);
-			this.iframe.set_disabled(true);
+			this.load();
 			var parts = _id.split('/');
 			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
 		}
@@ -236,9 +257,7 @@ app.classes.admin = AppJS.extend(
 		}
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
-			this.nm.set_disabled(true);
-			this.iframe.set_disabled(false);
-			this.iframe.set_src(link+(link.match(/\?/)?'&':'?')+'nonavbar=1');
+			this.load(link+(link.match(/\?/)?'&':'?')+'nonavbar=1');
 		}
 		else if (link.substr(0,11) == 'javascript:')
 		{
@@ -282,9 +301,7 @@ app.classes.admin = AppJS.extend(
 				}
 				else
 				{
-					this.nm.set_disabled(true);
-					this.iframe.set_disabled(false);
-					this.iframe.set_src(url);
+					this.load(url);
 				}
 				break;
 		}
