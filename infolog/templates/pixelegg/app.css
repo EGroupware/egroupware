@@ -186,14 +186,14 @@ tr.dialogOperators td,
   top: 5px;
 }
 #infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget {
-  border: 1px solid #0C5DA5;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-  text-shadow: none;
+  /*border: 1px solid #0C5DA5;*/
+  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+  /*text-shadow: none;*/
   height: 24px;
   margin-top: 0px;
   margin-left: 12px;
   padding: 4px;
-  background-color: #e6e6e6;
+  /*background-color: @gray_10;*/
   position: relative;
   top: 5px;
   -webkit-border-top-right-radius: 3px;
@@ -218,11 +218,14 @@ tr.dialogOperators td,
 }
 #infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:before {
   content: "+";
-  font-size: 18px;
+  font-size: 20px;
   color: #ffc200;
   line-height: 1px;
   position: relative;
   top: 2px;
+  text-shadow: 1px 1px 2px #000;
+  /*.Complete_Button_Icon_normal;*/
+  /*.dimension_width_height_sm;*/
 }
 #infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget span {
   display: none;
@@ -237,8 +240,8 @@ tr.dialogOperators td,
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   margin-left: 0.5em;
   padding: 0px;
   margin-top: 0px;
@@ -279,8 +282,9 @@ tr.dialogOperators td,
   -moz-border-radius-topleft: 10px;
   border-radius: 3px;
   border-top-left-radius: 10px;
-  height: 24px;
+  height: 20px;
   /*Text*/
+  /*img {.scale; margin: 0 5px; background: @gray_0;}*/
 }
 #infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover:before {
   content: "";
@@ -290,15 +294,6 @@ tr.dialogOperators td,
 #infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover span {
   visibility: hidden;
   display: none;
-}
-#infolog-index #infolog-index_nm #infolog-index_infolog-index-header_right div.et2_box_widget:hover img {
-  -webkit-transform: scale(1.3);
-  -moz-transform: scale(1.3);
-  -o-transform: scale(1.3);
-  -ms-transform: scale(1.3);
-  transform: scale(1.3);
-  margin: 0 5px;
-  background: #ffffff;
 }
 #infolog-index #infolog-index_nm table.egwGridView_outer thead tr th.optcol .selectcols {
   margin-top: 1.5%;

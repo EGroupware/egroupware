@@ -130,14 +130,14 @@
 #infolog-index_infolog-index-header_right{
 
 div.et2_box_widget{
-                  border: 1px solid #0C5DA5;
-                  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-                  text-shadow: none;
+                  /*border: 1px solid #0C5DA5;*/
+                  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+                  /*text-shadow: none;*/
                  .dimension_height_m;
                    margin-top: 0px;
                    margin-left: 12px;
                    padding: 4px;
-                   background-color: @gray_10;
+                   /*background-color: @gray_10;*/
                    position: relative;
                    top: 5px;
                  .border_radius(3px, 3px, 3px, 10px);
@@ -147,11 +147,14 @@ div.et2_box_widget{
 
                          &:before {
                             content: "+";
-                            font-size: 18px;
-                            color: @egw_color_1;
+                            font-size: 20px;
+                            color: @egw_color_1_a;
                             line-height: 1px;
                             position: relative;
                             top: 2px;
+                            text-shadow: 1px 1px 2px #000;
+                            /*.Complete_Button_Icon_normal;*/
+                            /*.dimension_width_height_sm;*/
                             }
 
                        /*Text ""hinzufügen" "*/
@@ -162,7 +165,7 @@ div.et2_box_widget{
                         img {
                             /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
                             .Complete_Button_Icon_normal;
-                            .dimension_width_height_s;
+                            .dimension_width_height_sm;
                             margin-left: 0.5em;
                             padding: 0px;
                             margin-top: 0px;
@@ -183,11 +186,13 @@ div.et2_box_widget{
                           .box_shadow_standard_light_hover;
                           background-color: fade(@egw_color_2_a, 80%) !important;
                           .border_radius_button_lefttop;
-                          .dimension_height_m;
+                          .dimension_height_sm;
+
                           &:before {content: ""; font-size: 1em;padding-left: 5px;}
+
                           /*Text*/
                           span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0 5px; background: @gray_0;}
+                         /*img {.scale; margin: 0 5px; background: @gray_0;}*/
                       }
         }
 }// END BOX WIDGET
