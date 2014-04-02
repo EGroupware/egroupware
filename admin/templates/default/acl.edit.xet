@@ -45,9 +45,5 @@
 				</row>
 			</rows>
 		</grid>
-		<hbox>
-			<button label="Save" id="save"/>
-			<button label="Cancel" id="cancel" onclick="window.close();"/>
-		</hbox>
 	</template>
 </overlay>

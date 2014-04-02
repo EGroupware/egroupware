@@ -324,6 +324,52 @@ app.classes.admin = AppJS.extend(
 		if (app != 'admin') app = 'preferences';
 		var className = app+'_acl';
 
+		// Select options are already here, just pull them and pass along
+		var sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
+			'apps': this.et2.getArrayMgr('sel_options').getEntry('acl_appname')
+		});
+
+		// For add and edit, set some data from the list since it's already there
+		var acl_rights = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
+		var content = _senders[0].id ? jQuery.extend({}, egw.dataGetUIDdata(_senders[0].id).data) : {};
+		if(!content.acl_appname)
+		{
+			// Pre-set appname to currently selected
+			content.acl_appname = this.et2.getWidgetById('filter2').getValue();
+		}
+		if(!content.acl_location)
+		{
+			content.acl_location = this.et2.getWidgetById('filter2').getValue() == 'run' ? 'run' : null;
+		}
+		if(!content.acl_account)
+		{
+			content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+		}
+		if(content.acl_appname)
+		{
+			content.apps = content.acl_appname;
+			content.acl_rights = content.acl_rights ? parseInt(acl_rights) : null;
+			jQuery.extend(content, {acl:[],right:[],label:[]});
+			for( var right in acl_rights[content.acl_appname])
+			{
+				content.acl.push(content.acl_rights & right);
+				content.right.push(right);
+				content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
+			}
+
+			// These aren't actually there
+			if(content.acl_account)
+			{
+				sel_options.acl_account = {};
+				this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account[content.acl_account] = title;});
+			}
+			if(content.acl_location)
+			{
+				sel_options.acl_location = {};
+				this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
+			}
+		}
+		
 		switch(_action.id)
 		{
 			case 'delete':
@@ -332,20 +378,28 @@ app.classes.admin = AppJS.extend(
 				break;
 
 			case 'edit':
-				// need to specify window to get correct opener, as admin has multiple windows open!
-				egw('admin', window).open_link(egw.link('/index.php', {
-					menuaction: app+'.'+className+'.acl',
-					id: ids[0]
-				}), 'acl', '300x300');
-				break;
-
 			case 'add':
-				var current = ids[0].split(':');
-				egw('admin', window).open_link(egw.link('/index.php', {
-					menuaction: app+'.'+className+'.acl',
-					app: current[0],
-					account: current[1]
-				}), 'acl', '250x250');
+				return et2_createWidget("dialog", {
+					callback: jQuery.proxy(function(_button_id, _value) {
+						if(_button_id != et2_dialog.OK_BUTTON) return;
+
+						var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
+						var rights = 0;
+						for(var i in _value.acl)
+						{
+							rights += parseInt(_value.acl[i]);
+						}
+						this.egw.json(className+'::ajax_change_acl', [id, rights], this._acl_callback,this,false,this)
+							.sendRequest();
+					},this),
+					title: egw.lang('Access control'),
+					buttons: et2_dialog.BUTTONS_OK_CANCEL,
+					value: {
+						content: content,
+						sel_options: sel_options
+					},
+					template: egw.webserverUrl+'/admin/templates/default/acl.edit.xet'
+				}, et2_dialog._create_parent(app));
 				break;
 		}
 	},
