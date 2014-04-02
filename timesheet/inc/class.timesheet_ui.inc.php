@@ -701,6 +701,9 @@ class timesheet_ui extends timesheet_bo
 			if ($row['ts_id'] <= 0)	// sums
 			{
 				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
+				
+				// Remove fake modified date, it breaks nextmatch checks
+				unset($row['ts_modified']);
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
