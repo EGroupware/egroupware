@@ -509,8 +509,8 @@ var et2_widget = ClassWithAttributes.extend(
 					attrValue = mgr.expandName(attrValue);
 				}
 
-				// Parse the legacy options
-				var splitted = et2_csvSplit(attrValue);
+				// Parse the legacy options (as a string, other types not allowed)
+				var splitted = et2_csvSplit(attrValue+"");
 
 				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
 				{
