@@ -473,21 +473,30 @@ etemplate2.prototype.isDirty = function()
  *
  * @param {(et2_button|string)} button button widget or string with id
  * @param {boolean} async true: do an asynchronious submit, default is synchronious
+ * @param {boolean} no_validation - Do not do individual widget validation, just submit their current values
  * @return {boolean} true if submit was send, false if eg. validation stoped submit
  */
-etemplate2.prototype.submit = function(button, async)
+etemplate2.prototype.submit = function(button, async, no_validation)
 {
+	if(typeof no_validation == 'undefined')
+	{
+		no_validation = false;
+	}
+
 	// Get the form values
 	var values = this.getValues(this.widgetContainer);
 
 	// Trigger the submit event
 	var canSubmit = true;
-	this.widgetContainer.iterateOver(function(_widget) {
-		if (_widget.submit(values) === false)
-		{
-			canSubmit = false;
-		}
-	}, this, et2_ISubmitListener);
+	if(!no_validation)
+	{
+		this.widgetContainer.iterateOver(function(_widget) {
+			if (_widget.submit(values) === false)
+			{
+				canSubmit = false;
+			}
+		}, this, et2_ISubmitListener);
+	}
 
 	if (canSubmit)
 	{
