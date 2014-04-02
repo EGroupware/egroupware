@@ -197,7 +197,7 @@
 				<row class="dialogHeader2">
 					<description value="Type" for="info_type"/>
 					<menulist class="et2_fullWidth">
-						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1" />
+						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
 					</menulist>
 					<description/>
 					<description value="Contact"/>
