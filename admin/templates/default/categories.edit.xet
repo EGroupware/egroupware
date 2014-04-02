@@ -106,12 +106,10 @@
 					<description value="Modified"/>
 					<date-time id="last_mod" readonly="true"/>
 				</row>
-				<row class="dialog-footer-toolbar">
-					<hbox>
+				<row>
+					<hbox span="all" width="100%" class="dialogFooterToolbar">
 						<button label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply" background_image="1"/>
-					</hbox>
-					<hbox>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Are you sure you want to delete this category ?'); return false;" image="delete" background_image="1"/>
 					</hbox>

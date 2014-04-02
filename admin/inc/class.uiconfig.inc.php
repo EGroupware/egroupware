@@ -254,9 +254,9 @@ class uiconfig
 					break;
 			}
 		}
-		$t->set_var('submit', '<div class="dialog-footer-toolbar" style="text-align: left">'.
+		$t->set_var('submit', '<div class="dialogFooterToolbar" style="text-align: left">'.
 			($GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? '' :
-				html::submit_button('save', 'Save').
+				html::submit_button('save', 'Save')."\n".
 				html::submit_button('apply', 'Apply')));
 		$t->set_var('cancel', html::submit_button('cancel', 'Cancel').'</div>');
 
