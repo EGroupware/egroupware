@@ -3,8 +3,8 @@
 <overlay>
 	<template id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<hbox class="dialog-header" width="100%" >
-			<description value="Import message" align="center" class="dialog-header"/>
+		<hbox class="dialogHeader" width="100%" >
+			<description value="Import message" align="center" class="dialogHeader"/>
 		</hbox>
 		<vbox id="divImportArea">
 			<hbox span="all">

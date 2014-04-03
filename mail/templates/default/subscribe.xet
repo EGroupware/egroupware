@@ -7,7 +7,7 @@
 				<column width="20%"/>
 			</columns>
 			<rows>
-				<row class="dialog-header" >
+				<row class="dialogHeader" >
 					<description value="Subscription folders" class="mail_subscription_header"/>
 				</row>
 				<row>
@@ -17,7 +17,7 @@
 				</row>
 			</rows>
 		</grid>
-		<hbox  class="dialog-footer-toolbar">
+		<hbox  class="dialogFooterToolbar">
 			<button statustext="Saves subscription changes" label="Save" id="button[save]"/>
 			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 			<button label="Cancel" id="button[cancel]"/>

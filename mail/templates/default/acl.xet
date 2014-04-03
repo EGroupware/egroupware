@@ -26,7 +26,7 @@
 					<column/>
 				</columns>
 				<rows>
-					<row class="th dialog-header">
+					<row class="th dialogHeader">
 						<description value="Name"/>
 						<description value="Common ACL"/>
 						<description align="center" value="L"/>
@@ -62,7 +62,7 @@
 					</row>
 				</rows>
 			</grid>
-			<hbox class="dialog-footer-toolbar">
+			<hbox class="dialogFooterToolbar">
 				<button statustext="Saves this ACL" label="Save" id="button[save]"/>
 				<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 				<button label="Cancel" id="button[cancel]"/>

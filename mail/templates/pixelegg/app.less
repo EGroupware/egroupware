@@ -266,7 +266,7 @@ div#mail-index{
         .basefontfamily;
     }
 
-    
+
     // color - selected tree item
     .selectedTreeRow {background-color: @egw_color_1_a; color: @gray_90;}
 
@@ -608,6 +608,12 @@ div#mail-index{
  *          Preview
  * ##################################################################################
  */
+div#popupMainDiv{
+        padding: 8px;
+        margin: -6px 0px 6px -1px;
+        width: 100%;
+}
+
 #mail-display{
     //	gesamtbreite
     width: 870px;
@@ -623,7 +629,8 @@ div#mail-index{
         .et2_toolbar,
         #mail-display_toolbar,
         mail-display_displayToolbar{
-            .gradient_thead;
+            /*.gradient_thead;*/
+            background-color: transparent;
             .color_100_gray;
             clear: both;
 /*            padding: 5px 3px;*/
@@ -906,7 +913,44 @@ div.ui-toolbar-menulist{
 }
 .et2_toolbar_activeList{
 }
+
+
+// all used button in toolbar
 .et2_toolbar_actionlist{
+
+        // zusammengesetzte Buttons
+        .et2_toolbar-dropdown{
+/*            background: @gray_10 !important;
+            background-color: @gray_10 !important;*/
+            margin: -4px 5px -2px 4px;
+            .rounded(3px);
+
+            .et2_dropdown{
+                        .box_shadow_none;
+                        border: none !important;
+
+                        button{
+                            .box_shadow_none;
+                            background: @gray_10 !important;
+                            background-color: @gray_10 !important;
+
+                            &:hover{}
+
+                            img {
+                                .dimension_width_height_sm;
+                                top: 1px;
+                            }
+
+                        }
+
+             }
+
+            ul> li{  }
+
+            ul{          }
+
+        }
+
 }
 
 
@@ -1414,7 +1458,7 @@ input[type=button] {
 //}
 .mailDisplay {
   position: relative;
-  background-color: white;
+  background-color: transparent;
   width: 100%;
 }
 #mail-index_mailPreview {

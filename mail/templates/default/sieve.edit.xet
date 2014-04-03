@@ -135,7 +135,7 @@
 					</groupbox>
 				</row>
 				<row>
-					<hbox class="dialog-footer-toolbar">
+					<hbox class="dialogFooterToolbar">
 						<button statustext="Saves this rule" label="Save" id="button[save]"/>
 						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
                         <button label="Cancel" id="button[cancel]"/>

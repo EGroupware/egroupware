@@ -1069,11 +1069,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span {
   font-size: 1.1em;
   font-weight: normal;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1203,11 +1201,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1239,11 +1235,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1303,6 +1297,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
  *          Preview
  * ##################################################################################
  */
+div#popupMainDiv {
+  padding: 8px;
+  margin: -6px 0px 6px -1px;
+  width: 100%;
+}
 #mail-display {
   width: 870px;
   padding: 5px;
@@ -1315,21 +1314,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-display .et2_toolbar,
 #mail-display #mail-display_toolbar,
 #mail-display mail-display_displayToolbar {
-  /*.background-color-5-gray;*/
-  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
-  /* IE6-9 */
+  /*.gradient_thead;*/
+  background-color: transparent;
   color: #000000;
   clear: both;
   /*            padding: 5px 3px;*/
@@ -1632,6 +1618,32 @@ div.ui-toolbar-menulist {
 .ui-toolbar-menulist div {
   background-color: #e6e6e6 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.et2_toolbar_actionlist .et2_toolbar-dropdown {
+  /*            background: @gray_10 !important;
+            background-color: @gray_10 !important;*/
+  margin: -4px 5px -2px 4px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown {
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  border: none !important;
+}
+.et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button {
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  background: #e6e6e6 !important;
+  background-color: #e6e6e6 !important;
+}
+.et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button img {
+  width: 20px;
+  height: 20px;
+  top: 1px;
 }
 div#displayToolbar-menulist .et2_dropdown {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -2078,7 +2090,7 @@ input[type=button] {
 }
 .mailDisplay {
   position: relative;
-  background-color: white;
+  background-color: transparent;
   width: 100%;
 }
 #mail-index_mailPreview {
