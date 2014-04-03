@@ -492,22 +492,21 @@ div.et2_file {
 /* Customize file upload styling */
 span.et2_file_span{
 	display: block;
-	background-position: left;
-	background-image: url(images/upload.png);
+	background-position: 2px;
+	background-image: url(../../../phpgwapi/templates/default/images/upload.png);
 	background-repeat: no-repeat;
 	background-size: 16px;
 	cursor: pointer;
-
 	height: 15px;
 	text-align: left;
-	text-indent: 20px;
+	text-indent: 18px;
+	white-space: nowrap;
 }
 div.et2_file input.et2_file_upload{
 	position: absolute;
 	top: 4px;
-	padding-right: 100%;
 	cursor: pointer;
-	margin-left: -84px;
+	width: 143px;
 	opacity: 0;
 }
 /**

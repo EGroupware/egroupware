@@ -42,16 +42,13 @@ div.filemanager_navigation > * {
 div.filemanager_navigation > label {
 	position: absolute;
 	left: 50px;
-	right: 565px;
+	right: 385px;
 	padding-top: 3px;
 	font-size: 140%;
 	white-space: nowrap;
 }
 div.filemanager_navigation > label > input {
 	width: 100%;
-}
-input#filemanager-index_upload {
-	width: 315px;
 }
 #filemanager-index-buttons div.et2_file .progress {
   position: absolute;

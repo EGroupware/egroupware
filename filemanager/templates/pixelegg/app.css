@@ -74,7 +74,7 @@ div.filemanager_navigation > * {
 div.filemanager_navigation > label {
   position: absolute;
   left: 50px;
-  right: 565px;
+  right: 385px;
   padding-top: 3px;
   font-size: 140%;
   white-space: nowrap;
@@ -82,8 +82,9 @@ div.filemanager_navigation > label {
 div.filemanager_navigation > label > input {
   width: 100%;
 }
-input#filemanager-index_upload {
-  width: 315px;
+#filemanager-index-buttons div.et2_file .progress {
+  position: absolute;
+  right: 0px;
 }
 /**
  * Select file dialog
@@ -120,10 +121,9 @@ input.displayNone {
 /*//******************************************************************
 // iframe*/
 #filemanager-index_filemanager-index-header_left {
-  loat: left;
+  float: left;
   height: 36px;
   width: 98%;
-  margin: 0 17px;
 }
 div.filemanager_navigation {
   position: relative;
@@ -178,12 +178,10 @@ img#filemanager-index_home {
 /*Pfad */
 div.filemanager_navigation > label {
   float: left;
-  /*position: absolute;*/
-  left: 55px;
-  right: 567px;
-  /*padding-top: 3px;*/
+  left: 64px;
+  right: 485px;
   font-size: 140%;
-  top: 0px;
+  top: 5px;
 }
 /*Buttons / Tarp / FileUpload*/
 #filemanager-index_buttons {
@@ -209,7 +207,6 @@ div.filemanager_navigation > label > input {
 }
 #filemanager-index .et2_file input#filemanager-index_upload {
   color: #ffffff;
-  width: 250px;
   background-color: #0c5da5;
 }
 #filemanager-index .et2_file input#filemanager-index_upload:hover {
