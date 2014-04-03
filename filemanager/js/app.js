@@ -248,7 +248,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_upload_callback: function(_data)
 	{
-		if (_data.msg) window.egw_message(_data.msg, this.appname);
+		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
 
 		var that = this;
 		for(var file in _data.uploaded)
