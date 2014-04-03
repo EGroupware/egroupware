@@ -5,12 +5,10 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package preferences
- * @copyright (c) 2013 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-14 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
 
 /**
  * UI for settings / preferences
@@ -87,11 +85,31 @@ class preferences_settings
 							$GLOBALS['egw']->preferences->set_account_id($account_id);
 							$GLOBALS['egw']->preferences->read_repository();
 						}
+						// name of common preferences which require reload of framework, if there values change
+						$require_reload = array('template_set', 'lang');
+						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
+
 						$attribute = $type == 'group' ? 'user' : $type;
 						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute)))
 						{
 							$msg_type = 'success';
 							$msg = lang('Preferences saved.');
+
+							// do we need to reload whole framework
+							if ($appname == 'common')
+							{
+								if ($account_id && $GLOBALS['egw']->preferences->get_account_id() != $GLOBALS['egw_info']['user']['account_id'])
+								{
+									$GLOBALS['egw']->preferences->set_account_id($GLOBALS['egw_info']['user']['account_id']);
+								}
+								$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+								$new_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
+								//error_log(__METHOD__."() ".__LINE__.": old_values=".array2string($old_values).", new_values=".array2string($new_values));
+								if ($old_values != $new_values)
+								{
+									egw_framework::refresh_opener($msg, null, null, null, null, null, null, $msg_type);
+								}
+							}
 						}
 				}
 				if (in_array($button, array('save','cancel')))
