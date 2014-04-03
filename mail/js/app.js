@@ -806,6 +806,38 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
+	 *
+	 */
+	mail_callRefreshVacationNotice: function(_server)
+	{
+		egw.jsonq('mail.mail_ui.ajax_refreshVacationNotice',[_server]);
+	},
+
+	/**
+	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
+	 *
+	 */
+	mail_refreshVacationNotice: function(_data)
+	{
+		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
+		//var vacationnotice = this.et2.getWidgetById(this.nm_index+'[vacationnotice]');
+		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
+		//console.log(_data,vacationnotice,vacationrange);
+		//try to set it via set_value and set label
+		if (_data == null)
+		{
+			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
+			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value('');
+		}
+		else
+		{
+			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value(_data.vacationnotice);
+			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value(_data.vacationrange);
+		}
+	},
+
+	/**
 	 * Queues a refreshFolderList request for 10ms. Actually this will just execute the
 	 * code after the calling script has finished.
 	 */
@@ -1247,6 +1279,8 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
+		if (server[0]!=previousServer[0]) this.mail_callRefreshVacationNotice(server[0]);
+
 	},
 
 	/**

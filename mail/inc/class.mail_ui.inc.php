@@ -413,6 +413,21 @@ class mail_ui
 			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 		}
 
+		$vacation = $this->gatherVacation();
+		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
+		if($vacation) {
+			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
+			{
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
+				$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
+				$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
+			}
+		}
+		if ($vacation==false)
+		{
+			$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
+			$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
+		}
 		//$zstarttime = microtime (true);
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial',null,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		//$zendtime = microtime(true) - $zstarttime;
@@ -2417,9 +2432,40 @@ unset($query['actions']);
 	}
 
 	/**
-	 * display image
+	 * gatherVacation
 	 *
-	 *
+	 * fetch vacation info from active Server using the oldIMAPObject
+	 * @return mixed array/boolean - array with vacation on success; false on failure
+	 */
+	function gatherVacation()
+	{
+		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && $this->mail_bo->icServer->acc_sieve_host;
+		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
+		if($vacation) {
+			$sieveServerClass = mail_bo::getInstance(false,  self::$icServerID, false, $oldIMAPObject=true);
+			$sieveServer = $sieveServerClass->icServer;
+			//error_log(__METHOD__.__LINE__.' Sieve Server:'.self::$icServerID.' InstanceOf:'.array2string(($sieveServer instanceof defaultimap)|| ($sieveServer instanceof emailadmin_oldimap)).':'.array2string($sieveServerClass));
+			if(($sieveServer instanceof defaultimap) || ($sieveServer instanceof emailadmin_oldimap)) {
+				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
+				$sieveServer->getScript($scriptName);
+				$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
+				$vacation = $sieveServer->getVacation($sieveServer->scriptName);
+				$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
+				if ($isSieveError[self::$icServerID])
+				{
+					$vacation = false;
+				}
+			}
+		}
+		return $vacation;
+	}
+
+	/**
+	 * quotaDisplay
+	 * gather Info on how to display the quota info
+	 * @param $_usage int
+	 * @param $_limit int
+	 * @return array - info used for quota array(class=>string,text=>string,$percent=>string)
 	 */
 	function quotaDisplay($_usage, $_limit)
 	{
@@ -3963,6 +4009,38 @@ $this->partID = $partID;
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
+	}
+
+	/**
+	 * ajax_refreshVacationNotice - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 *	Note: only the activeProfile VacationNotice is refreshed
+	 * @param int $icServerId profileId / server ID to work on; may be empty -> then activeProfile is used
+	 *						if other than active profile; nothing is done!
+	 * @return nothing
+	 */
+	function ajax_refreshVacationNotice($icServerId=null)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($icServerId));
+		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
+		if ($icServerID != $this->mail_bo->profileID) return;
+		$vacation = $this->gatherVacation();
+		//error_log(__METHOD__.__LINE__.array2string($vacation));
+		if($vacation) {
+			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
+			{
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
+				$refreshData['vacationnotice'] = lang('Vacation notice is active');
+				$refreshData['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
+			}
+		}
+		if ($vacation==false)
+		{
+			$refreshData['vacationnotice'] =  '';
+			$refreshData['vacationrange'] =  '';
+		}
+
+		$response = egw_json_response::get();
+		$response->call('app.mail.mail_refreshVacationNotice',$refreshData);
 	}
 
 	/**

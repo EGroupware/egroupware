@@ -296,6 +296,19 @@ pre {
   width: 200px !important;
   z-index: 99;
 }
+.mail-index_vacation {
+  position: absolute;
+  top: 3px;
+  right: 190px;
+  width: 250px !important;
+  z-index: 99;
+}
+.mail-index_vacation > div {
+  text-align: center;
+}
+.mail-index_vacation > div > span {
+  color: red;
+}
 .mail_DisplayNone {
   display: none !important;
 }
@@ -2053,6 +2066,19 @@ pre {
 .mail-index_QuotaRed > div {
   background-color: red !important;
   height: 4px !important;
+}
+.mail-index_vacation {
+  position: absolute;
+  top: 3px;
+  right: 190px;
+  width: 250px !important;
+  z-index: 99;
+}
+.mail-index_vacation > div {
+  text-align: center;
+}
+.mail-index_vacation > div > span {
+  color: red;
 }
 /*
  influence the tree display and scrolling behavior

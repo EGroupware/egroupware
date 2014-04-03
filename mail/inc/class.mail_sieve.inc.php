@@ -526,6 +526,7 @@ class mail_sieve
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			$vacRules = $this->getVacation($vacation,$msg);
+			//$this->timed_vacation=true;//this could force the timed vacation thingy even if not supported ;-)
 			if ($this->timed_vacation)
 			{
 				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
@@ -616,9 +617,13 @@ class mail_sieve
 							{
 								$msg .= implode("\n",$this->errorStack);
 							}
+							// refresh vacationNotice on index
+							$response = egw_json_response::get();
+							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
 							egw_framework::refresh_opener($msg, 'mail','edit');
 							if ($button === 'apply') break;
 						}
+
 					case 'cancel':
 						egw_framework::window_close();
 

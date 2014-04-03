@@ -45,6 +45,10 @@
 		<html id="msg"/>
 		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" parent_node="mail-index_buttonmailcreate"/>
 		<hbox class="mail-index_quotabox"><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
+		<hbox class="mail-index_vacation"><vbox>
+			<description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
+			<description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/></vbox>
+		</hbox>
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
 			<vbox id="mailPreview" width="100%">
