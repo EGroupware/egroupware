@@ -164,7 +164,15 @@ span.et2_date span {
 .et2_file .progress p {
     background-color: @color_progress;
 }
-
+span.et2_file_span{
+	background-image: url(../images/upload.png);
+	width: 145px;
+}
+div.et2_file input.et2_file_upload{
+	background-color: @gray_0 !important;
+	.rounded (3px);
+	&:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+}
 
 /*Link to / Selector Widget*/
 .et2_link_to {
@@ -456,7 +464,7 @@ div.header_row_right{
                             /*}*/
 
                        /*Text ""hinzufügen" "*/
-                       span {display: none;}
+                       /* commented as it hides upload in filemanager span {display: none;}*/
 
 
                       // IMG

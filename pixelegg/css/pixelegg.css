@@ -201,6 +201,27 @@
   .et2_file .progress p {
     background-color: #ffdd73;
   }
+  span.et2_file_span {
+    background-image: url(../images/upload.png);
+    width: 145px;
+  }
+  div.et2_file input.et2_file_upload {
+    background-color: #ffffff !important;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+  div.et2_file input.et2_file_upload:hover {
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #1aa200 !important;
+  }
   /*Link to / Selector Widget*/
   .et2_link_to .et2_button_icon {
     /*.background_color_10_gray;*/
@@ -592,6 +613,7 @@
     /*.dimension_width_height_sm;*/
     /*}*/
     /*Text ""hinzufügen" "*/
+    /* commented as it hides upload in filemanager span {display: none;}*/
     /*MouseOver*/
     /*                      &:hover {
                           .box_shadow_standard_light_hover;
@@ -605,9 +627,6 @@
                           span {visibility: hidden; display: none;};
                          img {.scale; margin: 0 5px; background: @gray_0;}
                       }*/
-  }
-  .nextmatch_header div.et2_box_widget span {
-    display: none;
   }
   .nextmatch_header div.et2_box_widget img {
     /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
