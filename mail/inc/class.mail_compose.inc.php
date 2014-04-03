@@ -425,6 +425,7 @@ class mail_compose
 			{
 				$workingFolder = $activeFolder;
 				$mode = 'compose';
+				$idsForRefresh = array();
 				if (isset($_content['mode']) && !empty($_content['mode']))
 				{
 					$mode = $_content['mode'];
@@ -436,6 +437,7 @@ class mail_compose
 							$fhA = mail_ui::splitRowID($rowid);
 							//$this->sessionData['uid'][] = $fhA['msgUID'];
 							//$this->sessionData['forwardedUID'][] = $fhA['msgUID'];
+							$idsForRefresh[] = mail_ui::generateRowID($fhA['profileID'], $fhA['folder'], $fhA['msgUID'], $_prependApp=false);
 							if (!empty($fhA['folder'])) $workingFolder = $fhA['folder'];
 						}
 					}
@@ -443,8 +445,15 @@ class mail_compose
 					{
 						$rhA = mail_ui::splitRowID($_content['processedmail_id']);
 						//$this->sessionData['uid'] = $rhA['msgUID'];
+						$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
 						$workingFolder = $rhA['folder'];
 					}
+				}
+				//the line/condition below should not be needed
+				if (empty($idsForRefresh) && !empty($_content['processedmail_id']))
+				{
+					$rhA = mail_ui::splitRowID($_content['processedmail_id']);
+					$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
 				}
 				$response = egw_json_response::get();
 				if ($activeProfile != $composeProfile)
@@ -461,7 +470,8 @@ class mail_compose
 					}
 					else
 					{
-						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail',$_content['processedmail_id'],'update');
+						//error_log(__METHOD__.__LINE__.array2string($idsForRefresh));
+						$response->call('opener.egw_refresh',lang('Message send successfully.'),'mail',$idsForRefresh,'update');
 					}
 				}
 				else
