@@ -115,7 +115,7 @@ class admin_account
 	 */
 	public static function addressbook_pre_save(&$content)
 	{
-		if ($content['old_account'] && !array_diff_assoc($content['old_account'], $content))
+		if ($content['old_account'] && $content['old_account'] == array_diff_key($content, $content['old_account']))
 		{
 			return '';	// no need to save account data, if nothing changed
 		}
