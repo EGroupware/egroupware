@@ -75,6 +75,10 @@ class admin_ui
 
 		$tpl->setElementAttribute('tree', 'actions', self::tree_actions());
 
+		// switching between iframe and nm/accounts-list depending on load parameter
+		// important for first time load eg. from an other application calling it's site configuration
+		$tpl->setElementAttribute('nm', 'disabled', !empty($_GET['load']));
+		$tpl->setElementAttribute('iframe', 'disabled', empty($_GET['load']));
 		if (!empty($_GET['load']))
 		{
 			$vars = $_GET;
@@ -86,11 +90,6 @@ class admin_ui
 		else
 		{
 			$content['iframe'] = 'about:blank';	// we show accounts-list be default now
-
-			// Switch these, in this case there is nothing else specified
-			// and we show the user list
-			$tpl->setElementAttribute('nm','disabled',false);
-			$tpl->setElementAttribute('iframe','disabled',true);
 		}
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
