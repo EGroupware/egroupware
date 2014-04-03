@@ -219,7 +219,7 @@ function nm_action(_action, _senders, _target, _ids)
 			{
 
 				var nextmatch = mgr.data.nextmatch;
-				if(nextmatch && nextmatch.controller && nextmatch.controller._grid &&nextmatch.controller._grid.getTotalCount() > idsArr.length)
+				if(nextmatch && nextmatch.controller && nextmatch.controller._grid && nextmatch.controller._grid.getTotalCount() > idsArr.length)
 				{
 					// Need to actually fetch all (TODO: just ids) to do this client side
 					var idsArr = [];
@@ -237,7 +237,7 @@ function nm_action(_action, _senders, _target, _ids)
 					// dataFetch() is asyncronous, so all these requests just get fired off...
 					// 200 rows chosen arbitrarily to reduce requests.
 					do {
-						nextmatch.controller.dataFetch({start:idsArr.length, num_rows: 200}, function(data) {
+						nextmatch.controller.dataFetch({start:count, num_rows: 200}, function(data) {
 							if(data && data.order)
 							{
 								for(var i = 0; i < data.order.length; i++)
