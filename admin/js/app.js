@@ -519,7 +519,7 @@ app.classes.admin = AppJS.extend(
 		}
 		else
 		{
-			params.account_id = _senders[0].id.substr(7);	// remove admin::
+			params.account_id = _senders[0].id.substr(21);	// remove admin_ui::get_users::
 		}
 		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
 	}
