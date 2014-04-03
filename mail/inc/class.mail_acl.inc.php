@@ -7,7 +7,7 @@
  * @author Hadi Nategh [hn@stylite.de]
  * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version
+ * @version $Id$
  */
 
 class mail_acl

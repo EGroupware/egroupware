@@ -7,7 +7,7 @@
  * @author Hadi Nategh [hn@stylite.de]
  * @copyright (c) 2013 by Hadi Nategh <hn-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.mail_ui.inc.php 42779 2013-06-17 14:25:20Z leithoff $
+ * @version $Id$
  */
 include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
 
