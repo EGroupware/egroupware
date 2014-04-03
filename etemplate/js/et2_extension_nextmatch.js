@@ -502,15 +502,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			return;
 		}
 
-		// Use jsapi data module to update
-		var list = this.options.settings.get_rows.split('.', 2);
-		if (list.length < 2) list = this.options.settings.get_rows.split('_', 2);	// support "app_something::method"
-		var app = list[0];
-
 		if(_type == "delete")
 		{
 			// Record current & next index
-			var uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[0];
+			var uid = this.controller.dataStorePrefix + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 			var next = (entry.ao?entry.ao.getNext(_row_ids.length):null);
 			if(next == null || !next.id || next.id == uid)
@@ -523,7 +518,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.dataview.grid.doInvalidate = false;
 			for(var i = 0; i < _row_ids.length; i++)
 			{
-				uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
+				uid = this.controller.dataStorePrefix + "::" + _row_ids[i];
 
 				// Delete from internal references
 				this.controller.deleteRow(uid);
@@ -549,7 +544,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
 		{
-			var uid = (this.controller.dataStorePrefix || app) + "::" + _row_ids[i];
+			var uid = this.controller.dataStorePrefix + "::" + _row_ids[i];
 			switch(_type)
 			{
 				case "update":
@@ -1007,12 +1002,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Need to trigger empty row the first time
 		if(total == 0) this.controller._emptyRow();
 
-		// Set custom data cache prefix
-		if(this.options.settings.dataStorePrefix)
+		// Set data cache prefix to either provided custom or auto
+		if(!this.options.settings.dataStorePrefix)
 		{
-			this.controller.setPrefix(this.options.settings.dataStorePrefix);
+			// Use jsapi data module to update
+			var list = this.options.settings.get_rows.split('.', 2);
+			if (list.length < 2) list = this.options.settings.get_rows.split('_');	// support "app_something::method"
+			this.options.settings.dataStorePrefix = list[0];
 		}
-
+		this.controller.setPrefix(this.options.settings.dataStorePrefix);
+		
 		// Load the initial order
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
@@ -1029,14 +1028,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Insert any data sent from server, so invalidate finds data already
 		if(this.options.settings.rows)
 		{
-			var prefix = this.options.settings.dataStorePrefix;
-			if(!prefix)
-			{
-				prefix = this.options.settings.get_rows.split('.');
-				prefix = prefix[0];
-			}
 			this.controller.loadInitialData(
-				prefix,
+				this.options.settings.dataStorePrefix,
 				this.options.settings.row_id,
 				this.options.settings.rows
 			);
