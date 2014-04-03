@@ -50,6 +50,12 @@ div.et2_hbox_right {
     background: transparent;
 }
 
+
+
+
+
+
+
 /**
  * Placeholder widget - used for un-implemented widgets
  */
@@ -415,6 +421,84 @@ div.header_row_right{
 // area width left and right boxes
 .ui-helper-clearfix{ background-color: @gray_20;}
 
+/*################################################################
+*
+* ADD BUTTON for Infolog View in ADDRESSBOOK
+*
+################################################################*/
+.nextmatch_header {
+    div.et2_box_widget{
+                  /*border: 1px solid #0C5DA5;*/
+                  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+                  /*text-shadow: none;*/
+                 .dimension_height_m;
+                   margin-top: 0px;
+                   margin-left: 12px;
+                   padding: 4px;
+                   /*background-color: @gray_10;*/
+                   position: relative;
+                   top: 5px;
+                 .border_radius(3px, 3px, 3px, 10px);
+                   background-image: none !important;
+                   transition: all 0.5s linear;
+                   -webkit-transition: all 0.5s linear; /* Safari */
+
+/*                         &:before {
+                            content: "+";
+                            font-size: 20px;
+                            color: @egw_color_1_a;
+                            line-height: 1px;
+                            position: relative;
+                            top: 2px;
+                            text-shadow: 1px 1px 2px #000;*/
+                            /*.Complete_Button_Icon_normal;*/
+                            /*.dimension_width_height_sm;*/
+                            /*}*/
+
+                       /*Text ""hinzufügen" "*/
+                       span {display: none;}
+
+
+                      // IMG
+                        img {
+                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_sm;
+                            margin-left: 0.5em;
+                            padding: 0px;
+                            margin-top: 0px;
+                            vertical-align: middle;
+
+
+                            &:hover{.Complete_Button_Icon_hover ; background-color: @color_positive_action;}
+
+                            &:active { .Complete_Button_Icon_active ; background-color: @color_positive_action_active;}
+                        }
+
+                        img:last-child {margin-right: 5px;};
+
+
+
+                /*MouseOver*/
+/*                      &:hover {
+                          .box_shadow_standard_light_hover;
+                          background-color: fade(@egw_color_2_a, 80%) !important;
+                          .border_radius_button_lefttop;
+                          .dimension_height_sm;
+
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+
+                          Text
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0 5px; background: @gray_0;}
+                      }*/
+        }
+// END BOX WIDGET
+}
+/*######################################################*/
+
+
+
 
 /*################################################################
 *
@@ -510,6 +594,14 @@ div.header_row_right{
 * Filters
 *
 ################################################################*/
+.nextmatch_header_row {
+    .et2_label {
+
+        // distance to label
+        select { margin-left: 3px; }
+    }
+}
+
 
 .nextmatch_header_row > .filters {
 
@@ -691,62 +783,62 @@ button#admin-categories-index_add {
     */
     .et2_dropdown{
 
-        position: relative;
-        /*top: -5px;*/
+            position: relative;
+            /*top: -5px;*/
 
-        button {
-            .dimension_height_m;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: -2px;
-            padding: 0px 1ex;
-            background-color: @gray_0;
-            background-image: none;
-//            width: 50px;
+            button {
+                .dimension_height_m;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: -2px;
+                padding: 0px 1ex;
+                background-color: @gray_0;
+                background-image: none;
+    //            width: 50px;
 
-            // Filter img
-            img{.dimension_width_height_xs;}
+                // Filter img
+                img{.dimension_width_height_xs;}
 
-        }
-        button > div {
-            vertical-align: middle;
-        }
-        button:last-child {
-            padding: 0px
-        }
-        + ul.ui-menu {
-            position: absolute;
-            z-index: 2;
-        }
+            }
+            button > div {
+                vertical-align: middle;
+            }
+            button:last-child {
+                padding: 0px
+            }
+            + ul.ui-menu {
+                position: absolute;
+                z-index: 2;
+            }
 
-        /*left Button*/
-        button.ui-corner-left,
-        button.ui-state-default{
-            background-image: none !important;
-            background-repeat: no-repeat !important;
-//            background-size: 10px 10px;
+            /*left Button*/
+            button.ui-corner-left,
+            button.ui-state-default{
+                background-image: none !important;
+                background-repeat: no-repeat !important;
+    //            background-size: 10px 10px;
 
-            img {
-                .dimension_width_height_xs;
-                text-align: left;
-                position: relative;
-                right: 1px;
-                top: 3px;
-                }
+                img {
+                    .dimension_width_height_s;
+                    text-align: left;
+                    position: relative;
+                    right: 1px;
+                    top: 3px;
+                    }
 
-             /*&:hover {.Complete_Button_save_apply_copy;}*/
-             &:active {background-color: @color_positive_action_active;}
+                 /*&:hover {.Complete_Button_save_apply_copy;}*/
+                 &:active {background-color: @color_positive_action_active;}
 
-        }
+            }
 
 
-        /*right Button*/
-        button.ui-corner-right {}
+            /*right Button*/
+            button.ui-corner-right {}
 
-       /* hover */
-        button.ui-state-hover { background-color: @gray_10; }
+           /* hover */
+            button.ui-state-hover { background-color: @gray_10; }
 
-         button.ui-state-hover > img {}
+             button.ui-state-hover > img {}
 
 
 

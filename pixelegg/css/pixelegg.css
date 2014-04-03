@@ -549,6 +549,111 @@
   }
   /*################################################################
 *
+* ADD BUTTON for Infolog View in ADDRESSBOOK
+*
+################################################################*/
+  .nextmatch_header div.et2_box_widget {
+    /*border: 1px solid #0C5DA5;*/
+    /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+    /*text-shadow: none;*/
+    height: 24px;
+    margin-top: 0px;
+    margin-left: 12px;
+    padding: 4px;
+    /*background-color: @gray_10;*/
+    position: relative;
+    top: 5px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 10px;
+    /*.background-clip(padding-box);*/
+    background-image: none !important;
+    transition: all 0.5s linear;
+    -webkit-transition: all 0.5s linear;
+    /* Safari */
+    /*                         &:before {
+                            content: "+";
+                            font-size: 20px;
+                            color: @egw_color_1_a;
+                            line-height: 1px;
+                            position: relative;
+                            top: 2px;
+                            text-shadow: 1px 1px 2px #000;*/
+    /*.Complete_Button_Icon_normal;*/
+    /*.dimension_width_height_sm;*/
+    /*}*/
+    /*Text ""hinzufügen" "*/
+    /*MouseOver*/
+    /*                      &:hover {
+                          .box_shadow_standard_light_hover;
+                          background-color: fade(@egw_color_2_a, 80%) !important;
+                          .border_radius_button_lefttop;
+                          .dimension_height_sm;
+
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+
+                          Text
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0 5px; background: @gray_0;}
+                      }*/
+  }
+  .nextmatch_header div.et2_box_widget span {
+    display: none;
+  }
+  .nextmatch_header div.et2_box_widget img {
+    /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+    /*.background_color_10_gray;*/
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    margin-left: 0.5em;
+    padding: 0px;
+    margin-top: 0px;
+    vertical-align: middle;
+  }
+  .nextmatch_header div.et2_box_widget img:hover {
+    /*.background_color_20_gray;*/
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #189800;
+  }
+  .nextmatch_header div.et2_box_widget img:active {
+    /*.background_color_30_gray;*/
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    background-color: #1aa200;
+  }
+  .nextmatch_header div.et2_box_widget img:last-child {
+    margin-right: 5px;
+  }
+  /*######################################################*/
+  /*################################################################
+*
 * Search Field
 *
 ################################################################*/
@@ -639,6 +744,9 @@
 * Filters
 *
 ################################################################*/
+  .nextmatch_header_row .et2_label select {
+    margin-left: 3px;
+  }
   .nextmatch_header_row > .filters {
     /*width: 83%;*/
     z-index: 7;
@@ -897,8 +1005,8 @@
   }
   .et2_dropdown button.ui-corner-left img,
   .et2_dropdown button.ui-state-default img {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     text-align: left;
     position: relative;
     right: 1px;
@@ -3301,7 +3409,7 @@ table.table_passord_change td:first-child {
     -webkit-appearance: none;
     margin: 0;
     background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-    background-size: 20px auto;
+    background-size: 16px auto;
   }
 }
 /**
