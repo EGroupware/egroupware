@@ -864,15 +864,26 @@ class PHPMailer {
           $port = $this->Port;
         }
         $hostA = explode("://", $host);
-        if (strtolower($hostA[0]) == 'tls' || strtolower($hostA[0]) == 'ssl') {
+        if (in_array(strtolower($hostA[0]), array('tls', 'ssl', 'tlsv1'))) {
           $this->SMTPSecure = strtolower($hostA[0]);
           $host = $hostA[1];
         }
 
-        $tls = ($this->SMTPSecure == 'tls');
-        $ssl = ($this->SMTPSecure == 'ssl');
+        $tls = ($this->SMTPSecure == 'tls');	// starttls
+        switch($this->SMTPSecure)
+		{
+			case 'tls':	// STARTTLS
+				$tls = true;
+				break;
+			case 'ssl':
+				$host = 'ssl://'.$host;
+				break;
+			case 'tlsv1':	// require minimum tls version 1.0, no more ssl 2 or 3
+				$host = 'tls://'.$host;
+				break;
+		}
 
-        if ($this->smtp->Connect(($ssl ? 'ssl://':'').$host, $port, $this->Timeout)) {
+        if ($this->smtp->Connect($host, $port, $this->Timeout)) {
 
           $hello = ($this->Helo != '' ? $this->Helo : $this->ServerHostname());
           $this->smtp->Hello($hello);
