@@ -12,7 +12,8 @@
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
 %1 phrases saved.	admin	fr	%1 phrases enregistrées.
 %1 rights for %2 and applications %3	admin	fr	Droits en %1 pour %2 et l'application %3.
-%1 sessions killed	admin	fr	%1 sessions éliminées.
+%1 run rights for applications	admin	fr	% droits d'exécution des applications
+%1 sessions killed	admin	fr	%1 session(s) tuée(s).
 %1 user %2	admin	fr	%1 utilisateur %2
 (default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
@@ -22,8 +23,9 @@ access by	admin	fr	Accès par
 access control	admin	fr	Contrôle d'accès
 access to %1 data by others	admin	fr	Accès aux données de %1  par d'autres
 accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et force brute
-account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié!
-account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe en texte !
+account	admin	fr	Compte
+account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié !
+account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe au format texte !
 account %1 %2	admin	fr	Compte %1 %2
 account '%1' deleted.	admin	fr	Compte '%' supprimé.
 account active	admin	fr	Compte actif
@@ -63,6 +65,7 @@ add new account	admin	fr	Ajouter un nouveau compte
 add new application	admin	fr	Ajouter une nouvelle application
 add peer server	admin	fr	Ajouter un Serveur Pair
 add sub-category	admin	fr	Ajouter une sous-catégorie
+add user	admin	fr	Ajouter un utilisateur
 admin email	admin	fr	Email de l'administrateur
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses email (séparées par des virgules) des administrateurs à prévenir en cas de blocage d'un compte ou d'une ip (vide pour aucune notification)
 admin name	admin	fr	Nom de l'administrateur
@@ -74,7 +77,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
 aliases	admin	fr	Alias
 all applications	admin	fr	Toutes les applications
-all categories	admin	fr	Toutes catégories
+all categories	admin	fr	Toutes les catégories
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
@@ -149,7 +152,7 @@ clear cache and register hooks	admin	fr	Vider le cache et enregistrer les hooks
 click to select a color	admin	fr	Cliquez pour sélectionner une couleur
 color	admin	fr	Couleur
 command scheduled to run at %1	admin	fr	Commande programmée pour s'executer à %1
-commercial: all sorts of companies	admin	fr	Commercial: toutes sortes d'entreprises
+commercial: all sorts of companies	admin	fr	Commercial : toutes sortes d'entreprises
 config password or md5 hash from the header.inc.php	admin	fr	Mot de passe de configuration ou clé cryptée md5 du header.inc.php.
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	fr	Domaine du cookie. Vide par défaut utilise le nom de domaine complet. Par exemple, dans le Gestionnaire de site ".domaine.com" permet d'utiliser le même cookie pour egw.domaine.com et www.domaine.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fr	Chemin vers le cookie. Permet des sessions d'EGroupware multiple avec des répertoires différents.
@@ -168,6 +171,7 @@ custom fields	admin	fr	Champs personnalisés
 custom translation	admin	fr	Traduction personnalisée
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
 data	admin	fr	Données
+data from	admin	fr	Données de
 day	admin	fr	Jour
 day of week<br>(0-6, 0=sun)	admin	fr	Jour de la semaine<br>(0-6, 0=Dim)
 db backup and restore	admin	fr	Sauvegarde et restauration de la BDD
@@ -285,15 +289,16 @@ enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy
 enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
 enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
 error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
-error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe par % !
-error deleting log entry!	admin	fr	Erreur en supprimant les entrées dans le lot !
+error changing the password for % !!!	admin	fr	Erreur en changeant le mot de passe pour % !!!
+error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe pour % !
+error deleting log entry!	admin	fr	Erreur à la suppression des entrées de journaux  !
 error saving	admin	fr	Erreur lors de l'enregistrement !
 error saving account!	admin	fr	Erreur lors de l'enregistrement du compte !
 error saving the command!	admin	fr	Erreur lors de l'enregistrement de la commande !
 error saving to db:	admin	fr	Erreur lors de l'enregistrement dans la bd :
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
-error! no appname found	admin	fr	Erreur : pas de nom d'application trouvé !
-error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
+error! no appname found	admin	fr	Erreur : aucun nom d'application trouvé !
+error: %1 not found or other error !!!	admin	fr	Erreur : %1 introuvable ou autre erreur !
 exists	admin	fr	Existe
 expired	admin	fr	Expiré
 expires	admin	fr	Expire
@@ -321,6 +326,7 @@ global categories	common	fr	Catégories globales
 go directly to admin menu, returning here the next time you click on administration.	admin	fr	Aller directement au menu admin, revenir ici la prochaine fois que vous cliquer sur administration.
 governmental: incl. state or municipal authorities or services	admin	fr	Gouvernemental: incluant les autorités et services d'état ou de municipalité
 grant	admin	fr	Accorder
+group #%1 must have negative sign!	admin	fr	Le groupe #%1 doit avoir un signe négatif !
 group ?	admin	fr	Groupe ?
 group csv export	admin	fr	Export de groupe en CSV
 group csv import	admin	fr	Import de groupe en CSV
@@ -482,22 +488,22 @@ permission denied!!!	admin	fr	Permission refusée !!!
 permissions	admin	fr	Permissions
 permissions this group has	admin	fr	Permissions attribuées à ce groupe
 personal: eg. within a family	admin	fr	Personnel : ex. dans une famille
-php version	admin	fr	Version de PHP.
+php version	admin	fr	Version de PHP
 phpinfo	admin	fr	Informations PHP
 phrase	admin	fr	Phrase
 phrase deleted	admin	fr	Phrase supprimée
-please enter a name	admin	fr	SVP entrez un nom
-please enter a name for that server !	admin	fr	SVP entrez un nom pour ce serveur !
-please run setup to become current	admin	fr	SVP exécutez setup pour mettre à jour
+please enter a name	admin	fr	Entrez un nom
+please enter a name for that server !	admin	fr	Entrez un nom pour ce serveur !
+please run setup to become current	admin	fr	Exécutez le setup pour mettre à jour
 please select	admin	fr	SVP choisissez
 postfix with ldap	admin	fr	Postfix avec support LDAP
-postpone for	admin	fr	Postposé à
+postpone for	admin	fr	Reporter à
 preferences	admin	fr	Préférences
-primary group	admin	fr	groupe initial
+primary group	admin	fr	Groupe primaire
 qmaildotmode	admin	fr	qmaildotmode
 quota settings	admin	fr	Paramétrage des quotas
-quota size in mbyte	admin	fr	Taille des quota en Mo
-re-enter password	admin	fr	Entrez le mot de passe à nouveau
+quota size in mbyte	admin	fr	Taille du quota en Mo
+re-enter password	admin	fr	Entrez à nouveau le mot de passe
 read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Inscrire les dépendances
 reject passwords containing part of username or full name (3 or more characters long)	admin	fr	Rejeter les mots de passe contenant une partie du nom complet ou du login (3 caractères ou plus)
@@ -513,6 +519,7 @@ return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administrati
 return to view account	admin	fr	Revenir à l'affichage du compte
 route all mails to	admin	fr	Livrer tous les emails à
 rpm or debian package	admin	fr	Paquet RPM ou Debian
+run	admin	fr	exécuter
 run asynchronous services	admin	fr	Exécuter les Services asynchrones
 save the category	admin	fr	Enregistrer la catégorie
 save the category and return back to the list	admin	fr	Enregistrer la catégorie et retourner à la liste
@@ -549,6 +556,7 @@ show 'powered by' logo on	admin	fr	Montrer le logo 'motorisé par' sur
 show access log	admin	fr	Montrer les journaux d'accès
 show current action	admin	fr	Montrer les actions en cours
 show error log	admin	fr	Montrer le journal des erreurs
+show members	admin	fr	Afficher les nombres
 show phpinfo()	admin	fr	Montrer phpinfo()
 show session ip address	admin	fr	Montrer les adresses IP des sessions
 site	admin	fr	Site

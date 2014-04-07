@@ -69,6 +69,7 @@ date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
+default your name and email	mail	de	z.B. Ihr Name und Ihre Mail-Adresse
 delete folder	mail	de	Ordner Löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
@@ -148,10 +149,11 @@ flag / unflag	mail	de	Markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	markiert
 flagged %1 messages as %2 in %3	mail	de	%1 Nachrichten wurden als %2 in %3 markiert
-flagged %1 messages as flagged in %2	mail	de	Markierung zugefügt %1 Nachrichten als  in %2
-flagged %1 messages as unflagged in %2	mail	de	Markierung von %1 Nachrichten entfernt %2
+flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
+flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
+folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 force html	mail	de	erzwinge HTML
@@ -165,6 +167,7 @@ forward to address:	mail	de	weiterleiten an:
 from	mail	de	Von
 from(a->z)	mail	de	Von (A->Z)
 from(z->a)	mail	de	Von (Z->A)
+general	admin	de	Allgemein
 general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	größer als
@@ -209,6 +212,7 @@ inline	mail	de	Eingebunden Text
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
 junk	mail	de	Spammails
+junk folder	mail	de	Ordner für SPAM Nachrichten
 keep a copy of the message in your inbox	mail	de	eine Kopie der Nachricht in der INBOX behalten
 kilobytes	mail	de	Kilobytes
 later	mail	de	später
@@ -219,10 +223,12 @@ mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
 mail-address	mail	de	Mail-Adresse
 mailaccount	mail	de	Mailkonto
+mailinglist	mail	de	Mailingliste
 mark as deleted	mail	de	als gelöscht markieren
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
+mbstring.func_overload=0 is required for correct mail processing!	mail	de	mbstring.func_overload=0 wird von der Anwendung Mail zwingend benötigt!
 message body	mail	de	Nachricht
 message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
@@ -254,6 +260,7 @@ no text body supplied, check attachments for message text	mail	de	Keine Text vor
 no valid %1 folder configured!	mail	de	Kein gültiger %1 Ordner eingestellt!
 non	mail	de	Kein
 none, create all	mail	de	keine, erstellt alle
+notify about new mail in this folders	mail	de	Über neue Mails in diesem Ordner benachrichtigen
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
 on	mail	de	am
 one address is not valid	mail	de	Eine Adresse ist ungültig
@@ -363,13 +370,18 @@ source	mail	de	Quelltext
 sources	mail	de	HTML Quellcode
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde.
-step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang konfigurieren
+step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
+step 2: folder	mail	de	2. Schritt: Ordner einrichten
+step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige Filterregeln (Sieve) einrichten
+step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten
 store to folder	mail	de	Ablageordner
 subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren
 subscribe folder ...	mail	de	Ordner abonieren ...
+subscription faild!	mail	de	Das Abonnieren ist fehlgeschlagen.
 subscription folders	mail	de	Ordner Abonieren
+subscription successfully saved!	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 successfully connected	mail	de	erfolgreich verbunden
 template folder	mail	de	Vorlagen Ordner
 templates	mail	de	Vorlagen
@@ -382,6 +394,7 @@ the %1 's acl removed from the %2!	mail	de	Die Zugriffskontrollrechte von %1 wur
 the %1 's acl, including its subfolders, removed from the %2!	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt!
 the folder %1 's acls saved!	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat ein Empfangsbestätigung angefordert, um sicherzustellen, das Sie diese E-Mail gelesen haben. Möchten Sie ein Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann

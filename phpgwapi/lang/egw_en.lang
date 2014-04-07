@@ -43,6 +43,7 @@ active	common	en	Active
 active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
 add	common	en	Add
 add %1 category for	common	en	Add %1 category for
+add a new contact	common	en	Add a new contact
 add category	common	en	Add category
 add current	common	en	Add current
 add shortcut	common	en	Add shortcut
@@ -296,6 +297,7 @@ failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 favorite queries	common	en	Favorite queries
+favorites	common	en	Favorites
 fax number	common	en	Fax number
 features of the editor?	common	en	Features of the editor
 february	common	en	February
@@ -445,6 +447,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	en	List
 list members	common	en	List members
 lithuania	common	en	LITHUANIA
+load	common	en	Load
 local	common	en	Local
 location calendars	groupdav	en	Location calendars
 locations	common	en	Locations
@@ -539,6 +542,7 @@ not readable %1 entry of user %2	common	en	Not readable %1 entry of user %2
 not supported by current application!	common	en	Not supported by current application!
 note	common	en	Note
 notes	common	en	Notes
+nothing to save.	common	en	Nothing to save.
 notifications	common	en	Notifications
 notify window	common	en	Notify window
 notify your administrator to correct this situation	common	en	Notify your Administrator to correct this.
@@ -902,4 +906,3 @@ your settings have been updated	common	en	Your settings have been updated.
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom
-nothing to save.	common	en	Nothing to save.

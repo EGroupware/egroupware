@@ -155,6 +155,7 @@ color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
 config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder md5 Hash von der header.inc.php Datei
+configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 could not remote execute the command	admin	de	Kann den Befehl nicht Remote ausführen.
@@ -177,6 +178,7 @@ day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 db backup and restore	admin	de	DB Datensicherung und Wiederherstellung
 deactivate	admin	de	Deaktivieren
+debug	admin	de	Fehler suchen
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
@@ -521,6 +523,7 @@ return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 route all mails to	admin	de	Alle E-Mails senden an
 rpm or debian package	admin	de	RPM oder Debian Pakete
+run	admin	de	Ausführen
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren

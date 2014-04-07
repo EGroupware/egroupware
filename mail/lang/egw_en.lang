@@ -68,6 +68,7 @@ date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
+default your name and email	mail	en	default your name and email
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
@@ -151,6 +152,7 @@ flagged %1 messages as flagged in %2	mail	en	flagged %1 messages as flagged in %
 flagged %1 messages as unflagged in %2	mail	en	flagged %1 messages as unflagged in %2
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
+folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
 force html	mail	en	force html
@@ -164,6 +166,7 @@ forward to address:	mail	en	Forward to address:
 from	mail	en	from
 from(a->z)	mail	en	from(A->Z)
 from(z->a)	mail	en	from(Z->A)
+general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	greater than
@@ -208,6 +211,7 @@ inline	mail	en	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
 junk	mail	en	Junk
+junk folder	mail	en	Junk folder
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
 kilobytes	mail	en	kilobytes
 later	mail	en	later
@@ -218,10 +222,12 @@ mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
+mailinglist	mail	en	Mailinglist
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
+mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct mail processing!
 message body	mail	en	message body
 message preview area	mail	en	Message preview area
 message saved successfully.	mail	en	Message saved successfully.
@@ -253,6 +259,7 @@ no text body supplied, check attachments for message text	mail	en	no text body s
 no valid %1 folder configured!	mail	en	No valid %1 folder configured!
 non	mail	en	Non
 none, create all	mail	en	none, create all
+notify about new mail in this folders	mail	en	Notify about new mail in this folders
 notify when new mails arrive in these folders	mail	en	notify when new mails arrive in these folders
 on	mail	en	on
 one address is not valid	mail	en	One address is not valid
@@ -363,12 +370,17 @@ sources	mail	en	Sources
 start new messages with mime type plain/text or html?	mail	en	start new messages with mime type plain/text or html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	start reply messages with mime type plain/text or html or try to use the displayed format (default)?
 step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming mail
+step 2: folder	mail	en	Step 2: Folder
+step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side mail filtering
+step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing mail
 store to folder	mail	en	Store to Folder
 subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
+subscription faild!	mail	en	Subscription faild!
 subscription folders	mail	en	Subscription folders
+subscription successfully saved!	mail	en	Subscription successfully saved!
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
 templates	mail	en	Templates
@@ -381,6 +393,7 @@ the %1 's acl removed from the %2!	mail	en	The %1 's acl removed from the %2!
 the %1 's acl, including its subfolders, removed from the %2!	mail	en	The %1 's acl, including its subfolders, removed from the %2!
 the folder %1 's acls saved!	mail	en	The Folder %1 's ACLs saved!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
 then	mail	en	THEN

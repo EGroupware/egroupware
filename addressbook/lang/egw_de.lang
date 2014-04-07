@@ -147,6 +147,7 @@ country code (private)	addressbook	de	Länderkennung (Privat)
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
+crm view list	addressbook	de	CRM Ansicht
 crm-view	addressbook	de	CRM-Ansicht
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
@@ -483,6 +484,7 @@ warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefund
 warning: template "%1" not found, using default template instead.	addressbook	de	WARNUNG: Template "%1" nicht gefunden, das Standard-Template wird stattdessen benutzt.
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
+when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen geziegt
 where to add the email address	addressbook	de	wo soll die E-Mailadresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.

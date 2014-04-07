@@ -147,6 +147,7 @@ country code (private)	addressbook	en	Country code (private)
 create new links	addressbook	en	Create new links
 created	addressbook	en	Created
 credit	addressbook	en	Credit
+crm view list	addressbook	en	CRM view list
 crm-view	addressbook	en	CRM-View
 csv-fieldname	addressbook	en	CSV field name
 csv-filename	addressbook	en	CSV file name
@@ -483,6 +484,7 @@ warning: all contacts found will be deleted!	addressbook	en	WARNING: All contact
 warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
 weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	Address book links displayed in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
+when viewing a contact, show linked entries from the selected application	addressbook	en	When viewing a contact, show linked entries from the selected application
 where to add the email address	addressbook	en	Where to add the email address
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Select which address format should be used for countries with unknown address format.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	The address book to add contacts, when you have no rights to add to the current address book.

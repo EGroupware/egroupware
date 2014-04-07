@@ -43,6 +43,7 @@ active	common	de	Aktiv
 active directory requires ssl or tls to change passwords!	common	de	Active Directory benötigt eine SSL oder TLS Verbindung um Passwörter zu ändern!
 add	common	de	Hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
+add a new contact	common	de	Neuen Kontakt erstellen
 add category	common	de	Kategorie hinzufügen
 add current	common	de	Aktuelle Ansicht als Favorit
 add shortcut	common	de	Abkürzung hinzufügen
@@ -160,7 +161,7 @@ choose a background color for the icons	common	de	Wählen Sie eine Hintergrundfa
 choose a background image.	common	de	Wählen Sie ein Hintergrundbild.
 choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
 choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
-choose file...	common	de	Dateien auswählen...
+choose file...	common	de	Dateien wählen...
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 choose time	common	de	Uhrzeit auswählen
@@ -296,6 +297,7 @@ failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 favorite queries	common	de	Filter Auswahl anzeigen
+favorites	common	de	Favoriten
 fax number	common	de	Fax Nummer
 features of the editor?	common	de	Funktionen des Editors?
 february	common	de	Februar
@@ -445,6 +447,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	de	Liste
 list members	common	de	Mitglieder anzeigen
 lithuania	common	de	LITAUEN
+load	common	de	Daten werden geladen
 local	common	de	lokal
 location calendars	groupdav	de	Kalender von Räumen
 locations	common	de	Räume
@@ -539,6 +542,7 @@ not readable %1 entry of user %2	common	de	Nicht lesbarer %1 Eintrag des Benutze
 not supported by current application!	common	de	Für diese Anwendung nicht möglich!
 note	common	de	Notiz
 notes	common	de	Notizen
+nothing to save.	common	de	Nichts zu speichern.
 notifications	common	de	Benachrichtigungen
 notify window	common	de	Benachrichtigungsfenster
 notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administrator um diese Situation zu lösen
@@ -698,7 +702,7 @@ select user	common	de	Benutzer auswählen
 select work email address	common	de	geschäftl. E-Mail-Adresse auswählen
 selection	common	de	Auswahl
 send	common	de	senden
-send succeeded to %1	common	de	erfolgreich gesendet zu %1
+send succeeded to %1	common	de	Versand erfolgreich zu %1
 senegal	common	de	SENEGAL
 september	common	de	September
 serbia	common	de	SERBIEN
@@ -902,4 +906,3 @@ your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
 zoom	common	de	Zoomen
-nothing to save.	common	de	Nichts zu speichern.

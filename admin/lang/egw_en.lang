@@ -155,6 +155,7 @@ color	admin	en	Color
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
 config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php.
+configuration saved.	admin	en	Configuration saved.
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
 could not remote execute the command	admin	en	Could not remote execute the command
@@ -177,6 +178,7 @@ day	admin	en	Day
 day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
 db backup and restore	admin	en	DB backup and restore
 deactivate	admin	en	Deactivate
+debug	admin	en	Debug
 default	admin	en	Default
 default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group?
