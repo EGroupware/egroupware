@@ -2439,7 +2439,7 @@ unset($query['actions']);
 	 */
 	function gatherVacation()
 	{
-		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && $this->mail_bo->icServer->acc_sieve_host;
+		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 		if($vacation) {
 			$sieveServerClass = mail_bo::getInstance(false,  self::$icServerID, false, $oldIMAPObject=true);
@@ -2456,6 +2456,7 @@ unset($query['actions']);
 					$vacation = false;
 				}
 			}
+			//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		}
 		return $vacation;
 	}
