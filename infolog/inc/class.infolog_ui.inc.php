@@ -1643,8 +1643,7 @@ class infolog_ui
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
-					// Most changes we can just update, but un-delete needs an edit
-					$operation = $info_id ? ($old['info_status'] == 'deleted' ? 'edit' : 'update') : 'add';
+					$operation = $info_id ?  'edit' : 'add';
 					if ($content['info_contact'])
 					{
 						$old_link_id = (int)$content['info_link_id'];
