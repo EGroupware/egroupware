@@ -336,9 +336,14 @@ et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
 
 // Bind a mouseenter event once for every read-only email
 $j(function() {
+	// If user doesn't have access to addressbook, stop
 	if(!egw.app('addressbook')) return;
 
 	$j('body').on('mouseenter', 'a.et2_email', function() {
+
+		// Disabled for addressbook links - no point, they'd already be a contact
+		if(this.id.indexOf('addressbook-') === 0) return;
+		
 		$j(this).tooltip({
 			items: 'a.et2_email',
 			position: {my:"left top", at:"left bottom", collision:"flipfit"},
