@@ -344,7 +344,8 @@ ul.et2_selectbox {
   padding: 0px;
   display: inline-block;
 }
-label.et2_label > ul.et2_selectbox {
+/* padding between selectbox/textbox and it's label */
+label.et2_label > .et2_selectbox, label.et2_label > .et2_textbox, label.et2_label > .et2_textbox_ro {
 	padding-left: 5px;
 }
 .et2_selectbox li {
