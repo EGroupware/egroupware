@@ -207,11 +207,12 @@ class addressbook_hooks
 			'default'=> 'org_name: n_family, n_given',
 		);
 		$crm_list_options = array(
-			'infolog' => lang('infolog')
+			'~edit~'    => lang('Edit contact'),
+			'infolog' => lang('Open %1 CRM view', lang('infolog')),
 		);
 		if($GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
-			$crm_list_options['tracker'] = lang('tracker');
+			$crm_list_options['tracker'] = lang('Open %1 CRM view', lang('tracker'));
 		}
 		$settings['crm_list'] = array(
 			'type'   => 'select',

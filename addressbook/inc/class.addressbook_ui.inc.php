@@ -352,7 +352,7 @@ class addressbook_ui extends addressbook_bo
 			$actions = array(
 				'view' => array(
 					'caption' => 'CRM-View',
-					'default' => true,
+					'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] != '~edit~',
 					'allowOnMultiple' => false,
 					'group' => $group=1,
 					'onExecute' => 'javaScript:app.addressbook.view',
@@ -361,6 +361,7 @@ class addressbook_ui extends addressbook_bo
 				),
 				'open' => array(
 					'caption' => 'Open',
+					'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~',
 					'allowOnMultiple' => false,
 					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
 					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
@@ -2283,6 +2284,7 @@ window.egw_LAB.wait(function() {
 		// CRM list comes from content, request, or preference
 		$crm_list = $content['crm_list'] ? $content['crm_list'] :
 			($_GET['crm_list'] ? $_GET['crm_list'] : $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list']);
+		if(!$crm_list) $crm_list = 'infolog';
 
 		if(is_array($content))
 		{
