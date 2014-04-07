@@ -216,7 +216,7 @@ class addressbook_hooks
 		}
 		$settings['crm_list'] = array(
 			'type'   => 'select',
-			'label'  => 'CRM view list',
+			'label'  => 'Default action on double-click',
 			'name'   => 'crm_list',
 			'values' => $crm_list_options,
 			'help'   => 'When viewing a contact, show linked entries from the selected application',
