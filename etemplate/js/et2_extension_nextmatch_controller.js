@@ -163,7 +163,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				{
 					var reg = this._selectionMgr._getRegisteredRowsEntry(entry.uid);
 					reg.idx = entry.idx;
-					if(reg.ao && reg.ao._index) reg.ao.index = entry.idx;
+					if(reg.ao && reg.ao._index) reg.ao._index = entry.idx;
 				}
 			}
 			// Remove last one, it was moved to mapIndex-1 before increment
