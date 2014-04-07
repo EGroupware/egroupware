@@ -86,6 +86,9 @@ var et2_htmlarea = et2_inputWidget.extend(
 		// _super.apply is responsible for the actual setting of the params (some magic)
 		this._super.apply(this, arguments);
 
+		// CK instance
+		this.ckeditor = null;
+
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 		this.htmlNode = $j(document.createElement("textarea"))
@@ -111,15 +114,13 @@ var et2_htmlarea = et2_inputWidget.extend(
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		if(this.mode == 'ascii') return;
+		if(this.mode == 'ascii' || this.ckeditor != null) return;
 
 		var self = this;
-		var ckeditor;
 		try
 		{
-			CKEDITOR.replace(this.dom_id,jQuery.extend({},this.options.config,this.options));
-			ckeditor = CKEDITOR.instances[this.dom_id];
-			ckeditor.setData(self.value);
+			this.ckeditor = CKEDITOR.replace(this.dom_id,jQuery.extend({},this.options.config,this.options));
+			this.ckeditor.setData(self.value);
 			delete self.value;
 		}
 		catch (e)
@@ -130,9 +131,8 @@ var et2_htmlarea = et2_inputWidget.extend(
 			}
 			if(this.htmlNode.ckeditor)
 			{
-				CKEDITOR.replace(this.dom_id,this.options.config);
-				ckeditor = CKEDITOR.instances[this.dom_id];
-				ckeditor.setData(self.value);
+				this.ckeditor = CKEDITOR.replace(this.dom_id,this.options.config);
+				this.ckeditor.setData(self.value);
 				delete self.value;
 			}
 		}
@@ -142,8 +142,8 @@ var et2_htmlarea = et2_inputWidget.extend(
 		try
 		{
 			//this.htmlNode.ckeditorGet().destroy(true);
-			var ckeditor = CKEDITOR.instances[this.dom_id];
-			if (ckeditor) ckeditor.destroy(true);
+			if (this.ckeditor) this.ckeditor.destroy(true);
+			this.ckeditor = null;
 		}
 		catch (e)
 		{
