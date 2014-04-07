@@ -225,6 +225,11 @@ var et2_dataview_controller = Class.extend({
 
 			// Don't try to insert the rows, grid will do that automatically
 		}
+		if(idx == 0)
+		{
+			// No rows, start with an empty
+			this._emptyRow();
+		}
 	},
 
 	/**
