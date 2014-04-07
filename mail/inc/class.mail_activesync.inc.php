@@ -380,6 +380,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$this->_wasteID = $this->mail->getTrashFolder(false);
 		//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
 		$this->_sentID = $this->mail->getSentFolder(false);
+		$this->mail->getOutboxFolder(true);
 		//error_log(__METHOD__.__LINE__.' SentFolder:'.$this->_sentID);
 		//error_log(__METHOD__.__LINE__.' Connection Status for ProfileID:'.self::$profileID.'->'.$this->mail->icServer->_connected);
 	}

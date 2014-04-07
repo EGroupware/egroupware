@@ -124,10 +124,6 @@ class mail_hooks
 				$mail_bo->closeConnection();
 			}
 */
-			$availableAutoFolders['none'] = lang('none, create all');
-			foreach(mail_bo::$autoFolders as $aname) {
-				$availableAutoFolders[$aname] = lang($aname);
-			}
 
 			$mailConfig = config::read('mail');
 		}
@@ -549,16 +545,6 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '0',
 			),*/
-			'notavailableautofolders' => array(
-				'type'   => 'multiselect',
-				'label'  => 'do not auto create folders',
-				'help'   => 'which folders - in general - should NOT be automatically created, if not existing',
-				'name'   => 'notavailableautofolders',
-				'values' => $availableAutoFolders,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'none',
-			),
 			'saveAsOptions' => array(
 				'type'   => 'select',
 				'label'  => 'Save as',
