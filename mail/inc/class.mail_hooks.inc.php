@@ -16,32 +16,6 @@
 class mail_hooks
 {
 	/**
-	 * Menu for Admin >> Edit accounts
-	 */
-	static public function adminMenu()
-	{
-		if (($default_profile_id = emailadmin_bo::getDefaultAccID()))
-		{
-			$mail_bo = mail_bo::forceEAProfileLoad($default_profile_id);
-
-			$ogServer = $mail_bo->mailPreferences->getOutgoingServer($default_profile_id);
-			//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
-
-			if (!in_array(get_class($ogServer), array('defaultsmtp', 'emailadmin_smtp')))
-			{
-				global $menuData;
-
-				$menuData[] = Array
-				(
-					'description'   => 'email settings',
-					'url'           => '/index.php',
-					'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
-				);
-			}
-		}
-	}
-
-	/**
      * Hook called by link-class to include mail in the appregistry of the linkage
      *
      * @param array/string $location location and other parameters (not used)

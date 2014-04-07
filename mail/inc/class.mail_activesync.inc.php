@@ -159,7 +159,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$identities = array();
 		if (!isset($params['setup']))
 		{
-			$profileID=(self::$profileID=='G'?emailadmin_bo::getDefaultAccID():self::$profileID);
+			$profileID=(self::$profileID=='G'?emailadmin_account::get_default_acc_id():self::$profileID);
 			if (!$this->mail) $this->mail = mail_bo::getInstance(true,$profileID,true,false,true);
 			foreach($allIdentities as $key => $singleIdentity) {
 				if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
