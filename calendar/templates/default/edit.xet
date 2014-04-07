@@ -56,16 +56,16 @@
 				<row class="row optional" disabled="@no_add">
 					<vbox options="0,0" span="2">
 						<menulist>
-							<menupopup type="select-account" statustext="User or group" id="account" empty_label="User or group" expand_multiple_rows="10" options=",calendar+"/>
+							<menupopup type="select-account" statustext="User or group" id="account" empty_label="User or group" multiple="true" no_lang="true" tags="true" account_type="both"/>
 						</menulist>
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
-                                        <vbox options="0,0" span="2" valign="middle">
-					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
-					<menulist>
-						<menupopup class="selectRole" id="role"/>
-					</menulist>
-                                        </vbox>
+					<vbox options="0,0" span="2" valign="middle">
+						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
+						<menulist>
+							<menupopup class="selectRole" id="role"/>
+						</menulist>
+					</vbox>
 					<button align="center" label="Add" id="add" image="add" background_image="1"/>
 					<description/>
 				</row>
