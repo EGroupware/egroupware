@@ -692,12 +692,16 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 		{
 			this._super.apply(this, arguments);
 			// Don't make it look like a link though
-			jQuery('li',this.list).removeClass("et2_link et2_link_string");
+			jQuery('li',this.list).removeClass("et2_link et2_link_string")
+				// No clicks either
+				.off();
 			return;
 		}
 
 		// Don't make it look like a link
-		jQuery('li',this.list).removeClass("et2_link et2_link_string");
+		jQuery('li',this.list).removeClass("et2_link et2_link_string")
+			// No clicks either
+			.off();
 
 		if(this.options.select_options && this.options.select_options[_value] || this.options.empty_label)
 		{
