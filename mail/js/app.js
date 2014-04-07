@@ -825,6 +825,7 @@ app.classes.mail = AppJS.extend(
 		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
 		//console.log(_data,vacationnotice,vacationrange);
 		//try to set it via set_value and set label
+		if (!this.et2) return;
 		if (_data == null)
 		{
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
