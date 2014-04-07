@@ -271,6 +271,25 @@ class mail_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
+			'htmlOptions' => array(
+				'type'   => 'select',
+				'label'  => 'display of html emails',
+				'help'   => 'What do do with html email',
+				'name'   => 'htmlOptions',
+				'values' => $htmlOptions,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => 'always_display',
+			),
+			'allowExternalIMGs' => array(
+				'type'   => 'check',
+				'label'  => 'Allow external images',
+				'help'   => 'allow images from external sources in html emails',
+				'name'   => 'allowExternalIMGs',
+				'xmlrpc' => True,
+				'admin'  => True,
+				'forced' => true,
+			),
 			'message_forwarding' => array(
 				'type'   => 'select',
 				'label'  => 'how to forward messages',
@@ -331,73 +350,6 @@ class mail_hooks
 				'default'=> 0,
 				'admin'  => False,
 			),
-			array(
-				'type'  => 'section',
-				'title' => lang('General settings'),
-				'no_lang'=> true,
-				'xmlrpc' => False,
-				'admin'  => False
-			),
-			'htmlOptions' => array(
-				'type'   => 'select',
-				'label'  => 'display of html emails',
-				'help'   => 'What do do with html email',
-				'name'   => 'htmlOptions',
-				'values' => $htmlOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'always_display',
-			),
-			'message_newwindow' => array(
-				'type'   => 'select',
-				'label'  => 'display messages in multiple windows',
-				'help'   => 'When displaying messages in a popup, re-use the same popup for all or open a new popup for each message',
-				'name'   => 'message_newwindow',
-				'values' => $newWindowOptions,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => '1',
-			),
-			'allowExternalIMGs' => array(
-				'type'   => 'check',
-				'label'  => 'Allow external images',
-				'help'   => 'allow images from external sources in html emails',
-				'name'   => 'allowExternalIMGs',
-				'xmlrpc' => True,
-				'admin'  => True,
-				'forced' => true,
-			),
-			'sortOrder' => array(
-				'type'   => 'select',
-				'label'  => 'Sort order',
-				'help'   => 'Default sorting order',
-				'name'   => 'sortOrder',
-				'values' => $sortOrder,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '0',	// newest first
-			),
-			'rowOrderStyle' => array(
-				'type'   => 'select',
-				'label'  => 'row order style',
-				'help'   => 'What order the list columns are in',
-				'name'   => 'rowOrderStyle',
-				'values' => $rowOrderStyle,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'mail',
-			),
-			'prefaskformove' => array(
-				'type'   => 'select',
-				'label'  => 'Confirm move to folder',
-				'help'   => 'Do you want to be asked for confirmation before moving selected messages to another folder?',
-				'name'   => 'prefaskformove',
-				'values' => $no_yes_copy,
-				'xmlrpc' => True,
-				'default'=> 2,
-				'admin'  => False,
-				'forced' => '1',
-			),
 /*
 			// option requested by customer, removed for the new client
 			'prefaskformultipleforward' => array(
@@ -433,7 +385,7 @@ class mail_hooks
 */
 			array(
 				'type'  => 'section',
-				'title' => lang('Folder settings'),
+				'title' => lang('Configuration settings'),
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
@@ -477,13 +429,6 @@ class mail_hooks
 				'xmlrpc' => True,
 				'default'=> 0,
 				'admin'  => False,
-			),
-			array(
-				'type'  => 'section',
-				'title' => lang('Configuration settings'),
-				'no_lang'=> true,
-				'xmlrpc' => False,
-				'admin'  => False
 			),
 			/*'prefpreventmanagefolders' => array(
 				'type'   => 'select',
@@ -545,6 +490,17 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '0',
 			),*/
+			'prefaskformove' => array(
+				'type'   => 'select',
+				'label'  => 'Confirm move to folder',
+				'help'   => 'Do you want to be asked for confirmation before moving selected messages to another folder?',
+				'name'   => 'prefaskformove',
+				'values' => $no_yes_copy,
+				'xmlrpc' => True,
+				'default'=> 2,
+				'admin'  => False,
+				'forced' => '1',
+			),
 			'saveAsOptions' => array(
 				'type'   => 'select',
 				'label'  => 'Save as',
