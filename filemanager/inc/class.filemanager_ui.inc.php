@@ -253,7 +253,7 @@ class filemanager_ui
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'filter'         => '1',	// current dir only
+					'filter'         => '',	// current dir only
 					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
 					'no_cat'         => True,	// I  disable the cat-selectbox
 					'lettersearch'   => True,	// I  show a lettersearch
@@ -306,7 +306,7 @@ class filemanager_ui
 				// reset lettersearch as it confuses users (they think the dir is empty)
 				$content['nm']['searchletter'] = false;
 				// switch recusive display off
-				if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
+				if (!$content['nm']['filter']) $content['nm']['filter'] = '';
 			}
 		}
 		$view = self::get_view();
@@ -447,10 +447,10 @@ class filemanager_ui
 		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
 
 		$sel_options['filter'] = array(
-			'1' => 'Current directory',
+			'' => 'Current directory',
 			'2' => 'Directories sorted in',
 			'3' => 'Show hidden files',
-			''  => 'Files from subdirectories',
+			'0'  => 'Files from subdirectories',
 		);
 		$tpl->setElementAttribute('nm', 'onfiledrop', 'app.filemanager.filedrop');
 
@@ -711,6 +711,8 @@ class filemanager_ui
 		{
 			egw_session::appsession('index','filemanager',$query);
 		}
+		if(!$query['path']) $query['path'] = self::get_home_dir();
+		
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
 		{
@@ -743,16 +745,19 @@ class filemanager_ui
 		{
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
+		
+		// Re-map so 'No filters' favorite ('') is depth 1
+		$filter = $query['filter'] === '' ? 1 : $query['filter'];
 		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
 			'mindepth' => 1,
-			'maxdepth' => $query['filter'] ? (int)(boolean)$query['filter'] : null,
-			'dirsontop' => $query['filter'] <= 1,
-			'type' => $query['filter'] ? null : 'f',
+			'maxdepth' => $filter ? (int)(boolean)$filter : null,
+			'dirsontop' => $filter <= 1,
+			'type' => $filter ? null : 'f',
 			'order' => $query['order'], 'sort' => $query['sort'],
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
 			'name_preg' => $namefilter,
-			'hidden' => $query['filter'] == 3,
+			'hidden' => $filter == 3,
 		),true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
