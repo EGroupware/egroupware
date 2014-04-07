@@ -1492,6 +1492,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			filter_name = 'filter';
 		}
+		this.options['no_'+filter_name] = bool;
 
 		var filter = this.header[filter_name];
 		if(filter)
@@ -1974,7 +1975,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var widget_options = {
 			"id": name,
 			"label": this.nextmatch.options.settings[name+"_label"],
-			"no_lang": lang
+			"no_lang": lang,
+			"disabled": this.nextmatch.options['no_'+name]
 		};
 
 		// Set select options
