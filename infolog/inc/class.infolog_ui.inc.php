@@ -486,7 +486,7 @@ class infolog_ui
 			$rows['sel_options']['info_status']['deleted'] = 'deleted';
 		}
 
-		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog')
+		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog' && !$this->called_by)
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog');
 			if ($query['filter'] != '' && !empty($this->filters[$query['filter']]))
