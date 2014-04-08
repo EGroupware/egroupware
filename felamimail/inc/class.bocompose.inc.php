@@ -1079,7 +1079,15 @@
 			}
 
 			// check if there are folders to be used
-			$folder = (array)$this->sessionData['folder'];
+			$folderToCheck = (array)$this->sessionData['folder'];
+			$folder = array();
+			foreach ($folderToCheck as $k => $f)
+			{
+				if ($this->bofelamimail->folderExists($f, true))
+				{
+					$folder[] = $f;
+				}
+			}
 			$sentFolder = $this->bofelamimail->getSentFolder();
 			if(isset($sentFolder) && $sentFolder != 'none' &&
 				$this->preferences->preferences['sendOptions'] != 'send_only' &&
@@ -1096,13 +1104,16 @@
 			}
 			else
 			{
-				if ((!isset($sentFolder) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
+				if (((!isset($sentFolder)||$sentFolder==false) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
 					($this->preferences->preferences['sendOptions'] != 'send_only' &&
-					$sentFolder != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
+					$sentFolder != 'none'))
+				{
+					$this->errorInfo = lang("No Send Folder set in preferences");
+				}
 			}
 			if($messageIsDraft == true) {
 				$draftFolder = $this->bofelamimail->getDraftFolder();
-				if(!empty($draftFolder) && $this->bofelamimail->folderExists($draftFolder)) {
+				if(!empty($draftFolder) && $this->bofelamimail->folderExists($draftFolder,true)) {
 					$this->sessionData['folder'] = array($draftFolder);
 					$folder[] = $draftFolder;
 				}
