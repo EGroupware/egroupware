@@ -718,7 +718,6 @@ class calendar_uiforms extends calendar_ui
 							{
 								$event['button_was'] = $button;	// remember for confirm
 								$preserv['duration'] = $content['duration'];
-								return $this->confirm_edit_series($event,$preserv);
 							}
 						}
 					}
