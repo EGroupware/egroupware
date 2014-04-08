@@ -629,6 +629,7 @@ class calendar_bo
 			'modified'	=> $event['modified'],
 			'owner'		=> $event['owner'],
 			'recur_type' => MCAL_RECUR_NONE,
+			'uid'	=> $event['uid'],
 			'etag'	=> $event['etag'],
 			'max_user_modified' => $event['max_user_modified'],
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
