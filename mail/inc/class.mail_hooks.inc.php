@@ -598,7 +598,7 @@ class mail_hooks
 		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
-
+/*
 		unset($file);
 		if ($preferences && $sieveEnabledServerCounter)
 		{
@@ -642,7 +642,7 @@ class mail_hooks
 			}
 
 		}
-
+*/
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
