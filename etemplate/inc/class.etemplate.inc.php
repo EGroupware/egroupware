@@ -389,23 +389,37 @@ class etemplate extends boetemplate
 	static function validation_errors($ignore_validation='',$cname=null)
 	{
 		if (is_null($cname)) $cname = self::$name_vars;
-		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
+		//echo "<p>uiself::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
 		if (!$ignore_validation) return count(self::$validation_errors) > 0;
 
 		foreach(self::$validation_errors as $name => $error)
 		{
-			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
-
-			// treat $ignoare_validation only as regular expression, if it starts with a slash
-			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) ||
-				$ignore_validation[0] != '/' && $ignore_validation != $name)
+			if (!self::ignore_validation_match($name, $ignore_validation))
 			{
-				//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
+				//echo "<p>uiself::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
 				return true;
 			}
-			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
+			//echo "<p>uiself::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
 		}
 		return false;
+	}
+
+	/**
+	 * Check if given form-name matches ai ignore-validation rule
+	 *
+	 * @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
+	 * @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	 * @param string $cname
+	 * @return boolean
+	 */
+	static function ignore_validation_match($form_name, $ignore_validation, $cname=null)
+	{
+		if (is_null($cname)) $cname = self::$name_vars;
+		if ($cname) $form_name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2', $form_name);
+
+		return empty($ignore_validation) ||
+			$ignore_validation[0] == '/' && preg_match($ignore_validation, $form_name) ||
+			$ignore_validation[0] != '/' && $ignore_validation == $form_name;
 	}
 
 	/**
