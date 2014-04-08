@@ -81,7 +81,7 @@ class mail_compose
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
 		$this->preferences	=& $this->mail_bo->mailPreferences;
 		// we should get away from this $this->preferences->preferences should hold the same info
-		$this->preferencesArray =& $this->preferences; //$GLOBALS['egw_info']['user']['preferences']['felamimail'];
+		$this->preferencesArray =& $this->preferences;
 		//force the default for the forwarding -> asmail
 		if (is_array($this->preferencesArray)) {
 			if (!array_key_exists('message_forwarding',$this->preferencesArray)
@@ -116,115 +116,6 @@ class mail_compose
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 		}
 	}
-
-/*
-	function action()
-	{
-		$formData['mailaccount']	= (int)$_POST['mailaccount'];
-
-		foreach((array)$_POST['destination'] as $key => $destination) {
-			if(!empty($_POST['address'][$key])) {
-				if($destination == 'folder') {
-					$formData[$destination][] = $GLOBALS['egw']->translation->convert($_POST['address'][$key], $this->charset, 'UTF7-IMAP');
-				} else {
-					$formData[$destination][] = $_POST['address'][$key];
-				}
-			}
-		}
-
-		$formData['subject'] 	= $this->stripSlashes($_POST['subject']);
-		$formData['body'] 	= $this->stripSlashes($_POST['body']);
-		// if the body is empty, maybe someone pasted something with scripts, into the message body
-		if(empty($formData['body']))
-		{
-			// this is to be found with the egw_unset_vars array for the _POST['body'] array
-			$name='_POST';
-			$key='body';
-			#error_log($GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
-			if (isset($GLOBALS['egw_unset_vars'][$name.'['.$key.']']))
-			{
-				$formData['body'] = bocompose::_getCleanHTML( $GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
-			}
-		}
-		$formData['priority'] 	= $this->stripSlashes($_POST['priority']);
-		$formData['signatureid'] = (int)$_POST['signatureid'];
-		$formData['stationeryID'] = $_POST['stationeryID'];
-		$formData['mimeType']	= $this->stripSlashes($_POST['mimeType']);
-		if ($formData['mimeType'] == 'html' && html::htmlarea_availible()===false)
-		{
-			$formData['mimeType'] = 'plain';
-			$formData['body'] = $this->convertHTMLToText($formData['body']);
-		}
-		$formData['disposition'] = (bool)$_POST['disposition'];
-		$formData['to_infolog'] = $_POST['to_infolog'];
-		$formData['to_tracker'] = $_POST['to_tracker'];
-		//$formData['mailbox']	= $_GET['mailbox'];
-		if((bool)$_POST['printit'] == true) {
-			$formData['printit'] = 1;
-			$formData['isDraft'] = 1;
-			// pint the composed message. therefore save it as draft and reopen it as plain printwindow
-			$formData['subject'] = "[".lang('printview').":]".$formData['subject'];
-			$messageUid = $this->saveAsDraft($formData,$destinationFolder);
-			if (!$messageUid) {
-				print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")."');</script>";
-				return;
-			}
-			$uidisplay   = CreateObject('felamimail.uidisplay');
-			$uidisplay->printMessage($messageUid, $formData['printit'],$destinationFolder);
-			//egw::link('/index.php',array('menuaction' => 'felamimail.uidisplay.printMessage','uid'=>$messageUid));
-			return;
-		}
-		if((bool)$_POST['saveAsDraft'] == true) {
-			$formData['isDraft'] = 1;
-			// save as draft
-			$folder = $this->mail_bo->getDraftFolder();
-			$this->mail_bo->reopen($folder);
-			$status = $this->mail_bo->getFolderStatus($folder);
-			//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
-			$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
-			$messageUid = $this->saveAsDraft($formData,$folder); // folder may change
-			if (!$messageUid) {
-				print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
-				//try to reopen the mail from session data
-				$this->compose(null,null,'to',true);
-				return;
-			}
-			// saving as draft, does not mean closing the message
-			unset($_POST['composeid']);
-			unset($_GET['composeid']);
-			$uicompose   = CreateObject('felamimail.uicompose');
-			$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-			if (!$uicompose->mail_bo->icServer->_connected) $uicompose->mail_bo->openConnection($uicompose->mail_bo->profileID);
-			if ($uicompose->mail_bo->getMessageHeader($messageUid))
-			{
-				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
-				$uicompose->bocompose->getDraftData($uicompose->mail_bo->icServer, $folder, $messageUid);
-				$uicompose->compose(null,null,'to',true);
-				return;
-			}
-		} else {
-			$cachedComposeID = egw_cache::getCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60);
-			egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=60);
-			//error_log(__METHOD__.__LINE__.' '.$formData['subject'].' '.$cachedComposeID.'<->'.$this->composeID);
-			if (!empty($cachedComposeID) && $cachedComposeID == $this->composeID)
-			{
-				//already send
-				print "<script type=\"text/javascript\">window.close();</script>";
-				return;
-			}
-			if(!$this->send($formData)) {
-				// reset the cached composeID, as something failed
-				egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,$expiration=60);
-//					print "<script type=\"text/javascript\">alert('".lang("Error: Could not send Message.")." ".lang("Trying to recover from session data")."');</script>";
-				$this->compose();
-				return;
-			}
-		}
-
-		#common::egw_exit();
-		print "<script type=\"text/javascript\">window.close();</script>";
-	}
-*/
 
 	/**
 	 * function compose
@@ -2357,26 +2248,16 @@ class mail_compose
 			$_mailObject->IsHTML(true);
 			if(!empty($signature)) {
 				#$_mailObject->Body    = array($_formData['body'], $_signature['signature']);
-				//if($_formData['stationeryID']) {
-				//	$bostationery = new felamimail_bostationery();
-				//	$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body'],$signature);
-				//} else {
-					$_mailObject->Body = $_formData['body'] .
-						($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
-						$signature;
-				//}
+				$_mailObject->Body = $_formData['body'] .
+					($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
+					$signature;
 				$_mailObject->AltBody = $this->convertHTMLToText($_formData['body'],true,true).
 					($disableRuler ?"\r\n":"\r\n-- \r\n").
 					$this->convertHTMLToText($signature,true,true);
 				#print "<pre>$_mailObject->AltBody</pre>";
 				#print htmlentities($_signature['signature']);
 			} else {
-				//if($_formData['stationeryID']) {
-				//	$bostationery = new felamimail_bostationery();
-				//	$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body']);
-				//} else {
-					$_mailObject->Body	= $_formData['body'];
-				//}
+				$_mailObject->Body	= $_formData['body'];
 				$_mailObject->AltBody	= $this->convertHTMLToText($_formData['body'],true,true);
 			}
 			// convert URL Images to inline images - if possible
@@ -2674,7 +2555,15 @@ class mail_compose
 		}
 
 		// check if there are folders to be used
-		$folder = (array)$this->sessionData['folder'];
+		$folderToCheck = (array)$this->sessionData['folder'];
+		$folder = array();
+		foreach ($folderToCheck as $k => $f)
+		{
+			if ($this->mail_bo->folderExists($f, true))
+			{
+				$folder[] = $f;
+			}
+		}
 		$sentFolder = $this->mail_bo->getSentFolder();
 		if(isset($sentFolder) && $sentFolder != 'none' &&
 			$this->preferences->preferences['sendOptions'] != 'send_only' &&
@@ -2691,13 +2580,13 @@ class mail_compose
 		}
 		else
 		{
-			if ((!isset($sentFolder) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
+			if (((!isset($sentFolder)||$sentFolder==false) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
 				($this->preferences->preferences['sendOptions'] != 'send_only' &&
 				$sentFolder != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
 		}
 		if($messageIsDraft == true) {
 			$draftFolder = $this->mail_bo->getDraftFolder();
-			if(!empty($draftFolder) && $this->mail_bo->folderExists($draftFolder)) {
+			if(!empty($draftFolder) && $this->mail_bo->folderExists($draftFolder,true)) {
 				$this->sessionData['folder'] = array($draftFolder);
 				$folder[] = $draftFolder;
 			}

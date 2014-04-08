@@ -2128,7 +2128,7 @@ unset($query['actions']);
 		$attachmentHTMLBlock='';
 		if (is_array($attachments) && count($attachments) > 0) {
 			$url_img_vfs = html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
-			$url_img_vfs_save_all = html::image('felamimail','save_all', lang('Save all'));
+			$url_img_vfs_save_all = html::image('mail','save_all', lang('Save all'));
 
 			$detectedCharSet=$charset2use=mail_bo::$displayCharset;
 			foreach ($attachments as $key => $value)
@@ -2234,7 +2234,7 @@ unset($query['actions']);
 					'is_winmail'    => $value['is_winmail'],
 					'mailbox'   => base64_encode($mailbox),
 				);
-				$attachmentHTML[$key]['link_save'] ="<a href='".egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".html::image('felamimail','fileexport')."</a>";
+				$attachmentHTML[$key]['link_save'] ="<a href='".egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".html::image('mail','fileexport')."</a>";
 
 				if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 				{
@@ -2351,40 +2351,7 @@ unset($query['actions']);
 								$newSenderAddress,
 								$realName);
 
-/*
-					$linkData = array (
-						'menuaction'		=> 'addressbook.addressbook_ui.edit',
-						'presets[email]'	=> $addressData['EMAIL'],
-						'presets[org_name]'	=> $_organisation,
-						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
-					);
-*/
 					$decodedPersonalName = $realName;
-/*
-					if (!empty($decodedPersonalName)) {
-						if($spacePos = strrpos($decodedPersonalName, ' ')) {
-							$linkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);
-							$linkData['presets[n_given]'] 	= substr($decodedPersonalName, 0, $spacePos);
-						} else {
-							$linkData['presets[n_family]']	= $decodedPersonalName;
-						}
-						$linkData['presets[n_fn]']	= $decodedPersonalName;
-					}
-					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
-						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
-						$onClick = "window.open(this,this.target,'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;";
-						$image = $GLOBALS['egw']->common->image('felamimail','sm_envelope');
-						$senderAddress .= sprintf('<a href="%s" onClick="%s">
-							<img src="%s" width="10" height="8" border="0"
-							align="absmiddle" alt="%s"
-							title="%s"></a>',
-							$urlAddToAddressbook,
-							$onClick,
-							$image,
-							lang('add to addressbook'),
-							lang('add to addressbook'));
-					}
-*/
 				} else {
 					$addrEMailORG = $addrEMail = $addressData['EMAIL'];
 					$addAction = egw_link::get_registry('mail','add');
@@ -2397,31 +2364,6 @@ unset($query['actions']);
 					$senderEMail = mail_bo::htmlentities($addrEMail);
 					$senderAddress .= sprintf('<a href="%s">%s</a>',
 								$link,$senderEMail);
-					//TODO: This uses old addressbook code, which should be removed in Version 1.4
-					//Please use addressbook.addressbook_ui.edit with proper paramenters
-/*
-					$linkData = array
-					(
-						'menuaction'		=> 'addressbook.addressbook_ui.edit',
-						'presets[email]'	=> $senderEMail, //$addressData['EMAIL'],
-						'presets[org_name]'	=> $_organisation,
-						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
-					);
-					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
-						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
-						$onClick = "window.open(this,this.target, 'dependent=yes, width=850, height=440, location=no, menubar=no, toolbar=no, scrollbars=yes, status=yes'); return false;";
-						$image = $GLOBALS['egw']->common->image('felamimail','sm_envelope');
-						$senderAddress .= sprintf('<a href="%s" onClick="%s">
-							<img src="%s" width="10" height="8" border="0"
-							align="absmiddle" alt="%s"
-							title="%s"></a>',
-							$urlAddToAddressbook,
-							$onClick,
-							$image,
-							lang('add to addressbook'),
-							lang('add to addressbook'));
-					}
-*/
 				}
 			}
 			return $senderAddress;

@@ -24,12 +24,8 @@ class mail_bosieve
 	function async_vacation($_vacation)
 	{
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'('.print_r($_vacation,true).')');
-		// unset the fm_preferences session object, to force the reload/rebuild
 
 		$_restoreSession = false; // as in async, each call may be for a different user
-		//$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
-		//$mailPreferences  = $bopreferences->getPreferences();
-		//$icServer = $mailPreferences->getIncomingServer(0);
 		$icServer = emailadmin_account::search((isset($_vacation['account_id'])&&!empty($_vacation['account_id'])?$_vacation['account_id']:$GLOBALS['egw_info']['user']['account_id']),false,null,0,1)->oldImapServer();
 
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'->LoginName:'.$icServer->loginName);
