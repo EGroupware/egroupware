@@ -59,7 +59,6 @@ class customfields_widget
 		'url-email'=> 'EMail',
 		'url-phone'=> 'Phone number',
 		'htmlarea' => 'Formatted Text (HTML)',
-		'client-ip'=> 'IP address',
 		'link-entry' => 'Select entry',		// should be last type, as the individual apps get added behind
 	);
 
@@ -340,12 +339,6 @@ class customfields_widget
 							'size' => implode(',',$options)
 						));
 						break;
-					case 'client-ip':
-						if (empty($value[$this->prefix.$lname]))
-						{
-							$value[$this->prefix.$lname] = egw_session::getuser_ip();
-						}
-						// fall through
 					case 'text' :
 					case 'textarea' :
 					case '' :	// not set
