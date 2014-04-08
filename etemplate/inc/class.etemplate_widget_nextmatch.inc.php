@@ -352,6 +352,15 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 			else	// non-row data set by get_rows method
 			{
+				// Encode all select options and re-index to avoid Firefox's problem with
+				// '' => 'All'
+				if($n == 'sel_options')
+				{
+					foreach($row as $select => &$options)
+					{
+						etemplate_widget_menupopup::fix_encoded_options($options,true);
+					}
+				}
 				$result['rows'][$n] = $row;
 			}
 		}
