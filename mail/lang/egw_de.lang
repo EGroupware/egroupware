@@ -187,7 +187,7 @@ if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	falls abweichend zur E-Mail
 if from contains:(*)	mail	de	wenn Von enthält:(*)
 if mail body content / attachment type	mail	de	wenn E-Mail Text enthält /Anhang Type
-if mail body message type	mail	de	wenn E-Mail Type
+if mail body message type	mail	de	wenn E-Mail Text
 if mail header	mail	de	wenn E-Mail-Header
 if message size	mail	de	wenn Nachrichtengröße
 if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ordner sollen auf der Startseite dargestellt werden (gelesene/ungelesene Nachrichten)
@@ -388,6 +388,7 @@ templates	mail	de	Vorlagen
 templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
+text	mail	de	Text
 text mode	mail	de	Text Modus
 text/plain	mail	de	text/plain
 the %1 's acl removed from the %2!	mail	de	Die Zugriffskontrollrechte von %1 wurden von %2 entfernt!

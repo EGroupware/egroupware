@@ -387,6 +387,7 @@ templates	mail	en	Templates
 templates folder	mail	en	Templates folder
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test Connection and display basic information about the selected profile
+text	mail	en	Text
 text mode	mail	en	Text mode
 text/plain	mail	en	text/plain
 the %1 's acl removed from the %2!	mail	en	The %1 's acl removed from the %2!
