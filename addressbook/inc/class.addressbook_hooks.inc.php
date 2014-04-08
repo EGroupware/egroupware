@@ -353,7 +353,7 @@ class addressbook_hooks
 	 */
 	static function search_link($location)
 	{
-		return array(
+		$links = array(
 			'query' => 'addressbook.addressbook_bo.link_query',
 			'title' => 'addressbook.addressbook_bo.link_title',
 			'titles' => 'addressbook.addressbook_bo.link_titles',
@@ -393,6 +393,12 @@ class addressbook_hooks
 			),
 			'merge' => true,
 		);
+		if($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~')
+		{
+			$links['view'] = $links['edit'];
+			$links['view_popup'] = $links['edit_popup'];
+		}
+		return $links;
 	}
 
 	/**
