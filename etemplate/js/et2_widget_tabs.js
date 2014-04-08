@@ -350,6 +350,31 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 		this.tabContainer.children(":eq(" + _idx + ")").show();
 	},
 
+	/**
+	 * Activate the tab containing the given widget
+	 *
+	 * @param {et2_widget} widget
+	 * @return {bool} widget was found in a tab
+	 */
+	activateTab: function(widget) {
+		var tab = widget;
+		while(tab._parent && tab._parent._type !='tabbox')
+		{
+			tab = tab._parent;
+		}
+
+		var child_index = this._children.indexOf(tab);
+		for(var i = 0; i < this.tabData.length; i++)
+		{
+			if(this.tabData[i].widget == tab)
+			{
+				this.setActiveTab(i);
+				return true;
+			}
+		}
+		return false;
+	},
+
 	getDOMNode: function(_sender) {
 		if (_sender == this)
 		{

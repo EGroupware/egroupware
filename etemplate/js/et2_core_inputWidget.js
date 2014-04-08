@@ -252,10 +252,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 					tab = widget;
 					widget = widget._parent;
 				}
-				if(!widget || typeof widget.setActiveTab == 'undefined') return;
-				var index = widget._children.indexOf(tab);
-				widget.setActiveTab(index);
-				console.log(widget);
+				widget.activateTab(this);
 			}
 		}
 	},
