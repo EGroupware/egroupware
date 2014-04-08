@@ -689,17 +689,13 @@ class boetemplate extends soetemplate
 	 */
 	static function &get_array(&$arr,$idx,$reference_into=False,$skip_empty=False)
 	{
-		// return content of $arr itself (but no reference!) in all error-cases: $arr no array or $idx an object
-		if (is_object($idx) || !is_array($arr))
+		if (!is_array($arr))
 		{
-			$ret = $arr;
-			return $ret;
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx',$reference_into,$skip_empty) \$arr is no array!");
 		}
-		if ((string)$idx === '')
-		{
-			$idxs = array();
-		}
-		elseif (count($idxs = explode('[', $idx, 2)) > 1)
+		if (is_object($idx)) return false;	// given an error in php5.2
+
+		if (count($idxs = explode('[', $idx, 2)) > 1)
 		{
 			$idxs = array_merge(array($idxs[0]), explode('][', substr($idxs[1],0,-1)));
 		}

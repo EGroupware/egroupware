@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author RalfBecker-At-outdoor-training.de
- * @copyright 2006-13 by RalfBecker-At-outdoor-training.de
+ * @copyright 2006-11 by RalfBecker-At-outdoor-training.de
  * @license GPL - GNU General Public License
  * @version $Id$
  */
@@ -215,8 +215,7 @@ class historylog_widget
 				}
 				else
 				{
-					self::$status_widgets['#'.$cf_name] = !in_array($cf_data['type'], array('text', 'client-ip')) ?
-						$cf_data['type'] : 'label';
+					self::$status_widgets['#'.$cf_name] = $cf_data['type'] != 'text' ? $cf_data['type'] : 'label';
 				}
 			}
 			elseif($cf_data['values']['@'])
