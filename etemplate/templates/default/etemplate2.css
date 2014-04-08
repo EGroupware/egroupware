@@ -987,6 +987,21 @@ div.message.floating {
   background-color: gray;
   opacity: 0.5;
 }
+
+@media print {
+	/** Keeps rows from breaking */
+	.et2_nextmatch .egwGridView_grid > tbody > tr {
+		display: block;
+	}
+	.egwGridView_grid > tbody > tr {
+		page-break-inside: avoid;
+		-webkit-region-break-inside: avoid;
+	}
+	.et2_nextmatch > div {
+		width: 100% !important;
+		height: auto;
+	}
+}
 /**
  * Grid / nextmatch Hierarchy
  */
