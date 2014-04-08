@@ -2284,7 +2284,7 @@ window.egw_LAB.wait(function() {
 		// CRM list comes from content, request, or preference
 		$crm_list = $content['crm_list'] ? $content['crm_list'] :
 			($_GET['crm_list'] ? $_GET['crm_list'] : $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list']);
-		if(!$crm_list) $crm_list = 'infolog';
+		if(!$crm_list || $crm_list == '~edit~') $crm_list = 'infolog';
 
 		if(is_array($content))
 		{
