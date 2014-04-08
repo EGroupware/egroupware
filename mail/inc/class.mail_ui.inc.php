@@ -120,7 +120,7 @@ class mail_ui
 		if ($connectionReset)
 		{
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
-			emailadmin_bo::unsetCachedObjects(self::$icServerID);
+			emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		}
 
 		try {
@@ -166,7 +166,7 @@ class mail_ui
 		}
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 		self::$icServerID = $_icServerID;
-		if ($unsetCache) emailadmin_bo::unsetCachedObjects(self::$icServerID);
+		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
@@ -656,7 +656,7 @@ class mail_ui
 		echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
 
 		_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.$icServerID);
-		emailadmin_bo::unsetCachedObjects($icServerID);
+		emailadmin_imapbase::unsetCachedObjects($icServerID);
 /*
 		if (mail_bo::$idna2)
 		{
