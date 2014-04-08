@@ -1959,7 +1959,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			//header.loadingFinished();
 			this._bindHeaderInput(header);
 		},this));
-		header.loadingFinished();
+		// Don't care about deferred promises, using load event instead
+		// to only catch not available templates
+		header.loadingFinished([]);
 	},
 
 	/**
