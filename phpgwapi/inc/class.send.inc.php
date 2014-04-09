@@ -27,9 +27,8 @@ class send extends egw_mailer
 	 *
 	 * To be able to call PHPMailer's Send function, we check if a subject, body or address is set and call it in that case,
 	 * else we do our constructors work.
-	 * @param string $_app the app that is responsible for the sending itself, if available an appspecific profile is fetched/merged
 	 */
-	function send($_app='felamimail')
+	function send()
 	{
 		if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 		if ($this->Subject || $this->Body || count($this->to))
@@ -41,72 +40,31 @@ class send extends egw_mailer
 
 		$this->CharSet = translation::charset();
 		$this->IsSmtp();
-		$restoreSession = $getUserDefinedProfiles = true;
-		// if dontUseUserDefinedProfiles is set to yes/true/1 dont restore the session AND dont retrieve UserdefinedAccount settings
-		$notification_config = config::read('notifications');
-		if ($notification_config['dontUseUserDefinedProfiles']) $restoreSession = $getUserDefinedProfiles = false;
-		try
+
+		// smtp settings from default account of current user
+		$account = emailadmin_account::read(emailadmin_account::get_default_acc_id());
+		$this->Host = $account->acc_smtp_host;
+		$this->Port = $account->acc_smtp_port;
+		switch($account->acc_smtp_ssl)
 		{
-			$bopreferences =& CreateObject('felamimail.bopreferences',$restoreSession);
+			case self::SSL_TLS:			// requires modified PHPMailer, or comment next two lines to use just ssl!
+				$this->Host = 'tlsv1://'.$this->Host;
+				break;
+			case self::SSL_SSL:
+				$this->Host = 'ssl://'.$this->Host;
+				break;
+			case self::SSL_STARTTLS:	// PHPMailer uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
+				$this->Host = 'tls://'.$this->Host;
 		}
-		catch (egw_exception_assertion_failed $e)
-		{
-			$bopreferences = false;
-		}
-		if ($bopreferences) {
-			if ($this->debug) error_log(__METHOD__." using felamimail preferences for mailing.");
-			// if dontUseUserDefinedProfiles is set to yes/true/1  dont retrieve UserdefinedAccount settings
-			$preferences  = $bopreferences->getPreferences($getUserDefinedProfiles,0,$_app);
-			if ($this->debug) error_log(__METHOD__.__LINE__.' Preferences fetched:'.array2string($preferences));
-			if ($preferences) {
-				$ogServer = $preferences->getOutgoingServer(0);
-				if ($ogServer) {
-					$this->Host     = $ogServer->host;
-					$this->Port = $ogServer->port;
-					if($ogServer->smtpAuth) {
-						$this->SMTPAuth = true;
-						list($username,$senderadress) = explode(';', $ogServer->username,2);
-						if (!isset($this->Sender) || empty($this->Sender)) // if there is no Sender info, try to determine one
-						{
-							if (isset($senderadress) && !empty($senderadress)) // thats the senderinfo, that may be part of the
-							{												   // SMTP Auth. this one has precedence over other settings
-								$this->Sender = $senderadress;
-							}
-							else // there is no senderinfo with smtp auth, fetch the identities mailaddress, as it should be connected to
-							{    // the active profiles smtp settings
-								$activeMailProfile = $preferences->getIdentity(0); // fetch active identity
-								if (isset($activeMailProfile->emailAddress) && !empty($activeMailProfile->emailAddress))
-								{
-									$this->Sender = $activeMailProfile->emailAddress;
-								}
-							}
-						}
-						$this->Username = $username;
-						$this->Password = $ogServer->password;
-						// if we have NO password, eg. because we run by async service outside a regular user session
-						// --> fall back to the default profile / mail config from setup
-						if (empty($this->Password)) $bopreferences = false;
-					}
-					if ($this->debug) error_log(__METHOD__." using Host ".print_r($this->Host,true)." to be send");
-					if ($this->debug) error_log(__METHOD__." using User ".print_r($this->Username,true)." to be send");
-					if ($this->debug) error_log(__METHOD__." using Sender ".print_r($this->Sender,true)." to be send");
-				}
-			}
-		}
-		if (!$bopreferences) {
-			if ($this->debug) error_log(__METHOD__." using global config to send");
-			$this->Host = $GLOBALS['egw_info']['server']['smtp_server']?$GLOBALS['egw_info']['server']['smtp_server']:'localhost';
-			$this->Port = $GLOBALS['egw_info']['server']['smtp_port']?$GLOBALS['egw_info']['server']['smtp_port']:25;
-			$this->SMTPAuth = !empty($GLOBALS['egw_info']['server']['smtp_auth_user']);
-			list($username,$senderadress) = explode(';', $GLOBALS['egw_info']['server']['smtp_auth_user'],2);
-			if (isset($senderadress) && !empty($senderadress)) $this->Sender = $senderadress;
-			$this->Username = $username;
-			$this->Password = $GLOBALS['egw_info']['server']['smtp_auth_passwd'];
-			if ($this->debug) error_log(__METHOD__." using Host ".print_r($this->Host,true)." to be send");
-			if ($this->debug) error_log(__METHOD__." using User ".print_r($this->Username,true)." to be send");
-			if ($this->debug) error_log(__METHOD__." using Sender ".print_r($this->Sender,true)." to be send");
-		}
+		$this->smtpAuth = !empty($account->acc_smtp_username);
+		$this->Username = $account->acc_smtp_username;
+		$this->Password = $account->acc_smtp_password;
+		$this->defaultDomain = $account->acc_domain;
+		$this->Sender = emailadmin_account::rfc822($account);
+
 		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
+
+		error_log(__METHOD__."() initialised egw_mailer with ".array2string($this)." from mail default account ".array2string($account->params));
 	}
 
 	/**
@@ -137,6 +95,7 @@ class send extends egw_mailer
 	function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 	{
 		if ($this->debug) error_log(__METHOD__." to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender'");
+		unset($boundary);	// not used, but required by function signature
 		//echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
 		$this->ClearAll();	// reset everything to its default, we might be called more then once !!!
 
@@ -146,6 +105,7 @@ class send extends egw_mailer
 		}
 		if ($from)
 		{
+			$matches = null;
 			if (preg_match('/"?(.+)"?<(.+)>/',$from,$matches))
 			{
 				list(,$this->FromName,$this->From) = $matches;
