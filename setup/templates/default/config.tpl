@@ -92,38 +92,12 @@
 
    <tr class="row_on">
     <td>{lang_Enter_the_hostname_of_the_machine_on_which_this_server_is_running}:</td>
-    <td><input name="newsettings[hostname]" value="{value_hostname}" /></td>
+    <td><input name="newsettings[hostname]" value="{value_hostname}" size="40"/></td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_Enter_your_default_FTP_server}:</td>
-    <td><input name="newsettings[default_ftp_server]" value="{value_default_ftp_server}" /></td>
-   </tr>
-
-   <tr class="row_on">
-    <td>{lang_Attempt_to_use_correct_mimetype_for_FTP_instead_of_default_'application/octet-stream'}:</td>
-    <td>
-     <select name="newsettings[ftp_use_mime]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_ftp_use_mime_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
-<!-- this is not working correct
-   <tr class="row_off">
-    <td>{lang_Datetime_port.<br />If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br />(Port:_13_/_Host:_129.6.15.28)}</td>
-    <td>
-      <select name="newsettings[daytime_port]">
-       <option value="00"{selected_daytime_port_00}>{lang_00_(disable)}</option>
-       <option value="13"{selected_daytime_port_13}>{lang_13_(ntp)}</option>
-       <option value="80"{selected_daytime_port_80}>{lang_80_(http)}</option>
-      </select>
-    </td>
-   </tr>
--->
    <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server}:</td>
-    <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}" /></td>
+    <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}" size="40"/></td>
    </tr>
 
    <tr class="row_on">
@@ -141,73 +115,9 @@
     <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}" /></td>
    </tr>
 
-<!-- until they are working
-   <tr class="row_off">
-    <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
-    <td><input name="newsettings[site_username]" value="{value_site_username}" /></td>
-   </tr>
-
-   <tr class="row_on">
-    <td>{lang_Enter_the_site_password_for_peer_servers}.</td>
-    <td><input type="password" name="newsettings[site_password]" value="{value_site_password}" /></td>
-   </tr>
--->
-
   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
-
-   <tr class="th">
-    <td colspan="2"><b>{lang_Standard_mailserver_settings_(used_for_Mail_authentication_too)}:</b></td>
-   </tr>
-   <tr class="row_on"">
-    <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}:</td>
-    <td><input name="newsettings[mail_server]" value="{value_mail_server}"></td>
-   </tr>
-   <tr class="row_off"">
-    <td>{lang_Mail_server_protocol}:</td>
-    <td>
-     <select name="newsettings[mail_server_type]">
-      <option value="imap" {selected_mail_server_type_imap}>IMAP</option>
-      <option value="imaps" {selected_mail_server_type_imaps}>IMAPS</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_Mail_server_login_type}:</td>
-    <td>
-     <select name="newsettings[mail_login_type]">{hook_mail_login_type}</select>
-    </td>
-   </tr>
-   <tr class="row_off"">
-    <td>{lang_Mail_domain_(for_Virtual_mail_manager)}:</td>
-    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_SMTP_server_hostname_or_IP_address}:</td>
-    <td><input name="newsettings[smtp_server]" value="{value_smtp_server}"></td>
-   </tr>
-   <tr class="row_off">
-    <td>{lang_SMTP_server_port}:</td>
-    <td><input name="newsettings[smtp_port]" value="{value_smtp_port}"></td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_SMTP-authentication_required}:</td>
-    <td><select name="newsettings[smtpAuth]"> {hook_auth_type_smtp}</select></td>
-   </tr>
-   <tr class="row_off">
-    <td>{lang_User_for_SMTP-authentication_(leave_it_empty_if_no_auth_required)}:</td>
-    <td><input name="newsettings[smtp_auth_user]" value="{value_smtp_auth_user}"></td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_Password_for_SMTP-authentication}:</td>
-    <td><input type="password" name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
-   </tr>
-   <tr class="row_off">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-
-<!-- from admin -->
 
    <tr class="th">
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>

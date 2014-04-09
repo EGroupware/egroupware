@@ -37,22 +37,6 @@ function vfs_storage_mode($settings)
 	}
 }
 
-function mail_server($settings)
-{
-	if (!$settings['smtp_server'])
-	{
-		$GLOBALS['config_error'] = lang('Missing or uncomplete mailserver configuration');
-	}
-	if (@file_exists('../emailadmin/inc/class.emailadmin_bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')))
-	{
-		$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
-		if (is_object($emailadmin))
-		{
-			$emailadmin->setDefaultProfile($settings);
-		}
-	}
-}
-
 function temp_dir($settings)
 {
 	if (!setup_detection::check_dir($settings['temp_dir'],$error_msg))
