@@ -64,7 +64,7 @@ class send extends egw_mailer
 
 		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 
-		error_log(__METHOD__."() initialised egw_mailer with ".array2string($this)." from mail default account ".array2string($account->params));
+		if ($this->debug) error_log(__METHOD__."() initialised egw_mailer with ".array2string($this)." from mail default account ".array2string($account->params));
 	}
 
 	/**
