@@ -47,13 +47,13 @@ class send extends egw_mailer
 		$this->Port = $account->acc_smtp_port;
 		switch($account->acc_smtp_ssl)
 		{
-			case self::SSL_TLS:			// requires modified PHPMailer, or comment next two lines to use just ssl!
+			case emailadmin_account::SSL_TLS:			// requires modified PHPMailer, or comment next two lines to use just ssl!
 				$this->Host = 'tlsv1://'.$this->Host;
 				break;
-			case self::SSL_SSL:
+			case emailadmin_account::SSL_SSL:
 				$this->Host = 'ssl://'.$this->Host;
 				break;
-			case self::SSL_STARTTLS:	// PHPMailer uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
+			case emailadmin_account::SSL_STARTTLS:	// PHPMailer uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
 				$this->Host = 'tls://'.$this->Host;
 		}
 		$this->smtpAuth = !empty($account->acc_smtp_username);
