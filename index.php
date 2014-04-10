@@ -103,6 +103,8 @@ if ($app == 'home' && !($GLOBALS['egw']->framework instanceof jdots_framework))
 	if (!$app || $app == 'home') $app = isset($GLOBALS['egw_info']['user']['apps']['calendar']) ? 'calendar' : key($GLOBALS['egw_info']['user']['apps']);
 	egw::redirect(egw_framework::index($app), $app);
 }
+// until home works again, we build new frameset for jdots template
+if ($app == 'home' && $GLOBALS['egw']->framework instanceof jdots_framework) $_GET['cd'] = 'yes';
 
 if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
 {
