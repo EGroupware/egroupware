@@ -84,6 +84,7 @@ class felamimail_bo
 	var $encoding = array("7bit", "8bit", "binary", "base64", "quoted-printable", "other");
 	static $displayCharset;
 	static $folderStatusCache;
+	static $supportsORinQuery;
 
 	/**
 	 * Instance of bopreference
@@ -760,7 +761,7 @@ class felamimail_bo
 
 	}
 
-	function createIMAPFilter($_folder, $_criterias)
+	function createIMAPFilter($_folder, $_criterias, $_supportsOrInQuery=true)
 	{
 		$all = 'ALL UNDELETED'; //'ALL'
 		//_debug_array($_criterias);
@@ -777,9 +778,9 @@ class felamimail_bo
 			switch ($criteria) {
 				case 'QUICK':
 					if($this->isSentFolder($_folder)) {
-						$imapFilter .= 'OR SUBJECT "'. $_criterias['string'] .'" TO "'. $_criterias['string'] .'" ';
+						$imapFilter .= ($_supportsOrInQuery?'OR ':'').'SUBJECT "'. $_criterias['string'] .'" TO "'. $_criterias['string'] .'" ';
 					} else {
-						$imapFilter .= 'OR SUBJECT "'. $_criterias['string'] .'" FROM "'. $_criterias['string'] .'" ';
+						$imapFilter .= ($_supportsOrInQuery?'OR ':'').'SUBJECT "'. $_criterias['string'] .'" FROM "'. $_criterias['string'] .'" ';
 					}
 					break;
 				case 'BCC':
@@ -2922,7 +2923,13 @@ class felamimail_bo
 			}
 			//error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
 			if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName." Filter:".array2string($_filter).function_backtrace());
-			$filter = $this->createIMAPFilter($_folderName, $_filter);
+			//self::$supportsORinQuery[$this->profileID]=true;
+			if (is_null(self::$supportsORinQuery) || !isset(self::$supportsORinQuery[$this->profileID]))
+			{
+				self::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+				if (!isset(self::$supportsORinQuery[$this->profileID])) self::$supportsORinQuery[$this->profileID]=true;
+			}
+			$filter = $this->createIMAPFilter($_folderName, $_filter, self::$supportsORinQuery[$this->profileID]);
 			//_debug_array($filter);
 
 			if($this->icServer->hasCapability('SORT')) {
@@ -2964,33 +2971,63 @@ class felamimail_bo
 				$sortResult = $this->icServer->search($advFilter, $resultByUid);
 				if (PEAR::isError($sortResult))
 				{
+					if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver reports:".$sortResult->message.' '."$advFilter, $resultByUid");
 					if (stripos(array2string($sortResult->message),'BADCHARSET')!==false)
 					{
 						$supportsCharset[$this->profileID]=false;
 						egw_cache::setCache(egw_cache::INSTANCE,'email','supportsCharset'.trim($GLOBALS['egw_info']['user']['account_id']),$supportsCharset,$expiration=60*60*10);
-						if (self::$debug) error_log(__METHOD__." Mailserver has NO CHARSET Capability:".$sortResult->message);
+						if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver has NO CHARSET Capability:".$sortResult->message);
+					}
+					elseif (stripos(array2string($sortResult->message),'BAD, UID')!==false)
+					{
+						$resultByUid=false;
+					}
+					elseif (stripos(array2string($sortResult->message),'BAD, SEARCH')!==false && self::$supportsORinQuery[$this->profileID])
+					{
+						self::$supportsORinQuery[$this->profileID]=false;
+						egw_cache::setCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsORinQuery,$expiration=60*60*10);
+						$filter = $this->createIMAPFilter($_folderName, $_filter, self::$supportsORinQuery[$this->profileID]);
 					}
 					else
 					{
 						$filter='*';
 					}
 					$sortResult = $this->icServer->search($filter, $resultByUid);
+					if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver reports:".$sortResult->message.' '."$filter, $resultByUid");
 					if (PEAR::isError($sortResult))
 					{
-						// some servers are not replying on a search for uids, so try this one
-						$resultByUid = false;
-						if ($filter!='*') $sortResult = $this->icServer->search('*', $resultByUid);
+						if (stripos(array2string($sortResult->message),'BAD, SEARCH')!==false)
+						{
+							self::$supportsORinQuery[$this->profileID]=false;
+							egw_cache::setCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsORinQuery,$expiration=60*60*10);
+							if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver has NO OR Capability for Search:".$sortResult->message);
+							$filter = $this->createIMAPFilter($_folderName, $_filter, self::$supportsORinQuery[$this->profileID]);
+						}
+						else
+						{
+							// some servers are not replying on a search for uids, so try this one
+							$resultByUid = false;
+							if ($filter!='*') $filter='*';
+						}
+						$sortResult = $this->icServer->search($filter, $resultByUid);
+						if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver reports:".$sortResult->message.' '."$filter, $resultByUid");
 						if (PEAR::isError($sortResult))
 						{
-							error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
-							$sortResult = null;
+							$resultByUid = false;
+							$filter='*';
+							$sortResult = $this->icServer->search($filter, $resultByUid);
+							if (PEAR::isError($sortResult))
+							{
+								error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
+								$sortResult = null;
+							}
 						}
 					}
 				}
 				if(is_array($sortResult)) {
 						sort($sortResult, SORT_NUMERIC);
 				}
-				if (self::$debug) error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
+				if (self::$debug) error_log(__METHOD__.__LINE__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 			}
 			if ($setSession)
 			{

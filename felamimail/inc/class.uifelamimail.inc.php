@@ -1039,9 +1039,6 @@ class uifelamimail
 				$this->t->set_var('quicksearch', $this->bofelamimail->sessionData['messageFilter']['string']);
 			}
 
-			$defaultSearchType = (isset($this->bofelamimail->sessionData['messageFilter']['type']) ? $this->bofelamimail->sessionData['messageFilter']['type'] : 'quick');
-			$defaultSelectStatus = (isset($this->bofelamimail->sessionData['messageFilter']['status']) ? $this->bofelamimail->sessionData['messageFilter']['status'] : 'any');
-
 			$searchTypes = array(
 				'quick'		=> 'quicksearch',
 				'subject'	=> 'subject',
@@ -1050,6 +1047,15 @@ class uifelamimail
 				'to'		=> 'to',
 				'cc'		=> 'cc',
 			);
+			//felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID]=true;
+			if (is_null(felamimail_bo::$supportsORinQuery) || !isset(felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID]))
+			{
+				felamimail_bo::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+				if (!isset(felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID])) felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID]=true;
+			}
+			if (!felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID]) unset($searchTypes['quick']);
+			$defaultSearchType = (isset($this->bofelamimail->sessionData['messageFilter']['type']) ? $this->bofelamimail->sessionData['messageFilter']['type'] : (felamimail_bo::$supportsORinQuery[$this->bofelamimail->profileID]?'quick':'subject'));
+			$defaultSelectStatus = (isset($this->bofelamimail->sessionData['messageFilter']['status']) ? $this->bofelamimail->sessionData['messageFilter']['status'] : 'any');
 			$selectSearchType = html::select('searchType', $defaultSearchType, $searchTypes, false, "style='width:100%;' id='searchType' onchange='document.getElementById(\"quickSearch\").focus(); document.getElementById(\"quickSearch\").value=\"\" ;return false;'");
 			$this->t->set_var('select_search', $selectSearchType);
 

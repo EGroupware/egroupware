@@ -1705,9 +1705,15 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		//}
 		if (isset($searchquery['query'][0]['value']['FolderId'])) $folderid = $searchquery['query'][0]['value']['FolderId'];
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
+		if (is_null(felamimail_bo::$supportsORinQuery) || !isset(felamimail_bo::$supportsORinQuery[$this->mail->profileID]))
+		{
+			felamimail_bo::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			if (!isset(felamimail_bo::$supportsORinQuery[$this->mail->profileID])) felamimail_bo::$supportsORinQuery[$this->mail->profileID]=true;
+		}
+
 		if (isset($searchquery['query'][0]['value']['Search:FreeText']))
 		{
-			$type = 'quick';
+			$type = (felamimail_bo::$supportsORinQuery[$this->mail->profileID]?'quick':'subject');
 			$searchText = $searchquery['query'][0]['value']['Search:FreeText'];
 		}
 		if (!$folderid)
@@ -1721,7 +1727,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 //if (isset($searchquery['query'][0]['value'][subquery][1][value][POOMMAIL:DateReceived]));
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
-		$_filter = array('type'=> 'quick',
+		$_filter = array('type'=> (felamimail_bo::$supportsORinQuery[$this->mail->profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any',
 						);
