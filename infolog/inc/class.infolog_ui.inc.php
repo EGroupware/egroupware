@@ -2430,8 +2430,8 @@ class infolog_ui
 		$uid = $_GET['uid'];
 		$partid = $_GET['part'];
 		$mailbox = base64_decode($_GET['mailbox']);
-		$mailClass = 'felamimail_bo';
-		$sessionLocation = 'felamimail';
+		$mailClass = 'mail_bo';
+		$sessionLocation = 'mail';
 		// if rowid is set, we are called from new mail module.
 		if (method_exists('mail_ui','splitRowID') && isset($_GET['rowid']) && !empty($_GET['rowid']))
 		{
