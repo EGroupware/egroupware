@@ -157,14 +157,11 @@
 				</row>
 				<row disabled="!@ts_modified" class="dialogOperators">
 					<description value="Last modified"/>
-					<hbox width="100%">
-						<menulist>
-							<menupopup type="select-account" id="ts_modifier" readonly="true"/>
-						</menulist>
-						<date-time id="ts_modified" readonly="true" align="right"/>
-					</hbox>
+                                                    <menulist>
+                                                            <menupopup type="select-account" id="ts_modifier" readonly="true"/>
+                                                    </menulist>
 					<description/>
-					<description span="all"/>
+                                        <date-time id="ts_modified" readonly="true" align="left"/>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox orient="0" span="all">
