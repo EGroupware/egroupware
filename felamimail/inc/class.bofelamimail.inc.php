@@ -2283,15 +2283,16 @@
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
 					$retValue['header'][$sortOrder[$uid]]['priority']		= ($headerObject['PRIORITY']?$headerObject['PRIORITY']:3);
 					if (is_array($headerObject['FLAGS'])) {
-						$retValue['header'][$sortOrder[$uid]]['recent']		= in_array('\\Recent', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['flagged']	= in_array('\\Flagged', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['answered']	= in_array('\\Answered', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['forwarded']   = in_array('$Forwarded', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['deleted']	= in_array('\\Deleted', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['seen']		= in_array('\\Seen', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
-						$retValue['header'][$sortOrder[$uid]]['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
+						$headerFlags = array_map('strtolower',$headerObject['FLAGS']);
+						$retValue['header'][$sortOrder[$uid]]['recent']		= in_array('\\recent', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['flagged']	= in_array('\\flagged', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['answered']	= in_array('\\answered', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['forwarded']   = in_array('$forwarded', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['deleted']	= in_array('\\deleted', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['seen']		= in_array('\\seen', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['draft']		= in_array('\\draft', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['mdnsent']	= in_array('mdnsent', $headerFlags);
+						$retValue['header'][$sortOrder[$uid]]['mdnnotsent']	= in_array('mdnnotsent', $headerFlags);
 					}
 					if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
 						if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {
