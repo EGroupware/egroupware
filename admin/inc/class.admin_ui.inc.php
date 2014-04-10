@@ -284,7 +284,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 			$params['query_type'] = 'all';
 		}
 
-		$rows = self::$accounts->search($params);
+		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
 
 		foreach($rows as &$row)
