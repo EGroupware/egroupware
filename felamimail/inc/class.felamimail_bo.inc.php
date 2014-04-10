@@ -1101,7 +1101,7 @@ class felamimail_bo
 					$this->flagMessages('read', $uid, $_folder);
 					$flags = $this->getFlags($uid);
 					//error_log(__METHOD__.__LINE__.array2string($flags));
-					if (strpos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
+					if (stripos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
 					unset($flags);
 				}
 				$retValue = PEAR::isError($this->icServer->deleteMessages($_messageUID, true));
@@ -3318,16 +3318,17 @@ class felamimail_bo
 	static function prepareFlagsArray($headerObject)
 	{
 		$retValue = array();
-		$retValue['recent']		= in_array('\\Recent', $headerObject['FLAGS']);
-		$retValue['flagged']	= in_array('\\Flagged', $headerObject['FLAGS']);
-		$retValue['answered']	= in_array('\\Answered', $headerObject['FLAGS']);
-		$retValue['forwarded']   = in_array('$Forwarded', $headerObject['FLAGS']);
-		$retValue['deleted']	= in_array('\\Deleted', $headerObject['FLAGS']);
-		$retValue['seen']		= in_array('\\Seen', $headerObject['FLAGS']);
-		$retValue['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
-		$retValue['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
-		$retValue['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
 		if (is_array($headerObject['FLAGS'])) $headerFlags = array_map('strtolower',$headerObject['FLAGS']);
+		//error_log(__METHOD__.__LINE__.'->'.array2string($headerFlags));
+		$retValue['recent']		= in_array('\\recent', $headerFlags);
+		$retValue['flagged']	= in_array('\\flagged', $headerFlags);
+		$retValue['answered']	= in_array('\\answered', $headerFlags);
+		$retValue['forwarded']   = in_array('$forwarded', $headerFlags);
+		$retValue['deleted']	= in_array('\\deleted', $headerFlags);
+		$retValue['seen']		= in_array('\\seen', $headerFlags);
+		$retValue['draft']		= in_array('\\draft', $headerFlags);
+		$retValue['mdnsent']	= in_array('mdnsent', $headerFlags);
+		$retValue['mdnnotsent']	= in_array('mdnnotsent', $headerFlags);
 		if (!empty($headerFlags))
 		{
 			$retValue['label1']   = in_array('$label1', $headerFlags);
