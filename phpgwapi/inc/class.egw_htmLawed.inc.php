@@ -283,7 +283,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 		// Re-build 'alt'
 		if (isset($attribute_array['alt'])) $attribute_array['alt'] = ($attribute_array['alt']=='image'?'':$attribute_array['alt']);
 		if (isset($attribute_array['alt'])&&strpos($attribute_array['alt'],'@')!==false) $attribute_array['alt']=str_replace('@','(at)',$attribute_array['alt']);
-		// $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
+		// $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 		if (isset($attribute_array['src']))
 		{
 			if (!(strlen($attribute_array['src'])>4 && strlen($attribute_array['src']<400)))
@@ -292,13 +292,13 @@ function hl_email_tag_transform($element, $attribute_array=0)
 					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
 					$attribute_array['src']=common::image('phpgwapi','dialog_error');
 			}
-			if (!$GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'])
+			if (!$GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'])
 			{
 				if (!preg_match('/^cid:.*/',$attribute_array['src']))
 				{
 					$attribute_array['alt']= $attribute_array['alt'].' [blocked external image:'.$attribute_array['src'].']';
 					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
-					$attribute_array['src']=common::image('felamimail','no-image-shown');
+					$attribute_array['src']=common::image('mail','no-image-shown');
 					$attribute_array['border'] = 1;
 					if ($attribute_array['style'])
 					{
@@ -326,7 +326,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 		if (strpos($attribute_array['href'],'denied:javascript')===0) $attribute_array['href']='';
 		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
 		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
-		if (strpos($attribute_array['href'],'#')===0 && (isset(felamimail_bo::$htmLawed_config['transform_anchor']) && felamimail_bo::$htmLawed_config['transform_anchor']===true))
+		if (strpos($attribute_array['href'],'#')===0 && (isset(emailadmin_imapbase::$htmLawed_config['transform_anchor']) && emailadmin_imapbase::$htmLawed_config['transform_anchor']===true))
 		{
 			$attribute_array['href'] = "javascript:GoToAnchor('".trim(substr($attribute_array['href'],1))."');";
 		}
