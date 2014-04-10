@@ -186,6 +186,10 @@ table.egwGridView_outer{
 // Tabelle der APP Ausgabe
 
 table.egwGridView_grid{
+
+
+
+
     //	border-collapse:collapse;
     font-size: 12px;
     .background_color_0_gray;
@@ -195,7 +199,7 @@ table.egwGridView_grid{
     img{ .dimension_height_s;}
     img.iphoto {height: 9em;margin: 0.2em; max-height: 60px;}
 
-    > tbody {
+    tbody {
         border-bottom: 1px solid @lightgray;
         /*padding: 2px 3px 2px 4px;*/
         margin: 0;
@@ -222,7 +226,46 @@ table.egwGridView_grid{
             background-repeat: repeat;
             background-color: fade(@color_active_row, 50%);
         }
+
+
+     td {
+
+         // maybe problem width width + height calc
+        padding: 3px 0 3px 3px;
+        border-bottom: 1px solid @gray_10;
+        color: @gray_100;
+
+        // Custom fields
+        table.customfields{
+                tbody{
+                    border-bottom: 0px;
+                    tr{
+                        border-bottom: 0px;
+                        background-size: 12px 12px;
+                        td{
+                            border-bottom: 0px;
+                            border: 0px;
+                            height: 12px;
+
+
+                            // html field
+                            .et2_textbox_ro{
+                                white-space: inherit;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+
     }
+
+
+    }
+
+
 
     > tr {
 
@@ -230,10 +273,12 @@ table.egwGridView_grid{
         border-color: @gray_50;
 
         > td {
-            border-left: 0px;
-            border-right: 0px;
+            border-left: 1px;
+            border-right: 1px;
 
-            /*padding: 0.3em 0 0.3em 0.3em;*/
+
+
+            padding: 0.3em 0 0.3em 0.3em;
             border-bottom: 1px solid;
             color: @gray_10;
             /*&:hover {background-color: @egw_color_2_e;} legacy*/
@@ -258,19 +303,7 @@ table.egwGridView_grid{
             span.low {color: @gray_80;}
 
 
-            table.customfields{
-                tbody{
-                    border-bottom: 0px;
-                    tr{
-                        border-bottom: 0px;
-                        td{
-                            border-bottom: 0px;
-                        }
-                    }
 
-                }
-
-            }
         }
     }
 
