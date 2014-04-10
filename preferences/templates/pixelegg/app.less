@@ -53,19 +53,25 @@ tr.prefRow > td {
 }
 .prefHelp {
 	position: absolute;
-	display: none;
-	width: 98%;
-	background-color: @egw_color_2_e;
+        background-color: @gray_10;
+	/*border-radius: 10px;*/
+        .box_shadow_message;
+/*        .border_normal;*/
+         border: 3px solid @egw_color_2_e;
+        .border_radius (0px, 15px, 15px, 0px);
+	right: 5px;
+        left: 5px;
+	/*top: 5px;*/
+        top: 0px;
+	padding: 10px;
+	padding-left: 25px;
+	background-position-x: 5px;
+	/*border: 2px gray solid;*/
+	min-width: 100px;
+        max-width: 90%;
+	z-index: 100000;
 
-	padding: 5px;
-	margin-top: 5px;
-        
-        .border_normal;
-        .box_shadow_standard_light;
-        .rounded (3px);
-        color: @gray_100 !important;
-        
-        
+
 }
 tr.prefRow:hover .prefHelp {
 	display: block;
@@ -97,8 +103,9 @@ tr.prefRow:hover .prefHelp {
 
 
 .prefType, .prefApp {
-    margin: 0.3em;
-    -webkit-appearance:button; padding:10px;
+    /*margin: 0.3em;*/
+    -webkit-appearance:button;
+    /*padding:10px;*/
 }
 
 
@@ -111,25 +118,55 @@ tr.prefRow:hover .prefHelp {
 
 /*Preferences APP / left */
 .prefApp{
-    
+
                             background-image: url(../pixelegg/images/setup.png);
-                            background-repeat: no-repeat; 
+                            background-repeat: no-repeat;
                             background-position: 93% 50%;
                             background-size: 16px 16px;
-                            
+
                             margin-right: 1em;
-  
+
 
 }
 /*Preferences APP Settings / right*/
 .prefType{
-    
+
                             background-image: url(../pixelegg/images/setup.png);
-                            background-repeat: no-repeat; 
+                            background-repeat: no-repeat;
                             background-position: 93% 50%;
                             background-size: 16px 16px;
-                              
+
 
 
 }
-//
+
+/*###############################*/
+ /*ADMIN DIALOG*/
+div#preferences-settings{
+
+    margin: -8px;
+
+    // Header
+    div.dialogHeader {
+        height: 50px;
+
+    // left
+    select#preferences-settings_appname{
+                                    min-width: 47%;
+                                    margin: 5px;
+                                    -webkit-appearance:button;
+                                    padding:5px;
+                        }
+
+    // right
+    select#preferences-settings_type{
+                                    margin: 5px;
+                                    min-width: 48%;
+                                    -webkit-appearance:button;
+                                    padding:5px;
+
+                        }
+
+                }
+
+}

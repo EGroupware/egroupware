@@ -18,7 +18,7 @@
  * @package preferences
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 44587 2013-11-18 19:57:38Z ralfbecker $
+ * @version $Id: app.css 46460 2014-04-01 16:07:38Z ralfbecker $
  */
 table.prefTable {
   width: 100%;
@@ -63,8 +63,8 @@ textarea.prefValue {
 .prefType,
 .prefApp {
   font-size: 150%;
-  display: inline-block;
-  padding-bottom: 5px;
+  margin-top: 10px;
+  margin-right: 5px;
 }
 /* #############################################################################
 // iframe
@@ -101,19 +101,37 @@ tr.prefRow > td {
 }
 .prefHelp {
   position: absolute;
-  display: none;
-  width: 98%;
-  background-color: #679fd2;
-  padding: 5px;
-  margin-top: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #000000 !important;
+  background-color: #e6e6e6;
+  /*border-radius: 10px;*/
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  /*        .border_normal;*/
+  border: 3px solid #679fd2;
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  -webkit-border-top-left-radius: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  -moz-border-radius-topleft: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 0px;
+  /*.background-clip(padding-box);*/
+  right: 5px;
+  left: 5px;
+  /*top: 5px;*/
+  top: 0px;
+  padding: 10px;
+  padding-left: 25px;
+  background-position-x: 5px;
+  /*border: 2px gray solid;*/
+  min-width: 100px;
+  max-width: 90%;
+  z-index: 100000;
 }
 tr.prefRow:hover .prefHelp {
   display: block;
@@ -141,9 +159,9 @@ textarea.prefValue {
 /*###############################*/
 .prefType,
 .prefApp {
-  margin: 0.3em;
+  /*margin: 0.3em;*/
   -webkit-appearance: button;
-  padding: 10px;
+  /*padding:10px;*/
 }
 /*img[src$="svg"]{
             .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
@@ -162,4 +180,24 @@ textarea.prefValue {
   background-repeat: no-repeat;
   background-position: 93% 50%;
   background-size: 16px 16px;
+}
+/*###############################*/
+/*ADMIN DIALOG*/
+div#preferences-settings {
+  margin: -8px;
+}
+div#preferences-settings div.dialogHeader {
+  height: 50px;
+}
+div#preferences-settings div.dialogHeader select#preferences-settings_appname {
+  min-width: 47%;
+  margin: 5px;
+  -webkit-appearance: button;
+  padding: 5px;
+}
+div#preferences-settings div.dialogHeader select#preferences-settings_type {
+  margin: 5px;
+  min-width: 48%;
+  -webkit-appearance: button;
+  padding: 5px;
 }
