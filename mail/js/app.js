@@ -793,6 +793,7 @@ app.classes.mail = AppJS.extend(
 	mail_setQuotaDisplay: function(_data)
 	{
 		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
+		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
 		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
 		
 		// Check to make sure it's there
@@ -825,7 +826,7 @@ app.classes.mail = AppJS.extend(
 		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
 		//console.log(_data,vacationnotice,vacationrange);
 		//try to set it via set_value and set label
-		if (!this.et2) return;
+		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
 		if (_data == null)
 		{
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
@@ -836,6 +837,47 @@ app.classes.mail = AppJS.extend(
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value(_data.vacationnotice);
 			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value(_data.vacationrange);
 		}
+	},
+
+	/**
+	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
+	 *
+	 */
+	mail_refreshFilter2Options: function(_data)
+	{
+		//alert('mail_refreshFilter2Options');
+		if (_data == null) return;
+		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		var filter2 = this.et2.getWidgetById('filter2');
+		var current = filter2.value;
+		var currentexists=false;
+		for (var k in _data)
+		{
+			if (k==current) currentexists=true;
+		}
+		if (!currentexists) filter2.set_value('subject');
+		filter2.set_select_options(_data);
+	},
+
+	/**
+	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 *
+	 */
+	mail_refreshFilterOptions: function(_data)
+	{
+		//alert('mail_refreshFilterOptions');
+		if (_data == null) return;
+		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		var filter = this.et2.getWidgetById('filter');
+		var current = filter.value;
+		var currentexists=false;
+		for (var k in _data)
+		{
+			if (k==current) currentexists=true;
+		}
+		if (!currentexists) filter.set_value('any');
+		filter.set_select_options(_data);
+
 	},
 
 	/**
@@ -1280,8 +1322,11 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
-		if (server[0]!=previousServer[0]) this.mail_callRefreshVacationNotice(server[0]);
-
+		if (server[0]!=previousServer[0])
+		{
+			this.mail_callRefreshVacationNotice(server[0]);
+			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
+		}
 	},
 
 	/**

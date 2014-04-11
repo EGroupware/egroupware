@@ -450,11 +450,24 @@ class mail_ui
 				'keyword5'	=> 'later',	//lang('later'),
 			));
 		}
+		else
+		{
+			foreach(array('keyword1','keyword2','keyword3','keyword4','keyword5') as $i => $k)
+			{
+				if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
+			}
+		}
 
 		if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
 		//$sel_options['cat_id'] = array(1=>'none');
+		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+		{
+			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+		}
+		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
 		$sel_options['filter2'] = $this->searchTypes;
 		$sel_options['filter'] = $this->statusTypes;
 		//if (!isset($content[self::$nm_index]['cat_id'])) $content[self::$nm_index]['cat_id'] = 'All';
@@ -622,7 +635,7 @@ class mail_ui
 		// sending preview toolbar actions
 		$etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
-		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
+		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 		$readonlys = $preserv = array();
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
@@ -1472,7 +1485,12 @@ unset($query['actions']);
 		if (!empty($query['search']))
 		{
 			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
-			$filter = array('filterName' => lang('quicksearch'),'type' => ($query['filter2']?$query['filter2']:'quick'),'string' => $query['search'],'status' => 'any');
+			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+			{
+				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+			}
+			$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
 		}
 		else
 		{
@@ -3981,9 +3999,52 @@ $this->partID = $partID;
 			$refreshData['vacationnotice'] =  '';
 			$refreshData['vacationrange'] =  '';
 		}
-
 		$response = egw_json_response::get();
 		$response->call('app.mail.mail_refreshVacationNotice',$refreshData);
+	}
+
+	/**
+	 * ajax_refreshFilters - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 *	Note: only the activeProfile Filters are refreshed
+	 * @param int $icServerId profileId / server ID to work on; may be empty -> then activeProfile is used
+	 *						if other than active profile; nothing is done!
+	 * @return nothing
+	 */
+	function ajax_refreshFilters($icServerId=null)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($icServerId));
+		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
+		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+		{
+			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+		}
+		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
+		{
+			unset($this->searchTypes['quick']);
+		}
+		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+		{
+			$this->statusTypes = array_merge($this->statusTypes,array(
+				'keyword1'	=> 'important',//lang('important'),
+				'keyword2'	=> 'job',	//lang('job'),
+				'keyword3'	=> 'personal',//lang('personal'),
+				'keyword4'	=> 'to do',	//lang('to do'),
+				'keyword5'	=> 'later',	//lang('later'),
+			));
+		}
+		else
+		{
+			foreach(array('keyword1','keyword2','keyword3','keyword4','keyword5') as $i => $k)
+			{
+				if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
+			}
+		}
+
+		$response = egw_json_response::get();
+		$response->call('app.mail.mail_refreshFilter2Options',$this->searchTypes);
+		$response->call('app.mail.mail_refreshFilterOptions',$this->statusTypes);
+
 	}
 
 	/**
