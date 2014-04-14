@@ -858,6 +858,7 @@ class calendar_ui
 					'icon' => false,
 				);
 			}
+			$file['Placeholders'] = egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
 		}
 
 		$appname = 'calendar';

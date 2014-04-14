@@ -100,6 +100,7 @@ class infolog_hooks
 					'menuaction' => 'infolog.infolog_ui.index',
 					'ajax' => 'true')),
 				'Add' => "javascript:app.infolog.add_link_sidemenu();",
+				'Placeholders' => egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements')
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}

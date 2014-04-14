@@ -108,6 +108,7 @@ class timesheet_hooks
 
 			$file = array(
 			);
+			$file['Placeholders'] = egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 		}
 
