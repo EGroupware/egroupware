@@ -1590,6 +1590,9 @@ egw_LAB.wait(function() {
 		{
 			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
 			$style2buffer = implode('',$newStyle[0]);
+			// only replace what we have found, we use it here, as we use the same routine in translation::replaceTagsCompletley
+			// no need to do the extra routine
+			$html = str_ireplace($newStyle[0],'',$html);
 		}
 		if ($style2buffer)
 		{
@@ -1621,8 +1624,10 @@ egw_LAB.wait(function() {
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
 		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
 		//error_log(__METHOD__.__LINE__.$css);
+		// we already removed what we have found, above, as we used pretty much the same routine as in translation::replaceTagsCompletley
+		// no need to do the extra routine
 		// TODO: we may have to strip urls and maybe comments and ifs
-		if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
+		//if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
 		return $css_no_comment;
 	}
 }

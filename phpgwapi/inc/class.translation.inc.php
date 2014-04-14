@@ -1086,15 +1086,31 @@ class translation
 			}
 			else
 			{
+				$found=null;
 				if ($addbracesforendtag === true )
 				{
-					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*?)</'.$endtag.'[\s]*>~simU','',$_body);
+					if (stripos($_body,'<'.$tag)!==false)  $ct = preg_match_all('#<'.$tag.'(?:\s.*)?>(.+)</'.$endtag.'>#isU', $_body, $found);
+					if ($ct>0)
+					{
+						//error_log(__METHOD__.__LINE__.array2string($found[0]));
+						// only replace what we have found
+						$_body = str_ireplace($found[0],'',$_body);
+					}
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 				}
 				if ($addbracesforendtag === false )
 				{
+					if (stripos($_body,'<'.$tag)!==false)  $ct = preg_match_all('#<'.$tag.'(?:\s.*)?>(.+)'.$endtag.'#isU', $_body, $found);
+					if ($ct>0)
+					{
+						//error_log(__METHOD__.__LINE__.array2string($found[0]));
+						// only replace what we have found
+						$_body = str_ireplace($found[0],'',$_body);
+					}
+/*
 					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*?)'.$endtag.'~simU','',$_body);
+*/
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 					$_body = preg_replace('~'.$endtag.'~','',$_body);
