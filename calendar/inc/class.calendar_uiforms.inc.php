@@ -639,85 +639,77 @@ class calendar_uiforms extends calendar_ui
 								break;
 							}
 							// splitting of series confirmed or first event clicked (no confirmation necessary)
-							if ($old_event['start'] == $event['actual_date'])
+							$orig_event = $event;
+
+							// calculate offset against old series start or clicked recurrance,
+							// depending on which is smaller
+							$offset = $event['start'] - $old_event['start'];
+							if (abs($offset) > abs($off2 = $event['start'] - $event['actual_date']))
 							{
-								$orig_event = $event;
-
-								// calculate offset against old series start or clicked recurrance,
-								// depending on which is smaller
-								$offset = $event['start'] - $old_event['start'];
-								if (abs($offset) > abs($off2 = $event['start'] - $event['actual_date']))
+								$offset = $off2;
+							}
+							// base start-date of new series on actual / clicked date
+							$actual_date = $event['actual_date'];
+							$event['start'] = $actual_date + $offset;
+							if ($content['duration'])
+							{
+								$event['end'] = $event['start'] + $content['duration'];
+							}
+							elseif($event['end'] < $event['start'])
+							{
+								$event['end'] = $event['start'] + $event['end'] - $actual_date;
+							}
+							//echo "<p>".__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration=$content[duration], event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset</p>\n";
+							$event['participants'] = $old_event['participants'];
+							foreach ($old_event['recur_exception'] as $key => $exdate)
+							{
+								if ($exdate > $actual_date)
 								{
-									$offset = $off2;
+									unset($old_event['recur_exception'][$key]);
+									$event['recur_exception'][$key] += $offset;
 								}
-								// base start-date of new series on actual / clicked date
-								$actual_date = $event['actual_date'];
-								$event['start'] = $actual_date + $offset;
-								if ($content['duration'])
+								else
 								{
-									$event['end'] = $event['start'] + $content['duration'];
-								}
-								elseif($event['end'] < $event['start'])
-								{
-									$event['end'] = $event['start'] + $event['end'] - $actual_date;
-								}
-								//echo "<p>".__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration=$content[duration], event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset</p>\n";
-								$event['participants'] = $old_event['participants'];
-								foreach ($old_event['recur_exception'] as $key => $exdate)
-								{
-									if ($exdate > $actual_date)
-									{
-										unset($old_event['recur_exception'][$key]);
-										$event['recur_exception'][$key] += $offset;
-									}
-									else
-									{
-										unset($event['recur_exception'][$key]);
-									}
-								}
-								$old_alarms = $old_event['alarm'];
-								if ($old_event['start'] < $actual_date)
-								{
-									unset($orig_event);
-									// copy event by unsetting the id(s)
-									unset($event['id']);
-									unset($event['uid']);
-									unset($event['caldav_name']);
-
-									// set enddate of existing event
-									$rriter = calendar_rrule::event2rrule($old_event, true);
-									$rriter->rewind();
-									$last = $rriter->current();
-									do
-									{
-										$rriter->next_no_exception();
-										$occurrence = $rriter->current();
-									}
-									while ($rriter->valid() &&
-											egw_time::to($occurrence, 'ts') < $actual_date &&
-											($last = $occurrence));
-									$last->setTime(0, 0, 0);
-									$old_event['recur_enddate'] = egw_time::to($last, 'ts');
-									if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$content['no_notifications']))
-									{
-										$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
-											lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-												htmlspecialchars(egw::link('/index.php',array(
-													'menuaction' => 'calendar.calendar_uiforms.edit',
-													'cal_id'    => $content['id'],
-													'referer'    => $referer,
-												))).'">','</a>');
-										$noerror = false;
-										$event = $orig_event;
-										break;
-									}
-									$event['alarm'] = array();
+									unset($event['recur_exception'][$key]);
 								}
 							}
-							else
+							$old_alarms = $old_event['alarm'];
+							if ($old_event['start'] < $actual_date)
 							{
-								$event['button_was'] = $button;	// remember for confirm
-								$preserv['duration'] = $content['duration'];
+								unset($orig_event);
+								// copy event by unsetting the id(s)
+								unset($event['id']);
+								unset($event['uid']);
+								unset($event['caldav_name']);
+
+								// set enddate of existing event
+								$rriter = calendar_rrule::event2rrule($old_event, true);
+								$rriter->rewind();
+								$last = $rriter->current();
+								do
+								{
+									$rriter->next_no_exception();
+									$occurrence = $rriter->current();
+								}
+								while ($rriter->valid() &&
+										egw_time::to($occurrence, 'ts') < $actual_date &&
+										($last = $occurrence));
+								$last->setTime(0, 0, 0);
+								$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+								if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$content['no_notifications']))
+								{
+									$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+										lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+											htmlspecialchars(egw::link('/index.php',array(
+												'menuaction' => 'calendar.calendar_uiforms.edit',
+												'cal_id'    => $content['id'],
+												'referer'    => $referer,
+											))).'">','</a>');
+									$noerror = false;
+									$event = $orig_event;
+									break;
+								}
+								$event['alarm'] = array();
 							}
 						}
 					}
