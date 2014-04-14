@@ -27,7 +27,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	/**
 	 * Instance of mail_bo
 	 *
-	 * @var mail_bo
+	 * @var mail
 	 */
 	private $mail;
 
@@ -1724,15 +1724,15 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//}
 		if (isset($searchquery['query'][0]['value']['FolderId'])) $folderid = $searchquery['query'][0]['value']['FolderId'];
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
-		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]))
 		{
 			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]=true;
 		}
 
 		if (isset($searchquery['query'][0]['value']['Search:FreeText']))
 		{
-			$type = (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
+			$type = (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject');
 			$searchText = $searchquery['query'][0]['value']['Search:FreeText'];
 		}
 		if (!$folderid)
@@ -1746,7 +1746,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 //if (isset($searchquery['query'][0]['value'][subquery][1][value][POOMMAIL:DateReceived]));
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
-		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'),
+		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any',
 						);
