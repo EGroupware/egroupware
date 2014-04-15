@@ -1524,7 +1524,9 @@ class egw_db
 						}
 						$data[$k] = $this->quote($v,$column_type,$not_null,$maxlength);
 					}
-					$values[] = ($or_null?'(':'').(!count($data) ? '' :
+					$values[] = ($or_null?'(':'').(!count($data) ?
+						// empty array on insert/update, store as NULL, or if not allowed whatever value NULL is casted to
+						$this->quote(null, $column_type, $not_null) :
 						($use_key===True ? $this->name_quote($key).' IN ' : '') .
 						'('.implode(',',$data).')'.($or_null ? ' OR ' : '')).$or_null;
 				}
