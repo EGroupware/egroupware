@@ -48,6 +48,7 @@ div.et2_hbox {
 div.et2_hbox > * {
   text-align: left;
   white-space: normal;
+  padding-right: 5px;
 }
 div.et2_hbox_left {
   float: left;
