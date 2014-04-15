@@ -314,7 +314,7 @@ class mail_acl
 		}
 		else
 		{
-			$folders = explode(' ',$mailbox);
+			$folders = (array)$mailbox;
 		}
 		foreach($folders as $sbFolders)
 		{
@@ -376,7 +376,7 @@ class mail_acl
 		}
 		else
 		{
-			$folders = explode(' ',$mailbox);
+			$folders = (array)$mailbox;
 		}
 		foreach($folders as $sbFolders)
 		{
