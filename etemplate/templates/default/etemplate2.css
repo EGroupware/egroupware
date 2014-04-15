@@ -549,10 +549,10 @@ div.et2_link_entry:after {
   margin: -12px;
 }
 div.et2_link_entry select {
-  width: 39%;
+  width: 40%;
 }
 div.et2_link_entry input.ui-autocomplete-input {
-  width: 61%;
+  width: 40%;
   padding-bottom: 1px;
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
@@ -567,7 +567,7 @@ div.et2_link_entry input.ui-autocomplete-input {
   border: none;
   position: relative;
   top: 3px;
-  left: -18px;
+  left: -26px;
   cursor: pointer;
   margin-top: -3px;
 }
@@ -579,7 +579,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to button {
   display: inline;
   float: right;
-  height: 5ex;
+  margin-right: 56px;
 }
 .et2_link_to span.status {
   background-repeat: no-repeat;
