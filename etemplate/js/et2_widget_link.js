@@ -84,8 +84,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 		this.link_button = null;
 		this.status_span = null;
-		this.comment = null;
-
+		
 		this.link_entry = null;
 		this.file_upload = null;
 
@@ -95,8 +94,7 @@ var et2_link_to = et2_inputWidget.extend(
 	destroy: function() {
 		this.link_button = null;
 		this.status_span = null;
-		this.comment = null;
-
+		
 		this.link_entry.destroy();
 		this.link_entry = null;
 		this.file_upload.destroy();
@@ -108,6 +106,8 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Override to provide proper node for sub widgets to go in
+	 * 
+	 * @param {Object} _sender 
 	 */
 	getDOMNode: function(_sender) {
 		if(_sender == this) {
@@ -141,14 +141,6 @@ var et2_link_to = et2_inputWidget.extend(
 			.css("width", "89%")
 			.appendTo(this.div);
 
-		// Link comment field
-		this.comment = $j(document.createElement("input"))
-			.css("display", "block")
-			// Leave room for link button
-			.css("width","89%")
-			.appendTo(this.div).hide();
-		et2_link_entry.prototype.set_blur(this.egw().lang("Comment..."),this.comment);
-
 		// Filemanager link popup
 		this.filemanager_button = $j(document.createElement("div")).appendTo(this.div);
 
@@ -174,8 +166,8 @@ var et2_link_to = et2_inputWidget.extend(
 			only_app: this.options.only_app,
 			application_list: this.options.application_list,
 			blur: this.options.search_label ? this.options.search_label : this.egw().lang('Search...'),
-			query: function() { self.link_button.hide(); self.comment.hide(); return true;},
-			select: function() {self.link_button.show(); self.comment.show(); return true;}
+			query: function() { self.link_button.hide(); return true;},
+			select: function() {self.link_button.show(); return true;}
 		};
 		this.link_entry = et2_createWidget("link-entry", link_entry_attrs,this);
 
@@ -184,7 +176,7 @@ var et2_link_to = et2_inputWidget.extend(
 			method: 'etemplate_widget_link::link_existing',
 			method_id: function() { return self.options.value.to_app + ':' + self.options.value.to_id;},
 			button_label: egw.lang('Link')
-		}
+		};
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		$j(this.vfs_select.getDOMNode()).change( function() {
 			var values = true;
@@ -263,6 +255,8 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Create a link using the current internal values
+	 * 
+	 * @param {Object} event 
 	 */
 	createLink: function(event) {
 		// Disable link button
@@ -276,16 +270,7 @@ var et2_link_to = et2_inputWidget.extend(
 		// Links to other entries
 		event.data = self.link_entry;
 		self.link_entry.createLink(event,links);
-		// Add comment
-		if(links.length > 0 && self.comment.val() && self.comment.val() != self.comment.attr("placeholder"))
-		{
-			for(var i = 0; i < links.length; i++)
-			{
-				links[i].remark = self.comment.val();
-			}
-			self.comment.val(self.comment.attr("placeholder"));
-		}
-
+		
 		// Files
 		if(!self.options.no_files)
 		{
@@ -318,10 +303,11 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Sent some links, server has a result
+	 * 
+	 * @param {Object} success
 	 */
 	_link_result: function(success) {
 		if(success) {
-			this.comment.hide();
 			this.link_button.hide().attr("disabled", false);
 			this.status_span.removeClass("error").addClass("success");
 			this.status_span.fadeIn().delay(1000).fadeOut();
@@ -476,6 +462,8 @@ var et2_link_apps = et2_selectbox.extend(
 
 	/**
 	 * We get some minor speedups by overriding parent searching and directly setting select options
+	 * 
+	 * @param {Array} _attrs an array of attributes
 	 */
 	transformAttributes: function(_attrs) {
 		var select_options = {};
@@ -531,7 +519,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			"type": "any",
 			"default": false,
 			"description": "Callback when user selects an option.  Must return true, or false to abort normal action."
-		},
+		}
 	},
 
 	legacyOptions: ["only_app", "application_list"],
@@ -868,6 +856,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Ask server for entries matching selected app/type and filtered by search string
+	 * 
+	 * @param {Object} request
+	 * @param {Object} response 
 	 */
 	query: function(request, response) {
 		// If there is a pending request, abort it
@@ -906,6 +897,10 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * User selected a value
+	 * 
+	 * @param {Object} event
+	 * @param {Object} selected
+	 * 
 	 */
 	select: function(event, selected) {
 		if(selected.item.value !== null && typeof selected.item.value == "string")
@@ -940,6 +935,8 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Server found some results
+	 * 
+	 * @param {Array} data
 	 */
 	_results: function(data) {
 		if(this.request)
@@ -957,6 +954,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Create a link using the current internal values
+	 * 
+	 * @param {Object} event
+	 * @param {Object} _links
 	 */
 	createLink: function(event, _links) {
 
@@ -997,6 +997,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Sent some links, server has a result
+	 * 
+	 * @param {Object} success
+	 * 
 	 */
 	_link_result: function(success) {
 		if(success) {
@@ -1126,6 +1129,9 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Sets the text to be displayed.
 	 * Used as a callback, so node is provided to make sure we get the right one
+	 * 
+	 * @param {Object} node
+	 * @param {String} _value description
 	 */
 	set_title: function(node, _value) {
 		if(_value === false || _value === null) _value = "";
@@ -1136,6 +1142,8 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
+	 * 
+	 * @param {Array} _attrs an array of attributes
 	 */
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("label","value");
@@ -1303,6 +1311,8 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
+	 * 
+	 * @param {Array} _attrs an array of attributes
 	 */
 	getDetachedAttributes: function(_attrs) {
 		_attrs.push("value");
