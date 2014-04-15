@@ -793,7 +793,18 @@ app.classes.mail = AppJS.extend(
 	mail_setQuotaDisplay: function(_data)
 	{
 		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
-		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		if (!this.et2)
+		{
+			try
+			{
+				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+			}
+			catch(e)
+			{
+				return;
+			}
+		}
+
 		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
 		
 		// Check to make sure it's there
@@ -826,7 +837,17 @@ app.classes.mail = AppJS.extend(
 		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
 		//console.log(_data,vacationnotice,vacationrange);
 		//try to set it via set_value and set label
-		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		if (!this.et2)
+		{
+			try
+			{
+				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+			}
+			catch(e)
+			{
+				return;
+			}
+		}
 		if (_data == null)
 		{
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
@@ -847,7 +868,17 @@ app.classes.mail = AppJS.extend(
 	{
 		//alert('mail_refreshFilter2Options');
 		if (_data == null) return;
-		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		if (!this.et2)
+		{
+			try
+			{
+				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+			}
+			catch(e)
+			{
+				return;
+			}
+		}
 		var filter2 = this.et2.getWidgetById('filter2');
 		var current = filter2.value;
 		var currentexists=false;
@@ -867,7 +898,17 @@ app.classes.mail = AppJS.extend(
 	{
 		//alert('mail_refreshFilterOptions');
 		if (_data == null) return;
-		if (!this.et2) this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+		if (!this.et2)
+		{
+			try
+			{
+				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+			}
+			catch(e)
+			{
+				return;
+			}
+		}
 		var filter = this.et2.getWidgetById('filter');
 		var current = filter.value;
 		var currentexists=false;
