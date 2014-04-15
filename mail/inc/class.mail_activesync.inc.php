@@ -93,6 +93,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 */
 	public function __construct(BackendEGW $backend)
 	{
+		if ($GLOBALS['egw_setup']) return;
+
 		//$this->debugLevel=2;
 		$this->backend = $backend;
 		if (!isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']))
