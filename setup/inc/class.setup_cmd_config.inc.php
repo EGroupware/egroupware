@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -65,16 +65,18 @@ class setup_cmd_config extends setup_cmd
 		$values = array();
 		if ($this->arguments)	// we have command line arguments
 		{
-			$save_ea_profile = $this->_parse_cli_arguments($values);
+			$save_mail_account = $this->_parse_cli_arguments($values);
 		}
 		else
 		{
-			$save_ea_profile = $this->_parse_properties($values);
+			$save_mail_account = $this->_parse_properties($values);
 		}
 
 		// store the config
 		foreach($values as $name => $value)
 		{
+			if (substr($name, 0, 4) == 'acc_') continue;
+
 			self::$egw_setup->db->insert(self::$egw_setup->config_table,array(
 				'config_value' => $value,
 			),array(
@@ -84,7 +86,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		if (count($values))
 		{
-			if ($save_ea_profile) $this->_save_ea_profile();
+			if ($save_mail_account) $this->_save_mail_account($values);
 
 			$this->restore_db();
 
@@ -136,51 +138,45 @@ class setup_cmd_config extends setup_cmd
 		'--backup-dir' => 'backup_dir',
 		'--temp-dir'   => 'temp_dir',
 		'--webserver-url' => 'webserver_url',
-		'--mailserver' => array(	//server,{IMAP|IMAPS|POP|POPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
-			'mail_server',
-			array('name' => 'mail_server_type','allowed' => array('imap','imaps'),'default'=>'imap'),
-			'mail_suffix',
-			array('name' => 'mail_login_type','allowed'  => array(
+		'--mailserver' => array(	//server,{IMAP|IMAPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
+			'acc_imap_host',
+			array('name' => 'acc_imap_port','default'=>143),
+			'acc_domain',
+			array('name' => 'acc_imap_logintype','allowed'  => array(
 				'username (standard)' => 'standard',
 				'username@domain (virtual mail manager)' => 'vmailmgr',
 				'Username/Password defined by admin' => 'admin',
 				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
+			array('name' => 'acc_imap_ssl','allowed' => array('no','starttls','ssl','tls')),
 		),
 		'--imap' => array(
-			'imapAdminUsername',
-			'imapAdminPW',
-			array('name' => 'imapType','default' => 'defaultimap'),
-			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
+			'acc_admin_username',
+			'acc_admin_password',
+			array('name' => 'acc_imap_type','default' => 'emailadmin_imap'),
 		),
-		'--cyrus' => array(	// deprecated use --imap ,,cyrusimap
-			'imapAdminUsername',
-			'imapAdminPW',
-			array('name' => 'imapType','default' => 'cyrusimap'),
-			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
+		'--folder' => array(
+			'acc_folder_sent','acc_folder_trash','acc_folder_drafts','acc_folder_templates','acc_folder_junk',
 		),
 		'--sieve' => array(
-			array('name' => 'imapSieveServer'),
-			array('name' => 'imapSievePort','default' => 2000),
-			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
+			array('name' => 'acc_sieve_host'),
+			array('name' => 'acc_sieve_port','default' => 4192),
+			array('name' => 'acc_sieve_enabled','default' => 'yes'),	// null or yes
+			array('name' => 'acc_sieve_ssl','allowed' => array('no','starttls','ssl','tls')),
 		),
 		'--smtp' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
-			array('name' => 'smtpType','default' => 'defaultsmtp'),
+			array('name' => 'acc_smpt_type','default' => 'emailadmin_smtp'),
 		),
-		'--postfix' => array(	// deprecated use --smtp ,postfixldap
-			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
-			array('name' => 'smtpType','default' => 'postfixldap'),
-		),
-		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[auth=no|yes|ann]
-			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',
-			array('name' => 'smtpAuth', 'default' => 'no', 'allowed' => array('no', 'yes', 'ann')),
+		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[no|starttls|ssl|tls]
+			'acc_smtp_host',array('name' => 'acc_smtp_port','default' => 25),'acc_smtp_username','acc_smtp_passwd',
+			array('name' => 'acc_smtp_ssl','allowed' => array('no','starttls','ssl','tls')),
 		),
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap','ads'),'default'=>'sql'),
 			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam'),'default'=>'sql'),
-			array('name' => 'sql_encryption','allowed' => array('sha512_crypt','sha256_crypt','blowfish_crypt','md5_crypt','crypt','ssha','smd5','md5'),'default'=>'sha512_crypt'),
+			array('name' => 'sql_encryption','allowed' => array('blowfish_crypt','sha512_crypt','sha256_crypt','md5_crypt','crypt','ssha','smd5','md5'),'default'=>'blowfish_crypt'),
 			'check_save_password','allow_cookie_auth'),
 		'--ldap-host' => 'ldap_host',
 		'--ldap-root-dn' => 'ldap_root_dn',
@@ -199,45 +195,73 @@ class setup_cmd_config extends setup_cmd
 		),
 		'--ads-context' => 'ads_context',
 	);
+	/**
+	 * Translate old EMailAdmin profile name to new mail account names
+	 *
+	 * @var array
+	 */
+	var $old2new = array(
+		'mail_server' => 'acc_imap_host',
+		'mail_server_type' => 'acc_imap_port',
+		'mail_suffix' => 'acc_domain',
+		'mail_login_type' => 'acc_imap_logintype',
+		'imapAdminUsername' => 'acc_admin_username',
+		'imapAdminPW' => 'acc_admin_password',
+		'imapType' => 'acc_imap_type',
+		'imapSieveServer' => 'acc_sieve_host',
+		'imapSievePort' => 'acc_sieve_port',
+		'imapEnableSieve' => 'acc_sieve_enabled',
+		'editforwardingaddress' => null,
+		'smtpType' => 'acc_smtp_type',
+		'smtp_server' => 'acc_smtp_host',
+		'smtp_port' => 'acc_smtp_port',
+		'smtp_auth_user' => 'acc_smtp_username',
+		'smtp_auth_passwd' => 'acc_smtp_password',
+		'smtpAuth' => null,
+	);
 
 	/**
 	 * Parses properties from this object
 	 *
 	 * @param array &$value contains set values on return
-	 * @return boolean do we need to save the emailadmin profile
+	 * @return boolean do we need to save a mail account
 	 */
 	private function _parse_properties(&$values)
 	{
 		$this->_merge_defaults();
 
-		$save_ea_profile = false;
+		$save_mail_account = false;
 		$values = array();
 		foreach(self::$options as $arg => $option)
 		{
 			foreach(is_array($option) ? $option : array($option) as $n => $data)
 			{
 				$name = is_array($data) ? $data['name'] : $data;
+				$oldname = array_key_exists($name, $this->old2new);
 
+				if (!isset($this->$name) && $oldname && isset($this->$oldname))
+				{
+					$this->$name = $this->$oldname;
+				}
 				if (isset($this->$name))
 				{
-					$save_ea_profile |= $this->_parse_value($arg,$n,$option,$this->$name,$values);
+					$save_mail_account = $this->_parse_value($arg,$n,$option,$this->$name,$values) || $save_mail_account;
 				}
 			}
 		}
-		return $save_ea_profile;
+		return $save_mail_account;
 	}
 
 	/**
 	 * Parses command line arguments in $this->arguments
 	 *
 	 * @param array &$value contains set values on return
-	 * @return boolean do we need to save the emailadmin profile
+	 * @return boolean do we need to save a mail account
 	 */
 	private function _parse_cli_arguments(&$values)
 	{
-		$arguments = $this->arguments;
 		$values = array();
-		$save_ea_profile = false;
+		$save_mail_account = false;
 		$args = $this->arguments;
 		while(($arg = array_shift($args)))
 		{
@@ -259,10 +283,10 @@ class setup_cmd_config extends setup_cmd
 			$options[] = ''; $options[] = '';
 			foreach($options as $n => $value)
 			{
-				$save_ea_profile |= $this->_parse_value($arg,$n,self::$options[$arg],$value,$values);
+				$save_mail_account = $this->_parse_value($arg,$n,self::$options[$arg],$value,$values) || $save_mail_account;
 			}
 		}
-		return $save_ea_profile;
+		return $save_mail_account;
 	}
 
 	/**
@@ -270,9 +294,10 @@ class setup_cmd_config extends setup_cmd
 	 *
 	 * @param string $arg current cli argument processed
 	 * @param int $n number of the property
-	 * @param array/string $data string with type or array containing values for type, allowed
+	 * @param array|string $data string with type or array containing values for type, allowed
 	 * @param mixed $value value to set
 	 * @param array &$values where the values get set
+	 * @return boolean true if mail-accounts needs to be saved, false if not
 	 */
 	private function _parse_value($arg,$n,$data,$value,array &$values)
 	{
@@ -292,31 +317,42 @@ class setup_cmd_config extends setup_cmd
 		}
 		$values[$name] = $value;
 
-		return in_array($arg,array('--mailserver','--smtpserver','--imap','--cyrus','--smtp','--postfix','--sieve'));
+		return in_array($arg,array('--mailserver','--smtpserver','--imap','--smtp','--sieve','--folder'));
 	}
 
 	/**
-	 * Updates the default EMailAdmin profile from the eGW config
+	 * Add new new mail account
+	 *
+	 * @param array $data
 	 */
-	function _save_ea_profile($config=array())
+	function _save_mail_account(array $data)
 	{
-		self::$egw_setup->db->select(self::$egw_setup->config_table,'config_name,config_value',array(
-			'config_app'  => 'phpgwapi',
-			"((config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp%' OR config_name LIKE 'imap%' OR config_name='editforwardingaddress')",
-		),__LINE__,__FILE__);
-		while (($row = self::$egw_setup->db->row(true)))
+		// convert ssl textual values to nummerical ones used in emailadmin_account
+		foreach(array('acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl') as $name)
 		{
-			$config[$row['config_name']] = $row['config_value'];
+			switch(strtolower($data[$name]))
+			{
+				case 'no':       $data[$name] = emailadmin_account::SSL_NONE; break;
+				case 'starttls': $data[$name] = emailadmin_account::SSL_STARTTLS; break;
+				case 'ssl':      $data[$name] = emailadmin_account::SSL_SSL; break;
+				case 'tls':      $data[$name] = emailadmin_account::SSL_TLS; break;
+			}
 		}
-		if (!$config['smtpAuth']) $config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
+		// convert 'yes', 'no' to boolean
+		foreach(array('acc_sieve_enabled') as $name)
+		{
+			$data[$name] = $data[$name] && strtolower($data[$name]) != 'no';
+		}
 
-		$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
-		$emailadmin->setDefaultProfile($config);
+		$data['acc_name'] = 'Created by setup';
+		$data['account_id'] = 0;	// 0 = valid for all users
+
+		emailadmin_account::write($data);
 
 		if ($this->verbose)
 		{
-			echo "\n".lang('EMailAdmin profile updated:')."\n";
-			foreach($config as $name => $value)
+			echo "\n".lang('EMailAdmin mail account saved:')."\n";
+			foreach($data as $name => $value)
 			{
 				echo str_pad($name.':',22).$value."\n";
 			}
@@ -335,7 +371,7 @@ class setup_cmd_config extends setup_cmd
 		{
 			if (is_array($option))
 			{
-				foreach($option as $n => $data)
+				foreach($option as $data)
 				{
 					if (is_array($data) && isset($data['allowed']))
 					{
@@ -377,13 +413,14 @@ class setup_cmd_config extends setup_cmd
 			'fallbackmail2sql' => 'Fallback Mail --> SQL',
 			'sqlssl' => 'SQL / SSL',
 		);
-		static $scan_done;
+		static $scan_done = null;
 		if (!$scan_done++)
 		{
 			// now add auth backends found in filesystem
 			foreach(scandir(EGW_INCLUDE_ROOT.'/phpgwapi/inc') as $class)
 			{
-				if (preg_match('/^class\.auth_([a-z]+)\.inc\.php$/',$class,$matches) &&
+				$matches = null;
+				if (preg_match('/^class\.auth_([a-z]+)\.inc\.php$/', $class, $matches) &&
 					!isset($auth_types[$matches[1]]))
 				{
 					$auth_types[$matches[1]] = ucfirst($matches[1]);
@@ -414,7 +451,7 @@ class setup_cmd_config extends setup_cmd
 		{
 			if (is_array($option))
 			{
-				foreach($option as $n => $data)
+				foreach($option as $data)
 				{
 					if (is_array($data) && isset($data['default']))
 					{
@@ -435,8 +472,8 @@ class setup_cmd_config extends setup_cmd
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
-		$defaults['imapType'] = 'defaultimap';	// standard IMAP
-		$defaults['smtpType'] = 'defaultsmtp';	// standard SMTP
+		$defaults['imapType'] = 'emailadmin_imap';	// standard IMAP
+		$defaults['smtpType'] = 'emailadmin_smtp';	// standard SMTP
 
 		return $defaults;
 	}

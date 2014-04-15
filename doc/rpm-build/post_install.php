@@ -60,8 +60,7 @@ $config = array(
 	'smtp'          => '',	// see setup-cli.php --help config
 	'imap'          => '',
 	'sieve'         => '',
-	'postfix'       => '',	// deprecated use 'smtp'
-	'cyrus'         => '',	// deprecated use 'imap'
+	'folder'        => '',
 	'install-update-app' => '',	// install or update a single (non-default) app
 	'webserver_user'=> 'apache',	// required to fix permissions
 );

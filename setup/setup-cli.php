@@ -480,11 +480,12 @@ function do_usage($what='')
 	{
 		echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
 		echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
-		echo '	--mailserver '.lang('host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
-		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password],[auth=no|yes|ann]')."\n";
-		echo '	--smtp '.lang('MTA (with LDAP): [yes(user edit forwarding)],(defaultsmtp|postfix(ldap|dbmailuser)|emailadmin_smtp_(ldap|ads|mandriva|suse|sql))')."\n";
-		echo '	--imap '.lang('IMAP: Admin user,Password,(defaultimap|cyrusimap|emailadmin_dovecot)')."\n";
-		echo '	--sieve '.lang('Sieve: Host[,Port(4190)]')."\n";
+		echo '	--mailserver '.lang('host,port(143),[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]').',[starttls|ssl|tls]'."\n";
+		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password],[auth=no|yes|ann]').',[starttls|ssl|tls]'."\n";
+		echo '	--smtp '.lang('MTA (with LDAP): [yes(user edit forwarding)],emailadmin_smtp(|_sql|_ldap|_ads|_qmail|_mandriva|_dbmailuser|_suse)')."\n";
+		echo '	--imap '.lang('IMAP: Admin user,Password,emailadmin_imap(|_cyrus|_dovecot)')."\n";
+		echo '	--sieve '.lang('Sieve: Host[,Port(4190)]').',[starttls|ssl|tls]'."\n";
+		echo '  --folder '.lang('Folders: Sent,Trash,Drafts,Templates,Junk')."\n";
 		echo '	--account-auth '.lang('account repository{sql(default) | ldap | ads},[authentication{sql | ldap | ads | mail | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
 		echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
 		echo '	--ads-host  --ads-domain  --ads-admin-user --ads-admin-pw --ads-connection (ssl|tls)  --ads-context'."\n";
