@@ -16,6 +16,11 @@
 class setup_cmd_config extends setup_cmd
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $domain string with domain-name or array with all arguments
@@ -149,7 +154,7 @@ class setup_cmd_config extends setup_cmd
 				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
-			array('name' => 'acc_imap_ssl','allowed' => array('no','starttls','ssl','tls')),
+			array('name' => 'acc_imap_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 		),
 		'--imap' => array(
 			'acc_admin_username',
@@ -163,7 +168,7 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'acc_sieve_host'),
 			array('name' => 'acc_sieve_port','default' => 4192),
 			array('name' => 'acc_sieve_enabled','default' => 'yes'),	// null or yes
-			array('name' => 'acc_sieve_ssl','allowed' => array('no','starttls','ssl','tls')),
+			array('name' => 'acc_sieve_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 		),
 		'--smtp' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
@@ -171,7 +176,7 @@ class setup_cmd_config extends setup_cmd
 		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[no|starttls|ssl|tls]
 			'acc_smtp_host',array('name' => 'acc_smtp_port','default' => 25),'acc_smtp_username','acc_smtp_passwd',
-			array('name' => 'acc_smtp_ssl','allowed' => array('no','starttls','ssl','tls')),
+			array('name' => 'acc_smtp_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 		),
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap','ads'),'default'=>'sql'),
@@ -208,6 +213,7 @@ class setup_cmd_config extends setup_cmd
 		'imapAdminUsername' => 'acc_admin_username',
 		'imapAdminPW' => 'acc_admin_password',
 		'imapType' => 'acc_imap_type',
+		'imapTLSEncryption' => 'acc_imap_ssl',
 		'imapSieveServer' => 'acc_sieve_host',
 		'imapSievePort' => 'acc_sieve_port',
 		'imapEnableSieve' => 'acc_sieve_enabled',
@@ -218,6 +224,7 @@ class setup_cmd_config extends setup_cmd
 		'smtp_auth_user' => 'acc_smtp_username',
 		'smtp_auth_passwd' => 'acc_smtp_password',
 		'smtpAuth' => null,
+		'organisationName' => 'ident_org',
 	);
 
 	/**
@@ -242,6 +249,7 @@ class setup_cmd_config extends setup_cmd
 				if (!isset($this->$name) && $oldname && isset($this->$oldname))
 				{
 					$this->$name = $this->$oldname;
+					unset($this->$oldname);
 				}
 				if (isset($this->$name))
 				{
@@ -271,7 +279,7 @@ class setup_cmd_config extends setup_cmd
 			}
 			$options = is_array(self::$options[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args));
 
-			if ($arg == '--config')
+			if ($arg == '--config' || $arg == '--setup_cmd_config')
 			{
 				foreach($options as $option)
 				{

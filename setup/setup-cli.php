@@ -17,6 +17,8 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli 
 {
 	die('<h1>setup-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+
 $dry_run = false;
 array_shift($_SERVER['argv']);
 
