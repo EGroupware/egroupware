@@ -418,10 +418,6 @@ class setup_detection
 		{
 			$config_errors[] = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
 		}
-		if (!$config['smtp_server'])
-		{
-			$config_errors[] = lang('Missing or uncomplete mailserver configuration');
-		}
 		if ($config_errors)
 		{
 			return 2;
