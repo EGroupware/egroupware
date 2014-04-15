@@ -80,7 +80,7 @@ class mail_acl
 				$content['mailbox'] = $mailbox;
 				$acl = (array)$this->retrive_acl($mailbox, $msg);
 				$n = 1;
-				foreach ($acl as $keys => $value)
+				foreach ($acl as $key => $value)
 				{
 					$virtuals = array_pop(array_values((array)$value));
 					$rights = array_shift(array_values((array)$value));
@@ -104,23 +104,23 @@ class mail_acl
 					{
 						$content['grid'][$n]['acl'] = 'custom';
 					}
-					if (($account_id = $this->mail_bo->icServer->getMailBoxAccountId($keys)))
+					if (($account_id = $this->mail_bo->icServer->getMailBoxAccountId($key)))
 					{
 						$content['grid'][$n++]['acc_id'] = $account_id;
 					}
 					else
 					{
-						$content['grid'][$n++]['acc_id'] = $keys;
+						$content['grid'][$n++]['acc_id'] = $key;
 					}
 				}
 				//error_log(__METHOD__."() acl=".array2string($acl).' --> grid='.array2string($content['grid']));
 			}
-            //Set the acl entry in the last row with lrs as default ACL
+			//Set the acl entry in the last row with lrs as default ACL
 			array_push($content['grid'], array(
-                'acc_id'=>'',
-                'acl_l' => true,
-                'acl_r' => true,
-                'acl_s' => true));
+				'acc_id'=>'',
+				'acl_l' => true,
+				'acl_r' => true,
+				'acl_s' => true));
 		}
 		else
 		{
@@ -180,7 +180,18 @@ class mail_acl
 		}
 		$readonlys = $sel_options = array();
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
-		$readonlys['grid']['delete[1]'] = true;
+
+		//Make the delete buttons readonly for entry filed and account owner
+		foreach($content['grid'] as $key => $field)
+		{
+			if ($field['acc_id'] == $this->mail_bo->icServer->acc_name ||
+					$field['acc_id'][0] == $this->mail_bo->icServer->acc_name)
+			{
+				$readonlys['grid']['delete['.$key.']'] = true;
+			}
+		}
+		$readonlys['grid']['delete['.count($content['grid']).']'] = true;
+		
 		$preserv ['mailbox'] = $content['mailbox'];
 		$content['msg'] = $msg;
 		$content['grid']['account_type'] = $this->mail_bo->icServer->supportsGroupAcl() ? 'both' : 'accounts';
@@ -237,7 +248,10 @@ class mail_acl
 				}
 			}
 		}
-		if (is_array($validator)) return $validator;
+		if (is_array($validator))
+		{
+			return $validator;
+		}	
 	}
 
 	/**
@@ -359,9 +373,9 @@ class mail_acl
 	 * @param String $mailbox folder name that needs to be edited
 	 * @param String $Identifier The identifier to set.
 	 * @param Array $options Additional options:
-     *				- rights: (string) The rights to alter or set.
-     *				- action: (string, optional) If 'add' or 'remove', adds or removes the
-     *				specified rights. Sets the rights otherwise.
+	 * 				- rights: (string) The rights to alter or set.
+	 * 				- action: (string, optional) If 'add' or 'remove', adds or removes the
+	 * 				specified rights. Sets the rights otherwise.
 	 * @param Boolean $recursive boolean flag FALSE|TRUE. If it is FALSE, only the folder take in to account, but in case of TRUE
 	 *		the mailbox including all its subfolders will be considered.
 	 * @param String $msg message
