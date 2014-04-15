@@ -1,8 +1,6 @@
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * et2 Messages
- *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
  * @link http://www.egroupware.org
@@ -3499,7 +3497,7 @@ table.egwGridView_outer thead tr th {
   background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
   font-weight: normal;
-  padding: 0px;
+  padding: 3px 0 3px 4px;
   border-color: #b4b4b4;
   border-left: 0px solid transparent;
   border-top: 0px solid transparent;
@@ -3593,7 +3591,7 @@ table.egwGridView_grid img.iphoto {
   margin: 0.2em;
   max-height: 60px;
 }
-table.egwGridView_grid > tbody {
+table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;
   /*padding: 2px 3px 2px 4px;*/
   margin: 0;
@@ -3602,27 +3600,48 @@ table.egwGridView_grid > tbody {
         tr:nth-child(odd) {background: @color_odd;}*/
   /*multiple choise*/
 }
-table.egwGridView_grid > tbody tr:hover {
+table.egwGridView_grid tbody tr:hover {
   background: rgba(103, 159, 210, 0.2);
 }
-table.egwGridView_grid > tbody tr.selected {
+table.egwGridView_grid tbody tr.selected {
   background-image: none;
   /*background-color: @egw_color_1_e !important;*/
   background-color: rgba(255, 194, 0, 0.5);
 }
-table.egwGridView_grid > tbody tr.focused {
+table.egwGridView_grid tbody tr.focused {
   background-image: url(../images/yellow-stripe-a.png);
   background-repeat: repeat;
   background-color: rgba(255, 194, 0, 0.5);
+}
+table.egwGridView_grid tbody td {
+  padding: 3px 0 3px 3px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000000;
+}
+table.egwGridView_grid tbody td table.customfields tbody {
+  border-bottom: 0px;
+}
+table.egwGridView_grid tbody td table.customfields tbody tr {
+  border-bottom: 0px;
+  /*background-size: 12px 12px;*/
+}
+table.egwGridView_grid tbody td table.customfields tbody tr td {
+  border-bottom: 0px;
+  border: 0px;
+  padding: 0;
+  /*height: 12px;*/
+}
+table.egwGridView_grid tbody td table.customfields tbody tr td .et2_textbox_ro {
+  /*white-space: inherit;*/
 }
 table.egwGridView_grid > tr {
   border-bottom: 1px solid;
   border-color: #828282;
 }
 table.egwGridView_grid > tr > td {
-  border-left: 0px;
-  border-right: 0px;
-  /*padding: 0.3em 0 0.3em 0.3em;*/
+  border-left: 1px;
+  border-right: 1px;
+  padding: 0.3em 0 0.3em 0.3em;
   border-bottom: 1px solid;
   color: #e6e6e6;
   /*&:hover {background-color: @egw_color_2_e;} legacy*/
@@ -3649,15 +3668,6 @@ table.egwGridView_grid > tr > td span.urgent {
 }
 table.egwGridView_grid > tr > td span.low {
   color: #373737;
-}
-table.egwGridView_grid > tr > td table.customfields tbody {
-  border-bottom: 0px;
-}
-table.egwGridView_grid > tr > td table.customfields tbody tr {
-  border-bottom: 0px;
-}
-table.egwGridView_grid > tr > td table.customfields tbody tr td {
-  border-bottom: 0px;
 }
 table.egwGridView_grid tr.subentry {
   background: rgba(255, 221, 115, 0.2) !important;
@@ -4331,7 +4341,7 @@ table.nextmatch_header img {
     -ms-justify-content: flex-start;*/
   position: fixed;
   z-index: 1000;
-  bottom: -8px;
+  bottom: 2px;
   right: 5px;
   padding-right: 20px;
   /*Notification*/
@@ -4369,6 +4379,9 @@ table.nextmatch_header img {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+#egw_fw_topmenu_info_items #topmenu_info_user_info {
+  display: inline-block;
 }
 #egw_fw_topmenu_info_items form {
   height: 0px;
