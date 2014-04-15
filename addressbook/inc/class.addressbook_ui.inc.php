@@ -1950,7 +1950,47 @@ window.egw_LAB.wait(function() {
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : ($active_tid?$active_tid:$new_type[0]);
 				foreach($this->get_contact_columns() as $field)
 				{
-					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
+					if ($_GET['presets'][$field])
+					{
+						if ($field=='email'||$field=='email_home')
+						{
+							$singleAddress = imap_rfc822_parse_adrlist($_GET['presets'][$field],'');
+							//error_log(__METHOD__.__LINE__.' Address:'.$singleAddress[0]->mailbox."@".$singleAddress[0]->host.", ".$singleAddress[0]->personal);
+							if (!(!is_array($singleAddress) || count($singleAddress)<1))
+							{
+								$content[$field] = $singleAddress[0]->mailbox."@".$singleAddress[0]->host;
+								if (!empty($singleAddress[0]->personal))
+								{
+									if (strpos($singleAddress[0]->personal,',')===false)
+									{
+										list($P_n_given,$P_n_family,$P_org_name)=explode(' ',$singleAddress[0]->personal,3);
+										if (strlen(trim($P_n_given))>0) $content['n_given'] = trim($P_n_given);
+										if (strlen(trim($P_n_family))>0) $content['n_family'] = trim($P_n_family);
+										if (strlen(trim($P_org_name))>0) $content['org_name'] = trim($P_org_name);
+									}
+									else
+									{
+										list($P_n_family,$P_other)=explode(',',$singleAddress[0]->personal,2);
+										if (strlen(trim($P_n_family))>0) $content['n_family'] = trim($P_n_family);
+										if (strlen(trim($P_other))>0)
+										{
+											list($P_n_given,$P_org_name)=explode(',',$P_other,2);
+											if (strlen(trim($P_n_given))>0) $content['n_given'] = trim($P_n_given);
+											if (strlen(trim($P_org_name))>0) $content['org_name'] = trim($P_org_name);
+										}
+									}
+								}
+							}
+							else
+							{
+								$content[$field] = $_GET['presets'][$field];
+							}
+						}
+						else
+						{
+							$content[$field] = $_GET['presets'][$field];
+						}
+					}
 				}
 				if (isset($_GET['presets']))
 				{
@@ -1962,10 +2002,13 @@ window.egw_LAB.wait(function() {
 							break;
 						}
 					}
+					$content['n_fn'] = $this->fullname($content);
 				}
+				$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
 				unset($state);
+				//_debug_array($content);
 			}
 
 			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);	// dont allow HTML!
