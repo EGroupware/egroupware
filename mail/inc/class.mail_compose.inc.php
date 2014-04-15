@@ -1562,7 +1562,7 @@ class mail_compose
 			}
 		}
 
-		foreach((array)$headers['REPLY_TO'] as $val) {
+		foreach((array)$headers['REPLY-TO'] as $val) {
 			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
 			$_rfcAddr = $rfcAddr[0];
 			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
@@ -1720,7 +1720,7 @@ class mail_compose
 	 *
 	 * passes the given $_formData representing an attachment to $_content
 	 *
-	 * @param array $_formData fields of the compose form (to,cc,bcc,reply_to,subject,body,priority,signature), plus data of the file (name,file,size,type)
+	 * @param array $_formData fields of the compose form (to,cc,bcc,reply-to,subject,body,priority,signature), plus data of the file (name,file,size,type)
 	 * @param array $_content the content passed to the function and to be modified
 	 * @return void
 	 */
@@ -1920,21 +1920,21 @@ class mail_compose
 
 		// get message headers for specified message
 		//print "AAAA: $_folder, $_uid, $_partID<br>";
-		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
-		#$headers	= $mail_bo->getMessageHeader($_uid, $_partID);
+		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID,false,$_folder,$useHeaderInsteadOfEnvelope=true);
+		//$headers	= $mail_bo->getMessageHeader($_uid, $_partID, true, true, $_folder);
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = $headers['MESSAGE_ID'];
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
 		// check for Reply-To: header and use if available
-		if(!empty($headers['REPLY_TO']) && ($headers['REPLY_TO'] != $headers['FROM'])) {
-			foreach($headers['REPLY_TO'] as $val) {
+		if(!empty($headers['REPLY-TO']) && ($headers['REPLY-TO'] != $headers['FROM'])) {
+			foreach($headers['REPLY-TO'] as $val) {
 				if(!$foundAddresses[$val]) {
 					$oldTo[] = $val;
 					$foundAddresses[$val] = true;
 				}
 			}
-			$oldToAddress	= (is_array($headers['REPLY_TO'])?$headers['REPLY_TO'][0]:$headers['REPLY_TO']);
+			$oldToAddress	= (is_array($headers['REPLY-TO'])?$headers['REPLY-TO'][0]:$headers['REPLY-TO']);
 		} else {
 			foreach($headers['FROM'] as $val) {
 				if(!$foundAddresses[$val]) {
