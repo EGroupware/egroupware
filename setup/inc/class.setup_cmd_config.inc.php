@@ -143,9 +143,10 @@ class setup_cmd_config extends setup_cmd
 		'--backup-dir' => 'backup_dir',
 		'--temp-dir'   => 'temp_dir',
 		'--webserver-url' => 'webserver_url',
+		// mail must NOT have any default, as it causes to store a mail profile!
 		'--mailserver' => array(	//server,{IMAP|IMAPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
 			'acc_imap_host',
-			array('name' => 'acc_imap_port','default'=>143),
+			'acc_imap_port',
 			'acc_domain',
 			array('name' => 'acc_imap_logintype','allowed'  => array(
 				'username (standard)' => 'standard',
@@ -153,30 +154,31 @@ class setup_cmd_config extends setup_cmd
 				'Username/Password defined by admin' => 'admin',
 				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
-			),'default'=>'standard'),
+			)),
 			array('name' => 'acc_imap_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 		),
 		'--imap' => array(
-			'acc_admin_username',
-			'acc_admin_password',
-			array('name' => 'acc_imap_type','default' => 'emailadmin_imap'),
+			'acc_imap_admin_username',
+			'acc_imap_admin_password',
+			'acc_imap_type',
 		),
 		'--folder' => array(
 			'acc_folder_sent','acc_folder_trash','acc_folder_drafts','acc_folder_templates','acc_folder_junk',
 		),
 		'--sieve' => array(
 			array('name' => 'acc_sieve_host'),
-			array('name' => 'acc_sieve_port','default' => 4192),
-			array('name' => 'acc_sieve_enabled','default' => 'yes'),	// null or yes
+			'acc_sieve_port',
+			'acc_sieve_enabled',
 			array('name' => 'acc_sieve_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 		),
 		'--smtp' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
-			array('name' => 'acc_smpt_type','default' => 'emailadmin_smtp'),
+			'acc_smtp_type',
 		),
-		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[no|starttls|ssl|tls]
-			'acc_smtp_host',array('name' => 'acc_smtp_port','default' => 25),'acc_smtp_username','acc_smtp_passwd',
+		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[no|starttls|ssl|tls],[user editable],[further identities]
+			'acc_smtp_host','acc_smtp_port','acc_smtp_username','acc_smtp_passwd',
 			array('name' => 'acc_smtp_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
+			'acc_user_editable','acc_further_identities',
 		),
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap','ads'),'default'=>'sql'),
@@ -210,8 +212,8 @@ class setup_cmd_config extends setup_cmd
 		'mail_server_type' => 'acc_imap_port',
 		'mail_suffix' => 'acc_domain',
 		'mail_login_type' => 'acc_imap_logintype',
-		'imapAdminUsername' => 'acc_admin_username',
-		'imapAdminPW' => 'acc_admin_password',
+		'imapAdminUsername' => 'acc_imap_admin_username',
+		'imapAdminPW' => 'acc_imap_admin_password',
 		'imapType' => 'acc_imap_type',
 		'imapTLSEncryption' => 'acc_imap_ssl',
 		'imapSieveServer' => 'acc_sieve_host',
@@ -347,9 +349,18 @@ class setup_cmd_config extends setup_cmd
 			}
 		}
 		// convert 'yes', 'no' to boolean
-		foreach(array('acc_sieve_enabled') as $name)
+		foreach(array('acc_sieve_enabled','acc_user_editable','acc_further_identities') as $name)
 		{
 			$data[$name] = $data[$name] && strtolower($data[$name]) != 'no';
+		}
+		// do NOT write empty usernames
+		foreach(array('acc_imap_username', 'acc_smtp_username') as $name)
+		{
+			if (empty($data[$name]))
+			{
+				unset($data[$name]);
+				unset($data[str_replace('username', 'password', $name)]);
+			}
 		}
 
 		$data['acc_name'] = 'Created by setup';
@@ -475,13 +486,7 @@ class setup_cmd_config extends setup_cmd
 		$defaults['backup_files'] = false;
 		$defaults['temp_dir'] = '/tmp';
 		$defaults['webserver_url'] = '/egroupware';
-		$defaults['smtp_server'] = 'localhost';
-		//$defaults['mail_server'] = 'localhost';
-		$defaults['mail_suffix'] = '$domain';
-		$defaults['imapAdminUsername'] = 'cyrus@$domain';
-		$defaults['imapAdminPW'] = self::randomstring();
-		$defaults['imapType'] = 'emailadmin_imap';	// standard IMAP
-		$defaults['smtpType'] = 'emailadmin_smtp';	// standard SMTP
+		// no more mail defaults, to not create a (2.) mail account during setup!
 
 		return $defaults;
 	}

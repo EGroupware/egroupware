@@ -251,7 +251,7 @@ abstract class setup_cmd extends admin_cmd
 		{
 			case 1: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
 
-			case 2: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'),2);
+//			case 2: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'),2);
 
 			case 3: throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No eGroupWare domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).'),3);
 
