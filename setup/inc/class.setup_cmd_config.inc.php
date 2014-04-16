@@ -93,6 +93,9 @@ class setup_cmd_config extends setup_cmd
 		{
 			if ($save_mail_account) $this->_save_mail_account($values);
 
+			// flush instance cache, so above config get read from database not cache
+			egw_cache::flush();
+
 			$this->restore_db();
 
 			return lang('Configuration changed.');

@@ -138,6 +138,9 @@ abstract class setup_cmd extends admin_cmd
 		{
 			$GLOBALS['egw']->db->disconnect();
 			$GLOBALS['egw']->db = new egw_db($GLOBALS['egw_domain'][$domain]);
+
+			// change caching to managed instance
+			egw_cache::unset_instance_key();
 		}
 	}
 
@@ -151,6 +154,9 @@ abstract class setup_cmd extends admin_cmd
 		{
 			$GLOBALS['egw']->db->disconnect();
 			$GLOBALS['egw']->db = new egw_db($GLOBALS['egw_info']['server']);
+
+			// change caching back to own instance
+			egw_cache::unset_instance_key();
 
 			if (!is_null(self::$egw_accounts_backup))
 			{

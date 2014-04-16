@@ -569,6 +569,15 @@ class egw_cache
 	}
 
 	/**
+	 * Unset instance key, so it get read again and re-read install_id from database
+	 */
+	static public function unset_instance_key()
+	{
+		self::$instance_key = null;
+		$GLOBALS['egw_info']['server']['install_id'] = egw_cache::get_system_config('install_id', false);
+	}
+
+	/**
 	 * Key used for instance specific data
 	 *
 	 * @var string
