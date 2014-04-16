@@ -179,7 +179,7 @@ class setup_cmd_database extends setup_cmd
 		{
 			$this->set_defaults['db_name'] = $this->db_name =
 			$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
-				substr($this->db_name,0,self::MAX_DB_NAME_LEN);
+				substr(str_replace(array('.', '-'), '_', $this->db_name),0,self::MAX_DB_NAME_LEN);
 		}
 		try {
 			$msg = $this->connect();
