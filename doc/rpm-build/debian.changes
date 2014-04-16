@@ -1,3 +1,16 @@
+egroupware-epl (11.1.20140416-1) hardy; urgency=low
+
+  * CalDAV/calendar: if requesting user had only freebusy rights, no freebusy information was regurned
+  * FireFox/all apps: fixed in recent FF version popups opened always in a single popup (overwritting previous opened one)
+  * eTemplate/all apps: removed custom-field widget type IP again, as it caused too many problems in various modules
+  * eMail: give user feedback when setting/applying timed vacation; do display of dates regarding user time zone settings; improve information when a vacation is set for a given time-range
+  * eMail: fix / improve condition for copy to send folder, on not existing send folder -> give warning on compose window
+  * eMail: make evaluation of message flags case INSENSITIVE (by changing all flags to lowercase before evaluating
+  * eMail: some Servers have very limited SEARCH capability; (no OR allowed/supported) try to detect and act accordingly
+  * Tracker: preserve html mode if set for tracker entry, but switched off globaly later (for display of comments); When in HTML mode, comments may exceed the size limit of the databasefield, if they do: try to fix the display of the comment by checking/validating the reply-comment with our purifying method -> tag balancing, as unbalanced tags in the reply may destroy the edit-form
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 16 Apr 2014 08:44:34 +0200
+
 egroupware-epl (11.1.20140317-1) hardy; urgency=low
 
   * All apps: run link notifications after processing and returning control to user to speed up saving of entries with links to (big) projects
