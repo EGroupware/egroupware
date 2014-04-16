@@ -163,7 +163,7 @@ class setup_cmd_config extends setup_cmd
 			'acc_imap_type',
 		),
 		'--folder' => array(
-			'acc_folder_sent','acc_folder_trash','acc_folder_drafts','acc_folder_templates','acc_folder_junk',
+			'acc_folder_sent','acc_folder_trash','acc_folder_draft','acc_folder_template','acc_folder_junk',
 		),
 		'--sieve' => array(
 			array('name' => 'acc_sieve_host'),
@@ -349,7 +349,7 @@ class setup_cmd_config extends setup_cmd
 			}
 		}
 		// convert 'yes', 'no' to boolean
-		foreach(array('acc_sieve_enabled','acc_user_editable','acc_further_identities') as $name)
+		foreach(array('acc_sieve_enabled','acc_user_editable','acc_further_identities','acc_smtp_auth_session') as $name)
 		{
 			$data[$name] = $data[$name] && strtolower($data[$name]) != 'no';
 		}
