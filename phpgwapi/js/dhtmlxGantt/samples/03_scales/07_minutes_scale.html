@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Minutes timeline</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+	gantt.config.xml_date="%d-%m-%Y %H:%i";
+	gantt.config.scale_unit = "hour";
+	gantt.config.step = 1;
+	gantt.config.date_scale = "%g %a";
+	gantt.config.min_column_width = 20;
+	gantt.config.duration_unit = "minute";
+	gantt.config.duration_step = 60;
+	gantt.config.scale_height = 75;
+
+	gantt.config.subscales = [
+		{unit:"day", step:1, date : "%j %F, %l"},
+		{unit:"minute", step:15, date : "%i"}
+	];
+
+	gantt.init("gantt_here");
+	gantt.parse({
+		"data":[
+			{"id":11, "text":"Project #1", "start_date":"01-04-2013 02:00", "duration":"24", "progress": 0.6, "open": true},
+
+			{"id":12, "text":"Task #1", "start_date":"01-04-2013 02:00", "duration":"5", "parent":"11", "progress": 1, "open": true},
+			{"id":13, "text":"Task #2", "start_date":"01-04-2013 03:00", "duration":"7", "parent":"11", "progress": 0.5, "open": true},
+			{"id":14, "text":"Task #3", "start_date":"01-04-2013 04:00", "duration":"6", "parent":"11", "progress": 0.8, "open": true},
+			{"id":15, "text":"Task #4", "start_date":"01-04-2013 05:00", "duration":"5", "parent":"11", "progress": 0.2, "open": true},
+			{"id":16, "text":"Task #5", "start_date":"01-04-2013 06:00", "duration":"7", "parent":"11", "progress": 0, "open": true},
+
+			{"id":17, "text":"Task #2.1", "start_date":"01-04-2013 07:00", "duration":"2", "parent":"13", "progress": 1, "open": true},
+			{"id":18, "text":"Task #2.2", "start_date":"01-04-2013 08:00", "duration":"3", "parent":"13", "progress": 0.8, "open": true},
+			{"id":19, "text":"Task #2.3", "start_date":"01-04-2013 09:00", "duration":"4", "parent":"13", "progress": 0.2, "open": true},
+			{"id":20, "text":"Task #2.4", "start_date":"01-04-2013 11:00", "duration":"4", "parent":"13", "progress": 0, "open": true},
+			{"id":21, "text":"Task #4.1", "start_date":"01-04-2013 12:00", "duration":"4", "parent":"15", "progress": 0.5, "open": true},
+			{"id":22, "text":"Task #4.2", "start_date":"01-04-2013 06:00", "duration":"4", "parent":"15", "progress": 0.1, "open": true},
+			{"id":23, "text":"Task #4.3", "start_date":"01-04-2013 10:00", "duration":"5", "parent":"15", "progress": 0, "open": true}
+		],
+		"links":[
+			{"id":"10","source":"11","target":"12","type":"1"},
+			{"id":"11","source":"11","target":"13","type":"1"},
+			{"id":"12","source":"11","target":"14","type":"1"},
+			{"id":"13","source":"11","target":"15","type":"1"},
+			{"id":"14","source":"11","target":"16","type":"1"},
+			{"id":"15","source":"13","target":"17","type":"1"},
+			{"id":"16","source":"17","target":"18","type":"0"},
+			{"id":"17","source":"18","target":"19","type":"0"},
+			{"id":"18","source":"19","target":"20","type":"0"},
+			{"id":"19","source":"15","target":"21","type":"2"},
+			{"id":"20","source":"15","target":"22","type":"2"},
+			{"id":"21","source":"15","target":"23","type":"2"}
+		]
+	});
+</script>
+</body>

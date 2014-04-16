@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Clickable links</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+
+	gantt.attachEvent("onLinkClick", function(id){
+		var link = this.getLink(id),
+			src = this.getTask(link.source),
+			trg = this.getTask(link.target),
+			types = this.config.links;
+
+		var first = "", second = "";
+		switch (link.type){
+			case types.finish_to_start:
+				first = "finish";
+				second = "start";
+				break;
+			case types.start_to_start:
+				first = "start";
+				second = "start";
+				break;
+			case types.finish_to_finish:
+				first = "finish";
+				second = "finish";
+				break;
+		}
+
+		dhtmlx.message("Must " + first + " <b>" + src.text + "</b> to " + second + " <b>" + trg.text + "</b>");
+	});
+
+</script>
+</body>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Filtering</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<style>
+    .filters_wrapper {
+        line-height: 12px;
+        font-size: 12px;
+    }
+    .filters_wrapper span {
+        font-weight: bold;
+        padding-right: 5px;
+    }
+    .filters_wrapper label {
+        padding-right: 3px;
+    }
+</style>
+<body>
+<div style='height:20px; padding:5px;'>
+    <div class="filters_wrapper" id="filters_wrapper">
+        <span>Display tasks with priority:</span>
+        <label>
+            <input type="checkbox" name="1" checked />
+            High
+        </label>
+        <label>
+            <input type="checkbox" name="2" />
+            Normal
+        </label>
+        <label>
+            <input type="checkbox" name="3" />
+            Low
+        </label>
+    </div>
+</div>
+
+
+<div id="gantt_here" style='width:1000px; height:420px;'></div>
+
+
+<script type="text/javascript">
+
+
+    var filter_inputs = document.getElementById("filters_wrapper").getElementsByTagName("input");
+    for (var i=0; i<filter_inputs.length; i++) {
+        var filter_input = filter_inputs[i];
+
+        // attach event handler to update filters object and refresh data (so filters will be applied)
+        filter_input.onchange = function() {
+            gantt.refreshData();
+        }
+    }
+
+	function hasPriority(parent, priority){
+		if(gantt.getTask(parent).priority == priority)
+			return true;
+
+		var child = gantt.getChildren(parent);
+		for(var i = 0; i < child.length; i++){
+			if(hasPriority(child[i], priority))
+				return true;
+		}
+		return false;
+	}
+
+    gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
+        for (var i=0; i<filter_inputs.length; i++) {
+            var filter_input = filter_inputs[i];
+
+
+            if (filter_input.checked){
+                if (hasPriority(id, filter_input.name)){
+                    return true;
+                }
+            }
+
+        }
+		return false;
+    });
+    gantt.config.columns = [
+        {name:"text",       label:"Task name",  tree:true, align:"center", width:160},
+        {name:"start_date", label:"Start time", align: "center"},
+        {name:"priority",   label:"Priority",   align: "center", template:function(obj){
+            if (obj.priority== 1) return "High";
+            if (obj.priority== 2) return "Normal";
+            return "Low";
+        }}
+    ];
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+</script>
+</body>

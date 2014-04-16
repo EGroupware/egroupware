@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Load data from JSON file</title>
+</head>
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+<body>
+	<style type="text/css">
+		html, body{ padding:0px; margin:0px; height:100%; }
+	</style>
+	<div id="gantt_here" style='width:100%; height:100%;'></div>
+	<script type="text/javascript">
+		gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+		gantt.init("gantt_here");
+		gantt.load("../common/data.json", "json");
+	</script>
+</body>

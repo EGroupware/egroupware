@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>D'n'D Events</title>
+</head>
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+	<style type="text/css">
+		html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+	</style>
+<body>
+	<div id="gantt_here" style='width:100%; height:100%;'></div>
+	<script type="text/javascript">
+		gantt.init("gantt_here");
+		gantt.attachEvent("onAfterTaskDrag", function(id, mode){
+			var task = gantt.getTask(id);
+			if(mode == gantt.config.drag_mode.progress){
+				var pr = Math.floor(task.progress * 100 * 10)/10;
+				dhtmlx.message(task.text + " is now " + pr + "% completed!");
+			}else{
+				var convert = gantt.date.date_to_str("%H:%i, %F %j");
+				var s = convert(task.start_date);
+				var e = convert(task.end_date);
+				dhtmlx.message(task.text + " starts at " + s + " and ends at " + e);
+			}
+		});
+		gantt.attachEvent("onBeforeTaskChanged", function(id, mode, old_event){
+			var task = gantt.getTask(id);
+			if(mode == gantt.config.drag_mode.progress){
+				if(task.progress < old_event.progress){
+					dhtmlx.message(task.text + " progress can't be undone!");
+					return false;
+				}
+			}
+			return true;
+		});
+
+		gantt.attachEvent("onBeforeTaskDrag", function(id, mode){
+			var task = gantt.getTask(id);
+			var message = task.text + " ";
+
+			if(mode == gantt.config.drag_mode.progress){
+				message += "progress is being updated";
+			}else{
+				message += "is being ";
+				if(mode == gantt.config.drag_mode.move)
+					message += "moved";
+				else if(mode == gantt.config.drag_mode.resize)
+					message += "resized";
+			}
+
+			dhtmlx.message(message);
+			return true;
+		});
+
+		gantt.parse(demo_tasks);
+	</script>
+</body>

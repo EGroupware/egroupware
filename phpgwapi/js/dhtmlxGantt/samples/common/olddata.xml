@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+  <project id="1" name="project1" startdate="2006,12,14">
+     <task id="1">
+  	<name>project1 task1</name>
+	<est>2006,12,14</est>
+	<duration>120</duration>
+    	<percentcompleted>60</percentcompleted>
+	<predecessortasks></predecessortasks>
+            <childtasks>
+                  <task id="2">
+                    <name>project1 task2</name>
+              	    <est>2006,12,14</est>
+        	    <duration>100</duration>
+    	            <percentcompleted>20</percentcompleted>
+        	    <predecessortasks></predecessortasks>
+                    <childtasks></childtasks>
+        	  </task>
+                  <task id="6">
+            	    <name>project1 task6</name>
+	            <est>2006,12,15</est>
+            	    <duration>90</duration>
+        	    <percentcompleted>10</percentcompleted>
+        	    <predecessortasks>2</predecessortasks>
+                    <childtasks></childtasks>
+                  </task>
+            </childtasks>
+     </task>
+  </project>
+  <project id="2" name="project2" startdate="2006,12,20">
+     <task id="12">
+	<name>project2 task12</name>
+	<est>2006,12,20</est>
+	<duration>140</duration>
+	<percentcompleted>60</percentcompleted>
+	<predecessortasks></predecessortasks>
+        <childtasks>
+            <task id="14">
+	        <name>project2 task14</name>
+       		<est>2006,12,20</est>
+       		<duration>100</duration>
+	        <percentcompleted>20</percentcompleted>
+       		<predecessortasks></predecessortasks>
+                <childtasks></childtasks>
+        	</task>
+        </childtasks>
+     </task>
+  </project>
+</projects>

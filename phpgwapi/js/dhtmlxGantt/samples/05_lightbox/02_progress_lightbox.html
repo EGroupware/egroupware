@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Progress lightbox</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+
+<script type="text/javascript">
+    gantt.config.grid_width = 380;
+    gantt.config.add_column = false;
+    gantt.config.columns = [
+        {name:"text", label:"Task name", tree:true, width:'*' },
+        {name:"progress", label:"Progress", width:80, align: "center",
+            template: function(item) {
+                if (item.progress >= 1)
+                    return "Complete";
+                if (item.progress == 0)
+                    return "Not started";
+                return item.progress*100 + "%";
+            }
+        },
+        {name:"assigned", label:"Assigned to", align: "center", width:100,
+            template: function(item) {
+                if (!item.users) return "Nobody";
+                return item.users.join(", ");
+            }
+        }
+    ];
+    gantt.locale.labels["section_progress"] = "Progress";
+
+    gantt.config.lightbox.sections = [
+        {name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+        {name: "progress", height: 22, map_to: "progress", type: "select", options: [
+            {key:"0", label: "Not started"},
+            {key:"0.1", label: "10%"},
+            {key:"0.2", label: "20%"},
+            {key:"0.3", label: "30%"},
+            {key:"0.4", label: "40%"},
+            {key:"0.5", label: "50%"},
+            {key:"0.6", label: "60%"},
+            {key:"0.7", label: "70%"},
+            {key:"0.8", label: "80%"},
+            {key:"0.9", label: "90%"},
+            {key:"1", label: "Complete"}
+        ]},
+        {name: "time", height: 72, type: "duration", map_to: "auto", time_format:["%d", "%m", "%Y", "%H:%i"]}
+    ];
+
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+    gantt.showLightbox(2);
+</script>
+</body>

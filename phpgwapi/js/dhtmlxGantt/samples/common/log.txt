@@ -1,0 +1,947 @@
+
+
+====================================
+Log started, 24/03/2014 05:33:39
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.014001131057739s
+
+
+
+====================================
+Log started, 24/03/2014 05:34:21
+====================================
+
+DataProcessor object initialized
+1395678846913_text => New task
+1395678846913_start_date => 2013-04-06 00:00:00
+1395678846913_duration => 1
+1395678846913_progress => 0
+1395678846913_parent => 9
+1395678846913_id => 1395678846913
+1395678846913_end_date => 2013-04-07 00:00:00
+1395678846913_!nativeeditor_status => inserted
+ids => 1395678846913
+
+Row data [1395678846913]
+text => New task
+start_date => 2013-04-06 00:00:00
+duration => 1
+progress => 0
+parent => 9
+id => 1395678846913
+end_date => 2013-04-07 00:00:00
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_tasks(start_date,duration,text,progress,parent) VALUES ('2013-04-06 00:00:00','1','New task','0','9')
+
+Edit operation finished
+0 => action:inserted; sid:1395678846913; tid:30;
+
+Done in 0.13600778579712s
+
+
+
+====================================
+Log started, 24/03/2014 05:34:24
+====================================
+
+DataProcessor object initialized
+1395678846916_text => New task
+1395678846916_start_date => 2013-04-06 00:00:00
+1395678846916_duration => 1
+1395678846916_progress => 0
+1395678846916_parent => 1395678846913
+1395678846916_id => 1395678846916
+1395678846916_end_date => 2013-04-07 00:00:00
+1395678846916_!nativeeditor_status => inserted
+ids => 1395678846916
+
+Row data [1395678846916]
+text => New task
+start_date => 2013-04-06 00:00:00
+duration => 1
+progress => 0
+parent => 1395678846913
+id => 1395678846916
+end_date => 2013-04-07 00:00:00
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_tasks(start_date,duration,text,progress,parent) VALUES ('2013-04-06 00:00:00','1','New task','0','1395678846913')
+
+Edit operation finished
+0 => action:inserted; sid:1395678846916; tid:31;
+
+Done in 0.11300706863403s
+
+
+
+====================================
+Log started, 24/03/2014 05:34:27
+====================================
+
+DataProcessor object initialized
+1395678846917_source => 1395678846916
+1395678846917_target => 10
+1395678846917_type => 2
+1395678846917_id => 1395678846917
+1395678846917_!nativeeditor_status => inserted
+ids => 1395678846917
+
+Row data [1395678846917]
+source => 1395678846916
+target => 10
+type => 2
+id => 1395678846917
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395678846916','10','2')
+
+Edit operation finished
+0 => action:inserted; sid:1395678846917; tid:14;
+
+Done in 0.11400604248047s
+
+
+
+====================================
+Log started, 24/03/2014 05:34:29
+====================================
+
+DataProcessor object initialized
+1395678846918_source => 1395678846913
+1395678846918_target => 9
+1395678846918_type => 1
+1395678846918_id => 1395678846918
+1395678846918_!nativeeditor_status => inserted
+ids => 1395678846918
+
+Row data [1395678846918]
+source => 1395678846913
+target => 9
+type => 1
+id => 1395678846918
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395678846913','9','1')
+
+Edit operation finished
+0 => action:inserted; sid:1395678846918; tid:15;
+
+Done in 0.17401003837585s
+
+
+
+====================================
+Log started, 24/03/2014 05:36:15
+====================================
+
+DataProcessor object initialized
+10_id => 10
+10_start_date => 2013-04-06 00:00:00
+10_duration => 3
+10_text => Task #3.2
+10_progress => 0
+10_parent => 4
+10_open => 1
+10_end_date => 2013-04-09 00:00:00
+10_!nativeeditor_status => updated
+ids => 10
+
+Row data [10]
+id => 10
+start_date => 2013-04-06 00:00:00
+duration => 3
+text => Task #3.2
+progress => 0
+parent => 4
+open => 1
+end_date => 2013-04-09 00:00:00
+!nativeeditor_status => updated
+
+UPDATE gantt_tasks SET start_date='2013-04-06 00:00:00',duration='3',text='Task #3.2',progress='0',parent='4' WHERE id='10'
+
+Edit operation finished
+0 => action:updated; sid:10; tid:10;
+
+Done in 0.13900804519653s
+
+
+
+====================================
+Log started, 24/03/2014 06:02:48
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.030000925064087s
+
+
+
+====================================
+Log started, 24/03/2014 06:03:13
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.015001058578491s
+
+
+
+====================================
+Log started, 24/03/2014 06:03:50
+====================================
+
+DataProcessor object initialized
+12_id => 12
+12_!nativeeditor_status => deleted
+13_id => 13
+13_!nativeeditor_status => deleted
+14_id => 14
+14_!nativeeditor_status => deleted
+15_id => 15
+15_!nativeeditor_status => deleted
+16_id => 16
+16_!nativeeditor_status => deleted
+17_id => 17
+17_!nativeeditor_status => deleted
+18_id => 18
+18_!nativeeditor_status => deleted
+19_id => 19
+19_!nativeeditor_status => deleted
+20_id => 20
+20_!nativeeditor_status => deleted
+21_id => 21
+21_!nativeeditor_status => deleted
+22_id => 22
+22_!nativeeditor_status => deleted
+23_id => 23
+23_!nativeeditor_status => deleted
+24_id => 24
+24_!nativeeditor_status => deleted
+ids => 12,13,14,15,16,17,18,19,20,21,22,23,24
+
+Row data [12]
+id => 12
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='12'
+
+DELETE FROM gantt_links WHERE source = '12'
+
+DELETE FROM gantt_links WHERE target = '12'
+
+Row data [13]
+id => 13
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='13'
+
+DELETE FROM gantt_links WHERE source = '13'
+
+DELETE FROM gantt_links WHERE target = '13'
+
+Row data [14]
+id => 14
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='14'
+
+DELETE FROM gantt_links WHERE source = '14'
+
+DELETE FROM gantt_links WHERE target = '14'
+
+Row data [15]
+id => 15
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='15'
+
+DELETE FROM gantt_links WHERE source = '15'
+
+DELETE FROM gantt_links WHERE target = '15'
+
+Row data [16]
+id => 16
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='16'
+
+DELETE FROM gantt_links WHERE source = '16'
+
+DELETE FROM gantt_links WHERE target = '16'
+
+Row data [17]
+id => 17
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='17'
+
+DELETE FROM gantt_links WHERE source = '17'
+
+DELETE FROM gantt_links WHERE target = '17'
+
+Row data [18]
+id => 18
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='18'
+
+DELETE FROM gantt_links WHERE source = '18'
+
+DELETE FROM gantt_links WHERE target = '18'
+
+Row data [19]
+id => 19
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='19'
+
+DELETE FROM gantt_links WHERE source = '19'
+
+DELETE FROM gantt_links WHERE target = '19'
+
+Row data [20]
+id => 20
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='20'
+
+DELETE FROM gantt_links WHERE source = '20'
+
+DELETE FROM gantt_links WHERE target = '20'
+
+Row data [21]
+id => 21
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='21'
+
+DELETE FROM gantt_links WHERE source = '21'
+
+DELETE FROM gantt_links WHERE target = '21'
+
+Row data [22]
+id => 22
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='22'
+
+DELETE FROM gantt_links WHERE source = '22'
+
+DELETE FROM gantt_links WHERE target = '22'
+
+Row data [23]
+id => 23
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='23'
+
+DELETE FROM gantt_links WHERE source = '23'
+
+DELETE FROM gantt_links WHERE target = '23'
+
+Row data [24]
+id => 24
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='24'
+
+DELETE FROM gantt_links WHERE source = '24'
+
+DELETE FROM gantt_links WHERE target = '24'
+
+Edit operation finished
+0 => action:deleted; sid:12; tid:12;
+1 => action:deleted; sid:13; tid:13;
+2 => action:deleted; sid:14; tid:14;
+3 => action:deleted; sid:15; tid:15;
+4 => action:deleted; sid:16; tid:16;
+5 => action:deleted; sid:17; tid:17;
+6 => action:deleted; sid:18; tid:18;
+7 => action:deleted; sid:19; tid:19;
+8 => action:deleted; sid:20; tid:20;
+9 => action:deleted; sid:21; tid:21;
+10 => action:deleted; sid:22; tid:22;
+11 => action:deleted; sid:23; tid:23;
+12 => action:deleted; sid:24; tid:24;
+
+Done in 1.8391051292419s
+
+
+
+====================================
+Log started, 24/03/2014 06:03:55
+====================================
+
+
+
+====================================
+Log started, 24/03/2014 06:03:55
+====================================
+
+DataProcessor object initialized
+2_id => 2
+2_!nativeeditor_status => deleted
+7_id => 7
+7_!nativeeditor_status => deleted
+8_id => 8
+8_!nativeeditor_status => deleted
+ids => 2,7,8
+
+DataProcessor object initialized
+3_id => 3
+3_!nativeeditor_status => deleted
+ids => 3
+
+Row data [2]
+id => 2
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='2'
+
+Row data [3]
+id => 3
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='3'
+
+SQLite3::query(): Unable to prepare statement: 5, database is locked at D:\www\connector-php\codebase\db_sqlite3.php line 14
+
+exception 'Exception' with message 'SQLLite - sql execution failed
+database is locked' in D:\www\connector-php\codebase\db_sqlite3.php:16
+Stack trace:
+#0 D:\www\connector-php\codebase\db_common.php(726): SQLite3DBDataWrapper->query('DELETE FROM gan...')
+#1 [internal function]: DBDataWrapper->delete(Object(DataAction), Object(DataRequestConfig))
+#2 D:\www\connector-php\codebase\dataprocessor.php(221): call_user_func(Array, Object(DataAction), Object(DataRequestConfig))
+#3 D:\www\connector-php\codebase\dataprocessor.php(168): DataProcessor->check_exts(Object(DataAction), 'delete')
+#4 D:\www\connector-php\codebase\dataprocessor.php(97): DataProcessor->inner_process(Object(DataAction))
+#5 D:\www\connector-php\codebase\gantt_connector.php(294): DataProcessor->process(Object(DataConfig), Object(DataRequestConfig))
+#6 D:\www\connector-php\codebase\base_connector.php(410): JSONGanttConnector->render()
+#7 D:\www\gantt\samples\common\connector.php(11): Connector->render_table('gantt_tasks', 'id', 'start_date,dura...', '')
+#8 {main}
+
+Edit operation finished
+0 => action:error; sid:3; tid:3;
+
+Done in 0.087005138397217s
+
+Row data [7]
+id => 7
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='7'
+
+Row data [8]
+id => 8
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='8'
+
+Edit operation finished
+0 => action:deleted; sid:2; tid:2;
+1 => action:deleted; sid:7; tid:7;
+2 => action:deleted; sid:8; tid:8;
+
+Done in 0.14900898933411s
+
+
+
+====================================
+Log started, 24/03/2014 06:03:58
+====================================
+
+
+
+====================================
+Log started, 24/03/2014 06:03:58
+====================================
+
+DataProcessor object initialized
+9_id => 9
+9_!nativeeditor_status => deleted
+10_id => 10
+10_!nativeeditor_status => deleted
+11_id => 11
+11_!nativeeditor_status => deleted
+30_id => 30
+30_!nativeeditor_status => deleted
+ids => 9,10,11,30
+
+DataProcessor object initialized
+4_id => 4
+4_!nativeeditor_status => deleted
+ids => 4
+
+Row data [9]
+id => 9
+!nativeeditor_status => deleted
+
+Row data [4]
+id => 4
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='9'
+
+DELETE FROM gantt_tasks WHERE id='4'
+
+Row data [10]
+id => 10
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='10'
+
+SQLite3::query(): Unable to execute statement: database is locked at D:\www\connector-php\codebase\db_sqlite3.php line 14
+
+exception 'Exception' with message 'SQLLite - sql execution failed
+database is locked' in D:\www\connector-php\codebase\db_sqlite3.php:16
+Stack trace:
+#0 D:\www\connector-php\codebase\db_common.php(726): SQLite3DBDataWrapper->query('DELETE FROM gan...')
+#1 [internal function]: DBDataWrapper->delete(Object(DataAction), Object(DataRequestConfig))
+#2 D:\www\connector-php\codebase\dataprocessor.php(221): call_user_func(Array, Object(DataAction), Object(DataRequestConfig))
+#3 D:\www\connector-php\codebase\dataprocessor.php(168): DataProcessor->check_exts(Object(DataAction), 'delete')
+#4 D:\www\connector-php\codebase\dataprocessor.php(97): DataProcessor->inner_process(Object(DataAction))
+#5 D:\www\connector-php\codebase\gantt_connector.php(360): DataProcessor->process(Object(DataConfig), Object(DataRequestConfig))
+#6 D:\www\connector-php\codebase\gantt_connector.php(291): JSONGanttLinksConnector->save()
+#7 D:\www\connector-php\codebase\base_connector.php(410): JSONGanttConnector->render()
+#8 D:\www\gantt\samples\common\connector.php(11): Connector->render_table('gantt_tasks', 'id', 'start_date,dura...', '')
+#9 {main}
+
+Row data [11]
+id => 11
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='11'
+
+DELETE FROM gantt_links WHERE source = '4'
+
+SQLite3::query(): Unable to execute statement: database is locked at D:\www\connector-php\codebase\db_sqlite3.php line 14
+
+DELETE FROM gantt_links WHERE target = '4'
+
+exception 'Exception' with message 'SQLLite - sql execution failed
+database is locked' in D:\www\connector-php\codebase\db_sqlite3.php:16
+Stack trace:
+#0 D:\www\connector-php\codebase\db_common.php(726): SQLite3DBDataWrapper->query('DELETE FROM gan...')
+#1 [internal function]: DBDataWrapper->delete(Object(DataAction), Object(DataRequestConfig))
+#2 D:\www\connector-php\codebase\dataprocessor.php(221): call_user_func(Array, Object(DataAction), Object(DataRequestConfig))
+#3 D:\www\connector-php\codebase\dataprocessor.php(168): DataProcessor->check_exts(Object(DataAction), 'delete')
+#4 D:\www\connector-php\codebase\dataprocessor.php(97): DataProcessor->inner_process(Object(DataAction))
+#5 D:\www\connector-php\codebase\gantt_connector.php(360): DataProcessor->process(Object(DataConfig), Object(DataRequestConfig))
+#6 D:\www\connector-php\codebase\gantt_connector.php(291): JSONGanttLinksConnector->save()
+#7 D:\www\connector-php\codebase\base_connector.php(410): JSONGanttConnector->render()
+#8 D:\www\gantt\samples\common\connector.php(11): Connector->render_table('gantt_tasks', 'id', 'start_date,dura...', '')
+#9 {main}
+
+Row data [30]
+id => 30
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_links WHERE id='30'
+
+SQLite3::query(): Unable to execute statement: database is locked at D:\www\connector-php\codebase\db_sqlite3.php line 14
+
+exception 'Exception' with message 'SQLLite - sql execution failed
+database is locked' in D:\www\connector-php\codebase\db_sqlite3.php:16
+Stack trace:
+#0 D:\www\connector-php\codebase\db_common.php(726): SQLite3DBDataWrapper->query('DELETE FROM gan...')
+#1 [internal function]: DBDataWrapper->delete(Object(DataAction), Object(DataRequestConfig))
+#2 D:\www\connector-php\codebase\dataprocessor.php(221): call_user_func(Array, Object(DataAction), Object(DataRequestConfig))
+#3 D:\www\connector-php\codebase\dataprocessor.php(168): DataProcessor->check_exts(Object(DataAction), 'delete')
+#4 D:\www\connector-php\codebase\dataprocessor.php(97): DataProcessor->inner_process(Object(DataAction))
+#5 D:\www\connector-php\codebase\gantt_connector.php(360): DataProcessor->process(Object(DataConfig), Object(DataRequestConfig))
+#6 D:\www\connector-php\codebase\gantt_connector.php(291): JSONGanttLinksConnector->save()
+#7 D:\www\connector-php\codebase\base_connector.php(410): JSONGanttConnector->render()
+#8 D:\www\gantt\samples\common\connector.php(11): Connector->render_table('gantt_tasks', 'id', 'start_date,dura...', '')
+#9 {main}
+
+Edit operation finished
+0 => action:deleted; sid:9; tid:9;
+1 => action:error; sid:10; tid:10;
+2 => action:error; sid:11; tid:11;
+3 => action:error; sid:30; tid:30;
+
+Done in 0.27601599693298s
+
+Edit operation finished
+0 => action:deleted; sid:4; tid:4;
+
+Done in 0.29101610183716s
+
+
+
+====================================
+Log started, 24/03/2014 06:04:10
+====================================
+
+DataProcessor object initialized
+3_id => 3
+3_!nativeeditor_status => deleted
+15_id => 15
+15_!nativeeditor_status => true_deleted
+ids => 3,15
+
+Row data [3]
+id => 3
+!nativeeditor_status => deleted
+
+DELETE FROM gantt_tasks WHERE id='3'
+
+DELETE FROM gantt_links WHERE source = '3'
+
+DELETE FROM gantt_links WHERE target = '3'
+
+Row data [15]
+id => 15
+!nativeeditor_status => true_deleted
+
+Access control: true_deleted operation blocked
+
+Edit operation finished
+0 => action:deleted; sid:3; tid:3;
+1 => action:error; sid:15; tid:15;
+
+Done in 0.1880099773407s
+
+
+
+====================================
+Log started, 24/03/2014 06:11:01
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.018001079559326s
+
+
+
+====================================
+Log started, 24/03/2014 06:11:35
+====================================
+
+DataProcessor object initialized
+1395681080542_text => New task
+1395681080542_start_date => 2013-04-05 00:00:00
+1395681080542_duration => 1
+1395681080542_progress => 0
+1395681080542_parent => 5
+1395681080542_id => 1395681080542
+1395681080542_end_date => 2013-04-06 00:00:00
+1395681080542_!nativeeditor_status => inserted
+ids => 1395681080542
+
+Row data [1395681080542]
+text => New task
+start_date => 2013-04-05 00:00:00
+duration => 1
+progress => 0
+parent => 5
+id => 1395681080542
+end_date => 2013-04-06 00:00:00
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_tasks(start_date,duration,text,progress,parent) VALUES ('2013-04-05 00:00:00','1','New task','0','5')
+
+Edit operation finished
+0 => action:inserted; sid:1395681080542; tid:32;
+
+Done in 0.15600895881653s
+
+
+
+====================================
+Log started, 24/03/2014 06:11:41
+====================================
+
+DataProcessor object initialized
+1395681080545_source => 1395681080542
+1395681080545_target => 1
+1395681080545_type => 2
+1395681080545_id => 1395681080545
+1395681080545_!nativeeditor_status => inserted
+ids => 1395681080545
+
+Row data [1395681080545]
+source => 1395681080542
+target => 1
+type => 2
+id => 1395681080545
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395681080542','1','2')
+
+Edit operation finished
+0 => action:inserted; sid:1395681080545; tid:16;
+
+Done in 0.20201086997986s
+
+
+
+====================================
+Log started, 24/03/2014 06:11:45
+====================================
+
+DataProcessor object initialized
+1395681080546_source => 1395681080542
+1395681080546_target => 5
+1395681080546_type => 3
+1395681080546_id => 1395681080546
+1395681080546_!nativeeditor_status => inserted
+ids => 1395681080546
+
+Row data [1395681080546]
+source => 1395681080542
+target => 5
+type => 3
+id => 1395681080546
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395681080542','5','3')
+
+Edit operation finished
+0 => action:inserted; sid:1395681080546; tid:17;
+
+Done in 0.23701310157776s
+
+
+
+====================================
+Log started, 24/03/2014 06:11:49
+====================================
+
+DataProcessor object initialized
+1395681080547_source => 1
+1395681080547_target => 1395681080542
+1395681080547_type => 1
+1395681080547_id => 1395681080547
+1395681080547_!nativeeditor_status => inserted
+ids => 1395681080547
+
+Row data [1395681080547]
+source => 1
+target => 1395681080542
+type => 1
+id => 1395681080547
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1','1395681080542','1')
+
+Edit operation finished
+0 => action:inserted; sid:1395681080547; tid:18;
+
+Done in 0.13200783729553s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:17
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.019001960754395s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:47
+====================================
+
+DataProcessor object initialized
+1395681151945_text => New task
+1395681151945_start_date => 2013-04-05 00:00:00
+1395681151945_duration => 1
+1395681151945_progress => 0
+1395681151945_parent => 32
+1395681151945_id => 1395681151945
+1395681151945_end_date => 2013-04-06 00:00:00
+1395681151945_!nativeeditor_status => inserted
+ids => 1395681151945
+
+Row data [1395681151945]
+text => New task
+start_date => 2013-04-05 00:00:00
+duration => 1
+progress => 0
+parent => 32
+id => 1395681151945
+end_date => 2013-04-06 00:00:00
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_tasks(start_date,duration,text,progress,parent) VALUES ('2013-04-05 00:00:00','1','New task','0','32')
+
+Edit operation finished
+0 => action:inserted; sid:1395681151945; tid:33;
+
+Done in 0.17500996589661s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:49
+====================================
+
+DataProcessor object initialized
+1395681151948_source => 1395681151945
+1395681151948_target => 1
+1395681151948_type => 2
+1395681151948_id => 1395681151948
+1395681151948_!nativeeditor_status => inserted
+ids => 1395681151948
+
+Row data [1395681151948]
+source => 1395681151945
+target => 1
+type => 2
+id => 1395681151948
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395681151945','1','2')
+
+Edit operation finished
+0 => action:inserted; sid:1395681151948; tid:19;
+
+Done in 0.14000821113586s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:51
+====================================
+
+DataProcessor object initialized
+1395681151949_source => 1395681151945
+1395681151949_target => 1
+1395681151949_type => 1
+1395681151949_id => 1395681151949
+1395681151949_!nativeeditor_status => inserted
+ids => 1395681151949
+
+Row data [1395681151949]
+source => 1395681151945
+target => 1
+type => 1
+id => 1395681151949
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395681151945','1','1')
+
+Edit operation finished
+0 => action:inserted; sid:1395681151949; tid:20;
+
+Done in 0.18001008033752s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:52
+====================================
+
+DataProcessor object initialized
+1395681151950_text => New task
+1395681151950_start_date => 2013-04-05 00:00:00
+1395681151950_duration => 1
+1395681151950_progress => 0
+1395681151950_parent => 1395681151945
+1395681151950_id => 1395681151950
+1395681151950_end_date => 2013-04-06 00:00:00
+1395681151950_!nativeeditor_status => inserted
+ids => 1395681151950
+
+Row data [1395681151950]
+text => New task
+start_date => 2013-04-05 00:00:00
+duration => 1
+progress => 0
+parent => 1395681151945
+id => 1395681151950
+end_date => 2013-04-06 00:00:00
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_tasks(start_date,duration,text,progress,parent) VALUES ('2013-04-05 00:00:00','1','New task','0','1395681151945')
+
+Edit operation finished
+0 => action:inserted; sid:1395681151950; tid:34;
+
+Done in 0.17101001739502s
+
+
+
+====================================
+Log started, 24/03/2014 06:12:56
+====================================
+
+DataProcessor object initialized
+1395681151951_source => 1395681151950
+1395681151951_target => 6
+1395681151951_type => 0
+1395681151951_id => 1395681151951
+1395681151951_!nativeeditor_status => inserted
+ids => 1395681151951
+
+Row data [1395681151951]
+source => 1395681151950
+target => 6
+type => 0
+id => 1395681151951
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('1395681151950','6','0')
+
+Edit operation finished
+0 => action:inserted; sid:1395681151951; tid:21;
+
+Done in 0.14600801467896s
+
+
+
+====================================
+Log started, 24/03/2014 06:14:10
+====================================
+
+SELECT id,start_date,duration,text,progress,parent FROM gantt_tasks
+
+SELECT id,source,target,type FROM gantt_links
+
+Done in 0.022001981735229s
+
+
+
+====================================
+Log started, 24/03/2014 06:14:43
+====================================
+
+DataProcessor object initialized
+1395681268406_source => 32
+1395681268406_target => 6
+1395681268406_type => 0
+1395681268406_id => 1395681268406
+1395681268406_!nativeeditor_status => inserted
+ids => 1395681268406
+
+Row data [1395681268406]
+source => 32
+target => 6
+type => 0
+id => 1395681268406
+!nativeeditor_status => inserted
+
+INSERT INTO gantt_links(source,target,type) VALUES ('32','6','0')
+
+Edit operation finished
+0 => action:inserted; sid:1395681268406; tid:22;
+
+Done in 0.14300894737244s
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Select control</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<body>
+<div id="gantt_here" style='width:1000px; height:400px;'></div>
+
+<script type="text/javascript">
+    gantt.config.grid_width = 380;
+    gantt.config.add_column = false;
+    gantt.config.columns = [
+        {name:"text", label:"Task name", tree:true, width:'*' },	
+	{name:"start_date", label:"Start time", align: "center" },
+	{name:"duration",   label:"Duration",   align: "center" },
+        {name:"priority", label:"Priority", width:80, align: "center", 
+	template: function(item){
+		if (item.priority == 1)
+			return "High";
+		if (item.priority == 2)
+			return "Normal";
+		return "Low";
+	}}
+    ];
+    gantt.locale.labels.section_priority = "Priority";
+
+    gantt.config.lightbox.sections = [
+        {name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+        {name: "priority", height: 22, map_to: "priority", type: "select", options: [
+            {key:1, label: "High"},
+            {key:2, label: "Normal"},
+            {key:3, label: "Low"}
+        ]},
+        {name: "time", height: 72, type: "duration", map_to: "auto"}
+    ];
+
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+    gantt.showLightbox(1);
+</script>
+</body>

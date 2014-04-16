@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Multiple scales</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+
+	gantt.config.scale_unit = "month";
+	gantt.config.step = 1;
+	gantt.config.date_scale = "%F, %Y";
+	gantt.config.min_column_width = 50;
+
+	gantt.config.scale_height = 90;
+
+	var weekScaleTemplate = function(date){
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate);
+	};
+
+	gantt.config.subscales = [
+		{unit:"week", step:1, template:weekScaleTemplate},
+		{unit:"day", step:1, date:"%D" }
+	];
+
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+</script>
+</body>

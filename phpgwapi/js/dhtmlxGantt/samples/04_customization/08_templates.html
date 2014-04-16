@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Styling task bars with events</title>
+
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+<style>
+html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+
+.important{
+	border:2px solid red;
+	color:red;
+	background:red;
+}
+
+.important .gantt_task_progress{
+	background: #ff5956;
+}
+.normal{
+	border:2px solid green;
+}
+.low{
+	border:2px solid yellow;
+}
+
+.custom_row{
+	background:rgb(245, 248, 245);
+}
+
+</style>
+</head>
+<body onload="init();">
+	<div id="gantt_here" style='width:1000px; height:400px;'></div>
+
+
+	<script>
+	function init() {
+				
+		gantt.init("gantt_here");
+		//defines the text inside the tak bars 
+		gantt.templates.task_text=function(start,end,task){
+			return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.users;
+		};
+		//defines the style of task bars
+		gantt.templates.grid_row_class = gantt.templates.task_row_class = function(start, end, task){
+			return "custom_row";
+		};
+
+		gantt.templates.task_class=function(start,end,task){
+			if(task.progress > 0.5){
+				 return "";
+			}else{
+				return "important";
+			}
+		};
+		gantt.parse(users_data);
+	}
+
+	</script>
+</body>

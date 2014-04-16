@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Exclude holidays</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+
+	.gantt_task_cell.week_end{
+		background-color: #EFF5FD;
+	}
+	.gantt_task_row.gantt_selected .gantt_task_cell.week_end{
+		background-color: #F8EC9C;
+	}
+
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+
+
+
+	var holidays = [//USA, DC holidays
+		new Date(2014, 0, 1),
+		new Date(2014, 0, 20),
+		new Date(2014, 1, 17),
+		new Date(2014, 3, 16),
+		new Date(2014, 4, 26),
+		new Date(2014, 6, 4),
+		new Date(2014, 8, 1),
+		new Date(2014, 9, 13),
+		new Date(2014, 10, 11),
+		new Date(2014, 10, 27),
+		new Date(2014, 11, 25)
+	];
+
+	for(var i=0; i < holidays.length; i++){
+		gantt.setWorkTime({
+			date:holidays[i],
+			hours:false
+		});
+	}
+
+	var dateToStr = gantt.date.date_to_str("%d %F");
+	dhtmlx.message("Following holidays are excluded from working time:");
+	for(var i =0; i < holidays.length; i++){
+		setTimeout(
+			(function(i){
+				return function(){
+					dhtmlx.message(dateToStr(holidays[i]))
+				} })(i)
+			,
+			(i+1)*600
+		);
+	}
+
+	gantt.config.work_time = true;
+
+	gantt.config.scale_unit = "day";
+	gantt.config.date_scale = "%D, %d";
+	gantt.config.min_column_width = 60;
+	gantt.config.duration_unit = "day";
+	gantt.config.scale_height = 20*3;
+	gantt.config.row_height = 30;
+
+
+
+	gantt.config.start_date = new Date(2014, 0, 1);
+	gantt.config.end_date = new Date(2015, 0, 1);
+
+
+	var weekScaleTemplate = function(date){
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var weekNum = gantt.date.date_to_str("(week %W)");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate) + " " + weekNum(date);
+	};
+
+	gantt.config.subscales = [
+		{unit:"month", step:1, date:"%F, %Y"},
+		{unit:"week", step:1, template:weekScaleTemplate}
+
+	];
+
+	gantt.templates.task_cell_class = function(task, date){
+		if(!gantt.isWorkTime(date))
+			return "week_end";
+		return "";
+	};
+
+	gantt.init("gantt_here");
+	gantt.parse({
+		"data":[
+			{"id":11, "text":"Project #1", "start_date":"28-03-2014", "duration":"11", "progress": 0.6, "open": true},
+			{"id":1, "text":"Project #2", "start_date":"01-04-2014", "duration":"18", "progress": 0.4, "open": true},
+
+			{"id":2, "text":"Task #1", "start_date":"02-04-2014", "duration":"8", "parent":"1", "progress":0.5, "open": true},
+			{"id":3, "text":"Task #2", "start_date":"11-04-2014", "duration":"8", "parent":"1", "progress": 0.6, "open": true},
+			{"id":4, "text":"Task #3", "start_date":"13-04-2014", "duration":"6", "parent":"1", "progress": 0.5, "open": true},
+			{"id":5, "text":"Task #1.1", "start_date":"02-04-2014", "duration":"7", "parent":"2", "progress": 0.6, "open": true},
+			{"id":6, "text":"Task #1.2", "start_date":"03-04-2014", "duration":"7", "parent":"2", "progress": 0.6, "open": true},
+			{"id":7, "text":"Task #2.1", "start_date":"11-04-2014", "duration":"8", "parent":"3", "progress": 0.6, "open": true},
+			{"id":8, "text":"Task #3.1", "start_date":"14-04-2014", "duration":"5", "parent":"4", "progress": 0.5, "open": true},
+			{"id":9, "text":"Task #3.2", "start_date":"14-04-2014", "duration":"4", "parent":"4", "progress": 0.5, "open": true},
+			{"id":10, "text":"Task #3.3", "start_date":"14-04-2014", "duration":"3", "parent":"4", "progress": 0.5, "open": true},
+
+			{"id":12, "text":"Task #1", "start_date":"03-04-2014", "duration":"5", "parent":"11", "progress": 1, "open": true},
+			{"id":13, "text":"Task #2", "start_date":"02-04-2014", "duration":"7", "parent":"11", "progress": 0.5, "open": true},
+			{"id":14, "text":"Task #3", "start_date":"02-04-2014", "duration":"6", "parent":"11", "progress": 0.8, "open": true},
+			{"id":15, "text":"Task #4", "start_date":"02-04-2014", "duration":"5", "parent":"11", "progress": 0.2, "open": true},
+			{"id":16, "text":"Task #5", "start_date":"02-04-2014", "duration":"7", "parent":"11", "progress": 0, "open": true},
+
+			{"id":17, "text":"Task #2.1", "start_date":"03-04-2014", "duration":"2", "parent":"13", "progress": 1, "open": true},
+			{"id":18, "text":"Task #2.2", "start_date":"06-04-2014", "duration":"3", "parent":"13", "progress": 0.8, "open": true},
+			{"id":19, "text":"Task #2.3", "start_date":"10-04-2014", "duration":"4", "parent":"13", "progress": 0.2, "open": true},
+			{"id":20, "text":"Task #2.4", "start_date":"10-04-2014", "duration":"4", "parent":"13", "progress": 0, "open": true},
+			{"id":21, "text":"Task #4.1", "start_date":"03-04-2014", "duration":"4", "parent":"15", "progress": 0.5, "open": true},
+			{"id":22, "text":"Task #4.2", "start_date":"03-04-2014", "duration":"4", "parent":"15", "progress": 0.1, "open": true},
+			{"id":23, "text":"Task #4.3", "start_date":"03-04-2014", "duration":"5", "parent":"15", "progress": 0, "open": true}
+		],
+		"links":[
+			{"id":"1","source":"1","target":"2","type":"1"},
+			{"id":"2","source":"2","target":"3","type":"0"},
+			{"id":"3","source":"3","target":"4","type":"0"},
+			{"id":"4","source":"2","target":"5","type":"2"},
+			{"id":"5","source":"2","target":"6","type":"2"},
+			{"id":"6","source":"3","target":"7","type":"2"},
+			{"id":"7","source":"4","target":"8","type":"2"},
+			{"id":"8","source":"4","target":"9","type":"2"},
+			{"id":"9","source":"4","target":"10","type":"2"},
+			{"id":"10","source":"11","target":"12","type":"1"},
+			{"id":"11","source":"11","target":"13","type":"1"},
+			{"id":"12","source":"11","target":"14","type":"1"},
+			{"id":"13","source":"11","target":"15","type":"1"},
+			{"id":"14","source":"11","target":"16","type":"1"},
+			{"id":"15","source":"13","target":"17","type":"1"},
+			{"id":"16","source":"17","target":"18","type":"0"},
+			{"id":"17","source":"18","target":"19","type":"0"},
+			{"id":"18","source":"19","target":"20","type":"0"},
+			{"id":"19","source":"15","target":"21","type":"2"},
+			{"id":"20","source":"15","target":"22","type":"2"},
+			{"id":"21","source":"15","target":"23","type":"2"}
+		]
+	});
+</script>
+</body>

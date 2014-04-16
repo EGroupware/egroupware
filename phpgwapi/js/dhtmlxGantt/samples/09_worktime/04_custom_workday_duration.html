@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Custom working days and time</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+
+	.gantt_task_cell.no_work_hour{
+		background-color: #F5F5F5;
+	}
+	.gantt_task_row.gantt_selected .gantt_task_cell.no_work_hour{
+		background-color: #F8EC9C;
+	}
+</style>
+<body>
+
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+
+	gantt.config.work_time = true;
+
+	gantt.config.scale_unit = "day";
+	gantt.config.date_scale = "%l, %F %d";
+	gantt.config.min_column_width = 20;
+	gantt.config.duration_unit = "hour";
+	gantt.config.scale_height = 20*3;
+
+	gantt.templates.task_cell_class = function(task, date){
+		if(!gantt.isWorkTime(date, 'hour')){
+			return ("no_work_hour");
+		}
+
+		return "";
+	};
+
+
+
+	var weekScaleTemplate = function(date){
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var weekNum = gantt.date.date_to_str("(week %W)");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate) + " " + weekNum(date);
+	};
+
+	gantt.config.subscales = [
+		{unit:"week", step:1, template:weekScaleTemplate},
+		{unit:"hour", step:1, date:"%G"}
+
+	];
+
+
+
+	gantt.setWorkTime({hours : [8,17]});//global working hours
+	gantt.setWorkTime({day : 2, hours : false});// make Tuesdays day-off
+	gantt.setWorkTime({day : 5, hours : [8,12]});//Fridays and Saturdays are short days
+	gantt.setWorkTime({day : 6, hours : [8,12]});//Saturdays are also work days
+	gantt.setWorkTime({date : new Date(2013, 2, 31)});//specific working day
+
+	var hints = [
+		"Global working time is: <b>8:00-17:00</b>",
+		"<b>Tuesdays</b> are not working days",
+		"<b>Saturdays</b> are working days",
+		"<b>Saturdays</b> and <b>Fridays</b> are short days",
+		"<b>Sunday, 31th March</b> is working day"
+	];
+	for(var i=0; i < hints.length; i++){
+		setTimeout(
+			(function(i){
+				return function(){
+					dhtmlx.message(hints[i]);
+				} })(i)
+			, (i+1)*600);
+	}
+
+
+
+	gantt.ignore_time = function(date){
+		if(date.getHours() < 8 || date.getHours() > 16){
+			return true;
+		}
+
+		return false;
+	};
+
+
+
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+</script>
+</body>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Lightbox customization</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%'></div>
+
+<style type="text/css">
+    .red .gantt_cell, .odd.red .gantt_cell,
+    .red .gantt_task_cell, .odd.red .gantt_task_cell{
+        background-color: #FDE0E0;
+    }
+    .green .gantt_cell, .odd.green .gantt_cell,
+    .green .gantt_task_cell, .odd.green .gantt_task_cell {
+        background-color: #BEE4BE;
+    }
+</style>
+<script type="text/javascript">
+    gantt.locale.labels["section_priority"] = "Priority";
+
+    gantt.config.columns = [
+        {name:"text", label:"Task name", tree:true, width:'*' },
+        {name:"priority", label:"Priority", width:90, align: "center", template: function(item) { return item.priority ? item.priority : "Low" } }
+    ];
+
+    gantt.config.lightbox.sections = [
+        {name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+        {name: "priority", height: 22, map_to: "priority", type: "select", options: [{key:"Hight", label: "Hight"}, {key:"Normal", label: "Normal"}, {key:"Low", label: "Low"}]},
+        {name: "time", height: 72, type: "time", map_to: "auto", time_format:["%d", "%m", "%Y", "%H:%i"]}
+    ];
+
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+</script>
+</body>

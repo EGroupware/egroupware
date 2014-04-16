@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Simple context menu</title>
+</head>
+
+<script type="text/javascript" src="../common/dhtmlxMenu/dhtmlxcommon.js"></script>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/dhtmlxMenu/dhtmlxmenu.js"></script>
+
+<link rel="stylesheet" href="../common/dhtmlxMenu/skins/dhtmlxmenu_dhx_terrace.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%'></div>
+<div id="context"></div>
+<script type="text/javascript">
+
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+
+	var menu = new dhtmlXMenuObject();
+	menu.setIconsPath("../common/dhtmlxMenu/sample_images/");
+	menu.renderAsContextMenu();
+	menu.setSkin("dhx_terrace");
+	menu.loadXML("../common/dhxmenu.xml?e=" + new Date().getTime());
+
+	gantt.attachEvent("onContextMenu", function(taskId, linkId, event){
+		var x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
+			y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+
+		if(taskId){
+			menu.showContextMenu(x, y);
+		}else if(linkId){
+			menu.showContextMenu(x, y);
+		}
+
+		if(taskId || linkId){
+			return false;
+		}
+
+		return true;
+	});
+
+
+</script>
+</body>

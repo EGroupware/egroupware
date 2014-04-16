@@ -33,6 +33,7 @@
 	et2_widget_dropdown_button;
 	et2_widget_styles;
 	et2_widget_favorites;
+	et2_widget_gantt;
 	et2_widget_html;
 	et2_widget_htmlarea;
 	et2_widget_tabs;

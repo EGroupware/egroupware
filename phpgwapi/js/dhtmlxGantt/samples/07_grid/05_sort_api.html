@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Using sorting methods</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<body>
+<input type='button'  value='Sort by priority' onclick='sortByPriority()'>
+<input type='button'  value='Sort by task name' onclick='sortByName()'>
+
+<div id="gantt_here" style='width:1000px; height:420px;'></div>
+		
+
+<script type="text/javascript">
+    var p_direction = false;
+    var n_direction = false;
+	function sortByPriority(){
+        if (p_direction){
+            gantt.sort("priority",false);
+        } else {
+            gantt.sort("priority",true);
+        }
+        p_direction = !p_direction;
+	};
+	function sortByName(){
+        if (n_direction){
+            gantt.sort("text",false);
+        } else {
+            gantt.sort("text",true);
+        }
+        n_direction = !n_direction;
+	};
+
+    gantt.config.columns = [
+        {name:"text",       label:"Task name",  tree:true, align:"center", width:160},
+        {name:"start_date", label:"Start time", align: "center"},
+        {name:"priority",   label:"Priority",   align: "center", template:function(obj){
+            if (obj.priority== 1) return "High";
+            if (obj.priority== 2) return "Normal";
+            return "Low";
+        }}
+    ];
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+</script>
+</body>

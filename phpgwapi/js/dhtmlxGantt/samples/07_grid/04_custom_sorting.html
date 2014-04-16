@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Custom sorting function</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<body>
+<input type='button'  value='Sort by the number of holders' onclick='sortByHolders(direction)'>
+
+<div id="gantt_here" style='width:1000px; height:420px;'></div>
+
+
+<script type="text/javascript">
+    var direction = false;
+
+    function sortByHolders(direction1){
+        direction = !direction;
+        gantt.sort(sortHolders);
+
+    };
+    function sortHolders(a,b){
+         a = a.users.length;
+         b = b.users.length;
+
+         if (direction){
+            return a>b?1:(a<b?-1:0);
+         } else {
+            return a>b?-1:(a<b?1:0);
+         }
+    };
+    gantt.config.columns = [
+        {name:"text",       label:"Task name",  tree:true, width:160}
+    ];
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+</script>
+</body>

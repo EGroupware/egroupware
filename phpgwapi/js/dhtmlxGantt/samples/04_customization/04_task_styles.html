@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Task styles</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+
+    .high{
+        border:2px solid #d96c49;
+        color: #d96c49;
+        background: #d96c49;
+    }
+    .high .gantt_task_progress{
+        background: #db2536;
+    }
+
+    .medium{
+        border:2px solid #34c461;
+        color:#34c461;
+        background: #34c461;
+    }
+    .medium .gantt_task_progress{
+        background: #23964d;
+    }
+
+    .low{
+        border:2px solid #6ba8e3;
+        color:#6ba8e3;
+        background: #6ba8e3;
+    }
+    .low .gantt_task_progress{
+        background: #547dab;
+    }
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+	gantt.init("gantt_here");
+    gantt.config.columns=[
+        {name:"text",       label:"Task name",  tree:true, width:"*" },
+        {name:"start_date", label:"Start time", align: "center" },
+        {name:"priority",   label:"Priority",   align: "center", template:function(obj){
+            if (obj.priority == 1){ return "High"}
+            if (obj.priority == 2){ return "Medium"}
+            return "Low"
+        } }
+    ];
+    gantt.templates.task_class  = function(start, end, task){
+		switch (task.priority){
+			case "1":
+				return "high";
+				break;
+			case "2":
+				return "medium";
+				break;
+			case "3":
+				return "low";
+				break;
+		}
+	};
+
+	gantt.parse(users_data);
+</script>
+</body>

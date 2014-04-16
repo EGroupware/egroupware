@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Dynamic scales</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+</style>
+<body>
+<input type="radio" id="scale1" name="scale" value="1" checked /><label for="scale1">Day scale</label><br>
+<input type="radio" id="scale2" name="scale" value="2" /><label for="scale2">Week scale</label><br>
+<input type="radio" id="scale3" name="scale" value="3" /><label for="scale3">Month scale</label><br>
+<input type="radio" id="scale4" name="scale" value="4" /><label for="scale4">Year scale</label><br>
+
+<div id="gantt_here" style='width:100%; height:600px;'></div>
+
+
+<script type="text/javascript">
+
+	function setScaleConfig(value){
+		switch (value) {
+			case "1":
+				gantt.config.scale_unit = "day";
+				gantt.config.step = 1;
+				gantt.config.date_scale = "%d %M";
+				gantt.config.subscales = [];
+				gantt.config.scale_height = 27;
+				gantt.templates.date_scale = null;
+				break;
+			case "2":
+				var weekScaleTemplate = function(date){
+					var dateToStr = gantt.date.date_to_str("%d %M");
+					var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				};
+
+				gantt.config.scale_unit = "week";
+				gantt.config.step = 1;
+				gantt.templates.date_scale = weekScaleTemplate;
+				gantt.config.subscales = [
+					{unit:"day", step:1, date:"%D" }
+				];
+				gantt.config.scale_height = 50;
+				break;
+			case "3":
+				gantt.config.scale_unit = "month";
+				gantt.config.date_scale = "%F, %Y";
+				gantt.config.subscales = [
+					{unit:"day", step:1, date:"%j, %D" }
+				];
+				gantt.config.scale_height = 50;
+				gantt.templates.date_scale = null;
+				break;
+			case "4":
+				gantt.config.scale_unit = "year";
+				gantt.config.step = 1;
+				gantt.config.date_scale = "%Y";
+				gantt.config.min_column_width = 50;
+
+				gantt.config.scale_height = 90;
+				gantt.templates.date_scale = null;
+
+				var monthScaleTemplate = function(date){
+					var dateToStr = gantt.date.date_to_str("%M");
+					var endDate = gantt.date.add(date, 2, "month");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				};
+
+				gantt.config.subscales = [
+					{unit:"month", step:3, template:monthScaleTemplate},
+					{unit:"month", step:1, date:"%M" }
+				];
+				break;
+		}
+	}
+
+	setScaleConfig('1');
+
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+
+	var func = function(e) {
+		e = e || window.event;
+		var el = e.target || e.srcElement;
+		var value = el.value;
+		setScaleConfig(value);
+		gantt.render();
+	};
+
+	var els = document.getElementsByName("scale");
+	for (var i = 0; i < els.length; i++) {
+		els[i].onclick = func;
+	}
+</script>
+</body>

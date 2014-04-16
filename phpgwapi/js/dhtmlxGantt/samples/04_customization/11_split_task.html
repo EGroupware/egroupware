@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Split task</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<style type="text/css">
+	html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+	.complex_gantt_bar{
+		background: transparent;
+		border:none;
+	}
+	.complex_gantt_bar .gantt_task_progress{
+		display:none;
+	}
+</style>
+<body>
+
+<div id="gantt_here" style='width:100%; height:100%'></div>
+<script type="text/javascript">
+	gantt.init("gantt_here");
+	gantt.templates.task_class = function(start, end, task){
+		if (task.splitStart)
+			return "complex_gantt_bar";
+	};
+	gantt.templates.task_text = function(start, end, task){
+		if (!task.splitStart) return task.text;
+
+		var lw = Math.round( task.splitStart * 100 / task.duration );
+		var rw = Math.round( 100 - task.splitEnd * 100 / task.duration );
+		var left = "<div class='gantt_task_line' style='left:0px; width:"+lw+"%;'>" + task.text + "</div>";
+		var right = "<div class='gantt_task_line' style='right:0px; width:"+rw+"%'>" + task.text + "</div>";
+		return right + left;
+	};
+	gantt.parse({
+		"data":[
+			{"id":11, "text":"Project #1", "start_date":"01-04-2013", "duration":"11", "progress": 0.6, "open": true},
+			{"id":1, "text":"Task 1", 
+				start_date:"01-04-2013", 
+				splitStart:4, splitEnd:6,
+				duration:"10",
+				"progress": 0.4, "parent":"11"}
+		]
+	});
+</script>
+</body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Validation</title>
+</head>
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+	<style type="text/css">
+		html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+        .busy{
+            background: #ff5956 !important;
+        }
+	</style>
+<body>
+	<div id="gantt_here" style='width:100%; height:100%;'></div>
+	<script type="text/javascript">
+		gantt.init("gantt_here");
+		gantt.parse(users_data);
+
+		gantt.attachEvent("onBeforeAdd", function(id, item){
+
+                var tasks = gantt.getTaskByTime(date1, date2);
+                for(var i=0;i<tasks.length; i++){
+                    if (item.users == tasks[i].users){
+                        gantt.templates.task_cell_class = function(item1,date){
+                            if (date == date1){
+                                return "busy";
+                            }
+                        };
+                        gantt.refreshData();
+                        alert("One of days is already occupied");
+                        return false;
+                    }
+                }
+                return true;
+        });
+	</script>
+</body>                                                                                                                                                                                                                                                                                                                                                                                                                     

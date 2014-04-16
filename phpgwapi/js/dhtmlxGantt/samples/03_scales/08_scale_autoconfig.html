@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Auto resize scale</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+
+	gantt.config.fit_tasks = true;
+
+	gantt.config.scale_unit = "day";
+	gantt.config.date_scale = "%F %d";
+	gantt.config.min_column_width = 50;
+
+	gantt.config.scale_height = 54;
+
+	gantt.config.subscales = [
+		{unit:"hour", step:3, date:"%H:%i"}
+	];
+
+	gantt.init("gantt_here");
+
+	function showScaleDesc(){
+		var min = gantt.getState().min_date,
+			max = gantt.getState().max_date,
+			to_str = gantt.templates.task_date;
+
+		return dhtmlx.message("Scale shows days from " + to_str(min) + " to " + to_str(max));
+	}
+
+	gantt.parse(demo_tasks);
+	setTimeout(showScaleDesc, 500);
+	setTimeout(function(){
+		dhtmlx.message("Change date or duration of any task and scales will be adjusted");
+	}, 4500);
+	gantt.attachEvent("onScaleAdjusted", showScaleDesc);
+
+</script>
+</body>

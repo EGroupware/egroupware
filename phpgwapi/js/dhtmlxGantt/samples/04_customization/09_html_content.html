@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Custom html content</title>
+</head>
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+	<style type="text/css">
+		html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+
+
+		.custom_progress{
+			display: inline-block;
+			vertical-align: top;
+			text-align: center;
+			height:100%;
+		}
+		.custom_progress.nearly_done{
+			background-color: #4CC259;
+		}
+		.custom_progress.in_progress{
+			background-color: #88BFF5;
+		}
+		.custom_progress.idle{
+			background-color: #d96c49;
+		}
+	</style>
+<body>
+	<div id="gantt_here" style='width:100%; height:100%;'></div>
+	<script type="text/javascript">
+		var tasks =  {
+			data:[
+				{id:1, text:"Project #2", start_date:"01-04-2013",
+					progress1:0.3, progress2:0.5, progress3:0.8, duration:18,order:10,open: true},
+				{id:2, text:"Task #1", 	  start_date:"02-04-2013", duration:8, order:10,
+					progress1:0.6, progress2:0.1, progress3:0.8, parent:1},
+				{id:3, text:"Task #2",    start_date:"11-04-2013", duration:8, order:20,
+					progress1:0.9, progress2:0.4, progress3:0.2, parent:1}
+			],
+			links:[
+				{ id:1, source:1, target:2, type:"1"},
+				{ id:2, source:2, target:3, type:"0"},
+				{ id:3, source:3, target:4, type:"0"},
+				{ id:4, source:2, target:5, type:"2"}
+		]
+		};
+		gantt.config.progress = false;
+
+		function percenToString(num){
+			return Math.floor(num*100) + '%';
+		}
+
+		function renderLabel(progress, sum){
+
+			var relWidth = progress/sum * 100;
+
+			var cssClass = "custom_progress ";
+			if(progress > 0.6){
+				cssClass += "nearly_done";
+			}else if(progress > 0.3){
+				cssClass += "in_progress";
+			}else{
+				cssClass += "idle";
+			}
+			return "<div class='"+cssClass+"' style='width:"+relWidth+"%'>" + percenToString(progress) + "</div>";
+
+		}
+
+		gantt.templates.task_text = function(start, end, task){
+			var summ = task.progress1 + task.progress2 + task.progress3;
+			return renderLabel(task.progress1, summ) + renderLabel(task.progress2, summ) + renderLabel(task.progress3, summ);
+
+		};
+
+		gantt.init("gantt_here");
+
+
+		gantt.parse(tasks);
+
+	</script>
+</body>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Working days as duration</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" src="../common/testdata.js"></script>
+<style type="text/css">
+	html, body { height: 100%; padding:0px; margin:0px; overflow: hidden; }
+
+	.gantt_task_cell.week_end{
+		background-color: #EFF5FD;
+	}
+	.gantt_task_row.gantt_selected .gantt_task_cell.week_end{
+		background-color: #F8EC9C;
+	}
+
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script type="text/javascript">
+
+	gantt.config.work_time = true;
+
+
+	gantt.config.scale_unit = "day";
+	gantt.config.date_scale = "%D, %d";
+	gantt.config.min_column_width = 60;
+	gantt.config.duration_unit = "day";
+	gantt.config.scale_height = 20*3;
+	gantt.config.row_height = 30;
+
+
+
+	var weekScaleTemplate = function(date){
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var weekNum = gantt.date.date_to_str("(week %W)");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate) + " " + weekNum(date);
+	};
+
+	gantt.config.subscales = [
+		{unit:"month", step:1, date:"%F, %Y"},
+		{unit:"week", step:1, template:weekScaleTemplate}
+
+	];
+
+	gantt.templates.task_cell_class = function(task, date){
+		if(!gantt.isWorkTime(date))
+			return "week_end";
+		return "";
+	};
+
+	gantt.init("gantt_here");
+	gantt.parse(demo_tasks);
+</script>
+</body>

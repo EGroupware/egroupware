@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Custom button in the lightbox</title>
+</head>
+<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+    html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+</style>
+<body>
+<div id="gantt_here" style='width:100%; height:100%'></div>
+
+<style type="text/css">
+    .complete_button{
+        margin-top: 1px;
+        background-image:url("common/v_complete.png");
+        width: 20px;
+    }
+    .dhx_btn_set.complete_button_set{
+        background: #ACCAAC;
+        color: #454545;
+        border: 1px solid #94AD94;
+    }
+    .completed_task{
+        border:1px solid #94AD94;
+    }
+    .completed_task .gantt_task_progress{
+        background: #ACCAAC;
+    }
+
+    .dhtmlx-completed{
+        border-color: #669e60;
+    }
+    .dhtmlx-completed div {
+        background: #81c97a;
+    }
+
+</style>
+<script type="text/javascript">
+    gantt.locale.labels["complete_button"] = "Complete";
+    gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","complete_button"];
+
+    gantt.templates.task_class=function(start,end,task){
+        if (task.progress == 1)
+            return "completed_task";
+        return "";
+    };
+
+    gantt.init("gantt_here");
+    gantt.parse(users_data);
+
+    gantt.attachEvent("onLightboxButton", function(button_id, node, e){
+        if(button_id == "complete_button"){
+            var id = gantt.getState().lightbox;
+            gantt.getTask(id).progress = 1;
+            gantt.updateTask(id)
+            gantt.hideLightbox();
+        }
+    });
+    gantt.attachEvent("onBeforeLightbox", function(id) {
+        var task = gantt.getTask(id);
+        if (task.progress == 1){
+            dhtmlx.message({text:"The task is already completed!", type:"completed"});
+            return false;
+        }
+        return true;
+    });
+
+</script>
+</body>

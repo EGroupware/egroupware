@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Template for tree nodes</title>
+
+	<script src="../../codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../../codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	<script type="text/javascript" src="../common/testdata.js"></script>
+<style>
+.important{
+	color:red;
+}
+</style>
+</head>
+
+<body>
+	<div id="gantt_here" style='width:1000px; height:400px;'></div>
+	<script>
+		gantt.config.columns=[
+    			{name:"text",       label:"Task name",  tree:true, width:230, template:myFunc },
+    			{name:"start_date", label:"Start time", align: "center" },
+    			{name:"duration",   label:"Duration",   align: "center" }
+		];
+		gantt.init("gantt_here");
+		gantt.parse(users_data);
+		
+		function myFunc(task){
+			if(task.priority ==1)
+				return "<div class='important'>"+task.text+" ("+task.users+") </div>";
+			return task.text+" ("+task.users+")";
+		};
+	</script>
+</body>
