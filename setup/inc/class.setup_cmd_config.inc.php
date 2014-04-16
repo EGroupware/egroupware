@@ -86,6 +86,9 @@ class setup_cmd_config extends setup_cmd
 		{
 			if ($save_ea_profile) $this->_save_ea_profile();
 
+			// flush instance cache, so above config get read from database not cache
+			egw_cache::flush();
+
 			$this->restore_db();
 
 			return lang('Configuration changed.');

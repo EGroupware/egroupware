@@ -145,6 +145,9 @@ abstract class setup_cmd extends admin_cmd
 				$GLOBALS['egw_domain'][$domain]['db_pass'],
 				$GLOBALS['egw_domain'][$domain]['db_type']
 			);
+
+			// change caching to managed instance
+			egw_cache::unset_instance_key();
 		}
 	}
 
@@ -165,6 +168,9 @@ abstract class setup_cmd extends admin_cmd
 				$GLOBALS['egw_info']['server']['db_pass'],
 				$GLOBALS['egw_info']['server']['db_type']
 			);
+			// change caching back to own instance
+			egw_cache::unset_instance_key();
+
 			if (!is_null(self::$egw_accounts_backup))
 			{
 				$GLOBALS['egw']->accounts = self::$egw_accounts_backup;
