@@ -2,6 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
+		<appicon class="onlyPrint"/>
 		<html id="msg"/>
 		<vbox class="mailDisplay">
 			<hbox>

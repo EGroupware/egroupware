@@ -2899,7 +2899,26 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_print: function(_action, _senders)
 	{
-		this.egw.message('Not yet implemented ;-)');
+		
+		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
+		
+		if (jQuery('#tempPrintDiv').length == 0)
+		{
+			var tmpPrintDiv = jQuery(document.createElement('div'))
+							.attr('id', 'tempPrintDiv')
+							.addClass('tmpPrintDiv');
+			if (mainIframe)		
+			{
+				tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
+			}
+
+			jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);		
+
+			tmpPrintDiv.find('#divAppboxHeader').remove();
+		}
+
+		this.egw.message('Printing....');
+		this.egw.window.print();
 	}
 });
 

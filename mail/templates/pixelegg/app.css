@@ -662,6 +662,32 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   height: 500px;
   overflow: auto;
 }
+/* MAIL PRINT */
+@media print {
+  .mailDisplayHeaders {
+    border-bottom: 0.1em solid #d7d7d7;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  #mail-display_mailDisplayBodySrc {
+    display: none;
+  }
+  .tmpPrintDiv {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .mailDisplayContainer {
+    border: none;
+    overflow: visible;
+    position: static;
+  }
+  .mailDisplayAttachments,
+  #mail-display_mail_displayattachments {
+    display: none;
+    border: none;
+    position: inherit;
+  }
+}
 #popupMainDiv {
   padding: 5px;
 }
