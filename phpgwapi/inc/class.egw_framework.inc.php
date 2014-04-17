@@ -1305,15 +1305,15 @@ if ($app == 'home') continue;
 		}
 
 		// allways display password in topmenu, if user has rights to change it
-		if((($pw_app = $GLOBALS['egw_info']['user']['apps']['preferences']) ||
-			($pw_app = $GLOBALS['egw_info']['user']['apps']['password'])) &&
+		if ($GLOBALS['egw_info']['user']['apps']['preferences'] &&
 			!$GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences'))
 		{
 			$this->_add_topmenu_item(array(
-				'name'  => $pw_app['name'] == 'password' ? 'about' : $pw_app['name'],
+				'id'    => 'password',
+				'name'  => 'preferences',
 				'title' => lang('Password'),
-				'url'   => egw::link($pw_app['name'] == 'password' ? $pw_app['index'] : '/index.php?menuaction=preferences.uipassword.change'),
-				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
+				'url'   => 'javascript:egw.open_link("'.
+					egw::link('/index.php?menuaction=preferences.preferences_password.change').'", "_blank", "400x200")',
 			));
 		}
 

@@ -127,7 +127,7 @@ class auth
 		//echo "Warn about the upcomming change ".$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'].' days before that time is reached<br>';
 		//$result = $GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - $daysLeftUntilChangeReq;
 		//echo $GLOBALS['egw_info']['server']['change_pwd_every_x_days'].' - '.$daysLeftUntilChangeReq.'='. $result.'<br>';
-		if  (!($app == 'preferences' && $class == 'uipassword' && $method=='change') &&
+		if  (!($app == 'preferences' && $class == 'preferences_password' && $method == 'change') &&
 			 (
 			  ($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] &&
 			   ($GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['user']['apps']['password']) &&
@@ -168,8 +168,11 @@ class auth
 						'date'=>egw_time::to($alpwchange_val))));
 					$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
 				}
-				if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
-				egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
+				egw::redirect_link('/index.php',array(
+					'menuaction' => 'preferences.preferences_password.change',
+					'message'    => $message,
+					'nopopup'    => true,
+				));
 			}
 		}
 		return true;
