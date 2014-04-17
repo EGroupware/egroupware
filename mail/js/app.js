@@ -237,7 +237,7 @@ app.classes.mail = AppJS.extend(
 		}
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
-		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view')) _mode = 'view';
+		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view' || _mode == 'print')) _mode = 'view';
 		this.mail_selectedMails = [];
 		this.mail_selectedMails.push(_id);
 		this.mail_currentlyFocussed = _id;
@@ -559,6 +559,13 @@ app.classes.mail = AppJS.extend(
 			this.url_email_expandOnClick(expand_content, dataElem);
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
+		}
+		
+		// Trigger print command if the mail oppend for printing porpuse
+		if (window.location.search.search('&print=') >= 0)
+		{
+			var that = this;
+			jQuery('#mail-display_mailDisplayBodySrc').bind('load',function(){that.mail_print()});
 		}
 
 	},
@@ -2899,7 +2906,25 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_print: function(_action, _senders)
 	{
+		var currentTemp = this.et2._inst.name;
 		
+		switch (currentTemp)
+		{
+			case 'mail.index':
+				this.mail_prev_print();
+				break;
+			case 'mail.display':
+				this.mail_display_print();
+		}
+		
+	},
+	
+	/**
+	 * Print a mail from Display
+	 * 
+	 */
+	mail_display_print: function ()
+	{
 		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
 		
 		if (jQuery('#tempPrintDiv').length == 0)
@@ -2919,7 +2944,20 @@ app.classes.mail = AppJS.extend(
 
 		this.egw.message('Printing....');
 		this.egw.window.print();
-	}
+	},
+	
+	/**
+	 * Print a mail from list
+	 * 
+	 * @param {Object} _action 
+	 * @param {Object} _elems 
+	 * 
+	 */
+	mail_prev_print: function (_action, _elems)
+	{
+		this.mail_open(_action, _elems, 'print');
+	},
+
 });
 
 // Bind a mouseenter event once for every read-only email
