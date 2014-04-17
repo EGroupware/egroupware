@@ -207,7 +207,7 @@ class preferences_hooks
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'primary_group'
+				'default'=> 'selectbox'
 			),
 			'account_display' => array(
 				'type'   => 'select',
