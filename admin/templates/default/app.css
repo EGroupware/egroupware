@@ -50,7 +50,9 @@ td.admin_userAgent span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+#admin-acl_filter {
+	max-width: 100% !important;
+}
 .admin_account_delete > * {
 	padding: 8px;
 }

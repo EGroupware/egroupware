@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 45312 2014-01-20 19:11:35Z hnategh $
+ * @version $Id: app.css 46330 2014-03-19 13:20:46Z ralfbecker $
  */
 .admin_tree table,
 .admin_tree tr,
@@ -58,6 +58,9 @@ td.admin_userAgent span {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+#admin-acl_filter {
+  max-width: 100% !important;
 }
 .admin_account_delete > * {
   padding: 8px;
