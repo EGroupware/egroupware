@@ -77,6 +77,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
+		$widget_type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -85,20 +86,38 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			$allowed = self::selOptions($form_name, true);	// true = return array of option-values
 			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
-
 			foreach((array) $value as $val)
 			{
-				// array_key_exists() (used below) is inconsistent in how it handles empty/false
-				// It needs a string or integer.
-				if(!$val && $val !== 0) $val = '';
-
-				// Special for select-account - selOptions doesn't always load all accounts
-				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !in_array($val, $allowed) ||
-					$this->attrs['type'] != 'select-account' && !in_array($val, $allowed))
+				switch ($widget_type)
 				{
-					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!", $val, implode("','",$allowed)),'');
-					$value = '';
-					break;
+					case 'select-account':	// validate accounts independent of options know to server
+						$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
+						$type = $GLOBALS['egw']->accounts->exists($val);
+						//error_log(__METHOD__."($cname,...) form_name=$form_name, widget_type=$widget_type, account_type=$account_type, type=$type");
+						if (!$type || $type == 1 && in_array($account_type, array('groups', 'owngroups', 'memberships')) ||
+							$type == 2 && $account_type == 'users' ||
+							in_array($account_type, array('owngroups', 'memberships')) &&
+								!in_array($val, $GLOBALS['egw']->accounts->memberships(
+									$GLOBALS['egw_info']['user']['account_id'], true)))
+						{
+							self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val,
+								!$type?'not found' : ($type == 1 ? 'user' : 'group')),'');
+							$value = '';
+							break 2;
+						}
+						break;
+
+					default:
+						// array_key_exists() (used below) is inconsistent in how it handles empty/false
+						// It needs a string or integer.
+						if(!$val && $val !== 0) $val = '';
+
+						if(!in_array($val, $allowed))
+						{
+							self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!", $val, implode("','",$allowed)),'');
+							$value = '';
+							break 2;
+						}
 				}
 			}
 			if ($ok && $value === '' && $this->attrs['needed'])
@@ -107,7 +126,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 			// some widgets sub-types need some post-processing
 			// ToDo: move it together with preprocessing to clientside
-			switch ($this->attrs['type'])
+			switch ($widget_type)
 			{
 				case 'select-dow':
 					$dow = 0;
