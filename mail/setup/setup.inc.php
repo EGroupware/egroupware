@@ -59,7 +59,10 @@ $setup_info['mail']['check_install'] = array(
 		'func' => 'pear_check',
 		'version' => '1.6.0',	// otherwise install of Mail_Mime fails!
 	),
-# get's provided by egw-pear temporarly
+	'Net_Sieve' => array(
+		'func' => 'pear_check',
+		'version' => '1.3.2',
+	),
 	'Mail_Mime' => array(
 		'func' => 'pear_check',
 		'version' => '1.4.1',
@@ -80,8 +83,5 @@ $setup_info['mail']['check_install'] = array(
 		'value' => 0,
 		'warning' => '<div class="setup_info">' . lang('mbstring.func_overload=0 is required for correct mail processing!') . "</div>",
 		'change' => 'mbstring.func_overload = 0',
-	),
-	'tnef' => array(
-		'func' => 'tnef_check',
 	),
 );
