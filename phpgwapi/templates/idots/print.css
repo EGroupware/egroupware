@@ -7,7 +7,7 @@
 
 @media print {
 
-#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint,#topmenu {
+#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint,#topmenu, #egw_message {
 	display:none;
 }
 
@@ -23,6 +23,9 @@
 }
 #divAppboxHeader {
 	background: none;
+}
+.et2_toolbar div {
+	display: none;
 }
 
 /* all tables */
@@ -83,3 +86,10 @@ input, select, textarea {
 }
 
 } /* @media print */
+
+@media screen {
+	.tmpPrintDiv {
+		display: none;
+		height: auto;
+	}
+}

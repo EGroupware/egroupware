@@ -675,17 +675,21 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   .tmpPrintDiv {
     margin-top: 10px;
     margin-bottom: 30px;
+    display: block;
+    overflow: visible;
+    height: auto;
   }
   .mailDisplayContainer {
     border: none;
-    overflow: visible;
-    position: static;
+    overflow: visible !important;
+    position: static !important;
   }
-  .mailDisplayAttachments,
-  #mail-display_mail_displayattachments {
-    display: none;
+  .mailDisplayAttachments {
     border: none;
-    position: inherit;
+    position: inherit !important;
+  }
+  .et2_button {
+    display: none;
   }
 }
 #popupMainDiv {
