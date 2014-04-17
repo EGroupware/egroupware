@@ -3,11 +3,11 @@
 */
 @media screen {
   .onlyPrint {
-    display: none;
+    display: none !important;
   }
 }
 @media print {
   .noPrint {
-    display: none;
+    display: none !important;
   }
 }
