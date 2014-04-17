@@ -924,6 +924,7 @@ td.lettersearch {
 	background-position: left;
 	background-repeat: no-repeat;
 	background-size: 16px;
+	white-space: pre-wrap;
 }
 .warning_message {
 	background-image: url(../../default/images/dialog_warning.png);
