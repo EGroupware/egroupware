@@ -67,7 +67,8 @@ function get_app_dirs()
 	foreach(scandir(__DIR__) as $dir)
 	{
 		$path = __DIR__ . '/'. $dir;
-		if (!is_dir($path) || in_array($dir, array('debian','home','doc','..','.svn')) || !is_dir($path.'/setup')) continue;
+		if (!is_dir($path) || in_array($dir, array('debian','home','doc','..','.svn')) ||
+			!is_dir($path.'/setup') && $dir != 'setup') continue;
 		$app_dirs[$dir == '.' ? 'egroupware' : $dir] = $dir;
 	}
 	//error_log(__METHOD__."() returning ".print_r($app_dirs, true));
