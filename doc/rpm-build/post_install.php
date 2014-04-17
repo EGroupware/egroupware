@@ -619,7 +619,23 @@ function check_install_pear_packages()
 			}
 			if ($to_install)
 			{
-				$cmd = $config['pear'].' install '.implode(' ',$to_install);
+				$channels = array();
+				$cmd = $config['pear'].' install';
+				foreach($to_install as $package)
+				{
+					// if package is prefixed with a channel, discover it before installing package
+					if (strpos($package, '/') !== false)
+					{
+						list($channel) = explode('/', $package);
+						if (!in_array($channel, $channels))
+						{
+							$discover_cmd = $config['pear'].' channel-discover '.$channel;
+							echo "$discover_cmd\n";	system($discover_cmd);
+							$channels[] = $channel;
+						}
+					}
+					$cmd .= ' '.$package;
+				}
 				echo "$cmd\n";	system($cmd);
 			}
 		}
