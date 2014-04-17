@@ -59,19 +59,12 @@ $setup_info['mail']['check_install'] = array(
 		'func' => 'pear_check',
 		'version' => '1.6.0',	// otherwise install of Mail_Mime fails!
 	),
-	'Net_Sieve' => array(
-		'func' => 'pear_check',
-		'version' => '1.3.2',
-	),
 	'Mail_Mime' => array(
 		'func' => 'pear_check',
 		'version' => '1.4.1',
 	),
 	'Mail_mimeDecode' => array(
 		'func' => 'pear_check',
-	),
-	'imap' => array(
-		'func' => 'extension_check',
 	),
 	'magic_quotes_gpc' => array(
 		'func' => 'php_ini_check',
