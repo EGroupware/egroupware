@@ -372,9 +372,9 @@ var et2_selectAccount = et2_selectbox.extend(
 						search.find('#search_results').empty();
 					}
 					// Restrict to specified account type
-					if(!request['options'] || !request['options']['filter'])
+					if(!request.options || !request.options.filter)
 					{
-						request['options'] = {filter:{group:self.options.account_type}};
+						request.options = {account_type: self.options.account_type};
 					}
 					return true;
 				},
@@ -440,7 +440,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		var node = null;
 		var self = this;
-		
+
 		// Make sure value is numeric
 		if(item.value) item.value = parseInt(item.value);
 
