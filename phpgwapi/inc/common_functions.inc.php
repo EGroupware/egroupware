@@ -965,8 +965,8 @@ function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classpa
 
 		if (!method_exists($GLOBALS[$classname],$functionname))
 		{
-			echo "<p><b>".function_backtrace()."</b>: no methode '$functionname' in class '$classname'</p>\n";
-			return False;
+			error_log("ExecMethod('$method', ...) No methode '$functionname' in class '$classname'! ".function_backtrace());
+			return false;
 		}
 		$method = array($GLOBALS[$classname],$functionname);
 	}
@@ -974,7 +974,8 @@ function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classpa
 	{
 		return $functionparam != '_UNDEF_' ? call_user_func($method,$functionparam) : call_user_func($method);
 	}
-	return "<p>ExecMethod('$method'): error in parts!<br />".function_backtrace()."</p>\n";
+	error_log("ExecMethod('$method', ...) Error in parts! ".function_backtrace());
+	return false;
 }
 
 /**
