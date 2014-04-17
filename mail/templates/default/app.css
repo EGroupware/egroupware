@@ -688,10 +688,11 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 		overflow: visible;
 		position: static;
 	}
-	.mailDisplayAttachments, #mail-display_mail_displayattachments {
-		display: none;
+	.mailDisplayAttachments{
 		border: none;
 		position: inherit;
 	}
-	
+	.et2_button {
+		display: none;
+	}
 }
