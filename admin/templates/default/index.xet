@@ -2,6 +2,9 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
+	<template id="admin.index.add" template="" lang="" group="0" version="1.9.001">
+		<buttononly label="Add" id="add" onclick='app.admin.account({id:"add"})'/>
+	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>

@@ -49,6 +49,7 @@ class admin_ui
 			'filter_label' => 'Group',
 			'filter_no_lang' => true,
 			'lettersearch' => true,
+			'header_row'   => 'admin.index.add',
 			'order' => 'account_lid',
 			'sort' => 'ASC',
 			'row_id' => 'account_id',
