@@ -86,8 +86,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			$allowed = self::selOptions($form_name, true);	// true = return array of option-values
 			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
+
 			foreach((array) $value as $val)
 			{
+				// handle empty-label for all widget types
+				if ((string)$val === '' && in_array('', $allowed)) continue;
+
 				switch ($widget_type)
 				{
 					case 'select-account':	// validate accounts independent of options know to server
@@ -108,10 +112,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 						break;
 
 					default:
-						// array_key_exists() (used below) is inconsistent in how it handles empty/false
-						// It needs a string or integer.
-						if(!$val && $val !== 0) $val = '';
-
 						if(!in_array($val, $allowed))
 						{
 							self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!", $val, implode("','",$allowed)),'');
