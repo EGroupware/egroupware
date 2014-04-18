@@ -73,11 +73,20 @@ function cut_bytes(&$data,$offset,$len=null)
 if (!function_exists('imap_rfc822_parse_adrlist'))
 {
 	/**
-	 * parses an address string
-	 * Examples: Joe Doe <doe@example.com>, "Doe, Joe" <doe@example.com> , "\'Joe Doe\'" <doe@example.com>,
-	 *			postmaster@example.com, root, "Joe on its way Down Under :-\)" <doe@example.com>,
-	 *			 "Giant; \"Big\" Box" <sysservices@example.net>, sysservices@example.net <sysservices@example.net>,
+	 * parses a (comma-separated) address string
+	 *
+	 * Examples:
+	 * - Joe Doe <doe@example.com>
+	 * - "Doe, Joe" <doe@example.com>
+	 * - "\'Joe Doe\'" <doe@example.com>	// actually not necessary to quote
+	 * - postmaster@example.com
+	 * - root
+	 * - "Joe on its way Down Under :-\)" <doe@example.com>
+	 * - "Giant; \"Big\" Box" <sysservices@example.net>
+	 * - sysservices@example.net <sysservices@example.net>	// this is wrong, because @ need to be quoted
+	 *
 	 * Invalid addresses, if detected, set host to '.SYNTAX-ERROR.'
+	 *
 	 * @param string $address - A string containing addresses
 	 * @param string $default_host - The default host name
 	 * @return array of objects. The objects properties are:
@@ -86,10 +95,48 @@ if (!function_exists('imap_rfc822_parse_adrlist'))
 	 *		personal - the personal name
 	 *		adl - at domain source route
 	 */
-	//function imap_rfc822_parse_adrlist(string $address, string $default_host)
-	//{
-	//	return array();
-	//}
+	function imap_rfc822_parse_adrlist($address, $default_host)
+	{
+		$addresses = array();
+		$pending = '';
+		foreach(explode(',', $address) as $part)
+		{
+			$trimmed = trim(($pending ? $pending.',' : '').$part);
+			if ($trimmed[0] == '"' && substr($trimmed, -1) != '>')
+			{
+				$pending .= ($pending ? $pending.',' : '').$part;
+				continue;
+			}
+			$pending = '';
+			$matches = $personal = $mailbox = $host = null;
+			if (preg_match('/^(.*)<([^>@]+)(@([^>]+))?>$/', $trimmed, $matches))
+			{
+				$personal = trim($matches[1]);
+				$mailbox = $matches[2];
+				$host = $matches[4];
+			}
+			elseif (strpos($trimmed, '@') !== false)
+			{
+				list($mailbox, $host) = explode('@', $trimmed);
+			}
+			else
+			{
+				$mailbox = $trimmed;
+			}
+			if ($personal[0] == '"' && substr($personal, -1) == '"')
+			{
+				$personal = str_replace('\\', '', substr($personal, 1, -1));
+			}
+			if (empty($host)) $host = $default_host;
+
+			$addresses[] = (object)array_diff(array(
+				'mailbox'  => $mailbox,
+				'host'     => $host,
+				'personal' => $personal,
+			), array(null, ''));
+		}
+		return $addresses;
+	}
 }
 
 if (!function_exists('imap_rfc822_write_address'))
@@ -101,11 +148,14 @@ if (!function_exists('imap_rfc822_write_address'))
 	 * @param string $personal - The name of the account owner
 	 * @return string properly formatted email address as defined in » RFC2822.
 	 */
-	function imap_rfc822_write_address(string $mailbox , string $host , string $personal)
+	function imap_rfc822_write_address($mailbox, $host, $personal)
 	{
-		// ToDo: correctly handle personal strings like "Giant; \"Big\" Box" or Fuzzy, Brain
-		if (stripos($personal,',')) $personal = '"'.$personal.'"'; // probably too simplistic
-		return (!empty($personal)?$personal.' ':'').'<'.$mailbox.'@'.$host.'>';
+		//if (!preg_match('/^[!#$%&\'*+/0-9=?A-Z^_`a-z{|}~-]+$/u', $personal))	// that's how I read the rfc(2)822
+		if ($personal && !preg_match('/^[0-9A-Z -]*$/iu', $personal))	// but quoting is never wrong, so quote more then necessary
+		{
+			$personal = '"'.str_replace(array('\\', '"'),array('\\\\', '\\"'), $personal).'"';
+		}
+		return ($personal ? $personal.' <' : '').$mailbox.($host ? '@'.$host : '').($personal ? '>' : '');
 	}
 }
 
