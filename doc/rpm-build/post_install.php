@@ -576,7 +576,7 @@ function check_install_pear_packages()
 		}
 		if ($app == 'egw-pear')
 		{
-			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_IMAP'] = $egw_pear_packages['Net_Sieve'] = $egw_pear_packages['Log'] = '999.egw-pear';
+			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_IMAP'] = '999.egw-pear';
 		}
 	}
 	//echo 'Installed: '; print_r($packages_installed);
