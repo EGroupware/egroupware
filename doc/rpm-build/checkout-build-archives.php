@@ -1,11 +1,12 @@
 #!/usr/bin/php -qC
 <?php
 /**
- * EGroupware - checkout and build EGroupware tgz
+ * EGroupware - checkout, build and release archives, build Debian and rpm packages
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
+ * @copyright (c) 2009-14 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -17,32 +18,35 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'eGroupware',
-	'version' => 'trunk',				// '1.6'
-	'packaging' => date('Ymd'),			// '001'
+	'packagename' => 'egroupware-epl',
+	'version' => '14.1',                            // '1.6'
+	'packaging' => date('Ymd'),                     // '001'
 	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/egw_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/egw_buildroot',
-	'sourcedir' => '~/rpm/SOURCES',
-	'svnbase' => 'http://svn.egroupware.org/egroupware',
-	'svnbranch' => 'trunk',				// 'branches/1.6' or 'tags/1.6.001'
-	'svnalias' => 'aliases/default',	// default alias
-	'aliasdir' => 'egroupware',			// directory created by the alias
-	'extra' => array('egw-pear','gallery','mydms','icalsrv'),
+	'svndir' => '/tmp/build_root/epl_trunk_buildroot-svn',
+	'egw_buildroot' => '/tmp/build_root/epl_trunk_buildroot',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-trunk',
+	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
+	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
+	'svnbranch' => 'trunk', // 'branches/1.6' or 'tags/1.6.001'
+	'svnalias' => 'aliases/default-ssh',    // default alias
+	'aliasdir' => 'egroupware',             // directory created by the alias
+	'extra' => array('egw-pear', '$stylitebase/$svnbranch/stylite','$stylitebase/$svnbranch/jdots','$stylitebase/$svnbranch/pixelegg', '$stylitebase/$svnbranch/esyncpro'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
-	'packager' => 'packager@egroupware.org',
-	'obs' => false,
-	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
+	'packager' => 'build@stylite.de',
+	'obs' => '../obs/stylite-epl-trunk',
+	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
-	'svntag' => false,	// eg. '$version.$packaging'
+	'svntag' => 'tags/$version.$packaging',
+	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
+	'copychangelog' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('checkout','copy','virusscan','create','sign'),
+	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
@@ -71,11 +75,11 @@ while(($arg = array_shift($argv)))
 			case 'run':
 				if ($value[0] == '+')
 				{
-					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',$value)));
+					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',substr($value,1))));
 				}
 				elseif ($value[0] == '-')
 				{
-					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',$value));
+					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',substr($value,1)));
 				}
 				else
 				{
@@ -84,8 +88,10 @@ while(($arg = array_shift($argv)))
 				break;
 
 			case 'svntag':
+			case 'release':
+			case 'copychangelog':
 				$config[$name] = $value;
-				array_unshift($config['run'],'svntag');
+				array_unshift($config['run'],$name);
 				break;
 
 			case 'editsvnchangelog':
@@ -122,7 +128,45 @@ $svn = $config['svn'];
 
 foreach(array_diff($config['run'],$config['skip']) as $func)
 {
+	chdir(dirname(__FILE__));	// make relative filenames work, if other command changes dir
 	call_user_func('do_'.$func);
+}
+
+/**
+ * Release sources by rsync'ing them to a distribution / download directory
+ */
+function do_release()
+{
+	global $config,$verbose;
+
+	$target = $config['release'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
+	passthru($cmd);
+}
+
+/**
+ * Copy changelog by rsync'ing it to a distribution / download directory
+ */
+function do_copychangelog()
+{
+	global $config,$verbose;
+
+	$changelog = __DIR__.'/debian.changes';
+	$target = $config['copychangelog'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$changelog.' '.$target;
+	passthru($cmd);
 }
 
 /**
@@ -159,17 +203,27 @@ function do_editsvnchangelog()
 	file_put_contents($logfile,$changelog);
 	$cmd = $config['editor'].' '.escapeshellarg($logfile);
 	passthru($cmd);
-	$config['changlog'] = file_get_contents($logfile);
+	$config['changelog'] = file_get_contents($logfile);
 	// remove trailing newlines
 	while (substr($config['changelog'],-1) == "\n")
 	{
 		$config['changelog'] = substr($config['changelog'],0,-1);
 	}
 	// allow user to abort, by deleting the changelog
-	if (strlen($config['changlog']) <= 2)
+	if (strlen($config['changelog']) <= 2)
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
+	// commit changelog
+	$changelog = __DIR__.'/debian.changes';
+	if (file_exists($changelog))
+	{
+		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		run_cmd($cmd);
+	}
+	// update obs changelogs (so all changlogs are updated in case of a later error and changelog step can be skiped)
+	do_obs(true);	// true: only update debian.changes in obs checkouts
 }
 
 /**
@@ -191,7 +245,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 	{
 		list($tags_url,$branch) = explode('/branches/',$branch_url);
 		$tags_url .= '/tags';
-		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.\d{8})/');
+		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
 	}
@@ -250,7 +304,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
 	global $config,$verbose,$svn;
 
-	$cmd = $svn.' log --xml --limit 10 '.escapeshellarg($tags_url);
+	$cmd = $svn.' log --xml --limit 40 '.escapeshellarg($tags_url);
 	if (($v = $verbose))
 	{
 		echo "Querying SVN for last tags\n$cmd\n";
@@ -278,8 +332,9 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 /**
  * Copy archive files to obs checkout and commit them
  *
+ * @param boolean $only_update_changelog=false true update debian.changes, but nothing else, nor commit it
  */
-function do_obs()
+function do_obs($only_update_changelog=false)
 {
 	global $config,$verbose;
 
@@ -287,7 +342,7 @@ function do_obs()
 	{
 		usage("Path '$config[obs]' not found!");
 	}
-	if ($verbose) echo "Updating OBS checkout\n";
+	if ($verbose) echo $only_update_changelog ? "Updating OBS changelogs\n" : "Updating OBS checkout\n";
 	run_cmd('osc up '.$config['obs']);
 
 	$n = 0;
@@ -296,7 +351,7 @@ function do_obs()
 		if (basename(dirname($path)) == '.osc') continue;
 		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-'.preg_quote($config['version']).'/',$path)) continue;
 
-		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
+		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
 			if (basename($path) != basename($new_name))
@@ -309,28 +364,24 @@ function do_obs()
 			++$n;
 		}
 		// updating dsc, spec and changelog files
-		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec' ||
+		if (!$only_update_changelog && (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec') ||
 			!empty($config['changelog']) && basename($path) == 'debian.changes')
 		{
 			$content = $content_was = file_get_contents($path);
 
 			if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec')
 			{
-				$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9]+/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
+				$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9.]+[0-9]/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
 			}
 			if (substr($path,-4) == '.dsc')
 			{
 				$content = preg_replace('/^(Debtransform-Tar: '.preg_quote($config['packagename']).'[a-z-]*)-'.
-					preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/m',
+					preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/m',
 					'\\1-'.$config['version'].'.'.$config['packaging'].'\\2',$content);
 			}
 			if (basename($path) == 'debian.changes' && strpos($content,$config['version'].'.'.$config['packaging']) === false)
 			{
-				list($new_header) = explode("\n",$content);
-				$new_header = preg_replace('/\('.preg_quote($config['version']).'.[0-9]+(.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
-				if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
-				$content = $new_header."\n\n".$config['changelog'].
-					"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+				$content = update_changelog($content);
 			}
 			if (!empty($config['changelog']) && substr($path,-5) == '.spec' &&
 				($pos_changelog = strpos($content,'%changelog')) !== false)
@@ -347,13 +398,32 @@ function do_obs()
 			}
 		}
 	}
-	if ($n)
+	if ($n && !$only_update_changelog)
 	{
 		echo "$n files updated in OBS checkout ($config[obs]), commiting them now...\n";
 		//run_cmd('osc status '.$config['obs']);
 		run_cmd('osc addremove '.$config['obs'].'/*');
 		run_cmd('osc commit -m '.escapeshellarg('Version: '.$config['version'].'.'.$config['packaging'].":\n".$config['changelog']).' '.$config['obs']);
 	}
+}
+
+/**
+ * Update content of debian changelog file with new content from $config[changelog]
+ *
+ * @param string $content existing changelog content
+ * @return string updated changelog content
+ */
+function update_changelog($content)
+{
+	global $config,$verbose;
+
+	list($new_header) = explode("\n",$content);
+	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+	if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
+	$content = $new_header."\n\n".$config['changelog'].
+		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+
+	return $content;
 }
 
 /**
@@ -533,8 +603,18 @@ function do_checkout()
 	chdir($config['svndir']);
 
 	// do we use a just created tag --> list of taged modules
-	if ($config['svntag'] && isset($config['modules']))
+	if ($config['svntag'])
 	{
+		if (!isset($config['modules']))
+		{
+			get_modules_per_repro();
+		}
+		if (strpos($config['svntag'],'$') !== false)	// in case svntag command did not run, translate tag name
+		{
+			$translate = array();
+			foreach($config as $name => $value) $translate['$'.$name] = $value;
+			$config['svntag'] = strtr($config['svntag'],$translate);
+		}
 		if (file_exists($config['aliasdir']))
 		{
 			system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout, as we dont implement switching tags
