@@ -1,3 +1,9 @@
+egroupware-epl (14.1.20140419-1) hardy; urgency=low
+
+  * Mail: working now without PHP imap extension
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 19 Apr 2014 13:20:32 +0200
+
 egroupware-epl (14.1.20140417-1) hardy; urgency=low
 
   * first 14.1 beta
