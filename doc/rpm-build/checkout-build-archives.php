@@ -350,7 +350,7 @@ function do_obs($only_update_changelog=false)
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
 		if (basename(dirname($path)) == '.osc') continue;
-		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-'.preg_quote($config['version']).'/',$path)) continue;
+		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path)) continue;
 
 		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
@@ -363,6 +363,11 @@ function do_obs($only_update_changelog=false)
 			copy($new_name,dirname($path).'/'.basename($new_name));
 			if ($verbose) echo "cp $new_name ".dirname($path)."/\n";
 			++$n;
+		}
+		// if we have no changelog (eg. because commands run separate), try parsing it from changelog file
+		if (empty($config['changelog']))
+		{
+			$config['changelog'] = parse_current_changelog();
 		}
 		// updating dsc, spec and changelog files
 		if (!$only_update_changelog && (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec') ||
@@ -406,6 +411,34 @@ function do_obs($only_update_changelog=false)
 		run_cmd('osc addremove '.$config['obs'].'/*');
 		run_cmd('osc commit -m '.escapeshellarg('Version: '.$config['version'].'.'.$config['packaging'].":\n".$config['changelog']).' '.$config['obs']);
 	}
+}
+
+/**
+ * Parse current changelog from debian.changes file
+ *
+ * @return string changelog entries without header and footer lines
+ */
+function parse_current_changelog()
+{
+	global $config,$verbose;
+
+	$changelog = file_get_contents(__DIR__.'/debian.changes');
+	$lines = explode("\n", $changelog, 100);
+	foreach($lines as $n => $line)
+	{
+		if (preg_match($preg='/^'.preg_quote($config['packagename']).' \('.preg_quote($config['version'].'.'.$config['packaging']).'/', $line))
+		{
+			$n += empty($lines[$n+1]) ? 2 : 1;	// overead empty line behind header
+			$logentry = '';
+			while($lines[$n])	// entry is terminated by empty line
+			{
+				$logentry .= (substr($lines[n], 0, 2) == '  ' ? substr($lines[$n], 2) : $lines[$n])."\n";
+				++$n;
+			}
+			return substr($logentry, 0, -1);	// remove training "\n"
+		}
+	}
+	return null;	// paragraph for current version NOT found
 }
 
 /**
