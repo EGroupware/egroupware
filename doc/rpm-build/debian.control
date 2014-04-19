@@ -1,0 +1,281 @@
+Source: egroupware-epl
+Section: web
+Priority: optional
+Maintainer: Lars Volker <lv@stylite.de>
+Build-Depends: debhelper (>= 5), po-debconf
+Standards-Version: 3.8.0
+Homepage: http://www.stylite.de/EPL
+
+Package: egroupware-epl
+Architecture: all
+Depends: egroupware-epl-core, egroupware-epl-stylite, egroupware-epl-jdots, egroupware-epl-pixelegg, ${egw:Modules}, ${misc:Depends}
+Replaces: egroupware
+Description: web-based groupware suite - metapackage
+ ${commondesc}
+ .
+ This package is a metapackage containing dependencies on all the
+ EGroupware applications.  It can be used to conveniently install
+ EGroupware with all available applications.
+
+Package: egroupware-epl-core
+Architecture: all
+Depends: apache2,
+ libapache2-mod-php5,
+ php5-cli,
+ php5-sqlite,
+ php5-mysql | php5-pgsql | php5-odbc,
+ php5-gd, php-log, php-pear,
+ egroupware-epl-egw-pear,
+ perl,
+ php5-mcrypt,
+ ${misc:Depends}
+Recommends: mysql-server, php-apc, mysql-client | postgresql-client
+Suggests: egroupware-epl,
+ php5-ldap,
+ php5-mhash,
+ php5-auth-pam
+Provides: egroupware-epl-addressbook, egroupware-epl-etemplate
+Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook, egroupware-etemplate, egroupware-epl-etemplate
+Description: web-based groupware suite - core modules
+ ${commondesc}
+ .
+ The core package provides the modules for initial setup, global
+ administration, and preferences, and the API for the applications.  It
+ does not, by itself, provide any groupware functionality.  The actual
+ EGroupware applications are shipped separately in packages named
+ "egroupware-epl-<name>".
+
+Package: egroupware-epl-bookmarks
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-bookmarks
+Description: web-based groupware suite - bookmark management application
+ ${commondesc}
+ .
+ This EGroupware application provides a bookmark management facility.
+
+Package: egroupware-epl-calendar
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-infolog (>= ${binary:Version}),
+ egroupware-epl-notifications (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-calendar
+Description: web-based groupware suite - calendar management application
+ ${commondesc}
+ .
+ This EGroupware application provides a powerful calendar with a meeting
+ request system, alarms, iCal and e-Mail support, and ACL security.
+
+Package: egroupware-epl-developer-tools
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-developer-tools
+Description: web-based groupware suite - developer tools
+ ${commondesc}
+ .
+ This EGroupware application contains tools for EGroupware developers
+ and translators.  The translation tools allow creating and extending
+ translation files for EGroupware.  They can search the sources for new
+ or added phrases and show the ones missing in a given language.
+
+Package: egroupware-epl-emailadmin
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}, php5-imap
+Replaces: egroupware-emailadmin
+Description: web-based groupware suite - e-mail user administration application
+ ${commondesc}
+ .
+ This EGroupware application allows the administration of e-mail user
+ accounts.  It is intended to be used with the package
+ egroupware-epl-mail.
+
+Package: egroupware-epl-esync
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-esync
+Description: web-based groupware suite - esync application
+ ${commondesc}
+ .
+ Z-Push based ActiveSync protocol implementation.
+
+Package: egroupware-epl-mail
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-emailadmin (>= ${binary:Version}),
+ ${misc:Depends}
+Provides: mail-reader, imap-client
+Replaces: egroupware-felamimail, egroupware-epl-felamimail
+Description: web-based groupware suite - e-mail application
+ ${commondesc}
+ .
+ Mail is an e-mail application for EGroupware.
+
+Package: egroupware-epl-filemanager
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Suggests: php5-cli
+Replaces: egroupware-filemanager
+Description: web-based groupware suite - file manager application
+ ${commondesc}
+ .
+ This EGroupware application provides a web-based file manager.
+ Abilities include all common file actions (upload, mkdir, rename,
+ delete, copy, move), creating, and editing text files, and syncing with
+ the file system.  Per file/directory comments are stored, and version
+ history is tracked.  Group sharing and ACLs are fully supported.
+
+Package: egroupware-epl-importexport
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-importexport
+Description: web-based groupware suite - importexport application
+ ${commondesc}
+ .
+ This eGroupWare application is a framework for egroupware to handle
+ imports and exports.
+ 
+Package: egroupware-epl-infolog
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), ${misc:Depends}
+Replaces: egroupware-infolog
+Description: web-based groupware suite - infolog application
+ ${commondesc}
+ .
+ This EGroupware application allows tracking on-going and previous support
+ requests, phone calls, and other customer relations.
+
+Package: egroupware-epl-manual
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-wiki (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-manual
+Description: web-based groupware suite - manual
+ ${commondesc}
+ .
+ This package contains the EGroupware manual, provided as an
+ EGroupware application.
+
+Package: egroupware-epl-news-admin
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-news-admin
+Description: web-based groupware suite - news administration interface
+ ${commondesc}
+ .
+ This EGroupware application provides an interface to handle a simple
+ web-based news system.
+
+Package: egroupware-epl-notifications
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-notifications
+Description: web-based groupware suite - notifications
+ ${commondesc}
+ .
+ This package contains the EGroupware notifications, provided as an
+ EGroupware application.
+    
+Package: egroupware-epl-phpbrain
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-phpbrain
+Description: web-based groupware suite - phpbrain application
+ ${commondesc}
+ .
+ This EGroupware application provides a knowledge base system.
+
+Package: egroupware-epl-projectmanager
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), php5-gd, jpgraph-epl,
+ ${misc:Depends}
+Replaces: egroupware-projectmanager
+Description: web-based groupware suite - project management application
+ ${commondesc}
+ .
+ This EGroupware application provides a project workflow tracker.
+
+Package: egroupware-epl-registration
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-registration
+Description: web-based groupware suite - registration application
+ ${commondesc}
+ .
+ This EGroupware application allows users to create EGroupware accounts
+ through a web interface.  Site administrators can decide what pieces of
+ information are requested and whether each is required or not.
+
+Package: egroupware-epl-resources
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-filemanager (>= ${binary:Version}),
+ ${misc:Depends}
+Suggests: egroupware-epl-calendar
+Replaces: egroupware-resources
+Description: web-based groupware suite - resource manager application
+ ${commondesc}
+ .
+ This EGroupware application provides a resource management and booking
+ system, which integrates into EGroupware's calendar.
+
+Package: egroupware-epl-sambaadmin
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ php5-ldap,
+ ${misc:Depends}
+Replaces: egroupware-sambaadmin
+Description: web-based groupware suite - Samba administration application
+ ${commondesc}
+ .
+ This EGroupware application allows managing LDAP-based Samba servers.
+
+Package: egroupware-epl-sitemgr
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-sitemgr
+Description: web-based groupware suite - site manager application
+ ${commondesc}
+ .
+ This is a content management system application for EGroupware.
+
+Package: egroupware-epl-timesheet
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), 
+ ${misc:Depends}
+Suggests: egroupware-epl-projectmanager
+Replaces: egroupware-timesheet
+Description: web-based groupware suite - timesheet application
+ ${commondesc}
+ .
+ This EGroupware application allows tracking times and other activities
+ for the project manager.
+
+Package: egroupware-epl-tracker
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-notifications (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-tracker
+Description: web-based groupware suite - tracker application
+ ${commondesc}
+ .
+ This EGroupware application is a universal tracker for bugs, feature
+ requests, etc. with voting and bounties.
+
+Package: egroupware-epl-wiki
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}), 
+ ${misc:Depends}
+Replaces: egroupware-wiki
+Description: web-based groupware suite - wiki application
+ ${commondesc}
+ .
+ This EGroupware application provides a wiki.
