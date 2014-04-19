@@ -1,0 +1,51 @@
+advanced options	emailadmin	el	επιλογές για προχωρημένους
+alternate email address	emailadmin	el	εναλλακτική διεύθυνση email
+bad login name or password.	emailadmin	el	Λάθος όνομα ή κωδικός πρόσβασης
+bad request: %s	emailadmin	el	Άκυρη απαίτηση: %
+connection dropped by imap server.	emailadmin	el	Έπεσε η σύνδεση από τον IMAP server
+could not complete request. reason given: %s	emailadmin	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
+default	emailadmin	el	προκαθορισμένο
+deliver extern	emailadmin	el	παράδοση εξωτερ
+do not validate certificate	emailadmin	el	μην επικυρώνετε το πιστοποιητικό
+edit email settings	emailadmin	el	επεξεργασία ρυθμίσεων email
+email account active	emailadmin	el	ενεργός κατάλογος email
+email address	emailadmin	el	διεύθυνση email
+encrypted connection	emailadmin	el	αποκρυπτογραφημένη σύνδεση
+error connecting to imap server. %s : %s.	emailadmin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
+forward also to	emailadmin	el	προώθηση επίσης στο
+forward only	emailadmin	el	μόνο προώθηση
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
+imap server	emailadmin	el	IMAP Server
+imap server closed the connection.	emailadmin	el	Ο IMAP Server έκλεισε τη σύνδεση
+imap server closed the connection. server responded: %s	emailadmin	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
+in mbyte	emailadmin	el	σε MByte
+leave empty for no quota	emailadmin	el	να μείνει κενό για μη ποσοστόσεις
+mail settings	admin	el	Ρυθμίσεις μηνυμάτων
+no alternate email address	emailadmin	el	δεν υπάρχει εναλλακτική διεύθυνση email
+no encryption	emailadmin	el	Καμία κρυπτογράφηση
+no message returned.	emailadmin	el	Δεν επεστράφη κάποιο μήνυμα.
+no supported imap authentication method could be found.	emailadmin	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
+order	emailadmin	el	Ταξινόμηση
+organisation	emailadmin	el	οργανισμός
+port	emailadmin	el	θύρα
+quota settings	emailadmin	el	ρυθμίσεις ποσοστών
+quota size in mbyte	emailadmin	el	μέγεθος ποσοστών σε MByte
+remove	emailadmin	el	αφαίρεση
+sieve settings	emailadmin	el	Ρυθμίσεις Sieve
+smtp settings	emailadmin	el	Ρυθμίσεις SMTP
+standard	emailadmin	el	συνήθης
+standard imap server	emailadmin	el	συνήθης IMAP server
+standard pop3 server	emailadmin	el	συνήθης POP3 server
+standard smtp-server	emailadmin	el	συνήθης SMTP-server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	el	Ο IMAP server δεν υποστηρίζει την επιλεγμένη μέθοδο αυθεντικότητας.Παρακαλώ επικοινωνήστε με τον διαχειριστή σας.
+this php has no imap support compiled in!!	emailadmin	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
+unexpected response from server to authenticate command.	emailadmin	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
+unexpected response from server to digest-md5 response.	emailadmin	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
+unexpected response from server to login command.	emailadmin	el	Απρόσμενη απάντηση από τον server στην εντολή ΕΙΣΟΔΟΥ
+unknown imap response from the server. server responded: %s	emailadmin	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server:%s
+use smtp auth	emailadmin	el	Χρήση SMTP αυθ
+users can define their own emailaccounts	emailadmin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς
