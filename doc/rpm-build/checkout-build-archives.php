@@ -33,18 +33,20 @@ $config = array(
 	'extra' => array('egw-pear', '$stylitebase/$svnbranch/stylite','$stylitebase/$svnbranch/jdots','$stylitebase/$svnbranch/pixelegg', '$stylitebase/$svnbranch/esyncpro'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
+	'rsync' => 'rsync --progress -e ssh',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'build@stylite.de',
 	'obs' => '../obs/stylite-epl-trunk',
+	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
 	'svntag' => 'tags/$version.$packaging',
 	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
-	'copychangelog' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
+	'copychangelog' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/README',
 	'skip' => array(),
 	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
@@ -143,10 +145,14 @@ function do_release()
 	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
 	{
 		$translate = array();
-		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		foreach($config as $name => $value)
+		{
+			$translate['$'.$name] = $value;
+		}
 		$target = strtr($target,$translate);
 	}
 	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
+	if ($verbose) echo $cmd."\n";
 	passthru($cmd);
 }
 
@@ -349,9 +355,13 @@ function do_obs($only_update_changelog=false)
 	$n = 0;
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
-		if (basename(dirname($path)) == '.osc') continue;
-		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path)) continue;
-
+		if (basename(dirname($path)) == '.osc' ||
+			!preg_match('/\/('.preg_quote($config['packagename']).
+				($config['obs_package_alias'] ? '|'.preg_quote($config['obs_package_alias']) : '').
+				')[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path))
+		{
+			continue;
+		}
 		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
@@ -432,7 +442,7 @@ function parse_current_changelog()
 			$logentry = '';
 			while($lines[$n])	// entry is terminated by empty line
 			{
-				$logentry .= (substr($lines[n], 0, 2) == '  ' ? substr($lines[$n], 2) : $lines[$n])."\n";
+				$logentry .= (substr($lines[$n], 0, 2) == '  ' ? substr($lines[$n], 2) : $lines[$n])."\n";
 				++$n;
 			}
 			return substr($logentry, 0, -1);	// remove training "\n"
