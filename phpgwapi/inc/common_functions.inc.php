@@ -159,6 +159,26 @@ if (!function_exists('imap_rfc822_write_address'))
 	}
 }
 
+if (!function_exists('imap_mime_header_decode'))
+{
+	/**
+	 * Decodes MIME message header extensions that are non ASCII text (RFC2047)
+	 *
+	 * Uses Horde_Mime::decode() and therefore always returns only a single array element!
+	 *
+	 * @param string $text
+	 * @return array with single object with attribute text already in our internal encoding and charset
+	 * @deprecated use Horde_Mime::decode()
+	 */
+	function imap_mime_header_decode($text)
+	{
+		return array((object)array(
+			'text' => Horde_Mime::decode($text),
+			'charset' => translation::charset(),	// is already in our internal encoding!
+		));
+	}
+}
+
 if (!function_exists('mb_strlen'))
 {
 	/**
