@@ -243,7 +243,8 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 
 	if (is_null($revision))
 	{
-		list($tags_url,$branch) = explode('/branches/',$branch_url);
+		list($tags_url,$branch) = preg_split('#/(branches/|trunk)#',$branch_url);
+		if (empty($branch)) $branch = $config['version'];
 		$tags_url .= '/tags';
 		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
