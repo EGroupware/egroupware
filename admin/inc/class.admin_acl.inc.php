@@ -457,6 +457,7 @@ class admin_acl
 					$GLOBALS['egw_info']['user']['preferences']['admin']['acl_filter']),
 			'filter2' => !empty($_GET['acl_app']) ? $_GET['acl_app'] : '',
 			'lettersearch' => false,
+			'header_row'   => 'admin.acl.add',
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
