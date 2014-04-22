@@ -188,6 +188,7 @@ div#preferences-settings {
 }
 div#preferences-settings div.dialogHeader {
   height: 50px;
+  font-size: 100% !important;
 }
 div#preferences-settings div.dialogHeader select#preferences-settings_appname {
   min-width: 47%;
