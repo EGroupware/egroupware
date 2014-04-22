@@ -421,7 +421,19 @@ class preferences_settings
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);
 		}
 		// defining used tabs on run-time
-		if ($tabs) $tpl->setElementAttribute('tabs', 'tabs', $tabs);
+		if ($tabs)
+		{
+			$tpl->setElementAttribute('tabs', 'tabs', $tabs);
+		}
+		else
+		{
+			// Modifications are kept in the request, so reset to just one
+			$tpl->setElementAttribute('tabs', 'tabs', array(array(
+				'id' => 'tab1',
+				'template' => 'preferences.settings.tab1',
+				'label' => 'general settings'
+			)));
+		}
 
 		$content['appname'] = $appname;
 		$sel_options['appname'] = array();
