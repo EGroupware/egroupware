@@ -678,6 +678,9 @@ var et2_selectbox = et2_inputWidget.extend(
 					this.input.children('[value=""]').remove();
 				}
 			}
+			// Don't do it again if already done
+			if(this.input.hasClass("chzn-done")) return;
+			
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
 			this.input.chosen({
@@ -706,7 +709,8 @@ var et2_selectbox = et2_inputWidget.extend(
 			this.multiOptions.empty();
 		}
 		// Re-add empty, it's usually not there (empty_label get's allways translated, independent of no_lang!)
-		if(this.options.empty_label)
+		// Empty label should not be added as an option for chosen, it conflicts
+		if(this.options.empty_label && !(this.options.tags || this.options.search))
 		{
 			this._appendOptionElement('', this.egw().lang(this.options.empty_label));
 		}
