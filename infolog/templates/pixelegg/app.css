@@ -15,6 +15,10 @@
 div#infolog-edit.et2_container {
   width: 842px;
 }
+/* Minimum width for first column */
+div#infolog-index.et2_container .gridCont_0_div_col_0 {
+  min-width: 45px;
+}
 .infolog_headertext {
   color: black;
   font-size: 120%;
@@ -147,9 +151,13 @@ tr.dialogOperators td,
 }*/
 #infolog-index {
   /*height: auto !important;*/
+  /* Minimum width for first column */
 }
 #infolog-index table.et2_grid {
   border-top: 0px;
+}
+#infolog-index .gridCont_0_div_col_0 {
+  min-width: 45px;
 }
 #infolog-index #infolog-index_nm {
   /*min-height: 900px;*/

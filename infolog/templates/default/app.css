@@ -2,6 +2,11 @@
 div#infolog-edit.et2_container {
 	width: 842px;
 }
+/* Minimum width for first column */
+div#infolog-index.et2_container .gridCont_0_div_col_0 {
+	min-width: 45px;
+}
+
 .infolog_headertext { color: black; font-size: 120%; }
 .infolog_lpadding5 { padding-left: 5px; }
 .low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
