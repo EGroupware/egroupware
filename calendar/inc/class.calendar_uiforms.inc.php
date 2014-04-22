@@ -996,6 +996,8 @@ class calendar_uiforms extends calendar_ui
 
 		foreach($event['participants'] as $uid => $status)
 		{
+			//error_log(__METHOD__.__LINE__.' '.$uid.':'.array2string($status));
+			if (empty($status)) continue;
 			$toadd = '';
 			if ((isset($status['status']) && $status['status'] == 'R') || (isset($status['uid']) && $status['uid'] == $this->user)) continue;
 
@@ -1007,6 +1009,7 @@ class calendar_uiforms extends calendar_ui
 
 				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
 				if (!in_array($toadd,$to)) $to[] = $toadd;
+				//error_log(__METHOD__.__LINE__.array2string($to));
 			}
 			elseif ($uid < 0)
 			{
@@ -1019,11 +1022,18 @@ class calendar_uiforms extends calendar_ui
 					$toadd = $firstname.' '.$lastname.' <'.$email.'>';
 					// dont add groupmembers if they already rejected the event, or are the current user
 					if (!in_array($toadd,$to) && ($event['participants'][$uid] !== 'R' && $uid != $this->user)) $to[] = $toadd;
+					//error_log(__METHOD__.__LINE__.array2string($to));
 				}
 			}
-			elseif(($info = $this->bo->resource_info($uid)))
+			elseif(!empty($status['uid'])&& !is_numeric(substr($status['uid'],0,1)) && ($info = $this->bo->resource_info($status['uid'])))
 			{
 				$to[] = $info['email'];
+				//error_log(__METHOD__.__LINE__.array2string($to));
+			}
+			elseif(!is_numeric(substr($uid,0,1)) && ($info = $this->bo->resource_info($uid)))
+			{
+				$to[] = $info['email'];
+				//error_log(__METHOD__.__LINE__.array2string($to));
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
@@ -1039,6 +1049,7 @@ class calendar_uiforms extends calendar_ui
 			fwrite($f,$ics);
 			fclose($f);
 		}
+		//error_log(__METHOD__.__LINE__.array2string($to));
 		$vars = array(
 			'menuaction'      => 'mail.mail_compose.compose',
 			'mimeType'		  => 'plain', // force type to plain as thunderbird seems to try to be smart while parsing html messages with ics attachments
