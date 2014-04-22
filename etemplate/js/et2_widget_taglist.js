@@ -135,6 +135,11 @@ var et2_taglist = et2_selectbox.extend(
 		// Initialize magicSuggest here
 		if(this.taglist != null) return;
 
+		// If no options or ajax url, try the array mgr
+		if(this.options.select_options === null && !this.options.autocomplete_url)
+		{
+			this.set_select_options(this.getArrayMgr("sel_options").getEntry(this.id));
+		}
 
 		// MagicSuggest would replaces our div, so add a wrapper instead
 		this.taglist = $j('<div/>').appendTo(this.div);
