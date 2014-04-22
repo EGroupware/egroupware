@@ -415,16 +415,13 @@ class mail_acl
 	 */
 	function getACL ($mailbox)
 	{
-		if(($acl =$this->mail_bo->icServer->getACL($mailbox)))
+		try
 		{
-			try
-			{
-				$acl = $this->mail_bo->icServer->getACL($mailbox);
-				return $acl;
-			} catch (Exception $e) {
-				error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . " because of " .$e->getMessage());
-				return false;
-			}
+			$acl = $this->mail_bo->icServer->getACL($mailbox);
+			return $acl;
+		} catch (Exception $e) {
+			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . " because of " .$e->getMessage());
+			return false;
 		}
 	}
 }
