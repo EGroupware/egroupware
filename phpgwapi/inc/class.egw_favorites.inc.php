@@ -169,7 +169,7 @@ class egw_favorites
 				$favorites[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
 		}
-		if (is_array($sorted_list))
+		if (is_array($fav_sort_pref))
 		{
 			foreach ($fav_sort_pref as $key)
 			{
