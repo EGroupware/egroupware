@@ -40,32 +40,36 @@ class egw_favorites
 	 */
 	public static function list_favorites($app, $default=null)
 	{
-		if(!$app) return '';
+		if (!$app)
+		{
+			return '';
+		}
 
-		if (!$default) $default = "nextmatch-$app.index.rows-favorite";
+		if (!$default)
+		{
+			$default = "nextmatch-$app.index.rows-favorite";
+		}
 
 		// This target is used client-side to find & enable adding new favorites
 		$target = 'favorite_sidebox_'.$app;
-		$pref_prefix = 'favorite_';
-		$filters = array(
-			'blank' => array(
-				'name' => lang('No filters'),
-				// Old
-				'filter' => array(),
-				// New
-				'state' => array(),
-				'group' => true
-			)
-		) + self::get_favorites($app);
+
+		/* @var $filters array an array of favorites*/
+		$filters =  self::get_favorites($app);
 		$is_admin = $GLOBALS['egw_info']['user']['apps']['admin'];
 		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
 		
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
-		if(!isset($default_filter) || !isset($filters[$default_filter])) $default_filter = "blank";
+		if (!isset($default_filter) || !isset($filters[$default_filter]))
+		{
+			$default_filter = "blank";
+		}
 
 		// Get link for if there is no nextmatch - this is the fallback
 		$registry = egw_link::get_registry($app,'list');
-		if(!$registry) $registry = egw_link::get_registry($app,'index');
+		if (!$registry)
+		{
+			$registry = egw_link::get_registry($app, 'index');
+		}
 		foreach($filters as $name => $filter)
 		{
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
@@ -81,7 +85,7 @@ class egw_favorites
 		}
 
 		// If were're here, the app supports favorites, so add a 'Add' link too
-		$html .= "<li class='ui-menu-item' role='menuitem'><a href='javascript:app.$app.add_favorite()' class='ui-corner-all'>";
+		$html .= "<li data-id='add' class='ui-menu-item' role='menuitem'><a href='javascript:app.$app.add_favorite()' class='ui-corner-all'>";
 		$html .= html::image($app, 'new') . lang('Add current'). '</a></li>';
 
 		$html .= '</ul></span>';
@@ -95,7 +99,29 @@ class egw_favorites
 			),
 		);
 	}
-
+	
+	/**
+	 * Get preferenced favorites sorted list
+	 *
+	 * @param string $app Application name as string
+	 *
+	 * @return (array|boolean) An array of sorted favorites or False if there's no preferenced sorted list
+	 *
+	 */
+	public static function get_fav_sort_pref ($app)
+	{
+		$fav_sorted_list = array();
+		
+		if (($fav_sorted_list = $GLOBALS['egw_info']['user']['preferences'][$app]['fav_sort_pref']))
+		{
+			return $fav_sorted_list;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	/**
 	 * Get a list of actual user favorites
 	 * The default 'Blank' favorite is not included here
@@ -106,9 +132,21 @@ class egw_favorites
 	 */
 	public static function get_favorites($app)
 	{
-		$favorites = array();
+		$favorites = array(
+			'blank' => array(
+				'name' => lang('No filters'),
+				// Old
+				'filter' => array(),
+				// New
+				'state' => array(),
+				'group' => true
+			)
+		);
 		$pref_prefix = 'favorite_';
-
+		
+		$sorted_list = array();
+		$fav_sort_pref = self::get_fav_sort_pref($app);
+		
 		// Look through all preferences & pull out favorites
 		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
 		{
@@ -116,7 +154,10 @@ class egw_favorites
 			{
 				if(!is_array($pref))	// old favorite
 				{
-					if (!($pref = unserialize($pref))) continue;
+					if (!($pref = unserialize($pref)))
+					{
+						continue;
+					}
 					$pref = array(
 						'name' => substr($pref_name,strlen($pref_prefix)),
 						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
@@ -128,7 +169,14 @@ class egw_favorites
 				$favorites[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
 		}
-
+		if (is_array($sorted_list))
+		{
+			foreach ($fav_sort_pref as $key)
+			{
+				$sorted_list[$key] = $favorites[$key];
+			}
+			$favorites = $sorted_list;
+		}
 		return $favorites;
 	}
 

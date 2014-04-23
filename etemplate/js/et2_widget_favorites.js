@@ -99,18 +99,20 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			var egw_fw = egw_getFramework();
 			this.sidebox_target = $j("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
 		}
-
+		// Store array of sorted items
+		this.favSortedList = [];
+		
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
-
+		
 		this.stored_filters = this.load_favorites(this.options.app);
-
+		
 		this.preferred = egw.preference(this.options.default_pref,this.options.app);
 		if(!this.preferred || typeof this.stored_filters[this.preferred] == "undefined")
 		{
 			this.preferred = "blank";
 		}
-
+		
 		// It helps to have the ID properly set before we get too far
 		this.set_id(this.id);
 
@@ -149,7 +151,33 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				self.button.removeClass("ui-state-active",2000);
 			});
 		});
-
+		
+		//Add Sortable handler to nm fav. menu
+		$j(this.menu).sortable({
+			
+			items:'li:not([data-id^="add"])',
+			placeholder:'ui-fav-sortable-placeholder',
+			update: function (event, ui)
+			{
+				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
+				
+				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
+				this.sidebox_target.children()
+			}
+		});
+		$j(this.sidebox_target.children()).sortable({
+			
+			items:'li:not([data-id^="add"])',
+			placeholder:'ui-fav-sortable-placeholder',
+			update: function (event, ui)
+			{
+				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
+				
+				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
+				self.init_filters(self,self.load_favorites(self.options.app));
+			}
+		});
+		
 		// Add a listener on the delete to remove
 		this.menu.on("click","div.ui-icon-trash", app[self.options.app], function() {
 				// App instance might not be ready yet, so don't bind directly
@@ -167,7 +195,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			this.init_filters(this);
 		}
 	},
-
+	
 	/**
 	 * Load favorites from preferences
 	 *
@@ -182,7 +210,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				state: {}
 			}
 		};
-
+				
 		// Load saved favorites
 		var preferences = egw.preference("*",app);
 		for(var pref_name in preferences)
@@ -197,12 +225,34 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 					stored_filters[pref_name].state = preferences[pref_name].filters;
 				}
 			}
+			if (pref_name == 'fav_sort_pref')
+			{
+				 this.favSortedList = preferences[pref_name];
+			}
 		}
 		if(typeof stored_filters == "undefined" || !stored_filters)
 		{
 			stored_filters = {};
 		}
+		else if (this.favSortedList.length > 0)
+		{
+			var sortedListObj = {};
 
+			for (var i=0;i < this.favSortedList.length;i++)
+			{
+				if (typeof stored_filters[this.favSortedList[i]] != 'undefined')
+				{
+					sortedListObj[this.favSortedList[i]] = stored_filters[this.favSortedList[i]];
+				}
+				else
+				{
+					this.favSortedList.splice(i,1);
+					this.egw().set_preference (this.options.app,'fav_sort_pref',this.favSortedList);
+				}
+			}
+			stored_filters = jQuery.extend(sortedListObj,stored_filters);
+		}
+		
 		return stored_filters;
 	},
 
