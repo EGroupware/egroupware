@@ -1401,7 +1401,7 @@ div.ui-toolbar-menulist{
 	margin-right: 5px;
 }
 
-.et2_gantt
+.et2_gantt, .et2_gantt .gantt_container
 {
 	width: 100%;
 	height: 100%;

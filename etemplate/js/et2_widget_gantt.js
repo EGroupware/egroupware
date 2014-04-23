@@ -33,7 +33,7 @@
  * @see http://docs.dhtmlx.com/gantt/index.html
  * @augments et2_valueWidget
  */
-var et2_gantt = et2_valueWidget.extend(
+var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 {
 	// Filters are inside gantt namespace
 	createNamespace: true,
@@ -44,6 +44,18 @@ var et2_gantt = et2_valueWidget.extend(
 			"type": "string",
 			"default": "",
 			"description": "JSON URL or menuaction to be called for projects with no, GET parameter selected contains id"
+		},
+		"ajax_update": {
+			"name": "AJAX update method",
+			"type": "string",
+			"default": "",
+			"description": "AJAX menuaction to be called when the user changes a task.  The function should take two parameters: the updated element, and all template values."
+		},
+		"on_edit": {
+			"name": "Edit handler",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Function to handle when a user double-clicks a task.  The function should take two parameters, the task information and this widget"
 		},
 		value: {type: 'any'}
 	},
@@ -61,6 +73,7 @@ var et2_gantt = et2_valueWidget.extend(
 		min_column_width: 30,
 		fit_tasks: true,
 		autosize: 'y',
+		round_dnd_dates: false,
 		scale_unit: 'day',
 		date_scale: '%d',//(egw.preference('dateformat')).replace(/[YMmdhHisaA]/g,function(a) {return '%'+a;}),
 		subscales: [
@@ -75,19 +88,28 @@ var et2_gantt = et2_valueWidget.extend(
 	init: function(_parent, _attrs) {
 		// _super.apply is responsible for the actual setting of the params (some magic)
 		this._super.apply(this, arguments);
-		
+
 		// Gantt instance
 		this.gantt = null;
 
-		// Filters
-		// Gantt chart empties its div on creation, so we don't add filters to main
-		// DOM node until after
+		// DOM Nodes
 		this.filters = $j(document.createElement("div"))
 			.addClass('et2_gantt_header');
-
+		this.gantt_node = $j('<div style="width:100%;height:100%"></div>');
 		this.htmlNode = $j(document.createElement("div"))
 			.css('height', this.options.height)
 			.addClass('et2_gantt');
+
+		this.htmlNode.prepend(this.filters);
+		this.htmlNode.append(this.gantt_node);
+		
+		// Create the dynheight component which dynamically scales the inner
+		// container.
+		this.dynheight = new et2_dynheight(
+			this.getParent().getDOMNode(this.getParent()) || this.getInstanceManager().DOMContainer,
+			this.gantt_node, 300
+		);
+		
 		this.setDOMNode(this.htmlNode[0]);
 	},
 
@@ -97,7 +119,10 @@ var et2_gantt = et2_valueWidget.extend(
 			this.gantt.detachAllEvents();
 			this.gantt.clearAll();
 			this.gantt = null;
-		
+			
+		// Destroy dynamic full-height
+		if(this.dynheight) this.dynheight.free();
+
 		this._super.apply(this, arguments);}
 	
 		this.htmlNode.remove();
@@ -123,10 +148,7 @@ var et2_gantt = et2_valueWidget.extend(
 		}
 
 		// Initialize chart
-		this.gantt = $j(this.htmlNode).dhx_gantt(config);
-
-		// Gantt empties the div, so put any children in now
-		this.htmlNode.prepend(this.filters);
+		this.gantt = this.gantt_node.dhx_gantt(config);
 
 		if(this.options.value)
 		{
@@ -146,6 +168,7 @@ var et2_gantt = et2_valueWidget.extend(
 		// Bind some events to make things nice and et2
 		this._bindGanttEvents();
 
+		// Bind filters
 		this._bindChildren();
 
 		return true;
@@ -160,6 +183,23 @@ var et2_gantt = et2_valueWidget.extend(
 
 		// Normally simply return the main div
 		return this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Implement the et2_IResizable interface to resize
+	 */
+	resize: function()
+	{
+		if(this.dynheight)
+		{
+			this.dynheight.update(function(w,h) {
+				this.gantt.setSizes();
+			}, this);
+		}
+		else
+		{
+			this.gantt.setSizes();
+		}
 	},
 
 	/**
@@ -280,7 +320,7 @@ var et2_gantt = et2_valueWidget.extend(
 				break;
 			case 3:
 				// Less than a year, several months
-				subscales.push({unit: "month", step: 1, date: '%F'});
+				subscales.push({unit: "month", step: 1, date: '%F %Y'});
 				break;
 			case 2:
 			default:
@@ -294,8 +334,8 @@ var et2_gantt = et2_valueWidget.extend(
 				subscales.push({unit: "day", step: 1, date: '%F %d'});
 				date_scale = this.egw().preference('timeformat') == '24' ? "%G:%i" : "%g:%i";
 
-				step = 1;//this.egw().preference('interval','calendar') || 15;
-				scale_unit = 'hour';
+				step = parseInt(this.egw().preference('interval','calendar') || 15);
+				scale_unit = 'minute';
 		}
 
 		// Apply settings
@@ -304,6 +344,7 @@ var et2_gantt = et2_valueWidget.extend(
 		this.gantt.config.date_scale = date_scale;
 		this.gantt.config.step = step;
 
+		this.options.zoom = level;
 		return level;
 	},
 
@@ -313,9 +354,30 @@ var et2_gantt = et2_valueWidget.extend(
 	_bindGanttEvents: function() {
 		var gantt_widget = this;
 
+		// Click on scale to zoom - top zooms out, bottom zooms in
+		this.gantt_node.on('click','.gantt_scale_line', function(e) {
+			if(this.parentNode.firstChild == this)
+			{
+				// Zoom out
+				gantt_widget.set_zoom(gantt_widget.options.zoom + 1);
+				gantt_widget.gantt.render();
+			}
+			else if (gantt_widget.options.zoom > 1)
+			{
+				// Zoom in
+				gantt_widget.set_zoom(gantt_widget.options.zoom - 1);
+				gantt_widget.gantt.render();
+			}
+		});
+
 		// Double click
 		this.gantt.attachEvent("onBeforeLightbox", function(id) {
 			var task = this.getTask(id);
+			if(gantt_widget.options.on_edit)
+			{
+				gantt_widget.on_edit.apply(gantt_widget, [task,gantt_widget]);
+			}
+			/*
 			if(task.pe_app)
 			{
 				gantt_widget.egw().open(task.pe_app_id, task.pe_app);
@@ -324,16 +386,43 @@ var et2_gantt = et2_valueWidget.extend(
 			{
 				gantt_widget.egw().open(id, 'projectmanager');
 			}
-
+*/
 			// Don't do gantt default actions
 			return false;
 		});
 
+		// Update server after dragging a task
+		this.gantt.attachEvent("onAfterTaskDrag", function(id, mode, e) {
+			var task = jQuery.extend({},this.getTask(id));
+
+			// Gantt chart deals with dates as Date objects, format as server likes
+			var date_parser = this.date.date_to_str(this.config.api_date);
+			if(task.start_date) task.start_date = date_parser(task.start_date);
+			if(task.end_date) task.end_date = date_parser(task.end_date);
+			
+			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
+
+			if(gantt_widget.options.ajax_update)
+			{
+				var request = gantt_widget.egw().json(gantt_widget.options.ajax_update,
+					[task,value]
+				).sendRequest(true);
+			}
+		});
+
 		// Bind AJAX for dynamic expansion
+		// TODO: This could be improved
 		this.gantt.attachEvent("onTaskOpened", function(id, item) {
 			// Node children are already there & displayed
-			// TODO: Load children of children of this node.
-			debugger;
+			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
+
+			var request = gantt_widget.egw().json(gantt_widget.options.autoload,
+				[id,value],
+				function(data) {
+					this.parse(data);
+				},
+				this,true,this
+			).sendRequest();
 		});
 
 		// Filters
@@ -361,9 +450,28 @@ var et2_gantt = et2_valueWidget.extend(
 				}
 
 				// Regular equality comparison
-				if(_widget.getValue() && typeof task[_widget.id] != 'undefined' && task[_widget.id] != _widget.getValue())
+				if(_widget.getValue() && typeof task[_widget.id] != 'undefined')
 				{
-					display = false;
+					if (task[_widget.id] != _widget.getValue())
+					{
+						display = false;
+					}
+					// Special comparison for objects, any intersection is a match
+					if(!display && typeof task[_widget.id] == 'object' || typeof _widget.getValue() == 'object')
+					{
+						var a = typeof task[_widget.id] == 'object' ? task[_widget.id] : _widget.getValue();
+						var b = a == task[_widget.id] ? _widget.getValue() : task[_widget.id];
+						if(typeof b == 'object')
+						{
+							display = jQuery.map(a,function(x) {
+								return jQuery.inArray(x,b) >= 0;
+							});
+						}
+						else
+						{
+							display = jQuery.inArray(b,a) >= 0;
+						}
+					}
 				}
 			},gantt_widget, et2_inputWidget);
 			return display;
