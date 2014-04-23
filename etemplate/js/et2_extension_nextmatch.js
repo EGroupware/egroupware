@@ -760,6 +760,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 							continue RowLoop;
 						}
 					}
+					// Disable if there are no custom fields
+					if(jQuery.isEmptyObject(_row[i].widget.customfields))
+					{
+						_colData[i].disabled = true;
+						continue;
+					}
 				}
 
 				var colName = this._getColumnName(_row[i].widget);
