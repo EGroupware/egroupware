@@ -70,7 +70,7 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 	$GLOBALS['egw_setup']->db->transaction_begin();
 	foreach($newsettings as $setting => $value)
 	{
-		if($GLOBALS['egw_info']['server']['found_validation_hook'] && @function_exists($setting))
+		if(in_array($setting, (array)$GLOBALS['egw_info']['server']['found_validation_hook']) && function_exists($setting))
 		{
 			$setting($newsettings);
 			if($GLOBALS['config_error'])
