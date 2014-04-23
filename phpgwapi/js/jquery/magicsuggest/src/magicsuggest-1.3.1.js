@@ -1089,13 +1089,14 @@
                     filtered = [],
                     newSuggestions = [],
                     selectedValues = ms.getValue();
+				var server_search = typeof cfg.data == 'string' && cfg.data.indexOf(',') < 0
                 // filter the data according to given input
                 if(q.length > 0) {
                     $.each(data, function(index, obj) {
                         var name = obj[cfg.displayField];
                         if((cfg.matchCase === true && name.indexOf(q) > -1) ||
                             (cfg.matchCase === false && name.toLowerCase().indexOf(q.toLowerCase()) > -1) ||
-							cfg.strictSuggest === false) {
+							cfg.strictSuggest === false && server_search) {
                             if(cfg.strictSuggest === false || name.toLowerCase().indexOf(q.toLowerCase()) === 0) {
                                 filtered.push(obj);
                             }
