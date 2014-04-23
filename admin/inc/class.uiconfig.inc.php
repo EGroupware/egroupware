@@ -118,12 +118,12 @@ class uiconfig
 				if ($config)
 				{
 					$c->config_data[$key] = $config;
-					if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists($key))
+					if (in_array($key, (array)$GLOBALS['egw_info']['server']['found_validation_hook'], true) && function_exists($key))
 					{
 						call_user_func($key,$config);
 						if($GLOBALS['config_error'])
 						{
-							$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
+							$errors .= lang($GLOBALS['config_error']) . "\n";
 							$GLOBALS['config_error'] = False;
 						}
 					}
@@ -134,12 +134,13 @@ class uiconfig
 					unset($c->config_data[$key]);
 				}
 			}
-			if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists('final_validation'))
+			if(in_array('final_validation', (array)$GLOBALS['egw_info']['server']['found_validation_hook']) &&
+				function_exists('final_validation'))
 			{
 				final_validation($_POST['newsettings']);
 				if($GLOBALS['config_error'])
 				{
-					$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
+					$errors .= lang($GLOBALS['config_error']) . "\n";
 					$GLOBALS['config_error'] = False;
 				}
 				unset($GLOBALS['egw_info']['server']['found_validation_hook']);

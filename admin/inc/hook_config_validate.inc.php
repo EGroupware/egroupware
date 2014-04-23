@@ -10,10 +10,9 @@
  */
 
 /*
-  Set a global flag to indicate this file was found by setup/config.php.
-  config.php will unset it after parsing the form values.
+  Set global flag to indicate for which config settings we have equally named validation methods
 */
-$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
+$GLOBALS['egw_info']['server']['found_validation_hook'] = array('vfs_image_dir');
 
 /**
  * Check VFS dir exists and delete image map to recreate it, if vfs-image-dir changes
