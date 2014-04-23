@@ -1038,13 +1038,13 @@ class filemanager_ui
 				}
 				elseif ($button == 'eacl')
 				{
-					if (!$content['eacl']['owner'])
+					if (!$content['eacl_owner'])
 					{
 						$msg .= lang('You need to select an owner!');
 					}
 					else
 					{
-						$msg .= egw_vfs::eacl($path,$content['eacl']['rights'],$content['eacl']['owner']) ?
+						$msg .= egw_vfs::eacl($path,$content['rights'],$content['eacl_owner']) ?
 							lang('ACL added.') : lang('Error adding the ACL!');
 					}
 				}
@@ -1073,7 +1073,7 @@ class filemanager_ui
 		}
 		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable(egw_vfs::dirname($path));
 		$readonlys['comment'] = !egw_vfs::is_writable($path);
-		$readonlys['tabs']['preview'] = $readonlys['tabs']['perms'] = $content['is_link'];
+		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
 
 		// if neither owner nor is writable --> disable save&apply
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !egw_vfs::is_writable($path);
@@ -1089,10 +1089,10 @@ class filemanager_ui
 				$readonlys['#'.$name] = true;
 			}
 		}
-		$readonlys['tabs']['eacl'] = true;	// eacl off by default
+		$readonlys['tabs']['filemanager.file.eacl'] = true;	// eacl off by default
 		if ($content['is_dir'])
 		{
-			$readonlys['tabs']['preview'] = true;	// no preview tab for dirs
+			$readonlys['tabs']['filemanager.file.preview'] = true;	// no preview tab for dirs
 			$sel_options['rights']=$sel_options['owner']=$sel_options['group']=$sel_options['other'] = array(
 				7 => lang('Display and modification of content'),
 				5 => lang('Display of content'),
@@ -1100,7 +1100,7 @@ class filemanager_ui
 			);
 			if(($content['eacl'] = egw_vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
 			{
-				unset($readonlys['tabs']['eacl']);	// --> switch the tab on again
+				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
 					$eacl['path'] = parse_url($eacl['path'],PHP_URL_PATH);

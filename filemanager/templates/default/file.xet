@@ -162,12 +162,12 @@
 					</groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
-					<menulist class="filemanager-file_filemanager-file-eaclowner eaclAccount">
-						<menupopup type="select-account" class="eaclAccount" label="Owner" id="eacl[owner]" options="select one,both"/>
-					</menulist>
-					<menulist>
-						<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
-					</menulist>
+						<menulist class="filemanager-file_filemanager-file-eaclowner eaclAccount">
+							<menupopup type="select-account" class="eaclAccount" label="Owner" id="eacl_owner" options="select one,both"/>
+						</menulist>
+						<menulist>
+							<menupopup class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"/>
+						</menulist>
 					<button label="Add" id="button[eacl]" image="add" background_image="1"/>
 				</row>
 			</rows>
