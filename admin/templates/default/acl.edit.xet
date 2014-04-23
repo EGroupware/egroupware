@@ -17,13 +17,13 @@
 				<row part="header">
 					<description value="Data from" for="acl_account"/>
 					<menulist>
-						<menupopup type="select-account" id="acl_account" needed="1"/>
+						<menupopup type="select-account" id="acl_account" account_type="both" needed="1"/>
 					</menulist>
 				</row>
 				<row disabled="@acl_location=run" part="header">
 					<description value="Access by" for="acl_location"/>
 					<menulist>
-						<menupopup type="select-account" id="acl_location"/>
+						<menupopup type="select-account" id="acl_location" account_type="both"/>
 					</menulist>
 				</row>
 				<row valign="top" disabled="@acl_location=run">

@@ -400,22 +400,32 @@ app.classes.admin = AppJS.extend(
 		}
 		if(content.acl_appname)
 		{
-			content.apps = content.acl_appname;
+			// Load checkboxes & their values
 			content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
 			jQuery.extend(content, {acl:[],right:[],label:[]});
 			for( var right in acl_rights[content.acl_appname])
 			{
+				// only user himself is allowed to grant private (16) rights
 				if(right == '16' && content['acl_account'] != egw.user('account_id'))
 				{
-					// only user himself is allowed to grant private (16) rights
 					readonlys.acl[content.acl.length] = true;
 				}
 				content.acl.push(content.acl_rights & right);
 				content.right.push(right);
 				content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
 			}
-
-			
+		}
+		
+		// Make sure selected values are there
+		if(content.acl_account)
+		{
+			sel_options.acl_account = jQuery.extend({},sel_options.acl_account);
+			this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account[content.acl_account] = title;});
+		}
+		if(content.acl_location)
+		{	 
+			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
+			this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
 		}
 
 		// Create the dialog

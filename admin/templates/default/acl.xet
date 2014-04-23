@@ -61,14 +61,6 @@
 	<template id="admin.acl" template="" lang="" group="0" version="1.9.001">
 		<vbox>
 			<description id="msg" class="message"/>
-			<hbox readonly="true">
-				<menulist>
-				<menupopup type="select-account" id="acl_account" account_type="both" />
-				</menulist>
-				<menulist>
-					<menupopup type="select-account" id="acl_location" account_type="both"/>
-				</menulist>
-			</hbox>
 			<nextmatch id="nm" template="admin.acl.rows"/>
 			<hbox class="dialogFooterToolbar">
 				<button label="Close" id="cancel" onclick="window.close();"/>
