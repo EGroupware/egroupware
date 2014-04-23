@@ -707,7 +707,7 @@ class calendar_hooks
 	}
 
 	public static function config_validate() {
-		$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
+		$GLOBALS['egw_info']['server']['found_validation_hook'] = array('calendar_purge_old');
 	}
 }
 
