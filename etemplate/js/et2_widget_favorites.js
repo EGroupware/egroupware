@@ -152,22 +152,35 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			});
 		});
 		
+		//Sort DomNodes of sidebox fav. menu
+		var sideBoxDOMNodeSort = function (_favSList) {
+			var favS = jQuery.isArray(_favSList)?_favSList.slice(0).reverse():[];
+			
+			for (var i=0; i < favS.length;i++)
+			{
+				self.sidebox_target.children().find('[data-id$="' + favS[i] + '"]').prependTo(self.sidebox_target.children());
+			}
+		};
+		
 		//Add Sortable handler to nm fav. menu
 		$j(this.menu).sortable({
 			
-			items:'li:not([data-id^="add"])',
+			items:'li:not([data-id$="add"])',
 			placeholder:'ui-fav-sortable-placeholder',
 			update: function (event, ui)
 			{
 				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
 				
 				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
-				this.sidebox_target.children()
+				
+				sideBoxDOMNodeSort(self.favSortedList);
 			}
 		});
+		
+		//Add Sortable handler to sideBox fav. menu
 		$j(this.sidebox_target.children()).sortable({
 			
-			items:'li:not([data-id^="add"])',
+			items:'li:not([data-id$="add"])',
 			placeholder:'ui-fav-sortable-placeholder',
 			update: function (event, ui)
 			{
