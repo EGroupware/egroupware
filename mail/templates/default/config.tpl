@@ -73,13 +73,6 @@
    </tr>
    <tr class="row_on">
 	<td>
-	 <b>{lang_Test_connection}</b><br/>
-	 {lang_Show_Test_Connection_section_and_control_the_level_of_info_displayed??}
-	</td>
-    <td>{call_mail_hooks::deny_testconnection}</td>
-   </tr>
-   <tr class="row_on">
-	<td>
      <b>{lang_restrict_acl_management}</b><br/>
 	 {lang_effective_only_if_server_supports_ACL_at_all}
 	</td>

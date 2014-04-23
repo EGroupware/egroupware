@@ -123,15 +123,6 @@ class mail_hooks
 
  		$prefAllowManageFolders = $no_yes;
 
-		$test_connection = array(
-			'full' => lang('yes, show all debug information available for the user'),
-			'nocredentials' => lang('yes, but mask all usernames and passwords'),
-			'nopasswords' => lang('yes, but mask all passwords'),
-			'basic' => lang('yes, show basic info only'),
-			'reset' => lang('yes, only trigger connection reset'),
-			'none' => lang('no'),
-		);
-
 		$forwardOptions = array(
 			'asmail' => lang('forward as attachment'),
 			'inline' => lang('forward inline'),
@@ -454,16 +445,7 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => '0',
 			),
-			'prefcontroltestconnection' => array(
-				'type'   => 'select',
-				'label'  => 'Test connection',
-				'help'   => 'Show Test Connection section and control the level of info displayed?',
-				'name'   => 'prefcontroltestconnection',
-				'values' => $test_connection,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => '0',
-			),*/
+			*/
 			'prefaskformove' => array(
 				'type'   => 'select',
 				'label'  => 'Confirm move to folder',
@@ -592,10 +574,6 @@ class mail_hooks
 					"','_blank',640,480,'yes')",
 			);
 		}
-		if (self::access('testconnection'))
-		{
-			$file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
-		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 /*
@@ -665,11 +643,15 @@ class mail_hooks
 		$preferences = $prefs->read();
 		// TODO: no possibility to set that at this time; always use INBOX
 		if (empty($preferences['mail']['notify_folders'])) return true;//$preferences['mail']['notify_folders']='INBOX';
-		//error_log(__METHOD__.__LINE__.array2string($preferences['mail']['notify_folders']));
+/*		//error_log(__METHOD__.__LINE__.array2string($preferences['mail']['notify_folders']));
 		if(!isset($preferences['mail']['notify_folders'])||empty($preferences['mail']['notify_folders'])||$preferences['mail']['notify_folders']=='none') {
 			return true; //no pref set for notifying - exit
 		}
-		$notify_folders = explode(',', $preferences['mail']['notify_folders']);
+*/
+		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
+		{
+			$folders2notify[$acc_id] = emailadmin_notifications::read($acc_id,$GLOBALS['egw_info']['user']['account_id']);
+		}
 		if(count($notify_folders) == 0) {
 			return true; //no folders configured for notifying - exit
 		}
@@ -786,7 +768,7 @@ class mail_hooks
 	 * Example: if (!mail_hooks::access("managerfolders")) return;
 	 *
 	 * @param string $feature "createaccounts", "managefolders", "forwards", "notifications", "filters",
-	 *		"notificationformailviaemail", "editfilterrules", "absentnotice", "testconnection", "aclmanagement"
+	 *		"notificationformailviaemail", "editfilterrules", "absentnotice", "aclmanagement"
 	 * @return boolean true if user has access, false if not
 	 */
 	public static function access($feature)

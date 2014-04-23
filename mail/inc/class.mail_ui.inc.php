@@ -35,7 +35,6 @@ class mail_ui
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
 		'importMessageFromVFS2DraftAndDisplay'=>True,
-		'TestConnection' => True,
 		'subscription'	=> True,
 	);
 
@@ -639,115 +638,6 @@ class mail_ui
 		$readonlys = $preserv = array();
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
-	}
-
-	/**
-	 * Test Connection
-	 * Simple Test, resets the active connections cachedObjects / ImapServer
-	 */
-	function TestConnection ()
-	{
-		// load translations
-		translation::add_app('mail');
-
-		common::egw_header();
-		parse_navbar();
-		//$GLOBALS['egw']->framework->sidebox();
-		//$GLOBALS['egw_info']['user']['preferences']['mail'];
-		$preferences	=& $this->mail_bo->mailPreferences;
-
-		if ($preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
-
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
-			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		//_debug_array($this->mail_bo->mailPreferences);
-		if (is_object($preferences)) $imapServer = $this->mail_bo->icServer;
-		if (isset($imapServer->ImapServerId) && !empty($imapServer->ImapServerId))
-		{
-			$icServerID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $imapServer->ImapServerId;
-		}
-		echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
-
-		_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.$icServerID);
-		emailadmin_imapbase::unsetCachedObjects($icServerID);
-/*
-		if (mail_bo::$idna2)
-		{
-			_debug_array('Umlautdomains supported (see Example below)');
-			$dom = 'füßler.com';
-			$encDom = mail_bo::$idna2->encode($dom);
-			_debug_array(array('source'=>$dom,'result'=>array('encoded'=>$encDom,'decoded'=>mail_bo::$idna2->decode($encDom))));
-		}
-*/
-		if ($preferences['prefcontroltestconnection'] == 'reset') exit;
-
-		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
-
-		$this->mail_bo->reopen('INBOX');
-/*
-		unset($imapServer->_connectionErrorObject);
-		$sieveServer = clone $imapServer;
-*/
-		if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
-		if ($preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences['prefcontroltestconnection'] == 'nocredentials')
-		{
-			if (!empty($imapServer->password)) $imapServer->password='**********************';
-		}
-		if ($preferences['prefcontroltestconnection'] == 'nocredentials')
-		{
-			if (!empty($imapServer->adminUsername)) $imapServer->adminUsername='++++++++++++++++++++++';
-			if (!empty($imapServer->username)) $imapServer->username='++++++++++++++++++++++';
-			if (!empty($imapServer->loginName)) $imapServer->loginName='++++++++++++++++++++++';
-		}
-		if ($preferences['prefcontroltestconnection'] <> 'basic')
-		{
-			_debug_array($imapServer);
-		}
-		else
-		{
-			_debug_array(array('ImapServerId' =>$imapServer->ImapServerId,
-				'host'=>$imapServer->acc_imap_host,
-				'port'=>$imapServer->acc_imap_port,
-				'validatecert'=>$imapServer->validatecert));
-		}
-
-		echo "<h4 style='color:red'>".lang('Connection Status')."</h4>";
-		$lE = false;
-		if ($eO && $eO->message)
-		{
-			_debug_array($eO->message);
-			$lE = true;
-		}
-		_debug_array(($lE?'':lang('Successfully connected')));
-
-		$suF = $this->mail_bo->getSpecialUseFolders();
-		if (is_array($suF) && !empty($suF)) _debug_array(array(lang('Server supports Special-Use Folders')=>$suF));
-
-		$sievebo	= mail_bo::getInstance(false, $icServerID, false, $oldIMAPObject=true);
-		$sieveServer = $sievebo->icServer;
-		if(($sieveServer instanceof defaultimap) && $sieveServer->enableSieve) {
-			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
-			$sieveServer->getScript($scriptName);
-			$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
-			$vacation = $sieveServer->getVacation($sieveServer->scriptName);
-			echo "<h4 style='color:red'>".lang('Sieve Connection Status')."</h4>";
-			$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
-			if ($isSieveError[$icServerID])
-			{
-				_debug_array($isSieveError[$icServerID]);
-			}
-			else
-			{
-				_debug_array(array(lang('Successfully connected'),$rules));
-			}
-		}
-
-		echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
-		_debug_array($preferences);
-		//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
-		//error_log(__METHOD__.__LINE__.' ImapServerObject:'.array2string($imapServer));
-
-		common::egw_footer();
 	}
 
 	/**
