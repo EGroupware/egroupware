@@ -11,7 +11,7 @@
 				<row disabled="@acl_location=run" part="header">
 					<description value="Application"/>
 					<menulist>
-						<menupopup id="acl_appname" needed="1" onchange="1" options="Select one"/>
+						<menupopup id="acl_appname" needed="1" onchange="app.admin.acl_change_application" options="Select one"/>
 					</menulist>
 				</row>
 				<row part="header">

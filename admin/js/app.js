@@ -36,6 +36,11 @@ app.classes.admin = AppJS.extend(
 	nm: null,
 
 	/**
+	 * Reference to ACL edit dialog (not the list)
+	 */
+	acl_dialog: null,
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -52,6 +57,8 @@ app.classes.admin = AppJS.extend(
 	destroy: function()
 	{
 		this.iframe = null;
+		this.nm = null;
+		this.acl_dialog = null;
 
 		// call parent
 		this._super.apply(this, arguments);
@@ -324,30 +331,72 @@ app.classes.admin = AppJS.extend(
 		{
 			ids.push(_senders[i].id.split('::').pop());	// remove "admin::" prefix
 		}
+
+		// For edit, set some data from the list since it's already there
+		var content = _senders[0].id ? jQuery.extend({}, egw.dataGetUIDdata(_senders[0].id).data) : {};
+		
+		switch(_action.id)
+		{
+			case 'delete':
+				var app = egw.app_name();	// can be either admin or preferences!
+				if (app != 'admin') app = 'preferences';
+				var className = app+'_acl';
+				var request = egw.json(className+'::ajax_change_acl', [ids], this._acl_callback,this,false,this)
+					.sendRequest();
+				break;
+
+			case 'add':
+				// No content, even if they clicked on a row
+				// Defaults set by _acl_content() based on nm values
+				content = {};
+				// Fall through
+			case 'edit':
+				this._acl_dialog(content);
+				break;
+		}
+	},
+
+	/**
+	 * Create the ACL edit dialog, including defaults & fetching what can be found
+	 *
+	 * @param content List of content for the dialog template
+	 * @param sel_options optional select options
+	 */
+	_acl_dialog: function(content, sel_options)
+	{
+		if(typeof content == 'undefined') content = {};
+		
+		// Determine which application we're running as
 		var app = egw.app_name();	// can be either admin or preferences!
 		if (app != 'admin') app = 'preferences';
 		var className = app+'_acl';
+		var acl_rights = {};
+		var readonlys = {acl: {}};
 
 		// Select options are already here, just pull them and pass along
-		var sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
+		sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
 			'apps': this.et2.getArrayMgr('sel_options').getEntry('acl_appname')
-		});
+		},sel_options);
 
-		// For add and edit, set some data from the list since it's already there
-		var acl_rights = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
-		var content = _senders[0].id ? jQuery.extend({}, egw.dataGetUIDdata(_senders[0].id).data) : {};
-		if(!content.acl_appname)
+		// Some defaults
+		if(this.et2 && this.et2.getWidgetById('nm'))
 		{
-			// Pre-set appname to currently selected
-			content.acl_appname = this.et2.getWidgetById('filter2').getValue();
-		}
-		if(!content.acl_location)
-		{
-			content.acl_location = this.et2.getWidgetById('filter2').getValue() == 'run' ? 'run' : null;
-		}
-		if(!content.acl_account)
-		{
-			content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+			// This is which checkboxes are available for each app
+			var acl_rights = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
+
+			if(!content.acl_appname)
+			{
+				// Pre-set appname to currently selected
+				content.acl_appname = this.et2.getWidgetById('filter2').getValue()||"";
+			}
+			if(!content.acl_location)
+			{
+				content.acl_location = this.et2.getWidgetById('filter2').getValue() == 'run' ? 'run' : null;
+			}
+			if(!content.acl_account)
+			{
+				content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+			}
 		}
 		if(content.acl_appname)
 		{
@@ -356,56 +405,66 @@ app.classes.admin = AppJS.extend(
 			jQuery.extend(content, {acl:[],right:[],label:[]});
 			for( var right in acl_rights[content.acl_appname])
 			{
+				if(right == '16' && content['acl_account'] != egw.user('account_id'))
+				{
+					// only user himself is allowed to grant private (16) rights
+					readonlys.acl[content.acl.length] = true;
+				}
 				content.acl.push(content.acl_rights & right);
 				content.right.push(right);
 				content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
 			}
 
-			// These aren't actually there
-			if(content.acl_account)
-			{
-				sel_options.acl_account = {};
-				this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account[content.acl_account] = title;});
-			}
-			if(content.acl_location)
-			{
-				sel_options.acl_location = {};
-				this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
-			}
+			
 		}
 
-		switch(_action.id)
+		// Create the dialog
+		this.acl_dialog = et2_createWidget("dialog", {
+			callback: jQuery.proxy(function(_button_id, _value) {
+				this.acl_dialog = null;
+				if(_button_id != et2_dialog.OK_BUTTON) return;
+
+				// Only send the request if they entered everything
+				if(_value.acl_appname && _value.acl_account && _value.acl_location)
+				{
+					var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
+					var rights = 0;
+					for(var i in _value.acl)
+					{
+						rights += parseInt(_value.acl[i]);
+					}
+					this.egw.json(className+'::ajax_change_acl', [id, rights], this._acl_callback,this,false,this)
+						.sendRequest();
+				}
+			},this),
+			title: egw.lang('Access control'),
+			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: content,
+				sel_options: sel_options,
+				readonlys: readonlys
+			},
+			template: egw.webserverUrl+'/admin/templates/default/acl.edit.xet'
+		}, et2_dialog._create_parent(app));
+	},
+
+	/**
+	 * Change handler for ACL edit dialog application selectbox.
+	 * Re-creates the dialog with the current values
+	 */
+	acl_change_application: function(input, widget)
+	{
+		var content = {};
+		if(this.acl_dialog != null)
 		{
-			case 'delete':
-				var request = egw.json(className+'::ajax_change_acl', [ids], this._acl_callback,this,false,this)
-					.sendRequest();
-				break;
+			content = this.acl_dialog.get_value() || {};
 
-			case 'edit':
-			case 'add':
-				return et2_createWidget("dialog", {
-					callback: jQuery.proxy(function(_button_id, _value) {
-						if(_button_id != et2_dialog.OK_BUTTON) return;
-
-						var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
-						var rights = 0;
-						for(var i in _value.acl)
-						{
-							rights += parseInt(_value.acl[i]);
-						}
-						this.egw.json(className+'::ajax_change_acl', [id, rights], this._acl_callback,this,false,this)
-							.sendRequest();
-					},this),
-					title: egw.lang('Access control'),
-					buttons: et2_dialog.BUTTONS_OK_CANCEL,
-					value: {
-						content: content,
-						sel_options: sel_options
-					},
-					template: egw.webserverUrl+'/admin/templates/default/acl.edit.xet'
-				}, et2_dialog._create_parent(app));
-				break;
+			// Destroy the dialog
+			this.acl_dialog.free();
+			this.acl_dialog = null;
 		}
+		// Re-open the dialog
+		this._acl_dialog(content);
 	},
 
 	/**
