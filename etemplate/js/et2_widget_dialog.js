@@ -260,17 +260,25 @@ var et2_dialog = et2_widget.extend({
 	 * @param button_id integer The ID of the clicked button
 	 */
 	click: function(target, button_id) {
+		if(this.options.callback)
+		{
+			this.options.callback.call(this,button_id,this.get_value());
+		}
+		// Triggers destroy too
+		this.div.dialog("close");
+	},
+
+	/**
+	 * Returns the values of any widgets in the dialog.  This does not include
+	 * the buttons, which are only supplied for the callback.
+	 */
+	get_value: function() {
 		var value = this.options.value;
 		if(this.template)
 		{
 			value = this.template.getValues(this.template.widgetContainer);
 		}
-		if(this.options.callback)
-		{
-			this.options.callback.call(this,button_id,value);
-		}
-		// Triggers destroy too
-		this.div.dialog("close");
+		return value;
 	},
 
 	/**
