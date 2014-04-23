@@ -321,6 +321,7 @@ own open and upcoming	infolog	de	eigene offene und zukünftige
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 owner does not have edit rights	infolog	de	Der Besitzer dieses Datensatzes benötigt Bearbeitungsrechte
+owner, responsible	infolog	de	Besitzer, Verantwortlicher
 parent	infolog	de	Elterneintrag
 parent infolog	infolog	de	Übergeordneter InfoLog
 participants for scheduling an appointment	infolog	de	Teilnehmer für Termin planen

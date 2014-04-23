@@ -1,6 +1,6 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
-%1 access to other data	admin	de	Zugriff von %1 auf Daten von anderen
+%1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
 %1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
@@ -22,7 +22,7 @@
 -  type	admin	de	-Typ
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffskontrolle
-access to %1 data by others	admin	de	Zugriff auf Daten von %1 durch andere
+access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account	admin	de	Benutzerkonto
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail Adresse --> nicht benachrichtigt!

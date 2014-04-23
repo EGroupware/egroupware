@@ -419,6 +419,7 @@ use source as displayed, if applicable	mail	en	use source as displayed, if appli
 use username+password from current user	mail	en	Use username+password from current user
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	mail	en	Vacation notice
+vacation notice is active	mail	en	Vacation notice is active
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation notice sucessfully updated.	mail	en	Vacation notice sucessfully updated.
 vacation notice update failed	mail	en	Vacation notice update failed

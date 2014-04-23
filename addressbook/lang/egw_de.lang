@@ -157,7 +157,7 @@ custom fields	addressbook	de	Benutzerdefinierte Felder
 data exchange settings	addressbook	de	Einstellungen Datenaustausch
 debug output in browser	addressbook	de	Debug - Ausgabe in Browser
 default	addressbook	de	Standard
-default action on double-click	addressbook	de	Vorgabe bein doppel-Klick einer Adresse
+default action on double-click	addressbook	de	Vorgabe beim Doppel-Klick einer Adresse
 default address format	addressbook	de	Vorgabe für Format der Adresse
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default document to insert contacts	addressbook	de	Standarddokument zum Einfügen von Kontakten
@@ -192,7 +192,7 @@ download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei
 duration	addressbook	de	Dauer
 each category in its own field	addressbook	de	Jede Kategorie in einem eigenen Feld
 each option in its own field	addressbook	de	Jede Option in einem eigenen Feld
-edit contact	addressbook	de	Adressee bearbeiten
+edit contact	addressbook	de	Adresse bearbeiten
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
@@ -350,8 +350,8 @@ number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
 open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail Programm
 open for editing?	addressbook	de	Zum Bearbeiten öffnen?
-open infolog crm view	addressbook	de	Infolog CRM-Ansicht öffnen
-open tracking system crm view	addressbook	de	Ticket System CRM-Ansicht öffnen
+open infolog crm view	preferences	de	Infolog CRM-Ansicht öffnen
+open tracking system crm view	preferences	de	Ticket System CRM-Ansicht öffnen
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen
@@ -397,6 +397,7 @@ required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Beruf
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
+search letter	addressbook	de	Suche nach Buchstaben
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
 select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen

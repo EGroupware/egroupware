@@ -350,8 +350,8 @@ number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 open for editing?	addressbook	en	Open for editing?
-open infolog crm view	addressbook	en	Open InfoLog CRM view
-open tracking system crm view	addressbook	en	Open Tracking System CRM view
+open infolog crm view	preferences	en	Open InfoLog CRM view
+open tracking system crm view	preferences	en	Open Tracking System CRM view
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
 organisations	addressbook	en	Organisations
@@ -397,6 +397,7 @@ required fields *	addressbook	en	Required fields *
 role	addressbook	en	Occupation
 room	addressbook	en	Room
 search for '%1'	addressbook	en	Search for '%1'
+search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
 select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select address book type

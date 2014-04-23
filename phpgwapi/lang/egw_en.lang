@@ -145,12 +145,14 @@ categories for	common	en	Categories for
 category	common	en	Category
 category %1 has been added !	common	en	Category %1 has been added!
 category %1 has been updated !	common	en	Category %1 has been updated!
+category owner	common	en	Category owner
 cayman islands	common	en	CAYMAN ISLANDS
 cc	common	en	Cc
 centered	common	en	Centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
+change owner	common	en	Change Owner
 charset	common	en	utf-8
 check installation	common	en	Check installation
 check now	common	en	Check now
@@ -220,6 +222,7 @@ delete	common	en	Delete
 delete category	common	en	Delete category
 delete file	common	en	Delete file
 delete row	common	en	Delete row
+delete selected entries?	common	en	Delete selected entries?
 delete these entries	common	en	Delete these entries
 delete this entry	common	en	Delete this entry
 denmark	common	en	DENMARK
@@ -524,6 +527,7 @@ niger	common	en	NIGER
 nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
+no - cancel	common	en	No - Cancel
 no entries found, try again ...	common	en	No entries found, try again ...
 no filters	common	en	No filters
 no history for this record	common	en	No history for this record
@@ -691,6 +695,7 @@ select "%1", if your client support groups, eg. os x or ios addressbook.	groupda
 select action	common	en	Select action
 select all	common	en	Select all
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
+select all entries	common	en	Select all entries
 select category	common	en	Select category
 select date	common	en	Select date
 select group	common	en	Select group
@@ -877,6 +882,8 @@ written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes
+yes - delete	common	en	Yes - Delete
+yes - delete including sub-entries	common	en	Yes - Delete including sub-entries
 you are required to change your password during your first login	common	en	You are required to change your password during your first log in
 you can customize how many icons and toolbars the editor shows.	common	en	How many icons and tool bars the editor shows.
 you have been successfully logged out	login	en	You have been successfully logged out.

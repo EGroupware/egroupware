@@ -28,7 +28,7 @@ about	common	de	Über
 about %1	common	de	Über %1
 about egroupware	common	de	Über EGroupware
 about the calendar	jscalendar	de	Über den Kalender
-access	common	de	Zugriff
+access	common	de	Zugriffskontrolle
 access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
 account has been deleted	common	de	Benutzerkennung wurde gelöscht
@@ -145,12 +145,14 @@ categories for	common	de	Kategorien für
 category	common	de	Kategorie
 category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
 category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
+category owner	common	de	Eigentümer der Kategorie
 cayman islands	common	de	KAIMAN INSELN
 cc	common	de	Kopie
 centered	common	de	zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	ändern
+change owner	common	de	Eigentümer ändern
 charset	common	de	UTF-8
 check installation	common	de	Installation überprüfen
 check now	common	de	jetzt überprüfen
@@ -198,7 +200,7 @@ could not contact server. operation timed out!	common	de	Konnte Server nicht kon
 create	common	de	Erstellen
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
-ctrl	common	de	Ctr
+ctrl	common	de	Strg
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
@@ -215,11 +217,12 @@ december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
-del	common	de	Del
+del	common	de	Ent
 delete	common	de	Löschen
 delete category	common	de	Kategorie entfernen
 delete file	common	de	Datei löschen
 delete row	common	de	Zeile löschen
+delete selected entries?	common	de	Möchten Sie die markierten Einträge löschen?
 delete these entries	common	de	Diese Einträge löschen
 delete this entry	common	de	Diesen Eintrag löschen
 denmark	common	de	DÄNEMARK
@@ -524,6 +527,7 @@ niger	common	de	NIGER
 nigeria	common	de	NIGERIA
 niue	common	de	NIUE
 no	common	de	Nein
+no - cancel	common	de	Nicht Löschen - Abbruch
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
 no filters	common	de	Filter aufheben
 no history for this record	common	de	Keine Historie für diesen Datensatz
@@ -691,6 +695,7 @@ select "%1", if your client support groups, eg. os x or ios addressbook.	groupda
 select action	common	de	Befehl auswählen
 select all	common	de	Alle auswählen
 select all %1 %2 for %3	common	de	Alle auswählen %1 %2 von %3
+select all entries	common	de	Alle Datensätze auswählen
 select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
@@ -877,6 +882,8 @@ written by:	common	de	geschrieben von:
 year	common	de	Jahr
 yemen	common	de	JEMEN
 yes	common	de	Ja
+yes - delete	common	de	Einträge löschen
+yes - delete including sub-entries	common	de	Einträge inklusive Untereinträge
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wie viele Icons und Toolbars der Editor anzeigt.
 you have been successfully logged out	login	de	Abmelden erfolgreich
