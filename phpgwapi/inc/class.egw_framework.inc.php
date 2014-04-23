@@ -1991,6 +1991,28 @@ if ($app == 'home') continue;
 	{
 		return egw_favorites::set_favorite($app, $name, $action, $group, $filters);
 	}
+
+	/**
+	 * Get a cachable list of users for the client
+	 *
+	 * The account source takes care of access and filtering according to preference
+	 */
+	public static function ajax_user_list()
+	{
+		$list = array('accounts' => array(),'groups' => array(), 'owngroups' => array());
+		if($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'primary_group')
+		{
+			$list['accounts']['filter']['group'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+		}
+		foreach($list as $type => &$accounts)
+		{
+			$options = array('account_type' => $type) + $accounts;
+			$accounts = accounts::link_query('',$options);
+		}
+		
+		egw_json_response::get()->data($list);
+		return $list;
+	}
 }
 
 // Init all static variables

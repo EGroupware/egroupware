@@ -104,10 +104,21 @@ var et2_selectAccount = et2_selectbox.extend(
 	 */
 	createInputWidget: function()
 	{
-		this._super.apply(this, arguments);
-
 		var type = this.egw().preference('account_selection', 'common');
 
+		switch(type)
+		{
+			case 'none':
+				break;
+			case 'selectbox':
+			case 'groupmembers':
+			default:
+				jQuery.extend(this.options.select_options, this.egw().accounts(this.options.account_type));
+				break;
+		}
+
+		this._super.apply(this, arguments);
+		
 		// Add search button
 		if(type == 'primary_group')
 		{

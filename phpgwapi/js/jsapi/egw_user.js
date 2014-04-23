@@ -25,6 +25,17 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	 */
 	var userData = {apps: {}};
 
+	/**
+	 * Client side cache of accounts user has access to
+	 * Used by account select widgets
+	 */
+	var accountStore = {
+		// Filled by AJAX when needed
+		//accounts: {},
+		//groups: {},
+		//owngroups: {}
+	};
+
 	return {
 		/**
 		 * Set data of current user
@@ -63,6 +74,36 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		{
 			return typeof _name == 'undefined' || typeof userData.apps[_app] == 'undefined' ?
 				userData.apps[_app] : userData.apps[_app][_name];
+		},
+
+		/**
+		 * Get a list of accounts the user has access to
+		 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
+		 *
+		 * @param {string} type
+		 * @returns {Object}
+		 */
+		accounts: function(type)
+		{
+			if(typeof type == 'undefined') type = 'accounts';
+
+			var list = {};
+			if(jQuery.isEmptyObject(accountStore))
+			{
+				// Synchronous
+				egw.json('home.egw_framework.ajax_user_list.template',[],
+					function(data) {accountStore = data||{};}
+				).sendRequest();
+			}
+			if(type == 'both')
+			{
+				list = jQuery.extend(list, accountStore['accounts'],accountStore['groups']);
+			}
+			else
+			{
+				list = jQuery.extend(list, accountStore[type]);
+			}
+			return list;
 		}
 	};
 
