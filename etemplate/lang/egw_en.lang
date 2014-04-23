@@ -396,6 +396,7 @@ select number	etemplate	en	Select number
 select one ...	etemplate	en	Select ...
 select percentage	etemplate	en	Select percentage
 select priority	etemplate	en	Select priority
+select some options	etemplate	en	Select Some Options
 select state	etemplate	en	Select state
 select the columns to display in the list	etemplate	en	Select columns to display in the list
 select the indexed columns in their desired order	etemplate	en	Select indexed columns in desired order

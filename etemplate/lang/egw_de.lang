@@ -395,6 +395,7 @@ select number	etemplate	de	Zahl auswählen
 select one ...	etemplate	de	Eine auswählen ...
 select percentage	etemplate	de	Prozente auswählen
 select priority	etemplate	de	Priorität auswählen
+select some options	etemplate	de	Optionen auswählen
 select state	etemplate	de	US-State auswählen
 select the columns to display in the list	etemplate	de	Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen
 select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen

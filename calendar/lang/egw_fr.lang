@@ -22,6 +22,7 @@ actions	calendar	fr	Actions
 actions...	calendar	fr	Actions...
 add alarm	calendar	fr	Ajouter une alarme
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
+add new participants or resource	calendar	fr	Ajouter de nouveaux participants ou ressources
 add timesheet entry	calendar	fr	Ajouter une entrée feuille de temps
 added	calendar	fr	Ajouté
 added by synchronisation	calendar	fr	ajouté par synchronisation
@@ -541,6 +542,7 @@ use this timezone to import/export calendar data.	calendar	fr	Utiliser ce fuseau
 use weekday start	calendar	fr	Utiliser le début de semaine
 user or group	calendar	fr	Utilisateur ou groupe
 user selectable css file for the calendar setup	calendar	fr	Fichier css sélectionnable pour le setup du calendrier
+users + groups: inviting both allways requires an invite grant	admin	fr	Utilisateurs + groupes : inviter les deux nécessite une autorisation d'invitation
 using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur
 view exception	calendar	fr	Voir l'exception
 view series	calendar	fr	Voir la série

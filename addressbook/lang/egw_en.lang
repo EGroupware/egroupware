@@ -157,6 +157,7 @@ custom fields	addressbook	en	Custom fields
 data exchange settings	addressbook	en	Data exchange settings
 debug output in browser	addressbook	en	Debug output in browser
 default	addressbook	en	Default
+default action on double-click	addressbook	en	Default action on double-click
 default address format	addressbook	en	Default address format
 default addressbook for adding contacts	addressbook	en	Default address book
 default document to insert contacts	addressbook	en	Default document to insert contacts
@@ -191,6 +192,7 @@ download this contact as vcard file	addressbook	en	Download this contact as vCar
 duration	addressbook	en	Duration
 each category in its own field	addressbook	en	Each category in its own field
 each option in its own field	addressbook	en	Each option in its own field
+edit contact	addressbook	en	Edit contact
 edit custom field	addressbook	en	Edit custom field
 edit custom fields	admin	en	Edit custom fields
 edit extra account-data in the addressbook	admin	en	Edit extra account data in the address book
@@ -348,6 +350,8 @@ number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 open for editing?	addressbook	en	Open for editing?
+open infolog crm view	addressbook	en	Open InfoLog CRM view
+open tracking system crm view	addressbook	en	Open Tracking System CRM view
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
 organisations	addressbook	en	Organisations

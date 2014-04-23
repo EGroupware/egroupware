@@ -68,7 +68,7 @@ date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
-default your name and email	mail	en	default your name and email
+default your name and email	common	en	default your name and email
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
@@ -418,7 +418,7 @@ use regular expressions (see wikipedia for information on posix regular expressi
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
-vacation notice	admin	en	vacation notice
+vacation notice	mail	en	Vacation notice
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation notice sucessfully updated.	mail	en	Vacation notice sucessfully updated.
 vacation notice update failed	mail	en	Vacation notice update failed

@@ -69,7 +69,7 @@ date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
-default your name and email	mail	de	z.B. Ihr Name und Ihre Mail-Adresse
+default your name and email	common	de	z.B. Ihr Name und Ihre Mail-Adresse
 delete folder	mail	de	Ordner Löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
@@ -419,7 +419,7 @@ use regular expressions (see wikipedia for information on posix regular expressi
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
 use username+password from current user	mail	de	verwendet Benutzername+Passwort des angemeldeten Benutzers
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
-vacation notice	admin	de	Abwesenheitsnotiz
+vacation notice	mail	de	Abwesenheitsnotiz
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
 vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisiert.
 vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
