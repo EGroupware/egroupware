@@ -109,6 +109,9 @@ input.et2_radiobox {
 img.iphoto {
   width: 100%;
 }
+#addressbook-index_org_view {
+  margin: 5px;
+}
 @media all {
   /* #############################################################################
 // iframe
@@ -139,6 +142,9 @@ img.iphoto {
     height: auto;
     min-height: 390px;
     overflow: auto;
+  }
+  div#addressbook-index {
+    /*#############################################################*/
   }
   div#addressbook-index div.et2_hbox_left {
     padding: 0px 17px 0 13px;
@@ -202,11 +208,9 @@ img.iphoto {
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
     background-color: #f0f0f0;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    /*.rounded (3px);*/
     color: #000000;
     -webkit-appearance: none;
     -webkit-transition-property: background-color;
@@ -233,11 +237,9 @@ img.iphoto {
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
     background-image: url('../../../pixelegg/images/advanced-search.png');
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    /*.rounded (3px);*/
     color: #000000;
     -webkit-appearance: none;
     -webkit-transition-property: background-color;
@@ -265,11 +267,9 @@ img.iphoto {
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
     background-image: url('../../../pixelegg/images/advanced-search.png');
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /*.border_normal;*/
     /*.box_shadow_standard_light;*/
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    /*.rounded (3px);*/
     color: #000000;
     -webkit-appearance: none;
     -webkit-transition-property: background-color;
@@ -312,7 +312,7 @@ img.iphoto {
     color: #0c5da5;
     line-height: 0.6em;
     padding-left: 0.1em;
-    padding-right: 4em;
+    padding-right: 100em;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:active {
     background-color: #1aa200;
@@ -443,17 +443,54 @@ img.iphoto {
     display: none;
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget:hover img {
-    -webkit-transform: scale(1.5);
-    -moz-transform: scale(1.5);
-    -o-transform: scale(1.5);
-    -ms-transform: scale(1.5);
-    transform: scale(1.5);
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    -o-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
     margin: 0.5em;
     background: #ffffff;
   }
   .et2_container[id^="infolog-index-addressbook"] .egwGridView_scrollarea {
     overflow-y: scroll !important;
     overflow-x: hidden !important;
+  }
+  button#tracker-index-addressbook_add {
+    width: 32px;
+    border: 1px solid #0C5DA5;
+    margin: 6px 2px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    padding: -0.5em;
+    background-color: #e6e6e6 !important;
+    background-size: 16px 16px;
+    height: 24px;
+  }
+  button#tracker-index-addressbook_add:before {
+    content: "";
+    font-size: 2em;
+    color: #0c5da5;
+    line-height: 0.6em;
+    padding-left: 0.1em;
+    padding-right: 100em;
+  }
+  button#tracker-index-addressbook_add:active {
+    background-color: #1aa200;
+  }
+  button#tracker-index-addressbook_add:hover {
+    background-color: #66a1d2 !important;
+    color: #ffc200;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
+  }
+  button#tracker-index-addressbook_add:active {
+    background-color: #1aa200 !important;
   }
   /*###########################################
 #                                           #
