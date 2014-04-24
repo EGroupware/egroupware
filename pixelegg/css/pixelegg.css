@@ -5427,14 +5427,14 @@ tr.dialogOperators td {
 }
 /*** dialogHeader on a box not table ***/
 div.dialogHeader {
-  background-color: #0c5da5 !important;
+  /*background-color: @egw_color_2_a !important;*/
   vertical-align: middle;
-  font-size: 150%;
+  /*font-size: 150%*/
 }
 .dialogHeader2,
 .dialogHeader3,
 .dialogHeader4 {
-  font-size: 120%;
+  /*font-size: 120%;*/
 }
 /**********    Header Part ********************/
 .dialogHeader {
@@ -5736,8 +5736,7 @@ body > div#egw_message {
   border-bottom-left-radius: 15px;
   border-top-left-radius: 0px;
   /*.background-clip(padding-box);*/
-  right: 5px;
-  /*top: 5px;*/
+  right: 33%;
   top: 0px;
   padding: 10px;
   padding-left: 25px;
@@ -5745,6 +5744,8 @@ body > div#egw_message {
   /*border: 2px gray solid;*/
   min-width: 100px;
   z-index: 100000;
+  margin: 0px auto;
+  width: 22%;
 }
 /*
 	Printing
