@@ -26,7 +26,7 @@ $GLOBALS['settings'] = array(
 		'help'   => 'Choose a notification-chain. You will be notified over the backends included in the chain.<br />'
 					.'Note: If a notification-chain is marked as "disabled", your Administrator does not allow one or'
 					.' more of the backends included in the chain and notifications falls back to "E-Mail" while notifying you.',
-		'default'=> 'popup_or_email',
+		'default'=> 'popup_and_email',
 		'xmlrpc' => True,
 		'admin'  => False
 	),

@@ -339,7 +339,8 @@ class preferences_hooks
 				'values' => egw_ckeditor_config::$font_options,
 				'help'   => 'Automatically start with this font',
 				'xmlrpc' => True,
-				'admin'  => false
+				'admin'  => false,
+				'default' => 'arial, helvetica, sans-serif'
 			),
 			'rte_font_unit' => array(
 				'type'   => 'select',
@@ -349,7 +350,8 @@ class preferences_hooks
 				'help'   => 'Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.',
 				'default'=> 'pt',
 				'xmlrpc' => True,
-				'admin'  => false
+				'admin'  => false,
+				'default' => 'pt'
 			),
 			'rte_font_size' => array(
 				'type'   => 'select',
@@ -358,7 +360,8 @@ class preferences_hooks
 				'values' => egw_ckeditor_config::$font_size_options,
 				'help'   => 'Automatically start with this font size',
 				'xmlrpc' => True,
-				'admin'  => false
+				'admin'  => false,
+				'default' => '10'
 			),
 			'spellchecker_lang' => array(
 				'type'   => 'select',
@@ -388,7 +391,7 @@ class preferences_hooks
 				'help'   => 'Select the theme (visualization) of the rich text editor.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'office2003',
+				'forced' => 'moono',
 			),
 			'rte_features' => array(
 				'type'   => 'select',
