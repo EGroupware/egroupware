@@ -180,6 +180,7 @@ class mail_ui
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
+
 	/**
 	 * Subscribe or Unsubscribe to a folder
 	 * also it is consider if the folder is valid to un/subscribe
@@ -299,6 +300,26 @@ class mail_ui
 							}
 						}
 					}
+					$parentFolder='INBOX';
+					$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+					if ($folderInfo['unseen'])
+					{
+						$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
+					}
+					if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
+					{
+						$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
+					}
+					$refreshData = array(
+						$content['profileId'].self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
+
+					// Send full info back in the response
+					$response = egw_json_response::get();
+					foreach($refreshData as $folder => &$name)
+					{
+						$name = $this->getFolderTree(true, $folder, true, true,false);
+					}
+					$response->call('opener.app.mail.mail_reloadNode',$refreshData);
 					egw_framework::refresh_opener($msg, 'mail');
 					if ($button == 'apply') break;
 				}
@@ -311,6 +332,7 @@ class mail_ui
 
 		$preserv['profileId'] = $content['profileId'];
 		$readonlys = array();
+
 
 		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
 	}
@@ -700,6 +722,7 @@ class mail_ui
 	 * @param string $_nodeID, nodeID to fetch and return
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 * @param boolean $_returnNodeOnly only effective if $_nodeID is set, and $_nodeID is_nummeric
+	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
 	 * @return array something like that: array('id'=>0,
 	 * 		'item'=>array(
 	 *			'text'=>'INBOX',
@@ -709,7 +732,7 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true)
+	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true, $_useCacheIfPossible=true)
 	{
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (!is_null($_nodeID) && $_nodeID !=0)
@@ -725,7 +748,7 @@ class mail_ui
 			}
 		}
 		//$starttime = microtime(true);
-		$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,true);
+		$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
 		$trashFolder = $this->mail_bo->getTrashFolder();
@@ -1270,8 +1293,8 @@ class mail_ui
 						'caption' => 'Undelete',
 						'icon' => 'revert',
 						'onExecute' => 'javaScript:app.mail.mail_flag',
-						'enableClass' => 'deleted',
-						'enabled' => "javaScript:mail_enabledByClass",
+						//'enableClass' => 'deleted',
+						//'enabled' => "javaScript:mail_enabledByClass",
 					),
 				),
 			),
