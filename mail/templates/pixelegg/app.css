@@ -905,23 +905,10 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   float: left;
   width: 100%;
   height: 35px !important;
-  padding: 5px 5px 5px 2px !important;
-  /*.background-color-5-gray;*/
-  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
-  /* IE6-9 */
+  padding: 0px 5px 5px 2px !important;
+  /*.gradient_thead;*/
   color: #000000;
+  background: transparent;
   /*######################################*/
   /*// Button senden -> dev_buttons.less*/
   /*######################################*/
@@ -960,14 +947,18 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mail-compose_toolbar span.sent {
   float: left;
-  background-color: #0c5da5;
-  background-image: none;
 }
 #mail-compose .mail-compose_toolbar span.save {
   float: left;
 }
+#mail-compose .mail-compose_toolbar span.save img {
+  background-color: #ffffff;
+}
 #mail-compose .mail-compose_toolbar span.file {
   float: left;
+}
+#mail-compose .mail-compose_toolbar span.file img {
+  background-color: #ffffff;
 }
 #mail-compose .mail-compose_toolbar span.egw {
   float: left;
@@ -978,6 +969,10 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin: 3px;
   vertical-align: middle;
   width: auto;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ffffff;
 }
 #mail-compose .mail-compose_toolbar span.notification {
   float: left;
@@ -1024,18 +1019,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar span.et2_label {
   font-size: 8px;
 }
-#mail-compose .mail-compose_toolbar button.et2_button {
-  /*.dimension_height_m;*/
-  /*             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}*/
-}
 #mail-compose .mail-compose_toolbar .mail-compose_button {
   height: 27px;
-  margin-right: 3px !important;
+  /*margin-right: 3px !important;*/
   margin-top: 0.7px !important;
   padding: 0 3px 0 0;
   text-align: left;
-  font-weight: bold;
+  font-weight: normal;
   padding-left: 20px;
   width: 71px;
   float: left;
@@ -1154,6 +1144,10 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   background-color: #d9d9d9;
+}
+#mail-compose .mail-compose_toolbar .et2_file input,
+#mail-compose .mail-compose_toolbar .mail-compose_fileselector input {
+  border: none;
 }
 #mail-compose .mail-compose_toolbar .et2_file div.progress,
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector div.progress {
@@ -1687,7 +1681,7 @@ div.ui-toolbar-menulist {
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button img {
   width: 20px;
   height: 20px;
-  top: 1px;
+  top: 3px;
 }
 div#displayToolbar-menulist .et2_dropdown {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -2540,7 +2534,7 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   background-color: #f0f0f0;
   border-color: #e6e6e6;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  max-height: 2.6em;
+  max-height: 3.6em;
 }
 #mail-index_previewAttachmentArea img {
   width: 16px;
