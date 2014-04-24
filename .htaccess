@@ -15,7 +15,7 @@ php_flag track_vars on
 php_flag display_errors off
 # E_ALL & ~E_NOTICE & ~E_STRICT = 8191 - 8 - 2048 = 6135
 #php_value error_reporting 30711
-php_value max_execution_time 90
+php_value max_execution_time 240
 php_value memory_limit 256M
 php_value session.gc_maxlifetime 14400
 php_value upload_max_filesize 64M
@@ -25,7 +25,7 @@ php_flag session.use_trans_sid Off
 php_value session.gc_probability 1
 php_value session.gc_divisor 10
 # multibyte extension: needed for utf-8
-php_value mbstring.func_overload 7
+php_value mbstring.func_overload 0
 #
 #For Apache FCGI (not regular mod_php!) you need the following rewrite rule:
 #RewriteEngine on
