@@ -111,7 +111,7 @@
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
 								<menulist>
-									<menupopup type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" multiple="true" no_lang="1" tags="true" class="et2_fullWidth" account_type="both"/>
+									<menupopup type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" multiple="true" no_lang="1" tags="true" class="et2_fullWidth" account_type="both" empty_label="User or group"/>
 								</menulist>
 							</row>
 							<row class="row" disabled="1">
