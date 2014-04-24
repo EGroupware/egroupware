@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.wizard.sieve" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Step 3: Sieve - server side mail filtering" span="all" class="emailadmin_header"/>
+					<description/>
+				</row>
+				<row>
+					<description value="Enable Sieve" for="acc_sieve_enabled"/>
+					<menulist>
+						<menupopup type="select-bool" id="acc_sieve_enabled"/>
+					</menulist>
+				</row>
+				<row class="@manual_class">
+					<description value="Sieve server" for="acc_sieve_host"/>
+					<textbox blur="Hostname or IP" id="acc_sieve_host" onchange="app.emailadmin.wizard_sieve_onchange" size="32" maxlength="128"/>
+				</row>
+				<row class="@manual_class">
+					<description value="Secure connection" for="acc_sieve_ssl"/>
+					<hbox>
+						<menulist>
+							<menupopup id="acc_sieve_ssl" onchange="app.emailadmin.wizard_sieve_ssl_onchange" class="emailadmin_ssl"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.emailadmin.wizard_sieve_onchange" class="emailadmin_port"/>
+					</hbox>
+				</row>
+				<row  class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Continue" id="button[continue]" onclick="app.emailadmin.wizard_detect" image="continue" background_image="1"/>
+						<button label="Back" id="button[back]" image="back" background_image="1"/>
+						<button label="Manual entry" id="button[manual]" onclick="app.emailadmin.wizard_manual" image="manual" background_image="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+				<row>
+					<image src="emailadmin/progress" span="all" class="emailadmin_progress"/>
+					<description/>
+				</row>
+				<row>
+					<textbox multiline="true" id="sieve_output" readonly="true" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
