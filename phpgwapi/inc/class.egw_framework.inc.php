@@ -1316,11 +1316,11 @@ if ($app == 'home') continue;
 					egw::link('/index.php?menuaction=preferences.preferences_password.change').'", "_blank", "400x200")',
 			));
 		}
-
+		/* disable help until content is reworked
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
 			$this->_add_topmenu_item(array_merge($apps['manual'],array('title' => lang('Help'))));
-		}
+		}*/
 
 		$GLOBALS['egw']->hooks->process('topmenu_info',array(),true);
 		// Add extra items added by hooks
