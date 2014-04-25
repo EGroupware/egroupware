@@ -1,3 +1,9 @@
+egroupware-epl (14.1.20140425-1) hardy; urgency=low
+
+  * Mail: skip accounts with no imap server set for notification and foldertree
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 25 Apr 2014 11:50:02 +0200
+
 egroupware-epl (14.1.20140424-1) hardy; urgency=low
 
   * Mail: fix wrong port (typo) for SMTP STARTTLS in wizard
