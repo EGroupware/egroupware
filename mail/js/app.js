@@ -2518,8 +2518,13 @@ app.classes.mail = AppJS.extend(
 	 */
 	sieve_vac_all_aliases: function()
 	{
+		var aliases = [];
 		var addr = this.et2.getWidgetById('addresses');
-		addr.select_all();
+		var addresses = this.et2.getArrayMgr('sel_options').data.addresses;
+		
+		for(var id in addresses) aliases.push(id);
+		
+		addr.set_value(aliases);
 	},
 
 	/**
