@@ -547,7 +547,7 @@ class mail_sieve
 				//Set default value for days new entry
 				if (empty($content['days']))
 				{
-					$content['days'] = '1';
+					$content['days'] = '3';
 				}
 			}
 			else
