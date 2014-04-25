@@ -68,36 +68,6 @@ class mail_hooks
 			$profileID = 0;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-			try
-			{
-				$mail_bo = mail_bo::getInstance(true,$profileID);
-				$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
-			} catch (Exception $ex) {
-				error_log(__METHOD__."()" . $ex->getMessage());
-				$profileID = null;
-			}
-/*
-			if($profileID && $mail_bo->openConnection($profileID)) {
-				$folderObjects = $mail_bo->getFolderObjects(true, false);
-				foreach($folderObjects as $folderName => $folderInfo) {
-					#_debug_array($folderData);
-					$folderList[$folderName] = $folderInfo->displayName;
-				}
-				if ($GLOBALS['type'] === 'user')
-				{
-					$trashFolder    = $mail_bo->getTrashFolder();
-					$draftFolder	= $mail_bo->getDraftFolder();
-					$templateFolder = $mail_bo->getTemplateFolder();
-					$sentFolder		= $mail_bo->getSentFolder();
-					// use displaynames, if available
-					if (isset($folderList[$trashFolder])) $trashFolder = $folderList[$trashFolder];
-					if (isset($folderList[$draftFolder])) $draftFolder = $folderList[$draftFolder];
-					if (isset($folderList[$templateFolder])) $templateFolder = $folderList[$templateFolder];
-					if (isset($folderList[$sentFolder])) $sentFolder = $folderList[$sentFolder];
-				}
-				$mail_bo->closeConnection();
-			}
-*/
 
 			$mailConfig = config::read('mail');
 		}
