@@ -232,6 +232,10 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 {
 	if (!file_exists($config[$name])) bail_out(1,$config[$name].' not found!');
 }
+
+// install/upgrade required pear packages
+check_install_pear_packages();
+
 $setup_cli = $config['php'].' -d memory_limit=256M '.$config['setup-cli'];
 
 if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
@@ -338,8 +342,6 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			system($config['start_webserver'].' reload');
 		}
 	}
-	// install/upgrade required pear packages
-	check_install_pear_packages();
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
@@ -392,8 +394,6 @@ else
 			echo "\nEGroupware successful updated\n";
 			break;
 	}
-	// install/upgrade required pear packages
-	check_install_pear_packages();
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
