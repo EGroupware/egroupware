@@ -544,6 +544,11 @@ class mail_sieve
 				{
 					$content['forwards'] = '';
 				}
+				//Set default value for days new entry
+				if (empty($content['days']))
+				{
+					$content['days'] = '1';
+				}
 			}
 			else
 			{
