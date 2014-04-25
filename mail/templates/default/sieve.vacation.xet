@@ -2,23 +2,20 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
-		<grid>
+		<grid width="100%">
 			<columns>
-				<column/>
-				<column width="100%"/>
+				<column width="25%"/>
+				<column width="35%"/>
+				<column width="30%"/>
+				<column width="10%"/>
 			</columns>
 			<rows>
-				<row disabled="!@msg" part="header">
-					<description align="center" id="msg" span="all" class="message"/>
-					<description/>
-				</row>
-				<row class="th" valign="top" part="header">
-					<description value="Edit vacation settings"/>
-					<description/>
+				<row valign="top" class="dialogHeader">
+					<description value="Edit vacation settings" span="all" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="Status:"/>
-					<hbox>
+					<hbox span="all">
 						<menulist>
 							<menupopup id="status" onchange='app.mail.vacationFilterStatusChange'/>
 						</menulist>
@@ -28,48 +25,38 @@
 				</row>
 				<row>
 					<description value="Respond to mail sent to:"/>
-					<vbox>
-						<taglist-email id="addresses" width="40%" allowFreeEntries="true" />
-						<button class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
-					</vbox>
+					<taglist-email id="addresses" allowFreeEntries="true" empty_label="Respond" span="2"/>
+					<button class="$cont[hideIfSieveDisabled] et2_fullWidth"  label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
+				</row>
+				<row>
+					<description value="Forward messages to:"/>
+					<taglist-email id="forwards" allowFreeEntries="true" width="100%" empty_label="Forwards"/>
 				</row>
 				<row>
 					<description value="Every:"/>
 					<textbox type="integer" id="days" min="1" max="31"/>
+					
 				</row>
 				<row>
-					<hbox>
-						<description value="With message:"/>
-					</hbox>
-					<vbox>
+					<description value="With message:"/>
+					<vbox span="all">
 						<textbox multiline="true" id="text" width="99%" height="150px"/>
 						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
 				</row>
 				<row>
-					<description value="Forward messages:"/>
-					<taglist-email id="forwards" width="40%" allowFreeEntries="true"/>
+					<description value="Set it as default:"/>
+					<checkbox id="set_as_default"/>
+					<description value="Validate addresses on submit:"/>
+					<checkbox id="check_mail_sent_to"/>
 				</row>
-				<row>
-					<description value="Validate selected addresses on submit:"/>
-					<hbox>
-						<checkbox id="check_mail_sent_to"/>
-					</hbox>
-				</row>
-				<row>
-					<description value="set it as default:"/>
-					<hbox>
-						<checkbox id="set_as_default"/>
-					</hbox>
-				</row>
-				<row>
-					<hbox>
+				<row class="dialogFooterToolbar">
+					<hbox span="all">
 						<button label="Save" id="button[save]" class="$cont[hideIfSieveDisabled]"/>
 						<button label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
 						<button label="Cancel" id="button[cancel]" class="$cont[hideIfSieveDisabled]"/>
 					</hbox>
-					<description/>
-				</row>
+				</row> 
 			</rows>
 		</grid>
 	</template>
