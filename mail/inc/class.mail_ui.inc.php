@@ -763,10 +763,20 @@ class mail_ui
 		$out = array('id' => 0);
 
 		//$starttime = microtime(true);
-		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
+		foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
 		{
-			if ($_profileID && $acc_id != $_profileID) continue;
-
+			if ($_profileID && $acc_id != $_profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' Fetching accounts '."  $acc_id != $_profileID ".'->'.$identity_name);
+				continue;
+			}
+			//error_log(__METHOD__.__LINE__.array2string($accountObj));
+			if (empty($accountObj->acc_imap_host))
+			{
+				// not to be used for IMAP Foldertree, as there is no Imap host
+				continue;
+			}
+			$identity_name = emailadmin_account::identity_name($accountObj);
 			$oA = array('id' => $acc_id,
 				'text' => str_replace(array('<','>'),array('[',']'),$identity_name),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
