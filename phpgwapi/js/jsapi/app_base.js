@@ -319,6 +319,21 @@ var AppJS = Class.extend(
 					}
 				})
 				.addClass("ui-helper-clearfix");
+				
+				//Add Sortable handler to sideBox fav. menu
+				 jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
+
+					items:'li:not([data-id$="add"])',
+					placeholder:'ui-fav-sortable-placeholder',
+					update: function (event, ui)
+					{
+						var favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
+
+						self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
+						
+						self._refresh_fav_nm();
+					}
+				});			
 			return true;
 		}
 		return false;
@@ -394,7 +409,32 @@ var AppJS = Class.extend(
 		// Stop the normal bubbling if this is called on click
 		return false;
 	},
-
+	
+	/**
+	 * Update favorite items in nm fav. menu 
+	 * 
+	 */
+	_refresh_fav_nm: function ()
+	{
+		var self = this;
+		
+		if(etemplate2 && etemplate2.getByApplication)
+		{
+			var et2 = etemplate2.getByApplication(self.appname);
+			for(var i = 0; i < et2.length; i++)
+			{
+				et2[i].widgetContainer.iterateOver(function(_widget) {
+					_widget.stored_filters = _widget.load_favorites(self.appname);
+					_widget.init_filters(_widget);
+				}, self, et2_favorites);
+			}
+		}
+		else
+		{
+			throw new Error ("_refresh_fav_nm():Either et2 is  not ready/ not there yet. Make sure that etemplate2 is ready before call this method.");
+		}
+	},
+	
 	/**
 	 * Create the "Add new" popup dialog
 	 */
@@ -522,17 +562,7 @@ var AppJS = Class.extend(
 					}
 
 					// Try to update nextmatch favorites too
-					if(etemplate2 && etemplate2.getByApplication)
-					{
-						var et2 = etemplate2.getByApplication(self.appname);
-						for(var i = 0; i < et2.length; i++)
-						{
-							et2[i].widgetContainer.iterateOver(function(_widget) {
-								_widget.stored_filters = _widget.load_favorites(self.appname);
-								_widget.init_filters(_widget);
-							}, self, et2_favorites);
-						}
-					}
+					self._refresh_fav_nm();
 				}
 				// Reset form
 				delete self.favorite_popup.state;
@@ -617,19 +647,7 @@ var AppJS = Class.extend(
 						// Remove line from list
 						line.slideUp("slow", function() { });
 
-						// Try to update nextmatch favorites too
-						if(etemplate2 && etemplate2.getByApplication)
-						{
-							var et2 = etemplate2.getByApplication(app.appname);
-							for(var i = 0; i < et2.length; i++)
-							{
-								et2[i].widgetContainer.iterateOver(function(_widget) {
-									var faves = _widget.load_favorites(app.appname);
-									delete faves[id];
-									_widget.init_filters(_widget,faves);
-								}, app, et2_favorites);
-							}
-						}
+						trash._refresh_fav_nm();
 					}
 					else
 					{

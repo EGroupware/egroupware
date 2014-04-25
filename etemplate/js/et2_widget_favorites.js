@@ -177,20 +177,6 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			}
 		});
 		
-		//Add Sortable handler to sideBox fav. menu
-		$j(this.sidebox_target.children()).sortable({
-			
-			items:'li:not([data-id$="add"])',
-			placeholder:'ui-fav-sortable-placeholder',
-			update: function (event, ui)
-			{
-				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
-				
-				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
-				self.init_filters(self,self.load_favorites(self.options.app));
-			}
-		});
-		
 		// Add a listener on the delete to remove
 		this.menu.on("click","div.ui-icon-trash", app[self.options.app], function() {
 				// App instance might not be ready yet, so don't bind directly
