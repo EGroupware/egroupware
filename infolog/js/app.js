@@ -178,7 +178,7 @@ app.classes.infolog = AppJS.extend(
 		{
 			for(var i = 0; i < _senders.length; i++)
 			{
-				if ($j(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
+				if ($j(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs'))
 				{
 					children = true;
 					break;

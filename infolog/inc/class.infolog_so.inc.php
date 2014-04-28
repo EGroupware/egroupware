@@ -692,7 +692,7 @@ class infolog_so
 			if ($action)
 			{
 				$links = solink::get_links($action=='sp'?'infolog':$action,
-					is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog');
+					is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog','',$query['col_filter']['info_status'] =='deleted');
 
 				if (count($links))
 				{

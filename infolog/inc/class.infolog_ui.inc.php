@@ -318,7 +318,7 @@ class infolog_ui
 				$id = $link['id'];
 			}
 			if(!is_array($id)) $id = explode(',',$id);
-			if (!($linked = egw_link::get_links_multiple($app,$id,true,'infolog')))
+			if (!($linked = egw_link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
 			{
 				$rows = array();	// no infologs linked to selected link --> no rows to return
 				return 0;
@@ -780,7 +780,7 @@ class infolog_ui
 		}
 		unset($values['nm']['rows']['checked']);	// not longer used, but hides button actions
 
-		if ($values['add'] || $values['cancel'] || isset($values['nm']['rows']) || isset($values['main']))
+		if ($values['add'] || $values['cancel'] || isset($values['main']))
 		{
 			if ($values['add'])
 			{
@@ -796,7 +796,7 @@ class infolog_ui
 			}
 			else
 			{
-				list($do,$do2) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
+				list($do,$do2) = each($values['main']);
 				list($do_id) = @each($do2);
 				switch((string)$do)
 				{
