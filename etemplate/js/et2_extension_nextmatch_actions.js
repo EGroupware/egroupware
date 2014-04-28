@@ -374,7 +374,8 @@ function nm_open_popup(_action, _ids)
 			var dialog_parent = dialog.parent();
 			var d_buttons = [];
 			var action = _action;
-			jQuery('button',popup).each(function(index) {
+			popup.show();
+			var buttons = jQuery('button:visible',popup).each(function(index) {
 				var but = jQuery(this);
 				but.hide();
 				if(but.attr("id"))
@@ -395,6 +396,7 @@ function nm_open_popup(_action, _ids)
 					}
 				});
 			});
+			popup.hide();
 			dialog.dialog({
 				title: jQuery('.promptheader',popup).text(),
 				modal: true,
@@ -406,6 +408,7 @@ function nm_open_popup(_action, _ids)
 
 					// Put it back where it came from, or et2 will error when clear() is called
 					dialog.appendTo(dialog_parent);
+					buttons.show();
 				}
 			});
 		}
