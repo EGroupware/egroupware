@@ -356,6 +356,10 @@ class admin_acl
 			//error_log(__METHOD__."() $n: ".array2string($row));
 		}
 		//error_log(__METHOD__."(".array2string($query).") returning ".$total);
+
+		// Get updated apps permission
+		$rows['acl_apps'] = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $query['account_id']);
+		
 		return $total;
 	}
 
@@ -405,7 +409,7 @@ class admin_acl
 			self::check_access($account_id, $location);	// throws exception, if no rights
 
 			$acl = $GLOBALS['egw']->acl;
-
+			
 			if (!(int)$rights)	// this also handles taking away all rights as delete
 			{
 				$acl->delete_repository($app, $location, $account_id);
@@ -417,7 +421,7 @@ class admin_acl
 		}
 		if (!(int)$rights)
 		{
-			if (count(ids) > 1)
+			if (count($ids) > 1)
 			{
 				$msg = lang('%1 ACL entries deleted.', count($ids));
 			}
@@ -449,6 +453,7 @@ class admin_acl
 		$content = array();
 		$account_id = isset($_GET['account_id']) && (int)$_GET['account_id'] ?
 			(int)$_GET['account_id'] : $GLOBALS['egw_info']['user']['account_id'];
+		$acl_apps = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $account_id);
 		$content['nm'] = array(
 			'get_rows' => 'admin_acl::get_rows',
 			'no_cat' => true,
@@ -467,9 +472,10 @@ class admin_acl
 				'location' => 'acl_rights',
 				'owner' => $account_id,
 			), array(), true),
+			// Client side is much easier if we send an array
+			'acl_apps' => $acl_apps ? $acl_apps : array()
 		);
 		$user = common::grab_owner_name($content['nm']['account_id']);
-		$content['acl_apps'] = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $account_id);
 		$sel_options = array(
 			'filter' => array(
 				'other' => lang('Access to %1 data by others', $user),

@@ -396,7 +396,7 @@ app.classes.admin = AppJS.extend(
 			if(content.acl_location == 'run')
 			{
 				// These are the apps the account has access to
-				content.apps = this.et2.getArrayMgr('content').getEntry('acl_apps')||'';
+				content.apps = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_apps')||[];
 			}
 			else
 			{
@@ -449,13 +449,48 @@ app.classes.admin = AppJS.extend(
 				if(_button_id != et2_dialog.OK_BUTTON) return;
 
 				// Only send the request if they entered everything
-				if(_value.acl_appname && _value.acl_account && _value.acl_location)
+				if(_value.acl_account && (_value.acl_appname && _value.acl_location || _value.apps))
 				{
 					var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
 					var rights = 0;
 					for(var i in _value.acl)
 					{
 						rights += parseInt(_value.acl[i]);
+					}
+					if(_value.apps && !_value.acl_appname)
+					{
+						id = [];
+						rights = 1;
+						var removed = [];
+
+						// Loop through all apps, remove the ones with no permission
+						for(var app in sel_options.apps)
+						{
+							var run_id = app+":"+_value.acl_account+":run";
+							if(_value.apps.indexOf(app) < 0 && content.apps.indexOf(app) >= 0)
+							{
+								removed.push(run_id);
+							}
+							else if (_value.apps.indexOf(app) >= 0 && content.apps.indexOf(app) < 0)
+							{
+								id.push(run_id)
+							}
+						}
+
+						// Update value in list
+						var list = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_apps',true);
+						list.length = 0;
+						for(var app in _value.apps)
+						{
+							list.push(_value.apps[app]);
+						}
+
+						// Remove any removed
+						if(removed.length > 0)
+						{
+							this.egw.json(className+'::ajax_change_acl', [removed, 0], this._acl_callback,this,false,this)
+								.sendRequest();
+						}
 					}
 					this.egw.json(className+'::ajax_change_acl', [id, rights], this._acl_callback,this,false,this)
 						.sendRequest();
