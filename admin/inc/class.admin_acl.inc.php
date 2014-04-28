@@ -469,6 +469,7 @@ class admin_acl
 			), array(), true),
 		);
 		$user = common::grab_owner_name($content['nm']['account_id']);
+		$content['acl_apps'] = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $account_id);
 		$sel_options = array(
 			'filter' => array(
 				'other' => lang('Access to %1 data by others', $user),

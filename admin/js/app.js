@@ -391,7 +391,21 @@ app.classes.admin = AppJS.extend(
 			}
 			if(!content.acl_location)
 			{
-				content.acl_location = this.et2.getWidgetById('filter2').getValue() == 'run' ? 'run' : null;
+				content.acl_location = this.et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
+			}
+			if(content.acl_location == 'run')
+			{
+				// These are the apps the account has access to
+				content.apps = this.et2.getArrayMgr('content').getEntry('acl_apps')||'';
+			}
+			else
+			{
+				// Restrict application selectbox to only apps that support ACL
+				sel_options.acl_appname = {};
+				for(var app in acl_rights)
+				{
+					sel_options.acl_appname[app] = this.egw.lang(app);
+				}
 			}
 			if(!content.acl_account)
 			{
