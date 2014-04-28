@@ -146,7 +146,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 				}
 				apps.push(_apps[i].app);
 			}
-			if (this !== egw)
+			if (this !== egw && apps.length > 0)
 			{
 				this.lang_order = apps.reverse();
 			}
