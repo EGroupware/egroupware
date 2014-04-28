@@ -73,9 +73,11 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 		min_column_width: 30,
 		fit_tasks: true,
 		autosize: 'y',
-		round_dnd_dates: false,
+		// Date rounding happens either way, but this way it rounds to the displayed grid resolution
+		// Also avoids a potential infinite loop thanks to how the dates are rounded with false
+		round_dnd_dates: true,
 		scale_unit: 'day',
-		date_scale: '%d',//(egw.preference('dateformat')).replace(/[YMmdhHisaA]/g,function(a) {return '%'+a;}),
+		date_scale: '%d',
 		subscales: [
 			{unit:"month", step:1, date:"%F, %Y"},
 			//{unit:"hour", step:1, date:"%G"}
