@@ -475,9 +475,10 @@ class egw_link extends solink
 	 * @param boolean $cache_titles=true should all titles be queryed and cached (allows to query each link app only once!)
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order='link_lastmod DESC' defaults to newest links first
+	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
 	 * @return array of $id => array($links) pairs
 	 */
-	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC' )
+	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC', $deleted=false )
 	{
 		if (self::DEBUG) echo "<p>".__METHOD__."('$app',".print_r($ids,true).",$cache_titles,'$only_app','$order')</p>\n";
 
@@ -485,7 +486,7 @@ class egw_link extends solink
 		{
 			return array();		// no ids are linked to nothing
 		}
-		$links = solink::get_links($app,$ids,$only_app,$order);
+		$links = solink::get_links($app,$ids,$only_app,$order,$deleted);
 
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
