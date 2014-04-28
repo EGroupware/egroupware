@@ -1404,7 +1404,6 @@ div.ui-toolbar-menulist{
 .et2_gantt, .et2_gantt .gantt_container
 {
 	width: 100%;
-	height: 100%;
 	min-height: 300px;
 	overflow: hidden;
 }
