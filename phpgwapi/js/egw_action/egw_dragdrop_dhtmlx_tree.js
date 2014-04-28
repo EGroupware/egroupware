@@ -53,6 +53,20 @@ function dhtmlxtreeItemAOI(_tree, _itemId)
 		}
 	}
 
+	aoi.doSetState = function(_state) {
+		if(!_tree || !_tree.focusItem) return;
+
+		// Update the "focused" flag
+		if(egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
+		{
+			_tree.focusItem(this.id);
+		}
+		if(egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
+		{
+			_tree.selectItem(this.id, false);	// false = do not trigger onSelect
+		}
+	}
+
 	return aoi;
 }
 
