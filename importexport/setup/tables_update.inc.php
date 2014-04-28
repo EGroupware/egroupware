@@ -63,6 +63,10 @@ function importexport_upgrade1_9_001()
 
 function importexport_upgrade1_9_002()
 {
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_importexport_definitions','filter',array(
+		'type' => 'longtext'
+	));
+
 	$sql = 'UPDATE egw_importexport_definitions SET allowed_users = '.
 		$GLOBALS['egw_setup']->db->concat("','", 'allowed_users', "','");
 	$GLOBALS['egw_setup']->oProc->query($sql, __LINE__, __FILE__);
@@ -106,7 +110,7 @@ function importexport_upgrade1_9_002()
 		$GLOBALS['egw_setup']->add_acl('importexport','run',$account_id);
 	}
 
-	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.003';
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.004';
 }
 
 function importexport_upgrade1_9_003()
