@@ -469,7 +469,9 @@ div#mail-index{
 
             float: left;
             vertical-align: middle;
-			margin:-3px;
+            margin:-3px;
+
+
             span.et2_file_span{
 
                         font-size: 1.1em;
@@ -478,6 +480,7 @@ div#mail-index{
                         background-image: url(images/attach.png) !important;
                         .background_color_5_gray;
                         height: 16px;
+                        width: 100px;
                         &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
 
                         &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
@@ -485,6 +488,8 @@ div#mail-index{
                     }
 
              input {border: none;}
+
+             input.et2_file_upload {width: 120px}
 
             div.progress {width: 212px;}
         }

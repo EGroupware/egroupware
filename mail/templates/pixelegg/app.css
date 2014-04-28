@@ -1130,6 +1130,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-image: url(images/attach.png) !important;
   background-color: #fafafa;
   height: 16px;
+  width: 100px;
 }
 #mail-compose .mail-compose_toolbar .et2_file span.et2_file_span:hover,
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span:hover {
@@ -1148,6 +1149,10 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .et2_file input,
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector input {
   border: none;
+}
+#mail-compose .mail-compose_toolbar .et2_file input.et2_file_upload,
+#mail-compose .mail-compose_toolbar .mail-compose_fileselector input.et2_file_upload {
+  width: 120px;
 }
 #mail-compose .mail-compose_toolbar .et2_file div.progress,
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector div.progress {
