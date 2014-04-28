@@ -203,7 +203,10 @@ div.filemanager_navigation > label > input {
   width: 95%;
 }
 #filemanager-index .et2_file {
-  /*background-color: @egw_color_2_a;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: none;
 }
 #filemanager-index .et2_file input#filemanager-index_upload {
   color: #ffffff;
@@ -224,6 +227,12 @@ div.filemanager_navigation > label > input {
 }
 #filemanager-index .et2_file input#filemanager-index_upload:active {
   background-color: #1aa200 !important;
+}
+#filemanager-index .et2_file .et2_file_span {
+  background-size: 20px 20px;
+  padding: 3px 5px 3px 10px;
+  height: 16px;
+  border: 2px solid transparent;
 }
 #filemanager-index .et2_file div.progress {
   z-index: 1;

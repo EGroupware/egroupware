@@ -108,13 +108,19 @@ div.filemanager_navigation > label > input {
 #filemanager-index{
 
     .et2_file{
-       /*background-color: @egw_color_2_a;*/
+        .rounded(3px);
+        border: none;
+
        input#filemanager-index_upload {
-            color: @gray_0;
-             background-color: @egw_color_2_a;
-        &:hover {.Complete_Button_add_only_plus_hover;}
-        &:active {background-color: @color_positive_action_active !important;}
+                color: @gray_0;
+                background-color: @egw_color_2_a;
+
+                &:hover {.Complete_Button_add_only_plus_hover;}
+                &:active {background-color: @color_positive_action_active !important;}
         }
+
+
+        .et2_file_span {background-size: 20px 20px; padding: 3px 5px 3px 10px; height: 16px; border: 2px solid transparent;}
 
         div.progress {z-index: 1;}
   }
