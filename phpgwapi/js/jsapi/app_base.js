@@ -99,7 +99,15 @@ var AppJS = Class.extend(
 			var egw_fw = egw_getFramework();
 			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 		}
-		this._init_sidebox(sidebox);
+		// Make sure we're running in the top window when we init sidebox
+		if(window.top.app[this.appname] !== this)
+		{
+			window.top.app[this.appname]._init_sidebox(sidebox);
+		}
+		else
+		{
+			this._init_sidebox(sidebox);
+		}
 	},
 
 	/**
@@ -302,6 +310,7 @@ var AppJS = Class.extend(
 		if(sidebox.length)
 		{
 			var self = this;
+			if(this.sidebox) this.sidebox.off();
 			this.sidebox = sidebox;
 			sidebox
 				.off()
@@ -319,7 +328,7 @@ var AppJS = Class.extend(
 					}
 				})
 				.addClass("ui-helper-clearfix");
-				
+
 				//Add Sortable handler to sideBox fav. menu
 				 jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
 
@@ -330,10 +339,10 @@ var AppJS = Class.extend(
 						var favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
 
 						self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
-						
+
 						self._refresh_fav_nm();
 					}
-				});			
+				});
 			return true;
 		}
 		return false;
