@@ -1,0 +1,7 @@
+admin password	emailadmin	ja	パスワード
+admin username	emailadmin	ja	ユーザID
+email settings	common	ja	電子メール設定
+mail settings	admin	ja	電子メール設定
+order	emailadmin	ja	順序
+remove	emailadmin	ja	削除
+standard	emailadmin	ja	標準

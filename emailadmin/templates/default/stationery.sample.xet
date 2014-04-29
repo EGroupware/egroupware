@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.stationery.sample" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%" border="0" class="fullwidth" spacing="0" padding="0">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Header" class="header"/>
+				</row>
+				<row>
+					<html label="message" id="message" class="message"/>
+				</row>
+				<row>
+					<html label="signature" id="signature" class="signature"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			body {
+ font-family: &quot;Lucida Grande&quot;;
+ font-size: 12px;
+ color: #000000;
+ background-color: #eaeaea;
+ margin: 0;
+ padding: 0;
+}
+
+table.fullwidth {
+ table-layout:fixed;
+ width: 100%;
+ margin: 0;
+ padding: 0;
+ border: 0;
+}
+
+td.header {
+ background-color: #322f40;
+ color: #ffffff;
+ font-weight: bold;
+ margin: 0;
+ padding: 1em;
+ border-left: 6px solid #504a66;
+ border-bottom: 1px solid #504a66;
+}
+
+td.message {
+ margin: 0.5em;
+ padding: 1em;
+ color: #333333;
+ font-family: &quot;Lucida Grande&quot;;
+ font-size: 12px;
+}
+
+td.signature {
+ color: #666666;
+ border-left: 5px solid #747474;
+ margin: 0.5em;
+ padding-left: 8px;
+ font-family: &quot;Lucida Grande&quot;;
+ font-size: 12px;
+}
+
+img {
+ border: 0;
+ margin: 0;
+ padding: 0;
+}
+		</styles>
+	</template>
+</overlay>
