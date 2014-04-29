@@ -556,6 +556,7 @@ div.et2_link_entry:after {
 }
 div.et2_link_entry select {
   width: 40%;
+  margin-right: 10px;
 }
 div.et2_link_entry input.ui-autocomplete-input {
   width: 40%;
