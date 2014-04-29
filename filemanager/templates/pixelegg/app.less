@@ -34,6 +34,7 @@
 div.filemanager_navigation {
     position: relative;
     width: 100%;
+    margin-top: -12px !important;
 
 
     img {
@@ -110,22 +111,38 @@ div.filemanager_navigation > label > input {
     .et2_file{
         .rounded(3px);
         border: none;
+        cursor: pointer;
 
+        &:hover {background-color: @color_positive_action_active !important;}
+        &:active {background-color: @color_positive_action_active !important;}
+
+        // Datei wählen
+        span.et2_file_span {
+            background-size: 20px 20px;
+            padding: 3px 5px 3px 10px;
+            height: 16px;
+            border: 2px solid transparent;
+            width: auto;
+        }
+
+       // Upload Fläche
        input#filemanager-index_upload {
                 color: @gray_0;
-                background-color: @egw_color_2_a;
+                 cursor: pointer;
+                background-color: transparent;
 
-                &:hover {.Complete_Button_add_only_plus_hover;}
-                &:active {background-color: @color_positive_action_active !important;}
+         &:hover {background-color: @color_positive_action_active !important;}
+        &:active {background-color: @color_positive_action_active !important;}
+
         }
 
 
-        .et2_file_span {background-size: 20px 20px; padding: 3px 5px 3px 10px; height: 16px; border: 2px solid transparent;}
-
+        // Progress Bar
         div.progress {z-index: 1;}
   }
 
 
+    // Tarp
     #filemanager-index_tarp {
         width: 32px !important;
         height: 32px !important;

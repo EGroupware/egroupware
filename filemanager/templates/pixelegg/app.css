@@ -128,6 +128,7 @@ input.displayNone {
 div.filemanager_navigation {
   position: relative;
   width: 100%;
+  margin-top: -12px !important;
 }
 div.filemanager_navigation img {
   width: 16px;
@@ -207,32 +208,31 @@ div.filemanager_navigation > label > input {
   -moz-border-radius: 3px;
   border-radius: 3px;
   border: none;
+  cursor: pointer;
 }
-#filemanager-index .et2_file input#filemanager-index_upload {
-  color: #ffffff;
-  background-color: #0c5da5;
-}
-#filemanager-index .et2_file input#filemanager-index_upload:hover {
-  background-color: #66a1d2 !important;
-  color: #ffc200;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
-}
-#filemanager-index .et2_file input#filemanager-index_upload:active {
+#filemanager-index .et2_file:hover {
   background-color: #1aa200 !important;
 }
-#filemanager-index .et2_file .et2_file_span {
+#filemanager-index .et2_file:active {
+  background-color: #1aa200 !important;
+}
+#filemanager-index .et2_file span.et2_file_span {
   background-size: 20px 20px;
   padding: 3px 5px 3px 10px;
   height: 16px;
   border: 2px solid transparent;
+  width: auto;
+}
+#filemanager-index .et2_file input#filemanager-index_upload {
+  color: #ffffff;
+  cursor: pointer;
+  background-color: transparent;
+}
+#filemanager-index .et2_file input#filemanager-index_upload:hover {
+  background-color: #1aa200 !important;
+}
+#filemanager-index .et2_file input#filemanager-index_upload:active {
+  background-color: #1aa200 !important;
 }
 #filemanager-index .et2_file div.progress {
   z-index: 1;
