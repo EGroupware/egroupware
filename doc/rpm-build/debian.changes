@@ -1,3 +1,9 @@
+egroupware-epl (14.1.20140429-1) hardy; urgency=low
+
+  * ImportExport: Creation of new filter column before we update definitions
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 29 Apr 2014 09:34:56 +0200
+
 egroupware-epl (14.1.20140425-1) hardy; urgency=low
 
   * Mail: skip accounts with no imap server set for notification and foldertree
