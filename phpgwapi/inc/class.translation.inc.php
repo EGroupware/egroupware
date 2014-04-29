@@ -1206,12 +1206,12 @@ class translation
 		//   removing carriage return linefeeds, preserve those enclosed in <pre> </pre> tags
 		if ($stripcrl === true )
 		{
-			if (stripos($_html,'<pre>')!==false)
+			if (stripos($_html,'<pre ')!==false)
 			{
 				$contentArr = html::splithtmlByPRE($_html);
 				foreach ($contentArr as $k =>&$elem)
 				{
-					if (stripos($elem,'<pre>')===false)
+					if (stripos($elem,'<pre ')===false)
 					{
 						//$elem = str_replace('@(\r\n)@i',' ',$elem);
 						$elem = str_replace(array("\r\n","\n"),($isHTML?'':' '),$elem);
@@ -1268,12 +1268,12 @@ class translation
 		// reducing double \r\n to single ones, dont mess with pre sections
 		if ($stripcrl === true && $isHTML)
 		{
-			if (stripos($_html,'<pre>')!==false)
+			if (stripos($_html,'<pre ')!==false)
 			{
 				$contentArr = html::splithtmlByPRE($_html);
 				foreach ($contentArr as $k =>&$elem)
 				{
-					if (stripos($elem,'<pre>')===false)
+					if (stripos($elem,'<pre ')===false)
 					{
 						//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
 						if ( $stripalltags ) {

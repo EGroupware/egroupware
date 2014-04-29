@@ -645,266 +645,267 @@ class mail_compose
 
 		// do not double insert a signature on a server roundtrip
 		if ($buttonClicked) $suppressSigOnTop = true;
-
-		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
-		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
-			$this->preferencesArray['attachVCardAtCompose']))
+		if ($isFirstLoad)
 		{
-			$alwaysAttachVCardAtCompose = true;
-			if (!is_array($_REQUEST['preset']['file']) && !empty($_REQUEST['preset']['file']))
+			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
+			if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
+				$this->preferencesArray['attachVCardAtCompose']))
 			{
-				$f = $_REQUEST['preset']['file'];
-				$_REQUEST['preset']['file'] = array($f);
-			}
-			$_REQUEST['preset']['file'][] = "vfs://default/apps/addressbook/".$GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')."/.entry";
-		}
-		// an app passed the request for fetching and mailing an entry
-		if (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id']))
-		{
-			$app = $_REQUEST['app'];
-			$mt = $_REQUEST['method'];
-			$id = $_REQUEST['id'];
-			// passed method MUST be registered
-			$method = egw_link::get_registry($app,$mt);
-			//error_log(__METHOD__.__LINE__.array2string($method));
-			if ($method)
-			{
-				$res = ExecMethod($method,array($id,'html'));
-				//_debug_array($res);
-				if (!empty($res))
+				$alwaysAttachVCardAtCompose = true;
+				if (!is_array($_REQUEST['preset']['file']) && !empty($_REQUEST['preset']['file']))
 				{
-					$insertSigOnTop = 'below';
-					if (isset($res['attachments']) && is_array($res['attachments']))
+					$f = $_REQUEST['preset']['file'];
+					$_REQUEST['preset']['file'] = array($f);
+				}
+				$_REQUEST['preset']['file'][] = "vfs://default/apps/addressbook/".$GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')."/.entry";
+			}
+			// an app passed the request for fetching and mailing an entry
+			if (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id']))
+			{
+				$app = $_REQUEST['app'];
+				$mt = $_REQUEST['method'];
+				$id = $_REQUEST['id'];
+				// passed method MUST be registered
+				$method = egw_link::get_registry($app,$mt);
+				//error_log(__METHOD__.__LINE__.array2string($method));
+				if ($method)
+				{
+					$res = ExecMethod($method,array($id,'html'));
+					//_debug_array($res);
+					if (!empty($res))
 					{
-						foreach($res['attachments'] as $f)
+						$insertSigOnTop = 'below';
+						if (isset($res['attachments']) && is_array($res['attachments']))
 						{
-							$_REQUEST['preset']['file'][] = $f;
+							foreach($res['attachments'] as $f)
+							{
+								$_REQUEST['preset']['file'][] = $f;
+							}
 						}
-					}
-					$content['subject'] = lang($app).' #'.$res['id'].': ';
-					foreach(array('subject','body','mimetype') as $name) {
-						$sName = $name;
-						if ($name=='mimetype')
-						{
-							$sName = 'mimeType';
-							$content[$sName] = $res[$name];
-						}
-						else
-						{
-							if ($res[$name]) $content[$sName] .= (strlen($content[$sName])>0 ? ' ':'') .$res[$name];
+						$content['subject'] = lang($app).' #'.$res['id'].': ';
+						foreach(array('subject','body','mimetype') as $name) {
+							$sName = $name;
+							if ($name=='mimetype')
+							{
+								$sName = 'mimeType';
+								$content[$sName] = $res[$name];
+							}
+							else
+							{
+								if ($res[$name]) $content[$sName] .= (strlen($content[$sName])>0 ? ' ':'') .$res[$name];
+							}
 						}
 					}
 				}
 			}
-		}
-		// handle preset info/values
-		if (is_array($_REQUEST['preset']))
-		{
-			//_debug_array($_REQUEST);
-			if ($_REQUEST['preset']['mailto']) {
-				// handle mailto strings such as
-				// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
-				// the above string may be htmlentyty encoded, then multiple body tags are supported
-				// first, strip the mailto: string out of the mailto URL
-				$tmp_send_to = (stripos($_REQUEST['preset']['mailto'],'mailto')===false?$_REQUEST['preset']['mailto']:trim(substr(html_entity_decode($_REQUEST['preset']['mailto']),7)));
-				// check if there is more than the to address
-				$mailtoArray = explode('?',$tmp_send_to,2);
-				if ($mailtoArray[1]) {
-					// check if there are more than one requests
-					$addRequests = explode('&',$mailtoArray[1]);
-					foreach ($addRequests as $key => $reqval) {
-						// the additional requests should have a =, to separate key from value.
-						$keyValuePair = explode('=',$reqval,2);
-						$content[$keyValuePair[0]] .= (strlen($content[$keyValuePair[0]])>0 ? ' ':'') . $keyValuePair[1];
+			// handle preset info/values
+			if (is_array($_REQUEST['preset']))
+			{
+				//_debug_array($_REQUEST);
+				if ($_REQUEST['preset']['mailto']) {
+					// handle mailto strings such as
+					// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
+					// the above string may be htmlentyty encoded, then multiple body tags are supported
+					// first, strip the mailto: string out of the mailto URL
+					$tmp_send_to = (stripos($_REQUEST['preset']['mailto'],'mailto')===false?$_REQUEST['preset']['mailto']:trim(substr(html_entity_decode($_REQUEST['preset']['mailto']),7)));
+					// check if there is more than the to address
+					$mailtoArray = explode('?',$tmp_send_to,2);
+					if ($mailtoArray[1]) {
+						// check if there are more than one requests
+						$addRequests = explode('&',$mailtoArray[1]);
+						foreach ($addRequests as $key => $reqval) {
+							// the additional requests should have a =, to separate key from value.
+							$keyValuePair = explode('=',$reqval,2);
+							$content[$keyValuePair[0]] .= (strlen($content[$keyValuePair[0]])>0 ? ' ':'') . $keyValuePair[1];
+						}
+					}
+					$content['to']=$mailtoArray[0];
+					// if the mailto string is not htmlentity decoded the arguments are passed as simple requests
+					foreach(array('cc','bcc','subject','body') as $name) {
+						if ($_REQUEST[$name]) $content[$name] .= (strlen($content[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
 					}
 				}
-				$content['to']=$mailtoArray[0];
-				// if the mailto string is not htmlentity decoded the arguments are passed as simple requests
-				foreach(array('cc','bcc','subject','body') as $name) {
-					if ($_REQUEST[$name]) $content[$name] .= (strlen($content[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
-				}
-			}
 
-			if ($_REQUEST['preset']['mailtocontactbyid']) {
-				if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
-					$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
-					if (method_exists($GLOBALS['egw']->contacts,'search')) {
+				if ($_REQUEST['preset']['mailtocontactbyid']) {
+					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
+						$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
+						if (method_exists($GLOBALS['egw']->contacts,'search')) {
 
-						$addressArray = explode(',',$_REQUEST['preset']['mailtocontactbyid']);
-						foreach ((array)$addressArray as $id => $addressID)
-						{
-							$addressID = (int) $addressID;
-							if (!($addressID>0))
+							$addressArray = explode(',',$_REQUEST['preset']['mailtocontactbyid']);
+							foreach ((array)$addressArray as $id => $addressID)
 							{
-								unset($addressArray[$id]);
+								$addressID = (int) $addressID;
+								if (!($addressID>0))
+								{
+									unset($addressArray[$id]);
+								}
 							}
-						}
-						if (count($addressArray))
-						{
-							$_searchCond = array('contact_id'=>$addressArray);
-							//error_log(__METHOD__.__LINE__.$_searchString);
-							if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
-							$filter = ($showAccounts?array():array('account_id' => null));
-							$filter['cols_to_search']=array('n_fn','email','email_home');
-							$contacts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
-							// additionally search the accounts, if the contact storage is not the account storage
-							if ($showAccounts &&
-								$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
-								$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
+							if (count($addressArray))
 							{
-								$accounts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
+								$_searchCond = array('contact_id'=>$addressArray);
+								//error_log(__METHOD__.__LINE__.$_searchString);
+								if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
+								$filter = ($showAccounts?array():array('account_id' => null));
+								$filter['cols_to_search']=array('n_fn','email','email_home');
+								$contacts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
+								// additionally search the accounts, if the contact storage is not the account storage
+								if ($showAccounts &&
+									$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+									$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
+								{
+									$accounts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
 
-								if ($contacts && $accounts)
-								{
-									$contacts = array_merge($contacts,$accounts);
-									usort($contacts,create_function('$a,$b','return strcasecmp($a["n_fn"],$b["n_fn"]);'));
+									if ($contacts && $accounts)
+									{
+										$contacts = array_merge($contacts,$accounts);
+										usort($contacts,create_function('$a,$b','return strcasecmp($a["n_fn"],$b["n_fn"]);'));
+									}
+									elseif($accounts)
+									{
+										$contacts =& $accounts;
+									}
+									unset($accounts);
 								}
-								elseif($accounts)
-								{
-									$contacts =& $accounts;
-								}
-								unset($accounts);
 							}
-						}
-						if(is_array($contacts)) {
-							$mailtoArray = array();
-							$primary = $addressbookprefs['distributionListPreferredMail'];
-							if ($primary != 'email' && $primary != 'email_home') $primary = 'email';
-							$secondary = ($primary == 'email'?'email_home':'email');
-							//error_log(__METHOD__.__LINE__.array2string($contacts));
-							foreach($contacts as $contact) {
-								$innerCounter=0;
-								foreach(array($contact[$primary],$contact[$secondary]) as $email) {
-									// use pref distributionListPreferredMail for the primary address
-									// avoid wrong addresses, if an rfc822 encoded address is in addressbook
-									$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
-									$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
-									$completeMailString = addslashes(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>');
-									if($innerCounter==0 && !empty($email) && in_array($completeMailString ,$mailtoArray) === false) {
-										$i++;
-										$innerCounter++;
-										$str = $GLOBALS['egw']->translation->convert(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>', $this->charset, 'utf-8');
-										$mailtoArray[$i] = $completeMailString;
+							if(is_array($contacts)) {
+								$mailtoArray = array();
+								$primary = $addressbookprefs['distributionListPreferredMail'];
+								if ($primary != 'email' && $primary != 'email_home') $primary = 'email';
+								$secondary = ($primary == 'email'?'email_home':'email');
+								//error_log(__METHOD__.__LINE__.array2string($contacts));
+								foreach($contacts as $contact) {
+									$innerCounter=0;
+									foreach(array($contact[$primary],$contact[$secondary]) as $email) {
+										// use pref distributionListPreferredMail for the primary address
+										// avoid wrong addresses, if an rfc822 encoded address is in addressbook
+										$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+										$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
+										$completeMailString = addslashes(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>');
+										if($innerCounter==0 && !empty($email) && in_array($completeMailString ,$mailtoArray) === false) {
+											$i++;
+											$innerCounter++;
+											$str = $GLOBALS['egw']->translation->convert(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>', $this->charset, 'utf-8');
+											$mailtoArray[$i] = $completeMailString;
+										}
 									}
 								}
 							}
+							//error_log(__METHOD__.__LINE__.array2string($mailtoArray));
+							$content['to']=$mailtoArray;
 						}
-						//error_log(__METHOD__.__LINE__.array2string($mailtoArray));
-						$content['to']=$mailtoArray;
 					}
 				}
-			}
 
-			if (isset($_REQUEST['preset']['file']))
-			{
-				$names = (array)$_REQUEST['preset']['name'];
-				$types = (array)$_REQUEST['preset']['type'];
-				//if (!empty($types) && in_array('text/calendar; method=request',$types))
-				$files = (array)$_REQUEST['preset']['file'];
-				foreach($files as $k => $path)
+				if (isset($_REQUEST['preset']['file']))
 				{
-					if (!empty($types[$k]) && stripos($types[$k],'text/calendar')!==false)
+					$names = (array)$_REQUEST['preset']['name'];
+					$types = (array)$_REQUEST['preset']['type'];
+					//if (!empty($types) && in_array('text/calendar; method=request',$types))
+					$files = (array)$_REQUEST['preset']['file'];
+					foreach($files as $k => $path)
 					{
-						$insertSigOnTop = 'below';
-					}
-					//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
-					if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
-					{
-						//egw_vfs::load_wrapper('vfs');
-						$type = egw_vfs::mime_content_type($path);
-						// special handling for attaching vCard of iCal --> use their link-title as name
-						if (substr($path,-7) != '/.entry' ||
-							!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
-							!($name = egw_link::title($app, $id)))
+						if (!empty($types[$k]) && stripos($types[$k],'text/calendar')!==false)
 						{
-							$name = egw_vfs::decodePath(egw_vfs::basename($path));
+							$insertSigOnTop = 'below';
+						}
+						//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
+						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
+						{
+							//egw_vfs::load_wrapper('vfs');
+							$type = egw_vfs::mime_content_type($path);
+							// special handling for attaching vCard of iCal --> use their link-title as name
+							if (substr($path,-7) != '/.entry' ||
+								!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
+								!($name = egw_link::title($app, $id)))
+							{
+								$name = egw_vfs::decodePath(egw_vfs::basename($path));
+							}
+							else
+							{
+								$name .= '.'.mime_magic::mime2ext($type);
+							}
+							$path = str_replace('+','%2B',$path);
+							$formData = array(
+								'name' => $name,
+								'type' => $type,
+								'file' => egw_vfs::decodePath($path),
+								'size' => filesize(egw_vfs::decodePath($path)),
+							);
+							if ($formData['type'] == egw_vfs::DIR_MIME_TYPE) continue;	// ignore directories
+						}
+						elseif(is_readable($path))
+						{
+							$formData = array(
+								'name' => isset($names[$k]) ? $names[$k] : basename($path),
+								'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : mime_magic::filename2mime($path)),
+								'file' => $path,
+								'size' => filesize($path),
+							);
 						}
 						else
 						{
-							$name .= '.'.mime_magic::mime2ext($type);
+							continue;
 						}
-						$path = str_replace('+','%2B',$path);
-						$formData = array(
-							'name' => $name,
-							'type' => $type,
-							'file' => egw_vfs::decodePath($path),
-							'size' => filesize(egw_vfs::decodePath($path)),
-						);
-						if ($formData['type'] == egw_vfs::DIR_MIME_TYPE) continue;	// ignore directories
+						$this->addAttachment($formData,$content,($alwaysAttachVCardAtCompose?true:false));
 					}
-					elseif(is_readable($path))
+					$remember = array();
+					if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
 					{
-						$formData = array(
-							'name' => isset($names[$k]) ? $names[$k] : basename($path),
-							'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : mime_magic::filename2mime($path)),
-							'file' => $path,
-							'size' => filesize($path),
-						);
+						foreach(array_keys($content) as $k)
+						{
+							if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))&&isset($this->sessionData[$k])) $remember[$k] = $this->sessionData[$k];
+						}
 					}
-					else
-					{
-						continue;
-					}
-					$this->addAttachment($formData,$content,($alwaysAttachVCardAtCompose?true:false));
+					if(!empty($remember)) $content = array_merge($content,$remember);
 				}
-				$remember = array();
-				if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
+				foreach(array('to','cc','bcc','subject','body') as $name)
 				{
-					foreach(array_keys($content) as $k)
+					if ($_REQUEST['preset'][$name]) $content[$name] = $_REQUEST['preset'][$name];
+				}
+			}
+			// is the to address set already?
+			if (!empty($_REQUEST['send_to']))
+			{
+				$content['to'] = base64_decode($_REQUEST['send_to']);
+				// first check if there is a questionmark or ampersand
+				if (strpos($content['to'],'?')!== false) list($content['to'],$rest) = explode('?',$content['to'],2);
+				$content['to'] = html_entity_decode($content['to']);
+				if (($at_pos = strpos($content['to'],'@')) !== false)
+				{
+					if (($amp_pos = strpos(substr($content['to'],$at_pos),'&')) !== false)
 					{
-						if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))&&isset($this->sessionData[$k])) $remember[$k] = $this->sessionData[$k];
+						//list($email,$addoptions) = explode('&',$value,2);
+						$email = substr($content['to'],0,$amp_pos+$at_pos);
+						$rest = substr($content['to'], $amp_pos+$at_pos+1);
+						//error_log(__METHOD__.__LINE__.$email.' '.$rest);
+						$content['to'] = $email;
 					}
 				}
-				if(!empty($remember)) $content = array_merge($content,$remember);
-			}
-			foreach(array('to','cc','bcc','subject','body') as $name)
-			{
-				if ($_REQUEST['preset'][$name]) $content[$name] = $_REQUEST['preset'][$name];
+				if (strpos($content['to'],'%40')!== false) $content['to'] = html::purify(str_replace('%40','@',$content['to']));
+				$rarr = array(html::purify($rest));
+				if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
+				//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($rarr));
+				$karr = array();
+				foreach ($rarr as $ri => $rval)
+				{
+					//must contain =
+					if (strpos($rval,'=')!== false)
+					{
+						$k = $v = '';
+						list($k,$v) = explode('=',$rval,2);
+						$karr[$k] = $v;
+					}
+				}
+				//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($karr));
+				foreach(array('cc','bcc','subject','body') as $name)
+				{
+					if ($karr[$name]) $content[$name] = $karr[$name];
+				}
+				if (!empty($_REQUEST['subject'])) $content['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
 			}
 		}
-		// is the to address set already?
-		if (!empty($_REQUEST['send_to']))
-		{
-			$content['to'] = base64_decode($_REQUEST['send_to']);
-			// first check if there is a questionmark or ampersand
-			if (strpos($content['to'],'?')!== false) list($content['to'],$rest) = explode('?',$content['to'],2);
-			$content['to'] = html_entity_decode($content['to']);
-			if (($at_pos = strpos($content['to'],'@')) !== false)
-			{
-				if (($amp_pos = strpos(substr($content['to'],$at_pos),'&')) !== false)
-				{
-					//list($email,$addoptions) = explode('&',$value,2);
-					$email = substr($content['to'],0,$amp_pos+$at_pos);
-					$rest = substr($content['to'], $amp_pos+$at_pos+1);
-					//error_log(__METHOD__.__LINE__.$email.' '.$rest);
-					$content['to'] = $email;
-				}
-			}
-			if (strpos($content['to'],'%40')!== false) $content['to'] = html::purify(str_replace('%40','@',$content['to']));
-			$rarr = array(html::purify($rest));
-			if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
-			//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($rarr));
-			$karr = array();
-			foreach ($rarr as $ri => $rval)
-			{
-				//must contain =
-				if (strpos($rval,'=')!== false)
-				{
-					$k = $v = '';
-					list($k,$v) = explode('=',$rval,2);
-					$karr[$k] = $v;
-				}
-			}
-			//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($karr));
-			foreach(array('cc','bcc','subject','body') as $name)
-			{
-				if ($karr[$name]) $content[$name] = $karr[$name];
-			}
-			if (!empty($_REQUEST['subject'])) $content['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
-		}
-
 		//is the MimeType set/requested
-		if (!empty($_REQUEST['mimeType']))
+		if ($isFirstLoad && !empty($_REQUEST['mimeType']))
 		{
 			if (($_REQUEST['mimeType']=="text" ||$_REQUEST['mimeType']=="plain") && $content['mimeType'] == 'html')
 			{

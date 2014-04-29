@@ -1557,7 +1557,7 @@ egw_LAB.wait(function() {
 	 */
 	static function splithtmlByPRE($html)
 	{
-		if (($pos = stripos($html,'<pre>')) === false)
+		if (($pos = stripos($html,'<pre ')) === false)
 		{
 			return $html;
 		}
@@ -1567,10 +1567,11 @@ egw_LAB.wait(function() {
 			$endofpre = stripos($html,'</pre>',$pos);
 			$length = $endofpre-$pos+6;
 			$html2ret[] = substr($html,$pos,$length);
-			$pos =  stripos($html,'<pre>', $endofpre+6);
+			$pos =  stripos($html,'<pre ', $endofpre+6);
 			$html2ret[] = ($pos ? substr($html,$endofpre+6,$pos-($endofpre+6)): substr($html,$endofpre+6));
 			//$pos=false;
 		}
+		//error_log(__METHOD__.__LINE__.array2string($html2ret));
 		return $html2ret;
 	}
 
