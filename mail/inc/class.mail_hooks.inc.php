@@ -612,8 +612,7 @@ class mail_hooks
 		$currentTime = time();
 		if (!empty($lastRun) && $lastRun>$currentTime-3*60)
 		{
-			
-			error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
+			//error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
 			return true;
 		}
 		$accountsToSearchObj = emailadmin_account::search($only_current_user=true, $just_name=true);
