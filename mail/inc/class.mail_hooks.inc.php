@@ -607,6 +607,15 @@ class mail_hooks
 	 */
 	static function notification_check_mailbox()
 	{
+		// should not run more often then every 3 minutes;
+		$lastRun = egw_cache::getCache(egw_cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
+		$currentTime = time();
+		if (!empty($lastRun) && $lastRun>$currentTime-3*60)
+		{
+			
+			error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
+			return true;
+		}
 		$accountsToSearchObj = emailadmin_account::search($only_current_user=true, $just_name=true);
 
 		foreach($accountsToSearchObj as $acc_id => $identity_name)
@@ -638,14 +647,13 @@ class mail_hooks
 					error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') notification for Profile:'.$activeProfile.' failed.'.$e->getMessage());
 					continue; //fail silently
 				}
-/*
-				error_log(__METHOD__.__LINE__.' '.$nFKey.' =>'.array2string($bomail->icServer));
-				if (empty($bomail->icServer->acc_imap_host))
+				//error_log(__METHOD__.__LINE__.' '.$nFKey.' =>'.array2string($bomail->icServer->params));
+				$icServerParams=$bomail->icServer->params;
+				if (empty($icServerParams['acc_imap_host']))
 				{
 					error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') notification for Profile:'.$activeProfile.' failed: NO IMAP HOST configured!');
 					continue; //fail silently
 				}
-*/
 				try
 				{
 					$bomail->openConnection($activeProfile);
@@ -727,6 +735,7 @@ class mail_hooks
 				error_log(__METHOD__.__LINE__.' Notification on new messages for Profile '.$activeProfile.' ('.$accountsToSearchArray[$activeProfile].') failed:'.$e->getMessage());
 			}
 		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
 		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
 		return true;
 	}
