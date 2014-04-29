@@ -993,16 +993,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		// Create the grid controller
 		this.controller = new et2_nextmatch_controller(
-				null,
-				this.egw(),
-				this.getInstanceManager().etemplate_exec_id,
-				this,
-				null,
-				this.dataview.grid,
-				this.rowProvider,
-				this.options.settings.action_links,
-				null,
-				this.options.actions
+			null,
+			this.egw(),
+			this.getInstanceManager().etemplate_exec_id,
+			this,
+			null,
+			this.dataview.grid,
+			this.rowProvider,
+			this.options.settings.action_links,
+			null,
+			this.options.actions
 		);
 
 		// Need to trigger empty row the first time
@@ -1022,8 +1022,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
 		));*/
-
-		this.controller.setFilters(this.activeFilters);
 
 		// Set the initial row count
 		var total = typeof this.options.settings.total != "undefined" ?
@@ -1449,10 +1447,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			},1);
 
 			// Call the "setNextmatch" function of all registered
-			// INextmatchHeader widgets.
+			// INextmatchHeader widgets.  This updates this.activeFilters.col_filters according
+			// to what's in the template.
 			this.iterateOver(function (_node) {
 				_node.setNextmatch(this);
 			}, this, et2_INextmatchHeader);
+
+			// Set filters to current values
+			this.controller.setFilters(this.activeFilters);
 
 			// Load the default sort order
 			if (this.options.settings.order && this.options.settings.sort)
@@ -2258,7 +2260,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			var value = {};
 			value[_widget.id] = _widget._oldValue = _widget.getValue();
 			var mgr = new et2_arrayMgr(value);
-			jQuery.extend(this.nextmatch.activeFilters,mgr.data);
+			jQuery.extend(true, this.nextmatch.activeFilters,mgr.data);
 		}, this, et2_inputWidget);
 	}
 });
