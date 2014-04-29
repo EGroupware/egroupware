@@ -485,19 +485,6 @@ var AppJS = Class.extend(
 				parent_node: this.appname+'_favorites_popup_admin'
 			},this.et2 || null);
 			this.favorite_popup.group.loadingFinished();
-
-			// Creating select-account client side won't have primary group data
-			// so fetch using link system
-			var request = egw.json(self.appname + ".etemplate_widget_link.ajax_link_search.etemplate",
-				['home-accounts', '','', {filter:{group:'groups'}}],
-				function(data) {
-					var result = [];
-					for(var id in data) {
-						result.push({"value": id.trim(), "label":data[id]});
-					}
-					self.favorite_popup.group.set_select_options(result);
-				}
-			).sendRequest();
 		}
 
 		var buttons = {};
