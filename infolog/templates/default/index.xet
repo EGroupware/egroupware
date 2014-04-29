@@ -18,7 +18,7 @@
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
-				<column width="55"/>
+				<column width="65"/>
 				<column/>
 				<column disabled="@no_customfields"/>
 				<column/>
