@@ -100,7 +100,7 @@ var AppJS = Class.extend(
 			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 		}
 		// Make sure we're running in the top window when we init sidebox
-		if(window.top.app[this.appname] !== this)
+		if(window.top.app[this.appname] !== this && window.top.app[this.appname])
 		{
 			window.top.app[this.appname]._init_sidebox(sidebox);
 		}
