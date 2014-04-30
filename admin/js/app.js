@@ -389,6 +389,10 @@ app.classes.admin = AppJS.extend(
 				// Pre-set appname to currently selected
 				content.acl_appname = this.et2.getWidgetById('filter2').getValue()||"";
 			}
+			if(!content.acl_account)
+			{
+				content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+			}
 			if(!content.acl_location)
 			{
 				content.acl_location = this.et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
@@ -396,7 +400,9 @@ app.classes.admin = AppJS.extend(
 			if(content.acl_location == 'run')
 			{
 				// These are the apps the account has access to
-				content.apps = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_apps')||[];
+				// Fetch current values from server
+				this.egw.json(className+'::ajax_get_app_list', [content.acl_account], function(data) {content.apps = data},this,false,this)
+					.sendRequest();
 			}
 			else
 			{
@@ -407,10 +413,7 @@ app.classes.admin = AppJS.extend(
 					sel_options.acl_appname[app] = this.egw.lang(app);
 				}
 			}
-			if(!content.acl_account)
-			{
-				content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
-			}
+
 		}
 		if(content.acl_appname)
 		{
@@ -436,6 +439,12 @@ app.classes.admin = AppJS.extend(
 			sel_options.acl_account = jQuery.extend({},sel_options.acl_account);
 			this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account[content.acl_account] = title;});
 		}
+		if(content.acl_account != this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id'))
+		{
+			var account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+			sel_options.acl_account[account] = 'loading';
+			this.egw.link_title('home-accounts', account, function(title) {sel_options.acl_account[account] = title;});
+		}
 		if(content.acl_location)
 		{	 
 			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
@@ -448,6 +457,9 @@ app.classes.admin = AppJS.extend(
 				this.acl_dialog = null;
 				if(_button_id != et2_dialog.OK_BUTTON) return;
 
+				// Restore account if it's readonly in dialog
+				if(!_value.acl_account) _value.acl_account = content.acl_account;
+				
 				// Only send the request if they entered everything
 				if(_value.acl_account && (_value.acl_appname && _value.acl_location || _value.apps))
 				{
@@ -477,14 +489,6 @@ app.classes.admin = AppJS.extend(
 							}
 						}
 
-						// Update value in list
-						var list = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_apps',true);
-						list.length = 0;
-						for(var app in _value.apps)
-						{
-							list.push(_value.apps[app]);
-						}
-
 						// Remove any removed
 						if(removed.length > 0)
 						{
@@ -511,7 +515,7 @@ app.classes.admin = AppJS.extend(
 	 * Change handler for ACL edit dialog application selectbox.
 	 * Re-creates the dialog with the current values
 	 */
-	acl_change_application: function(input, widget)
+	acl_reopen_dialog: function(input, widget)
 	{
 		var content = {};
 		if(this.acl_dialog != null)

@@ -356,9 +356,6 @@ class admin_acl
 			//error_log(__METHOD__."() $n: ".array2string($row));
 		}
 		//error_log(__METHOD__."(".array2string($query).") returning ".$total);
-
-		// Get updated apps permission
-		$rows['acl_apps'] = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $query['account_id']);
 		
 		return $total;
 	}
@@ -389,6 +386,23 @@ class admin_acl
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Get the list of applications allowed for the given user
+	 *
+	 * The list of applications is added to the json response
+	 *
+	 * @param int $account_id
+	 */
+	public static function ajax_get_app_list($account_id)
+	{
+		$list = array();
+		if(self::check_access((int)$account_id,'run',false))
+		{
+			$list = array_keys($GLOBALS['egw']->acl->get_user_applications((int)$account_id,false,false));
+		}
+		egw_json_response::get()->data($list);
 	}
 
 	/**
@@ -453,7 +467,6 @@ class admin_acl
 		$content = array();
 		$account_id = isset($_GET['account_id']) && (int)$_GET['account_id'] ?
 			(int)$_GET['account_id'] : $GLOBALS['egw_info']['user']['account_id'];
-		$acl_apps = $GLOBALS['egw']->acl->get_app_list_for_id('run', acl::READ, $account_id);
 		$content['nm'] = array(
 			'get_rows' => 'admin_acl::get_rows',
 			'no_cat' => true,
@@ -472,8 +485,6 @@ class admin_acl
 				'location' => 'acl_rights',
 				'owner' => $account_id,
 			), array(), true),
-			// Client side is much easier if we send an array
-			'acl_apps' => $acl_apps ? $acl_apps : array()
 		);
 		$user = common::grab_owner_name($content['nm']['account_id']);
 		$sel_options = array(
