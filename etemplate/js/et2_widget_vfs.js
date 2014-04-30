@@ -619,6 +619,12 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		"value": {
 			"type": "any", // Object
 			"description": "Array of paths (strings)"
+		}, 
+		"button_caption":{
+			name: "button caption",
+			type: "string",
+			default: "Upload file(s) from Filemanager...",
+			description: "Caption for vfs-select button."	
 		}
 	},
 
@@ -635,11 +641,16 @@ var et2_vfsSelect = et2_inputWidget.extend(
 
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
-
-		this.button = $j(document.createElement("img"))
-			.attr("src", this.egw().image("filemanager/navbar"))
+		
+		this.button = $j(document.createElement("button"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
-			.addClass("et2_button et2_button_icon");
+			.addClass("et2_button et2_button_text et2_vfs_btn")
+			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
+			
+		if (this.options.button_caption != "")
+		{
+			this.button.text(this.options.button_caption);
+		}
 		this.setDOMNode(egw.app('filemanager') ? this.button[0]:document.createElement('span'));
 	},
 
@@ -721,7 +732,17 @@ var et2_vfsSelect = et2_inputWidget.extend(
 	{
 		this.options.button_label = label;
 	},
-
+	
+	/**
+	 * Set the caption for vfs-select button
+	 * 
+	 * @param {string} caption string value as a caption
+	 */
+	set_button_caption: function (caption)
+	{
+		this.options.button_caption = caption;
+	},
+	
 	/**
 	 * Set the ID passed to the server side callback
 	 *
