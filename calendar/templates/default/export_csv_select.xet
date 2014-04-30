@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.export_csv_select" template="" lang="" group="0" version="1.9.003">
+		<grid>
+			<columns>
+				<column width="150"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" span="all" class="message"/>
+					<description/>
+				</row>
+				<row>
+					<radio label="Use search results" id="selection" options="search_results" span="all"/>
+				</row>
+				<row>
+					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();jQuery('.criteria').hide();" options="filter" span="all"/>
+				</row>
+				<row>
+					<radio label="Use given criteria:" id="selection" onchange="jQuery('.criteria').show();jQuery('div.filters').hide();" options="criteria" span="all"/>
+				</row>
+				<row>
+					<grid class="criteria" id="criteria">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description value="Start" font_style="1"/>
+								<date statustext="Startdate of the export" id="start"/>
+							</row>
+							<row>
+								<description value="End"/>
+								<date statustext="Enddate of the export" id="end"/>
+							</row>
+							<row>
+								<listbox type="select-account" id="owner" rows="5" options="both" span="2" class="shorter"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.shorter select {
+  width: 170px;
+}
+		</styles>
+	</template>
+</overlay>

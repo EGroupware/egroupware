@@ -285,7 +285,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				'selection'	=> $prefs['selection'] ? $prefs['selection'] : 'criteria',
 				'criteria'	=> array(
 					'start'		=> is_object($start) ? $start->format('ts') : $start,
-					'end'		=> $end,
+					'end'		=> is_object($end) ? $end->format('ts') : $end,
 					'owner'		=> $states['owner']
 				)
 			)
