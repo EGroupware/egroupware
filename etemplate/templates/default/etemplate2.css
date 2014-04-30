@@ -456,7 +456,9 @@ div.et2_file {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
-	width: 150px;
+	width: 37%;
+	margin-left: 8px;
+	margin-top: 0;
 }
 .et2_file .progress {
   width: 300px;
@@ -508,12 +510,13 @@ span.et2_file_span{
 	text-align: left;
 	text-indent: 18px;
 	white-space: nowrap;
+	margin-top:0;
 }
 div.et2_file input.et2_file_upload{
 	position: absolute;
 	top: 4px;
 	cursor: pointer;
-	width: 143px;
+	width: 98%;
 	opacity: 0;
 }
 /**
@@ -580,13 +583,11 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 /* Link to */
 .et2_link_to {
-  width: 350px;
   overflow-x: visible;
 }
 .et2_link_to button {
   display: inline;
   float: right;
-  margin-right: 56px;
 }
 .et2_link_to span.status {
   background-repeat: no-repeat;
@@ -754,6 +755,18 @@ ul.et2_vfs {
 .et2_vfs li.vfsFilename:not(:last-child):after {
   padding: 0.25ex;
 }
+button.et2_vfs_btn {
+	float:left;
+	margin: 0;
+	text-align: left;
+	height: 24px !important;
+	padding-left: 30px !important;
+    background-repeat: no-repeat;
+    background-position:  4px center;
+	background-size: 20px auto;
+	width:35%;
+}
+
 /**
 * Validation
 */
