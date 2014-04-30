@@ -60,6 +60,7 @@
 div.filemanager_navigation {
   position: relative;
   width: 100%;
+  white-space: normal;
 }
 div.filemanager_navigation > * {
   vertical-align: middle;
@@ -69,7 +70,7 @@ div.filemanager_navigation > * {
 }
 #filemanager-index_buttons > * {
   vertical-align: middle;
-  padding-left: 3px;
+  margin: 0;
 }
 div.filemanager_navigation > label {
   position: absolute;
@@ -81,6 +82,10 @@ div.filemanager_navigation > label {
 }
 div.filemanager_navigation > label > input {
   width: 100%;
+}
+#filemanager-index_buttons div.et2_file {
+  width: 130px;
+  margin-top: 2px;
 }
 #filemanager-index-buttons div.et2_file .progress {
   position: absolute;
@@ -199,6 +204,9 @@ div.filemanager_navigation > label {
   padding-left: 3px;
   vertical-align: middle;
   margin-right: 0.2em;
+}
+#filemanager-index_buttons div.et2_file {
+  width: 139px;
 }
 div.filemanager_navigation > label > input {
   width: 95%;
