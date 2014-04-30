@@ -13,7 +13,7 @@
 		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
                     </description>
 					<description class="email-button-group file">
-						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
+						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
 						<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 					</description>
                     <description class="email-button-group egw">

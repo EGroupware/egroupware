@@ -362,6 +362,15 @@ input[type=button] {
 /*********************************
  ************  mailCompose  ******
  *********************************/
+#mail-compose_selectFromVFSForCompose{
+	width:20px;
+	float:none;
+	background-color: transparent;
+	background-size: 18px;
+	padding: 0;
+	background-position: center;
+	border:none;
+}
 #mail-index_button\[mailcreate\] {
 	width: 99%;
 	text-align: left;
@@ -392,6 +401,10 @@ input[type=button] {
 	height: 24px;
 	width: 24px;
 	vertical-align: middle;
+}
+div.mail-compose_fileselector {
+	width:auto;
+	margin-top: 3px;
 }
 .mail-compose_fileselector span.et2_file_span {
 	background-repeat: no-repeat;

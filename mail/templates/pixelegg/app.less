@@ -370,7 +370,7 @@ div#mail-index{
         // file upload
         span.file {float: left;
 
-                   img{background-color: @gray_0;}
+                   button{background-color: @gray_0;}
         }
 
 
@@ -450,14 +450,16 @@ div#mail-index{
         // file
 
         // Dateimanager
-        img[id="mail-compose_selectFromVFSForCompose"] {
+        button[id="mail-compose_selectFromVFSForCompose"] {
             /*margin-left: 15px !important;*/
             .dimension_height_s;
-            padding: 1px;
             margin: 3px;
             vertical-align: middle;
             float: left;
+			height: 20px !important;
 			width: auto;
+			background-size: 16px 16px;
+			padding: 0;
             .Complete_Button_Icon_normal;
             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
             &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
@@ -469,9 +471,7 @@ div#mail-index{
 
             float: left;
             vertical-align: middle;
-            margin:-3px;
-
-
+			margin:2px;
             span.et2_file_span{
 
                         font-size: 1.1em;

@@ -361,6 +361,15 @@ input[type=button] {
 /*********************************
  ************  mailCompose  ******
  *********************************/
+#mail-compose_selectFromVFSForCompose {
+  width: 20px;
+  float: none;
+  background-color: transparent;
+  background-size: 18px;
+  padding: 0;
+  background-position: center;
+  border: none;
+}
 #mail-index_button\[mailcreate\] {
   width: 99%;
   text-align: left;
@@ -391,6 +400,10 @@ input[type=button] {
   height: 24px;
   width: 24px;
   vertical-align: middle;
+}
+div.mail-compose_fileselector {
+  width: auto;
+  margin-top: 3px;
 }
 .mail-compose_fileselector span.et2_file_span {
   background-repeat: no-repeat;
@@ -957,7 +970,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar span.file {
   float: left;
 }
-#mail-compose .mail-compose_toolbar span.file img {
+#mail-compose .mail-compose_toolbar span.file button {
   background-color: #ffffff;
 }
 #mail-compose .mail-compose_toolbar span.egw {
@@ -1064,14 +1077,16 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
 }
-#mail-compose .mail-compose_toolbar img[id="mail-compose_selectFromVFSForCompose"] {
+#mail-compose .mail-compose_toolbar button[id="mail-compose_selectFromVFSForCompose"] {
   /*margin-left: 15px !important;*/
   height: 16px;
-  padding: 1px;
   margin: 3px;
   vertical-align: middle;
   float: left;
+  height: 20px !important;
   width: auto;
+  background-size: 16px 16px;
+  padding: 0;
   /*.background_color_10_gray;*/
   -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
@@ -1081,13 +1096,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-#mail-compose .mail-compose_toolbar img[id="mail-compose_selectFromVFSForCompose"]:hover {
+#mail-compose .mail-compose_toolbar button[id="mail-compose_selectFromVFSForCompose"]:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
 }
-#mail-compose .mail-compose_toolbar img[id="mail-compose_selectFromVFSForCompose"]:focus {
+#mail-compose .mail-compose_toolbar button[id="mail-compose_selectFromVFSForCompose"]:focus {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -1097,15 +1112,17 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector {
   float: left;
   vertical-align: middle;
-  margin: -3px;
+  margin: 2px;
 }
 #mail-compose .mail-compose_toolbar .et2_file span.et2_file_span,
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span {
   font-size: 1.1em;
   font-weight: normal;
-  /*.border_normal;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
   /*.box_shadow_standard_light;*/
-  /*.rounded (3px);*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1244,9 +1261,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander {
-  /*.border_normal;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
   /*.box_shadow_standard_light;*/
-  /*.rounded (3px);*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1278,9 +1297,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander {
-  /*.border_normal;*/
+  border: 1px solid rgba(0, 0, 0, 0.15);
   /*.box_shadow_standard_light;*/
-  /*.rounded (3px);*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
