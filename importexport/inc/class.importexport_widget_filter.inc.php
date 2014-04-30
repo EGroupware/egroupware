@@ -229,7 +229,7 @@ error_log('Trying to filter with unsupported field type: ' . $field['type']);
 		$form_name = self::form_name($cname, $this->id, $expand);
 		if (!$this->is_readonly($cname, $form_name))
 		{
-			$value_in = self::get_array($content, $form_name);
+			$value_in = (array)self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
 			foreach($value_in as $key => $value)
