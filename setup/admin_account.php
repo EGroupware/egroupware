@@ -26,6 +26,12 @@ if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 $error = '';
 if ($_POST['submit'])
 {
+	// for POST (not GET or cli call via setup_cmd_admin) validate CSRF token
+	if ($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		egw_csrf::validate($_POST['csrf_token'], __FILE__);
+	}
+
 	/* Posted admin data */
 	$passwd   = get_var('passwd',Array('POST'));
 	$passwd2  = get_var('passwd2',Array('POST'));
@@ -82,6 +88,8 @@ if(!$_POST['submit'] || $error)
 	$setup_tpl->set_var('all_apps_desc',lang('Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.'));
 	$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 	$setup_tpl->set_var('demo_desc',lang('The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
+
+	$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
 
 	$setup_tpl->set_var('lang_submit',lang('Save'));
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));
