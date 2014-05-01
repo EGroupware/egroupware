@@ -1,5 +1,6 @@
 <!-- BEGIN form -->
 <form method="POST" action="{form_action}">
+ {hidden_vars}
  <input type="hidden" name="account_id" value="{account_id}">
  <center>
   <table border="0" width="85%">

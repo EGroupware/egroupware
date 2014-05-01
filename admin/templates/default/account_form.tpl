@@ -8,7 +8,7 @@ function check_account_email(id)
 	firstname = document.getElementById('firstname').value;
 	lastname  = document.getElementById('lastname').value;
 	email     = document.getElementById('email').value;
-	
+
 	if (!email || email_set || id == 'account')
 	{
 		xajax_doXMLHTTP('admin.uiaccounts.ajax_check_account_email',firstname,lastname,account,{account_id},email_set ? '' : email,id);
@@ -19,7 +19,7 @@ function check_password(id)
 {
 	password  = document.getElementById('password').value;
 	password2 = document.getElementById('password2').value;
-	
+
 	if (password && (password2 || id == 'password2') && password != password2)
 	{
 		alert('{lang_passwds_unequal}');
@@ -32,6 +32,7 @@ function check_password(id)
 }
 </script>
  <form method="POST" action="{form_action}">
+	{hidden_vars}
  	<div align="center">
 	<table border="0" width="95%">
 		<tr>
@@ -44,22 +45,22 @@ function check_password(id)
 			    <tr class="th">
 			      <td colspan="4"><b>{lang_action}</b></td>
 			    </tr>
-				
+
 			    <tr class="row_on">
 			     <td width="25%">{lang_loginid}</td>
 			     <td width="25%">{account_lid}&nbsp;</td>
-				
+
 			     <td width="25%">{lang_account_active}:</td>
 			     <td width="25%">{account_status}</td>
 			    </tr>
-				
+
 			    <tr class="row_off">
 			     <td>{lang_firstname}</td>
 			     <td>{account_firstname}&nbsp;</td>
 			     <td>{lang_lastname}</td>
 			     <td>{account_lastname}&nbsp;</td>
 			    </tr>
-			
+
 			    {password_fields}
 <!-- BEGIN ldap_extra -->
 			    <tr class="row_off">
@@ -75,7 +76,7 @@ function check_password(id)
 					<td></td>
 					<td></td>
 				</tr>
-			 
+
 			    <tr class="row_off">
 			     <td>{lang_changepassword}</td>
 			     <td>{changepassword}</td>
@@ -89,14 +90,14 @@ function check_password(id)
 			     <td>{lang_email}</td>
 			     <td>{account_email}</td>
 			    </tr>
-	
+
 			    <tr class="row_off">
 			     <td>{lang_groups}</td>
 			     <td>{groups_select}&nbsp;</td>
 			     <td>{lang_primary_group}</td>
 			     <td>{primary_group_select}&nbsp;</td>
 			    </tr>
-			    
+
 			    <tr class="th">
 			     <td>{lang_app}</td>
 			     <td>{lang_acl}</td>
@@ -105,9 +106,9 @@ function check_password(id)
 			    </tr>
 
 			    {permissions_list}
-			
+
 				 {form_buttons}
-			
+
 			   </table>
    			</td>
    		</tr>
