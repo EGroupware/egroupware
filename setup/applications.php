@@ -40,6 +40,13 @@ $setup_tpl->set_file(array(
 	'T_login_stage_header' => 'login_stage_header.tpl',
 	'T_setup_main' => 'applications.tpl'
 ));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+
+// check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
+{
+	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+}
 
 $setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
 $setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
