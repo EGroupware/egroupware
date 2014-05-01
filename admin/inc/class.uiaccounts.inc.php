@@ -690,6 +690,11 @@
 
 		function delete_user()
 		{
+			// for POST (not GET or cli call via setup_cmd_admin) validate CSRF token
+			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			{
+				egw_csrf::validate($_POST['csrf_token'], __METHOD__);
+			}
 			if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || $GLOBALS['egw_info']['user']['account_id'] == $_GET['account_id'] ||
 				$_POST['cancel'])
 			{
@@ -714,7 +719,8 @@
 			);
 			$var = Array(
 				'form_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.delete_user'),
-				'account_id'  => $_GET['account_id']
+				'account_id'  => $_GET['account_id'],
+				'hidden_vars'       => html::input_hidden('csrf_token', egw_csrf::token(__METHOD__)),
 			);
 
 			// the account can have special chars/white spaces, if it is a ldap dn
@@ -849,6 +855,11 @@
 
 		function edit_user($cd='',$account_id='')
 		{
+			// for POST (not GET or cli call via setup_cmd_admin) validate CSRF token
+			if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
+			{
+				egw_csrf::validate($_POST['csrf_token'], __METHOD__);
+			}
 			if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
 				$this->list_users();
@@ -1474,7 +1485,8 @@
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space,
-				'account_id'        => (int) $userData['account_id']
+				'account_id'        => (int) $userData['account_id'],
+				'hidden_vars'       => html::input_hidden('csrf_token', egw_csrf::token(__CLASS__.'::edit_user')),
 			);
             if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.$GLOBALS['egw']->common->show_date($userData['account_created']);
             if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.$GLOBALS['egw']->common->show_date($userData['account_modified']);
