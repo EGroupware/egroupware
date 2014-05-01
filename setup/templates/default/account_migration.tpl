@@ -1,5 +1,6 @@
 <!-- BEGIN header -->
  <form action="{action_url}" method="post">
+  {hidden_vars}
   <table border="0" align="center" width="70%">
    <tr bgcolor="#486591">
      <td colspan="2" align="center"><b><font color="#fefefe">{description}</font></b></td>

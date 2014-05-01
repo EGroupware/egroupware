@@ -29,6 +29,13 @@ $setup_tpl->set_file(array(
 	'T_footer' => 'footer.tpl',
 	'T_alert_msg' => 'msg_alert_msg.tpl'
 ));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+
+// check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
+{
+	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+}
 
 // determine from where we migrate to what
 if (!is_object($GLOBALS['egw_setup']->db))

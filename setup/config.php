@@ -32,6 +32,13 @@ $setup_tpl->set_file(array(
 	'T_config_pre_script' => 'config_pre_script.tpl',
 	'T_config_post_script' => 'config_post_script.tpl'
 ));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+
+// check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
+{
+	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+}
 
 /* Following to ensure windows file paths are saved correctly */
 if (function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
@@ -130,16 +137,14 @@ $setup_tpl->pparse('out','T_config_pre_script');
 /* Now parse each of the templates we want to show here */
 class phpgw
 {
-	var $common;
 	var $accounts;
 	var $applications;
 	var $db;
 }
 $GLOBALS['egw'] = new phpgw;
-$GLOBALS['egw']->common =& CreateObject('phpgwapi.common');
 $GLOBALS['egw']->db     =& $GLOBALS['egw_setup']->db;
 
-$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('setup'));
+$t = CreateObject('phpgwapi.Template', common::get_tpl_dir('setup'));
 
 $t->set_unknowns('keep');
 $t->set_file(array('config' => 'config.tpl'));

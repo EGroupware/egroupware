@@ -142,6 +142,7 @@
 	</td>
 	<td>
 		<form action="index.php" method="post">
+		{hidden_vars}
 		<input type="hidden" name="oldversion" value="new" />
         <input type="hidden" name="action" value="REALLY Uninstall all applications" />
 		<input type="submit" name="label" value="{really_uninstall_all_applications}" /> {dropwarn}

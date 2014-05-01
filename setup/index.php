@@ -268,6 +268,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 5:
+		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
 		$setup_tpl->set_var('are_you_sure',lang('ARE YOU SURE?'));
 		$setup_tpl->set_var('really_uninstall_all_applications',lang('REALLY Uninstall all applications'));
 		$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
@@ -294,6 +295,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
 				break;
 			case 'drop':
+				egw_csrf::validate($_POST['csrf_token'], __FILE__);
 				$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
 				$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
 				break;

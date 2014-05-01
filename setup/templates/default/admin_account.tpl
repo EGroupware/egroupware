@@ -1,5 +1,6 @@
 <!-- BEGIN admin_account -->
 <form method="post" action="{action_url}">
+{hidden_vars}
 <table border="0" width="90%" cellspacing="0" cellpadding="2">
   <tr>
     <td>

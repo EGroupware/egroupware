@@ -15,7 +15,7 @@ function check_all(which)
       {
         document.apps.elements[i].checked = true;
       }
-    } 
+    }
   }
 }
 // -->
@@ -29,6 +29,7 @@ function check_all(which)
   </tr>
 </table>
 <form name="apps" method="post" action="{action_url}">
+{hidden_vars}
 <table width="90%" cellspacing="0" cellpadding="2">
 <!-- END header -->
 
