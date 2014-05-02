@@ -309,7 +309,7 @@ class mail_compose
 						$sendOK=false;
 						$message = $this->errorInfo;
 					}
-					if (!empty($_content['signatureid']))
+					if (!empty($_content['signatureid']) && $_content['signatureid'] != $sigPref[$this->mail_bo->profileID])
 					{
 						$sigPref[$this->mail_bo->profileID]=$_content['signatureid'];
 						$GLOBALS['egw']->preferences->add('mail','LastSignatureIDUsed',$sigPref,'user');
