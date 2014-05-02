@@ -129,6 +129,15 @@ class mail_compose
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
+		{
+			$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
+		}
+		else
+		{
+			$sigPref = array();
+		}
+		//error_log(__METHOD__.__LINE__.array2string($sigPref));
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
@@ -299,6 +308,13 @@ class mail_compose
 					{
 						$sendOK=false;
 						$message = $this->errorInfo;
+					}
+					if (!empty($_content['signatureid']))
+					{
+						$sigPref[$this->mail_bo->profileID]=$_content['signatureid'];
+						$GLOBALS['egw']->preferences->add('mail','LastSignatureIDUsed',$sigPref,'user');
+						// save prefs
+						$GLOBALS['egw']->preferences->save_repository(true);
 					}
 				}
 				catch (egw_exception_wrong_userinput $e)
@@ -947,7 +963,6 @@ class mail_compose
 			$_content['mimeType'] = $content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
 		}
-
 		// is a certain signature requested?
 		// only the following values are supported (and make sense)
 		// no => means -2
@@ -961,6 +976,7 @@ class mail_compose
 		//if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
 		$presetId = NULL;
 		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['mailaccount'])) $presetId = (int)$content['mailaccount'];
+		if (!empty($sigPref[$this->mail_bo->profileID]) && (empty($presetSig) || $presetSig==-1 || empty($content['signatureid']) || $content['signatureid']==-1)) $presetSig=$sigPref[$this->mail_bo->profileID];
 
 /*
 
@@ -969,9 +985,9 @@ class mail_compose
 */
 
 /*
-		$this->t->set_var('lang_no_recipient',lang('No recipient address given!'));
-		$this->t->set_var('lang_no_subject',lang('No subject given!'));
-		$this->t->set_var('lang_infolog_tracker_not_both',lang("You can either choose to save as infolog OR tracker, not both."));
+		lang('No recipient address given!');
+		lang('No subject given!');
+		lang("You can either choose to save as infolog OR tracker, not both.");
 */
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
@@ -1019,6 +1035,7 @@ class mail_compose
 		$allSignatures = $this->mail_bo->getAccountIdentities($selectedMailAccount);
 		$defaultIdentity = 0;
 		foreach($allSignatures as $key => $singleIdentity) {
+			//error_log(__METHOD__.__LINE__.array2string($singleIdentity));
 			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
 			$iS = mail_bo::generateIdentityString($singleIdentity);
 			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
@@ -1029,10 +1046,17 @@ class mail_compose
 			{
 				$id_prepend = '('.$singleIdentity['ident_id'].') ';
 			}
-			$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,50));
+			if (!empty($singleIdentity['ident_name']) && !in_array(lang('Signature').': '.$id_prepend.$singleIdentity['ident_name'],$selectSignatures))
+			{
+				$buff = $singleIdentity['ident_name'];
+			}
+			else
+			{
+				$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,50));
+			}
 			$sigDesc = $buff?$buff:lang('none');
 
-			if ($sigDesc == lang('none')) $sigDesc = $singleIdentity['ident_realname'].($singleIdentity['ident_org']?' ('.$singleIdentity['ident_org'].')':'');
+			if ($sigDesc == lang('none')) $sigDesc = (!empty($singleIdentity['ident_name'])?$singleIdentity['ident_name']:$singleIdentity['ident_realname'].($singleIdentity['ident_org']?' ('.$singleIdentity['ident_org'].')':''));
 			$selectSignatures[$singleIdentity['ident_id']] = lang('Signature').': '.$id_prepend.$sigDesc;
 
 			if(in_array($singleIdentity['ident_id'],$defaultIds) && $defaultIdentity==0)
@@ -2822,6 +2846,23 @@ class mail_compose
 	{
 		// retrieve the signature accociated with the identity
 		$id = $this->mail_bo->getDefaultIdentity();
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
+		{
+			$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
+			if (!empty($sigPref[$this->mail_bo->profileID]) && $sigPref[$this->mail_bo->profileID]>0)
+			{
+				try
+				{
+					$identity = emailadmin_account::read_identity($sigPref[$this->mail_bo->profileID]);
+					$id = $sigPref[$this->mail_bo->profileID];
+				}
+				catch (Exception $e)
+				{
+					unset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'][$this->mail_bo->profileID]);
+				}
+			}
+		}
+
 		if ((!isset($content['mailaccount']) || empty($content['mailaccount'])) && $id) $content['signatureid'] = $id;
 		if (!isset($content['signatureid']) || empty($content['signatureid'])) $content['signatureid'] = $id;
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
