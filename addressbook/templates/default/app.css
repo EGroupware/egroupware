@@ -92,3 +92,6 @@ img.iphoto {
 #addressbook-index_org_view {
 	margin: 5px;
 }
+.et2_hbox > * {
+	padding-right: 0 !important;
+}
