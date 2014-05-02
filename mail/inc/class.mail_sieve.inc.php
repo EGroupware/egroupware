@@ -626,7 +626,7 @@ class mail_sieve
 							$response = egw_json_response::get();
 							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
 							egw_framework::refresh_opener($msg, 'mail','edit');
-							if ($button === 'apply') break;
+							if ($button === 'apply' || $this->bosieve->error !=="") break;
 						}
 
 					case 'cancel':
