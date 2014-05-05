@@ -88,6 +88,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	protected $user = null;
 
 	/**
+	 * Maximum number of errors or warnings before aborting
+	 */
+	const MAX_MESSAGES = 100;
+
+	/**
 	 * List of import errors
 	 */
 	protected $errors = array();
@@ -157,7 +162,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 
 			$warning = importexport_import_csv::convert($record, $record_class::$types, $app, $this->lookups, $_definition->plugin_options['convert']);
-                        if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
+				if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
 
 			$egw_record = new $record_class();
 			$egw_record->set_record($record);
@@ -169,6 +174,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			if($this->dry_run && $import_csv->get_current_position() < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])
 			{
 				$this->preview_records[] = $egw_record;
+			}
+			if(count($this->warnings) > self::MAX_MESSAGES || count($this->errors) > self::MAX_MESSAGES)
+			{
+				$this->errors[] = 'Too many errors, aborted';
+				break;
 			}
 		}
 		return $count;
@@ -298,12 +308,14 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		// Set up HTML
 		$rows['h1'] = $labels;
+		error_log("Wow, ".count($this->preview_records) . ' preveiw records');
 		foreach($this->preview_records as $i => $row_data)
 		{
 			// Convert to human-friendly
 			importexport_export_csv::convert($row_data,$record_class::$types,$definition->application,$this->lookups);
 			$rows[] = $row_data->get_record_array();
 		}
+		$this->preview_records = array();
 
 		return html::table($rows);
 	}
