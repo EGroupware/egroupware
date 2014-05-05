@@ -188,6 +188,7 @@ class egw_cache
 					}
 				}
 				catch(Exception $e) {
+					unset($e);
 					$data = null;
 				}
 				return $data;
@@ -213,7 +214,7 @@ class egw_cache
 
 			case self::INSTANCE:
 			case self::TREE:
-				if (!($provider = self::get_provider($level)))
+				if (!($provider = self::get_provider($level, false)))
 				{
 					return false;
 				}
@@ -316,6 +317,7 @@ class egw_cache
 	 */
 	static public function setSession($app,$location,$data,$expiration=0)
 	{
+		unset($expiration);	// not used, but required by function signature
 		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (egw_session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
@@ -340,6 +342,7 @@ class egw_cache
 	 */
 	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
+		unset($expiration);	// not used, but required by function signature
 		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (egw_session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
@@ -393,6 +396,7 @@ class egw_cache
 	 */
 	static public function setRequest($app,$location,$data,$expiration=0)
 	{
+		unset($expiration);	// not used, but required by function signature
 		self::$request_cache[$app][$location] = $data;
 
 		return true;
@@ -410,6 +414,7 @@ class egw_cache
 	 */
 	static public function getRequest($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
+		unset($expiration);	// not used, but required by function signature
 		if (!isset(self::$request_cache[$app][$location]) && !is_null($callback))
 		{
 			self::$request_cache[$app][$location] = call_user_func_array($callback,$callback_params);
@@ -432,7 +437,7 @@ class egw_cache
 		}
 		unset(self::$request_cache[$app][$location]);
 
-		return $ret;
+		return true;
 	}
 
 	/**
@@ -441,9 +446,10 @@ class egw_cache
 	 * The returned provider already has an opened connection
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE)
+	 * @param boolean $log_not_found=true false do not log if no provider found, used eg. to supress error via unsetCache during installation
 	 * @return egw_cache_provider
 	 */
-	static protected function get_provider($level)
+	static protected function get_provider($level, $log_not_found=true)
 	{
 		static $providers = array();
 
@@ -494,7 +500,7 @@ class egw_cache
 					}
 				}
 			}
-			if (!$providers[$level]) error_log(__METHOD__."($level) no provider found ($reason)!");
+			if (!$providers[$level] && $log_not_found) error_log(__METHOD__."($level) no provider found ($reason)!".function_backtrace());
 		}
 		//error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
 		return $providers[$level];
@@ -515,16 +521,22 @@ class egw_cache
 			{
 				$db = $GLOBALS['egw']->db ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 
-				if (($rs = $db->select(config::TABLE,'config_value',array(
-					'config_app'	=> 'phpgwapi',
-					'config_name'	=> $name,
-				),__LINE__,__FILE__)))
-				{
-					$GLOBALS['egw_info']['server'][$name] = $rs->fetchColumn();
+				try {
+					if (($rs = $db->select(config::TABLE,'config_value',array(
+						'config_app'	=> 'phpgwapi',
+						'config_name'	=> $name,
+					),__LINE__,__FILE__)))
+					{
+						$GLOBALS['egw_info']['server'][$name] = $rs->fetchColumn();
+					}
+					else
+					{
+						error_log(__METHOD__."('$name', $throw) config value NOT found!");//.function_backtrace());
+					}
 				}
-				else
+				catch(egw_exception_db $e)
 				{
-					error_log(__METHOD__."('name', $throw) cound NOT query value!");
+					if ($throw) error_log(__METHOD__."('$name', $throw) cound NOT query value: ".$e->getMessage());//.function_backtrace());
 				}
 			}
 			if (!$GLOBALS['egw_info']['server'][$name] && $throw)
@@ -837,6 +849,7 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	 */
 	function flush(array $keys)
 	{
+		unset($keys);	// required by function signature
 		return false;
 	}
 }

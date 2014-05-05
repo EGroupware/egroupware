@@ -45,7 +45,8 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 		}
 		else
 		{
-			$this->base_path = egw_cache::get_system_config('temp_dir').'/egw_cache';
+			$this->base_path = egw_cache::get_system_config('temp_dir', false);
+			if (isset($this->base_path)) $this->base_path .= '/egw_cache';
 		}
 		if (!isset($this->base_path) || !file_exists($this->base_path) && !mkdir($this->base_path,0700,true))
 		{
@@ -63,7 +64,7 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 	 */
 	function set(array $keys,$data,$expiration=0)
 	{
-		if ($ret = @file_put_contents($fname=$this->filename($keys,true),serialize($data),LOCK_EX) > 0)
+		if (($ret = @file_put_contents($fname=$this->filename($keys,true),serialize($data),LOCK_EX) > 0))
 		{
 			if ((int)$expiration > 0) file_put_contents($fname.self::EXPIRATION_EXTENSION,(string)$expiration);
 		}
