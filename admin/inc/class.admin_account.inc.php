@@ -154,6 +154,11 @@ class admin_account
 					break;
 			}
 		}
+		// Make sure primary group is in account groups
+		if($account['account_primary_group'] && !array_search($account['account_primary_group'], $account['account_groups']))
+		{
+			$account['account_groups'][] = $account['account_primary_group'];
+		}
 
 		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account);
 		$cmd->run();
