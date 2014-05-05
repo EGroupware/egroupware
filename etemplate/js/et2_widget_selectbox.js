@@ -826,8 +826,8 @@ jQuery.extend(et2_selectbox,
 			{
 				// If that didn't work, check according to ID
 				if (!content_options) content_options = content_mgr.getEntry("options-" + widget.id);
-				// Again, try last name part at top level - this is usually just the value
-				if (!content_options) content_options = content_mgr.getRoot().getEntry(name_parts[name_parts.length-1]);
+				// Again, try last name part at top level
+				if (!content_options) content_options = content_mgr.getRoot().getEntry("options-"+name_parts[name_parts.length-1]);
 			}
 		}
 
