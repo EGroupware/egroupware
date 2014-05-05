@@ -547,7 +547,7 @@ class infolog_activesync implements activesync_plugin_write
 	 */
 	function settings($hook_data)
 	{
-		translation::add_app('infolog');
+		if (!$hook_data['setup']) translation::add_app('infolog');
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		if (!($types = $this->infolog->enums['type']))
