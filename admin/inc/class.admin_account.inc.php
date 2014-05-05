@@ -236,14 +236,18 @@ class admin_account
 	 * Check entered data and return error-msg via json data or null
 	 *
 	 * @param array $data values for account_id and account_lid
+	 * @param string $changed name of addressbook widget triggering change eg. "email", "n_given" or "n_family"
 	 */
-	public static function ajax_check(array $data)
+	public static function ajax_check(array $data, $changed)
 	{
 		// generate default email address
-		if (empty($data['account_email']) || !$data['account_id'])
+		if (empty($data['account_email']) || !$data['account_id'] && in_array($changed, array('n_given', 'n_family')))
 		{
 			$email = common::email_address($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
-			if ($email) egw_json_response::get()->assign('addressbook-edit_email', 'value', $email);
+			if ($email && $email[0] != '@' && strpos($email, '@'))	// only add valid email addresses
+			{
+				egw_json_response::get()->assign('addressbook-edit_email', 'value', $email);
+			}
 		}
 
 		if (!$data['account_lid'] && !$data['account_id']) return;	// makes no sense to check before

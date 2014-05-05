@@ -688,7 +688,7 @@ app.classes.addressbook = AppJS.extend(
 				};
 
 				this.egw.message('');
-				this.egw.json('admin_account::ajax_check', [data], function(_msg)
+				this.egw.json('admin_account::ajax_check', [data, _widget.id], function(_msg)
 				{
 					if (_msg && typeof _msg == 'string')
 					{
