@@ -323,6 +323,9 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
 					if (is_array($valid)) $valid = implode(',', $valid);
+					// NULL is valid for most fields, but not custom fields due to backend handling
+					// See so_sql_cf->save()
+					if (is_null($valid)) $valid = false;
 					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($valid));
 				}
 			} elseif ($this->type == 'customfields-types') {
