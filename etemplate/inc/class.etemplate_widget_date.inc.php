@@ -29,6 +29,10 @@
  *           &128 = no icon to trigger popup, click into input trigers it, also removing the separators to save space
  *
  * @todo validation of date-duration
+ *
+ * @info beforeSendToClient is no longer neccessary, in order to handle date/time conversion, for this widget
+ *		 as we are handling both timestamp and string date/time formats on client side
+ *
  */
 class etemplate_widget_date extends etemplate_widget_transformer
 {
@@ -42,21 +46,8 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	 * @var string|array
 	 */
 	protected $legacy_options = 'dataformat,mode';
-
-	/**
-	 * Change value to be an integer - client side only deals in timestamps
-	 */
-	public function beforeSendToClient($cname)
-	{
-		$form_name = self::form_name($cname, $this->id);
-		$value =& self::get_array(self::$request->content, $form_name, true);
-		if ($value && !empty($this->attrs['dataformat']))	// Non-integer timestamp
-		{
-			$date = DateTime::createFromFormat($this->attrs['dataformat'], $value);
-			if($date) $value = $date->getTimestamp();
-		}
-	}
-
+	
+	
 	/**
 	 * Validate input
 	 *
@@ -109,4 +100,3 @@ class etemplate_widget_date extends etemplate_widget_transformer
 		}
 	}
 }
-new jscalendar();
