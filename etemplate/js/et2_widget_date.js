@@ -609,11 +609,14 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		if(typeof _value == 'string' && isNaN(_value))
 		{
-			var text = new Date(_value);
-			// Handle timezone offset - times are already in user time, but parse does UTC
-			var localOffset = text.getTimezoneOffset() * 60000;
+			// parseDateTime to handle string PHP: DateTime local date/time format
+			var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
+						jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value): 
+						jQuery.datepicker.parseDateTime(this.egw().preference('dateformat'),this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', _value);
+			
+			var text = new Date(parsed);
 			// JS dates use milliseconds
-			this.date.setTime(text.valueOf()+localOffset);
+			this.date.setTime(text.valueOf());
 		}
 		else
 		{
