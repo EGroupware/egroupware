@@ -94,7 +94,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 				switch ($widget_type)
 				{
-					case 'select-account':	// validate accounts independent of options know to server
+					case 'select-account':	
+						// If in allowed options, skip account check to support app-specific options
+						if(count($allowed) > 0 && in_array($val,$allowed)) continue;
+
+						// validate accounts independent of options know to server
 						$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
 						$type = $GLOBALS['egw']->accounts->exists($val);
 						//error_log(__METHOD__."($cname,...) form_name=$form_name, widget_type=$widget_type, account_type=$account_type, type=$type");
@@ -102,7 +106,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 							$type == 2 && $account_type == 'users' ||
 							in_array($account_type, array('owngroups', 'memberships')) &&
 								!in_array($val, $GLOBALS['egw']->accounts->memberships(
-									$GLOBALS['egw_info']['user']['account_id'], true)))
+									$GLOBALS['egw_info']['user']['account_id'], true))
+						)
 						{
 							self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val,
 								!$type?'not found' : ($type == 1 ? 'user' : 'group')),'');

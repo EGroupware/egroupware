@@ -169,99 +169,10 @@ var et2_selectbox = et2_inputWidget.extend(
 			return;
 		}
 
-		var name_parts = this.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
-
-		// Try to find the options inside the "sel-options" array
-		if(this.getArrayMgr("sel_options"))
+		var sel_options = et2_selectbox.find_select_options(this, _attrs['select_options']);
+		if(!jQuery.isEmptyObject(sel_options))
 		{
-			var content_options = {};
-
-			// Try first according to ID
-			content_options = this.getArrayMgr("sel_options").getEntry(this.id);
-			// ID can get set to an array with 0 => ' ' - not useful
-			if(content_options && content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '')
-			{
-				content_options = null;
-			}
-			// We could wind up too far inside options if label,title are defined
-			if(content_options && !isNaN(name_parts[name_parts.length -1]) && content_options.label && content_options.title)
-			{
-				name_parts.pop();
-				content_options = this.getArrayMgr("sel_options").getEntry(name_parts.join('['));
-				delete content_options["$row"];
-			}
-
-			// Select options tend to be defined once, at the top level, so try that
-			if(!content_options || content_options.length == 0)
-			{
-				content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
-			}
-
-			// Try in correct namespace (inside a grid or something)
-			if(!content_options || content_options.length == 0)
-			{
-				content_options = this.getArrayMgr("sel_options").getEntry(name_parts[name_parts.length-1]);
-			}
-
-			// Try name like widget[$row]
-			if(!content_options || content_options.length == 0)
-			{
-				var pop_that = jQuery.extend([],name_parts);
-				while(pop_that.length > 0 && (!content_options || content_options.length == 0))
-				{
-					pop_that.pop();
-					content_options = this.getArrayMgr('sel_options').getEntry(pop_that.join('['));
-				}
-			}
-
-			// Maybe in a row, and options got stuck in ${row} instead of top level
-			// not sure this code is still needed, as server-side no longer creates ${row} or {$row} for select-options
-			if(!content_options || content_options.length == 0)
-			{
-				var row_stuck = ['${row}','{$row}'];
-				for(var i = 0; i < row_stuck.length; i++)
-				{
-					// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
-					if(this.getArrayMgr("sel_options").perspectiveData.row || this.getArrayMgr("sel_options").data[row_stuck[i]])
-					{
-						var row_id = this.id.replace(/[0-9]+/,row_stuck[i]);
-						content_options = this.getArrayMgr("sel_options").getEntry(row_id);
-						if(!content_options || content_options.length == 0)
-						{
-							content_options = this.getArrayMgr("sel_options").getEntry(row_stuck[i] + '[' + this.id + ']');
-						}
-					}
-				}
-			}
-			if(_attrs["select_options"] && !jQuery.isEmptyObject(_attrs['select_options']) && content_options)
-			{
-				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
-			}
-			else if (content_options)
-			{
-				_attrs["select_options"] = content_options;
-			}
-		}
-
-		// Check whether the options entry was found, if not read it from the
-		// content array.
-		if (jQuery.isEmptyObject(_attrs["select_options"]) && this.getArrayMgr('content') != null)
-		{
-			if (content_options) _attrs['select_options'] = content_options;
-			var content_mgr = this.getArrayMgr('content');
-			if (content_mgr)
-			{
-				// If that didn't work, check according to ID
-				if (!content_options) _attrs["select_options"] = content_mgr.getEntry("options-" + this.id);
-				// Again, try last name part at top level - this is usually just the value
-				var content_options = content_mgr.getRoot().getEntry(name_parts[name_parts.length-1]);
-			}
-		}
-
-		// Default to an empty object
-		if (_attrs["select_options"] == null)
-		{
-			_attrs["select_options"] = {};
+			_attrs['select_options'] = sel_options;
 		}
 	},
 
@@ -823,6 +734,111 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 	'select-country', 'select-state', 'select-year', 'select-month',
 	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
 	'select-lang', 'select-bool', 'select-timezone' ]);
+
+// Static class stuff
+jQuery.extend(et2_selectbox,
+{
+	/**
+	 * Find the select options for a widget, out of the many places they could be.
+	 * @param {et2_widget} Widget to check for.  Should be some sort of select widget.
+	 * @param {object} Select options in attributes array
+	 * @return {object} Select options, or empty object
+	 */
+	find_select_options: function(widget, attr_options)
+	{
+		var name_parts = widget.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
+
+		var content_options = {};
+
+		// Try to find the options inside the "sel-options" array
+		if(widget.getArrayMgr("sel_options"))
+		{
+			// Try first according to ID
+			content_options = widget.getArrayMgr("sel_options").getEntry(widget.id);
+			// ID can get set to an array with 0 => ' ' - not useful
+			if(content_options && content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '')
+			{
+				content_options = null;
+			}
+			// We could wind up too far inside options if label,title are defined
+			if(content_options && !isNaN(name_parts[name_parts.length -1]) && content_options.label && content_options.title)
+			{
+				name_parts.pop();
+				content_options = widget.getArrayMgr("sel_options").getEntry(name_parts.join('['));
+				delete content_options["$row"];
+			}
+
+			// Select options tend to be defined once, at the top level, so try that
+			if(!content_options || content_options.length == 0)
+			{
+				content_options = widget.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length-1]);
+			}
+
+			// Try in correct namespace (inside a grid or something)
+			if(!content_options || content_options.length == 0)
+			{
+				content_options = widget.getArrayMgr("sel_options").getEntry(name_parts[name_parts.length-1]);
+			}
+
+			// Try name like widget[$row]
+			if(!content_options || content_options.length == 0)
+			{
+				var pop_that = jQuery.extend([],name_parts);
+				while(pop_that.length > 0 && (!content_options || content_options.length == 0))
+				{
+					pop_that.pop();
+					content_options = widget.getArrayMgr('sel_options').getEntry(pop_that.join('['));
+				}
+			}
+
+			// Maybe in a row, and options got stuck in ${row} instead of top level
+			// not sure this code is still needed, as server-side no longer creates ${row} or {$row} for select-options
+			if(!content_options || content_options.length == 0)
+			{
+				var row_stuck = ['${row}','{$row}'];
+				for(var i = 0; i < row_stuck.length; i++)
+				{
+					// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
+					if(widget.getArrayMgr("sel_options").perspectiveData.row || widget.getArrayMgr("sel_options").data[row_stuck[i]])
+					{
+						var row_id = widget.id.replace(/[0-9]+/,row_stuck[i]);
+						content_options = widget.getArrayMgr("sel_options").getEntry(row_id);
+						if(!content_options || content_options.length == 0)
+						{
+							content_options = widget.getArrayMgr("sel_options").getEntry(row_stuck[i] + '[' + widget.id + ']');
+						}
+					}
+				}
+			}
+			if(attr_options && !jQuery.isEmptyObject(attr_options) && content_options)
+			{
+				content_options = jQuery.extend(true, {},attr_options,content_options);
+			}
+		}
+
+		// Check whether the options entry was found, if not read it from the
+		// content array.
+		if (jQuery.isEmptyObject(content_options) && widget.getArrayMgr('content') != null)
+		{
+			if (content_options) attr_options = content_options;
+			var content_mgr = widget.getArrayMgr('content');
+			if (content_mgr)
+			{
+				// If that didn't work, check according to ID
+				if (!content_options) content_options = content_mgr.getEntry("options-" + widget.id);
+				// Again, try last name part at top level - this is usually just the value
+				if (!content_options) content_options = content_mgr.getRoot().getEntry(name_parts[name_parts.length-1]);
+			}
+		}
+
+		// Default to an empty object
+		if (content_options == null)
+		{
+			content_options = {};
+		}
+		return content_options;
+	}
+});
 
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.

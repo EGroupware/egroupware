@@ -683,6 +683,13 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 
 		this.options.application = 'home-accounts';
 
+		// Editable version allows app to set options that aren't accounts, so allow for them
+		var options = et2_selectbox.find_select_options(this,options['select_options']);
+		if(!jQuery.isEmptyObject(options))
+		{
+			this.options.select_options = options;
+		}
+
 		// Don't make it look like a link though
 		this.list.removeClass("et2_link_string").addClass("et2_selectbox");
 	},
@@ -699,7 +706,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 		}
 
 		// Don't bother to lookup if it's not an array, or a number
-		if(typeof _value == 'object' || !isNaN(_value))
+		if(typeof _value == 'object' || !isNaN(_value) && _value != "")
 		{
 			this._super.apply(this, arguments);
 			// Don't make it look like a link though
