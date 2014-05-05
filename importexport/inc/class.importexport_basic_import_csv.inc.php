@@ -170,6 +170,12 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 			if($success) $count++;
 
+			// Add some more time
+			if($success && $import_csv->get_current_position() > 0 && $import_csv->get_current_position() % 100 == 0)
+			{
+				set_time_limit(10);
+			}
+			
 			// Keep a few records for preview, but process the whole file
 			if($this->dry_run && $import_csv->get_current_position() < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])
 			{
@@ -373,27 +379,27 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	* Returns errors that were encountered during importing
+	* Maximum of one error message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => error message
+	*       )
+	*/
+	public function get_errors() {
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
+	* Returns a list of actions taken, and the number of records for that action.
+	* Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	*
+	* @return Array (
+	*       action => record count
+	* )
+	*/
+	public function get_results() {
+			return $this->results;
+	}
 } // end of iface_export_plugin
 ?>
