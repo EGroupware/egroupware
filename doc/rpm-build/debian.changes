@@ -1,3 +1,12 @@
+egroupware-epl (11.1.20140505-1) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Security: remote command execution for logged in users with administrative priviledges
+  * Security: cross site request forgery allowing to create new admin users or run above commands
+  * many thanks to High-Tech Bridge Security Research Lab for discovery above vulnerabilities: https://www.htbridge.com/advisory/HTB23212
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 05 May 2014 16:07:53 +0200
+
 egroupware-epl (11.1.20140416-1) hardy; urgency=low
 
   * CalDAV/calendar: if requesting user had only freebusy rights, no freebusy information was regurned
