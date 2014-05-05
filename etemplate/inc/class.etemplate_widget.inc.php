@@ -290,7 +290,11 @@ class etemplate_widget
 		{
 			list($basetype) = explode('-',$type);
 			if (!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
-				!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)))
+				!class_exists($class_name = 'etemplate_widget_'.$basetype) &&
+				// widgets supplied by application in class ${app}_widget_etemplate or ${app}_${subtype}_widget_etemplate
+				!(isset($GLOBALS['egw_info']['apps'][$basetype]) &&
+					(class_exists($class_name = str_replace('-','_',$type).'_etemplate_widget') ||
+					 class_exists($class_name = $basetype.'_etemplate_widget'))))
 			{
 				// Try for base type, it's probably better than the root
 				if(self::$widget_registry[$basetype] && self::$widget_registry[$basetype] != $class_name)
