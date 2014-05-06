@@ -150,17 +150,17 @@ div.et2_box_widget{
                    transition: all 0.5s linear;
                    -webkit-transition: all 0.5s linear; /* Safari */
 
-                         &:before {
+/*                         &:before {
                             content: "+";
                             font-size: 20px;
                             color: @egw_color_1_a;
                             line-height: 1px;
                             position: relative;
                             top: 2px;
-                            text-shadow: 1px 1px 2px #000;
+                            text-shadow: 1px 1px 2px #000;*/
                             /*.Complete_Button_Icon_normal;*/
                             /*.dimension_width_height_sm;*/
-                            }
+                            /*}*/
 
                        /*Text ""hinzufügen" "*/
                        span {display: none;}
@@ -177,9 +177,9 @@ div.et2_box_widget{
                             vertical-align: middle;
 
 
-                            &:hover{.Complete_Button_Icon_hover ;}
+                            &:hover{.Complete_Button_Icon_hover ; background-color: @color_positive_action;}
 
-                            &:active { .Complete_Button_Icon_active ;}
+                            &:active { .Complete_Button_Icon_active ; background-color: @color_positive_action_active;}
                         }
 
                         img:last-child {margin-right: 5px;};
@@ -187,7 +187,7 @@ div.et2_box_widget{
 
 
                 /*MouseOver*/
-                      &:hover {
+/*                      &:hover {
                           .box_shadow_standard_light_hover;
                           background-color: fade(@egw_color_2_a, 80%) !important;
                           .border_radius_button_lefttop;
@@ -195,10 +195,10 @@ div.et2_box_widget{
 
                           &:before {content: ""; font-size: 1em;padding-left: 5px;}
 
-                          /*Text*/
+                          Text
                           span {visibility: hidden; display: none;};
-                         /*img {.scale; margin: 0 5px; background: @gray_0;}*/
-                      }
+                         img {.scale; margin: 0 5px; background: @gray_0;}
+                      }*/
         }
 }// END BOX WIDGET
 
