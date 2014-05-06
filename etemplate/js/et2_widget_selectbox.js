@@ -420,7 +420,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		if (this.options.type == 'select-account')
 		{
-			jQuery.extend(this.options.select_options, this.egw().accounts(this.options.account_type));
+			this.options.select_options = jQuery.extend({},this.options.select_options, this.egw().accounts(this.options.account_type));
 		}	
 		this.set_select_options(this.options.select_options);
 	},

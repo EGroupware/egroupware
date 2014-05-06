@@ -113,7 +113,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			case 'selectbox':
 			case 'groupmembers':
 			default:
-				jQuery.extend(this.options.select_options, this.egw().accounts(this.options.account_type));
+				this.options.select_options = jQuery.extend({}, this.options.select_options, this.egw().accounts(this.options.account_type));
 				break;
 		}
 

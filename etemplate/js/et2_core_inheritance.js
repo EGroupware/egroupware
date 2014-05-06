@@ -124,9 +124,7 @@ var ClassWithAttributes = Class.extend(
 					_default = undefined;
 				}
 
-				// Use extend() to avoid a reference to default.
-				// Widget might change it, and alter the default
-				_attrs[key] = typeof _default == "object" ? jQuery.extend(true,{},_default) : _default;
+				attrs[key] = _default;
 			}
 		}
 
