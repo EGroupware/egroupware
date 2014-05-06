@@ -388,9 +388,6 @@ input#infolog-edit_info_subject {
 #infolog-edit_infolog-edit-links div#addressbook-edit_link_to {
   width: 100% !important;
 }
-#infolog-edit_infolog-edit-links div.et2_file {
-  width: 70%;
-}
 #infolog-edit_infolog-edit-links table#infolog-edit_link_to {
   overflow-y: scroll;
 }
