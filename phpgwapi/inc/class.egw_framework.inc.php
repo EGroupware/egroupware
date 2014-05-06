@@ -2007,7 +2007,12 @@ if ($app == 'home') continue;
 		foreach($list as $type => &$accounts)
 		{
 			$options = array('account_type' => $type) + $accounts;
-			$accounts = accounts::link_query('',$options);
+			$key_pair = accounts::link_query('',$options);
+			$accounts = array();
+			foreach($key_pair as $account_id => $name)
+			{
+				$accounts[] = array('value' => $account_id, 'label' => $name);
+			}
 		}
 		
 		egw_json_response::get()->data($list);
