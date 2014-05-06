@@ -1,3 +1,18 @@
+egroupware (1.8.007.20140506) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Security: remote command execution for logged in users with administrative priviledges
+  * Security: cross site request forgery allowing to create new admin users or run above commands
+  * many thanks to High-Tech Bridge Security Research Lab for discovery above vulnerabilities: https://www.htbridge.com/advisory/HTB23212
+  * CalDAV/Calendar: store and therefore keep external organizer if he has no common name (just email) and also store its common name
+  * EMail(Admin): inetOrgPerson schema support reported all accounts as inactive
+  * eMail: give user feedback when setting/applying timed vacation; do display of dates regarding user time zone settings; improve information when a vacation is set for a given time-range
+  * FireFox/all apps: fixed in recent FF version popups opened always in a single popup (overwritting previous opened one)
+  * CalDAV/calendar: if requesting user had only freebusy rights, no freebusy information was regurned
+  * eMail: make evaluation of message flags case INSENSITIVE (by changing all flags to lowercase before evaluating
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 06 May 2014 13:04:30 +0200
+
 egroupware (1.8.006.20140307) hardy; urgency=low
 
   * CalDAV/Calendar: sending now iMip response to external organizer when initialy accepting invitation via CalDAV client (before only status changes where sent)
