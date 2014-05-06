@@ -261,9 +261,12 @@ class egw_link extends solink
 	 */
 	static function save_session_cache()
 	{
-		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
-		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
-		$GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi',self::$file_access_cache);
+		if (isset($GLOBALS['egw']->session))	// eg. cron-jobs use it too, without any session
+		{
+			//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
+			$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',self::$title_cache);
+			$GLOBALS['egw']->session->appsession('link_file_access_cache','phpgwapi',self::$file_access_cache);
+		}
 	}
 
 	/**
