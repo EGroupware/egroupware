@@ -201,7 +201,6 @@
   }
   span.et2_file_span {
     background-image: url(../images/upload.png);
-    width: 145px;
   }
   div.et2_file input.et2_file_upload {
     background-color: #ffffff !important;
@@ -266,10 +265,8 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     left: 0px;
-    margin-left: 60px;
     /*margin-top: 1em;*/
     /*padding-top: 0.2em;*/
-    /*width: auto;*/
   }
   .et2_link_to .et2_file span {
     background-image: url("../images/upload.png");
