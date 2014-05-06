@@ -578,7 +578,7 @@ function list_exit_codes()
 				//if (isset($codes[$code])) echo "$file redifines #$code: {$codes[$code]}\n";
 
 				$src = $matches[2][$key];
-				$src = preg_replace('/self::\$[a-z_>-]/i',"''",$src);	// gives fatal error otherwise
+				$src = preg_replace('/self::\$[a-z_>-]+/i',"''",$src);	// gives fatal error otherwise
 				@eval($src='$codes['.$code.'] = '.$src.';');
 				//echo "- codes[$code] => '{$codes[$code]}'\n";
 			}
