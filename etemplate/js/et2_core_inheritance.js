@@ -124,7 +124,7 @@ var ClassWithAttributes = Class.extend(
 					_default = undefined;
 				}
 
-				attrs[key] = _default;
+				_attrs[key] = _default;
 			}
 		}
 
