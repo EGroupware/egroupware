@@ -153,7 +153,7 @@ var et2_taglist = et2_selectbox.extend(
 			method: 'GET',
 			displayField: "label",
 			invalidCls: 'invalid ui-state-error',
-			emptyText: this.options.empty_label,
+			emptyText: this.egw().lang(this.options.empty_label),
 			hideTrigger: true,
 			noSuggestionText: this.egw().lang("No suggestions"),
 			required: this.options.required,
