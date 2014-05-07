@@ -628,7 +628,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Empty label should not be added as an option for chosen, it conflicts
 		if(this.options.empty_label && !(this.options.tags || this.options.search))
 		{
-			this._appendOptionElement('',this.options.empty_label);
+			this._appendOptionElement('',this.egw().lang(this.options.empty_label));
 		}
 
 		// Add the select_options
