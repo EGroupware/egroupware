@@ -111,8 +111,11 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		if(this._actionManager)
 		{
-			var om = egw_getAppObjectManager(false).getObjectById(this.id);
-			if(om) om.remove();
+			if(egw_getAppObjectManager(false))
+			{
+				var om = egw_getAppObjectManager(false).getObjectById(this.id);
+				if(om) om.remove();
+			}
 			this._actionManager.remove();
 			this._actionManager = null;
 		}
