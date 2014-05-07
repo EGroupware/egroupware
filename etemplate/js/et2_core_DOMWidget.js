@@ -109,6 +109,14 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		this.parentNode = null;
 		this._attachSet = {};
 
+		if(this._actionManager)
+		{
+			var om = egw_getAppObjectManager(false).getObjectById(this.id);
+			if(om) om.remove();
+			this._actionManager.remove();
+			this._actionManager = null;
+		}
+		
 		if (this._surroundingsMgr)
 		{
 			this._surroundingsMgr.free();
