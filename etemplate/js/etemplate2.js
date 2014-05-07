@@ -270,7 +270,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 	if(console.groupCollapsed)
 	{
-		egw.window.console.groupCollapsed("Loading %s into ", _name, this.DOMContainer);
+		egw.window.console.groupCollapsed("Loading %s into ", _name, '#'+this.DOMContainer.id);
 	}
 	if(console.timeline)
 	{
