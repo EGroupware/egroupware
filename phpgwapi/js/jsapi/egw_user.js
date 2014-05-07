@@ -81,13 +81,13 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 		 *
 		 * @param {string} type
-		 * @returns {Object}
+		 * @returns {array}
 		 */
 		accounts: function(type)
 		{
 			if(typeof type == 'undefined') type = 'accounts';
 
-			var list = {};
+			var list = [];
 			if(jQuery.isEmptyObject(accountStore))
 			{
 				// Synchronous
@@ -97,11 +97,11 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			}
 			if(type == 'both')
 			{
-				list = jQuery.extend(list, accountStore['accounts'],accountStore['groups']);
+				list = list.concat(accountStore['accounts'], accountStore['groups']);
 			}
 			else
 			{
-				list = jQuery.extend(list, accountStore[type]);
+				list = list.concat(accountStore[type]);
 			}
 			return list;
 		}

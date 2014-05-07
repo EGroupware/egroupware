@@ -113,12 +113,32 @@ var et2_selectAccount = et2_selectbox.extend(
 			case 'selectbox':
 			case 'groupmembers':
 			default:
-				this.options.select_options = jQuery.extend({}, this.options.select_options, this.egw().accounts(this.options.account_type));
+				if (!jQuery.isArray(this.options.select_options))
+				{
+					var options = jQuery.extend({}, this.options.select_options);
+					this.options.select_options = [];
+					for(var key in options)
+					{
+						if (typeof options[key] == 'object')
+						{
+							if (typeof(options[key].key) == 'undefined')
+							{
+								options[key].value = key;
+							}
+							this.options.select_options.push(options[key]);
+						}
+						else
+						{
+							this.options.select_options.push({value: key, label: options});
+						}
+					}
+				}
+				this.options.select_options = this.options.select_options.concat(this.egw().accounts(this.options.account_type));
 				break;
 		}
 
 		this._super.apply(this, arguments);
-		
+
 		// Add search button
 		if(type == 'primary_group')
 		{
