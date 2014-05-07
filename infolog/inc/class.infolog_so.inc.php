@@ -906,7 +906,7 @@ class infolog_so
 				$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
 			{
 				$where = array('info_id' => array_keys($ids));
-				if (!($query['csv_export'] || strchr(is_array($query['selectcols'] ? implode(',',$query['selectcols']):$query['selectcols']),'#') === false ||
+				if (!($query['csv_export'] || strchr(is_array($query['selectcols']) ? implode(',',$query['selectcols']):$query['selectcols'],'#') === false ||
 					$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
 				{
 					$where['info_extra_name'] = array();
