@@ -263,6 +263,7 @@ abstract class bo_tracking
 	 * Need to be implemented in your extended tracking class!
 	 *
 	 * @param string $what possible values are:
+	 *  - 'assigned' array of users to use instead of a field in the data
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
 	 *  - 'subject' string subject line for the notification of $data,$old, defaults to link-title
@@ -562,10 +563,11 @@ abstract class bo_tracking
 		}
 
 		// assigned / responsible users
-		if ($this->assigned_field)
+		if ($this->assigned_field || $assigned = $this->get_config('assigned', $data))
 		{
 			//error_log("bo_tracking::do_notifications() data[$this->assigned_field]=".print_r($data[$this->assigned_field],true).", old[$this->assigned_field]=".print_r($old[$this->assigned_field],true));
 			$assignees = $old_assignees = array();
+			$assignees = $assigned ? $assigned : $assignees;
 			if ($data[$this->assigned_field])	// current assignments
 			{
 				$assignees = is_array($data[$this->assigned_field]) ?
