@@ -33,7 +33,8 @@ var et2_taglist = et2_selectbox.extend(
 			"name": "Empty label",
 			"type": "string",
 			"default": "",
-			"description": "Textual label for when nothing is selected"
+			"description": "Textual label for when nothing is selected",
+			translate: true
 		},
 		"select_options": {
 			"type": "any",
@@ -153,7 +154,7 @@ var et2_taglist = et2_selectbox.extend(
 			method: 'GET',
 			displayField: "label",
 			invalidCls: 'invalid ui-state-error',
-			emptyText: this.egw().lang(this.options.empty_label),
+			emptyText: this.options.empty_label,
 			hideTrigger: true,
 			noSuggestionText: this.egw().lang("No suggestions"),
 			required: this.options.required,
@@ -472,7 +473,7 @@ var et2_taglist_email = et2_taglist.extend(
 			default: false,
 			type: "boolean"
 		}
-	},
+		},
 	lib_options: {
 		// Search function limits to 3 anyway
 		minChars: 3
