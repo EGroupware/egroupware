@@ -51,12 +51,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 			"default": "",
 			"description": "AJAX menuaction to be called when the user changes a task.  The function should take two parameters: the updated element, and all template values."
 		},
-		"on_edit": {
-			"name": "Edit handler",
-			"type": "js",
-			"default": et2_no_init,
-			"description": "Function to handle when a user double-clicks a task.  The function should take two parameters, the task information and this widget"
-		},
 		value: {type: 'any'}
 	},
 	
@@ -70,6 +64,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 		duration_unit: 'minute',
 
 		show_progress: true,
+		order_branch: true,
 		min_column_width: 30,
 		fit_tasks: true,
 		autosize: 'y',
@@ -372,24 +367,14 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 			}
 		});
 
+		this.gantt.attachEvent("onContextMenu",function(taskId, linkId, e) {
+			gantt_widget._link_task(taskId);
+			return false;
+		})
 		// Double click
 		this.gantt.attachEvent("onBeforeLightbox", function(id) {
-			var task = this.getTask(id);
-			if(gantt_widget.options.on_edit)
-			{
-				gantt_widget.on_edit.apply(gantt_widget, [task,gantt_widget]);
-			}
-			/*
-			if(task.pe_app)
-			{
-				gantt_widget.egw().open(task.pe_app_id, task.pe_app);
-			}
-			else
-			{
-				gantt_widget.egw().open(id, 'projectmanager');
-			}
-*/
-			// Don't do gantt default actions
+			gantt_widget._link_task(id);
+			// Don't do gantt default actions, actions handle it
 			return false;
 		});
 
@@ -522,7 +507,89 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 
 			if(_widget.change != change) _widget.change = change;
 		}, this, et2_inputWidget);
+	},
+
+	/**
+	 * Link the actions to the DOM nodes / widget bits.
+	 * Overridden to make the gantt chart a container, so it can't be selected.
+	 * Because the chart handles its own AJAX fetching and parsing, for this widget
+	 * we're trying dynamic binding as needed, rather than binding every single task
+	 *
+	 * @param {object} actions {ID: {attributes..}+} map of egw action information
+	 */
+	_link_actions: function(actions)
+	{
+
+		this._super.apply(this, arguments);
+		
+		 // Get the top level element for the tree
+		var objectManager = egw_getAppObjectManager(true);
+		var widget_object = objectManager.getObjectById(this.id);
+		widget_object.flags = EGW_AO_FLAG_IS_CONTAINER;
+	},
+
+	/**
+	 * Bind a single task as needed to the action system.  This is instead of binding
+	 * every single task at the start.
+	 *
+	 * @param {string} taskId 
+	 */
+	_link_task: function(taskId)
+	{
+		var objectManager = egw_getObjectManager(this.id,false);
+		var obj = null;
+		if(!(obj = objectManager.getObjectById(taskId)))
+		{
+			obj = objectManager.addObject(taskId, this.dhtmlxGanttItemAOI(this.gantt,taskId));
+			obj.data = this.gantt.getTask(taskId);
+			obj.updateActionLinks(objectManager.actionLinks)
+		}
+		objectManager.setAllSelected(false);
+		obj.setSelected(true);
+		objectManager.updateSelectedChildren(obj,true)
+	},
+
+	/**
+	 * ActionObjectInterface for gantt chart
+	 */
+	dhtmlxGanttItemAOI: function(gantt, task_id)
+	{
+		var aoi = new egwActionObjectInterface();
+
+		// Retrieve the actual node from the chart
+		aoi.node = gantt.getTaskNode(task_id);
+		aoi.id = task_id;
+		aoi.doGetDOMNode = function() {
+			return aoi.node;
+		}
+
+		aoi.doTriggerEvent = function(_event) {
+			if (_event == EGW_AI_DRAG_OVER)
+			{
+				$j(this.node).addClass("draggedOver");
+			}
+			if (_event == EGW_AI_DRAG_OUT)
+			{
+				$j(this.node).removeClass("draggedOver");
+			}
+		}
+
+		aoi.doSetState = function(_state) {
+			if(!gantt || !gantt.isTaskExists(this.id)) return;
+
+			if(egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
+			{
+				gantt.selectTask(this.id);	// false = do not trigger onSelect
+			}
+			else
+			{
+				gantt.unselectTask(this.id);
+			}
+		}
+
+		return aoi;
 	}
+
 });
 et2_register_widget(et2_gantt, ["gantt"]);
 
