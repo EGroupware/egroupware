@@ -78,15 +78,19 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 	 */
 	public function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
+		$_value = $value;
+		$_cell = $cell;
 		$cell['value'] =& $value;
 		$cell['options'] =& $cell['size'];	// old engine uses 'size' instead of 'options' for legacy options
 		$cell['id'] =& $cell['name'];		// dto for 'name' instead of 'id'
 
 		// run the transformation
-		foreach($this->transformation as $filter => $data)
+		foreach(static::$transformation as $filter => $data)
 		{
 			$this->action($filter, $data, $cell);
 		}
+		unset($cell['value']);
+		error_log(__METHOD__."('$name', ".(is_array($_value)?$_value['id']:$_value).", ".array2string($_cell).", ...) transformed to ".array2string($cell)." and value=".array2string($value));
 		return true;
 	}
 

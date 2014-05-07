@@ -196,8 +196,6 @@ class contact_widget extends etemplate_widget_transformer
 	 * @param etemplate &$tmpl reference to the template we belong too
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-/*	old code now replaced with etemplate_widget_transformer::pre_process() ...
-
  	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		//echo "<p>contact_widget::pre_process('$name','$value',".print_r($cell,true).",...)</p>\n";
@@ -277,7 +275,7 @@ class contact_widget extends etemplate_widget_transformer
 		$cell['id'] = ($cell['id'] ? $cell['id'] : $cell['name'])."[$type]";
 
 		return True;	// extra label ok
-	}*/
+	}
 }
 // register widgets for etemplate2
 etemplate_widget::registerWidget('contact_widget',array('contact-value', 'contact-account', 'contact-template', 'contact-fields'));
