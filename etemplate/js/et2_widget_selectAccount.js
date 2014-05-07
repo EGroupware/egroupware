@@ -647,6 +647,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 			"type": "string",
 			"default": "",
 			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
+			translate:true
 		},
 	},
 

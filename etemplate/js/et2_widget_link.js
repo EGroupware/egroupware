@@ -46,7 +46,8 @@ var et2_link_to = et2_inputWidget.extend(
 			"name": "Placeholder",
 			"type": "string",
 			"default": "",
-			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
+			translate:true
 		},
  		"no_files": {
 			"name": "No files",
@@ -506,7 +507,8 @@ var et2_link_entry = et2_inputWidget.extend(
 			"name": "Placeholder",
 			"type": "string",
 			"default": et2_no_init,
-			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
+			translate:true
 		},
 		"query": {
 			"name": "Query callback",

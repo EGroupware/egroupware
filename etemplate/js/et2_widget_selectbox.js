@@ -51,7 +51,8 @@ var et2_selectbox = et2_inputWidget.extend(
 			"name": "Empty label",
 			"type": "string",
 			"default": "",
-			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''"
+			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
+			translate:true
 		},
 		"select_options": {
 			"type": "any",
@@ -586,7 +587,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(this.options.empty_label)
 			{
-				this.input.attr("data-placeholder", this.egw().lang(this.options.empty_label));
+				this.input.attr("data-placeholder", this.options.empty_label);
 				// Remove from list of options, if multiple
 				if (this.options.multiple)
 				{
@@ -627,7 +628,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Empty label should not be added as an option for chosen, it conflicts
 		if(this.options.empty_label && !(this.options.tags || this.options.search))
 		{
-			this._appendOptionElement('', this.egw().lang(this.options.empty_label));
+			this._appendOptionElement('',this.options.empty_label);
 		}
 
 		// Add the select_options
