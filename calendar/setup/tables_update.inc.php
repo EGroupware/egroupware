@@ -2098,14 +2098,15 @@ function calendar_upgrade1_9_004()
 		'GROUP BY egw_cal_repeats.cal_id,egw_cal_repeats.recur_exception', 'calendar', '',
 		'JOIN egw_cal_dates ON egw_cal_repeats.cal_id=egw_cal_dates.cal_id') as $row)
 	{
-		foreach($row['recur_exception'] ? explode(',', $row['recur_exception']) : array() as $recur_exception)
+		foreach($row['recur_exception'] ? array_unique(explode(',', $row['recur_exception'])) : array() as $recur_exception)
 		{
 			$GLOBALS['egw_setup']->db->insert('egw_cal_dates', array(
-				'cal_id' => $row['cal_id'],
-				'cal_start' => $recur_exception,
 				'cal_end' => $recur_exception+$row['cal_end']-$row['cal_start'],
 				'recur_exception' => true,
-			), false, __LINE__, __FILE__, 'calendar');
+			), array(
+				'cal_id' => $row['cal_id'],
+				'cal_start' => $recur_exception,
+			), __LINE__, __FILE__, 'calendar');
 		}
 	}
 	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_dates', array('recur_exception', 'cal_id'));
