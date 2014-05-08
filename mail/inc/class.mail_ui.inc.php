@@ -200,7 +200,7 @@ class mail_ui
 		foreach($nameSpaces as $key => $value )
 		{
 			if (str_replace($value['delimiter'],"",$value['prefix']) == $folderName &&
-					$key == 'others' || $key == 'user')
+					$value['type'] == 'others' || $value['type'] == 'shared')
 			{
 				$validFolder = false;
 			}
@@ -211,10 +211,10 @@ class mail_ui
 			try
 			{
 				$this->mail_bo->subscribe($folderName, $status);
-			} catch (Exception $ex)
+			} catch (Exception $e)
 			{
 				$result = false;
-				error_log(__METHOD__.__LINE__."() error ".$ex."happend while subscribing to folder ". $folderName );
+				error_log(__METHOD__.__LINE__."() error ".$e->getMessage()." happend while subscribing to folder ". $folderName );
 			}
 
 		}
@@ -223,10 +223,10 @@ class mail_ui
 			try
 			{
 				$this->mail_bo->subscribe($folderName, $status);
-			} catch (Exception $ex)
+			} catch (Exception $e)
 			{
 				$result = false;
-				error_log(__METHOD__.__LINE__."() error ".$ex."happend while unsubscribing of folder ". $folderName );
+				error_log(__METHOD__.__LINE__."() error ".$e->getMessage()." happend while unsubscribing of folder ". $folderName );
 			}
 		}
 		return $result;
