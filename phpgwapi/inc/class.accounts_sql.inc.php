@@ -363,21 +363,27 @@ class accounts_sql
 	}
 
 	/**
-	 * Searches users and/or groups
+	 * Searches / lists accounts: users and/or groups
 	 *
-	 * ToDo: implement a search like accounts::search
-	 *
-	 * @param string $_type='both', 'accounts', 'groups'
-	 * @param int $start=null
-	 * @param string $sort='' ASC or DESC
-	 * @param string $order=''
-	 * @param string $query=''
-	 * @param int $offset=null
-	 * @param string $query_type='all' 'start', 'all' (default), 'exact'
-	 * @param boolean $active=false true: return only active accounts
-	 * @return array
+	 * @param array with the following keys:
+	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both',
+	 * 'groupmember' or 'groupmembers+memberships'
+	 *	or integer group-id for a list of members of that group
+	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
+	 * @param $param['order'] string column to sort after, default account_lid if unset
+	 * @param $param['sort'] string 'ASC' or 'DESC', default 'DESC' if not set
+	 * @param $param['query'] string to search for, no search if unset or empty
+	 * @param $param['query_type'] string:
+	 *	'all'   - query all fields for containing $param[query]
+	 *	'start' - query all fields starting with $param[query]
+	 *	'exact' - query all fields for exact $param[query]
+	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
+	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
+	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
+	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
+	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
-	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='', $active=false)
+	function search($param)
 	{
 		static $order2contact = array(
 			'account_firstname' => 'n_given',
@@ -386,41 +392,62 @@ class accounts_sql
 		);
 
 		// fetch order of account_fullname from common::display_fullname
-		if (strpos($order,'account_fullname') !== false)
+		if (strpos($param['order'],'account_fullname') !== false)
 		{
-			$order = str_replace('account_fullname',preg_replace('/[ ,]+/',',',str_replace(array('[',']'),'',
-				common::display_fullname('account_lid','account_firstname','account_lastname'))),$order);
+			$param['order'] = str_replace('account_fullname', preg_replace('/[ ,]+/',',',str_replace(array('[',']'),'',
+				common::display_fullname('account_lid','account_firstname','account_lastname'))), $param['order']);
 		}
-		$order = str_replace(array_keys($order2contact),array_values($order2contact),$order);
+		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order']);
 		// allways add 'account_lid', as it is only valid one for groups
 		if (strpos($order, 'account_lid') === false)
 		{
 			$order .= ($order?',':'').'account_lid';
 		}
-		if ($sort) $order = implode(' '.$sort.',', explode(',', $order)).' '.$sort;
+		if ($param['sort']) $order = implode(' '.$param['sort'].',', explode(',', $order)).' '.$param['sort'];
 
-		switch($_type)
+		$filter = array();
+		switch($param['type'])
 		{
 			case 'accounts':
-				$filter = array('owner' => 0);
+				$filter['owner'] = 0;
 				break;
 			case 'groups':
-				$filter = array("account_type = 'g'");
+				$filter['account_type'] = 'g';
+				break;
+			case 'owngroups':
+				$filter['account_id'] = array_map('abs', $this->frontend->memberships($GLOBALS['egw_info']['user']['account_id'], true));
+				$filter['account_type'] = 'g';
+				break;
+			case 'groupmembers':
+			case 'groupmembers+memberships':
+				$members = array();
+				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'], true) as $grp)
+				{
+					$members = array_unique(array_merge($members, (array)$this->members($grp,true)));
+					if ($param['type'] == 'groupmembers+memberships') $members[] = abs($grp);
+				}
+				$filter['account_id'] = $members;
 				break;
 			default:
+				if (is_numeric($param['type']))
+				{
+					$filter['account_id'] = $this->frontend->memberships($param['type'], true);
+					break;
+				}
+				// fall-through
 			case 'both':
-				$filter = array("(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)");
+				$filter[] = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
 				break;
 		}
-		if ($active)
+		if ($param['active'])
 		{
 			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),addressbook_sql::ACOUNT_ACTIVE_FILTER);
 		}
 		$criteria = array();
-		$wildcard = $query_type == 'start' || $query_type == 'exact' ? '' : '%';
-		if ($query)
+		$wildcard = $param['query_type'] == 'start' || $param['query_type'] == 'exact' ? '' : '%';
+		if (($query = $param['query']))
 		{
-			switch($query_type)
+			switch($param['query_type'])
 			{
 				case 'start':
 					$query .= '*';
@@ -454,15 +481,18 @@ class accounts_sql
 		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
 
 		$accounts = array();
-		foreach((array) $GLOBALS['egw']->contacts->search($criteria,"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
+		foreach((array) $GLOBALS['egw']->contacts->search($criteria,
+			"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
 			$order,"account_lid,account_type,account_status,account_expires,account_primary_group",
-			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',$offset ? array($start,$offset) : (is_null($start) ? false : $start),
+			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
+			$param['offset'] ? array($param['start'], $param['offset']) : (is_null($param['start']) ? false : $param['start']),
 			$filter,$this->contacts_join) as $contact)
 		{
 			if ($contact)
 			{
-				$accounts[] = array(
-					'account_id'        => ($contact['account_type'] == 'g' ? -1 : 1) * $contact['account_id'],
+				$account_id = ($contact['account_type'] == 'g' ? -1 : 1) * $contact['account_id'];
+				$accounts[$account_id] = array(
+					'account_id'        => $account_id,
 					'account_lid'       => $contact['account_lid'],
 					'account_type'      => $contact['account_type'],
 					'account_firstname' => $contact['n_given'],
