@@ -415,7 +415,7 @@ class egw_ckeditor_config
 		// if webspellchecker is enabled in EGroupware config, allow access to it's url
 		if (in_array($GLOBALS['egw_info']['server']['enabled_spellcheck'], array('True', 'YesUseWebSpellCheck')))
 		{
-			$attrs[] = 'http://svc.webspellchecker.net';
+			$attrs[] = 'https://svc.webspellchecker.net';
 		}
 		//error_log(__METHOD__."() egw_info[server][enabled_spellcheck]='{$GLOBALS['egw_info']['server']['enabled_spellcheck']}' --> attrs=".array2string($attrs));
 		// tell framework CK Editor needs eval and inline javascript :(
