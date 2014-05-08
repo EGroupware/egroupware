@@ -138,7 +138,9 @@ class accounts_sql
 				$this->table.'.account_id='.abs($account_id),
 				__LINE__, __FILE__, false, '', false, 0, $join);
 		}
-		catch (egw_exception_db $e) { }
+		catch (egw_exception_db $e) {
+			unset($e);
+		}
 
 		if (!$rs)	// handle not (yet) existing mailaccounts table
 		{
@@ -246,7 +248,9 @@ class accounts_sql
 				}
 			}
 			// ignore not (yet) existing mailaccounts table
-			catch (egw_exception_db $e) {}
+			catch (egw_exception_db $e) {
+				unset($e);
+			}
 		}
 		return $data['account_id'];
 	}
@@ -412,11 +416,11 @@ class accounts_sql
 				$filter['owner'] = 0;
 				break;
 			case 'groups':
-				$filter['account_type'] = 'g';
+				$filter[] = "account_type='g'";
 				break;
 			case 'owngroups':
 				$filter['account_id'] = array_map('abs', $this->frontend->memberships($GLOBALS['egw_info']['user']['account_id'], true));
-				$filter['account_type'] = 'g';
+				$filter[] = "account_type='g'";
 				break;
 			case 'groupmembers':
 			case 'groupmembers+memberships':
@@ -431,13 +435,27 @@ class accounts_sql
 			default:
 				if (is_numeric($param['type']))
 				{
-					$filter['account_id'] = $this->frontend->memberships($param['type'], true);
+					$filter['account_id'] = $this->frontend->members($param['type'], true);
+					$filter['owner'] = 0;
 					break;
 				}
 				// fall-through
 			case 'both':
 				$filter[] = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
 				break;
+		}
+		// fix ambigous account_id (used in accounts and contacts table)
+		if (array_key_exists('account_id', $filter))
+		{
+			if (!$filter['account_id'])	// eg. group without members (would give SQL error)
+			{
+				$this->total = 0;
+				return array();
+			}
+			$filter[] = $this->db->expression($this->table, $this->table.'.', array(
+				'account_id' => $filter['account_id'],
+			));
+			unset($filter['account_id']);
 		}
 		if ($param['active'])
 		{
@@ -509,7 +527,7 @@ class accounts_sql
 			}
 		}
 		$this->total = $GLOBALS['egw']->contacts->total;
-		//error_log(__METHOD__."('$_type', $start, '$sort', '$order', '$query', $offset, '$query_type') returning ".count($accounts).'/'.$this->total);
+		//error_log(__METHOD__."(".array2string($param).") returning ".count($accounts).'/'.$this->total);
 		return $accounts;
 	}
 

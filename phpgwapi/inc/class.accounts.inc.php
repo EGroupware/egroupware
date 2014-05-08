@@ -251,10 +251,10 @@ class accounts
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
-		// no backend understands $param['app'] and sql does not understand group-parameters
+		// no backend understands $param['app'], only sql understands type owngroups or groupmemember[+memberships]
 		// --> do an full search first and then filter and limit that search
-		elseif($param['app'] || $this->config['account_repository'] != 'ldap' &&
-			(is_numeric($param['type']) || in_array($param['type'],array('owngroups','groupmembers','groupmembers+memberships'))))
+		elseif($param['app'] || $this->config['account_repository'] != 'sql' &&
+			in_array($param['type'], array('owngroups','groupmembers','groupmembers+memberships')))
 		{
 			$app = $param['app'];
 			unset($param['app']);
@@ -264,12 +264,7 @@ class accounts
 			unset($param['offset']);
 			$stop = $start + $offset;
 
-			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
-			{
-				$members = $this->members($group=$param['type'], true);
-				$param['type'] = 'accounts';
-			}
-			elseif ($param['type'] == 'owngroups')
+			if ($param['type'] == 'owngroups')
 			{
 				$members = $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
 				$param['type'] = 'groups';
@@ -319,22 +314,10 @@ class accounts
 			}
 			$account_search[$serial]['total'] = $this->total;
 		}
-		// search via ldap backend
-		elseif (method_exists($this->backend, 'search'))	// implements its on search function ==> use it
-		{
-			$account_search[$serial]['data'] = $this->backend->search($param);
-			$account_search[$serial]['total'] = $this->total = $this->backend->total;
-		}
-		// search by old accounts_sql backend
+		// direct search via backend
 		else
 		{
-			$account_search[$serial]['data'] = array();
-			$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type'],$param['active']);
-			if (!$accounts) $accounts = array();
-			foreach($accounts as $data)
-			{
-				$account_search[$serial]['data'][$data['account_id']] = $data;
-			}
+			$account_search[$serial]['data'] = $this->backend->search($param);
 			$account_search[$serial]['total'] = $this->total = $this->backend->total;
 		}
 		//echo "<p>accounts::search(".array2string(unserialize($serial)).")= returning ".count($account_search[$serial]['data'])." of $this->total entries<pre>".print_r($account_search[$serial]['data'],True)."</pre>\n";
@@ -730,9 +713,10 @@ class accounts
 		}
 		if ($account_id && ($data = self::cache_read($account_id)))
 		{
-			return $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
+			$ret = $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
 		}
-		return null;
+		//error_log(__METHOD__."($account_id, $just_id) data=".array2string($data)." returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
