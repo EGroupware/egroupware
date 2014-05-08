@@ -252,10 +252,13 @@ class accounts
 			unset($param['app']);
 			$start = $param['start'];
 			unset($param['start']);
+			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			unset($param['offset']);
+			$stop = $start + $offset;
 
 			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
 			{
-				$members = $this->members($param['type'],true);
+				$members = $this->members($group=$param['type'],true);
 				$param['type'] = 'accounts';
 			}
 			elseif ($param['type'] == 'owngroups')
@@ -289,9 +292,7 @@ class accounts
 				if (!$members) $members = array();
 				$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 			}
-			//echo "<p>limiting result to app='$app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
-			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-			$stop = $start + $offset;
+			//error_log(__METHOD__."() limiting result to app='$app' and/or group=$group valid-ids=".array2string($valid));
 			$n = 0;
 			$account_search[$serial]['data'] = array();
 			foreach ($full_search as $id => $data)
