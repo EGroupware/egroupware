@@ -1960,16 +1960,17 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Load the template
+		var self = this;
 		var header = et2_createWidget("template", {"id": template_name}, this);
 		jQuery(header.getDOMNode()).addClass(location == "left" ? "et2_hbox_left": location=="right" ?"et2_hbox_right":'').addClass("nm_header");
 		this.headers[id] = header;
-		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
-			//header.loadingFinished();
-			this._bindHeaderInput(header);
-		},this));
-		// Don't care about deferred promises, using load event instead
-		// to only catch not available templates
-		header.loadingFinished([]);
+		var deferred = [];
+		header.loadingFinished(deferred);
+
+		// Wait until all child widgets are loaded, then bind
+		jQuery.when(deferred).then(function() {
+			self._bindHeaderInput(header);
+		});
 	},
 
 	/**
@@ -2231,12 +2232,20 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		return null;
 	},
 
-	_bindHeaderInput: function(_widget) {
+	/**
+	 * Bind all the inputs in the header sub-templates to update the filters
+	 * on change, and update current filter with the inputs' current values
+	 *
+	 * @param {et2_template} sub_header
+	 */
+	_bindHeaderInput: function(sub_header) {
 		var header = this;
-		_widget.iterateOver(function(_widget){
+
+		sub_header.iterateOver(function(_widget){
 			// Previously set change function
 			var widget_change = _widget.change;
-			_widget.change = function(_node) {
+
+			var change = function(_node) {
 				// Call previously set change function
 				var result = widget_change.call(_widget,_node);
 
@@ -2245,15 +2254,35 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					// Update dirty
 					_widget._oldValue = _widget.getValue();
 
-					var value = this.getInstanceManager().getValues(header);
-
-					// Filter now, but reset - handles nulled values
-					header.nextmatch.activeFilters = {};
-					header.nextmatch.applyFilters(value[header.nextmatch.id]);
+					// Widget will not have an entry in getValues() because nulls
+					// are not returned, we remove it from activeFilters
+					if(_widget._oldValue == null)
+					{
+						var path = _widget.getArrayMgr('content').explodeKey(_widget.id);
+						if(path.length > 0)
+						{
+							var entry = header.nextmatch.activeFilters;
+							var i = 0;
+							for(; i < path.length-1; i++)
+							{
+								entry = entry[path[i]];
+							}
+							delete entry[path[i]];
+						}
+						header.nextmatch.applyFilters(header.nextmatch.activeFilters);
+					}
+					else
+					{
+						// Not null is easy, just get values
+						var value = this.getInstanceManager().getValues(sub_header);
+						header.nextmatch.applyFilters(value[header.nextmatch.id]);
+					}
 				}
 				// In case this gets bound twice, it's important to return
 				return true;
 			};
+
+			_widget.change = change;
 
 			// Set activeFilters to current value
 			// Use an array mgr to hande non-simple IDs
