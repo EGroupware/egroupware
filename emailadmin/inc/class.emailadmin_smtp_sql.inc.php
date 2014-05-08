@@ -213,7 +213,7 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 					{
 						foreach($members as $member)
 						{
-							if (($email = $this->accounts->id2name($member, 'account_email')) && !in_array($email, $userData['forward']))
+							if (($email = $this->accounts->id2name($member, 'account_email')) && !in_array($email, (array)$userData['forward']))
 							{
 								$userData['forward'][] = $email;
 							}
