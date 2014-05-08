@@ -260,10 +260,13 @@ class accounts
 			unset($param['app']);
 			$start = $param['start'];
 			unset($param['start']);
+			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			unset($param['offset']);
+			$stop = $start + $offset;
 
 			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
 			{
-				$members = $this->members($param['type'],true);
+				$members = $this->members($group=$param['type'], true);
 				$param['type'] = 'accounts';
 			}
 			elseif ($param['type'] == 'owngroups')
@@ -297,9 +300,7 @@ class accounts
 				if (!$members) $members = array();
 				$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 			}
-			//echo "<p>limiting result to app='$app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
-			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-			$stop = $start + $offset;
+			//error_log(__METHOD__."() limiting result to app='$app' and/or group=$group valid-ids=".array2string($valid));
 			$n = 0;
 			$account_search[$serial]['data'] = array();
 			foreach ($full_search as $id => $data)
@@ -642,6 +643,7 @@ class accounts
 			if (!($data = self::cache_read($account_id))) return false;
 		}
 		catch (Exception $e) {
+			unset($e);
 			return false;
 		}
 		//echo "<p>accounts::id2name($account_id,$which)='{$data[$which]}'";
@@ -893,7 +895,7 @@ class accounts
 		if (!($default_group_id = $this->name2id($this->config['default_group_lid'],'account_lid','g')))
 		{
 			// check if we have a comma or semicolon delimited list of groups --> add first as primary and rest as memberships
-			foreach(preg_split('/[,;] */',$this->config['default_group_lid']) as $n => $group_lid)
+			foreach(preg_split('/[,;] */',$this->config['default_group_lid']) as $group_lid)
 			{
 				if (($group_id = $this->name2id($group_lid,'account_lid','g')))
 				{
@@ -987,39 +989,6 @@ class accounts
 	function require_password_for_enable()
 	{
 		return constant(get_class($this->backend).'::REQUIRE_PASSWORD_FOR_ENABLE');
-	}
-
-	function list_methods($_type='xmlrpc')
-	{
-		if (is_array($_type))
-		{
-			$_type = $_type['type'] ? $_type['type'] : $_type[0];
-		}
-
-		switch($_type)
-		{
-			case 'xmlrpc':
-				$xml_functions = array(
-					'search' => array(
-						'function'  => 'search',
-						'signature' => array(array(xmlrpcStruct)),
-						'docstring' => lang('Returns a full list of accounts on the system.  Warning: This is return can be quite large')
-					),
-					'list_methods' => array(
-						'function'  => 'list_methods',
-						'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-						'docstring' => lang('Read this list of methods.')
-					)
-				);
-				return $xml_functions;
-				break;
-			case 'soap':
-				return $this->soap_functions;
-				break;
-			default:
-				return array();
-				break;
-		}
 	}
 
 	/**
@@ -1218,6 +1187,7 @@ class accounts
 	 */
 	function create($account_info,$default_prefs=True)
 	{
+		unset($default_prefs);	// not used, but required by function signature
 		return $this->save($account_info);
 	}
 
@@ -1335,6 +1305,7 @@ class accounts
 		$this->account_id = $account_id;
 		$this->read_repository();
 
+		$data = array();
 		$data[$this->data['account_id']]['lid']       = $this->data['account_lid'];
 		$data[$this->data['account_id']]['firstname'] = $this->data['firstname'];
 		$data[$this->data['account_id']]['lastname']  = $this->data['lastname'];
