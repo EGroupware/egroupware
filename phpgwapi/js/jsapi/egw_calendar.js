@@ -37,11 +37,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	function calendarPreferences(_egw)
 	{
 		// Date format in jQuery UI date format
-		var dateformat = _egw.preference("dateformat")
-			.replace("Y","yy")
-			.replace("d","dd")
-			.replace("m","mm")
-			.replace("M", "M");
+		var dateformat = dateTimeFormat(_egw.preference("dateformat"));
 
 		// First day of the week
 		var first_day = {"Monday": 1, "Sunday": 0, "Saturday": 6};
@@ -52,6 +48,24 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			'firstDay': first_day_pref ? first_day[first_day_pref] : 0
 		};
 	};
+
+	/**
+	 * transform PHP date/time-format to jQuery date/time-format
+	 *
+	 * @param {string} _php_format
+	 * @returns {string}
+	 */
+	function dateTimeFormat(_php_format)
+	{
+		return _php_format
+			.replace("Y","yy")
+			.replace("d","dd")
+			.replace("m","mm")
+			.replace("M", "M")
+			.replace('H', 'hh')
+			.replace('i', 'mm')	// datepicker uses mm for month and minutes, depending where in format it's written!
+			.replace('s', 'ss');
+	}
 
 	function timePreferences(_egw)
 	{
@@ -247,6 +261,16 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		time: function(_input, _callback, _context)
 		{
 			setupTime(this, _input, _callback, _context);
+		},
+		/**
+		 * transform PHP date/time-format to jQuery date/time-format
+		 *
+		 * @param {string} _php_format
+		 * @returns {string}
+		 */
+		dateTimeFormat: function(_php_format)
+		{
+			return dateTimeFormat(_php_format);
 		}
 	};
 });
