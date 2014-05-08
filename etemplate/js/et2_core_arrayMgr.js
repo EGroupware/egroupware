@@ -108,6 +108,41 @@ var et2_arrayMgr = Class.extend(
 	},*/
 
 	/**
+	 * Explodes compound keys (eg IDs) into a list of namespaces
+	 * This uses no internal values, just expands
+	 *
+	 * eg:
+	 * a[b][c] => [a,b,c]
+	 * col_filter[tr_tracker] => [col_filter, tr_tracker]
+	 *
+	 * @param {string} _key
+	 *
+	 * @return {string[]}
+	 */
+	explodeKey: function(_key)
+	{
+		// Parse the given key by removing the "]"-chars and splitting at "["
+		var indexes = [_key];
+
+		if(typeof _key === "string")
+		{
+			_key = _key.replace(/&#x5B;/g,"[").replace(/&#x5D;/g,"]");
+			indexes = _key.split('[');
+		}
+		if (indexes.length > 1)
+		{
+			indexes = [indexes.shift(), indexes.join('[')];
+			indexes[1] = indexes[1].substring(0,indexes[1].length-1);
+			var children = indexes[1].split('][');
+			if(children.length)
+			{
+				indexes = jQuery.merge([indexes[0]], children);
+			}
+		}
+		return indexes;
+	},
+
+	/**
 	 * Returns the path to this content array manager perspective as an array
 	 * containing the key values
 	 *
@@ -155,26 +190,7 @@ var et2_arrayMgr = Class.extend(
 		}
 
 		// Parse the given key by removing the "]"-chars and splitting at "["
-		var indexes = [_key];
-
-		if (this.splitIds)
-		{
-			if(typeof _key === "string")
-			{
-				_key = _key.replace(/&#x5B;/g,"[").replace(/&#x5D;/g,"]");
-				indexes = _key.split('[');
-			}
-			if (indexes.length > 1)
-			{
-				indexes = [indexes.shift(), indexes.join('[')];
-				indexes[1] = indexes[1].substring(0,indexes[1].length-1);
-				var children = indexes[1].split('][');
-				if(children.length)
-				{
-					indexes = jQuery.merge([indexes[0]], children);
-				}
-			}
-		}
+		var indexes = this.explodeKey(_key);
 
 		var entry = this.data;
 		for (var i = 0; i < indexes.length; i++)
