@@ -420,6 +420,14 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		return true;
 	},
+	 _setup_date: function(field_name, field, attrs) {
+		attrs.data_format = field.len ? field.len : 'Y-m-d';
+		return true;
+	},
+	_setup_date_time: function(field_name, field, attrs) {
+		attrs.data_format = field.len ? field.len : 'Y-m-d H:i:s';
+		return true;
+	},
 	_setup_htmlarea: function(field_name, field, attrs) {
 		attrs.config = field.config ? field.config : {};
 		attrs.config.toolbarStartupExpanded = false;
