@@ -159,8 +159,8 @@ function phpgwapi_upgrade1_9_004()
 	$sql .= "adr_one_countrycode = (" . sprintf($case, 'one') . '),';
 	$sql .= "adr_two_countrycode = (" . sprintf($case, 'two') . ')';
 
-	// Change names
-	$GLOBALS['egw_setup']->oProc->query($sql,__LINE__,__FILE__);
+	// Change names (if there are changes, gives sql error otherwise!)
+	if ($country_list) $GLOBALS['egw_setup']->oProc->query($sql,__LINE__,__FILE__);
 
 	// Clear text names
 	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_addressbook SET adr_one_countryname = NULL WHERE adr_one_countrycode IS NOT NULL',__LINE__,__FILE__);
@@ -288,6 +288,7 @@ function phpgwapi_upgrade1_9_009()
 		(!$config['pwd_migration_allowed'] || $config['pwd_migration_types'] == 'md5,crypt'))	// 1.9.009 migration to ssha
 	{
 		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes to get securest available password hash
+		$securest = null;
 		sql_passwdhashes(array(), true, $securest);
 		// OpenLDAP has no own support for extended crypt like sha512_crypt, but relys the OS crypt implementation,
 		// do NOT automatically migrate to anything above SSHA for OS other then Linux (Darwin can not auth anymore!)
