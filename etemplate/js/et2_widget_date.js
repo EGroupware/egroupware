@@ -172,7 +172,7 @@ var et2_date = et2_inputWidget.extend(
 						}
 						this.date = new Date(parsed);
 					}
-					else if(!jQuery.isEmptyObject(this._oldValue)) // Parse other date widgets date with timepicker date/time format to date onject
+					else  // Parse other date widgets date with timepicker date/time format to date onject
 					{
 						var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
 								this.input_date.datepicker('option', 'timeFormat'), _value);
