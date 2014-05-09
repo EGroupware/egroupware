@@ -1,22 +1,139 @@
+%1 definition(s) %2	importexport	it	%1 definizioni %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	it	%1 definizione(i) %2, %3 non creata(e) a causa di diritti insufficienti.
+%1 definitions %2	importexport	it	%1 definizioni %2
+%1 is not a known user or group	importexport	it	%1 non è un utente o un gruppo
+%1 is not readable	importexport	it	%1 non è leggibile
+%1 is not writable	importexport	it	%1 non è scrivibile
+%1 records processed	importexport	it	%1 voci processate
+%s just me	importexport	it	% Solo io
+(* for all)	importexport	it	(* per tutti)
+(0-23)	importexport	it	(0-23)
+(0-6, 0=sun)	importexport	it	(0-6, 0=Domenica)
+*contact id cannot be changed by import	importexport	it	* L'ID contatto non può essere modificato dall'importazione
+addressbook csv import	importexport	it	Importazione da CSV rubrica
+addressbook vcard import	importexport	it	Importazione da vCard rubrica
+admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione
+all encodings	importexport	it	Tutte le codifiche
+allowed users	importexport	it	Utenti consentiti
+automatically created by importexport	importexport	it	Automaticamente creto da Importa|Esporta
+basic csv import	importexport	it	Importazione base CSV
 changed	importexport	it	Modificato
+changed allowed_users	importexport	it	Gli utenti consentiti sono stati modificati
+changed owner	importexport	it	Proprietario modificato
 charset of file	importexport	it	Set di Caratteri del file
 check all	importexport	it	Seleziona tutto
+choose a name for this definition	importexport	it	Seleziona un nome per questa definizione
+choose a plugin	importexport	it	Seleziona un plugin
+choose an application	importexport	it	Seleziona una applicazione
+choose fields to export	importexport	it	Seleziona i campi da esportare
+choose seperator and charset	importexport	it	Seleziona separatore e set di caratteri
+column mismatch.  expected %1 columns, your file has %2.	importexport	it	Discrepanza di colonne. Si aspettano %1 colonne e il file caricato ne ha %2
+column mismatch: %1 should be %2, not %3	importexport	it	Discrepanza di colonne: %1 dovrebbe essere %2, non %3
 condition	importexport	it	Condizione
 copied	importexport	it	Copiato
+create a <a href="%1">new definition</a> for this file	importexport	it	Crea una  <a href="%1">nuova definizione</a> per questo file
+create export	importexport	it	Crea esportazione
 created	importexport	it	Creato
-deleted	importexport	it	cancellato
+csv field	importexport	it	Campo CSV
+database values	importexport	it	Valori del database
+day of week	importexport	it	Giorni della settimana
+define imports|exports	common	it	Definisci Importazioni | Esportazioni
+definition	importexport	it	Definizione
+delete all selected definitions	importexport	it	Rimuovi TUTTE le definizioni selezionate
+deleted	importexport	it	Eliminato
+delimiter	importexport	it	Separatore
+duplicate name, please choose another.	importexport	it	Nome duplicato, selezionare un altro
+edit conditions	importexport	it	Modifica le condizioni
+edit definition <a href="%1">%2</a> to match your file	importexport	it	Modifica la definizione<a href="%1">%2</a> in modo che combaci con il tuo file
+edit your file to match the definition:	importexport	it	Modifica il file in modo che combaci con la definizione:
+encoding mismatch. expected %1 file, you uploaded %2.<br />n	importexport	it	Discrepanza nella codifica. Si aspettava file %1, è stato caricato %2.<br />\n
+errors	importexport	it	Errori
 execute	importexport	it	Esegui
-export	importexport	it	esporta
-exported	importexport	it	esportato
+expert options	importexport	it	Opzioni per esperti
+export	importexport	it	Esporta
+export all selected definitions	importexport	it	Esporta TUTTE le definizioni selezionate
+export data as	importexport	it	Esporta la data come
+export definition to use for nextmatch export	preferences	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
+export spreadsheet	importexport	it	Esporta foglio di calcolo
+exported	importexport	it	Esportato
+extra charsets for import / export	importexport	it	Set di caratteri extra per l'importazione/esportazione
+extra encodings	importexport	it	Codifiche extra
 false	importexport	it	Falso
-finish	importexport	it	termina
+field labels	importexport	it	Etichette campi
+field names	importexport	it	Nomi campi
+fieldseperator	importexport	it	Separatore campo
+filters	importexport	it	Filtri
+finish	importexport	it	Termina
+from definition	importexport	it	Da definizione
 general	preferences	it	Generale
+general fields:	preferences	it	Campi generici:
+header lines to skip	importexport	it	Linee di intestazione da saltare
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	it	Come integrare con i dati esistenti? Per ogni voce, tutte le condizioni sono convalidate dalla cima al fondo, altrimenti la convalida si ferma. Per inserimenti "ciechi" lasciare vuoto.
+human friendly values	importexport	it	Valori a interpretazione umana
 if you specify an export definition, it will be used when you export	preferences	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 import	importexport	it	Importa
+import aborted	importexport	it	Importazione fallita
+import data is	importexport	it	I dati importati sono
+import definition	importexport	it	Definizione di importazione
+import definitions	common	it	Definizioni di importazione
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	it	Definizioni di importazione. Attenzione: Definizioni esistenti con nomi uguali, verranno sovrascritte!
+imported	importexport	it	Importato
+importexport	common	it	Importazione | Esportazione
+importexport wizard finished successfully!	importexport	it	La procedura guidata di importazione/esportazioneè andata a buon fine!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	it	Importazione informazioni da file CSV. Questa è solo una classe di base, non fa nulla da sola.
+include header	importexport	it	Includi intestazione
+just me	importexport	it	Solo io
+last run	importexport	it	Ultima esecuzione
+load sample file	importexport	it	Carica file di esempio/modello
+lock expired on previous run	importexport	it	Blocca scaduti nell'esecuzione precedente
 manage mapping	importexport	it	Gestisci la mappatura
+next	importexport	it	Prossimo
 next run	importexport	it	Prossima esecuzione
+no matches	importexport	it	nessuna corrispondenza
+no matching records	importexport	it	Nessuna corrispondenza
+no notifications	importexport	it	Nessuna notifica
+no records selected	importexport	it	Nessuna voce selezionata
+none found	importexport	it	Nessuno trovato
+old fixed definition	preferences	it	Vecchia definizione fissa
+please select file to import	importexport	it	Per favore selezionare il file da importare
+plugin	importexport	it	Plugin
 preview	importexport	it	Anteprima
-previous	importexport	it	precedente
-translation	importexport	it	Traduzione
+previous	importexport	it	Precedente
+problems during import:	importexport	it	Problemi durante l'importazione:
+save as definition	importexport	it	Salva come definizione
+schedule	common	it	Pianifica importazione | esportazione
+schedule import / export	common	it	Pianifica importazione | esportazione
+schedule import | export	importexport	it	Pianifica importazione | esportazione
+schedule not found	importexport	it	Pianificazione non trovata
+schedule times are server time!  currently %s.	importexport	it	Gli orari di pianificazine sono quelli del server! Attualmente sono le %s
+select definition	importexport	it	Seleziona definizione
+select plugin	importexport	it	Seleziona plugin
+select...	importexport	it	Seleziona:
+skipped	importexport	it	Saltati
+some nice text	importexport	it	Un po' di testo
+some records may not have been imported	importexport	it	Alcune voci potrebbero non essere state importate
+stop	importexport	it	Stop
+stylite template folder	importexport	it	Cartella modelli Stylite
+target	importexport	it	Destinazione
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	it	Esempi di destinazione: vfs://default/home/user/export.csv oppure http://server.net/prices.csv
+target field	importexport	it	Campo di destinazione
+test only	importexport	it	Prova soltanto
+too many matches	importexport	it	Troppe corrispondenze
+translation	importexport	it	Modifica personalizzata
 true	importexport	it	Vero
+try	importexport	it	Prova
+unable to delete	importexport	it	Impossibile eliminare
+unable to link to %1 "%2"	importexport	it	Impossibile collegare %1 a "%2"
+unable to schedule	importexport	it	Impossibile pianificare.
+update categories	importexport	it	Aggiorna categorie
 use default	importexport	it	Usa il predefinito
+use field from csv if possible	importexport	it	Usa campo da CSV se possibile
+user preference	importexport	it	Preferenza utente
+user template folder	importexport	it	Usa cartella modelli
+users allowed to create their own definitions	importexport	it	Utenti a cui è consentito modificare le loro definizioni
+users allowed to share their own definitions	importexport	it	Utenti a cui è consentito condividere le loro definizioni
+warnings	importexport	it	Avvisi
+which useres are allowed for this definition	importexport	it	A quali utenti è permesso di usare questa definizione
+which users are allowed to use this definition	importexport	it	A quali utenti è permesso di usare questa definizione
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	it	Potresti effettuare un <a href="%1" target="_new">backup dei dati</a> prima di procedere.
+you need to select an app and format first!	importexport	it	Devi prima selezionare un'applicazione ed un formato !

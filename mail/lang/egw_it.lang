@@ -1,6 +1,7 @@
 %1 attachments	mail	it	%1 allegati
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
 %1 mails selected	mail	it	% messaggi selezionati
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions.	mail	it	(*) caratteri jolly (*,?) possono essere usati. Se stai cercando di far corrispondere * o ? come caratteri, allora devi anteporre un backslash (\). Se tu selezionassi "Usa espressioni regolari" dovresti inserire espressioni regolari valide.
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
@@ -33,6 +34,7 @@ any status	mail	it	qualsiasi stato
 append	mail	it	apponi
 attach users vcard at compose to every new mail	mail	it	allega la VCard dell'utente ogni volta che componi un nuovo messaggio
 attach vcard	mail	it	Allega vCard
+attachment	mail	it	Allegato
 attachments	mail	it	Allegati
 authentication	mail	it	Autenticazione
 available personal email-accounts/profiles	mail	it	Account email/Profili personali disponibili
@@ -66,11 +68,13 @@ date(newest first)	mail	it	Data (prima più recenti)
 date(oldest first)	mail	it	Data (prima meno recenti)
 deactive	mail	it	Disattiva
 default sorting order	mail	it	Ordinamento predefinito
+default your name and email	common	it	Predefinire tuo nome e email
 delete folder	mail	it	Elimina cartella
 delete folder %1 ?	mail	it	ELIMINARE la cartella %1 ?
 deleted	mail	it	eliminato
 deleted %1 messages in %2	mail	it	eliminato %1 messaggi in %2
 deleted!	mail	it	eliminato!
+deny certain groups access to following features	mail	it	Nega accesso alle seguenti funzioni ad alcuni gruppi
 disable	mail	it	Disabilita
 disable ruler for separation of mailbody and signature	mail	it	disabilita il righello per la separazione del corpo del messaggio dalla firma
 disabled!	mail	it	diabilitato!
@@ -144,8 +148,11 @@ flag / unflag	mail	it	Spunta / Togli spunta
 flag or unflag a mail	mail	it	Spunta / Togli spunta un messaggio
 flagged	mail	it	contrassegnato
 flagged %1 messages as %2 in %3	mail	it	contrassegnato %1 messaggi come %2 in %3
+flagged %1 messages as flagged in %2	mail	it	contrassegnato %1 messaggi come contrassegnati in %2
+flagged %1 messages as unflagged in %2	mail	it	contrassegnato %1 messaggi come non conrassegnati in %2
 flagged / unflagged	mail	it	Spuntato / Non spuntato
 folder	mail	it	Cartella
+folder %1 %2 failed!	mail	it	Cartella %1 %2 fallita!
 folder settings	mail	it	Impostazioni Cartelle
 for e.g.: mpeg	mail	it	p.es.: mpeg
 force html	mail	it	forza HTML
@@ -159,6 +166,7 @@ forward to address:	mail	it	Inoltra all'indirizzo:
 from	mail	it	Da
 from(a->z)	mail	it	Da (A->Z)
 from(z->a)	mail	it	Da (Z->A)
+general	admin	it	Generale
 general settings	mail	it	Impostazioni generali
 get acl rights failed from imap server!	mail	it	Impossibile rilevare i permessi ACL per il server IMAP
 greater than	mail	it	superiore a
@@ -199,9 +207,11 @@ importance	mail	it	Importanza
 important	mail	it	importante
 in mailbox: %1, with id: %2, and partid: %3	mail	it	Nella casella: %1, con ID: %2 e PartID: %3
 inbox	mail	it	Posta in arrivo
+inline	mail	it	In linea
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	it	Inserisci la firma all'inizio del nuovo messaggio quando ne componi uno
 job	mail	it	compito
 junk	mail	it	Spazzatura
+junk folder	mail	it	Cartella mail spazzatura
 keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
 kilobytes	mail	it	kilobyte
 later	mail	it	Più tardi
@@ -212,10 +222,12 @@ mail settings	mail	it	Impostazioni email
 mail source	mail	it	Sorgente email
 mail-address	mail	it	Indirizzo email
 mailaccount	mail	it	Account email
+mailinglist	mail	it	Mailing list
 mark as deleted	mail	it	Contrassegna come eliminato
 match:	mail	it	Corrispondenza:
 matches	mail	it	corrispondenze
 matches regexp	mail	it	corrispondenze di espressioni regolari
+mbstring.func_overload=0 is required for correct mail processing!	mail	it	mbstring.func_overload=0 è richiesto per il corretto funzionamento della posta elettronica! Controlla il tuo php.ini o altri file di configurazione di PHP
 message body	mail	it	corpo del messaggio
 message preview area	mail	it	Area di anteprima dei messaggi
 message saved successfully.	mail	it	Messaggio salvato correttamente
@@ -247,7 +259,8 @@ no text body supplied, check attachments for message text	mail	it	nessun corpo d
 no valid %1 folder configured!	mail	it	Nessun cartella valida %1 configurata!
 non	mail	it	Non
 none, create all	mail	it	Nessuno, crea tutti
-notify when new mails arrive in these folders	mail	it	notifica quando arrivano nuovi messaggi in queste cartelle
+notify about new mail in this folders	mail	it	Notifica quando arrivano nuovi messaggi in questa cartella
+notify when new mails arrive in these folders	mail	it	Notifica quando arrivano nuovi messaggi in queste cartelle
 on	mail	it	Su
 one address is not valid	mail	it	Un indirizzo non è valido
 only one window	mail	it	solo una finestra
@@ -313,6 +326,7 @@ save as infolog on send	mail	it	Salva come scheda attività all'invio
 save as ticket	mail	it	Salva come ticket
 save as tracker on send	mail	it	Salva come ticket all'invio
 save message to disk	mail	it	Salva messaggio sul disco
+save message to filemanager	mail	it	Salva il messaggio in Filemanager
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
 save to disk	mail	it	Salva su disco
 save to filemanager	mail	it	Salva in filemanager
@@ -338,6 +352,7 @@ show all folders	mail	it	mostra tutte le cartelle
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	it	mostra tutte le cartelle (sottoscritte e non) nella schermata principale del pannello delle cartelle
 show new messages on home page	mail	it	mostra nuovi messaggi in home page
 show test connection section and control the level of info displayed?	mail	it	Mostrare la sezione di Test della connessione e controllare il livello delle informazioni mostrate
+show test connection section and control the level of info displayed??	mail	it	Mostrare la sezione di Prova Connessione e controllare il livello delle informazioni mostrate?
 sieve	mail	it	Sieve
 sieve connection status	mail	it	Salva lo stato della connessione
 sieve not activated	mail	it	Sieve non attivato
@@ -355,22 +370,31 @@ sources	mail	it	Sorgenti
 start new messages with mime type plain/text or html?	mail	it	Iniziare nuovi messaggi con mime type plain/test o HTML
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	it	Iniziare i messaggi di risposta con mime type plain/text oppure provare a usare il formato mostrato (predefinito)?
 step 1: imap - incoming mail	mail	it	Primo passo: IMAP - posta in arrivo
+step 2: folder	mail	it	Secondo passo: Cartella
+step 3: sieve - server side mail filtering	mail	it	Terzo passo: Sieve - filtri email a livello server
+step 4: smtp - outgoing mail	mail	it	Quarto passo: SMTP - server posta in uscita
 store to folder	mail	it	Salva nella cartella
 subject(a->z)	mail	it	Oggetto (A->Z)
 subject(z->a)	mail	it	Oggetto (Z->A)
 subscribe folder	mail	it	Sottoscrivi cartella
 subscribe folder ...	mail	it	Sottoscrivi cartella...
+subscription faild!	mail	it	Sottoscrizione fallita!
+subscription folders	mail	it	Cartelle da sottoscrivere
+subscription successfully saved!	mail	it	Sottoscrizione salvata corretamente!
 successfully connected	mail	it	Connesso con successo
 template folder	mail	it	Cartella dei modelli
 templates	mail	it	Modelli
 templates folder	mail	it	Cartella modelli
 test connection	mail	it	Prova connessione attiva
 test connection and display basic information about the selected profile	mail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
+text	mail	it	Testo
 text mode	mail	it	Modalità testo
 text/plain	mail	it	text/plain (testo semplice)
 the %1 's acl removed from the %2!	mail	it	I permessi di %1 rimossi dalla %2!
 the %1 's acl, including its subfolders, removed from the %2!	mail	it	I permessi di %1, sottocartelle incluse, rimossi dalla %2!
+the folder %1 's acls saved!	mail	it	I permessi ACL per la cartella %1 sono stati salvati!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	it	La cartella <b>%1</b> sarà usata, se non ci fosse nulla qui e non fosse fornito un valore predefinito valido.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	it	Il mittente del messaggio ha richiesto la ricevuta di lettura. Vuoi inviarla?
 the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a interpretare il messaggio.
 the rule with priority %1 successfully saved!	mail	it	La regola con priorità %1 è stata salvata
 then	mail	it	DI
@@ -394,7 +418,8 @@ use regular expressions (see wikipedia for information on posix regular expressi
 use source as displayed, if applicable	mail	it	Usa le sorgenti come mostrate, se applicabile
 use username+password from current user	mail	it	Utilizza nome utente+password dell'utente attuale
 vacation messages with start and end date require an admin account to be set!	mail	it	Messaggi di ferie con data inizio e fine, richiedono l'impostazione di un account amministrativo!
-vacation notice	admin	it	notifica assenza
+vacation notice	mail	it	notifica assenza
+vacation notice is active	mail	it	Il messaggio delle ferie è attivo
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	it	La notifica "vacanze" non è stata ancora salvata! (Però ho già inserito dei valori predefiniti per coprire alcuni degli errori di cui sopra. Per favore correggi e controlla le tue impostazioni e salva di nuovo).
 vacation notice sucessfully updated.	mail	it	Messaggio ferie aggiornato
 vacation notice update failed	mail	it	Messaggio ferie NON aggiornato
@@ -402,6 +427,7 @@ vacation start-date must be before the end-date!	mail	it	La data di inizio delle
 vacation update failed	mail	it	aggiornamento ferie non riuscito
 valid for	mail	it	Valido per
 validate selected addresses on submit:	mail	it	Convalida gli indirizzi selezionati all'invio:
+view full mail source	mail	it	Visualizza il codice sorgente completo del messaggio
 view header lines	mail	it	Visualizza righe di intestazione (header)
 what do do with html email	mail	it	Cosa fare con email scritte in HTML
 what order the list columns are in	mail	it	Quale ordine usare per le colonne delle liste
