@@ -1576,7 +1576,10 @@ var et2_link_add = et2_inputWidget.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = jQuery(document.createElement("div")).text(this.egw().lang("Add new"));
+		this.span = jQuery(document.createElement("span"))
+				.text(this.egw().lang("Add new"))
+				.addClass('et2_link_add_span');
+		this.div = jQuery(document.createElement("div")).append(this.span);
 		this.setDOMNode(this.div[0]);
 	},
 	doLoadingFinished: function() {
