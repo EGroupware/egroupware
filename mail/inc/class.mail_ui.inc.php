@@ -129,13 +129,16 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
 			if ($_GET['menuaction'] != 'mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate')
 			{
+				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
 				$this->mail_bo->openConnection(self::$icServerID);
 			}
 		}
 		catch (Exception $e)
 		{
+			//error_log(__METHOD__.__LINE__.' Fetched IC Server failed:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			// redirect to mail wizard to handle it (redirect works for ajax too)
+/*
 			egw_framework::redirect_link('/index.php',
 				(self::$icServerID ? array(
 					'menuaction' => 'mail.mail_wizard.edit',
@@ -145,11 +148,34 @@ class mail_ui
 				)) + array(
 					'msg' => $e->getMessage()//.' ('.get_class($e).': '.$e->getCode().')',
 				));
+*/
+			self::callWizard($e->getMessage());
 		}
 
+		
 		//$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+	}
+
+	/**
+	 * callWizard
+	 *
+	 * @param string $message
+	 */
+	static function callWizard($message)
+	{
+		$response = egw_json_response::get();
+		$linkData=(self::$icServerID ? array(
+				'menuaction' => 'mail.mail_wizard.edit',
+				'acc_id' => self::$icServerID,
+			) : array(
+				'menuaction' => 'mail.mail_wizard.add',
+			)) + array(
+				'msg' => $message//.' ('.get_class($e).': '.$e->getCode().')',
+			);
+		$windowName = "editMailAccount".self::$icServerID;
+		$response->call("egw.open_link",egw::link('/index.php',$linkData,$windowName,"600x480"));
 	}
 
 	/**
@@ -173,11 +199,15 @@ class mail_ui
 		/*if (!($this->mail_bo->icServer->_connected == 1))*/
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
+		if (!emailadmin_imapbase::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
+		{
+			throw new egw_exception(__METHOD__." failed to change Profile to $_icServerID");
+		}
 		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
 		$oldicServerID = self::$icServerID;
-		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
-		$GLOBALS['egw']->preferences->save_repository(true);
-		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
+		//$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
+		//$GLOBALS['egw']->preferences->save_repository(true);
+		//$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
@@ -262,9 +292,9 @@ class mail_ui
 					{
 						array_push($content['foldertree'], $folderName);
 					}
-					}
 				}
 			}
+		}
 		else
 		{
 			list($button) = @each($content['button']);
@@ -352,8 +382,15 @@ class mail_ui
 		//$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
-			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
-			//$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
+			try
+			{
+				$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+				//$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
+			}
+			catch (Exception $e)
+			{
+				self::callWizard($e->getMessage());
+			}
 		}
 		else
 		{
@@ -743,23 +780,64 @@ class mail_ui
 				if ($_profileID && $_profileID != $this->mail_bo->profileID)
 				{
 					//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
-					$this->changeProfile($_profileID);
+					try
+					{
+						$this->changeProfile($_profileID);
+					}
+					catch (Exception $e)
+					{
+						error_log(__METHOD__.__LINE__.' failed change Profile to ->'.$_profileID.': '.$e->getMessage());
+						$out = array('id' => 0);
+						$accountObj = emailadmin_account::read($_profileID);
+						$identity_name = emailadmin_account::identity_name($accountObj);
+						$oA = array('id' => $acc_id,
+							'text' => str_replace(array('<','>'),array('[',']'),$identity_name).' '.$e->getMessage(),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
+							'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name). ' '.$e->getMessage(),
+							'im0' => 'thunderbird.png',
+							'im1' => 'thunderbird.png',
+							'im2' => 'thunderbird.png',
+							'path'=> array($acc_id),
+							'child'=> 0, // dynamic loading on unfold
+							'parent' => ''
+						);
+
+						self::callWizard($e->getMessage());
+
+						$this->setOutStructure($oA, $out, self::$delimiter);
+						if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
+						{
+							$node = self::findNode($out,$_nodeID);
+							//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
+							if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'return subtree for:'.$_nodeID,__METHOD__.__LINE__);
+							return $node;
+						}
+						return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));				
+					}
 				}
 			}
 		}
 		//$starttime = microtime(true);
-		$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
-		//$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
-		$trashFolder = $this->mail_bo->getTrashFolder();
-		$templateFolder = $this->mail_bo->getTemplateFolder();
-		$draftFolder = $this->mail_bo->getDraftFolder();
-		$sentFolder = $this->mail_bo->getSentFolder();
-		$userDefinedFunctionFolders = array();
-		if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
-		if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
-		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
-		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
+		try
+		{
+			$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
+			//$endtime = microtime(true) - $starttime;
+			//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
+			$trashFolder = $this->mail_bo->getTrashFolder();
+			$templateFolder = $this->mail_bo->getTemplateFolder();
+			$draftFolder = $this->mail_bo->getDraftFolder();
+			$sentFolder = $this->mail_bo->getSentFolder();
+			$userDefinedFunctionFolders = array();
+			if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
+			if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
+			if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
+			if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
+		}
+		catch (Exception $e)
+		{
+			$folderObjects=array();
+			self::callWizard($e->getMessage());
+		}
+
 		$out = array('id' => 0);
 
 		//$starttime = microtime(true);
@@ -794,10 +872,13 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($oA));
 		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
 		$c = 0;
-		$delimiter = $this->mail_bo->getHierarchyDelimiter();
-		$cmb = $this->mail_bo->icServer->getCurrentMailbox();
-		$cmblevels = explode($delimiter,$cmb);
-		$cmblevelsCt = count($cmblevels);
+		if (!empty($folderObjects))
+		{
+			$delimiter = $this->mail_bo->getHierarchyDelimiter();
+			$cmb = $this->mail_bo->icServer->getCurrentMailbox();
+			$cmblevels = explode($delimiter,$cmb);
+			$cmblevelsCt = count($cmblevels);
+		}
 		//error_log(__METHOD__.__LINE__.function_backtrace());
 		foreach($folderObjects as $key => $obj)
 		{
@@ -1383,7 +1464,15 @@ unset($query['actions']);
 			if ($_profileID && $_profileID != $this->mail_bo->profileID)
 			{
 				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
-				$this->changeProfile($_profileID);
+				try
+				{
+					$this->changeProfile($_profileID);
+				}
+				catch(Exception $e)
+				{
+					$rows=array();
+					return 0;
+				}
 			}
 			$_folderName = (!empty($folderName)?$folderName:'INBOX');
 		}
@@ -1425,27 +1514,44 @@ unset($query['actions']);
 		}
 		$reverse = ($query['sort']=='ASC'?false:true);
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
-		if ($maxMessages > 75)
+		try
 		{
-			$_sR = $this->mail_bo->getSortedList(
-				$_folderName,
-				$sort,
-				$reverse,
-				$filter,
-				$rByUid=true
-			);
-			$rowsFetched['messages'] = $_sR['count'];
-			$sR = $_sR['match']->ids;
-			// if $sR is false, something failed fundamentally
-			if($reverse === true) $sR = ($sR===false?array():array_reverse((array)$sR));
-			$sR = array_slice((array)$sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
-			$sRToFetch = $sR;//array_slice($sR,0,50); // we fetch only the headers of a subset of the fetched uids
-			//error_log(__METHOD__.__LINE__.' Rows fetched (UID only):'.count($sR).' Data:'.array2string($sR));
-			$maxMessages = 75;
-			$sortResultwH['header'] = array();
-			if (count($sRToFetch)>0)
+			if ($maxMessages > 75)
 			{
-				//error_log(__METHOD__.__LINE__.' Headers to fetch with UIDs:'.count($sRToFetch).' Data:'.array2string($sRToFetch));
+				$_sR = $this->mail_bo->getSortedList(
+					$_folderName,
+					$sort,
+					$reverse,
+					$filter,
+					$rByUid=true
+				);
+				$rowsFetched['messages'] = $_sR['count'];
+				$sR = $_sR['match']->ids;
+				// if $sR is false, something failed fundamentally
+				if($reverse === true) $sR = ($sR===false?array():array_reverse((array)$sR));
+				$sR = array_slice((array)$sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
+				$sRToFetch = $sR;//array_slice($sR,0,50); // we fetch only the headers of a subset of the fetched uids
+				//error_log(__METHOD__.__LINE__.' Rows fetched (UID only):'.count($sR).' Data:'.array2string($sR));
+				$maxMessages = 75;
+				$sortResultwH['header'] = array();
+				if (count($sRToFetch)>0)
+				{
+					//error_log(__METHOD__.__LINE__.' Headers to fetch with UIDs:'.count($sRToFetch).' Data:'.array2string($sRToFetch));
+					$sortResult = array();
+					// fetch headers
+					$sortResultwH = $this->mail_bo->getHeaders(
+						$_folderName,
+						$offset,
+						$maxMessages,
+						$sort,
+						$reverse,
+						$filter,
+						$sRToFetch
+					);
+				}
+			}
+			else
+			{
 				$sortResult = array();
 				// fetch headers
 				$sortResultwH = $this->mail_bo->getHeaders(
@@ -1454,24 +1560,16 @@ unset($query['actions']);
 					$maxMessages,
 					$sort,
 					$reverse,
-					$filter,
-					$sRToFetch
+					$filter
 				);
+				$rowsFetched['messages'] = $sortResultwH['info']['total'];
 			}
 		}
-		else
+		catch (Exception $e)
 		{
-			$sortResult = array();
-			// fetch headers
-			$sortResultwH = $this->mail_bo->getHeaders(
-				$_folderName,
-				$offset,
-				$maxMessages,
-				$sort,
-				$reverse,
-				$filter
-			);
-			$rowsFetched['messages'] = $sortResultwH['info']['total'];
+			$sortResultwH=array();
+			$sR=array();
+			self::callWizard($e->getMessage());
 		}
 		if (is_array($sR) && count($sR)>0)
 		{

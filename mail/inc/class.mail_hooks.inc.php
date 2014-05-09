@@ -483,9 +483,9 @@ class mail_hooks
 		{
 			$mail_bo = mail_bo::getInstance(true,$profileID);
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
-		} catch (Exception $ex) {
-			error_log(__METHOD__."()" . $ex->getMessage());
-			$profileID = null;
+		} catch (Exception $e) {
+			//error_log(__METHOD__."()" . $e->getMessage());
+			$profileID = emailadmin_bo::getUserDefaultAccID();
 		}
 
 		$preferences =& $mail_bo->mailPreferences;
