@@ -159,7 +159,9 @@ var et2_date = et2_inputWidget.extend(
 					this._oldValue = _value;
 					return;
 				default:
-					if (this.id.match(/^#/g) && this.options.value == _value) // Parse customfields's date with storage data_format to date object
+					// Parse customfields's date with storage data_format to date object
+					// Or generally any date widgets with fixed date/time format
+					if (this.id.match(/^#/g) && this.options.value == _value || (this.options.data_format && this.options.value == _value))
 					{
 						switch (this._type)
 						{
