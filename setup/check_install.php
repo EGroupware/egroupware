@@ -428,7 +428,7 @@ function pear_check($package,$args)
 		{
 			echo ' '.lang('You can install it by running:').
 				($channel ? ' pear channel-discover '.$channel.' ;' : '').
-				' pear install '.$package;
+				' pear install '.($channel ? $channel.'/' : '').$package;
 		}
 		echo "</div>";
 	}
