@@ -1,3 +1,16 @@
+egroupware-epl (14.1.20140512-1) hardy; urgency=low
+
+  * Mail: display an error for broken accounts and let user fix it or continue working with other accounts
+  * Mail: fix a namespace issue (for additional defineable namespaces under dovecot) reported by E.Popp
+  * Mail: fix for messed up signature in some cases; fix for not beeing able to delete/remave an attachment to a new mail that was attached using PRESET methods
+  * Tracker/Mailhandling: Add new feature to tracker mailhandling in order to extract latest reply from mail content, instead of the entire content including the previous replies.
+  * Mail: limit async notification on new mail to once every 3 minutes; control if a imapHost is set on choosen profile
+  * Mail: remember last used Signature on Compose, and try to use it on subsequent compose sessions
+  * Setup: fixed (partially) stalled installation, because caching could not find not yet created configuration
+  * Setup: fixed not working admin account creation, if it triggers an error in emailadmin (eg. because on email address given)
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 12 May 2014 11:24:58 +0200
+
 egroupware-epl (14.1.20140429-1) hardy; urgency=low
 
   * ImportExport: Creation of new filter column before we update definitions
