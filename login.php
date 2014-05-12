@@ -106,7 +106,7 @@ else
 	$prefs->read_repository();
 
 	$class = $prefs->data['common']['template_set'].'_framework';
-	if (class_exists($class) && constant($class.'::LOGIN_TEMPLATE_SET'))
+	if (class_exists($class) && @constant($class.'::LOGIN_TEMPLATE_SET'))
 	{
 		$GLOBALS['egw_info']['server']['template_set'] =
 			$GLOBALS['egw_info']['login_template_set'] = $prefs->data['common']['template_set'];
