@@ -92,21 +92,25 @@ var AppJS = Class.extend(
 
 		this.egw = egw(this.appname, window);
 
-		// Initialize sidebox - ID set server side
-		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
-		if(sidebox.length == 0 && egw_getFramework() != null)
+		// Initialize sidebox for non-popups.  
+		// ID set server side
+		if(window.opener == null)
 		{
-			var egw_fw = egw_getFramework();
-			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
-		}
-		// Make sure we're running in the top window when we init sidebox
-		if(window.top.app[this.appname] !== this && window.top.app[this.appname])
-		{
-			window.top.app[this.appname]._init_sidebox(sidebox);
-		}
-		else
-		{
-			this._init_sidebox(sidebox);
+			var sidebox = jQuery('#favorite_sidebox_'+this.appname);
+			if(sidebox.length == 0 && egw_getFramework() != null)
+			{
+				var egw_fw = egw_getFramework();
+				sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+			}
+			// Make sure we're running in the top window when we init sidebox
+			if(window.top.app[this.appname] !== this && window.top.app[this.appname])
+			{
+				window.top.app[this.appname]._init_sidebox(sidebox);
+			}
+			else
+			{
+				this._init_sidebox(sidebox);
+			}
 		}
 	},
 
