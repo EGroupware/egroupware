@@ -282,10 +282,6 @@ class importexport_wizard_basic_import_csv
 					}
 				}
 			}
-			foreach($content['csv_fields'] as $index => $title)
-			{
-				error_log("$index: $title => {$content['field_mapping'][$index]}");
-			}
 			unset($content['mapping']);
 			switch (array_search('pressed', $content['button']))
 			{
@@ -306,12 +302,20 @@ class importexport_wizard_basic_import_csv
 			$content['step'] = 'wizard_step50';
 
 			$content['mapping'] = array(false);
+			if(array_key_exists('field_mapping', $content))
+			{
+				$field = $content['field_mapping'];
+			}
+			else
+			{
+				$field = $content['plugin_options']['field_mapping'];
+			}
 			foreach($content['csv_fields'] as $index => $title)
 			{
 				$content['mapping'][] = array(
 					'index'	=>	$index,
 					'title' => $title,
-					'field'	=>	$content['field_mapping'][$index],
+					'field'	=>	$field[$index],
 					'conversion'	=>	$content['field_conversion'][$index]
 				);
 			}
