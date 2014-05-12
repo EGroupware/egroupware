@@ -179,6 +179,25 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 				return this._subgridCallback.call(this._context,
 						_row, _data, _controller);
 			}, this);
+
+			// Check for kept expansion, and set the row up to be re-expanded
+			// Only the top controller tracks expanded, including sub-grids
+			var top_controller = _controller;
+			while(top_controller._parentController != null)
+			{
+				top_controller = top_controller._parentController;
+			}
+			var expansion_index = top_controller.kept_expansion.indexOf(
+				top_controller.dataStorePrefix + '::' + _data.content[this._context.settings.row_id]
+			);
+			if(top_controller.kept_expansion && expansion_index >=0)
+			{
+				top_controller.kept_expansion.splice(expansion_index,1);
+				// Use a timeout since the DOM nodes might not be finished yet
+				window.setTimeout(function() {
+					_row.expansionButton.trigger('click');
+				},ET2_GRID_INVALIDATE_TIMEOUT);
+			}
 		}
 
 		// Set the row data

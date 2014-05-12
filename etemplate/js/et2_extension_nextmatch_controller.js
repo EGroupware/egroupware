@@ -86,6 +86,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Keep selection across filter changes
 		this.kept_selection = null;
 		this.kept_focus = null;
+		this.kept_expansion = [];
 
 		// Directly use the API-Implementation of dataRegisterUID and
 		// dataUnregisterUID
@@ -121,6 +122,17 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		this.kept_selection = this._selectionMgr ? this._selectionMgr.getSelected() : null;
 		this.kept_focus = this._selectionMgr && this._selectionMgr._focusedEntry ?
 			this._selectionMgr._focusedEntry.uid || null : null;
+
+		// Find expanded rows
+		var nm = this._widget;
+		var controller = this;
+		$j('.arrow.opened',this._widget.getDOMNode(this._widget)).each(function() {
+			var entry = controller.getRowByNode(this);
+			if(entry && entry.uid)
+			{
+				controller.kept_expansion.push(entry.uid);
+			}
+		});
 	},
 
 	getObjectManager: function () {
@@ -370,6 +382,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			{
 				this.self._selectionMgr.setFocused(this.self.kept_focus,true);
 			}
+			// Re-expanding rows handled in et2_extension_nextmatch_rowProvider
+			// Expansions might still be valid, so we don't clear them
 			this.self.kept_selection = null;
 			this.self.kept_focus = null;
 		}
