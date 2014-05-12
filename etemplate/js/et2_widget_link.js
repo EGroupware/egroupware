@@ -1317,7 +1317,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {Array} _attrs an array of attributes
 	 */
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value");
+		_attrs.push("label", "value");
 	},
 
 	/**
@@ -1325,7 +1325,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {
-		return [this.list[0]];
+		return [this.list[0], this._labelContainer[0]];
 	},
 
 	/**
@@ -1340,7 +1340,18 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.list = $j(_nodes[0]);
+
 		this.set_value(_values["value"]);
+		
+		// Special detached, to prevent DOM node modification of the normal method
+		this._labelContainer = $j(_nodes[1]) || null;
+		if(_values['label'])
+		{
+			this.set_label(_values['label']);
+		}
+		else {
+			this._labelContainer.contents().not(this.list).remove();
+		}
 	}
 });
 et2_register_widget(et2_link_string, ["link-string"]);
