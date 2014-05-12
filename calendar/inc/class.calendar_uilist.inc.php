@@ -481,8 +481,14 @@ class calendar_uilist extends calendar_ui
 			$params['options-selectcols']['pm_id'] = false;
 		}
 
-		// Not sure why this has to be echoed instead of appended, but that's what works.
-		echo calendar_uiviews::edit_series();
+		// Needs to be echoed here to deal with the iframe and the fact that we're
+		// sending dynamically generated javascript.  After a search / filter
+		// the series code is missing, since we're just echoing it and not including
+		// it in any file.
+		if(!$params['csv_export'])
+		{
+			echo calendar_uiviews::edit_series();
+		}
 
 		//_debug_array($rows);
 		return $this->bo->total;
@@ -528,6 +534,7 @@ class calendar_uilist extends calendar_ui
 		elseif(in_array($action,array('ical','document')))
 		{
 			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			$query['csv_export'] = true;
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$this->get_rows($query,$events,$readonlys);
 			foreach($events as $key => $event)
