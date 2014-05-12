@@ -47,7 +47,7 @@
 		<hbox span="all" class="filemanager_navigation">
 			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..');" id="up"/>
 			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~');" id="home"/>
-			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~');} return false;" size="80" class="address"/>
+			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~');} return true;" size="80" class="address"/>
 			<hbox id="buttons">
 				<button label="Go to" id="button[go]" image="key_enter"/>
 				<image id="tarp" src="buttonseparator"/>
