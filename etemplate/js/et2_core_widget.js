@@ -209,7 +209,7 @@ var et2_widget = ClassWithAttributes.extend(
 
 		if(this.id)
 		{
-			this.id = this.id.replace(/\[/g,'&#x5B;').replace(/]/g,'&#x5D;');
+			//this.id = this.id.replace(/\[/g,'&#x5B;').replace(/]/g,'&#x5D;');
 		}
 
 		// Add all attributes hidden in the content arrays to the attributes
