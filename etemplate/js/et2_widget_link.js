@@ -1325,6 +1325,13 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {
+		// Create the label container if it didn't exist yet
+		if (this._labelContainer == null)
+		{
+			this._labelContainer = $j(document.createElement("label"))
+				.addClass("et2_label");
+			this.getSurroundings().insertDOMNode(this._labelContainer[0]);
+		}
 		return [this.list[0], this._labelContainer[0]];
 	},
 

@@ -788,7 +788,7 @@ class nextmatch_widget
 		if($none_option)
 		{
 			array_unshift($cats, array(
-				'id'	=> '',
+				'id'	=> $prefix.'',
 				'name'	=> 'None'
 			));
 		}
