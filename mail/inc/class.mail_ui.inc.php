@@ -152,7 +152,7 @@ class mail_ui
 			self::callWizard($e->getMessage());
 		}
 
-		
+
 		//$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
@@ -163,9 +163,9 @@ class mail_ui
 	 *
 	 * @param string $message
 	 */
-	static function callWizard($message)
+	static function callWizard($message, $exit=true)
 	{
-		$response = egw_json_response::get();
+		error_log(__METHOD__."('$message', $exit) ".function_backtrace());
 		$linkData=(self::$icServerID ? array(
 				'menuaction' => 'mail.mail_wizard.edit',
 				'acc_id' => self::$icServerID,
@@ -174,8 +174,23 @@ class mail_ui
 			)) + array(
 				'msg' => $message//.' ('.get_class($e).': '.$e->getCode().')',
 			);
-		$windowName = "editMailAccount".self::$icServerID;
-		$response->call("egw.open_link",egw::link('/index.php',$linkData,$windowName,"600x480"));
+
+		if (egw_json_response::isJSONResponse())
+		{
+			$response = egw_json_response::get();
+			$windowName = "editMailAccount".self::$icServerID;
+			$response->call("egw.open_link", egw::link('/index.php', $linkData), $windowName, "600x480");
+			egw_framework::message($message, 'error');
+			if ($exit)
+			{
+				$GLOBALS['egw']->framework->render($message);
+				common::egw_exit();
+			}
+		}
+		else	// regular GET request eg. in idots template
+		{
+			egw_framework::redirect_link('/index.php', $linkData);
+		}
 	}
 
 	/**
@@ -199,12 +214,12 @@ class mail_ui
 		/*if (!($this->mail_bo->icServer->_connected == 1))*/
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
+		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
+		$oldicServerID = self::$icServerID;
 		if (!emailadmin_imapbase::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
 		{
 			throw new egw_exception(__METHOD__." failed to change Profile to $_icServerID");
 		}
-		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
-		$oldicServerID = self::$icServerID;
 		//$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
 		//$GLOBALS['egw']->preferences->save_repository(true);
 		//$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
@@ -801,7 +816,7 @@ class mail_ui
 							'parent' => ''
 						);
 
-						self::callWizard($e->getMessage());
+						//self::callWizard($e->getMessage(), false);
 
 						$this->setOutStructure($oA, $out, self::$delimiter);
 						if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
@@ -811,12 +826,13 @@ class mail_ui
 							if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'return subtree for:'.$_nodeID,__METHOD__.__LINE__);
 							return $node;
 						}
-						return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));				
+						return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 					}
 				}
 			}
 		}
 		//$starttime = microtime(true);
+		$c = 0;
 		try
 		{
 			$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
@@ -834,8 +850,10 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
+			error_log(__LINE__.': '.__METHOD__."() ".$e->getMessage());
 			$folderObjects=array();
-			self::callWizard($e->getMessage());
+//			self::callWizard($e->getMessage(), false);
+			$c = 1;
 		}
 
 		$out = array('id' => 0);
@@ -862,16 +880,31 @@ class mail_ui
 				'im1' => 'thunderbird.png',
 				'im2' => 'thunderbird.png',
 				'path'=> array($acc_id),
-				'child'=> 1, // dynamic loading on unfold
+				'child'=> (int)($acc_id != $_profileID || $folderObjects), // dynamic loading on unfold
 				'parent' => ''
 			);
 			$this->setOutStructure($oA, $out, self::$delimiter);
+
+			// create a fake INBOX folder showing connection error (necessary that client UI unlocks tree!)
+			if ($e && $acc_id == $_profileID && !$folderObjects)
+			{
+				$oA = array(
+					'id' => $acc_id.self::$delimiter.'INBOX',
+					'text' => lang($e->getMessage()),
+					'tooltip' => '('.$acc_id.') '.$e->getMessage(),
+					'im0' => "folderNoSelectClosed.gif",
+					'im1' => "folderNoSelectOpen.gif",
+					'im2' => "folderNoSelectClosed.gif",
+					'path'=> array($acc_id, 'INBOX'),
+					'parent' => $acc_id,
+				);
+				$this->setOutStructure($oA, $out, self::$delimiter);
+			}
 		}
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' Fetching accounts took: '.$endtime);
 		//error_log(__METHOD__.__LINE__.array2string($oA));
 		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
-		$c = 0;
 		if (!empty($folderObjects))
 		{
 			$delimiter = $this->mail_bo->getHierarchyDelimiter();
@@ -1569,7 +1602,7 @@ unset($query['actions']);
 		{
 			$sortResultwH=array();
 			$sR=array();
-			self::callWizard($e->getMessage());
+			self::callWizard($e->getMessage(), false);
 		}
 		if (is_array($sR) && count($sR)>0)
 		{
