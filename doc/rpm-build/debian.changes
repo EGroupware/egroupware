@@ -1,3 +1,10 @@
+egroupware (1.8.007.20140512) hardy; urgency=low
+
+  * LDAP: prevent CSRF error while saving accounts stored in LDAP
+  * Admin: limiting a huge list of accounts returned not all accounts, because full search was limited too original number of requested rows
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 12 May 2014 08:36:49 +0200
+
 egroupware (1.8.007.20140506) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
