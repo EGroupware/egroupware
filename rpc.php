@@ -13,7 +13,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 @define('EGW_API_INC', dirname(__FILE__) . '/phpgwapi/inc/');
 @define('HORDE_BASE', EGW_API_INC . '/horde/');
 require_once HORDE_BASE . '/lib/core.php';
-require_once 'Horde/RPC.php';
+require_once HORDE_BASE . '/Horde/RPC.php';
 //require_once EGW_API_INC . '/common_functions.inc.php';
 
 $GLOBALS['egw_info'] = array(
