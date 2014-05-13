@@ -877,6 +877,8 @@ class etemplate_widget
 				'key' => $attr,
 				'value' => $val
 			));
+			// Don't delete it
+			self::$request->data_modified = true;
 			//error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
 		}
 		if (isset($this)) $this->attrs[$attr] = $val;
