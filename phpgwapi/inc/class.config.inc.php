@@ -390,13 +390,13 @@ class config
 	public static function init_static()
 	{
 		// we use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
-		if (is_object($GLOBALS['egw']->db))
+		if (isset($GLOBALS['egw_setup']) && is_a($GLOBALS['egw_setup']->db, 'egw_db'))
 		{
-			config::$db = $GLOBALS['egw']->db;
+			self::$db = $GLOBALS['egw_setup']->db;
 		}
 		else
 		{
-			config::$db = $GLOBALS['egw_setup']->db;
+			self::$db = $GLOBALS['egw']->db;
 		}
 		// if item is not cached or cache is not looking alright --> query config from database
 		if (!(self::$configs = egw_cache::getInstance(__CLASS__, 'configs')) || !is_array(self::$configs['phpgwapi']))

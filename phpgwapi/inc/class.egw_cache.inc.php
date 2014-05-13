@@ -624,7 +624,7 @@ class egw_cache
 	{
 		static $bases = array();
 
-		if (!isset($bases[$level]))
+		if (!isset($bases[$level]) || $level == self::INSTANCE && $bases[$level] != self::$instance_key)
 		{
 			switch($level)
 			{

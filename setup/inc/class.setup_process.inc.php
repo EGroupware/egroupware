@@ -123,7 +123,7 @@ class setup_process
 				case 'new':
 					/* Create tables and insert new records for each app in this list */
 					$passing = $this->current($pass,$DEBUG);
-					$this->save_minimal_config($preset_config);
+					if (isset($pass['phpgwapi'])) $this->save_minimal_config($preset_config);
 					$passing = $this->default_records($passing,$DEBUG);
 					break;
 				case 'upgrade':
@@ -297,7 +297,7 @@ class setup_process
 
 		// so the default_records use the current data
 		$GLOBALS['egw_info']['server'] = array_merge((array)$GLOBALS['egw_info']['server'], $current_config);
-		egw_cache::generate_instance_key();	// generate instance-key flushes whole instance cache
+		egw_cache::flush();	// flush whole instance cache
 		config::init_static();	// flush internal cache of config class
 		$GLOBALS['egw_setup']->setup_account_object($current_config);
 	}
