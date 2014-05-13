@@ -59,8 +59,6 @@ class mail_compose
 	 */
 	var $mailPreferences;
 	var $attachments;	// Array of attachments
-	var $preferences;	// the prefenrences(emailserver, username, ...)
-	var $preferencesArray;
 	var $displayCharset;
 	var $composeID;
 	var $sessionData;
@@ -79,16 +77,14 @@ class mail_compose
 		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
 
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
-		$this->preferences	=& $this->mail_bo->mailPreferences;
-		// we should get away from this $this->preferences->preferences should hold the same info
-		$this->preferencesArray =& $this->preferences;
+		$this->mailPreferences	=& $this->mail_bo->mailPreferences;
 		//force the default for the forwarding -> asmail
-		if (is_array($this->preferencesArray)) {
-			if (!array_key_exists('message_forwarding',$this->preferencesArray)
-				|| !isset($this->preferencesArray['message_forwarding'])
-				|| empty($this->preferencesArray['message_forwarding'])) $this->preferencesArray['message_forwarding'] = 'asmail';
+		if (is_array($this->mailPreferences)) {
+			if (!array_key_exists('message_forwarding',$this->mailPreferences)
+				|| !isset($this->mailPreferences['message_forwarding'])
+				|| empty($this->mailPreferences['message_forwarding'])) $this->mailPreferences['message_forwarding'] = 'asmail';
 		} else {
-			$this->preferencesArray['message_forwarding'] = 'asmail';
+			$this->mailPreferences['message_forwarding'] = 'asmail';
 		}
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 
@@ -111,8 +107,6 @@ class mail_compose
 			// no icServer Object: something failed big time
 			if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 			$this->mail_bo->openConnection($this->mail_bo->profileID);
-			$this->preferences	=& $this->mail_bo->mailPreferences;
-			// we should get away from this $this->preferences->preferences should hold the same info
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 		}
 	}
@@ -664,8 +658,8 @@ class mail_compose
 		if ($isFirstLoad)
 		{
 			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
-			if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
-				$this->preferencesArray['attachVCardAtCompose']))
+			if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->mailPreferences['attachVCardAtCompose']) &&
+				$this->mailPreferences['attachVCardAtCompose']))
 			{
 				$alwaysAttachVCardAtCompose = true;
 				if (!is_array($_REQUEST['preset']['file']) && !empty($_REQUEST['preset']['file']))
@@ -941,13 +935,13 @@ class mail_compose
 			// try to enforce a mimeType on reply ( if type is not of the wanted type )
 			if ($isReply)
 			{
-				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="text" &&
+				if (!empty($this->mailPreferences['replyOptions']) && $this->mailPreferences['replyOptions']=="text" &&
 					$content['mimeType'] == 'html')
 				{
 					$_content['mimeType'] = $content['mimeType']  = 'plain';
 					$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
 				}
-				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="html" &&
+				if (!empty($this->mailPreferences['replyOptions']) && $this->mailPreferences['replyOptions']=="html" &&
 					$content['mimeType'] != 'html')
 				{
 					$_content['mimeType'] = $content['mimeType']  = 'html';
@@ -1084,8 +1078,8 @@ class mail_compose
 			//PROBABLY NOT FOUND
 			$signature=array();
 		}
-		if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) &&
-			$this->preferencesArray['disableRulerForSignatureSeparation']) ||
+		if ((isset($this->mailPreferences['disableRulerForSignatureSeparation']) &&
+			$this->mailPreferences['disableRulerForSignatureSeparation']) ||
 			empty($signature['ident_signature']) || trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='')
 		{
 			$disableRuler = true;
@@ -1103,10 +1097,10 @@ class mail_compose
 		if (!$isFirstLoad && !empty($font_span) && stripos($content['body'],$font_part)===false) $font_span = '';
 		//remove possible html header stuff
 		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
-		//error_log(__METHOD__.__LINE__.array2string($this->preferencesArray));
+		//error_log(__METHOD__.__LINE__.array2string($this->mailPreferences));
 		$blockElements = array('address','blockquote','center','del','dir','div','dl','fieldset','form','h1','h2','h3','h4','h5','h6','hr','ins','isindex','menu','noframes','noscript','ol','p','pre','table','ul');
-		if (isset($this->preferencesArray['insertSignatureAtTopOfMessage']) &&
-			$this->preferencesArray['insertSignatureAtTopOfMessage'] &&
+		if (isset($this->mailPreferences['insertSignatureAtTopOfMessage']) &&
+			$this->mailPreferences['insertSignatureAtTopOfMessage'] &&
 			!(isset($_POST['mySigID']) && !empty($_POST['mySigID']) ) && !$suppressSigOnTop
 		)
 		{
@@ -1388,7 +1382,7 @@ class mail_compose
 					}
 					$content['processedmail_id'] = implode(',',$replyIds);
 					$content['mode'] = 'forward';
-					$isReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
+					$isReply = ($mode?$mode=='inline':$this->mailPreferences['message_forwarding'] == 'inline');
 					$suppressSigOnTop = false;// ($mode && $mode=='inline'?true:false);// may be a better solution
 					$_focusElement = 'to';
 					break;
@@ -1623,7 +1617,7 @@ class mail_compose
 		// remove a printview tag if composing
 		$searchfor = '/^\['.lang('printview').':\]/';
 		$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
-		$bodyParts = $mail_bo->getMessageBody($_uid, $this->preferencesArray['always_display'], $_partID);
+		$bodyParts = $mail_bo->getMessageBody($_uid, $this->mailPreferences['always_display'], $_partID);
 		//_debug_array($bodyParts);
 		#$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
 		if($bodyParts['0']['mimeType'] == 'text/html') {
@@ -1684,10 +1678,10 @@ class mail_compose
 	{
 		if ($_mode)
 		{
-			$modebuff = $this->preferencesArray['message_forwarding'];
-			$this->preferencesArray['message_forwarding'] = $_mode;
+			$modebuff = $this->mailPreferences['message_forwarding'];
+			$this->mailPreferences['message_forwarding'] = $_mode;
 		}
-		if  ($this->preferencesArray['message_forwarding'] == 'inline') {
+		if  ($this->mailPreferences['message_forwarding'] == 'inline') {
 			$this->getReplyData('forward', $_icServer, $_folder, $_uid, $_partID);
 		}
 		$mail_bo    = $this->mail_bo;
@@ -1704,8 +1698,8 @@ class mail_compose
 		//$this->sessionData['sourceFolder']=$_folder;
 		//$this->sessionData['forwardFlag']='forwarded';
 		//$this->sessionData['forwardedUID']=$_uid;
-		if  ($this->preferencesArray['message_forwarding'] == 'asmail') {
-			$this->sessionData['mimeType']  = $this->preferencesArray['composeOptions'];
+		if  ($this->mailPreferences['message_forwarding'] == 'asmail') {
+			$this->sessionData['mimeType']  = $this->mailPreferences['composeOptions'];
 			if($headers['SIZE'])
 				$size				= $headers['SIZE'];
 			else
@@ -1734,7 +1728,7 @@ class mail_compose
 		$mail_bo->closeConnection();
 		if ($_mode)
 		{
-			$this->preferencesArray['message_forwarding'] = $modebuff;
+			$this->mailPreferences['message_forwarding'] = $modebuff;
 		}
 		//error_log(__METHOD__.__LINE__.array2string($this->sessionData));
 		return $this->sessionData;
@@ -2023,8 +2017,8 @@ class mail_compose
 		}
 
 		//_debug_array($headers);
-		//error_log(__METHOD__.__LINE__.'->'.array2string($this->preferencesArray['htmlOptions']));
-		$bodyParts = $mail_bo->getMessageBody($_uid, ($this->preferencesArray['htmlOptions']?$this->preferencesArray['htmlOptions']:''), $_partID);
+		//error_log(__METHOD__.__LINE__.'->'.array2string($this->mailPreferences['htmlOptions']));
+		$bodyParts = $mail_bo->getMessageBody($_uid, ($this->mailPreferences['htmlOptions']?$this->mailPreferences['htmlOptions']:''), $_partID);
 		//_debug_array($bodyParts);
 		$styles = mail_bo::getStyles($bodyParts);
 
@@ -2251,14 +2245,14 @@ class mail_compose
 		#if ($realCharset != $this->displayCharset) error_log("Error: bocompose::createMessage found Charset ($realCharset) differs from DisplayCharset (".$this->displayCharset.")");
 		$signature = $_signature['ident_signature'];
 
-		if ((isset($this->preferencesArray['insertSignatureAtTopOfMessage']) && $this->preferencesArray['insertSignatureAtTopOfMessage']))
+		if ((isset($this->mailPreferences['insertSignatureAtTopOfMessage']) && $this->mailPreferences['insertSignatureAtTopOfMessage']))
 		{
 			// note: if you use stationery ' s the insert signatures at the top does not apply here anymore, as the signature
 			// is already part of the body, so the signature part of the template will not be applied.
 			$signature = null; // note: no signature, no ruler!!!!
 		}
-		if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) &&
-			$this->preferencesArray['disableRulerForSignatureSeparation']) ||
+		if ((isset($this->mailPreferences['disableRulerForSignatureSeparation']) &&
+			$this->mailPreferences['disableRulerForSignatureSeparation']) ||
 			empty($signature) || trim($this->convertHTMLToText($signature)) =='')
 		{
 			$disableRuler = true;
@@ -2425,7 +2419,6 @@ class mail_compose
 		// decide where to save the message (default to draft folder, if we find nothing else)
 		// if the current folder is in draft or template folder save it there
 		// if it is called from printview then save it with the draft folder
-		//error_log(__METHOD__.__LINE__.array2string($this->preferences->ic_server));
 		$savingDestination = $mail_bo->getDraftFolder();
 		if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox']))
 		{
@@ -2533,7 +2526,6 @@ class mail_compose
 		   empty($this->sessionData['bcc']) && empty($this->sessionData['folder'])) {
 		   	$messageIsDraft = true;
 		}
-		#error_log(print_r($this->preferences,true));
 		try
 		{
 			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
@@ -2591,7 +2583,7 @@ class mail_compose
 		}
 		$sentFolder = $this->mail_bo->getSentFolder();
 		if(isset($sentFolder) && $sentFolder != 'none' &&
-			$this->preferences->preferences['sendOptions'] != 'send_only' &&
+			$this->mailPreferences['sendOptions'] != 'send_only' &&
 			$messageIsDraft == false)
 		{
 			if ($this->mail_bo->folderExists($sentFolder, true))
@@ -2605,8 +2597,8 @@ class mail_compose
 		}
 		else
 		{
-			if (((!isset($sentFolder)||$sentFolder==false) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
-				($this->preferences->preferences['sendOptions'] != 'send_only' &&
+			if (((!isset($sentFolder)||$sentFolder==false) && $this->mailPreferences['sendOptions'] != 'send_only') ||
+				($this->mailPreferences['sendOptions'] != 'send_only' &&
 				$sentFolder != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
 		}
 		if($messageIsDraft == true) {
@@ -2617,7 +2609,7 @@ class mail_compose
 			}
 		}
 		$folder = array_unique($folder);
-		if (($this->preferences->preferences['sendOptions'] != 'send_only' && $sentFolder != 'none') && !(count($folder) > 0) &&
+		if (($this->mailPreferences['sendOptions'] != 'send_only' && $sentFolder != 'none') && !(count($folder) > 0) &&
 			!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
 		{
 			$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');
@@ -2868,7 +2860,7 @@ class mail_compose
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
 		{
 			$content['mimeType'] = 'html';
-			if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
+			if (!empty($this->mailPreferences['composeOptions']) && $this->mailPreferences['composeOptions']=="text") $content['mimeType']  = 'plain';
 		}
 		return $content;
 
