@@ -690,7 +690,7 @@ class mail_sieve
 			$this->errorStack['days'] = lang('Please select the number of days to wait between responses').'!';
 		}
 
-		if(is_array($_vacation['addresses']))
+		if(is_array($_vacation['addresses']) && !empty($_vacation['addresses']))
 		{
 			$regexp="/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
 			foreach ($_vacation['addresses'] as $addr)

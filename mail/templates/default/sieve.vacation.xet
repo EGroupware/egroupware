@@ -25,7 +25,7 @@
 				</row>
 				<row>
 					<description value="Respond to mail sent to:"/>
-					<taglist-email id="addresses" allowFreeEntries="true" empty_label="Respond" span="2"/>
+					<taglist-email id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="Respond" span="2"/>
 					<button class="$cont[hideIfSieveDisabled] et2_fullWidth"  label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
 				</row>
 				<row>
@@ -40,7 +40,7 @@
 				<row>
 					<description value="With message:"/>
 					<vbox span="all">
-						<textbox multiline="true" id="text" width="99%" height="150px"/>
+						<textbox multiline="true" id="text" width="99%" height="150px" needed="true" class="et2_required"/>
 						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
 				</row>
@@ -54,7 +54,7 @@
 					<hbox span="all">
 						<button label="Save" id="button[save]" class="$cont[hideIfSieveDisabled]"/>
 						<button label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
-						<button label="Cancel" id="button[cancel]" class="$cont[hideIfSieveDisabled]"/>
+						<button label="Cancel" id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"/>
 					</hbox>
 				</row> 
 			</rows>
