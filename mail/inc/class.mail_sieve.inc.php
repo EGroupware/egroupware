@@ -15,16 +15,9 @@ class mail_sieve
 {
 	var $public_functions = array
 		(
-			'addScript'		=> True,
-			'ajax_moveRules' => True,
-			'deleteScript'	=> True,
-			'editRule'		=> True,
-			'editScript'	=> True,
 			'editVacation'	=> True,
-			'listScripts'	=> True,
 			'index'			=> True,
 			'edit'			=> True,
-			'updateRules'	=> True,
 			'editEmailNotification'=> True, // Added email notifications
 		);
 	/**
@@ -153,7 +146,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.emailNotification
 		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
-
+		
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			$eNotification = $this->getEmailNotification();
@@ -180,8 +173,8 @@ class mail_sieve
 						if (isset($content['status']))
 						{
 							$newEmailNotification = $content;
-							if (empty($preferences->preferences['prefpreventforwarding']) ||
-								$preferences->preferences['prefpreventforwarding'] == 0 )
+							if (empty($this->mailPreferences['prefpreventforwarding']) ||
+								$this->mailPreferences['prefpreventforwarding'] == 0 )
 							{
 								if (is_array($content['externalEmail']) && !empty($content['externalEmail']))
 								{
@@ -194,7 +187,6 @@ class mail_sieve
 							if (!$this->bosieve->setEmailNotification($this->scriptName, $newEmailNotification))
 							{
 								$msg = lang("email notification update failed")."<br />";
-								$msg .= $script->errstr. "<br />";
 								break;
 							}
 							else
@@ -208,7 +200,10 @@ class mail_sieve
 							break;
 						}
 						egw_framework::refresh_opener($msg, 'mail');
-						if ($button === 'apply') break;
+						if ($button === 'apply')
+						{
+							break;
+						}	
 
 					case 'cancel':
 						egw_framework::window_close();
@@ -355,12 +350,17 @@ class mail_sieve
 						$error++;
 					}
 					egw_framework::refresh_opener($msg, 'mail');
-					if ($button == "apply") break;
+					if ($button == "apply")
+					{
+						break;
+					}
 				//fall through
 
 				case 'delete':
 					if ($button == "delete")
-					$msg  = $this->ajax_action(false,$button, $ruleID, $msg);
+					{
+						$msg  = $this->ajax_action(false,$button, $ruleID, $msg);
+					}
 					egw_framework::refresh_opener($msg, 'mail');
 
 				case 'cancel':
@@ -402,9 +402,10 @@ class mail_sieve
 	 */
 	function getEmailNotification()
 	{
-		$preferences =& $this->mailPreferences;
-		if(!(empty($preferences->preferences['prefpreventnotificationformailviaemail']) || $preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
-			die('You should not be here!');
+		if(!(empty($this->mailPreferences['prefpreventnotificationformailviaemail']) || $this->mailPreferences['prefpreventnotificationformailviaemail'] == 0))
+		{
+			throw new egw_exception_no_permission();
+		}	
 
 		if($this->bosieve->getScript($this->scriptName))
 		{
@@ -439,10 +440,10 @@ class mail_sieve
 	function getVacation(&$vacation,&$msg)
 	{
 		//$response->call('app.mail.sieve_vac_response_addresses');
-		$preferences =& $this->mailPreferences;
-		if(!(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0))
+		
+		if(!(empty($this->mailPreferences['prefpreventabsentnotice']) || $this->mailPreferences['prefpreventabsentnotice'] == 0))
 		{
-			die('You should not be here!');
+			throw new egw_exception_no_permission();
 		}
 
 		if($this->bosieve->getScript($this->scriptName))
@@ -465,7 +466,7 @@ class mail_sieve
 
 		$allIdentities = mail_bo::getAllIdentities();
 		$defaultIdentity = $this->mailbo->getDefaultIdentity();
-		foreach($allIdentities as $key => $singleIdentity)
+		foreach($allIdentities as &$singleIdentity)
 		{
 			if((empty($vacation))&& !empty($singleIdentity['ident_email']) && $singleIdentity['ident_email']==$allIdentities[$defaultIdentity]['ident_email'])
 			{
@@ -523,6 +524,8 @@ class mail_sieve
 
 		//Instantiate an etemplate_new object, representing the sieve.vacation template
 		$vtmpl = new etemplate_new('mail.sieve.vacation');
+		$vacation = array();
+
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			$vacRules = $this->getVacation($vacation,$msg);
@@ -535,7 +538,10 @@ class mail_sieve
 			if (!is_array($content))
 			{
 				$content = $vacation = $vacRules['vacation'];
-				if (empty($vacation['addresses'])) $content['addresses']='';
+				if (empty($vacation['addresses']))
+				{
+					$content['addresses']='';
+				}
 				if (!empty($vacation['forwards']))
 				{
 					$content['forwards'] = explode(",",$vacation['forwards']);
@@ -558,9 +564,7 @@ class mail_sieve
 
 				switch($button)
 				{
-
 					case 'save':
-
 					case 'apply':
 						if ($GLOBALS['egw_info']['user']['apps']['admin'])
 						{
@@ -574,8 +578,8 @@ class mail_sieve
 						{
 							//error_log(__METHOD__. 'content:' . array2string($content));
 							$newVacation = $content;
-							if (empty($preferences->preferences['prefpreventforwarding']) ||
-								$preferences->preferences['prefpreventforwarding'] == 0 )
+							if (empty($this->mailPreferences['prefpreventforwarding']) ||
+								$this->mailPreferences['prefpreventforwarding'] == 0 )
 							{
 								if (is_array($content['forwards']) && !empty($content['forwards']))
 								{
@@ -592,7 +596,10 @@ class mail_sieve
 								unset($newVacation ['forwards']);
 							}
 
-							if (!in_array($newVacation['status'],array('on','off','by_date'))) $newVacation['status'] = 'off';
+							if (!in_array($newVacation['status'],array('on','off','by_date')))
+							{
+								$newVacation['status'] = 'off';
+							}
 
 							$checkAddresses = (isset($content['check_mail_sent_to']) && ($content['check_mail_sent_to']) != 0) ? true: false;
 							if ($content['addresses'])
@@ -613,7 +620,10 @@ class mail_sieve
 								}
 								else
 								{
-									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
+									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName']))
+									{
+										$newVacation['scriptName'] = $this->scriptName;
+									}	
 									$this->bosieve->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
@@ -626,16 +636,15 @@ class mail_sieve
 							$response = egw_json_response::get();
 							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
 							egw_framework::refresh_opener($msg, 'mail','edit');
-							if ($button === 'apply' || $this->bosieve->error !=="") break;
+							if ($button === 'apply' || $this->bosieve->error !=="")
+							{
+								break;
+							}	
 						}
 
 					case 'cancel':
 						egw_framework::window_close();
-
 				}
-				$vacation = $newVacation;
-
-				$this->saveSessionData();
 			}
 
 			$sel_options = array(
@@ -738,18 +747,19 @@ class mail_sieve
 	function ajax_moveRule($objType, $orders)
 	{
 
-		foreach ($orders as $keys => $val) $orders[$keys] = $orders[$keys] -1;
-
+		foreach ($orders as $keys => $val)
+		{
+			$orders[$keys] = $orders[$keys] -1;
+		}
+		
 		$this->getRules(null);
 
 		$newrules = $this->rules;
-		$keyloc = 0;
+
 		foreach($orders as $keys => $ruleID)
 		{
 			$newrules[$keys] = $this->rules[$ruleID];
 		}
-
-		$msg = 'the rule with priority moved from ' . $from . ' to ' . $to;
 
 		$this->rules = $newrules;
 		$this->updateScript();
@@ -757,7 +767,7 @@ class mail_sieve
 
 		//Calling to referesh after move action
 		$response = egw_json_response::get();
-		$response->call('app.mail.sieve_refresh',null,$msg);
+		$response->call('app.mail.sieve_refresh');
 
 	}
 
@@ -776,7 +786,7 @@ class mail_sieve
 				'etemplate_exec_id' => $execId,
 				'id' => 'rg',
 				'key' => 'value',
-				'value' => array('content' => $this->get_rows($rows))
+				'value' => array('content' => $this->get_rows())
 		));
 		//error_log(__METHOD__. "RESPONSE".array2string($response));
 	}
@@ -841,20 +851,6 @@ class mail_sieve
 	}
 
 	/**
-	 * Add script to sieve script
-	 *
-	 *
-	 */
-	function addScript()
-	{
-		if(($scriptName = $_POST['newScriptName']))
-		{
-			$this->bosieve->installScript($scriptName, '');
-		}
-			$this->listScripts();
-	}
-
-	/**
 	 * Convert an script seive format rule to human readable format
 	 *
 	 * @param {array} $rule Array of rules
@@ -864,9 +860,15 @@ class mail_sieve
 	{
 		$andor = ' '. lang('and') .' ';
 		$started = 0;
-		if ($rule['anyof']) $andor = ' '. lang('or') .' ';
+		if ($rule['anyof'])
+		{
+			$andor = ' '. lang('or') .' ';
+		}
 		$complete = lang('IF').' ';
-		if ($rule['unconditional']) $complete = "[Unconditional] ";
+		if ($rule['unconditional'])
+		{
+			$complete = "[Unconditional] ";
+		}
 		if ($rule['from'])
 		{
 			$match = $this->setMatchType($rule['from'],$rule['regexp']);
@@ -875,21 +877,30 @@ class mail_sieve
 		}
 		if ($rule['to'])
 		{
-			if ($started) $complete .= $andor;
+			if ($started)
+			{
+				$complete .= $andor;
+			}
 			$match = $this->setMatchType($rule['to'],$rule['regexp']);
 			$complete .= "'To:' " . $match . " '" . $rule['to'] . "'";
 			$started = 1;
 		}
 		if ($rule['subject'])
 		{
-			if ($started) $complete .= $andor;
+			if ($started)
+			{
+				$complete .= $andor;
+			}
 			$match = $this->setMatchType($rule['subject'],$rule['regexp']);
 			$complete .= "'Subject:' " . $match . " '" . $rule['subject'] . "'";
 			$started = 1;
 		}
 		if ($rule['field'] && $rule['field_val'])
 		{
-			if ($started) $complete .= $andor;
+			if ($started)
+			{
+				$complete .= $andor;
+			}
 			$match = $this->setMatchType($rule['field_val'],$rule['regexp']);
 			$complete .= "'" . $rule['field'] . "' " . $match . " '" . $rule['field_val'] . "'";
 			$started = 1;
@@ -897,44 +908,85 @@ class mail_sieve
 		if ($rule['size'])
 		{
 			$xthan = " less than '";
-			if ($rule['gthan']) $xthan = " greater than '";
-			if ($started) $complete .= $andor;
+			if ($rule['gthan'])
+			{
+				$xthan = " greater than '";
+			}
+			if ($started)
+			{
+				$complete .= $andor;
+			}
 			$complete .= "message " . $xthan . $rule['size'] . "KB'";
 			$started = 1;
 		}
 		if (!empty($rule['field_bodytransform']))
 		{
-			if ($started) $newruletext .= ", ";
+			if ($started)
+			{
+				$newruletext .= ", ";
+			}
 			$btransform	= " :raw ";
 			$match = ' :contains';
-			if ($rule['bodytransform'])	$btransform = " :text ";
-			if (preg_match("/\*|\?/", $rule['field_bodytransform'])) $match = ':matches';
-			if ($rule['regexp']) $match = ':regex';
+			if ($rule['bodytransform'])
+			{
+				$btransform = " :text ";
+			}
+			if (preg_match("/\*|\?/", $rule['field_bodytransform']))
+			{
+				$match = ':matches';
+			}
+			if ($rule['regexp'])
+			{
+				$match = ':regex';
+			}
 			$complete .= " body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
 			$started = 1;
 
 		}
 		if ($rule['ctype']!= '0' && !empty($rule['ctype']))
 		{
-			if ($started) $newruletext .= ", ";
+			if ($started)
+			{
+				$newruletext .= ", ";
+			}
 			$btransform_ctype = emailadmin_script::$btransform_ctype_array[$rule['ctype']];
 			$ctype_subtype = "";
-			if ($rule['field_ctype_val']) $ctype_subtype = "/";
+			if ($rule['field_ctype_val'])
+			{
+				$ctype_subtype = "/";
+			}
 			$complete .= " body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
 			$started = 1;
 			//error_log(__CLASS__."::".__METHOD__.array2string(emailadmin_script::$btransform_ctype_array));
 		}
-		if (!$rule['unconditional']) $complete .= ' '.lang('THEN').' ';
+		if (!$rule['unconditional'])
+		{
+			$complete .= ' '.lang('THEN').' ';
+		}
 		if (preg_match("/folder/i",$rule['action']))
+		{
 			$complete .= lang('file into')." '" . $rule['action_arg'] . "';";
+		}
 		if (preg_match("/reject/i",$rule['action']))
+		{
 			$complete .= lang('reject with')." '" . $rule['action_arg'] . "'.";
+		}
 		if (preg_match("/address/i",$rule['action']))
+		{
 			$complete .= lang('forward to').' ' . $rule['action_arg'] .'.';
+		}
 		if (preg_match("/discard/i",$rule['action']))
+		{
 			$complete .= lang('discard').'.';
-		if ($rule['continue']) $complete .= " [Continue]";
-		if ($rule['keep']) $complete .= " [Keep a copy]";
+		}
+		if ($rule['continue'])
+		{
+			$complete .= " [Continue]";
+		}
+		if ($rule['keep'])
+		{
+			$complete .= " [Keep a copy]";
+		}
 		return $complete;
 	}
 
@@ -949,47 +1001,34 @@ class mail_sieve
 	{
 		$match = lang('contains');
 		if (preg_match("/^\s*!/", $matchstr))
-				$match = lang('does not contain');
-			if (preg_match("/\*|\?/", $matchstr))
-			{
-				$match = lang('matches');
-				if (preg_match("/^\s*!/", $matchstr))
-					$match = lang('does not match');
-			}
-			if ($regex)
-			{
-				$match = lang('matches regexp');
-				if (preg_match("/^\s*!/", $matchstr))
-					$match = lang('does not match regexp');
-			}
-			if ($regex && preg_match("/^\s*\\\\!/", $matchstr))
-			{
-				$matchstr = preg_replace("/^\s*\\\\!/","!",$matchstr);
-			}
-			else
-			{
-				$matchstr = preg_replace("/^\s*!/","",$matchstr);
-			}
-		return $match;
-	}
-
-	/**
-	 * Save sieve script
-	 *
-	 *
-	 */
-	function saveScript()
-	{
-		$scriptName 	= $_POST['scriptName'];
-		$scriptContent	= $_POST['scriptContent'];
-		if(isset($scriptName) and isset($scriptContent))
 		{
-			if($this->sieve->sieve_sendscript($scriptName, stripslashes($scriptContent)))
+			$match = lang('does not contain');
+		}
+		if (preg_match("/\*|\?/", $matchstr))
+		{
+			$match = lang('matches');
+			if (preg_match("/^\s*!/", $matchstr))
 			{
-				#print "Successfully loaded script onto server. (Remember to set it active!)<br>";
+				$match = lang('does not match');
 			}
 		}
-			$this->mainScreen();
+		if ($regex)
+		{
+			$match = lang('matches regexp');
+			if (preg_match("/^\s*!/", $matchstr))
+			{
+				$match = lang('does not match regexp');
+			}
+		}
+		if ($regex && preg_match("/^\s*\\\\!/", $matchstr))
+		{
+			$matchstr = preg_replace("/^\s*\\\\!/","!",$matchstr);
+		}
+		else
+		{
+			$matchstr = preg_replace("/^\s*!/","",$matchstr);
+		}
+		return $match;
 	}
 
 	/**
@@ -1144,6 +1183,5 @@ class mail_sieve
 		);
 		return $actions;
 	}
-
 }
-?>
+
