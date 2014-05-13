@@ -48,28 +48,6 @@
     </td>
    </tr>
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_SMS_backend}</b></td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_Enable_SMS_backend}</td>
-    <td>
-     <select name="newsettings[sms_enable]">
-      <option value=""{selected_sms_enable_False}>{lang_No}</option>
-      <option value="True"{selected_sms_enable_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_off">
-    <td>{lang_Maximum_SMS_messages_per_notification}</td>
-    <td>
-     <select name="newsettings[sms_maxmessages]">
-      <option value="1"{selected_sms_maxmessages_1}>1</option>
-      <option value="2"{selected_sms_maxmessages_2}>2</option>
-      <option value="3"{selected_sms_maxmessages_3}>3</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="th">
      <td colspan="2">{lang_Signature}</td>
    </tr>
    <tr class = "row_off">

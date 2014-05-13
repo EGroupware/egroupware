@@ -45,7 +45,7 @@ final class notifications {
 	 * registered backends
 	 * @var array
 	 */
-	private $backends = array('popup', 'winpopup', 'email', 'sms', 'jpopup');
+	private $backends = array('popup', 'winpopup', 'email', 'jpopup');
 
 	/**
 	 * backends to skip even if the user has chosen it
@@ -72,14 +72,11 @@ final class notifications {
 		'all' 					=> false, // will be created by $this->get_available_chains
  		'popup_only' 			=> array('popup' => 'stop'),
  		'popup_or_email' 		=> array('popup' => 'fail', 'email' => 'stop'),
- 		'popup_or_sms' 			=> array('popup' => 'fail', 'sms' => 'stop'),
  		'popup_and_email' 		=> array('popup' => 'continue', 'email' => 'stop'),
  		'popup_and_winpopup'	=> array('popup' => 'continue', 'winpopup' => 'stop'),
 		'winpopup_only' 		=> array('winpopup' => 'stop'),
 		'winpopup_or_email'		=> array('winpopup' => 'fail', 'email' => 'stop'),
-		//'winpopup_or_sms'		=> array('winpopup' => 'fail', 'sms' => 'stop'),
 		'winpopup_and_email' 	=> array('winpopup' => 'continue', 'email' => 'stop'),
-		'sms_only' 				=> array('sms' => 'stop'),
 		'jpopup_only'			=> array('jpopup' => 'continue', 'popup' => 'stop'),
 		'jpopup_and_email'		=> array('jpopup' => 'continue', 'popup' => 'continue', 'email' => 'stop'),
 	);
@@ -94,14 +91,11 @@ final class notifications {
 		'all' 					=> 'all possible notification backends',
 		'popup_only' 			=> 'eGroupWare-Popup only',
 		'popup_or_email' 		=> 'eGroupWare-Popup first, if that fails notify me by E-Mail',
-		'popup_or_sms' 			=> 'eGroupware-Popup first, if that fails notify me by SMS',
 		'popup_and_email' 		=> 'eGroupWare-Popup and E-Mail',
 		'popup_and_winpopup'	=> 'eGroupWare-Popup and Windows-Popup',
 		'winpopup_only' 		=> 'Windows-Popup only',
 		'winpopup_or_email' 	=> 'Windows-Popup first, if that fails notify me by E-Mail',
-		//'winpopup_or_sms' 		=> 'Windows-Popup first, if that fails notify me by SMS',
 		'winpopup_and_email' 	=> 'Windows-Popup and E-Mail',
-		'sms_only' 				=> 'SMS only',
 		'jpopup_only'			=> 'Java-Windows-Popup and eGroupWare-Popup only',
 		'jpopup_and_email'		=> 'Java-Windows-Popup, eGroupWare-Popup and Email'
 	);

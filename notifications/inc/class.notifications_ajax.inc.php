@@ -22,7 +22,7 @@ class notifications_ajax {
 	/**
 	 * Mailappname
 	 */
-	const _mailappname = 'felamimail';
+	const _mailappname = 'mail';
 
 	/**
 	 * Notification table in SQL database
@@ -112,7 +112,7 @@ class notifications_ajax {
 	 */
 	public function get_notifications($browserNotify = false) {
 		// call a hook for notifications on new mail
-		//if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
+		//if ($GLOBALS['egw_info']['user']['apps']['mail'])  $this->check_mailbox();
 		$GLOBALS['egw']->hooks->process('check_notify');
 
 		// update currentusers

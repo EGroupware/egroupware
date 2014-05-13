@@ -5,14 +5,12 @@ egroupware has notifications for you	notifications	pt-br	O eGroupWare possui not
 egroupware-popup backend	admin	pt-br	Método eGroupWare-Popup
 egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do eGroupWare-Popup
 enable egroupware-popup backend	admin	pt-br	Habilitar método eGroupWare-Popup
-enable sms backend	admin	pt-br	Habilitar método SMS
 enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
 enabled chains	notifications	pt-br	Séries habilitadas
 folder	notifications	pt-br	pasta
 from	notifications	pt-br	De
 if set, embedded links get rendered special for external clients	notifications	pt-br	Se definido, links embutidos serão exibidos de forma especial para clientes externos
 linked entries:	common	pt-br	Registros linkados:
-maximum sms messages per notification	admin	pt-br	Máximo de mensagens SMS por notificação
 message from	notifications	pt-br	Mensagem de
 minutes	notifications	pt-br	minutos
 notification	common	pt-br	Notificação
@@ -22,7 +20,6 @@ permission	notifications	pt-br	Permissões
 preferences for notification	notifications	pt-br	Preferências para notificação
 settings	notifications	pt-br	Configurações
 signature	admin	pt-br	Assinatura
-sms backend	admin	pt-br	Método SMS
 step	notifications	pt-br	Etapa
 warning	notifications	pt-br	Atenção
 windows-popup backend	admin	pt-br	Método Windows-Popup

@@ -28,12 +28,10 @@ egroupware-popup and e-mail	notifications	en	EGroupware popup and email
 egroupware-popup and windows-popup	notifications	en	EGroupware popup and Windows popup
 egroupware-popup backend	admin	en	EGroupware popup back end
 egroupware-popup first, if that fails notify me by e-mail	notifications	en	EGroupware popup first, if that fails notify me by email
-egroupware-popup first, if that fails notify me by sms	notifications	en	EGroupware popup first, if that fails notify me by SMS
 egroupware-popup only	notifications	en	EGroupware popup only
 egroupware-popup verbosity	notifications	en	EGroupware popup verbosity
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	en	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
 enable egroupware-popup backend	admin	en	Enable EGroupware popup back end
-enable sms backend	admin	en	Enable SMS backend
 enable windows-popup backend	admin	en	Enable Windows popup back end
 enabled chains	notifications	en	Enabled chains
 error browser can`t start.	notifications	en	Error Browser can`t start.
@@ -52,7 +50,6 @@ linked entries:	common	en	Linked entries:
 login aborted, application exit?	notifications	en	Login aborted, application exit?
 login in egroupware:	notifications	en	login in EGroupware:
 mail backend	admin	en	Mail backend
-maximum sms messages per notification	admin	en	Maximum SMS messages per notification
 message from	notifications	en	Message from
 minutes	notifications	en	Minutes
 notification	common	en	Notification
@@ -79,8 +76,6 @@ setting aborted, application exit	notifications	en	Setting aborted, application 
 settings	notifications	en	Settings
 signature	admin	en	Signature
 signature added to every change notification	admin	en	Signature added to every change notification
-sms backend	admin	en	SMS back end
-sms only	notifications	en	SMS only
 sorry, your login has expired	notifications	en	Sorry, your login has expired
 step	notifications	en	Step
 subject dn:	notifications	en	Subject DN:
@@ -92,7 +87,6 @@ warning	notifications	en	Warning
 windows-popup and e-mail	notifications	en	Windows popup and email
 windows-popup backend	admin	en	Windows popup back end
 windows-popup first, if that fails notify me by e-mail	notifications	en	Windows popup first, if that fails notify me by email
-windows-popup first, if that fails notify me by sms	notifications	en	Windows popup first, if that fails notify me by SMS
 windows-popup only	notifications	en	Windows popup only
 you can also use	admin	en	You can also use
 you have been successfully logged out	notifications	en	You have been successfully logged out

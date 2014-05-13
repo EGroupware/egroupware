@@ -5,14 +5,12 @@ egroupware has notifications for you	notifications	nl	eGroupWare heeft meldingen
 egroupware-popup backend	admin	nl	eGroupWare popup backend
 egroupware-popup verbosity	notifications	nl	eGroupWare popup zichtbaarheid
 enable egroupware-popup backend	admin	nl	eGroupWare popup backend inschakelen
-enable sms backend	admin	nl	SMS backend inschakelen
 enable windows-popup backend	admin	nl	Windows popup backend inschakelen
 enabled chains	notifications	nl	Ingeschakelde lijsten
 folder	notifications	nl	folder
 from	notifications	nl	Van
 if set, embedded links get rendered special for external clients	notifications	nl	Indien ingesteld, embedded links worden op een speciale manier samengesteld voor externe clients
 linked entries:	common	nl	Gekoppelde items:
-maximum sms messages per notification	admin	nl	Maximaal aantal SMS berichten per melding
 message from	notifications	nl	Bericht van
 minutes	notifications	nl	minuten
 notification	common	nl	Melding
@@ -22,7 +20,6 @@ permission	notifications	nl	toestemming
 preferences for notification	notifications	nl	Voorkeuren voor meldingen
 settings	notifications	nl	Instellingen
 signature	admin	nl	Ondertekening
-sms backend	admin	nl	SMS backend
 step	notifications	nl	Stap
 warning	notifications	nl	Waarschuwing
 windows-popup backend	admin	nl	Windows-Popup backend
