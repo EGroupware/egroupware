@@ -419,10 +419,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				"title": et2_readAttrWithDefault(options[i], "title", "")
 			};
 		}
-		if (this.options.type == 'select-account')
-		{
-			this.options.select_options = jQuery.extend({},this.options.select_options, this.egw().accounts(this.options.account_type));
-		}	
+
 		this.set_select_options(this.options.select_options);
 	},
 

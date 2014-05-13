@@ -113,27 +113,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			case 'selectbox':
 			case 'groupmembers':
 			default:
-				if (!jQuery.isArray(this.options.select_options))
-				{
-					var options = jQuery.extend({}, this.options.select_options);
-					this.options.select_options = [];
-					for(var key in options)
-					{
-						if (typeof options[key] == 'object')
-						{
-							if (typeof(options[key].key) == 'undefined')
-							{
-								options[key].value = key;
-							}
-							this.options.select_options.push(options[key]);
-						}
-						else
-						{
-							this.options.select_options.push({value: key, label: options});
-						}
-					}
-				}
-				this.options.select_options = this.options.select_options.concat(this.egw().accounts(this.options.account_type));
+				this.options.select_options = this._get_accounts();
 				break;
 		}
 
@@ -186,6 +166,9 @@ var et2_selectAccount = et2_selectbox.extend(
 		this._super.apply(this, arguments);
 
 		var type = this.egw().preference('account_selection', 'common');
+
+		this.options.select_options = this._get_accounts(e);
+
 		if(type == 'primary_group')
 		{
 			// Allow search 'inside' this widget
@@ -290,6 +273,83 @@ var et2_selectAccount = et2_selectbox.extend(
 				return ids;
 			};
 		}
+	},
+
+	/**
+	 * Override parent to make sure accounts are there as options.
+	 *
+	 * Depending on the widget's attributes and the user's preferences, not all selected
+	 * accounts may be in the cache as options, so we fetch the extras to make sure
+	 * we don't lose any.
+	 */
+	set_value: function(_value)
+	{
+		if(typeof _value == "string" && this.options.multiple && _value.match(/^[,0-9A-Za-z/-_]+$/) !== null)
+		{
+			_value = _value.split(',');
+		}
+
+		if(_value)
+		{
+			var search = _value;
+			if (!jQuery.isArray(search))
+			{
+				search = [_value];
+			}
+			var update_options = false;
+			for(var j = 0; j < search.length; j++)
+			{
+				var not_found = true;
+				// Options are not indexed, so we must look
+				for(var i = 0; not_found && i < this.options.select_options.length; i++)
+				{
+					if(this.options.select_options[i].value == search[j]) not_found = false;
+				}
+				if(not_found)
+				{
+					update_options = true;
+					// Add it in
+					this.egw().link_title('home-accounts', search[j], function(name) {
+						this.options.select_options.push({value: search[j],label:name});
+					}, this);
+				}
+			}
+			if(update_options)
+			{
+				this.set_select_options(this.options.select_options);
+			}
+		}
+		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Get account info for select options from common client-side account cache
+	 *
+	 * @return {Array} select options
+	 */
+	_get_accounts: function()
+	{
+		if (!jQuery.isArray(this.options.select_options))
+		{
+			var options = jQuery.extend({}, this.options.select_options);
+			this.options.select_options = [];
+			for(var key in options)
+			{
+				if (typeof options[key] == 'object')
+				{
+					if (typeof(options[key].key) == 'undefined')
+					{
+						options[key].value = key;
+					}
+					this.options.select_options.push(options[key]);
+				}
+				else
+				{
+					this.options.select_options.push({value: key, label: options});
+				}
+			}
+		}
+		return this.options.select_options.concat(this.egw().accounts(this.options.account_type));
 	},
 
 	/**
