@@ -647,7 +647,7 @@ var AppJS = Class.extend(
 						// Remove line from list
 						line.slideUp("slow", function() { });
 
-						trash._refresh_fav_nm();
+						app._refresh_fav_nm();
 					}
 					else
 					{

@@ -180,7 +180,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		// Add a listener on the delete to remove
 		this.menu.on("click","div.ui-icon-trash", app[self.options.app], function() {
 				// App instance might not be ready yet, so don't bind directly
-				app[self.options.app].delete_favorite.apply(app[self.options.app],arguments);
+				app[self.options.app].delete_favorite.apply(this,arguments);
 			})
 			// Wrap and unwrap because jQueryUI styles use a parent, and we don't want to change the state of the menu item
 			// Wrap in a span instead of a div because div gets a border
