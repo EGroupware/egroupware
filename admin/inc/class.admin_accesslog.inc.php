@@ -160,6 +160,7 @@ class admin_accesslog
 				'csv_fields'     =>	false,	// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 								//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 				'actions'		=> $this->get_actions($sessions_list),
+				'placeholder_actions' => false,
 				'row_id'			=> 'sessionid',
 			);
 			if ((int)$_GET['account_id'])
