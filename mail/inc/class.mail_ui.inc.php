@@ -2456,22 +2456,19 @@ unset($query['actions']);
 		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 		if($vacation) {
-			$sieveServerClass = mail_bo::getInstance(false,  self::$icServerID, false, $oldIMAPObject=true);
-			$sieveServer = $sieveServerClass->icServer;
+			$sieveServer = $this->mail_bo->icServer;
 			//error_log(__METHOD__.__LINE__.' Sieve Server:'.self::$icServerID.' InstanceOf:'.array2string(($sieveServer instanceof defaultimap)|| ($sieveServer instanceof emailadmin_oldimap)).':'.array2string($sieveServerClass));
-			if(($sieveServer instanceof defaultimap) || ($sieveServer instanceof emailadmin_oldimap)) {
-				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
-				$sieveServer->getScript($scriptName);
-				$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
-				$vacation = $sieveServer->getVacation($sieveServer->scriptName);
-				$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
-				if ($isSieveError[self::$icServerID])
-				{
-					$vacation = false;
-				}
+			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
+			$sieveServer->getScript($scriptName);
+			$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
+			$vacation = $sieveServer->getVacation($sieveServer->scriptName);
+			$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
+			if ($isSieveError[self::$icServerID])
+			{
+				$vacation = false;
 			}
-			//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		}
+		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		return $vacation;
 	}
 

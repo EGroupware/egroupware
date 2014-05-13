@@ -57,21 +57,13 @@ class mail_sieve
 
 	function __construct()
 	{
-
-		if(empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName']))
-		{
-			$GLOBALS['egw']->preferences->add('mail','sieveScriptName','felamimail', 'forced');
-			$GLOBALS['egw']->preferences->save_repository();
-		}
-		$this->scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail' ;
-		$this->displayCharset	= $GLOBALS['egw']->translation->charset();
-		$this->botranslation	=& $GLOBALS['egw']->translation;
+		$this->displayCharset	= translation::charset();
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			$profileID = (int) $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		$this->mailbo	= mail_bo::getInstance(false, $profileID, false, $oldIMAPObject=true);
+		$this->mailbo	= mail_bo::getInstance(false, $profileID, false,false);
 
 		$this->mailPreferences  =& $this->mailbo->mailPreferences;
 		$this->mailConfig	= config::read('mail');
@@ -80,19 +72,8 @@ class mail_sieve
 		$this->currentIdentity = $allIdentities[$defaultIdentity];
 		$this->currentIdentity['identity_string'] = mail_bo::generateIdentityString($allIdentities[$defaultIdentity],true);
 		$this->restoreSessionData();
-		$icServer = $this->mailbo->icServer;
-		if(($icServer instanceof defaultimap) && $icServer->enableSieve)
-		{
-			$this->bosieve	= $icServer;
-			$serverclass = get_class($icServer);
-			$classsupportstimedsieve = false;
-			if (!empty($serverclass) && stripos(constant($serverclass . '::CAPABILITIES'), 'timedsieve') !== false)
-			{
-				$classsupportstimedsieve = true;
-			}
-			$this->timed_vacation = $classsupportstimedsieve && $icServer->enableCyrusAdmin &&
-			$icServer->adminUsername && $icServer->adminPassword;
-		}
+		$this->bosieve = $this->mailbo->icServer;
+		$this->timed_vacation = $this->bosieve->enableSieve && $this->bosieve->acc_imap_administration;
 	}
 
 	/**
@@ -146,7 +127,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.emailNotification
 		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
-		
+
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			$eNotification = $this->getEmailNotification();
@@ -203,7 +184,7 @@ class mail_sieve
 						if ($button === 'apply')
 						{
 							break;
-						}	
+						}
 
 					case 'cancel':
 						egw_framework::window_close();
@@ -405,7 +386,7 @@ class mail_sieve
 		if(!(empty($this->mailPreferences['prefpreventnotificationformailviaemail']) || $this->mailPreferences['prefpreventnotificationformailviaemail'] == 0))
 		{
 			throw new egw_exception_no_permission();
-		}	
+		}
 
 		if($this->bosieve->getScript($this->scriptName))
 		{
@@ -440,7 +421,7 @@ class mail_sieve
 	function getVacation(&$vacation,&$msg)
 	{
 		//$response->call('app.mail.sieve_vac_response_addresses');
-		
+
 		if(!(empty($this->mailPreferences['prefpreventabsentnotice']) || $this->mailPreferences['prefpreventabsentnotice'] == 0))
 		{
 			throw new egw_exception_no_permission();
@@ -468,10 +449,6 @@ class mail_sieve
 		$defaultIdentity = $this->mailbo->getDefaultIdentity();
 		foreach($allIdentities as &$singleIdentity)
 		{
-			if((empty($vacation))&& !empty($singleIdentity['ident_email']) && $singleIdentity['ident_email']==$allIdentities[$defaultIdentity]['ident_email'])
-			{
-				$selectedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
-			}
 			$predefinedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
 		}
 		asort($predefinedAddresses);
@@ -479,7 +456,7 @@ class mail_sieve
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($predefinedAddresses),
-			);
+		);
 	}
 
 	/**
@@ -532,7 +509,6 @@ class mail_sieve
 			//$this->timed_vacation=true;//this could force the timed vacation thingy even if not supported ;-)
 			if ($this->timed_vacation)
 			{
-				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
 				$ByDate = array('by_date' => lang('By date'));
 			}
 			if (!is_array($content))
@@ -623,7 +599,7 @@ class mail_sieve
 									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName']))
 									{
 										$newVacation['scriptName'] = $this->scriptName;
-									}	
+									}
 									$this->bosieve->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
@@ -639,7 +615,7 @@ class mail_sieve
 							if ($button === 'apply' || $this->bosieve->error !=="")
 							{
 								break;
-							}	
+							}
 						}
 
 					case 'cancel':
@@ -751,7 +727,7 @@ class mail_sieve
 		{
 			$orders[$keys] = $orders[$keys] -1;
 		}
-		
+
 		$this->getRules(null);
 
 		$newrules = $this->rules;
