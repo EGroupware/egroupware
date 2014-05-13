@@ -521,6 +521,7 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	de	angefordert
 return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
+rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
 rpm or debian package	admin	de	RPM oder Debian Pakete
 run	admin	de	Ausführen

@@ -2,7 +2,9 @@
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash () (e.g. !)	mail	de	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	de	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
 (no subject)	mail	de	(Kein Betreff)
 (not connected)	mail	de	(nicht verbunden)
@@ -44,6 +46,9 @@ by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
+check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. mache Empfänger keine Bestätigung senden möchten.)
+check to save as infolog on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Infolog erstellt wird.
+check to save as trackerentry on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Ticket erstell werden kann.
 common acl	mail	de	Berechtigung
 compose	mail	de	Verfassen
 compose as new	mail	de	Als neu bearbeiten
@@ -156,14 +161,17 @@ folder	mail	de	Ordner
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
+for eg.: mpeg	mail	de	z.B. für mpeg
 force html	mail	de	erzwinge HTML
 force plain text	mail	de	erzwinge Text
 forward	mail	de	Weiterleiten als
 forward as attachment	mail	de	weiterleiten als Anhang
 forward inline	mail	de	Inline weiterleiten
+forward messages to:	mail	de	Nachricht weiterleiten an:
 forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
 forward to	mail	de	weiterleiten an
 forward to address:	mail	de	weiterleiten an:
+forwards	mail	de	Weiterleiten an
 from	mail	de	Von
 from(a->z)	mail	de	Von (A->Z)
 from(z->a)	mail	de	Von (Z->A)
@@ -320,6 +328,7 @@ rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Filter Regeln
 save all	mail	de	Alle speichern
 save as	mail	de	Konvertiere E-Mails in andere Anwendung als
+save as default	mail	de	Als Vorgabe speichern
 save as draft	mail	de	Als Entwurf speichern
 save as draft and print	mail	de	Als Entwurf speichern und drucken
 save as infolog	mail	de	Als Infolog speichern
@@ -336,6 +345,8 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speic
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 select all	mail	de	Alle Auswählen
+select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
+select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager auswählen
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
@@ -414,6 +425,7 @@ undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Ordner Abbestellen
+upload file(s) from filemanager...	mail	de	Dateien aus dem EGroupware Dateimanager auswählen..
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
@@ -427,6 +439,7 @@ vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlg
 vacation start-date must be before the end-date!	mail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 vacation update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 valid for	mail	de	Zugewiesen an
+validate addresses on submit:	mail	de	Adresse beim Speichern überprüfen?
 validate selected addresses on submit:	mail	de	Überprüfe die ausgewählten Adressen beim Senden des Formulars:
 view full mail source	mail	de	Quelltext anzeigen
 view header lines	mail	de	Kopfzeilen anzeigen

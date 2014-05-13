@@ -2,6 +2,7 @@
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 Mails selected
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
@@ -43,6 +44,9 @@ by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
 changed profile	mail	en	changed profile
 check message against next rule also	mail	en	Check message against next rule also
+check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	en	check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)
+check to save as infolog on send	mail	en	check to save as infolog on send
+check to save as trackerentry on send	mail	en	check to save as trackerentry on send
 common acl	mail	en	Common ACL
 compose	mail	en	compose
 compose as new	mail	en	Compose as new
@@ -155,14 +159,17 @@ folder	mail	en	Folder
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
+for eg.: mpeg	mail	en	for eg.: mpeg
 force html	mail	en	force html
 force plain text	mail	en	force plain text
 forward	mail	en	Forward
 forward as attachment	mail	en	forward as attachment
 forward inline	mail	en	forward inline
+forward messages to:	mail	en	Forward messages to:
 forward messages:	mail	en	Forward messages:
 forward to	mail	en	forward to
 forward to address:	mail	en	Forward to address:
+forwards	mail	en	Forwards
 from	mail	en	from
 from(a->z)	mail	en	from(A->Z)
 from(z->a)	mail	en	from(Z->A)
@@ -319,6 +326,7 @@ rule with priority	mail	en	rule with priority
 rules	mail	en	rules
 save all	mail	en	Save all
 save as	mail	en	Save as
+save as default	mail	en	save as default
 save as draft	mail	en	Save as Draft
 save as draft and print	mail	en	Save as Draft and Print
 save as infolog	mail	en	Save as Infolog
@@ -335,6 +343,8 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	en	Savin
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
 select all	mail	en	Select all
+select file to attach to message	mail	en	Select file to attach to message
+select file to import into folder	mail	en	Select file to import into Folder
 select file(s) from vfs	mail	en	Select file(s) from VFS
 selected	mail	en	selected
 send a reject message:	mail	en	Send a reject message:
@@ -413,6 +423,7 @@ undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
 unsubscribe folder	mail	en	Unsubscribe folder
+upload file(s) from filemanager...	mail	en	Upload file(s) from Filemanager...
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
@@ -426,6 +437,7 @@ vacation notice update failed	mail	en	Vacation notice update failed
 vacation start-date must be before the end-date!	mail	en	Vacation start-date must be BEFORE the end-date!
 vacation update failed	mail	en	vacation update failed
 valid for	mail	en	Valid for
+validate addresses on submit:	mail	en	Validate addresses on submit:
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
 view full mail source	mail	en	View full Mail Source
 view header lines	mail	en	View header lines

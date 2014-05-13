@@ -521,6 +521,7 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	en	Requested
 return to admin mainscreen	admin	en	Return to admin main screen
 return to view account	admin	en	Return to view account
+rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
 rpm or debian package	admin	en	RPM or Debian package
 run	admin	en	run

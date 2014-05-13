@@ -205,6 +205,7 @@ for infolog type %1, %2 is required	infolog	en	For infolog type %1, %2 is requir
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	en	For serial letter use this tag. Place the content you want to repeat between two tags.
 for which types should this field be used	infolog	en	For which types should this field be used
 from	infolog	en	From
+full list of placeholder names	infolog	en	Full list of placeholder names
 general fields:	infolog	en	General fields:
 general settings	infolog	en	General settings
 global categories	infolog	en	Global categories
@@ -476,6 +477,7 @@ upcoming	infolog	en	Upcoming
 urgency	infolog	en	Urgency
 urgent	infolog	en	Urgent
 use all	infolog	en	Use all
+use custom notification message	infolog	en	Use custom notification message
 use field from csv if possible	infolog	en	Use field from CSV if possible
 use search results	infolog	en	Use search results
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	en	Use this tag for address labels. Place the content you want to repeat between two tags.
