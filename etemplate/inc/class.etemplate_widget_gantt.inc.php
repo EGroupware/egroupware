@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+egw_framework::includeCSS('/phpgwapi/js/dhtmlxGantt/codebase/dhtmlxgantt.css');
+
 /**
  * eTemplate Gantt chart widget
  *
