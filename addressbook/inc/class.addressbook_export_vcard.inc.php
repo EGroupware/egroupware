@@ -40,7 +40,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
-		if ($options['selection'] == 'use_all' || $options['selection'] == 'all') {
+		if ($options['selection'] == 'search') {
 			// uicontacts selection with checkbox 'use_all'
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
@@ -48,7 +48,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->uicontacts->get_rows($query,$this->selection,$readonlys, true);	// only return the ids
 		}
-		elseif ( $options['selection'] == 'all_contacts' ) {
+		elseif ( $options['selection'] == 'all' ) {
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
 				$col_filter['account_id'] = null;
 			}
@@ -136,8 +136,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl() {
 		return array(
-			'name'		=> 'addressbook.export_csv_selectors',
-			'content'	=> 'use_all',
+			'name'		=> 'addressbook.export_vcard_selectors',
+			'content'	=> 'all',
 		);
 	}
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.export_vcard_selectors" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<radio label="Use all" id="selection" options="all"/>
+				</row>
+				<row>
+					<radio label="Use search results" id="selection" options="search"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
