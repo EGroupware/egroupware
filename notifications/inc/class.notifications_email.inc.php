@@ -86,13 +86,19 @@ class notifications_email implements notifications_iface {
 	 * @param array $_attachments
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
+		//$_messages['plain'] = $_messages['plain']."\nSent By:".php_uname();
+		//$_messages['html'] = $_messages['html']."\n<hr>\n Sent by:".php_uname();
+
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
 		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
 
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
 		$this->mail->AddAddress($this->recipient->account_email, $this->recipient->account_fullname);
-		$this->mail->AddCustomHeader('X-eGroupWare-type: notification-mail');
+		$this->mail->AddCustomHeader('X-EGroupware-type: notification-mail');
+		$this->mail->AddCustomHeader('X-EGroupware-Install: '.$GLOBALS['egw_info']['server']['install_id'].'@'.$GLOBALS['egw_info']['server']['default_domain']);
+		//$this->mail->AddCustomHeader('X-EGroupware-URL: notification-mail');
+		//$this->mail->AddCustomHeader('X-EGroupware-Tracker: notification-mail');
 		$this->mail->From = $this->sender->account_email;
 		$this->mail->FromName = $this->sender->account_fullname;
 		$this->mail->Subject = $_subject;
