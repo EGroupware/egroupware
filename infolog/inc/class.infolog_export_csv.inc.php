@@ -95,7 +95,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 						}
 						if($cf_preload[$app]){
 							 $selects[$field] = egw_link::titles($app, $cf_preload[$app]);
-							error_log('Preload ' . $field . '['.$app . ']: ' . implode(',',$cf_preload[$app]));
+							//error_log('Preload ' . $field . '['.$app . ']: ' . implode(',',$cf_preload[$app]));
 						}
 					}
 
