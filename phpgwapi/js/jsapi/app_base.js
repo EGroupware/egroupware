@@ -92,9 +92,9 @@ var AppJS = Class.extend(
 
 		this.egw = egw(this.appname, window);
 
-		// Initialize sidebox for non-popups.  
+		// Initialize sidebox for non-popups.
 		// ID set server side
-		if(window.opener == null)
+		if(!this.egw.is_popup())
 		{
 			var sidebox = jQuery('#favorite_sidebox_'+this.appname);
 			if(sidebox.length == 0 && egw_getFramework() != null)
@@ -422,15 +422,15 @@ var AppJS = Class.extend(
 		// Stop the normal bubbling if this is called on click
 		return false;
 	},
-	
+
 	/**
-	 * Update favorite items in nm fav. menu 
-	 * 
+	 * Update favorite items in nm fav. menu
+	 *
 	 */
 	_refresh_fav_nm: function ()
 	{
 		var self = this;
-		
+
 		if(etemplate2 && etemplate2.getByApplication)
 		{
 			var et2 = etemplate2.getByApplication(self.appname);
@@ -447,7 +447,7 @@ var AppJS = Class.extend(
 			throw new Error ("_refresh_fav_nm():Either et2 is  not ready/ not there yet. Make sure that etemplate2 is ready before call this method.");
 		}
 	},
-	
+
 	/**
 	 * Create the "Add new" popup dialog
 	 */
