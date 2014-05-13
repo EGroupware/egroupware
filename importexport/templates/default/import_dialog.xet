@@ -8,8 +8,8 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<html id="msg" span="all" class="message"/>
+				<row disabled="!@message">
+					<html id="message" span="all" class="message"/>
 					<description/>
 				</row>
 				<row>
@@ -38,8 +38,8 @@
 					<file id="file"/>
 				</row>
 				<row>
-					<box id="preview_box" readonly="true" span="all" class="preview">
-						<html id="preview" readonly="true" class="content"/>
+					<box id="preview_box" span="all" class="preview">
+						<html id="preview" class="content"/>
 						<box align="center" id="buttons">
 							<buttononly align="center" label="OK" onclick="jQuery(this).parents('div.preview').css('display','none'); return false;"/>
 						</box>

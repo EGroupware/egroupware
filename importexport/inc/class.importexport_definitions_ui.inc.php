@@ -219,6 +219,7 @@ class importexport_definitions_ui
 				'icon' => 'importexport/navbar',
 				'allowOnMultiple' => false,
 				'group' => $group,
+				'onExecute' => 'javaScript:app.importexport.run_definition'
 			),
 			'schedule' => array(
 				'caption' => 'Schedule',

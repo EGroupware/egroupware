@@ -93,5 +93,26 @@ app.classes.importexport = AppJS.extend(
 					.removeClass('loading');
 			},this));
 		return false;
+	},
+
+	/**
+	 * Open a popup to run a given definition
+	 *
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected
+	 */
+	run_definition: function(action, selected)
+	{
+		if(!selected || selected.length != 1) return;
+
+		var id = selected[0].id||null;
+		var data = egw.dataGetUIDdata(id).data;
+		if(!data || !data.type) return;
+
+		egw.open_link(egw.link('/index.php',{
+			menuaction: 'importexport.importexport_' + data.type + '_ui.' + data.type + '_dialog',
+			appname: data.application,
+			definition: data.definition_id
+		}), false, '850x440', app);
 	}
 });

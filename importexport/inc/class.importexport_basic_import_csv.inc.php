@@ -296,6 +296,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		// Get labels from wizard, if possible
 		$labels = array_combine($definition->plugin_options['field_mapping'], $definition->plugin_options['field_mapping']);
+
 		$plugin = get_called_class();
 		$wizard_name = $definition->application . '_wizard_' . str_replace($definition->application . '_', '', $plugin);
 		try {

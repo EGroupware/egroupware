@@ -126,6 +126,8 @@
 							$preview = $this->preview($plugin, $file, $definition_obj);
 							if(trim($this->message) == '')
 							{
+								// Clear first, to prevent request from being collected if the result is the same
+								$template->setElementAttribute('preview', 'value', '');
 								$template->setElementAttribute('preview', 'value', $preview);
 								return;
 							}
@@ -205,7 +207,7 @@
 
 			$sel_options = self::get_select_options($data);
 
-			$data['msg'] = $this->message;
+			$data['message'] = $this->message;
 			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
 			if($_GET['appname']) $readonlys['appname'] = true;
