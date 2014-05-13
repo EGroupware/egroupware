@@ -167,7 +167,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		var type = this.egw().preference('account_selection', 'common');
 
-		this.options.select_options = this._get_accounts(e);
+		this.options.select_options = this._get_accounts();
 
 		if(type == 'primary_group')
 		{
