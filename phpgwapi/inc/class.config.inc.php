@@ -253,7 +253,7 @@ class config
 	 */
 	private static function _check_private_cf($private)
 	{
-		static $user_and_memberships;
+		static $user_and_memberships = null;
 
 		if (!$private)
 		{
@@ -282,7 +282,7 @@ class config
 		$changed = 0;
 		if (($cfs = self::get_customfields($app, true)))
 		{
-			foreach($cfs as $name => &$data)
+			foreach($cfs as &$data)
 			{
 				if ($data['private'])
 				{
@@ -353,7 +353,7 @@ class config
 			'phpgwapi' => array('webserver_url','server_timezone','enforce_ssl','system_charset',
 				'checkfornewversion','checkappversions','email_address_format',	// admin >> site config
 				'site_title','login_logo_file','login_logo_url','login_logo_title','favicon_file',
-				'markuntranslated','link_list_thumbnail','enabled_spellcheck',
+				'markuntranslated','link_list_thumbnail','enabled_spellcheck','debug_minify',
 				'call_link','call_popup',	// addressbook
 				'hide_birthdays'),	// calendar
 			'projectmanager' => array('hours_per_workday', 'duration_units'),
@@ -385,13 +385,11 @@ class config
 	}
 
 	/**
-	 * Initialise our db
-	 *
-	 * We use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
-	 *
+	 * Initialise class: reference to db and self::$configs cache
 	 */
-	private static function init_static()
+	public static function init_static()
 	{
+		// we use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
 		if (is_object($GLOBALS['egw']->db))
 		{
 			config::$db = $GLOBALS['egw']->db;
