@@ -27,9 +27,12 @@
 					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
 				</row>
 				<row class="row">
-					<menulist>
-						<menupopup type="select-account" label="$row_cont[alt_loginid]" id="${row}[account_id]" readonly="true"/>
-					</menulist>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" label="" id="${row}[account_id]" readonly="true"/>
+						</menulist>
+						<description id="${row}[alt_loginid]"/>
+					</hbox>
 					<description id="${row}[sessionstatus]"/>
 					<description id="${row}[loginid]"/>
 					<description id="${row}[ip]"/>

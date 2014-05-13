@@ -91,7 +91,7 @@ class admin_accesslog
 				$row['sessionstatus'] = lang('logged out');
 			}
 			// eg. for bad login or password
-			if (!$row['account_id']) $row['alt_loginid'] = $row['loginid'];
+			if (!$row['account_id']) $row['alt_loginid'] = ($row['loginid']?$row['loginid']:lang('none'));
 
 			$readonlys['kill['.$row['sessionid'].']'] = $no_kill;
 			$readonlys['delete['.$row['sessionid'].']'] = $query['session_list'];
