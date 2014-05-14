@@ -729,6 +729,14 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 #            #                               #
 ##############################################
 */
+/*Border around iframe*/
+iframe#mail-display_mailDisplayBodySrc {
+  /*border: 4px solid yellow;*/
+}
+/*Border around iframe*/
+.mailDisplayContainer {
+  border: 0px;
+}
 div#mail-index {
   margin: 0 1% 0 0 !important;
 }
@@ -1118,11 +1126,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar .mail-compose_fileselector span.et2_file_span {
   font-size: 1.1em;
   font-weight: normal;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1261,11 +1267,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -1297,11 +1301,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  /*.border_normal;*/
   /*.box_shadow_standard_light;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.rounded (3px);*/
   color: #000000;
   -webkit-appearance: none;
   -webkit-transition-property: background-color;
@@ -2577,6 +2579,8 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 12px;
   height: 12px;
 }
+/*######################################################*/
+/*Diplay : View                                         */
 .mailDisplayContainer,
 .mailDisplayAttachments {
   display: block;
@@ -2593,7 +2597,7 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   position: fixed;
   overflow: hidden;
   overflow-y: auto;
-  border: 1px solid silver;
+  border: 0px solid silver;
   top: 120px;
   bottom: 100px;
 }
