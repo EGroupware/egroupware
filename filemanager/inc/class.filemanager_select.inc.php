@@ -46,8 +46,6 @@ class filemanager_select
 	 */
 	function __construct()
 	{
-		// tell framework felamimail needs eval and inline javascript :(
-		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
 		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 		if (get_magic_quotes_gpc() && $_GET)
 		{
@@ -147,7 +145,7 @@ class filemanager_select
 						$content['name'] = egw_vfs::encodePathComponent($content['file_upload']['name']);
 						$to_path = egw_vfs::concat($content['path'],$content['name']);
 
-						$copy_result = (egw_vfs::is_writable($content['path']) || egw_vfs::is_writable($to)) &&
+						$copy_result = (egw_vfs::is_writable($content['path']) || egw_vfs::is_writable($to_path)) &&
 							copy($content['file_upload']['tmp_name'],egw_vfs::PREFIX.$to_path);
 					}
 
@@ -247,7 +245,6 @@ class filemanager_select
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
 		$tpl = new etemplate_new('filemanager.select');
-		$et2 = class_exists('etemplate_widget', false) && is_a($tpl, 'etemplate_widget');
 
 		if ($favorites_flag)
 		{
@@ -255,13 +252,13 @@ class filemanager_select
 			$files = array();
 			$favorites = egw_favorites::get_favorites('filemanager');
 			$n = 0;
-			foreach($favorites as $f_id => $favorite)
+			foreach($favorites as $favorite)
 			{
 				$path = $favorite['state']['path'];
 				// Just directories
 				if(!$path) continue;
 				if ($path == $content['path']) continue;	// remove directory itself
-				
+
 				$mime = egw_vfs::mime_content_type($path);
 				$content['dir'][$n] = array(
 					'name' => $favorite['name'],
@@ -335,6 +332,11 @@ class filemanager_select
 			$preserve['ckeditor'] = $content['ckeditor'];
 		}
 
+		// tell framework we need inline javascript for ckeditor_return
+		if ($content['method'] == 'ckeditor_return')
+		{
+			egw_framework::csp_script_src_attrs('unsafe-inline');
+		}
 		$tpl->exec('filemanager.filemanager_select.select',$content,$sel_options,$readonlys,$preserve,2);
 	}
 
