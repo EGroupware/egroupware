@@ -1,3 +1,14 @@
+egroupware-epl (14.1.20140514-1) hardy; urgency=low
+
+  * eTemplate2: fixed accounts got lost, if account-selection did not show all accounts
+  * Filemanager/InfoLog: perserve expanded rows/directories on refresh
+  * Filemanager: fixed not working opening of directories on double-click or using favorites
+  * EMailAdmin: only query imap or smtp backend user-data (quota, aliases, forwards, ...), if explicitly requested --> improve Mail performance
+  * ProjectManager: further work on clientside gantt-chart
+  * all apps: favorites caused apps to reload, as the got initialised for popups
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 14 May 2014 12:36:19 +0200
+
 egroupware-epl (14.1.20140512-1) hardy; urgency=low
 
   * Mail: display an error for broken accounts and let user fix it or continue working with other accounts
