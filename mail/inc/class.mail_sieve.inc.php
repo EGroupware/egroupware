@@ -35,20 +35,57 @@ class mail_sieve
 
 	var $errorStack;
 
+	/**
+	 * etemplate object for sieve index
+	 *
+	 * @var object
+	 */
 	var $tmpl;
-
+	
+	/**
+	 * etemplate object for sieve edit popup
+	 *
+	 * @var object
+	 */
 	var $etmpl;
-
+	
+	/**
+	 * etemplate object for Vacation
+	 *
+	 * @var object
+	 */
 	var $vtmpl;
-
+	
+	/**
+	 * etemplate object for email notification
+	 *
+	 * @var object
+	 */
 	var $eNotitmpl;
-
+	
+	/**
+	 * mail_bo object
+	 *
+	 * @var object
+	 */
 	var $mailbo;
 
 	var $extraAddr;
 
+	/**
+	 * Current Identitiy
+	 *
+	 * @var String
+	 */
 	var $currentIdentity;
-
+	
+	/**
+	 * emailamdin_smpt object
+	 *
+	 * @var object
+	 */
+	var $smtp;
+	
 	/**
 	 * Constructor
 	 *
@@ -59,6 +96,8 @@ class mail_sieve
 	{
 		$this->displayCharset	= translation::charset();
 		$profileID = 0;
+		$this->smtp = new emailadmin_smtp();
+		
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			$profileID = (int) $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -447,15 +486,25 @@ class mail_sieve
 
 		$allIdentities = mail_bo::getAllIdentities();
 		
+		$accAllIdentities = $this->smtp->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']);
+		$accEmailAddresses = array();
+		foreach ($accAllIdentities as &$arrVal)
+		{
+			if ($arrVal['type'] !='default')
+			{
+				array_push($accEmailAddresses, $arrVal['address']);
+			}
+		}
 		foreach($allIdentities as &$singleIdentity)
 		{
 			$predefinedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
 		}
-		asort($predefinedAddresses);
-
+				
+		$allAliases = array_unique(array_merge($predefinedAddresses,$accEmailAddresses));
+		asort($allAliases);
 		return array(
 			'vacation' =>$vacation,
-			'aliases' => array_values($predefinedAddresses),
+			'aliases' => array_values($allAliases),
 			'defaultProfile' => $allIdentities[$this->mailbo->getDefaultIdentity()]
 		);
 	}
