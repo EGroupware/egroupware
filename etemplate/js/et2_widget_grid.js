@@ -876,7 +876,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			items: "tr:not(.th)",
 			distance: 15,
 			stop: function(event, ui) {
-				self.egw().jsonq(sortable,[self.id, self.tbody.sortable("toArray")],
+				self.egw().jsonq(sortable,[self.tbody.sortable("toArray"), self.id],
 					null,
 					self
 				);
