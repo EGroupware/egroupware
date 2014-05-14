@@ -446,7 +446,7 @@ class mail_sieve
 		}
 
 		$allIdentities = mail_bo::getAllIdentities();
-		$defaultIdentity = $this->mailbo->getDefaultIdentity();
+		
 		foreach($allIdentities as &$singleIdentity)
 		{
 			$predefinedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
@@ -456,38 +456,8 @@ class mail_sieve
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($predefinedAddresses),
+			'defaultProfile' => $allIdentities[$this->mailbo->getDefaultIdentity()]
 		);
-	}
-
-	/**
-	 * Convert the taglist-email contact address "account name<email>" format to sieveRule "email" format
-	 *
-	 * @param {array} $addresses
-	 *
-	 * @return {boolean|array} return false if failed | array of addresses in case of success
-	 */
-	function email_address_converter($addresses)
-	{
-		$tagmail = array();
-		foreach ($addresses as $key => $adr)
-		{
-
-			if (preg_match('/(?<=\<)[^<]+(?=\>)/', $adr,$tagmail))
-			{
-				$addressses = $tagmail;
-				//error_log(__METHOD__. '() inside the foreach' . array2string($tagmail). 'key is' . $key);
-			}
-		}
-		if (!empty($addresses))
-		{
-			//error_log(__METHOD__. '() emailAddress '. array2string($addresses));
-			return $addressses;
-		}
-		else
-		{
-			error_log(__METHOD__. '() No email address(es)');
-			return false;
-		}
 	}
 
 	/**
@@ -717,17 +687,16 @@ class mail_sieve
 	/**
 	 * Move rule to an other position in list
 	 *
-	 * @param {array} $objType
 	 * @param {array} $orders
 	 */
-	function ajax_moveRule($objType, $orders)
+	function ajax_moveRule($orders)
 	{
 
 		foreach ($orders as $keys => $val)
 		{
-			$orders[$keys] = $orders[$keys] -1;
+			$orders[$keys] = $val -1;
 		}
-
+		
 		$this->getRules(null);
 
 		$newrules = $this->rules;
