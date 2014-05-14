@@ -27,11 +27,9 @@
 								<description value="Translation"/>
 							</row>
 							<row>
-								<description value="${row_cont[index]}" no_lang="1"/>
+								<description id="{$row_cont[index]}" value="${row_cont[index]}" no_lang="1"/>
 								<description value="{$row_cont[title]}" no_lang="1"/>
-								<menulist>
-									<menupopup id="{$row}[field]" no_lang="1"/>
-								</menulist>
+								<listbox id="{$row}[field]" no_lang="1"/>
 								<textbox id="{$row}[conversion]"/>
 							</row>
 						</rows>
