@@ -89,6 +89,8 @@ var et2_selectAccount = et2_selectbox.extend(
 
 	/**
 	 * Tell et2 widget framework where to go
+	 *
+	 * @param {object} _sender
 	 */
 	getDOMNode: function(_sender) {
 		if(this.search_widget != null && _sender == this.search_widget)
@@ -203,7 +205,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			this.search_widget.search.on("autocompleteopen", jQuery.proxy(function() {
 				this.search_widget.search.data("ui-autocomplete").menu.element
 					.appendTo(this.node)
-					.position({my: 'left top', at: 'left bottom', of: this.multiOptions.prev()})
+					.position({my: 'left top', at: 'left bottom', of: this.multiOptions.prev()});
 			},this));
 			this.search = jQuery(document.createElement("li"))
 				.appendTo(this.multiOptions.prev().find('ul'));
@@ -214,7 +216,7 @@ var et2_selectAccount = et2_selectbox.extend(
 				.addClass("et2_clickable")
 				.click(this, this._open_multi_search)
 				.attr("title", egw.lang("popup with search"))
-				.append('<span class="ui-icon ui-icon-search"/>')
+				.append('<span class="ui-icon ui-icon-search"/>');
 			var type = this.egw().preference('account_selection', 'common');
 
 			// Put it last so check/uncheck doesn't move around
@@ -281,6 +283,11 @@ var et2_selectAccount = et2_selectbox.extend(
 	 * Depending on the widget's attributes and the user's preferences, not all selected
 	 * accounts may be in the cache as options, so we fetch the extras to make sure
 	 * we don't lose any.
+	 *
+	 * As fetching them might only work asynchron (if they are not yet loaded),
+	 * we have to call set_value again, once all labels have arrived from server.
+	 *
+	 * @param {string|array} _value
 	 */
 	set_value: function(_value)
 	{
@@ -297,21 +304,36 @@ var et2_selectAccount = et2_selectbox.extend(
 				search = [_value];
 			}
 			var update_options = false;
+			var num_calls = 0;
+			var current_call = 0;
 			for(var j = 0; j < search.length; j++)
 			{
-				var not_found = true;
+				var found = false;
 				// Options are not indexed, so we must look
-				for(var i = 0; not_found && i < this.options.select_options.length; i++)
+				for(var i = 0; !found && i < this.options.select_options.length; i++)
 				{
-					if(this.options.select_options[i].value == search[j]) not_found = false;
+					if(this.options.select_options[i].value == search[j]) found = true;
 				}
-				if(not_found)
+				if(!found)
 				{
-					update_options = true;
 					// Add it in
-					this.egw().link_title('home-accounts', search[j], function(name) {
-						this.options.select_options.push({value: search[j],label:name});
-					}, this);
+					var name = this.egw().link_title('home-accounts', search[j]);
+					if (name)	// was already cached on client-side
+					{
+						update_options = true;
+						this.options.select_options.push({value: search[j], label:name});
+					}
+					else	// not available: need to call set_value again, after all arrived from server
+					{
+						++num_calls;
+						this.egw().link_title('home-accounts', search[j], function(name)
+						{
+							if (++current_call >= num_calls)	// only run last callback
+							{
+								this.set_value(_value);
+							}
+						}, this);
+					}
 				}
 			}
 			if(update_options)
@@ -355,6 +377,8 @@ var et2_selectAccount = et2_selectbox.extend(
 	/**
 	 * Create & display a way to search & select a single account / group
 	 * Single selection is just link widget
+	 *
+	 * @param e event
 	 */
 	_open_search: function(e) {
 		var widget = e.data;
@@ -374,6 +398,8 @@ var et2_selectAccount = et2_selectbox.extend(
 
 	/**
 	 * Create & display a way to search & select multiple accounts / groups
+	 *
+	 * @param e event
 	 */
 	_open_multi_search: function(e) {
 		var widget = e && e.data ? e.data : this;
@@ -424,6 +450,9 @@ var et2_selectAccount = et2_selectbox.extend(
 
 	/**
 	 * Create / display popup with search / selection widgets
+	 *
+	 * @param {et2_dialog} widgets
+	 * @param {function} update_function
 	 */
 	_create_dialog: function(widgets, update_function) {
 		this.dialog = widgets;
@@ -526,6 +555,9 @@ var et2_selectAccount = et2_selectbox.extend(
 
 	/**
 	 * Add the selected result to the list of search results
+	 *
+	 * @param list
+	 * @param item
 	 */
 	_add_search_result: function(list, item) {
 
@@ -678,6 +710,9 @@ var et2_selectAccount = et2_selectbox.extend(
 	/**
 	 * Add an option to the list of selected accounts
 	 * value is the account / group ID
+	 *
+	 * @param list
+	 * @param value
 	 */
 	_add_selected: function(list, value) {
 
@@ -728,7 +763,7 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 			"default": "",
 			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
 			translate:true
-		},
+		}
 	},
 
 	legacyOptions: ["empty_label"],
