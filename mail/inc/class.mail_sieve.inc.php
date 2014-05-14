@@ -1055,16 +1055,13 @@ class mail_sieve
 	/**
 	 *
 	 * Get the data for iterating the rows on rules list grid
- 	 * @param {array} $rows Array of rows
-	 * @param {array} $readonlys Array of readonlys contents
-	 *
+ 	 *
 	 * @return {boolean|array} Array of rows | false if failed
 	 */
-	function get_rows(&$rows)
+	function get_rows()
 	{
 		$rows = array();
-		$this->getRules(null);	/* ADDED BY GHORTH */
-		//$this->saveSessionData();
+		$this->getRules(null);
 
 		if (is_array($this->rules) && !empty($this->rules) )
 		{
