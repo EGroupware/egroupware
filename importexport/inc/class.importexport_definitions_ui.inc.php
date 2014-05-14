@@ -709,7 +709,6 @@ class importexport_definitions_ui
 					}
 					return $this->get_step($content['step'],1);
 				case 'previous' :
-					unset ($content['plugin']);
 					$readonlys['button[previous]'] = true;
 					return $this->get_step($content['step'],-1);
 				case 'finish':
