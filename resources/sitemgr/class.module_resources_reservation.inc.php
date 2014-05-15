@@ -80,7 +80,9 @@ class module_resources_reservation extends sitemgr_module
 		$query = array(
 			// Resources uses filter, not cat_id
 			'filter' => $this->block->arguments['category'],
-			'bookable' => true
+			'filter2' => -1,
+			'show_bookable' => true,
+			'csv_export' => true
 		);
 
 		// Add resources from selected category
@@ -94,37 +96,38 @@ class module_resources_reservation extends sitemgr_module
 	}
 
 	/**
-         * generate the module content AND process submitted forms
-	 * Overridden from parent to pass arguments
-         *
-         * @param array &$arguments $arguments['arg1']-$arguments['arg3'] will be passed for non-submitted forms (first call)
-         * @param array $properties
-         * @return string the html content
-         */
-        function get_content(&$arguments,$properties)
-        {
-                list($app) = explode('.',$this->etemplate_method);
-                $GLOBALS['egw']->translation->add_app($app);
+	* generate the module content AND process submitted forms
+	* Overridden from parent to pass arguments
+	*
+	* @param array &$arguments $arguments['arg1']-$arguments['arg3'] will be passed for non-submitted forms (first call)
+	* @param array $properties
+	* @return string the html content
+	*/
+	function get_content(&$arguments,$properties)
+	{
+		list($app) = explode('.',$this->etemplate_method);
+		$GLOBALS['egw']->translation->add_app($app);
 
-                $extra = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
-                        "/etemplate/templates/default/app.css);\n";
+		$extra = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+				"/etemplate/templates/default/app.css);\n";
 
-                if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
-                {
-                        $extra .= "@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
-                                '/'.$app."/templates/default/app.css);\n";
-                }
-                $extra .= "-->\n</style>\n";
-                $extra .= '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js" type="text/javascript"></script>'."\n";
-                $ret = false;
-                if($_POST['etemplate_exec_id'])
-                {
-                        $ret = ExecMethod('etemplate.etemplate.process_exec');
-                }
+		if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
+		{
+				$extra .= "@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+						'/'.$app."/templates/default/app.css);\n";
+		}
+		$extra .= '.calendar_plannerRowHeader > a { display: none; }';
+		$extra .= "-->\n</style>\n";
+		$extra .= '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js" type="text/javascript"></script>'."\n";
+		$ret = false;
+		if($_POST['etemplate_exec_id'])
+		{
+				$ret = ExecMethod('etemplate.etemplate.process_exec');
+		}
 		if($_GET['date']) $arguments['date'] = strtotime($_GET['date']);
 		$arguments['link'] = $this->link();
 		$arguments['sitemgr_version'] = $this->block->version;
-                return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments));
-        }
+		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments));
+	}
 
 }
