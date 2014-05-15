@@ -920,13 +920,20 @@ class timesheet_bo extends so_sql_cf
 
 		if ($data['target_app'] == 'projectmanager' && $this->read($data['id']))
 		{
+			$old_title = isset($data['data']) ? $data['data'][egw_link::OLD_LINK_TITLE] : null;
 			switch($data['type'])
 			{
 				case 'link':
 				case 'update':
-					if (empty($this->data['ts_project']))	// timesheet has not yet project set --> set just linked one
+					if (empty($this->data['ts_project']) ||	// timesheet has not yet project set --> set just linked one
+						isset($old_title) && $this->data['ts_project'] === $old_title)
 					{
 						$pm_id = $data['target_id'];
+						$update['ts_project'] = egw_link::title('projectmanager', $pm_id);
+						if (isset($old_title) && $this->data['ts_title'] === $old_title)
+						{
+							$update['ts_title'] = $update['ts_project'];
+						}
 					}
 					break;
 
@@ -934,14 +941,16 @@ class timesheet_bo extends so_sql_cf
 					if ($this->data['ts_project'] == projectmanager_bo::link_title($data['target_id']))
 					{
 						$pm_id = 0;
+						$update['ts_project'] = null;
+
 					}
 					break;
 			}
-			if (isset($pm_id))
+			if (isset($update))
 			{
-				$ts_project = $pm_id ? egw_link::title('projectmanager', $pm_id) : null;
-				$this->update(array('ts_project' => $ts_project));
-				//error_log(__METHOD__."() setting pm_id=$pm_id --> ts_project=".array2string($ts_project));
+				$this->update($update);
+				egw_link::notify_update(TIMESHEET_APP, $this->data['ts_id'],$this->data);
+				//error_log(__METHOD__."() setting pm_id=$pm_id --> ".array2string($update));
 			}
 		}
 		if ($backup) $this->data = $backup;

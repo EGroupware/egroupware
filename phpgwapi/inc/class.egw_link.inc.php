@@ -1337,7 +1337,15 @@ class egw_link extends solink
 	}
 
 	/**
+	 * Key for old link title in $data param to egw_link::notify
+	 */
+	const OLD_LINK_TITLE = 'old_link_title';
+
+	/**
 	 * notify other apps about changed content in $app,$id
+	 *
+	 * To give other apps the possebility to update a title, you can also specify
+	 * a changed old link-title in $data[egw_link::OLD_LINK_TITLE].
 	 *
 	 * @param string $app name of app in which the updated happend
 	 * @param string $id id in $app of the updated entry
@@ -1345,11 +1353,12 @@ class egw_link extends solink
 	 */
 	static function notify_update($app,$id,$data=null)
 	{
+		self::delete_cache($app,$id);
+		//error_log(__METHOD__."('$app', $id, $data)");
 		foreach(self::get_links($app,$id,'!'.self::VFS_APPNAME) as $link_id => $link)
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
-		self::delete_cache($app,$id);
 	}
 
 	/**
@@ -1374,6 +1383,7 @@ class egw_link extends solink
 	 */
 	static private function notify($type,$notify_app,$notify_id,$target_app,$target_id,$link_id,$data=null)
 	{
+		//error_log(__METHOD__."('$type', '$notify_app', $notify_id, '$target_app', $target_id, $link_id, $data)");
 		if ($link_id && isset(self::$app_register[$notify_app]) && isset(self::$app_register[$notify_app]['notify']))
 		{
 			if (!self::$notifies)
