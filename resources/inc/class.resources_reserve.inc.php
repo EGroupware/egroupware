@@ -22,6 +22,7 @@ class resources_reserve {
 	 */
 	public function book($content = array(), $arguments = array())
 	{
+		egw_framework::validate_file('jscalendar','calendar');
 		$data = array();
 		$readonlys = array();
 		$display_days = $_GET['planner_days'] ? $_GET['planner_days'] : 3;
