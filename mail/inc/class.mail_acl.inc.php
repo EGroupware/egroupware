@@ -230,6 +230,7 @@ class mail_acl
 				}
 			}
 			$username = $content['grid'][$keys]['acc_id'][0];
+			//error_log(__METHOD__."(".__LINE__.") setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
 			if (is_numeric($username) && ($u = $this->mail_bo->icServer->getMailBoxUserName($username)))
 			{
 				$username = $u;
@@ -287,7 +288,11 @@ class mail_acl
 		if ($row_num) $row_num = $row_num[0];
 		$recursive = $content['grid'][$row_num]['acl_recursive'];
 		$identifier = $content['grid'][$row_num]['acc_id'][0];
-
+		if (is_numeric($identifier) && ($u = $this->mail_bo->icServer->getMailBoxUserName($identifier)))
+		{
+			$identifier = $u;
+		}
+		//error_log(__METHOD__.__LINE__."(".$content['mailbox'].", ".$identifier.", ".$recursive.")");
 		if(($res = $this->deleteACL($content['mailbox'], $identifier,$recursive)))
 		{
 			unset($content['grid'][$row_num]);
