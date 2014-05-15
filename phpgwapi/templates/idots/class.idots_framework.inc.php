@@ -123,7 +123,10 @@ class idots_framework extends egw_framework
 	*/
 	function navbar()
 	{
-		if (self::$navbar_done) return '';
+		if (self::$navbar_done)
+		{
+			return !self::$header_done ? $this->header() : '';
+		}
 		self::$navbar_done = true;
 
 		// the navbar
