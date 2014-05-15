@@ -199,7 +199,8 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					'id': 		id,
 					'statustext':	field.help,
 					'needed':	field.needed,
-					'readonly':	this.options.readonly,
+					'readonly':	this.options.readonly ||
+						this.getArrayMgr("readonlys").isReadOnly(id),
 					'value':	this.options.value[this.prefix+field_name]
 				};
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
@@ -357,7 +358,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		var value = {};
 		for(var field_name in this.widgets)
 		{
-			if(this.widgets[field_name].getValue)
+			if(this.widgets[field_name].getValue && !this.widgets[field_name].options.readonly)
 			{
 				value[this.prefix + field_name] = this.widgets[field_name].getValue();
 			}
