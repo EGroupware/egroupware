@@ -330,13 +330,13 @@ class etemplate extends boetemplate
 			{
 				// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
 				$GLOBALS['egw_info']['flags']['nonavbar'] = $output_mode == 2 ? 'popup' : false;
-				echo $GLOBALS['egw']->framework->header();
 				if((int) $output_mode != 2)
 				{
 					echo $GLOBALS['egw']->framework->navbar();
 				}
 				else
 				{
+					echo $GLOBALS['egw']->framework->header();
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{

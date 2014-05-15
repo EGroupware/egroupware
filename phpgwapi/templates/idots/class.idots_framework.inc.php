@@ -143,7 +143,10 @@ class idots_framework extends egw_framework
 	*/
 	function navbar()
 	{
-		if (self::$navbar_done) return '';
+		if (self::$navbar_done)
+		{
+			return !self::$header_done ? $this->header() : '';
+		}
 
 		if (!empty($_GET['nonavbar']) || $GLOBALS['egw_info']['flags']['currentapp'] == 'admin' && empty($_GET['ajax']))
 		{
