@@ -1397,14 +1397,15 @@ class egw_link extends solink
 	 */
 	static public function run_notifies()
 	{
-		foreach(self::$notifies as $args)
+		//error_log(__METHOD__."() count(self::\$notifies)=".count(self::$notifies));
+		while(self::$notifies)
 		{
+			$args = array_shift(self::$notifies);
 			$method = $args['method'];
 			unset($args['method']);
 			//error_log(__METHOD__."() calling $method(".array2string($args).')');
 			ExecMethod($method, $args);
 		}
-		self::$notifies = array();
 	}
 
 	/**
