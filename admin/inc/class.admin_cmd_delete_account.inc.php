@@ -74,7 +74,11 @@ class admin_cmd_delete_account extends admin_cmd
 		}			
 		if (!$this->is_user) $GLOBALS['egw']->accounts->delete($account_id);	// groups get not deleted via the admin hook, as users
 	
-		return lang("'%1' '%2' deleted.",($account_id < 0 ? "Group": "Account"),$this->account)."\n\n";
+		if ($account_id < 0)
+		{
+			return lang("Group '%1' deleted.",$this->account)."\n\n";
+		}
+		return lang("Account '%1' deleted.",$this->account)."\n\n";
 	}
 
 	/**
