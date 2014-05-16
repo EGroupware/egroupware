@@ -7,13 +7,13 @@
  * @package admin
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * admin command: delete an account (user or group)
  */
-class admin_cmd_delete_account extends admin_cmd 
+class admin_cmd_delete_account extends admin_cmd
 {
 	/**
 	 * Constructor
@@ -37,7 +37,7 @@ class admin_cmd_delete_account extends admin_cmd
 
 	/**
 	 * delete an account (user or group)
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
@@ -74,7 +74,7 @@ class admin_cmd_delete_account extends admin_cmd
 		}			
 		if (!$this->is_user) $GLOBALS['egw']->accounts->delete($account_id);	// groups get not deleted via the admin hook, as users
 	
-		return lang("Account '%1' deleted.",$this->account)."\n\n";
+		return lang("'%1' '%2' deleted.",($account_id < 0 ? "Group": "Account"),$this->account)."\n\n";
 	}
 
 	/**

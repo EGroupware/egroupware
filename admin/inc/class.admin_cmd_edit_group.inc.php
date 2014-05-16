@@ -112,7 +112,7 @@ class admin_cmd_edit_group extends admin_cmd
 		// make new account_id available to caller
 		$this->account = $data['account_id'];
 
-		return lang("Account %1 %2", $data['account_lid'] ? $data['account_lid'] : accounts::id2name($this->account),
+		return lang("Group %1 %2", $data['account_lid'] ? $data['account_lid'] : accounts::id2name($this->account),
 			$update ? lang('updated') : lang("created with id #%1", $this->account));
 	}
 
