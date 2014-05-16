@@ -384,7 +384,7 @@ class mail_compose
 			}
 			if ($sendOK == false)
 			{
-				egw_framework::message(lang('Message send failed: %1',$message),'warning');// maybe error is more appropriate
+				egw_framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
 			}
 		}
 		if ($_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
