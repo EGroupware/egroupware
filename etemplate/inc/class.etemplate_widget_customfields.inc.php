@@ -372,6 +372,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		{
 			return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
 		}
+		$options = array();
 		include($path);
 
 		return $options;
