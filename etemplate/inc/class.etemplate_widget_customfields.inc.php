@@ -313,6 +313,11 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					$field_settings = $customfields[$fname=substr($field,1)];
 
+					// check if single field is set readonly, used in apps as it was only way to make cfs readonly in old eT
+					if ($this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : '', $field))
+					{
+						continue;
+					}
 					// run validation method of widget implementing this custom field
 					$widget = $this->_widget($fname, $field_settings);
 					$widget->validate($cname, $expand, $content, $validated);
@@ -328,7 +333,9 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					if (is_null($valid)) $valid = false;
 					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($valid));
 				}
-			} elseif ($this->type == 'customfields-types') {
+			}
+			elseif ($this->type == 'customfields-types')
+			{
 				// Transformation doesn't handle validation
 				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 				if (true) $valid = $value_in;
