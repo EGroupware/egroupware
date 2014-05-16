@@ -373,10 +373,12 @@ app.classes.mail = AppJS.extend(
 	 * @memberOf mail
 	 *
 	 * @param {String} window_name The name of an open content window.
-	 * @param content Data to set into the window's fields
-	 * @param content.to Addresses to add to the to line
-	 * @param content.cc Addresses to add to the CC line
-	 * @param content.bcc Addresses to add to the BCC line
+	 * @param {object} content
+	 * 
+	 * @description content Data to set into the window's fields
+	 * content.to Addresses to add to the to line
+	 * content.cc Addresses to add to the CC line
+	 * content.bcc Addresses to add to the BCC line
 	 *
 	 * @return {boolean} Success
 	 */
@@ -392,15 +394,16 @@ app.classes.mail = AppJS.extend(
 		{
 			return false;
 		}
-
+		
 		// Set each field provided
 		var success = true;
+		var arrContent = [];
 		for(var field in content)
 		{
 			try
 			{
 				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
-
+				
 				// Merge array values, replace strings
 				var value = widget.getValue() || content[field];
 				if(jQuery.isArray(value))
@@ -411,7 +414,11 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						value.push(content[field]);
+						arrContent = content[field].split(',');
+						for (var k=0;k < arrContent.length;k++)
+						{
+							value.push(arrContent[k]);
+						}
 					}
 				}
 				widget.set_value(value);
@@ -565,7 +572,7 @@ app.classes.mail = AppJS.extend(
 		if (window.location.search.search('&print=') >= 0)
 		{
 			var that = this;
-			jQuery('#mail-display_mailDisplayBodySrc').bind('load',function(){that.mail_print()});
+			jQuery('#mail-display_mailDisplayBodySrc').bind('load',function(){that.mail_print();});
 		}
 
 	},
@@ -741,8 +748,11 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
 	 *
-	 * @param _nodeID
-	 * @param mode
+	 * @param {stirng} _nodeID
+	 * @param {string} mode
+	 * @param {boolean} _refreshGridArea
+	 * @param {boolean} _refreshQuotaDisplay
+	 * 
 	 */
 	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
 		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
@@ -785,6 +795,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
+	 * 
+	 * @param {object} _server
 	 *
 	 */
 	mail_refreshQuotaDisplay: function(_server)
@@ -795,6 +807,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setQuotaDisplay, function to call to read the quota for the active server
+	 * 
+	 * @param {object} _data
 	 *
 	 */
 	mail_setQuotaDisplay: function(_data)
@@ -826,6 +840,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
+	 * 
+	 * @param {object} _server
 	 *
 	 */
 	mail_callRefreshVacationNotice: function(_server)
@@ -835,6 +851,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
+	 * 
+	 * @param {object} _data
 	 *
 	 */
 	mail_refreshVacationNotice: function(_data)
@@ -869,6 +887,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
+	 * 
+	 * @param {object} _data
 	 *
 	 */
 	mail_refreshFilter2Options: function(_data)
@@ -899,6 +919,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * 
+	 * @param {object} _data
 	 *
 	 */
 	mail_refreshFilterOptions: function(_data)
@@ -931,6 +953,8 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Queues a refreshFolderList request for 10ms. Actually this will just execute the
 	 * code after the calling script has finished.
+	 * 
+	 * @param {array} _folders description
 	 */
 	mail_queueRefreshFolderList: function(_folders)
 	{
@@ -944,11 +968,12 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_CheckFolderNoSelect - implementation of the mail_CheckFolderNoSelect action to control right click options on the tree
 	 *
-	 * @param _action
-	 * @param _senders - the representation of the tree leaf to be manipulated
+	 * @param {object} action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
 	 */
 	mail_CheckFolderNoSelect: function(action,_senders,_currentNode) {
-		//console.log(action,_senders,_currentNode);
+		
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
 		var ftree, node;
@@ -969,6 +994,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setFolderStatus, function to set the status for the visible folders
+	 * 
+	 * @param {array} _status
 	 */
 	mail_setFolderStatus: function(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -982,7 +1009,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setLeaf, function to set the id and description for the folder given by status key
-	 * @param array _status status array with the required data (new id, desc, old desc)
+	 * @param {array} _status status array with the required data (new id, desc, old desc)
 	 *		key is the original id of the leaf to change
 	 *		multiple sets can be passed to mail_setLeaf
 	 */
@@ -1008,7 +1035,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_removeLeaf, function to remove the leaf represented by the given ID
-	 * @param array _status status array with the required data (KEY id, VALUE desc)
+	 * @param {array} _status status array with the required data (KEY id, VALUE desc)
 	 *		key is the id of the leaf to delete
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
@@ -1065,6 +1092,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
+	 * 
+	 * @param {boolean} _isPopup
 	 */
 	mail_refreshMessageGrid: function(_isPopup) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
@@ -1096,7 +1125,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
-	 * @param string myMsg - the message
+	 * @param {string} myMsg - the message
 	 */
 	mail_setMsg: function(myMsg)
 	{
@@ -1167,6 +1196,9 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_splitRowId
+	 * 
+	 * @param {string} _rowID
+	 * 
 	 */
 	mail_splitRowId: function(_rowID)
 	{
@@ -1183,8 +1215,9 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Delete mails - actually calls the backend function for deletion
 	 * takes in all arguments
-	 * @param _msg - message list
-	 * @param _action - optional action
+	 * @param {string} _msg - message list
+	 * @param {object} _action - optional action
+	 * @param {object} _calledFromPopup
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
@@ -1266,6 +1299,9 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_emptyTrash
+	 * 
+	 * @param {object} action
+	 * @param {object} _senders 
 	 */
 	mail_emptyTrash: function(action,_senders) {
 		var server = _senders[0].iface.id.split('::');
@@ -1281,6 +1317,10 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_compressFolder
+	 * 
+	 * @param {object} action
+	 * @param {object} _senders
+	 * 
 	 */
 	mail_compressFolder: function(action,_senders) {
 		//console.log(action,_senders,FolderName);
@@ -1294,11 +1334,12 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_changeProfile
-	 * @param folder, the ID of the selected Node -> should be an integer
-	 * @param _widget, handle to the tree widget
+	 * 
+	 * @param {string} folder the ID of the selected Node -> should be an integer
+	 * @param {object} _widget handle to the tree widget
 	 * @param {boolean} getFolders Flag to indicate that the profile needs the mail
-	 *	folders.  False means they're already loaded in the tree, and we don't need
-	 *	them again
+	 *		folders.  False means they're already loaded in the tree, and we don't need
+	 *		them again
 	 */
 	mail_changeProfile: function(folder,_widget, getFolders) {
 		if(typeof getFolders == 'undefined')
@@ -1312,7 +1353,7 @@ app.classes.mail = AppJS.extend(
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders], jQuery.proxy(function() {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
-			_widget.reSelectItem(inbox)
+			_widget.reSelectItem(inbox);
 			this.mail_changeFolder(inbox,_widget,'');
 			this.unlock_tree();
 		},this))
@@ -1323,8 +1364,8 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_changeFolder
-	 * @param _folder, the ID of the selected Node
-	 * @param _widget, handle to the tree widget
+	 * @param {string} _folder the ID of the selected Node
+	 * @param {widget object} _widget handle to the tree widget
 	 * @param {string} _previous - Previously selected node ID
 	 */
 	mail_changeFolder: function(_folder,_widget, _previous) {
@@ -1516,8 +1557,9 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
 	 *
-	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
-	 * @param _elems
+	 * @param {object} _flag
+	 * @param {object} _elems
+	 * @param {boolean} _isPopup
 	 */
 	mail_flagMessages: function(_flag, _elems,_isPopup)
 	{
@@ -1633,16 +1675,22 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * User clicked an address (FROM, TO, etc)
 	 *
-	 * @param object tag_info with values for attributes id, label, title, ...
-	 * @param et2_taglist widget
+	 * @param {object} tag_info with values for attributes id, label, title, ...
+	 * @param {widget object} widget
+	 * 
+	 * @todo seems this function is not implemented, need to be checked if it is neccessary at all
 	 */
 	address_click: function(tag_info, widget)
 	{
-		console.log(this, arguments);
+		
 	},
 
 	/**
 	 * displayAttachment
+	 * 
+	 * @param {object} tag_info 
+	 * @param {widget object} widget
+	 * @param {object} calledForCompose
 	 */
 	displayAttachment: function(tag_info, widget, calledForCompose)
 	{
@@ -1766,6 +1814,9 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * displayUploadedFile
+	 * 
+	 * @param {object} tag_info
+	 * @param {widget object} widget
 	 */
 	displayUploadedFile: function(tag_info, widget)
 	{
@@ -1995,7 +2046,7 @@ app.classes.mail = AppJS.extend(
 		var filename =dataElem.data.subject.replace(/[\f\n\t\v/\\:*#?<>\|]/g,"_");
 		url += '&name='+encodeURIComponent(filename+'.eml');
 		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
-		url += '&method=mail.mail_ui.vfsSaveMessage'
+		url += '&method=mail.mail_ui.vfsSaveMessage';
 		url += '&id='+_elems[0].id;
 		url += '&label=Save';
 		//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
@@ -2103,7 +2154,8 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_getFormData
 	 *
-	 * @param _actionObjects, the senders
+	 * @param {object} _actionObjects the senders
+	 * 
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
 	mail_getFormData: function(_actionObjects) {
@@ -2129,7 +2181,8 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_setRowClass
 	 *
-	 * @param _actionObjects, the senders
+	 * @param {object} _actionObjects the senders
+	 * @param {string} _class
 	 */
 	mail_setRowClass: function(_actionObjects,_class) {
 		if (typeof _class == 'undefined') return false;
@@ -2173,8 +2226,8 @@ app.classes.mail = AppJS.extend(
 	 * mail_removeRowFlag
 	 * Removes a flag and updates the CSS class.  Updates the UI, but not the server.
 	 *
-	 * @param _actionObjects, the senders, or a messages object
-	 * @param _class, the class to be removed
+	 * @param {action object} _actionObjects the senders, or a messages object
+	 * @param {string} _class the class to be removed
 	 */
 	mail_removeRowClass: function(_actionObjects,_class) {
 		if (typeof _class == 'undefined') return false;
@@ -2437,13 +2490,12 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 *
-	 * @param _event
-	 * @param _file_count
-	 * @param {string} [_path=current directory] Where the file is uploaded to.
+	 * @param {event object} _event
+	 * @param {string} _file_count
+	 * @param {string} _path [_path=current directory] Where the file is uploaded to.
 	 */
 	uploadForCompose: function(_event, _file_count, _path)
 	{
-		//console.log(_event,_file_count,_path);
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
 		{
@@ -2460,6 +2512,13 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
+	/**
+	* Upload for import (VFS)
+	* 
+	* @param {egw object} _egw
+	* @param {widget object} _widget
+	* @param {window object} _window
+	*/
 	vfsUploadForImport: function(_egw, _widget, _window) {
 		//console.log(_egw, _widget, _window);
 		if (jQuery.isEmptyObject(_widget)) return;
@@ -2469,6 +2528,13 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
+	/**
+	* Upload for compose (VFS)
+	* 
+	* @param {egw object} _egw
+	* @param {widget object} _widget
+	* @param {window object} _window
+	*/
 	vfsUploadForCompose: function(_egw, _widget, _window)
 	{
 		//console.log(_egw, _widget, _window);
@@ -2479,6 +2545,13 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
+	/**
+	* Submit on change (VFS)
+	* 
+	* @param {egw object} _egw
+	* @param {widget object} _widget
+	* @param {window object} _window
+	*/
 	submitOnChange: function(_egw, _widget, _window) {
 		//console.log(_egw, _widget, _window);
 		if (!jQuery.isEmptyObject(_widget))
@@ -2490,11 +2563,25 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
+	/**
+	* Save as Draft (VFS)
+	* 
+	* @param {egw object} _egw
+	* @param {widget object} _widget
+	* @param {window object} _window
+	*/
 	saveAsDraft: function(_egw, _widget, _window)
 	{
 		this.et2_obj.submit();
 	},
 
+	/**
+	* Save as Draf and pring (VFS)
+	* 
+	* @param {egw object} _egw
+	* @param {widget object} _widget
+	* @param {window object} _window
+	*/
 	saveAsDraftAndPrint: function(_egw, _widget, _window)
 	{
 		this.et2_obj.submit();
@@ -2551,7 +2638,6 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param _type - action name
 	 * @param _selected - selected row from the sieve rule list
-	 * @param _msg - messages
 	 */
 	action: function(_type, _selected)
 	{
@@ -2574,7 +2660,7 @@ app.classes.mail = AppJS.extend(
 							actionData = _type.parent.data.widget.getArrayMgr('content');
 							that._do_action(typeId, actionData['data'],ruleID);
 						}
-					}
+					};
 					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 					break;
@@ -2601,9 +2687,9 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	* Send back action resault to server
+	* Send back sieve action resault to server
 	*
-	* @param {string} _typeId action name
+	* @param {string} _typeID action name
 	* @param {object} _data content
 	* @param {string} _selectedID selected row id
 	* @param {string} _msg message
@@ -2620,7 +2706,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	*
-	* @todo: Need to find a way how to refresh the grid
+	* Send ajax request to server to refresh the sieve grid
 	*
 	*
 	*/
@@ -2715,7 +2801,7 @@ app.classes.mail = AppJS.extend(
 	{
 	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
 	},
-
+	
 	/**
 	 * Popup the subscription dialog
 	 *
@@ -2961,7 +3047,7 @@ app.classes.mail = AppJS.extend(
 	mail_prev_print: function (_action, _elems)
 	{
 		this.mail_open(_action, _elems, 'print');
-	},
+	}
 
 });
 
@@ -2992,7 +3078,7 @@ $j(function() {
 						//.fadeIn("slow"); // doesn't work because of stop()
 					},
 					function () {
-						$j(this).fadeOut("400", function(){ $j(this).remove(); })
+						$j(this).fadeOut("400", function(){ $j(this).remove(); });
 					}
 				);
 			}
