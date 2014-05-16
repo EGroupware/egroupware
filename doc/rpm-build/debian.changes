@@ -1,3 +1,12 @@
+egroupware-epl (11.1.20140516-1) hardy; urgency=low
+
+  * Admin: limiting a huge list of accounts returned not all accounts, because full search was limited too original number of requested rows
+  * ProjectManager: project-tree was not shown in idots template
+  * ProjectManager: parent projects were not updated with changes (you had to run sync-all manually
+  * ProjectManager: switching from account-type "status" to "status and times" set datasource time as overwritten time
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 16 May 2014 13:28:43 +0200
+
 egroupware-epl (11.1.20140505-1) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
