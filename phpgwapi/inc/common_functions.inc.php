@@ -1580,8 +1580,9 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	{
 		error_log($headline.' ('.get_class($e).'): '.$e->getMessage());
 		foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
-		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-			($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].
+			', Request='.$_SERVER['REQUEST_METHOD'].' '.($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].
+			', User-agent='.$_SERVER['HTTP_USER_AGENT']);
 	}
 }
 
