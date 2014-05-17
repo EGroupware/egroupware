@@ -446,6 +446,44 @@
    </tr>
 
    <tr class="th">
+    <td colspan="2"><b>{lang_If_using_Mail_authentication_(requires_PHP_IMAP_extension!}:</b></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}[:{lang_port}]:</td>
+    <td><input name="newsettings[mail_server]" value="{value_mail_server}"></td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_Mail_server_protocol}:</td>
+    <td>
+     <select name="newsettings[mail_server_type]">
+      <option value="imap" {selected_mail_server_type_imap}>IMAP</option>
+      <option value="imaps" {selected_mail_server_type_imaps}>IMAPS</option>
+      <option value="pop3" {selected_mail_server_type_pop3}>POP3</option>
+      <option value="pop3s" {selected_mail_server_type_pop3s}>POP3s</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on">
+	<td>{lang_Mail_server_login_type}:</td>
+    <td>
+     <select name="newsettings[mail_login_type]">
+      <option value="standard" {selected_mail_login_type_standard}>{lang_username_(standard)}</option>
+      <option value="vmailmgr" {selected_mail_login_type_vmailmgr}>{lang_username@domainname_(Virtual_MAIL_ManaGeR)}</option>
+      <option value="email" {selected_mail_login_type_email}>{lang_EMail-address}</option>
+      <option value="uidNumber" {selected_mail_login_type_uidNumber}>{lang_UserId@domain_eg._u1234@domain}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_Mail_domain_(for_Virtual_MAIL_ManaGeR)}:</td>
+    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
     <td colspan="2"><b>{lang_If_using_CAS_(Central_Authentication_Service):}</b></td>
    </tr>
 

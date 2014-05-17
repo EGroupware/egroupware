@@ -19,8 +19,30 @@ $GLOBALS['egw_info']['server']['found_validation_hook'] = array(
 	'files_dir',
 	'backup_dir',
 	'mcrypt_algo',
-	'ldap_search_filter'
+	'ldap_search_filter',
+	'auth_type',
 );
+
+/**
+ * Validate different auth-types
+ *
+ * @param array $settings
+ */
+function auth_type($settings)
+{
+	switch($settings['auth_type'])
+	{
+		case 'mail':
+			try {
+				check_load_extension('imap', true);
+			}
+			catch (Exception $ex)
+			{
+				$GLOBALS['config_error'] = $ex->getMessage();
+			}
+			break;
+	}
+}
 
 /**
  * Set vfs_fstab depending from what the user selected for vfs_storage_mode
