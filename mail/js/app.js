@@ -2134,12 +2134,12 @@ app.classes.mail = AppJS.extend(
 				}
 				else
 				{
-					var app_registry = egw.link_get_registry('infolog');//this.appname);
+					var app_registry = egw.link_get_registry('tracker');//this.appname);
 				}
 				//console.log(app_registry);
-				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
+				if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
 				{
-					var w_h =app_registry['edit_popup'].split('x');
+					var w_h =app_registry['add_popup'].split('x');
 				}
 			}
 		}
