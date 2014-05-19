@@ -16,6 +16,41 @@
 class mail_hooks
 {
 	/**
+	 * Hook to add context menu entries to user list
+	 *
+	 * @param array $data
+	 */
+	static function edit_user($data)
+	{
+		unset($data);	// not used, but required by function signature
+
+		$have_imap_admin_and_sieve = false;
+		// list all mail accounts
+		foreach(emailadmin_account::search(false, 'params', null, false, 0, false) as $params)
+		{
+			// check if account is valid for multiple users, has admin credentials and sieve enabled
+			if (emailadmin_account::is_multiple($params) &&
+				$params['acc_imap_admin_username'] && $params['acc_sieve_enabled'])
+			{
+				$have_imap_admin_and_sieve = true;
+				break;
+			}
+		}
+		$user_actions = array();
+
+		if ($have_imap_admin_and_sieve)	// add action to set vacation notice for a user
+		{
+			$user_actions[] = array (
+				'id' => 'mail_vacation',
+				'caption' => 'Vacation notice',
+				'popup' => '750x420',
+				'url' => 'menuaction=mail.mail_sieve.editVacation&account_id=$id',
+			);
+		}
+		return $user_actions;
+	}
+
+	/**
      * Hook called by link-class to include mail in the appregistry of the linkage
      *
      * @param array/string $location location and other parameters (not used)
