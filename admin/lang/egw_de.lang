@@ -24,11 +24,11 @@ access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffskontrolle
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
-account	admin	de	Benutzerkonto
+account	admin	de	Konto
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
-account '%1' deleted.	admin	de	Benutzerkonto '%1' gelöscht.
+account '%1' deleted.	admin	de	Konto '%1' gelöscht.
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
 account has been deleted	common	de	Konto wurde gelöscht

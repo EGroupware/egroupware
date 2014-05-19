@@ -194,7 +194,7 @@ search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen.
-select file(s) from vfs	common	de	Detein aus dem VFS wählen
+select file(s) from vfs	common	de	Datein aus dem VFS wählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert.
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
@@ -222,6 +222,7 @@ unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
 upload fields	filemanager	de	Dateien hochladen
+upload file(s) from filemanager...	filemanager	de	Dateien aus dem Dateimanager
 upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
