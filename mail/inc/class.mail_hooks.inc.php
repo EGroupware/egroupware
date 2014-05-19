@@ -45,6 +45,7 @@ class mail_hooks
 				'caption' => 'Vacation notice',
 				'popup' => '750x420',
 				'url' => 'menuaction=mail.mail_sieve.editVacation&account_id=$id',
+				'allowMultiple' => false,
 			);
 		}
 		return $user_actions;
