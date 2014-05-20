@@ -177,10 +177,26 @@ class admin_accesslog
 			}
 			$content['nm']['session_list'] = $sessions_list;
 		}
-		error_log(__METHOD__. ' accesslog =>' . array2string($content['nm']['selected']));
+		//error_log(__METHOD__. ' accesslog =>' . array2string($content['nm']['selected']));
 		if ($content['nm']['action'])
 		{
+			if ($content['nm']['select_all'])
+			{
+				// get the whole selection
+				$query = array(
+					'search' => $content['nm']['search'],
+					'col_filter' => $content['nm']['col_filter']
+				);
 
+				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
+				$query['num_rows'] = -1;	// all
+				$total = $this->get_rows($query,$all,$readonlys);
+				$content['nm']['selected'] = array();
+				foreach($all as $session)
+				{
+					$content['nm']['selected'][] = $session[$content['nm']['row_id']];
+				}
+			}
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');
@@ -239,9 +255,8 @@ class admin_accesslog
 	 */
 	function action($action,$checked,&$success,&$failed,&$action_msg,&$msg)
 	{
-
 		$success = $failed = 0;
-		error_log(__METHOD__.'selected:' . array2string($checked). 'action:' . $action);
+		//error_log(__METHOD__.'selected:' . array2string($checked). 'action:' . $action);
 		switch ($action)
 		{
 			case "delete":
@@ -315,6 +330,19 @@ class admin_accesslog
 				),
 			);
 		}
+		// Automatic select all doesn't work with only 1 action
+		$actions['select_all'] = array(
+			'caption' => 'Select all',
+			//'checkbox' => true,
+			'hint' => 'Select all entries',
+			'enabled' => true,
+			'shortcut' => array(
+				'keyCode'	=>	65, // A
+				'ctrl'		=>	true,
+				'caption'	=> 'Ctrl+A'
+			),
+			'group' => $group++,
+		);
 		return $actions;
 	}
 
