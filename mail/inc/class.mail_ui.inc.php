@@ -276,6 +276,7 @@ class mail_ui
 		}
 		return $result;
 	}
+
 	/**
 	 * Subscription popup window
 	 *
@@ -345,6 +346,7 @@ class mail_ui
 						}
 					}
 					$parentFolder='INBOX';
+/*
 					$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
 					if ($folderInfo['unseen'])
 					{
@@ -354,8 +356,10 @@ class mail_ui
 					{
 						$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
 					}
+*/
 					$refreshData = array(
-						$content['profileId'].self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
+						$content['profileId']/*.self::$delimiter.$parentFolder*/=>lang($parentFolder)//$folderInfo['shortDisplayName'])
+					);
 
 					// Send full info back in the response
 					$response = egw_json_response::get();
@@ -3752,20 +3756,28 @@ $this->partID = $partID;
 		// that we get what we request
 		if ($_subscribedOnly != $oldPrefForSubscribedOnly) $this->mail_bo->resetFolderObjectCache($profileID);
 		if ($profileID != $this->mail_bo->profileID) return; // only current connection
-		$parentFolder=(!empty($folderName)?$folderName:'INBOX');
-		$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
-		if ($folderInfo['unseen'])
+		if (!empty($folderName))
 		{
-			$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
+			$parentFolder=(!empty($folderName)?$folderName:'INBOX');
+			$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+			if ($folderInfo['unseen'])
+			{
+				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
+			}
+			if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
+			{
+				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
+			}
+
+			$refreshData = array(
+				$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
 		}
-		if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
+		else
 		{
-			$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
+			$refreshData = array(
+				$profileID=>lang('INBOX')//string with no meaning lateron
+			);
 		}
-
-		$refreshData = array(
-			$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
-
 		// Send full info back in the response
 		$response = egw_json_response::get();
 		foreach($refreshData as $folder => &$name)
