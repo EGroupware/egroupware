@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -39,6 +39,9 @@
  *
  * The tree and instance wide cache uses a certain provider class, to store the data
  * eg. in memcached or if there's nothing else configured in the filesystem (eGW's temp_dir).
+ *
+ * Apps needing to talk to multiple EGroupware instances (eg. Stylite Managementserver)
+ * can use install_id of instance as $level parameter to (set|get|unset)Cache method.
  */
 class egw_cache
 {
@@ -101,6 +104,7 @@ class egw_cache
 
 			case self::INSTANCE:
 			case self::TREE:
+			default:
 				if (!($provider = self::get_provider($level)))
 				{
 					return false;
@@ -141,6 +145,7 @@ class egw_cache
 
 			case self::INSTANCE:
 			case self::TREE:
+			default:
 				if (!($provider = self::get_provider($level)))
 				{
 					return null;
@@ -207,6 +212,7 @@ class egw_cache
 
 			case self::INSTANCE:
 			case self::TREE:
+			default:
 				if (!($provider = self::get_provider($level)))
 				{
 					return false;
@@ -434,12 +440,14 @@ class egw_cache
 	 *
 	 * The returned provider already has an opened connection
 	 *
-	 * @param string $level egw_cache::(TREE|INSTANCE)
+	 * @param string $level egw_cache::(TREE|INSTANCE) or install_id
 	 * @return egw_cache_provider
 	 */
 	static protected function get_provider($level)
 	{
 		static $providers = array();
+
+		if ($level != self::TREE) $level = self::INSTANCE;
 
 		if (!isset($providers[$level]))
 		{
@@ -597,39 +605,43 @@ class egw_cache
 	/**
 	 * Get keys array from $level, $app and $location
 	 *
-	 * @param string $level egw_cache::(TREE|INSTANCE)
+	 * @param string $level egw_cache::(TREE|INSTANCE) or instance_id
 	 * @param string $app
 	 * @param string $location
 	 * @return array
 	 */
 	static public function keys($level,$app,$location)
 	{
-		static $bases = array();
+		static $tree_key = null;
 
-		if (!isset($bases[$level]))
+		switch($level)
 		{
-			switch($level)
-			{
-				case self::TREE:
-					$bases[$level] = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
+			case self::TREE:
+				if (!isset($tree_key))
+				{
+					$tree_key = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
 					// add charset to key, if not utf-8 (as everything we store depends on charset!)
 					if (($charset = self::get_system_config('system_charset',false)) && $charset != 'utf-8')
 					{
-						$bases[$level] .= '-'.$charset;
+						$tree_key .= '-'.$charset;
 					}
-					break;
-				case self::INSTANCE:
-					if (!isset(self::$instance_key))
-					{
-						self::$instance_key = self::getTree(__CLASS__, self::get_system_config('install_id'));
-						//error_log(__METHOD__."('$level',...) instance_key read from tree-cache=".array2string(self::$instance_key));
-						if (!isset(self::$instance_key)) self::generate_instance_key();
-					}
-					$bases[$level] = self::$instance_key;
-					break;
-			}
+				}
+				$level_key = $tree_key;
+				break;
+			case self::INSTANCE:
+				if (!isset(self::$instance_key))
+				{
+					self::$instance_key = self::getTree(__CLASS__, self::get_system_config('install_id'));
+					//error_log(__METHOD__."('$level',...) instance_key read from tree-cache=".array2string(self::$instance_key));
+					if (!isset(self::$instance_key)) self::generate_instance_key();
+				}
+				$level_key = self::$instance_key;
+				break;
+			default:
+				$level_key = $level;
+				break;
 		}
-		return array($bases[$level],$app,$location);
+		return array($level_key, $app, $location);
 	}
 
 	/**

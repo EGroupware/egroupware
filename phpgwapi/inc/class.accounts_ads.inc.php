@@ -139,12 +139,12 @@ class accounts_ads
 			if (empty($config['ads_host'])) throw new Exception("Required ADS host name(s) missing!");
 			if (empty($config['ads_domain'])) throw new Exception("Required ADS domain missing!");
 
-			$base_dn = array();
+			$base_dn_parts = array();
 			foreach(explode('.', $config['ads_domain']) as $dc)
 			{
-				$base_dn[] = 'DC='.$dc;
+				$base_dn_parts[] = 'DC='.$dc;
 			}
-			$base_dn = implode(',', $base_dn);
+			$base_dn = implode(',', $base_dn_parts);
 			$options = array(
 				'domain_controllers' => preg_split('/[ ,]+/', $config['ads_host']),
 				'base_dn' => $base_dn ? $base_dn : null,
@@ -170,10 +170,10 @@ class accounts_ads
 	 */
 	protected function get_sid($account_id=null)
 	{
-		static $domain_sid;
+		static $domain_sid = null;
 		if (!isset($domain_sid))
 		{
-			$domain_sid = egw_cache::getInstance(__CLASS__, 'ads_domain_sid');
+			$domain_sid = egw_cache::getCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid');
 			if ((!is_array($domain_sid) || !isset($domain_sid[$this->frontend->config['ads_domain']])) &&
 				($adldap = self::get_adldap($this->frontend->config)) &&
 				($sr = ldap_search($adldap->getLdapConnection(), $adldap->getBaseDn(), '(objectclass=domain)', array('objectsid'))) &&
@@ -181,7 +181,7 @@ class accounts_ads
 			{
 				$domain_sid = array();
 				$domain_sid[$this->frontend->config['ads_domain']] = $adldap->utilities()->getTextSID($entries[0]['objectsid'][0]);
-				egw_cache::setInstance(__CLASS__, 'ads_domain_sid', $domain_sid);
+				egw_cache::setCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid', $domain_sid);
 			}
 		}
 		$sid = $domain_sid[$this->frontend->config['ads_domain']];
@@ -231,6 +231,7 @@ class accounts_ads
 	{
 		$context = $this->ads_context(true);
 		$base = $this->adldap->getBaseDn();
+		$matches = null;
 		if (!preg_match('/^(.*),'.preg_quote($base, '/').'$/i', $context, $matches))
 		{
 			throw new egw_exception_wrong_userinput("Wrong or not configured ADS context '$context' (baseDN='$base')!");
@@ -556,7 +557,7 @@ class accounts_ads
 	 */
 	protected static function _when2ts($when)
 	{
-		static $utc;
+		static $utc=null;
 		if (!isset($utc)) $utc = new DateTimeZone('UTC');
 
 		list($when) = explode('.', $when);	// remove .0Z not understood by createFromFormat
@@ -1101,6 +1102,7 @@ class accounts_ads
 		{
 			foreach($this->filter(array($to_ldap[$which] => $name), $account_type) as $account_id => $account_lid)
 			{
+				unset($account_lid);
 				$ret = $account_id;
 				break;
 			}
@@ -1132,6 +1134,8 @@ class accounts_ads
 	 */
 	function update_lastlogin($_account_id, $ip)
 	{
+		unset($_account_id, $ip);	// not used, but required by function signature
+
 		return false;	// not longer supported
 	}
 
