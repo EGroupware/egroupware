@@ -20,12 +20,6 @@ class mail_sieve
 			'edit'			=> True,
 			'editEmailNotification'=> True, // Added email notifications
 		);
-	/**
-	 * Flag if we can do a timed vaction message, requires Cyrus Admin User/Pw to enable/disable via async service
-	 *
-	 * @var boolean
-	 */
-	var $timed_vacation;
 
 	var $errorStack;
 
@@ -81,7 +75,7 @@ class mail_sieve
 	/**
 	 * account object
 	 *
-	 * @var emailadmin_imap
+	 * @var emailadmin_account
 	 */
 	var $account;
 
@@ -114,8 +108,6 @@ class mail_sieve
 		$this->mailConfig = config::read('mail');
 
 		$this->restoreSessionData();
-
-		$this->timed_vacation = $this->account->acc_sieve_enabled && $this->account->acc_imap_administration;
 	}
 
 	/**
@@ -509,7 +501,6 @@ class mail_sieve
 	 */
 	function editVacation($content=null, $msg='')
 	{
-
 		//Instantiate an etemplate_new object, representing the sieve.vacation template
 		$vtmpl = new etemplate_new('mail.sieve.vacation');
 		$vacation = array();
@@ -541,16 +532,16 @@ class mail_sieve
 			$this->account = $accounts[$profileID];
 
 			$this->is_admin_vac = true;
-			$this->timed_vacation = $this->account->acc_sieve_enabled && $this->account->acc_imap_administration;
 			$preserv['account_id'] = $account_id;
 		}
 
+		$icServer = $this->account->imapServer($this->is_admin_vac ? $account_id : false);
 
-		if ( $this->account->acc_sieve_enabled)
+		if ($icServer->acc_sieve_enabled)
 		{
 			$vacRules = $this->getVacation($account_id);
 
-			if ($this->timed_vacation)
+			if ($icServer->acc_imap_administration)
 			{
 				$ByDate = array('by_date' => lang('By date'));
 			}
@@ -640,11 +631,11 @@ class mail_sieve
 							{
 								if (isset($account_id) && $this->mail_admin)
 								{
-									$resSetvac = $this->account->imapServer()->setVacationUser($account_id,$this->scriptName, $newVacation);
+									$resSetvac = $icServer->setVacationUser($account_id,$this->scriptName, $newVacation);
 								}
 								else
 								{
-									$resSetvac = $this->account->imapServer()->setVacation($this->scriptName, $newVacation);
+									$resSetvac = $icServer->setVacation($this->scriptName, $newVacation);
 								}
 
 								if (!$resSetvac)
@@ -658,7 +649,7 @@ class mail_sieve
 									{
 										$newVacation['scriptName'] = $this->scriptName;
 									}
-									$this->account->imapServer()->setAsyncJob($newVacation);
+									$icServer->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}
@@ -670,7 +661,7 @@ class mail_sieve
 							$response = egw_json_response::get();
 							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
 							egw_framework::refresh_opener($msg, 'mail','edit');
-							if ($button === 'apply' || $this->account->imapServer()->error !=="")
+							if ($button === 'apply' || $icServer->error !=="")
 							{
 								break;
 							}
