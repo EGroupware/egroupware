@@ -59,13 +59,6 @@ class mail_sieve
 	var $currentIdentity;
 
 	/**
-	 * emailamdin_smpt object
-	 *
-	 * @var object
-	 */
-	var $smtp;
-
-	/**
 	 * user has admin right to emailadmin
 	 *
 	 * @var	boolean
@@ -97,7 +90,6 @@ class mail_sieve
 		$this->displayCharset = translation::charset();
 		$profileID = 0;
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
-		$this->smtp = new emailadmin_smtp();
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
@@ -477,7 +469,7 @@ class mail_sieve
 		}
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
-		$accAllIdentities = $this->smtp->getAccountEmailAddress(accounts::id2name($accountID));
+		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(accounts::id2name($accountID));
 		$allAliases = array($this->account->acc_imap_username);
 		foreach ($accAllIdentities as &$arrVal)
 		{
