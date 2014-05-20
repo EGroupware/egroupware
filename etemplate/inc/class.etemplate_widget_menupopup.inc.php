@@ -663,7 +663,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 				break;
 		}
-		if ($rows > 1)
+		if ($rows > 1 || $readonly)
 		{
 			unset($options['']);
 		}
