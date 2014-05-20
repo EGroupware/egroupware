@@ -75,7 +75,7 @@ app.classes.mail = AppJS.extend(
 		// Unbind from nm refresh
 		if(this.et2 != null)
 		{
-			var nm = this.et2.getWidgetById('nm');
+			var nm = this.et2.getWidgetById(this.nm_index);
 			if(nm != null)
 			{
 				$j(nm).off('refresh');
@@ -126,7 +126,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 
 			// Bind to nextmatch refresh to update folder status
-			var nm = this.et2.getWidgetById('nm');
+			var nm = this.et2.getWidgetById(this.nm_index);
 			if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 			{
 				var self = this;
@@ -173,6 +173,17 @@ app.classes.mail = AppJS.extend(
 		{
 			this.vacationFilterStatusChange();
 		}
+	},
+
+	/**
+	 * mail rebuild Action menu On nm-list
+	 *
+	 * @param _actions
+	 */
+	mail_rebuildActionsOnList: function(_actions)
+	{
+		console.log("mail_rebuildActionsOnList",_actions);
+		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
 	},
 
 	/**
@@ -691,7 +702,7 @@ app.classes.mail = AppJS.extend(
 		// Pre-load next email already so user gets it faster
 		// Browser will cache the file for us
 /*
-		var fO = egw_getObjectManager('mail',false,1).getObjectById('nm').getFocusedObject();
+		var fO = egw_getObjectManager('mail',false,1).getObjectById(this.nm_index).getFocusedObject();
 		var next = false;
 		if (fO) next = fO.getNext(1);
 		// Stop until we get all the details worked out - server marks as seen automatically
@@ -2284,6 +2295,18 @@ app.classes.mail = AppJS.extend(
 	mail_dragStart: function(action,_senders) {
 		//console.log(action,_senders);
 		return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>");
+	},
+
+	/**
+	 * mail_move2folder - implementation of the move action from action menu
+	 *
+	 * @param _action
+	 * @param _elems - the representation of the elements to be affected
+	 */
+	mail_move2folder: function(_action, _elems) {
+		//alert('Copy or Move Called:'+_action.id);
+		// _action.id holds folder target information
+		this.mail_move(_action, _elems, null);
 	},
 
 	/**

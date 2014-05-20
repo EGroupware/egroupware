@@ -432,8 +432,8 @@ class mail_ui
 					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
 					//'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
+					//'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					//'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
 					'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
@@ -445,6 +445,7 @@ class mail_ui
 		//$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['csv_fields'] = false;
+		//$content[self::$nm_index]['actions'] = self::get_actions();
 		if ($msg)
 		{
 			$content['msg'] = $msg;
@@ -1097,6 +1098,7 @@ class mail_ui
 	 */
 	private function get_actions(array &$action_links=array())
 	{
+		static $accArray; // buffer identity names on single request
 		// duplicated from mail_hooks
 		static $deleteOptions = array(
 			'move_to_trash'		=> 'move to trash',
@@ -1110,22 +1112,82 @@ class mail_ui
 			'Sent' => 'Sent',
 		);
 		$lastFolderUsedForMove = null;
-		$moveaction = 'move_';
-		$lastFolderUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-		if (isset($lastFolderUsedForMoveCont[$this->mail_bo->profileID]))
+		$moveactions = array();
+		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__." StoredFolders->".array2string($lastFoldersUsedForMoveCont));
+		error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
+		if (is_null($accArray))
 		{
-			$_folder = $this->mail_bo->icServer->getCurrentMailbox();
-			//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFolderUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
-			//if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID]) $this->mail_bo->icServer->selectMailbox($lastFolderUsedForMoveCont[$this->mail_bo->profileID]);
-			if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID])
+			foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
 			{
-				$lastFolderUsedForMove = $this->mail_bo->getFolderStatus($lastFolderUsedForMoveCont[$this->mail_bo->profileID]);
-				//error_log(array2string($lastFolderUsedForMove));
-				$moveaction .= $lastFolderUsedForMoveCont[$this->mail_bo->profileID];
+				//error_log(__METHOD__.__LINE__.array2string($accountObj));
+				if (empty($accountObj->acc_imap_host))
+				{
+					// not to be used for IMAP Foldertree, as there is no Imap host
+					continue;
+				}
+				$identity_name = emailadmin_account::identity_name($accountObj);
+				$accArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
+				//	'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 			}
-			//if ($_folder!=$lastFolderUsedForMoveCont[$this->profileID]) $this->mail_bo->icServer->selectMailbox($_folder);
-
 		}
+		if (!is_array($lastFoldersUsedForMoveCont)) $lastFoldersUsedForMoveCont=array();
+		foreach ($lastFoldersUsedForMoveCont as $pid => $info)
+		{
+			if ($this->mail_bo->profileID==$pid && isset($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]))
+			{
+				$_folder = $this->mail_bo->icServer->getCurrentMailbox();
+				//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFoldersUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
+				//if ($_folder!=$lastFoldersUsedForMoveCont[$this->mail_bo->profileID]) $this->mail_bo->icServer->selectMailbox($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]);
+				$counter =1;
+				foreach ($lastFoldersUsedForMoveCont[$this->mail_bo->profileID] as $i => $lastFolderUsedForMoveCont)
+				{
+					$moveaction = 'move_';
+					if ($_folder!=$i)
+					{
+						$moveaction .= $lastFolderUsedForMoveCont;
+						
+						if ($this->mail_bo->folderExists($i) /*&& $counter<4*/) // only 4 entries per mailaccount.Control this on setting the buffered folders
+						{
+							$fS['profileID'] = $this->mail_bo->profileID;
+							$fS['profileName'] = $accArray[$this->mail_bo->profileID];
+							$fS['shortDisplayName'] = $i;
+							$moveactions[$moveaction] = $fS;
+							$counter ++;
+						}
+						else
+						{
+							unset($lastFoldersUsedForMoveCont[$this->mail_bo->profileID][$i]);
+						}
+						//error_log(array2string($moveactions[$moveaction]));
+					}
+				}
+			}
+			elseif ($this->mail_bo->profileID!=$pid && isset($lastFoldersUsedForMoveCont[$pid]) && !empty($lastFoldersUsedForMoveCont[$pid]))
+			{
+				$counter =1;
+				foreach ($lastFoldersUsedForMoveCont[$pid] as $i => $lastFolderUsedForMoveCont)
+				{
+					//error_log(__METHOD__.__LINE__."$i => $lastFolderUsedForMoveCont");
+					if (/*$counter<4 &&*/ !empty($lastFolderUsedForMoveCont)) // only 4 entries per mailaccount.Control this on setting the buffered folders
+					{
+						$moveaction = 'move_';
+						$fS = array();
+						$fS['profileID'] = $pid;
+						$fS['profileName'] = $accArray[$pid];
+						$fS['shortDisplayName'] = $i;
+						$moveactions[$moveaction] = $fS;
+						$counter ++;
+					}
+					else
+					{
+						//unset($lastFoldersUsedForMoveCont[$pid][$i]);
+					}
+				}
+			}
+			//if ($_folder!=$lastFoldersUsedForMoveCont[$this->profileID]) $this->mail_bo->icServer->selectMailbox($_folder);
+		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
 		$actions =  array(
 			'open' => array(
 				'caption' => lang('Open'),
@@ -1180,268 +1242,247 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
-			),
-			$moveaction => array(
-				'caption' => lang('Move selected to').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
-				'icon' => 'move',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_move2folder',
-				'allowOnMultiple' => true,
-			),
-			'infolog' => array(
-				'caption' => 'InfoLog',
-				'hint' => 'Save as InfoLog',
-				'icon' => 'infolog/navbar',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_infolog',
-				'url' => 'menuaction=infolog.infolog_ui.import_mail',
-				'popup' => egw_link::get_registry('infolog', 'add_popup'),
-				'allowOnMultiple' => false,
-				'toolbarDefault' => true
-			),
-			'tracker' => array(
-				'caption' => 'Tracker',
-				'hint' => 'Save as ticket',
-				'group' => $group,
-				'icon' => 'tracker/navbar',
-				'onExecute' => 'javaScript:app.mail.mail_tracker',
-				'url' => 'menuaction=tracker.tracker_ui.import_mail',
-				'popup' => egw_link::get_registry('tracker', 'add_popup'),
-				'allowOnMultiple' => false,
-			),
-			'print' => array(
-				'caption' => 'Print',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_print',
-				'allowOnMultiple' => false,
-			),
-			'save' => array(
-				'caption' => 'Save',
-				'group' => $group,
-				'icon' => 'fileexport',
-				'children' => array(
-					'save2disk' => array(
-						'caption' => 'Save to disk',
-						'hint' => 'Save message to disk',
-						'group' => $group,
-						'icon' => 'fileexport',
-						'onExecute' => 'javaScript:app.mail.mail_save',
-						'allowOnMultiple' => false,
-					),
-					'save2filemanager' => array(
-						'caption' => 'Filemanager',
-						'hint' => 'Save message to filemanager',
-						'group' => $group,
-						'icon' => 'filemanager/navbar',
-						'onExecute' => 'javaScript:app.mail.mail_save2fm',
-						'allowOnMultiple' => false,
-					),
-				),
-			),
-			'view' => array(
-				'caption' => 'View',
-				'group' => $group,
-				'icon' => 'kmmsgread',
-				'children' => array(
-					'header' => array(
-						'caption' => 'Header',
-						'hint' => 'View header lines',
-						'group' => $group,
-						'icon' => 'kmmsgread',
-						'onExecute' => 'javaScript:app.mail.mail_header',
-						'allowOnMultiple' => false,
-					),
-					'mailsource' => array(
-						'caption' => 'Source',
-						'hint' => 'View full Mail Source',
-						'group' => $group,
-						'icon' => 'source',
-						'onExecute' => 'javaScript:app.mail.mail_mailsource',
-						'allowOnMultiple' => false,
-					),
-					'openastext' => array(
-						'caption' => lang('Text mode'),
-						'hint' => 'Open in Text mode',
-						'group' => ++$group,
-						'icon' => 'textmode',
-						'onExecute' => 'javaScript:app.mail.mail_openAsText',
-						'allowOnMultiple' => false,
-					),
-					'openashtml' => array(
-						'caption' => lang('HTML mode'),
-						'hint' => 'Open in HTML mode',
-						'group' => $group,
-						'icon' => 'htmlmode',
-						'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
-						'allowOnMultiple' => false,
-					),
-				),
-			),
-			'mark' => array(
-				'caption' => 'Set / Remove Flags',
-				'icon' => 'read_small',
-				'group' => ++$group,
-				'children' => array(
-					// icons used from http://creativecommons.org/licenses/by-sa/3.0/
-					// Artist: Led24
-					// Iconset Homepage: http://led24.de/iconset
-					// License: CC Attribution 3.0
-					'setLabel' => array(
-						'caption' => 'Set / Remove Labels',
-						'icon' => 'tag_message',
-						'group' => ++$group,
-						'children' => array(
-							'unlabel' => array(
-								'group' => ++$group,
-								'caption' => "<font color='#ff0000'>".lang('remove all')."</font>",
-								'icon' => 'mail_label',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_0, true, true),
-							),
-							'label1' => array(
-								'group' => ++$group,
-								'caption' => "<font color='#ff0000'>".lang('important')."</font>",
-								'icon' => 'mail_label1',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
-							),
-							'label2' => array(
-								'group' => $group,
-								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
-								'icon' => 'mail_label2',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_2, true, true),
-							),
-							'label3' => array(
-								'group' => $group,
-								'caption' => "<font color='#008000'>".lang('personal')."</font>",
-								'icon' => 'mail_label3',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_3, true, true),
-							),
-							'label4' => array(
-								'group' => $group,
-								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
-								'icon' => 'mail_label4',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_4, true, true),
-							),
-							'label5' => array(
-								'group' => $group,
-								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
-								'icon' => 'mail_label5',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-								'shortcut' => egw_keymanager::shortcut(egw_keymanager::_5, true, true),
-							),
-						),
-					),
-					// modified icons from http://creativecommons.org/licenses/by-sa/3.0/
-/*
-					'unsetLabel' => array(
-						'caption' => 'Remove Label',
-						'icon' => 'untag_message',
-						'group' => ++$group,
-						'children' => array(
-							'unlabel1' => array(
-								'caption' => "<font color='#ff0000'>".lang('important')."</font>",
-								'icon' => 'mail_unlabel1',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-							),
-							'unlabel2' => array(
-								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
-								'icon' => 'mail_unlabel2',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-							),
-							'unlabel3' => array(
-								'caption' => "<font color='#008000'>".lang('personal')."</font>",
-								'icon' => 'mail_unlabel3',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-							),
-							'unlabel4' => array(
-								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
-								'icon' => 'mail_unlabel4',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-							),
-							'unlabel5' => array(
-								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
-								'icon' => 'mail_unlabel5',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
-							),
-						),
-					),
-*/
-					'flagged' => array(
-						'group' => ++$group,
-						'caption' => 'Flag / Unflag',
-						'icon' => 'unread_flagged_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						'hint' => 'Flag or Unflag a mail',
-						//'disableClass' => 'flagged',
-						//'enabled' => "javaScript:mail_disabledByClass",
-						'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
-						'toolbarDefault' => true
-					),
-/*
-					'unflagged' => array(
-						'group' => $group,
-						'caption' => 'Unflagged',
-						'icon' => 'read_flagged_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						//'enableClass' => 'flagged',
-						//'enabled' => "javaScript:mail_enabledByClass",
-						'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
-					),
-*/
-					'read' => array(
-						'group' => $group,
-						'caption' => 'Read / Unread',
-						'icon' => 'read_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						//'enableClass' => 'unseen',
-						//'enabled' => "javaScript:mail_enabledByClass",
-						'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
-
-					),
-/*
-					'unread' => array(
-						'group' => $group,
-						'caption' => 'Unread',
-						'icon' => 'unread_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						//'disableClass' => 'unseen',
-						//'enabled' => "javaScript:mail_disabledByClass",
-					),
-*/
-					'undelete' => array(
-						'group' => $group,
-						'caption' => 'Undelete',
-						'icon' => 'revert',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						//'enableClass' => 'deleted',
-						//'enabled' => "javaScript:mail_enabledByClass",
-					),
-				),
-			),
-			'delete' => array(
-				'caption' => 'Delete',
-				'hint' => $deleteOptions[$this->mail_bo->mailPreferences['deleteOptions']],
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_delete',
-				'toolbarDefault' => true
-			),
-/*
-			'select_all' => array(
-				'caption' => 'Select all',
-				'group' => ++$group,
-				'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, false, true),
-			),
-*/
-			'drag_mail' => array(
-				'dragType' => array('mail','file'),
-				'type' => 'drag',
-				'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
+		$macounter=0;
+		if (!empty($moveactions))
+		{
+			//error_log(__METHOD__.__LINE__.array2string($moveactions));
+			$children=array();
+			$pID=0;
+			foreach ($moveactions as $moveaction => $lastFolderUsedForMove)
+			{
+				$group = ($pID != $lastFolderUsedForMove['profileID'] && $macounter>0? $group+1 : $group);
+				//error_log(__METHOD__.__LINE__."#$pID != ".$lastFolderUsedForMove['profileID']."#".$macounter.'#'.$groupCounter.'#');
+				$children = array_merge($children,
+					array(
+						$moveaction => array(
+							'caption' => (!empty($lastFolderUsedForMove['profileName'])?$lastFolderUsedForMove['profileName']:'('.$lastFolderUsedForMove['profileID'].')').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
+							'icon' => 'move',
+							'group' => $group,
+							'onExecute' => 'javaScript:app.mail.mail_move2folder',
+							'allowOnMultiple' => true,
+						)
+					)
+				);
+				$pID = $lastFolderUsedForMove['profileID'];
+				$macounter++;
+			}
+			$actions = array_merge($actions,array('moveto' =>
+				array(
+					'caption' => lang('Move selected to'),
+					'icon' => 'move',
+					'group' => $group++,
+					'children' => $children,
+					)
+				)
+			);
+
+		}
+
+		$actions = array_merge($actions,
+			array(
+				'infolog' => array(
+					'caption' => 'InfoLog',
+					'hint' => 'Save as InfoLog',
+					'icon' => 'infolog/navbar',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.mail_infolog',
+					'url' => 'menuaction=infolog.infolog_ui.import_mail',
+					'popup' => egw_link::get_registry('infolog', 'add_popup'),
+					'allowOnMultiple' => false,
+					'toolbarDefault' => true
+				),
+				'tracker' => array(
+					'caption' => 'Tracker',
+					'hint' => 'Save as ticket',
+					'group' => $group,
+					'icon' => 'tracker/navbar',
+					'onExecute' => 'javaScript:app.mail.mail_tracker',
+					'url' => 'menuaction=tracker.tracker_ui.import_mail',
+					'popup' => egw_link::get_registry('tracker', 'add_popup'),
+					'allowOnMultiple' => false,
+				),
+				'print' => array(
+					'caption' => 'Print',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.mail_print',
+					'allowOnMultiple' => false,
+				),
+				'save' => array(
+					'caption' => 'Save',
+					'group' => $group,
+					'icon' => 'fileexport',
+					'children' => array(
+						'save2disk' => array(
+							'caption' => 'Save to disk',
+							'hint' => 'Save message to disk',
+							'group' => $group,
+							'icon' => 'fileexport',
+							'onExecute' => 'javaScript:app.mail.mail_save',
+							'allowOnMultiple' => false,
+						),
+						'save2filemanager' => array(
+							'caption' => 'Filemanager',
+							'hint' => 'Save message to filemanager',
+							'group' => $group,
+							'icon' => 'filemanager/navbar',
+							'onExecute' => 'javaScript:app.mail.mail_save2fm',
+							'allowOnMultiple' => false,
+						),
+					),
+				),
+				'view' => array(
+					'caption' => 'View',
+					'group' => $group,
+					'icon' => 'kmmsgread',
+					'children' => array(
+						'header' => array(
+							'caption' => 'Header',
+							'hint' => 'View header lines',
+							'group' => $group,
+							'icon' => 'kmmsgread',
+							'onExecute' => 'javaScript:app.mail.mail_header',
+							'allowOnMultiple' => false,
+						),
+						'mailsource' => array(
+							'caption' => 'Source',
+							'hint' => 'View full Mail Source',
+							'group' => $group,
+							'icon' => 'source',
+							'onExecute' => 'javaScript:app.mail.mail_mailsource',
+							'allowOnMultiple' => false,
+						),
+						'openastext' => array(
+							'caption' => lang('Text mode'),
+							'hint' => 'Open in Text mode',
+							'group' => ++$group,
+							'icon' => 'textmode',
+							'onExecute' => 'javaScript:app.mail.mail_openAsText',
+							'allowOnMultiple' => false,
+						),
+						'openashtml' => array(
+							'caption' => lang('HTML mode'),
+							'hint' => 'Open in HTML mode',
+							'group' => $group,
+							'icon' => 'htmlmode',
+							'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
+							'allowOnMultiple' => false,
+						),
+					),
+				),
+				'mark' => array(
+					'caption' => 'Set / Remove Flags',
+					'icon' => 'read_small',
+					'group' => ++$group,
+					'children' => array(
+						// icons used from http://creativecommons.org/licenses/by-sa/3.0/
+						// Artist: Led24
+						// Iconset Homepage: http://led24.de/iconset
+						// License: CC Attribution 3.0
+						'setLabel' => array(
+							'caption' => 'Set / Remove Labels',
+							'icon' => 'tag_message',
+							'group' => ++$group,
+							'children' => array(
+								'unlabel' => array(
+									'group' => ++$group,
+									'caption' => "<font color='#ff0000'>".lang('remove all')."</font>",
+									'icon' => 'mail_label',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_0, true, true),
+								),
+								'label1' => array(
+									'group' => ++$group,
+									'caption' => "<font color='#ff0000'>".lang('important')."</font>",
+									'icon' => 'mail_label1',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_1, true, true),
+								),
+								'label2' => array(
+									'group' => $group,
+									'caption' => "<font color='#ff8000'>".lang('job')."</font>",
+									'icon' => 'mail_label2',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_2, true, true),
+								),
+								'label3' => array(
+									'group' => $group,
+									'caption' => "<font color='#008000'>".lang('personal')."</font>",
+									'icon' => 'mail_label3',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_3, true, true),
+								),
+								'label4' => array(
+									'group' => $group,
+									'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
+									'icon' => 'mail_label4',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_4, true, true),
+								),
+								'label5' => array(
+									'group' => $group,
+									'caption' => "<font color='#8000ff'>".lang('later')."</font>",
+									'icon' => 'mail_label5',
+									'onExecute' => 'javaScript:app.mail.mail_flag',
+									'shortcut' => egw_keymanager::shortcut(egw_keymanager::_5, true, true),
+								),
+							),
+						),
+						// modified icons from http://creativecommons.org/licenses/by-sa/3.0/
+						'flagged' => array(
+							'group' => ++$group,
+							'caption' => 'Flag / Unflag',
+							'icon' => 'unread_flagged_small',
+							'onExecute' => 'javaScript:app.mail.mail_flag',
+							'hint' => 'Flag or Unflag a mail',
+							//'disableClass' => 'flagged',
+							//'enabled' => "javaScript:mail_disabledByClass",
+							'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
+							'toolbarDefault' => true
+						),
+						'read' => array(
+							'group' => $group,
+							'caption' => 'Read / Unread',
+							'icon' => 'read_small',
+							'onExecute' => 'javaScript:app.mail.mail_flag',
+							//'enableClass' => 'unseen',
+							//'enabled' => "javaScript:mail_enabledByClass",
+							'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
+
+						),
+						'undelete' => array(
+							'group' => $group,
+							'caption' => 'Undelete',
+							'icon' => 'revert',
+							'onExecute' => 'javaScript:app.mail.mail_flag',
+							//'enableClass' => 'deleted',
+							//'enabled' => "javaScript:mail_enabledByClass",
+						),
+					),
+				),
+				'delete' => array(
+					'caption' => 'Delete',
+					'hint' => $deleteOptions[$this->mail_bo->mailPreferences['deleteOptions']],
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.mail_delete',
+					'toolbarDefault' => true
+				),
+/*
+				'select_all' => array(
+					'caption' => 'Select all',
+					'group' => ++$group,
+					'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, false, true),
+				),
+*/
+				'drag_mail' => array(
+					'dragType' => array('mail','file'),
+					'type' => 'drag',
+					'onExecute' => 'javaScript:app.mail.mail_dragStart',
+				)
+			)
+		);
+		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
 		{
@@ -1450,10 +1491,6 @@ class mail_ui
 		if (!isset($GLOBALS['egw_info']['user']['apps']['tracker']))
 		{
 			unset($actions['tracker']);
-		}
-		if (empty($lastFolderUsedForMove))
-		{
-			unset($actions[$moveaction]);
 		}
 		// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
 		if (!$this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
@@ -4350,6 +4387,23 @@ $this->partID = $partID;
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
 		list($targetProfileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
+		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+		$changeFolderActions = false;
+		if (!isset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]))
+		{
+			if ($lastFoldersUsedForMoveCont[$targetProfileID] && count($lastFoldersUsedForMoveCont[$targetProfileID])>3)
+			{
+				$keys = array_keys($lastFoldersUsedForMoveCont[$targetProfileID]);
+				foreach( $keys as $k => $f)
+				{
+					if (count($lastFoldersUsedForMoveCont[$targetProfileID])>3) unset($lastFoldersUsedForMoveCont[$targetProfileID][$f]);
+					else break;
+				}
+				//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont[$targetProfileID]));
+			}
+			$lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]=$_folderName;
+			$changeFolderActions = true;
+		}
 
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
@@ -4393,6 +4447,17 @@ $this->partID = $partID;
 			{
 				//error_log(__METHOD__.__LINE__.function_backtrace());
 				$response->call('egw_message',$e->getMessage(),"error");
+				if ($changeFolderActions == false)
+				{
+					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);
+					$changeFolderActions = true;
+				}
+			}
+			if ($changeFolderActions == true)
+			{
+				egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
+				$actionsnew = etemplate_widget_nextmatch::egw_actions(self::get_actions());
+				$response->call('app.mail.mail_rebuildActionsOnList',$actionsnew);
 			}
 		}
 		else
