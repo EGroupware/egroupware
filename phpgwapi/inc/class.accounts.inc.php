@@ -178,8 +178,7 @@ class accounts
 			$this->config = $backend;
 			$backend = null;
 			self::$_instance = $this;	// also set instance returned by singleton
-			unset(self::$cache);		// and empty our internal (session) cache
-			self::$cache = array();
+			self::$cache = array();		// and empty our internal (session) cache
 		}
 		else
 		{
