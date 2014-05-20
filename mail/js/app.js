@@ -182,7 +182,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_rebuildActionsOnList: function(_actions)
 	{
-		console.log("mail_rebuildActionsOnList",_actions);
+		//console.log("mail_rebuildActionsOnList",_actions);
 		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
 	},
 

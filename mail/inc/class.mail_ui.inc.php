@@ -165,7 +165,7 @@ class mail_ui
 	 */
 	static function callWizard($message, $exit=true)
 	{
-		error_log(__METHOD__."('$message', $exit) ".function_backtrace());
+		//error_log(__METHOD__."('$message', $exit) ".function_backtrace());
 		$linkData=(self::$icServerID ? array(
 				'menuaction' => 'mail.mail_wizard.edit',
 				'acc_id' => self::$icServerID,
@@ -1115,7 +1115,7 @@ class mail_ui
 		$moveactions = array();
 		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__." StoredFolders->".array2string($lastFoldersUsedForMoveCont));
-		error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
+		//error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
 		if (is_null($accArray))
 		{
 			foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
@@ -4456,7 +4456,14 @@ $this->partID = $partID;
 			if ($changeFolderActions == true)
 			{
 				egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
-				$actionsnew = etemplate_widget_nextmatch::egw_actions(self::get_actions());
+				$actionsnew = self::get_actions();
+/*
+				$actionsWithoutMoveTo = $actionsnew;
+				unset($actionsWithoutMoveTo['moveto']);
+				$actionsWithoutMoveTo = etemplate_widget_nextmatch::egw_actions($actionsWithoutMoveTo);
+				$response->call('app.mail.mail_rebuildActionsOnList',$actionsWithoutMoveTo);
+*/
+				$actionsnew = etemplate_widget_nextmatch::egw_actions($actionsnew);
 				$response->call('app.mail.mail_rebuildActionsOnList',$actionsnew);
 			}
 		}
