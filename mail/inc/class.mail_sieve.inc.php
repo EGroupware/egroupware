@@ -111,7 +111,7 @@ class mail_sieve
 		}
 		$this->account = emailadmin_account::read($profileID);
 
-		$this->mailPreferences = config::read('mail');
+		$this->mailConfig = config::read('mail');
 
 		$this->restoreSessionData();
 
@@ -121,8 +121,8 @@ class mail_sieve
 	/**
 	 * Sieve rules list
 	 *
-	 * @param {array} $content=null
-	 * @param {string} $msg=null
+	 * @param {array} $content
+	 * @param {string} $msg
 	 */
 	function index(array $content=null,$msg=null)
 	{
@@ -196,8 +196,8 @@ class mail_sieve
 						if (isset($content['status']))
 						{
 							$newEmailNotification = $content;
-							if (empty($this->mailPreferences['prefpreventforwarding']) ||
-								$this->mailPreferences['prefpreventforwarding'] == 0 )
+							if (empty($this->mailConfig['prefpreventforwarding']) ||
+								$this->mailConfig['prefpreventforwarding'] == 0 )
 							{
 								if (is_array($content['externalEmail']) && !empty($content['externalEmail']))
 								{
@@ -259,7 +259,7 @@ class mail_sieve
 	 * Sieve rules edit
 	 *
 	 *
-	 * @param {array} $content=null
+	 * @param {array} $content
 	 */
 	function edit ($content=null)
 	{
@@ -426,7 +426,7 @@ class mail_sieve
 	 */
 	function getEmailNotification()
 	{
-		if(!(empty($this->mailPreferences['prefpreventnotificationformailviaemail']) || $this->mailPreferences['prefpreventnotificationformailviaemail'] == 0))
+		if(!(empty($this->mailConfig['prefpreventnotificationformailviaemail']) || $this->mailConfig['prefpreventnotificationformailviaemail'] == 0))
 		{
 			throw new egw_exception_no_permission();
 		}
@@ -464,13 +464,14 @@ class mail_sieve
 	 */
 	function getVacation(&$vacation,&$msg, $accountID = null)
 	{
-		if(!(empty($this->mailPreferences['prefpreventabsentnotice']) || $this->mailPreferences['prefpreventabsentnotice'] == 0))
+		if(!(empty($this->mailConfig['prefpreventabsentnotice']) || $this->mailConfig['prefpreventabsentnotice'] == 0))
 		{
 			throw new egw_exception_no_permission();
 		}
 		$icServer = $this->is_admin_vac? $this->account->imapServer($accountID):$this->account->imapServer();
 
-		if($icServer->getScript($this->scriptName))
+		$ret = $icServer->getScript($this->scriptName);
+		if(!is_string($ret) && !isset($ret))
 		{
 			if(PEAR::isError($error = $icServer->retrieveRules($this->scriptName)) )
 			{
@@ -491,7 +492,7 @@ class mail_sieve
 		else
 		{
 			// something went wrong
-			$msg = lang('Unable to fetch vacation!');
+			if ($error)	$msg = lang($error);
 		}
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -613,8 +614,8 @@ class mail_sieve
 								unset($newVacation['account_id']);
 								unset($newVacation['acc_id']);
 							}
-							if (empty($this->mailPreferences['prefpreventforwarding']) ||
-								$this->mailPreferences['prefpreventforwarding'] == 0 )
+							if (empty($this->mailConfig['prefpreventforwarding']) ||
+								$this->mailConfig['prefpreventforwarding'] == 0 )
 							{
 								if (is_array($content['forwards']) && !empty($content['forwards']))
 								{
@@ -825,7 +826,7 @@ class mail_sieve
 	/**
 	 * Ajax function to handle the server side content for refreshing the form
 	 *
-	 * @param type $execId,
+	 * @param type $execId
      *
      */
 	function ajax_sieve_egw_refresh($execId)
@@ -846,7 +847,7 @@ class mail_sieve
 	 * Ajax function to handle actions over sieve rules list on gd
 	 *
 	 * @param {int|boolean} $exec_id template unique Id | false if we only wants to use serverside actions
-	 * @param {string} $actions name of action
+	 * @param {string} $action name of action
 	 * @param {string} $checked the selected rule id
 	 * @param {string} $msg containing the message comming from the client-side
 	 *
