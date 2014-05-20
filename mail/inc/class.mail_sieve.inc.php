@@ -26,12 +26,6 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $timed_vacation;
-	//var $scriptName = 'felamimail';
-
-	/**
-	 * @var emailadmin_sieve
-	 */
-	var $bosieve;
 
 	var $errorStack;
 
@@ -64,15 +58,6 @@ class mail_sieve
 	var $eNotitmpl;
 	
 	/**
-	 * mail_bo object
-	 *
-	 * @var object
-	 */
-	var $mailbo;
-
-	var $extraAddr;
-
-	/**
 	 * Current Identitiy
 	 *
 	 * @var String
@@ -87,6 +72,27 @@ class mail_sieve
 	var $smtp;
 	
 	/**
+	 * user has admin right to emailadmin
+	 *
+	 * @var	boolean
+	 */
+	var $mail_admin = false;
+	
+	/**
+	 * emailadmin_imap account object
+	 *
+	 * @var type
+	 */
+	var $account;
+	
+	/**
+	 * flag to check if vacation is called from admin
+	 *
+	 * @var type
+	 */
+	var $is_admin_vac = false;
+	
+	/**
 	 * Constructor
 	 *
 	 *
@@ -94,27 +100,24 @@ class mail_sieve
 
 	function __construct()
 	{
-		$this->displayCharset	= translation::charset();
+		$this->displayCharset = translation::charset();
 		$profileID = 0;
+		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
 		$this->smtp = new emailadmin_smtp();
 		
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			$profileID = (int) $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		$this->mailbo	= mail_bo::getInstance(false, $profileID, false,false);
-
-		$this->mailPreferences  =& $this->mailbo->mailPreferences;
-		$this->mailConfig	= config::read('mail');
-		$allIdentities = mail_bo::getAllIdentities();
-		$defaultIdentity = $this->mailbo->getDefaultIdentity();
-		$this->currentIdentity = $allIdentities[$defaultIdentity];
-		$this->currentIdentity['identity_string'] = mail_bo::generateIdentityString($allIdentities[$defaultIdentity],true);
+		$this->account = emailadmin_account::read($profileID);
+		
+		$this->mailPreferences = config::read('mail');
+		
 		$this->restoreSessionData();
-		$this->bosieve = $this->mailbo->icServer;
-		$this->timed_vacation = $this->bosieve->enableSieve && $this->bosieve->acc_imap_administration;
+		
+		$this->timed_vacation = $this->account->acc_sieve_enabled && $this->account->acc_imap_administration;
 	}
-
+	
 	/**
 	 * Sieve rules list
 	 *
@@ -132,7 +135,7 @@ class mail_sieve
 			$content['msg'] = $msg;
 		}
 
-		if ($this->mailbo->icServer->enableSieve)
+		if ($this->account->acc_sieve_enabled)
 		{
 			//Initializes the Grid contents
 			$content['rg']= $this->get_rows();
@@ -167,7 +170,7 @@ class mail_sieve
 		//Instantiate an etemplate_new object, representing sieve.emailNotification
 		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
 
-		if ($this->mailbo->icServer->enableSieve)
+		if ($this->account->acc_sieve_enabled)
 		{
 			$eNotification = $this->getEmailNotification();
 
@@ -204,7 +207,7 @@ class mail_sieve
 						}
 						if (isset($content['externalEmail']) && !empty($content['externalEmail']))
 						{
-							if (!$this->bosieve->setEmailNotification($this->scriptName, $newEmailNotification))
+							if (!$this->account->imapServer()->setEmailNotification($this->scriptName, $newEmailNotification))
 							{
 								$msg = lang("email notification update failed")."<br />";
 								break;
@@ -347,10 +350,10 @@ class mail_sieve
 						if($newRule['action'] && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
-							$ret = $this->bosieve->setRules($this->scriptName, $this->rules);
-							if (!$ret && !empty($this->bosieve->error))
+							$ret = $this->account->imapServer()->setRules($this->scriptName, $this->rules);
+							if (!$ret && !empty($this->account->imapServer()->error))
 							{
-								$msg .= lang("Saving the rule failed:")."<br />".$this->bosieve->error."<br />";
+								$msg .= lang("Saving the rule failed:")."<br />".$this->account->imapServer()->error."<br />";
 							}
 							else
 							{
@@ -419,6 +422,7 @@ class mail_sieve
 	 *
 	 *
 	 * @return type, returns array of email notification data, and in case of failure returns false
+	 * @todo Need to be checked if it is still needed
 	 */
 	function getEmailNotification()
 	{
@@ -427,17 +431,17 @@ class mail_sieve
 			throw new egw_exception_no_permission();
 		}
 
-		if($this->bosieve->getScript($this->scriptName))
+		if($this->account->imapServer()->getScript($this->scriptName))
 		{
-			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
+			if(PEAR::isError($error = $this->account->imapServer()->retrieveRules($this->scriptName)) )
 			{
 				$rules    = array();
 				$emailNotification = array();
 			}
 			else
 			{
-				$rules    = $this->bosieve->getRules($this->scriptName);
-				$emailNotification = $this->bosieve->getEmailNotification($this->scriptName);
+				$rules    = $this->account->imapServer()->getRules($this->scriptName);
+				$emailNotification = $this->account->imapServer()->getEmailNotification($this->scriptName);
 			}
 		}
 		else
@@ -454,58 +458,56 @@ class mail_sieve
 	 *
 	 * @param {array} $vacation
 	 * @param {string} $msg
+	 * @param {sting} $accountID
 	 *
 	 * @return {array} return multi-dimentional array of vacation and aliases
 	 */
-	function getVacation(&$vacation,&$msg)
+	function getVacation(&$vacation,&$msg, $accountID = null)
 	{
-		//$response->call('app.mail.sieve_vac_response_addresses');
-
 		if(!(empty($this->mailPreferences['prefpreventabsentnotice']) || $this->mailPreferences['prefpreventabsentnotice'] == 0))
 		{
 			throw new egw_exception_no_permission();
 		}
-
-		if($this->bosieve->getScript($this->scriptName))
+		$icServer = $this->is_admin_vac? $this->account->imapServer($accountID):$this->account->imapServer();
+		
+		if($icServer->getScript($this->scriptName))
 		{
-			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
+			if(PEAR::isError($error = $icServer->retrieveRules($this->scriptName)) )
 			{
-				$vacation	= array();
+				$vacation = array();
 			}
 			else
 			{
-				$vacation	= $this->bosieve->getVacation($this->scriptName);
+				if ($this->is_admin_vac)
+				{
+				$vacation = $icServer->getVacationUser($accountID);
+				}
+				else
+				{
+					$vacation = $icServer->getVacation();
+				}
 			}
 		}
 		else
 		{
 			// something went wrong
 			$msg = lang('Unable to fetch vacation!');
-
 		}
-
-		$allIdentities = mail_bo::getAllIdentities();
+		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 		
-		$accAllIdentities = $this->smtp->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']);
-		$accEmailAddresses = array();
+		$accAllIdentities = $this->smtp->getAccountEmailAddress(accounts::id2name($accountID));
+		$allAliases = array($this->account->acc_imap_username);
 		foreach ($accAllIdentities as &$arrVal)
 		{
 			if ($arrVal['type'] !='default')
 			{
-				array_push($accEmailAddresses, $arrVal['address']);
+				$allAliases[] =  $arrVal['address'];
 			}
 		}
-		foreach($allIdentities as &$singleIdentity)
-		{
-			$predefinedAddresses[$singleIdentity['ident_email']] = $singleIdentity['ident_email'];
-		}
-				
-		$allAliases = array_unique(array_merge($predefinedAddresses,$accEmailAddresses));
 		asort($allAliases);
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($allAliases),
-			'defaultProfile' => $allIdentities[$this->mailbo->getDefaultIdentity()]
 		);
 	}
 
@@ -521,21 +523,53 @@ class mail_sieve
 		//Instantiate an etemplate_new object, representing the sieve.vacation template
 		$vtmpl = new etemplate_new('mail.sieve.vacation');
 		$vacation = array();
-
-		if ($this->mailbo->icServer->enableSieve)
+		
+		if (isset($_GET['account_id'])) $account_id = $preserv['account_id'] = $_GET['account_id'];
+		
+		if (isset($content['account_id']))
 		{
-			$vacRules = $this->getVacation($vacation,$msg);
-			//$this->timed_vacation=true;//this could force the timed vacation thingy even if not supported ;-)
+			$account_id = $content['account_id'];
+			$preserv['acc_id'] = $content['acc_id'];
+		}
+		if(isset($account_id) && $this->mail_admin)
+		{
+			foreach(emailadmin_account::search($account_id,false , null, false, 0, false) as $account)
+			{	
+				// check if account is valid for multiple users, has admin credentials and sieve enabled
+				if (emailadmin_account::is_multiple($account) &&
+					$account->acc_imap_admin_username && $account->acc_sieve_enabled)
+				{
+					$allAccounts[$account->acc_id] = $account->acc_name;
+					$accounts[$account->acc_id] = $account;
+				}
+			}
+			
+			$profileID = !isset($content['acc_id']) ? key($accounts):$content['acc_id'];
+			
+			//Chooses the right account
+			$this->account = $accounts[$profileID];
+			
+			$this->is_admin_vac = true;
+			$this->timed_vacation = $this->account->acc_sieve_enabled && $this->account->acc_imap_administration;
+			$preserv['account_id'] = $account_id;
+		}
+		
+		
+		if ( $this->account->acc_sieve_enabled)
+		{
+			$vacRules = $this->getVacation($vacation,$msg, $account_id);
+
 			if ($this->timed_vacation)
 			{
 				$ByDate = array('by_date' => lang('By date'));
 			}
-			if (!is_array($content))
+			if (!is_array($content) || ($content['acc_id'] && !isset($content['button'])))
 			{
 				$content = $vacation = $vacRules['vacation'];
+				if (!empty($profileID)) $content['acc_id'] = $profileID;
 				if (empty($vacation['addresses']))
 				{
-					$content['addresses']='';
+					$content['addresses'] = '';
 				}
 				if (!empty($vacation['forwards']))
 				{
@@ -573,6 +607,11 @@ class mail_sieve
 						{
 							//error_log(__METHOD__. 'content:' . array2string($content));
 							$newVacation = $content;
+							if (!empty($newVacation['account_id']) || !empty($newVacation['acc_id']))
+							{
+								unset($newVacation['account_id']);
+								unset($newVacation['acc_id']);
+							}
 							if (empty($this->mailPreferences['prefpreventforwarding']) ||
 								$this->mailPreferences['prefpreventforwarding'] == 0 )
 							{
@@ -608,9 +647,18 @@ class mail_sieve
 
 							if($this->checkRule($newVacation,$checkAddresses))
 							{
-								if (!$this->bosieve->setVacation($this->scriptName, $newVacation))
+								if (isset($account_id) && $this->mail_admin)
 								{
-									$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->bosieve->error;
+									$resSetvac = $this->account->imapServer()->setVacationUser($account_id,$this->scriptName, $newVacation);
+								}
+								else
+								{
+									$resSetvac = $this->account->imapServer()->setVacation($this->scriptName, $newVacation);
+								}
+								
+								if (!$resSetvac)
+								{
+									$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->account->imapServer()->error;
 									break;
 								}
 								else
@@ -619,7 +667,7 @@ class mail_sieve
 									{
 										$newVacation['scriptName'] = $this->scriptName;
 									}
-									$this->bosieve->setAsyncJob($newVacation);
+									$this->account->imapServer()->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}
@@ -631,7 +679,7 @@ class mail_sieve
 							$response = egw_json_response::get();
 							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
 							egw_framework::refresh_opener($msg, 'mail','edit');
-							if ($button === 'apply' || $this->bosieve->error !=="")
+							if ($button === 'apply' || $this->account->imapServer()->error !=="")
 							{
 								break;
 							}
@@ -641,7 +689,7 @@ class mail_sieve
 						egw_framework::window_close();
 				}
 			}
-
+			
 			$sel_options = array(
 				'status' => array(
 					'on' => lang('Active'),
@@ -649,6 +697,14 @@ class mail_sieve
 				),
 				'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 			);
+			if (!isset($account_id))
+			{
+				$readonlys['acc_id'] = true;
+			}	
+			else
+			{
+				$sel_options['acc_id'] = $allAccounts;
+			}
 			if (!empty($ByDate))
 			{
 				$sel_options['status'] += $ByDate;
@@ -660,7 +716,7 @@ class mail_sieve
 			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
-		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,array(),array(),2);
+		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -1045,7 +1101,7 @@ class mail_sieve
 	 */
 	function updateScript()
 	{
-		if (!$this->bosieve->setRules($this->scriptToEdit, $this->rules))
+		if (!$this->account->imapServer()->setRules($this->scriptToEdit, $this->rules))
 		{
 			return "update failed";
 		}
@@ -1061,10 +1117,10 @@ class mail_sieve
 	 */
 	function getRules($ruleID = null)
 	{
-		if(($script = $this->bosieve->getScript($this->scriptName)))
+		if(($script = $this->account->imapServer()->getScript($this->scriptName)))
 		{
 			$this->scriptToEdit 	= $this->scriptName;
-			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
+			if(PEAR::isError($error = $this->account->imapServer()->retrieveRules($this->scriptName)) )
 			{
 				error_log(__METHOD__.__LINE__.$error->message);
 				$this->rules	= array();
@@ -1073,9 +1129,9 @@ class mail_sieve
 			}
 			else
 			{
-				$this->rules	= $this->bosieve->getRules($this->scriptName);
+				$this->rules	= $this->account->imapServer()->getRules($this->scriptName);
 				$this->rulesByID = $this->rules[$ruleID];
-				$this->vacation	= $this->bosieve->getVacation($this->scriptName);
+				$this->vacation	= $this->account->imapServer()->getVacation($this->scriptName);
 			}
 			return true;
 		}

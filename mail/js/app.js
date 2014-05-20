@@ -3047,8 +3047,19 @@ app.classes.mail = AppJS.extend(
 	mail_prev_print: function (_action, _elems)
 	{
 		this.mail_open(_action, _elems, 'print');
+	},
+	
+	/**
+	 * Print a mail from list
+	 * 
+	 * @param {egw object} _egw 
+	 * @param {widget object} _widget mail account selectbox
+	 * 
+	 */
+	vacation_change_account: function (_egw, _widget)
+	{
+		_widget.getInstanceManager().submit();
 	}
-
 });
 
 // Bind a mouseenter event once for every read-only email

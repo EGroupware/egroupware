@@ -11,7 +11,12 @@
 			</columns>
 			<rows>
 				<row valign="top" class="dialogHeader">
-					<description value="Edit vacation settings" span="all" class="et2_fullWidth"/>
+					<description value="Edit vacation settings" class="et2_fullWidth"/>
+					<description align="right" disabled="!@acc_id" for="acc_id" value="Mail account"/>
+					<menulist>
+						<menupopup id="acc_id" disabled="!@acc_id" onchange="app.mail.vacation_change_account" class="et2_fullWidth"/>
+					</menulist>
+					<description/>
 				</row>
 				<row>
 					<description value="Status:"/>
