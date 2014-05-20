@@ -79,16 +79,16 @@ class mail_sieve
 	var $mail_admin = false;
 
 	/**
-	 * emailadmin_imap account object
+	 * account object
 	 *
-	 * @var type
+	 * @var emailadmin_imap
 	 */
 	var $account;
 
 	/**
 	 * flag to check if vacation is called from admin
 	 *
-	 * @var type
+	 * @var boolean
 	 */
 	var $is_admin_vac = false;
 
@@ -456,43 +456,32 @@ class mail_sieve
 	/**
 	 * Fetch Vacation rules and predefined Addresses from mailserver
 	 *
-	 * @param {array} $vacation
-	 * @param {string} $msg
-	 * @param {sting} $accountID
+	 * @param string $accountID
 	 *
-	 * @return {array} return multi-dimentional array of vacation and aliases
+	 * @return array return multi-dimentional array of vacation and aliases
 	 */
-	function getVacation(&$vacation,&$msg, $accountID = null)
+	function getVacation($accountID = null)
 	{
 		if(!(empty($this->mailConfig['prefpreventabsentnotice']) || $this->mailConfig['prefpreventabsentnotice'] == 0))
 		{
 			throw new egw_exception_no_permission();
 		}
-		$icServer = $this->is_admin_vac? $this->account->imapServer($accountID):$this->account->imapServer();
-
-		$ret = $icServer->getScript($this->scriptName);
-		if(!is_string($ret) && !isset($ret))
-		{
-			if(PEAR::isError($error = $icServer->retrieveRules($this->scriptName)) )
+		try {
+			if ($this->is_admin_vac)
 			{
-				$vacation = array();
+				$icServer = $this->account->imapServer($accountID);
+				$vacation = $icServer->getVacationUser($accountID);
 			}
 			else
 			{
-				if ($this->is_admin_vac)
-				{
-					$vacation = $icServer->getVacationUser($accountID);
-				}
-				else
-				{
-					$vacation = $icServer->getVacation();
-				}
+				$icServer = $this->account->imapServer();
+				$icServer->retrieveRules($this->scriptName);
+				$vacation = $icServer->getVacation();
 			}
 		}
-		else
+		catch(Exception $e)
 		{
-			// something went wrong
-			if ($error)	$msg = lang($error);
+			egw_framework::window_close(lang($e->getMessage()));
 		}
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -559,7 +548,7 @@ class mail_sieve
 
 		if ( $this->account->acc_sieve_enabled)
 		{
-			$vacRules = $this->getVacation($vacation,$msg, $account_id);
+			$vacRules = $this->getVacation($account_id);
 
 			if ($this->timed_vacation)
 			{

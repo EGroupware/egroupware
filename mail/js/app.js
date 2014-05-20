@@ -385,7 +385,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {String} window_name The name of an open content window.
 	 * @param {object} content
-	 * 
+	 *
 	 * @description content Data to set into the window's fields
 	 * content.to Addresses to add to the to line
 	 * content.cc Addresses to add to the CC line
@@ -405,7 +405,7 @@ app.classes.mail = AppJS.extend(
 		{
 			return false;
 		}
-		
+
 		// Set each field provided
 		var success = true;
 		var arrContent = [];
@@ -414,7 +414,7 @@ app.classes.mail = AppJS.extend(
 			try
 			{
 				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
-				
+
 				// Merge array values, replace strings
 				var value = widget.getValue() || content[field];
 				if(jQuery.isArray(value))
@@ -578,7 +578,7 @@ app.classes.mail = AppJS.extend(
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
 		}
-		
+
 		// Trigger print command if the mail oppend for printing porpuse
 		if (window.location.search.search('&print=') >= 0)
 		{
@@ -763,7 +763,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} mode
 	 * @param {boolean} _refreshGridArea
 	 * @param {boolean} _refreshQuotaDisplay
-	 * 
+	 *
 	 */
 	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
 		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
@@ -806,7 +806,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
-	 * 
+	 *
 	 * @param {object} _server
 	 *
 	 */
@@ -818,7 +818,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setQuotaDisplay, function to call to read the quota for the active server
-	 * 
+	 *
 	 * @param {object} _data
 	 *
 	 */
@@ -838,7 +838,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
-		
+
 		// Check to make sure it's there
 		if(quotabox)
 		{
@@ -851,7 +851,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
-	 * 
+	 *
 	 * @param {object} _server
 	 *
 	 */
@@ -862,7 +862,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
-	 * 
+	 *
 	 * @param {object} _data
 	 *
 	 */
@@ -898,7 +898,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
-	 * 
+	 *
 	 * @param {object} _data
 	 *
 	 */
@@ -930,7 +930,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
-	 * 
+	 *
 	 * @param {object} _data
 	 *
 	 */
@@ -964,7 +964,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Queues a refreshFolderList request for 10ms. Actually this will just execute the
 	 * code after the calling script has finished.
-	 * 
+	 *
 	 * @param {array} _folders description
 	 */
 	mail_queueRefreshFolderList: function(_folders)
@@ -984,7 +984,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _currentNode
 	 */
 	mail_CheckFolderNoSelect: function(action,_senders,_currentNode) {
-		
+
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
 		var ftree, node;
@@ -1005,7 +1005,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_setFolderStatus, function to set the status for the visible folders
-	 * 
+	 *
 	 * @param {array} _status
 	 */
 	mail_setFolderStatus: function(_status) {
@@ -1103,7 +1103,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
-	 * 
+	 *
 	 * @param {boolean} _isPopup
 	 */
 	mail_refreshMessageGrid: function(_isPopup) {
@@ -1207,9 +1207,9 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_splitRowId
-	 * 
+	 *
 	 * @param {string} _rowID
-	 * 
+	 *
 	 */
 	mail_splitRowId: function(_rowID)
 	{
@@ -1310,9 +1310,9 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_emptyTrash
-	 * 
+	 *
 	 * @param {object} action
-	 * @param {object} _senders 
+	 * @param {object} _senders
 	 */
 	mail_emptyTrash: function(action,_senders) {
 		var server = _senders[0].iface.id.split('::');
@@ -1328,10 +1328,10 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_compressFolder
-	 * 
+	 *
 	 * @param {object} action
 	 * @param {object} _senders
-	 * 
+	 *
 	 */
 	mail_compressFolder: function(action,_senders) {
 		//console.log(action,_senders,FolderName);
@@ -1345,7 +1345,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * mail_changeProfile
-	 * 
+	 *
 	 * @param {string} folder the ID of the selected Node -> should be an integer
 	 * @param {object} _widget handle to the tree widget
 	 * @param {boolean} getFolders Flag to indicate that the profile needs the mail
@@ -1688,18 +1688,18 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {object} tag_info with values for attributes id, label, title, ...
 	 * @param {widget object} widget
-	 * 
+	 *
 	 * @todo seems this function is not implemented, need to be checked if it is neccessary at all
 	 */
 	address_click: function(tag_info, widget)
 	{
-		
+
 	},
 
 	/**
 	 * displayAttachment
-	 * 
-	 * @param {object} tag_info 
+	 *
+	 * @param {object} tag_info
 	 * @param {widget object} widget
 	 * @param {object} calledForCompose
 	 */
@@ -1825,7 +1825,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * displayUploadedFile
-	 * 
+	 *
 	 * @param {object} tag_info
 	 * @param {widget object} widget
 	 */
@@ -2166,7 +2166,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_getFormData
 	 *
 	 * @param {object} _actionObjects the senders
-	 * 
+	 *
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
 	mail_getFormData: function(_actionObjects) {
@@ -2537,7 +2537,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Upload for import (VFS)
-	* 
+	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	* @param {window object} _window
@@ -2553,7 +2553,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Upload for compose (VFS)
-	* 
+	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	* @param {window object} _window
@@ -2570,7 +2570,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Submit on change (VFS)
-	* 
+	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	* @param {window object} _window
@@ -2588,7 +2588,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Save as Draft (VFS)
-	* 
+	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	* @param {window object} _window
@@ -2600,7 +2600,7 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	* Save as Draf and pring (VFS)
-	* 
+	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	* @param {window object} _window
@@ -2631,9 +2631,9 @@ app.classes.mail = AppJS.extend(
 		var aliases = [];
 		var addr = this.et2.getWidgetById('addresses');
 		var addresses = this.et2.getArrayMgr('sel_options').data.addresses;
-		
+
 		for(var id in addresses) aliases.push(id);
-		
+
 		addr.set_value(aliases);
 	},
 
@@ -2817,14 +2817,17 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Edit vacation message
 	 *
-	 * @todo get the account id and open the relevant vacation, ATM alway open vacation rules which is set in preferences
+	 * @param {action} _action
+	 * @param {sender} _senders
 	 */
-	edit_vacation: function()
+	edit_vacation: function(_action, _senders)
 	{
-	   this.egw.open_link('mail.mail_sieve.editVacation','_blank','700x480');
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x480');
 	},
-	
+
 	/**
 	 * Popup the subscription dialog
 	 *
@@ -3021,7 +3024,7 @@ app.classes.mail = AppJS.extend(
 	mail_print: function(_action, _senders)
 	{
 		var currentTemp = this.et2._inst.name;
-		
+
 		switch (currentTemp)
 		{
 			case 'mail.index':
@@ -3030,28 +3033,28 @@ app.classes.mail = AppJS.extend(
 			case 'mail.display':
 				this.mail_display_print();
 		}
-		
+
 	},
-	
+
 	/**
 	 * Print a mail from Display
-	 * 
+	 *
 	 */
 	mail_display_print: function ()
 	{
 		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
-		
+
 		if (jQuery('#tempPrintDiv').length == 0)
 		{
 			var tmpPrintDiv = jQuery(document.createElement('div'))
 							.attr('id', 'tempPrintDiv')
 							.addClass('tmpPrintDiv');
-			if (mainIframe)		
+			if (mainIframe)
 			{
 				tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
 			}
 
-			jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);		
+			jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);
 
 			tmpPrintDiv.find('#divAppboxHeader').remove();
 		}
@@ -3059,25 +3062,25 @@ app.classes.mail = AppJS.extend(
 		this.egw.message('Printing....');
 		this.egw.window.print();
 	},
-	
+
 	/**
 	 * Print a mail from list
-	 * 
-	 * @param {Object} _action 
-	 * @param {Object} _elems 
-	 * 
+	 *
+	 * @param {Object} _action
+	 * @param {Object} _elems
+	 *
 	 */
 	mail_prev_print: function (_action, _elems)
 	{
 		this.mail_open(_action, _elems, 'print');
 	},
-	
+
 	/**
 	 * Print a mail from list
-	 * 
-	 * @param {egw object} _egw 
+	 *
+	 * @param {egw object} _egw
 	 * @param {widget object} _widget mail account selectbox
-	 * 
+	 *
 	 */
 	vacation_change_account: function (_egw, _widget)
 	{
