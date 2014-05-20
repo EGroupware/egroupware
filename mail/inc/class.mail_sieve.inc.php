@@ -191,7 +191,7 @@ class mail_sieve
 						}
 						if (isset($content['externalEmail']) && !empty($content['externalEmail']))
 						{
-							if (!$this->account->imapServer()->setEmailNotification($this->scriptName, $newEmailNotification))
+							if (!$this->account->imapServer()->setEmailNotification(null, $newEmailNotification))
 							{
 								$msg = lang("email notification update failed")."<br />";
 								break;
@@ -334,7 +334,7 @@ class mail_sieve
 						if($newRule['action'] && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
-							$ret = $this->account->imapServer()->setRules($this->scriptName, $this->rules);
+							$ret = $this->account->imapServer()->setRules(null, $this->rules);
 							if (!$ret && !empty($this->account->imapServer()->error))
 							{
 								$msg .= lang("Saving the rule failed:")."<br />".$this->account->imapServer()->error."<br />";
@@ -415,25 +415,17 @@ class mail_sieve
 			throw new egw_exception_no_permission();
 		}
 
-		if($this->account->imapServer()->getScript($this->scriptName))
+		if(PEAR::isError($error = $this->account->imapServer()->retrieveRules()) )
 		{
-			if(PEAR::isError($error = $this->account->imapServer()->retrieveRules($this->scriptName)) )
-			{
-				$rules    = array();
-				$emailNotification = array();
-			}
-			else
-			{
-				$rules    = $this->account->imapServer()->getRules($this->scriptName);
-				$emailNotification = $this->account->imapServer()->getEmailNotification($this->scriptName);
-			}
+			$rules    = array();
+			$emailNotification = array();
 		}
 		else
 		{
-			// something went wrong
-			error_log(__METHOD__.__LINE__.' failed');
-			return false;
+			$rules    = $this->account->imapServer()->getRules();
+			$emailNotification = $this->account->imapServer()->getEmailNotification();
 		}
+
 		return $emailNotification;
 	}
 
@@ -459,7 +451,7 @@ class mail_sieve
 			else
 			{
 				$icServer = $this->account->imapServer();
-				$icServer->retrieveRules($this->scriptName);
+				$icServer->retrieveRules();
 				$vacation = $icServer->getVacation();
 			}
 		}
@@ -637,10 +629,6 @@ class mail_sieve
 								}
 								else
 								{
-									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName']))
-									{
-										$newVacation['scriptName'] = $this->scriptName;
-									}
 									$icServer->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
@@ -1091,31 +1079,20 @@ class mail_sieve
 	 */
 	function getRules($ruleID = null)
 	{
-		if(($script = $this->account->imapServer()->getScript($this->scriptName)))
+		if(PEAR::isError($error = $this->account->imapServer()->retrieveRules()) )
 		{
-			$this->scriptToEdit 	= $this->scriptName;
-			if(PEAR::isError($error = $this->account->imapServer()->retrieveRules($this->scriptName)) )
-			{
-				error_log(__METHOD__.__LINE__.$error->message);
-				$this->rules	= array();
-				$this->rulesByID = array();
-				$this->vacation	= array();
-			}
-			else
-			{
-				$this->rules	= $this->account->imapServer()->getRules($this->scriptName);
-				$this->rulesByID = $this->rules[$ruleID];
-				$this->vacation	= $this->account->imapServer()->getVacation($this->scriptName);
-			}
-			return true;
+			error_log(__METHOD__.__LINE__.$error->message);
+			$this->rules	= array();
+			$this->rulesByID = array();
+			$this->vacation	= array();
 		}
 		else
 		{
-			// something went wrong
-			error_log(__METHOD__.__LINE__.' failed');
-			return false;
+			$this->rules	= $this->account->imapServer()->getRules();
+			$this->rulesByID = $this->rules[$ruleID];
+			$this->vacation	= $this->account->imapServer()->getVacation();
 		}
-		//error_log(__METHOD__.array2string( $script));
+		return true;
 	}
 
 
