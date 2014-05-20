@@ -41,6 +41,8 @@ class mail_hooks
 
 		if ($have_imap_admin_and_sieve)	// add action to set vacation notice for a user
 		{
+			translation::add_app('mail');
+
 			$user_actions[] = array (
 				'id' => 'mail_vacation',
 				'caption' => 'Vacation notice',
