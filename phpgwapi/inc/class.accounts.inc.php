@@ -56,7 +56,7 @@ class accounts
 	/**
 	 * Enables the session-cache, currently switched on independent of the backend
 	 *
-	 * @var boolean $use_session_cache
+	 * @var boolean
 	 */
 	static $use_session_cache = true;
 
@@ -90,6 +90,19 @@ class accounts
 	 */
 	var $depricated_names = array('firstname','lastname','fullname','email','type',
 		'status','expires','lastlogin','lastloginfrom','lastpasswd_change');
+
+	/**
+	 * List of all config vars accounts depend on and therefore should be passed in when calling contructor with array syntax
+	 *
+	 * @var array
+	 */
+	static public $config_vars = array(
+		'account_repository', 'auth_type',	// auth_type if fallback if account_repository is not set
+		'install_id',	// instance-specific caching
+		'auto_create_expire', 'default_group_lid',	// auto-creation of accounts
+		'ldap_host','ldap_root_dn','ldap_root_pw','ldap_context','ldap_group_context','ldap_search_filter',	// ldap backend
+		'ads_domain', 'ads_host', 'ads_admin_user', 'ads_admin_passwd', 'ads_connection', 'ads_context',	// ads backend
+	);
 
 	/**
 	 * Querytypes for the account-search
@@ -135,7 +148,7 @@ class accounts
 	private static $_instance = NULL;
 
 	/**
-	 * the singleton passtern
+	 * Singleton
 	 *
 	 * @return accounts
 	 */
@@ -164,10 +177,15 @@ class accounts
 		{
 			$this->config = $backend;
 			$backend = null;
+			self::$_instance = $this;	// also set instance returned by singleton
+			unset(self::$cache);		// and empty our internal (session) cache
+			self::$cache = array();
 		}
 		else
 		{
 			$this->config =& $GLOBALS['egw_info']['server'];
+
+			if (!isset(self::$_instance)) self::$_instance = $this;
 		}
 		if (is_null($backend))
 		{
@@ -991,7 +1009,9 @@ class accounts
 		{
 			foreach((array)$account_ids as $account_id)
 			{
-				egw_cache::unsetInstance(__CLASS__, 'account-'.$account_id);
+				$instance = self::getInstance();
+
+				egw_cache::unsetCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id);
 
 				unset(self::$request_cache[$account_id]);
 			}
@@ -1035,12 +1055,12 @@ class accounts
 
 		if (!isset($account))	// not in request cache --> try instance cache
 		{
-			$account = egw_cache::getInstance(__CLASS__, 'account-'.$account_id);
+			$instance = self::getInstance();
+
+			$account = egw_cache::getCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id);
 
 			if (!isset($account))	// not in instance cache --> read from backend
 			{
-				$instance = self::getInstance();
-
 				if (($account = $instance->backend->read($account_id)))
 				{
 					if ($instance->get_type($account_id) == 'u')
@@ -1051,7 +1071,7 @@ class accounts
 					{
 						if (!isset($account['members'])) $account['members'] = $instance->backend->members($account_id);
 					}
-					egw_cache::setInstance(__CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
+					egw_cache::setCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
 				}
 				//error_log(__METHOD__."($account_id) read from backend ".array2string($account));
 			}
@@ -1066,7 +1086,7 @@ class accounts
 			{
 				if ($instance->is_active($id)) $account['members-active'][$id] = $lid;
 			}
-			egw_cache::setInstance(__CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
+			egw_cache::setCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
 		}
 		//error_log(__METHOD__."($account_id, $need_active) returning ".array2string($account));
 		return $account;
