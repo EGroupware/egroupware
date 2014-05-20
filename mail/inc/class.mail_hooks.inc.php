@@ -30,7 +30,8 @@ class mail_hooks
 		{
 			// check if account is valid for multiple users, has admin credentials and sieve enabled
 			if (emailadmin_account::is_multiple($params) &&
-				$params['acc_imap_admin_username'] && $params['acc_sieve_enabled'])
+				$params['acc_imap_admin_username'] && $params['acc_sieve_enabled'] ||
+				$params['acc_imap_type'] == 'managementserver_imap')
 			{
 				$have_imap_admin_and_sieve = true;
 				break;
