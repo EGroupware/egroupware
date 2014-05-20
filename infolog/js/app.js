@@ -64,7 +64,13 @@ app.classes.infolog = AppJS.extend(
 			case 'infolog.index':
 				this.filter_change();
 				break;
+			case 'infolog.edit.print':
+				// Trigger print command if the infolog oppend for printing porpuse
+				var that = this;
+				jQuery('#infolog-edit-print').bind('load',function(){that.infolog_print_preview();});
 		}
+		
+		
 	},
 
 	/**
@@ -314,7 +320,31 @@ app.classes.infolog = AppJS.extend(
 			}
 		}
 	},
-
+	
+	/**
+	 * Open infolog entry for printing
+	 *
+	 * @param {aciton object} _action
+	 * @param {object} _selected
+	 */
+	infolog_menu_print: function(_action, _selected)
+	{
+		var id = _selected[0].id.replace(/^infolog::/g,'');
+		egw_open(id,'infolog','edit',{print:1});
+	
+	},
+	
+	/**
+	 * Trigger print() function to print the current window
+	 *
+	 *
+	 */
+	infolog_print_preview: function ()
+	{
+		this.egw.message('Printing....');
+		this.egw.window.print();
+	},
+	
 	/**
 	 *
 	 */

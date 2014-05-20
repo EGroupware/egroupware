@@ -1117,6 +1117,12 @@ class infolog_ui
 				'allowOnMultiple' => false,
 				'disableClass' => 'rowNoCloseAll',
 			),
+			'print' => array(
+				'caption' => 'Print',
+				'icon' => 'print',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.infolog.infolog_menu_print'
+			)
 		);
 		++$group;	// integration with other apps
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
