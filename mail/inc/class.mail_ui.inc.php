@@ -288,9 +288,8 @@ class mail_ui
 
 		$profileId = $_GET['acc_id'];
 
+		$allFolders = $this->mail_bo->getFolderObjects(false,false,false,false);
 		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
-
-		$allFolders = $this->mail_bo->getFolderObjects();
 
 		if (!is_array($content))
 		{
