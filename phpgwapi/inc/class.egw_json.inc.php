@@ -96,6 +96,13 @@ class egw_json_request
 		{
 			@list($className,$functionName,$handler) = explode('::',$menuaction);
 			list($appName) = explode('_',$className);
+
+			// Check for a real static method, avoid instanciation if it is
+			$m = new ReflectionMethod($menuaction);
+			if($m->isStatic())
+			{
+				$ajaxClass = $className;
+			}
 		}
 		else
 		{
@@ -143,7 +150,7 @@ class egw_json_request
 		{
 			$ajaxClass = $GLOBALS['egw']->framework;
 		}
-		else
+		else if (!$ajaxClass)
 		{
 			$ajaxClass = CreateObject($appName.'.'.$className);
 		}
