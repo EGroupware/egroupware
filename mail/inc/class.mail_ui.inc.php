@@ -1149,7 +1149,7 @@ class mail_ui
 					if ($_folder!=$i)
 					{
 						$moveaction .= $lastFolderUsedForMoveCont;
-						
+
 						if ($this->mail_bo->folderExists($i) /*&& $counter<4*/) // only 4 entries per mailaccount.Control this on setting the buffered folders
 						{
 							$fS['profileID'] = $this->mail_bo->profileID;
@@ -2486,24 +2486,25 @@ unset($query['actions']);
 	}
 
 	/**
-	 * gatherVacation
+	 * fetch vacation info from active Server using icServer object
 	 *
-	 * fetch vacation info from active Server using the oldIMAPObject
-	 * @return mixed array/boolean - array with vacation on success; false on failure
+	 * @return array|boolean array with vacation on success or false on failure
 	 */
 	function gatherVacation()
 	{
 		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
-		if($vacation) {
+
+		if ($vacation && (!($isSieveError = egw_cache::getCache(egw_cache::INSTANCE, 'email',
+			'icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']))) || !$isSieveError[self::$icServerID]))
+		{
 			$sieveServer = $this->mail_bo->icServer;
 			//error_log(__METHOD__.__LINE__.' Sieve Server:'.self::$icServerID.' InstanceOf:'.array2string(($sieveServer instanceof defaultimap)|| ($sieveServer instanceof emailadmin_oldimap)).':'.array2string($sieveServerClass));
-			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'felamimail';
-			$sieveServer->getScript($scriptName);
-			$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
-			$vacation = $sieveServer->getVacation($sieveServer->scriptName);
-			$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
-			if ($isSieveError[self::$icServerID])
+			try {
+				$sieveServer->retrieveRules();
+				$vacation = $sieveServer->getVacation();
+			}
+			catch (Exception $e)
 			{
 				$vacation = false;
 			}
