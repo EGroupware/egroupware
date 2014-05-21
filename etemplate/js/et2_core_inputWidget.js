@@ -246,13 +246,11 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 				// If on a tab, switch to that tab so user can see it
 				var widget = this;
-				var tab = this;
-				while(widget._parent && widget._type !='tabbox')
+				while(widget._parent && widget._type != 'tabbox')
 				{
-					tab = widget;
 					widget = widget._parent;
 				}
-				widget.activateTab(this);
+				if (widget._type == 'tabbox') widget.activateTab(this);
 			}
 		}
 	},
