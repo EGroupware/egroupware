@@ -48,7 +48,7 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -65,7 +65,7 @@ class mail_sieve
 
 		$this->restoreSessionData();
 	}
-		
+
 	/**
 	 * Sieve rules list
 	 *
@@ -85,7 +85,7 @@ class mail_sieve
 		{
 			$content['msg'] = $msg;
 		}
-		
+
 		if ($this->account->acc_sieve_enabled)
 		{
 			//Initializes the Grid contents
@@ -215,7 +215,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.edit template
 		$etmpl = new etemplate_new('mail.sieve.edit');
-		
+
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -484,6 +484,7 @@ class mail_sieve
 		}
 		elseif(!is_array($content) && isset($_GET['acc_id']))
 		{
+			$this->account = emailadmin_account::read($_GET['acc_id']);
 			$preserv['acc_id'] = $this->account->acc_id;
 		}
 		elseif ($content['acc_id'])
