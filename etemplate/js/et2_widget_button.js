@@ -62,6 +62,12 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			description: "Adds image in front of text instead of just using an image with text as tooltip",
 			default: et2_no_init	// to leave it undefined, if not defined, so background-image is assigned by default
 		},
+		novalidate: {
+			name: "Do NOT validate form",
+			type: "boolean",
+			description: "Do NOT validate form before submitting it",
+			default: false
+		},
 		// No such thing as a required button
 		"needed": {
 			"ignore": true
@@ -270,7 +276,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		// Submit the form
 		if (this._type != "buttononly")
 		{
-			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
+			this.getInstanceManager().submit(this, false, this.options.novalidate); //TODO: this only needs to be passed if it's in a datagrid
 		}
 		this.clicked = false;
 		return true;
