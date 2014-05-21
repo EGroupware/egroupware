@@ -9,47 +9,17 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
 
 class mail_sieve
 {
-	var $public_functions = array
-		(
-			'editVacation'	=> True,
-			'index'			=> True,
-			'edit'			=> True,
-			'editEmailNotification'=> True, // Added email notifications
-		);
+	var $public_functions = array(
+		'editVacation'	=> True,
+		'index'			=> True,
+		'edit'			=> True,
+		'editEmailNotification'=> True, // Added email notifications
+	);
 
 	var $errorStack;
-
-	/**
-	 * etemplate object for sieve index
-	 *
-	 * @var object
-	 */
-	var $tmpl;
-
-	/**
-	 * etemplate object for sieve edit popup
-	 *
-	 * @var object
-	 */
-	var $etmpl;
-
-	/**
-	 * etemplate object for Vacation
-	 *
-	 * @var object
-	 */
-	var $vtmpl;
-
-	/**
-	 * etemplate object for email notification
-	 *
-	 * @var object
-	 */
-	var $eNotitmpl;
 
 	/**
 	 * Current Identitiy
@@ -78,17 +48,14 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-	
+
 	/**
 	 * Constructor
-	 *
-	 *
 	 */
-
 	function __construct()
 	{
 		$this->displayCharset = translation::charset();
-		$profileID = 0;
+		$profileID = (int)$_GET['acc_id'];
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
@@ -110,7 +77,6 @@ class mail_sieve
 	 */
 	function index(array $content=null,$msg=null)
 	{
-
 		//Instantiate an etemplate_new object
 		$tmpl = new etemplate_new('mail.sieve.index');
 
@@ -191,7 +157,7 @@ class mail_sieve
 						}
 						if (isset($content['externalEmail']) && !empty($content['externalEmail']))
 						{
-							if (!$this->account->imapServer()->setEmailNotification(null, $newEmailNotification))
+							if (!$this->account->imapServer()->setEmailNotification($newEmailNotification))
 							{
 								$msg = lang("email notification update failed")."<br />";
 								break;
@@ -241,7 +207,6 @@ class mail_sieve
 
 	/**
 	 * Sieve rules edit
-	 *
 	 *
 	 * @param {array} $content
 	 */
@@ -334,7 +299,7 @@ class mail_sieve
 						if($newRule['action'] && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
-							$ret = $this->account->imapServer()->setRules(null, $this->rules);
+							$ret = $this->account->imapServer()->setRules($this->rules);
 							if (!$ret && !empty($this->account->imapServer()->error))
 							{
 								$msg .= lang("Saving the rule failed:")."<br />".$this->account->imapServer()->error."<br />";
@@ -374,7 +339,6 @@ class mail_sieve
 					egw_framework::window_close();
 					common::egw_exit();
 			}
-
 		}
 		$sel_options = array(//array_merge($sel_options,array(
 			'anyof' => array(
@@ -396,7 +360,6 @@ class mail_sieve
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
 		$mailCompose = new mail_compose();
 		$sel_options['action_folder_text'] = $mailCompose->ajax_searchFolder(0,true);
-
 
 		return $etmpl->exec('mail.mail_sieve.edit',$content,$sel_options,$readonlys,array(),2);
 	}
@@ -518,6 +481,11 @@ class mail_sieve
 			$this->is_admin_vac = true;
 			$preserv['account_id'] = $account_id;
 		}
+		elseif(!is_array($content) && isset($_GET['acc_id']))
+		{
+			$this->account = emailadmin_account::read($_GET['acc_id']);
+			$preserv['acc_id'] = $this->account->acc_id;
+		}
 
 		$icServer = $this->account->imapServer($this->is_admin_vac ? $account_id : false);
 
@@ -607,11 +575,11 @@ class mail_sieve
 							{
 								if (isset($account_id) && $this->mail_admin)
 								{
-									$resSetvac = $icServer->setVacationUser($account_id,$this->scriptName, $newVacation);
+									$resSetvac = $icServer->setVacationUser($account_id, $this->scriptName, $newVacation);
 								}
 								else
 								{
-									$resSetvac = $icServer->setVacation($this->scriptName, $newVacation);
+									$resSetvac = $icServer->setVacation($newVacation);
 								}
 
 								if (!$resSetvac)
@@ -620,9 +588,12 @@ class mail_sieve
 									break;
 								}
 								// schedule job to switch message on/off, if request and not already in past
-								elseif ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600<time())
+								else
 								{
-									self::setAsyncJob($newVacation);
+									if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time())
+									{
+										self::setAsyncJob($newVacation);
+									}
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}
@@ -836,14 +807,12 @@ class mail_sieve
 		//Calling to referesh after move action
 		$response = egw_json_response::get();
 		$response->call('app.mail.sieve_refresh');
-
 	}
 
 	/**
 	 * Ajax function to handle the server side content for refreshing the form
 	 *
 	 * @param type $execId
-     *
      */
 	function ajax_sieve_egw_refresh($execId)
 	{
@@ -878,7 +847,8 @@ class mail_sieve
 				if ($checked === count($this->rules)-1)
 				{
 					$msg = lang('rule with priority ') . $checked . lang(' deleted!');
-				}else
+				}
+				else
 				{
 
 					$msg = lang('rule with priority ') . $checked . lang(' deleted!') . lang(' And the rule with priority %1, now got the priority %2',$checked+1,$checked);
@@ -1101,8 +1071,6 @@ class mail_sieve
 
 	/**
 	 * Save session data
-	 *
-	 *
 	 */
 	function saveSessionData()
 	{
@@ -1114,19 +1082,16 @@ class mail_sieve
 
 	/**
 	 * Update the sieve script on mail server
-	 *
-	 *
 	 */
 	function updateScript()
 	{
-		if (!$this->account->imapServer()->setRules($this->scriptToEdit, $this->rules))
+		if (!$this->account->imapServer()->setRules($this->rules))
 		{
 			return "update failed";
 		}
 	}
 
 	/**
-	 * getRules()
 	 * Fetched rules save on array()rules.
 	 *
 	 * @param {string} $ruleID  Numeric Id of the rule if specify return the specitic rule| otherwise ruleByID would be null
@@ -1151,10 +1116,8 @@ class mail_sieve
 		return true;
 	}
 
-
 	/**
 	 * Restore session data
-	 *
 	 */
 	function restoreSessionData()
 	{
@@ -1188,7 +1151,8 @@ class mail_sieve
 					$row['class'] = 'mail_sieve_DISABLED';
 				}
             }
-		}else
+		}
+		else
 		{
 			//error_log(__METHOD__.'There are no rules or something is went wrong at getRules()!');
 			return false;
