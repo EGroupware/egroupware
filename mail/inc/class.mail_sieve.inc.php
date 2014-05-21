@@ -573,11 +573,7 @@ class mail_sieve
 						{
 							//error_log(__METHOD__. 'content:' . array2string($content));
 							$newVacation = $content;
-							if (!empty($newVacation['account_id']) || !empty($newVacation['acc_id']))
-							{
-								unset($newVacation['account_id']);
-								unset($newVacation['acc_id']);
-							}
+
 							if (empty($this->mailConfig['prefpreventforwarding']) ||
 								$this->mailConfig['prefpreventforwarding'] == 0 )
 							{
@@ -601,14 +597,10 @@ class mail_sieve
 								$newVacation['status'] = 'off';
 							}
 
-							$checkAddresses = (isset($content['check_mail_sent_to']) && ($content['check_mail_sent_to']) != 0) ? true: false;
+							$checkAddresses = isset($content['check_mail_sent_to']) && $content['check_mail_sent_to'] != 0;
 							if ($content['addresses'])
 							{
 								$newVacation ['addresses'] = $content['addresses'];
-							}
-							else
-							{
-
 							}
 
 							if($this->checkRule($newVacation,$checkAddresses))
@@ -627,9 +619,10 @@ class mail_sieve
 									$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->account->imapServer()->error;
 									break;
 								}
-								else
+								// schedule job to switch message on/off, if request and not already in past
+								elseif ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600<time())
 								{
-									$icServer->setAsyncJob($newVacation);
+									self::setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}
@@ -679,6 +672,69 @@ class mail_sieve
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
+	 * set the asyncjob for a timed vacation
+	 *
+	 * @param array $_vacation vacation to set/unset with values for 'account_id', 'acc_id' and vacation stuff
+	 * @param boolean $_reschedule do nothing but reschedule the job by 3 minutes
+	 * @return  void
+	 */
+	static function setAsyncJob (array $_vacation, $_reschedule=false)
+	{
+		if (!($_vacation['acc_id'] > 0))
+		{
+			throw new egw_exception_wrong_parameter('No acc_id given!');
+		}
+		// setting up an async job to enable/disable the vacation message
+		$async = new asyncservice();
+		if (empty($_vacation['account_id'])) $_vacation['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
+		$async_id = !empty($_vacation['id']) ? $_vacation['id'] : 'mail-vacation-'.$_vacation['account_id'];
+		$async->delete($async_id);
+
+		$end_date = $_vacation['end_date'] + 24*3600;   // end-date is inclusive, so we have to add 24h
+		if ($_vacation['status'] == 'by_date' && time() < $end_date && $_reschedule===false)
+		{
+			$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
+			$async->set_timer($time,$async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
+		}
+		if ($_reschedule)
+		{
+			$time = time() + 60*3;
+			unset($_vacation['next']);
+			unset($_vacation['times']);
+			$async->set_timer($time, $async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
+		}
+ 	}
+
+	/**
+	 * Callback for the async job to enable/disable the vacation message
+	 *
+	 * @param array $_vacation
+	 * @throws egw_exception_not_found if mail account is not found
+	 */
+	static function async_vacation(array $_vacation)
+	{
+		if ($this->debug) error_log(__METHOD__.'('.array2string($_vacation).')');
+
+		$account = emailadmin_account::read($_vacation['acc_id'], $_vacation['account_id']);
+		$icServer = $account->imapServer($_vacation['account_id']);
+
+		if ($this->debug) error_log(__METHOD__.'() imap username='.$icServer->acc_imap_username);
+
+		try
+		{
+			$ret = $icServer->setVacationUser($_vacation['account_id'], null, $_vacation);
+			self::setAsyncJob($_vacation);
+		}
+		catch (Exception $e) {
+			error_log(__METHOD__.'('.array2string($_vacation).' failed '.$e->getMessage());
+			self::setAsyncJob($_vacation, true);	// reschedule
+			$ret = false;
+		}
+
+		return $ret;
 	}
 
 	/**
