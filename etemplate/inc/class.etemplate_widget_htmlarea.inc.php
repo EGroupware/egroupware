@@ -56,8 +56,13 @@ class etemplate_widget_htmlarea extends etemplate_widget
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = self::get_array($content, $form_name);
+			// only purify for html, mode "ascii" is NO html and content get lost!
+			if ($this->attrs['mode'] != 'ascii')
+			{
+				$value = html::purify($value, $this->attrs['validation_rules']);
+			}
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = html::purify($value,($this->attrs['validation_rules']?$this->attrs['validation_rules']:null));
+			if (true) $valid = $value;
 		}
 	}
 }

@@ -179,13 +179,21 @@ class etemplate_widget
 					$template = clone($this);
 					$cloned = true;	// only clone it once, otherwise we loose attributes!
 				}
-				$template->attrs[$reader->name] = $reader->value;
+				$value = (string)$reader->value;
+
+				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
+				if ($value[0] == '@' || strpos($value, '$') !== false)
+				{
+					$value = self::expand_name($value, null, null, null, null,
+						isset(self::$cont) ? self::$cont : self::$request->content);
+				}
+				$template->attrs[$reader->name] = $value;
 
 				// split legacy options
 				if ($legacy_options && $reader->name == 'options')
 				{
 					$legacy_options = explode(',', $legacy_options);
-					foreach(self::csv_split($reader->value, count($legacy_options)) as $n => $val)
+					foreach(self::csv_split($value, count($legacy_options)) as $n => $val)
 					{
 						if ($legacy_options[$n] && (string)$val !== '') $template->attrs[$legacy_options[$n]] = $val;
 					}
