@@ -175,6 +175,10 @@ img.iphoto {
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
+  div#addressbook-index div.header_row_right div[id$=favorite_wrapper] {
+    margin-top: 0px;
+    top: 6px;
+  }
   div#addressbook-index div.et2_hbox_right {
     padding: 0px 11px 0px 0px;
     width: auto;
