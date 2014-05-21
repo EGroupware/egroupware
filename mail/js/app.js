@@ -2801,19 +2801,19 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Open seive filter list
 	 *
-	 * @param {egwAction} action - Action user did to get here
-	 * @param {egwActionObject[]} selected - selected row(s)
+	 * @param {action} _action
+	 * @param {sender} _senders
 	 *
-	 * @todo get the account id and open the relevant sieve, ATM alway open sieve rules which is set in preferences
 	 */
-	edit_sieve: function(action, selected)
+	edit_sieve: function(_action, _senders)
 	{
-	   this.egw.open_link(this.egw.link('/index.php',
-		   {
-			   'menuaction': 'mail.mail_sieve.index',
-			   'ajax': 'true'
-		   }
-		));
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link(this.egw.link('/index.php',
+			{
+				'menuaction': 'mail.mail_sieve.index',
+				'acc_id': acc_id,
+				'ajax': 'true'
+			}));
 	},
 
 	/**

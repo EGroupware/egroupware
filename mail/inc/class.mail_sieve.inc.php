@@ -48,27 +48,24 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-
+	
 	/**
 	 * Constructor
 	 */
 	function __construct()
 	{
 		$this->displayCharset = translation::charset();
-		$profileID = (int)$_GET['acc_id'];
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : egw_cache::getSession(__CLASS__, 'acc_id');
+		if ($acc_id > 0)
 		{
-			$profileID = (int) $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+			$this->account = emailadmin_account::read($acc_id);
 		}
-		$this->account = emailadmin_account::read($profileID);
-
-		$this->mailConfig = config::read('mail');
 
 		$this->restoreSessionData();
 	}
-
+		
 	/**
 	 * Sieve rules list
 	 *
@@ -77,6 +74,10 @@ class mail_sieve
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		if (!is_array($content))
+		{
+			egw_cache::setSession(__CLASS__, 'acc_id', $this->account->acc_id);
+		}
 		//Instantiate an etemplate_new object
 		$tmpl = new etemplate_new('mail.sieve.index');
 
@@ -84,7 +85,7 @@ class mail_sieve
 		{
 			$content['msg'] = $msg;
 		}
-
+		
 		if ($this->account->acc_sieve_enabled)
 		{
 			//Initializes the Grid contents
@@ -214,7 +215,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.edit template
 		$etmpl = new etemplate_new('mail.sieve.edit');
-
+		
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -483,8 +484,11 @@ class mail_sieve
 		}
 		elseif(!is_array($content) && isset($_GET['acc_id']))
 		{
-			$this->account = emailadmin_account::read($_GET['acc_id']);
 			$preserv['acc_id'] = $this->account->acc_id;
+		}
+		elseif ($content['acc_id'])
+		{
+			$this->account = emailadmin_account::read($content['acc_id']);
 		}
 
 		$icServer = $this->account->imapServer($this->is_admin_vac ? $account_id : false);
@@ -518,6 +522,7 @@ class mail_sieve
 				{
 					$content['days'] = '3';
 				}
+				$preserv['is_admin_vac'] = $content['is_admin_vac'] = $this->is_admin_vac;
 			}
 			else
 			{
