@@ -78,7 +78,7 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-
+	
 	/**
 	 * Constructor
 	 *
@@ -451,7 +451,7 @@ class mail_sieve
 			else
 			{
 				$icServer = $this->account->imapServer();
-				$icServer->retrieveRules();
+				$icServer->retrieveRules(null);
 				$vacation = $icServer->getVacation();
 			}
 		}
@@ -716,12 +716,12 @@ class mail_sieve
 	 */
 	static function async_vacation(array $_vacation)
 	{
-		if ($this->debug) error_log(__METHOD__.'('.array2string($_vacation).')');
+		//error_log(__METHOD__.'('.array2string($_vacation).')');
 
 		$account = emailadmin_account::read($_vacation['acc_id'], $_vacation['account_id']);
 		$icServer = $account->imapServer($_vacation['account_id']);
 
-		if ($this->debug) error_log(__METHOD__.'() imap username='.$icServer->acc_imap_username);
+		//error_log(__METHOD__.'() imap username='.$icServer->acc_imap_username);
 
 		try
 		{
