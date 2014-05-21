@@ -33,7 +33,7 @@
  * @see http://docs.dhtmlx.com/gantt/index.html
  * @augments et2_valueWidget
  */
-var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
+var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 {
 	// Filters are inside gantt namespace
 	createNamespace: true,
@@ -70,7 +70,11 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 		autosize: 'y',
 		// Date rounding happens either way, but this way it rounds to the displayed grid resolution
 		// Also avoids a potential infinite loop thanks to how the dates are rounded with false
-		round_dnd_dates: true,
+		round_dnd_dates: false,
+		// Round resolution
+		time_step: parseInt(this.egw().preference('interval','calendar') || 15),
+		min_duration: 1 * 60 * 1000, // 1 minute
+
 		scale_unit: 'day',
 		date_scale: '%d',
 		subscales: [
@@ -244,6 +248,43 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 			this.egw().debug('warning', 'Problem rendering gantt', e);
 		}
 	},
+	/**
+	 * getValue has to return the value of the input widget
+	 */
+	getValue: function() {
+		return this.value;
+	},
+
+	/**
+	 * Is dirty returns true if the value of the widget has changed since it
+	 * was loaded.
+	 */
+	isDirty: function() {
+		return this.value != null;
+	},
+
+	/**
+	 * Causes the dirty flag to be reseted.
+	 */
+	resetDirty: function() {
+		this.value = null;
+	},
+
+	/**
+	 * Checks the data to see if it is valid, as far as the client side can tell.
+	 * Return true if it's not possible to tell on the client side, because the server
+	 * will have the chance to validate also.
+	 *
+	 * The messages array is to be populated with everything wrong with the data,
+	 * so don't stop checking after the first problem unless it really makes sense
+	 * to ignore other problems.
+	 *
+	 * @param {String[]} messages List of messages explaining the failure(s).
+	 *	messages should be fairly short, and already translated.
+	 *
+	 * @return {boolean} True if the value is valid (enough), false to fail
+	 */
+	isValid: function(messages) {return true},
 
 	/**
 	 * Set a URL to fetch the data from the server.
@@ -272,6 +313,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 		var scale_unit = 'day';
 		var date_scale = '%d';
 		var step = 1;
+		var time_step = this.gantt_config.time_step;
+		var min_column_width = this.gantt_config.min_column_width;
 
 		// No level?  Auto calculate.
 		if(level > 4) level = 4;
@@ -317,7 +360,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 				break;
 			case 3:
 				// Less than a year, several months
-				subscales.push({unit: "month", step: 1, date: '%F %Y'});
+				subscales.push({unit: "month", step: 1, date: '%F %Y', class: 'et2_clickable'});
 				break;
 			case 2:
 			default:
@@ -326,13 +369,14 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 				scale_unit = 'hour';
 				date_scale = this.egw().preference('timeformat') == '24' ? "%G" : "%g";
 				break;
-			case 1:
-				// A day or two, scale in Minutes
+			case 1: // A day or two, scale in Minutes
 				subscales.push({unit: "day", step: 1, date: '%F %d'});
 				date_scale = this.egw().preference('timeformat') == '24' ? "%G:%i" : "%g:%i";
-
 				step = parseInt(this.egw().preference('interval','calendar') || 15);
+				time_step = 1;
 				scale_unit = 'minute';
+				min_column_width = 50;
+				break;
 		}
 
 		// Apply settings
@@ -340,6 +384,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 		this.gantt.config.scale_unit = scale_unit;
 		this.gantt.config.date_scale = date_scale;
 		this.gantt.config.step = step;
+		this.gantt.config.time_step = time_step;
+		this.gantt.config.min_column_width = min_column_width;
 
 		this.options.zoom = level;
 		return level;
@@ -353,6 +399,20 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 
 		// Click on scale to zoom - top zooms out, bottom zooms in
 		this.gantt_node.on('click','.gantt_scale_line', function(e) {
+			var current_position = e.target.offsetLeft / $j(e.target.parentNode).width();
+
+			// Some crazy stuff make sure timing is OK to scroll after re-render
+			// TODO: Make this more consistently go to where you click
+			var id = gantt_widget.gantt.attachEvent("onGanttRender", function() {
+				console.log('Render');
+				gantt_widget.gantt.detachEvent(id);
+				gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
+				window.setTimeout(function() {
+					console.log("Scroll to");
+					gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
+				},100);
+			});
+			
 			if(this.parentNode.firstChild == this)
 			{
 				// Zoom out
@@ -365,6 +425,12 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 				gantt_widget.set_zoom(gantt_widget.options.zoom - 1);
 				gantt_widget.gantt.render();
 			}
+			/*
+			window.setTimeout(function() {
+				console.log("Scroll to");
+				gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
+			},50);
+			*/
 		});
 
 		this.gantt.attachEvent("onContextMenu",function(taskId, linkId, e) {
@@ -396,6 +462,26 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 				).sendRequest(true);
 			}
 		});
+
+		// Update server for links
+		var link_update = function(id, link) {
+			if(gantt_widget.options.ajax_update)
+			{
+				link.parent = this.getTask(link.source).parent;
+				var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
+
+				var request = gantt_widget.egw().json(gantt_widget.options.ajax_update,
+					[link,value], function(new_id) {
+						if(new_id)
+						{
+							link.id = new_id;
+						}
+					}
+				).sendRequest(true);
+			}
+		};
+		this.gantt.attachEvent("onAfterLinkAdd", link_update);
+		this.gantt.attachEvent("onAfterLinkDelete", link_update);
 
 		// Bind AJAX for dynamic expansion
 		// TODO: This could be improved
@@ -521,8 +607,31 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 	{
 
 		this._super.apply(this, arguments);
-		
-		 // Get the top level element for the tree
+
+		// Submit with most actions
+		this._actionManager.setDefaultExecute(jQuery.proxy(function(action, selected) {
+			var ids = [];
+			for(var i = 0; i < selected.length; i++)
+			{
+				ids.push(selected[i].id);
+			}
+			this.value = {
+				action: action.id,
+				selected: ids
+			};
+
+			// downloads need a regular submit via POST (no Ajax)
+			if (action.data.postSubmit)
+			{
+				this.getInstanceManager().postSubmit();
+			}
+			else
+			{
+				this.getInstanceManager().submit();
+			}
+		}, this));
+
+		// Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
 		var widget_object = objectManager.getObjectById(this.id);
 		widget_object.flags = EGW_AO_FLAG_IS_CONTAINER;
@@ -536,6 +645,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable],
 	 */
 	_link_task: function(taskId)
 	{
+		if(!taskId) return;
 		var objectManager = egw_getObjectManager(this.id,false);
 		var obj = null;
 		if(!(obj = objectManager.getObjectById(taskId)))
@@ -599,17 +709,19 @@ et2_register_widget(et2_gantt, ["gantt"]);
 // Localize to user's language - breaks if file is not there
 //egw.includeJS("/phpgwapi/js/dhtmlxGantt/codebase/locale/locale_" + egw.preference('lang') + ".js");
 
-// Set icon to match application
-gantt.templates.grid_file = function(item) {
-	if(!item.pe_app || !egw.image(item.pe_icon)) return "<div class='gantt_tree_icon gantt_file'></div>";
-	return "<div class='gantt_tree_icon' style='background-image: url(\"" + egw.image(item.pe_icon) + "\");'/></div>";
-}
-
-// Show nicer intervals in minute duration
-gantt.templates.date_scale = function(date) {
-	if(gantt.config.scale_unit == 'minute')
-	{
-		date.setMinutes((date.getMinutes() % this.gantt.config.step) * this.gantt.config.step);
+$j(function() {
+	// Set icon to match application
+	gantt.templates.grid_file = function(item) {
+		if(!item.pe_app || !egw.image(item.pe_icon)) return "<div class='gantt_tree_icon gantt_file'></div>";
+		return "<div class='gantt_tree_icon' style='background-image: url(\"" + egw.image(item.pe_icon) + "\");'/></div>";
 	}
-	return gantt.date.date_to_str(gantt.config.date_scale)(date);
-}
+
+	// CSS for scale row, turns on clickable
+	gantt.templates.scale_row_class = function(scale) {
+		if(scale.unit != 'minute' && scale.unit != 'month')
+		{
+			return scale.class || 'et2_clickable';
+		}
+		return scale.class;
+	}
+});

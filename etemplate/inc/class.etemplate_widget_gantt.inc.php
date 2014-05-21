@@ -22,6 +22,25 @@ class etemplate_widget_gantt extends etemplate_widget_box
 {
 	// No legacy options
 	protected $legacy_options = array();
+
+
+	/**
+	 * Validate input
+	 *
+	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $expand, array $content, &$validated=array())
+	{
+		$value = self::get_array($content, $cname);
+		$validated[$cname] = array(
+			'action' => $value['action'],
+			'selected' => $value['selected']
+		);
+	}
+
 }
 // register class for layout widgets, which can have an own namespace
 //etemplate_widget::registerWidget('etemplate_widget_box', array('box', 'hbox', 'vbox', 'groupbox'));
