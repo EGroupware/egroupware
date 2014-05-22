@@ -603,12 +603,12 @@ class mail_compose
 					else
 					{
 						// try the old way
-						$found = strpos($content['body'],trim($oldSigText));
+						$found = (strlen(trim($oldSigText))>0?strpos($content['body'],trim($oldSigText)):false);
 					}
 				}
 				else
 				{
-					$found = strpos($content['body'],trim($oldSigText));
+					$found = (strlen(trim($oldSigText))>0?strpos($content['body'],trim($oldSigText)):false);
 				}
 
 				if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($this->convertHTMLToText($oldSigText,true,true)) ==''))
