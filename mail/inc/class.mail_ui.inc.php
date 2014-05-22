@@ -388,8 +388,8 @@ class mail_ui
 	/**
 	 * Main mail page
 	 *
-	 * @param array $content=null
-	 * @param string $msg=null
+	 * @param array $content
+	 * @param string $msg
 	 */
 	function index(array $content=null,$msg=null)
 	{
@@ -541,7 +541,7 @@ class mail_ui
 		//$sel_options['cat_id'] = array(1=>'none');
 		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
 		{
-			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 		}
 		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
@@ -758,7 +758,7 @@ class mail_ui
 	 *
 	 * We currently load all folders of a given profile, tree can also load parts of a tree.
 	 *
-	 * @param string $_GET[id] if of node whos children are requested
+	 * @param string $_nodeID if of node whos children are requested
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 */
 	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
@@ -783,7 +783,7 @@ class mail_ui
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param mixed bool/string $_fetchCounters, wether to fetch extended information on folders
 	 *			if set to initial, only for initial level of seen (unfolded) folders
-	 * @param string $_nodeID, nodeID to fetch and return
+	 * @param string $_nodeID nodeID to fetch and return
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 * @param boolean $_returnNodeOnly only effective if $_nodeID is set, and $_nodeID is_nummeric
 	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
@@ -871,7 +871,7 @@ class mail_ui
 		$out = array('id' => 0);
 
 		//$starttime = microtime(true);
-		foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
+		foreach(emailadmin_account::search($only_current_user=true, false) as $acc_id => $accountObj)
 		{
 			if ($_profileID && $acc_id != $_profileID)
 			{
@@ -944,7 +944,7 @@ class mail_ui
 			$fFP = $folderParts = explode($obj->delimiter, $key);
 			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
 			//get rightmost folderpart
-			$shortName = array_pop($folderParts);
+			array_pop($folderParts);
 
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$obj->delimiter);
@@ -1014,9 +1014,9 @@ class mail_ui
 	/**
 	 * findNode - helper function to return only a branch of the tree
 	 *
-	 * @param array $out, out array (to be searched)
-	 * @param string $_nodeID, node to search for
-	 * @param boolean $childElements=true return node itself, or only its child items
+	 * @param array $_out out array (to be searched)
+	 * @param string $_nodeID node to search for
+	 * @param boolean $childElements return node itself, or only its child items
 	 * @return array structured subtree
 	 */
 	static function findNode($_out, $_nodeID, $childElements = false)
@@ -1039,10 +1039,10 @@ class mail_ui
 	/**
 	 * setOutStructure - helper function to transform the folderObjectList to dhtmlXTreeObject requirements
 	 *
-	 * @param array $data, data to be processed
+	 * @param array $data data to be processed
 	 * @param array &$out, out array
-	 * @param string $del='.', needed as glue for parent/child operation / comparsion
-	 * @param boolean $createMissingParents=true create a missing parent, instead of throwing an exception
+	 * @param string $del needed as glue for parent/child operation / comparsion
+	 * @param boolean $crea$createMissingParentste a missing parent, instead of throwing an exception
 	 * @return void
 	 */
 	function setOutStructure($data, &$out, $del='.', $createMissingParents=true)
@@ -1525,10 +1525,10 @@ class mail_ui
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
-unset($query['actions']);
-//_debug_array($query);
-//error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
-//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+		unset($query['actions']);
+		//_debug_array($query);
+		//error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
+		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 		if (mail_bo::$debugTimes) $starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
@@ -1584,7 +1584,7 @@ unset($query['actions']);
 			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
 			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
 			{
-				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 			}
 			$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
@@ -1697,9 +1697,9 @@ unset($query['actions']);
 	/**
 	 * function createRowID - create a unique rowID for the grid
 	 *
-	 * @param string $_folderName, used to ensure the uniqueness of the uid over all folders
-	 * @param string $message_uid, the message_Uid to be used for creating the rowID
-	 * @param boolean $_prependApp, flag to indicate that the app 'mail' is to be used for creating the rowID
+	 * @param string $_folderName used to ensure the uniqueness of the uid over all folders
+	 * @param string $message_uid the message_Uid to be used for creating the rowID
+	 * @param boolean $$_prependAppflag to indicate that the app 'mail' is to be used for creating the rowID
 	 * @return string - a colon separated string in the form [app:]accountID:profileID:folder:message_uid
 	 */
 	function createRowID($_folderName, $message_uid, $_prependApp=false)
@@ -1710,10 +1710,10 @@ unset($query['actions']);
 	/**
 	 * static function generateRowID - create a unique rowID for the grid
 	 *
-	 * @param integer $_profileID, profile ID for the rowid to be used
-	 * @param string $_folderName, used to ensure the uniqueness of the uid over all folders
-	 * @param string $message_uid, the message_Uid to be used for creating the rowID
-	 * @param boolean $_prependApp, flag to indicate that the app 'mail' is to be used for creating the rowID
+	 * @param integer $_profileID profile ID for the rowid to be used
+	 * @param string $_folderName to ensure the uniqueness of the uid over all folders
+	 * @param string $message_uid the message_Uid to be used for creating the rowID
+	 * @param boolean $_prependApp to indicate that the app 'mail' is to be used for creating the rowID
 	 * @return string - a colon separated string in the form [app:]accountID:profileID:folder:message_uid
 	 */
 	static function generateRowID($_profileID, $_folderName, $message_uid, $_prependApp=false)
@@ -1724,7 +1724,7 @@ unset($query['actions']);
 	/**
 	 * function splitRowID - split the rowID into its parts
 	 *
-	 * @param string $_rowID, string - a colon separated string in the form accountID:profileID:folder:message_uid
+	 * @param string $_rowID string - a colon separated string in the form accountID:profileID:folder:message_uid
 	 * @return array populated named result array (accountID,profileID,folder,msgUID)
 	 */
 	static function splitRowID($_rowID)
@@ -1781,11 +1781,11 @@ unset($query['actions']);
 	/**
 	 * function header2gridelements - to populate the grid elements with the collected Data
 	 *
-	 * @param array $_headers, headerdata to process
-	 * @param array $cols, cols to populate
-	 * @param array $_folderName, used to ensure the uniqueness of the uid over all folders
-	 * @param array $_folderType=0, foldertype, used to determine if we need to populate from/to
-	 * @param array $previewMessage=0, the message previewed
+	 * @param array $_headers headerdata to process
+	 * @param array $cols cols to populate
+	 * @param array $_folderName to ensure the uniqueness of the uid over all folders
+	 * @param array $_folderType used to determine if we need to populate from/to
+	 * @param array $previewMessage the message previewed
 	 * @return array populated result array
 	 */
 	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0, $previewMessage=0)
@@ -2240,11 +2240,11 @@ unset($query['actions']);
 	 * createAttachmentBlock
 	 * helper function to create the attachment block/table
 	 *
-	 * @param array $attachments, array with the attachments information
-	 * @param string $rowID, rowid of the message
-	 * @param int $uid, uid of the message
-	 * @param string $mailbox, the mailbox identifier
-	 * @param boolean $_returnFullHTML, flag wether to return HTML or data array
+	 * @param array $attachments array with the attachments information
+	 * @param string $rowID rowid of the message
+	 * @param int $uid uid of the message
+	 * @param string $mailbox mailbox identifier
+	 * @param boolean $_returnFullHTML flag wether to return HTML or data array
 	 * @return mixed array/string data array or html or empty string
 	 */
 	static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox,$_returnFullHTML=false)
@@ -3579,7 +3579,7 @@ $this->partID = $partID;
 						$c=0;
 						foreach($nA as $sTName)
 						{
-							if($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true))
+							if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true)))
 							{
 								$c++;
 							}
@@ -3659,7 +3659,8 @@ $this->partID = $partID;
 					$success = false;
 					try
 					{
-						if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
+						if(($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)))
+						{
 							$this->mail_bo->resetFolderObjectCache($profileID);
 							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
 							$rv = $this->mail_bo->subscribe($newFolderName, true);
@@ -3869,7 +3870,8 @@ $this->partID = $partID;
 					$success = false;
 					try
 					{
-						if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
+						if(($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)))
+						{
 							$this->mail_bo->resetFolderObjectCache($profileID);
 							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
 							$rv = $this->mail_bo->subscribe($newFolderName, true);
@@ -4057,7 +4059,7 @@ $this->partID = $partID;
 	/**
 	 * empty changeProfile - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
-	 * @param int $icServerId New profile / server ID
+	 * @param int $icServerID New profile / server ID
 	 * @param bool $getFolders The client needs the folders for the profile
 	 * @return nothing
 	 */
@@ -4087,11 +4089,11 @@ $this->partID = $partID;
 	/**
 	 * ajax_refreshVacationNotice - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *	Note: only the activeProfile VacationNotice is refreshed
-	 * @param int $icServerId profileId / server ID to work on; may be empty -> then activeProfile is used
+	 * @param int $icServerID profileId / server ID to work on; may be empty -> then activeProfile is used
 	 *						if other than active profile; nothing is done!
 	 * @return nothing
 	 */
-	function ajax_refreshVacationNotice($icServerId=null)
+	function ajax_refreshVacationNotice($icServerID=null)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($icServerId));
 		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
@@ -4118,17 +4120,17 @@ $this->partID = $partID;
 	/**
 	 * ajax_refreshFilters - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *	Note: only the activeProfile Filters are refreshed
-	 * @param int $icServerId profileId / server ID to work on; may be empty -> then activeProfile is used
+	 * @param int $icServerID profileId / server ID to work on; may be empty -> then activeProfile is used
 	 *						if other than active profile; nothing is done!
 	 * @return nothing
 	 */
-	function ajax_refreshFilters($icServerId=null)
+	function ajax_refreshFilters($icServerID=null)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($icServerId));
 		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
 		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
 		{
-			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 		}
 		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
@@ -4284,7 +4286,7 @@ $this->partID = $partID;
 	 */
 	function ajax_sendMDN($_messageList)
 	{
-		if(mail_bo::$debug); error_log(__METHOD__."->".array2string($_messageList));
+		if(mail_bo::$debug) error_log(__METHOD__."->".array2string($_messageList));
 		$uidA = self::splitRowID($_messageList['msg'][0]);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$this->mail_bo->sendMDN($uidA['msgUID'],$folder);
