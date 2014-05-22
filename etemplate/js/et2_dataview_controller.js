@@ -413,7 +413,7 @@ var et2_dataview_controller = Class.extend({
 		// Queue fetching that data range
 		if (needsData !== false)
 		{
-			this._queueFetch(et2_bounds(needsData, _idxEnd + 1), false);
+			this._queueFetch(et2_bounds(needsData, _idxEnd + 1), needsData == _idxStart ? 0 : needsData > _idxStart ? 1 : -1, false);
 		}
 	},
 
@@ -421,7 +421,7 @@ var et2_dataview_controller = Class.extend({
 	 * The _queueFetch function is used to queue a fetch request.
 	 * TODO: Refresh is currently not used
 	 */
-	_queueFetch: function (_range, _isUpdate) {
+	_queueFetch: function (_range, _direction, _isUpdate) {
 
 		// Force immediate to be false
 		_isUpdate = _isUpdate ? _isUpdate : false;
@@ -433,7 +433,7 @@ var et2_dataview_controller = Class.extend({
 		{
 			if (typeof this._queue[i] === "undefined")
 			{
-				this._queue[i] = 1; // Stage 1 -- queued
+				this._queue[i] = _direction; // Stage 1 - queue for after current, -1 -- queue for before current
 			}
 		}
 
@@ -472,13 +472,13 @@ var et2_dataview_controller = Class.extend({
 
 			key = parseInt(key);
 
-			var b = Math.max(0, key - r);
-			var t = Math.min(key + r, total - 1);
+			var b = Math.max(0, key - r + (r * this._queue[key]));
+			var t = Math.min(key + r + (r * this._queue[key]), total - 1);
 			var c = 0;
 			for (var i = b; i <= t && c < ET2_DATAVIEW_STEPSIZE; i ++)
 			{
 				if (typeof this._queue[i] == "undefined"
-						|| this._queue[i] === 1)
+						|| this._queue[i] <= 1)
 				{
 					this._queue[i] = 2; // Stage 2 -- pending or available
 					marked[i] = true;
