@@ -163,28 +163,101 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		},
 
 		/**
-		* Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
-		*
-		* Default implementation here only reloads window with it's current url with an added msg=_msg attached
-		*
-		* @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
-		* @param {string} _app application name
-		* @param {(string|number)} _id id of entry to refresh or null
-		* @param {string} _type either 'update', 'edit', 'delete', 'add' or null
-		* - update: request just modified data from given rows.  Sorting is not considered,
-		*		so if the sort field is changed, the row will not be moved.
-		* - edit: rows changed, but sorting may be affected.  Requires full reload.
-		* - delete: just delete the given rows clientside (no server interaction neccessary)
-		* - add: requires full reload for proper sorting
-		* @param {string} _targetapp which app's window should be refreshed, default current
-		* @param {(string|RegExp)} _replace regular expression to replace in url
-		* @param {string} _with
-		* @param {string} _msg_type 'error', 'warning' or 'success' (default)
-		* @todo move code from jsapi to here to deprecate egw_refresh in favor of egw.refresh()
-		*/
+		 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+		 *
+		 * Default implementation here only reloads window with it's current url with an added msg=_msg attached
+		 *
+		 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+		 * @param {string} _app application name
+		 * @param {(string|number)} _id id of entry to refresh or null
+		 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+		 * - update: request just modified data from given rows.  Sorting is not considered,
+		 *		so if the sort field is changed, the row will not be moved.
+		 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+		 * - delete: just delete the given rows clientside (no server interaction neccessary)
+		 * - add: requires full reload for proper sorting
+		 * @param {string} _targetapp which app's window should be refreshed, default current
+		 * @param {(string|RegExp)} _replace regular expression to replace in url
+		 * @param {string} _with
+		 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+		 */
 	   refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 	   {
-		   _wnd.egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
+			// Log for debugging purposes
+			this.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)", _msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
+
+			var win = typeof _targetapp != 'undefined' ? _wnd.egw_appWindow(_targetapp) : _wnd;
+
+			this.message(_msg, _msg_type);
+
+			// notify app observers: if observer for _app itself returns false, no regular refresh will take place
+			// app's own observer can replace current app_refresh functionality
+			var no_regular_refresh = false;
+			for(var app in _wnd.app)
+			{
+				if (typeof _wnd.app[app].observer == 'function' &&
+					_wnd.app[app].observer(_msg, _app, _id, _type, _msg_type, _targetapp) === false && app === _app)
+				{
+					no_regular_refresh = true;
+				}
+			}
+			if (no_regular_refresh) return;
+
+			// if we have a framework, let it deal with refresh
+			if (win.framework && win.framework.refresh)
+			{
+				win.framework.refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
+				return;
+			}
+
+			// if window registered an app_refresh method or overwritten app_refresh, just call it
+			if(typeof win.app_refresh == "function" && typeof win.app_refresh.registered == "undefined" ||
+				typeof win.app_refresh != "undefined" && win.app_refresh.registered(_app))
+			{
+				win.app_refresh(_msg, _app, _id, _type);
+				return;
+			}
+
+			// etemplate2 specific to avoid reloading whole page
+			if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
+			{
+				var refresh_done = false;
+				var et2 = etemplate2.getByApplication(_app);
+				for(var i = 0; i < et2.length; i++)
+				{
+					refresh_done = et2[i].refresh(_msg,_app,_id,_type);
+				}
+
+				// Refresh target or current app too
+				if ((_targetapp || egw_appName) != _app)
+				{
+					var et2t = etemplate2.getByApplication(_targetapp || egw_appName);
+					for(var i = 0; i < et2t.length; i++)
+					{
+						refresh_done = et2t[i].refresh(_msg,_app,_id,_type);
+					}
+				}
+				//In case that we have etemplate2 ready but it's empty and refresh is not done
+				if (et2.length >= 1 && refresh_done) return;
+			}
+
+			var href = win.location.href;
+
+			if (typeof _replace != 'undefined')
+			{
+				href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, typeof _with != 'undefined' ? _with : '');
+			}
+
+			if (href.indexOf('msg=') != -1)
+			{
+				href = href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
+			}
+			else if (_msg)
+			{
+				href += (href.indexOf('?') != -1 ? '&' : '?') + 'msg=' + encodeURIComponent(_msg);
+			}
+			//alert('egw_refresh() about to call '+href);
+			win.location.href = href;
 	   }
 	};
 });

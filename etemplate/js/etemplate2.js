@@ -840,23 +840,25 @@ function etemplate2_handle_load(_type, _response)
 	// handle egw_framework::refresh_opener()
 	if (jQuery.isArray(data['refresh-opener']))
 	{
-		if (window.opener && typeof window.opener.egw_refresh == 'function')
+		if (window.opener)// && typeof window.opener.egw_refresh == 'function')
 		{
-			window.opener.egw_refresh.apply(window.opener, data['refresh-opener']);
+			var egw = window.egw(opener);
+			egw.refresh.apply(egw, data['refresh-opener']);
 		}
 	}
+	var egw = window.egw(window);
 
 	// need to set app_header before message, as message temp. replaces app_header
 	if (typeof data.data == 'object' && typeof data.data.app_header == 'string')
 	{
-		window.egw_app_header(data.data.app_header, data.data.currentapp||null);
+		egw.app_header(data.data.app_header, data.data.currentapp||null);
 		delete data.data.app_header;
 	}
 
 	// handle egw_framework::message()
 	if (jQuery.isArray(data.message))
 	{
-		window.egw_message.apply(window, data.message);
+		egw.message.apply(egw, data.message);
 	}
 
 	// handle egw_framework::window_close(), this will terminate execution

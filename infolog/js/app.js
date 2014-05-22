@@ -17,13 +17,6 @@
 app.classes.infolog = AppJS.extend(
 {
 	appname: 'infolog',
-	/**
-	 * et2 widget container
-	 */
-	et2: null,
-	/**
-	 * path widget
-	 */
 
 	/**
 	 * Constructor
@@ -41,7 +34,6 @@ app.classes.infolog = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		delete this.et2;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -69,8 +61,35 @@ app.classes.infolog = AppJS.extend(
 				var that = this;
 				jQuery('#infolog-edit-print').bind('load',function(){that.infolog_print_preview();});
 		}
-		
-		
+	},
+
+	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * InfoLog currently reacts to timesheet updates, as it might show time-sums.
+	 * @todo only trigger update, if times are shown
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		switch (_app)
+		{
+			case 'timesheet':
+				var nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+				if (nm) nm.applyFilters();
+				break;
+		}
 	},
 
 	/**
@@ -78,7 +97,6 @@ app.classes.infolog = AppJS.extend(
 	 */
 	filter_change: function()
 	{
-
 		var filter = this.et2.getWidgetById('filter');
 		var nm = this.et2.getWidgetById('nm');
 		if(nm && filter)
@@ -94,7 +112,6 @@ app.classes.infolog = AppJS.extend(
 					break;
 			}
 		}
-		
 	},
 
 	/**
@@ -166,7 +183,6 @@ app.classes.infolog = AppJS.extend(
 			}
 		};
 		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
-
 	},
 
 	/**
@@ -320,7 +336,7 @@ app.classes.infolog = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Open infolog entry for printing
 	 *
@@ -331,20 +347,17 @@ app.classes.infolog = AppJS.extend(
 	{
 		var id = _selected[0].id.replace(/^infolog::/g,'');
 		egw_open(id,'infolog','edit',{print:1});
-	
 	},
-	
+
 	/**
 	 * Trigger print() function to print the current window
-	 *
-	 *
 	 */
 	infolog_print_preview: function ()
 	{
 		this.egw.message('Printing....');
 		this.egw.window.print();
 	},
-	
+
 	/**
 	 *
 	 */

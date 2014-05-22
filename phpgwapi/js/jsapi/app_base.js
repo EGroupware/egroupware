@@ -143,6 +143,28 @@ var AppJS = Class.extend(
 	},
 
 	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+
+	},
+
+	/**
 	 * Open an entry.
 	 *
 	 * Designed to be used with the action system as a callback
