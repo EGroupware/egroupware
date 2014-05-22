@@ -607,17 +607,21 @@ class egw_cache
 	/**
 	 * Generate a new instance key and by doing so effectivly flushes whole instance cache
 	 *
+	 * @param string $install_id=null default use install_id of current instance
 	 * @return string new key also stored in self::$instance_key
 	 */
-	static public function generate_instance_key()
+	static public function generate_instance_key($install_id=null)
 	{
-		$install_id = self::get_system_config('install_id');
+		if (!isset($install_id))
+		{
+			self::$instance_key = null;
+			$install_id = self::get_system_config('install_id');
+		}
+		$instance_key = self::INSTANCE.'-'.$install_id.'-'.microtime(true);
+		self::setTree(__CLASS__, $install_id, $instance_key);
 
-		self::$instance_key = self::INSTANCE.'-'.$install_id.'-'.microtime(true);
-		self::setTree(__CLASS__, $install_id, self::$instance_key);
-
-		//error_log(__METHOD__."() install_id='$install_id' returning '".self::$instance_key."'");
-		return self::$instance_key;
+		//error_log(__METHOD__."(install_id='$install_id') returning '".$instance_key."'");
+		return $instance_key;
 	}
 
 	/**
@@ -646,17 +650,22 @@ class egw_cache
 				}
 				$level_key = $tree_key;
 				break;
+			default:	// arbitrary install_id given --> check for current instance
+				if ($level !== $GLOBALS['egw_info']['server']['install_id'])
+				{
+					$level_key = self::getTree(__CLASS__, $level);
+					if (!isset($level_key)) $level_key = self::generate_instance_key($level);
+					break;
+				}
+				// fall-through for current instance
 			case self::INSTANCE:
 				if (!isset(self::$instance_key))
 				{
 					self::$instance_key = self::getTree(__CLASS__, self::get_system_config('install_id'));
 					//error_log(__METHOD__."('$level',...) instance_key read from tree-cache=".array2string(self::$instance_key));
-					if (!isset(self::$instance_key)) self::generate_instance_key();
+					if (!isset(self::$instance_key)) self::$instance_key = self::generate_instance_key();
 				}
 				$level_key = self::$instance_key;
-				break;
-			default:
-				$level_key = $level;
 				break;
 		}
 		return array($level_key, $app, $location);
