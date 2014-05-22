@@ -169,7 +169,7 @@ var et2_dataview_controller = Class.extend({
 		}
 
 		// Require that range from the server
-		this._queueFetch(et2_bounds(range.top, clear ? 0 : range.bottom + 1), true);
+		this._queueFetch(et2_bounds(range.top, clear ? 0 : range.bottom + 1), 0, true);
 	},
 
 	/**
