@@ -1004,6 +1004,43 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Check if Sieve is enabled on that account
+	 *
+	 * Sieve enabled is stored as data { acl: true/false } on account node.
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	sieve_enabled: function(_action,_senders,_currentNode)
+	{
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var acc_id = _senders[0].id.split('::')[0];
+		var node = ftree ? ftree.getNode(acc_id) : null;
+
+		return node && node.data && node.data.sieve;
+	},
+
+	/**
+	 * Check if ACL is enabled on that account
+	 *
+	 * ACL enabled is stored as data { acl: true/false } on INBOX node.
+	 * We also need to check if folder is marked as no-select!
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	acl_enabled: function(_action,_senders,_currentNode)
+	{
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
+		var node = ftree ? ftree.getNode(inbox) : null;
+
+		return node && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
+	},
+
+	/**
 	 * mail_setFolderStatus, function to set the status for the visible folders
 	 *
 	 * @param {array} _status

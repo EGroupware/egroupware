@@ -617,25 +617,30 @@ class mail_ui
 			'sieve' => array(
 				'caption' => 'Mail filter',
 				'onExecute' => 'javaScript:app.mail.edit_sieve',
-				'group'	=> $group++,
+				'group'	=> ++$group,	// new group for filter
+				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+				'icon' => 'etemplate/fav_filter',	// funnel
 			),
 			'vacation' => array(
 				'caption' => 'Vacation notice',
-				'icon' => 'configure',
+				'icon' => 'mail/navbar',	// mail as in admin
 				'onExecute' => 'javaScript:app.mail.edit_vacation',
-				'group'	=> $group++,
+				'group'	=> $group,
+				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
 			),
 			'edit_account' => array(
 				'caption' => 'Edit account ...',
 				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.edit_account',
 				//'enableId' => '^\\d+$',	// only show action on account itself
+				'group'	=> ++$group,	// new groups for account & acl
 			),
 			'edit_acl'	=> array(
 				'caption' => 'Edit folder ACL ...',
-				'icon'	=> 'blocks',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'icon'	=> 'lock',
+				'enabled'	=> 'javaScript:app.mail.acl_enabled',
 				'onExecute' => 'javaScript:app.mail.edit_acl',
+				'group'	=> $group,
 			),
 		);
 		// the preference prefaskformove controls actually if there is a popup on target or not
@@ -663,36 +668,39 @@ class mail_ui
 			unset($tree_actions['subscribe']);
 			unset($tree_actions['unsubscribe']);
 		}
-		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
-		if($deleteOptions == 'move_to_trash')
+		++$group;	// put delete in own group
+		switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
 		{
-			$tree_actions['empty_trash'] = array(
-				'caption' => 'empty trash',
-				'icon' => 'dhtmlxtree/MailFolderTrash',
-				'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
-				//'enableId' => '^\\d+$',	// only show action on account itself
-			);
-		}
-		if($preferences['deleteOptions'] == 'mark_as_deleted')
-		{
-			$tree_actions['compress_folder'] = array(
-				'caption' => 'compress folder',
-				'icon' => 'dhtmlxtree/MailFolderTrash',
-				'onExecute' => 'javaScript:app.mail.mail_compressFolder',
-				//'enableId' => '^\\d+$',	// only show action on account itself
-			);
+			case 'move_to_trash':
+				$tree_actions['empty_trash'] = array(
+					'caption' => 'empty trash',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+					//'enableId' => '^\\d+$',	// only show action on account itself
+					'group'	=> $group,
+				);
+				break;
+			case 'mark_as_deleted':
+				$tree_actions['compress_folder'] = array(
+					'caption' => 'compress folder',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_compressFolder',
+					//'enableId' => '^\\d+$',	// only show action on account itself
+					'group'	=> $group,
+				);
+				break;
 		}
 
 		// enforce global (group-specific) ACL
-		if (!$this->mail_bo->icServer->queryCapability('ACL') || !mail_hooks::access('aclmanagement'))
+		if (!mail_hooks::access('aclmanagement'))
 		{
 			unset($tree_actions['edit_acl']);
 		}
-		if (!$this->mail_bo->icServer->acc_sieve_enabled || !mail_hooks::access('editfilterrules'))
+		if (!mail_hooks::access('editfilterrules'))
 		{
 			unset($tree_actions['sieve']);
 		}
-		if (!$this->mail_bo->icServer->acc_sieve_enabled || !mail_hooks::access('absentnotice'))
+		if (!mail_hooks::access('absentnotice'))
 		{
 			unset($tree_actions['vacation']);
 		}
@@ -885,7 +893,9 @@ class mail_ui
 				'im2' => 'thunderbird.png',
 				'path'=> array($acc_id),
 				'child'=> (int)($acc_id != $_profileID || $folderObjects), // dynamic loading on unfold
-				'parent' => ''
+				'parent' => '',
+				// mark on account if Sieve is enabled
+				'data' => array('sieve' => $accountObj->acc_sieve_enabled),
 			);
 			$this->setOutStructure($oA, $out, self::$delimiter);
 
@@ -946,6 +956,8 @@ class mail_ui
 			if ($path=='INBOX')
 			{
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "kfm_home.png";
+				// mark on inbox if ACL is supported
+				$oA['data'] = array('acl' => $this->mail_bo->icServer->queryCapability('ACL'));
 			}
 			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
 			{
