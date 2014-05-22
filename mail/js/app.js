@@ -2745,7 +2745,7 @@ app.classes.mail = AppJS.extend(
 	{
 		if (_typeID && _data)
 		{
-			var request = egw().json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
+			var request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
 	},
