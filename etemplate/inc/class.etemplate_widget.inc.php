@@ -179,7 +179,9 @@ class etemplate_widget
 					$template = clone($this);
 					$cloned = true;	// only clone it once, otherwise we loose attributes!
 				}
-				$value = (string)$reader->value;
+				// $reader->value is an object and therefore assigned by reference
+				// this is important to not loose content when validating dynamic generated tabs as in settings!
+				$template->attrs[$reader->name] = $value = $reader->value;
 
 				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
 				if ($value[0] == '@' || strpos($value, '$') !== false)
@@ -187,7 +189,6 @@ class etemplate_widget
 					$value = self::expand_name($value, null, null, null, null,
 						isset(self::$cont) ? self::$cont : self::$request->content);
 				}
-				$template->attrs[$reader->name] = $value;
 
 				// split legacy options
 				if ($legacy_options && $reader->name == 'options')
