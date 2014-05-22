@@ -92,86 +92,69 @@ app.classes.mail = AppJS.extend(
 	 * make sure to clean it up in destroy().
 	 *
 	 * @param et2 etemplate2 Newly ready object
+	 * @param {string} _name template name
 	 */
-	et2_ready: function(et2)
+	et2_ready: function(et2, _name)
 	{
 		// call parent; somehow this function is called more often. (twice on a display and compose) why?
 		this._super.apply(this, arguments);
 		this.et2_obj = et2;
-		var isMainView = false;
-		var isDisplay = false;
-		var isCompose = false;
-		for (var t in et2.templates)
-		{
-			//alert(t); // as we iterate through this more than once, ... we separate trigger and action
-			switch (t) {
-				case 'mail.index':
-					this.mail_isMainWindow = isMainView=true;
-					break;
-				case 'mail.display':
-					this.mail_isMainWindow = false;
-					isDisplay=true;
-					this.mail_display();
-					break;
-				case 'mail.compose':
-					this.mail_isMainWindow = false;
-					isCompose = true;
-					this.hide_cc_compose();
-					break;
-			}
-		}
-		//alert('action about to go down');
-		if (isMainView)
-		{
-			this.mail_disablePreviewArea(true);
 
-			// Bind to nextmatch refresh to update folder status
-			var nm = this.et2.getWidgetById(this.nm_index);
-			if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
-			{
-				var self = this;
-				$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
-			}
-			var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-			if (tree_wdg)
-			{
-				tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
-				tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
-			}
-		}
-		if (isDisplay)
+		switch (_name)
 		{
-			var subject = this.et2.getWidgetById('mail_displaysubject');
-			var body = this.et2.getWidgetById('mailDisplayBodySrc');
-			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
-			var app_registry = egw.link_get_registry('mail');
-			var w=870;
-			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
-			{
-				var w_h =app_registry['view_popup'].split('x');
-				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-			}
-			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
-		}
-		if (isCompose)
-		{
-			var app_registry = egw.link_get_registry('mail');//this.appname);
-			//console.log(app_registry);
-			w=870;
-			if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
-			{
-				var w_h =app_registry['edit_popup'].split('x');
-				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-			}
-			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
-			//window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
-			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
-			this.compose_cc_expander();
-		}
-		//Vacation By_date filter
-		if (typeof et2.templates['mail.sieve.vacation'] != 'undefined')
-		{
-			this.vacationFilterStatusChange();
+			case 'mail.sieve.vacation':
+				this.vacationFilterStatusChange();
+				break;
+			case 'mail.index':
+				var nm = this.et2.getWidgetById(this.nm_index);
+				this.mail_isMainWindow = true;
+				this.mail_disablePreviewArea(true);
+
+				// Bind to nextmatch refresh to update folder status
+				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
+				{
+					var self = this;
+					$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
+				}
+				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+				if (tree_wdg)
+				{
+					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
+					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+				}
+				break;
+			case 'mail.display':
+				var subject = this.et2.getWidgetById('mail_displaysubject');
+				var body = this.et2.getWidgetById('mailDisplayBodySrc');
+				this.mail_isMainWindow = false;
+				this.mail_display();
+				body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
+				var app_registry = egw.link_get_registry('mail');
+				var w=870;
+				if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+				{
+					var w_h =app_registry['view_popup'].split('x');
+					if (w_h[1] == 'egw_getWindowOuterHeight()')
+					{
+						w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
+					}	
+				}
+				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+				break;
+			case 'mail.compose':
+				var app_registry = egw.link_get_registry('mail');
+				this.mail_isMainWindow = false;
+				this.hide_cc_compose();
+				
+				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
+				{
+					var w_h =app_registry['edit_popup'].split('x');
+					if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
+				}
+				
+				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
+				this.compose_cc_expander();
+				break;
 		}
 	},
 
@@ -1417,7 +1400,10 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} _previous - Previously selected node ID
 	 */
 	mail_changeFolder: function(_folder,_widget, _previous) {
-
+		
+		// to reset iframes to the normal status
+		this.loadIframe();
+		
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
 		var img = _widget.getSelectedNode().images[0];
@@ -2759,21 +2745,17 @@ app.classes.mail = AppJS.extend(
 	{
 		if (_typeID && _data)
 		{
-			var request = egw().json('mail.mail_sieve.ajax_action', [this.et2_obj.etemplate_exec_id, _typeID,_selectedID,_msg],null,null,true);
+			var request = egw().json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
 	},
 
 	/**
-	*
 	* Send ajax request to server to refresh the sieve grid
-	*
-	*
 	*/
 	sieve_refresh: function()
 	{
-		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id],null,this.et2_obj,true);
-		request.sendRequest();
+		this.et2._inst.submit();
 	},
 
 	/**
@@ -2786,7 +2768,9 @@ app.classes.mail = AppJS.extend(
 	acl_common_rights_selector: function(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var rights = (widget.get_value() == "custom")?[]:(widget.get_value() == "aeiklprstwx")? widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
+		var rights = (widget.get_value() == "custom"?[]:widget.get_value() == "aeiklprstwx")?
+						widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
+		
 		for (var i=0;i<this.aclRights.length;i++)
 		{
 			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
@@ -2845,12 +2829,47 @@ app.classes.mail = AppJS.extend(
 	edit_sieve: function(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link(this.egw.link('/index.php',
+		
+		var url = this.egw.link('/index.php',{
+					'menuaction': 'mail.mail_sieve.index',
+					'acc_id': acc_id,
+					'ajax': 'true'
+		});
+		
+		if (!this.loadIframe(url))
+		{
+			this.egw.open_link(url);
+		}
+	},
+	
+	/**
+	 * Load an url on an iframe
+	 *
+	 * @param {string} _url string egw url 
+	 * @param {iframe widget} _iFrame an iframe to be set if non, extra_iframe is default
+	 *
+	 * @return {boolean} return TRUE if success, and FALSE if iframe not given 
+	 */
+	loadIframe: function (_url, _iFrame)
+	{
+		var mailSplitter = this.et2.getWidgetById('mailSplitter');
+		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
+		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
+		if (typeof iframe != 'undefined')
+		{
+			if (_url)
 			{
-				'menuaction': 'mail.mail_sieve.index',
-				'acc_id': acc_id,
-				'ajax': 'true'
-			}));
+				iframe.set_src(_url);
+			}
+			if (typeof mailSplitter != 'undefined' && typeof quotaipercent != 'undefined')
+			{
+				mailSplitter.set_disabled(!!_url);
+				quotaipercent.set_disabled(!!_url);
+				iframe.set_disabled(!_url);
+			}
+			return true;
+		}
+		return false;
 	},
 
 	/**

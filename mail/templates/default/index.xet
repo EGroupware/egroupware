@@ -113,5 +113,6 @@
 				</box>
 			</vbox>
 		</split>
+		<iframe frameborder="1" height="100%" id="extra_iframe" scrolling="auto" width="100%" disabled="true"/>
 	</template>
 </overlay>

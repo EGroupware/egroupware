@@ -230,8 +230,8 @@ class mail_ui
 	 * Subscribe or Unsubscribe to a folder
 	 * also it is consider if the folder is valid to un/subscribe
 	 *
-	 * @param {boolean} $status subscribe if true and unsubscribe if false
-	 * @param {string} $folderName folder name
+	 * @param boolean $folderName subscribe if true and unsubscribe if false
+	 * @param string $status folder name
 	 *
 	 * @example setSubscribe('INBOX', true) subscribe to folder INBOX
 	 *
@@ -1042,7 +1042,7 @@ class mail_ui
 	 * @param array $data data to be processed
 	 * @param array &$out, out array
 	 * @param string $del needed as glue for parent/child operation / comparsion
-	 * @param boolean $crea$createMissingParentste a missing parent, instead of throwing an exception
+	 * @param boolean $createMissingParents a missing parent, instead of throwing an exception
 	 * @return void
 	 */
 	function setOutStructure($data, &$out, $del='.', $createMissingParents=true)
@@ -1699,7 +1699,7 @@ class mail_ui
 	 *
 	 * @param string $_folderName used to ensure the uniqueness of the uid over all folders
 	 * @param string $message_uid the message_Uid to be used for creating the rowID
-	 * @param boolean $$_prependAppflag to indicate that the app 'mail' is to be used for creating the rowID
+	 * @param boolean $_prependApp to indicate that the app 'mail' is to be used for creating the rowID
 	 * @return string - a colon separated string in the form [app:]accountID:profileID:folder:message_uid
 	 */
 	function createRowID($_folderName, $message_uid, $_prependApp=false)
@@ -2416,8 +2416,6 @@ class mail_ui
 
 	/**
 	 * emailAddressToHTML
-	 *
-	 *
 	 */
 	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true)
 	{

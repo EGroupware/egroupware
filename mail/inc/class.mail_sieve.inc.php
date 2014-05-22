@@ -816,34 +816,14 @@ class mail_sieve
 	}
 
 	/**
-	 * Ajax function to handle the server side content for refreshing the form
-	 *
-	 * @param type $execId
-     */
-	function ajax_sieve_egw_refresh($execId)
-	{
-		//Need to read the template to use for refreshing the form
-		$response = egw_json_response::get();
-
-		$response->generic('assign',array(
-				'etemplate_exec_id' => $execId,
-				'id' => 'rg',
-				'key' => 'value',
-				'value' => array('content' => $this->get_rows())
-		));
-		//error_log(__METHOD__. "RESPONSE".array2string($response));
-	}
-
-	/**
 	 * Ajax function to handle actions over sieve rules list on gd
 	 *
-	 * @param {int|boolean} $exec_id template unique Id | false if we only wants to use serverside actions
-	 * @param {string} $action name of action
-	 * @param {string} $checked the selected rule id
-	 * @param {string} $msg containing the message comming from the client-side
+	 * @param string $action name of action
+	 * @param string $checked the selected rule id
+	 * @param string $msg containing the message comming from the client-side
 	 *
 	 */
-	function ajax_action($exec_id, $action,$checked,$msg)
+	function ajax_action($action, $checked, $msg)
 	{
 		$this->getRules(null);
 
@@ -876,22 +856,17 @@ class mail_sieve
 
 		ob_start();
 		$result = $this->updateScript();
+		
+		$response = egw_json_response::get();
+		
 		if($result)
 		{
-			egw_json_response::get()->error($result);
+			$response->error($result);
 			return;
 		}
 		$this->saveSessionData();
 
-		//Refresh the grid
-		if ($exec_id)
-		{
-			$this->ajax_sieve_egw_refresh($exec_id,$msg);
-		}
-		else
-		{
-			return $msg;
-		}
+		$response->call('app.mail.sieve_refresh');
 	}
 
 	/**
