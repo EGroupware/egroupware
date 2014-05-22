@@ -250,10 +250,11 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 	// etemplate2 specific to avoid reloading whole page
 	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
 	{
+		var refresh_done = false;
 		var et2 = etemplate2.getByApplication(_app);
 		for(var i = 0; i < et2.length; i++)
 		{
-			et2[i].refresh(_msg,_app,_id,_type);
+			refresh_done = et2[i].refresh(_msg,_app,_id,_type);
 		}
 
 		// Refresh target or current app too
@@ -262,12 +263,11 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 			var et2t = etemplate2.getByApplication(_targetapp || egw_appName);
 			for(var i = 0; i < et2t.length; i++)
 			{
-				et2t[i].refresh(_msg,_app,_id,_type);
+				refresh_done = et2t[i].refresh(_msg,_app,_id,_type);
 			}
 		}
-		//In case that we have etemplate2 ready but it's empty
-		if (et2.length >= 1)
-		return;
+		//In case that we have etemplate2 ready but it's empty and refresh is not done
+		if (et2.length >= 1 && refresh_done) return;
 	}
 
 	var href = win.location.href;
