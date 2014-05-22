@@ -184,7 +184,7 @@ class etemplate_widget
 				$template->attrs[$reader->name] = $value = $reader->value;
 
 				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
-				if ($value[0] == '@' || strpos($value, '$') !== false)
+				if ($value[0] == '@' || strpos($value, '$cont') !== false)
 				{
 					$value = self::expand_name($value, null, null, null, null,
 						isset(self::$cont) ? self::$cont : self::$request->content);
