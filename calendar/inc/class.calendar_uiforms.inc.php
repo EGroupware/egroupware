@@ -159,6 +159,7 @@ class calendar_uiforms extends calendar_ui
 			'priority' => 2,	// normal
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,
 			'alarm' => array(),
+			'recur_exception' => array(),
 		);
 	}
 
@@ -839,7 +840,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
-				egw_framework::refresh_opener($msg, 'calendar');
+				egw_framework::refresh_opener($msg, 'calendar', $event['id']);
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
