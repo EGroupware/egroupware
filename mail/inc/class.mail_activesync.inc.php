@@ -2165,7 +2165,13 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if (file_exists($file = $this->hashFile()) &&
 			($hashes = file_get_contents($file)))
 		{
-			$this->folderHashes = unserialize($hashes);
+			$this->folderHashes = json_decode($hashes,true);
+			// fallback in case hashes have been serialized instead of being json-encoded
+			if (json_last_error()!=JSON_ERROR_NONE)
+			{
+				//error_log(__METHOD__.__LINE__." error decoding with json");
+				$this->folderHashes = unserialize($hashes);
+			}			
 		}
 		else
 		{
@@ -2180,7 +2186,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 */
 	private function storeFolderHashes()
 	{
-		return file_put_contents($this->hashFile(), serialize($this->folderHashes));
+		// make sure $this->folderHashes is an array otherwise json_encode may fail on decode for string,integer,float or boolean
+		return file_put_contents($this->hashFile(), json_encode((is_array($this->folderHashes)?$this->folderHashes:array($this->folderHashes))));
 	}
 
 	/**

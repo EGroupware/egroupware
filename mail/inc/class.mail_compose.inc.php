@@ -89,7 +89,6 @@ class mail_compose
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 
 		$this->mailPreferences  =& $this->mail_bo->mailPreferences;
-
 	}
 
 	/**
@@ -1776,9 +1775,6 @@ class mail_compose
 				'tmp_name'	=> $tmpFileName,
 				'size'	=> $_formData['size']
 			);
-			// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
-			//$attachmentID = md5(time().serialize($buffer));
-			//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
 			if (!is_array($_content['attachments'])) $_content['attachments']=array();
 			$_content['attachments'][] = $buffer;
 			unset($buffer);
