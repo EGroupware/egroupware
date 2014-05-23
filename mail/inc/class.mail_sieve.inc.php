@@ -341,7 +341,7 @@ class mail_sieve
 						}
 						unset($this->rules[$ruleID]);
 						$this->rules = array_values($this->rules);
-						$result = $this->updateScript();
+						$this->updateScript();
 					}
 					egw_framework::refresh_opener($msg, 'mail');
 
