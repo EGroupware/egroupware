@@ -158,6 +158,7 @@ var AppJS = Class.extend(
 	 * - add: requires full reload for proper sorting
 	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
 	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
 	 */
 	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 	{
