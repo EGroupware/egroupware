@@ -262,8 +262,6 @@ class mail_sieve
             $error = 0;
 			switch ($button)
 			{
-
-
 				case 'save':
 				case 'apply':
 					if($content)
@@ -332,7 +330,18 @@ class mail_sieve
 				case 'delete':
 					if ($button == "delete")
 					{
-						$msg  = $this->ajax_action(false,$button, $ruleID, $msg);
+						if ($ruleID === count($this->rules)-1)
+						{
+							$msg = lang('rule with priority ') . $ruleID . lang(' deleted!');
+						}
+						else
+						{
+
+							$msg = lang('rule with priority ') . $ruleID . lang(' deleted!') . lang(' And the rule with priority %1, now got the priority %2',$ruleID+1,$ruleID);
+						}
+						unset($this->rules[$ruleID]);
+						$this->rules = array_values($this->rules);
+						$result = $this->updateScript();
 					}
 					egw_framework::refresh_opener($msg, 'mail');
 
