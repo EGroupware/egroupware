@@ -320,7 +320,7 @@ class mail_sieve
 						$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 						$error++;
 					}
-					egw_framework::refresh_opener($msg, 'mail');
+					egw_framework::refresh_opener($msg, 'mail', 'sieve');
 					if ($button == "apply")
 					{
 						break;
@@ -343,7 +343,7 @@ class mail_sieve
 						$this->rules = array_values($this->rules);
 						$this->updateScript();
 					}
-					egw_framework::refresh_opener($msg, 'mail');
+					egw_framework::refresh_opener($msg, 'mail', 'sieve');
 
 				case 'cancel':
 					egw_framework::window_close();
@@ -619,7 +619,7 @@ class mail_sieve
 							// refresh vacationNotice on index
 							$response = egw_json_response::get();
 							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
-							egw_framework::refresh_opener($msg, 'mail','edit');
+							egw_framework::refresh_opener($msg, 'mail');
 							if ($button === 'apply' || $icServer->error !=="")
 							{
 								break;
@@ -865,9 +865,9 @@ class mail_sieve
 
 		ob_start();
 		$result = $this->updateScript();
-		
+
 		$response = egw_json_response::get();
-		
+
 		if($result)
 		{
 			$response->error($result);

@@ -137,7 +137,7 @@ app.classes.mail = AppJS.extend(
 					if (w_h[1] == 'egw_getWindowOuterHeight()')
 					{
 						w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-					}	
+					}
 				}
 				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 				break;
@@ -145,16 +145,59 @@ app.classes.mail = AppJS.extend(
 				var app_registry = egw.link_get_registry('mail');
 				this.mail_isMainWindow = false;
 				this.hide_cc_compose();
-				
+
 				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
 				{
 					var w_h =app_registry['edit_popup'].split('x');
 					if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
 				}
-				
+
 				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
 				this.compose_cc_expander();
 				break;
+		}
+	},
+
+	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		switch(_app)
+		{
+			case 'mail':
+				if (_id === 'sieve')
+				{
+					var iframe = this.et2.getWidgetById('extra_iframe');
+					if (iframe && iframe.getDOMNode())
+					{
+						var contentWindow = iframe.getDOMNode().contentWindow;
+						if (contentWindow && contentWindow.app && contentWindow.app.mail)
+						{
+							contentWindow.app.mail.sieve_refresh();
+						}
+					}
+					return false;	// mail nextmatch needs NOT to be refreshed
+				}
+				break;
+
+			case 'emailadmin':
+				// ToDo: update tree with given account _id and _type
 		}
 	},
 
@@ -1400,10 +1443,10 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} _previous - Previously selected node ID
 	 */
 	mail_changeFolder: function(_folder,_widget, _previous) {
-		
+
 		// to reset iframes to the normal status
 		this.loadIframe();
-		
+
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
 		var img = _widget.getSelectedNode().images[0];
@@ -2770,7 +2813,7 @@ app.classes.mail = AppJS.extend(
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = (widget.get_value() == "custom"?[]:widget.get_value() == "aeiklprstwx")?
 						widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
-		
+
 		for (var i=0;i<this.aclRights.length;i++)
 		{
 			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
@@ -2829,26 +2872,26 @@ app.classes.mail = AppJS.extend(
 	edit_sieve: function(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		
+
 		var url = this.egw.link('/index.php',{
 					'menuaction': 'mail.mail_sieve.index',
 					'acc_id': acc_id,
 					'ajax': 'true'
 		});
-		
+
 		if (!this.loadIframe(url))
 		{
 			this.egw.open_link(url);
 		}
 	},
-	
+
 	/**
 	 * Load an url on an iframe
 	 *
-	 * @param {string} _url string egw url 
+	 * @param {string} _url string egw url
 	 * @param {iframe widget} _iFrame an iframe to be set if non, extra_iframe is default
 	 *
-	 * @return {boolean} return TRUE if success, and FALSE if iframe not given 
+	 * @return {boolean} return TRUE if success, and FALSE if iframe not given
 	 */
 	loadIframe: function (_url, _iFrame)
 	{
