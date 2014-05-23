@@ -489,6 +489,10 @@ app.classes.mail = AppJS.extend(
 				continue;
 			}
 		}
+		if (content['cc'] || content['bcc'])
+		{
+			this.compose_cc_expander();
+		}
 		return success;
 	},
 
