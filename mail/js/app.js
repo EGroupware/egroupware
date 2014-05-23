@@ -35,7 +35,7 @@ app.classes.mail = AppJS.extend(
 	mail_currentlyFocussed: '',
 	mail_previewAreaActive: true, // we start with the area active
 
-	nm_index: 'nm', // nm nome of index
+	nm_index: 'nm', // nm name of index
 	mail_fileSelectorWindow: null,
 	mail_isMainWindow: true,
 
@@ -196,8 +196,30 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 
-			case 'emailadmin':
-				// ToDo: update tree with given account _id and _type
+			case 'emailadmin':	// update tree with given mail account _id and _type
+				var tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+				if (!tree) break;
+				var node = tree.getNode(_id);
+				switch(_type)
+				{
+					case 'delete':
+						if (node)	// we dont care for deleted accounts not shown (eg. other users)
+						{
+							tree.deleteItem(_id);
+							// ToDo: blank list, if _id was active account
+						}
+						break
+					case 'update':
+					case 'edit':
+						if (node)	// we dont care for updated accounts not shown (eg. other users)
+						{
+							tree.refreshItem(_id);
+						}
+						break;
+					case 'add':
+						tree.refreshItem(0);	// refresh root
+						break;
+				}
 		}
 	},
 
