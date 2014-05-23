@@ -688,13 +688,8 @@ etemplate2.prototype.getValues = function(_root)
 		// Store the value of the widget and reset its dirty flag
 		if (value !== null)
 		{
-			// Namespaced container has its own value, don't put it down one more level
-			if (_widget.createNamespace)
-			{
-				jQuery.extend(_target,value);
-			}
 			// Merge, if possible (link widget)
-			else if(typeof _target[id] == 'object' && typeof value == 'object')
+			if(typeof _target[id] == 'object' && typeof value == 'object')
 			{
 				_target[id] = jQuery.extend({},_target[id],value);
 			}
