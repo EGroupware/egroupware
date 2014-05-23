@@ -3181,7 +3181,9 @@ app.classes.mail = AppJS.extend(
 		}
 
 		this.egw.message('Printing....');
-		this.egw.window.print();
+		var display = this;
+		// Make sure the print happens after the content is loaded. Seems Firefox can't handle timing for print command correctly 
+		setTimeout(function(){display.egw.window.print();},1);
 	},
 
 	/**
