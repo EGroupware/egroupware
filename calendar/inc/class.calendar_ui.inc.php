@@ -129,7 +129,7 @@ class calendar_ui
 	 * Constructor
 	 *
 	 * @param boolean $use_boupdate use bocalupdate as parenent instead of bocal
-	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
+	 * @param array $set_states to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
 	function __construct($use_boupdate=false,$set_states=NULL)
 	{
@@ -535,10 +535,10 @@ class calendar_ui
 	 * Generate a link to add an event, incl. the necessary popup
 	 *
 	 * @param string $content content of the link
-	 * @param string $date=null which date should be used as start- and end-date, default null=$this->date
-	 * @param int $hour=null which hour should be used for the start, default null=$this->hour
-	 * @param int $minute=0 start-minute
-	 * @param array $extra_vars=null
+	 * @param string $date which date should be used as start- and end-date, default null=$this->date
+	 * @param int $hour which hour should be used for the start, default null=$this->hour
+	 * @param int $minute start-minute
+	 * @param array $vars
 	 * @return string the link incl. content
 	 */
 	function add_link($content,$date=null,$hour=null,$minute=0,array $vars=null)
@@ -559,9 +559,9 @@ class calendar_ui
 	 * returns javascript to open a popup window: window.open(...)
 	 *
 	 * @param string $link link or this.href
-	 * @param string $target='_blank' name of target or this.target
-	 * @param int $width=750 width of the window
-	 * @param int $height=400 height of the window
+	 * @param string $target name of target or this.target
+	 * @param int $width width of the window
+	 * @param int $height height of the window
 	 * @return string javascript (using single quotes)
 	 */
 	function popup($link,$target='_blank',$width=750,$height=410)
@@ -833,14 +833,8 @@ class calendar_ui
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
 			$options = '';
-			if ($GLOBALS['egw_info']['user']['apps']['importexport'])
-			{
-				$mime_filter = array('!',	// negativ filter, everything but ...
-					'application/vnd.oasis.opendocument.spreadsheet',
-					'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-				);
-			}
-			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', $mime_filter,'calendar');
+			
+			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
 			foreach($documents as $key => $value)
 			{
 				$options .= '<option value="'.html::htmlspecialchars($key).'">'.html::htmlspecialchars($value)."</option>\n";
