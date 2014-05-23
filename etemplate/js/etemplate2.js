@@ -729,13 +729,13 @@ etemplate2.prototype.getValues = function(_root)
  * If there's a message provided, we try to find where it goes and set it directly.  Then
  * we look for a nextmatch widget, and tell it to refresh its data based on that ID.
  *
+ * @see egw_message.refresh()
+ *
  * @param {string} msg message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
  * @param {string} app app-name
  * @param {(string|null)} id application specific entry ID to try to refresh
  * @param {(string|null)} type type of change.  One of 'update','edit', 'delete', 'add' or null
- *
- * @see jsapi.egw_refresh()
- * @see egw_fw.egw_refresh()
+ * @return {boolean} true if nextmatch found and refreshed, false if not
  */
 etemplate2.prototype.refresh = function(msg, app, id, type)
 {
@@ -749,6 +749,28 @@ etemplate2.prototype.refresh = function(msg, app, id, type)
 		refresh_done = true;
 	}, this, et2_nextmatch);
 
+	return refresh_done;
+};
+
+/**
+ * "Intelligently" refresh a given app
+ *
+ * @see egw_message.refresh()
+ *
+ * @param {string} _msg message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
+ * @param {string} _app app-name
+ * @param {(string|null)} _id application specific entry ID to try to refresh
+ * @param {(string|null)} _type type of change.  One of 'update','edit', 'delete', 'add' or null
+ * @return {boolean} true if nextmatch found and refreshed, false if not
+ */
+etemplate2.app_refresh = function(_msg, _app, _id, _type)
+{
+	var refresh_done = false;
+	var et2 = etemplate2.getByApplication(_app);
+	for(var i = 0; i < et2.length; i++)
+	{
+		refresh_done = et2[i].refresh(_msg,_app,_id,_type) || refresh_done;
+	}
 	return refresh_done;
 };
 

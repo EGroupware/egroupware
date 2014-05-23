@@ -203,10 +203,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 			if (no_regular_refresh) return;
 
-			// if we have a framework, let it deal with refresh
-			if (win.framework && win.framework.refresh)
+			// if we have a framework template, let it deal with refresh, unless it returns a DOMwindow for us to refresh
+			if (win.framework && win.framework.refresh &&
+				!(win = win.framework.refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)))
 			{
-				win.framework.refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
 				return;
 			}
 
@@ -219,28 +219,20 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// etemplate2 specific to avoid reloading whole page
-			if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
+			if(typeof etemplate2 != "undefined" && etemplate2.app_refresh)
 			{
-				var refresh_done = false;
-				var et2 = etemplate2.getByApplication(_app);
-				for(var i = 0; i < et2.length; i++)
-				{
-					refresh_done = et2[i].refresh(_msg,_app,_id,_type);
-				}
+				var refresh_done = etemplate2.app_refresh(_msg, _app, _id, _type);
 
 				// Refresh target or current app too
-				if ((_targetapp || egw_appName) != _app)
+				if ((_targetapp || this.app_name()) != _app)
 				{
-					var et2t = etemplate2.getByApplication(_targetapp || egw_appName);
-					for(var i = 0; i < et2t.length; i++)
-					{
-						refresh_done = et2t[i].refresh(_msg,_app,_id,_type);
-					}
+					refresh_done = etemplate2.app_refresh(_msg, _targetapp || this.app_name()) || refresh_done;
 				}
 				//In case that we have etemplate2 ready but it's empty and refresh is not done
-				if (et2.length >= 1 && refresh_done) return;
+				if (refresh_done) return;
 			}
 
+			// fallback refresh by reloading window
 			var href = win.location.href;
 
 			if (typeof _replace != 'undefined')
