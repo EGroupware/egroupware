@@ -257,7 +257,7 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.' CurrentFolder:'.$activeFolderCache[$this->mail_bo->profileID]);
 			$activeFolder = $activeFolderCache[$this->mail_bo->profileID];
 		}
-
+		//error_log(__METHOD__.__LINE__.array2string($_content));
 		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
 			($_content['button']['send'] || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
 		)
@@ -2553,9 +2553,18 @@ class mail_compose
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
 
+		// we use the authentication data of the choosen mailaccount
+		if ($_formData['serverID']!=$_formData['mailaccount'])
+		{
+			$this->changeProfile($_formData['mailaccount']);
+		}
+		// sentFolder is account specific
+		$sentFolder = $this->mail_bo->getSentFolder();
+		if (!$this->mail_bo->folderExists($sentFolder, true)) $sentFolder=false;
+		// we do not fake the sender (anymore), we use the account settings for server and authentication of the choosen account
 		$ogServer = $this->mail_bo->ogServer;
 		//_debug_array($ogServer);
-		$mail->Host 	= $ogServer->host;
+		$mail->Host = $ogServer->host;
 		$mail->Port	= $ogServer->port;
 		// SMTP Auth??
 		if($ogServer->smtpAuth) {
@@ -2565,6 +2574,11 @@ class mail_compose
 			if (isset($senderadress) && !empty($senderadress)) $mail->Sender = $senderadress;
 			$mail->Username = $username;
 			$mail->Password	= $ogServer->password;
+		}
+		// we switch back from authentication data to the account we used to work on
+		if ($_formData['serverID']!=$_formData['mailaccount'])
+		{
+			$this->changeProfile($_formData['serverID']);
 		}
 
 		// check if there are folders to be used
@@ -2577,12 +2591,11 @@ class mail_compose
 				$folder[] = $f;
 			}
 		}
-		$sentFolder = $this->mail_bo->getSentFolder();
-		if(isset($sentFolder) && $sentFolder != 'none' &&
+		if(isset($sentFolder) && $sentFolder && $sentFolder != 'none' &&
 			$this->mailPreferences['sendOptions'] != 'send_only' &&
 			$messageIsDraft == false)
 		{
-			if ($this->mail_bo->folderExists($sentFolder, true))
+			if ($sentFolder)
 			{
 				$folder[] = $sentFolder;
 			}
@@ -2675,6 +2688,8 @@ class mail_compose
 		{
 			foreach($folder as $folderName) {
 				if (is_array($folderName)) $folderName = array_shift($folderName); // should not happen at all
+				// if $_formData['serverID']!=$_formData['mailaccount'] skip copying to sentfolder on serverID
+				if($mail_bo->isSentFolder($folderName) && $_formData['serverID']!=$_formData['mailaccount']) continue;
 				if($mail_bo->isSentFolder($folderName)) {
 					$flags = '\\Seen';
 				} elseif($mail_bo->isDraftFolder($folderName)) {
@@ -2705,6 +2720,35 @@ class mail_compose
 					error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$this->sessionData['subject'],$folderName));
 				}
 			}
+			// if we choose to send from a differing profile
+			if ($_formData['serverID']!=$_formData['mailaccount'])
+			{
+				// we assume the intention is to see the sent mail in the sentfolder
+				// of that account, that is, if there is one at all, and our options
+				// suggest it
+				if(isset($sentFolder) && $sentFolder != 'none' &&
+					$this->mailPreferences['sendOptions'] != 'send_only')
+				{
+					$this->changeProfile($_formData['mailaccount']);
+					$sentFolder = $this->mail_bo->getSentFolder();
+					try
+					{
+						$flags = '\\Seen';
+						//error_log(__METHOD__.__LINE__.array2string($folderName));
+						$this->mail_bo->appendMessage($sentFolder,
+								$sentMailHeader,
+								$sentMailBody,
+								$flags);
+					}
+					catch (egw_exception_wrong_userinput $e)
+					{
+						error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$this->sessionData['subject'],$folderName,$e->getMessage()));
+					}
+
+					$this->changeProfile($_formData['serverID']);
+				}
+			}
+
 			//$mail_bo->closeConnection();
 		}
 		// handle previous drafted versions of that mail
