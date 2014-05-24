@@ -6,7 +6,7 @@
  * @package mail
  * @subpackage setup
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-14 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -21,7 +21,7 @@ $setup_info['mail']['autoinstall'] = true;	// install automatically on update
 
 $setup_info['mail']['author']		= 'Stylite AG';
 $setup_info['mail']['license']		= 'GPL';
-$setup_info['mail']['description']	= 'IMAP emailclient for eGroupWare';
+$setup_info['mail']['description']	= 'IMAP client for EGroupware';
 $setup_info['mail']['maintainer'] 	= 'Stylite AG';
 $setup_info['mail']['maintainer_email'] 	= 'info@stylite.de';
 
@@ -48,11 +48,7 @@ $setup_info['mail']['depends'][] = array(
 );
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'emailadmin',
-	'versions' => Array('1.7','1.8','1.9')
-);
-$setup_info['mail']['depends'][] = array(
-	'appname'  => 'egw-pear',
-	'versions' => Array('1.8','1.9')
+	'versions' => Array('1.9')
 );
 // installation checks for mail
 $setup_info['mail']['check_install'] = array(
