@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2013 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2014 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -16,7 +16,7 @@
  */
 
 /**
- * Generalized linking between entries of eGroupware apps
+ * Generalized linking between entries of EGroupware apps
  *
  * Please note: this class can NOT and does not need to be initialised, all methods are static
  *
@@ -99,6 +99,9 @@
  *    Attached files are stored under $vfs_basedir='/infolog' in the vfs!
  * 3) It manages the link-registry, in which apps can register themselfs by implementing some hooks
  * 4) It notifies apps, who registered for that service, about changes in the links their entries
+ *
+ * Modification times in links (and deleted timestamp) are always in server-time!
+ * (We dont convert them here, as most apps ignore them anyway)
  */
 class egw_link extends solink
 {

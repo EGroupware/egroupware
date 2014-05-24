@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2013 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2014 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -53,10 +53,9 @@ class solink
 	 * @param string $remark='' Remark to be saved with the link (defaults to '')
 	 * @param int $owner=0 Owner of the link (defaults to user)
 	 * @param int $lastmod=0 timestamp of last modification (defaults to now=time())
-	 * @param int $no_notify=0 &1 dont notify $app1, &2 dont notify $app2
 	 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 	 */
-	static function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0,$no_notify=0 )
+	static function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 	{
 		if (self::DEBUG)
 		{
@@ -67,7 +66,7 @@ class solink
 		{
 			return False;	// dont link to self or other nosense
 		}
-		if ($link = self::get_link($app1,$id1,$app2,$id2))
+		if (($link = self::get_link($app1,$id1,$app2,$id2)))
 		{
 			if ($link['link_remark'] != $remark)
 			{
@@ -186,6 +185,7 @@ class solink
 			'owner'   => $row['link_owner'],
 			'lastmod' => $row['link_lastmod'],
 			'link_id' => $row['link_id'],
+			'deleted' => $row['deleted'],
 		);
 	}
 
@@ -303,7 +303,10 @@ class solink
 		}
 		if($hold_for_purge)
 		{
-			self::$db->update(self::TABLE,array('deleted'=> time()), $where, __LINE__,__FILE__);
+			self::$db->update(self::TABLE,array(
+				'deleted' => time(),
+				'link_lastmod' => time(),
+			), $where, __LINE__,__FILE__);
 		}
 		else
 		{

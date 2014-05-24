@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -206,14 +206,22 @@ class infolog_ui
 		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
 		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
 
+		$info['row_mod'] = $info['info_modified'];
+
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true))))
+			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true,true))))
 		{
 			$timesheets = array();
 			foreach ($info['links'] as $link)
 			{
+				// incl. link modification time into row_mod (link's lastmod is always in server-time!)
+				$link_mod = egw_time::server2user($link['lastmod']);
+				if ($info['row_mod'] < $link_mod) $info['row_mod'] = $link_mod;
+
+				if ($link['deleted']) continue;	// skip deleted links, but incl. them in row_mod!
+
 				if ($show_links != 'none' && $show_links != 'no_describtion' &&
 					$link['link_id'] != $info['info_link_id'] &&
 				    ($link['app'] != $action || $link['id'] != $action_id) &&
@@ -231,6 +239,8 @@ class infolog_ui
 			{
 				$sum = ExecMethod('timesheet.timesheet_bo.sum',$timesheets);
 				$info['info_sum_timesheets'] = $sum['duration'];
+				// incl. max timesheet modification in row_mod
+				if ($info['row_mod'] < $sum['max_modified']) $info['row_mod'] = $sum['max_modified'];
 			}
 		}
 		$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
@@ -279,7 +289,7 @@ class infolog_ui
 			}
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
-			$query['row_modified'] = 'info_datemodified';
+			$query['row_modified'] = 'row_mod';
 			$query['parent_id'] = 'info_id_parent';
 			$query['is_parent'] = 'info_anz_subs';
 			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
@@ -398,7 +408,7 @@ class infolog_ui
 		// query all links and sub counts in one go
 		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
 		{
-			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true);
+			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true,'','link_lastmod DESC',true);	// true=incl. deleted
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$rows = array();

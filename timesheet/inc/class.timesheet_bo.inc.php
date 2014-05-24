@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -518,16 +518,21 @@ class timesheet_bo extends so_sql_cf
 				return array();
 			}
 			unset($criteria);
-			foreach ($ids as $r =>$v) $id_filter[] = $v['id'];
+			foreach ($ids as $v)
+			{
+				$id_filter[] = $v['id'];
+			}
 			$filter = array('ts_id'=>$id_filter);
 		}
 		// if we only want to return the summary (sum of duration and sum of price) we have to take care that the customfield table
 		// is not joined, as the join causes a multiplication of the sum per customfield found
 		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
-		$this->summary = parent::search(($only_summary?false:$criteria),"SUM(ts_duration) AS duration,SUM($total_sql) AS price".
+		$this->summary = parent::search(($only_summary?false:$criteria),
+			"SUM(ts_duration) AS duration,SUM($total_sql) AS price,MAX(ts_modified) AS max_modified".
 			($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
 			'','',$wildcard,$empty,$op,false,($only_summary&&is_array($criteria)&&is_array($filter)?array_merge($criteria,$filter):$filter),($only_summary?'':$join));
 		$this->summary = $this->summary[0];
+		$this->summary['max_modified'] = egw_time::server2user($this->summary['max_modified']);
 
 		if ($only_summary) return $this->summary;
 
@@ -676,7 +681,7 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 
-		if (!$this->check_acl(EGW_ACL_DELETE,$ts_id) || !($old = $this->read($ts_id)))
+		if (!$ignore_acl && !$this->check_acl(EGW_ACL_DELETE,$ts_id) || !($old = $this->read($ts_id)))
 		{
 			return false;
 		}
@@ -727,11 +732,11 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * set a status for timesheet entry identified by $keys
 	 *
-	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
-	 * @param boolean $status
+	 * @param array $keys=null if given array with col => value pairs to characterise single timesheet or null for $this->data
+	 * @param int $status=0
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
-	function set_status($keys=null,$status)
+	function set_status($keys=null, $status=0)
 	{
 		$ret = true;
 		if (!is_array($keys) && (int) $keys)
@@ -752,10 +757,10 @@ class timesheet_bo extends so_sql_cf
 	}
 
 	/**
-	 * Get the time- and pricesum for the given timesheet entries
+	 * Get the time-, price-, quantity-sum and max. modification date for the given timesheet entries
 	 *
 	 * @param array $ids array of timesheet id's
-	 * @return array with keys time and price
+	 * @return array with values for keys "duration", "price", "max_modified" and "quantity"
 	 */
 	function sum($ids)
 	{
@@ -854,6 +859,8 @@ class timesheet_bo extends so_sql_cf
 	 */
 	function file_access($id,$check,$rel_path=null,$user=null)
 	{
+		unset($rel_path);	// not used, but required by function signature
+
 		return $this->check_acl($check,$id,$user);
 	}
 
