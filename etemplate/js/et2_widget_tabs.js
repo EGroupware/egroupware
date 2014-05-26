@@ -238,7 +238,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			{
 				tabs._loadTab(i,promises);
 			}
-			jQuery.when(promises).then(function() {
+			jQuery.when.apply(jQuery,promises).then(function() {
 				tab_deferred.resolve();
 			});
 		},0);

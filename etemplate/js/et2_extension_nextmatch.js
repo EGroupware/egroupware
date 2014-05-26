@@ -1968,7 +1968,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		header.loadingFinished(deferred);
 
 		// Wait until all child widgets are loaded, then bind
-		jQuery.when(deferred).then(function() {
+		jQuery.when.apply(jQuery,deferred).then(function() {
 			self._bindHeaderInput(header);
 		});
 	},
@@ -2140,7 +2140,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				 * is to warn & not set it, but for nextmatch we'll just add it
 				 * in, and let the server either set it properly, or ignore.
 				 */
-				if(value && child.instanceOf(et2_selectbox))
+				if(value && typeof value != 'object' && child.instanceOf(et2_selectbox))
 				{
 					var found = typeof child.options.select_options[value] != 'undefined';
 					// options is array of objects with attribute value&label

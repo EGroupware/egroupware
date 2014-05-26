@@ -384,7 +384,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			}
 
 			// Wait for everything to be loaded, then finish it up
-			jQuery.when.apply(null, deferred).done(jQuery.proxy(function() {
+			jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function() {
 				egw.debug("log", "Finished loading %s, triggering load event", _name);
 
 				// Trigger the "resize" event
