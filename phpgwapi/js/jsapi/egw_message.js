@@ -28,6 +28,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var message_timer;
 	var error_reg_exp;
 	var on_click_remove_installed = false;
+	var a_href_reg = /<a href="([^"]+)">([^<]+)<\/a>/img;
 
 	// Register an 'error' plugin, displaying using the message system
 	this.registerJSONPlugin(function(type, res, req) {
@@ -38,6 +39,17 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 		throw 'Invalid parameters';
 	}, null, 'error');
+
+	/**
+	 * Decode html entities so they can be added via .text(_str), eg. html_entity_decode('&amp;') === '&'
+	 *
+	 * @param {string} _str
+	 * @returns {string}
+	 */
+	function html_entity_decode(_str)
+	{
+		return _str && _str.indexOf('&') != -1 ? jQuery('<span>'+_str+'</span>').text() : _str;
+	}
 
 	return {
 		/**
@@ -95,12 +107,27 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					});
 					on_click_remove_installed = true;
 				}
-				parent.prepend(jQuery(_wnd.document.createElement('div'))
+				// replace br-tags with newlines
+				_msg = _msg.replace(/<br\s?\/?>\n?/i, "\n");
+
+				var msg_div = jQuery(_wnd.document.createElement('div'))
 					.attr('id','egw_message')
 					.text(_msg)
 					.addClass(_type+'_message')
-					.css('position', 'absolute'));
+					.css('position', 'absolute');
+				parent.prepend(msg_div);
 
+				// replace simple a href (NO other attribute, to gard agains XSS!)
+				var matches = a_href_reg.exec(_msg);
+				if (matches)
+				{
+					var parts = _msg.split(matches[0]);
+					msg_div.text(parts[0]);
+					msg_div.append(jQuery(_wnd.document.createElement('a'))
+						.attr('href', html_entity_decode(matches[1]))
+						.text(matches[2]));
+					msg_div.append(jQuery(_wnd.document.createElement('span')).text(parts[1]));
+				}
 				if (_type == 'success')	// clear message again after some time, if no error
 				{
 					message_timer = _wnd.setTimeout(function() {
