@@ -26,7 +26,7 @@
 					<nextmatch-sortheader label="Idle" id="session_dla"/>
 					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
 				</row>
-				<row class="row">
+				<row class="row $row_cont[class]">
 					<hbox>
 						<menulist>
 							<menupopup type="select-account" label="" id="${row}[account_id]" readonly="true"/>

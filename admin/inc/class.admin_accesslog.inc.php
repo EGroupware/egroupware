@@ -93,22 +93,14 @@ class admin_accesslog
 			// eg. for bad login or password
 			if (!$row['account_id']) $row['alt_loginid'] = ($row['loginid']?$row['loginid']:lang('none'));
 
-			$readonlys['kill['.$row['sessionid'].']'] = $no_kill;
-			$readonlys['delete['.$row['sessionid'].']'] = $query['session_list'];
-
 			// do not allow to kill or select own session
 			if ($GLOBALS['egw']->session->sessionid_access_log == $row['sessionid'] && $query['session_list'])
 			{
-				$readonlys['kill['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
-				$readonlys["kill[$row[sessionid]]"]= true;
 				$row['class'] .= ' rowNoDelete ';
 			}
 			// do not allow to delete access log off active sessions
 			if (!$row['lo'] && $row['session_dla'] > time()-$GLOBALS['egw_info']['server']['sessions_timeout'] && !$query['session_list'])
 			{
-				$readonlys['delete['.$row['sessionid'].']'] = $readonlys['selected['.$row['sessionid'].']'] = true;
-
-				$readonlys["delete[$row[sessionid]]"]= true;
 				$row['class'] .= ' rowNoDelete ';
 			}
 			unset($row['session_php']);	// for security reasons, do NOT give real PHP sessionid to UI
@@ -314,6 +306,7 @@ class admin_accesslog
 					'confirm' => 'Kill this session',
 					'confirm_multiple' => 'Kill these sessions',
 					'group' => $group,
+					'disableClass' => 'rowNoDelete',
 				),
 			);
 
