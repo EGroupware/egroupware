@@ -251,6 +251,10 @@ abstract class egw_framework
 	 *
 	 * Calling egw_refresh and egw_message on opener in a content security save way
 	 *
+	 * To provide more information about necessary refresh an automatic 9th parameter is added
+	 * containing an object with application-name as attributes containing an array of linked ids
+	 * (adding happens in get_extras to give apps time to link new entries!).
+	 *
 	 * @param string $msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param string $app application name
 	 * @param string|int $id=null id of entry to refresh
@@ -346,6 +350,22 @@ abstract class egw_framework
 	 */
 	public static function get_extra()
 	{
+		// adding links of refreshed entry, to give others apps more information about necessity to refresh
+		if (isset(self::$extra['refresh-opener']) && count(self::$extra['refresh-opener']) <= 8 &&	// do not run twice
+			!empty(self::$extra['refresh-opener'][1]) && !empty(self::$extra['refresh-opener'][2]))	// app/id given
+		{
+			$links = egw_link::get_links(self::$extra['refresh-opener'][1], self::$extra['refresh-opener'][2]);
+			$apps = array();
+			foreach($links as $link)
+			{
+				$apps[$link['app']][] = $link['id'];
+			}
+			while (count(self::$extra['refresh-opener']) < 8)
+			{
+				self::$extra['refresh-opener'][] = null;
+			}
+			self::$extra['refresh-opener'][] = $apps;
+		}
 		return self::$extra;
 	}
 
@@ -2014,7 +2034,7 @@ if ($app == 'home') continue;
 				$accounts[] = array('value' => $account_id, 'label' => $name);
 			}
 		}
-		
+
 		egw_json_response::get()->data($list);
 		return $list;
 	}

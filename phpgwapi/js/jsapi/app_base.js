@@ -157,10 +157,11 @@ var AppJS = Class.extend(
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload for proper sorting
 	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
-	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 * @param {object|null} _links app => array of ids of linked entries
+	 * or null, if not triggered on server-side, which adds that info
 	 * @return {false|*} false to stop regular refresh, thought all observers are run
 	 */
-	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	observer: function(_msg, _app, _id, _type, _msg_type, _links)
 	{
 
 	},

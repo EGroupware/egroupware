@@ -207,8 +207,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {(string|RegExp)} _replace regular expression to replace in url
 		 * @param {string} _with
 		 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+		 * @param {object|null} _links app => array of ids of linked entries
+		 * or null, if not triggered on server-side, which adds that info
 		 */
-	   refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
+	   refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type, _links)
 	   {
 			// Log for debugging purposes
 			this.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)", _msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
@@ -224,7 +226,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				var app_obj = _wnd.egw.window.app[app];
 				if (typeof app_obj.observer == 'function' &&
-					app_obj.observer(_msg, _app, _id, _type, _msg_type, _targetapp) === false && app === _app)
+					app_obj.observer(_msg, _app, _id, _type, _msg_type, _links) === false && app === _app)
 				{
 					no_regular_refresh = true;
 				}
