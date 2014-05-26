@@ -30,12 +30,12 @@
 							<row class="dialogHeader">
 								<hbox>
 									<html id="js"/>
-									<button label="Up" id="button[up]" image="goup"/>
+									<button label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"/>
 									<button label="Go to your home directory" id="button[home]" image="gohome"/>
 									<box class="selectPathContainer">
-										<vfs-name id="path" class="selectPath"/>
+										<vfs-name id="path" class="selectPath" onchange="1"/>
 									</box>
-									<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('path')).value+='/'+dir;" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
+									<button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
 								</hbox>
 							</row>
 							<row class="selectFiles">

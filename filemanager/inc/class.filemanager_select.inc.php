@@ -122,19 +122,8 @@ class filemanager_select
 			unset($content['button']);
 			switch($button)
 			{
-				case 'up':
-					if ($content['path'] != '/') $content['path'] = egw_vfs::dirname($content['path']);
-					break;
 				case 'home':
 					$content['path'] = filemanager_ui::get_home_dir();
-					break;
-				case 'createdir':
-					if (!@egw_vfs::mkdir($content['path'],null,STREAM_MKDIR_RECURSIVE))
-					{
-						$content['msg'] = !egw_vfs::is_writable(dirname($content['path'])) ?
-							lang('Permission denied!') : lang('Failed to create directory!');
-						$content['path'] = $content['old_path'];
-					}
 					break;
 				case 'ok':
 					$copy_result = null;
