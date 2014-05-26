@@ -148,6 +148,7 @@ var et2_date = et2_inputWidget.extend(
 					this.set_validation_error(false);
 					this.date.setHours(parsed.hour);
 					this.date.setMinutes(parsed.minute);
+					this.input_date.val(_value);
 					if(old_value !== this.getValue())
 					{
 						this.input_date.timepicker('setTime',_value);
