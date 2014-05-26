@@ -413,12 +413,12 @@ class calendar_merge extends bo_merge
 	*/
 	public function participant($plugin,$id,$n)
 	{
-		if(!is_array($id) || !$id['start']) {
+		if(!is_array($id) || !$id['start'] || !is_array($id['participants'])) {
 			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
 		} else {
 			$event = $id;
 		}
-
+		
 		if(!is_array($event['participants']) || $n >= count($event['participants'])) return array();
 
 		$participant = null;

@@ -528,6 +528,7 @@ class calendar_uilist extends calendar_ui
 			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$query['num_rows'] = -1;		// all
+			$query['csv_export'] = true;
 			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
 		}
 		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
