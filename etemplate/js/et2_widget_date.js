@@ -102,7 +102,7 @@ var et2_date = et2_inputWidget.extend(
 			this.createInputWidget();
 		}
 	},
-	
+
 	set_value: function(_value) {
 		var old_value = this.getValue();
 		if(_value === null || _value === "" || _value === undefined ||
@@ -122,7 +122,7 @@ var et2_date = et2_inputWidget.extend(
 		}
 
 		// Handle just time as a string in the form H:i
-		if(typeof _value == 'string' && isNaN(_value)) 
+		if(typeof _value == 'string' && isNaN(_value))
 		{
 			// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
 			var fix_reg = new RegExp((this._type == "date-timeonly"?'^':' ')+'([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$','i');
@@ -186,8 +186,8 @@ var et2_date = et2_inputWidget.extend(
 						}
 						this.date = new Date(parsed);
 					}
-					
-					
+
+
 					this.set_validation_error(false);
 			}
 		} else if (typeof _value == 'object' && _value.date) {
@@ -444,11 +444,11 @@ var et2_date_duration = et2_date.extend(
 
 		// Figure out best unit for display
 		var _unit = this.options.display_format == "d" ? "d" : "h";
-		if (this.options.data_format.indexOf('m') > -1 && _value && _value < 60)
+		if (this.options.display_format.indexOf('m') > -1 && _value && _value < 60)
 		{
 			_unit = 'm';
 		}
-		else if (this.options.data_format.indexOf('d') > -1 && _value >= 60*this.options.hours_per_day)
+		else if (this.options.display_format.indexOf('d') > -1 && _value >= 60*this.options.hours_per_day)
 		{
 			_unit = 'd';
 		}
@@ -635,9 +635,9 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// parseDateTime to handle string PHP: DateTime local date/time format
 			var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
-						jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value): 
+						jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value):
 						jQuery.datepicker.parseDateTime(this.egw().preference('dateformat'),this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', _value);
-			
+
 			var text = new Date(parsed);
 			// JS dates use milliseconds
 			this.date.setTime(text.valueOf());
@@ -706,7 +706,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		this.span.attr("datetime", date("Y-m-d H:i:s",this.date)).text(display);
 	},
-	
+
 	/**
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
@@ -741,7 +741,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	setDetachedAttributes: function(_nodes, _values) {
 		this.label_node = jQuery(_nodes[0]);
 		this.span = jQuery(_nodes[1]);
-		
+
 		this.set_value(_values["value"]);
 		if(_values["label"])
 		{
