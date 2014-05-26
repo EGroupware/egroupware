@@ -177,6 +177,7 @@ class etemplate_widget_link extends etemplate_widget
 				{
 					$link['title'] = preg_replace('/: ([^ ]+) /',': ',$link['title']);        // remove mime-type, it's alread in the icon
 				}
+				$link['title'] = egw_vfs::decodePath($link['title']);
 				$link['icon'] = egw_link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
 			}
 			else
