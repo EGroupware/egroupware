@@ -45,7 +45,9 @@ class admin_hooks
 			// Destination div for folder tree
 			$file[] = array(
 				'no_lang' => true,
-				'text' => '<span id="admin_tree_target" class="admin_tree" />',
+				// Tree has about 20 leaves (or more) in it, but the sidebox starts
+				// with no content.  Set some minimum height to make sure scrolling is triggered.
+				'text' => '<div id="admin_tree_target" class="admin_tree" style="min-height:20em"/>',
 				'link' => false,
 				'icon' => false
 			);
