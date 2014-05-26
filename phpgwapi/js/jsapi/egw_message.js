@@ -65,7 +65,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			var framework = _wnd.framework;
 			var jQuery = _wnd.jQuery;
 
-			if (_msg && typeof _type == 'undefined')
+			if (_msg && !_type)
 			{
 				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
 
