@@ -1773,7 +1773,8 @@ abstract class bo_merge
 					);
 				}
 				$documents[$file['mime']]['children'][$prefix.$file['name']] = array(
-					'caption' => egw_vfs::decodePath($file['name'])
+					'caption' => egw_vfs::decodePath($file['name']),
+					'postSubmit' => true,	// download needs post submit (not Ajax) to work
 				);
 				if ($file['mime'] == 'message/rfc822')
 				{
@@ -1833,7 +1834,7 @@ abstract class bo_merge
 		// egw.open() used if only 1 row selected
 		$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
 		$action['target'] = 'compose_' .$file['path'];
-		
+
 		// long_task runs menuaction once for each selected row
 		$action['nm_action'] = 'long_task';
 		$action['popup'] = egw_link::get_registry('mail', 'edit_popup');
