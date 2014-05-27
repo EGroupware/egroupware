@@ -309,6 +309,10 @@ var et2_selectAccount = et2_selectbox.extend(
 			for(var j = 0; j < search.length; j++)
 			{
 				var found = false;
+
+				// Not having a value to look up causes an infinite loop
+				if(!search[j]) continue;
+				
 				// Options are not indexed, so we must look
 				for(var i = 0; !found && i < this.options.select_options.length; i++)
 				{
