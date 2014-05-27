@@ -1032,7 +1032,12 @@ var et2_widget = ClassWithAttributes.extend(
 	 * this, but some extensions need to override this
 	 */
 	getPath: function() {
-		return this.getArrayMgr("content").getPath();
+		var path = this.getArrayMgr("content").getPath();
+
+		// Prevent namespaced widgets with value from going an extra layer deep
+		if(this.id && this.createNamespace && path[path.length -1] == this.id) path.pop();
+
+		return path;
 	}
 });
 
