@@ -57,7 +57,8 @@ if (!count(translation::$lang_arr))
 	translation::add_app($_GET['app'], 'en');
 }
 
-$content = 'egw.set_lang_arr("'.$_GET['app'].'", '.json_encode(translation::$lang_arr).');';
+// fix for phrases containing \n
+$content = 'egw.set_lang_arr("'.$_GET['app'].'", '.str_replace('\\\\n', '\\n', json_encode(translation::$lang_arr)).');';
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))

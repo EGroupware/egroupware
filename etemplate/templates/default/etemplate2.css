@@ -397,6 +397,11 @@ span.et2_date_duration input.et2_date_duration{
 .ui-dialog-content {
   vertical-align: middle;
 }
+.ui-dialog-content > div {
+  white-space: pre-wrap;
+  display: inline-block;
+  vertical-align: middle;
+}
 /* These change button alignment, but it seems the standard is right-aligned for
 action buttons, left aligned for "extra" controls
 .ui-dialog .ui-dialog-buttonpane {
