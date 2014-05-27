@@ -156,7 +156,7 @@ var et2_arrayMgr = Class.extend(
 
 		if (this.perspectiveData.key != null)
 		{
-			_path.push(this.perspectiveData.key);
+			_path.unshift(this.perspectiveData.key);
 		}
 
 		if (this.parentMgr != null)
