@@ -214,7 +214,9 @@ app.classes.mail = AppJS.extend(
 					case 'edit':
 						if (node)	// we dont care for updated accounts not shown (eg. other users)
 						{
-							tree.refreshItem(_id);
+							//tree.refreshItem(_id);
+							egw.json('mail.mail_ui.ajax_reloadNode',[_id])
+								.sendRequest(true);
 						}
 						break;
 					case 'add':
@@ -1523,6 +1525,64 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * mail_checkAllSelected
+	 *
+	 * @param _action
+	 * @return boolean
+	 */
+	mail_checkAllSelected: function(_action, _confirm)
+	{
+		if (typeof _confirm == 'undefiend') _confirm = false;
+		var obj_manager = egw_getObjectManager(_action.getManager().id, false);
+		if (obj_manager && obj_manager.getAllSelected())
+		{
+			if (_confirm)
+			{
+/*				var buttons = [
+					{text: this.egw.lang("Yes"), id: "all", class: "ui-priority-primary", "default": true},
+					{text: this.egw.lang("Cancel"), id:"cancel"}
+				];
+				et2_dialog.show_dialog(function(_button_id, _value) {
+					switch (_button_id)
+					{
+						case "all":
+							return true;
+						case "cancel":
+							return false;
+					}
+				},
+				this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(_action.id))+" ",
+				this.egw.lang("Confirm"),
+				_action.id, buttons);
+*/
+				return confirm(this.egw.lang("Do you really want to apply/toggle %1 to ALL messages in the current folder?\n %2: All (filtered) mesages, will be affected.\n %3: only the selected range will be affected ",this.egw.lang(_action.id),this.egw.lang('ok'),this.egw.lang('cancel')));
+				
+			}
+			else
+			{
+				return true;
+			}
+		}
+		return false;
+	},
+
+	/**
+	 * mail_getActiveFilters
+	 *
+	 * @param _action
+	 * @return mixed boolean/activeFilters object
+	 */
+	mail_getActiveFilters: function(_action)
+	{
+		var obj_manager = egw_getObjectManager(this.nm_index, false);
+		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
+		{
+			return obj_manager.manager.data.nextmatch.activeFilters;
+		}
+		return false;
+	},
+
+	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
 	 *
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
@@ -1534,6 +1594,7 @@ app.classes.mail = AppJS.extend(
 		var msg;
 		var ftree;
 		var _folder;
+
 		if (_action.id=='read')
 		{
 			ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -1573,6 +1634,8 @@ app.classes.mail = AppJS.extend(
 		if (do_nmactions)
 		{
 			msg = this.mail_getFormData(_elems);
+			msg['all'] = this.mail_checkAllSelected(_action,true);
+			msg['activeFilters'] = this.mail_getActiveFilters(_action);
 			if (_action.id.substring(0,2)=='un') {
 				//old style, only available for undelete and unlabel (no toggle)
 				if ( _action.id=='unlabel') // this means all labels should be removed
@@ -1637,12 +1700,14 @@ app.classes.mail = AppJS.extend(
 				// Notify server of changes
 				if (msg_unset['msg'] && msg_unset['msg'].length)
 				{
-					this.mail_flagMessages('un'+_action.id,msg_unset);
+					if (!msg['all']) this.mail_flagMessages('un'+_action.id,msg_unset);
 				}
 				if (msg_set['msg'] && msg_set['msg'].length)
 				{
-					this.mail_flagMessages(_action.id,msg_set);
+					if (!msg['all']) this.mail_flagMessages(_action.id,msg_set);
 				}
+				//server must do the toggle, as we apply to ALL, not only the visible
+				if (msg['all']) this.mail_flagMessages(_action.id,msg);
 				// No further update needed, only in case of read, the counters should be refreshed
 				if (_action.id=='read') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
 				return;
