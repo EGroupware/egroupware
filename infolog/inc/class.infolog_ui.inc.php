@@ -206,7 +206,7 @@ class infolog_ui
 		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
 		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
 
-		$info['row_mod'] = $info['info_modified'];
+		$info['row_mod'] = $info['info_datemodified'];
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
