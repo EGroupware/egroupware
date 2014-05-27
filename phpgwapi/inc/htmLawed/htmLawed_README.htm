@@ -110,8 +110,8 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 
 <div id="body">
 <br />
-<div class="comment">htmLawed_README.txt, 17 September 2012<br />
-htmLawed 1.1.14, 8 August 2012<br />
+<div class="comment">htmLawed_README.txt, 11 March 2014<br />
+htmLawed 1.1.17, 11 March 2014<br />
 Copyright Santosh Patnaik<br />
 Dual licensed with LGPL 3 and GPL 2+<br />
 A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed</a>&#160;</div>
@@ -121,7 +121,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s1" id="s1"></a><span class="item-no">1</span>&#160; About htmLawed
 </h2><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; htmLawed is a PHP script to process text with HTML markup to make it more comliant with HTML standards &#160;and administrative policies. It works by making HTML well-formed with balanced and properly nested tags, neutralizing code that may be used for cross-site scripting (XSS) attacks, allowing only specified HTML tags and attributes, and so on. Such <em>lawing in</em>&#160;of HTML in text used in (X)HTML or XML documents ensures that it is in accordance with the aesthetics, safety and usability requirements set by administrators.<br />
+&#160; htmLawed is a PHP script to process text with HTML markup to make it more compliant with HTML standards and administrative policies. It works by making HTML well-formed with balanced and properly nested tags, neutralizing code that may be used for cross-site scripting (XSS) attacks, allowing only specified HTML tags and attributes, and so on. Such <em>lawing in</em>&#160;of HTML in text used in (X)HTML or XML documents ensures that it is in accordance with the aesthetics, safety and usability requirements set by administrators.<br />
 <br />
 &#160; htmLawed is highly customizable, and fast with low memory usage. Its free and open-source code is in one small file, does not require extensions or libraries, and works in older versions of PHP as well. It is a good alternative to the HTML <a href="http://tidy.sourceforge.net">Tidy</a>&#160;application.<br />
 
@@ -915,7 +915,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; The character values are replaced with entities/characters and not character values referred to by the entities/characters to keep this task independent of the character-encoding of input text.<br />
 <br />
-&#160; The <span class="term">$config["clean_ms_char"]</span>&#160;parameter should not be used if authors do not copy-paste Microsoft-created text, or if the input text is not believed to use the <span class="term">Windows 1252</span>&#160;(<span class="term">Cp-1252</span>) or a similar encoding like <span class="term">Cp-1251</span>. Further, the input form and the web-pages displaying it or its content should have the character encoding appropriately marked-up.<br />
+&#160; The <span class="term">$config["clean_ms_char"]</span>&#160;parameter should not be used if authors do not copy-paste Microsoft-created text, or if the input text is not believed to use the <span class="term">Windows 1252</span>&#160;(<span class="term">Cp-1252</span>) or a similar encoding like <span class="term">Cp-1251</span>&#160;(otherwise, for example when UTF-8 encoding is in use, Japanese or Korean characters can get mangled). Further, the input form and the web-pages displaying it or its content should have the character encoding appropriately marked-up.<br />
 
 </div>
 <div class="sub-section"><h3>
@@ -1773,15 +1773,21 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; <em>Version number - Release date. Notes</em><br />
 <br />
+&#160; 1.1.17 - 11 March 2014. Removed use of PHP function preg_replace with <span class="term">e</span>&#160;modifier for compatibility with PHP 5.5<br />
+<br />
+&#160; 1.1.16 - 29 August 2013. Fix for a potential security vulnerability arising from specially encoded space characters in URL schemes/protocols<br />
+<br />
+&#160; 1.1.15 - 11 August 2013. Improved tidying/prettifying functionality<br />
+<br />
 &#160; 1.1.14 - 8 August 2012. Fix for possible segmental loss of incremental indentation during <span class="term">tidying</span>&#160;when <span class="term">balance</span>&#160;is disabled; fix for non-effectuation under some circumstances of a corrective behavior to preserve plain text within elements like <span class="term">blockquote</span>.<br />
 <br />
 &#160; 1.1.13 - 22 July 2012. Added feature allowing use of custom, non-standard attributes or custom rules for standard attributes<br />
 <br />
 &#160; 1.1.12 - 5 July 2012. Fix for a bug in identifying an unquoted value of the <span class="term">face</span>&#160;attribute<br />
 <br />
-&#160; 1.1.11 - 5 June 2012. Fix for possible problem with handling of multi-byte characters in attribute values in an mbstring.func_overload enviroment. <span class="term">$config["hook_tag"]</span>, if specified, now receives names of elements in closing tags.<br />
+&#160; 1.1.11 - 5 June 2012. Fix for possible problem with handling of multi-byte characters in attribute values in an mbstring.func_overload environment. <span class="term">$config["hook_tag"]</span>, if specified, now receives names of elements in closing tags.<br />
 <br />
-&#160; 1.1.10 - 22 October 2011. Fix for a bug in the <span class="term">tidy</span>&#160;functionality that caused the entire input to be replaced with a single space; new parameter, <span class="term">$config["direct_list_nest"]</span>&#160;to allow direct descendance of a list in a list. (5 April 2012. Dual licensing from LGPLv3 to LGPLv3 and GPLv2+.)<br />
+&#160; 1.1.10 - 22 October 2011. Fix for a bug in the <span class="term">tidy</span>&#160;functionality that caused the entire input to be replaced with a single space; new parameter, <span class="term">$config["direct_list_nest"]</span>&#160;to allow direct descendence of a list in a list. (5 April 2012. Dual licensing from LGPLv3 to LGPLv3 and GPLv2+.)<br />
 <br />
 &#160; 1.1.9.5 - 6 July 2011. Minor correction of a rule for nesting of <span class="term">li</span>&#160;within <span class="term">dir</span><br />
 <br />
@@ -1898,7 +1904,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s4.10" id="s4.10"></a><span class="item-no">4.10</span>&#160; Acknowledgements
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Edward Yang, and many anonymous users.<br />
+&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Dac Chartrand, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Harro Verton, Edward Yang, and many anonymous users.<br />
 <br />
 &#160; Thank you!<br />
 
@@ -2167,7 +2173,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 </div>
 </div>
 <br />
-<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 18 Sep, 2012 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
+<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 11 Mar, 2014 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
 </div><!-- ended div body -->
 </div><!-- ended div top -->
 </body>
