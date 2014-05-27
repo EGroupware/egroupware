@@ -201,7 +201,7 @@ class calendar_uiforms extends calendar_ui
 							$exception['recurrence'] != $content['recur_exception'][$key]) continue;
 					$exception['uid'] = common::generate_uid('calendar', $id);
 					$exception['reference'] = $exception['recurrence'] = 0;
-					$this->bo->update($exception, true, true,false,true,$message,$content['no_notifications']);
+					$this->bo->update($exception, true, true,false,true,$messages,$content['no_notifications']);
 					break;
 				}
 				unset($content['recur_exception'][$key]);
@@ -281,6 +281,7 @@ class calendar_uiforms extends calendar_ui
 						case 'add':
 							// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
 							// ToDo: get eTemplate to return that field
+							$matches = array();
 							if (($email = $_POST['exec']['participants']['resource']['query']) &&
 									(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 							{
@@ -322,7 +323,10 @@ class calendar_uiforms extends calendar_ui
 							{
 								list($app,$id) = explode(':',$data);
 							}
-							foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
+							foreach($this->bo->resources as $type => $data)
+							{
+								if ($data['app'] == $app) break;
+							}	
 							$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
 							if ($app == 'home-accounts')
 							{
@@ -886,8 +890,8 @@ class calendar_uiforms extends calendar_ui
 
 		case 'add_alarm':
 			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
-			$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
-			if($content['before_after']) $offset *= -1;
+			$offset = $time - $content['new_alarm']['date'];
+			
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
 				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
 				$time < $next_occurrence['start'])
@@ -898,7 +902,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => $time - $offset,
+					'time'   => $content['new_alarm']['date'],
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
@@ -1105,14 +1109,14 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Edit a calendar event
 	 *
-	 * @param array $event=null Event to edit, if not $_GET['cal_id'] contains the event-id
-	 * @param array $perserv=null following keys:
+	 * @param array $event Event to edit, if not $_GET['cal_id'] contains the event-id
+	 * @param array $preserv following keys:
 	 *	view boolean view-mode, if no edit-access we automatic fallback to view-mode
 	 *	hide_delete boolean hide delete button
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
-	 * @param string $msg='' msg to display
-	 * @param mixed $link_to_id='' $content from or for the link-widget
+	 * @param string $msg msg to display
+	 * @param mixed $li$link_to_idontent from or for the link-widget
 	 */
 	function edit($event=null,$preserv=null,$msg='',$link_to_id='')
 	{
@@ -1121,6 +1125,8 @@ class calendar_uiforms extends calendar_ui
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
+			'new_alarm[options]' =>array(300 => lang('5 Minutes'), 600 => lang('10 Minutes'), 900 => lang('15 Minutes'),	1800 => lang('30 Minutes'), 3600 => lang('1 Hour'), 7200 => lang('2 Hours'),
+										43200 => lang('12 Hours'),	86400 => lang('1 Day'), 172800 => lang('2 Days'),	604800 => lang('1 Week'), 0 => lang('Custom')),
 			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
@@ -1445,14 +1451,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				// hide the alarm tab for newly created exceptions
-				$readonlys['tabs']['alarms'] = true;
-
 				// disable the alarm tab functionality
 				$readonlys['button[add_alarm]'] = true;
-				$readonlys['new_alarm[days]'] = true;
-				$readonlys['new_alarm[hours]'] = true;
-				$readonlys['new_alarm[mins]'] = true;
+				$readonlys['new_alarm[options]'] = true;
 				$readonlys['new_alarm[owner]'] = true;
 			}
 			if (count($content['alarm']) == 1)
@@ -1471,7 +1472,7 @@ class calendar_uiforms extends calendar_ui
 			$readonlys['__ALL__'] = true;	// making everything readonly, but widgets set explicitly to false
 			$readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
 				$readonlys['before_after'] = $readonlys['button[add_alarm]'] = $readonlys['new_alarm[owner]'] =
-				$readonlys['new_alarm[days]'] = $readonlys['new_alarm[hours]'] = $readonlys['new_alarm[mins]'] = false;
+				$readonlys['new_alarm[options]'] = false;
 
 			$content['participants']['no_add'] = true;
 
@@ -2143,8 +2144,8 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Export events as vCalendar version 2.0 files (iCal)
 	 *
-	 * @param int|array $content=0 numeric cal_id or submitted content from etempalte::exec
-	 * @param boolean $return_error=false should an error-msg be returned or a regular page with it generated (default)
+	 * @param int|array $content numeric cal_id or submitted content from etempalte::exec
+	 * @param boolean $return_error should an error-msg be returned or a regular page with it generated (default)
 	 * @return string error-msg if $return_error
 	 */
 	function export($content=0,$return_error=false)
@@ -2209,7 +2210,7 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Import events as vCalendar version 2.0 files (iCal)
 	 *
-	 * @param array $content=null submitted content from etempalte::exec
+	 * @param array $content submitted content from etempalte::exec
 	 */
 	function import($content=null)
 	{
@@ -2250,7 +2251,7 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Edit category ACL (admin only)
 	 *
-	 * @param array $content=null
+	 * @param array $content
 	 */
 	function cat_acl(array $content=null)
 	{
@@ -2377,7 +2378,7 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * moves an event to another date/time
 	 *
-	 * @param string $eventID id of the event which has to be moved
+	 * @param string $eventId id of the event which has to be moved
 	 * @param string $calendarOwner the owner of the calendar the event is in
 	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
 	 * @param string $targetOwner the owner of the target calendar

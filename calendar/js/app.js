@@ -111,6 +111,7 @@ app.classes.calendar = AppJS.extend(
 						, [content.data['id'],content.data['lock_token']],null,true,null,null).sendRequest(true);
 					};
 				}
+				this.alarm_custom_date();
 				break;
 
 			case 'calendar.freetimesearch':
@@ -1163,5 +1164,37 @@ app.classes.calendar = AppJS.extend(
 		// Stop the normal bubbling if this is called on click
 		return false;
 	},
-
+	
+	/**
+	 * Enable/Disable custom Date-time for set Alarm
+	 *
+	 * @param {egw object} _egw 
+	 * @param {widget object} _widget new_alarm[options] selectbox
+	 */
+	alarm_custom_date: function (_egw,_widget)
+	{
+		var alarm_date = this.et2.getWidgetById('new_alarm[date]');
+		var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
+		var start = this.et2.getWidgetById('start');
+		var date = 0;
+		
+		if (alarm_date && alarm_options 
+					&& start)
+		{
+			if (alarm_options.get_value() != '0')
+			{
+				alarm_date.set_class('calendar_alarm_date_display');
+			}
+			else
+			{
+				alarm_date.set_class('');
+			}
+			var startDate = start.get_value();
+			if (startDate)
+			{
+				date = startDate - parseInt(alarm_options.get_value());
+				alarm_date.set_value(date);
+			}
+		}
+	}
 });

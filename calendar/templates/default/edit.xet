@@ -3,9 +3,9 @@
 <overlay>
 	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
-			<grid height="250" width="500">
+			<grid height="250" width="445">
 				<columns>
-					<column width="85"/>
+					<column width="80px"/>
 					<column/>
 				</columns>
 				<rows>
@@ -21,16 +21,71 @@
 					</row>
 					<row>
 						<description value="Options"/>
-						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
+						<hbox>
+							<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
+							<checkbox label="Private" id="public" options="0,1"/>
+						</hbox>
 					</row>
 					<row>
-						<description/>
-						<checkbox label="Private" id="public" options="0,1"/>
+						<grid width="445" height="250">
+							<columns>
+								<column width="80px" height="30px"/>
+								<column/>
+							</columns>
+							<rows>
+								<row class="th" disabled="@view" height="28">
+									<description value="Add new alarm" span="all"/>
+								</row>
+								<row class="row add_alarm_action" height="50" disabled="@no_add_alarm">
+									
+									<hbox span="all">
+										<description value="Set at"/>
+										<menulist>
+											<menupopup type="select-number" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
+										</menulist>
+										<date-time id="new_alarm[date]" class="calendar_alarm_date_display"/>
+										<menulist>
+											<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
+										</menulist>
+										<button label="Add" id="button[add_alarm]" image="add" background_image="1"/>
+									</hbox>
+								</row>
+								<row valign="top" disabled="!@alarm">
+									<grid id="alarm" width="100%"  class="egwGridView_grid">
+										<columns>
+											<column/>
+											<column/>
+											<column/>
+											<column/>
+											<column/>
+										</columns>
+										<rows>
+											<row class="th">
+												<description value="Time"/>
+												<description value="before the event"/>
+												<description value="All participants"/>
+												<description value="Owner"/>
+												<description value="Action"/>
+											</row>
+											<row>
+												<date-time id="${row}[time]" readonly="true"/>
+												<description id="${row}[offset]" no_lang="1"/>
+												<checkbox align="center" id="${row}[all]" readonly="true"/>
+												<menulist>
+													<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+												</menulist>
+												<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
 					</row>
 				</rows>
 			</grid>
 			<vbox align="right" options="0,0" class="calendar_category_details">
-				<description height="25"/>
+				<description/>
 				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9" />
 			</vbox>
@@ -186,72 +241,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.alarms" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="250" overflow="auto">
-			<columns>
-				<column width="120px" height="30px"/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th gray" disabled="@view" height="28">
-					<description value="Add new alarm" span="all"/>
-				</row>
-				<row class="row add_alarm_action" height="50" disabled="@no_add_alarm">
-					<menulist>
-						<menupopup label="%s the event" id="before_after"/>
-					</menulist>
-					<hbox>
-						<menulist>
-							<menupopup type="select-number" statustext="days" id="new_alarm[days]" options=",0,7"/>
-						</menulist>
-						<description for="new_alarm[days]" value="days"/>
-						<menulist>
-							<menupopup type="select-number" statustext="hours" id="new_alarm[hours]" options=",0,23"/>
-						</menulist>
-						<description for="new_alarm[hours]" value="hours"/>
-						<menulist>
-							<menupopup type="select-number" statustext="Minutes" id="new_alarm[mins]" options=",0,55,5"/>
-						</menulist>
-						<description for="new_alarm[mins]" value="Minutes"/>
-						<menulist>
-							<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
-						</menulist>
-						<button label="Add alarm" id="button[add_alarm]" image="add" background_image="1"/>
-					</hbox>
-				</row>
-				<row valign="top" disabled="!@alarm">
-					<description value="Alarms"/>
-					<grid id="alarm">
-						<columns>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row class="th">
-								<description value="Time"/>
-								<description value="before the event"/>
-								<description value="All participants"/>
-								<description value="Owner"/>
-								<description value="Action"/>
-							</row>
-							<row>
-								<date-time id="${row}[time]" readonly="true"/>
-								<description id="${row}[offset]" no_lang="1"/>
-								<checkbox align="center" id="${row}[all]" readonly="true"/>
-								<menulist>
-									<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
-								</menulist>
-								<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
-							</row>
-						</rows>
-					</grid>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" height="250" overflow="auto">
 			<columns>
@@ -319,7 +308,6 @@
 							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
 							<tab id="custom" label="Custom" statustext="Custom fields"/>
 							<tab id="links" label="Links" statustext="Links, Attachments"/>
-							<tab id="alarms" label="Alarms" statustext="Alarm management"/>
 							<tab id="history" label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
@@ -329,7 +317,6 @@
 							<template id="calendar.edit.recurrence"/>
 							<template id="calendar.edit.custom"/>
 							<template id="calendar.edit.links"/>
-							<template id="calendar.edit.alarms"/>
 							<template id="calendar.edit.history"/>
 						</tabpanels>
 					</tabbox>
