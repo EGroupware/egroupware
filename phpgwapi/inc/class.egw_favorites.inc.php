@@ -150,7 +150,6 @@ class egw_favorites
 		// Look through all preferences & pull out favorites
 		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
 		{
-			error_log($pref_name .' => ' . array2string($pref));
 			if(strpos($pref_name, $pref_prefix) === 0)
 			{
 				if(!is_array($pref))	// old favorite
