@@ -163,7 +163,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 						} catch(e) {
 							var msg = e.message ? e.message : e + '';
 							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : ""
-							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response type "' + res.type + '", plugin', plugin, 'response', res, stack);
+							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response from ' + this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type + '", plugin', plugin, 'response', res, stack);
 						}
 					}
 				}
