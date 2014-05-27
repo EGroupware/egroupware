@@ -191,7 +191,7 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.drop'
 			)
 		);
-		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))
+		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))
 		{
 			unset($actions['mail']);
 		}
@@ -202,7 +202,7 @@ class filemanager_ui
 	 * Get mergeapp property for given path
 	 *
 	 * @param string $path
-	 * @param string $scope='self' (default) or 'parents'
+	 * @param string $scope (default) or 'parents'
 	 *    $scope == 'self' query only the given path
 	 *    $scope == 'parents' query only path parents for property (first parent in hierarchy upwards wins)
 	 *
@@ -239,8 +239,8 @@ class filemanager_ui
 	/**
 	 * Main filemanager page
 	 *
-	 * @param array $content=null
-	 * @param string $msg=null
+	 * @param array $content
+	 * @param string $msg
 	 */
 	function index(array $content=null,$msg=null)
 	{
@@ -323,8 +323,8 @@ class filemanager_ui
 	 *
 	 * The user/pw is either the setup config user or a specially configured vfs_root user
 	 *
-	 * @param string $user='' setup config user to become root or '' to log off as root
-	 * @param string $password=null setup config password to become root
+	 * @param string $user setup config user to become root or '' to log off as root
+	 * @param string $password setup config password to become root
 	 * @param boolean &$is_setup=null on return true if authenticated user is setup config user, false otherwise
 	 * @return boolean true is root user given, false otherwise (including logout / empty $user)
 	 */
@@ -351,8 +351,8 @@ class filemanager_ui
 	/**
 	 * Filemanager listview
 	 *
-	 * @param array $content=null
-	 * @param string $msg=null
+	 * @param array $content
+	 * @param string $msg
 	 */
 	function listview(array $content=null,$msg=null)
 	{
@@ -444,7 +444,7 @@ class filemanager_ui
 					break;
 			}
 		}
-		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
+		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['mail']);
 
 		$sel_options['filter'] = array(
 			'' => 'Current directory',
@@ -480,7 +480,7 @@ class filemanager_ui
 	 *
 	 * @param string $action
 	 * @param array $selected selected pathes
-	 * @param mixed $dir=null current directory
+	 * @param mixed $dir current directory
 	 * @param int &$errs=null on return number of errors
 	 * @param int &$dirs=null on return number of dirs deleted
 	 * @param int &$files=null on return number of files deleted
@@ -820,8 +820,8 @@ class filemanager_ui
 	/**
 	 * Preferences of a file/directory
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content
+	 * @param string $msg
 	 */
 	function file(array $content=null,$msg='')
 	{
@@ -851,7 +851,10 @@ class filemanager_ui
 				$content['gid'] *= -1;	// our widgets use negative gid's
 				if (($props = egw_vfs::propfind($path)))
 				{
-					foreach($props as $prop) $content[$prop['name']] = $prop['val'];
+					foreach($props as $prop)
+					{
+						$content[$prop['name']] = $prop['val'];
+					}
 				}
 				if (($content['is_link'] = egw_vfs::is_link($path)))
 				{
@@ -978,7 +981,7 @@ class filemanager_ui
 									$changed = egw_vfs::find($path,null,$cmd,array($value));
 								}
 								$ok = $failed = 0;
-								foreach($changed as $p => $r)
+								foreach($changed as &$r)
 								{
 									if ($r)
 									{
