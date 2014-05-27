@@ -945,6 +945,7 @@ class categories
 					'cat_appname' => '*update*',
 					'cat_name'    => 'global=0',
 					'cat_description' => 'global=0',
+					'last_mod'    => time(),
 				),false,__LINE__,__FILE__);
 			}
 			self::$cache = array();
