@@ -13,7 +13,8 @@
  * @version $Id$
  */
 
-error_reporting(error_reporting() & ~E_NOTICE & ~E_STRICT);
+// disabling PHP 5.5 E_DEPRECATED messages eg. preg_replace with /e
+error_reporting(error_reporting() & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
 // for an old header, we need to setup the reference before including it
 $GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
