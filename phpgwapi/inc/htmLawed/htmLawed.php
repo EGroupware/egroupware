@@ -231,6 +231,9 @@ for($i=-1, $ci=count($t); ++$i<$ci;){
  if((($ql && isset($cB[$p])) or (isset($cB[$in]) && !$ql)) && !isset($eB[$e]) && !isset($ok[$e])){
   array_splice($t, $i, 0, 'div>'); unset($e, $x); ++$ci; --$i; continue;
  }
+ if($e == 'div' && !isset($ok['div']) && strpos($a, '-htmlawed-transform')){
+  $t[$i] = "span{$a}>{$x}"; unset($e, $x); --$i; continue;
+ }
  // if no open ele, $in = parent; mostly immediate parent-child relation should hold
  if(!$ql or !isset($eN[$e]) or !array_intersect($q, $cN2)){
   if(!isset($ok[$e])){
@@ -419,7 +422,8 @@ $t = $t[0];
 if($t == '< '){return '&lt; ';}
 if($t == '>'){return '&gt;';}
 if(!preg_match('`^<(/?)([a-zA-Z][a-zA-Z1-6]*)([^>]*?)\s?>$`m', $t, $m)){
- return str_replace(array('<', '>'), array('&lt;', '&gt;'), $t);
+ //return str_replace(array('<', '>'), array('&lt;', '&gt;'), $t);
+ return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
 }elseif(!isset($C['elements'][($e = strtolower($m[2]))])){
  return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
 }
@@ -639,7 +643,13 @@ if($e == 'font' && $t !=3){//3 is a new make_tag_strict config value, to indicat
  if(preg_match('`size\s*=\s*(\'|")?(.+?)(\\1|\s|$)`i', $a, $m) && isset($fs[($m = trim($m[2]))])){
   $a2 .= ' font-size: '. $fs[$m]. ';';
  }
- $e = 'span'; return ltrim($a2);
+// $e = 'span'; return ltrim($a2);
+// replace the above with following
+ if($GLOBALS['C']['balance']){
+  $e = 'div'; return 'display: inline; -htmlawed-transform: 1; '. ltrim($a2);
+ }else{
+  $e = 'span'; return ltrim($a2);
+ }
 }
 if($t == 2){$e = 0; return 0;}
 return '';
