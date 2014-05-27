@@ -67,7 +67,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		order_branch: true,
 		min_column_width: 30,
 		fit_tasks: true,
-		autosize: 'y',
+		autosize: '',
 		// Date rounding happens either way, but this way it rounds to the displayed grid resolution
 		// Also avoids a potential infinite loop thanks to how the dates are rounded with false
 		round_dnd_dates: false,
@@ -397,6 +397,14 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	_bindGanttEvents: function() {
 		var gantt_widget = this;
 
+		// After the chart renders, resize to make sure it's all showing
+		this.gantt.attachEvent("onGanttRender", function() {
+			// Timeout gets around delayed rendering
+			window.setTimeout(function() {
+				gantt_widget.resize();
+			},100);
+		});
+	
 		// Click on scale to zoom - top zooms out, bottom zooms in
 		this.gantt_node.on('click','.gantt_scale_line', function(e) {
 			var current_position = e.target.offsetLeft / $j(e.target.parentNode).width();
