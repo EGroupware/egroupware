@@ -3734,7 +3734,7 @@ $this->partID = $partID;
 			}
 			else
 			{
-				$response->call('egw_refresh',lang('failed to rename %1 ! Reason: %2',$oldFolderName,$msg),'mail');
+				$response->call('egw.refresh',lang('failed to rename %1 ! Reason: %2',$oldFolderName,$msg),'mail');
 			}
 		}
 	}
@@ -3935,7 +3935,7 @@ $this->partID = $partID;
 			}
 			else
 			{
-				$response->call('egw_refresh',lang('failed to move %1 ! Reason: %2',$folderName,$msg),'mail');
+				$response->call('egw.refresh',lang('failed to move %1 ! Reason: %2',$folderName,$msg),'mail');
 			}
 		}
 	}
@@ -4049,7 +4049,7 @@ $this->partID = $partID;
 			}
 			else
 			{
-				$response->call('egw_refresh',lang('failed to delete %1 ! Reason: %2',$oldFolderInfo['shortDisplayName'],$msg),'mail');
+				$response->call('egw.refresh',lang('failed to delete %1 ! Reason: %2',$oldFolderInfo['shortDisplayName'],$msg),'mail');
 			}
 		}
 	}
@@ -4226,7 +4226,7 @@ $this->partID = $partID;
 		{
 			$oldFolderInfo = $this->mail_bo->getFolderStatus($trashFolder,false);
 			$response = egw_json_response::get();
-			$response->call('egw_message',lang('empty trash'));
+			$response->call('egw.message',lang('empty trash'));
 			$response->call('app.mail.mail_reloadNode',array($icServerID.self::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
 			$this->changeProfile($rememberServerID);
@@ -4234,7 +4234,7 @@ $this->partID = $partID;
 		else
 		{
 			$response = egw_json_response::get();
-			$response->call('egw_refresh',lang('empty trash'),'mail');
+			$response->call('egw.refresh',lang('empty trash'),'mail');
 		}
 	}
 
@@ -4271,7 +4271,7 @@ $this->partID = $partID;
 				$this->changeProfile($rememberServerID);
 			}
 			$response = egw_json_response::get();
-			$response->call('egw_refresh',lang('compress folder').': '.$folderName,'mail');
+			$response->call('egw.refresh',lang('compress folder').': '.$folderName,'mail');
 		}
 	}
 
@@ -4429,7 +4429,7 @@ $this->partID = $partID;
 		if ($_sendJsonResponse)
 		{
 			$response = egw_json_response::get();
-			$response->call('egw_message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder));
+			$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder));
 		}
 	}
 
@@ -4552,17 +4552,17 @@ $this->partID = $partID;
 				$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
 				if ($_copyOrMove=='copy')
 				{
-					$response->call('egw_message',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder));
+					$response->call('egw.message',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder));
 				}
 				else
 				{
-					$response->call('egw_refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
+					$response->call('egw.refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
 				}
 			}
 			catch (Exception $e)
 			{
 				//error_log(__METHOD__.__LINE__.function_backtrace());
-				$response->call('egw_message',$e->getMessage(),"error");
+				$response->call('egw.message',$e->getMessage(),"error");
 				if ($changeFolderActions == false)
 				{
 					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);

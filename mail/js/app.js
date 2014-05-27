@@ -1123,7 +1123,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') egw_message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']));
+			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			ftree.setStyle(i, 'font-weight: '+(_status[i]['desc'].match(this._unseen_regexp) ? 'bold' : 'normal'));
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -1149,7 +1149,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') egw_message(this.egw.lang("Removed Folder %1 ",_status[i]));
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Removed Folder %1 ",_status[i]));
 			ftree.deleteItem(i,(selectedNode.id==i));
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -1176,7 +1176,7 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				egw_message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				this.egw.message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
@@ -1347,8 +1347,8 @@ app.classes.mail = AppJS.extend(
 		//{
 		//	ids.push(_msg['msg'][i].replace(/mail::/,''));
 		//}
-		//egw_refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current folder'))),'mail',ids,'delete');
-		egw_message(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current Folder'))));
+		//this.egw.refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current folder'))),'mail',ids,'delete');
+		this.egw.message(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current Folder'))));
 	},
 
 	/**
@@ -1364,8 +1364,8 @@ app.classes.mail = AppJS.extend(
 		{
 			ids.push(_msg['msg'][i].replace(/mail::/,''));
 		}
-		//egw_message(_msg['egw_message']);
-		egw_refresh(_msg['egw_message'],'mail',ids,'delete');
+		//this.egw.message(_msg['egw_message']);
+		this.egw.refresh(_msg['egw_message'],'mail',ids,'delete');
 	},
 
 	/**
@@ -1384,7 +1384,7 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			egw_message(this.egw.lang('canceled deletion due to userinteraction'));
+			this.egw.message(this.egw.lang('canceled deletion due to userinteraction'));
 			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();
@@ -1410,10 +1410,10 @@ app.classes.mail = AppJS.extend(
 		var server = _senders[0].iface.id.split('::');
 
 		//console.log(action,_senders,FolderName);
-		egw_message(this.egw.lang('empty trash'));
+		this.egw.message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]])
 			.sendRequest(true);
-		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
+		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
 		//this.mail_refreshFolderStatus();
 	},
@@ -1427,10 +1427,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_compressFolder: function(action,_senders) {
 		//console.log(action,_senders,FolderName);
-		egw_message(this.egw.lang('compress folder'));
+		this.egw.message(this.egw.lang('compress folder'));
 		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id]);
 		//	.sendRequest(true);
-		// since the json reply is using egw_refresh, we should not need to call refreshFolderStatus
+		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
 		//this.mail_refreshFolderStatus();
 	},
@@ -1450,7 +1450,7 @@ app.classes.mail = AppJS.extend(
 			getFolders = true;
 		}
 	//	alert(folder);
-		egw_message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
+		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
 
 		this.lock_tree();
 		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders], jQuery.proxy(function() {
@@ -1509,7 +1509,7 @@ app.classes.mail = AppJS.extend(
 		{
 			var displayname = _widget.getSelectedLabel();
 			var myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
-			egw_message(myMsg);
+			this.egw.message(myMsg);
 		}
 
 		// Update non-grid
@@ -3042,7 +3042,7 @@ app.classes.mail = AppJS.extend(
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		egw_message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
+		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
 			.sendRequest();
 	},
@@ -3058,7 +3058,7 @@ app.classes.mail = AppJS.extend(
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		egw_message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
+		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
 	},
