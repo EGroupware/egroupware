@@ -36,10 +36,9 @@
 								<row class="th" disabled="@view" height="28">
 									<description value="Add new alarm" span="all"/>
 								</row>
-								<row class="row add_alarm_action" height="50" disabled="@no_add_alarm">
-									
+								<row class="row add_alarm_action" disabled="@no_add_alarm">
+									<description value="Set at"/>
 									<hbox span="all">
-										<description value="Set at"/>
 										<menulist>
 											<menupopup type="select-number" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
 										</menulist>
@@ -51,6 +50,7 @@
 									</hbox>
 								</row>
 								<row valign="top" disabled="!@alarm">
+									<description value="Alarms"/>
 									<grid id="alarm" width="100%"  class="egwGridView_grid">
 										<columns>
 											<column/>
