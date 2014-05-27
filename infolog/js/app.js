@@ -84,14 +84,17 @@ app.classes.infolog = AppJS.extend(
 	 */
 	observer: function(_msg, _app, _id, _type, _msg_type, _links)
 	{
-		if (typeof _links['infolog'] != 'undefined')
-		{	
-			switch (_app)
-			{
-				case 'timesheet':
-					var nm = this.et2 ? this.et2.getWidgetById('nm') : null;
-					if (nm) nm.applyFilters();
-					break;
+		if (typeof _links != 'undefined')
+		{
+			if (typeof _links.infolog != 'undefined')
+			{	
+				switch (_app)
+				{
+					case 'timesheet':
+						var nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+						if (nm) nm.applyFilters();
+						break;
+				}
 			}
 		}	
 	},
