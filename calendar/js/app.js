@@ -1196,5 +1196,64 @@ app.classes.calendar = AppJS.extend(
 				alarm_date.set_value(date);
 			}
 		}
+	},
+	
+	/**
+	 * Set alarm options based on WD/Regular event user preferences 
+	 * Gets fired by wholeday checkbox
+	 * 
+	 * @param {egw object} _egw 
+	 * @param {widget object} _widget whole_day checkbox
+	 */
+	set_alarmOptions_WD: function (_egw,_widget)
+	{
+		var alarm_options = this.et2.getWidgetById('new_alarm[options]'); 
+		var sel_options = alarm_options.options.select_options;
+		var def_wd = this.egw.preference('default-alarm-wholeday', 'calendar');
+		var def_alarm = this.egw.preference('default-alarm', 'calendar');
+		var self = this;
+		// Search a needle inside an object. Return true if there's one, otherwise false 
+		var _is_in_options = function (_needle, _object)
+		{
+			for(var key in _object)
+			{
+				if (_needle == _object[key].value) return true; 
+			}
+			return false;
+		}
+		// Convert a seconds of time to a translated label
+		var _secs_to_label = function (_secs)
+		{
+			var label='';
+			if (_secs <= 3600)
+			{
+				label = self.egw.lang('%1 minutes', _secs/60);
+			}
+			else if(_secs <= 86400)
+			{
+				label = self.egw.lang('%1 hours', _secs/3600);
+			}
+			else
+			{
+				label = self.egw.lang('%1 days', _secs/86400);
+			}
+			return label;
+		}
+		
+		if (_widget.get_value() == "true")
+		{
+			if (!_is_in_options(def_wd, sel_options))
+			{
+				sel_options [sel_options.length] = {value:def_wd,label:_secs_to_label(def_wd)};
+				alarm_options.set_select_options(sel_options);
+			}
+			alarm_options.set_value(def_wd);
+		}
+		else
+		{
+			sel_options = this.et2.getArrayMgr('sel_options').data.new_alarm.options;
+			alarm_options.set_select_options(sel_options);
+			alarm_options.set_value(def_alarm);
+		}
 	}
 });

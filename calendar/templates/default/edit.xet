@@ -287,7 +287,7 @@
 				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required"/>
-					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable" span="all"/>
+					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable" span="all" onchange="app.calendar.set_alarmOptions_WD"/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<description for="duration" value="Duration" width="0" id="calendar_edit_duration" />

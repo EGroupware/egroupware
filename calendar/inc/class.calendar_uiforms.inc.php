@@ -1125,7 +1125,6 @@ class calendar_uiforms extends calendar_ui
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
-			'new_alarm[options]' => $this->bo->alarms+array(0 => lang('Custom')),
 			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
@@ -1268,6 +1267,24 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
+		// Set alarm sel_options
+		$alarm_options = array();
+		$default_alarm = $this->cal_prefs['default-alarm'];
+		if (!empty($event['whole_day']) && $event['whole_day']) $default_alarm = $this->cal_prefs['default-alarm-wholeday'];
+		if (!array_key_exists($default_alarm, $this->bo->alarms) && $default_alarm > 0)
+		{
+			$alarm_options = $this->bo->alarms + array($default_alarm => calendar_bo::secs2label ($default_alarm));
+		}
+		else
+		{
+			$alarm_options = $this->bo->alarms;
+		}
+		$sel_options += array(
+			'new_alarm[options]' => $alarm_options + array(0 => lang('Custom'))
+		);
+		// set default preference value
+		$event['new_alarm']['options'] = $default_alarm;
+		
 		$etpl = new etemplate_new();
 		if (!$etpl->read($preserv['template']))
 		{
@@ -1415,7 +1432,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		$preserv = array_merge($preserv,$content);
-
+		$event['new_alarm']['options'] = $content['new_alarm']['options'];
 		if ($event['alarm'])
 		{
 			// makes keys of the alarm-array starting with 1
