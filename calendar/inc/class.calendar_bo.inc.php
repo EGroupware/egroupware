@@ -147,6 +147,23 @@ class calendar_bo
 		'NON-PARTICIPANT' => 'None',
 	);
 	/**
+	 * Alarm times
+	 *
+	 * @var array
+	 */
+	var $alarms = array(
+		300 => '5 Minutes',
+		600 => '10 Minutes',
+		900 => '15 Minutes',
+		1800 => '30 Minutes',
+		3600 => '1 Hour',
+		7200 => '2 Hours',
+		43200 => '12 Hours',
+		86400 => '1 Day',
+		172800 => '2 Days',
+		604800 => '1 Week',
+	);
+	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets cached in the session for performance reasons)
 	 */
 	var $resources;
@@ -253,6 +270,34 @@ class calendar_bo
 		$this->categories = new categories($this->user,'calendar');
 
 		$this->customfields = config::get_customfields('calendar');
+
+		foreach($this->alarms as $secs => &$label)
+		{
+			$label = self::secs2label($secs);
+		}
+	}
+
+	/**
+	 * Generate translated label for a given number of seconds
+	 *
+	 * @param int $secs
+	 * @return string
+	 */
+	static public function secs2label($secs)
+	{
+		if ($secs <= 3600)
+		{
+			$label = lang('%1 minutes', $secs/60);
+		}
+		elseif($secs <= 86400)
+		{
+			$label = lang('%1 hours', $secs/3600);
+		}
+		else
+		{
+			$label = lang('%1 days', $secs/86400);
+		}
+		return $label;
 	}
 
 	/**

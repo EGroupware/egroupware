@@ -1,6 +1,9 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
+%1 days	calendar	de	%1 Tage
 %1 event(s) %2	calendar	de	%1 Termin(e) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	de	%1 Termin(e) %2, %3 wegen fehlender Rechte !!!
+%1 hours	calendar	de	%1 Stunden
+%1 minutes	calendar	de	%1 Minuten
 %1 participants removed because of missing invite grants	calendar	de	%1 Teilnehmer entfernt wegen fehlender Einladungsrechte
 %1 records imported	calendar	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, Sie können zurück gehen und Test Import ausschalten)
@@ -33,6 +36,7 @@ after current date	calendar	de	Nach dem aktuellen Datum
 age:	calendar	de	Alter:
 alarm	calendar	de	Alarm
 alarm added	calendar	de	Alarm zugefügt
+alarm added automatic to new events before event start-time	calendar	de	Der Alarm wird automatisch bei neuen Termin vor dem Startdatum eingefügt
 alarm deleted	calendar	de	Alarm gelöscht
 alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
@@ -113,6 +117,7 @@ creator	calendar	de	Ersteller
 csv	calendar	de	CSV
 csv-fieldname	calendar	de	CSV-Feldname
 csv-filename	calendar	de	CSV-Dateiname
+custom	calendar	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder
 custom_2	common	de	frei / besetzt
 daily	calendar	de	Täglich
@@ -125,6 +130,8 @@ days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
 dayview	calendar	de	Tagesansicht
+default alarm for regular events	calendar	de	Default-Alarm für normale Termine
+default alarm for whole-day events	calendar	de	Default-Alarm für ganztägige Termine
 default appointment length (in minutes)	calendar	de	Standardlänge eines neuen Kalendereintrags (in Minuten)
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
@@ -314,6 +321,7 @@ maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 er
 meeting request	calendar	de	Terminanfrage
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen...
+midnight	calendar	de	Mitternacht
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
 modifier	calendar	de	Geändert von

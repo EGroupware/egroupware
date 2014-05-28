@@ -38,6 +38,7 @@ $setup_info['calendar']['hooks']['admin'] = 'calendar_hooks::admin';
 $setup_info['calendar']['hooks']['deleteaccount'] = 'calendar.calendar_so.deleteaccount';
 $setup_info['calendar']['hooks']['home'] = 'calendar_hooks::home';
 $setup_info['calendar']['hooks']['settings'] = 'calendar_hooks::settings';
+$setup_info['calendar']['hooks']['verify_settings'] = 'calendar_hooks::verify_settings';
 $setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.calendar_ui.sidebox_menu';
 $setup_info['calendar']['hooks']['search_link'] = 'calendar_hooks::search_link';
 $setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_validate';

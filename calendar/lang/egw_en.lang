@@ -1,6 +1,9 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
+%1 days	calendar	en	%1 days
 %1 event(s) %2	calendar	en	%1 event(s) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficient rights!
+%1 hours	calendar	en	%1 hours
+%1 minutes	calendar	en	%1 minutes
 %1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants.
 %1 records imported	calendar	en	%1 records imported.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read. Not yet imported, go back and uncheck Test import.
@@ -33,6 +36,7 @@ after current date	calendar	en	After current date
 age:	calendar	en	Age:
 alarm	calendar	en	Alarm
 alarm added	calendar	en	Alarm added.
+alarm added automatic to new events before event start-time	calendar	en	Alarm added automatic to new events before event start-time
 alarm deleted	calendar	en	Alarm deleted.
 alarm for %1 at %2 in %3	calendar	en	Alarm for %1 at %2 in %3
 alarm management	calendar	en	Alarm management
@@ -113,6 +117,7 @@ creator	calendar	en	Creator
 csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV field name
 csv-filename	calendar	en	CSV file name
+custom	calendar	en	Custom
 custom fields	common	en	Custom fields
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
@@ -125,6 +130,8 @@ days	calendar	en	Days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
 days repeated	calendar	en	Days repeated
 dayview	calendar	en	Day view
+default alarm for regular events	calendar	en	Default alarm for regular events
+default alarm for whole-day events	calendar	en	Default alarm for whole-day events
 default appointment length (in minutes)	calendar	en	Default appointment length in minutes
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
@@ -314,6 +321,7 @@ maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantit
 meeting request	calendar	en	Meeting request
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document...
+midnight	calendar	en	Midnight
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
 modifier	calendar	en	Modifier

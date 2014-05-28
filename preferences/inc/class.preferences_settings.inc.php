@@ -140,12 +140,6 @@ class preferences_settings
 			'preferences' : $content['current_app'];
 		egw_framework::includeCSS('preferences','app');
 
-		$sel_options = $readonlys = null;
-		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
-		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
-		$preserve['type'] = $preserve['old_type'] = $content['type'];
-		if (isset($old_tab)) $content['tabs'] = $old_tab;
-
 		// if not just saved, call validation before, to be able to show failed validation of current prefs
 		if (!isset($button))
 		{
@@ -153,6 +147,13 @@ class preferences_settings
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
 				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
 		}
+
+		$sel_options = $readonlys = null;
+		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
+		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
+		$preserve['type'] = $preserve['old_type'] = $content['type'];
+		if (isset($old_tab)) $content['tabs'] = $old_tab;
+
 		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 
 		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve, 2);
@@ -250,8 +251,9 @@ class preferences_settings
 		//
 		if(($error .= $GLOBALS['egw']->hooks->single(array(
 				'location' => 'verify_settings',
-				'prefs'    => $repository[$appname],
-				'type'     => $type
+				'prefs'    => &$repository[$appname],
+				'type'     => $type,
+				'preprocess' => $only_verify,
 			),
 			$appname
 		)))

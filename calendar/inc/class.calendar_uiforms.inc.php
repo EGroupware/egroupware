@@ -326,7 +326,7 @@ class calendar_uiforms extends calendar_ui
 							foreach($this->bo->resources as $type => $data)
 							{
 								if ($data['app'] == $app) break;
-							}	
+							}
 							$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
 							if ($app == 'home-accounts')
 							{
@@ -891,7 +891,7 @@ class calendar_uiforms extends calendar_ui
 		case 'add_alarm':
 			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
 			$offset = $time - $content['new_alarm']['date'];
-			
+
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
 				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
 				$time < $next_occurrence['start'])
@@ -1125,8 +1125,7 @@ class calendar_uiforms extends calendar_ui
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
-			'new_alarm[options]' =>array(300 => lang('5 Minutes'), 600 => lang('10 Minutes'), 900 => lang('15 Minutes'),	1800 => lang('30 Minutes'), 3600 => lang('1 Hour'), 7200 => lang('2 Hours'),
-										43200 => lang('12 Hours'),	86400 => lang('1 Day'), 172800 => lang('2 Days'),	604800 => lang('1 Week'), 0 => lang('Custom')),
+			'new_alarm[options]' => $this->bo->alarms+array(0 => lang('Custom')),
 			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
