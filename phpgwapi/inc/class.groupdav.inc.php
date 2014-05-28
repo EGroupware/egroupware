@@ -1549,17 +1549,18 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function PROPPATCH(&$options)
 	{
-		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options).')');
+		if ($this->debug) error_log(__METHOD__."(".array2string($options).')');
 
 		// parse path in form [/account_lid]/app[/more]
 		self::_parse_path($options['path'],$id,$app,$user,$user_prefix);	// allways returns false if eg. !$id
 		if ($app == 'principals' || $id || $options['path'] == '/')
 		{
-			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
+			if ($this->debug > 1) error_log(__METHOD__.": user='$user', app='$app', id='$id': 404 not found!");
 			foreach($options['props'] as &$prop) $prop['status'] = '403 Forbidden';
 			return 'NOT allowed to PROPPATCH that resource!';
 		}
 		// store selected props in preferences, eg. calendar-color, see self::$proppatch_props
+		$need_save = array();
 		foreach($options['props'] as &$prop)
 		{
 			if ((isset(self::$proppatch_props[$prop['name']]) && self::$proppatch_props[$prop['name']] === $prop['xmlns'] ||
@@ -1586,7 +1587,7 @@ class groupdav extends HTTP_WebDAV_Server
 					{
 						$GLOBALS['egw']->preferences->delete($app, $name);
 					}
-					$need_save = true;
+					$need_save[] = $name;
 				}
 				$prop['status'] = '200 OK';
 			}
@@ -1595,7 +1596,20 @@ class groupdav extends HTTP_WebDAV_Server
 				$prop['status'] = '409 Conflict';	// could also be "403 Forbidden"
 			}
 		}
-		if ($need_save) $GLOBALS['egw']->preferences->save_repository();
+		if ($need_save)
+		{
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
+			// call calendar-hook, if default-alarms are changed, to sync them to calendar prefs
+			foreach($need_save as $name)
+			{
+				list($name) = explode(':', $name);
+				if (in_array($name, array('default-alarm-vevent-date', 'default-alarm-vevent-datetime')))
+				{
+					calendar_hooks::sync_default_alarms();
+					break;
+				}
+			}
+		}
 	}
 
 	/**

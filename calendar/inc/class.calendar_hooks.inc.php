@@ -786,7 +786,8 @@ class calendar_hooks
 						{
 							$data['prefs'][$name] = '0';
 						}
-						error_log(__METHOD__."() setting $name={$data['prefs'][$name]} from $dav='$pref'");
+						$GLOBALS['egw']->preferences->add('calendar', $name, $data['prefs'][$name], 'user');
+						//error_log(__METHOD__."() setting $name={$data['prefs'][$name]} from $dav='$pref'");
 					}
 				}
 				else	// storing preferences
@@ -812,11 +813,25 @@ END:VALARM';
 						$pref = preg_replace('/^TRIGGER:.*$/m', 'TRIGGER:-PT'.number_format($val/3600, 0).'H', $pref);
 					}
 					$GLOBALS['egw']->preferences->add('groupdav', $dav, $pref, 'user');
-					error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
+					//error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
 				}
 			}
 			$GLOBALS['egw']->preferences->save_repository();
 		}
+	}
+
+	/**
+	 * Sync default alarms from CalDAV to Calendar
+	 *
+	 * Gets called by groupdav::PROPPATCH() for 'default-alarm-vevent-date(time)' changes
+	 */
+	public static function sync_default_alarms()
+	{
+		self::verify_settings(array(
+			'prefs' => array(),
+			'preprocess' => true,
+			'type' => 'user',
+		));
 	}
 
 	public static function config_validate()
