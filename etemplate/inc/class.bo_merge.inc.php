@@ -1664,12 +1664,20 @@ abstract class bo_merge
 		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
 		if ($default_doc && ($file = egw_vfs::stat($default_doc)))	// put default document on top
 		{
+			if(!$file['mime'])
+			{
+				$file['mime'] = egw_vfs::mime_content_type($default_doc);
+			}
 			$documents['document'] = array(
 				'icon' => egw_vfs::mime_icon($file['mime']),
 				'caption' => egw_vfs::decodePath(egw_vfs::basename($default_doc)),
 				'group' => 1,
 				'postSubmit' => true,	// download needs post submit (not Ajax) to work
 			);
+			if ($file['mime'] == 'message/rfc822')
+			{
+				self::document_mail_action($documents['document'], $file);
+			}
 		}
 
 		$files = array();
