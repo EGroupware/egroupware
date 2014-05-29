@@ -26,7 +26,7 @@
 				<row disabled="@ts_viewtype">
 					<description value="Unitprice" for="ts_unitprice"/>
 					<hbox disabled="@pm_integration=none" >
-						<projectmanager-pricelist id="pl_id" class="et2_fullWidth" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None"/>
+						<projectmanager-pricelist id="pl_id" class="et2_fullWidth" onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));" options="None"/>
 					</hbox>
 					<description/>
 					<hbox disabled="@pm_integration=none">
