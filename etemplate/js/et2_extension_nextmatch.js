@@ -433,6 +433,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			this.controller.keepSelection();
 		}
+		else
+		{
+			// Do not keep selection
+            this.controller._selectionMgr.resetSelection();
+		}
 
 		// Update the filters in the grid controller
 		this.controller.setFilters(this.activeFilters);
