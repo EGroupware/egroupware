@@ -58,7 +58,7 @@ app.classes.preferences = AppJS.extend(
 				var defAlarmWidgets = ['default-alarm', 'default-alarm-wholeday'];
 				for(var key in defAlarmWidgets)
 				{
-					this.def_alarm_onchange(null, this.et2.getWidgetById(defAlarmWidgets[key]));
+					this.cal_def_alarm_onchange(null, this.et2.getWidgetById(defAlarmWidgets[key]));
 				}
 				break;
 		}	
