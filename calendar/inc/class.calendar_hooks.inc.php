@@ -434,8 +434,18 @@ class calendar_hooks
 				'type'   => 'select',
 				'label'  => 'Default alarm for regular events',
 				'name'   => 'default-alarm',
-				'values' => isset($bo) ? array(0 => lang('None'))+$bo->alarms : array(),
+				'values' => isset($bo) ? array(0 => lang('None'), -1 => lang('Custom'))+$bo->alarms : array(),
 				'help'   => 'Alarm added automatic to new events before event start-time',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => 0,
+				'onchange' => 'app.preferences.cal_def_alarm_onchange'
+			),
+			'custom-default-alarm' => array(
+				'type'   => 'date-duration',
+				'label'  => 'Enter custom default alarm time',
+				'name'   => 'custom-default-alarm',
+				'help'   => 'Alarm added automatic to new events before event start-time.',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => 0,
@@ -444,12 +454,22 @@ class calendar_hooks
 				'type'   => 'select',
 				'label'  => 'Default alarm for whole-day events',
 				'name'   => 'default-alarm-wholeday',
-				'values' => isset($bo) ? array(0 => lang('None'))+$bo->alarms : array(),
+				'values' => isset($bo) ? array(0 => lang('None'), -1 => lang('Custom'))+$bo->alarms : array(),
 				'help'   => lang('Alarm added automatic to new events before event start-time').' ('.lang('Midnight').')',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => 0,
-			)
+				'onchange' => 'app.preferences.cal_def_alarm_onchange'
+			),
+			'custom-default-alarm-wholeday' => array(
+				'type'   => 'date-duration',
+				'label'  => 'Enter custom default alarm time for wholeday event',
+				'name'   => 'custom-default-alarm-wholeday',
+				'help'   => lang('Alarm added automatic to new events before event start-time').' ('.lang('Midnight').')',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => 0,
+			),
 		);
 		if (isset($bo))	// add custom time-spans set by CalDAV clients, not in our prefs
 		{

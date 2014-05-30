@@ -1269,8 +1269,12 @@ class calendar_uiforms extends calendar_ui
 		}
 		// Set alarm sel_options
 		$alarm_options = array();
-		$default_alarm = $this->cal_prefs['default-alarm'];
-		if (!empty($event['whole_day']) && $event['whole_day']) $default_alarm = $this->cal_prefs['default-alarm-wholeday'];
+		$default_alarm = $this->cal_prefs['default-alarm'] != -1?$this->cal_prefs['default-alarm']:$this->cal_prefs['custom-default-alarm'] * 60;
+		if (!empty($event['whole_day']) && $event['whole_day'])
+		{
+			$default_alarm = $this->cal_prefs['default-alarm-wholeday'] != -1?$this->cal_prefs['default-alarm-wholeday']:
+							$this->cal_prefs['custom-default-alarm-wholeday'] * 60;
+		}
 		if (!array_key_exists($default_alarm, $this->bo->alarms) && $default_alarm > 0)
 		{
 			$alarm_options = $this->bo->alarms + array($default_alarm => calendar_bo::secs2label ($default_alarm));
