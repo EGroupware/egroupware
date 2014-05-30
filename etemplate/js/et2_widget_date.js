@@ -259,7 +259,7 @@ var et2_date_duration = et2_date.extend(
 		},
 		"display_format": {
 			"name": "Display format",
-			"default": "dh",
+			"default": "dhm",
 			"type": "string",
 			"description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
 		},
