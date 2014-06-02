@@ -84,7 +84,7 @@ class etemplate_widget_textbox extends etemplate_widget
 			if (!empty($value))
 			{
 				$preserv =& self::get_array(self::$request->preserv, $form_name, true);
-				$preserv = (string)$value;
+				if (true) $preserv = (string)$value;
 				$value = str_repeat('*', strlen($preserv));
 			}
 		}
@@ -183,7 +183,7 @@ class etemplate_widget_textbox extends etemplate_widget
 					}
 				}
 			}
-			$valid = $value;
+			if (true) $valid = $value;
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
 		}
 	}
