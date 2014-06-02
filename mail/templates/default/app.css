@@ -126,20 +126,20 @@ tr.forwarded span.status_img {
 
 .subjectBold
 {
-	FONT-SIZE: 12px;
+	font-size: 12px;
 	font-weight : bold;
 	font-family : Arial;
 }
 
 .subject
 {
-	FONT-SIZE: 12px;
+	font-size: 12px;
 	font-family : Arial;
 }
 
 TR.sieveRowActive
 {
-	FONT-SIZE: 11px;
+	font-size: 11px;
 	height : 20px;
 	padding: 0;
 	background : White;
@@ -147,14 +147,14 @@ TR.sieveRowActive
 
 A.sieveRowActive
 {
-	FONT-SIZE: 11px;
+	font-size: 11px;
 	height : 14px;
 	padding: 0;
 }
 
 TR.sieveRowInActive
 {
-	FONT-SIZE: 11px;
+	font-size: 11px;
 	height : 20px;
 	padding: 0;
 	background : White;
@@ -163,7 +163,7 @@ TR.sieveRowInActive
 
 A.sieveRowInActive
 {
-	FONT-SIZE: 11px;
+	font-size: 11px;
 	height : 14px;
 	padding: 0;
 	color: Silver;

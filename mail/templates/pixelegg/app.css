@@ -131,34 +131,34 @@ tr.forwarded span.status_img {
   background-image: url(images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
-  FONT-SIZE: 12px;
+  font-size: 12px;
   font-weight: bold;
   font-family: Arial;
 }
 .subject {
-  FONT-SIZE: 12px;
+  font-size: 12px;
   font-family: Arial;
 }
 TR.sieveRowActive {
-  FONT-SIZE: 11px;
+  font-size: 11px;
   height: 20px;
   padding: 0;
   background: White;
 }
 A.sieveRowActive {
-  FONT-SIZE: 11px;
+  font-size: 11px;
   height: 14px;
   padding: 0;
 }
 TR.sieveRowInActive {
-  FONT-SIZE: 11px;
+  font-size: 11px;
   height: 20px;
   padding: 0;
   background: White;
   color: Silver;
 }
 A.sieveRowInActive {
-  FONT-SIZE: 11px;
+  font-size: 11px;
   height: 14px;
   padding: 0;
   color: Silver;
@@ -1327,6 +1327,40 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose .mailComposeHeaders span#mail-compose_bcc_expander:hover,
 #mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  background-color: #189800;
+  color: #ffffff;
+}
+#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
+#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander {
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.rounded (3px);*/
+  color: #000000;
+  -webkit-appearance: none;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
+  float: left;
+  width: 47px;
+  margin: 3px;
+  font-size: 8px;
+  margin-left: 12px;
+}
+#mail-compose .mailComposeHeaders span#mail-compose_folder_expander:hover,
+#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);

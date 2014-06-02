@@ -59,28 +59,36 @@
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="lastdrafted"/>
 							</hbox>
 							<taglist-email id="replyto" empty_label="Reply to" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
+							<hbox>
+								<description id="folder_expander" value="Folder" onclick="app.mail.compose_fieldExpander"/>
+							</hbox>	
+						</row>
+						<row class="mailComposeHeaders mailComposeJQueryFolder">
+							<description value="Folder"/>
+							<taglist id="folder" empty_label="Folder" span="2" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
 							<description/>
 						</row>
 						<row class="mailComposeHeaders" >
 							<description value="To"/>
 							<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
 							<hbox>
-								<description id="cc_expander" value="Cc" onclick="app.mail.compose_cc_expander"/>
-								<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_cc_expander"/>
+								<description id="cc_expander" value="Cc" onclick="app.mail.compose_fieldExpander"/>
+								<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_fieldExpander"/>
 							</hbox>
 						</row>
 						<row class="mailComposeHeaders mailComposeJQueryCc">
 							<description value="Cc"/>
 							<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
-							<taglist id="folder" empty_label="Folder" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
+							<description/>
 						</row>
 						<row  class="mailComposeHeaders mailComposeJQueryBcc">
 							<description value="Bcc"/>
 							<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<description/>
 						</row>
 						<row class="mailComposeHeaders">
 							<description value="Subject"/>
-							<textbox align="left" width="100%" id="subject" span="2"/>
+							<textbox align="left" width="100%" id="subject" span="2" height="25"/>
 							<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
 						</row>
 						<row>
@@ -105,10 +113,10 @@
 					</menulist>
 					<description value=" "/>
 				</groupbox>
-				<groupbox class="et2_file mailUploadSection">
+				<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
 					<caption label="Files"/>
 					<box class="mailUploadProgress" id="mailUploadProgress" width="99%"/>
-					<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">
+					<grid id="attachments" width="100%" maxheight="165" overflow="auto">
 					  <columns>
 					   <column disabled="!@showtempname"/>
 					   <column width="50%" />

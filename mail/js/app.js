@@ -143,9 +143,18 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.compose':
 				var app_registry = egw.link_get_registry('mail');
+				var that = this;
 				this.mail_isMainWindow = false;
-				this.hide_cc_compose();
+				this.compose_fieldExpander_hide();
 
+				/* Control focus actions on subject to handle expanders properly.*/
+				jQuery("#mail-compose_subject").on({
+					focus:function(){
+						that.compose_fieldExpander_hide();
+						that.compose_fieldExpander();
+					}
+				});
+								
 				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
 				{
 					var w_h =app_registry['edit_popup'].split('x');
@@ -153,7 +162,7 @@ app.classes.mail = AppJS.extend(
 				}
 
 				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
-				this.compose_cc_expander();
+				this.compose_fieldExpander();
 				break;
 		}
 	},
@@ -494,7 +503,7 @@ app.classes.mail = AppJS.extend(
 		}
 		if (content['cc'] || content['bcc'])
 		{
-			this.compose_cc_expander();
+			this.compose_fieldExpander();
 		}
 		return success;
 	},
@@ -3089,62 +3098,97 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Hide Cc and Bcc rows from the compose popup
+	 * Hide Folder, Cc and Bcc rows from the compose popup
 	 *
 	 */
-	hide_cc_compose: function ()
+	compose_fieldExpander_hide: function ()
 	{
-		jQuery(".mailComposeJQueryCc").hide();
-		jQuery(".mailComposeJQueryBcc").hide();
+		var widgets = {cc:{},bcc:{},folder:{}};
+		for(var widget in widgets)
+		{
+			widgets[widget] = this.et2.getWidgetById(widget+'_expander');
+			if (typeof widgets[widget] != 'undefined')
+			{	
+				widgets[widget].set_disabled(false);
+			}	
+		}
+		jQuery(".mailComposeJQueryCc,.mailComposeJQueryBcc,.mailComposeJQueryFolder").hide();
 	},
-
+	
 	/**
-	 * Display Cc or Bcc fields in compose popup
+	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
 	 * @param {jQuery event} event
-	 * @param {widget object} widget clicked label (Cc or Bcc) from compose popup
+	 * @param {widget object} widget clicked label (Folder, Cc or Bcc) from compose popup
 	 *
 	 */
-	compose_cc_expander: function(event,widget)
+	compose_fieldExpander: function(event,widget)
 	{
-		var Cc = this.et2.getWidgetById('cc_expander');
-		var Bcc = this.et2.getWidgetById('bcc_expander');
-
-		if (typeof widget != "undefined" && widget.id == "cc_expander")
+		var expWidgets = {cc:{},bcc:{},folder:{}};
+		for (var name in expWidgets)
 		{
-			jQuery(".mailComposeJQueryCc").show();
-			if (typeof Cc !='undefined')
-			{
-				Cc.set_disabled(true);
-			}
-
+			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
 		}
-		else if (typeof widget != "undefined" && widget.id == "bcc_expander")
+		
+		if (typeof widget !='undefined')
 		{
-			jQuery(".mailComposeJQueryBcc").show();
-			if (typeof Bcc !='undefined')
+			switch (widget.id)
 			{
-				Bcc.set_disabled(true);
+				case 'cc_expander':
+					jQuery(".mailComposeJQueryCc").show();
+					if (typeof expWidgets.cc !='undefined')
+					{
+						expWidgets.cc.set_disabled(true);
+					}
+					break;
+				case 'bcc_expander':
+					jQuery(".mailComposeJQueryBcc").show();
+					if (typeof expWidgets.bcc !='undefined')
+					{
+						expWidgets.bcc.set_disabled(true);
+					}
+					break;
+				case 'folder_expander':
+					jQuery(".mailComposeJQueryFolder").show();
+					if (typeof expWidgets.folder !='undefined')
+					{
+						expWidgets.folder.set_disabled(true);
+					}
 			}
 		}
 		else if (typeof widget == "undefined")
 		{
-			var CcField = this.et2.getWidgetById('cc');
-			var BccField = this.et2.getWidgetById('bcc');
-			if (CcField.get_value().length)
+			var widgets = {cc:{},bcc:{},folder:{}};
+			
+			for(var widget in widgets)
 			{
-				jQuery(".mailComposeJQueryCc").show();
-				if (typeof Cc !='undefined')
+				widgets[widget] = this.et2.getWidgetById(widget);
+				
+				if (widgets[widget].get_value().length)
 				{
-					Cc.set_disabled(true);
-				}
-			}
-			if (BccField.get_value().length)
-			{
-				jQuery(".mailComposeJQueryBcc").show();
-				if (typeof Bcc !='undefined')
-				{
-					Bcc.set_disabled(true);
+					switch (widget)
+					{
+						case 'cc':
+							jQuery(".mailComposeJQueryCc").show();
+							if (typeof expWidgets.cc != 'undefiend')
+							{
+								expWidgets.cc.set_disabled(true)
+							}
+							break;
+						case 'bcc':
+							jQuery(".mailComposeJQueryBcc").show();
+							if (typeof expWidgets.bcc != 'undefiend')
+							{
+								expWidgets.bcc.set_disabled(true)
+							}
+							break;
+						case 'folder':
+							jQuery(".mailComposeJQueryFolder").show();
+							if (typeof expWidgets.folder != 'undefiend')
+							{
+								expWidgets.folder.set_disabled(true)
+							}
+					}
 				}
 			}
 		}
