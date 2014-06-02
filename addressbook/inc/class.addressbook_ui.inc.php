@@ -1723,7 +1723,7 @@ window.egw_LAB.wait(function() {
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
 			$content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $content['cat_id_tree'] : $content['cat_id'];
-			$content += (array)$content['private_cfs'];
+			if ($this->config['private_cf_tab']) $content = (array)$content['private_cfs'] + $content;
 			unset($content['private_cfs']);
 
 			switch($button)
@@ -2063,8 +2063,17 @@ window.egw_LAB.wait(function() {
 		$content['cat_id_tree'] = $content['cat_id'];
 
 		// Avoid setting conflicts with private custom fields
-		$content['private_cfs'] = $content;
-
+		if ($this->config['private_cf_tab'])
+		{
+			$content['private_cfs'] = array();
+			foreach(config::get_customfields('addressbook', true) as $name => $cf)
+			{
+				if ($cf['private'] && isset($content['#'.$name]))
+				{
+					$content['private_cfs']['#'.$name] = $content['#'.$name];
+				}
+			}
+		}
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
