@@ -1,0 +1,356 @@
+/*
+								"dhx_terrace" DHTMLXMENU SKIN 20012/05
+*/
+/****************************************************************************************************************************************************/
+/*									TOPLEVEL								    */
+.dhtmlxMenu_dhx_terrace_Middle {
+	position: relative;
+	height: 32px;
+	border: none;
+	/*border-left: #cecece 1px solid;*/
+	-moz-user-select: none;
+	
+	/*
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	*/
+	
+}
+/*
+.dhtmlxMenu_dhx_terrace_Layout, .dhtmlxMenu_dhx_terrace_Accordion {
+	border-bottom: #cedce8 1px solid;
+}
+
+.dhtmlxMenu_dhx_terrace_Middle.in_acccell, .dhtmlxMenu_dhx_terrace_Middle.in_layoutcell {
+	height: 25px;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhxmenu_bg_acccell.gif");
+	background-position: top;
+	background-repeat: repeat-x;
+}
+*/
+.dhtmlxMenu_dhx_terrace_Middle.dir_left div.align_left {
+	float: left;
+}
+.dhtmlxMenu_dhx_terrace_Middle.dir_left div.align_right {
+	float: right;
+}
+
+
+/****************************************************************************************************************************************************/
+/*									TOPLEVEL ITEMS								    */
+/* toplevel item normal */
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected {
+	position: relative;
+	float: left;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+	cursor: default;
+	white-space: nowrap;
+	-moz-user-select: none;
+	height: 32px;
+	line-height: 32px;
+	vertical-align: middle;
+	margin: 0px;
+	padding-left: 12px;
+	padding-right: 12px;
+	aborder-left: #cecece 1px solid;
+	border-right: #cecece 1px solid;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhxmenu_bg_item.gif");
+	background-repeat: repeat-x;
+	color: #2f2f2f;
+}
+/*
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal:last-child,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled:last-child,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected:last-child {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal:first-child,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled:first-child,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected:first-child {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+*/
+
+/* toplevel item disabled */
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled {
+	color: #999999 !important;
+}
+/* toplevel item selected (over) */
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected {
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhxmenu_bg_item_sel.gif");
+}
+/* toplevel separator */
+.dhtmlxMenu_dhx_terrace_Middle div.top_sep {
+	font-size: 1px;
+	cursor: default;
+	-moz-user-select: none;
+	height: 32px;
+	position: relative;
+	float: left;
+	width: 14px;
+	/*border-right: #cecece 1px solid;*/
+}
+/* top level image */
+.dhtmlxMenu_dhx_terrace_Middle img.dhtmlxMenu_TopLevel_Item_Icon {
+	float: left;
+	margin: 7px 6px 0px 0px;
+	width: 18px;
+	height: 18px;
+}
+
+
+/* top level text*/
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Normal div.top_level_text,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Disabled div.top_level_text,
+div.dhtmlxMenu_dhx_terrace_TopLevel_Item_Selected div.top_level_text {
+	float: left;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+/****************************************************************************************************************************************************/
+/*									SUBLEVEL POLYGON							    */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon {
+	position: absolute;
+	background-color: #ffffff;
+	border: #c0c0c0 1px solid;
+	overflow: hidden;
+	padding-top: 7px;
+	padding-bottom: 5px;
+	
+	box-shadow: 1px 1px 6px #909090;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#a0a0a0,direction=135,strength=3);
+}
+/* IE6 sublevel undercover fix */
+iframe.dhtmlxMenu_IE6CoverFix_dhx_terrace {
+	position: absolute;
+	border: none;
+	background: #000000;
+	filter: alpha(opacity=100);
+}
+/****************************************************************************************************************************************************/
+/*									SUBLEVEL ITEMS								    */
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl {
+	
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item {
+	height: 26px;
+	cursor: default;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis {
+	height: 26px;
+	cursor: default;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
+	height: 26px;
+	cursor: default;
+	background-color: #f0ede7;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_icon {
+	width: 35px;
+	text-align: left;
+	-moz-user-select: none;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_icon img.sub_icon {
+	width: 18px;
+	height: 18px;
+	margin-top: 2px;
+	margin-right: 0px;
+	margin-left: 12px;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_text {
+	vertical-align: middle;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_item_text {
+	font-family: Arial;
+	font-size: 13px;
+	font-weight: normal;
+	color: #2f2f2f;
+	white-space: nowrap;
+	text-align: left;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.sub_item_text {
+	color: #999999 !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk {
+	padding-left: 12px;
+	padding-right: 16px;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk div.sub_item_hk {
+	padding-top: 1px;
+	font-family: Arial;
+	font-size: 11px;
+	color: #747473;
+	text-align: right;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis td.sub_item_hk div.sub_item_hk {
+	color: #cecece !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon tr.sub_sep {
+	height: 5px;
+	font-size: 1px;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon div.sub_sep {
+	font-size: 1px;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhxmenu_bg_subsep.gif");
+	background-repeat: repeat-x;
+	background-position: top;
+	cursor: default;
+	height: 5px;
+	overflow: hidden;
+}
+/****************************************************************************************************************************************************/
+/*									SUBLEVEL ARROWS								    */
+
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.complex_arrow {
+	width: 5px;
+	height: 26px;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhtmlxmenu_subar.gif");
+	background-repeat: no-repeat;
+	background-position:  0px 0px;
+	float: right;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.complex_arrow {
+	background-position: -5px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.complex_arrow {
+	background-position: -10px 0px !important;
+}
+/****************************************************************************************************************************************************/
+/*									LOADING ICON								    */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.complex_arrow_loading {
+	aposition: absolute;
+	width: 16px;
+	height: 16px;
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhtmlxmenu_loader.gif");
+	top: 0px;
+	left: none;
+	right: 0px;
+}
+/****************************************************************************************************************************************************/
+/*									UP/DOWN OVERFLOW ARROWS							    */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Arrow {
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #eaf2fb;
+	text-align: center;
+	overflow: hidden;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Arrow div.dhtmlxMenu_SubLevelArea_Arrow_Icon {
+	position: relative;
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 9px;
+	height: 5px;
+	background-repeat: no-repeat;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhtmlxmenu_upar.gif");
+}
+/* up arrows */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp,
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp_Over,
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp_Disabled {
+	position: absolute;
+	height: 16px;
+	height= 18px;
+	padding: 1px 1px 0px 1px;
+	font-size: 1px;
+	background-color: #eaf2fb;
+	border: #a4bed4 1px solid;
+	border-bottom: none;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: -27px 0px; }
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp_Over div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: -36px 0px; }
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowUp_Disabled div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: -45px 0px; }
+/* down arrows */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown,
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown_Over,
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown_Disabled {
+	position: absolute;
+	height: 16px;
+	height= 18px;
+	font-size: 1px;
+	padding: 1px 1px 0px 1px;
+	background-color: #eaf2fb;
+	border: #a4bed4 1px solid;
+	border-top: none;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: 0px 0px; }
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown_Over div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: -9px 0px; }
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_ArrowDown_Disabled div.dhtmlxMenu_SubLevelArea_Arrow_Icon { background-position: -18px 0px; }
+/****************************************************************************************************************************************************/
+/*									TOPLEVEL TEXT								    */
+.dhtmlxMenu_dhx_terrace_Middle div.dhtmlxMenu_TopLevel_Text_right {
+	position: absolute;
+	top: 5px;
+	left: none;
+	right: 8px;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #000000;
+	cursor: default;
+}
+.dhtmlxMenu_dhx_terrace_Middle div.dhtmlxMenu_TopLevel_Text_left {
+	position: absolute;
+	top: 5px;
+	right: none;
+	left: 8px;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #000000;
+	cursor: default;
+}
+/****************************************************************************************************************************************************/
+/*									ITEM'S CHECKS, RADIOS							    */
+/* sublevel */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon {
+	float: left;
+	margin-left: 12px;
+	width: 18px;
+	height: 18px;
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-image: url("../imgs/dhxmenu_dhx_terrace/dhtmlxmenu_chrd.gif");
+}
+/* checkboxes */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.chbx_0 {
+	background-position: 0px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.chbx_1 {
+	background-position: -18px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.sub_icon.chbx_0 {
+	background-position: -36px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.sub_icon.chbx_1 {
+	background-position: -54px 0px !important;
+}
+/* radios */
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.rdbt_0 {
+	background-position: -72px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_icon.rdbt_1 {
+	background-position: -90px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.sub_icon.rdbt_0 {
+	background-position: -108px 0px !important;
+}
+div.dhtmlxMenu_dhx_terrace_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_dis div.sub_icon.rdbt_1 {
+	background-position: -126px 0px !important;
+}

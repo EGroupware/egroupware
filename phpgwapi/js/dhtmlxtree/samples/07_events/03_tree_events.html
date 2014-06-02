@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Event handlers</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body>
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><input class="button" type="submit" value=""><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/tree.gif" alt="" >dhtmlxTree</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >Events</a>
+            </div>
+            <div style="display:block;">
+                <h3>Event handlers</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link rel="STYLESHEET" type="text/css" href="../../codebase/dhtmlxtree.css">
+	
+	<script  src="../../codebase/dhtmlxcommon.js"></script>
+	<script  src="../../codebase/dhtmlxtree.js"></script>
+	
+	<p>This JavaScript tree example illustrates the ability to assign user-defined functions to different
+	 event handlers (e.g. <em>Mouse Over, Mouse Out, Check, UnCheck, Select, Deselect</em>). If you try to change 
+	 a checkbox value, an alert box will appear. Alert box is displayed also when a tree node is selected. 
+	 Confirm box will pop up if user opens or closes a node.<br>
+So, dhtmlxTree allows you to define any functions and attach them to event handlers in order to customize 
+tree behavior. That enriches possibilities for user interaction with JavaScript tree interface.</p>
+	
+
+	<table>
+		<tr>
+			<td>
+				<div id="treeboxbox_tree" style="width:250px; height:218px;background-color:#f5f5f5;border :1px solid Silver; "/>
+			</td>
+			<td rowspan="2" style="padding-left:25" valign="top">
+				<div id="logarea" style="background-color:lightgrey;height:218px;width:400px; padding:3px; overflow:auto;"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+		<li>Selected node ID will be passed to function specified as argument for setDefaultAction(funcObj)</li>
+		<li>Dropped node ID and new parent node ID  will be passed to function specified as argument for setDragFunction(funcObj)</li>
+		<li>node ID will be passed to the function specified as argument for setOpenAction(aFunc)</li>
+		<li>node ID will be passed to the function specified as argument for setDblClickAction(aFunc)</li>
+	<script>
+			function doLog(str){
+			
+				var log = document.getElementById("logarea");
+				log.innerHTML = log.innerHTML+str+"<br/>"
+				log.scrollTop = log.scrollHeight;
+			}
+	
+			function tonclick(id){
+			
+				doLog("Item "+tree.getItemText(id)+" was selected");
+			
+			};
+			function tondblclick(id){
+			
+				doLog("Item "+tree.getItemText(id)+" was doubleclicked");
+			
+			};			
+			function tondrag(id,id2){
+			
+				return confirm("Do you want to move node "+tree.getItemText(id)+" to item "+tree.getItemText(id2)+"?");
+			
+			};
+			function tonopen(id,mode){
+			
+				return confirm("Do you want to "+(mode>0?"close":"open")+" node "+tree.getItemText(id)+"?");
+			
+			};
+			function toncheck(id,state){
+			
+				doLog("Item "+tree.getItemText(id)+" was " +((state)?"checked":"unchecked"));
+			
+			};
+			
+			
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+
+			
+			
+			tree.setSkin('dhx_skyblue');
+			tree.setImagePath("../../codebase/imgs/csh_bluebooks/");
+			tree.enableCheckBoxes(1);
+			tree.enableDragAndDrop(1);
+   			tree.attachEvent("onOpenEnd",function(nodeId, event){doLog("An id of open item is "+nodeId);});
+			tree.setOnClickHandler(tonclick);
+			tree.setOnCheckHandler(toncheck);
+			tree.setOnDblClickHandler(tondblclick);
+
+
+			tree.loadXML("../common/tree3.xml", function(){
+				tree.setOnOpenHandler(tonopen);
+				tree.setDragHandler(tondrag);
+			});
+			
+			
+			
+			
+	</script>
+			
+			
+         </div>
+    <div style="clear:both;"></div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">STYLESHEET</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxtree.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code">  </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code">  </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxtree.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+ 
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">table</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">tr</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">td</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+            </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">treeboxbox_tree</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">width:250px; height:218px;background-color:#f5f5f5;border :1px solid Silver; </span><span class="hl-quotes">&quot;</span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">td</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">td</span><span class="hl-code"> </span><span class="hl-var">rowspan</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">padding-left:25</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">valign</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">top</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+            </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">logarea</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">background-color:lightgrey;height:218px;width:400px; padding:3px; overflow:auto;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">td</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">tr</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">tr</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">td</span><span class="hl-brackets">&gt;</span><span class="hl-special">&amp;nbsp;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">td</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">tr</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">table</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">Selected node ID will be passed to function specified as argument for setDefaultAction(funcObj)</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">Dropped node ID and new parent node ID  will be passed to function specified as argument for setDragFunction(funcObj)</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">node ID will be passed to the function specified as argument for setOpenAction(aFunc)</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">node ID will be passed to the function specified as argument for setDblClickAction(aFunc)</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">li</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code"><div class="hl-main"><pre><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">doLog</span><span class="hl-brackets">(</span><span class="hl-identifier">str</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">log</span><span class="hl-code"> = </span><span class="hl-builtin">document</span><span class="hl-code">.</span><span class="hl-identifier">getElementById</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">logarea</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">log</span><span class="hl-code">.</span><span class="hl-identifier">innerHTML</span><span class="hl-code"> = </span><span class="hl-identifier">log</span><span class="hl-code">.</span><span class="hl-identifier">innerHTML</span><span class="hl-code"> + </span><span class="hl-identifier">str</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">&lt;br/&gt;</span><span class="hl-quotes">&quot;</span><span class="hl-code">;
+    </span><span class="hl-identifier">log</span><span class="hl-code">.</span><span class="hl-identifier">scrollTop</span><span class="hl-code"> = </span><span class="hl-identifier">log</span><span class="hl-code">.</span><span class="hl-identifier">scrollHeight</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">tonclick</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">doLog</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Item </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string"> was selected</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">tondblclick</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">doLog</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Item </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string"> was doubleclicked</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">tondrag</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-code">, </span><span class="hl-identifier">id2</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-reserved">return</span><span class="hl-code"> </span><span class="hl-identifier">confirm</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Do you want to move node </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string"> to item </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id2</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">?</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">tonopen</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-code">, </span><span class="hl-identifier">mode</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-reserved">return</span><span class="hl-code"> </span><span class="hl-identifier">confirm</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Do you want to </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-brackets">(</span><span class="hl-identifier">mode</span><span class="hl-code"> &gt; </span><span class="hl-number">0</span><span class="hl-code"> ? </span><span class="hl-quotes">&quot;</span><span class="hl-string">close</span><span class="hl-quotes">&quot;</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">open</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string"> node </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string">?</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">toncheck</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-code">, </span><span class="hl-identifier">state</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">doLog</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">Item </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">getItemText</span><span class="hl-brackets">(</span><span class="hl-identifier">id</span><span class="hl-brackets">)</span><span class="hl-code"> + </span><span class="hl-quotes">&quot;</span><span class="hl-string"> was </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-brackets">(</span><span class="hl-brackets">(</span><span class="hl-identifier">state</span><span class="hl-brackets">)</span><span class="hl-code"> ? </span><span class="hl-quotes">&quot;</span><span class="hl-string">checked</span><span class="hl-quotes">&quot;</span><span class="hl-code">: </span><span class="hl-quotes">&quot;</span><span class="hl-string">unchecked</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-code">;
+ 
+</span><span class="hl-identifier">tree</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXTreeObject</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">treeboxbox_tree</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">100%</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">100%</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-number">0</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setSkin</span><span class="hl-brackets">(</span><span class="hl-quotes">'</span><span class="hl-string">dhx_skyblue</span><span class="hl-quotes">'</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setImagePath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/imgs/csh_bluebooks/</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">enableCheckBoxes</span><span class="hl-brackets">(</span><span class="hl-number">1</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">enableDragAndDrop</span><span class="hl-brackets">(</span><span class="hl-number">1</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">attachEvent</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">onOpenEnd</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">function</span><span class="hl-brackets">(</span><span class="hl-identifier">nodeId</span><span class="hl-code">, </span><span class="hl-identifier">event</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">doLog</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">An id of open item is </span><span class="hl-quotes">&quot;</span><span class="hl-code"> + </span><span class="hl-identifier">nodeId</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setOnClickHandler</span><span class="hl-brackets">(</span><span class="hl-identifier">tonclick</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setOnCheckHandler</span><span class="hl-brackets">(</span><span class="hl-identifier">toncheck</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setOnDblClickHandler</span><span class="hl-brackets">(</span><span class="hl-identifier">tondblclick</span><span class="hl-brackets">)</span><span class="hl-code">;
+ 
+</span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">loadXML</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../common/tree3.xml</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">function</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setOnOpenHandler</span><span class="hl-brackets">(</span><span class="hl-identifier">tonopen</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">tree</span><span class="hl-code">.</span><span class="hl-identifier">setDragHandler</span><span class="hl-brackets">(</span><span class="hl-identifier">tondrag</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span><span class="hl-brackets">)</span><span class="hl-code">;</span></pre></div></span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2012 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>

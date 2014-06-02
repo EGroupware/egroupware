@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="dhx" text="DHTMLX">
+		<href target="blank"><![CDATA[http://dhtmlx.com/index.shtml]]></href>
+		<item id="company" text="Company"><href target="blank"><![CDATA[http://dhtmlx.com/docs/company.shtml]]></href></item>
+		<item id="services" text="Services"><href target="blank"><![CDATA[http://dhtmlx.com/docs/services.shtml]]></href></item>
+		<item id="faq" text="FAQ"><href target="blank"><![CDATA[http://dhtmlx.com/docs/faq.shtml]]></href></item>
+	</item>
+	<item id="products" text="Products">
+		<href target="blank"><![CDATA[http://dhtmlx.com/docs/products/index.shtml]]></href>
+		<item id="dhtmlxTree" text="dhtmlxTree" img="http://dhtmlx.com/images/menues/img_tree.gif"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/dhtmlxTree/index.shtml]]></href></item>
+		<item id="dhtmlxGrid" text="dhtmlxGrid" img="http://dhtmlx.com/images/menues/img_grid.gif"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/dhtmlxGrid/index.shtml]]></href></item>
+		<item id="dhtmlxTreeGrid" text="dhtmlxTreeGrid" img="http://dhtmlx.com/images/menues/img_treegrid.gif"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/dhtmlxTreeGrid/index.shtml]]></href></item>
+		<item id="dhtmlxWindows" text="dhtmlxWindows" img="http://dhtmlx.com/images/menues/img_wins.gif"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/dhtmlxWindows/index.shtml]]></href></item>
+		<item id="dhtmlxLayout" text="dhtmlxLayout" img="http://dhtmlx.com/images/menues/img_layout.gif"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/dhtmlxLayout/index.shtml]]></href></item>
+		<item id="sep_90247589" type="separator"/>
+		<item id="moreDHTMLX" text="More..."><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/index.shtml]]></href></item>
+	</item>
+	<item id="support" text="Support">
+		<href target="blank"><![CDATA[http://dhtmlx.com/docs/support/index.shtml]]></href>
+		<item id="docs" text="Documentation"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/docsExplorer/index.shtml]]></href></item>
+		<item id="samples" text="Samples"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/docsExplorer/index.shtml?type=smpl]]></href></item>
+		<item id="kb" text="Knowledge Base"><href target="blank"><![CDATA[http://dhtmlx.com/docs/products/kb/index.shtml]]></href></item>
+		<item id="submitrequest" text="Submit Request"><href target="blank"><![CDATA[http://dhtmlx.com/docs/support/support_form.shtml]]></href></item>
+		<item id="blog" text="Blog"><href target="blank"><![CDATA[http://dhtmlx.com/blog/]]></href></item>
+	</item>
+</menu>

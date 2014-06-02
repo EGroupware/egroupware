@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0">
+	<item text="Book 0" id="10" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 1" id="1" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 2" id="2" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 3" id="3" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 4" id="4" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 5" id="5" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 6" id="6" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 7" id="7" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 8" id="8" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+	
+		<item text="Book 9" id="9" open="1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+	<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />		<item text="dummy" id="books" open="1" />	
+				
+</tree> 

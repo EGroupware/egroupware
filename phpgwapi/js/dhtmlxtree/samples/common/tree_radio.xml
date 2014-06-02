@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0" >
+	<item text="Books" id="books" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" call="1" select="1" checked="1" radio="1" open="1">
+		<item text="Horror" id="horror" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" open="1">
+			<item text="Stephen King" id="sk" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif"></item>
+			<item text="Dan Brown" id="db" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" open="true" radio="1">
+				<item text="Angels &amp; Demons" id="db_1"/>
+				<item text="Deception Point" id="db_2" checked="1"/>
+				<item text="Digital Fortress" id="db_3" />
+				<item text="The Da Vinci Code" id="db_4" />
+				<item text="Deception Point" id="db_5" />
+			</item>
+			<item text="Mary Janice Davidson" id="mjd" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" checked="1"></item>
+			<item text="Katie Macalister" id="km" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" checked="1"></item>
+		</item>
+		<item text="Science Fiction &amp; Fantasy" id="fantasy" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item text="Audrey Niffenegger" id="af" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif"></item>
+			<item text="Philip Roth" id="pr" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif" checked=""></item>
+		</item>
+	</item>
+</tree>

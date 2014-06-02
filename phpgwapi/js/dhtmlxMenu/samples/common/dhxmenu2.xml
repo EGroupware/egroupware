@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="view" text="View">
+		<item id="zoomIn" text="Zoom In" img="zoom_in.gif"/>
+		<item id="zoomOut" text="Zoom Out" img="zoom_out.gif"/>
+		<item id="zoom100" text="Zoom 100%" img="zoom_100.gif"/>
+		<item id="view_sep_1" type="separator"/>
+		<item id="reload" text="Reload" img="reload.gif"/>
+		<item id="view_sep_2" type="separator"/>
+		<item id="sourceCode" text="Source Code" img="source_code.gif"/>
+		<item id="fullscreenMode" text="Fullscreen Mode" img="fullscreen_mode.gif"/>
+	</item>
+	<item id="tools" text="Tools">
+		<item id="search" text="Search" img="search.gif"/>
+		<item id="tools_sep_1" type="separator"/>
+		<item id="downloads" text="Downloads" img="downloads.gif"/>
+		<item id="addons" text="Addons" img="addons.gif"/>
+		<item id="tools_sep_2" type="separator"/>
+		<item id="console" text="Console" img="console.gif"/>
+		<item id="pageInfo" text="Page Info" img="page_info.gif"/>
+		<item id="tools_sep_3" type="separator"/>
+		<item id="privateData" text="Private Data" img="private_data.gif"/>
+	</item>
+</menu>

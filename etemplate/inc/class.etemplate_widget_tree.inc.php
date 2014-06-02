@@ -11,12 +11,12 @@
  * @version $Id$
  */
 
-egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css');
+egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
 
 /**
  * eTemplate tree widget
  *
- * @see /phpgwapi/js/dhtmlxtree/docsExplorer/dhtmlxtree/dhtmlxtree___syntax_templates.html Tree syntax
+ * @see http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:syntax_templates Tree syntax
  *
  * Example initialisation of tree via $sel_options array:
  *

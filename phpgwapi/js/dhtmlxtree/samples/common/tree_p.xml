@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0">
+	<item radio="1" text="Books" id="books" open="1" im0="tombs.gif" im1="tombs.gif" im2="iconSafe.gif" call="1" select="1">
+		<pathstart id="path1" color="red" width="3" mode="dashed"/>
+		<pathstart id="path2" color="green" />
+		<item nocheckbox="1" text="Mystery &amp; Thrillers" id="mystery" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="Lawrence Block" id="lb" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif">
+				<item nocheckbox="1" text="All the Flowers Are Dying" id="lb_1" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="The Burglar on the Prowl" id="lb_2" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="The Plot Thickens" id="lb_3" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Grifter's Game" id="lb_4" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="The Burglar Who Thought He Was Bogart" id="lb_5" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"/>
+			</item>
+			<item nocheckbox="1" text="Robert Crais" id="rc" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif">
+				<item nocheckbox="1" text="The Forgotten Man" id="rc_1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Stalking the Angel" id="rc_2" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Free Fall" id="rc_3" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Sunset Express" id="rc_4" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Hostage" id="rc_5" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+			</item>
+			<item nocheckbox="1" text="Ian Rankin" id="ir" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="James Patterson" id="jp" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="Nancy Atherton" id="na" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+		</item>
+		<item nocheckbox="1" text="History" id="history" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="John Mack Faragher" id="jmf" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="Jim Dwyer" id="jd" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="Larry Schweikart" id="ls" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="R. Lee Ermey" id="rle" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+		</item>
+		<item nocheckbox="1" text="Horror" id="horror" open="1" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="Stephen King" id="sk" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="Dan Brown" id="db" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif">
+				<item nocheckbox="1" text="Angels &amp; Demons" id="db_1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Deception Point" id="db_2" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item path_end="path1" nocheckbox="1" text="Digital Fortress" id="db_3" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif">
+					<pathend id="path1" />
+				</item>
+				<item nocheckbox="1" text="The Da Vinci Code" id="db_4" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item nocheckbox="1" text="Deception Point" id="db_5" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+			</item>
+			<item nocheckbox="1" text="Mary Janice Davidson" id="mjd" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item path_end="path2" nocheckbox="1" text="Katie Macalister" id="km" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif">
+				<pathend id="path2" />
+			</item>
+		</item>
+		<item nocheckbox="1" text="Science Fiction &amp; Fantasy" id="fantasy" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="Audrey Niffenegger" id="af" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item nocheckbox="1" text="Philip Roth" id="pr" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+		</item>
+		<item nocheckbox="1" text="Sport" id="sport" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="Bill Reynolds" id="br" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+		</item>
+		<item open="1" text="Teens" id="teens" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+			<item nocheckbox="1" text="Joss Whedon" id="jw" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif">
+				<item text="Astonishing X-Men" id="jw_1" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item text="Joss Whedon: The Genius Behind Buffy" id="jw_2" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item text="Fray" id="jw_3" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item text="Tales Of The Vampires" id="jw_4" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+				<item text="The Harvest" id="jw_5" im0="book_titel.gif" im1="book_titel.gif" im2="book_titel.gif"/>
+			</item>
+			<item text="Meg Cabot" id="mc" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item text="Garth Nix" id="gn" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+			<item text="Ann Brashares" id="ab" im0="book_titel.gif" im1="book.gif" im2="book_titel.gif"></item>
+		</item>
+	</item>
+	<item nocheckbox="1" text="Magazines" id="magazines" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif">
+		<item nocheckbox="1" text="Sport" id="mag_sp" im0="folderClosed.gif" im1="folderOpen.gif" im2="folderClosed.gif"></item>
+	</item>
+</tree> 

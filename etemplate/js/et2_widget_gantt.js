@@ -15,7 +15,7 @@
 /*egw:uses
 	jsapi.jsapi;
 	jquery.jquery;
-	/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js; // otherwise gantt breaks
+	/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js; // otherwise gantt breaks
 	/phpgwapi/js/dhtmlxGantt/codebase/dhtmlxgantt.js;
 	et2_core_inputWidget;
 */
@@ -194,7 +194,10 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		if(this.dynheight)
 		{
 			this.dynheight.update(function(w,h) {
-				this.gantt.setSizes();
+				if(this.gantt)
+				{
+					this.gantt.setSizes();
+				}
 			}, this);
 		}
 		else

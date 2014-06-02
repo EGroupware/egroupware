@@ -17,11 +17,11 @@
 /*egw:uses
         et2_core_inputWidget;
 	/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
-	/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js;
+	/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js;
 //	using debugable and fixed source of dhtmltree instead: /phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxtree.js;
-	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_json.js;
-//	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_start.js;
+	/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js;
+	/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js;
+//	/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_start.js;
 */
 
 /**

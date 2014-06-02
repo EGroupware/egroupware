@@ -1,3 +1,3 @@
-dhtmlxTree v.2.6  Standard edition build 100916 (with applied IE9 beta fix)
+dhtmlxTree v.3.6 Standard edition build 131023
 
 (c) DHTMLX Ltd. 
