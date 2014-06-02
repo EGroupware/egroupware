@@ -97,14 +97,14 @@ if(@file_exists($tpl_info))
 }
 
 // until home works again, we redirect to default_app from prefs (if set and not home) or calendar, if allowed, or first app found
-if ($app == 'home' && !($GLOBALS['egw']->framework instanceof jdots_framework))
+if ($app == 'home' && !$api_requested && !($GLOBALS['egw']->framework instanceof jdots_framework))
 {
 	$app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app'];
 	if (!$app || $app == 'home') $app = isset($GLOBALS['egw_info']['user']['apps']['calendar']) ? 'calendar' : key($GLOBALS['egw_info']['user']['apps']);
 	egw::redirect(egw_framework::index($app), $app);
 }
 // until home works again, we build new frameset for jdots template
-if ($app == 'home' && $GLOBALS['egw']->framework instanceof jdots_framework) $_GET['cd'] = 'yes';
+if ($app == 'home' && !$api_requested && $GLOBALS['egw']->framework instanceof jdots_framework) $_GET['cd'] = 'yes';
 
 if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
 {
