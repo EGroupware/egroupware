@@ -2406,6 +2406,7 @@ window.egw_LAB.wait(function() {
 					'ajax' => 'true'
 				));
 			}
+			$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 			if (isset($_GET['index']))
 			{
 				$content['index'] = (int)$_GET['index'];
