@@ -306,6 +306,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value_in = self::get_array($content, $form_name);
+			//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
 			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 			if(is_array($value_in))
 			{
@@ -313,25 +314,32 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					$field_settings = $customfields[$fname=substr($field,1)];
 
+					if ((string)$this->attrs['use-private'] !== '' &&	// are only (non-)private fields requested
+						(boolean)$field_settings['private'] != ($this->attrs['use-private'] != '0'))
+					{
+						continue;
+					}
+
 					// check if single field is set readonly, used in apps as it was only way to make cfs readonly in old eT
-					if ($this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : '', $field))
+					if ($this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : $cname, $field))
 					{
 						continue;
 					}
 					// run validation method of widget implementing this custom field
 					$widget = $this->_widget($fname, $field_settings);
-					$widget->validate($cname, $expand, $content, $validated);
+					$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 					if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
 					{
 						self::set_validation_error($field,lang('Field must not be empty !!!'),'');
 					}
-					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
+					$field_name = self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+					$valid =& self::get_array($validated, $field_name, true);
 
 					if (is_array($valid)) $valid = implode(',', $valid);
 					// NULL is valid for most fields, but not custom fields due to backend handling
 					// See so_sql_cf->save()
 					if (is_null($valid)) $valid = false;
-					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($valid));
+					//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
 				}
 			}
 			elseif ($this->type == 'customfields-types')
