@@ -518,17 +518,17 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					// Start and end date are an interval.  Also update the chart to
 					// display those dates.  Special handling because date widgets give
 					// value in timestamp (seconds), gantt wants Date object (ms)
-					case 'start_date':
+					case 'end_date':
 						if(_widget.getValue())
 						{
-							display = display && ((task[_widget.id].valueOf() / 1000) >= _widget.getValue());
+							display = display && ((task['start_date'].valueOf() / 1000) < _widget.getValue() + 86400 );
 						}
 						return;
-					case 'end_date':
+					case 'start_date':
 						// End date is not actually a required field, so accept undefined too
 						if(_widget.getValue())
 						{
-							display = display && (typeof task[_widget.id] == 'undefined' || !task[_widget.id] || ((task[_widget.id].valueOf() / 1000) <= _widget.getValue()));
+							display = display && (typeof task['end_date'] == 'undefined' || !task['end_date'] || ((task['end_date'].valueOf() / 1000) >= _widget.getValue()));
 						}
 						return;
 				}
@@ -586,7 +586,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 						var start = this.getWidgetById('start_date');
 						var end = this.getWidgetById('end_date');
 						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue() * 1000) : gantt_widget.gantt.getState().min_date;
-						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(end.getValue() * 1000) : gantt_widget.gantt.getState().max_date;
+						// End date is inclusive
+						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date((end.getValue()+86400) * 1000) : gantt_widget.gantt.getState().max_date;
 						if(gantt_widget.gantt.config.end_date <= gantt_widget.gantt.config.start_date)
 						{
 							gantt_widget.gantt.config.end_date = null;
