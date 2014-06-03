@@ -246,7 +246,11 @@ class setup
 
 		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
 
-		return @session_start();	// suppress notice if session already started or warning in CLI
+		$ok = @session_start();	// suppress notice if session already started or warning in CLI
+		// need to decrypt session, in case session encryption is switched on in header.inc.php
+		egw_session::decrypt();
+		//error_log(__METHOD__."() returning ".array2string($ok).' _SESSION='.array2string($_SESSION));
+		return $ok;
 	}
 
 	/**
