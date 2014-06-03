@@ -268,13 +268,6 @@ pre {
   width: 100%;
   display: table-row;
 }
-.dtree tbody,
-.dtree tr,
-.dtree td,
-.dtree span {
-  width: 100%;
-  overflow: hidden;
-}
 .useEllipsis {
   text-overflow: ellipsis;
   width: 250px;
@@ -2103,13 +2096,6 @@ pre {
   overflow: hidden;
   width: 100%;
   display: table-row;
-}
-.dtree tbody,
-.dtree tr,
-.dtree td,
-.dtree span {
-  width: 100%;
-  overflow: hidden;
 }
 .useEllipsis {
   text-overflow: ellipsis;
