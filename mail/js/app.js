@@ -142,7 +142,6 @@ app.classes.mail = AppJS.extend(
 				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 				break;
 			case 'mail.compose':
-				var app_registry = egw.link_get_registry('mail');
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
@@ -154,14 +153,9 @@ app.classes.mail = AppJS.extend(
 						that.compose_fieldExpander();
 					}
 				});
-								
-				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
-				{
-					var w_h =app_registry['edit_popup'].split('x');
-					if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-				}
+				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
+				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});			
 
-				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight<800?screen.availHeight:800)));
 				this.compose_fieldExpander();
 				break;
 		}
@@ -3116,6 +3110,42 @@ app.classes.mail = AppJS.extend(
 	},
 	
 	/**
+	 * Control textArea size based on available free space at the bottom
+	 *
+	 */
+	compose_resizeHandler: function()
+	{
+		var bodyH = jQuery('body').height();
+		var textArea = this.et2.getWidgetById('mail_plaintext');
+		var toolbar = jQuery('.mailSignature');
+		
+		if (typeof textArea != 'undefined')
+		{
+			var textAreaH = textArea.node.clientHeight;
+			if (textArea.getParent().disabled)
+			{
+				textArea = this.et2.getWidgetById('mail_htmltext');
+				textAreaH = parseInt(textArea.getParent().node.clientHeight);
+			} 
+			
+			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - 65);
+			
+			if (textArea.id != "mail_htmltext")
+			{
+				textArea.set_height(textAreaH + freeSpace);
+			}
+			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext' && typeof textArea.getParent().node.children[1] != 'undefined')
+			{
+				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',textAreaH + (freeSpace - 90));
+			}
+			else
+			{
+				textArea.set_height(textAreaH + (freeSpace - 90));
+			}
+		}
+	},
+	
+	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
 	 * @param {jQuery event} event
@@ -3192,6 +3222,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
+		this.compose_resizeHandler();
 	},
 
 	/**

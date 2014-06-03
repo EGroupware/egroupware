@@ -1211,9 +1211,6 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose .mail-compose_toolbar #mail-compose_priority span.et2_label {
   margin-right: 3px;
 }
-#mail-compose table.et2_grid {
-  float: left;
-}
 #mail-compose .mailComposeHeaders,
 #mail-compose .mailComposeHeadersSection {
   margin: 2px 0;

@@ -102,10 +102,10 @@
 			</vbox>
 			<vbox class="mailComposeBodySection" width="99%">
 				<hbox disabled="@is_plain" class="mailComposeBody">
-					<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="320px" width="100%" />
+					<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="478px" width="100%" />
 				</hbox>
 				<hbox disabled="@is_html" class="mailComposeBody">
-					<textbox multiline="true" rows="15" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
+					<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
 				</hbox>
 				<groupbox class="mailSignature">
 					<menulist>
