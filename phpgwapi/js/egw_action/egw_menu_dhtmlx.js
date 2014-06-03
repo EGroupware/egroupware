@@ -11,7 +11,7 @@
 
 /*egw:uses
 	egw_menu;
-	/phpgwapi/js/dhtmlxMenu/sources/dhtmlxcommon.js;
+	/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js;
 	/phpgwapi/js/dhtmlxMenu/sources/dhtmlxmenu.js;
 	/phpgwapi/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js;
 */

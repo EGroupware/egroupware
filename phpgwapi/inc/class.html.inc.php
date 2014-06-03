@@ -1289,10 +1289,10 @@ egw_LAB.wait(function() {
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
-			egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/dhtmlxcommon');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/dhtmlxtree');
-			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/ext/dhtmlxtree_json');
+			egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxtree.css');
+			egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+			egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js');
+			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 			$tree_initialised = true;
 			if (!$_folders && !$autoLoading) return null;
 		}

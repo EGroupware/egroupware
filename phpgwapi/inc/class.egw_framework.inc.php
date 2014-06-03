@@ -1804,10 +1804,10 @@ if ($app == 'home') continue;
 		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/jsapi.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_json.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/egw.js');
-		// dhtmlx tree & menu
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxcommon.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxtree.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/dhtmlxMenu/sources/dhtmlxmenu.js');
+		// dhtmlxTree (dhtmlxMenu get loaded via dependency in egw_menu_dhtmlx.js)
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		// actions
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_keymanager.js');
