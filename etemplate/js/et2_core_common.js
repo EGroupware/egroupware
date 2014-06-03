@@ -495,10 +495,11 @@ function et2_activateLinks(_content)
 			var splitted = _content.split(_matches[0]);
 
 			// Push the not-matched part
-			if (splitted[0])
+			var left = splitted.shift();
+			if (left)
 			{
 				// activate the links of the left string
-				arr = arr.concat(et2_activateLinks(splitted.shift()));
+				arr = arr.concat(et2_activateLinks(left));
 			}
 
 			// Call the callback function which converts the matches into an object
