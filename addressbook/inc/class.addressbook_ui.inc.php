@@ -732,7 +732,7 @@ class addressbook_ui extends addressbook_bo
 			if ($name) $org_name[] = $name;
 		}
 		$org_name = implode(': ',$org_name);
-		return array($org => $org_name);
+		return $org_name ? array($org => $org_name) : array();
 	}
 
 	/**
@@ -1387,7 +1387,11 @@ window.egw_LAB.wait(function() {
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
-					$query['col_filter'][$name] = $value;
+					// do NOT set invalid column, as this gives an SQL error ("AND AND" in sql)
+					if (in_array($name, array('org_name','org_unit','adr_one_location')))
+					{
+						$query['col_filter'][$name] = $value;
+					}
 				}
 			}
 			else if($query['actions'] && !$query['actions']['edit'])
