@@ -1934,21 +1934,16 @@ class mail_ui
 					$imageTag = '';
 					$imageHTMLBlock = '';
 					$datarowid = $this->createRowID($_folderName,$message_uid,true);
-					if (//$header['mimetype'] != 'multipart/mixed' &&
-						$header['mimetype'] != 'multipart/signed'
-					)
+					$attachments = $header['attachments'];
+					if (count($attachments)<1)
 					{
-						$attachments = $header['attachments'];
-						if (count($attachments)<1)
-						{
-							$image = '&nbsp;';
-						}
-						if (count($attachments)==1)
-						{
-							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
-							$imageTag = json_encode($attachments);
-							$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
-						}
+						$image = '&nbsp;';
+					}
+					if (count($attachments)==1)
+					{
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
+						$imageTag = json_encode($attachments);
+						$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 					}
 					if (count($attachments)>1)
 					{
