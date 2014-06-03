@@ -289,6 +289,7 @@ class filemanager_select
 					'name' => $name,
 					'path' => $path,
 					'mime' => $mime,
+					'is_dir' => $is_dir
 				);
 				if ($is_dir && $content['mode'] == 'open-multiple')
 				{

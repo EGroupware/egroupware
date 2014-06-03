@@ -698,7 +698,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 
 		}
-		else if (widget.value.mime == 'httpd/unix-directory')
+		else if (widget.value.is_dir)
 		{
 			var path = null;
 			// Cannot do this, there are multiple widgets named path
@@ -709,7 +709,6 @@ app.classes.filemanager = AppJS.extend(
 			if(path)
 			{
 				path.set_value(widget.value.path);
-				path.getInstanceManager().postSubmit();
 			}
 		}
 		else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple')
