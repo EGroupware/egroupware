@@ -301,9 +301,6 @@ class filemanager_select
 		}
 		$readonlys['button[createdir]'] = !egw_vfs::is_writable($content['path']);
 
-		// scroll to end of path
-		$GLOBALS['egw']->js->set_onload("var p = document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]'); if (p) p.scrollIntoView();");
-
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);
 		$preserve = array(

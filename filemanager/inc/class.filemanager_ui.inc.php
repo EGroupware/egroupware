@@ -356,7 +356,6 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
 		$tpl = new etemplate_new('filemanager.index');
 
 		if($msg) egw_framework::message($msg);
@@ -712,7 +711,7 @@ class filemanager_ui
 			egw_session::appsession('index','filemanager',$query);
 		}
 		if(!$query['path']) $query['path'] = self::get_home_dir();
-		
+
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
 		{
@@ -745,7 +744,7 @@ class filemanager_ui
 		{
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
-		
+
 		// Re-map so 'No filters' favorite ('') is depth 1
 		$filter = $query['filter'] === '' ? 1 : $query['filter'];
 		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
