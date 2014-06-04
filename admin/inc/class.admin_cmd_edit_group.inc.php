@@ -101,7 +101,7 @@ class admin_cmd_edit_group extends admin_cmd
 			throw new egw_exception_db(lang("Error saving account!"),11);
 		}
 		$data['account_name'] = $data['account_lid'];	// also set deprecated name
-		if ($update) $data['old_name'] = $old['account_lid'];	// make old name available for hooks
+		if ($this->account) $data['old_name'] = $old['account_lid'];	// make old name available for hooks
 		$GLOBALS['hook_values'] =& $data;
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 			'location' => $this->account ? 'editgroup' : 'addgroup'
