@@ -1667,6 +1667,7 @@ abstract class bo_merge
 			if(!$file['mime'])
 			{
 				$file['mime'] = egw_vfs::mime_content_type($default_doc);
+				$file['path'] = $default_doc;
 			}
 			$documents['document'] = array(
 				'icon' => egw_vfs::mime_icon($file['mime']),
