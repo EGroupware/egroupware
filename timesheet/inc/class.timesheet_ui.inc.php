@@ -746,7 +746,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				$row['class'] .= ' rowNoUndelete ';
 			}
-			if ($query['col_filter']['ts_project'] || !$query['filter2'])
+			if ($query['col_filter']['ts_project'])
 			{
 				unset($row['ts_project']);	// dont need or want to show it
 			}
@@ -762,14 +762,9 @@ class timesheet_ui extends timesheet_bo
 					}
 				}
 			}
-			if (!$query['filter2'])
-			{
-				unset($row['ts_description']);
-			}
-			else
-			{
-				$row['titleClass'] = 'timesheet_titleDetails';
-			}
+
+			if(!$row['titleClass']) $row['titleClass'] = 'timesheet_titleDetails';
+
 		}
 		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
@@ -872,6 +867,7 @@ class timesheet_ui extends timesheet_bo
 				'header_left'    => 'timesheet.index.dates',
 				'header_row'     => 'timesheet.index.add',
 				'filter_onchange' => "app.timesheet.filter_change();",
+				'filter2_onchange' => "app.timesheet.filter2_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
 				'row_modified'   => 'ts_modified',

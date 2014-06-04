@@ -70,8 +70,8 @@
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
 					<vbox options="0,0">
 						<link id="${row}[ts_link]" no_lang="1"/>
-						<description id="${row}[ts_title]" no_lang="1" class="$row_cont[titleClass]"/>
-						<description id="${row}[ts_description]" no_lang="1"/>
+						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
+						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
 					</vbox>
 					<menulist class="noWrap">
 						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>

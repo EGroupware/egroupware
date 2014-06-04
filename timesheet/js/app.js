@@ -61,6 +61,7 @@ app.classes.timesheet = AppJS.extend(
 		if (typeof et2.templates['timesheet.index'] != "undefined")
 		{
 			this.filter_change();
+			this.filter2_change();
 		}
 	},
 
@@ -75,6 +76,24 @@ app.classes.timesheet = AppJS.extend(
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
+		}
+	},
+
+	/**
+	 * show or hide the details of rows by selecting the filter2 option
+	 * either 'all' for details or 'no_description' for no details
+	 *
+	 */
+	filter2_change: function()
+	{
+		var nm = this.et2.getWidgetById('nm');
+		var filter2 = this.et2.getWidgetById('filter2');
+
+		if (nm && filter2)
+		{
+			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
+			// Show / hide descriptions
+			egw.css(".et2_label.ts_description","display:" + (filter2.getValue() == '1' ? "block;" : "none;"));
 		}
 	},
 });
