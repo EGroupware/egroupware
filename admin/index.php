@@ -10,5 +10,5 @@
  * @version $Id$
  */
 
-header('Location: ../index.php?menuaction=admin.uiconfig.index&appname=admin'.
+header('Location: ../index.php?menuaction=admin.admin_ui.index&ajax=true'.
 	(isset($_GET['sessionid']) ? '&sessionid='.$_GET['sessionid'].'&kp3='.$_GET['kp3'] : ''));
