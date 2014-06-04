@@ -112,9 +112,17 @@ class etemplate_widget_taglist extends etemplate_widget
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					unset($value[$key]);
 				}
-				if($this->type == 'taglist-email' && !preg_match(etemplate_widget_url::EMAIL_PREG, $val))
+				if($this->type == 'taglist-email' && $this->attrs['include_lists'] && is_numeric($val))
 				{
-						self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
+					$lists = $GLOBALS['egw']->contacts->get_lists(EGW_ACL_READ);
+					if(!array_key_exists($val, $lists))
+					{
+						self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($lists))),'');
+					}
+				}
+				else if($this->type == 'taglist-email' && !preg_match(etemplate_widget_url::EMAIL_PREG, $val))
+				{
+					self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
 				}
 			}
 			if ($ok && $value === '' && $this->attrs['needed'])
