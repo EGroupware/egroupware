@@ -394,16 +394,16 @@ class infolog_ui
 		// add a '-details' to the name of the columnselection pref
 		if ($details)
 		{
-			$query['columnselection-pref'] = 'nextmatch-'.(is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
+			$query['columnselection_pref'] = 'nextmatch-'.(is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
 			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
 		}
 		else
 		{
-			$query['columnselection-pref'] = 'nextmatch-infolog.index.rows';
+			$query['columnselection_pref'] = 'nextmatch-infolog.index.rows';
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection-pref']],'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
 
 		// query all links and sub counts in one go
 		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))

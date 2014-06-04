@@ -141,7 +141,7 @@ app.classes.infolog = AppJS.extend(
 
 			// Load new preferences
 			var colData = [];
-			for(var i = 0; i < nm.columns.length; i++) colData[i] = {disabled: true, width: '0'};
+			for(var i = 0; i < nm.columns.length; i++) colData[i] = {disabled: true, width: '20'};
 			nm._applyUserPreferences(nm.columns, colData);
 			for(var i = 0; i < colData.length; i++)
 			{
