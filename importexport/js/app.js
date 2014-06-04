@@ -78,7 +78,7 @@ app.classes.importexport = AppJS.extend(
 	import_preview: function(event, widget)
 	{
 		var test = widget.getRoot().getWidgetById('dry-run');
-		if(!test.getValue()) return true;
+		if(test.getValue() == test.options.unselected_value) return true;
 
 		// Show preview
 		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
