@@ -36,8 +36,7 @@
 								<row class="th" disabled="@view" height="28">
 									<description value="Add new alarm" span="all"/>
 								</row>
-								<row class="row add_alarm_action" disabled="@no_add_alarm">
-									<description value="Set at"/>
+								<row class="row add_alarm_action" valign="top" disabled="@no_add_alarm">
 									<hbox span="all">
 										<menulist>
 											<menupopup type="select-number" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
@@ -49,9 +48,8 @@
 										<button label="Add" id="button[add_alarm]" image="add" background_image="1"/>
 									</hbox>
 								</row>
-								<row valign="top" disabled="!@alarm">
-									<description value="Alarms"/>
-									<grid id="alarm" width="100%"  class="egwGridView_grid">
+								<row valign="top" disabled="!@alarm" height="100%">
+									<grid id="alarm" width="100%"  class="egwGridView_grid calendar_alarm_grid">
 										<columns>
 											<column/>
 											<column/>
