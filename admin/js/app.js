@@ -537,7 +537,9 @@ app.classes.admin = AppJS.extend(
 	 */
 	_acl_callback: function(_data)
 	{
-		window.egw_refresh(_data.msg, this.appname, _data.ids, _data.type);
+		// Avoid the window / framework / app and just refresh the etemplate
+		// Framework will try to refresh the opener
+		this.et2.getInstanceManager().refresh(_data.msg, this.appname,_data.ids,_data.type);
 	},
 
 	/**
