@@ -684,11 +684,22 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Set preference name so changes are saved
 			this.options.settings.columnselection_pref = this.options.template;
 		}
+
+		var app = '';
 		if(this.options.settings.columnselection_pref) {
+			var pref = {};
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
-			var app = list[0];
-			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
+			if(this.options.settings.columnselection_pref.indexOf('nextmatch') == 0)
+			{
+				app = list[0].substring('nextmatch'.length+1);
+				pref = egw.preference(this.options.settings.columnselection_pref, app);
+			}
+			else
+			{
+				app = list[0];
+				// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+				pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, app);
+			}
 			if(pref)
 			{
 				negated = (pref[0] == "!");
@@ -710,7 +721,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var size = {};
 		if(this.options.settings.columnselection_pref && app)
 		{
-			size = this.egw().preference("nextmatch-"+this.options.settings.columnselection_pref+"-size", app);
+			var size_pref = this.options.settings.columnselection_pref +"-size";
+			
+			// If columnselection pref is missing prefix, add it in
+			if(size_pref.indexOf('nextmatch') == -1)
+			{
+				size_pref = 'nextmatch-'+size_pref;
+			}
+			size = this.egw().preference(size_pref, app);
 		}
 		if(!size) size = {};
 		return {
@@ -1272,12 +1290,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				{
 					self.getInstanceManager().submit();
 				}
+				self.selectPopup = null;
 			};
 
 			var cancelButton = et2_createWidget("buttononly", {}, this);
 			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();
+				self.selectPopup = null;
 			};
 
 			this.selectPopup = jQuery(document.createElement("div"))

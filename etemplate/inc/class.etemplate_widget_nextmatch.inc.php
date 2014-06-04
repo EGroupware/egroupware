@@ -50,7 +50,7 @@
  * 	'total'          =>		//  O the total number of entries
  * 	'sel_options'    =>		//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
  * 	'no_columnselection' => // I  turns off the columnselection completly, turned on by default
- * 	'columnselection-pref' => // I  name of the preference (plus 'nextmatch-' prefix), default = template-name
+ * 	'columnselection_pref' => // I  name of the preference (plus 'nextmatch-' prefix), default = template-name
  * 	'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
  * 	'options-selectcols' => // I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.
  *	'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
