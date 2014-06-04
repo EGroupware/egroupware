@@ -316,6 +316,10 @@
 				$preview = html::table($rows);
 				rewind($stream);
 			}
+			else
+			{
+				$preview = lang('Preview not supported by %1', $plugin->get_name());
+			}
 			if(count($plugin->get_warnings())) {
 				$this->message .= "<br />\n".lang('Warnings').':';
 				foreach($plugin->get_warnings() as $record => $message) {
