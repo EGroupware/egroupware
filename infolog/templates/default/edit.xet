@@ -44,7 +44,7 @@
 				</row>
 				<row class="row">
 					<description value="Price"/>
-					<projectmanager-pricelist id="pl_id" onchange="this.form['exec[info_price]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);" options="None" class="et2_fullWidth"/>
+					<projectmanager-pricelist id="pl_id" onchange="window.app.infolog.et2.getWidgetById('info_price').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));" options="None" class="et2_fullWidth"/>
 					<textbox type="float" id="info_price" class="et2_fullWidth"/>
 					<description/>
 				</row>
