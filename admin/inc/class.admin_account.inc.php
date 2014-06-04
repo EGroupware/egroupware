@@ -132,7 +132,7 @@ class admin_account
 			'changepassword', 'anonymous', 'mustchangepassword',
 			'account_passwd', 'account_passwd2',
 			'account_primary_group',
-			'account_expires', 'account_status',
+			'account_expires'
 		) as $c_name => $a_name)
 		{
 			if (is_int($c_name)) $c_name = $a_name;
@@ -140,7 +140,8 @@ class admin_account
 			switch($a_name)
 			{
 				case 'account_expires':
-					$account[$a_name] = $content[$c_name] ? $content[$c_name] : 'never';
+					$account[$a_name] = $content[$c_name] ? $content[$c_name] :
+						($content['account_status'] ? 'never' : 'already');
 					break;
 
 				case 'changepassword':	// boolean values: admin_cmd_edit_user understands '' as NOT set

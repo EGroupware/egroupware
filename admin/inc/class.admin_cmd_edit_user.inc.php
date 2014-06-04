@@ -88,8 +88,17 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		{
 			throw new egw_exception_wrong_userinput(lang('The two passwords are not the same'),0);
 		}
-		$data['account_expires'] = $expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
-		$data['account_status'] = is_null($expires) ? null : ($expires == -1 || $expires > time() ? 'A' : '');
+		$expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
+		if ($expires === 0)	// deactivated
+		{
+			$data['account_expires'] = -1;
+			$data['account_status'] = '';
+		}
+		else
+		{
+			$data['account_expires'] = $expires;
+			$data['account_status'] = is_null($expires) ? null : ($expires == -1 || $expires > time() ? 'A' : '');
+		}
 
 		$data['changepassword'] = admin_cmd::parse_boolean($data['changepassword'],$this->account ? null : true);
 		$data['anonymous'] = admin_cmd::parse_boolean($data['anonymous'],$this->account ? null : false);
@@ -138,6 +147,11 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 				if (is_null($value)) $value = $old[$name];
 			}
 		}
+		// hook allowing apps to intercept adding/editing accounts before saving them
+		$GLOBALS['egw']->hooks->process($data+array(
+			'location' => $this->account ? 'pre_editaccount' : 'pre_addaccount',
+		),False,True);	// called for every app now, not only enabled ones)
+
 		if (!($data['account_id'] = admin_cmd::$accounts->save($data)))
 		{
 			//_debug_array($data);
