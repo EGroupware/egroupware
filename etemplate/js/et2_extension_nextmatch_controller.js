@@ -352,6 +352,14 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			{
 				var mgr = nm.getArrayMgr('content');
 				mgr.data[i] = _response.rows[i];
+
+				// It's not enough to just update the data, the widgets need to
+				// be updated too, if there are matching widgets.
+				var widget = nm.getWidgetById(i);
+				if(widget && widget.set_value)
+				{
+					widget.set_value(mgr.getEntry(i));
+				}
 			}
 		}
 
