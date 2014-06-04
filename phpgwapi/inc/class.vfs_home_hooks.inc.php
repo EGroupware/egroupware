@@ -108,14 +108,16 @@ class vfs_home_hooks
 	 *
 	 * @param array $data
 	 * @param int $data['account_id'] numerical id
-	 * @param string $data['account_name'] group-name
+	 * @param string $data['account_lid'] group-name
 	 */
 	static function addGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
+		if (empty($data['account_lid'])) throw new egw_exception_wrong_parameter('account_lid must not be empty!');
+
 		// create a group-dir
 		egw_vfs::$is_root = true;
-		if (egw_vfs::mkdir($dir='/home/'.$data['account_name'],0070,0))
+		if (egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0070,0))
 		{
 			egw_vfs::chown($dir,0);
 			egw_vfs::chgrp($dir,$data['account_id']);
@@ -132,17 +134,18 @@ class vfs_home_hooks
 	 *
 	 * @param array $data
 	 * @param int $data['account_id'] numerical id
-	 * @param string $data['account_name'] new group-name
+	 * @param string $data['account_lid'] new group-name
 	 * @param string $data['old_name'] old account-name
 	 */
 	static function editGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
+		if (empty($data['account_lid']) || empty($data['old_name'])) throw new egw_exception_wrong_parameter('account_lid and old_name must not be empty!');
 
-		if ($data['account_name'] == $data['old_name'])
+		if ($data['account_lid'] == $data['old_name'])
 		{
 			// check if group directory exists and create it if not (by calling addGroup hook)
-			if (!egw_vfs::stat('/home/'.$data['account_name']))
+			if (!egw_vfs::stat('/home/'.$data['account_lid']))
 			{
 				self::addGroup($data);
 			}
@@ -151,7 +154,7 @@ class vfs_home_hooks
 		{
 			// rename the group-dir
 			egw_vfs::$is_root = true;
-			egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_name']);
+			egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_lid']);
 			egw_vfs::$is_root = false;
 		}
 	}
@@ -161,19 +164,19 @@ class vfs_home_hooks
 	 *
 	 * @param array $data
 	 * @param int $data['account_id'] numerical id
-	 * @param string $data['account_name'] account-name
+	 * @param string $data['account_lid'] account-name
 	 */
 	static function deleteGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 
-		if(empty($data['account_name']) || $data['account_name'] == '/')
+		if(empty($data['account_lid']) || $data['account_lid'] == '/')
 		{
-			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_name NOT set!');
+			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
 		// delete the group-directory
 		egw_vfs::$is_root = true;
-		egw_vfs::remove('/home/'.$data['account_name']);
+		egw_vfs::remove('/home/'.$data['account_lid']);
 		egw_vfs::$is_root = false;
 	}
 }
