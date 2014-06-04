@@ -423,7 +423,9 @@ var et2_selectbox = et2_inputWidget.extend(
 		this.set_select_options(this.options.select_options);
 	},
 
-	set_value: function(_value) {
+	set_value: function(_value)
+	{
+		if (typeof _value == "number") _value = ""+_value;	// convert to string for consitent matching
 		if(typeof _value == "string" && this.options.multiple && _value.match(/^[,0-9A-Za-z/-_]+$/) !== null)
 		{
 			_value = _value.split(',');
@@ -593,7 +595,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			}
 			// Don't do it again if already done
 			if(this.input.hasClass("chzn-done")) return;
-			
+
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
 			this.input.chosen({
@@ -738,8 +740,8 @@ jQuery.extend(et2_selectbox,
 {
 	/**
 	 * Find the select options for a widget, out of the many places they could be.
-	 * @param {et2_widget} Widget to check for.  Should be some sort of select widget.
-	 * @param {object} Select options in attributes array
+	 * @param {et2_widget} widget to check for.  Should be some sort of select widget.
+	 * @param {object} attr_options Select options in attributes array
 	 * @return {object} Select options, or empty object
 	 */
 	find_select_options: function(widget, attr_options)
