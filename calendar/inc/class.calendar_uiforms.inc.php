@@ -1286,8 +1286,8 @@ class calendar_uiforms extends calendar_ui
 		$sel_options += array(
 			'new_alarm[options]' => $alarm_options + array(0 => lang('Custom'))
 		);
-		// set default preference value
-		$event['new_alarm']['options'] = $default_alarm;
+		// set default preference value. If there's no preference chooses 5 min
+		$event['new_alarm']['options'] = $default_alarm ? $default_alarm: 300;
 		
 		$etpl = new etemplate_new();
 		if (!$etpl->read($preserv['template']))
