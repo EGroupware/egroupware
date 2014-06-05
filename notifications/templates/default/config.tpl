@@ -10,6 +10,7 @@
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
+   <!-- currently not used, might be reactived later
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Mail_backend}</b></td>
    </tr>
@@ -21,9 +22,9 @@
       <option value="True"{selected_dontUseUserDefinedProfiles_True}>{lang_Emailadmin_Profile_only_(Do_not_use_User_defined_(active)_Mail_Profiles_for_Notification)}</option>
      </select>
     </td>
-   </tr>
+   </tr -->
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_eGroupWare-Popup_backend}</b></td>
+    <td colspan="2">&nbsp;<b>{lang_EGroupware-Popup_backend}</b></td>
    </tr>
    <tr class="row_on">
     <td>{lang_Poll_interval}</td>

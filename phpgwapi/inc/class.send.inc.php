@@ -13,7 +13,7 @@
 /**
  * New eGW send-class. It implements the old interface (msg-method) on top of PHPMailer.
  *
- * The configuration is read from Admin >> Site configuration and it does NOT depend on one of the email-apps anymore.
+ * The configuration is read via emailadmin_account::get_default_acc_id(true);	// true=SMTP
  */
 class send extends egw_mailer
 {
@@ -42,7 +42,7 @@ class send extends egw_mailer
 		$this->IsSmtp();
 
 		// smtp settings from default account of current user
-		$account = emailadmin_account::read(emailadmin_account::get_default_acc_id());
+		$account = emailadmin_account::read(emailadmin_account::get_default_acc_id(true));	// true=SMTP
 		$this->Host = $account->acc_smtp_host;
 		$this->Port = $account->acc_smtp_port;
 		switch($account->acc_smtp_ssl)
@@ -56,7 +56,7 @@ class send extends egw_mailer
 			case emailadmin_account::SSL_STARTTLS:	// PHPMailer uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
 				$this->Host = 'tls://'.$this->Host;
 		}
-		$this->smtpAuth = !empty($account->acc_smtp_username);
+		$this->SMTPAuth = !empty($account->acc_smtp_username);
 		$this->Username = $account->acc_smtp_username;
 		$this->Password = $account->acc_smtp_password;
 		$this->defaultDomain = $account->acc_domain;
