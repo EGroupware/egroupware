@@ -70,6 +70,12 @@
 								str += '$';
 								break;
 							}
+							// check for regular expression "/  $/"
+							if (_p.expr.charAt(_p.pos) == _p.expr.charAt(0))
+							{
+								str += '$';
+								break;
+							}
 							if (str)
 							{
 								_tree.push(str); str = "";

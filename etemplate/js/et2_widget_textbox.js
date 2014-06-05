@@ -62,10 +62,16 @@ var et2_textbox = et2_inputWidget.extend(
 			"type": "integer",
 			"default": -1,
 			"description": "Multiline field width - better to use CSS"
+		},
+		"validator": {
+			"name": "Validator",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "Perl regular expression eg. '/^[0-9][a-f]{4}$/i'"
 		}
 	},
 
-	legacyOptions: ["size", "maxlength"],
+	legacyOptions: ["size", "maxlength", "validator"],
 
 	/**
 	 * Constructor
@@ -126,6 +132,37 @@ var et2_textbox = et2_inputWidget.extend(
 		return this._super.apply(this, arguments);
 	},
 
+	/**
+	 * Clientside validation using regular expression in "validator" attribute
+	 *
+	 * @param {array} _messages
+	 */
+	isValid: function(_messages)
+	{
+		var ok = true;
+		// Check input is valid
+		if(this.options && this.options.validator && !this.options.readonly)
+		{
+			if (typeof this.options.validator == 'string')
+			{
+				var parts = this.options.validator.split('/');
+				var flags = parts.pop();
+				if (parts.length < 2 || parts[0] !== '')
+				{
+					_messages.push(this.egw().lang("'%1' has an invalid format !!!", this.options.validator));
+					return false;	// show invalid expression
+				}
+				parts.shift();
+				this.options.validator = new RegExp(parts.join('/'), flags);
+			}
+			var value = this.getValue();
+			if (!(ok = this.options.validator.test(value)))
+			{
+				_messages.push(this.egw().lang("'%1' has an invalid format !!!", value));
+			}
+		}
+		return this._super.apply(this, arguments) && ok;
+	},
 
 	/**
 	 * Set input widget size

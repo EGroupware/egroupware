@@ -97,7 +97,7 @@ class etemplate_widget_textbox extends etemplate_widget
 	 * - needed: value must NOT be empty
 	 * - min, max: int and float widget only
 	 * - maxlength: maximum length of string (longer strings get truncated to allowed size)
-	 * - preg: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
+	 * - validator: perl regular expression incl. delimiters (set by default for int, float and colorpicker)
 	 * - int and float get casted to their type
 	 *
 	 * @param string $cname current namespace
@@ -112,18 +112,19 @@ class etemplate_widget_textbox extends etemplate_widget
 
 		if (!$this->is_readonly($cname, $form_name))
 		{
-			if (!isset($this->attrs['preg']))
+			if (!isset($this->attrs['validator']))
 			{
 				switch($this->type)
 				{
+					case 'int':
 					case 'integer':
-						$this->attrs['preg'] = '/^-?[0-9]*$/';
+						$this->attrs['validator'] = '/^-?[0-9]*$/';
 						break;
 					case 'float':
-						$this->attrs['preg'] = '/^-?[0-9]*[,.]?[0-9]*$/';
+						$this->attrs['validator'] = '/^-?[0-9]*[,.]?[0-9]*$/';
 						break;
 					case 'colorpicker':
-						$this->attrs['preg'] = '/^(#[0-9a-f]{6}|)$/i';
+						$this->attrs['validator'] = '/^(#[0-9a-f]{6}|)$/i';
 						break;
 				}
 			}
@@ -150,7 +151,7 @@ class etemplate_widget_textbox extends etemplate_widget
 			{
 				$value = mb_substr($value,0,(int) $this->attrs['maxlength']);
 			}
-			if ($this->attrs['preg'] && !preg_match($this->attrs['preg'],$value))
+			if ($this->attrs['validator'] && !preg_match($this->attrs['validator'],$value))
 			{
 				switch($this->type)
 				{
@@ -161,7 +162,7 @@ class etemplate_widget_textbox extends etemplate_widget
 						self::set_validation_error($form_name,lang("'%1' is not a valid floatingpoint number !!!",$value),'');
 						break;
 					default:
-						self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value)/*." !preg_match('$this->attrs[preg]', '$value')"*/,'');
+						self::set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value)/*." !preg_match('$this->attrs[validator]', '$value')"*/,'');
 						break;
 				}
 			}
