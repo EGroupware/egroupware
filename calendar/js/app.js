@@ -1207,20 +1207,18 @@ app.classes.calendar = AppJS.extend(
 	 */
 	set_alarmOptions_WD: function (_egw,_widget)
 	{
-		var alarm_options = this.et2.getWidgetById('new_alarm[options]'); 
-		var sel_options = alarm_options.options.select_options;
-		var def_wd = this.egw.preference('default-alarm-wholeday', 'calendar');
-		var def_alarm = this.egw.preference('default-alarm', 'calendar');
-		var self = this;
-		// Search a needle inside an object. Return true if there's one, otherwise false 
-		var _is_in_options = function (_needle, _object)
-		{
-			for(var key in _object)
-			{
-				if (_needle == _object[key].value) return true; 
-			}
-			return false;
-		}
+		var alarm = this.et2.getWidgetById('alarm'); 
+		var def_alarm_wd = this.egw.preference('default-alarm-wholeday', 'calendar')?
+							this.egw.preference('default-alarm-wholeday', 'calendar')
+							:parseInt(this.egw.preference('custom-default-alarm-wholeday', 'calendar')) * 60;
+		var def_alarm = this.egw.preference('default-alarm', 'calendar') != 0 ?
+						this.egw.preference('default-alarm', 'calendar')
+						:parseInt(this.egw.preference('custom-default-alarm', 'calendar')) * 60;
+		var content = this.et2.getArrayMgr('content').data;
+		var start = this.et2.getWidgetById('start');
+		var self= this;
+		var time = alarm.cells[1][0].widget;
+		var event = alarm.cells[1][1].widget;
 		// Convert a seconds of time to a translated label
 		var _secs_to_label = function (_secs)
 		{
@@ -1233,27 +1231,18 @@ app.classes.calendar = AppJS.extend(
 			{
 				label = self.egw.lang('%1 hours', _secs/3600);
 			}
-			else
-			{
-				label = self.egw.lang('%1 days', _secs/86400);
-			}
 			return label;
 		}
-		
-		if (_widget.get_value() == "true")
+		if (_widget.get_value() == "true" && typeof content['alarm'][1]['default'] != 'undefined')
 		{
-			if (!_is_in_options(def_wd, sel_options))
-			{
-				sel_options [sel_options.length] = {value:def_wd,label:_secs_to_label(def_wd)};
-				alarm_options.set_select_options(sel_options);
-			}
-			alarm_options.set_value(def_wd);
+			start.date.setHours(0);
+			time.set_value(start.get_value() - def_alarm_wd);
+			event.set_value(_secs_to_label(def_alarm_wd));
 		}
 		else
 		{
-			sel_options = this.et2.getArrayMgr('sel_options').data.new_alarm.options;
-			alarm_options.set_select_options(sel_options);
-			alarm_options.set_value(def_alarm);
+			time.set_value(start.get_value() - def_alarm);
+			event.set_value(_secs_to_label(def_alarm));
 		}
-	}
+	}	
 });

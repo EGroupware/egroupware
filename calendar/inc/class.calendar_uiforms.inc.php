@@ -149,6 +149,17 @@ class calendar_uiforms extends calendar_ui
 		{
 			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
 		}
+		$def_alarm = $this->cal_prefs['default-alarm'] != -1?$this->cal_prefs['default-alarm']:$this->cal_prefs['custom-default-alarm'] * 60;
+		
+		$offset = $def_alarm != 0 ? $def_alarm : 600;
+		$prefAlarm =  array(
+			'default' => 1,
+			'offset' => $offset ,
+			'time'   => $start - $offset,
+			'all'    => false,
+			'owner'  => $owner,
+			'id'	=> 1,
+		);
 		return array(
 			'participant_types' => $participant_types,
 			'participants' => $participants,
@@ -158,11 +169,11 @@ class calendar_uiforms extends calendar_ui
 			'tzid'  => $this->bo->common_prefs['tz'],
 			'priority' => 2,	// normal
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,
-			'alarm' => array(),
+			'alarm' => array(1 => $prefAlarm),
 			'recur_exception' => array(),
 		);
 	}
-
+	
 	/**
 	 * Process the edited event and evtl. call edit to redisplay it
 	 *
@@ -237,6 +248,24 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['end'] = $content['start'] + $content['duration'];
 		}
+		// Set the default alarm for a new whole day event
+		if ($content['whole_day'] && $content['alarm'][1]['default'])
+		{
+			
+			$default_alarm = $this->cal_prefs['default-alarm-wholeday'] != -1?$this->cal_prefs['default-alarm-wholeday']:
+							$this->cal_prefs['custom-default-alarm-wholeday'] * 60;
+			$offset = $default_alarm != 0 ? $default_alarm : 600;
+			$prefAlarm =  array(
+					'default' => 1,
+					'offset' => $offset ,
+					'time'   => $this->bo->date2ts($content['start']) - $offset,
+					'all'    => false,
+					'owner'  => $owner,
+					'id'	=> 1,
+			);
+			$content['alarm'][1] = $prefAlarm;
+		}
+		
 		$event = $content;
 		unset($event['new_alarm']);
 		unset($event['alarm']['delete_alarm']);
@@ -1132,6 +1161,7 @@ class calendar_uiforms extends calendar_ui
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
+			'new_alarm[options]' => $this->bo->alarms + array(0 => lang('Custom')),
 			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
@@ -1274,27 +1304,6 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
-		// Set alarm sel_options
-		$alarm_options = array();
-		$default_alarm = $this->cal_prefs['default-alarm'] != -1?$this->cal_prefs['default-alarm']:$this->cal_prefs['custom-default-alarm'] * 60;
-		if (!empty($event['whole_day']) && $event['whole_day'])
-		{
-			$default_alarm = $this->cal_prefs['default-alarm-wholeday'] != -1?$this->cal_prefs['default-alarm-wholeday']:
-							$this->cal_prefs['custom-default-alarm-wholeday'] * 60;
-		}
-		if (!array_key_exists($default_alarm, $this->bo->alarms) && $default_alarm > 0)
-		{
-			$alarm_options = $this->bo->alarms + array($default_alarm => calendar_bo::secs2label ($default_alarm));
-		}
-		else
-		{
-			$alarm_options = $this->bo->alarms;
-		}
-		$sel_options += array(
-			'new_alarm[options]' => $alarm_options + array(0 => lang('Custom'))
-		);
-		// set default preference value. If there's no preference chooses 10 min
-		$event['new_alarm']['options'] = $default_alarm ? $default_alarm: 600;
 
 		$etpl = new etemplate_new();
 		if (!$etpl->read($preserv['template']))
