@@ -175,6 +175,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			return $this->edit(null,null,strip_tags($_GET['msg']));
 		}
+		// clear notification errors
+		notifications::errors(true);
 		$messages = null;
 		$msg_permission_denied_added = false;
 		list($button) = @each($content['button']);
@@ -937,6 +939,11 @@ class calendar_uiforms extends calendar_ui
 			}
 			break;
 		}
+		// add notification-errors, if we have some
+		if (($notification_errors = notifications::errors(true)))
+		{
+			$msg .= ($msg ? "\n" : '').implode("\n", $notification_errors);
+		}
 		if (in_array($button,array('cancel','save','delete','delete_exceptions','delete_keep_exceptions')) && $noerror)
 		{
 			if ($content['lock_token'])	// remove an existing lock
@@ -1288,7 +1295,7 @@ class calendar_uiforms extends calendar_ui
 		);
 		// set default preference value. If there's no preference chooses 10 min
 		$event['new_alarm']['options'] = $default_alarm ? $default_alarm: 600;
-		
+
 		$etpl = new etemplate_new();
 		if (!$etpl->read($preserv['template']))
 		{
@@ -1627,9 +1634,9 @@ class calendar_uiforms extends calendar_ui
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
 	 * @param array $event=null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
 	 * 		are called by new mail-app; and we intend to use the stuff passed on by session
-	 * @param string $msg=''
+	 * @param string $msg=null
 	 */
-	function meeting(array $event=null, $msg='')
+	function meeting(array $event=null, $msg=null)
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$readonlys['button[apply]'] = true;
@@ -1742,6 +1749,9 @@ class calendar_uiforms extends calendar_ui
 			list($button) = each($event['button']);
 			unset($event['button']);
 
+			// clear notification errors
+			notifications::errors(true);
+
 			switch($button)
 			{
 				case 'reject':
@@ -1792,6 +1802,8 @@ class calendar_uiforms extends calendar_ui
 					break;
 
 			}
+			// add notification-errors, if we have some
+			$msg = array_merge((array)$msg, notifications::errors(true));
 		}
 		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];

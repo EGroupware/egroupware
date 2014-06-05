@@ -168,11 +168,31 @@ final class notifications {
 	private $config;
 
 	/**
+	 * Error-message cat be read and reset via notifications::errors($reset=false)
+	 *
+	 * @var array
+	 */
+	private static $errors = array();
+
+	/**
 	 * constructor of notifications
 	 *
 	 */
 	public function __construct() {
 		$this->config = (object) config::read(self::_appname);
+	}
+
+	/**
+	 * Return notification errors
+	 *
+	 * @param boolean $reset=false true: reset all errors
+	 * @return array
+	 */
+	public static function errors($reset=false)
+	{
+		$ret = self::$errors;
+		if ($reset) self::$errors = array();
+		return $ret;
 	}
 
 	/**
@@ -522,15 +542,19 @@ final class notifications {
 					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain
 				}
 				// check if the user has been notified at all
-				/*if(!$user_notified) {
-					error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
+				if(!$user_notified) {
+					/*error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
 					foreach($backend_errors as $id=>$backend_error) {
 						error_log($backend_error);
-					}
-				}*/
+					}*/
+					$error = implode(', ', $backend_errors);
+					if (stripos($error, (string)$receiver->handle) !== false) $error = $receiver->handle.': '.$error;
+					self::$errors[] = $error;
+				}
 			}
 			catch (Exception $exception_user) {
 				error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
+				self::$errors[] = $receiver->handle.': '.$exception_user->getMessage();
 			}
 		}
 		return true;
