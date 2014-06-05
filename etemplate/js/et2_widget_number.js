@@ -62,10 +62,38 @@ var et2_number = et2_textbox.extend(
 		this._super.apply(this, arguments);
 	},
 
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		if (typeof _attrs.validator == 'undefined')
+		{
+			_attrs.validator = _attrs.type == 'float' ? '/^-?[0-9]*[,.]?[0-9]*$/' : '/^-?[0-9]*$/';
+		}
+	},
+
+	/**
+	 * Clientside validation using regular expression in "validator" attribute
+	 *
+	 * @param {array} _messages
+	 */
+	isValid: function(_messages)
+	{
+		var ok = true;
+		// if we have a html5 validation error, show it, as this.input.val() will be empty!
+		if (this.input && this.input[0] && this.input[0].validationMessage)
+		{
+			_messages.push(this.input[0].validationMessage);
+			ok = false;
+		}
+		return this._super.apply(this, arguments) && ok;
+	},
+
 	createInputWidget: function() {
 		this.input = $j(document.createElement("input"));
 		this.input.attr("type", "number");
 		this.input.addClass("et2_textbox");
+		// bind invalid event to change, to trigger our validation
+		this.input.on('invalid', jQuery.proxy(this.change, this));
 
 		this.setDOMNode(this.input[0]);
 	},
