@@ -393,6 +393,9 @@ class asyncservice
 		{
 			return False;	// cant obtain semaphore
 		}
+		// mark enviroment as async-service, check with isset()!
+		$GLOBALS['egw_info']['flags']['async-service'] = $run_by;
+
 		if (($jobs = $this->read()))
 		{
 			foreach($jobs as $id => $job)
@@ -473,6 +476,8 @@ class asyncservice
 	 */
 	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
 	{
+		if (!is_a($this->db, 'egw_db')) return false;
+
 		if ($id === '%')
 		{
 			$where = "async_id != '##last-check-run##'";
@@ -510,10 +515,12 @@ class asyncservice
 	 * @param array $job db-row as array
 	 * @param boolean $exits if True, we do an update, else we check if update or insert necesary
 	 * @param array $where additional where statemetn to update only if a certain condition is met, used for the semaphore
-	 * @return int affected rows, cat be 0 if an additional where statement is given
+	 * @return int affected rows, can be 0 if an additional where statement is given
 	 */
 	function write($job,$exists = False,$where=array())
 	{
+		if (!is_a($this->db, 'egw_db')) return 0;
+
 		if (isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
 		$data = array(
 			'async_next'      => $job['next'],
