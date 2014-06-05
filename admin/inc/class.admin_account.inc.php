@@ -166,17 +166,21 @@ class admin_account
 
 		egw_json_response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');
 
+		$addressbook_bo = new addressbook_bo();
+		if (!($content['id'] = accounts::id2name($cmd->account, 'person_id')) ||
+			!($contact = $addressbook_bo->read($content['id'])))
+		{
+			throw new egw_exception_assertion_failed("Can't find contact of just created account!");
+		}
 		// for a new account a new contact was created, need to merge that data with $content
 		if (!$content['account_id'])
 		{
 			$content['account_id'] = $cmd->account;
-			$addressbook_bo = new addressbook_bo();
-			if (!($content['id'] = accounts::id2name($cmd->account, 'person_id')) ||
-				!($contact = $addressbook_bo->read($content['id'])))
-			{
-				throw new egw_exception_assertion_failed("Can't find contact of just created account!");
-			}
 			$content = array_merge($contact, $content);
+		}
+		else	// for updated account, we need to refresh etag
+		{
+			$content['etag'] = $contact['etag'];
 		}
 	}
 
