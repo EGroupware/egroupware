@@ -103,7 +103,7 @@ class egw_mailer extends PHPMailer
 	{
 		$port = $this->Port;
 		$hosts = explode(';',$this->Host);
-		foreach ($hosts as $k => &$host)
+		foreach ($hosts as &$host)
 		{
 			$host = trim($host); // make sure there is no whitespace leading or trailling the host string
 			if (in_array($port,array(465,587)) && strpos($host,'://')===false)
@@ -130,6 +130,7 @@ class egw_mailer extends PHPMailer
 	 */
 	public function SmtpSend($header, $body)
 	{
+		$matches = null;
 		$mail_id = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'send_mail',
 			'subject' => $this->Subject,
@@ -138,7 +139,7 @@ class egw_mailer extends PHPMailer
 			'cc' => $this->addresses['Cc'],
 			'bcc' => $this->addresses['Bcc'],
 			'body_sha1' => sha1($body),
-			'message_id' => preg_match('/^Message-ID: (.*)$/m', $header,$matches) ? $matches[1] : null,
+			'message_id' => preg_match('/^Message-ID: (.*)$/m', $header, $matches) ? $matches[1] : null,
 		), array(), true);	// true = call all apps
 
 		$this->addresses = array();	// reset addresses for next mail
