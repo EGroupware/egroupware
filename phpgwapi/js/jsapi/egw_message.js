@@ -29,6 +29,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var error_reg_exp;
 	var on_click_remove_installed = false;
 	var a_href_reg = /<a href="([^"]+)">([^<]+)<\/a>/img;
+	var new_line_reg = /<\/?(p|br)\s*\/?>\n?/ig;
 
 	// Register an 'error' plugin, displaying using the message system
 	this.registerJSONPlugin(function(type, res, req) {
@@ -107,8 +108,8 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					});
 					on_click_remove_installed = true;
 				}
-				// replace br-tags with newlines
-				_msg = _msg.replace(/<br\s?\/?>\n?/i, "\n");
+				// replace p and br-tags with newlines
+				_msg = _msg.replace(new_line_reg, "\n");
 
 				var msg_div = jQuery(_wnd.document.createElement('div'))
 					.attr('id','egw_message')
