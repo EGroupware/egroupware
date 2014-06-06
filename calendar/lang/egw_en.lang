@@ -177,6 +177,7 @@ edit series	calendar	en	Edit series
 edit status or alarms for this particular day	calendar	en	Edit status or alarms for this particular day
 edit this event	calendar	en	Edit this event
 edit this series of recuring events	calendar	en	Edit this series of recurring events
+empty = no alarm	calendar	en	empty = no alarm
 empty for all	calendar	en	Empty for all
 end	calendar	en	End
 end date/time	calendar	en	End Date/Time

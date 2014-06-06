@@ -1164,11 +1164,11 @@ app.classes.calendar = AppJS.extend(
 		// Stop the normal bubbling if this is called on click
 		return false;
 	},
-	
+
 	/**
 	 * Enable/Disable custom Date-time for set Alarm
 	 *
-	 * @param {egw object} _egw 
+	 * @param {egw object} _egw
 	 * @param {widget object} _widget new_alarm[options] selectbox
 	 */
 	alarm_custom_date: function (_egw,_widget)
@@ -1177,8 +1177,8 @@ app.classes.calendar = AppJS.extend(
 		var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
 		var start = this.et2.getWidgetById('start');
 		var date = 0;
-		
-		if (alarm_date && alarm_options 
+
+		if (alarm_date && alarm_options
 					&& start)
 		{
 			if (alarm_options.get_value() != '0')
@@ -1197,23 +1197,18 @@ app.classes.calendar = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
-	 * Set alarm options based on WD/Regular event user preferences 
+	 * Set alarm options based on WD/Regular event user preferences
 	 * Gets fired by wholeday checkbox
-	 * 
-	 * @param {egw object} _egw 
+	 *
+	 * @param {egw object} _egw
 	 * @param {widget object} _widget whole_day checkbox
 	 */
 	set_alarmOptions_WD: function (_egw,_widget)
 	{
-		var alarm = this.et2.getWidgetById('alarm'); 
-		var def_alarm_wd = this.egw.preference('default-alarm-wholeday', 'calendar')?
-							this.egw.preference('default-alarm-wholeday', 'calendar')
-							:parseInt(this.egw.preference('custom-default-alarm-wholeday', 'calendar')) * 60;
-		var def_alarm = this.egw.preference('default-alarm', 'calendar') != 0 ?
-						this.egw.preference('default-alarm', 'calendar')
-						:parseInt(this.egw.preference('custom-default-alarm', 'calendar')) * 60;
+		var alarm = this.et2.getWidgetById('alarm');
+		if (!alarm) return;	// no default alarm
 		var content = this.et2.getArrayMgr('content').data;
 		var start = this.et2.getWidgetById('start');
 		var self= this;
@@ -1232,17 +1227,26 @@ app.classes.calendar = AppJS.extend(
 				label = self.egw.lang('%1 hours', _secs/3600);
 			}
 			return label;
-		}
-		if (_widget.get_value() == "true" && typeof content['alarm'][1]['default'] != 'undefined')
+		};
+		if (typeof content['alarm'][1]['default'] == 'undefined')
 		{
-			start.date.setHours(0);
-			time.set_value(start.get_value() - def_alarm_wd);
-			event.set_value(_secs_to_label(def_alarm_wd));
+			// user deleted alarm --> nothing to do
 		}
 		else
 		{
-			time.set_value(start.get_value() - def_alarm);
-			event.set_value(_secs_to_label(def_alarm));
+			var def_alarm = this.egw.preference(_widget.get_value() === "true" ?
+				'default-alarm-wholeday' : 'default-alarm', 'calendar');
+			if (!def_alarm && def_alarm !== 0)	// no alarm
+			{
+				jQuery('#calendar-edit_alarm > tbody :nth-child(1)').hide();
+			}
+			else
+			{
+				jQuery('#calendar-edit_alarm > tbody :nth-child(1)').show();
+				start.date.setHours(0);
+				time.set_value(start.get_value() - 60 * def_alarm);
+				event.set_value(_secs_to_label(60 * def_alarm));
+			}
 		}
-	}	
+	}
 });

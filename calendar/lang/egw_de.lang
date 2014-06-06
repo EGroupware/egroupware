@@ -177,6 +177,7 @@ edit series	calendar	de	Serie bearbeiten
 edit status or alarms for this particular day	calendar	de	Bearbeite Status oder Alarme für diesen speziellen Tag
 edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
+empty = no alarm	calendar	de	leer = kein Alarm
 empty for all	calendar	de	leer für alle
 end	calendar	de	Ende
 end date/time	calendar	de	Enddatum /-zeit

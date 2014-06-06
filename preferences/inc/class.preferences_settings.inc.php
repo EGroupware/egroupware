@@ -367,6 +367,14 @@ class preferences_settings
 				case 'color':
 					$setting['type'] = 'colorpicker';
 					break;
+				case 'date-duration':
+					if (!isset($setting['size'])) $setting['size'] = 'm,dhm,24,1';
+					$attrs = explode(',', $setting['size']);
+					foreach(array("data_format","display_format", "hours_per_day", "empty_not_0", "short_labels") as $n => $name)
+					{
+						if ((string)$attrs[$n] !== '') $tpl->setElementAttribute($tab.'['.$setting['name'].']', $name, $attrs[$n]);
+					}
+					break;
 			}
 			// move values/options to sel_options array
 			if (isset($setting['values']) && is_array($setting['values']))
@@ -414,7 +422,7 @@ class preferences_settings
 				'type' => $setting['type'],
 				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
 				'help' => lang($setting['help']),	// is html
-				'size' => $setting['size'],	// old eT
+				//'size' => $setting['size'],	// old eT
 				'default' => !empty($default) ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
 			);

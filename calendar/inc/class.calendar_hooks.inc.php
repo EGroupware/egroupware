@@ -431,44 +431,22 @@ class calendar_hooks
 				'default'=> 60,
 			),
 			'default-alarm' => array(
-				'type'   => 'select',
-				'label'  => 'Default alarm for regular events',
+				'type'   => 'date-duration',//'select',
+				'label'  => lang('Default alarm for regular events').' ('.lang('empty = no alarm').')',
 				'name'   => 'default-alarm',
-				'values' => isset($bo) ? array(0 => lang('None'), -1 => lang('Custom'))+$bo->alarms : array(),
 				'help'   => 'Alarm added automatic to new events before event start-time',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 0,
-				'onchange' => 'app.preferences.cal_def_alarm_onchange'
-			),
-			'custom-default-alarm' => array(
-				'type'   => 'date-duration',
-				'label'  => 'Enter custom default alarm time',
-				'name'   => 'custom-default-alarm',
-				'help'   => 'Alarm added automatic to new events before event start-time.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default' => 0,
+				'default' => '',
 			),
 			'default-alarm-wholeday' => array(
-				'type'   => 'select',
-				'label'  => 'Default alarm for whole-day events',
+				'type'   => 'date-duration',//'select',
+				'label'  => lang('Default alarm for whole-day events').' ('.lang('empty = no alarm').')',
 				'name'   => 'default-alarm-wholeday',
-				'values' => isset($bo) ? array(0 => lang('None'), -1 => lang('Custom'))+$bo->alarms : array(),
 				'help'   => lang('Alarm added automatic to new events before event start-time').' ('.lang('Midnight').')',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 0,
-				'onchange' => 'app.preferences.cal_def_alarm_onchange'
-			),
-			'custom-default-alarm-wholeday' => array(
-				'type'   => 'date-duration',
-				'label'  => 'Enter custom default alarm time for wholeday event',
-				'name'   => 'custom-default-alarm-wholeday',
-				'help'   => lang('Alarm added automatic to new events before event start-time').' ('.lang('Midnight').')',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default' => 0,
+				'default' => '',
 			),
 		);
 		if (isset($bo))	// add custom time-spans set by CalDAV clients, not in our prefs
@@ -479,16 +457,7 @@ class calendar_hooks
 				'preprocess' => true,
 				'type' => 'user',
 			);
-			self::verify_settings($data);
-			foreach(array('default-alarm', 'default-alarm-wholeday') as $name)
-			{
-				$value = $prefs[$name];
-				if ($value > 0 && !isset($bo->alarms[$value]))
-				{
-					$settings[$name]['values'][$value] = calendar_bo::secs2label($value);
-					ksort($settings[$name]['values']);
-				}
-			}
+			self::verify_settings_reference($data);
 		}
 		$settings += array(
 			'defaultresource_sel' => array(
@@ -768,75 +737,88 @@ class calendar_hooks
 	 */
 	public static function verify_settings(array $data)
 	{
+		self::verify_settings_reference($data);
+	}
+
+	/**
+	 * Verify settings hook called to generate errors about settings used here to store default alarms in CalDAV prefs
+	 *
+	 * @param array& $data
+	 *  array $data['prefs']
+	 *  string $data['type'] 'user', 'default' or 'forced'
+	 *  boolean $data['preprocess'] true data just shown to user, false: data stored by user
+	 */
+	public static function verify_settings_reference(array &$data)
+	{
 		//error_log(__METHOD__."(".array2string($data).")");
 		// caldav perfs are always user specific and cant by switched off
-		if ($data['type'] == 'user')
-		{
-			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
-			foreach(array(
-				'default-alarm' => 'default-alarm-vevent-datetime:/'.$account_lid.'/:urn:ietf:params:xml:ns:caldav',
-				'default-alarm-wholeday' => 'default-alarm-vevent-date:/'.$account_lid.'/:urn:ietf:params:xml:ns:caldav',
-			) as $name => $dav)
-			{
-				$pref =& $GLOBALS['egw_info']['user']['preferences']['groupdav'][$dav];
-				if (true) $pref = str_replace("\r", '', $pref);	// remove CR messing up multiline preg_match
-				$val = $data['prefs'][$name];
-				//error_log(__METHOD__."() groupdav[$dav]=$pref, calendar[$name]=$val");
+		if ($data['type'] != 'user') return;
 
-				if ($data['preprocess'])	// showing preferences
+		$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
+		foreach(array(
+			'default-alarm' => 'default-alarm-vevent-datetime:/'.$account_lid.'/:urn:ietf:params:xml:ns:caldav',
+			'default-alarm-wholeday' => 'default-alarm-vevent-date:/'.$account_lid.'/:urn:ietf:params:xml:ns:caldav',
+		) as $name => $dav)
+		{
+			$pref =& $GLOBALS['egw_info']['user']['preferences']['groupdav'][$dav];
+			if (true) $pref = str_replace("\r", '', $pref);	// remove CR messing up multiline preg_match
+			$val =& $data['prefs'][$name];
+
+			//error_log(__METHOD__."() groupdav[$dav]=$pref, calendar[$name]=$val");
+
+			if ($data['preprocess'])	// showing preferences
+			{
+				if (!isset($val))	// no calendar pref --> read value from caldav
 				{
-					if ((string)$data['prefs'][$name] === '')	// no calendar pref --> read value from caldav
+					$matches = null;
+					if (preg_match('/^ACTION:NONE$/i', $pref))
 					{
-						$matches = null;
-						if (preg_match('/^ACTION:NONE$/i', $pref))
-						{
-							$data['prefs'][$name] = '0';
-						}
-						elseif (preg_match('/^TRIGGER:-PT(\d+(M|H|D))$/mi', $pref, $matches))
-						{
-							static $factors = array(
-								'M' => 60,
-								'H' => 3600,
-								'D' => 86400,
-							);
-							$factor = $factors[strtoupper($matches[2])];
-							$data['prefs'][$name] = $factor*(int)$matches[1];
-						}
-						else
-						{
-							$data['prefs'][$name] = '0';
-						}
-						$GLOBALS['egw']->preferences->add('calendar', $name, $data['prefs'][$name], 'user');
-						//error_log(__METHOD__."() setting $name={$data['prefs'][$name]} from $dav='$pref'");
+						$val = '';
 					}
-				}
-				else	// storing preferences
-				{
-					if (empty($pref) || !preg_match('/^TRIGGER:/m', $pref))
+					elseif (preg_match('/^TRIGGER:-PT(\d+(M|H|D))$/mi', $pref, $matches))
 					{
-						$pref = 'BEGIN:VALARM
+						static $factors = array(
+							'M' => 1,
+							'H' => 60,
+							'D' => 1440,
+						);
+						$factor = $factors[strtoupper($matches[2])];
+						$val = $factor*(int)$matches[1];
+					}
+					else
+					{
+						$val = '';
+					}
+					$GLOBALS['egw']->preferences->add('calendar', $name, $val, 'user');
+					//error_log(__METHOD__."() setting $name={$val} from $dav='$pref'");
+				}
+			}
+			else	// storing preferences
+			{
+				if (empty($pref) || !preg_match('/^TRIGGER:/m', $pref))
+				{
+					$pref = 'BEGIN:VALARM
 TRIGGER:-PT1H
 ATTACH;VALUE=URI:Basso
 ACTION:AUDIO
 END:VALARM';
-					}
-					if (!$val)
-					{
-						$pref = preg_replace('/^ACTION:.*$/m', 'ACTION:NONE', $pref);
-					}
-					elseif ($val < 3600)
-					{
-						$pref = preg_replace('/^TRIGGER:.*$/m', 'TRIGGER:-PT'.number_format($val/60, 0).'M', $pref);
-					}
-					else
-					{
-						$pref = preg_replace('/^TRIGGER:.*$/m', 'TRIGGER:-PT'.number_format($val/3600, 0).'H', $pref);
-					}
-					$GLOBALS['egw']->preferences->add('groupdav', $dav, $pref, 'user');
-					//error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
 				}
+				$trigger = $val < 0 ? 'TRIGGER:PT' : 'TRIGGER:-PT';
+				if ((string)$val === '')
+				{
+					$pref = preg_replace('/^ACTION:.*$/m', 'ACTION:NONE', $pref);
+				}
+				elseif (abs($val) < 60)
+				{
+					$pref = preg_replace('/^TRIGGER:.*$/m', $trigger.number_format(abs($val), 0).'M', $pref);
+				}
+				else
+				{
+					$pref = preg_replace('/^TRIGGER:.*$/m', $trigger.number_format(abs($val)/60, 0).'H', $pref);
+				}
+				$GLOBALS['egw']->preferences->add('groupdav', $dav, $pref, 'user');
+				error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
 			}
-			$GLOBALS['egw']->preferences->save_repository();
 		}
 	}
 

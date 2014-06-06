@@ -149,17 +149,21 @@ class calendar_uiforms extends calendar_ui
 		{
 			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
 		}
-		$def_alarm = $this->cal_prefs['default-alarm'] != -1?$this->cal_prefs['default-alarm']:$this->cal_prefs['custom-default-alarm'] * 60;
-		
-		$offset = $def_alarm != 0 ? $def_alarm : 600;
-		$prefAlarm =  array(
-			'default' => 1,
-			'offset' => $offset ,
-			'time'   => $start - $offset,
-			'all'    => false,
-			'owner'  => $owner,
-			'id'	=> 1,
-		);
+		$alarms = array();
+		// if default alarm set in prefs --> add it
+		// we assume here that user does NOT have a whole-day but no regular default-alarm, no whole-day!
+		if ((string)$this->cal_prefs['default-alarm'] !== '')
+		{
+			$offset = 60 * $this->cal_prefs['default-alarm'];
+			$alarms[1] =  array(
+				'default' => 1,
+				'offset' => $offset ,
+				'time'   => $start - $offset,
+				'all'    => false,
+				'owner'  => $owner,
+				'id'	=> 1,
+			);
+		}
 		return array(
 			'participant_types' => $participant_types,
 			'participants' => $participants,
@@ -169,11 +173,11 @@ class calendar_uiforms extends calendar_ui
 			'tzid'  => $this->bo->common_prefs['tz'],
 			'priority' => 2,	// normal
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,
-			'alarm' => array(1 => $prefAlarm),
+			'alarm' => $alarms,
 			'recur_exception' => array(),
 		);
 	}
-	
+
 	/**
 	 * Process the edited event and evtl. call edit to redisplay it
 	 *
@@ -248,24 +252,21 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['end'] = $content['start'] + $content['duration'];
 		}
-		// Set the default alarm for a new whole day event
-		if ($content['whole_day'] && $content['alarm'][1]['default'])
+		// fix default alarm for a new (whole day) event, to be according to default-alarm(-wholeday) pref
+		if ($content['alarm'][1]['default'])
 		{
-			
-			$default_alarm = $this->cal_prefs['default-alarm-wholeday'] != -1?$this->cal_prefs['default-alarm-wholeday']:
-							$this->cal_prefs['custom-default-alarm-wholeday'] * 60;
-			$offset = $default_alarm != 0 ? $default_alarm : 600;
-			$prefAlarm =  array(
-					'default' => 1,
-					'offset' => $offset ,
-					'time'   => $this->bo->date2ts($content['start']) - $offset,
-					'all'    => false,
-					'owner'  => $owner,
-					'id'	=> 1,
-			);
-			$content['alarm'][1] = $prefAlarm;
+			$def_alarm = $this->cal_prefs['default-alarm'.($content['whole_day'] ? '-wholeday' : '')];
+			if ((string)$def_alarm === '')
+			{
+				unset($content['alarm'][1]);	// '' = no alarm on whole day --> delete it
+			}
+			else
+			{
+				$content['alarm'][1]['offset'] = $offset = 60 * $def_alarm;
+				$content['start'][1]['offset'] = $this->bo->date2ts($content['start']) - $offset;
+			}
 		}
-		
+
 		$event = $content;
 		unset($event['new_alarm']);
 		unset($event['alarm']['delete_alarm']);
