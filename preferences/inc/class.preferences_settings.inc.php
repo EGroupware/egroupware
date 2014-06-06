@@ -111,6 +111,8 @@ class preferences_settings
 								}
 							}
 						}
+						// update client-side preferences in response
+						egw_framework::ajax_get_preference($appname);
 				}
 				if (in_array($button, array('save','cancel')))
 				{
