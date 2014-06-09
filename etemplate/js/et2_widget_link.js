@@ -512,14 +512,14 @@ var et2_link_entry = et2_inputWidget.extend(
 		},
 		"query": {
 			"name": "Query callback",
-			"type": "any",
-			"default": false,
+			"type": "js",
+			"default": et2_no_init,
 			"description": "Callback before query to server.  Must return true, or false to abort query."
 		},
 		"select": {
 			"name": "Select callback",
-			"type": "any",
-			"default": false,
+			"type": "js",
+			"default": et2_no_init,
 			"description": "Callback when user selects an option.  Must return true, or false to abort normal action."
 		}
 	},
@@ -854,6 +854,26 @@ var et2_link_entry = et2_inputWidget.extend(
 		} else {
 			this.search.removeAttr("placeholder");
 		}
+	},
+
+	/**
+	 * Set the query callback
+	 *
+	 * @param {function} query
+	 */
+	set_query: function(f)
+	{
+		this.options.query = f;
+	},
+
+	/**
+	 * Set the select callback
+	 *
+	 * @param {function} query
+	 */
+	set_select: function(f)
+	{
+		this.options.select = f;
 	},
 
 	/**
