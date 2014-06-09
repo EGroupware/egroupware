@@ -52,7 +52,7 @@ function et2_evalBool(_val)
 {
 	if (typeof _val == "string")
 	{
-		if (_val == "false")
+		if (_val == "false" || _val == "0")
 		{
 			return false;
 		}
