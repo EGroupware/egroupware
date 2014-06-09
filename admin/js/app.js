@@ -433,17 +433,25 @@ app.classes.admin = AppJS.extend(
 			}
 		}
 		
-		// Make sure selected values are there
+		// Make sure selected values are there, account might not be in a default group
+		// so not in cache
 		if(content.acl_account)
 		{
-			sel_options.acl_account = jQuery.extend({},sel_options.acl_account);
-			this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account[content.acl_account] = title;});
-		}
-		if(content.acl_account != this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id'))
-		{
-			var account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
-			sel_options.acl_account[account] = 'loading';
-			this.egw.link_title('home-accounts', account, function(title) {sel_options.acl_account[account] = title;});
+			var accounts = this.egw.accounts('both');
+			var there = false;
+			for(var i = 0; i < accounts.length; i++)
+			{
+				if(accounts[i].value == content.acl_account)
+				{
+					there = true;
+					break;
+				}
+			}
+			if(!there)
+			{
+				sel_options.acl_account = new Array().concat(sel_options.acl_account);
+				this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account.push({value: content.acl_account, label: title});});
+			}
 		}
 		if(content.acl_location)
 		{	 
