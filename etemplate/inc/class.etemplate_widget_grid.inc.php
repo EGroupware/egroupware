@@ -68,12 +68,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 		$expand =& $params[1];
 		$old_cname = $params[0];
 		$old_expand = $params[1];
-		if ($this->id) $cname = self::form_name($cname, $this->id, $expand);
-		if ($expand['cname'] !== $cname && $cname)
-		{
-			$expand['cont'] =& self::get_array(self::$request->content, $cname);
-			$expand['cname'] = $cname;
-		}
+
 		// as a grid can contain other grid's as direct child, we have to backup and initialise $columns_disabled
 		if ($this->type == 'grid')
 		{
@@ -88,6 +83,14 @@ class etemplate_widget_grid extends etemplate_widget_box
 			$params[1] = $old_expand;
 			return false;	// return
 		}
+		
+		if ($this->id) $cname = self::form_name($cname, $this->id, $expand);
+		if ($expand['cname'] !== $cname && $cname)
+		{
+			$expand['cont'] =& self::get_array(self::$request->content, $cname);
+			$expand['cname'] = $cname;
+		}
+
 		if (method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
