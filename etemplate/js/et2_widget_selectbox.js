@@ -393,7 +393,7 @@ var et2_selectbox = et2_inputWidget.extend(
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 
-		this.set_tags(this.options.tags);
+		this.set_tags(this.options.tags, this.options.width);
 
 		return true;
 	},
