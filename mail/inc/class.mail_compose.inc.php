@@ -2143,8 +2143,17 @@ class mail_compose
 			error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_identity));
 		}
 		$_mailObject->Sender  = (!empty($_identity['ident_email'])? $_identity['ident_email'] : $activeMailProfile['ident_email']);
-		$_mailObject->From 	= $_identity['ident_email'];
-		$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
+		if ($_signature && !empty($_signature['ident_email']) && $_identity['ident_email']!=$_signature['ident_email'])
+		{
+			error_log(__METHOD__.__LINE__.' Faking From for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_signature));
+			$_mailObject->From 	= $_signature['ident_email'];
+			$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_signature,false));
+		}
+		else
+		{
+			$_mailObject->From 	= $_identity['ident_email'];
+			$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
+		}
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
 		$_mailObject->AddCustomHeader('X-Mailer: EGroupware-Mail');
