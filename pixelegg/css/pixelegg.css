@@ -242,6 +242,30 @@
     background-color: #ffc200;
     border-color: #bf9d30;
   }
+  .et2_gantt .gantt_task_link .gantt_line_wrapper div {
+    background-color: green;
+  }
+  .et2_gantt .gantt_task_link .gantt_link_arrow_left {
+    border-right-color: green;
+  }
+  .et2_gantt .gantt_task_link .gantt_link_arrow_right {
+    border-left-color: green;
+  }
+  .et2_gantt .gantt_task_link:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0 green;
+  }
+  .et2_gantt .gantt_task_link.invalid_constraint .gantt_line_wrapper div {
+    background-color: #ae1d00;
+  }
+  .et2_gantt .gantt_task_link.invalid_constraint .gantt_link_arrow_left {
+    border-right-color: #ae1d00;
+  }
+  .et2_gantt .gantt_task_link.invalid_constraint .gantt_link_arrow_right {
+    border-left-color: #ae1d00;
+  }
+  .et2_gantt .gantt_task_link.invalid_constraint:hover .gantt_line_wrapper div {
+    box-shadow: 0 0 5px 0 #ae1d00;
+  }
   /*Link to / Selector Widget*/
   .et2_link_to .et2_button_icon {
     /*.background_color_10_gray;*/

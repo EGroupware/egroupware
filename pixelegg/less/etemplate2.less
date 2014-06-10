@@ -201,6 +201,43 @@ div.et2_file input.et2_file_upload{
 		background-color: @egw_color_1;
 		border-color: @egw_color_1_b;
 	}
+	.gantt_task_link
+	{
+		.gantt_line_wrapper div
+		{
+			background-color: green;
+		}
+		.gantt_link_arrow_left
+		{
+			border-right-color:  green;
+		}
+		.gantt_link_arrow_right
+		{
+			border-left-color:  green;
+		}
+		&:hover .gantt_line_wrapper div {
+			box-shadow: 0 0 5px 0 green;
+		}
+	}
+	
+	.gantt_task_link.invalid_constraint {
+		.gantt_line_wrapper div
+		{
+			background-color: @color_error;
+		}
+		.gantt_link_arrow_left
+		{
+			border-right-color:  @color_error;
+		}
+		.gantt_link_arrow_right
+		{
+			border-left-color:  @color_error;
+		}
+		&:hover .gantt_line_wrapper div
+		{
+			box-shadow: 0 0 5px 0 @color_error;
+		}
+	}
 }
 
 /*Link to / Selector Widget*/
