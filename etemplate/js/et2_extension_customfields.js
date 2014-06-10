@@ -220,7 +220,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					row.attr('title', field.label);
 					row.attr('data-label', field.label);
 					row.attr('data-help', field.help);
-					this.detachedNodes.push(cf[0]);
+					this.detachedNodes.push(row[0]);
 				} else {
 					// Label in first column, widget in 2nd
 					cf.text(field.label + "");
@@ -310,7 +310,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		this.loadFields();
 
 		// Load the nodes as usual
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 	},
 
 	set_value: function(_value) {
@@ -536,9 +536,17 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
-		// This doesn't need to be implemented.
 		// Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
-        }
+
+		// Show the row if there's a value, hide it if there is no value
+		var cf_index = 0
+		for(var key in _values.fields)
+		{
+			// toggle() needs a boolean to do what we want
+			$j(_nodes[cf_index]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
+			cf_index++;
+		}
+	}
 });
 
 et2_register_widget(et2_customfields_list, ["customfields", "customfields-list"]);
