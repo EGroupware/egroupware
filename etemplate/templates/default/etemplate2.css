@@ -1427,6 +1427,28 @@ div.ui-toolbar-menulist{
 	background-size: 18px;
 }
 
+.et2_gantt .gantt_task_progress
+{
+	text-align: left;
+	color: white;
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
+}
+.et2_gantt .gantt_task_progress > span
+{
+	font-weight: bold;
+	margin: 0 1ex;
+}
+.et2_gantt .weekend
+{
+	background-color: #f4f7f4;
+}
+.et2_gantt .gantt_selected .weekend
+{
+	background-color: #f7eb91;
+}
+
 /**
  * Do not wrap content of a single widget incl. a label or children of a hbox.
  * Taking into eg. select-account widget rendered as ul and prefixed with a label
