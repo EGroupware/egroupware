@@ -736,4 +736,21 @@ $j(function() {
 		}
 		return scale.class;
 	}
+
+	// Include progress text in the bar
+	gantt.templates.progress_text = function(start, end, task) {
+		return "<span>"+Math.round(task.progress*100)+ "% </span>";
+	};
+
+	// Highlight weekends
+	gantt.templates.scale_cell_class = function(date){
+		if(date.getDay()==0||date.getDay()==6){
+			return "weekend";
+		}
+	};
+	gantt.templates.task_cell_class = function(item,date){
+		if(date.getDay()==0||date.getDay()==6){
+			return "weekend"
+		}
+	};
 });
