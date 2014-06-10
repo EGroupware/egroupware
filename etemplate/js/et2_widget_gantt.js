@@ -753,4 +753,33 @@ $j(function() {
 			return "weekend"
 		}
 	};
+
+	// Link styling
+	gantt.templates.link_class = function(link) {
+		var link_class = '';
+		var source = gantt.getTask(link.source);
+		var target = gantt.getTask(link.target);
+		var valid = true;
+
+		var types = gantt.config.links;
+		switch (link.type)
+		{
+			case types.finish_to_start:
+				valid = (source.end_date <= target.start_date)
+				break;
+			case types.start_to_start:
+				valid = (source.start_date <= target.start_date);
+				break;
+			case types.finish_to_finish:
+				valid = (source.end_date >= target.end_date);
+				break;
+			case types.start_to_finish:
+				valid = (source.start_date >= target.end_date)
+				break;
+		}
+
+		link_class += valid ? '' : 'invalid_constraint';
+
+		return link_class;
+	}
 });

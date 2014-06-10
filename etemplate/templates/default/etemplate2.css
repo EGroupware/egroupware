@@ -1448,6 +1448,18 @@ div.ui-toolbar-menulist{
 {
 	background-color: #f7eb91;
 }
+.et2_gantt .gantt_task_link.invalid_constraint .gantt_line_wrapper div
+{
+	background-color: red;
+}
+.et2_gantt .gantt_task_link.invalid_constraint .gantt_link_arrow_left
+{
+	border-right-color: red;
+}
+.et2_gantt .gantt_task_link.invalid_constraint .gantt_link_arrow_right
+{
+	border-left-color: red;
+}
 
 /**
  * Do not wrap content of a single widget incl. a label or children of a hbox.
