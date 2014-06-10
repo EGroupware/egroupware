@@ -220,6 +220,28 @@
     border-radius: 3px;
     background-color: #1aa200 !important;
   }
+  /* Gantt widget */
+  .et2_gantt .gantt_task_line {
+    background-color: #679fd2;
+  }
+  .et2_gantt .gantt_task_line .gantt_task_content {
+    color: #043a6b;
+  }
+  .et2_gantt .gantt_task_line .gantt_selected {
+    background-color: rgba(255, 194, 0, 0.01);
+  }
+  .et2_gantt .gantt_task_line .gantt_task_progress {
+    color: #043a6b;
+    background-color: #ffdd73;
+    /* outline progress in a complementary color */
+    border: 1px solid #bf9d30;
+    border-right: none;
+    margin: -1px;
+  }
+  .et2_gantt .gantt_task_line.gantt_milestone {
+    background-color: #ffc200;
+    border-color: #bf9d30;
+  }
   /*Link to / Selector Widget*/
   .et2_link_to .et2_button_icon {
     /*.background_color_10_gray;*/
