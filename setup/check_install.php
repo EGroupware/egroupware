@@ -362,7 +362,7 @@ function pear_check($package,$args)
 	global $passed_icon, $warning_icon;
 	static $pear_available = null;
 	static $channel_packages = array();
-
+	$channel = '';
 	if (strpos($package, '/') !== false)
 	{
 		list($channel, $package) = explode('/', $package);
