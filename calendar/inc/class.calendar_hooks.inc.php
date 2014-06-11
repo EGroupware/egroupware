@@ -771,7 +771,7 @@ class calendar_hooks
 				if (!isset($val))	// no calendar pref --> read value from caldav
 				{
 					$matches = null;
-					if (preg_match('/^ACTION:NONE$/i', $pref))
+					if (preg_match('/^ACTION:NONE$/mi', $pref))
 					{
 						$val = '';
 					}
@@ -817,7 +817,7 @@ END:VALARM';
 					$pref = preg_replace('/^TRIGGER:.*$/m', $trigger.number_format(abs($val)/60, 0).'H', $pref);
 				}
 				$GLOBALS['egw']->preferences->add('groupdav', $dav, $pref, 'user');
-				error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
+				//error_log(__METHOD__."() storing $name=$val --> $dav='$pref'");
 			}
 		}
 	}
