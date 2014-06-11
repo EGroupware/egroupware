@@ -100,7 +100,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			this.sidebox_target = $j("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
 		}
 		// Store array of sorted items
-		this.favSortedList = [];
+		this.favSortedList = ['blank'];
 		
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
@@ -226,32 +226,44 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			}
 			if (pref_name == 'fav_sort_pref')
 			{
-				 this.favSortedList = preferences[pref_name];
+				this.favSortedList = preferences[pref_name];
+				//Make sure sorted list is always an array, seems some old fav are not array
+				if (!jQuery.isArray(this.favSortedList)) this.favSortedList = this.favSortedList.split(',');
 			}
 		}
 		if(typeof stored_filters == "undefined" || !stored_filters)
 		{
 			stored_filters = {};
 		}
-		else if (this.favSortedList.length > 0)
+		else
 		{
-			var sortedListObj = {};
-
-			for (var i=0;i < this.favSortedList.length;i++)
+			for(var name in stored_filters)
 			{
-				if (typeof stored_filters[this.favSortedList[i]] != 'undefined')
+				if (this.favSortedList.indexOf(name) < 0)
 				{
-					sortedListObj[this.favSortedList[i]] = stored_filters[this.favSortedList[i]];
-				}
-				else
-				{
-					this.favSortedList.splice(i,1);
-					this.egw().set_preference (this.options.app,'fav_sort_pref',this.favSortedList);
+					this.favSortedList.push(name);
 				}
 			}
-			stored_filters = jQuery.extend(sortedListObj,stored_filters);
+			this.egw().set_preference (this.options.app,'fav_sort_pref',this.favSortedList);
+			if (this.favSortedList.length > 0)
+			{
+				var sortedListObj = {};
+
+				for (var i=0;i < this.favSortedList.length;i++)
+				{
+					if (typeof stored_filters[this.favSortedList[i]] != 'undefined')
+					{
+						sortedListObj[this.favSortedList[i]] = stored_filters[this.favSortedList[i]];
+					}
+					else
+					{
+						this.favSortedList.splice(i,1);
+						this.egw().set_preference (this.options.app,'fav_sort_pref',this.favSortedList);
+					}
+				}
+				stored_filters = jQuery.extend(sortedListObj,stored_filters);
+			}
 		}
-		
 		return stored_filters;
 	},
 
