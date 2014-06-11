@@ -219,6 +219,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					// Add field label & help as data attribute to row, so it can be stylied with CSS (title should be disabled)
 					row.attr('title', field.label);
 					row.attr('data-label', field.label);
+					row.attr('data-field', field_name);
 					row.attr('data-help', field.help);
 					this.detachedNodes.push(row[0]);
 				} else {
@@ -539,12 +540,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		// Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
 
 		// Show the row if there's a value, hide it if there is no value
-		var cf_index = 0
-		for(var key in _values.fields)
+		for(var i = 0; i < _nodes.length; i++)
 		{
 			// toggle() needs a boolean to do what we want
-			$j(_nodes[cf_index]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
-			cf_index++;
+			var key = _nodes[i].dataset.field;
+			$j(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
 		}
 	}
 });
