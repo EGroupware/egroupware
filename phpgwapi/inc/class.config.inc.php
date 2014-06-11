@@ -236,7 +236,7 @@ class config
 		foreach($cfs as $name => $field)
 		{
 			if (!$all_private_too && $field['private'] && !self::_check_private_cf($field['private']) ||
-				$only_type2 && $field['type2'] && !in_array($only_type2, explode(',', $field['type2'])))
+				$only_type2 && $field['type2'] && !in_array($only_type2, is_array($field['type2']) ? $field['type2'] : explode(',', $field['type2'])))
 			{
 				unset($cfs[$name]);
 			}
