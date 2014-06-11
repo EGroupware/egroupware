@@ -9,8 +9,8 @@
  * @version $Id$
  */
 
-@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
-@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 
 .redItalic, .message {
     color: red;
@@ -62,12 +62,12 @@
 
 .etemplate_tab row_on,
 td.etemplate_tab_active:focus {
-	.background-color-50-gray;
+	/*.background-color-50-gray;*/
 	border-width: 0 0 3px 0;
 	border-style: solid;
 	border-spacing: 0px;
-	border-color: @active_button_border_bottom;
-	.color-5-gray;
+	/*border-color: @active_button_border_bottom;*/
+	/*.color-5-gray;*/
 
 
 
@@ -75,7 +75,7 @@ td.etemplate_tab_active:focus {
 }
 // Inhalte der Tabs
 .nextmatch_header {
- 
+
 }
 .nextmatch_header select {
     width: 140px;
@@ -130,3 +130,32 @@ button.et2_button {
 	padding-left: 3px;
 	padding-right: 3px;
 }
+
+
+
+
+/**
+ * SEARCH / Suchen
+ */
+
+// Result
+
+table.app_header {
+            background-color: #FFF;
+            margin: 0.3em;
+            border: 19px solid white;
+
+
+            td.app_icon {
+
+                img {.dimension_width_height_m;}
+
+            }
+}
+
+
+div.more_link {
+                            color: #003075;
+                            padding: 0.3em;
+                            background-color: @egw_color_1_a;
+                            }

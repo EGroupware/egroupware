@@ -57,12 +57,12 @@
 }
 .etemplate_tab row_on,
 td.etemplate_tab_active:focus {
-  background-color: #808080;
+  /*.background-color-50-gray;*/
   border-width: 0 0 3px 0;
   border-style: solid;
   border-spacing: 0px;
-  border-color: #408dd2;
-  color: #f2f2f2;
+  /*border-color: @active_button_border_bottom;*/
+  /*.color-5-gray;*/
 }
 .nextmatch_header select {
   width: 140px;
@@ -114,4 +114,21 @@ button.et2_button {
   height: 24px;
   padding-left: 3px;
   padding-right: 3px;
+}
+/**
+ * SEARCH / Suchen
+ */
+table.app_header {
+  background-color: #FFF;
+  margin: 0.3em;
+  border: 19px solid white;
+}
+table.app_header td.app_icon img {
+  width: 24px;
+  height: 24px;
+}
+div.more_link {
+  color: #003075;
+  padding: 0.3em;
+  background-color: #ffc200;
 }
