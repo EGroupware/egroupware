@@ -21,25 +21,69 @@
 
 
 /* #############################################################################
-// iframe
+
 // Rahmen + padding**/
 
-/*################## iframe ####################*/
+/*##############################################*/
 /*#            #                               #*/
-/*#            #                               #*/
-/*#            #      Addressbook              #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            ############################### #*/
+/*#   Bild     #                               #*/
+/*#            #      Infolog                  #*/
 /*#            #                               #*/
 /*#            #                               #*/
 /*#            #                               #*/
-/*#            #       infolog                 #*/
+/*#    Sidebar #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
 /*#            #                               #*/
 /*#            #                               #*/
 /*#            #                               #*/
 /*##############################################*/
+
+
+// Image + Data
+
+div#addressbook_view_sidebox{
+
+    //img
+    img.photo {
+                width: 68px;
+                padding-right: 3px;
+                height: auto;
+                vertical-align: top;
+                margin-right: 5px;
+                }
+
+    // name
+    #addressbook-view_n_fn{
+                .fontsize_xl;
+                font-weight: bold;
+                padding: 2px 0 2px 0;
+                width: 85%;
+                }
+
+    // org
+    #addressbook-view_org_name {
+                .fontsize_xl;
+                padding: 2px 0 2px 0;
+                width: 85%;
+                }
+
+    // Unit
+    #addressbook-view_org_unit {
+                .fontsize_m;
+                padding: 2px 0 2px 0;
+                }
+
+   // Ort
+    #addressbook-view_adr_one_locality{
+                .fontsize_m;
+                padding: 2px 0 2px 0;
+                }
+
+
+
+}
+
 
 
 /**
@@ -115,16 +159,27 @@ div#addressbook-index{
 
         // erweiterte Suche
         button#addressbook-index_search{
-
-            .background_color_10_gray;
-            .color_100_gray;
-
-            .Complete_Button_text_icon_before;
+           .Complete_Button_add_only_plus;
             .dimension_height_m;
+            margin-right: 0px;
             background-image:url('../../../pixelegg/images/advanced-search.png') !important;
+            background-repeat: no-repeat;
             padding-left: 0px;
-            &:hover{ background-image:url('../../../pixelegg/images/advanced-search.png'); .Complete_Button_text_icon_before_hover;.dimension_height_m;}
-            &:focus{ background-image:url('../../../pixelegg/images/advanced-search.png'); .Complete_Button_text_icon_before_active;.dimension_height_m;}
+
+            &:hover{
+                .Complete_Button_add_only_plus_hover;
+                background-image:url('../../../pixelegg/images/advanced-search.png');
+                /*.Complete_Button_text_icon_before_hover;*/
+                /*.dimension_height_m;*/
+            }
+
+
+            &:focus{
+                background-color: @color_positive_action_active !important;
+                background-image:url('../../../pixelegg/images/advanced-search.png');
+/*                .Complete_Button_text_icon_before_active;
+                .dimension_height_m;*/
+            }
 
         }
 

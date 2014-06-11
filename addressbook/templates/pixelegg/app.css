@@ -117,24 +117,48 @@ img.iphoto {
 }
 @media all {
   /* #############################################################################
-// iframe
+
 // Rahmen + padding**/
-  /*################## iframe ####################*/
+  /*##############################################*/
   /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            #      Addressbook              #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            #                               #*/
-  /*#            ############################### #*/
+  /*#   Bild     #                               #*/
+  /*#            #      Infolog                  #*/
   /*#            #                               #*/
   /*#            #                               #*/
   /*#            #                               #*/
-  /*#            #       infolog                 #*/
+  /*#    Sidebar #                               #*/
+  /*#            #                               #*/
+  /*#            #                               #*/
   /*#            #                               #*/
   /*#            #                               #*/
   /*#            #                               #*/
   /*##############################################*/
+  div#addressbook_view_sidebox img.photo {
+    width: 68px;
+    padding-right: 3px;
+    height: auto;
+    vertical-align: top;
+    margin-right: 5px;
+  }
+  div#addressbook_view_sidebox #addressbook-view_n_fn {
+    font-size: 14.3px;
+    font-weight: bold;
+    padding: 2px 0 2px 0;
+    width: 85%;
+  }
+  div#addressbook_view_sidebox #addressbook-view_org_name {
+    font-size: 14.3px;
+    padding: 2px 0 2px 0;
+    width: 85%;
+  }
+  div#addressbook_view_sidebox #addressbook-view_org_unit {
+    font-size: 11px;
+    padding: 2px 0 2px 0;
+  }
+  div#addressbook_view_sidebox #addressbook-view_adr_one_locality {
+    font-size: 11px;
+    padding: 2px 0 2px 0;
+  }
   /**
  * Give space to both contact view & infolog list
  */
@@ -214,93 +238,51 @@ img.iphoto {
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
-    background-color: #f0f0f0;
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.rounded (3px);*/
-    color: #000000;
-    -webkit-appearance: none;
-    -webkit-transition-property: background-color;
-    -moz-transition-property: background-color;
-    -o-transition-property: background-color;
-    transition-property: background-color;
-    -webkit-transition-duration: 0.5s;
-    -moz-transition-duration: 0.5s;
-    -o-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: linear;
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    transition-timing-function: linear;
-    background-color: #b4b4b4;
-    padding-left: 30px !important;
-    background-position: 6px center !important;
-    background-repeat: no-repeat !important;
-    background-size: 20px auto !important;
-    /*.Button_size_h32_auto;*/
+    width: 32px;
+    border: 1px solid #0C5DA5;
+    margin: 6px 2px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    padding: -0.5em;
+    background-color: #e6e6e6 !important;
+    background-size: 16px 16px;
     height: 24px;
+    margin-right: 0px;
     background-image: url('../../../pixelegg/images/advanced-search.png') !important;
+    background-repeat: no-repeat;
     padding-left: 0px;
   }
+  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:before {
+    content: "";
+    font-size: 2em;
+    color: #0c5da5;
+    line-height: 0.6em;
+    padding-left: 0.1em;
+    padding-right: 100em;
+  }
+  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:active {
+    background-color: #1aa200;
+  }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
-    background-image: url('../../../pixelegg/images/advanced-search.png');
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.rounded (3px);*/
-    color: #000000;
-    -webkit-appearance: none;
-    -webkit-transition-property: background-color;
-    -moz-transition-property: background-color;
-    -o-transition-property: background-color;
-    transition-property: background-color;
-    -webkit-transition-duration: 0.5s;
-    -moz-transition-duration: 0.5s;
-    -o-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: linear;
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    transition-timing-function: linear;
-    background-color: #b4b4b4;
-    padding-left: 30px !important;
-    background-position: 6px center !important;
-    background-repeat: no-repeat !important;
-    background-size: 20px auto !important;
-    /*.Button_size_h32_auto;*/
+    background-color: #66a1d2 !important;
+    color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    height: 24px;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
+    background-image: url('../../../pixelegg/images/advanced-search.png');
+    /*.Complete_Button_text_icon_before_hover;*/
+    /*.dimension_height_m;*/
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
+    background-color: #1aa200 !important;
     background-image: url('../../../pixelegg/images/advanced-search.png');
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.rounded (3px);*/
-    color: #000000;
-    -webkit-appearance: none;
-    -webkit-transition-property: background-color;
-    -moz-transition-property: background-color;
-    -o-transition-property: background-color;
-    transition-property: background-color;
-    -webkit-transition-duration: 0.5s;
-    -moz-transition-duration: 0.5s;
-    -o-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: linear;
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    transition-timing-function: linear;
-    background-color: #b4b4b4;
-    padding-left: 30px !important;
-    background-position: 6px center !important;
-    background-repeat: no-repeat !important;
-    background-size: 20px auto !important;
-    /*.Button_size_h32_auto;*/
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    height: 24px;
+    /*                .Complete_Button_text_icon_before_active;
+                .dimension_height_m;*/
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
     width: 32px;
