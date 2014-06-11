@@ -1633,10 +1633,10 @@ class infolog_ui
 					}
 				}
 				//Validate the enddate must be grather than startdate
-				if (isset($content['info_enddate']) && isset($content['info_startdate']))
+				if (!empty($content['info_enddate']) && !empty($content['info_startdate']))
 				{
 					$duration_date = $content['info_enddate']-$content['info_startdate'];
-					if (isset($duration_date) && $duration_date < 0 )
+					if ($duration_date < 0)
 					{
 						$this->tmpl->set_validation_error('info_startdate', lang('Startdate must be before Enddate!!!'));
 						$button = $action = '';	// stop save or apply
