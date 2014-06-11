@@ -3614,7 +3614,7 @@ table.egwGridView_grid tbody tr.selected {
 table.egwGridView_grid tbody tr.focused {
   background-image: url(../images/yellow-stripe-a.png);
   background-repeat: repeat;
-  background-color: rgba(255, 194, 0, 0.5);
+  background-color: rgba(255, 194, 0, 0.2);
 }
 table.egwGridView_grid tbody td {
   padding: 3px 0 3px 3px;
