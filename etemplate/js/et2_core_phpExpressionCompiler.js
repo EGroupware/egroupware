@@ -71,7 +71,7 @@
 								break;
 							}
 							// check for regular expression "/  $/"
-							if (_p.expr.charAt(_p.pos) == _p.expr.charAt(0))
+							if (_p.expr.charAt(_p.pos) == '/' && _p.expr.charAt(0) == '/')
 							{
 								str += '$';
 								break;
