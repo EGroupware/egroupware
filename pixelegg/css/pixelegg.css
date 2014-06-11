@@ -267,73 +267,28 @@
     box-shadow: 0 0 5px 0 #ae1d00;
   }
   /*Link to / Selector Widget*/
-  .et2_link_to .et2_button_icon {
-    /*.background_color_10_gray;*/
-    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    float: left;
-    margin: 0px 20px;
-    /*padding: 3px;*/
-    width: 24px;
-    height: 24px;
-    background-color: #b4b4b4;
+  .et2_link_to {
+    min-height: 78px;
+    /*
+        .et2_button_icon {
+            .Complete_Button_Icon_normal;
+            float: left;
+            margin: 0px 20px;
+            padding: 3px;
+            .dimension_width_height_m;
+            background-color: @gray_30;
+            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+}*/
   }
-  .et2_link_to .et2_button_icon:hover {
-    /*.background_color_20_gray;*/
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_button_icon:active {
-    /*.background_color_30_gray;*/
-    border: 1px solid rgba(0, 0, 0, 0.9);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    background-color: #1aa200;
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_file {
-    background-color: #ffffff !important;
+  .et2_link_to div:first-child {
+    background-color: #ffdd73;
+    padding: 0.5em 0 0.5em 0.5em;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    left: 0px;
-    margin-left: 60px;
-    /*margin-top: 1em;*/
-    /*padding-top: 0.2em;*/
-    /*width: auto;*/
   }
-  .et2_link_to .et2_file span {
-    background-image: url("../images/upload.png");
-    background-position: 4px 2px;
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-  }
-  .et2_link_to .et2_file input {
-    border: none;
-    padding: 1em;
-  }
-  .et2_link_to .et2_file:hover {
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_file:active {
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to button {
+  .et2_link_to button:first-child {
     /*.border_normal;*/
     /*.box_shadow_standard_light;*/
     /*.rounded (3px);*/
@@ -354,8 +309,15 @@
     background-color: #b4b4b4;
     padding: 3px;
     height: 20px;
+    position: relative;
+    top: 5px;
+    padding-left: 20px;
+    background-image: url("../images/link.png");
+    background-position: 2px 2px;
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
   }
-  .et2_link_to button:hover {
+  .et2_link_to button:first-child:hover {
     /*.background_color_20_gray;*/
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -366,7 +328,7 @@
     border-radius: 3px;
     background-color: #1aa200 !important;
   }
-  .et2_link_to button:active {
+  .et2_link_to button:first-child:active {
     /*.background_color_30_gray;*/
     border: 1px solid rgba(0, 0, 0, 0.9);
     -webkit-border-radius: 3px;
@@ -377,6 +339,48 @@
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #1aa200;
     background-color: #1aa200 !important;
+  }
+  .et2_link_to button.et2_vfs_btn {
+    width: auto;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    top: 5px;
+    left: 5px;
+  }
+  .et2_link_to .et2_file {
+    background-color: #ffffff !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    left: 0px;
+    margin-left: 60px;
+    height: 24px;
+    /*            &:hover {background-color: @color_positive_action_active !important;}
+            &:active {background-color: @color_positive_action_active !important;}*/
+  }
+  .et2_link_to .et2_file span {
+    background-image: url("../images/upload.png");
+    background-position: 4px 2px;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+  .et2_link_to .et2_file span:hover {
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to .et2_file span:active {
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to .et2_file span.et2_file_spanActive {
+    background-color: #1aa200 !important;
+  }
+  .et2_link_to .et2_file input {
+    border: none;
+    padding: 1em;
   }
   .et2_link {
     color: #0c5da5;
@@ -412,56 +416,6 @@
   }
   .egw_tooltip {
     background-color: #ffffff;
-  }
-  /**
- * Link_entry_widget
- */
-  div.et2_link_to {
-    width: auto;
-    /*input{width: 72% !important;}*/
-  }
-  div.et2_link_to button {
-    /*.border_normal;*/
-    /*.box_shadow_standard_light;*/
-    /*.rounded (3px);*/
-    color: #000000;
-    -webkit-appearance: none;
-    -webkit-transition-property: background-color;
-    -moz-transition-property: background-color;
-    -o-transition-property: background-color;
-    transition-property: background-color;
-    -webkit-transition-duration: 0.5s;
-    -moz-transition-duration: 0.5s;
-    -o-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: linear;
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    transition-timing-function: linear;
-    background-color: #b4b4b4;
-  }
-  div.et2_link_to button:hover {
-    /*.background_color_20_gray;*/
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-color: #1aa200 !important;
-  }
-  div.et2_link_to button:active {
-    /*.background_color_30_gray;*/
-    border: 1px solid rgba(0, 0, 0, 0.9);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-    background-color: #1aa200;
-    background-color: #1aa200 !important;
   }
   /**
  * Tabs widget

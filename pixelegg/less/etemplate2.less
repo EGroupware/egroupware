@@ -178,14 +178,14 @@ div.et2_file input.et2_file_upload{
 .et2_gantt {
 	.gantt_task_line {
 		background-color: @egw_color_2_e;
-		
+
 		.gantt_task_content {
 			color: @egw_color_2_c;
 		}
 		.gantt_selected {
 			background-color: @color_active_row;
 		}
-	
+
 		.gantt_task_progress {
 			color: @egw_color_2_c;
 			background-color: @color_progress;
@@ -219,7 +219,7 @@ div.et2_file input.et2_file_upload{
 			box-shadow: 0 0 5px 0 green;
 		}
 	}
-	
+
 	.gantt_task_link.invalid_constraint {
 		.gantt_line_wrapper div
 		{
@@ -243,34 +243,71 @@ div.et2_file input.et2_file_upload{
 /*Link to / Selector Widget*/
 .et2_link_to {
 
+    min-height: 78px;
 
-    // Link to Filesystem
-    .et2_button_icon {
-            .Complete_Button_Icon_normal;
-            float: left;
-            margin: 0px 20px;
-            /*padding: 3px;*/
-            .dimension_width_height_m;
-            background-color: @gray_30;
-            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
-            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
-}
+    // Background for select + Search Field
+    div:first-child{
+        background-color: @egw_color_1_e;
+        padding: 0.5em 0 0.5em 0.5em;
+        .rounded(5px);
+    }
+
+    // make link button
+   button:first-child {
+
+        .Complete_Button_normal;
+        padding: 3px;
+        .dimension_height_sm;
+
+        position: relative;
+        top: 5px;
+        padding-left: 20px;
+
+            background-image: url("../images/link.png");
+            background-position: 2px 2px;
+            background-size: 14px 14px;
+            background-repeat: no-repeat;
+
+        &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+         &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+
+    }
+
+
+    // next line - left
+    // et2_vfs_btn
+    button.et2_vfs_btn{
+        width: auto;
+        .rounded(5px);
+        position: relative;
+        top: 5px;
+        left: 5px;
+    }
+
     .et2_file{
            background-color: @gray_0 !important;
            .rounded (5px);
            left: 0px;
            margin-left: 60px;
-            /*margin-top: 1em;*/
-            /*padding-top: 0.2em;*/
-            /*width: auto;*/
+           height: 24px;
+/*            &:hover {background-color: @color_positive_action_active !important;}
+            &:active {background-color: @color_positive_action_active !important;}*/
+
+
 
             span {
             background-image: url("../images/upload.png");
             background-position: 4px 2px;
             background-size: 16px 16px;
             background-repeat: no-repeat;
+            .rounded (5px);
+
+            &:hover {background-color: @color_positive_action_active !important;}
+            &:active {background-color: @color_positive_action_active !important;}
 
             }
+
+            span.et2_file_spanActive{background-color: @color_positive_action_active !important;}
 
            input{
                border: none;
@@ -278,16 +315,21 @@ div.et2_file input.et2_file_upload{
 
             }
 
-             &:hover {background-color: @color_positive_action_active !important;}
-             &:active {background-color: @color_positive_action_active !important;}
-    }
-
-    button {
-        .Complete_Button_normal; padding: 3px; .dimension_height_sm;
-         &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
-         &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
 
     }
+
+/*
+        .et2_button_icon {
+            .Complete_Button_Icon_normal;
+            float: left;
+            margin: 0px 20px;
+            padding: 3px;
+            .dimension_width_height_m;
+            background-color: @gray_30;
+            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+}*/
+
 
 }
 
@@ -332,22 +374,7 @@ div.et2_file input.et2_file_upload{
     background-color: @color_tooltip;
 }
 
-/**
- * Link_entry_widget
- */
-div.et2_link_to{
 
-    width: auto;
-
-
-    button {
-            .Complete_Button_normal;
-            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
-            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
-            }
-
-    /*input{width: 72% !important;}*/
-}
 
 // defined in layout-dialog.less
 /**
