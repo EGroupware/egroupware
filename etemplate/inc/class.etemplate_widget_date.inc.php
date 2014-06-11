@@ -46,8 +46,8 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	 * @var string|array
 	 */
 	protected $legacy_options = 'dataformat,mode';
-	
-	
+
+
 	/**
 	 * Validate input
 	 *
@@ -70,13 +70,9 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
 			}
-			elseif (is_null($value))
-			{
-				$valid = null;
-			}
 			elseif ($this->type == 'date-duration')
 			{
-				$valid = $value;
+				$valid = (string)$value === '' ? '' : (int)$value;
 			}
 			elseif (empty($this->attrs['dataformat']))	// integer timestamp
 			{
