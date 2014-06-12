@@ -633,12 +633,11 @@ class infolog_ui
 	/**
 	 * Shows the infolog list
 	 *
-	 * @param array/string $values=null etemplate content or 'reset_action_view' if called by index.php to reset an action-view
-	 * @param string $action='' if set only entries liked to that $action:$action_id are shown
-	 * @param string $action_id='' if set only entries liked to that $action:$action_id are shown
-	 * @param mixed $called_as=0 this is how we got called, for a hook eg. the call-params of that page containing the hook
-	 * @param boolean $extra_app_header=false
-	 * @param boolean $return_html=false
+	 * @param array/string $values etemplate content or 'reset_action_view' if called by index.php to reset an action-view
+	 * @param string $action if set only entries liked to that $action:$action_id are shown
+	 * @param string $action_id if set only entries liked to that $action:$action_id are shown
+	 * @param mixed $ca$called_asis is how we got called, for a hook eg. the call-params of that page containing the hook
+	 * @param boolean $e$extra_app_header * @param boolean $return_html=false
 	 * @param string $own_referer='' this is our own referer
 	 * @param string $action_title='' app_header for the action, if '' we try the link-title
 	 */
@@ -1225,7 +1224,7 @@ class infolog_ui
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
 	 * @param array $query get_rows parameter
 	 * @param string &$msg on return user feedback
-	 * @param boolean $skip_notifications=false true to NOT notify users about changes
+	 * @param boolean $skip_notifications true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
 	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
@@ -1522,9 +1521,9 @@ class infolog_ui
 	/**
 	 * Deletes an InfoLog entry
 	 *
-	 * @param array|int $values=0 info_id (default _GET[info_id])
-	 * @param string $referer=''
-	 * @param string $called_by=''
+	 * @param array|int $values info_id (default _GET[info_id])
+	 * @param string $referer
+	 * @param string $called_by
 	 * @param boolean $skip_notification Do not send notification of deletion
 	 */
 	function delete($values=0,$referer='',$called_by='',$skip_notification=False)
@@ -1587,11 +1586,11 @@ class infolog_ui
 	/**
 	 * Edit/Create an InfoLog Entry
 	 *
-	 * @param array $content=null Content from the eTemplate Exec call or info_id on inital call
-	 * @param string $action='' Name of an app of 'sp' for a infolog-sub
-	 * @param int $action_id=0 Id of app-entry to which a link is created
-	 * @param string $type='' Type of log-entry: note,todo,task
-	 * @param string $referer='' array with param/get-vars of the refering page
+	 * @param array $content Content from the eTemplate Exec call or info_id on inital call
+	 * @param string $action Name of an app of 'sp' for a infolog-sub
+	 * @param int $action_id of app-entry to which a link is created
+	 * @param string $type Type of log-entry: note,todo,task
+	 * @param string $referer array with param/get-vars of the refering page
 	 */
 	function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 	{
@@ -2152,7 +2151,7 @@ class infolog_ui
 	 * Taking into account prefs and config about what to copy
 	 *
 	 * @param array &$content
-	 * @param boolean $create_sub=false true: create a sub-entry instead of a copy, default false to create a copy
+	 * @param boolean $create_sub true: create a sub-entry instead of a copy, default false to create a copy
 	 */
 	private function create_copy(array &$content, $create_sub=false)
 	{
@@ -2662,7 +2661,7 @@ class infolog_ui
 	/**
 	 * Defines the fields for the csv export
 	 *
-	 * @param string $type=null infolog type to include only the matching custom fields if set
+	 * @param string $type infolog type to include only the matching custom fields if set
 	 * @return array
 	 */
 	function csv_export_fields($type=null)
