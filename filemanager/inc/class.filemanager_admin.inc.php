@@ -57,7 +57,7 @@ class filemanager_admin extends filemanager_ui
 		}
 		// sudo handling
 		parent::__construct();
-		self::$is_setup = egw_vfs::$is_root;//egw_session::appsession('is_setup','filemanager');
+		self::$is_setup = egw_session::appsession('is_setup','filemanager');
 
 		if (class_exists('stylite_versioning_stream_wrapper'))
 		{
