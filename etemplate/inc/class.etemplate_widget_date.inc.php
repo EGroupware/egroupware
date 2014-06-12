@@ -70,6 +70,10 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
 			}
+			elseif (is_null($value))
+			{
+				$valid = null;
+			}
 			elseif ($this->type == 'date-duration')
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
@@ -82,11 +86,6 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			elseif (($valid = date($this->attrs['dataformat'], $value)))
 			{
 				// Nothing to do here
-			}
-			// Null is acceptable also
-			elseif ($value === null)
-			{
-				$valid = $value;
 			}
 			else
 			{
