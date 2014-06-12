@@ -61,7 +61,7 @@ class filemanager_admin extends filemanager_ui
 
 		if (class_exists('stylite_versioning_stream_wrapper'))
 		{
-			//$this->versioning = stylite_versioning_stream_wrapper::SCHEME;
+			$this->versioning = stylite_versioning_stream_wrapper::SCHEME;
 		}
 	}
 
