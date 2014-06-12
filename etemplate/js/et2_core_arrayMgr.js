@@ -406,8 +406,15 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 			{
 				_id = this.expandName(_id);
 			}
-			entry = this.getEntry(_id);
-
+			// readonlys was not namespaced in old eTemplate, therefore if we dont find data
+			// under current namespace, we look into parent
+			// (if there is anything namespaced, we will NOT look for parent!)
+			var mgr = this;
+			while (mgr.parentMgr && jQuery.isEmptyObject(mgr.data))
+			{
+				mgr = mgr.parentMgr;
+			}
+			entry = mgr.getEntry(_id);
 		}
 
 		// Let the array entry override the read only attribute entry
