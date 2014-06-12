@@ -118,10 +118,27 @@ button.et2_button {
 /**
  * SEARCH / Suchen
  */
+div.app_box {
+  display: inline;
+  float: left;
+  min-height: 30em;
+  margin: 0.3em;
+  background-color: #FFF;
+}
+div.app_box div {
+  display: inline;
+  margin: 0.3em;
+}
 table.app_header {
   background-color: #FFF;
-  margin: 0.3em;
-  border: 19px solid white;
+  margin: 1em;
+  /*border: 19px solid white;*/
+}
+table.app_header tr {
+  height: 1em;
+}
+table.app_header tr td {
+  height: 1em;
 }
 table.app_header td.app_icon img {
   width: 24px;
