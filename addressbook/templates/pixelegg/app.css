@@ -250,6 +250,7 @@ img.iphoto {
     background-image: url('../../../pixelegg/images/advanced-search.png') !important;
     background-repeat: no-repeat;
     padding-left: 0px;
+    font-size: 0px;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:before {
     content: "";
