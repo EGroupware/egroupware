@@ -124,7 +124,6 @@
 					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth" span="3"/>
 					<description/>
 				</row>
-
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all">
 						<tabs>
@@ -157,11 +156,11 @@
 				</row>
 				<row disabled="!@ts_modified" class="dialogOperators">
 					<description value="Last modified"/>
-                                                    <menulist>
-                                                            <menupopup type="select-account" id="ts_modifier" readonly="true"/>
-                                                    </menulist>
+					<menulist>
+						<menupopup type="select-account" id="ts_modifier" readonly="true"/>
+					</menulist>
 					<description/>
-                                        <date-time id="ts_modified" readonly="true" align="left"/>
+					<date-time id="ts_modified" readonly="true" align="left"/>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox orient="0" span="all">
