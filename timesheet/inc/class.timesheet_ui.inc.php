@@ -314,6 +314,7 @@ class timesheet_ui extends timesheet_bo
 				'to_app' => TIMESHEET_APP,
 			),
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
+			'ts_quantity' => $this->data['ts_duration']/60.0 == $this->data['ts_quantity'] ? null : $this->data['ts_quantity'],
 			'start_time' => isset($this->data['start_time']) ? $this->data['start_time'] : $this->data['ts_start'],
 			'pm_integration' => $this->pm_integration,
 			'no_ts_status' => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
@@ -383,13 +384,13 @@ class timesheet_ui extends timesheet_bo
 			$preserv['ts_project'] = $preserv['ts_project_blur'];
 		}
 		$content['history'] = array(
-				'id'  => $this->data['ts_id'],
-				'app' => 'timesheet',
-				'status-widgets' => array(
-					'ts_status' => $this->status_labels + array(self::DELETED_STATUS => 'Deleted'),
-					'ts_modifier' => 'select-account',
-					'cat_id' => 'select-cat',
-				),
+			'id'  => $this->data['ts_id'],
+			'app' => 'timesheet',
+			'status-widgets' => array(
+				'ts_status' => $this->status_labels + array(self::DELETED_STATUS => 'Deleted'),
+				'ts_modifier' => 'select-account',
+				'cat_id' => 'select-cat',
+			),
 		);
 		$sel_options['status'] = $this->field2label;
 
@@ -701,7 +702,7 @@ class timesheet_ui extends timesheet_bo
 			if ($row['ts_id'] <= 0)	// sums
 			{
 				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
-				
+
 				// Remove fake modified date, it breaks nextmatch checks
 				unset($row['ts_modified']);
 				switch($row['ts_id'])
