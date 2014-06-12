@@ -117,11 +117,12 @@ class filemanager_hooks
             'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
             'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
 			'Check virtual filesystem' => egw::link('/index.php','menuaction=filemanager.filemanager_hooks.fsck'),
+			'VFS mounts and versioning' => egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index'),
         );
         // add other administration links, eg. of filesystem backends like versioning
         if (($other = $GLOBALS['egw']->hooks->process('filemanager_admin',array(),true)))
         {
-        	foreach($other as $app => $file_data)
+        	foreach($other as $file_data)
         	{
         		$file += $file_data;
         	}
@@ -242,14 +243,18 @@ class filemanager_hooks
 				'application' => 'filemanager'
 			));
 			$options = array();
-			foreach ((array)$definitions->get_definitions() as $identifier) {
+			foreach ((array)$definitions->get_definitions() as $identifier)
+			{
 				try {
 					$definition = new importexport_definition($identifier);
-				} catch (Exception $e) {
+				}
+				catch (Exception $e) {
+					unset($e);
 					// permission error
 					continue;
 				}
-				if ($title = $definition->get_title()) {
+				if (($title = $definition->get_title()))
+				{
 					$options[$title] = $title;
 				}
 				unset($definition);

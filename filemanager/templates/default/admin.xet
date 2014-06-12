@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.admin" template="" lang="" group="0" version="1.7.001">
+		<groupbox disabled="!@percent_size">
+			<caption label="sqlFS Statistics"/>
+			<grid>
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<description value="All files"/>
+						<int id="total_files" readonly="true" align="right"/>
+						<description value="Files"/>
+						<vfs-size id="total_size" class="bold"/>
+					</row>
+					<row>
+						<description value="Older versions or deleted files"/>
+						<int id="version_files" readonly="true" align="right"/>
+						<description value="Files"/>
+						<vfs-size id="version_size" align="right" class="bold"/>
+					</row>
+					<row>
+						<description value="Percentage"/>
+						<description id="percent_files" align="right" class="bold"/>
+						<description/>
+						<description id="percent_size" align="right" class="bold"/>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<description value="Mountpoints" class="filemanager_header"/>
+		<grid id="mounts" class="egwGridView_grid">
+			<columns>
+				<column/>
+				<column/>
+				<column disabled="!@@is_root"/>
+				<column disabled="!@@is_setup"/>
+			</columns>
+			<rows>
+				<row class="th" part="header">
+					<description value="Path"/>
+					<description value="Backend URL"/>
+					<description value="Versioning" align="center"/>
+					<description value="Mount" align="center"/>
+				</row>
+				<row disabled="!@@is_root" part="footer">
+					<textbox id="path" class="inputFullWidth"/>
+					<textbox size="50" blur="stylite.versioning://default/$path" class="inputFullWidth" id="url" statustext="Backend URL to mount"/>
+					<button label="Enable" id="enable" statustext="Enable versioning for given mountpoint" class="filemanager_smallButton" align="center"/>
+					<button label="Mount" id="mount" class="filemanager_smallButton" align="center"/>
+				</row>
+				<row class="row">
+					<description id="${row}[path]"/>
+					<description id="${row}[url]"/>
+					<button label="Disable" id="disable[$row_cont[path]]" statustext="Disable versioning for this mountpoint" class="filemanager_smallButton" align="center"/>
+					<button label="Unmount" id="umount[$row_cont[path]]" class="filemanager_smallButton" align="center"/>
+				</row>
+			</rows>
+		</grid>
+		<vbox class="filemanager_config">
+			<menulist>
+				<menupopup id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" disabled="!@versioning"/>
+			</menulist>
+			<grid>
+				<columns>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row disabled="@is_root">
+						<description value="User"/>
+						<textbox id="user"/>
+					</row>
+					<row disabled="@is_root">
+						<description value="Password"/>
+						<passwd id="password"/>
+					</row>
+					<row disabled="@is_root">
+						<description/>
+						<button label="Submit" id="sudo"/>
+					</row>
+				</rows>
+			</grid>
+			<button id="logout" label="Logout" statustext="Log out as superuser"/>
+		</vbox>
+	</template>
+</overlay>

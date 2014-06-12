@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	en	%1 already exists as a file.
+%1 already mounted on %2!	filemanager	en	%1 already mounted on %2!
 %1 directories and %2 files copied.	filemanager	en	%1 directories and %2 files copied.
 %1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 files deleted.
 %1 elements linked.	filemanager	en	%1 elements linked.
@@ -12,6 +13,7 @@
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
+%1 successful unmounted.	filemanager	en	%1 successful unmounted.
 %1 successful uploaded.	filemanager	en	%1 successfully uploaded.
 %1 the following files into current directory	filemanager	en	%1 the following files into current directory
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard
@@ -26,21 +28,26 @@ acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
 add to clipboard	filemanager	en	Add to clipboard
-all files	common	en	All files
+administrators	filemanager	en	Administrators
+all files	filemanager	en	All files
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Maximum number of folder links to be configured in preferences.
 and all it's childeren	filemanager	en	and all it's children
 application fields	filemanager	en	Application fields
 applications	common	en	Applications
+backend	filemanager	en	Backend
+backend url	filemanager	en	Backend URL
+backend url to mount	filemanager	en	Backend URL to mount
 basedirectory	filemanager	en	Base directory
 can't open directory %1!	filemanager	en	Can't open directory %1!
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Can not create directory because it begins or ends in a space.
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
-check virtual filesystem	filemanager	en	Check virtual filesystem
+check virtual filesystem	common	en	Check virtual filesystem
 clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
 comment	filemanager	en	Comment
+configuration changed.	filemanager	en	Configuration changed.
 copied	filemanager	en	Copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
 copy	filemanager	en	Copy
@@ -75,6 +82,8 @@ directory %1 does not exist	filemanager	en	Directory %1 does not exist.
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
 directory successfully created.	filemanager	en	Directory successfully created.
 directory with documents to insert entries	filemanager	en	Directory with documents to insert entries
+disable	filemanager	en	Disable
+disable versioning for this mountpoint	filemanager	en	Disable versioning for this mountpoint
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
 do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in directory %2?
@@ -82,6 +91,8 @@ do you want to overwrite the existing file %1?	filemanager	en	Do you want to ove
 download	filemanager	en	Download
 edit comments	filemanager	en	Edit comments
 edit settings	filemanager	en	Edit settings
+enable	filemanager	en	Enable
+enable versioning for given mountpoint	filemanager	en	Enable versioning for given mountpoint
 enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
@@ -89,8 +100,11 @@ enter the complete vfs path to specify your desired start folder.	filemanager	en
 error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
+error mounting %1 on %2!	filemanager	en	Error mounting %1 on %2!
+error unmounting %1!	filemanager	en	Error unmounting %1!
 error uploading file!	filemanager	en	Error uploading file!
 error while creating directory.	filemanager	en	Error while creating directory
+everyone	filemanager	en	Everyone
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
@@ -117,6 +131,7 @@ filename must not be empty!	filemanager	en	File name must not be empty!
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
+finally delete this version	filemanager	en	Finally delete this version
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders.
@@ -147,6 +162,8 @@ mime type	filemanager	en	Mime type
 modified	filemanager	en	Modified
 modified between	filemanager	en	Modified between
 modify all subdirectories and their content	filemanager	en	Modify all sub directories and their content
+mount	filemanager	en	Mount
+mountpoints	filemanager	en	Mountpoints
 move	filemanager	en	Move
 move into folder	filemanager	en	Move into folder
 move to	filemanager	en	Move to
@@ -157,9 +174,13 @@ no access	filemanager	en	No access
 no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available.
 no version history for this file/directory	filemanager	en	No version history for this file/directory.
+noone	filemanager	en	Noone
+older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
 operation	filemanager	en	Operation
+path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
+percentage	filemanager	en	Percentage
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
 permissions of %1 changed.	filemanager	en	Permissions of %1 changed.
@@ -205,9 +226,12 @@ show link "your home directory" in side box menu?	filemanager	en	Show link "Your
 show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
+sqlfs statistics	filemanager	en	sqlFS Statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
+successful mounted %1 on %2.	filemanager	en	Successful mounted %1 on %2.
 superuser	filemanager	en	Super user
+superuser (root)	filemanager	en	Superuser (root)
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
 tag to mark positions for address labels	filemanager	en	Tag to mark positions for address labels
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
@@ -218,6 +242,7 @@ there's already a directory with that name!	filemanager	en	There's already a dir
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
 total files	filemanager	en	Total files
+unmount	filemanager	en	Unmount
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
@@ -228,10 +253,13 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
+vfs mounts and versioning	common	en	VFS mounts and versioning
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
 you do not have access to %1	filemanager	en	You do not have access to %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become root, to enable or disable versioning on a directory!
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
 you will be redirected to your home directory.	filemanager	en	You will be redirected to your home directory.
