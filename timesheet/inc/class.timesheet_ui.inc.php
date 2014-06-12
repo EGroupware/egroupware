@@ -471,7 +471,7 @@ class timesheet_ui extends timesheet_bo
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
 	 * @param array &$readonlys eg. to disable buttons based on acl
-	 * @param boolean $id_only=false if true only return (via $rows) an array of contact-ids, dont save state to session
+	 * @param boolean $id_only if true only return (via $rows) an array of contact-ids, dont save state to session
 	 * @return int total number of contacts matching the selection
 	 */
 	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
@@ -794,8 +794,8 @@ class timesheet_ui extends timesheet_bo
 	/**
 	 * List timesheet entries
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content
+	 * @param string $msg
 	 */
 	function index($content = null,$msg='')
 	{
