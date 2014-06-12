@@ -155,6 +155,11 @@ function et2_checkType(_val, _type, _attr, _widget)
 	// Check whether the given value is of the type "string"
 	if (_type == "string" || _type == "html")
 	{
+		if (typeof _val == "number")	// as php is a bit vague here, silently convert to a string
+		{
+			return _val.toString();
+		}
+
 		if (typeof _val == "string")
 		{
 			return _type == "html" ? _val : html_entity_decode(_val);
