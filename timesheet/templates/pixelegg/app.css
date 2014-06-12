@@ -14,6 +14,9 @@
 #timesheet-index {
   /*Details Bold*/
 }
+#timesheet-index div.et2_dropdown {
+  top: 0px;
+}
 #timesheet-index .nextmatch_header div.ui-helper-clearfix,
 #timesheet-index .nextmatch_header div.ui-helper-reset {
   height: 0px;
