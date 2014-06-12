@@ -130,10 +130,29 @@ input.displayNone {
   height: 36px;
   width: 98%;
 }
+/*Up img*/
+img#filemanager-index_up {
+  position: relative;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  background-color: #e6e6e6;
+}
+/*Home img*/
+img#filemanager-index_home {
+  position: relative;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  background-color: #e6e6e6;
+}
 div.filemanager_navigation {
   position: relative;
   width: 100%;
   margin-top: -12px !important;
+  margin-left: 6px !important;
 }
 div.filemanager_navigation img {
   width: 16px;
@@ -158,98 +177,103 @@ div.filemanager_navigation img:hover {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-div.filemanager_navigation img#filemanager-index_tarp {
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-div.filemanager_navigation img#filemanager-index_tarp:hover {
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  background-color: #f0f0f0;
-}
-/*Up img*/
-img#filemanager-index_up {
-  position: relative;
-  top: 5px;
-}
-/*Home img*/
-img#filemanager-index_home {
-  position: relative;
-  top: 5px;
-}
-/*Pfad */
-div.filemanager_navigation > label {
+div.filemanager_navigation label {
   float: left;
-  left: 64px;
+  left: 74px;
   right: 485px;
   font-size: 140%;
   top: 5px;
 }
+div.filemanager_navigation label input {
+  width: 99%;
+}
+/*div.filemanager_navigation > label > input {
+    width: 95%;
+}*/
 /*Buttons / Tarp / FileUpload*/
 #filemanager-index_buttons {
-  /*    float: right;
-    left: 0px;
-    right: 30%;
-    position: relative;*/
-  top: 0px;
+  top: -3px;
   float: left;
   position: absolute;
   right: 0;
+}
+#filemanager-index_buttons img {
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+}
+#filemanager-index_buttons div.et2_file {
+  /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0em;
+  margin: 0;
+  width: 16.5em;
+  background-color: #e6e6e6;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+#filemanager-index_buttons div.et2_file:hover {
+  background-color: #1aa200 !important;
+}
+#filemanager-index_buttons div.et2_file:active {
+  background-color: #1aa200 !important;
+}
+#filemanager-index_buttons div.et2_file span.et2_file_span {
+  background-size: 16px 16px;
+  padding: 3px 0px 0px 10px;
+  width: 14em;
+  border: none;
+  cursor: pointer;
+  margin: 3px 0 0 2px;
+  background-color: #e6e6e6;
+}
+#filemanager-index_buttons div.et2_file span.et2_file_span:hover {
+  background-color: #1aa200 !important;
+}
+#filemanager-index_buttons div.et2_file span.et2_file_span:active {
+  background-color: #1aa200 !important;
+}
+#filemanager-index_buttons div.et2_file input#filemanager-index_upload {
+  color: #ffffff;
+  cursor: pointer;
+  background-color: transparent;
+  /*                &:hover {background-color: @color_positive_action_active !important;}
+                &:active {background-color: @color_positive_action_active !important;}*/
+}
+#filemanager-index_buttons div.et2_file div.progress {
+  z-index: 1;
 }
 #filemanager-index_buttons > * {
   padding-left: 3px;
   vertical-align: middle;
   margin-right: 0.2em;
+  background-color: #e6e6e6;
 }
-#filemanager-index_buttons div.et2_file {
-  width: 139px;
-}
-div.filemanager_navigation > label > input {
-  width: 95%;
-}
-#filemanager-index .et2_file {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: none;
-  cursor: pointer;
-}
-#filemanager-index .et2_file:hover {
-  background-color: #1aa200 !important;
-}
-#filemanager-index .et2_file:active {
-  background-color: #1aa200 !important;
-}
-#filemanager-index .et2_file span.et2_file_span {
-  background-size: 20px 20px;
-  padding: 3px 5px 3px 10px;
-  height: 16px;
-  border: 2px solid transparent;
+#filemanager-index {
   width: auto;
-}
-#filemanager-index .et2_file input#filemanager-index_upload {
-  color: #ffffff;
-  cursor: pointer;
-  background-color: transparent;
-}
-#filemanager-index .et2_file input#filemanager-index_upload:hover {
-  background-color: #1aa200 !important;
-}
-#filemanager-index .et2_file input#filemanager-index_upload:active {
-  background-color: #1aa200 !important;
-}
-#filemanager-index .et2_file div.progress {
-  z-index: 1;
 }
 #filemanager-index #filemanager-index_tarp {
   width: 32px !important;
   height: 32px !important;
   position: relative;
   top: 0px;
+  background-color: #cdcdcd;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#filemanager-index #filemanager-index_tarp:hover {
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: #f0f0f0;
 }
 #filemanager-index .filters {
   vertical-align: center;
@@ -403,4 +427,47 @@ div#stylite-filemanager-upload .et2_file input:active {
 }
 div#stylite-filemanager-upload .et2_file div.progress {
   width: 0px;
+}
+div#stylite-filemanager-upload .th {
+  background: none;
+}
+div#stylite-filemanager-upload .dialogFooterToolbar button {
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.rounded (3px);*/
+  color: #000000;
+  -webkit-appearance: none;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
+  padding-left: 30px !important;
+  background-position: 6px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px auto !important;
+  /*.Button_size_h32_auto;*/
+  height: 24px;
+}
+div#stylite-filemanager-upload .dialogFooterToolbar button:hover {
+  background-color: #f5b301 !important;
+  color: #000000;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+div#stylite-filemanager-upload .dialogFooterToolbar button:active {
+  background-color: #fecc44 !important;
+  color: #000000;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }

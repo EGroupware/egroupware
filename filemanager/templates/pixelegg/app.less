@@ -31,111 +31,102 @@
     width: 98%;
 }
 
-div.filemanager_navigation {
-    position: relative;
-    width: 100%;
-    margin-top: -12px !important;
 
 
-    img {
-        .dimension_width_height_s;
-        .Complete_Button_Icon_normal;
-        padding: 0.2em;
 
-        &:hover {.Complete_Button_Icon_hover;}
-    }
-
-    img#filemanager-index_tarp {
-                border: none;
-                -webkit-box-shadow: none;
-                -moz-box-shadow: none;
-                box-shadow: none;
-        &:hover {
-                border: none;
-                -webkit-box-shadow: none;
-                -moz-box-shadow: none;
-                box-shadow: none;
-                .background_color_10_gray;
-        }
-    }
-
-}
+// UP / Home / Path _______ / Go / #TARP# / BUTTONS ----- / UPLOAD
 
  /*Up img*/
- img#filemanager-index_up {position: relative; top: 5px;}
+ img#filemanager-index_up {position: relative; top: 5px; .dimension_width_height_s; padding: 4px; background-color: @gray_10;}
 
   /*Home img*/
- img#filemanager-index_home {position: relative; top: 5px;}
+ img#filemanager-index_home {position: relative; top: 5px; .dimension_width_height_s; padding: 4px; background-color: @gray_10;}
 
 
- /*Pfad */
-div.filemanager_navigation > label {
-    float: left;
-    left: 64px;
-    right: 485px;
-    font-size: 140%;
-    top: 5px;
+// Pfad
+div.filemanager_navigation{
+        position: relative;
+        width: 100%;
+        margin-top: -12px !important;
+        margin-left: 6px !important;
+
+
+        img {
+                .dimension_width_height_s;
+                .Complete_Button_Icon_normal;
+                padding: 0.2em;
+
+                &:hover {.Complete_Button_Icon_hover;}
+            }
+
+        label {
+
+            float: left;
+            left: 74px;
+            right: 485px;
+            font-size: 140%;
+            top: 5px;
+
+        input {width: 99%;}
+
+
+
+
+    }
+
 }
 
-
+/*div.filemanager_navigation > label > input {
+    width: 95%;
+}*/
 
 
 /*Buttons / Tarp / FileUpload*/
 #filemanager-index_buttons {
-/*    float: right;
-    left: 0px;
-    right: 30%;
-    position: relative;*/
-    top: 0px;
-
+    top: -3px;
     float: left;
     position: absolute;
     right: 0;
 
-}
-
-#filemanager-index_buttons > * {
-    padding-left: 3px;
-    vertical-align: middle;
-    margin-right: 0.2em;
-}
-
-#filemanager-index_buttons div.et2_file {
-	width: 139px;
-}
-
-div.filemanager_navigation > label > input {
-    width: 95%;
-}
+    img {.dimension_width_height_s; padding: 4px;}
 
 
-#filemanager-index{
-
-    .et2_file{
+    // choose data area
+    div.et2_file{
+        .Complete_Button_Icon_normal;
+        padding: 0em;
+        margin:0;
+        width: 16.5em;
+        background-color: @gray_10;
+        .dimension_height_m;
         .rounded(3px);
-        border: none;
-        cursor: pointer;
 
-        &:hover {background-color: @color_positive_action_active !important;}
-        &:active {background-color: @color_positive_action_active !important;}
 
-        // Datei wählen
+                        &:hover {background-color: @color_positive_action_active !important;}
+                        &:active {background-color: @color_positive_action_active !important;}
+
+        // Text: Datei wählen
         span.et2_file_span {
-            background-size: 20px 20px;
-            padding: 3px 5px 3px 10px;
-            height: 16px;
-            border: 2px solid transparent;
-            width: auto;
+            background-size: 16px 16px;
+            padding: 3px 0px 0px 10px;;
+            width: 14em;
+            border: none;
+            cursor: pointer;
+            margin: 3px 0 0 2px;
+            background-color: @gray_10;
+
+                        &:hover {background-color: @color_positive_action_active !important;}
+                        &:active {background-color: @color_positive_action_active !important;}
         }
 
        // Upload Fläche
        input#filemanager-index_upload {
                 color: @gray_0;
-                 cursor: pointer;
+                cursor: pointer;
                 background-color: transparent;
 
-         &:hover {background-color: @color_positive_action_active !important;}
-        &:active {background-color: @color_positive_action_active !important;}
+/*                &:hover {background-color: @color_positive_action_active !important;}
+                &:active {background-color: @color_positive_action_active !important;}*/
 
         }
 
@@ -144,6 +135,28 @@ div.filemanager_navigation > label > input {
         div.progress {z-index: 1;}
   }
 
+}
+
+#filemanager-index_buttons > * {
+    padding-left: 3px;
+    vertical-align: middle;
+    margin-right: 0.2em;
+    background-color: @gray_10;
+
+
+
+}
+
+
+
+
+
+
+#filemanager-index{
+    width: auto;
+
+
+
 
     // Tarp
     #filemanager-index_tarp {
@@ -151,7 +164,25 @@ div.filemanager_navigation > label > input {
         height: 32px !important;
         position: relative;
         top: 0px;
+        background-color: @gray_20;
+
+        border: none;
+         -webkit-box-shadow: none;
+         -moz-box-shadow: none;
+         box-shadow: none;
+                &:hover {
+                        border: none;
+                        -webkit-box-shadow: none;
+                        -moz-box-shadow: none;
+                        box-shadow: none;
+                        .background_color_10_gray;
+               }
     }
+
+
+
+
+
 
 
 
@@ -287,6 +318,26 @@ div#stylite-filemanager-upload{
         }
 
         div.progress {width: 0px;}
+  }
+
+
+
+  // th
+  .th {background: none;}
+
+
+  // Schliessen / Close
+  .dialogFooterToolbar{
+
+      button {
+
+                .Complete_Button_text_icon_before;
+
+                &:hover {background-color: @color_cancel_action_hover !important; color: @gray_100; .box_shadow_standard_light_hover;}
+                &:active {background-color: @color_cancel_action_active !important; color: @gray_100; .box_shadow_standard_light_inset;}
+
+      }
+
   }
 
 
