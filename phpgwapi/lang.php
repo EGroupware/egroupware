@@ -51,6 +51,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	common::egw_exit();
 }
 
+translation::init(false);
 translation::add_app($_GET['app'], $_GET['lang']);
 if (!count(translation::$lang_arr))
 {

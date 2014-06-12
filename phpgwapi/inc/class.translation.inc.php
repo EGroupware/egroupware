@@ -192,9 +192,10 @@ class translation
 			//error_log(__METHOD__."() load_via set from config to ".array2string(self::$load_via));
 		}
 
+		self::$lang_arr = self::$loaded_apps = array();
+
 		if ($load_translations)
 		{
-			self::$lang_arr = self::$loaded_apps = array();
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
 				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
@@ -275,6 +276,7 @@ class translation
 	 */
 	static function add_app($apps, $lang=null)
 	{
+		//error_log(__METHOD__."(".array2string($apps).", $lang) count(self::\$lang_arr)=".count(self::$lang_arr));
 		//$start = microtime(true);
 		if (!$lang) $lang = self::$userlang;
 		$tree_level = $instance_level = array();
