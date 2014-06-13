@@ -839,9 +839,14 @@ class preferences
 			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs[$account_id] != $prefs))
 		{
 			//error_log(__METHOD__."(type=$type) saved, because old_prefs[$account_id] != prefs=".array2string($prefs));
-			$this->db->transaction_begin();
+			$changed = 0;
 			foreach($prefs as $app => $value)
 			{
+				// check if app preferences have changed, if not no need to save them
+				if ($old_prefs && $old_prefs[$app] == $value) continue;
+
+				if (!$changed++) $this->db->transaction_begin();
+
 				if (!is_array($value) || !$value)
 				{
 					$this->db->delete($this->table, array(
@@ -860,10 +865,13 @@ class preferences
 					),__LINE__,__FILE__);
 				}
 			}
-			$this->db->transaction_commit();
+			if ($changed)
+			{
+				$this->db->transaction_commit();
 
-			// update instance-wide cache
-			egw_cache::setInstance(__CLASS__, $account_id, $prefs);
+				// update instance-wide cache
+				egw_cache::setInstance(__CLASS__, $account_id, $prefs);
+			}
 		}
 		//else error_log(__METHOD__."(type=$type) NOT saved because old_prefs[$account_id] == prefs=".array2string($prefs));
 		return $this->data;
