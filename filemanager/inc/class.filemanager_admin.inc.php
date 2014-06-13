@@ -22,6 +22,7 @@ class filemanager_admin extends filemanager_ui
 	 */
 	public $public_functions = array(
 		'index' => true,
+		'fsck' => true,
 	);
 
 	/**
@@ -193,5 +194,29 @@ class filemanager_admin extends filemanager_ui
 		$tpl = new etemplate_new('filemanager.admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('VFS mounts and versioning');
 		$tpl->exec('filemanager.filemanager_admin.index',$content,$sel_options,$readonlys);
+	}
+
+	/**
+	 * Run fsck on sqlfs
+	 */
+	function fsck()
+	{
+		if ($_POST['cancel'])
+		{
+			egw_framework::redirect_link('/admin/index.php', null, 'admin');
+		}
+		$check_only = !isset($_POST['fix']);
+
+		if (!($msgs = sqlfs_utils::fsck($check_only)))
+		{
+			$msgs = lang('Filesystem check reported no problems.');
+		}
+		$content = '<p>'.implode("</p>\n<p>", (array)$msgs)."</p>\n";
+
+		$content .= html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
+			html::submit_button('cancel', lang('Cancel')).'</p>',
+			'','/index.php',array('menuaction'=>'filemanager.filemanager_admin.fsck'));
+
+		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
 	}
 }
