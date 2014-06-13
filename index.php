@@ -114,6 +114,17 @@ if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !
 	}
 	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 	{
+		// try to switch to mail on startup, if felamimail was called
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['default_app']=='felamimail' && !isset($GLOBALS['egw_info']['user']['apps']['felamimail']) && isset($GLOBALS['egw_info']['user']['apps']['mail']))
+		{
+			$GLOBALS['egw_info']['user']['preferences']['common']['default_app'] ='mail';
+			if (isset($GLOBALS['egw']->preferences))
+			{
+				$GLOBALS['egw']->preferences->add('common','default_app','mail','user');
+				// save prefs
+				$GLOBALS['egw']->preferences->save_repository(true);
+			}
+		}
 		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
 	}
 	else
