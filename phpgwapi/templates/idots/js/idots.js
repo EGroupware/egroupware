@@ -107,5 +107,6 @@ egw_LAB.wait(function() {
 		jQuery('#thesideboxcolumn').resizable({handles: 'e', minWidth: 200, stop: function(event, ui){
 			egw.set_preference(egw_appName, 'idotssideboxwidth', ui.size.width);
 		}});
+		jQuery('form[name^="tz_selection"]').children().on('change', function(){this.form.submit();});
 	});
 });
