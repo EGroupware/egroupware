@@ -119,6 +119,20 @@ input.displayNone {
   max-height: 400px;
   overflow: auto;
 }
+/**
+ * VFS mounts and versioning
+ */
+.filemanager_smallButton {
+  font-size: 90%;
+  margin: 0;
+}
+.filemanager_header {
+  font-size: 120%;
+  font-weight: bold;
+}
+.filemanager_config > * {
+  margin-top: 20px;
+}
 /*/*****************************************************************
 // sidebar
 
