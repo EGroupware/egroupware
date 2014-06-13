@@ -25,3 +25,6 @@ if (!$GLOBALS['egw_setup']->db->affected_rows())
 	$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 	$GLOBALS['egw_setup']->add_acl('mail','run',$defaultgroup);
 }
+
+// change common/default_app pref to mail, if it was felamimail
+preferences::change_pref('common', 'default_app', 'mail', 'felamimail');
