@@ -96,6 +96,18 @@ if(@file_exists($tpl_info))
 	}
 }
 
+// try to switch to mail on startup, if felamimail was called
+if ($GLOBALS['egw_info']['user']['preferences']['common']['default_app']=='felamimail' && !isset($GLOBALS['egw_info']['user']['apps']['felamimail']) && isset($GLOBALS['egw_info']['user']['apps']['mail']))
+{
+	$GLOBALS['egw_info']['user']['preferences']['common']['default_app'] ='mail';
+	if (isset($GLOBALS['egw']->preferences))
+	{
+		$GLOBALS['egw']->preferences->add('common','default_app','mail','user');
+		// save prefs
+		$GLOBALS['egw']->preferences->save_repository(true);
+	}
+}
+
 // until home works again, we redirect to default_app from prefs (if set and not home) or calendar, if allowed, or first app found
 if ($app == 'home' && !$api_requested && !($GLOBALS['egw']->framework instanceof jdots_framework))
 {
@@ -114,17 +126,6 @@ if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !
 	}
 	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 	{
-		// try to switch to mail on startup, if felamimail was called
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['default_app']=='felamimail' && !isset($GLOBALS['egw_info']['user']['apps']['felamimail']) && isset($GLOBALS['egw_info']['user']['apps']['mail']))
-		{
-			$GLOBALS['egw_info']['user']['preferences']['common']['default_app'] ='mail';
-			if (isset($GLOBALS['egw']->preferences))
-			{
-				$GLOBALS['egw']->preferences->add('common','default_app','mail','user');
-				// save prefs
-				$GLOBALS['egw']->preferences->save_repository(true);
-			}
-		}
 		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
 	}
 	else
