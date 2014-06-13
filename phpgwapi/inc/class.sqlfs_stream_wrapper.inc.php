@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -22,8 +22,6 @@
  * 		(there's a workaround implemented, but it requires to allocate memory for the whole file!)
  *   b) uploading/writing files > 1M fail on PDOStatement::execute() (setting PDO::MYSQL_ATTR_MAX_BUFFER_SIZE does NOT help)
  *      (not sure if that's a bug in PDO/PDO_mysql or an accepted limitation)
- * - content of files is versioned (and stored in the DB) NOT YET IMPLEMENTED
- * In the future it will be possible to activate eg. versioning in parts of the filesystem, via mount options in the vfs
  *
  * I use the PDO DB interface, as it allows to access BLOB's as streams (avoiding to hold them complete in memory).
  *
@@ -170,6 +168,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	public static function clearstatcache($path='/')
 	{
 		//error_log(__METHOD__."('$path')");
+		unset($path);	// not used
+
 		self::$stat_cache = array();
 
 		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl = null);
@@ -198,7 +198,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$this->operation = self::url2operation($url);
 		$dir = egw_vfs::dirname($url);
 
-		$this->opened_path = $path;
+		$this->opened_path = $opened_path = $path;
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
@@ -806,14 +806,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$path]);
 		unset($stmt);	// free statement object, on some installs a new prepare fails otherwise!
 
-		$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
-		if (($ret = $stmt->execute(array($stat['ino']))))
+		$del_stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=?');
+		if (($ret = $del_stmt->execute(array($stat['ino']))))
 		{
 			self::eacl($path,null,false,$stat['ino']);	// remove all (=false) evtl. existing extended acl for that dir
 			// delete props
-			unset($stmt);
-			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
-			$stmt->execute(array($stat['ino']));
+			unset($del_stmt);
+			$del_stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
+			$del_stmt->execute(array($stat['ino']));
 		}
 		return $ret;
 	}
@@ -827,7 +827,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
+		unset($atime);	// not used
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $time)");
 
 		$path = parse_url($url,PHP_URL_PATH);
 
@@ -944,25 +945,25 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chmod($url,$mode)
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $mode)");
 
 		$path = parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url, $mode) no such file or directory!");
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
 			return false;
 		}
 		if (!egw_vfs::has_owner_rights($path,$stat))
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) only owner or root can do that!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url, $mode) only owner or root can do that!");
 			trigger_error("Only owner or root can do that!",E_USER_WARNING);
 			return false;
 		}
 		if (!is_numeric($mode))	// not a mode
 		{
-			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no (numeric) mode!");
+			if (self::LOG_LEVEL) error_log(__METHOD__."($url, $mode) no (numeric) mode!");
 			trigger_error("No (numeric) mode!",E_USER_WARNING);
 			return false;
 		}
@@ -1050,7 +1051,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $url, $flags, $eacl_access=null )
 	{
-		static $max_subquery_depth;
+		static $max_subquery_depth=null;
 		if (is_null($max_subquery_depth))
 		{
 			$max_subquery_depth = $GLOBALS['egw_info']['server']['max_subquery_depth'];
@@ -1172,7 +1173,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	protected function _sql_readable()
 	{
-		static $sql_read_acl;
+		static $sql_read_acl=null;
 
 		if (is_null($sql_read_acl))
 		{
@@ -1475,7 +1476,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function id2path($fs_ids)
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_id).')');
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_ids).')');
 		$ids = (array)$fs_ids;
 		$pathes = array();
 		// first check our stat-cache for the ids
@@ -1599,14 +1600,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				self::$pdo_type = $egw_db->Type;
 				break;
 		}
-		switch($type)
-		{
-			default:
-				$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($egw_db->Host ? ';host='.$egw_db->Host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
-				break;
-		}
+		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($egw_db->Host ? ';host='.$egw_db->Host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
 		// check once if pdo extension and DB specific driver is loaded or can be loaded
-		static $pdo_available;
+		static $pdo_available=null;
 		if (is_null($pdo_available))
 		{
 			foreach(array('pdo','pdo_'.self::$pdo_type) as $ext)
@@ -1619,8 +1615,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			self::$pdo = new PDO($dsn,$egw_db->User,$egw_db->Password,array(
 				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 			));
-		} catch(Exception $e) {
-
+		}
+		catch(Exception $e)
+		{
+			unset($e);
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
 			self::$pdo = new PDO($dsn,$egw_db->User,'$egw_db->Password');
 		}
@@ -1713,7 +1711,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
 		}
 		$hash = array();
-		for ($n = $id; $n = (int) ($n / self::HASH_MAX); )
+		$n = $id;
+		while(($n = (int) ($n / self::HASH_MAX)))
 		{
 			$hash[] = sprintf('%02d',$n % self::HASH_MAX);
 		}
@@ -1753,7 +1752,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		if (strpos(is_array($url) ? $url['query'] : $url,'storage=') !== false)
 		{
-			parse_str(is_array($url) ? $url['query'] : parse_url($url,PHP_URL_QUERY),$query);
+			$query = null;
+			parse_str(is_array($url) ? $url['query'] : parse_url($url,PHP_URL_QUERY), $query);
 			switch ($query['storage'])
 			{
 				case 'db':
@@ -1795,6 +1795,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;	// permission denied
 		}
+		$ins_stmt = $del_stmt = null;
 		foreach($props as &$prop)
 		{
 			if (!isset($prop['ns'])) $prop['ns'] = egw_vfs::DEFAULT_PROP_NAMESPACE;
@@ -1886,7 +1887,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				unset($props[$id]);
 			}
 		}
-		if (self::LOG_LEVEL > 1) foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
+		if (self::LOG_LEVEL > 1)
+		{
+			foreach((array)$props as $k => $v)
+			{
+				error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
+			}
+		}
 		return $props;
 	}
 }
