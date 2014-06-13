@@ -34,7 +34,7 @@ class egw_favorites
 	 * a nextmatch is on the page, it will update / replace this list.
 	 *
 	 * @param string $app application, needed to find preferences
-	 * @param string $default=null preference name for default favorite, default "nextmatch-$app.index.rows-favorite"
+	 * @param string $default preference name for default favorite, default "nextmatch-$app.index.rows-favorite"
 	 *
 	 * @return array with a single sidebox menu item (array) containing html for favorites
 	 */
@@ -72,6 +72,13 @@ class egw_favorites
 		}
 		foreach($filters as $name => $filter)
 		{
+			//filter must not be empty if there's one, ignore it at the moment but it need to be checked how it got there in database
+			if (!$filter)
+			{
+				error_log(__METHOD__.'Favorite filter is not suppose to be empty, it should be an array. filter = '. array2string($filters[$name]));
+				continue;
+			}
+				
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
 			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
 			$li .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
@@ -189,7 +196,7 @@ class egw_favorites
 	 * @param string $name Name of the favorite
 	 * @param string $action "add" or "delete"
 	 * @param boolean|int|String $group ID of the group to create the favorite for, or 'all' for all users
-	 * @param array $filters=array() key => value pairs for the filter
+	 * @param array $filters key => value pairs for the filter
 	 * @return boolean Success
 	 */
 	public static function set_favorite($app, $name, $action, $group, $filters = array())

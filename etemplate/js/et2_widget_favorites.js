@@ -214,7 +214,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		var preferences = egw.preference("*",app);
 		for(var pref_name in preferences)
 		{
-			if(pref_name.indexOf(this.favorite_prefix) == 0)
+			if(pref_name.indexOf(this.favorite_prefix) == 0 && typeof preferences[pref_name] == 'object')
 			{
 				var name = pref_name.substr(this.favorite_prefix.length);
 				stored_filters[name] = preferences[pref_name];
