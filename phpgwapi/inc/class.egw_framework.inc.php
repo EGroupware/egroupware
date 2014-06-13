@@ -807,7 +807,7 @@ abstract class egw_framework
 		if (count($user_tzs) > 1)
 		{
 			$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
-			$user_info .= html::form(html::select('tz',$tz,$user_tzs,true,' onchange="this.form.submit();"'),array(),
+			$user_info .= html::form(html::select('tz',$tz,$user_tzs,true),array(),
 				'/index.php','','tz_selection',' style="display: inline;"','GET');
 		}
 		return $user_info;
