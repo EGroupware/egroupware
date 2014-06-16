@@ -103,6 +103,16 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	protected $results = array();
 
 	/**
+	 * Special fields that are not mapped to an application field, but are processed
+	 * using special rules.
+	 */
+	public static $special_fields = array(
+		'contact' => array('label' => 'Link to Addressbook', 'title'=>'use nlast,nfirst[,org] or contact_id from addressbook, eg: Guy,Test,My organization'),
+		'link_search' => array('label' => 'Link by search', 'title'=>'appname:search terms the entry should be linked to, links to the first match eg: addressbook:My organization'),
+		'link_0' => array('label' => 'Link to ID', 'title'=>'appname:appid the entry should be linked to, eg.: addressbook:123'),
+	);
+
+	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
@@ -150,7 +160,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		$record_class = isset(static::$record_class) ? static::$record_class : "{$app}_egw_record";
 
 		// Needed for categories to work right
-                $GLOBALS['egw_info']['flags']['currentapp'] = $app;
+        $GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
 		$this->init($_definition);
 
@@ -168,6 +178,10 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			$egw_record->set_record($record);
 			$success = $this->import_record($egw_record, $import_csv);
 
+			if($success)
+			{
+				$this->do_special_fields($egw_record, $import_csv);
+			}
 			if($success) $count++;
 
 			// Add some more time
@@ -294,15 +308,82 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	/**
 	 * perform the required action
 	 *
+	 * If a record identifier (ID) is generated for the record because of the action
+	 * (eg: a new entry inserted) make sure to update the record with the identifier
+	 *
 	 * Make sure you record any errors you encounter here:
 	 * $this->errors[$record_num] = error message;
 	 *
 	 * @param int $_action one of $this->actions
-	 * @param array $_data contact data for the action
+	 * @param importexport_iface_egw_record $record contact data for the action
 	 * @param int $record_num Which record number is being dealt with.  Used for error messages.
 	 * @return bool success or not
 	 */
-	protected abstract function action ( $_action, Array $_data, $record_num = 0 );
+	protected abstract function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 );
+
+	/**
+	 * Handle special fields
+	 *
+	 * These include linking to other records, which requires a valid identifier,
+	 * so must be performed after the action.
+	 *
+	 * @param importexport_iface_egw_record $record
+	 */
+	protected function do_special_fields(importexport_iface_egw_record &$record, &$import_csv)
+	{
+		$id = $record->get_identifier();
+
+		// Warn if there's no ID unless it's a dry_run because there probably won't be an ID then
+		if(!$this->dry_run && !$id)
+		{
+			$this->warnings[$import_csv->get_current_position()] .= "Unable to link, no identifier for record";
+			return;
+		}
+
+		foreach(self::$special_fields as $field => $desc) {
+			if(!$record->$field) continue;
+			if(strpos($field, 'link') === 0) {
+				list($app, $app_id) = explode(':', $record->$field,2);
+
+				list($link, $type) = explode('_',$field);
+
+				// Searching, take first result
+				if($type == 'search')
+				{
+					$result = egw_link::query($app, $app_id);
+					do
+					{
+						$app_id = key($result);
+						shift($result);
+					} while($result && !$app_id);
+				}
+			} else if (in_array($field, array_keys($GLOBALS['egw_info']['apps']))) {
+				$app = $field;
+				$app_id = $record->$field;
+
+				// Searching, take first result
+				if(!is_numeric($app_id))
+				{
+					$result = egw_link::query($app, $app_id);
+					do
+					{
+						$app_id = key($result);
+						shift($result);
+					} while($result && !$app_id);
+				}
+			}
+			else if ($field == 'contact')
+			{
+				// Special search limited to family, given, org_name
+				$app = 'addressbook';
+				$app_id = self::addr_id($record->$field);
+			}
+			if (!$this->dry_run && $app && $app_id && ($app != $this->definition->application || $app_id != $id))
+			{
+				$link_id = egw_link::link($this->definition->application,$id,$app,$app_id);
+			}
+		}
+	}
 
 	/**
 	 * Reads entries, and presents them back as they will be understood
@@ -358,6 +439,68 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		$this->preview_records = array();
 
 		return html::table($rows);
+	}
+
+	/**
+	 * Search for contact, but only using family, given & org name fields.
+	 *
+	 * Returns the ID of the first match.
+	 *
+	 * @staticvar type $contacts
+	 * @param string $n_family
+	 * @param string $n_given
+	 * @param string $org_name
+	 * @return int|boolean Contact ID of first match, or false if none found
+	 */
+	public static function addr_id( $n_family,$n_given=null,$org_name=null, &$record=null) {
+
+		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
+		static $contacts;
+		if (is_null($n_given) && is_null($org_name))
+		{
+			// Maybe all in one
+			list($n_family, $n_given, $org_name) = explode(',', $n_family);
+		}
+		$n_family = trim($n_family);
+		if(!is_null($n_given)) $n_given = trim($n_given);
+		if (!is_object($contacts))
+		{
+			$contacts =& CreateObject('phpgwapi.contacts');
+		}
+		if (!is_null($org_name))	// org_name given?
+		{
+			$org_name = trim($org_name);
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
+			if (!count($addrs))
+			{
+				$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name",'','n_family,org_name');
+			}
+		}
+		if (!is_null($n_given) && (is_null($org_name) || !count($addrs)))       // first name given and no result so far
+		{
+			$addrs = $contacts->search(array('n_family' => $n_family, 'n_given' => $n_given));
+		}
+		if (is_null($n_given) && is_null($org_name))    // just one name given, check against fn (= full name)
+		{
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_fn=$n_family",'','n_fn' );
+		}
+		if (count($addrs))
+		{
+			if(!$record || !$record->get_identifier())
+			{
+				return $addrs[0]['id'];
+			}
+			else
+			{
+				do
+				{
+					$id = key($addrs);
+					array_shift($addrs);
+				} while($addrs && !$id && $id == $record->get_identifier());
+				return $id;
+			}
+		}
+		return False;
 	}
 
 	/**
