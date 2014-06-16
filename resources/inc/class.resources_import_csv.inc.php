@@ -129,11 +129,11 @@ class resources_import_csv extends importexport_basic_import_csv  {
 									if ( !is_array( $record->cat_id ) ) $record->cat_id = explode( ',', $record->cat_id );
 									$record->cat_id = implode( ',', array_unique( array_merge( $record->cat_id, $resource['cat_id'] ) ) );
 								}
-								$success = $this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() );
+								$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 							}
 						} else {
 							$action = $condition['false'];
-							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 						}
 						break;
 
@@ -146,7 +146,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 			}
 		} else {
 			// unconditional insert
-			$success = $this->action( 'insert', $record->get_record_array(), $import_csv->get_current_position() );
+			$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 		}
 		return $success;
 	}
@@ -155,10 +155,11 @@ class resources_import_csv extends importexport_basic_import_csv  {
 	 * perform the required action
 	 *
 	 * @param int $_action one of $this->actions
-	 * @param array $_data contact data for the action
+	 * @param importexport_iface_egw_record $record Entry record
 	 * @return bool success or not
 	 */
-	protected function action ( $_action, Array $_data, $record_num = 0 ) {
+	protected function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 ) {
+		$_data = $record->get_record_array();
 		switch ($_action) {
 			case 'none' :
 				return true;
