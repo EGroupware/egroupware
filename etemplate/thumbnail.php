@@ -44,7 +44,7 @@ function get_srcfile()
 	}
 	else
 	{
-		$g_srcfile = egw_link::vfs_path($_GET['app'], $_GET['id'], $_GET['file'], true);		
+		$g_srcfile = egw_link::vfs_path($_GET['app'], $_GET['id'], $_GET['file'], true);
 	}
 
 	return egw_vfs::PREFIX.$g_srcfile;
@@ -62,7 +62,7 @@ function get_app()
 	elseif (isset($_GET['path']))
 	{
 		list(, $apps, $app) = explode('/', $_GET['path']);
-		if ($apps !== 'apps')
+		if ($apps !== 'apps' || !isset($GLOBALS['egw_info']['user']['apps'][$app]))
 		{
 			$app = 'filemanager';
 		}
