@@ -36,6 +36,8 @@ if (!class_exists('links_stream_wrapper_parent',false))
  * If the do not implement such a function the title function is used to test if the user has
  * at least read access to an entry, and if true full (write) access to the files is granted.
  *
+ * Entry directories are always reported existing and empty, if not existing in sqlfs.
+ *
  * The stream wrapper interface is according to the docu on php.net
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
@@ -149,9 +151,26 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 				'mime'  => $app == 'addressbook' ? 'text/vcard' : 'text/calendar',
 			);
 		}
-		else
+		// if entry directory does not exist --> return fake directory
+		elseif (!($ret = parent::url_stat($url,$flags,$eacl_check)) && $eacl_check)
 		{
-			$ret = parent::url_stat($url,$flags,$eacl_check);
+			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', parse_url($url, PHP_URL_PATH), 5);
+			if ($id && !isset($rel_path))
+			{
+				$ret = array(
+					'ino'   => md5($url),
+					'name'  => $id,
+					'mode'  => self::MODE_DIR,	// required by the stream wrapper
+					'size'  => 0,
+					'uid'   => 0,
+					'gid'   => 0,
+					'mtime' => time(),
+					'ctime' => time(),
+					'nlink' => 2,
+					// eGW addition to return some extra values
+					'mime'  => egw_vfs::DIR_MIME_TYPE,
+				);
+			}
 		}
 		if (self::DEBUG) error_log(__METHOD__."('$url', $flags) calling parent::url_stat(,,".array2string($eacl_check).') returning '.array2string($ret));
 		return $ret;
@@ -270,6 +289,11 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			$this->opened_stream = fopen('global://'.$name,'r');
 			unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
 			return true;
+		}
+		// create not existing entry directories on the fly
+		if ($mode[0] != 'r' && !parent::url_stat($dir = egw_vfs::dirname($url),0) && self::check_extended_acl($dir,egw_vfs::WRITABLE))
+		{
+			self::mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
