@@ -12,7 +12,7 @@
  */
 
 /**
- * eGroupWare API: VFS - new DB based VFS stream wrapper
+ * EGroupware API: VFS - new DB based VFS stream wrapper
  *
  * The sqlfs stream wrapper has 2 operation modi:
  * - content of files is stored in the filesystem (eGW's files_dir) (default)
@@ -172,7 +172,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		self::$stat_cache = array();
 
-		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl = null);
+		egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl = null);
 	}
 
 	/**
@@ -186,11 +186,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *                        If this flag is not set, you should not raise any errors.
 	 * @param string &$opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
 	 * @param array $overwrite_new=null if set create new file with values overwriten by the given ones
-	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
-	 * @todo remove $class parameter and use static::url_stat() once we require PHP5.3!
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
-	function stream_open ( $url, $mode, $options, &$opened_path, array $overwrite_new=null, $class=__CLASS__ )
+	function stream_open ( $url, $mode, $options, &$opened_path, array $overwrite_new=null )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
@@ -202,11 +200,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
-		if (!is_null($overwrite_new) || !($stat = call_user_func(array($class,'url_stat'),$path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		if (!is_null($overwrite_new) || !($stat = static::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
-				!($dir_stat=call_user_func(array($class,'url_stat'),$dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
+				!($dir_stat=static::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
 				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
@@ -586,11 +584,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $url_from
 	 * @param string $url_to
-	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
-	 * @todo remove $class parameter and use static::url_stat() and static::unlink() once we require PHP5.3!
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to, $class=__CLASS__)
+	static function rename ( $url_from, $url_to)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
@@ -601,15 +597,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$operation = self::url2operation($url_from);
 
 		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
-		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) ||
-			!egw_vfs::check_access($from_dir,egw_vfs::WRITABLE,$from_dir_stat = call_user_func(array($class,'url_stat'),$from_dir,0)))
+		if (!($from_stat = static::url_stat($path_from, 0)) ||
+			!egw_vfs::check_access($from_dir, egw_vfs::WRITABLE, $from_dir_stat = static::url_stat($from_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = call_user_func(array($class,'url_stat'),$to_dir,0)))
+		if (!egw_vfs::check_access($to_dir, egw_vfs::WRITABLE, $to_dir_stat = static::url_stat($to_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -618,7 +614,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = call_user_func(array($class,'url_stat'),$path_to,0)) &&
+		if (($to_stat = static::url_stat($path_to, 0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			self::_remove_password($url_from);
@@ -628,7 +624,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;	// no permission or file does not exist
 		}
 		// if destination file already exists, delete it
-		if ($to_stat && !call_user_func(array($class,'unlink'),$url_to,$operation))
+		if ($to_stat && !static::unlink($url_to,$operation))
 		{
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
@@ -1339,7 +1335,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function _read_extended_acl()
 	{
-		if ((self::$extended_acl = $GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME)) != false)
+		if ((self::$extended_acl = egw_cache::getSession(self::EACL_APPNAME, 'extended_acl')))
 		{
 			return;		// ext. ACL read from session.
 		}
@@ -1357,8 +1353,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		// sort by length descending, to allow more specific pathes to have precedence
-		uksort(self::$extended_acl,create_function('$a,$b','return strlen($b)-strlen($a);'));
-		$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
+		uksort(self::$extended_acl, function($a,$b) {
+			return strlen($b)-strlen($a);
+		});
+		egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() '.array2string(self::$extended_acl));
 	}
 
@@ -1424,7 +1422,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if ($ret)
 		{
-			$GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME,self::$extended_acl);
+			egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
 		return $ret;
@@ -1440,7 +1438,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function get_eacl($path)
 	{
-		if (!($stat = self::url_stat($_path=$path,STREAM_URL_STAT_QUIET)))
+		if (!($stat = static::url_stat($path, STREAM_URL_STAT_QUIET)))
 		{
 			error_log(__METHOD__.__LINE__.' '.array2string($path).' not found!');
 			return false;	// not found
@@ -1460,7 +1458,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$eacls = array_merge((array)self::get_eacl($path),$eacls);
 		}
 		// sort by length descending, to show precedence
-		usort($eacls,create_function('$a,$b','return strlen($b["path"])-strlen($a["path"]);'));
+		usort($eacls, function($a, $b) {
+			return strlen($b['path']) - strlen($a['path']);
+		});
 		//error_log(__METHOD__."('$_path') returning ".array2string($eacls));
 		return $eacls;
 	}
@@ -1494,7 +1494,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		// now search via the database
-		if (count($ids) > 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
+		if (count($ids) > 1) array_map(function(&$v) { $v = (int)$v; },$ids);
 		$query = 'SELECT fs_id,fs_dir,fs_name FROM '.self::TABLE.' WHERE fs_id'.
 			(count($ids) == 1 ? '='.(int)$ids[0] : ' IN ('.implode(',',$ids).')');
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
@@ -1856,7 +1856,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$id = $stat['ino'];
 			}
 		}
-		if (count($ids) >= 1) array_map(create_function('&$v','$v = (int)$v;'),$ids);
+		if (count($ids) >= 1) array_map(function(&$v) { $v = (int)$v; },$ids);
 		$query = 'SELECT * FROM '.self::PROPS_TABLE.' WHERE (fs_id'.
 			(count($ids) == 1 ? '='.(int)implode('',$ids) : ' IN ('.implode(',',$ids).')').')'.
 			(!is_null($ns) ? ' AND prop_namespace=?' : '');

@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
  */
 
@@ -22,7 +22,7 @@ if (!class_exists('links_stream_wrapper_parent',false))
 }
 
 /**
- * eGroupWare API: stream wrapper for linked files
+ * EGroupware API: stream wrapper for linked files
  *
  * The files stored by the sqlfs_stream_wrapper in a /apps/$app/$id directory
  *
@@ -130,6 +130,8 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	static function url_stat ( $url, $flags )
 	{
 		$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
+
+		// return vCard as /.entry
 		if ( $eacl_check && substr($url,-7) == '/.entry' &&
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
@@ -168,6 +170,8 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function eacl($path,$rights=null,$owner=null,$fs_id=null)
 	{
+		unset($path, $rights, $owner, $fs_id);	// not used, but required by function signature
+
 		return false;
 	}
 
@@ -181,6 +185,8 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	function get_eacl($path)
 	{
+		unset($path);	// not used, but required by function signature
+
 		return false;
 	}
 
@@ -201,12 +207,14 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function mkdir($path,$mode,$options)
 	{
+		unset($mode);	// not used, but required by function signature
+
 		if($path[0] != '/')
 		{
 			if (strpos($path,'?') !== false) $query = parse_url($path,PHP_URL_QUERY);
 			$path = parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
 		}
-		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
+		list(,$apps,$app,$id) = explode('/',$path);
 
 		$ret = false;
 		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,egw_vfs::WRITABLE))	// app directory itself is allways ok
@@ -244,7 +252,10 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
 		$stat = self::url_stat($url,0);
 		//error_log(__METHOD__."('$url', '$mode', $options) stat=".array2string($stat));
-		if ($stat && $mode[0] == 'r' && substr($url,-7) === '/.entry')
+
+		// return vCard as /.entry
+		if ($stat && $mode[0] == 'r' && substr($url,-7) === '/.entry' &&
+			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
 			list($id) = array_slice(explode('/',$url),-2,1);
 			$name = md5($url);
@@ -261,21 +272,6 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			return true;
 		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
-	}
-
-	/**
-	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
-	 *
-	 * Reimplemented to use our own url_stat and unlink function (workaround for no lsb in php < 5.3)
-	 *
-	 * @param string $url_from
-	 * @param string $url_to
-	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
-	 * @return boolean TRUE on success or FALSE on failure
-	 */
-	static function rename ( $url_from, $url_to, $class=__CLASS__)
-	{
-		return parent::rename($url_from,$url_to,$class);
 	}
 }
 
