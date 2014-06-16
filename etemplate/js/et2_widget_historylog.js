@@ -101,6 +101,12 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 						});
 					};
 					tabs.tabData[i].flagDiv.bind("click.history",{"history": this, div: tabs.tabData[i].flagDiv}, handler);
+
+					// Display if history tab is selected
+					if(i == tabs.get_active_tab())
+					{
+						tabs.tabData[i].flagDiv.trigger("click.history");
+					}
 					break;
 				}
 			}
