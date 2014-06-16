@@ -3,10 +3,10 @@
  * eGroupWare - Wizard for Infolog CSV import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package addressbook
+ * @package infolog
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @version $Id:  $
+ * @version $Id$
  */
 
 class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_import_csv

@@ -237,7 +237,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if ($record['addressbook'] && !is_numeric($record['addressbook']))
 			{
 				list($lastname,$firstname,$org_name) = explode(',',$record['addressbook']);
-				$record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
+				$record['addressbook'] = importexport_basic_import_csv::addr_id($lastname,$firstname,$org_name);
 			}
 			if ($record['projectmanager'] && !is_numeric($record['projectmanager']))
 			{
@@ -501,45 +501,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	// end of iface_export_plugin
 
 	// Extra conversion functions - must be static
-	public static function addr_id( $n_family,$n_given=null,$org_name=null ) {
-
-		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
-		static $contacts;
-		if (is_null($n_given) && is_null($org_name))
-		{
-			// Maybe all in one
-			list($n_family, $n_given, $org_name) = explode(',', $n_family);
-		}
-		$n_family = trim($n_family);
-		if(!is_null($n_given)) $n_given = trim($n_given);
-		if (!is_object($contacts))
-		{
-			$contacts =& CreateObject('phpgwapi.contacts');
-		}
-		if (!is_null($org_name))	// org_name given?
-		{
-			$org_name = trim($org_name);
-			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
-			if (!count($addrs))
-			{
-				$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name",'','n_family,org_name');
-			}
-		}
-		if (!is_null($n_given) && (is_null($org_name) || !count($addrs)))       // first name given and no result so far
-		{
-			$addrs = $contacts->search(array('n_family' => $n_family, 'n_given' => $n_given));
-		}
-		if (is_null($n_given) && is_null($org_name))    // just one name given, check against fn (= full name)
-		{
-			$addrs = $contacts->read( 0,0,array('id'),'',"n_fn=$n_family",'','n_fn' );
-		}
-		if (count($addrs))
-		{
-			return $addrs[0]['id'];
-		}
-		return False;
-	}
-
 	public static function project_id($num_or_title)
 	{
 		static $boprojects;
