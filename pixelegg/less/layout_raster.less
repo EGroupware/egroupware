@@ -736,7 +736,7 @@
                 // Normal
                 .egw_fw_ui_category {
                     margin: 4px 5px 5px 5px;
-                    padding: 0.5em 1em;
+                    padding: 0.5em 1em 0.5em 0;
                     cursor: pointer;
                     //																												border-top: 7px solid;
                     border-color: @gray_30;
@@ -769,7 +769,7 @@
                 // on Mouse over change color
                 .egw_fw_ui_category:hover {
                     .background_color_40_gray;
-                    padding: 0.5em 1em;
+                    padding: 0.5em 1em 0.5em 0;
                 }
 
 
@@ -910,7 +910,7 @@
     margin-top: 0px;
     padding-bottom: 5px;
     padding-left: 0px;
-    padding-top: 14px;
+    padding-top: 3px;
     margin-right: 5px;
     /*min-height: 50px;*/
 
@@ -971,11 +971,19 @@
 
 .egw_fw_ui_sidemenu_listitem {
 
-    padding: 0.5em 0;
-    margin: 0px 0 5px 0px;
+    padding: 9px 0px 0px 0px;
+    margin: 0px 0 1px 0px;
     position: relative;
-    min-height: 16px;
+    min-height: 18px;
     background-color: @gray_0;
+
+   // Submenu Hover Item - gelb
+    &:hover{
+        .color_100_gray;
+        background-color: @egw_color_1_e;
+
+    }
+
 
     // Icon before
     img.egw_fw_ui_sidemenu_listitem_icon {
@@ -1014,6 +1022,7 @@
         padding: 5px 0px 5px 5px;
         text-decoration: none;
         min-width: 5em;
+        vertical-align: bottom;
 
         &:hover{
             .color_100_gray;
@@ -1065,19 +1074,8 @@
             .color_0_gray;
             //		width: auto;
         }
-
-
     }
 
-
-
-    // Submenu Hover Item - gelb
-    &:hover{
-        .color_100_gray;
-        background-color: @egw_color_1_e;
-        padding: 0.5em 0;
-
-    }
 
 } // .egw_fw_ui_sidemenu_listitem
 
@@ -1194,12 +1192,12 @@
     // ########################################
     // APPS
     // CHrome hack
-     @media screen and (-webkit-min-device-pixel-ratio:0) {
+/*     @media screen and (-webkit-min-device-pixel-ratio:0) {
         #egw_fw_tabs {
-        /*Chrome needs margin-top*/
+        Chrome needs margin-top
            margin-top: 3px;
         }
-    }
+    }*/
 
     // #######################################
     // AREA for Content
@@ -1208,6 +1206,7 @@
         background-color: transparent;
         float: left;
         width: 100%;
+        margin-top: 3px;
 
 
         // ############################################################

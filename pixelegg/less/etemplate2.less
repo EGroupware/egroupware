@@ -963,14 +963,31 @@ button#admin-categories-index_add {
                                     margin-left: 0px;
                                     min-height: 16px;
                                     padding: 3px 0px;
+                                    margin-bottom: 0.2em;
+                                    background-color: lighten(@egw_color_3_e, 30%);
 
-                                    // gelb
+                                    // lila
                                     &:hover{
                                             .color_100_gray;
-                                            background-color: @egw_color_1_e;
+                                            background-color: @egw_color_3_e;
                                             padding: 3px 0;
 
+                                            a{color: @gray_0;}
+
                                         }
+
+                                    // delete favourites
+                                    &:first-of-type {background-color: @gray_0;
+
+                                                     a{color: @gray_100;}
+                                    }
+
+                                    // view as favourites
+                                    &:last-of-type {background-color: @gray_0;
+
+                                                    a{color: @gray_100;}
+                                    }
+
 
                                         a{
 
@@ -1213,7 +1230,8 @@ iframe#admin-index_iframe{
 
 
 
-/*#################################### ADMIN PART #####################################################*/
+/*#################################### END ADMIN PART #####################################################*/
+
 
 
 

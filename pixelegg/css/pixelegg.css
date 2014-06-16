@@ -1046,11 +1046,28 @@
     margin-left: 0px;
     min-height: 16px;
     padding: 3px 0px;
+    margin-bottom: 0.2em;
+    background-color: #ece2f7;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover {
     color: #000000;
-    background-color: #ffdd73;
+    background-color: #9b6ad6;
     padding: 3px 0;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item:hover a {
+    color: #ffffff;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item:first-of-type {
+    background-color: #ffffff;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item:first-of-type a {
+    color: #000000;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item:last-of-type {
+    background-color: #ffffff;
+  }
+  .sidebox-favorites ul.favorites li.ui-menu-item:last-of-type a {
+    color: #000000;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a {
     line-height: inherit;
@@ -1227,7 +1244,7 @@
   #admin-categories-index div.egwGridView_scrollarea {
     min-height: 500px;
   }
-  /*#################################### ADMIN PART #####################################################*/
+  /*#################################### END ADMIN PART #####################################################*/
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
@@ -4741,7 +4758,7 @@ table.nextmatch_header img {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
   margin: 4px 5px 5px 5px;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 0.5em 0;
   cursor: pointer;
   border-color: #b4b4b4;
   background-color: #e6e6e6;
@@ -4774,7 +4791,7 @@ table.nextmatch_header img {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:hover {
   background-color: #999999;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 0.5em 0;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
   border-bottom-width: 0px;
@@ -4881,7 +4898,7 @@ table.nextmatch_header img {
   margin-top: 0px;
   padding-bottom: 5px;
   padding-left: 0px;
-  padding-top: 14px;
+  padding-top: 3px;
   margin-right: 5px;
   /*min-height: 50px;*/
 }
@@ -4914,11 +4931,15 @@ table.nextmatch_header img {
   vertical-align: middle;
 }
 .egw_fw_ui_sidemenu_listitem {
-  padding: 0.5em 0;
-  margin: 0px 0 5px 0px;
+  padding: 9px 0px 0px 0px;
+  margin: 0px 0 1px 0px;
   position: relative;
-  min-height: 16px;
+  min-height: 18px;
   background-color: #ffffff;
+}
+.egw_fw_ui_sidemenu_listitem:hover {
+  color: #000000;
+  background-color: #ffdd73;
 }
 .egw_fw_ui_sidemenu_listitem img.egw_fw_ui_sidemenu_listitem_icon {
   /*display: none;*/
@@ -4950,6 +4971,7 @@ table.nextmatch_header img {
   padding: 5px 0px 5px 5px;
   text-decoration: none;
   min-width: 5em;
+  vertical-align: bottom;
 }
 .egw_fw_ui_sidemenu_listitem a:hover {
   color: #000000;
@@ -4994,11 +5016,6 @@ table.nextmatch_header img {
   -moz-border-radius: 3px;
   border-radius: 3px;
   color: #ffffff;
-}
-.egw_fw_ui_sidemenu_listitem:hover {
-  color: #000000;
-  background-color: #ffdd73;
-  padding: 0.5em 0;
 }
 .egw_fw_ui_scrollarea {
   overflow: hidden;
@@ -5075,18 +5092,19 @@ table.nextmatch_header img {
 #egw_fw_main {
   padding: 0;
   width: auto;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  #egw_fw_main #egw_fw_tabs {
-    /*Chrome needs margin-top*/
-    margin-top: 3px;
-  }
+  /*     @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #egw_fw_tabs {
+        Chrome needs margin-top
+           margin-top: 3px;
+        }
+    }*/
 }
 #egw_fw_main #egw_fw_tabs {
   position: relative;
   background-color: transparent;
   float: left;
   width: 100%;
+  margin-top: 3px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
   margin: 0px 0 0 0;
@@ -5443,7 +5461,7 @@ div.dialogHeader {
 .dialogHeader {
   /*.gradient_thead;*/
   color: #000000;
-  height: 40px;
+  height: 50px;
 }
 .dialogHeader img[src*="navbar"] {
   padding: 0 0 0 15px;
@@ -5631,7 +5649,6 @@ div#etemplate\.tab_widget {
   padding: 3px;
   white-space: nowrap;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
-  /*label.et2_label {}*/
 }
 .dialogFooterToolbar td {
   padding: 0px 5px 0px 0px;
@@ -5653,6 +5670,9 @@ div#etemplate\.tab_widget {
   white-space: normal;
 }
 .dialogFooterToolbar div.et2_box_widget {
+  white-space: nowrap;
+}
+.dialogFooterToolbar label.et2_label {
   white-space: nowrap;
 }
 .dialogFooterToolbar input.et2_checkbox {
