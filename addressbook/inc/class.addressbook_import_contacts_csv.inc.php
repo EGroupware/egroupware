@@ -21,7 +21,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 *
 	 * @var array
 	 */
-	protected static $conditions = array( 'exists' );
+	protected static $conditions = array( 'exists', 'equal' );
 
 	/**
 	 * @var bocontacts
@@ -70,16 +70,16 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	}
 
 	/**
-        * Import a single record
-        *
-        * You don't need to worry about mappings or translations, they've been done already.
-        * You do need to handle the conditions and the actions taken.
-        *
-        * Updates the count of actions taken
-        *
-        * @return boolean success
-        */
-        protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
+	 * Import a single record
+	 *
+	 * You don't need to worry about mappings or translations, they've been done already.
+	 * You do need to handle the conditions and the actions taken.
+	 *
+	 * Updates the count of actions taken
+	 *
+	 * @return boolean success
+	 */
+	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
 
 		// Set owner, unless it's supposed to come from CSV file
@@ -182,6 +182,22 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 								$success = $this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() );
 							}
 						} else {
+							$action = $condition['false'];
+							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+						}
+						break;
+					case 'equal':
+						// Match on field
+						$result = $this->equal($record, $condition, $matches);
+						if($result)
+						{
+							// Apply true action to any matching records found
+							$action = $condition['true'];
+							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+						}
+						else
+						{
+							// Apply false action if no matching records found
 							$action = $condition['false'];
 							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
 						}

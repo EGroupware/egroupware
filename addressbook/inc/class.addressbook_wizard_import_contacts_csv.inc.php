@@ -63,6 +63,7 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 		// Conditions
 		$this->conditions = array(
 			'exists'	=>	lang('exists'),
+			'equal'		=> '='
 		);
 	}
 
