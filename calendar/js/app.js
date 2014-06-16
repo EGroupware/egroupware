@@ -662,7 +662,7 @@ app.classes.calendar = AppJS.extend(
 	{
 		this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
 	},
-
+	
 	/**
 	 * control delete_series popup visibility
 	 *
@@ -676,7 +676,47 @@ app.classes.calendar = AppJS.extend(
 
 		if (exceptions)
 		{
-			$j(document.getElementById('calendar-edit_calendar-delete_series')).show();
+			var buttons = [
+				{
+					button_id: 'keep',
+					statustext:'All exceptions are converted into single events.',
+					text: 'Keep exceptions',
+					id: 'button[delete_keep_exceptions]',
+					image: 'keep', "default":true
+				},
+				{
+					button_id: 'delete',
+					statustext:'The exceptions are deleted together with the series.',
+					text: 'Delete exceptions',
+					id: 'button[delete_exceptions]',
+					image: 'delete'
+				},
+				{
+					button_id: 'cancel',
+					text: 'Cancel',
+					id: 'dialog[cancel]',
+					image: 'cancel'
+				}
+				
+			];
+			var self = this;
+			et2_dialog.show_dialog
+			(
+					function(_button_id)
+					{
+						if (_button_id != 'dialog[cancel]')
+						{
+							self.et2._inst.submit(_button_id);
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					},
+					this.egw.lang("Do you want to keep the series exceptions in your calendar?"),
+					this.egw.lang("This event is part of a series"), {}, buttons , et2_dialog.WARNING_MESSAGE
+			);
 		}
 		else if (content['recur_type'] !== 0)
 		{

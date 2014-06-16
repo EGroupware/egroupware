@@ -261,7 +261,6 @@
 				<hbox align="center">
 					<button statustext="All exceptions are converted into single events." label="Keep exceptions" id="button[delete_keep_exceptions]" image="keep" background_image="1"/>
 					<button statustext="The exceptions are deleted together with the series." label="Delete exceptions" id="button[delete_exceptions]" image="delete" background_image="1"/>
-					<buttononly label="Cancel" onclick="jQuery(document.getElementById('calendar-edit_calendar-delete_series')).hide();"/>
 				</hbox>
 			</vbox>
 		</vbox>
@@ -343,5 +342,6 @@
 			<checkbox label="Do not notify" id="no_notifications"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 		</hbox>
+		<template id="calendar.delete_series"/>
 	</template>
 </overlay>
