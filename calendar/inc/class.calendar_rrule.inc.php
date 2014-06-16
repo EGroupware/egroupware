@@ -492,6 +492,33 @@ class calendar_rrule implements Iterator
 	}
 
 	/**
+	 * Fix enddates which are not on a recurrence, eg. for a on Monday recurring weekly event a Tuesday
+	 *
+	 * @return DateTime
+	 */
+	public function normalize_enddate()
+	{
+		$this->rewind();
+		while ($this->current < $this->enddate)
+		{
+			$previous = clone $this->current;
+			$this->next_no_exception();
+		}
+		// if enddate is now before next acurrence, but not on same day, we use previous recurrence
+		// this can happen if client gives an enddate which is NOT a recurrence date
+		// eg. for a on Monday recurring weekly event a Tuesday as enddate
+		if ($this->enddate < $this->current  && $this->current->format('Ymd') != $this->enddate->format('Ymd'))
+		{
+			$last = $previous;
+		}
+		else
+		{
+			$last = clone $this->current;
+		}
+		return $last;
+	}
+
+	/**
 	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
 	 */
 	public function rewind()
