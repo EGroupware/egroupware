@@ -276,7 +276,7 @@ class importexport_wizard_basic_import_csv
 				$index = $field['index'];
 				foreach(array('conversion'=>'field_conversion', 'field' => 'field_mapping') as $id => $dest)
 				{
-					if(trim($field[$id]) != '')
+					if(trim($field[$id]) != '' && $field[$id] !== '--NONE--')
 					{
 						$content[$dest][$index] = trim($field[$id]);
 					}

@@ -54,7 +54,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 *
 	 * @var array
 	 */
-	protected static $conditions = array( 'exists', 'greater', 'greater or equal', );
+	protected static $conditions = array( 'exists', 'equal', 'less_than');
 
 	/**
 	 * This is the definition that will be used to deal with the CSV file
@@ -211,29 +211,34 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	{
 		if ( $this->_definition->plugin_options['conditions'] ) {
 			foreach ( $this->_definition->plugin_options['conditions'] as $condition ) {
+				$result = false;
 				switch ( $condition['type'] ) {
 					// exists
 					case 'exists' :
 						// Check for that record
-						$result = $this->exists($record, array($contition['string']), $matches);
-						if($result)
-						{
-						// Apply true action to any matching records found
-							$action = $condition['true'];
-							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
-						}
-						else
-						{
-						// Apply false action if no matching records found
-							$action = $condition['false'];
-							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
-						}
+						$result = $this->exists($record, $condition, $matches);
+						break;
+					case 'equal':
+						// Match on field
+						$result = $this->equal($record, $condition, $matches);
 						break;
 
 				// not supported action
 					default :
 						die('condition / action not supported!!!');
 						break;
+				}
+				if($result)
+				{
+					// Apply true action to any matching records found
+					$action = $condition['true'];
+					$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+				}
+				else
+				{
+					// Apply false action if no matching records found
+					$action = $condition['false'];
+					$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 				}
 				if ($action['stop']) break;
 			}
@@ -254,10 +259,38 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 *
 	 * @return boolean
 	 */
-	protected function exists(iface_egw_record &$record, Array &$condition, &$matches = array())
+	protected function exists(importexport_iface_egw_record &$record, Array &$condition, &$matches = array())
 	{
 	}
 
+	/**
+	 * Search for records where the selected field matches the given value
+	 *
+	 * @param record
+	 * @param condition array = array('string' => field name, 'type' => Type of condition, 'op_2' => second operand)
+	 *
+	 * @return boolean
+	 */
+	protected function equal(importexport_iface_egw_record &$record, Array &$condition)
+	{
+		$field = $condition['string'];
+		return $record->$field == $condition['op_2'];
+	}
+
+	/**
+	 * Search for records where the selected field is less than the given value.
+	 * PHP's concept of 'less than' is used.
+	 *
+	 * @param record
+	 * @param condition array = array('string' => field name, 'type' => Type of condition, 'op_2' => second operand)
+	 *
+	 * @return boolean
+	 */
+	protected function less_than(importexport_iface_egw_record &$record, Array &$condition)
+	{
+		$field = $condition['string'];
+		return $record->$field < $condition['op_2'];
+	}
 	/**
 	 * perform the required action
 	 *
