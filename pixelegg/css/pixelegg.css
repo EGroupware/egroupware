@@ -221,6 +221,9 @@
     background-color: #1aa200 !important;
   }
   /* Gantt widget */
+  .et2_gantt .gantt_tree_content {
+    color: #043a6b;
+  }
   .et2_gantt .gantt_task_line {
     background-color: #679fd2;
   }
