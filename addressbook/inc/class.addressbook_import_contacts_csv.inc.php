@@ -179,11 +179,11 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 									if ( !is_array( $record_array['cat_id'] ) ) $record->cat_id = explode( ',', $record->cat_id );
 									$record->cat_id = implode( ',', array_unique( array_merge( $record->cat_id, $contact['cat_id'] ) ) );
 								}
-								$success = $this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() );
+								$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 							}
 						} else {
 							$action = $condition['false'];
-							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 						}
 						break;
 					case 'equal':
@@ -193,13 +193,13 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 						{
 							// Apply true action to any matching records found
 							$action = $condition['true'];
-							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 						}
 						else
 						{
 							// Apply false action if no matching records found
 							$action = $condition['false'];
-							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 						}
 						break;
 
@@ -212,7 +212,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			}
 		} else {
 			// unconditional insert
-			$success = $this->action( 'insert', $record->get_record_array(), $import_csv->get_current_position() );
+			$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 		}
 		return $success;
 	}
@@ -221,10 +221,11 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 * perform the required action
 	 *
 	 * @param int $_action one of $this->actions
-	 * @param array $_data contact data for the action
+	 * @param importexport_iface_egw_record $record contact data for the action
 	 * @return bool success or not
 	 */
-	protected function action ( $_action, Array $_data, $record_num = 0 ) {
+	protected function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 ) {
+		$_data = $record->get_record_array();
 		switch ($_action) {
 			case 'none' :
 				return true;
@@ -296,6 +297,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 						$this->errors[$record_num] = $this->bocontacts->error;
 					} else {
 						$this->results[$_action]++;
+						// This does nothing (yet?) but update the identifier
+						$record->save($result);
 					}
 					return $result;
 				}

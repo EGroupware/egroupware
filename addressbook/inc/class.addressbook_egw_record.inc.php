@@ -102,7 +102,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return string identifier of current record
 	 */
 	public function get_identifier() {
-		return $this->identifier;
+		return $this->identifier ? $this->identifier : $this->id;
 	}
 
 	/**
@@ -111,7 +111,8 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-
+		// Not yet implemeted
+		$this->identifier = $_dst_identifier;
 	}
 
 	/**

@@ -51,6 +51,9 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
 		unset($this->mapping_fields['jpegphoto']);        // can't cvs import that
+		
+		// Add in special handled fields
+		$this->mapping_fields[lang('Special')] = addressbook_import_contacts_csv::$special_fields;
 
 		// Actions
 		$this->actions = array(
