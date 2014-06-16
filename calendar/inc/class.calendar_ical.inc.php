@@ -2972,12 +2972,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			// reset recure_enddate to 00:00:00 on the last day
 			$rriter = calendar_rrule::event2rrule($event, false);
-			$rriter->rewind();
-			while ($rriter->current < $rriter->enddate)
-			{
-				$rriter->next_no_exception();
-			}
-			$last = clone $rriter->current;
+			$last = $rriter->normalize_enddate();
 			$last->setTime(0, 0, 0);
 			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.egw_time::to($last, ''));
 			$event['recur_enddate'] = egw_time::to($last, 'server');
