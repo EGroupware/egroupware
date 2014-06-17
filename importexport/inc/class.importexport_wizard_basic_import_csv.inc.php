@@ -305,19 +305,33 @@ class importexport_wizard_basic_import_csv
 			if(array_key_exists('field_mapping', $content))
 			{
 				$field = $content['field_mapping'];
+				$conversion = $content['field_conversion'];
 			}
 			else
 			{
 				$field = $content['plugin_options']['field_mapping'];
+				$conversion = $content['plugin_options']['field_conversion'];
 			}
+			$empties = 1;
 			foreach($content['csv_fields'] as $index => $title)
 			{
 				$content['mapping'][] = array(
 					'index'	=>	$index,
 					'title' => $title,
 					'field'	=>	$field[$index],
-					'conversion'	=>	$content['field_conversion'][$index]
+					'conversion'	=>	$conversion[$index]
 				);
+				if(strstr($title,lang('Extra %1'))) $empties++;
+			}
+			while($empties <= 3)
+			{
+				$content['mapping'][] = array(
+					'index' => $index + $empties,
+					'title' => lang('Extra %1', $empties),
+					'field' => $field[$index+$empties],
+					'conversion'	=>	$conversion[$index+$empties]
+				);
+				$empties++;
 			}
 			$preserv = $content;
 			$sel_options['field'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
@@ -389,6 +403,16 @@ class importexport_wizard_basic_import_csv
 
 		foreach($content['field_mapping'] as $field) {
 			$sel_options['string'][$field] = $this->mapping_fields[$field];
+			if(!$sel_options['string'][$field])
+			{
+				foreach($this->mapping_fields as $fields)
+				{
+					if(is_array($fields) && $fields[$field])
+					{
+						$sel_options['string'][$field] = $fields[$field];
+					}
+				}
+			}
 		}
 		$sel_options['type'] = $this->conditions;
 		$sel_options['action'] = $this->actions;

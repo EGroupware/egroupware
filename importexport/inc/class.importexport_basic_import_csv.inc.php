@@ -109,6 +109,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	public static $special_fields = array(
 		'contact' => array('label' => 'Link to Addressbook', 'title'=>'use nlast,nfirst[,org] or contact_id from addressbook, eg: Guy,Test,My organization'),
 		'link_search' => array('label' => 'Link by search', 'title'=>'appname:search terms the entry should be linked to, links to the first match eg: addressbook:My organization'),
+		'link_custom' => array('label' => 'Link by custom field', 'title'=>'use <appname>:<custom_field_name>:|[<field_index>] links to first <appname> entry where given custom field matches given row column'),
 		'link_0' => array('label' => 'Link to ID', 'title'=>'appname:appid the entry should be linked to, eg.: addressbook:123'),
 	);
 
@@ -348,7 +349,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 				list($link, $type) = explode('_',$field);
 
 				// Searching, take first result
-				if($type == 'search')
+				if($type == 'custom')
+				{
+					$app_id = $this->link_by_cf($record, $app, $app_id, $import_csv->get_current_position());
+				}
+				else if($type == 'search')
 				{
 					$result = egw_link::query($app, $app_id);
 					do
@@ -501,6 +506,73 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			}
 		}
 		return False;
+	}
+
+	/**
+	 * Get the primary key for an entry based on a custom field
+	 * Returns key, so regular linking can take over
+	 *
+	 * @param int $record_number Row number, used for errors
+	 * @param string $app Target application name
+	 * @param string $value CSV value in the form of custom_field_name:value
+	 */
+	protected function link_by_cf(importexport_iface_egw_record &$record, $app, $value,$record_num)
+	{
+		$app_id = false;
+
+		list($custom_field, $value) = explode(':',$value);
+		// Find matching entry
+		if($app && $custom_field && $value)
+		{
+			$cfs = config::get_customfields($app);
+			// Error if no custom fields, probably something wrong in definition
+			if(!$cfs[$custom_field])
+			{
+				// Check for users specifing label instead of name
+				foreach($cfs as $name => $settings)
+				{
+					if(strtolower($settings['label']) == strtolower($custom_field))
+					{
+						$custom_field = $name;
+						break;
+					}
+				}
+			}
+
+			// Couldn't find field, give an error - something's wrong
+			if(!$cfs[$custom_field] && !$cfs[substr($custom_field,1)]) {
+				$this->errors[$record_num] .= lang('No custom field "%1" for %2.',
+					$custom_field, lang($app));
+				return false;
+			}
+			if($custom_field[0] != '#') $custom_field = '#' . $custom_field;
+error_log("Searching for $custom_field = $value");
+			// Search
+			if(egw_link::get_registry($app, 'query'))
+			{
+				$options = array('filter' => array("$custom_field = " . $GLOBALS['egw']->db->quote($value)));
+				$result = egw_link::query($app, '', $options);
+
+				// Only one allowed
+				if($record->get_identifier())
+				{
+					while(key($result) == $record->get_identifier())
+					{
+						array_shift($result);
+					}
+				}
+				if(count($result) != 1)
+				{
+					$this->warnings[$record_num] .= ($this->warnings[$record_num] ? "\n" : '') .
+						lang('Unable to link to %3 by custom field "%1": "%4".  %2 matches.',
+						$custom_field, count($result), lang($app), $options['filter'][0]
+					);
+					return false;
+				}
+				$app_id = key($result);
+			}
+		}
+		return $app_id;
 	}
 
 	/**

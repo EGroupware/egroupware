@@ -111,7 +111,8 @@
 					$content
 				);
 				if($result) {
-					$GLOBALS['egw']->js->set_onload('window.opener.location.reload(); self.close();');
+					egw_framework::refresh_opener('', 'importexport');
+					egw_framework::window_close();
 				} else {
 					$data['message'] = lang('Unable to schedule');
 					unset($id);
