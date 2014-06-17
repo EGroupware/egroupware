@@ -568,6 +568,12 @@ function check_install_pear_packages()
 	global $config;
 	$packages_installed = pear_list();
 
+	// some setup files use autoloader
+	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
+	define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
+	include_once(EGW_API_INC.'/common_functions.inc.php');
+
 	// read required packages from apps
 	$packages = array('PEAR' => true, 'HTTP_WebDAV_Server' => '999.egw-pear');	// pear must be the first, to run it's update first!
 	$channels = array();
