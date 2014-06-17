@@ -147,6 +147,7 @@ delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
 delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
+delete this recurrence	calendar	en	Delete this recurrence
 delete this series of recuring events	calendar	en	Delete this series of recurring events
 deleted	calendar	en	Deleted.
 deny ressources reservation for private events	calendar	en	Deny resources reservation for private events
@@ -515,6 +516,7 @@ this entry is currently opened by %1!	calendar	en	This entry is currently opened
 this entry is opened by user:	calendar	en	This entry was opened within the configured time interval by user:
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
+this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	en	This is a recurring event. Do you want to delete just this recurrence or the whole series?
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
