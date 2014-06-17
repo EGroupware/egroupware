@@ -1484,6 +1484,44 @@ var et2_link_list = et2_link_string.extend(
 		}
 	},
 
+	set_value: function(_value)
+	{
+		// Handle server passed a list of links that aren't ready yet
+		if(_value && typeof _value == "object" && _value.to_id && typeof _value.to_id == "object")
+		{
+			this.list.empty();
+			for(var id in _value.to_id)
+			{
+				var link = _value.to_id[id];
+				if(link.app)
+				{
+					// Icon should be in registry
+					if(typeof link.icon == 'undefined')
+					{
+						link.icon = egw.link_get_registry(link.app,'icon');
+						// No icon, try by mime type - different place for un-saved entries
+						if(link.icon == false && link.id.type)
+						{
+							// Triggers icon by mime type, not thumbnail or app
+							link.type = link.id.type;
+							link.icon = true;
+						}
+					}
+					// Special handling for file - if not existing, we can't ask for title
+					if(link.app == 'file' && typeof link.title == 'undefined')
+					{
+						link.title = link.id.name || '';
+					}
+					this._add_link(link);
+				}
+			}
+		}
+		else
+		{
+			this._super.apply(this,arguments);
+		}
+	},
+
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
 			.attr("id", "link_"+_link_data.link_id)
