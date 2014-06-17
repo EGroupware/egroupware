@@ -425,6 +425,9 @@ class asyncservice
 						{
 							translation::init();
 						}
+						// set VFS user for vfs access rights
+						egw_vfs::$user = $job['account_id'];
+						egw_vfs::clearstatcache();
 					}
 					else
 					{
