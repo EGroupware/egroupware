@@ -1,3 +1,32 @@
+egroupware-epl (14.1.20140617-1) hardy; urgency=low
+
+  * ProjectManager: fixed parent projects were not updated with changes (you had to run sync-all manually
+  * ProjectManager/Timesheet: automatic change a changed project-title in Timesheet too
+  * ProjectManager: fixed switching from account-type "status" to "status and times" set datasource time as overwritten time
+  * Setup: re-add config for mail authentication and fixed it to always try to use a TLS connection
+  * Admin/Mail: allow admins to set vacation notice for a user
+  * Mail/Vacation: Make vacation be able to be set from both Admin and Mail
+  * Mail: store last move or copy targets for action menu options to be used to move mails to previously used targets on rightclick
+  * EMailAdmin: wizard allows now in manual mode to skip IMAP configuration completely to create a SMTP only profile
+  * Mail/Sieve: Show mail sieve rules list in mail index with sidebox mailTree available
+  * Mail: when changing account on compose, we no longer fake the sender, but we use the outgoing Server settings of that account AND copy the sent message to that accounts sentfolder (if set and prefs suggest we should store a copy in the selected accounts sentfolder)
+  * Mail: detect and handle actions on ALL-messages for setting and removing flags and lables for the mailbox we operate on
+  * fixed SQL error "Field last_mod doesnt have a default value" on update for newer MySQL versions or PostgreSQL
+  * API/htmLawed: update to version 1.1.17
+  * Calendar/Alarm: Move calendar Alarm from Alarm tab to Details tab and make it more user friendly to add alarm
+  * Calendar: adding default alarm for regular or whole-day events, preference is shared with CalDAV clients
+  * Addressbook: fixed empty edit popup, if contact contains photo and changing of private custom-fields in extra private tab
+  * Admin/Filemanager: creating groups did not create group directory, but damaged VFS (can be repaired with "Check virtual filesystem")
+  * Admin: accounts could not be deactivated
+  * Notifications: fixed not used SMTP authentication and selection of mail account
+  * Calendar/Notifications: show notification errors, eg. mail could not be sent
+  * Mail: if we use a different Identity on sending AND the identity email is different but not empty from the account email; then use identity information for From and FromName; Do not touch Sender
+  * Filemanager: user interface to mount into VFS or enable versioning (requires EPL)
+  * Preferences: now stored JSON encoded in database (also removed many deprecated methods)
+  * Calendar/iCal/CalDAV: normalize enddates not on a recurrence-date, to recurrence-date before (not next)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 17 Jun 2014 09:04:57 +0200
+
 egroupware-epl (14.1.20140514-1) hardy; urgency=low
 
   * eTemplate2: fixed accounts got lost, if account-selection did not show all accounts
