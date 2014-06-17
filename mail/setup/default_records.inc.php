@@ -27,4 +27,4 @@ if (!$GLOBALS['egw_setup']->db->affected_rows())
 }
 
 // change common/default_app pref to mail, if it was felamimail
-preferences::change_pref('common', 'default_app', 'mail', 'felamimail');
+preferences::change_preference('common', 'default_app', 'mail', 'felamimail');
