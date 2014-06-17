@@ -987,7 +987,14 @@ class calendar_uiforms extends calendar_ui
 					'msg'        => $msg,
 				));
 			}
-			egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save'?'update': 'delete');
+			if (in_array($button,array('delete_exceptions','delete_keep_exceptions')) || ($content['recur_type'] && $button['delete']))
+			{
+				egw_framework::refresh_opener($msg,'calendar');
+			}
+			else
+			{
+				egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save'?'update': 'delete');
+			}	
 			egw_framework::window_close();
 			common::egw_exit();
 		}
