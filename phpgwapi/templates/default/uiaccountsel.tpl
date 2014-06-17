@@ -85,8 +85,9 @@
 							break;
 						}
 					}
-				}	
+				}
 			}
+			opener.jQuery('#uical_select_owner').change();
 		}
 		window.close();
 	}	
