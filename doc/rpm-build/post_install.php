@@ -63,6 +63,7 @@ $config = array(
 	'folder'        => '',
 	'install-update-app' => '',	// install or update a single (non-default) app
 	'webserver_user'=> 'apache',	// required to fix permissions
+	'php5enmod'     => '',
 );
 
 // read language from LANG enviroment variable
@@ -119,6 +120,11 @@ function set_distro_defaults($distro=null)
 			{
 				$config['start_db'] = '/etc/init.d/mysql';
 				$config['start_webserver'] = '/etc/init.d/apache2';
+			}
+			// enable mcrypt
+			if (file_exists('/usr/sbin/php5enmod'))
+			{
+				$config['php5enmod'] = '/usr/sbin/php5enmod -s ALL mcrypt';
 			}
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
@@ -295,6 +301,11 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			}
 		}
 		run_cmd($setup_ldap);
+	}
+	// enable mcrypt extension eg. for Ubuntu 14.04+
+	if (!empty($config['php5enmod']))
+	{
+		run_cmd($config['php5enmod']);
 	}
 
 	// create header
