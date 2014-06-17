@@ -118,6 +118,33 @@
 				<row>
 					<nextmatch id="nm" template="calendar.list.rows" span="all"/>
 				</row>
+				<row>
+					<hbox>
+						<box class="action_popup prompt" id="delete_popup">
+							<vbox>
+								<description value="Delete" class="promptheader"/>
+								<description value="Do you want to delete this event as an exception, or delete the whole series?"/>
+								<hbox>
+									<button label="Delete exception" id="delete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box class="action_popup prompt" id="undelete_popup">
+							<vbox>
+								<description value="Un-delete" class="promptheader"/>
+								<description value="Do you want to Un-delete this event as an exception, or un-delete the whole series?"/>
+								<hbox>
+									<button label="Un-delete exception" id="undelete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+					</hbox>
+					<description/>
+				</row>
 			</rows>
 		</grid>
 		<styles>

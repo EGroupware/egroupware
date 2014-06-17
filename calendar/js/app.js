@@ -925,46 +925,16 @@ app.classes.calendar = AppJS.extend(
 		}
 		if (matches)
 		{
-			var id = matches[1];
-			var date = matches[2];
-			var popup = jQuery(document.getElementById(_action.getManager().etemplate_var_prefix + '[' + _action.id + '_popup]'));
-			var row = null;
-
-			// Cancel normal confirm
-			delete _action.data.confirm;
-			delete _action.data.confirm_multiple;
-
-			// nm action - show popup
-			nm_open_popup(_action,_senders);
-
-			if(!popup)
+			var popup = jQuery('#calendar-list_delete_popup').get(0);
+			if (typeof popup != 'undefined')
 			{
-				return;
-			}
-			row = jQuery("#"+id+"\\:"+date);
-			if (row)
-			{
-				// Open at row
-				popup.css({
-					position: "absolute",
-					top: row.position().top + row.height() -popup.height()/2,
-					left: $j(window).width()/2-popup.width()/2
-				});
-			} else {
-				// Open popup in the middle
-				popup.css({
-					position: "absolute",
-					top: $j(window).height()/2-popup.height()/2,
-					left: $j(window).width()/2-popup.width()/2
-				});
-			}
+				// nm action - show popup
+				nm_open_popup(_action,_senders);
+			}	
 			return;
 		}
 
-		console.log(_action);
 		nm_action(_action, _senders);
-
-		_action.data = backup;	// restore url, width, height, nm_action
 	},
 
 	/**
