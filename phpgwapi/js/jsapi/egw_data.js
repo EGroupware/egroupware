@@ -49,9 +49,6 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			egw.debug("error", "Invalid result for 'dataFetch'");
 		}
 
-		// The "uidsMissing" contains a list of missing uids.
-		var uidsMissing = [];
-
 		if (_result.lastModification)
 		{
 			lastModification = _result.lastModification;
@@ -79,6 +76,18 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				else
 				{
 					egw.dataStoreUID(uid, _result.data[key]);
+				}
+			}
+			
+			// Tried to refresh a specific row and got nothing, so set it to null
+			// (triggers update for listeners), then remove it
+			if(_result.data.length == 0 && typeof _context == "object" && _context.refresh)
+			{
+				for(var i = 0; i < _context.refresh.length; i++)
+				{
+					var uid = UID(_context.refresh[i], _context.prefix);
+					egw.dataStoreUID(uid, null);
+					egw.dataDeleteUID(uid);
 				}
 			}
 
