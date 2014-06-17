@@ -1562,7 +1562,7 @@ class infolog_bo
 				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
-				$params = array('filter' => $filter, 'custom_fields' => true);
+				$params = array('filter' => $filter, 'custom_fields' => true, 'subs' => true);
 				foreach($this->so->search($params) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
