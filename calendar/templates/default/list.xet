@@ -123,9 +123,9 @@
 						<box class="action_popup prompt" id="delete_popup">
 							<vbox>
 								<description value="Delete" class="promptheader"/>
-								<description value="Do you want to delete this event as an exception, or delete the whole series?"/>
+								<description value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"/>
 								<hbox>
-									<button label="Delete exception" id="delete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"/>
 									<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
 								</hbox>
@@ -134,9 +134,9 @@
 						<box class="action_popup prompt" id="undelete_popup">
 							<vbox>
 								<description value="Un-delete" class="promptheader"/>
-								<description value="Do you want to Un-delete this event as an exception, or un-delete the whole series?"/>
+								<description value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"/>
 								<hbox>
-									<button label="Un-delete exception" id="undelete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
 									<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
 								</hbox>
