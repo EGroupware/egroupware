@@ -289,8 +289,7 @@ enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy
 enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
 enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
 error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
-error changing the password for % !!!	admin	fr	Erreur en changeant le mot de passe pour % !!!
-error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe pour % !
+error changing the password for %1 !!!	admin	fr	Erreur en changeant le mot de passe pour %1 !
 error deleting log entry!	admin	fr	Erreur à la suppression des entrées de journaux  !
 error saving	admin	fr	Erreur lors de l'enregistrement !
 error saving account!	admin	fr	Erreur lors de l'enregistrement du compte !

@@ -293,7 +293,6 @@ enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job !!!
-error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !!!
 error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error saving	admin	de	Fehler beim Speichern

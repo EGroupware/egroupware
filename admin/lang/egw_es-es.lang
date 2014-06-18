@@ -289,7 +289,6 @@ enter your http proxy server port	admin	es-es	Introduzca el puerto de su servido
 enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor SMTP (nombre o IP)
 enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
-error changing the password for % !!!	admin	es-es	¡Error al cambiar la contraseña para % !
 error changing the password for %1 !!!	admin	es-es	¡Error al cambiar la contraseña para %1!
 error deleting log entry!	admin	es-es	¡Error al borrar la entrada del log!
 error saving	admin	es-es	Error al guardar

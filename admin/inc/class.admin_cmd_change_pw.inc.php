@@ -55,7 +55,7 @@ class admin_cmd_change_pw extends admin_cmd
 		if (!$auth->change_password(null, $this->password, $account_id))
 		{
 			// as long as the auth class is not throwing itself ...
-			throw new Exception(lang('Error changing the password for % !!!',$this->account),99);
+			throw new Exception(lang('Error changing the password for %1 !!!',$this->account),99);
 		}
 		return lang('Password updated');
 	}

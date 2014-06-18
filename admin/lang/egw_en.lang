@@ -293,7 +293,6 @@ enter your http proxy server port	admin	en	Enter your HTTP proxy server port
 enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	en	Enter your SMTP server port
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
-error changing the password for % !!!	admin	en	Error changing the password for % !!!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
 error deleting log entry!	admin	en	Error deleting log entry!
 error saving	admin	en	Error saving!
