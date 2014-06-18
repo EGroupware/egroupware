@@ -864,7 +864,7 @@ class mail_ui
 		{
 			error_log(__LINE__.': '.__METHOD__."() ".$e->getMessage());
 			$folderObjects=array();
-//			self::callWizard($e->getMessage(), false);
+			self::callWizard($e->getMessage(), false);
 			$c = 1;
 		}
 
