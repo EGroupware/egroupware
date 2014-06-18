@@ -773,7 +773,7 @@ class mail_ui
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
-		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly);
+		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly,true,true,false);
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
@@ -787,6 +787,7 @@ class mail_ui
 	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
 	 * @param boolean $_returnNodeOnly only effective if $_nodeID is set, and $_nodeID is_nummeric
 	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
+	 * @param boolean $_popWizard Check if getFoldertree is called via open account (TRUE) or via tree interaction (FALSE), to control wizard popup
 	 * @return array something like that: array('id'=>0,
 	 * 		'item'=>array(
 	 *			'text'=>'INBOX',
@@ -796,7 +797,7 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true, $_useCacheIfPossible=true)
+	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true, $_useCacheIfPossible=true, $_popWizard=true)
 	{
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (!is_null($_nodeID) && $_nodeID !=0)
@@ -864,7 +865,10 @@ class mail_ui
 		{
 			error_log(__LINE__.': '.__METHOD__."() ".$e->getMessage());
 			$folderObjects=array();
-			self::callWizard($e->getMessage(), false);
+			if ($_popWizard)
+			{
+				self::callWizard($e->getMessage(), false);
+			}
 			$c = 1;
 		}
 
