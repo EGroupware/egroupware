@@ -522,6 +522,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	/**
 	 * Get the primary key for an entry based on a custom field
 	 * Returns key, so regular linking can take over
+	 *
+	 * This is a copy of what's in importexport_basic_import_csv, and can go
+	 * away if this is changed to extend it
 	 */
 	protected function link_by_cf($record_num, $app, $fieldname, $value)
 	{
