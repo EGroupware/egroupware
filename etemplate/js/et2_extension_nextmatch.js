@@ -857,17 +857,27 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 
 		var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
-		var app = list[0];
+		var pref = this.options.settings.columnselection_pref;
+		if(pref.indexOf('nextmatch') == 0)
+		{
+			app = list[0].substring('nextmatch'.length+1);
+		}
+		else
+		{
+			app = list[0];
+			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+			pref = "nextmatch-"+this.options.settings.columnselection_pref;
+		}
 
 		// Server side wants each cf listed as a seperate column
 		jQuery.merge(colDisplay, custom_fields);
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
+		egw.set_preference(app, pref, colDisplay.join(","));
 
 		// Save adjusted column sizes
-		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+		egw.set_preference(app, pref+"-size", colSize);
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
