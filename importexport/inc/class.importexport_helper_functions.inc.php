@@ -296,6 +296,7 @@ class importexport_helper_functions {
 			if ( empty( $conversion_string ) ) continue;
 
 			// fetch patterns ($rvalues)
+			$rvalues = array();
 			$pat_reps = explode( $PSep, stripslashes( $conversion_string ) );
 			foreach( $pat_reps as $k => $pat_rep ) {
 				list( $pattern, $replace ) = explode( $ASep, $pat_rep, 2 );
@@ -319,6 +320,16 @@ class importexport_helper_functions {
 			}
 			$c_functions = implode('|', $c_functions);
 			foreach ( $rvalues as $pattern => $replace ) {
+				// Allow to include record indexes in pattern
+				$reg = '/\|\[([0-9]+)\]/';
+				while( preg_match( $reg, $pattern, $vars ) ) {
+					// expand all _record fields
+					$pattern = str_replace(
+						$CPre . $vars[1] . $CPos,
+						$_record[array_search($vars[1], array_keys($_record))],
+						$pattern
+					);
+				}
 				if( preg_match('/'. (string)$pattern.'/', $val) ) {
 
 					$val = preg_replace( '/'.(string)$pattern.'/', $replace, (string)$val );
