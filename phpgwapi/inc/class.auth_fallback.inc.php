@@ -98,14 +98,18 @@ class auth_fallback implements auth_backend
 		}
 		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
-			if ($ret = $this->primary_backend->change_password($old_passwd, $new_passwd, $account_id))
+			if (($ret = $this->primary_backend->change_password($old_passwd, $new_passwd, $account_id)))
 			{
 				// if password successfully changed on primary, also update fallback
 				$this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
 			}
-			return $ret;
 		}
-		return $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+		else
+		{
+			$ret = $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
+		}
+		//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) username='$username', backend=".egw_cache::getInstance(__CLASS__,'backend_used-'.$username)." returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
