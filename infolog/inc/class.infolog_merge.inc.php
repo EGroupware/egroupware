@@ -140,6 +140,12 @@ class infolog_merge extends bo_merge
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
 		}
+
+		// Add parent
+		if($record->info_id_parent)
+		{
+			$info += $this->infolog_replacements($record->info_id_parent, 'info_id_parent', $content);
+		}
 		return $info;
 	}
 
@@ -180,6 +186,9 @@ class infolog_merge extends bo_merge
 		{
 			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
+
+		echo '<tr><td colspan="4"><h3>'.lang('Parent').":</h3></td></tr>";
+		echo '<tr><td>{{info_id_parent/info_subject}}</td><td colspan="3">'.lang('All other %1 fields are valid $',lang('infolog'))."</td></tr>\n";
 
 		echo '<tr><td colspan="4"><h3>'.lang('Contact fields').':</h3></td></tr>';
 		$n = 0;
