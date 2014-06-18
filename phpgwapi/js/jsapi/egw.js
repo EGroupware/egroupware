@@ -177,6 +177,14 @@
 
 	window.egw_LAB.script(include).wait(function()
 	{
+		// call egw.open_link, if popup attr specified
+		var egw_popup = egw_script.getAttribute('data-popup');
+		if (egw_popup)
+		{
+			egw_popup = JSON.parse(egw_popup) || [];
+			egw.open_link.apply(egw, egw_popup);
+		}
+
 		if(console.timelineEnd) console.timelineEnd("egw");
 		var end_time = (new Date).getTime();
 		var gen_time_div = $j('#divGenTime_'+window.egw_appName);

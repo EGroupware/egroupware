@@ -290,6 +290,28 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Open a popup independent if we run as json or regular request
+	 *
+	 * @param string $link
+	 * @param string $target
+	 * @param string $popup
+	 */
+	public static function popup($link, $target='_blank', $popup='640x480')
+	{
+		// default params are not returned by func_get_args!
+		$args = func_get_args()+array(null, '_blank', '640x480');
+
+		if (egw_json_request::isJSONRequest())
+		{
+			egw_json_response::get()->apply('egw.open_link', $args);
+		}
+		else
+		{
+			self::$extra['popup'] = $args;
+		}
+	}
+
+	/**
 	 * Close (popup) window, use to replace egw_framework::onload('window.close()') in a content security save way
 	 *
 	 * @param string $alert_msg='' optional message to display as alert, before closing the window
