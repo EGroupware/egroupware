@@ -4565,33 +4565,103 @@ $this->partID = $partID;
 
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
-			if ($_messageList=='all')
+			$error=false;
+			if (isset($_messageList['all']) && $_messageList['all'])
 			{
-				// we have no folder information
-				$folder=null;
+				// we have both messageIds AND allFlag folder information
+				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				$sourceProfileID = $uidA['profileID'];
+				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
+				{
+					$query = $_messageList['activeFilters'];
+					if (!empty($query['search']) || !empty($query['filter']))
+					{
+						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
+						if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+						{
+							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+						}
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+					}
+					else
+					{
+						$filter = array();
+					}
+					$messageList = array();
+					$_sR = $this->mail_bo->getSortedList(
+						$folder,
+						$sort=0,
+						$reverse=1,
+						$filter,
+						$rByUid=true,
+						false
+					);
+					$messageList = $_sR['match']->ids;
+					foreach($messageList as $uID)
+					{
+						//error_log(__METHOD__.__LINE__.$uID);
+						if ($_copyOrMove=='move')
+						{
+							$messageListForRefresh[] = self::generateRowID($sourceProfileID, $folderName, $uID, $_prependApp=false);
+						}
+					}
+				}
+				else
+				{
+					$messageList='all';
+				}
+				try
+				{
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
+					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+				}
+				catch (egw_exception $e)
+				{
+					$error = str_replace('"',"'",$e->getMessage());
+				}
 			}
 			else
 			{
 				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				$sourceProfileID = $uidA['profileID'];
-			}
-			foreach($_messageList['msg'] as $rowID)
-			{
-				//error_log(__METHOD__.__LINE__.$rowID);
-				$hA = self::splitRowID($rowID);
-				$messageList[] = $hA['msgUID'];
-				if ($_copyOrMove=='move')
+				foreach($_messageList['msg'] as $rowID)
 				{
-					$helpvar = explode(self::$delimiter,$rowID);
-					array_shift($helpvar);
-					$messageListForRefresh[]= implode(self::$delimiter,$helpvar);
+					//error_log(__METHOD__.__LINE__.$rowID);
+					$hA = self::splitRowID($rowID);
+					$messageList[] = $hA['msgUID'];
+					if ($_copyOrMove=='move')
+					{
+						$helpvar = explode(self::$delimiter,$rowID);
+						array_shift($helpvar);
+						$messageListForRefresh[]= implode(self::$delimiter,$helpvar);
+					}
+				}
+				try
+				{
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
+					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+				}
+				catch (egw_exception $e)
+				{
+					$error = str_replace('"',"'",$e->getMessage());
 				}
 			}
+
 			$response = egw_json_response::get();
-			try
+			if ($error)
 			{
-				$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+				if ($changeFolderActions == false)
+				{
+					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);
+					$changeFolderActions = true;
+				}
+				$response->call('egw.message',$error,"error");
+			}
+			else
+			{
 				if ($_copyOrMove=='copy')
 				{
 					$response->call('egw.message',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder));
@@ -4599,16 +4669,6 @@ $this->partID = $partID;
 				else
 				{
 					$response->call('egw.refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
-				}
-			}
-			catch (Exception $e)
-			{
-				//error_log(__METHOD__.__LINE__.function_backtrace());
-				$response->call('egw.message',$e->getMessage(),"error");
-				if ($changeFolderActions == false)
-				{
-					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);
-					$changeFolderActions = true;
 				}
 			}
 			if ($changeFolderActions == true)
