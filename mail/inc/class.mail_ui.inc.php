@@ -189,7 +189,8 @@ class mail_ui
 		}
 		else	// regular GET request eg. in idots template
 		{
-			egw_framework::redirect_link('/index.php', $linkData);
+			egw_framework::popup(egw_framework::link('/index.php',$linkData));
+			common::egw_exit();
 		}
 	}
 
