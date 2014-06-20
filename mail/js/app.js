@@ -1270,6 +1270,8 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var msg = this.mail_getFormData(_elems);
+		msg['all'] = this.mail_checkAllSelected(_action,true);
+		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
@@ -1340,6 +1342,7 @@ app.classes.mail = AppJS.extend(
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = jQuery.base64Decode(message[3]);
 		}
+		
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
@@ -1351,7 +1354,7 @@ app.classes.mail = AppJS.extend(
 		//	ids.push(_msg['msg'][i].replace(/mail::/,''));
 		//}
 		//this.egw.refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current folder'))),'mail',ids,'delete');
-		this.egw.message(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current Folder'))));
+		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))));
 	},
 
 	/**
@@ -1368,7 +1371,14 @@ app.classes.mail = AppJS.extend(
 			ids.push(_msg['msg'][i].replace(/mail::/,''));
 		}
 		//this.egw.message(_msg['egw_message']);
-		this.egw.refresh(_msg['egw_message'],'mail',ids,'delete');
+		if (_msg['all'])
+		{
+			this.egw.refresh(_msg['egw_message'],'mail');
+		}
+		else
+		{
+			this.egw.refresh(_msg['egw_message'],'mail',ids,'delete');
+		}
 	},
 
 	/**
@@ -2484,6 +2494,9 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
+		messages['all'] = this.mail_checkAllSelected(_action,true);
+		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'])
 			.sendRequest();
 		var nm = this.et2.getWidgetById(this.nm_index);
@@ -2505,6 +2518,9 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
+		messages['all'] = this.mail_checkAllSelected(_action,true);
+		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
 			.sendRequest();
 		// Server response contains refresh

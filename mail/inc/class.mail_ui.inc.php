@@ -4446,34 +4446,76 @@ $this->partID = $partID;
 		$error = null;
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
-			if ($_messageList=='all')
+			if (isset($_messageList['all']) && $_messageList['all'])
 			{
-				// we have no folder information
-				$folder=null;
+				// we have both messageIds AND allFlag folder information
+				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
+				{
+					$query = $_messageList['activeFilters'];
+					if (!empty($query['search']) || !empty($query['filter']))
+					{
+						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
+						if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+						{
+							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+						}
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+					}
+					else
+					{
+						$filter = array();
+					}
+					$messageList = array();
+					$_sR = $this->mail_bo->getSortedList(
+						$folder,
+						$sort=0,
+						$reverse=1,
+						$filter,
+						$rByUid=true,
+						false
+					);
+					$messageList = $_sR['match']->ids;
+				}
+				else
+				{
+					$messageList='all';
+				}
+				try
+				{
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
+					$this->mail_bo->deleteMessages(($messageList=='all' ? 'all':$messageList),$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
+				}
+				catch (egw_exception $e)
+				{
+					$error = str_replace('"',"'",$e->getMessage());
+				}
 			}
 			else
 			{
 				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
-			}
-			foreach($_messageList['msg'] as $rowID)
-			{
-				$hA = self::splitRowID($rowID);
-				$messageList[] = $hA['msgUID'];
-			}
-			try
-			{
-				//error_log(__METHOD__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
-				$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
-			}
-			catch (egw_exception $e)
-			{
-				$error = str_replace('"',"'",$e->getMessage());
+				foreach($_messageList['msg'] as $rowID)
+				{
+					$hA = self::splitRowID($rowID);
+					$messageList[] = $hA['msgUID'];
+				}
+				try
+				{
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
+					$this->mail_bo->deleteMessages($messageList,$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
+				}
+				catch (egw_exception $e)
+				{
+					$error = str_replace('"',"'",$e->getMessage());
+				}
 			}
 			$response = egw_json_response::get();
 			if (empty($error))
 			{
-				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'msg'=>$_messageList['msg']));
+				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',($messageList=='all'||$_messageList['all']?lang('all'):count($_messageList['msg'])),$folder),'msg'=>$_messageList['msg']));
 			}
 			else
 			{
