@@ -236,7 +236,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_rebuildActionsOnList: function(_actions)
 	{
-		//console.log("mail_rebuildActionsOnList",_actions);
 		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
 	},
 
@@ -247,7 +246,6 @@ app.classes.mail = AppJS.extend(
 	 * @param _reset bool - tell the function to reset the global vars used
 	 */
 	mail_fetchCurrentlyFocussed: function(_selected, _reset) {
-		//console.log("mail_fetchCurrentlyFocussed",_selected, _reset);
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
@@ -283,7 +281,6 @@ app.classes.mail = AppJS.extend(
 	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
 	mail_open: function(_action, _senders, _mode) {
-		//console.log("mail_open",_action, _senders);
 		if (typeof _senders == 'undefined' || _senders.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -364,7 +361,6 @@ app.classes.mail = AppJS.extend(
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
-			//console.log(this.et2.getArrayMgr('content').data,this.et2.getArrayMgr("content").getEntry('mail_id'));
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
@@ -379,7 +375,6 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		//console.log(_action, _elems);
 		// Extra info passed to egw.open()
 		var settings = {
 			// 'Source' Mail UID
@@ -656,7 +651,6 @@ app.classes.mail = AppJS.extend(
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview: function(selected, nextmatch) {
-		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
@@ -667,7 +661,6 @@ app.classes.mail = AppJS.extend(
 		}
 		//get_class does not exist yet
 		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
-		//console.log(pAAClass);
 		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
@@ -812,7 +805,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	mail_setMailBody: function(content) {
-		//console.log('mail_setMailBody',content);
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	},
@@ -932,7 +924,6 @@ app.classes.mail = AppJS.extend(
 		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
 		//var vacationnotice = this.et2.getWidgetById(this.nm_index+'[vacationnotice]');
 		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
-		//console.log(_data,vacationnotice,vacationrange);
 		//try to set it via set_value and set label
 		if (!this.et2)
 		{
@@ -1123,7 +1114,6 @@ app.classes.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_setLeaf
 	 */
 	mail_setLeaf: function(_status) {
-		//console.log('mail_setLeaf',_status);
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -1149,7 +1139,6 @@ app.classes.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	mail_removeLeaf: function(_status) {
-		//console.log('mail_removeLeaf',_status);
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -1174,7 +1163,6 @@ app.classes.mail = AppJS.extend(
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
 	mail_reloadNode: function(_status) {
-		//console.log('mail_reloadNode',_status);
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -1425,7 +1413,6 @@ app.classes.mail = AppJS.extend(
 	mail_emptyTrash: function(action,_senders) {
 		var server = _senders[0].iface.id.split('::');
 
-		//console.log(action,_senders,FolderName);
 		this.egw.message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]])
 			.sendRequest(true);
@@ -1442,7 +1429,6 @@ app.classes.mail = AppJS.extend(
 	 *
 	 */
 	mail_compressFolder: function(action,_senders) {
-		//console.log(action,_senders,FolderName);
 		this.egw.message(this.egw.lang('compress folder'));
 		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id]);
 		//	.sendRequest(true);
@@ -1638,8 +1624,6 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 
-		//alert(_action.id+' - '+_elems[0].id);
-		//console.log(_action, _elems);
 		var classToProcess = _action.id;
 		if (_action.id=='read') classToProcess='seen';
 		else if (_action.id=='label1') classToProcess='labelone';
@@ -1880,7 +1864,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	displayAttachment: function(tag_info, widget, calledForCompose)
 	{
-		//console.log(this, arguments, widget);
 		var mailid;
 		var attgrid;
 		if (typeof calledForCompose == 'undefined' || typeof calledForCompose == 'object') calledForCompose=false;
@@ -1914,7 +1897,6 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width;
 		var height;
@@ -2006,10 +1988,9 @@ app.classes.mail = AppJS.extend(
 	 */
 	displayUploadedFile: function(tag_info, widget)
 	{
-		//console.log(this, tag_info, widget);
 		var attgrid;
 		attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
-		//console.log(attgrid);
+
 		if (attgrid.uid && (attgrid.partID||attgrid.folder))
 		{
 			this.displayAttachment(tag_info, widget, true);
@@ -2109,7 +2090,6 @@ app.classes.mail = AppJS.extend(
 
 	saveAttachment: function(tag_info, widget)
 	{
-		//console.log(this, arguments);
 		var mailid;
 		var attgrid;
 		if (this.mail_isMainWindow)
@@ -2124,7 +2104,6 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
 		}
-		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width;
 		var height;
@@ -2139,7 +2118,6 @@ app.classes.mail = AppJS.extend(
 
 	saveAttachmentToVFS: function(tag_info, widget)
 	{
-		//console.log(this, arguments);
 		var mailid;
 		var attgrid;
 		if (this.mail_isMainWindow)
@@ -2154,7 +2132,6 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
 		}
-		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width=640;
 		var height=570;
@@ -2184,7 +2161,6 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
-		console.log(mailid,attgrid);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width=640;
 		var height=570;
@@ -2274,15 +2250,12 @@ app.classes.mail = AppJS.extend(
 				{
 					var app_registry = egw.link_get_registry('infolog');//this.appname);
 				}
-				//console.log(app_registry);
 				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
 				{
 					var w_h =app_registry['edit_popup'].split('x');
 				}
 			}
 		}
-		//alert('mail_infolog('+_elems[0].id+')');return;
-		//console.log(_action, _elems);
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
 		url += '&rowid='+_elems[0].id;
@@ -2322,7 +2295,6 @@ app.classes.mail = AppJS.extend(
 				{
 					var app_registry = egw.link_get_registry('tracker');//this.appname);
 				}
-				//console.log(app_registry);
 				if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
 				{
 					var w_h =app_registry['add_popup'].split('x');
@@ -2468,7 +2440,6 @@ app.classes.mail = AppJS.extend(
 	 * @return the ddhelper
 	 */
 	mail_dragStart: function(action,_senders) {
-		//console.log(action,_senders);
 		return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>");
 	},
 
@@ -2492,7 +2463,6 @@ app.classes.mail = AppJS.extend(
 	 * @param _target - the representation of the target
 	 */
 	mail_move: function(_action,_senders,_target) {
-		//console.log(_action,_senders,_target);
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
@@ -2516,7 +2486,6 @@ app.classes.mail = AppJS.extend(
 	 * @param _target - the representation of the target
 	 */
 	mail_copy: function(_action,_senders,_target) {
-		//console.log(_action,_senders,_target);
 		var target = _action.id == 'drop_copy_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
@@ -2537,12 +2506,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
 	mail_AddFolder: function(_action,_senders) {
-		//console.log(action,_senders);
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Add"), id: "add", class: "ui-priority-primary", "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
@@ -2575,12 +2542,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
 	mail_RenameFolder: function(_action,_senders) {
-		//console.log(action,_senders);
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", image: 'edit', "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
@@ -2640,12 +2605,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
 	mail_DeleteFolder: function(_action,_senders) {
-		//console.log(action,_senders);
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		//console.log(OldFolderName);
 		var buttons = [
 			{text: this.egw.lang("Yes"), id: "delete", class: "ui-priority-primary", "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
@@ -2674,7 +2637,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	uploadForImport: function(_event, _file_count, _path)
 	{
-		//console.log(_event,_file_count,_path);
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
 		{
@@ -2683,7 +2645,6 @@ app.classes.mail = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			//console.log(widget.getValue());
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
@@ -2708,7 +2669,6 @@ app.classes.mail = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			//console.log(widget.getValue());
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
@@ -2724,7 +2684,6 @@ app.classes.mail = AppJS.extend(
 	* @param {window object} _window
 	*/
 	vfsUploadForImport: function(_egw, _widget, _window) {
-		//console.log(_egw, _widget, _window);
 		if (jQuery.isEmptyObject(_widget)) return;
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
@@ -2741,7 +2700,6 @@ app.classes.mail = AppJS.extend(
 	*/
 	vfsUploadForCompose: function(_egw, _widget, _window)
 	{
-		//console.log(_egw, _widget, _window);
 		if (jQuery.isEmptyObject(_widget)) return;
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
@@ -2757,7 +2715,6 @@ app.classes.mail = AppJS.extend(
 	* @param {window object} _window
 	*/
 	submitOnChange: function(_egw, _widget, _window) {
-		//console.log(_egw, _widget, _window);
 		if (!jQuery.isEmptyObject(_widget))
 		{
 			if (!jQuery.isEmptyObject(_widget.getValue()))
