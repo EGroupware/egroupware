@@ -181,15 +181,16 @@ class mail_ui
 			$windowName = "editMailAccount".self::$icServerID;
 			$response->call("egw.open_link", egw::link('/index.php', $linkData), $windowName, "600x480");
 			egw_framework::message($message, 'error');
+			if ($_GET['menuaction'] == 'mail.mail_ui.index') $response->call('framework.setSidebox','mail',array(),'md5');
 			if ($exit)
 			{
-				$GLOBALS['egw']->framework->render($message);
 				common::egw_exit();
 			}
 		}
 		else	// regular GET request eg. in idots template
 		{
 			egw_framework::popup(egw_framework::link('/index.php',$linkData));
+			$GLOBALS['egw']->framework->render($message,'',true);
 			common::egw_exit();
 		}
 	}
