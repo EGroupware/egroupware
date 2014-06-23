@@ -450,10 +450,31 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	force_download: function(_action, _senders)
 	{
-		var data = egw.dataGetUIDdata(_senders[0].id);
-		var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[0].id);
-		if (url[0] == '/') url = egw.link(url);
-		window.location = url+"?download";
+		for(var i = 0; i < _senders.length; i++)
+		{
+			var data = egw.dataGetUIDdata(_senders[i].id);
+			var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[i].id);
+			if (url[0] == '/') url = egw.link(url);
+			
+			var a = document.createElement('a');
+			if(typeof a.download == "undefined")
+			{
+				window.location = url+"?download";
+				return false;
+			}
+
+			// Multiple file download for those that support it
+			a = $j(a)
+				.prop('href', url)
+				.prop('download', data ? data.data.name : "")
+				.appendTo(this.et2.getDOMNode());
+
+			var evt = document.createEvent('MouseEvent');
+			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+			a[0].dispatchEvent(evt);
+			a.remove();
+		}
+		return false;
 	},
 
 	/**
