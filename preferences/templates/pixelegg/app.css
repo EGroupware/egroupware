@@ -100,7 +100,7 @@ tr.prefRow > td {
   /* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
-  position: absolute;
+  position: fixed;
   background-color: #e6e6e6;
   /*border-radius: 10px;*/
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
