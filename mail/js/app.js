@@ -580,7 +580,10 @@ app.classes.mail = AppJS.extend(
 					children[i].destroy();
 					widget.removeChild(children[i]);
 				}
-
+				if (content.length == 1 && typeof content[0] != 'undefined')
+				{
+					content = content[0].split(',');	
+				}
 				// Add for current record
 				for(var i = 0; i < content.length; i++)
 				{
@@ -1541,6 +1544,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_checkAllSelected
 	 *
 	 * @param _action
+	 * @@param _confirm
 	 * @return boolean
 	 */
 	mail_checkAllSelected: function(_action, _confirm)
@@ -3218,21 +3222,21 @@ app.classes.mail = AppJS.extend(
 							jQuery(".mailComposeJQueryCc").show();
 							if (typeof expWidgets.cc != 'undefiend')
 							{
-								expWidgets.cc.set_disabled(true)
+								expWidgets.cc.set_disabled(true);
 							}
 							break;
 						case 'bcc':
 							jQuery(".mailComposeJQueryBcc").show();
 							if (typeof expWidgets.bcc != 'undefiend')
 							{
-								expWidgets.bcc.set_disabled(true)
+								expWidgets.bcc.set_disabled(true);
 							}
 							break;
 						case 'folder':
 							jQuery(".mailComposeJQueryFolder").show();
 							if (typeof expWidgets.folder != 'undefiend')
 							{
-								expWidgets.folder.set_disabled(true)
+								expWidgets.folder.set_disabled(true);
 							}
 					}
 				}
