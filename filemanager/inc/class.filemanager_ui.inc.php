@@ -125,10 +125,11 @@ class filemanager_ui
 			'saveas' => array(
 				'caption' => lang('Save as'),
 				'group' => $group,
-				'allowOnMultiple' => false,
+				'allowOnMultiple' => true,
 				'icon' => 'filesave',
 				'onExecute' => 'javaScript:app.filemanager.force_download',
 				'disableClass' => 'isDir',
+				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed'
 			),
 			'edit' => array(
 				'caption' => lang('Edit settings'),

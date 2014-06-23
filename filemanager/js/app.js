@@ -478,6 +478,23 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Check to see if the browser supports downloading multiple files
+	 * (using a tag download attribute) to enable/disable the context menu
+	 *
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected
+	 */
+	is_multiple_allowed: function(action, selected)
+	{
+		var allowed = typeof document.createElement('a').download != "undefined";
+		
+		if(typeof action == "undefined") return allowed;
+
+		return (allowed || selected.length <= 1) && action.not_disableClass.apply(action, arguments);
+	},
+
+
+	/**
 	 * Change directory
 	 *
 	 * @param _dir directory to change to incl. '..' for one up
