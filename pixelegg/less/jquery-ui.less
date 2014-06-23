@@ -90,8 +90,8 @@ option:checked {background-color: @egw_color_1_e;}
     border-color: @gray_30;
     //	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
     background: transparent;
-    font-weight: bold;
-    .color_40_gray;
+    font-weight: normal;
+    .color_90_gray;
     //	float: left;
     //	position: relative;
 }
@@ -109,7 +109,7 @@ option:checked {background-color: @egw_color_1_e;}
     background: @color_hint;
     background-image: none;
     color: @gray_0;
-    
+
 }
 
 
@@ -198,7 +198,7 @@ option:checked {background-color: @egw_color_1_e;}
     margin-top: 1px;
     background-position: 0px 0px;
     .rounded (2px);
-    
+
     &:hover{ background-color: @gray_30;}
 
     &:active { background-color: @color_cancel_action_active !important;    }
@@ -216,40 +216,40 @@ span.ui-icon-close {margin-top: 0px; top: 5px;}
      background-position: 0 0 !important;
     .color_0_gray;
     .dimension_height_s;
-     
+
       &:hover{ background-color: @gray_10; color: @gray_90; .box_shadow_standard_light_hover;}
 
     &:active {
-                .box_shadow_standard_light_active !important; 
+                .box_shadow_standard_light_active !important;
                 background-color: @color_cancel_action_active !important;
     }
-    
+
 }
 /*###########################################*/
 /*Menu */
 
 .ui-menu{
-    
+
     .ui-menu-item {
-        
+
         padding: 0px;
-        
+
         a {
-            line-height: 24px; 
+            line-height: 24px;
             margin: 0px;
             padding: 2px 5px;
-        
+
             input {padding: 0;}
             img {padding: 0;}
         }
         a.ui-state-focus {
             margin: 0px !important;
-            line-height: 24px; 
+            line-height: 24px;
             padding: 2px 5px;
             border: none;
         }
     }
-    
+
 }
 /*###########################################*/
 /* col selection */
@@ -263,7 +263,7 @@ span.ui-icon-search{
     background-size: 10px 10px;
 
 }
- 
+
 .ui-corner-all{.rounded(3px)}
 
 
@@ -288,12 +288,12 @@ span.ui-icon-search{
 /*Dialog: edit row*/
 
 .ui-widget-content {
-    
+
     border: 1px solid @egw_color_2_a;
 
     .et2_selectbox {
 
-        button.et2_button_text, 
+        button.et2_button_text,
         select.et2_selectbox {height: 20px;}
 
         button {background-image: none;}
@@ -302,7 +302,7 @@ span.ui-icon-search{
 
             ul li label.ui-state-hover {background-color: @color_hint; font-weight: normal;}
 
-        } 
+        }
 
     }
 
@@ -312,7 +312,7 @@ span.ui-icon-search{
 /*Dialog: calendar edit series*/
 .ui-dialog-buttonpane {background-color: @egw_color_2_e;}
 
-.ui-dialog-buttonset{ 
+.ui-dialog-buttonset{
 
     button{
         .Complete_Button_text_icon_before;
@@ -320,9 +320,9 @@ span.ui-icon-search{
         &:hover{ background-color: @gray_30; color: @gray_90;}
     }
 
-    button.ui-button-text-only {background-color: @gray_20; 
-                                background: inherit; 
-                                color: @gray_100 !important; 
+    button.ui-button-text-only {background-color: @gray_20;
+                                background: inherit;
+                                color: @gray_100 !important;
                                 font-weight: normal !important;
 
                                 &:hover{ background-color: @gray_30;}
@@ -340,15 +340,15 @@ span.ui-icon-search{
         }
 
 .ui-datepicker {
-    
+
     /*padding: 1px 0em;*/
 
 /*    .ui-widget-header .ui-icon {
     background-image: url("images/ui-icons_d8e7f3_256x240.png");
 }*/
     // Kalender Tabelle
-        table.ui-datepicker-calendar{ 
-        
+        table.ui-datepicker-calendar{
+
             //aktiver Tag
             .ui-state-active {background-color: @egw_color_2_a;color: @gray_0;}
         }
@@ -356,40 +356,40 @@ span.ui-icon-search{
 
 
 div.ui-timepicker-div{
-    
+
     padding: 3px;
-    
+
     //Uhrzeit - Label
     dt.ui_tpicker_time_label{font-size: 0.9em}
     //Uhrzeit
     dd.ui_tpicker_time{font-size: 1.3em; padding-left: 75px; background-color: @egw_color_1_a;}
-    
+
     //Stunde - Label
     dt.ui_tpicker_time_label{font-size: 0.9em}
-  
+
     // Minute - Label
     dt.ui_tpicker_minute_label {font-size: 0.9em}
-    
-    // Schieberegler 
+
+    // Schieberegler
     div.ui_tpicker_hour_slider{
         a.ui-slider-handle {background-color: @egw_color_2_a;}
     }
     div.ui_tpicker_minute_slider{
         a.ui-slider-handle {background-color: @egw_color_2_a;}
     }
-    
-    
-    
+
+
+
 }
 
     //Buttons
     div.ui-datepicker-buttonpane{
         background-color: @color_button_panel_bg_color;
-        
+
     }
-    
+
     button.ui-datepicker-current .ui-state-hover{
-    background-color: @color_positive_action_active !important;    
+    background-color: @color_positive_action_active !important;
     &:hover {background-color: @color_positive_action_active;}
     &:active {background-color: @color_positive_action_active;}
 }
@@ -397,13 +397,13 @@ div.ui-timepicker-div{
 }
 
 // Button now
-.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {    
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
     &:hover {background-color: @color_positive_action_active;}
     &:active {background-color: @color_positive_action_active;}
 }
 
 // Button close
-.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close  {    
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close  {
                 &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
                 &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
 }

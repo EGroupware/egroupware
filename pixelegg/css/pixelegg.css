@@ -169,7 +169,7 @@
   }
   /*look in layout_content_elements*/
   .et2_selectbox .ui-multiselect-checkboxes li:hover {
-    background-color: #0c5da5 !important;
+    background-color: #189800 !important;
   }
   .et2_selectbox .ui-multiselect-checkboxes label {
     display: block;
@@ -266,7 +266,9 @@
   .et2_gantt .gantt_task_link.invalid_constraint:hover .gantt_line_wrapper div {
     box-shadow: 0 0 5px 0 #ae1d00;
   }
-  /*Link to / Selector Widget*/
+  /*
+        Link to / Selector Widget
+*/
   .et2_link_to {
     min-height: 78px;
     /*
@@ -288,6 +290,10 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
   }
+  .et2_link_to .et2_link_entry .ui-icon-close {
+    background-color: transparent;
+    left: 0px;
+  }
   .et2_link_to button:first-child {
     /*.border_normal;*/
     /*.box_shadow_standard_light;*/
@@ -308,6 +314,9 @@
     transition-timing-function: linear;
     background-color: #b4b4b4;
     padding: 3px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     height: 20px;
     position: relative;
     top: 5px;
@@ -1336,8 +1345,8 @@ option:checked {
   border-bottom: solid 1px 1px;
   border-color: #b4b4b4;
   background: transparent;
-  font-weight: bold;
-  color: #999999;
+  font-weight: normal;
+  color: #1a1a1a;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -1349,7 +1358,7 @@ option:checked {
 .ui-widget-header .ui-state-focus,
 .ui-widget-content .ui-state-focus {
   border-color: #e6e6e6;
-  background: #0c5da5;
+  background: #189800;
   background-image: none;
   color: #ffffff;
 }
@@ -1361,7 +1370,7 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #e6e6e6;
-  background: #0c5da5;
+  background: #189800;
   background-image: none;
   color: #ffffff;
 }
@@ -1558,7 +1567,7 @@ span.ui-icon-search {
   background-image: none;
 }
 .ui-widget-content .et2_selectbox div.ui-widget-header ul li label.ui-state-hover {
-  background-color: #0c5da5;
+  background-color: #189800;
   font-weight: normal;
 }
 /*###########################################*/
@@ -3552,7 +3561,7 @@ table.egwGridView_outer thead tr th.optcol {
   /*width: 32px !important;*/
 }
 table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: #0c5da5;
+  background-color: #189800;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
@@ -3564,7 +3573,7 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
   display: inline-block;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
-  background-color: #0c5da5;
+  background-color: #189800;
 }
 table.egwGridView_outer > tbody > tr {
   /*Elements inside td*/
@@ -3848,7 +3857,7 @@ table.nextmatch_header img {
 #loginMainDiv div#centerBox #loginCdMessage span {
   padding: 0.5em;
   font-size: 1.2em;
-  color: #0c5da5;
+  color: #189800;
   text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
   width: 100%;
 }
