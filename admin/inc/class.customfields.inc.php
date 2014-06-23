@@ -52,7 +52,7 @@ class customfields
 	{
 		if (($this->appname = $appname))
 		{
-			$this->fields = config::get_customfields($this->appname,true);
+			$this->fields = egw_customfields::get($this->appname,true);
 			$this->content_types = config::get_content_types($this->appname);
 		}
 	}
@@ -73,7 +73,7 @@ class customfields
 		$this->tmpl = new etemplate();
 		// do we manage content-types?
 		if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
-		$this->fields = config::get_customfields($this->appname,true);
+		$this->fields = egw_customfields::get($this->appname,true);
 		$this->tmpl->read('admin.customfields');
 
 		if($this->manage_content_types)
@@ -381,22 +381,23 @@ class customfields
 		//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
 		$config = new config($this->appname);
 		$config->read_repository();
-		$config->value('customfields',$this->fields);
 		$config->value('types',$this->content_types);
 		$config->save_repository();
+
+		egw_customfields::save($this->appname, $this->fields);
 	}
 
 	/**
 	* get customfields of using application
 	*
-	* @deprecated use config::get_customfields() direct, no need to instanciate this UI class
+	* @deprecated use egw_customfields::get() direct, no need to instanciate this UI class
 	* @author Cornelius Weiss
 	* @param boolean $all_private_too=false should all the private fields be returned too
 	* @return array with customfields
 	*/
 	function get_customfields($all_private_too=false)
 	{
-		return config::get_customfields($this->appname,$all_private_too);
+		return egw_customfields::get($this->appname,$all_private_too);
 	}
 
 	/**

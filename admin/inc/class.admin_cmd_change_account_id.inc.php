@@ -78,7 +78,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				}
 				// we have a custom field table and cfs containing accounts
 				if ($cf && !empty($cf['cfname']) && !empty($cf['cfvalue']) &&
-					($account_cfs = config::get_account_cfs($app == 'phpgwapi' ? 'addressbook' : $app)))
+					($account_cfs = egw_customfields::get_account_cfs($app == 'phpgwapi' ? 'addressbook' : $app)))
 				{
 					foreach($account_cfs as $type => $names)
 					{
@@ -172,7 +172,7 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 			{
-				$total += ($changed = config::change_account_ids($app, $this->change));
+				$total += ($changed = egw_customfields::change_account_ids($app, $this->change));
 				if ($changed) echo "$app:\t$changed id's in definition of private custom fields changed\n";
 			}
 		}

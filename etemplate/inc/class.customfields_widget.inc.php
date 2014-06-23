@@ -91,7 +91,7 @@ class customfields_widget
 	function __construct($ui=null,$appname=null)
 	{
 		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
-		$this->customfields = config::get_customfields($this->appname);
+		$this->customfields = egw_customfields::get($this->appname);
 		$this->types = config::get_content_types($this->appname);
 		$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
 	}
@@ -561,7 +561,7 @@ class customfields_widget
 	{
 		$link_types = self::get_customfield_link_types();
 
-		foreach(config::get_customfields($own_app) as $name => $data)
+		foreach(egw_customfields::get($own_app) as $name => $data)
 		{
 			if (!in_array($data['type'],$link_types)) continue;
 

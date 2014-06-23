@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '1.9.020';
+$setup_info['phpgwapi']['version']   = '1.9.021';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -50,6 +50,7 @@ $setup_info['phpgwapi']['tables'][]  = 'egw_index';
 $setup_info['phpgwapi']['tables'][]  = 'egw_cat2entry';
 $setup_info['phpgwapi']['tables'][]  = 'egw_locks';
 $setup_info['phpgwapi']['tables'][]  = 'egw_sqlfs_props';
+$setup_info['phpgwapi']['tables'][]  = 'egw_customfields';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home_hooks.addAccount';
@@ -58,6 +59,12 @@ $setup_info['phpgwapi']['hooks']['editaccount']		= 'phpgwapi.vfs_home_hooks.edit
 $setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home_hooks.addGroup';
 $setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home_hooks.deleteGroup';
 $setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGroup';
+
+// egw-pear dependency for modified HTTP_WebDAV_Server
+$setup_info['phpgwapi']['depends'][] = array(
+	'appname'  => 'egw-pear',
+	'versions' => Array('1.8','1.9')
+);
 
 /* CalDAV/CardDAV/GroupDAV app */
 $setup_info['groupdav']['name']      = 'groupdav';
@@ -73,4 +80,3 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'groupdav_hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'groupdav_hooks::settings';
-

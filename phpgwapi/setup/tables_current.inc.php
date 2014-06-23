@@ -458,5 +458,28 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
+	),
+	'egw_customfields' => array(
+		'fd' => array(
+			'cf_id' => array('type' => 'auto','nullable' => False),
+			'cf_app' => array('type' => 'varchar','precision' => '50','nullable' => False,'comment' => 'app-name cf belongs too'),
+			'cf_name' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'internal name'),
+			'cf_label' => array('type' => 'varchar','precision' => '128','comment' => 'label to display'),
+			'cf_type' => array('type' => 'varchar','precision' => '64','nullable' => False,'default' => 'text','comment' => 'type of field'),
+			'cf_type2' => array('type' => 'varchar','precision' => '2048','comment' => 'comma-separated subtypes of app, cf is valid for'),
+			'cf_help' => array('type' => 'varchar','precision' => '256','comment' => 'helptext'),
+			'cf_values' => array('type' => 'varchar','precision' => '8096','comment' => 'json object with value label pairs'),
+			'cf_len' => array('type' => 'int','precision' => '2','comment' => 'length or columns of field'),
+			'cf_rows' => array('type' => 'int','precision' => '2','comment' => 'rows of field'),
+			'cf_order' => array('type' => 'int','precision' => '2','comment' => 'order to display fields'),
+			'cf_needed' => array('type' => 'bool','default' => '0','comment' => 'field is required'),
+			'cf_private' => array('type' => 'varchar','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id'),
+			'cf_modifier' => array('type' => 'int','meta' => 'account','precision' => '4','comment' => 'last modifier'),
+			'cf_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time')
+		),
+		'pk' => array('cf_id'),
+		'fk' => array(),
+		'ix' => array(array('cf_app', 'cf_order')),
+		'uc' => array(array('cf_app', 'cf_name'))
 	)
 );

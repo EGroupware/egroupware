@@ -113,7 +113,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if(!$app)
 		{
 			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
-			$customfields =& $this->setElementAttribute(self::GLOBAL_VALS, 'customfields', config::get_customfields($app));
+			$customfields =& $this->setElementAttribute(self::GLOBAL_VALS, 'customfields', egw_customfields::get($app));
 		}
 
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
@@ -123,7 +123,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		))
 		{
 			// app changed
-			$customfields =& config::get_customfields($app);
+			$customfields =& egw_customfields::get($app);
 		}
 
 		// Filter fields

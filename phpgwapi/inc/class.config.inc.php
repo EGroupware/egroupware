@@ -10,6 +10,8 @@
 
 /**
  * eGW's application configuration in a centralized location
+ *
+ * New config values are stored JSON serialized now instead of PHP serialized before 14.1.
  */
 class config
 {
@@ -150,7 +152,7 @@ class config
 		else
 		{
 			self::$configs[$app][$name] = $value;
-			if(is_array($value)) $value = serialize($value);
+			if(is_array($value)) $value = json_encode($value);
 			self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		if ($update_cache)
@@ -224,106 +226,13 @@ class config
 	 * @param string $app
 	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
 	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
+	 * @deprecated use egw_customfields::get()
 	 * @return array with customfields
 	 */
-	static function get_customfields($app,$all_private_too=false, $only_type2=null)
+	static function get_customfields($app, $all_private_too=false, $only_type2=null)
 	{
-		$config = self::read($app);
-		$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-
-		$cfs = is_array($config[$config_name]) ? $config[$config_name] : array();
-
-		foreach($cfs as $name => $field)
-		{
-			if (!$all_private_too && $field['private'] && !self::_check_private_cf($field['private']) ||
-				$only_type2 && $field['type2'] && !in_array($only_type2, is_array($field['type2']) ? $field['type2'] : explode(',', $field['type2'])))
-			{
-				unset($cfs[$name]);
-			}
-		}
-		//error_log(__METHOD__."('$app', $all_private_too, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
-		return $cfs;
-	}
-
-	/**
-	 * Check if user is allowed to see a certain private cf
-	 *
-	 * @param string $private comma-separated list of user- or group-id's
-	 * @return boolean true if user has access, false otherwise
-	 */
-	private static function _check_private_cf($private)
-	{
-		static $user_and_memberships = null;
-
-		if (!$private)
-		{
-			return true;
-		}
-		if (is_null($user_and_memberships))
-		{
-			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
-			$user_and_memberships[] = $GLOBALS['egw_info']['user']['account_id'];
-		}
-		if (!is_array($private)) $private = explode(',',$private);
-
-		return (boolean) array_intersect($private,$user_and_memberships);
-	}
-
-
-	/**
-	 * Change account_id's of private custom-fields
-	 *
-	 * @param string $app
-	 * @param array $ids2change from-id => to-id pairs
-	 * @return int number of changed ids
-	 */
-	static function change_account_ids($app, array $ids2change)
-	{
-		$changed = 0;
-		if (($cfs = self::get_customfields($app, true)))
-		{
-			foreach($cfs as &$data)
-			{
-				if ($data['private'])
-				{
-					foreach($data['private'] as &$id)
-					{
-						if (isset($ids2change[$id]))
-						{
-							$id = $ids2change[$id];
-							++$changed;
-						}
-					}
-				}
-			}
-			if ($changed)
-			{
-				self::save_value('customfields', $cfs, $app);
-			}
-		}
-		return $changed;
-	}
-
-	/**
-	 * Return names of custom fields containing account-ids
-	 *
-	 * @param string $app
-	 * @return array account[-commasep] => array of name(s) pairs
-	 */
-	static function get_account_cfs($app)
-	{
-		$types = array();
-		if (($cfs = self::get_customfields($app, true)))
-		{
-			foreach($cfs as $name => $data)
-			{
-				if ($data['type'] == 'select-account' || $data['type'] == 'home-accounts')
-				{
-					$types['account'.($data['rows'] > 1 ? '-commasep' : '')][] = $name;
-				}
-			}
-		}
-		return $types;
+		//error_log(__METHOD__."('$app', $all_private_too, $only_type2) deprecated, use egw_customfields::get() in ".  function_backtrace());
+		return egw_customfields::get($app, $all_private_too, $only_type2);
 	}
 
 	/**
@@ -377,11 +286,44 @@ class config
 					$client_config[$app][$name] = $value;
 				}
 			}
+			// currently not used, therefore no need to add it
+			//$client_config[$app]['customfields'] = egw_customfields::get($app);
 		}
 		// some things need on client-side which are not direct configs
 		$client_config['phpgwapi']['max_lang_time'] = translation::max_lang_time();
 
 		return $client_config;
+	}
+
+	/**
+	 * Unserialize data from either json_encode or PHP serialize
+	 *
+	 * @param string $str serialized prefs
+	 * @return array
+	 */
+	protected static function unserialize($str)
+	{
+		// handling of new json-encoded arrays
+		if ($str[0] == '{' && $str[0] != '[')
+		{
+			return json_decode($str, true);
+		}
+		// handling of not serialized strings
+		if ($str[0] != 'a' && $str[1] != ':')
+		{
+			return $str;
+		}
+		// handling of old PHP serialized and addslashed prefs
+		$data = unserialize($str);
+		if($data === false)
+		{
+			// manually retrieve the string lengths of the serialized array if unserialize failed
+			$data = unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
+			{
+				return 's:'.mb_strlen($matches[2],'8bit').':"'.$matches[2].'";';
+			}, $str));
+		}
+		return $data;
 	}
 
 	/**
@@ -404,17 +346,8 @@ class config
 			self::$configs = array();
 			foreach(self::$db->select(config::TABLE,'*',false,__LINE__,__FILE__) as $row)
 			{
-				$app = $row['config_app'];
-				$name = $row['config_name'];
-				$value = $row['config_value'];
-
-				$test = @unserialize($value);
-				if($test === false)
-				{
-					// manually retrieve the string lengths of the serialized array if unserialize failed
-					$test = @unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $value));
-				}
-				self::$configs[$app][$name] = is_array($test) ? $test : $value;
+				self::$configs[$row['config_app']][$row['config_name']] = self::unserialize($row['config_value']);
+				//error_log(__METHOD__."() configs[$row[config_app]][$row[config_name]]=".array2string(self::$configs[$row['config_app']][$row['config_name']]));
 			}
 			egw_cache::setInstance(__CLASS__, 'configs', self::$configs);
 		}

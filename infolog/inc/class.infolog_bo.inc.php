@@ -225,7 +225,7 @@ class infolog_bo
 			}
 			if ($config_data['group_owners']) $this->group_owners = $config_data['group_owners'];
 
-			$this->customfields = config::get_customfields('infolog');
+			$this->customfields = egw_customfields::get('infolog');
 			if ($this->customfields)
 			{
 				foreach($this->customfields as $name => $field)
@@ -830,7 +830,7 @@ class infolog_bo
 			// Check required custom fields
 			if($throw_exception)
 			{
-				$custom = config::get_customfields('infolog');
+				$custom = egw_customfields::get('infolog');
 				foreach($custom as $c_name => $c_field)
 				{
 					if($c_field['type2']) $type2 = explode(',',$c_field['type2']);

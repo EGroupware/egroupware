@@ -368,7 +368,7 @@ class infolog_customfields
 		//echo '<p>'.__METHOD__.'() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
 		config::save_value('status',$this->status,'infolog');
 		//echo '<p>'.__METHOD__.'() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
-		config::save_value('customfields',$this->fields,'infolog');
+		egw_customfields::save('infolog', $this->fields);
 		config::save_value('group_owners',$this->group_owners,'infolog');
 	}
 }

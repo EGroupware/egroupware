@@ -491,3 +491,70 @@ function phpgwapi_upgrade1_9_019()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.020';
 }
+
+/**
+ * Create own table for custom-fields and migrate values over from egw_config
+ *
+ * @return string
+ */
+function phpgwapi_upgrade1_9_020()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_customfields',array(
+		'fd' => array(
+			'cf_id' => array('type' => 'auto','nullable' => False),
+			'cf_app' => array('type' => 'varchar','precision' => '50','nullable' => False,'comment' => 'app-name cf belongs too'),
+			'cf_name' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'internal name'),
+			'cf_label' => array('type' => 'varchar','precision' => '128','comment' => 'label to display'),
+			'cf_type' => array('type' => 'varchar','precision' => '64','nullable' => False,'default' => 'text','comment' => 'type of field'),
+			'cf_type2' => array('type' => 'varchar','precision' => '2048','comment' => 'comma-separated subtypes of app, cf is valid for'),
+			'cf_help' => array('type' => 'varchar','precision' => '256','comment' => 'helptext'),
+			'cf_values' => array('type' => 'varchar','precision' => '8096','comment' => 'json object with value label pairs'),
+			'cf_len' => array('type' => 'int','precision' => '2','comment' => 'length or columns of field'),
+			'cf_rows' => array('type' => 'int','precision' => '2','comment' => 'rows of field'),
+			'cf_order' => array('type' => 'int','precision' => '2','comment' => 'order to display fields'),
+			'cf_needed' => array('type' => 'bool','default' => '0','comment' => 'field is required'),
+			'cf_private' => array('type' => 'varchar','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id'),
+			'cf_modifier' => array('type' => 'int','meta' => 'account','precision' => '4','comment' => 'last modifier'),
+			'cf_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time')
+		),
+		'pk' => array('cf_id'),
+		'fk' => array(),
+		'ix' => array(array('cf_app', 'cf_order')),
+		'uc' => array(array('cf_app', 'cf_name'))
+	));
+
+	foreach($GLOBALS['egw_setup']->db->select('egw_config', '*', "config_name='customfields'", __LINE__, __FILE__) as $row)
+	{
+		$cfs = $row['config_value'][1] == ':' ? unserialize($row['config_value']) : json_decode($row['config_value']);
+		foreach($cfs as $name => $cf)
+		{
+			$data = array(
+				'cf_name' => $name,
+				'cf_app'  => $row['config_app'],
+			);
+			foreach($cf as $attr => $val)
+			{
+				switch($attr)
+				{
+					case 'private':
+					case 'type2':
+						$val = $val ? implode(',', $val) : null;
+						break;
+					case 'values':
+						$val = $val && is_array($val) ? json_encode($val) : null;
+						break;
+					case 'len':
+					case 'rows':
+						$val = (string)$val !== '' ? $val : null;
+						break;
+				}
+				$data['cf_'.$attr] = $val;
+			}
+			$GLOBALS['egw_setup']->db->insert('egw_customfields', $data, false, __LINE__, __FILE__);
+		}
+	}
+	$GLOBALS['egw_setup']->db->delete('egw_config', "config_name='customfields'", __LINE__, __FILE__);
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.021';
+}
+
