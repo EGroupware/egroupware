@@ -769,47 +769,6 @@ function et2_rangeSubstract(_ar1, _ar2)
 }
 
 /**
- * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
- *
- * @param {string} _func dot-separated function name
- * variable number of arguments
- * @returns {Boolean}
- */
-function et2_call(_func)
-{
-	var args = [].slice.call(arguments);	// convert arguments to array
-	var func = args.shift();
-	var parent = window;
-
-	if (typeof _func == 'string')
-	{
-		var parts = _func.split('.');
-		func = parts.pop();
-		for(var i=0; i < parts.length; ++i)
-		{
-			if (typeof parent[parts[i]] != 'undefined')
-			{
-				parent = parent[parts[i]];
-			}
-			// check if we need a not yet instanciated app.js object --> instanciate it now
-			else if (i == 1 && parts[0] == 'app' && typeof window.app.classes[parts[1]] == 'function')
-			{
-				parent = parent[parts[1]] = new window.app.classes[parts[1]]();
-			}
-		}
-		if (typeof parent[func] == 'function')
-		{
-			func = parent[func];
-		}
-	}
-	if (typeof func != 'function')
-	{
-		throw _func+" is not a function!";
-	}
-	return func.apply(parent, args);
-}
-
-/**
  * Decode html entities so they can be added via .text(_str), eg. html_entity_decode('&amp;') === '&'
  *
  * @param {string} _str
