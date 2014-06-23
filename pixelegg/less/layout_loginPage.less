@@ -52,8 +52,18 @@
             top: 1px;
             background-color: @egw_color_2_e;
 
-            img {width: 70%;margin-left: 15%; }
+            img {
+                width: 70%;
+                /*margin-left: 15%;*/
+                margin: 0 auto;
+                max-width: 400px;
+            }
+
+
             img[src$="svg"]{
+            width: 70%;
+            max-width: 2560px;
+             margin-left: 15%;
             .gradient_vertical (@egw_color_2_e, @egw_color_2_e);
 }
         }
