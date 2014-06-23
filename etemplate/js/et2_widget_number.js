@@ -80,7 +80,7 @@ var et2_number = et2_textbox.extend(
 	{
 		var ok = true;
 		// if we have a html5 validation error, show it, as this.input.val() will be empty!
-		if (this.input && this.input[0] && this.input[0].validationMessage)
+		if (this.input && this.input[0] && this.input[0].validationMessage && !this.input[0].validity.stepMismatch)
 		{
 			_messages.push(this.input[0].validationMessage);
 			ok = false;
