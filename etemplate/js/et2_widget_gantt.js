@@ -445,7 +445,15 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		});
 
 		this.gantt.attachEvent("onContextMenu",function(taskId, linkId, e) {
-			gantt_widget._link_task(taskId);
+			if(taskId)
+			{
+				gantt_widget._link_task(taskId);
+			}
+			else if (linkId)
+			{
+				this._delete_link_handler(linkId,e)
+				e.stopPropagation();
+			}
 			return false;
 		})
 		// Double click
@@ -576,7 +584,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				var result = widget_change.call(_widget,_node);
 
 				// Update filters
-				if(result && _widget.isDirty()) {
+				if(result) {
 					// Update dirty
 					_widget._oldValue = _widget.getValue();
 
