@@ -1536,7 +1536,10 @@ app.classes.mail = AppJS.extend(
 	mail_checkAllSelected: function(_action, _confirm)
 	{
 		if (typeof _confirm == 'undefiend') _confirm = false;
-		var obj_manager = egw_getObjectManager(_action.getManager().id, false);
+		// we only want to check nm list for allSelected, so we dont use the action object, but refer directly to nm_index id
+		//var actManId = _action.getManager().id;
+		//console.log(actManId);
+		var obj_manager = egw_getObjectManager(this.nm_index, false);
 		if (obj_manager && obj_manager.getAllSelected())
 		{
 			if (_confirm)
