@@ -1355,7 +1355,7 @@ if ($app == 'home') continue;
 				'name'  => 'preferences',
 				'title' => lang('Password'),
 				'url'   => 'javascript:egw.open_link("'.
-					egw::link('/index.php?menuaction=preferences.preferences_password.change').'", "_blank", "400x200")',
+					egw::link('/index.php?menuaction=preferences.preferences_password.change').'","_blank","400x270")',
 			));
 		}
 		/* disable help until content is reworked
