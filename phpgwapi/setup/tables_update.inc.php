@@ -538,7 +538,7 @@ function phpgwapi_upgrade1_9_020()
 				{
 					case 'private':
 					case 'type2':
-						$val = $val ? implode(',', $val) : null;
+						$val = $val ? (is_array($val) ? implode(',', $val) : $val) : null;
 						break;
 					case 'values':
 						$val = $val && is_array($val) ? json_encode($val) : null;
