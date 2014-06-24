@@ -615,7 +615,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		{
 			$mailObject->IsHTML($message->ctype_secondary=='html'?true:false);
 			// we decode the body ourself
-			$message->body = $this->mail->decodeMimePart($message->body,($message->headers['content-transfer-encoding']?$message->headers['content-transfer-encoding']:'base64'));
+			$message->body = $this->mail->decodeMimePart($message->body,($message->headers['content-transfer-encoding']?$message->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
 			$mailObject->Body = $body = $message->body;
 			$simpleBodyType = ($message->ctype_secondary=='html'?'text/html':'text/plain');
 			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".($message->ctype_secondary=='html'?'html':'text'));
