@@ -868,6 +868,14 @@ class felamimail_bo
 				//error_log($_mimeMessage);
 				return $_mimeMessage;
 				break;
+			case 'WEDONTKNOWTHEENCODING':
+				// try base64
+				$r = base64_decode($_mimeMessage);
+				if (json_encode($r))
+				{
+					return $r;
+				}
+				//we do not know the encoding, so we do not decode
 			default:
 				// it is either not encoded or we don't know about it
 				return $_mimeMessage;
@@ -5932,7 +5940,7 @@ class felamimail_bo
 					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
 					$bodyPart = $part->body;
-					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
 /*
 					if (strtolower($part->ctype_primary) == 'text' && strtolower($part->ctype_secondary) == 'plain' &&
 						is_array($part->ctype_parameters) && isset($part->ctype_parameters['format']) &&
@@ -5956,7 +5964,7 @@ class felamimail_bo
 					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
 					$bodyPart = $part->body;
-					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
 					$mailObject->IsHTML(true); // we need/want that here, because looping through all message parts may mess up the message body mimetype
 					$mailObject->Body = ($isHTML?$mailObject->Body:'').$bodyPart;
 					$alternatebodyneeded = true;
@@ -5970,7 +5978,7 @@ class felamimail_bo
 				{
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' BodyPart:'.array2string($part));
 					$bodyPart = $part->body;
-					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
 					$mailObject->AltExtended = $bodyPart;
 					// "text/calendar; charset=utf-8; name=meeting.ics; method=REQUEST"
 					// [ctype_parameters] => Array([charset] => utf-8[name] => meeting.ics[method] => REQUEST)
@@ -6039,7 +6047,7 @@ class felamimail_bo
 					if (strlen($filename)==0) $filename = 'noname_'.$attachmentnumber;
 					//error_log(__METHOD__.__LINE__.' '.$filename);
 					//echo $part->headers['content-transfer-encoding'].'#<br>';
-					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
 					if ((trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
 					{
 						if (trim(strtolower($part->disposition)) == 'inline' || $part->headers['content-id'])
