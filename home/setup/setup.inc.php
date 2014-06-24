@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['home']['name']      = 'home';
 $setup_info['home']['title']     = 'Home';
-$setup_info['home']['version']   = '1.9';
+$setup_info['home']['version']   = '14.1';
 $setup_info['home']['app_order'] = 1;
 $setup_info['home']['enable']    = 1;
 $setup_info['home']['index']    = 'home.home_ui.index&ajax=true';
@@ -27,9 +27,9 @@ $setup_info['home']['maintainer'] = array(
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['home']['hooks']['hasUpdates'] = 'home.updates.hasUpdates';
 $setup_info['home']['hooks']['showUpdates'] = 'home.updates.showUpdates';
-	
+
 /* Dependencies for this app to work */
 $setup_info['home']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.9')
+	'versions' => Array('14.1')
 );

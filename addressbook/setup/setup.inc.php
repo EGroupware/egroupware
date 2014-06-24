@@ -10,7 +10,7 @@
 /* Basic information about this app */
 $setup_info['addressbook']['name']      = 'addressbook';
 $setup_info['addressbook']['title']     = 'Addressbook';
-$setup_info['addressbook']['version']   = '1.9.001';
+$setup_info['addressbook']['version']   = '14.1';
 $setup_info['addressbook']['app_order'] = 4;
 $setup_info['addressbook']['enable']    = 1;
 $setup_info['addressbook']['index']    = 'addressbook.addressbook_ui.index&ajax=true';
@@ -52,11 +52,11 @@ $setup_info['addressbook']['hooks']['categories'] = 'addressbook_hooks::categori
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.7','1.8','1.9')
+	'versions' => Array('14.1')
 );
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.7','1.8','1.9')
+	'versions' => Array('14.1')
 );
 
 // installation checks for addresbook

@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '1.9.021';
+$setup_info['phpgwapi']['version']   = '14.1';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -63,12 +63,12 @@ $setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGr
 // egw-pear dependency for modified HTTP_WebDAV_Server
 $setup_info['phpgwapi']['depends'][] = array(
 	'appname'  => 'egw-pear',
-	'versions' => Array('1.8','1.9')
+	'versions' => Array('1.9','14.1')
 );
 
 /* CalDAV/CardDAV/GroupDAV app */
 $setup_info['groupdav']['name']      = 'groupdav';
-$setup_info['groupdav']['version']   = '1.8';
+$setup_info['groupdav']['version']   = '14.1';
 $setup_info['groupdav']['enable']    = 2;
 $setup_info['groupdav']['app_order'] = 1;
 $setup_info['groupdav']['icon']      = 'groupdav';

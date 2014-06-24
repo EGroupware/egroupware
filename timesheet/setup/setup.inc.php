@@ -17,7 +17,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '1.9.002';
+$setup_info[TIMESHEET_APP]['version']   = '14.1';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -50,10 +50,9 @@ $setup_info[TIMESHEET_APP]['hooks']['acl_rights'] = 'timesheet_hooks::acl_rights
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
-

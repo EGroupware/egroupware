@@ -122,3 +122,7 @@ function importexport_upgrade1_9_003()
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.004';
 }
 
+function importexport_upgrade1_9_004()
+{
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '14.1';
+}

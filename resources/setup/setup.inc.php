@@ -13,7 +13,7 @@
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '1.9.004';
+$setup_info['resources']['version']	= '14.1';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
@@ -40,11 +40,11 @@ $setup_info['resources']['hooks']['settings'] = 'resources_hooks::settings';
 
 $setup_info['resources']['depends'][]	= array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
 $setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
 
 

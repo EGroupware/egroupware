@@ -13,7 +13,7 @@
 
 $setup_info['mail']['name']      	= 'mail';
 $setup_info['mail']['title']     	= 'mail';
-$setup_info['mail']['version']     	= '1.9.001';
+$setup_info['mail']['version']     	= '14.1';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
@@ -44,11 +44,15 @@ $setup_info['mail']['hooks'][] = 'home';
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'phpgwapi',
-	'versions' => Array('1.7','1.8','1.9')
+	'versions' => Array('14.1')
+);
+$setup_info['mail']['depends'][] = array(
+	'appname'  => 'etemplate',
+	'versions' => Array('14.1')
 );
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'emailadmin',
-	'versions' => Array('1.9')
+	'versions' => Array('14.1')
 );
 // installation checks for mail
 $setup_info['mail']['check_install'] = array(

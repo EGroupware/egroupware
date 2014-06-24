@@ -10,7 +10,7 @@
  */
 
 $setup_info['admin']['name']      = 'admin';
-$setup_info['admin']['version']   = '1.9.001';
+$setup_info['admin']['version']   = '14.1';
 $setup_info['admin']['app_order'] = 1;
 $setup_info['admin']['tables']    = array('egw_admin_queue','egw_admin_remote');
 $setup_info['admin']['enable']    = 1;
@@ -48,9 +48,9 @@ $setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.address
 /* Dependencies for this app to work */
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.7','1.8','1.9')
+	'versions' => Array('14.1')
 );
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.7','1.8','1.9')
+	'versions' => Array('14.1')
 );

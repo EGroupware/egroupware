@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '1.9.011';
+$setup_info['calendar']['version'] = '14.1';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';
@@ -51,11 +51,11 @@ $setup_info['calendar']['hooks']['categories'] = 'calendar_hooks::categories';
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.7','1.8','1.9')
+	 'versions' => Array('14.1')
 );
 
 // installation checks for calendar

@@ -101,3 +101,8 @@ function notifications_upgrade1_9_003()
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.004';
 }
 
+
+function notifications_upgrade1_9_004()
+{
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '14.1';
+}

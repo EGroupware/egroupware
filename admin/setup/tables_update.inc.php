@@ -101,3 +101,9 @@ function admin_upgrade1_8()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.9.001';
 }
+
+
+function admin_upgrade1_9_001()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '14.1';
+}

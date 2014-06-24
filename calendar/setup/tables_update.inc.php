@@ -2292,3 +2292,7 @@ function calendar_upgrade1_9_010()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.011';
 }
 
+function calendar_upgrade1_9_011()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.1';
+}

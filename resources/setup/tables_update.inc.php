@@ -330,11 +330,11 @@ function resources_upgrade1_8()
 	// Give default group all rights to this general cat
 	$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 	$GLOBALS['egw_setup']->add_acl('resources','run',$defaultgroup);
-	$GLOBALS['egw_setup']->add_acl('resources',"L$cat_id",$defaultgroup,399);
 	$GLOBALS['egw_setup']->add_acl('resources',"L$locations_cat_id",$defaultgroup,399);
 
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.001';
 }
+
 
 function resources_upgrade1_9_001()
 {
@@ -346,10 +346,13 @@ function resources_upgrade1_9_001()
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.002';
 }
 
+
 function resources_upgrade1_9_002()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.003';
 }
+
+
 function resources_upgrade1_9_003()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','res_creator',array(
@@ -376,3 +379,8 @@ function resources_upgrade1_9_003()
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.004';
 }
 
+
+function resources_upgrade1_9_004()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '14.1';
+}

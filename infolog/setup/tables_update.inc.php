@@ -736,3 +736,9 @@ function infolog_upgrade1_9_005()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.006';
 }
+
+
+function infolog_upgrade1_9_006()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.1';
+}
