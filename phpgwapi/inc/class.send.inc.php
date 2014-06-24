@@ -60,7 +60,7 @@ class send extends egw_mailer
 		$this->Username = $account->acc_smtp_username;
 		$this->Password = $account->acc_smtp_password;
 		$this->defaultDomain = $account->acc_domain;
-		$this->Sender = emailadmin_account::rfc822($account);
+		$this->Sender = $account->acc_smtp_username?$account->acc_smtp_username:emailadmin_account::rfc822($account);
 
 		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 
