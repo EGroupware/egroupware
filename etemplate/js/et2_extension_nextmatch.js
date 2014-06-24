@@ -815,6 +815,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	_updateUserPreferences: function() {
 		var colMgr = this.dataview.getColumnMgr();
+		var app = "";
 		if(!this.options.settings.columnselection_pref) {
 			this.options.settings.columnselection_pref = this.options.template;
 		}
