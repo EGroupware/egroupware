@@ -3794,6 +3794,8 @@ table.nextmatch_header img {
   margin-left: auto;
   margin-right: auto;
   background: transparent;
+  width: 100%;
+  text-align: center;
 }
 #loginMainDiv #divAppIconBar #divLogo {
   margin-left: -2%;
@@ -3812,7 +3814,6 @@ table.nextmatch_header img {
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
   width: 70%;
   max-width: 2560px;
-  margin-left: 15%;
   background-color: #679fd2;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #679fd2, #679fd2);
@@ -4089,10 +4090,10 @@ table.nextmatch_header img {
   /*.background_color_5_gray;*/
 }
 #egw_fw_header #egw_divLogo img {
-  width: 209px;
+  max-width: 209px;
   border: none;
   position: absolute;
-  top: 0.41em;
+  top: 0.1em;
   left: 1em;
   height: 40px;
   /*.background_color_5_gray;*/
