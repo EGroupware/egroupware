@@ -112,8 +112,8 @@ img.iphoto {
 #addressbook-index_org_view {
   margin: 5px;
 }
-.et2_hbox > * {
-  padding-right: 0 !important;
+#addressbook-edit_room {
+  float: right;
 }
 @media all {
   /* #############################################################################
@@ -511,6 +511,5 @@ img.iphoto {
   }
   #addressbook-edit_addressbook-edit-general .et2_label {
     margin-right: 6px;
-    display: block;
   }
 }

@@ -68,7 +68,7 @@
 					<description for="role" value="Role"/>
 					<hbox width="100%">
 						<textbox id="role" width="200" maxlength="64"/>
-						<textbox label="Room" id="room" width="50" align="right"/>
+						<textbox label="Room" id="room" width="40"/>
 					</hbox>
 					<description/>
 					<description for="adr_one_street" value="street"/>
@@ -90,7 +90,7 @@
 					<description for="adr_one_locality" value="city"/>
 					<hbox>
 						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="40" maxlength="64"/>
-						<textbox statustext="City" id="adr_one_locality" maxlength="64" align="right" width="250"/>
+						<textbox statustext="City" id="adr_one_locality" maxlength="64"  width="242"/>
 					</hbox>
 					<description/>
 				</row>
