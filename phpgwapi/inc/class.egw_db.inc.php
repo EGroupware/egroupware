@@ -592,7 +592,7 @@ class egw_db
 	 * @param string $val boolean value in db-specfic notation
 	 * @return boolean
 	 */
-	function from_bool($val)
+	public static function from_bool($val)
 	{
 		return $val && $val[0] !== 'f';	// everthing other then 0 or f[alse] is returned as true
 	}

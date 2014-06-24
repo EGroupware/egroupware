@@ -92,7 +92,7 @@ class egw_customfields implements IteratorAggregate
 			$row['private'] = $row['private'] ? explode(',', $row['private']) : array();
 			$row['type2'] = $row['type2'] ? explode(',', $row['type2']) : array();
 			$row['values'] = json_decode($row['values'], true);
-			$row['needed'] = self::$db->from_bool($row['needed']);
+			$row['needed'] = egw_db::from_bool($row['needed']);
 
 			return $row;
 		}, array(), function($row)
