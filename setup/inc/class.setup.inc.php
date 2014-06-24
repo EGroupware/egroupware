@@ -73,7 +73,7 @@ class setup
 	 *
 	 * @var string
 	 */
-	var $recommended_php_version = '5.3+';
+	var $recommended_php_version = '5.5';
 
 	function setup($html=False, $translation=False)
 	{
