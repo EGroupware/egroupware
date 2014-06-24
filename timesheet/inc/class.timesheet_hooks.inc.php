@@ -157,15 +157,13 @@ class timesheet_hooks
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
-			$link = egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
-
 			$settings['default_document'] = array(
 				'type'   => 'vfs_file',
 				'size'   => 60,
 				'label'  => 'Default document to insert entries',
 				'name'   => 'default_document',
 				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('timesheet')).' '.
-					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>', 'ts_title').' '.
+					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'ts_title').' '.
 					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
@@ -177,7 +175,7 @@ class timesheet_hooks
 				'label'  => 'Directory with documents to insert entries',
 				'name'   => 'document_dir',
 				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('timesheet')).' '.
-					lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','ts_title').' '.
+					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','ts_title').' '.
 					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,

@@ -190,7 +190,6 @@ class filemanager_hooks
 				'forced'   => 'yes',
 			),
 		);
-		$link = egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
 
 		$settings['default_document'] = array(
 			'type'   => 'vfs_file',
@@ -198,7 +197,7 @@ class filemanager_hooks
 			'label'  => 'Default document to insert entries',
 			'name'   => 'default_document',
 			'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('filemanager')).' '.
-				lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>', 'name').' '.
+				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name').' '.
 				lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc' => True,
@@ -210,7 +209,7 @@ class filemanager_hooks
 			'label'  => 'Directory with documents to insert entries',
 			'name'   => 'document_dir',
 			'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('filemanager')).' '.
-				lang('The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).','<a href="'.$link.'" target="_blank">','</a>','name').' '.
+				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','name').' '.
 				lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc' => True,
