@@ -1261,7 +1261,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var msg = this.mail_getFormData(_elems);
-		msg['all'] = this.mail_checkAllSelected(_action,true);
+		msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?this.mail_checkAllSelected(_action,true):false);
 		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
@@ -1635,7 +1635,7 @@ app.classes.mail = AppJS.extend(
 		if (do_nmactions)
 		{
 			msg = this.mail_getFormData(_elems);
-			msg['all'] = this.mail_checkAllSelected(_action,true);
+			msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?this.mail_checkAllSelected(_action,true):false);
 			msg['activeFilters'] = this.mail_getActiveFilters(_action);
 			if (_action.id.substring(0,2)=='un') {
 				//old style, only available for undelete and unlabel (no toggle)
@@ -2468,7 +2468,7 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = this.mail_checkAllSelected(_action,true);
+		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?this.mail_checkAllSelected(_action,true):false);
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'])
@@ -2491,7 +2491,7 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = this.mail_checkAllSelected(_action,true);
+		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?this.mail_checkAllSelected(_action,true):false);
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
