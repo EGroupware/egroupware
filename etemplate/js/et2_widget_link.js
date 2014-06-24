@@ -1559,6 +1559,14 @@ var et2_link_list = et2_link_string.extend(
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
+		if (typeof _link_data.title == 'undefined')
+		{
+			// Title will be fetched from server and then set
+			var title = this.egw().link_title(_link_data.app, _link_data.id, function(title) {
+				$j('td.title',this).removeClass("loading").text(title+"");
+			}, row);
+			$j('td.title',row).addClass("loading");
+		}
 		// Date
 		/*
 		var date_row = $j(document.createElement("td"))
