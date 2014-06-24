@@ -247,6 +247,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 4:
+		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
 		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
 		$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>'));
@@ -342,6 +343,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 				}
 				break;
 			case 'oldversion':
+				egw_csrf::validate($_POST['csrf_token'], __FILE__);
 				// create a backup, before upgrading the tables
 				if ($_POST['backup'])
 				{
