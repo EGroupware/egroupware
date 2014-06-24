@@ -131,6 +131,13 @@ class filemanager_ui
 				'disableClass' => 'isDir',
 				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed'
 			),
+			'saveaszip' => array(
+				'caption' => lang('Save as ZIP'),
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'icon' => 'filesave',
+				'postSubmit' => true
+			),
 			'edit' => array(
 				'caption' => lang('Edit settings'),
 				'group' => $group,
@@ -606,6 +613,9 @@ class filemanager_ui
 				}
 				return lang("Error while creating directory.");
 
+			case 'saveaszip':
+				return egw_vfs::download_zip($selected);
+			
 			default:
 				list($action, $settings) = explode('_', $action, 2);
 				switch($action)

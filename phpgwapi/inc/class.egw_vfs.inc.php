@@ -1321,6 +1321,120 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Download the given file list as a ZIP
+	 *
+	 * @param array $files
+	 *
+	 * @return undefined
+	 */
+	public static function download_zip(Array $files)
+	{
+		error_log(__METHOD__ . ': '.implode(',',$files));
+		
+		// Create zip file
+		$zip_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'zip');
+
+		$zip = new ZipArchive();
+		$result = $zip->open($zip_file, ZipArchive::OVERWRITE);
+		if($result !== TRUE)
+		{
+			throw new egw_exception("Cannot open zip file for writing.");
+		}
+
+		// A nice name for the user
+		$filename = $GLOBALS['egw_info']['server']['site_title'] . (count($files) == 1 ? '_'. self::basename($files[0]) : '') . '.zip';
+
+		// Go into directories, find them all
+		$files = self::find($files);
+
+		// We need to remove them _after_ we're done
+		$tempfiles = array();
+
+		// Give 1 second per file
+		set_time_limit(count($files));
+
+		// Add files to archive
+		foreach($files as $idx => &$addfile)
+		{
+			// Use relative paths inside zip, if we could
+			//$_name = self::concat($directory,self::basename($addfile));
+			$_name = $addfile;
+
+			// Don't go infinite with app entries
+			if(self::is_link($addfile))
+			{
+				if(in_array($addfile, $links)) continue;
+				$links[] = $addfile;
+			}
+			// Add directory - if empty, client app might not show it though
+			if(self::is_dir($addfile))
+			{
+				$zip->addEmptyDir($addfile);
+			}
+			else if(self::is_readable($addfile))
+			{
+				// Copy to temp file, as ZipArchive fails to read VFS
+				$temp = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'zip_');
+				$from = egw_vfs::fopen($addfile,'r');
+		 		$to = fopen($temp,'w');
+				if(!stream_copy_to_stream($from,$to) || !$zip->addFile($temp, $_name))
+				{
+					unlink($temp);
+					trigger_error("Could not add $addfile to ZIP file", E_USER_ERROR);
+					continue;
+				}
+				// Keep temp file until _after_ zipping is done
+				$tempfiles[] = $temp;
+
+				// Add comment in
+				$props = self::propfind($addfile);
+				if($props)
+				{
+					$comment = self::find_prop($props,'comment');
+					if($comment)
+					{
+						$zip->setCommentName($_name, $prop['val']);
+					}
+				}
+				$props = null;
+			}
+		}
+
+		// Set a comment to help tell them apart
+		$zip->setArchiveComment(lang('Created by %1', $GLOBALS['egw_info']['user']['account_lid']) . ' ' .egw_time::to());
+
+		// Record total for debug, not available after close()
+		$total_files = $zip->numFiles;
+
+		$result = $zip->close();
+		if(!$result || !filesize($zip_file))
+		{
+			error_log('close() result: '.array2string($result));
+			return 'Error creating zip file';
+		}
+		
+		error_log("Total files: " . $total_files . " Peak memory to zip: " . self::hsize(memory_get_peak_usage(true)));
+
+		// Stop any buffering
+		while(ob_get_level() > 0)
+			ob_end_clean();
+
+		// Stream the file to the client
+		header("Content-Type: application/zip");
+		header("Content-Length: " . filesize($zip_file));
+		header("Content-Disposition: attachment; filename=\"$filename\"");
+		readfile($zip_file);
+
+		unlink($zip_file);
+		foreach($tempfiles as $temp_file)
+		{
+			unlink($temp_file);
+		}
+		
+		common::egw_exit();
+	}
+
+	/**
 	 * We cache locks within a request, as HTTP_WebDAV_Server generates so many, that it can be a bottleneck
 	 *
 	 * @var array
