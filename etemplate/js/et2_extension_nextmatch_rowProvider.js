@@ -478,6 +478,19 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 	},
 
 	/**
+	 * Match category-ids from class attribute eg. "cat_15" or "123,456,789 "
+	 *
+	 * Make sure to not match numbers inside other class-names.
+	 *
+	 * We can NOT use something like /(^| |,|cat_)([0-9]+)( |,|$)/g as it wont find all cats in "123,456,789 "!
+	 */
+	cat_regexp: /(^| |,|cat_)([0-9]+)/g,
+	/**
+	 * Regular expression used to filter out non-nummerical chars from above matches
+	 */
+	cat_cleanup: /[^0-9]/g,
+
+	/**
 	 * Applies additional row data (like the class) to the tr
 	 *
 	 * @param {object} _data
@@ -499,10 +512,8 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 				var category_location = _data["class"].match(/(cat(_id|egory)?)/);
 				if(category_location) category_location = category_location[0];
 
-				// Get actual categories, eg. "cat_15" or "123,456,789", make sure to not match numbers inside other class-names
-				cats = classes.match(/(^| |,|cat_)([0-9]+)( |,|$)/g);
-				if (!cats) cats = [];
-				classes = classes.replace(/(^| |,|cat_)([0-9]+)( |,|$)/g, '');
+				cats = classes.match(this.cat_regexp) || [];
+				classes = classes.replace(this.cat_regexp, '');
 
 				// Get category info
 				if(!this.categories)
@@ -521,8 +532,7 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 				for(var i = 0; i < cats.length && this.categories; i++)
 				{
 					// Need cat_, classes can't start with a number
-					var cat_id = cats[i];
-					cat_id = cat_id.replace(/[^0-9]/g, '');
+					var cat_id = cats[i].replace(this.cat_cleanup, '');
 					var cat_class = 'cat_'+cat_id;
 
 					// Check for existing class
@@ -672,7 +682,7 @@ var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode,
 
 	/**
 	 * Returns the column node for the given sender
-	 * 
+	 *
 	 * @param {et2_widget} _sender
 	 * @return {DOMElement}
 	 */
