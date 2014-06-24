@@ -92,6 +92,7 @@
 		{automatic}
 		{backupwarn}<br />
 		<form method="post" action="index.php">
+		{hidden_vars}
 		<input type="hidden" name="oldversion" value="{oldver}" />
 		<input type="hidden" name="useglobalconfigsettings" />
 		<input type="hidden" name="action" value="Upgrade" />
@@ -108,25 +109,17 @@
 		</form>
 		<hr />
 		{dont_touch_my_data}.&nbsp;&nbsp;{goto}:
-		<form method="post" action="config.php">
-        <input type="hidden" name="action" value="Dont touch my data" />
+		<form method="get" action="config.php">
 		<input type="submit" name="label" value="{configuration}" />
         </form>
-		<form method="post" action="admin_account.php">
-        <input type="hidden" name="action" value="Dont touch my data" />
+		<form method="get" action="admin_account.php">
 		<input type="submit" name="label" value="{admin_account}" />
         </form>
-		<form method="post" action="lang.php">
-        <input type="hidden" name="action" value="Dont touch my data" />
-		<input type="submit" name="label" value="{language_management}" />
-        </form>
-		<form method="post" action="applications.php">
-        <input type="hidden" name="action" value="Dont touch my data" />
+		<form method="get" action="applications.php">
 		<input type="submit" name="label" value="{applications}" />
 		</form>
-		<form method="post" action="db_backup.php">
-        <input type="hidden" name="action" value="Dont touch my data" />
-		<input type="submit" name="label" value="{db_backup}" />
+		<form method="get" action="db_backup.php">
+ 		<input type="submit" name="label" value="{db_backup}" />
 		</form>
 	</td>
 </tr>
