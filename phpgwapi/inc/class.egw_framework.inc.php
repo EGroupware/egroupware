@@ -259,9 +259,11 @@ abstract class egw_framework
 	 * @param string $app application name
 	 * @param string|int $id=null id of entry to refresh
 	 * @param string $type=null either 'update', 'edit', 'delete', 'add' or null
-	 * - update: request just modified data from given rows.  Sorting is not considered,
-	 *		so if the sort field is changed, the row will not be moved.
-	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - update: request just modified data from given rows.
+	 *	Sorting and filtering are not considered, so if the sort field is changed,
+	 *	the row will not be moved.  If the current filtering could include or exclude
+	 *	the record, use edit.
+	 * - edit: rows changed, but sorting or filtering may be affected.  Requires full reload.
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload for proper sorting
 	 * - null: full reload
