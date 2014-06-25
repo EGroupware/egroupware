@@ -622,6 +622,8 @@ class egw_db
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false,$fetchmode=egw_db::FETCH_BOTH)
 	{
+		unset($line, $file);	// not used anymore
+
 		if ($Query_String == '')
 		{
 			return 0;
@@ -851,7 +853,9 @@ class egw_db
 	* @return bool True if sucessful, False if fails
 	*/
 	function lock($table, $mode='write')
-	{}
+	{
+		unset($table, $mode);	// not used anymore
+	}
 
 	/**
 	* Unlock a table
@@ -997,7 +1001,7 @@ class egw_db
 		foreach($columns as $column)
 		{
 			// for backwards compatibilty (depreciated)
-			unset($flags);
+			$flags = null;
 			if($column->auto_increment) $flags .= "auto_increment ";
 			if($column->primary_key) $flags .= "primary_key ";
 			if($column->binary) $flags .= "binary ";
@@ -1116,7 +1120,6 @@ class egw_db
 		$currentDatabase = $this->Database;
 
 		$sqls = array();
-		$set_charset = '';
 		switch ($this->Type)
 		{
 			case 'pgsql':
@@ -1164,7 +1167,7 @@ class egw_db
 	 * @param string $str1 already quoted stringliteral or column-name, variable number of arguments
 	 * @return string to be used in a query
 	 */
-	function concat($str1)
+	function concat(/*$str1, ...*/)
 	{
 		$args = func_get_args();
 
@@ -1345,6 +1348,7 @@ class egw_db
 		$quote = $this->Link_ID->nameQuote;
 
 		// if name is of the form `name`, quote it
+		$matches = null;
 		if ( preg_match('/^`(.+)`$/', $name, $matches) ) {
 			return $quote . $matches[1] . $quote;
 		}
@@ -1631,6 +1635,7 @@ class egw_db
 				}
 				else
 				{
+					$phpgw_baseline = null;
 					include($tables_current);
 					$all_app_data[$app] =& $phpgw_baseline;
 					unset($phpgw_baseline);
@@ -1682,7 +1687,7 @@ class egw_db
 	 */
 	/* static */ function get_column_attribute($column,$table,$app=null,$attribute='comment')
 	{
-		static $cached_columns,$cached_table;	// some caching
+		static $cached_columns=null,$cached_table=null;	// some caching
 
 		if ($cached_table !== $table || is_null($cached_columns))
 		{
@@ -1939,7 +1944,7 @@ class egw_db
 	 *
 	 * @return string the expression generated from the arguments
 	 */
-	function expression($table_def,$args)
+	function expression($table_def/*,$args, ...*/)
 	{
 		if (!is_array($table_def)) $table_def = $this->get_table_definitions(true,$table_def);
 		$sql = '';
@@ -1968,7 +1973,6 @@ class egw_db
 					break;
 			}
 		}
-		if ($this->Debug) echo "<p>db::expression($table,<pre>".print_r(func_get_args(),True)."</pre>) ='$sql'</p>\n";
 		return $sql;
 	}
 
@@ -2044,10 +2048,10 @@ class egw_db
 	{
 		if ($this->Debug) echo "<p>db::union(".print_r($selects,True).",$line,$file,$order_by,$offset,$num_rows)</p>\n";
 
-		$sql = array();
+		$union = array();
 		foreach($selects as $select)
 		{
-			$sql[] = call_user_func_array(array($this,'select'),array(
+			$union[] = call_user_func_array(array($this,'select'),array(
 				$select['table'],
 				$select['cols'],
 				$select['where'],
@@ -2061,7 +2065,7 @@ class egw_db
 				$select['table_def'],
 			));
 		}
-		$sql = count($sql) > 1 ? '(' . implode(")\nUNION\n(",$sql).')' : $sql[0];
+		$sql = count($union) > 1 ? '(' . implode(")\nUNION\n(",$union).')' : $union[0];
 
 		if ($order_by) $sql .=  (!stristr($order_by,'ORDER BY') ? "\nORDER BY " : '').$order_by;
 
