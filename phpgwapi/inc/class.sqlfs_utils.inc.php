@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -33,6 +33,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
 			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL';
 
+		$fs_id = $fs_name = $fs_size = $fs_content = null;
 		$stmt = self::$pdo->prepare($query);
 		$stmt->bindColumn(1,$fs_id);
 		$stmt->bindColumn(2,$fs_name);
@@ -41,6 +42,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 
 		if ($stmt->execute())
 		{
+			$n = 0;
 			foreach($stmt as $row)
 			{
 				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
@@ -80,6 +82,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 				fclose($content); unset($content);
 
 				++$n;
+				unset($row);	// not used, as we access bound variables
 			}
 			unset($stmt);
 
@@ -105,17 +108,23 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		{
 			self::_pdo();
 		}
-		$msgs = self::fsck_fix_required_nodes($check_only);
-		$msgs = array_merge($msgs, self::fsck_fix_multiple_active($check_only));
-		$msgs = array_merge($msgs, self::fsck_fix_unconnected($check_only));
-		$msgs = array_merge($msgs, self::fsck_fix_no_content($check_only));
+		$msgs = array();
+		foreach(array(
+			self::fsck_fix_required_nodes($check_only),
+			self::fsck_fix_multiple_active($check_only),
+			self::fsck_fix_unconnected($check_only),
+			self::fsck_fix_no_content($check_only),
+		) as $check_msgs)
+		{
+			if ($check_msgs) $msgs = array_merge($msgs, $check_msgs);
+		}
 
 		foreach ($GLOBALS['egw']->hooks->process(array(
 			'location' => 'fsck',
 			'check_only' => $check_only)
-		) as $app => $app_msgs)
+		) as $app_msgs)
 		{
-			$msgs = array_merge($msgs, $app_msgs);
+			if ($app_msgs) $msgs = array_merge($msgs, $app_msgs);
 		}
 		return $msgs;
 	}
@@ -133,6 +142,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 			'/home' => 2,
 			'/apps' => 3,
 		);
+		$stmt = $delete_stmt = null;
 		$msgs = array();
 		foreach($dirs as $path => $id)
 		{
@@ -149,26 +159,42 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 						$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_id,fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 							') VALUES (:fs_id,:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
 					}
-					if (($ok = $stmt->execute(array(
-						'fs_id' => $id,
-						'fs_name' => substr($path,1),
-						'fs_dir'  => $path == '/' ? 0 : $dirs['/'],
-						'fs_mode' => 05,
-						'fs_uid' => 0,
-						'fs_gid' => 0,
-						'fs_size' => 0,
-						'fs_mime' => 'httpd/unix-directory',
-						'fs_created' => self::_pdo_timestamp(time()),
-						'fs_modified' => self::_pdo_timestamp(time()),
-						'fs_creator' => 0,
-					))))
-					{
-						$msgs[] = lang('Required directory "%1" created.', $path);
+					try {
+						$ok = $stmt->execute($data = array(
+							'fs_id' => $id,
+							'fs_name' => substr($path,1),
+							'fs_dir'  => $path == '/' ? 0 : $dirs['/'],
+							'fs_mode' => 05,
+							'fs_uid' => 0,
+							'fs_gid' => 0,
+							'fs_size' => 0,
+							'fs_mime' => 'httpd/unix-directory',
+							'fs_created' => self::_pdo_timestamp(time()),
+							'fs_modified' => self::_pdo_timestamp(time()),
+							'fs_creator' => 0,
+						));
 					}
-					else
+					catch (PDOException $e)
 					{
-						$msgs[] = lang('Failed to create required directory "%1"!', $path);
+						$ok = false;
+						unset($e);	// ignore exception
 					}
+					if (!$ok)	// can not insert it, try deleting it first
+					{
+						if (!isset($delete_stmt))
+						{
+							$delete_stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+						}
+						try {
+							$ok = $delete_stmt->execute(array('fs_id' => $id)) && $stmt->execute($data);
+						}
+						catch (PDOException $e)
+						{
+							unset($e);	// ignore exception
+						}
+					}
+					$msgs[] = $ok ? lang('Required directory "%1" created.', $path) :
+						lang('Failed to create required directory "%1"!', $path);
 				}
 			}
 			// check if directory is at least world readable and executable (r-x), we allow more but not less
@@ -214,8 +240,8 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 	 */
 	private static function fsck_fix_no_content($check_only=true)
 	{
+		$stmt = null;
 		$msgs = array();
-
 		foreach(self::$pdo->query('SELECT fs_id FROM '.self::TABLE.
 			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL") as $row)
 		{
@@ -274,6 +300,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 	 */
 	private static function fsck_fix_unconnected($check_only=true)
 	{
+		$lostnfound = null;
 		$msgs = array();
 		foreach(self::$pdo->query('SELECT fs.* FROM '.self::TABLE.' fs'.
 			' LEFT JOIN '.self::TABLE.' dir ON dir.fs_id=fs.fs_dir'.
@@ -339,6 +366,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 	 */
 	private static function fsck_fix_multiple_active($check_only=true)
 	{
+		$stmt = $inactivate_msg_added = null;
 		$msgs = array();
 		foreach(self::$pdo->query('SELECT fs_dir,fs_name,COUNT(*) FROM '.self::TABLE.
 			' WHERE fs_active='.self::_pdo_boolean(true).
