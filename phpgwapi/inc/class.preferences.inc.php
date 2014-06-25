@@ -783,7 +783,7 @@ class preferences
 			$cached = egw_cache::getInstance(__CLASS__, $row['preference_owner']);
 			if($cached && $cached[$row['preference_app']])
 			{
-				$cached[$row['preference_app']] = $value;
+				$cached[$row['preference_app']] = $prefs;
 				egw_cache::setInstance(__CLASS__, $row['preference_owner'], $cached);
 			}
 		}

@@ -557,5 +557,13 @@ function phpgwapi_upgrade1_9_021()
 		'comment' => 'tab customfield should be shown'
 	));
 
+	// force new Pixelegg template on update
+	if (file_exists(EGW_SERVER_ROOT.'/pixelegg'))
+	{
+		preferences::change_preference('common', 'template_set', 'pixelegg', null, 'forced');
+		preferences::change_preference('common', 'theme', 'pixelegg', null, 'forced');
+	}
+	preferences::change_preference('common', 'maxmatchs', '20', null, 'forced');
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.1';
 }
