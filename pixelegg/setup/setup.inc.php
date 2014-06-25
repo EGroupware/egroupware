@@ -17,15 +17,12 @@ $GLOBALS['egw_info']['template']['pixelegg']['author'] = array(
    array('name' => 'Stylite AG', 'url' => 'http://www.stylite.de/'),
    array('name' => 'Pixelegg Informationsdesign', 'url' => 'http://www.pixelegg.de/'),
 );
-$GLOBALS['egw_info']['template']['pixelegg']['license'] = array(
-	'name' => 'Stylite EPL license',
-	'url'  => 'http://www.stylite.de/EPL',
-);
+$GLOBALS['egw_info']['template']['pixelegg']['license'] = 'GPL';
 $GLOBALS['egw_info']['template']['pixelegg']['icon'] = "pixelegg/images/logo.png";
 $GLOBALS['egw_info']['template']['pixelegg']['maintainer'] = array(
    array('name' => 'Stylite AG', 'url' => 'http://www.stylite.de/')
 );
-$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Pixelegg EGroupware template based on Stylite template using jQuery.";
+$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Pixelegg is the new EGroupware 14.1 template based on Stylite template using jQuery.";
 $GLOBALS['egw_info']['template']['pixelegg']['windowed'] = true;
 
 /* Dependencies for this template to work */
