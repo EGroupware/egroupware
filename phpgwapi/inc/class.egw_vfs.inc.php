@@ -1341,8 +1341,51 @@ class egw_vfs extends vfs_stream_wrapper
 			throw new egw_exception("Cannot open zip file for writing.");
 		}
 
+		// Find lowest common directory, to use relative paths
+		// eg: User selected /home/nathan/picture.jpg, /home/Pictures/logo.jpg
+		// We want /home
+		$paths = array();
+		foreach($files as $file)
+		{
+			$paths[] = self::dirname($file);
+		}
+		$paths = array_unique($paths);
+		if(count($paths) > 0)
+		{
+			// Shortest to longest
+			usort($paths, function($a, $b) {
+				return strlen($a) - strlen($b);
+			});
+
+			// Start with shortest, pop off sub-directories that don't match
+			$base_dir = explode('/',$paths[0]);
+			foreach($paths as $index => $path)
+			{
+				$dirs = explode('/',$path);
+				foreach($dirs as $dir_index => $dir)
+				{
+					if($base_dir[$dir_index] && $base_dir[$dir_index] != $dir)
+					{
+						unset($base_dir[$dir_index]);
+					}
+				}
+			}
+			$base_dir = implode('/', $base_dir);
+		}
+		else
+		{
+			$base_dir = $paths[0];
+		}
+
 		// A nice name for the user
-		$filename = $GLOBALS['egw_info']['server']['site_title'] . (count($files) == 1 ? '_'. self::basename($files[0]) : '') . '.zip';
+		$replace = array('/'=>'_') + self::$encode;
+		$filename = $GLOBALS['egw_info']['server']['site_title'] . '_' . (
+			count($files) == 1 ?
+			// Just one file (hopefully a directory?) selected
+			self::basename($files[0]) :
+			// Use the lowest common directory (eg: Infolog, Open, nathan)
+			self::basename($base_dir)
+		) . '.zip';
 
 		// Go into directories, find them all
 		$files = self::find($files);
@@ -1356,9 +1399,8 @@ class egw_vfs extends vfs_stream_wrapper
 		// Add files to archive
 		foreach($files as $idx => &$addfile)
 		{
-			// Use relative paths inside zip, if we could
-			//$_name = self::concat($directory,self::basename($addfile));
-			$_name = $addfile;
+			// Use relative paths inside zip
+			$_name = str_replace($base_dir, '', $addfile);
 
 			// Don't go infinite with app entries
 			if(self::is_link($addfile))
