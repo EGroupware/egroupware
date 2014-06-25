@@ -46,6 +46,8 @@ class about
 	 */
 	function about()
 	{
+		translation::add_app('admin');
+
 		// list or detail view
 		$name = 'eGroupWare';
 		$detail = false;
@@ -94,24 +96,24 @@ class about
 	 */
 	function _listView()
 	{
-		$text_content = str_replace('GPLLINK',self::$knownLicenses['GPL'],'
-<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a> 
-enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos 
+		$text_content = str_replace('GPLLINK',self::$knownLicenses['GPL'][0],'
+<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a>
+enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos
 and many more for your whole business.</p>
-<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data 
-from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with 
-your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA 
-via SyncML.</p>
-<p><b>EGroupware is international.</b> At the time, it supports more than 
+<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data
+from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with
+your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA
+via eSync.</p>
+<p><b>EGroupware is international.</b> At the time, it supports more than
 <a href="http://www.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
-<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems. 
-On the client side, all you need is a internet browser such as Firefox, Safari, Chrome, Konqueror or Internet Explorer 
+<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems.
+On the client side, all you need is a internet browser such as Chrome, Firefox, Safari or Internet Explorer
 and many more.</p>
 <p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite AG</a></b> with contributions
 from community developers.</p>
 <br />
 <p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
-		
+
 		// get informations about the applications
 		$apps = array();
 		$apps[] = ''; // first empty row for eTemplate
@@ -136,7 +138,7 @@ from community developers.</p>
 		foreach($GLOBALS['egw']->framework->list_templates(true) as $template => $info) {
 			$info = $this->_getParsedTemplateInfo($info);
 			$templates[] = array(
-				'templateImage'		=> '<img src="'.$info['image'].'" />',
+				'templateImage'		=> '',//'<img src="'.$info['image'].'" />',
 				'templateName'		=> $info['title'],
 				'templateAuthor'	=> $info['author'],
 				'templateMaintainer'=> $info['maintainer'],
@@ -149,7 +151,6 @@ from community developers.</p>
 		// get informations about installed languages
 		$translations = array();
 		$translations[] = ''; // first empty row for eTemplate
-		$langs = translation::get_installed_langs();
 		foreach(translation::get_installed_langs() as $translation => $translationinfo) {
 			$translations[] = array(
 				'langName'	=>	$translationinfo.' ('.$translation.')'
@@ -157,9 +158,16 @@ from community developers.</p>
 		}
 
 		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
+		// parse version from changelog
+		$version = $GLOBALS['egw_info']['server']['versions']['phpgwapi'];
+		$matches = null;
+		if (preg_match('/egroupware-epl \(([0-9.]+)/', file_get_contents($changelog), $matches))
+		{
+			$version = preg_replace('/[0-9.]+/', $matches[1], $version);
+		}
 		// fill content array for eTemplate
 		$content = array(
-			'apiVersion'	=> '<p>'.lang('eGroupWare API version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].'</p>',
+			'apiVersion'	=> '<p>'.lang('EGroupware version').' <b>'.$version.'</b></p>',
 			'applications'	=> $apps,
 			'templates'		=> $templates,
 			'translations'	=> $translations,
@@ -215,7 +223,7 @@ from community developers.</p>
 			'license'		=> $this->_linkLicense($info['license'])
 			);
 
-		$tmpl =& CreateObject('etemplate.etemplate', 'phpgwapi.about.detail');
+		$tmpl = new etemplate('phpgwapi.about.detail');
 		if ($nonavbar) {
 			$tmpl->exec('phpgwapi.about.detail', $content, array(), array(), array(), 2);
 		} else {
@@ -261,10 +269,10 @@ from community developers.</p>
 	function _getParsedAppInfo($app)
 	{
 		// we read all setup files once, as no every app has it's own file
-		static $setup_info;
+		static $setup_info=null;
 		if (is_null($setup_info))
 		{
-			foreach($GLOBALS['egw_info']['apps'] as $_app => $_data)
+			foreach(array_keys($GLOBALS['egw_info']['apps']) as $_app)
 			{
 				if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$_app.'/setup/setup.inc.php'))
 				{
@@ -339,7 +347,7 @@ from community developers.</p>
 							}
 						} else {
 							// may be more authors
-							foreach ($setup_info[$f] as $number => $values) {
+							foreach (array_keys($setup_info[$f]) as $number) {
 								if ($setup_info[$f][$number]['name']) {
 										$authors[$number]['name'] = $setup_info[$f][$number]['name'];
 								}
@@ -372,14 +380,15 @@ from community developers.</p>
 	}
 
 	static public $knownLicenses = array(
-		'GPL'	=> 'http://opensource.org/licenses/gpl-2.0.php',
-		'LGPL'	=> 'http://opensource.org/licenses/lgpl-2.1.php',
-		'GPL3'	=> 'http://opensource.org/licenses/gpl-3.0.php',
-		'LGPL3'	=> 'http://opensource.org/licenses/lgpl-3.0.php',
-		'PHP'   => 'http://opensource.org/licenses/php.php',
+		'GPL'	=> array('http://opensource.org/licenses/gpl-license.php','GNU General Public License version 2.0 or (at your option) any later version'),
+		'GPL2'	=> array('http://opensource.org/licenses/gpl-2.0.php','GNU General Public License version 2.0'),
+		'GPL3'	=> array('http://opensource.org/licenses/gpl-3.0.php','GNU General Public License version 3.0'),
+		'LGPL'	=> array('http://opensource.org/licenses/lgpl-2.1.php','GNU Lesser General Public License, version 2.1'),
+		'LGPL3'	=> array('http://opensource.org/licenses/lgpl-3.0.php','GNU Lesser General Public License, version 3.0'),
+		'PHP'   => array('http://opensource.org/licenses/php.php','PHP License'),
 	);
 
-	
+
 	/**
 	 * surround license string with link to license if it is known
 	 *
@@ -393,12 +402,16 @@ from community developers.</p>
 	{
 		$name = is_array($license) ? $license['name'] : $license;
 		$url = is_array($license) && isset($license['url']) ? $license['url'] : '';
+		$title = is_array($license) && isset($license['title']) ? $license['title'] : '';
 
-		if (!$url && isset(self::$knownLicenses[strtoupper($name)]))
+		if (isset(self::$knownLicenses[strtoupper($name)]))
 		{
-			$url = $knownLicenses[$name=strtoupper($name)];
+			if (!$url) $url = self::$knownLicenses[$name=strtoupper($name)][0];
+			if (!$title) $title = self::$knownLicenses[$name=strtoupper($name)][1];
 		}
 
-		return !$url ? $name : '<a href="'.htmlspecialchars($url).'" target="_blank">'.htmlspecialchars($name).'</a>';
+		return !$url ? $name : '<a href="'.htmlspecialchars($url).
+			($title ? '" title="'.htmlspecialchars($title):'').'" target="_blank">'.
+			htmlspecialchars($name).'</a>';
 	}
 }

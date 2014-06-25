@@ -135,6 +135,7 @@ class admin_hooks
 			$file['Admin queue and history'] = egw::link('/index.php','menuaction=admin.admin_cmds.index');
 			$file['Remote administration instances'] = egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
 			$file['Custom translation'] = egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
+			$file['Changelog and versions'] = egw::link('/about.php');
 
 			$file['Submit statistic information'] = egw::link('/index.php','menuaction=admin.admin_statistics.submit');
 

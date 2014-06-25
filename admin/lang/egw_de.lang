@@ -144,6 +144,8 @@ change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
 change password hash to	admin	de	Passwort Verschlüsselung ändern in
 changed password hash for %1 to %2.	admin	de	Passwort Verschlüsselung für %1 ändern in %2.
+changelog	admin	de	Änderungslog
+changelog and versions	admin	de	Änderungslog und Versionen
 check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Einträge auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check categories for not (longer) existing accounts	admin	de	Prüfe Kategorien auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
@@ -325,6 +327,7 @@ forward also to	admin	de	Zusätzlich weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	nur weiterleiten
 full name	admin	de	Vollständiger Name
+general	admin	de	Allgemein
 global categories	common	de	Globale Kategorien
 go directly to admin menu, returning here the next time you click on administration.	admin	de	Geht direkt zum Administrationsmenü, kehrt hier her zurück wenn Sie das nächste mal auf die Administration klicken.
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder städtische Behörden und Dienstleistungen
@@ -374,6 +377,7 @@ ip	admin	de	IP
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
+languages	admin	de	Sprachen
 last %1 logins	admin	de	Letzte %1 Logins
 last %1 logins for %2	admin	de	Letzte %1 Logins für %2
 last action	admin	de	Letzte Aktion

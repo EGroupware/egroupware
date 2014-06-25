@@ -144,6 +144,8 @@ change owner	admin	en	Change owner
 change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
 changed password hash for %1 to %2.	admin	en	Changed password hash for %1 to %2.
+changelog	admin	en	Changelog
+changelog and versions	admin	en	Changelog and versions
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not existing accounts.
 check categories for not (longer) existing accounts	admin	en	Check categories for not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
@@ -325,6 +327,7 @@ forward also to	admin	en	Forward also to
 forward emails to	admin	en	Forward emails to
 forward only	admin	en	Forward only
 full name	admin	en	Full name
+general	admin	en	General
 global categories	common	en	Global categories
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
@@ -374,6 +377,7 @@ ip	admin	en	IP
 jobs	admin	en	Jobs
 kill	admin	en	Kill
 kill session	admin	en	Kill session
+languages	admin	en	Languages
 last %1 logins	admin	en	Last %1 logins
 last %1 logins for %2	admin	en	Last %1 logins for %2
 last action	admin	en	Last action

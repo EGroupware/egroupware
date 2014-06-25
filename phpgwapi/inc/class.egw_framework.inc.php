@@ -640,9 +640,9 @@ abstract class egw_framework
 			}
 			$var['page_generation_time'] .= '</span></div>';
 		}
-		$var['powered_by'] = lang('Powered by').' <a href="http://www.stylite.de/" target="_blank">Stylite\'s</a>'.
-                        ' <a href="'.egw::link('/about.php','','about').'">EGroupware</a>'.
-			' Community Version '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
+		$var['powered_by'] = '<a href="http://www.egroupware.org/" target="_blank">'.
+			lang('Powered by').' Stylite\'s EGroupware '.
+			$GLOBALS['egw_info']['server']['versions']['phpgwapi'].'</a>';
 
 		return $var;
 	}
@@ -1282,7 +1282,7 @@ if ($app == 'home') continue;
 	 */
 	static function list_templates($full_data=false)
 	{
-		$list = array();
+		$list = array('pixelegg'=>null,'jdots'=>null,'idots'=>null);
 		// templates packaged in the api
 		$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
 		while (($entry=$d->read()))
@@ -1321,9 +1321,8 @@ if ($app == 'home') continue;
 			}
 		}
 		$d->close();
-		ksort($list);
 
-		return $list;
+		return array_filter($list);
 	}
 
 	/**
