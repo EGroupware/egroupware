@@ -230,7 +230,12 @@ class accounts_sql
 		if ($data['account_id'] < 0 && class_exists('emailadmin_smtp_sql', isset($data['account_email'])))
 		{
 			try {
-				if (empty($data['account_email']))
+				if (isset($GLOBALS['egw_info']['apps']) && !isset($GLOBALS['egw_info']['apps']['emailadmin']) ||
+					isset($GLOBALS['egw_setup']) && !in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+				{
+					// cant store email, if emailadmin not (yet) installed
+				}
+				elseif (empty($data['account_email']))
 				{
 					$this->db->delete(emailadmin_smtp_sql::TABLE, array(
 						'account_id' => $data['account_id'],
@@ -247,7 +252,7 @@ class accounts_sql
 					), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
 				}
 			}
-			// ignore not (yet) existing mailaccounts table
+			// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
 			catch (egw_exception_db $e) {
 				unset($e);
 			}

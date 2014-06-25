@@ -1030,11 +1030,12 @@ class egw_db
 	}
 
 	/**
-	* Get a list of table names in the current database
-	*
-	* @return array list of the tables
-	*/
-	function table_names()
+	 * Get a list of table names in the current database
+	 *
+	 * @param boolean $just_naem=false true return array of table-names, false return old format
+	 * @return array list of the tables
+	 */
+	function table_names($just_name=false)
 	{
 		if (!$this->Link_ID) $this->connect();
 		if (!$this->Link_ID)
@@ -1051,7 +1052,7 @@ class egw_db
 				{
 					$table = strtolower($table);
 				}
-				$result[] = array(
+				$result[] = $just_name ? $table : array(
 					'table_name'      => $table,
 					'tablespace_name' => $this->Database,
 					'database'        => $this->Database
