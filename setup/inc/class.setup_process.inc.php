@@ -167,6 +167,16 @@ class setup_process
 			$pass_string = implode (':', $pass);
 			$passing_string = implode (':', $passing);
 		}
+		try {
+			// flush instance cache
+			egw_cache::flush(egw_cache::INSTANCE);
+			// delete image-map, in case new apps get installed, or existing ones updated
+			common::delete_image_map();
+		}
+		catch(Exception $e) {
+			unset($e);
+			// ignore exception, as during a new install, there's no cache configured and therefore no need to unset
+		}
 		/* now return the list */
 		return $setup_info = array_merge($setup_info,$passed);
 	}
