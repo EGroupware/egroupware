@@ -256,7 +256,7 @@ class timesheet_ui extends timesheet_bo
 							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
 					}
-					egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'update' : 'add');
+					egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
