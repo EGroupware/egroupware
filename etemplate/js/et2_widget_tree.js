@@ -500,13 +500,13 @@ var et2_tree = et2_inputWidget.extend(
 		// Update action
 		// since the action ID has to = this.id, getObjectById() won't work
 		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
-		for(var i=0; i < treeObj.children.length; i++)
-		{
-			if(treeObj.children[i].id == _id)
+			for(var i=0; i < treeObj.children.length; i++)
 			{
-				treeObj.children.splice(i,1);
+				if(treeObj.children[i].id == _id)
+				{
+					treeObj.children.splice(i,1);
+				}
 			}
-		}
 	},
 
 	/**

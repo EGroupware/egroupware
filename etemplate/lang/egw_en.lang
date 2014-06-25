@@ -388,6 +388,7 @@ select country	etemplate	en	Select country
 select day	etemplate	en	Select day
 select day of week	etemplate	en	Select week day
 select entry	etemplate	en	Select entry
+select files from filemanager ...	etemplate	en	Select files from Filemanager ...
 select hour	etemplate	en	Select hour
 select if content of field should not be translated (label gets always translated)	etemplate	en	Select if field content should not be translated, label gets always translated.
 select language	etemplate	en	Select language

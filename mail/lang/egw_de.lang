@@ -425,7 +425,6 @@ undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Ordner Abbestellen
-upload file(s) from filemanager...	mail	de	Dateien aus dem EGroupware Dateimanager auswählen..
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige

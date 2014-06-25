@@ -623,7 +623,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		"button_caption":{
 			name: "button caption",
 			type: "string",
-			default: "Upload file(s) from Filemanager...",
+			default: "Select files from Filemanager ...",
 			description: "Caption for vfs-select button.",
 			translate:true
 		}

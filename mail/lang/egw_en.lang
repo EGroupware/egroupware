@@ -423,7 +423,6 @@ undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
 unsubscribe folder	mail	en	Unsubscribe folder
-upload file(s) from filemanager...	mail	en	Upload file(s) from Filemanager...
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable

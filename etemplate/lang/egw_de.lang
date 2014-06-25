@@ -386,6 +386,7 @@ select columns	etemplate	de	Spalten auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select day of week	etemplate	de	Wochentag auswählen
+select files from filemanager ...	etemplate	de	Dateien aus Dateimanager auswählen ...
 select entry	etemplate	de	Eintrag auswählen
 select hour	etemplate	de	Stunde auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
