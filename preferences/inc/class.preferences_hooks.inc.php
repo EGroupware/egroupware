@@ -93,7 +93,8 @@ class preferences_hooks
 
 		if ($hook_data['setup'])	// called via setup
 		{
-			$lang = get_var('ConfigLang',Array('POST','COOKIE'),'en');
+			$lang = setup::get_lang();
+			if (empty($lang)) $lang = 'en';
 			list(,$country) = explode('-',$lang);
 			if (empty($country)) $country = $lang;
 		}
