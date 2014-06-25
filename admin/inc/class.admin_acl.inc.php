@@ -23,7 +23,6 @@ class admin_acl
 	 */
 	public $public_functions = array(
 		'index' => true,
-		'acl' => true,
 	);
 
 	/**
@@ -39,114 +38,6 @@ class admin_acl
 	public function __construct()
 	{
 		$this->acl = $GLOBALS['egw']->acl;
-	}
-
-	/**
-	 * Edit or add an ACL entry
-	 *
-	 * @param array $content
-	 */
-	public function acl(array $content=null)
-	{
-		$state = (array)egw_cache::getSession(__CLASS__, 'state');
-		$tpl = new etemplate_new('admin.acl.edit');	// auto-repeat of acl & label not working with etemplate_new!
-
-		if (!is_array($content))
-		{
-			if (isset($_GET['id']))
-			{
-				list($app, $account, $location) = explode(':', $_GET['id'], 3);
-
-				if (!($rights = $this->acl->get_specific_rights_for_account($account, $location, $app)))
-				{
-					egw_framework::window_close(lang('ACL entry not found!'));
-				}
-			}
-			else
-			{
-				$app = !empty($_GET['app']) && isset($GLOBALS['egw_info']['apps'][$_GET['app']]) ?
-					$_GET['app'] : $state['acl_appname'];
-				$location = $state['filter'] == 'run' ? 'run' : null;//$state['account_id'];
-				$account = $state['account_id'];//$state['filter'] == 'run' ? $state['account_id'] : $state['acl_account'];
-				$rights = 1;
-			}
-			$content = array(
-				'id' => $_GET['id'],
-				'acl_appname' => $app,
-				'acl_location' => $location,
-				'acl_account' => $account,
-			);
-			if ($location == 'run')
-			{
-				$content['apps'] = array_keys($this->acl->get_user_applications($account, false, false));	// false: only direct rights, no memberships
-			}
-		}
-		$acl_rights = $GLOBALS['egw']->hooks->process(array(
-			'location' => 'acl_rights',
-			'owner' => $content['account_id'],
-		));
-		if ($content['save'])
-		{
-			self::check_access($content['acl_account'], $content['acl_location']);
-
-			if ($content['acl_location'] == 'run')
-			{
-				$this->save_run_rights($content);
-			}
-			else
-			{
-				$this->save_rights($content);
-			}
-			egw_framework::window_close();
-		}
-		if ($content['acl_location'] == 'run')
-		{
-			$readonlys['acl_account'] = true;
-		}
-		else
-		{
-			$content['acl'] = $content['label'] = array();
-			foreach($state['filter'] == 'run' ? array(1 => 'run') : $acl_rights[$content['acl_appname']] as $right => $label)
-			{
-				$content['acl'][] = $rights & $right;
-				$content['right'][] = $right;
-				$content['label'][] = lang($label);
-			}
-			$sel_options['acl_appname'] = array();
-			foreach(array_keys($state['filter'] == 'run' ? $GLOBALS['egw_info']['apps'] : $acl_rights) as $app)
-			{
-				$sel_options['acl_appname'][$app] = lang($app);
-			}
-			natcasesort($sel_options['acl_appname']);
-
-			if (!empty($content['id']))
-			{
-				$readonlys['acl_appname'] = $readonlys['acl_account'] = $readonlys['acl_location'] = true;
-			}
-			else
-			{
-				$readonlys['acl_account'] = true;
-			}
-			// only user himself is allowed to grant private rights!
-			if ($content['acl_account'] != $GLOBALS['egw_info']['user']['account_id'])
-			{
-				$readonlys['acl[5]'] = true;
-				$content['preserve_rights'] = $rights & acl::PRIVAT;
-			}
-			else
-			{
-				unset($content['preserve_rights']);
-			}
-		}
-		// view only, if no rights
-		if (!self::check_access($content['acl_account'], $content['acl_location'], false))
-		{
-			$readonlys[__ALL__] = true;
-			$readonlys['cancel'] = false;
-		}
-
-		//error_log(__METHOD__."() _GET[id]=".array2string($_GET['id'])." --> content=".array2string($content));
-		$tpl->exec('admin.admin_acl.acl', $content, $sel_options, $readonlys, $content, 2);
 	}
 
 	/**
@@ -356,7 +247,7 @@ class admin_acl
 			//error_log(__METHOD__."() $n: ".array2string($row));
 		}
 		//error_log(__METHOD__."(".array2string($query).") returning ".$total);
-		
+
 		return $total;
 	}
 
@@ -423,7 +314,7 @@ class admin_acl
 			self::check_access($account_id, $location);	// throws exception, if no rights
 
 			$acl = $GLOBALS['egw']->acl;
-			
+
 			if (!(int)$rights)	// this also handles taking away all rights as delete
 			{
 				$acl->delete_repository($app, $location, $account_id);

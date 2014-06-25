@@ -121,6 +121,48 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
+	 */
+	/* as replacement for register_app_refresh in et2_ready, would allow to retire app_refresh stuff ...
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		switch(_app)
+		{
+			case 'admin':
+				// group deleted, added or updated
+				if (_id < 0)
+				{
+					var tree = this.et2.getWidgetById('tree');
+					switch(_type)
+					{
+						case 'delete':
+							tree.deleteItem('/groups/'+_id, false);
+							return false;	// --> no regular refresh
+
+						default:	// add, update, edit, null
+							tree.refreshItem('/groups');
+							return false;	// --> no regular refresh
+					}
+				}
+		}
+	},*/
+
+	/**
 	 * Special handling for egw_refresh() in admin, to refresh the iframe when
 	 * the framework detects a simple refresh can be used (same URL).
 	 *
@@ -334,7 +376,7 @@ app.classes.admin = AppJS.extend(
 
 		// For edit, set some data from the list since it's already there
 		var content = _senders[0].id ? jQuery.extend({}, egw.dataGetUIDdata(_senders[0].id).data) : {};
-		
+
 		switch(_action.id)
 		{
 			case 'delete':
@@ -365,7 +407,7 @@ app.classes.admin = AppJS.extend(
 	_acl_dialog: function(content, sel_options)
 	{
 		if(typeof content == 'undefined') content = {};
-		
+
 		// Determine which application we're running as
 		var app = egw.app_name();	// can be either admin or preferences!
 		if (app != 'admin') app = 'preferences';
@@ -375,7 +417,7 @@ app.classes.admin = AppJS.extend(
 
 		// Select options are already here, just pull them and pass along
 		sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
-			'apps': this.et2.getArrayMgr('sel_options').getEntry('acl_appname')
+			'apps': this.et2.getArrayMgr('sel_options').getEntry('filter2')
 		},sel_options);
 
 		// Some defaults
@@ -401,7 +443,7 @@ app.classes.admin = AppJS.extend(
 			{
 				// These are the apps the account has access to
 				// Fetch current values from server
-				this.egw.json(className+'::ajax_get_app_list', [content.acl_account], function(data) {content.apps = data},this,false,this)
+				this.egw.json(className+'::ajax_get_app_list', [content.acl_account], function(data) {content.apps = data;},this,false,this)
 					.sendRequest();
 			}
 			else
@@ -432,7 +474,7 @@ app.classes.admin = AppJS.extend(
 				content.label.push(egw.lang(acl_rights[content.acl_appname][right]));
 			}
 		}
-		
+
 		// Make sure selected values are there, account might not be in a default group
 		// so not in cache
 		if(content.acl_account)
@@ -454,7 +496,7 @@ app.classes.admin = AppJS.extend(
 			}
 		}
 		if(content.acl_location)
-		{	 
+		{
 			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
 			this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
 		}
@@ -467,7 +509,7 @@ app.classes.admin = AppJS.extend(
 
 				// Restore account if it's readonly in dialog
 				if(!_value.acl_account) _value.acl_account = content.acl_account;
-				
+
 				// Only send the request if they entered everything
 				if(_value.acl_account && (_value.acl_appname && _value.acl_location || _value.apps))
 				{
@@ -493,7 +535,7 @@ app.classes.admin = AppJS.extend(
 							}
 							else if (_value.apps.indexOf(app) >= 0 && content.apps.indexOf(app) < 0)
 							{
-								id.push(run_id)
+								id.push(run_id);
 							}
 						}
 
@@ -522,6 +564,9 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Change handler for ACL edit dialog application selectbox.
 	 * Re-creates the dialog with the current values
+	 *
+	 * @param input
+	 * @param widget
 	 */
 	acl_reopen_dialog: function(input, widget)
 	{
