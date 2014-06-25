@@ -119,7 +119,51 @@ app.classes.calendar = AppJS.extend(
 				break;
 		}
 	},
-
+	
+	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {object|null} _links app => array of ids of linked entries
+	 * or null, if not triggered on server-side, which adds that info
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _links)
+	{
+		if (typeof _links != 'undefined')
+		{
+			if (typeof _links.calendar != 'undefined')
+			{
+				switch(_app)
+				{
+					case 'infolog':
+					{
+						if (typeof this.et2 != 'undefined' && this.et2 !=null)
+						{
+							this.egw.refresh(_msg, 'calendar');
+						}
+						else
+						{
+							window.location.reload();
+						}
+					}
+					break;
+				}	
+			}
+		}	
+	},
+	
 	/**
 	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
 	 *
