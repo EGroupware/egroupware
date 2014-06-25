@@ -924,8 +924,8 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 
 	function _decode($blob)
 	{
-		eval('$realblob="'.adodb_str_replace(array('"','$'),array('\"','\$'),$blob).'";');
-		return $realblob;
+		if ($blob === NULL) return NULL;
+		return pg_unescape_bytea($blob);
 	}
 
 	function _fixblobs()
