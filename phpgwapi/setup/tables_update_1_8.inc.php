@@ -118,10 +118,10 @@ function phpgwapi_upgrade1_9_004()
 {
 	// Get all installed translations for names
 	$country = new country();
-	$country_query = 'SELECT DISTINCT message_id, content
-		FROM ' . translation::LANG_TABLE . '
-		WHERE message_id IN ("' . implode('","', array_values($country->countries())) . '")
-		ORDER BY message_id';
+	$country_query = 'SELECT DISTINCT message_id, content'.
+		' FROM ' . translation::LANG_TABLE .
+		" WHERE message_id IN ('" . implode("','", array_values($country->countries())) . "')".
+		' ORDER BY message_id';
 	$result = $GLOBALS['egw_setup']->oProc->query($country_query, __LINE__, __FILE__);
 
 	$country_list = array();
