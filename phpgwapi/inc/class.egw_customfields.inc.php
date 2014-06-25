@@ -112,7 +112,7 @@ class egw_customfields implements IteratorAggregate
 		$to_or = array($column.' IS NULL');
 		foreach((array) $values as $value)
 		{
-			$to_or[] = self::$db->concat('","', $column, '","').' LIKE '.self::$db->quote('%,'.$value.',%');
+			$to_or[] = self::$db->concat("','", $column, "','").' LIKE '.self::$db->quote('%,'.$value.',%');
 		}
 		return '('.implode(' OR ', $to_or).')';
 	}
