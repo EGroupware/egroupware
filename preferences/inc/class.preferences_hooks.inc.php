@@ -93,7 +93,8 @@ class preferences_hooks
 
 		if ($hook_data['setup'])	// called via setup
 		{
-			$lang = get_var('ConfigLang',Array('POST','COOKIE'),'en');
+			$lang = setup::get_lang();
+			if (empty($lang)) $lang = 'en';
 			list(,$country) = explode('-',$lang);
 			if (empty($country)) $country = $lang;
 		}
@@ -129,7 +130,7 @@ class preferences_hooks
 				'size'  => 3,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 20,
+				'forced' => 20,	// hidden as not used in eTemplate2
 			),
 			'template_set' => array(
 				'type'   => 'select',
@@ -139,7 +140,7 @@ class preferences_hooks
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'idots',
+				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
 			),
 			'theme' => array(
 				'type'   => 'select',
@@ -149,7 +150,7 @@ class preferences_hooks
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'idots',
+				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
 			),
 			'navbar_format' => array(
 				'type'   => 'select',
