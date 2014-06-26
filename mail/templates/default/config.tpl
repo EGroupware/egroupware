@@ -45,33 +45,26 @@
    </tr>
    <tr class="row_on">
 	<td>
-	 <b>{lang_Prevent_managing_forwards}</b><br/>
-	 {lang_Do_you_want_to_prevent_the_editing/setup_for_forwarding_of_mails_via_settings_(,_even_if_SIEVE_is_enabled)?}
-	</td>
-    <td>{call_mail_hooks::deny_forwards}</td>
-   </tr>
-   <tr class="row_off">
-	<td>
 	 <b>{lang_Prevent_managing_notifications}</b><br/>
 	 {lang_Do_you_want_to_prevent_the_editing/setup_of_notification_by_mail_to_other_emailadresses_if_emails_arrive_(,_even_if_SIEVE_is_enabled)?}
 	</td>
     <td>{call_mail_hooks::deny_notificationformailviaemail}</td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
 	<td>
 	 <b>{lang_Prevent_managing_filters}</b><br/>
 	 {lang_Do_you_want_to_prevent_the_editing/setup_of_filter_rules_(,_even_if_SIEVE_is_enabled)?}
 	</td>
     <td>{call_mail_hooks::deny_editfilterrules}</td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
 	<td>
 	 <b>{lang_Prevent_managing_vacation_notice}</b><br/>
 	 {lang_Do_you_want_to_prevent_the_editing/setup_of_the_absent/vacation_notice_(,_even_if_SIEVE_is_enabled)?}
 	</td>
     <td>{call_mail_hooks::deny_absentnotice}</td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
 	<td>
      <b>{lang_restrict_acl_management}</b><br/>
 	 {lang_effective_only_if_server_supports_ACL_at_all}

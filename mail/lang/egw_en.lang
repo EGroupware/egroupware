@@ -94,7 +94,6 @@ do not auto create folders	mail	en	do not auto create folders
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup for forwarding of mails via settings (, even if SIEVE is enabled)?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if SIEVE is enabled)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of the absent/vacation notice (, even if SIEVE is enabled)?
@@ -286,7 +285,6 @@ please supply the message to send with auto-responses	mail	en	Please supply the 
 post	mail	en	post
 prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
-prevent managing forwards	mail	en	Prevent managing forwards
 prevent managing notifications	mail	en	Prevent managing notifications
 prevent managing vacation notice	mail	en	Prevent managing vacation notice
 primary profile	mail	en	Primary Profile

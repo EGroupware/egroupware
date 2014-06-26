@@ -802,7 +802,7 @@ class mail_hooks
 	 *
 	 * Example: if (!mail_hooks::access("managerfolders")) return;
 	 *
-	 * @param string $feature "createaccounts", "managefolders", "forwards", "notifications", "filters",
+	 * @param string $feature "createaccounts", "managefolders", "notifications", "filters",
 	 *		"notificationformailviaemail", "editfilterrules", "absentnotice", "aclmanagement"
 	 * @return boolean true if user has access, false if not
 	 */
