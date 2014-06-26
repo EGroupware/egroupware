@@ -153,7 +153,9 @@ class egw_customfields implements IteratorAggregate
 	 */
 	public static function update(array $cf)
 	{
-		self::$db->update(self::TABLE, array(
+		$op = $cf['id'] ? 'update' : 'insert';
+
+		self::$db->$op(self::TABLE, array(
 			'cf_label' => $cf['label'],
 			'cf_type' => $cf['type'],
 			'cf_type2' => $cf['type2'] ? implode(',', $cf['type2']) : null,
