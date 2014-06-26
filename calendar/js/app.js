@@ -141,26 +141,40 @@ app.classes.calendar = AppJS.extend(
 	 */
 	observer: function(_msg, _app, _id, _type, _msg_type, _links)
 	{
-		if (typeof _links != 'undefined')
+		var do_refresh = false;
+		switch(_app)
 		{
-			if (typeof _links.calendar != 'undefined')
+			case 'infolog':
 			{
-				switch(_app)
+				jQuery('.calendar_calDayTodos')
+					.find('a')
+					.each(function(i,a){
+						var match = a.href.split(/&info_id=/);
+						if (match && typeof match[1] !="undefined")
+						{
+							if (match[1]== _id)	do_refresh = true;
+						}
+					});
+				if (jQuery('div [id^="infolog'+_id+'"]').length > 0) do_refresh = true;	
+				switch (_type)
 				{
-					case 'infolog':
+					case 'add':
+						do_refresh = true;
+						break;
+				}
+				if (do_refresh)
+				{
+					if (typeof this.et2 != 'undefined' && this.et2 !=null)
 					{
-						if (typeof this.et2 != 'undefined' && this.et2 !=null)
-						{
-							this.egw.refresh(_msg, 'calendar');
-						}
-						else
-						{
-							window.location.reload();
-						}
+						this.egw.refresh(_msg, 'calendar');
 					}
-					break;
-				}	
+					else
+					{
+						window.location.reload();
+					}
+				}
 			}
+			break;
 		}	
 	},
 	
