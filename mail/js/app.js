@@ -1242,7 +1242,19 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_delete: function(_action,_elems)
 	{
+		this.mail_checkAllSelected(_action,_elems,null,true);
+	},
+
+	/**
+	 * call Delete mails
+	 * takes in all arguments
+	 * @param _action
+	 * @param _elems
+	 */
+	mail_callDelete: function(_action,_elems,_allMessagesChecked)
+	{
 		var calledFromPopup = false;
+		if (typeof _allMessagesChecked == 'undefined') _allMessagesChecked=false;
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			calledFromPopup = true;
@@ -1261,7 +1273,8 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var msg = this.mail_getFormData(_elems);
-		msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?this.mail_checkAllSelected(_action,true):false);
+		msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?_allMessagesChecked:false);
+		if (msg['all']=='cancel') return false;
 		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
@@ -1344,7 +1357,7 @@ app.classes.mail = AppJS.extend(
 		//{
 		//	ids.push(_msg['msg'][i].replace(/mail::/,''));
 		//}
-		//this.egw.refresh(this.egw.lang("deleted %1 messages in %2",_msg['msg'].length,(displayname?displayname:egw.lang('current folder'))),'mail',ids,'delete');
+		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))));
 	},
 
@@ -1530,48 +1543,129 @@ app.classes.mail = AppJS.extend(
 	 * mail_checkAllSelected
 	 *
 	 * @param _action
-	 * @@param _confirm
-	 * @return boolean
+	 * @param _elems
+	 * @param _target
+	 * @param _confirm
 	 */
-	mail_checkAllSelected: function(_action, _confirm)
+	mail_checkAllSelected: function(_action, _elems, _target, _confirm)
 	{
-		if (typeof _confirm == 'undefiend') _confirm = false;
+		if (typeof _confirm == 'undefined') _confirm = false;
 		// we only want to check nm list for allSelected, so we dont use the action object, but refer directly to nm_index id
 		//var actManId = _action.getManager().id;
 		//console.log(actManId);
 		var obj_manager = egw_getObjectManager(this.nm_index, false);
+		var that = this;
+		var rvMain = false;
 		if (obj_manager && obj_manager.getAllSelected())
 		{
 			if (_confirm)
 			{
-/*				var buttons = [
+				var buttons = [
 					{text: this.egw.lang("Yes"), id: "all", class: "ui-priority-primary", "default": true},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
-				et2_dialog.show_dialog(function(_button_id, _value) {
+				var messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
+				switch (_action.id)
+				{
+					case "unlabel":
+					case "label1":
+					case "label2":
+					case "label3":
+					case "label4":
+					case "label5":
+					case "flagged":
+					case "read":
+					case "undelete":
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
+						break;
+				}
+				return et2_dialog.show_dialog(function(_button_id, _value) {
+					var rv = false;
 					switch (_button_id)
 					{
 						case "all":
-							return true;
+							rv = true;
+							break;
 						case "cancel":
-							return false;
+							rv = 'cancel';
+					}
+					switch (_action.id)
+					{
+						case "delete":
+							that.mail_callDelete(_action, _elems,rv);
+							break;
+						case "unlabel":
+						case "label1":
+						case "label2":
+						case "label3":
+						case "label4":
+						case "label5":
+						case "flagged":
+						case "read":
+						case "undelete":
+							that.mail_callFlagMessages(_action, _elems,rv);
+							break;
+						case "drop_move_mail":
+							that.mail_callMove(_action, _elems,_target, rv);
+							break;
+						case "drop_copy_mail":
+							that.mail_callCopy(_action, _elems,_target, rv);
+							break;
+						default:
+							if (_action.id.substr(5)=='move') that.mail_callMove(_action, _elems,_target, rv);
+							if (_action.id.substr(5)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
 					}
 				},
-				this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(_action.id))+" ",
+				messageToDisplay,
 				this.egw.lang("Confirm"),
 				_action.id, buttons);
-*/
-				return confirm(this.egw.lang("Do you really want to apply/toggle %1 to ALL messages in the current folder?\n %2: All (filtered) mesages, will be affected.\n %3: only the selected range will be affected ",this.egw.lang(_action.id),this.egw.lang('ok'),this.egw.lang('cancel')));
-				
+
+//				var x = confirm(this.egw.lang("Do you really want to apply/toggle %1 to ALL messages in the current folder?\n %2: All (filtered) mesages, will be affected.\n %3: only the selected range will be affected ",this.egw.lang(_action.id),this.egw.lang('ok'),this.egw.lang('cancel')));
+//				if (!x) return 'cancel';
+//				return x;				
 			}
 			else
 			{
-				return true;
+				rvMain = true;
 			}
 		}
-		return false;
+		switch (_action.id)
+		{
+			case "delete":
+				this.mail_callDelete(_action, _elems,rvMain);
+				break;
+			case "unlabel":
+			case "label1":
+			case "label2":
+			case "label3":
+			case "label4":
+			case "label5":
+			case "flagged":
+			case "read":
+			case "undelete":
+				this.mail_callFlagMessages(_action, _elems,rvMain);
+				break;
+			case "drop_move_mail":
+				this.mail_callMove(_action, _elems,_target, rvMain);
+				break;
+			case "drop_copy_mail":
+				this.mail_callCopy(_action, _elems,_target, rvMain);
+				break;
+			default:
+				if (_action.id.substr(5)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
+				if (_action.id.substr(5)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
+		}
 	},
 
+	/**
+	 * mail_doActionCall
+	 *
+	 * @param _action
+	 * @param _elems
+	 */
+	mail_doActionCall: function(_action, _elems)
+	{
+	},
 	/**
 	 * mail_getActiveFilters
 	 *
@@ -1596,11 +1690,23 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_flag: function(_action, _elems)
 	{
+		this.mail_checkAllSelected(_action,_elems,null,true);
+	},
+
+	/**
+	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
+	 *
+	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
+	 * @param _elems
+	 * @param _allMessagesChecked
+	 */
+	mail_callFlagMessages: function(_action, _elems, _allMessagesChecked)
+	{
 		var do_nmactions = true;
 		var msg;
 		var ftree;
 		var _folder;
-
+		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		if (_action.id=='read')
 		{
 			ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -1638,7 +1744,8 @@ app.classes.mail = AppJS.extend(
 		if (do_nmactions)
 		{
 			msg = this.mail_getFormData(_elems);
-			msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?this.mail_checkAllSelected(_action,true):false);
+			msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?_allMessagesChecked:false);
+			if (msg['all']=='cancel') return false;
 			msg['activeFilters'] = this.mail_getActiveFilters(_action);
 			if (_action.id.substring(0,2)=='un') {
 				//old style, only available for undelete and unlabel (no toggle)
@@ -2466,12 +2573,26 @@ app.classes.mail = AppJS.extend(
 	 * @param _target - the representation of the target
 	 */
 	mail_move: function(_action,_senders,_target) {
+		this.mail_checkAllSelected(_action,_senders,_target,true);
+	},
+
+	/**
+	 * mail_move - implementation of the move action from drag n drop
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the elements dragged
+	 * @param _target - the representation of the target
+	 * @param _allMessagesChecked
+	 */
+	mail_callMove: function(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
+		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?this.mail_checkAllSelected(_action,true):false);
+		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?_allMessagesChecked:false);
+		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'])
@@ -2482,19 +2603,33 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * mail_copy - implementation of the copy action from drag n drop
+	 * mail_copy - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
 	mail_copy: function(_action,_senders,_target) {
+		this.mail_checkAllSelected(_action,_senders,_target,true);
+	},
+
+	/**
+	 * mail_callCopy - implementation of the copy action from drag n drop
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the elements dragged
+	 * @param _target - the representation of the target
+	 * @param _allMessagesChecked
+	 */
+	mail_callCopy: function(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_copy_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
+		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?this.mail_checkAllSelected(_action,true):false);
+		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?_allMessagesChecked:false);
+		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
@@ -2851,7 +2986,7 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	* Send back sieve action resault to server
+	* Send back sieve action result to server
 	*
 	* @param {string} _typeID action name
 	* @param {object} _data content
