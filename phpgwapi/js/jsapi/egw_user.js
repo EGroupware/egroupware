@@ -104,7 +104,64 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				list = list.concat(accountStore[type]);
 			}
 			return list;
+		},
+
+		/**
+		 * Invalidate client-side account cache
+		 *
+		 * For _type == "add" we invalidate the whole cache currently.
+		 *
+		 * @param {number} _id nummeric account_id, !_id will invalidate whole cache
+		 * @param {string} _type "add", "delete", "update" or "edit"
+		 */
+		invalidate_account: function(_id, _type)
+		{
+			if (jQuery.isEmptyObject(accountStore)) return;
+
+			switch(_type)
+			{
+				case 'delete':
+				case 'edit':
+				case 'update':
+					if (_id)
+					{
+						var store = _id < 0 ? accountStore.groups : accountStore.accounts;
+						for(var i=0; i < store.length; ++i)
+						{
+							if (_id == store[i].value)
+							{
+								if (_type == 'delete')
+								{
+									delete(store[i]);
+								}
+								else
+								{
+									this.link_title('home-accounts', _id, function(_label)
+									{
+										store[i].label = _label;
+										if (_id < 0)
+										{
+											for(var j=0; j < accountStore.owngroups.length; ++j)
+											{
+												if (_id == accountStore.owngroups[j].value)
+												{
+													accountStore.owngroups[j].label = _label;
+													break;
+												}
+											}
+										}
+									}, this, true);	// true = force reload
+								}
+								break;
+							}
+						}
+						break;
+					}
+					// fall through
+				default:
+					accountStore = {};
+					break;
+			}
 		}
 	};
-
 });

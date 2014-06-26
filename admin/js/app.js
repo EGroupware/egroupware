@@ -92,7 +92,7 @@ app.classes.admin = AppJS.extend(
 					);
 
 					// Register app refresh now that iframe is available
-					register_app_refresh('admin',jQuery.proxy(this.refresh,this));
+					//register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 				}
 				break;
 
@@ -138,12 +138,13 @@ app.classes.admin = AppJS.extend(
 	 * @param {string} _targetapp which app's window should be refreshed, default current
 	 * @return {false|*} false to stop regular refresh, thought all observers are run
 	 */
-	/* as replacement for register_app_refresh in et2_ready, would allow to retire app_refresh stuff ...
 	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 	{
 		switch(_app)
 		{
 			case 'admin':
+				// invalidate client-side account-cache
+				this.egw.invalidate_account(_id, _type);
 				// group deleted, added or updated
 				if (_id < 0)
 				{
@@ -160,7 +161,7 @@ app.classes.admin = AppJS.extend(
 					}
 				}
 		}
-	},*/
+	},
 
 	/**
 	 * Special handling for egw_refresh() in admin, to refresh the iframe when
