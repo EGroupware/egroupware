@@ -575,7 +575,7 @@ app.classes.mail = AppJS.extend(
 					children[i].destroy();
 					widget.removeChild(children[i]);
 				}
-				if (content.length == 1 && typeof content[0] != 'undefined')
+				if (content.length == 1 && typeof content[0] != 'undefined' && content[0])
 				{
 					content = content[0].split(',');	
 				}
