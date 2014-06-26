@@ -809,6 +809,10 @@ class mail_hooks
 	public static function access($feature)
 	{
 		static $config=null;
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_info']['user']['apps']['emailadmin'])
+		{
+			return true;	// allways give admins or emailadmins all rights, even if they are in a denied group
+		}
 		if (!isset($config)) $config = (array)config::read('mail');
 		//error_log(__METHOD__.__LINE__.' '.$feature.':'.array2string($config['deny_'.$feature]));
 		if (!empty($config['deny_'.$feature]))
