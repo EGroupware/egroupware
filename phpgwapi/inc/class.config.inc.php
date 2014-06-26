@@ -304,7 +304,7 @@ class config
 	protected static function unserialize($str)
 	{
 		// handling of new json-encoded arrays
-		if ($str[0] == '{' && $str[0] != '[')
+		if ($str[0] == '{' || $str[0] == '[')
 		{
 			return json_decode($str, true);
 		}
