@@ -314,11 +314,11 @@ class config
 			return $str;
 		}
 		// handling of old PHP serialized and addslashed prefs
-		$data = unserialize($str);
+		$data = php_safe_unserialize($str);
 		if($data === false)
 		{
 			// manually retrieve the string lengths of the serialized array if unserialize failed
-			$data = unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
+			$data = php_safe_unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
 			{
 				return 's:'.mb_strlen($matches[2],'8bit').':"'.$matches[2].'";';
 			}, $str));

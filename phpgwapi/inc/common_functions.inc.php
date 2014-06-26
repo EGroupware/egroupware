@@ -1530,6 +1530,61 @@ function try_lang($key,$vars=null)
 }
 
 /**
+ * Unserialize a php serialized string, but only if it contains NO objects 'O:\d:"' or 'C:\d:"' pattern
+ *
+ * Should be used for all external content, to guard against exploidts.
+ *
+ * @param string $str
+ * @return mixed
+ */
+function php_safe_unserialize($str)
+{
+	if ((strpos($str, 'O:') !== false || strpos($str, 'C:') !== false) &&
+		preg_match('/(^|;|{)[OC]:\d+:"/', $str))
+	{
+		error_log(__METHOD__."('$str') contains objects --> return false");
+		return false;
+	}
+	return unserialize($str);
+}
+
+/* some test for object safe unserialisation
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
+{
+	if (php_sapi_name() !== 'cli') echo "<pre>\n";
+	foreach(array(
+		// things unsafe to unserialize
+		"O:34:\"Horde_Kolab_Server_Decorator_Clean\":2:{s:43:\"\x00Horde_Kolab_Server_Decorator_Clean\x00_server\";" => false,
+		"O:20:\"Horde_Prefs_Identity\":2:{s:9:\"\x00*\x00_prefs\";O:11:\"Horde_Prefs\":2:{s:8:\"\x00*\x00_opts\";a:1:{s:12:\"sizecallback\";" => false,
+		"a:2:{i:0;O:12:\"Horde_Config\":1:{s:13:\"\x00*\x00_oldConfig\";s:#{php_injection.length}:\"#{php_injection}\";}i:1;s:13:\"readXMLConfig\";}}" => false,
+		'a:6:{i:0;i:0;i:1;d:2;i:2;s:4:"ABCD";i:3;r:3;i:4;O:8:"my_Class":2:{s:1:"a";r:6;s:1:"b";N;};i:5;C:16:"SplObjectStorage":14:{x:i:0;m:a:0:{}}' => false,
+		// string content, safe to unserialize
+		serialize('O:8:"stdClass"') => true,
+		serialize('C:16:"SplObjectStorage"') => true,
+		serialize(array('a' => 'O:8:"stdClass"', 'b' => 'C:16:"SplObjectStorage"')) => true,
+		// false positive: failing our tests, because it has correct delimiter (^|;|{) in front of pattern :-(
+		serialize('O:8:"stdClass";C:16:"SplObjectStorage"') => true,
+	) as $str => $result)
+	{
+		if ((bool)php_safe_unserialize($str) !== $result)
+		{
+			if (!$result)
+			{
+				echo "FAILED: $str\n";
+			}
+			else
+			{
+				echo "false positive: $str\n";
+			}
+		}
+		else
+		{
+			echo "passed: $str\n";
+		}
+	}
+}*/
+
+/**
  * php5 autoload function for eGroupWare understanding the following naming schema:
  *	1. new (prefered) nameing schema: app_class_something loading app/inc/class.class_something.inc.php
  *	2. API classes: classname loading phpgwapi/inc/class.classname.inc.php

@@ -349,16 +349,16 @@ class preferences
 	protected static function unserialize($str)
 	{
 		// handling of new json-encoded prefs
-		if ($str[0] == '{')
+		if ($str[0] != 'a' && $str[1] != ':')
 		{
 			return json_decode($str, true);
 		}
 		// handling of old PHP serialized and addslashed prefs
-		$data = unserialize($str);
+		$data = php_safe_unserialize($str);
 		if($data === false)
 		{
 			// manually retrieve the string lengths of the serialized array if unserialize failed
-			$data = unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
+			$data = php_safe_unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
 			{
 				return 's:'.mb_strlen($matches[2],'8bit').':"'.$matches[2].'";';
 			}, $str));

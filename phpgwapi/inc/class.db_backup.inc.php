@@ -449,7 +449,15 @@ class db_backup
 			if (substr($line,0,8) == 'schema: ')
 			{
 				// create the tables in the backup set
-				$this->schemas = unserialize(trim(substr($line,8)));
+				$schema = trim(substr($line,8));
+				if ($schema[0] == 'a' && $schema[1] == ':')
+				{
+					$this->schemas = php_safe_unserialize($schema);
+				}
+				else
+				{
+					$this->schema = json_decode($schema, true);
+				}
 				foreach($this->schemas as $table_name => $schema)
 				{
 					// if column is longtext in current schema, convert text to longtext, in case user already updated column
@@ -825,7 +833,7 @@ class db_backup
 
 		$this->schema_backup($f);	// add the schema in a human readable form too
 
-		fwrite($f,"\nschema: ".serialize($this->schemas)."\n");
+		fwrite($f,"\nschema: ".json_encode($this->schemas)."\n");
 
 		foreach($this->schemas as $table => $schema)
 		{
