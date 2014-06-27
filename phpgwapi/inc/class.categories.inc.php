@@ -190,12 +190,11 @@ class categories
 	 * @param int $lastmod = -1 if > 0 return only cats modified since then
 	 * @param string $column='' if column-name given only that column is returned, not the full array with all cat-data
 	 * @param array $filter=null array with column-name (without cat_-prefix) => value pairs (! negates the value)
-	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
 	 * @return array of cat-arrays or $column values
 	 */
-	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null,$unserialize_data=false)
+	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null)
 	{
-		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column,filter=".array2string($filter).",$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
+		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column,filter=".array2string($filter).") account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 		$cats = array();
 		foreach(self::$cache as $cat)
 		{
@@ -282,7 +281,7 @@ class categories
 			// check if last modified since
 			if ($lastmod > 0 && $cat['last_mod'] <= $lastmod) continue;
 
-			if ($unserialize_data) $cat['data'] = $cat['data'] ? json_php_unserialize($cat['data'], true) : array();
+			$cat['data'] = $cat['data'] ? json_php_unserialize($cat['data'], true) : array();
 
 			$cats[] = $cat;
 		}
