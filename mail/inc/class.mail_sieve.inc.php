@@ -48,7 +48,14 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-
+	
+	/**
+	 * siteConfigs
+	 *
+	 * @var array
+	 */
+	var $mailConfig = array();
+	
 	/**
 	 * Constructor
 	 */
@@ -56,13 +63,14 @@ class mail_sieve
 	{
 		$this->displayCharset = translation::charset();
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
-
+		$this->mailConfig = config::read('mail');
+		
 		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : egw_cache::getSession(__CLASS__, 'acc_id');
 		if ($acc_id > 0)
 		{
 			$this->account = emailadmin_account::read($acc_id);
 		}
-
+		
 		$this->restoreSessionData();
 	}
 
@@ -527,6 +535,7 @@ class mail_sieve
 				{
 					$content['forwards'] = '';
 				}
+				if (empty($vacation['text']) && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
 				//Set default value for days new entry
 				if (empty($content['days']))
 				{
