@@ -1689,7 +1689,7 @@ var et2_link_add = et2_inputWidget.extend(
 			value: this.options.application ? this.options.application : this.options.value && this.options.value.add_app ? this.options.value.add_app : null
 		}) ,this);
 		this.div.append(this.app_select.getDOMNode());
-		this.button = et2_createWidget("button", {label: this.egw().lang("add")}, this);
+		this.button = et2_createWidget("button", {id:this.options.id+"_add",label: this.egw().lang("add")}, this);
 		this.button.set_label(this.egw().lang("add"));
 		var self = this;
 		this.button.click = function() {
