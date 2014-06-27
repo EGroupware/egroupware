@@ -1585,6 +1585,31 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 }*/
 
 /**
+ * Unserialize a json or php serialized array
+ *
+ * Used to migrate from PHP serialized database values to json-encoded ones.
+ *
+ * @param string $str string with serialized array
+ * @param boolean $allow_not_serialized=false true: return $str as is, if it is no serialized array
+ * @return array|str|false
+ */
+function json_php_unserialize($str, $allow_not_serialized=false)
+{
+	if ($str[0] == 'a' && $str[1] == ':' || $str === 'N;')
+	{
+		return php_safe_unserialize($str);
+	}
+	elseif (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{')
+	{
+		return json_decode($str, true);
+	}
+	else
+	{
+		return $str;
+	}
+}
+
+/**
  * php5 autoload function for eGroupWare understanding the following naming schema:
  *	1. new (prefered) nameing schema: app_class_something loading app/inc/class.class_something.inc.php
  *	2. API classes: classname loading phpgwapi/inc/class.classname.inc.php

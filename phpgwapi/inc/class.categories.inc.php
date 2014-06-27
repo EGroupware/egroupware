@@ -28,11 +28,11 @@
  * ------------------
  * $cat['data'] array is stored serialized in the database to allow applications to simply add all
  * sorts of values there (without the hassel of a DB schema change).
- * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized
- * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized.
- * return*() methods still return $cat['data'] serialized by default, but have a parameter to return
- * it as array(). That default might change in future too, so better check if it's
- * not already an array, before unserialize!
+ * Before 14.1 data was PHP serialize(d), if it was an array, now it get json_encode(d),
+ * we use json_php_unserialize(, true) to automatic cope with that (true allows strings too)!
+ * Static methods categories::read($cat_id) and categories::id2name now returns data already as array
+ * and add() or edit() methods automatically json-encode $cat['data'], if it's an array.
+ * return*() methods return $cat['data'] now as array by default!
  *
  * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
  * 	and other functions needing to know if a cat has children. Be aware a user might not see all children, as they can
@@ -197,7 +197,7 @@ class categories
 	{
 		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column,filter=".array2string($filter).",$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 		$cats = array();
-		foreach(self::$cache as $cat_id => $cat)
+		foreach(self::$cache as $cat)
 		{
 			if ($filter) foreach($filter as $col => $val)
 			{
@@ -282,7 +282,7 @@ class categories
 			// check if last modified since
 			if ($lastmod > 0 && $cat['last_mod'] <= $lastmod) continue;
 
-			if ($unserialize_data) $cat['data'] = $cat['data'] ? unserialize($cat['data']) : array();
+			if ($unserialize_data) $cat['data'] = $cat['data'] ? json_php_unserialize($cat['data'], true) : array();
 
 			$cats[] = $cat;
 		}
@@ -333,10 +333,10 @@ class categories
 	 * @param boolean|string $globals includes the global egroupware categories or not,
 	 * 	'all_no_acl' to return global and all non-private user categories independent of ACL
 	 * @param array|int $parent_id=0 return only subcats of $parent_id(s)
-	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
+	 * @param boolean $unserialize_data=true return $cat['data'] as array (not serialized array)
 	 * @return array with cats
 	 */
-	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0,$unserialize_data=false,$filter=null)
+	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0,$unserialize_data=true,$filter=null)
 	{
 		if (!$sort)  $sort = 'ASC';
 		if (!$order) $order = 'cat_name';
@@ -419,7 +419,7 @@ class categories
 		if (!isset(self::$cache[$id])) return false;
 
 		$cat = self::$cache[$id];
-		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ?
+		$cat['data'] = $cat['data'] ? ((($arr=json_php_unserialize($cat['data'], true)) !== false || $cat['data'] === 'b:0;') ?
 			$arr : $cat['data']) : array();
 
 		return $cat;
@@ -451,7 +451,7 @@ class categories
 			'cat_appname' => $this->app_name,
 			'cat_name'    => $values['name'],
 			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from returned one
-			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
+			'cat_data'    => is_array($values['data']) ? json_encode($values['data']) : $values['data'],
 			'cat_main'    => $values['main'],
 			'cat_level'   => $values['level'],
 			'last_mod'    => time(),
@@ -684,7 +684,10 @@ class categories
 	function check_consistency4update($values)
 	{
 		// check if we try to move an element down its own subtree, which will fail
-		foreach ($this->return_sorted_array('',False,'','','',False, $values['id']) as $cat) if ($cat['id'] == $values['parent']) return lang('Cannot set a category as parent, which is part of this categorys subtree!');
+		foreach ($this->return_sorted_array('',False,'','','',False, $values['id']) as $cat)
+		{
+			if ($cat['id'] == $values['parent']) return lang('Cannot set a category as parent, which is part of this categorys subtree!');
+		}
 		// check if we try to be our own parent
 		if ($values['parent']==$values['id']) return lang('Cannot set this cat as its own parent!'); // deny to be our own parent
 		// check if parent still exists
@@ -736,7 +739,7 @@ class categories
 		$this->db->update(self::TABLE,$cat=array(
 			'cat_name' => $values['name'],
 			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from the one read
-			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
+			'cat_data'    => is_array($values['data']) ? json_encode($values['data']) : $values['data'],
 			'cat_parent' => $values['parent'],
 			'cat_access' => $values['access'],
 			'cat_owner' => isset($values['owner']) ? $values['owner'] : $this->account_id,
@@ -862,7 +865,7 @@ class categories
 		}
 		if ($item == 'data')
 		{
-			return $cat['data'] ? unserialize($cat['data']) : array();
+			return $cat['data'] ? json_php_unserialize($cat['data'], true) : array();
 		}
 		elseif ($cat[$item])
 		{
@@ -1032,6 +1035,7 @@ class categories
 		if (is_null(self::$cache)) self::init_cache();
 
 		$deleted = 0;
+		$cat = null;
 		foreach(self::$cache as $cat_id => $data)
 		{
 			if ($data['owner'] && ($owners = explode(',', $data['owner'])) && ($owner_key = array_search($account_id, $owners)) !== false)
@@ -1074,7 +1078,7 @@ class categories
 
 		$checked = array();
 		$deleted = 0;
-		foreach(self::$cache as $cat_id => $data)
+		foreach(self::$cache as $data)
 		{
 			foreach(explode(',', $data['owner']) as $owner)
 			{
