@@ -159,7 +159,7 @@ egw_LAB.wait(function() {
 	$j('#quick_add').on({
 		mouseover: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.relatedTarget && ev.relatedTarget.id != 'quick_add_selectbox')
+			if (ev.relatedTarget && ev.relatedTarget.id != 'quick_add_selectbox' && ev.target.id !='quick_add_selectbox')
 			{
 				$j(this).css({
 					transition: "0.2s ease-out 0s",
@@ -176,7 +176,7 @@ egw_LAB.wait(function() {
 		},
 		mouseout: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.relatedTarget && ev.relatedTarget.id != 'quick_add_selectbox')
+			if (ev.target && ev.target.id != 'quick_add_selectbox' && ev.relatedTarget.id != 'quick_add' && ev.relatedTarget.id !='quick_add_selectbox')
 			{
 				$j(this).css({
 					transition: "0.6s ease-out 0s",
@@ -190,6 +190,19 @@ egw_LAB.wait(function() {
 				});
 			}
 			ev.stopPropagation();
+		},
+		focusout: function (ev)
+		{
+			$j(this).css({
+					transition: "0.6s ease-out 0s",
+					width: "16px",
+					'border-top-left-radius': "0px",
+					'background-color': "transparent"
+			});
+			$j('select', this).css({
+				transition: "0s linear 0s",
+				visibility: "hidden"
+			});
 		}
 	});
 
