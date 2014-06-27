@@ -179,6 +179,7 @@ older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
 operation	filemanager	en	Operation
+paste link	filemanager	en	Paste Link
 path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
 percentage	filemanager	en	Percentage
 permission denied!	filemanager	en	Permission denied!
@@ -207,6 +208,7 @@ root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
 save as	filemanager	en	Save as
+save as zip	filemanager	en	Save as Zip
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
 saving properties failed!	filemanager	en	Saving properties failed!

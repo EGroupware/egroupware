@@ -93,10 +93,10 @@ display only when no plain text is available	mail	de	nur anzeigen wenn kein Plai
 displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
 displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text E-Mails ist deaktiviert.
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
+do you really want to apply %1 to all messages in the current folder?	mail	de	Möchten Sie die ausgewählte Aktion: %1, auf alle Nachrichten in diesem Ordner anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden?
@@ -288,7 +288,6 @@ please supply the message to send with auto-responses	mail	de	Bitte geben Sie ei
 post	mail	de	versenden
 prevent managing filters	mail	de	Zugriff auf Filterregeln deaktivieren
 prevent managing folders	mail	de	Zugriff auf die Ordnerverwaltung deaktivieren
-prevent managing forwards	mail	de	Zugriff auf E-Mail Weiterleitung deaktivieren
 prevent managing notifications	mail	de	Zugriff auf Benachrichtigungen deaktivieren
 prevent managing vacation notice	mail	de	Zugriff auf die Abwesenheitsbenachrichtigung deaktivieren
 primary profile	mail	de	Primäres Profil

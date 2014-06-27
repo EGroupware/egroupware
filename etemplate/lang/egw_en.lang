@@ -294,6 +294,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	Name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	Need to be unique in the table and no reserved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+new	etemplate	en	New
 new search	common	en	New search
 new table created	etemplate	en	New table created
 new value	etemplate	en	New Value
@@ -361,6 +362,7 @@ returns savely, without deleting	etemplate	en	Returns WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
 sa	etemplate	en	Sa
+save all	etemplate	en	Save all
 save selected columns as default preference for all users.	etemplate	en	Save columns as default preference for all users.
 save the changes made and close the window	etemplate	en	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs
@@ -463,6 +465,7 @@ unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields
 update from version '%s' to	etemplate	en	Update from version '%s' to
 upload	etemplate	en	Upload
+upload file(s) from filemanager...	etemplate	en	Upload file(s) from Filemanager...
 user	etemplate	en	User
 user-agent & action	etemplate	en	User-agent & action
 valign	etemplate	en	vAlign

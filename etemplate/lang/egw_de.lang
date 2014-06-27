@@ -293,6 +293,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
+new	etemplate	de	Neu
 new search	common	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 new value	etemplate	de	Neuer Wert
@@ -360,6 +361,7 @@ returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
 sa	etemplate	de	Sa
+save all	etemplate	de	Alle speichern
 save selected columns as default preference for all users.	etemplate	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	etemplate	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
@@ -386,8 +388,8 @@ select columns	etemplate	de	Spalten auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select day of week	etemplate	de	Wochentag auswählen
-select files from filemanager ...	etemplate	de	Dateien aus Dateimanager auswählen ...
 select entry	etemplate	de	Eintrag auswählen
+select files from filemanager ...	etemplate	de	Dateien aus Dateimanager auswählen ...
 select hour	etemplate	de	Stunde auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
 select language	etemplate	de	Sprache auswählen
@@ -462,6 +464,7 @@ unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
+upload file(s) from filemanager...	etemplate	de	Dateien aus dem Dateimanager (VFS)..
 user	etemplate	de	Benutzer
 user-agent & action	etemplate	de	Browser-Typ & Aktion
 valign	etemplate	de	vAlign

@@ -179,6 +179,7 @@ older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen.
 open	filemanager	de	Öffnen
 operation	filemanager	de	Vorgang
+paste link	filemanager	de	Als Verknüpfung einfügen
 path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Verzeichnis!
 percentage	filemanager	de	Prozentual
 permission denied!	filemanager	de	Zugriff verweigert!
@@ -207,6 +208,7 @@ root access stopped.	filemanager	de	Root Zugriff gestoppt.
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
 save as	filemanager	de	Speichern als
+save as zip	filemanager	de	Als ZIP-Datei speichern
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
 saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
