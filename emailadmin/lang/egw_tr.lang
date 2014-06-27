@@ -1,0 +1,5 @@
+default	emailadmin	tr	Varsayılan
+mail settings	admin	tr	Mail ayarları
+order	emailadmin	tr	Sıralama
+remove	emailadmin	tr	Kaldır
+standard	emailadmin	tr	standart
