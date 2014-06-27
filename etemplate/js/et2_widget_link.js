@@ -455,9 +455,11 @@ var et2_link_apps = et2_selectbox.extend(
 				this.set_value(egw.preference('link_app', this.egw().getAppName()));
 			}
 			// Register to update preference
-			this.input.on("click", jQuery.proxy(function() {
-				egw.set_preference(this.options.value.to_app || this.egw().getAppName(),'link_app',this.getValue());
-			}),this);
+			var self = this;
+			this.input.bind("click",function() {
+				if (typeof self.options.value != 'undefined') var appname = self.options.value.to_app; 
+				egw.set_preference(appname || self.egw().getAppName(),'link_app',self.getValue());
+			});
 		}
 	},
 
