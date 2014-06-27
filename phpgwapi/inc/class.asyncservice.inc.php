@@ -501,8 +501,8 @@ class asyncservice
 		$jobs = array();
 		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,$append,False,$num_rows) as $row)
 		{
-			$row['async_times'] = unserialize($row['async_times']);
-			$row['async_data'] = unserialize($row['async_data']);
+			$row['async_times'] = php_json_unserialize($row['async_times']);
+			$row['async_data'] = php_json_unserialize($row['async_data']);
 			$jobs[$row['async_id']] = egw_db::strip_array_keys($row,'async_');
 		}
 		if (!count($jobs))
@@ -527,9 +527,9 @@ class asyncservice
 		if (isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
 		$data = array(
 			'async_next'      => $job['next'],
-			'async_times'     => serialize($job['times']),
+			'async_times'     => json_encode($job['times']),
 			'async_method'    => $job['method'],
-			'async_data'      => serialize($job['data']),
+			'async_data'      => json_encode($job['data']),
 			'async_account_id'=> $job['account_id'],
 		);
 		if ($exists)
