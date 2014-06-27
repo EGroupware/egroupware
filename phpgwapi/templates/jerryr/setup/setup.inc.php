@@ -15,11 +15,10 @@
 	$GLOBALS['egw_info']['template']['jerryr']['title']     = 'jerryr';
 	$GLOBALS['egw_info']['template']['jerryr']['version']   = '1.0';
 
-	$GLOBALS['egw_info']['template']['jerryr']['author'] = 'Pim Snel';
+	$GLOBALS['egw_info']['template']['jerryr']['author'] = 'Jerry Ruhe';
 	$GLOBALS['egw_info']['template']['jerryr']['license']  = 'GPL';
 	$GLOBALS['egw_info']['template']['jerryr']['windowed'] = False;
 	$GLOBALS['egw_info']['template']['jerryr']['icon'] = "phpgwapi/templates/jerryr/images/jerryr-logo.png";
 	$GLOBALS['egw_info']['template']['jerryr']['maintainer'] = array(
 	);
 	$GLOBALS['egw_info']['template']['jerryr']['description'] = "jerryr is a clone of the idots template set.";
-?>
