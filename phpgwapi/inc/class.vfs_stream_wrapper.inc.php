@@ -1262,8 +1262,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		stream_register_wrapper(self::SCHEME,__CLASS__);
 
-		if (($fstab = $GLOBALS['egw_info']['server']['vfs_fstab']) &&
-			(is_array($fstab) || is_array($fstab = unserialize($fstab))) && count($fstab))
+		if (($fstab = $GLOBALS['egw_info']['server']['vfs_fstab']) && is_array($fstab) && count($fstab))
 		{
 			self::$fstab = $fstab;
 		}

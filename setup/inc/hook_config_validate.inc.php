@@ -57,10 +57,10 @@ function vfs_storage_mode($settings)
 			config::save_value('vfs_fstab','','phpgwapi');
 			break;
 		case 'db':
-			config::save_value('vfs_fstab',serialize(array(
+			config::save_value('vfs_fstab', array(
 				'/' => 'sqlfs://$host/?storage=db',
 				'/apps' => 'links://$host/apps?storage=db',
-			)),'phpgwapi');
+			),'phpgwapi');
 			break;
 	}
 }

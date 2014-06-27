@@ -18,17 +18,17 @@
  */
 function vfs_storage_mode_options($config)
 {
-	if (!isset($config['vfs_fstab']) || $config['vfs_fstab'] == serialize(array(
+	if (!isset($config['vfs_fstab']) || $config['vfs_fstab'] == json_encode($default=array(
 		'/' => 'sqlfs://$host/',
 		'/apps' => 'links://$host/apps',
-	)))
+	)) || $config['vfs_fstab'] == serialize($default))	// detect old serialized value too
 	{
 		$config['vfs_storage_mode'] = 'fs';
 	}
-	elseif($config['vfs_fstab'] == serialize(array(
+	elseif($config['vfs_fstab'] == json_encode($default_db=array(
 		'/' => 'sqlfs://$host/?storage=db',
 		'/apps' => 'links://$host/apps?storage=db',
-	)))
+	)) || $config['vfs_fstab'] == serialize($default_db))	// detect old serialized value too
 	{
 		$config['vfs_storage_mode'] = 'db';
 	}
@@ -89,12 +89,12 @@ function encryptalgo($config)
 		if(!$found)
 		{
 			/* Something is wrong with their mcrypt install or php.ini */
-			$out = '<option value="">' . lang('no algorithms available') . '</option>' . "\n";;
+			$out = '<option value="">' . lang('no algorithms available') . '</option>' . "\n";
 		}
 	}
 	else
 	{
-		$out = '<option value="tripledes">TRIPLEDES</option>' . "\n";;
+		$out = '<option value="tripledes">TRIPLEDES</option>' . "\n";
 	}
 	return $out;
 }
