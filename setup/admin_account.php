@@ -141,7 +141,7 @@ else
 	// not yet set for the default group or development only apps like (etemplate, jinn, tt's)
 	if (!$_POST['admin_all_apps'])
 	{
-		$apps = array_intersect(array('admin','bookmarks','emailadmin','mydms','news_admin','phpbrain','phpsysinfo','polls','phpfreechat','projectmanager','resources','sambaadmin','sitemgr','timesheet','tracker','wiki'),$apps);
+		$apps = array_intersect(array('admin','bookmarks','emailadmin','news_admin','phpbrain','phpsysinfo','phpfreechat','projectmanager','resources','sitemgr','timesheet','tracker','wiki'),$apps);
 	}
 	$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
