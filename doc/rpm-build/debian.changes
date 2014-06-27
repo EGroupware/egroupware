@@ -1,3 +1,15 @@
+egroupware-epl (14.1.20140627-1) hardy; urgency=low
+
+  * 14.1 release candidate: you need to visit setup for manual (non-package) installations!
+  * many bugfixes in all applications
+  * all apps: custom-fields are now stored in own egw_customfields table (no more limit on number), site configurations get now JSON serialized
+  * PostgreSQL: fixed not working installation (access to not yet existing table stalls transaction)
+  * PostgreSQL: fixed not working update from 1.8, as not existing FMail tables stalled update
+  * PostgreSQL/Addressbook: fixed not displayed pictures
+  * Notification/Mail: make sure acc_smtp_username is used (if available), to cope with strict mailserver settings to prevent faking sender information
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 27 Jun 2014 09:05:09 +0200
+
 egroupware-epl (14.1.20140617-1) hardy; urgency=low
 
   * ProjectManager: fixed parent projects were not updated with changes (you had to run sync-all manually
