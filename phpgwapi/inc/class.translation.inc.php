@@ -411,7 +411,6 @@ class translation
 				//else error_log(__METHOD__."() $file unchanged ($cached_time == $file_time)");
 			}
 		}
-
 	}
 
 	/**
@@ -436,6 +435,62 @@ class translation
 				egw_cache::unsetTree(__CLASS__, self::get_lang_file($load, $lang));
 			}
 		}
+		// unset statistics
+		egw_cache::unsetTree(__CLASS__, 'statistics');
+	}
+
+	const STATISTIC_CACHE_TIMEOUT = 86400;
+
+	/**
+	 * Statistical values about how much a language and app is translated, number or valid phrases per $lang or $lang/$app
+	 *
+	 * @param string $_lang=null
+	 * @return array $lang or $app => number pairs
+	 */
+	static function statistics($_lang=null)
+	{
+		$cache = egw_cache::getTree(__CLASS__, 'statistics');
+
+		if (!isset($cache[(string)$_lang]))
+		{
+			$cache[(string)$_lang] = array();
+			if (empty($_lang))
+			{
+				$en_phrases = array_keys(self::load_app_files(null, 'en', 'all-apps'));
+				$cache['']['en'] = count($en_phrases);
+				foreach(array_keys(self::get_available_langs()) as $lang)
+				{
+					if ($lang == 'en') continue;
+					$lang_phrases = array_keys(self::load_app_files(null, $lang, 'all-apps'));
+					$valid_phrases = array_intersect($lang_phrases, $en_phrases);
+					$cache[''][$lang] = count($valid_phrases);
+				}
+			}
+			else
+			{
+				$cache['en'] = array();
+				foreach(scandir(EGW_SERVER_ROOT) as $app)
+				{
+					if ($app[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) ||
+						!file_exists(self::get_lang_file($app, 'en')))
+					{
+						continue;
+					}
+					$en_phrases = array_keys(self::load_app_files(null, 'en', $app));
+					if (count($en_phrases) <= 2) continue;
+					$cache['en'][$app] = count($en_phrases);
+					$lang_phrases = array_keys(self::load_app_files(null, $_lang, $app));
+					$valid_phrases = array_intersect($lang_phrases, $en_phrases);
+					$cache[$_lang][$app] = count($valid_phrases);
+				}
+				asort($cache['en'], SORT_NUMERIC);
+				$cache['en'] = array_reverse($cache['en'], true);
+			}
+			asort($cache[(string)$_lang], SORT_NUMERIC);
+			$cache[(string)$_lang] = array_reverse($cache[(string)$_lang], true);
+			egw_cache::setTree(__CLASS__, 'statistics', $cache, self::STATISTIC_CACHE_TIMEOUT);
+		}
+		return $cache[(string)$_lang];
 	}
 
 	/**
@@ -495,12 +550,13 @@ class translation
 	 *
 	 * @param string $app name of the application to add (or 'common' for the general translations)
 	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
+	 * @param string $just_app_file=null	if given only that app is loaded ignoring self::$load_via
 	 * @return array the loaded strings
 	 */
-	static function &load_app_files($app,$lang)
+	static function &load_app_files($app, $lang, $just_app_file=null)
 	{
 		//$start = microtime(true);
-		$load_app = isset(self::$load_via[$app]) ? self::$load_via[$app] : $app;
+		$load_app = isset($just_app_file) ? $just_app_file : (isset(self::$load_via[$app]) ? self::$load_via[$app] : $app);
 		$loaded = array();
 		foreach($load_app == 'all-apps' ? scandir(EGW_SERVER_ROOT) : (array)$load_app as $app_dir)
 		{
@@ -526,7 +582,7 @@ class translation
 				if (count($line) != 4) continue;
 				list($l_id,$l_app,$l_lang,$l_translation) = $line;
 				if ($l_lang != $lang) continue;
-				if ($l_app != $app)
+				if (!isset($just_app_file) && $l_app != $app)
 				{
 					// check if $l_app contained in file in $app_dir is mentioned in $load_via
 					if ($l_app != $app_dir && (!isset(self::$load_via[$l_app]) ||
