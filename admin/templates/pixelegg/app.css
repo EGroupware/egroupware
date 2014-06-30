@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 46330 2014-03-19 13:20:46Z ralfbecker $
+ * @version $Id: app.css 46650 2014-04-17 12:09:11Z hnategh $
  */
 .admin_tree table,
 .admin_tree tr,
@@ -64,6 +64,18 @@ td.admin_userAgent span {
 }
 .admin_account_delete > * {
   padding: 8px;
+}
+/* Global Category classes*/
+.globalCat_confirmDelete {
+  position: absolute;
+  left: 120px;
+  top: 80px;
+  background-color: white;
+  display: none;
+  border: 2px solid black;
+}
+.globalCat_hiddenCatid {
+  display: none;
 }
 @media all {
   /* #############################################################################
