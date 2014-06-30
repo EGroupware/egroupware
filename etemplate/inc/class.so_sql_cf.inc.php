@@ -437,8 +437,6 @@ class so_sql_cf extends so_sql
 		}
 		if ($criteria && is_array($criteria))
 		{
-			$join .= $this->extra_join;
-
 			// check if we search in the custom fields
 			if (isset($criteria[$this->extra_value]))
 			{
@@ -462,8 +460,15 @@ class so_sql_cf extends so_sql
 				unset($criteria[$this->autoinc_id]);
 			}
 			// replace ambiguous column with (an exact match of) table_name.column
+			$extra_join_added = $join && strpos($join, $this->extra_join) !== false;
 			foreach($criteria as $name => $val)
 			{
+				// only add extra_join, if we really need it
+				if (!$extra_join_added && is_int($name) && strpos($val, $this->extra_value) !== false)
+				{
+					$join .= $this->extra_join;
+					$extra_join_added = true;
+				}
 				$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)])
 				{
