@@ -626,10 +626,9 @@ app.classes.admin = AppJS.extend(
 		}
 
 		// Find out what changed
-		var content = this.et2.getArrayMgr('content').getEntry('owner');
-		if (content)
+		var cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner');
+		if (cat_original_owner)
 		{
-			var cat_original_owner = content.split(",");
 			var selected_groups = select_owner.get_value().toString();
 
 			for(var i =0;i < cat_original_owner.length;i++)

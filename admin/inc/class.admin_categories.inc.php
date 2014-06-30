@@ -268,7 +268,8 @@ class admin_categories
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
-
+		// Make sure $content['owner'] is an array otherwise it wont show up values in the multiselectbox
+		if (!is_array($content['owner'])) $content['owner'] = explode(',',$content['owner']);
 		$tmpl = new etemplate_new('admin.categories.edit');
 		$tmpl->exec($this->edit_link,$content,$sel_options,$readonlys,$content+array(
 			'old_parent' => $content['old_parent'] ? $content['old_parent'] : $content['parent'], 'appname' => $appname
