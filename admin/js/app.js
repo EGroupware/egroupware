@@ -92,7 +92,7 @@ app.classes.admin = AppJS.extend(
 					);
 
 					// Register app refresh now that iframe is available
-					//register_app_refresh('admin',jQuery.proxy(this.refresh,this));
+					register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 				}
 				break;
 
