@@ -191,7 +191,10 @@ class mail_ui
 		{
 			egw_framework::popup(egw_framework::link('/index.php',$linkData));
 			$GLOBALS['egw']->framework->render($message,'',true);
-			common::egw_exit();
+			if ($exit)
+			{
+				common::egw_exit();
+			}	
 		}
 	}
 
@@ -205,15 +208,20 @@ class mail_ui
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (self::$icServerID != $_icServerID)
 		{
+			self::$icServerID = $_icServerID;
 		}
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
-		self::$icServerID = $_icServerID;
+		
 		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
-		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID) exit; // ToDo: Exception or the dialog for setting up a server config
-		/*if (!($this->mail_bo->icServer->_connected == 1))*/
+		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
+		{
+			self::$icServerID = $_icServerID;
+			throw new egw_exception('Profile change failed!');
+		}
+		
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
@@ -222,9 +230,7 @@ class mail_ui
 		{
 			throw new egw_exception(__METHOD__." failed to change Profile to $_icServerID");
 		}
-		//$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
-		//$GLOBALS['egw']->preferences->save_repository(true);
-		//$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
+		
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
@@ -780,7 +786,7 @@ class mail_ui
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
 	}
-
+	
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param mixed bool/string $_fetchCounters, wether to fetch extended information on folders
@@ -816,32 +822,18 @@ class mail_ui
 					}
 					catch (Exception $e)
 					{
-						error_log(__METHOD__.__LINE__.' failed change Profile to ->'.$_profileID.': '.$e->getMessage());
-						$out = array('id' => 0);
-						$accountObj = emailadmin_account::read($_profileID);
-						$identity_name = emailadmin_account::identity_name($accountObj);
-						$oA = array('id' => $acc_id,
-							'text' => str_replace(array('<','>'),array('[',']'),$identity_name).' '.$e->getMessage(),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
-							'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name). ' '.$e->getMessage(),
-							'im0' => 'thunderbird.png',
-							'im1' => 'thunderbird.png',
-							'im2' => 'thunderbird.png',
-							'path'=> array($acc_id),
-							'child'=> 0, // dynamic loading on unfold
+						$out = array('id' => $_profileID);
+						$oA = array('id' => $_profileID.self::$delimiter.'INBOX',
+							'text' => $e->getMessage(),
+							'tooltip' => $e->getMessage(),
+							'im0' => "folderNoSelectClosed.gif",
+							'im1' => "folderNoSelectOpen.gif",
+							'im2' => "folderNoSelectClosed.gif",
+							'path'=> array($_profileID),
 							'parent' => ''
 						);
-
-						//self::callWizard($e->getMessage(), false);
-
 						$this->setOutStructure($oA, $out, self::$delimiter);
-						if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
-						{
-							$node = self::findNode($out,$_nodeID);
-							//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
-							if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'return subtree for:'.$_nodeID,__METHOD__.__LINE__);
-							return $node;
-						}
-						return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
+						return ($out?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 					}
 				}
 			}
@@ -922,9 +914,7 @@ class mail_ui
 			}
 		}
 		//$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__.' Fetching accounts took: '.$endtime);
-		//error_log(__METHOD__.__LINE__.array2string($oA));
-		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
+	
 		if (!empty($folderObjects))
 		{
 			$delimiter = $this->mail_bo->getHierarchyDelimiter();
@@ -1002,7 +992,7 @@ class mail_ui
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
 			$oA['parent'] = $parentName;
-//_debug_array($oA);
+
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
@@ -4064,13 +4054,20 @@ $this->partID = $partID;
 	 */
 	function ajax_changeProfile($icServerID, $getFolders = true)
 	{
-		//lang('Connect to Profile %1',$icServerID);
+		$response = egw_json_response::get();
+		
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-			$this->changeProfile($icServerID);
+			try
+			{
+				$this->changeProfile($icServerID);
+			}
+			catch (Exception $e) {
+				self::callWizard($e->getMessage(),true);
+			}
+			
 		}
-		$response = egw_json_response::get();
+		
 		//$folderInfo = $this->mail_bo->getFolderStatus($icServerID,false);
 
 		// Send full info back in the response
