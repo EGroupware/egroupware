@@ -306,6 +306,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value_in = self::get_array($content, $form_name);
+			// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
+			if (!$this->id) $content = array_merge($content, $value_in);
 			//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
 			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 			if(is_array($value_in))

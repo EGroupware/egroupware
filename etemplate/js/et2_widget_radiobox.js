@@ -318,6 +318,13 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {object} _options object with value: label pairs
 	 */
 	set_options: function(_options) {
+		// Call the destructor of all children
+		for (var i = this._children.length - 1; i >= 0; i--)
+		{
+			this._children[i].free();
+		}
+		this._children = [];
+		// create radio buttons for each option
 		for(var key in _options)
 		{
 			var attrs = {

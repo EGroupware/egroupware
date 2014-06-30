@@ -58,7 +58,8 @@ class etemplate_widget_checkbox extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
-			$value_attr = $this->type == 'radio' ? 'set_value' : 'selected_value';
+			$type = $this->type ? $this->type : $this->attrs['type'];
+			$value_attr = $type == 'radio' ? 'set_value' : 'selected_value';
 			// defaults for set and unset values
 			if (!$this->attrs[$value_attr] && !$this->attrs['unselected_value'])
 			{
@@ -71,7 +72,19 @@ class etemplate_widget_checkbox extends etemplate_widget
 				$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
 				$unselected_value = self::expand_name($this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
 			}
-			if (in_array((string)$selected_value, (array)$value))
+			if ($type == 'radio')
+			{
+				$options = etemplate_widget_menupopup::selOptions($form_name, true);
+				if (in_array($value, $options))
+				{
+					$valid = $value;
+				}
+				elseif (!isset($valid))
+				{
+					$valid = '';	// do not overwrite value of an other radio-button of the same group (identical name)!
+				}
+			}
+			elseif (in_array((string)$selected_value, (array)$value))
 			{
 				if ($multiple)
 				{
@@ -82,10 +95,6 @@ class etemplate_widget_checkbox extends etemplate_widget
 				{
 					$valid = $selected_value;
 				}
-			}
-			elseif ($this->type == 'radio')
-			{
-				if (!isset($valid)) $valid = '';	// do not overwrite value of an other radio-button of the same group (identical name)!
 			}
 			else	// if checkbox is not checked, html returns nothing: eTemplate returns unselected_value (default false)
 			{
