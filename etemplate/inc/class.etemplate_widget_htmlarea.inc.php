@@ -35,6 +35,15 @@ class etemplate_widget_htmlarea extends etemplate_widget
 		$config = egw_ckeditor_config::get_ckeditor_config_array($this->attrs['mode'], $this->attrs['height'],
 			$this->attrs['expand_toolbar'],$this->attrs['base_href']
 		);
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
+		$font_size = egw_ckeditor_config::font_size_from_prefs();
+		$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
+		if (empty($font) && empty($font_size)) $font_span = '';
+		if($font_span)
+		{
+			$config['preference_style'] = $font_span;
+		}
 		self::$request->modifications[$form_name]['config'] = $config;
 	}
 
