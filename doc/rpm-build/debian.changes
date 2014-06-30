@@ -1,3 +1,9 @@
+egroupware-epl (14.1.20140630-1) hardy; urgency=low
+
+  * ProjectManager: only query projects visible in tree, autoload others on opening, to improve performance with huge number of projects
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 30 Jun 2014 12:03:54 +0200
+
 egroupware-epl (14.1.20140627-1) hardy; urgency=low
 
   * 14.1 release candidate: you need to visit setup for manual (non-package) installations!
