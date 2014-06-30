@@ -72,7 +72,7 @@
     <td>{call_mail_hooks::deny_aclmanagement}</td>
    </tr>
    <tr class="th">
-    <td colspan="2"><b>{lang_felamimail}</b> - {lang_sieve}</td>
+    <td colspan="2"><b>{lang_mail}</b> - {lang_sieve}</td>
    </tr>
    <tr class="row_on">
 	<td>
