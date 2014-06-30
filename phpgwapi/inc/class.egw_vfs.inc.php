@@ -1377,18 +1377,34 @@ class egw_vfs extends vfs_stream_wrapper
 			$base_dir = $paths[0];
 		}
 
-		// A nice name for the user
-		$replace = array('/'=>'_') + self::$encode;
-		$filename = $GLOBALS['egw_info']['server']['site_title'] . '_' . (
+		// Remove 'unsafe' filename characters
+		// (en.wikipedia.org/wiki/Filename#Reserved_characters_and_words)
+		$replace = array(
+			// Linux
+			'/',
+			// Windows
+			'\\','?','%','*',':','|',/*'.',*/ '"','<','>'
+		);
+
+		// A nice name for the user,
+		$filename = $GLOBALS['egw_info']['server']['site_title'] . '_' .
+			str_replace($replace,'_',(
 			count($files) == 1 ?
 			// Just one file (hopefully a directory?) selected
 			self::basename($files[0]) :
 			// Use the lowest common directory (eg: Infolog, Open, nathan)
 			self::basename($base_dir)
-		) . '.zip';
+		)) . '.zip';
 
+		// Make sure basename is a dir
+		if(substr($base_dir, -1) != '/')
+		{
+			$base_dir .='/';
+		}
+		
 		// Go into directories, find them all
 		$files = self::find($files);
+		$links = array();
 
 		// We need to remove them _after_ we're done
 		$tempfiles = array();
@@ -1402,6 +1418,10 @@ class egw_vfs extends vfs_stream_wrapper
 			// Use relative paths inside zip
 			$_name = str_replace($base_dir, '', $addfile);
 
+			// Use safe names - replace unsafe chars, convert to ASCII (ZIP spec says CP437, but we'll try)
+			$path = explode('/',$_name);
+			$_name = implode('/',translation::convert( str_replace($replace,'_',$path),false,'ASCII//TRANSLIT'));
+
 			// Don't go infinite with app entries
 			if(self::is_link($addfile))
 			{
@@ -1411,6 +1431,7 @@ class egw_vfs extends vfs_stream_wrapper
 			// Add directory - if empty, client app might not show it though
 			if(self::is_dir($addfile))
 			{
+				// Zip directories
 				$zip->addEmptyDir($addfile);
 			}
 			else if(self::is_readable($addfile))
@@ -1459,7 +1480,9 @@ class egw_vfs extends vfs_stream_wrapper
 
 		// Stop any buffering
 		while(ob_get_level() > 0)
+		{
 			ob_end_clean();
+		}
 
 		// Stream the file to the client
 		header("Content-Type: application/zip");
