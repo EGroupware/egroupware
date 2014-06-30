@@ -659,6 +659,11 @@ class mail_sieve
 			{
 				$sel_options['status'] += $ByDate;
 			}
+			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				$content['is_not_admin_user'] = true;
+				$readonlys['set_as_default'] = true;
+			}
 			$content['msg'] = $msg;
 		}
 		else

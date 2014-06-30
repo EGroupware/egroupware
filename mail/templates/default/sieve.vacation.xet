@@ -50,7 +50,7 @@
 					</vbox>
 				</row>
 				<row>
-					<description value="Set it as default:"/>
+					<description value="Set it as default:" disabled="@is_not_admin_user"/>
 					<checkbox id="set_as_default"/>
 					<description value="Validate addresses on submit:"/>
 					<checkbox id="check_mail_sent_to"/>
