@@ -1,21 +1,17 @@
 egroupware-epl (14.1.20140630-1) hardy; urgency=low
 
-  * ProjectManager: only query projects visible in tree, autoload others on opening, to improve performance with huge number of projects
-
- -- Ralf Becker <rb@stylite.de>  Mon, 30 Jun 2014 12:03:54 +0200
-
-egroupware-epl (14.1.20140627-1) hardy; urgency=low
-
   * 14.1 release candidate: you need to visit setup for manual (non-package) installations!
   * many bugfixes in all applications
   * all apps: custom-fields are now stored in own egw_customfields table (no more limit on number), site configurations get now JSON serialized
   * all apps: categories and async jobs extra data is now stored JSON serialized
+  * ProjectManager: only query projects visible in tree, autoload others on opening, to improve performance with huge number of projects
+  * Admin: admin view did no refresh if it shows something else then accounts list
   * PostgreSQL: fixed not working installation (access to not yet existing table stalls transaction)
   * PostgreSQL: fixed not working update from 1.8, as not existing FMail tables stalled update
   * PostgreSQL/Addressbook: fixed not displayed pictures
   * Notification/Mail: make sure acc_smtp_username is used (if available), to cope with strict mailserver settings to prevent faking sender information
 
- -- Ralf Becker <rb@stylite.de>  Fri, 27 Jun 2014 09:05:09 +0200
+ -- Ralf Becker <rb@stylite.de>  Mon, 30 Jun 2014 12:03:54 +0200
 
 egroupware-epl (14.1.20140617-1) hardy; urgency=low
 
