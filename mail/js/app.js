@@ -1652,8 +1652,8 @@ app.classes.mail = AppJS.extend(
 				this.mail_callCopy(_action, _elems,_target, rvMain);
 				break;
 			default:
-				if (_action.id.substr(5)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
-				if (_action.id.substr(5)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
+				if (_action.id.substr(0,4)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
+				if (_action.id.substr(0,4)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
 		}
 	},
 
