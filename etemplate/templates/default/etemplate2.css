@@ -1422,6 +1422,9 @@ div.ui-toolbar-menulist{
 .et2_label > input.et2_checkbox {
 	margin-right: 5px;
 }
+.et2_radiobox {
+	margin-right: 5px;
+}
 
 .et2_gantt, .et2_gantt .gantt_container
 {
