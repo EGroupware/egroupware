@@ -51,6 +51,9 @@ div.et2_hbox > * {
   white-space: normal;
   padding-right: 5px;
 }
+div.et2_hbox > *:empty {
+  padding-right: 0;
+}
 div.et2_hbox_left {
   float: left;
 }
