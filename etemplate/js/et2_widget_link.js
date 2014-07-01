@@ -1432,7 +1432,30 @@ var et2_link_list = et2_link_string.extend(
 			et2_dialog.show_prompt(
 				function(button, comment) {
 					if(button != et2_dialog.OK_BUTTON) return;
-					var remark = jQuery('#link_'+link_id, self.list).children('.remark');
+					var remark = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
+					if(isNaN(self.context.data.id))
+					{
+						remark.text(comment);
+						// Look for a link-to with the same ID, refresh it
+						if(self.context.data.link_id)
+						{
+							var _widget = link_id.widget || null;
+							self.getRoot().iterateOver(
+								function(widget) {
+									if(widget.id == self.id) {
+										_widget = widget;
+									}
+								},
+								self, et2_link_to
+							);
+							var value = _widget != null ? _widget.getValue() : false;
+							if(_widget && value && value.to_id)
+							{
+								value.to_id[link_id].remark = comment;
+							}
+						}
+						return;
+					}
 					remark.addClass("loading");
 					var request = egw.json(self.egw().getAppName() + ".etemplate_widget_link.ajax_link_comment.etemplate",
 						[link_id, comment],
@@ -1471,8 +1494,9 @@ var et2_link_list = et2_link_string.extend(
 		});
 		this.context.addItem("-", "-");
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
-			var link_id = self.context.data.link_id;
-			self._delete_link(link_id);
+			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
+			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
+			self._delete_link(link_id, row);
 		});
 	},
 
@@ -1497,6 +1521,11 @@ var et2_link_list = et2_link_string.extend(
 				var link = _value.to_id[id];
 				if(link.app)
 				{
+					// Temp IDs can cause problems since the ID includes the file name or :
+					if(link.link_id && typeof link.link_id != 'number')
+					{
+						link.dom_id = 'temp_'+egw.uid();
+					}
 					// Icon should be in registry
 					if(typeof link.icon == 'undefined')
 					{
@@ -1526,7 +1555,7 @@ var et2_link_list = et2_link_string.extend(
 
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
-			.attr("id", "link_"+_link_data.link_id)
+			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : _link_data.link_id))
 			.appendTo(this.list);
 
 		// Icon
@@ -1564,10 +1593,10 @@ var et2_link_list = et2_link_string.extend(
 		if (typeof _link_data.title == 'undefined')
 		{
 			// Title will be fetched from server and then set
+			$j('td.title',row).addClass("loading");
 			var title = this.egw().link_title(_link_data.app, _link_data.id, function(title) {
 				$j('td.title',this).removeClass("loading").text(title+"");
 			}, row);
-			$j('td.title',row).addClass("loading");
 		}
 		// Date
 		/*
@@ -1595,8 +1624,8 @@ var et2_link_list = et2_link_string.extend(
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
-			// File info only available for files
-			self.context.getItem("file_info").set_enabled(_link_data.app == 'file');
+			// File info only available for existing files
+			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
@@ -1604,8 +1633,11 @@ var et2_link_list = et2_link_string.extend(
 		});
 	},
 	_delete_link: function(link_id, row) {
-		var delete_button = jQuery('.delete',row);
-		delete_button.removeClass("delete").addClass("loading");
+		if(row)
+		{
+			var delete_button = jQuery('.delete',row);
+			delete_button.removeClass("delete").addClass("loading");
+		}
 		if(typeof link_id != "object")
 		{
 			egw.json(this.egw().getAppName()+".etemplate_widget_link.ajax_delete.etemplate", [link_id],
