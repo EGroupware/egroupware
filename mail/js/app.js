@@ -1273,7 +1273,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var msg = this.mail_getFormData(_elems);
-		msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?_allMessagesChecked:false);
+		msg['all'] = _allMessagesChecked;
 		if (msg['all']=='cancel') return false;
 		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
@@ -1556,7 +1556,7 @@ app.classes.mail = AppJS.extend(
 		var obj_manager = egw_getObjectManager(this.nm_index, false);
 		var that = this;
 		var rvMain = false;
-		if (obj_manager && obj_manager.getAllSelected())
+		if (obj_manager && _elems.length>1 && obj_manager.getAllSelected())
 		{
 			if (_confirm)
 			{
@@ -1619,10 +1619,6 @@ app.classes.mail = AppJS.extend(
 				messageToDisplay,
 				this.egw.lang("Confirm"),
 				_action.id, buttons);
-
-//				var x = confirm(this.egw.lang("Do you really want to apply/toggle %1 to ALL messages in the current folder?\n %2: All (filtered) mesages, will be affected.\n %3: only the selected range will be affected ",this.egw.lang(_action.id),this.egw.lang('ok'),this.egw.lang('cancel')));
-//				if (!x) return 'cancel';
-//				return x;				
 			}
 			else
 			{
@@ -1744,7 +1740,7 @@ app.classes.mail = AppJS.extend(
 		if (do_nmactions)
 		{
 			msg = this.mail_getFormData(_elems);
-			msg['all'] = ((typeof _elems != 'undefined' && _elems.length>1)?_allMessagesChecked:false);
+			msg['all'] = _allMessagesChecked;
 			if (msg['all']=='cancel') return false;
 			msg['activeFilters'] = this.mail_getActiveFilters(_action);
 			if (_action.id.substring(0,2)=='un') {
@@ -2591,7 +2587,7 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?_allMessagesChecked:false);
+		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
@@ -2628,7 +2624,7 @@ app.classes.mail = AppJS.extend(
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		messages['all'] = ((typeof _senders != 'undefined' && _senders.length>1)?_allMessagesChecked:false);
+		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 
