@@ -97,7 +97,6 @@ if (!function_exists('imap_rfc822_parse_adrlist'))
 	 */
 	function imap_rfc822_parse_adrlist($address, $default_host)
 	{
-		error_log(__METHOD__.__LINE__);
 		$addresses = array();
 		$pending = '';
 		foreach(explode(',', $address) as $part)
