@@ -70,6 +70,119 @@ function cut_bytes(&$data,$offset,$len=null)
 	return $func_overload & 2 ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 }
 
+if (!function_exists('imap_rfc822_parse_adrlist'))
+{
+	/**
+	 * parses a (comma-separated) address string
+	 *
+	 * Examples:
+	 * - Joe Doe <doe@example.com>
+	 * - "Doe, Joe" <doe@example.com>
+	 * - "\'Joe Doe\'" <doe@example.com>	// actually not necessary to quote
+	 * - postmaster@example.com
+	 * - root
+	 * - "Joe on its way Down Under :-\)" <doe@example.com>
+	 * - "Giant; \"Big\" Box" <sysservices@example.net>
+	 * - sysservices@example.net <sysservices@example.net>	// this is wrong, because @ need to be quoted
+	 *
+	 * Invalid addresses, if detected, set host to '.SYNTAX-ERROR.'
+	 *
+	 * @param string $address - A string containing addresses
+	 * @param string $default_host - The default host name
+	 * @return array of objects. The objects properties are:
+	 *		mailbox - the mailbox name (username)
+	 *		host - the host name
+	 *		personal - the personal name
+	 *		adl - at domain source route
+	 */
+	function imap_rfc822_parse_adrlist($address, $default_host)
+	{
+		error_log(__METHOD__.__LINE__);
+		$addresses = array();
+		$pending = '';
+		foreach(explode(',', $address) as $part)
+		{
+			$trimmed = trim(($pending ? $pending.',' : '').$part);
+			if ($trimmed[0] == '"' && substr($trimmed, -1) != '>')
+			{
+				$pending .= ($pending ? $pending.',' : '').$part;
+				continue;
+			}
+			$pending = '';
+			$matches = $personal = $mailbox = $host = null;
+			if (preg_match('/^(.*)<([^>@]+)(@([^>]+))?>$/', $trimmed, $matches))
+			{
+				$personal = trim($matches[1]);
+				$mailbox = $matches[2];
+				$host = $matches[4];
+			}
+			elseif (strpos($trimmed, '@') !== false)
+			{
+				list($mailbox, $host) = explode('@', $trimmed);
+			}
+			else
+			{
+				$mailbox = $trimmed;
+			}
+			if ($personal[0] == '"' && substr($personal, -1) == '"')
+			{
+				$personal = str_replace('\\', '', substr($personal, 1, -1));
+			}
+			if (empty($host)) $host = $default_host;
+
+			$addresses[] = (object)array_diff(array(
+				'mailbox'  => $mailbox,
+				'host'     => $host,
+				'personal' => $personal,
+			), array(null, ''));
+		}
+		return $addresses;
+	}
+}
+
+if (!function_exists('imap_rfc822_write_address'))
+{
+	/**
+	 * Returns a properly formatted email address given the mailbox, host, and personal info
+	 * @param string $mailbox - The mailbox name, see imap_open() for more information
+	 * @param string $host - The email host part
+	 * @param string $personal - The name of the account owner
+	 * @return string properly formatted email address as defined in » RFC2822.
+	 */
+	function imap_rfc822_write_address($mailbox, $host, $personal)
+	{
+		//if (!preg_match('/^[!#$%&\'*+/0-9=?A-Z^_`a-z{|}~-]+$/u', $personal))	// that's how I read the rfc(2)822
+		if ($personal && !preg_match('/^[0-9A-Z -]*$/iu', $personal))	// but quoting is never wrong, so quote more then necessary
+		{
+			$personal = '"'.str_replace(array('\\', '"'),array('\\\\', '\\"'), $personal).'"';
+		}
+		return ($personal ? $personal.' <' : '').$mailbox.($host ? '@'.$host : '').($personal ? '>' : '');
+	}
+}
+
+if (!function_exists('imap_mime_header_decode'))
+{
+	/**
+	 * Decodes MIME message header extensions that are non ASCII text (RFC2047)
+	 *
+	 * Uses Horde_Mime::decode() and therefore always returns only a single array element!
+	 *
+	 * @param string $text
+	 * @return array with single object with attribute text already in our internal encoding and charset
+	 * @deprecated use Horde_Mime::decode()
+	 */
+	function imap_mime_header_decode($text)
+	{
+		//error_log(__METHOD__.__LINE__.function_backtrace());
+		//pear install horde/Horde_Mime
+		if (class_exists('Horde_Mime',false)==false && (@include_once 'Horde/Mime.php') === false) throw new egw_exception_assertion_failed(lang('IMAP Extension NOT installed, and required PEAR class Horde/Mime.php (for fallback) not found.'));
+		return array((object)array(
+			'text' => Horde_Mime::decode($text),
+			'charset' => translation::charset(),	// is already in our internal encoding!
+		));
+	}
+}
+
 if (!function_exists('mb_strlen'))
 {
 	/**
@@ -1536,9 +1649,13 @@ function __autoload($class)
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
 		isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
-		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php'))// ||
+		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
 		// classes of the current application using the old naming schema
 //		file_exists($file = EGW_INCLUDE_ROOT.'/'.$GLOBALS['egw_info']['flags']['currentapp'].'/inc/class.'.$class.'.inc.php'))
+		// include PEAR and PSR0 classes from include_path
+		// need to use include (not include_once) as eg. a previous included EGW_API_INC/horde/Horde/String.php causes
+		// include_once('Horde/String.php') to return true, even if the former was included with an absolute path
+		!isset($GLOBALS['egw_info']['apps'][$app]) && @include($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
 	{
 		//error_log("autoloaded class $class from $file");
 		include_once($file);
