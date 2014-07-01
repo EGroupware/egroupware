@@ -756,11 +756,23 @@ class calendar_ui
 		// Category Selection
 		$cat_id = explode(',',$this->cat_id);
 
+		$current_view_url = egw::link('/index.php',array(
+			'menuaction' => $this->view_menuaction,
+			'date' => $this->date,
+		)+($this->view == 'listview' ? array('ajax' => 'true') : array()),false);
+
 		$select = ' <select style="width: 86%;" id="calendar_cat_id" name="cat_id" title="'.
 			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
 			'<option value="0">'.lang('All categories').'</option>'.
 				$this->categories->formatted_list('select','all',$cat_id,'True').
-			"</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"');
+			"</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"')."
+			<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\"".
+			" data-link-day-url =\"".htmlspecialchars($link['day']).
+			"\" data-link-week-url=\"".htmlspecialchars($link['week']).
+			"\" data-link-month-url=\"".htmlspecialchars($link['month']).
+			"\" data-date=\"".htmlspecialchars($flatdate).
+			"\" data-current-date=\"".htmlspecialchars(egw_time::to('now', 'Ymd')).
+			"\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n";
 
 		$file[++$n] =  array(
 			'text' => $select,
@@ -779,20 +791,8 @@ class calendar_ui
 			}
 			// we no longer exclude non-accounts from the account-selection: it shows all types of participants
 			$accounts = explode(',',$this->owner);
-			$current_view_url = egw::link('/index.php',array(
-				'menuaction' => $this->view_menuaction,
-				'date' => $this->date,
-			)+($this->view == 'listview' ? array('ajax' => 'true') : array()),false);
 			$file[] = array(
-				'text' => "
-					<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\"".
-					" data-link-day-url =\"".htmlspecialchars($link['day']).
-					"\" data-link-week-url=\"".htmlspecialchars($link['week']).
-					"\" data-link-month-url=\"".htmlspecialchars($link['month']).
-					"\" data-date=\"".htmlspecialchars($flatdate).
-					"\" data-current-date=\"".htmlspecialchars(egw_time::to('now', 'Ymd')).
-					"\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
-
+				'text' =>
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
 					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '86%' : '86%').';"'.
 					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
@@ -833,7 +833,7 @@ class calendar_ui
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
 			$options = '';
-			
+
 			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
 			foreach($documents as $key => $value)
 			{
