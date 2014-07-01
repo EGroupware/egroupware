@@ -1612,8 +1612,8 @@ app.classes.mail = AppJS.extend(
 							that.mail_callCopy(_action, _elems,_target, rv);
 							break;
 						default:
-							if (_action.id.substr(5)=='move') that.mail_callMove(_action, _elems,_target, rv);
-							if (_action.id.substr(5)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
+							if (_action.id.substr(0,4)=='move') that.mail_callMove(_action, _elems,_target, rv);
+							if (_action.id.substr(0,4)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
 					}
 				},
 				messageToDisplay,
