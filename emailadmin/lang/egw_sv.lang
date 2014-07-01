@@ -1,0 +1,100 @@
+add profile	emailadmin	sv	Skapa profil
+admin dn	emailadmin	sv	Admin dn
+admin password	emailadmin	sv	Admin lösenord
+admin username	emailadmin	sv	Admin användare
+advanced options	emailadmin	sv	Avanserade alternativ
+alternate email address	emailadmin	sv	Alternerande e-post adress
+bad login name or password.	emailadmin	sv	Ogiltigt användarna eller lösenord
+bad or malformed request. server responded: %s	emailadmin	sv	Ogiltig eller ofullständig förfrågan. Server svarade: %s
+bad request: %s	emailadmin	sv	Ogiltig förfrågan: %s
+connection dropped by imap server.	emailadmin	sv	Anslutningen stängd av IMAP server
+continue	emailadmin	sv	Fortsätt
+could not complete request. reason given: %s	emailadmin	sv	Kunde inte fullfölja förfrågan. Svaret: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	sv	CRAM-MD5 och DIGEST-MD5 kräver att Auth_SASL paketet installerats
+cyrus imap server	emailadmin	sv	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	sv	Cyrus IMAP server administration
+default	emailadmin	sv	Standard
+deliver extern	emailadmin	sv	Leverera extern
+do not validate certificate	emailadmin	sv	Validera inte certifikat
+do you really want to delete this profile	emailadmin	sv	Vill du verkligen radera profilen?
+domainname	emailadmin	sv	Domän namn
+edit email settings	emailadmin	sv	Redigera e-post alternativ
+email account active	emailadmin	sv	Aktivt e-post konto
+email address	emailadmin	sv	E-post adress
+enable cyrus imap server administration	emailadmin	sv	Aktivera Cyrus IMAP server administration
+enable sieve	emailadmin	sv	Aktivera Sieve
+encrypted connection	emailadmin	sv	Krypterad anslutning
+enter your default mail domain (from: user@domain)	emailadmin	sv	Standard e-post domän (från: user@domain)
+entry saved	emailadmin	sv	Post sparad
+error connecting to imap server. %s : %s.	emailadmin	sv	Kunde inte ansluta till IMAP server %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	sv	Kunde inte ansluta till IMAP server [%s] %s
+error saving the entry!!!	emailadmin	sv	Fel uppstod vid sparandet av posten!
+forward also to	emailadmin	sv	Vidarebefodra även till
+forward email's to	emailadmin	sv	Vidarebefodra e-post till
+forward only	emailadmin	sv	Vidarebefodra endast
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
+imap admin password	admin	sv	IMAP admin lösenord
+imap admin user	admin	sv	IMAP admin användare
+imap c-client version < 2001	emailadmin	sv	IMAP C-Client version < 2001
+imap server	emailadmin	sv	IMAP Server
+imap server closed the connection.	emailadmin	sv	IMAP server stängde anslutningen
+imap server closed the connection. server responded: %s	emailadmin	sv	IMAP server stängde anslutningen. Serverna svarade: %s
+imap server hostname or ip address	emailadmin	sv	IMAP server hostnamn eller IP adress
+imap server logintyp	emailadmin	sv	IMAP server inloggnings typ
+imap server port	emailadmin	sv	IMAP server port
+imap/pop3 server name	emailadmin	sv	IMAP/POP3 server namn
+in mbyte	emailadmin	sv	i MByte
+ldap basedn	emailadmin	sv	LDAP basedn
+ldap server	emailadmin	sv	LDAP server
+ldap server accounts dn	emailadmin	sv	LDAP server konton DN
+ldap server admin dn	emailadmin	sv	LDAP server admin DN
+ldap server admin password	emailadmin	sv	LDAP server admin lösenord
+ldap server hostname or ip address	emailadmin	sv	LDAP server hostnamn eller IP adress
+ldap settings	emailadmin	sv	LDAP alternativ
+leave empty for no quota	emailadmin	sv	Lämna tomt för ingen kvot
+mail settings	admin	sv	E-post alternativ
+name of organisation	emailadmin	sv	Organisations namn
+no alternate email address	emailadmin	sv	Ingen alternerande e-post adress
+no encryption	emailadmin	sv	Ingen kryptering
+no forwarding email address	emailadmin	sv	Ingen e-post vidarebefodrings adress
+no message returned.	emailadmin	sv	Inget svar meddelandes
+no supported imap authentication method could be found.	emailadmin	sv	Kunde inte hitta supporterad IMAP autentiserings metod
+order	emailadmin	sv	Sortering
+organisation	emailadmin	sv	Organisation
+pop3 server hostname or ip address	emailadmin	sv	POP3 server hostnamn eller IP adress
+pop3 server port	emailadmin	sv	POP3 server port
+port	emailadmin	sv	Port
+postfix with ldap	emailadmin	sv	Postfix med LDAP
+profile list	emailadmin	sv	Profil lista
+profile name	emailadmin	sv	Profil namn
+qmaildotmode	emailadmin	sv	qmaildotmode
+quota settings	emailadmin	sv	Kvot alternativ
+quota size in mbyte	emailadmin	sv	Kvotstorlek i Mb
+remove	emailadmin	sv	Radera
+select type of imap/pop3 server	emailadmin	sv	Välj typ av IMAP/POP3 server
+select type of smtp server	emailadmin	sv	Välj typ av SMTP Server
+sieve server hostname or ip address	emailadmin	sv	Sieve server hostnamn eller IP adress
+sieve server port	emailadmin	sv	Sieve server port
+sieve settings	emailadmin	sv	Sieve alternativ
+smtp server name	emailadmin	sv	SMTP server namn
+smtp settings	emailadmin	sv	SMTP alternativ
+smtp-server hostname or ip address	emailadmin	sv	SMTP server hostnamn eller IP adress
+smtp-server port	emailadmin	sv	SMTP server port
+standard	emailadmin	sv	Standard
+standard imap server	emailadmin	sv	Standard IMAP server
+standard pop3 server	emailadmin	sv	Standard POP3 server
+standard smtp-server	emailadmin	sv	Standard SMTP server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	sv	IMAP servern verkar inte stödja den autentiserings metod du valt. Var god och kontakta administratör.
+this php has no imap support compiled in!!	emailadmin	sv	Denna installation har inte IMAP stöd kompilerat i PHP.
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	sv	För att använda TLS anslutning måste du ha PHP version 5.1.0 eller högre
+unexpected response from server to authenticate command.	emailadmin	sv	Oväntat svar från servern på AUTENTISERINGS kommandot
+unexpected response from server to digest-md5 response.	emailadmin	sv	Oväntat svar från servern på Digest-MD5
+unexpected response from server to login command.	emailadmin	sv	Oväntat svar från servern på INLOGGINGS kommandot
+unknown imap response from the server. server responded: %s	emailadmin	sv	Okänt IMAP svar från server. Svarade: %s
+use ldap defaults	emailadmin	sv	använd LDAP standarder
+use smtp auth	emailadmin	sv	Använd SMTP autentisering
+use tls authentication	emailadmin	sv	Använd TLS autentisering
+use tls encryption	emailadmin	sv	Använd TLS kryptering
+users can define their own emailaccounts	emailadmin	sv	Användare kan definiera egna epost konton?
+virtual mail manager	emailadmin	sv	Virtuell E-post administration
