@@ -200,6 +200,10 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
+	set_label: function(_label) {
+		// no label for ro radio, we show label of checked option as content
+	},
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 *
