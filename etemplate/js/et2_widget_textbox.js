@@ -287,6 +287,14 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			_value = "";
 		}
+		if (this.label !="")
+		{
+			this.span.removeClass('et2_label_empty');
+		}
+		else
+		{
+			this.span.addClass('et2_label_empty');
+		}
 		this.value_span.text(_value);
 	},
 	/**

@@ -357,6 +357,9 @@ ul.et2_selectbox {
 label.et2_label > .et2_selectbox, label.et2_label > .et2_textbox, label.et2_label > .et2_textbox_ro {
 	padding-left: 5px;
 }
+label.et2_label_empty > .et2_textbox_ro{
+	padding-left: 0;
+}
 .et2_selectbox li {
   text-decoration: none;
   list-style-image: none;
