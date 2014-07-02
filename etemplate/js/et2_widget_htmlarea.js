@@ -139,6 +139,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 		
 		if(this.ckeditor && this.options.config.preference_style)
 		{
+			var editor = this.ckeditor;
 			this.ckeditor.on('instanceReady', function(e) {
 
 				// Add in user font preferences
@@ -160,6 +161,33 @@ var et2_htmlarea = et2_inputWidget.extend(
 				range.selectNodeContents(((typeof sN.getName==="function") && sN.getName()=="span"?range.startContainer.getNextSourceNode():range.startContainer.getNextSourceNode().getNext()));
 				range.collapse(true);
 				range.select();
+			});
+
+			// Drag & drop of images inline won't work, because of database
+			// field sizes.  For some reason FF ignored just changing the cursor
+			// when dragging, so we replace dropped images with error icon.
+			var replaceImgText = function(html) {
+				var ret = html.replace( /<img[^>]*src="(data:.*;base64,.*?)"[^>]*>/gi, function( img, src ){
+					return img.replace(src,egw.image('error'));
+				 });
+				return ret;
+			}
+
+			var chkImg = function() {
+				// don't execute code if the editor is readOnly
+				if (editor.readOnly)
+					return;
+
+				setTimeout( function() {
+					editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
+				},200);
+			};
+
+			editor.on( 'contentDom', function() {
+				// For Firefox
+				editor.document.on('drop', chkImg);
+				// For IE
+				editor.document.getBody().on('drop', chkImg);
 			});
 		}
 		
