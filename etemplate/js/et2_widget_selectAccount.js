@@ -747,6 +747,20 @@ var et2_selectAccount = et2_selectbox.extend(
 			.addClass("loading")
 			.appendTo(option);
 		this.egw().link_title('home-accounts', value, function(name) {this.text(name).removeClass("loading");}, label);
+	},
+	
+	/**
+	 * Overwritten attachToDOM metod to modify attachToDOM
+	 */
+	attachToDOM: function ()
+	{
+		this._super.apply(this, arguments);
+		//Chosen needs to be set after widget dettached from DOM (eg. validation_error), because chosen is not part of the widget node
+		if (this.egw().preference('account_selection', 'common') == 'primary_group')
+		{
+			jQuery(this.node).removeClass('chzn-done');
+			this.set_tags(this.options.tags, this.options.width);
+		}
 	}
 });
 et2_register_widget(et2_selectAccount, ["select-account"]);
