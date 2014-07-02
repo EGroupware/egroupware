@@ -91,6 +91,7 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
+	/* disabled until Pixelegg template supports it
 	'template_color' => array(
 		'type' => 'select',
 		'label' => 'Template color',
@@ -110,7 +111,7 @@ $GLOBALS['settings'] = array(
 		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
 		'xmlrpc' => True,
 		'admin'  => False,
-	),
+	),*/
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
 	'default_app' => false,		// not used in JDots, as we can have multiple tabs open ...
 );

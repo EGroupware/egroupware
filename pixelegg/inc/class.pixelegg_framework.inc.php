@@ -57,4 +57,15 @@ class pixelegg_framework extends jdots_framework
 		}
 		return parent::header($extra);
 	}
+
+	/**
+	 * Overwrite to NOT add customizable colors from jDots
+	 *
+	 * @see egw_framework::_get_css()
+	 * @return array
+	 */
+	public function _get_css()
+	{
+		return egw_framework::_get_css();
+	}
 }
