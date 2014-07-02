@@ -3306,7 +3306,7 @@ button.add {
   text-shadow: none;
   height: 24px;
   /*    height: auto;*/
-  background-image: none !important;
+  background-image: none;
   /*.border_radius_button_lefttop;*/
 }
 button.add:before {
@@ -3806,7 +3806,7 @@ table.nextmatch_header img {
   background-color: #679fd2;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
-  width: 70%;
+  /*width: 70%;*/
   /*margin-left: 15%;*/
   margin: 0 auto;
   max-width: 400px;
