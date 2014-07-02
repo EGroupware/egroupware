@@ -1420,7 +1420,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 			// Use safe names - replace unsafe chars, convert to ASCII (ZIP spec says CP437, but we'll try)
 			$path = explode('/',$_name);
-			$_name = translation::to_ascii(implode('/', str_replace($replace,'_',$path)));
+			$_name = translation::convert(translation::to_ascii(implode('/', str_replace($replace,'_',$path))),false,'ASCII');
 
 			// Don't go infinite with app entries
 			if(self::is_link($addfile))
