@@ -205,7 +205,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		// Unbind handler used for toggling autorefresh
 		$j(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
-
+		$j(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
+		
 		// Free the grid components
 		this.dataview.free();
 		this.rowProvider.free();
@@ -1390,7 +1391,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// (if needed) when tab is activated again
 				this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
 					// Check in case it was stopped / destroyed since
-					if(!this._autorefresh_timer) return;
+					if(!this._autorefresh_timer || !this.getInstanceManager()) return;
 					
 					$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 						// Important to use anonymous function instead of just 'this.refresh' because
