@@ -128,45 +128,7 @@ class admin_statistics
 		if (!isset($config[self::CONFIG_LAST_SUBMIT]) || $config[self::CONFIG_LAST_SUBMIT ] <= time()-self::SUBMISION_RATE)
 		{
 			// clear etemplate_exec_id and replace form.action, before submitting the form
-			$content['onclick'] = "return submit_statistic(this.form,'$content[submit_url]','".addslashes(lang('Submit displayed information?'))."');";
-
-			// Webkit browsers (Chrome, Safari, ...) do NOT allow to call form.submit() from within onclick of a submit button.
-			// Therefor we first store our own form action, replace it with egroupware.org submit url and set a timeout calling
-			// submit_statistic again with just the form, to do the second submit to our own webserver
-			$GLOBALS['egw_info']['flags']['java_script'] = "<script type=\"text/javascript\">
-var own_action;
-var own_exec_id;
-
-function submit_statistic(form,submit_url,confirm_msg)
-{
-	if (submit_url) {
-		if (!confirm(confirm_msg)) return false;
-
-		own_action = form.action;
-		own_exec_id = form['etemplate_exec_id'].value;
-
-		// submit to own webserver
-		window.setTimeout(function() {
-			submit_statistic(form);
-		},100);
-
-		// submit to egroupware.org
-		form.action=submit_url;
-		form['etemplate_exec_id'].value='';
-		form.target='_blank';
-	} else {
-		// submit to own webserver
-		form.action = own_action;
-		form['etemplate_exec_id'].value=own_exec_id;
-		form.target='';
-
-		form.submit();
-	}
-
-	return true;
-}
-</script>
-";
+			$content['onclick'] = "return app.admin.submit_statistic(this.form,'$content[submit_url]','".addslashes(lang('Submit displayed information?'))."');";
 		}
 		else	// we are not due --> tell it the user
 		{

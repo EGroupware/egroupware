@@ -699,5 +699,49 @@ app.classes.admin = AppJS.extend(
 			params.account_id = _senders[0].id.split('::').pop();	// get last :: separated part
 		}
 		this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup);
+	},
+
+	/**
+	 * Submit statistic
+	 *
+	 * Webkit browsers (Chrome, Safari, ...) do NOT allow to call form.submit() from within onclick of a submit button.
+	 * Therefor we first store our own form action, replace it with egroupware.org submit url and set a timeout calling
+	 * submit_statistic again with just the form, to do the second submit to our own webserver
+	 *
+	 * @param {DOM} form
+	 * @param {string} submit_url
+	 * @param {string} confirm_msg
+	 * @param {string} action own action, if called via window_set_timeout
+	 * @param {string} exec_id own exec_id
+	 * @return {boolean}
+	 */
+	submit_statistic: function(form,submit_url,confirm_msg,action,exec_id)
+	{
+		if (submit_url) {
+			if (!confirm(confirm_msg)) return false;
+
+			var own_action = form.action;
+			var own_exec_id = form['etemplate_exec_id'].value;
+			var that = this;
+
+			// submit to own webserver
+			window.setTimeout(function() {
+				that.submit_statistic.call(this, form, '', '', own_action, own_exec_id);
+			},100);
+
+			// submit to egroupware.org
+			form.action=submit_url;
+			form['etemplate_exec_id'].value='';
+			form.target='_blank';
+		} else {
+			// submit to own webserver
+			form.action = action;
+			form['etemplate_exec_id'].value=exec_id;
+			form.target='';
+
+			form.submit();
+		}
+
+		return true;
 	}
 });
