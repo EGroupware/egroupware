@@ -502,7 +502,7 @@ class asyncservice
 		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,$append,False,$num_rows) as $row)
 		{
 			$row['async_times'] = json_php_unserialize($row['async_times']);
-			$row['async_data'] = json_php_unserialize($row['async_data']);
+			$row['async_data'] = json_php_unserialize($row['async_data'], true);	// allow non-serialized data
 			$jobs[$row['async_id']] = egw_db::strip_array_keys($row,'async_');
 		}
 		if (!count($jobs))

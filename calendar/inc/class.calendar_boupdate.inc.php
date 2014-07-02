@@ -2685,6 +2685,9 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function purge($age)
 	{
-		$this->so->purge(time() - 365*24*3600*(float)$age);
+		if (is_numeric($age) && $age > 0)	// just make sure bogus values dont delete everything
+		{
+			$this->so->purge(time() - 365*24*3600*(float)$age);
+		}
 	}
 }
