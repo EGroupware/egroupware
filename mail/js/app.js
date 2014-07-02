@@ -154,7 +154,7 @@ app.classes.mail = AppJS.extend(
 					}
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
-				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});			
+				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});
 
 				this.compose_fieldExpander();
 				break;
@@ -577,7 +577,7 @@ app.classes.mail = AppJS.extend(
 				}
 				if (content.length == 1 && typeof content[0] != 'undefined' && content[0])
 				{
-					content = content[0].split(',');	
+					content = content[0].split(',');
 				}
 				// Add for current record
 				for(var i = 0; i < content.length; i++)
@@ -1346,7 +1346,7 @@ app.classes.mail = AppJS.extend(
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = jQuery.base64Decode(message[3]);
 		}
-		
+
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
@@ -1550,10 +1550,9 @@ app.classes.mail = AppJS.extend(
 	mail_checkAllSelected: function(_action, _elems, _target, _confirm)
 	{
 		if (typeof _confirm == 'undefined') _confirm = false;
-		// we only want to check nm list for allSelected, so we dont use the action object, but refer directly to nm_index id
-		//var actManId = _action.getManager().id;
-		//console.log(actManId);
-		var obj_manager = egw_getObjectManager(this.nm_index, false);
+		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
+		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
+		var obj_manager = egw_getObjectManager(this.app).getObjectById(this.nm_index);
 		var that = this;
 		var rvMain = false;
 		if (obj_manager && _elems.length>1 && obj_manager.getAllSelected())
@@ -3213,13 +3212,13 @@ app.classes.mail = AppJS.extend(
 		{
 			widgets[widget] = this.et2.getWidgetById(widget+'_expander');
 			if (typeof widgets[widget] != 'undefined')
-			{	
+			{
 				widgets[widget].set_disabled(false);
-			}	
+			}
 		}
 		jQuery(".mailComposeJQueryCc,.mailComposeJQueryBcc,.mailComposeJQueryFolder").hide();
 	},
-	
+
 	/**
 	 * Control textArea size based on available free space at the bottom
 	 *
@@ -3229,7 +3228,7 @@ app.classes.mail = AppJS.extend(
 		var bodyH = jQuery('body').height();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
 		var toolbar = jQuery('.mailSignature');
-		
+
 		if (typeof textArea != 'undefined')
 		{
 			var textAreaH = textArea.node.clientHeight;
@@ -3237,10 +3236,10 @@ app.classes.mail = AppJS.extend(
 			{
 				textArea = this.et2.getWidgetById('mail_htmltext');
 				textAreaH = parseInt(textArea.getParent().node.clientHeight);
-			} 
-			
+			}
+
 			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - 65);
-			
+
 			if (textArea.id != "mail_htmltext")
 			{
 				textArea.set_height(textAreaH + freeSpace);
@@ -3255,7 +3254,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
@@ -3270,7 +3269,7 @@ app.classes.mail = AppJS.extend(
 		{
 			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
 		}
-		
+
 		if (typeof widget !='undefined')
 		{
 			switch (widget.id)
@@ -3300,11 +3299,11 @@ app.classes.mail = AppJS.extend(
 		else if (typeof widget == "undefined")
 		{
 			var widgets = {cc:{},bcc:{},folder:{}};
-			
+
 			for(var widget in widgets)
 			{
 				widgets[widget] = this.et2.getWidgetById(widget);
-				
+
 				if (widgets[widget].get_value().length)
 				{
 					switch (widget)
@@ -3438,7 +3437,7 @@ app.classes.mail = AppJS.extend(
 
 		this.egw.message('Printing....');
 		var display = this;
-		// Make sure the print happens after the content is loaded. Seems Firefox can't handle timing for print command correctly 
+		// Make sure the print happens after the content is loaded. Seems Firefox can't handle timing for print command correctly
 		setTimeout(function(){display.egw.window.print();},1);
 	},
 
