@@ -440,7 +440,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			if(options.length > 1) attrs.config.mode = options[1];
 			if(options.length > 2) attrs.config.toolbarStartupExpanded = options[2];
 		}
-		attrs.config.height = ((field.rows ? field.rows : 5) *16) +'px';
+		attrs.config.height = (((field.rows > 0 && field.rows !='undefined') ? field.rows : 5) *16) +'px';
 
 		// We have to push the config modifications into the modifications array, or they'll
 		// be overwritten by the site config from the server
