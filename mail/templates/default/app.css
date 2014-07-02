@@ -601,6 +601,8 @@ div.mailDisplayHeaders div.mail_extraEmails.visible
 	z-index: 999;
 	overflow-y: auto;
 	background-color: white;
+	box-shadow: 5px 5px 5px #aaa;
+	border: 1px solid gray;
 }
 div.mailComposeBody {
 	white-space: normal !important;
@@ -634,6 +636,8 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	z-index: 1;
 	overflow-y: auto;
 	background-color: white;
+	box-shadow: 5px 5px 5px #aaa;
+	border: 1px solid gray;
 }
 .mail_extraEmails > a {
 	display:inline;
@@ -641,6 +645,7 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 }
 .mail_extraEmails.visible > a {
 	display: list-item;
+	border-bottom: 1px solid gray;
 }
 
 /**
