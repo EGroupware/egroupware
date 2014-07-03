@@ -127,7 +127,7 @@
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
-{hook_auth_type}
+{hook_auth_types}
      </select>
     </td>
    </tr>

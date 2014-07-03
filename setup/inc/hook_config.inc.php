@@ -168,7 +168,7 @@ function sql_passwdhashes($config, $return_hashes=false, &$securest=null)
  * @param array $config
  * @return string
  */
-function auth_type($config)
+function auth_types($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type']);
 }
