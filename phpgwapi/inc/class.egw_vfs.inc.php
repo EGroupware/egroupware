@@ -1495,8 +1495,8 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			unlink($temp_file);
 		}
-		
-		common::egw_exit();
+
+		// Make sure to exit after, if you don't want to add to the ZIP
 	}
 
 	/**

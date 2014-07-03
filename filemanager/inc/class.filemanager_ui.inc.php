@@ -614,7 +614,8 @@ class filemanager_ui
 				return lang("Error while creating directory.");
 
 			case 'saveaszip':
-				return egw_vfs::download_zip($selected);
+				egw_vfs::download_zip($selected);
+				common::egw_exit();
 			
 			default:
 				list($action, $settings) = explode('_', $action, 2);
