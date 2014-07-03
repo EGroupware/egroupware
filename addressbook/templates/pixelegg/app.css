@@ -239,12 +239,18 @@ img.iphoto {
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
     width: 32px;
-    border: 1px solid #0C5DA5;
+    /*border: 1px solid #0C5DA5;*/
     margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
     background-size: 16px 16px;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
     height: 24px;
     margin-right: 0px;
     background-image: url('../../../pixelegg/images/advanced-search.png') !important;
@@ -264,7 +270,7 @@ img.iphoto {
     background-color: #1aa200;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
-    background-color: #66a1d2 !important;
+    background-color: #189800 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -287,12 +293,18 @@ img.iphoto {
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
     width: 32px;
-    border: 1px solid #0C5DA5;
+    /*border: 1px solid #0C5DA5;*/
     margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
     background-size: 16px 16px;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
     height: 24px;
     margin-right: 0px;
   }
@@ -308,7 +320,7 @@ img.iphoto {
     background-color: #1aa200;
   }
   div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
-    background-color: #66a1d2 !important;
+    background-color: #189800 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -447,12 +459,18 @@ img.iphoto {
   }
   button#tracker-index-addressbook_add {
     width: 32px;
-    border: 1px solid #0C5DA5;
+    /*border: 1px solid #0C5DA5;*/
     margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
     background-size: 16px 16px;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
     height: 24px;
   }
   button#tracker-index-addressbook_add:before {
@@ -467,7 +485,7 @@ img.iphoto {
     background-color: #1aa200;
   }
   button#tracker-index-addressbook_add:hover {
-    background-color: #66a1d2 !important;
+    background-color: #189800 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
