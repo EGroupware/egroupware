@@ -831,8 +831,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   text-shadow: none;
   height: 24px;
   /*    height: auto;*/
-  background-image: none !important;
-  /*.border_radius_button_lefttop;*/
+  background-image: none;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
   background-image: url("images/write_mail_lighter.png") !important;
   background-position: right center !important;
   background-repeat: no-repeat;
@@ -840,7 +845,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   padding-left: 25px;
   text-align: left;
   width: 93%;
-  background-color: #0c5da5;
+  background-color: #696969;
+  height: 32px;
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:before,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:before {
@@ -851,6 +857,8 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:hover,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:hover {
+  background-color: #1aa200 !important;
+  color: #ffc200;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -860,10 +868,11 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-border-radius-topleft: 10px;
   border-radius: 3px;
   border-top-left-radius: 10px;
+  color: #1e1e1e;
 }
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:active,
 .egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:active {
-  background-color: #ffc200 !important;
+  background-color: #1aa200 !important;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 10px;
   -moz-border-radius: 3px;
