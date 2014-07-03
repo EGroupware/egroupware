@@ -2335,7 +2335,7 @@ class calendar_uiforms extends calendar_ui
 		$n = 1;
 		foreach($this->bo->get_cat_rights() as $Lcat_id => $data)
 		{
-			$cat_id = (int)substr($Lcat_id,1);
+			$cat_id = substr($Lcat_id,1);
 			$row = array(
 				'cat_id' => $cat_id,
 				'add' => array(),
