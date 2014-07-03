@@ -118,5 +118,8 @@ function timesheet_upgrade1_9_001()
 
 function timesheet_upgrade1_9_002()
 {
+	// switch history / delete prevention on, like for new installs, so only admins can finally delete timesheets
+	config::save_value('history', 'history', 'timesheet');
+
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '14.1';
 }
