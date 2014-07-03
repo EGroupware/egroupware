@@ -453,6 +453,10 @@ class mail_ui
 				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
 		}
+		else if ($content['mailPreview']['mailPreviewHeadersAttachments']['previewAttachmentArea'][0]['save_zip'])
+		{
+			$this->download_zip(current($content[self::$nm_index]['selected']));
+		}
 		//$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['csv_fields'] = false;
@@ -2817,6 +2821,53 @@ class mail_ui
 		//return $err.'window.close();';
 	}
 
+
+	/**
+	 * Zip all attachments and send to user
+	 * @param string $message_id
+	 */
+	function download_zip($message_id)
+	{
+		// First, get all attachment IDs
+		$attachments = $this->mail_bo->getMessageAttachments($message_id);
+
+		// put them in VFS so they can be zipped
+		$header = $this->mail_bo->getMessageHeader($message_id);
+		$temp_path = egw_vfs::get_home_dir() . "/.mail_$message_id";
+		if(egw_vfs::is_dir($temp_path)) egw_vfs::remove ($temp_path);
+
+		// Add subject to path, so it gets used as the file name
+		$path = $temp_path . '/' . ($header['SUBJECT'] ? egw_vfs::encodePathComponent($header['SUBJECT']) : lang('mail')) .'/';
+		if(!egw_vfs::mkdir($path, 0700, true))
+		{
+			egw_framework::message("Unable to open temp directory $path",'error');
+			return;
+		}
+
+		$file_list = array();
+		foreach($attachments as $file)
+		{
+			$this->mail_bo->reopen($this->mail_bo->sessionData['mailbox']);
+			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false);
+
+			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
+				!fwrite($fp,$attachment['attachment']))
+			{
+				egw_framework::message("Unable to zip {$file['filename']}",'error');
+			}
+			$file_list[] = $path.$file['filename'];
+			if ($fp) fclose($fp);
+		}
+		$this->mail_bo->closeConnection();
+		
+		// Zip it up
+		egw_vfs::download_zip($file_list);
+
+		// Clean up
+		egw_vfs::remove($temp_path);
+		
+		common::egw_exit();
+	}
 
 	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null)
 	{
