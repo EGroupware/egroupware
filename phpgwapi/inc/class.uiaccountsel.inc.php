@@ -92,7 +92,9 @@ class uiaccountsel
 			$multi_size = abs($lines);
 			$lines = 1;
 		}
-		$options .= ' class="uiaccountselection '.$this->account_selection.'"';	// to be able to style and select it with jQuery
+		// add "uiaccountselection" and account_selection-type class, to be able to style and select it with jQuery
+		if (strpos($options, 'class="') === false) $options .= ' class=""';
+		$options = str_replace('class="', 'class="uiaccountselection '.$this->account_selection.' ', $options);
 
 		if ($this->account_selection == 'none')	// dont show user-selection at all!
 		{
@@ -282,7 +284,6 @@ class uiaccountsel
 			$html .= html::submit_button('search','Search accounts',$js,false,
 				' title="'.html::htmlspecialchars(lang('Search accounts')).
 				'" class="uiaccountselection_trigger" id="'.$element_id.'_popup"','search','phpgwapi','button');
-			$need_js_popup = True;
 		}
 		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
 		{
