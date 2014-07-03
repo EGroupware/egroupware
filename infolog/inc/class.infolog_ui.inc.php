@@ -1699,6 +1699,8 @@ class infolog_ui
 					}
 					else
 					{
+						$GLOBALS['egw']->preferences->add('infolog','preferred_type',$content['info_type']);
+						$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 						$content['msg'] = lang('InfoLog entry saved');
 						egw_framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
@@ -1952,6 +1954,10 @@ class infolog_ui
 					if ($type != '' && empty($content['info_type']))
 					{
 						$content['info_type'] = $type;
+					}
+					else if ($type == '' && empty($content['info_type']) && isset($GLOBALS['egw_info']['user']['preferences']['infolog']['preferred_type']))
+					{
+						$content['info_type'] = $GLOBALS['egw_info']['user']['preferences']['infolog']['preferred_type'];
 					}
 					if (empty($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 					if (empty($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
