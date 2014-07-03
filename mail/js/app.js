@@ -1248,8 +1248,9 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * call Delete mails
 	 * takes in all arguments
-	 * @param _action
-	 * @param _elems
+	 * @param {object} _action
+	 * @param {array} _elems
+	 * @param {boolean} _allMessagesChecked
 	 */
 	mail_callDelete: function(_action,_elems,_allMessagesChecked)
 	{
