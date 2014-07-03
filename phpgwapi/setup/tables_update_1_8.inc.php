@@ -565,5 +565,30 @@ function phpgwapi_upgrade1_9_021()
 	}
 	preferences::change_preference('common', 'maxmatchs', '20', null, 'forced');
 
+	// switch on history / delete preventions for addressbook, calendar and infolog, if not yet a config exists
+	// for new installs this is done in setup_process::save_minimal_config
+	foreach(array(
+		'phgwapi' => array(
+			'history' => 'history',	// addressbook
+			'calendar_delete_history' => 'history',
+		),
+		'infolog' => array(
+			'history' => 'history_admin_delete',
+		)
+	) as $app => $data)
+	{
+		foreach($data as $name => $value)
+		{
+			if (!$GLOBALS['egw_setup']->db->select('egw_config','COUNT(*)', $row=array(
+				'config_app' => $app,
+				'config_name' => $name,
+			), __LINE__, __FILE__)->fetchColumn())
+			{
+				$row['config_value'] = $value;
+				$GLOBALS['egw_setup']->db->insert('egw_config', $row, null, __LINE__, __FILE__);
+			}
+		}
+	}
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.1';
 }
