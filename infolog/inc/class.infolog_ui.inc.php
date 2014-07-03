@@ -2492,6 +2492,7 @@ class infolog_ui
 						$attachments[] = array(
 								'name' => trim($subject).'.eml',
 								'mimeType' => 'message/rfc822',
+								'type' => 'message/rfc822',
 								'tmp_name' => $attachment_file,
 								'size' => $size,
 							);
@@ -2512,6 +2513,7 @@ class infolog_ui
 						$attachments[] = array(
 							'name' => $attachment['name'],
 							'mimeType' => $attachment['type'],
+							'type' => $attachment['type'],
 							'tmp_name' => $attachment['file'],
 							'size' => $attachment['size'],
 						);
@@ -2533,6 +2535,7 @@ class infolog_ui
 				$attachments[] = array(
 						'name' => trim($subject).'.eml',
 						'mimeType' => 'message/rfc822',
+						'type' => 'message/rfc822',
 						'tmp_name' => $attachment_file,
 						'size' => $size,
 					);
@@ -2569,7 +2572,6 @@ class infolog_ui
 			$mailobject->reopen($mailbox);
 
 			$mailcontent = $mailClass::get_mailcontent($mailobject,$uid,$partid,$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
-
 			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
 			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
@@ -2585,10 +2587,12 @@ class infolog_ui
 				$mailcontent['attachments'][] = array(
 						'name' => trim($subject).'.eml',
 						'mimeType' => 'message/rfc822',
+						'type' => 'message/rfc822',
 						'tmp_name' => $attachment_file,
 						'size' => $size,
 					);
 			}
+//_debug_array($mailcontent);
 			return $this->edit($this->bo->import_mail(
 				$mailcontent['mailaddress'],
 				$mailcontent['subject'],

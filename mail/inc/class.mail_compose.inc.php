@@ -1705,7 +1705,7 @@ class mail_compose
 				$size				= lang('unknown');
 
 			$this->addMessageAttachment($_uid, $_partID, $_folder,
-				$mail_bo->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))),
+				$mail_bo->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))).'.eml',
 				'MESSAGE/RFC822', $size);
 		}
 		else
