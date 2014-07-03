@@ -940,11 +940,17 @@
   /*ADD Button*/
   button#admin-categories-index_add {
     width: 32px;
-    border: 1px solid #0C5DA5;
+    /*border: 1px solid #0C5DA5;*/
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
     background-size: 16px 16px;
+    -webkit-border-radius: 3px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius: 3px;
+    -moz-border-radius-topleft: 10px;
+    border-radius: 3px;
+    border-top-left-radius: 10px;
     height: 24px;
     margin: 6px 2px;
   }
@@ -960,7 +966,7 @@
     background-color: #1aa200;
   }
   button#admin-categories-index_add:hover {
-    background-color: #66a1d2 !important;
+    background-color: #679fd2 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -3324,7 +3330,12 @@ button.add {
   height: 24px;
   /*    height: auto;*/
   background-image: none;
-  /*.border_radius_button_lefttop;*/
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
 }
 button.add:before {
   content: "+";
@@ -4355,13 +4366,9 @@ table.nextmatch_header img {
   position: fixed;
   width: 16px;
   height: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.border_radius_button_normal;*/
   padding: 0.5em;
   top: 5px;
   right: 40px;
@@ -4464,7 +4471,7 @@ table.nextmatch_header img {
   float: right;
   padding: 0.5em;
   position: fixed;
-  right: 95px;
+  right: 80px;
   top: 5px;
   background-image: url(../images/add.png);
   background-repeat: no-repeat;
@@ -4513,7 +4520,7 @@ table.nextmatch_header img {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
   padding: 5px;
   top: 6px;
-  right: 88px;
+  right: 112px;
   z-index: 200;
   background-color: #ff0000;
   -moz-transition: all 1s ease-in-out;

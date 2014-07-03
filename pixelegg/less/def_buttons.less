@@ -68,16 +68,13 @@
     .dimension_height_m;
 /*    height: auto;*/
     background-image: none;
-    /*.border_radius_button_lefttop;*/
+    .border_radius_button_lefttop;
 
     &:before {content: "+";font-size: 1.5em;color: @egw_color_1; line-height: 1.1em;}
 }
 
-
-
-
 .Complete_Button_add_hover {
-    background-color: @egw_color_blue_lightest !important;
+    background-color: @color_positive_action_active !important;
     color: @egw_color_1;
     .box_shadow_standard_light_hover;
     .border_radius_button_lefttop;
@@ -88,12 +85,13 @@
 .Complete_Button_add_only_plus {
                 height: 24px;
                 width: 32px;
-                border: 1px solid #0C5DA5;
+                /*border: 1px solid #0C5DA5;*/
                 margin: 6px 2px;
                 box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
                 padding: -0.5em;
                 background-color: @gray_10 !important;
                 background-size: 16px 16px;
+                .border_radius_button_lefttop;
 
 
                 &:before {
@@ -110,7 +108,7 @@
 }
 
 .Complete_Button_add_only_plus_hover {
-    background-color: @egw_color_blue_lightest !important;
+    background-color: @color_positive_action !important;
     color: @egw_color_1;
     .box_shadow_standard_light_hover;
     .border_radius_button_lefttop;
