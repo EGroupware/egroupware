@@ -2098,6 +2098,10 @@ class mail_ui
 			$rowID = $_requesteddata['id'];
 			//unset($_REQUEST);
 		}
+		if($_requesteddata['mail_displayattachments'][0]['save_zip'])
+		{
+			$this->download_zip($_requesteddata['mail_id']);
+		}
 		$preventRedirect=false;
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
@@ -2829,6 +2833,17 @@ class mail_ui
 	function download_zip($message_id)
 	{
 		// First, get all attachment IDs
+		if(!is_numeric($message_id))
+		{
+			$hA = self::splitRowID($message_id);
+			$message_id = $hA['msgUID'];
+			$mailbox = $hA['folder'];
+		}
+		else
+		{
+			$mailbox = $this->mail_bo->sessionData['mailbox'];
+		}
+		
 		$attachments = $this->mail_bo->getMessageAttachments($message_id);
 
 		// put them in VFS so they can be zipped
@@ -2845,9 +2860,9 @@ class mail_ui
 		}
 
 		$file_list = array();
+		$this->mail_bo->reopen($mailbox);
 		foreach($attachments as $file)
 		{
-			$this->mail_bo->reopen($this->mail_bo->sessionData['mailbox']);
 			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false);
 
 			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
