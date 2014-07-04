@@ -90,22 +90,9 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 			$value = $newsettings[$setting];	// it might be changed by the validation hook
 		}
 		/* Don't erase passwords, since we also do not print them below */
-		if(empty($value) && !(stristr($setting,'passwd') || stristr($setting,'password') || stristr($setting,'root_pw')))
+		if(!empty($value) || !(stristr($setting,'passwd') || stristr($setting,'password') || stristr($setting,'root_pw')))
 		{
-			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->config_table,array(
-				'config_name' => $setting,
-				'config_app'  => 'phpgwapi',
-			),__LINE__,__FILE__);
-			unset($newsettings[$setting]);
-		}
-		elseif($value)
-		{
-			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
-				'config_value' => $value,
-			),array(
-				'config_name' => $setting,
-				'config_app'  => 'phpgwapi',
-			),__LINE__,__FILE__);
+			config::save_value($setting, $value, 'phpgwapi');
 		}
 	}
 	if(!$GLOBALS['error'])
