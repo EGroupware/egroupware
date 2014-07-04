@@ -172,15 +172,9 @@ foreach($vars as $value)
 			}
 			break;
 		case 'selected':
-			$configs = array();
-			$config  = '';
 			$newvals = explode(' ',$newval);
-			$setting = end($newvals);
-			for($i=0;$i<(count($newvals) - 1); $i++)
-			{
-				$configs[] = $newvals[$i];
-			}
-			$config = implode('_',$configs);
+			$setting = array_pop($newvals);
+			$config = implode('_',$newvals);
 			/* echo $config . '=' . $current_config[$config]; */
 			if(@$current_config[$config] == $setting)
 			{
