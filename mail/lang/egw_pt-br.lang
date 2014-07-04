@@ -1,25 +1,84 @@
+%1 attachments	mail	pt-br	anexos
+%1 is not writable by you!	mail	pt-br	% 1 não é gravável por você!
+%1 mails selected	mail	pt-br	% 1 e-mails selecionados
+(leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt-br	(sem assunto)
+(not connected)	mail	pt-br	(não conectado)
+(with checkbox enforced)	mail	pt-br	(com caixa reforçado)
+account editable by user	mail	pt-br	conta editável pelo usuário
+acl rights retrived successfully!	mail	pt-br	Direitos ACL retrived com sucesso!
+action	mail	pt-br	ação
 activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
+add a new folder to %1:	mail	pt-br	Adicionar uma nova pasta para% 1:
+add all my aliases	mail	pt-br	Adicionar todos os meus aliases
+add folder	mail	pt-br	Adicionar pasta
 add to addressbook	mail	pt-br	Adicionar aos Contatos
+aliases+forwards	mail	pt-br	Aliases + Forwards
+all adresses:	mail	pt-br	Todos os Endereços:
+all available info	admin	pt-br	todas as informações disponíveis
+all messages in the folder will be lost	mail	pt-br	Todas as mensagens da pasta serão perdidas
 all of	mail	pt-br	Todos
+allow external images	mail	pt-br	Permitir imagens externas
 allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allow users to create further identities	mail	pt-br	permitir aos usuários criar novas identidades
 allways a new window	mail	pt-br	sempre uma nova janela
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
+append	mail	pt-br	anexar
+attach users vcard at compose to every new mail	mail	pt-br	anexar usuários VCard a compor a cada novo e-mail
+attach vcard	mail	pt-br	anexar vCard
+attachment	mail	pt-br	acessório
+attachments	mail	pt-br	Anexos
+authentication	mail	pt-br	autenticação
+available personal email-accounts/profiles	mail	pt-br	EMail-Accounts/Profiles pessoais disponíveis
+but check shared folders	mail	pt-br	mas verifique as pastas compartilhadas
 by date	mail	pt-br	por data
+can not open imap connection	mail	pt-br	Não é possível abrir conexão IMAP
+changed profile	mail	pt-br	perfil alterado
+check message against next rule also	mail	pt-br	Verifique mensagem contra seguinte regra também
+check to save as infolog on send	mail	pt-br	verificar para salvar como infolog em enviar
+check to save as trackerentry on send	mail	pt-br	verificar para salvar como trackerentry em enviar
+common acl	mail	pt-br	ACL comum
 compose	mail	pt-br	Compor
+compose as new	mail	pt-br	Compor como novo
 compress folder	mail	pt-br	Compactar pasta
+condition	mail	pt-br	condição
+configuration settings	mail	pt-br	As definições de configuração
+confirm attach message	mail	pt-br	Confirme anexar mensagem
+confirm move to folder	mail	pt-br	Confirme Mover para pasta
+connect to profile %1	mail	pt-br	Conecte-se ao Perfil 1%
+connection status	mail	pt-br	status da conexão
 contains	mail	pt-br	contém
+contains(*)	mail	pt-br	Contém (*)
+copied %1 message(s) from %2 to %3	mail	pt-br	copiados %1 mensagem (s) de% 2 a 3%
+copy to	mail	pt-br	copiar para
+could not append message:	mail	pt-br	Não foi possível anexar Mensagem:
+create new account	mail	pt-br	criar nova conta
+currently:	mail	pt-br	Atualmente:
 date(newest first)	mail	pt-br	Data (mais novas primeiro)
 date(oldest first)	mail	pt-br	Data (mais antigas primeiro)
+deactive	mail	pt-br	Desativado
 default sorting order	mail	pt-br	Ordem padrão de classificação
+default your name and email	common	pt-br	padrão o seu nome e e-mail
+delete folder	mail	pt-br	excluir pasta
+delete folder %1 ?	mail	pt-br	Apagar pasta% 1?
 deleted	mail	pt-br	removido
+deleted %1 messages in %2	mail	pt-br	apagado %1 mensagens em 2%
+deleted!	mail	pt-br	apagado
+deny certain groups access to following features	mail	pt-br	Negar o acesso a certos grupos as seguintes características
+disable	mail	pt-br	incapacitar
+disabled!	mail	pt-br	disabled!
 discard	mail	pt-br	descartar
+discard message	mail	pt-br	Descarte mensagem
 display messages in multiple windows	mail	pt-br	Exibir mensagens em múltiplas janelas
 display of html emails	mail	pt-br	Exibir emails em HTML
+display of identities	admin	pt-br	exibição de identidades
 display only when no plain text is available	mail	pt-br	Exibir somente quando não possuir versão em texto plano disponível
 displaying html messages is disabled	mail	pt-br	a exibição de mensagens HTML está desativada
+displaying plain messages is disabled	mail	pt-br	exibição de mensagens simples é desativado
+do not auto create folders	mail	pt-br	Não auto criar pastas
+do you really want to delete folder %1 ?	mail	pt-br	Você realmente quer apagar a pasta% 1?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt-br	Você deseja ser perguntado para confirmação ao mover mensagens para outra pasta?
 does not contain	mail	pt-br	não contém
 does not exist on imap server.	mail	pt-br	não existe no Servidor IMAP.
@@ -31,13 +90,28 @@ don't use template folder	mail	pt-br	Não usar pasta Modelos
 don't use trash	mail	pt-br	Não usar pasta Lixeira
 draft folder	mail	pt-br	Pasta Rascunho
 drafts	mail	pt-br	Rascunhos
+drafts folder	mail	pt-br	pasta Rascunhos
+edit account	mail	pt-br	Editar Conta
+edit account ...	mail	pt-br	Editar conta ...
+edit folder acl	mail	pt-br	Pasta Editar ACL
+edit folder acl ...	mail	pt-br	Pasta Editar ACL
+edit vacation settings	mail	pt-br	Editar configurações de férias
+effective only if server supports acl at all	admin	pt-br	efetiva apenas se o servidor suporta ACL em tudo
+email notification successfully updated!	mail	pt-br	notificação de email atualizado com sucesso!
 email notification update failed	mail	pt-br	Atualização do email de notificação falhou
 emailaddress	admin	pt-br	endereço de e-mail
+emailadmin: profilemanagement	mail	pt-br	emailadmin: Profile Management
 empty trash	mail	pt-br	Esvaziar Lixeira
+enable	mail	pt-br	lixo vazio
+enabled!	mail	pt-br	permitir
+enter the name for the new folder:	mail	pt-br	Digite o nome para a nova pasta:
+error saving %1!	mail	pt-br	Economizando% 1 Error!
 error:	mail	pt-br	Erro:
+error: could not save acl	mail	pt-br	Erro: Não foi possível salvar ACL
 error: could not save message as draft	mail	pt-br	Erro: Não foi possível salvar a mensagem como Rascunho
+error: could not save rule	mail	pt-br	Erro: Não foi possível salvar regra
+error: could not send message.	mail	pt-br	Erro: Não foi possível enviar mensagem.
 event details follow	mail	pt-br	Seguem detalhes do evento
-felamimail	admin	pt-br	eMail
 file into	mail	pt-br	Arquivar em
 filemanager	mail	pt-br	Gerenciador de Arquivos
 flagged	mail	pt-br	sinalizado
@@ -107,8 +181,7 @@ then	mail	pt-br	ENTÃO
 trash	mail	pt-br	Lixeira
 trash folder	mail	pt-br	Pasta Lixeira
 unread	mail	pt-br	Não lido
-urgent	mail	pt-br	urgente
-vacation notice	admin	pt-br	Notícia de ausência
+vacation notice	mail	pt-br	Notícia de ausência
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final !
 when deleting messages	mail	pt-br	Ao remover mensagens
 wrote	mail	pt-br	escreveu

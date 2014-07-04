@@ -1,41 +1,128 @@
+%1 definitions %2	importexport	pt-br	%1 definições %2
+%1 is not a known user or group	importexport	pt-br	% 1 não é um usuário ou grupo conhecido
+%1 is not readable	importexport	pt-br	% 1 não é legível.
+%1 is not writable	importexport	pt-br	% 1 não é gravável.
+%1 records processed	importexport	pt-br	% 1 registros processados.
+%s just me	importexport	pt-br	% s Just me
+(* for all)	importexport	pt-br	(* Para todos)
+(0-23)	importexport	pt-br	(0-23)
+(0-6, 0=sun)	importexport	pt-br	(0-6, 0=Sun)
+*contact id cannot be changed by import	importexport	pt-br	* Contact ID não pode ser alterado por importação
+addressbook csv import	importexport	pt-br	Endereços CSV Import
+addressbook vcard import	importexport	pt-br	Importação de endereços vCard
+admin disabled exporting	importexport	pt-br	Exportação desativado Administrador
+all encodings	importexport	pt-br	Todas as codificações
 allowed users	importexport	pt-br	Usuários permitidos
 automatically created by importexport	importexport	pt-br	Automaticamente criado por importar/exportar
+basic csv import	importexport	pt-br	Importação CSV Básico
 changed	importexport	pt-br	Alterado
+changed allowed_users	importexport	pt-br	Usuários permitidos Changed
+changed owner	importexport	pt-br	Proprietário Changed
 charset of file	importexport	pt-br	Charset do arquivo
 check all	importexport	pt-br	Verificar todos
 choose a name for this definition	importexport	pt-br	Escolha um nome para esta definição
 choose a plugin	importexport	pt-br	EScolha um plugin
 choose an application	importexport	pt-br	Escolha uma aplicação
+choose fields to export	importexport	pt-br	Escolha os campos para exportar
 choose seperator and charset	importexport	pt-br	Escolha o separador e a codificação de caracteres
+column mismatch: %1 should be %2, not %3	importexport	pt-br	Coluna incompatibilidade:% 1 deve ser% 2, e não 3%
 condition	importexport	pt-br	condição
 copied	importexport	pt-br	copiado
+create export	importexport	pt-br	Criar exportação
 created	importexport	pt-br	Criado
+csv field	importexport	pt-br	Campo CSV
+database values	importexport	pt-br	Valores de banco de dados
+day of week	importexport	pt-br	Dia da semana
+define imports|exports	common	pt-br	Definir Importações | Exportações
+definition	importexport	pt-br	Definição
 delete all selected definitions	importexport	pt-br	remover TODAS as definições selecionadas
 deleted	importexport	pt-br	removido
+delimiter	importexport	pt-br	Delimitador
+duplicate name, please choose another.	importexport	pt-br	Duplicar nome, escolha outra.
+edit conditions	importexport	pt-br	Condições Editar
+edit your file to match the definition:	importexport	pt-br	Edite seu arquivo para coincidir com a definição:
+errors	importexport	pt-br	Erros
+execute	importexport	pt-br	Executar
 expert options	importexport	pt-br	Opções avançadas
 export	importexport	pt-br	Exportar
 export all selected definitions	importexport	pt-br	exportar TODAS as definições selecionadas
+export data as	importexport	pt-br	Exportar dados como
+export definition to use for nextmatch export	preferences	pt-br	Definição Exportar para usar para exportação NextMatch
+export spreadsheet	importexport	pt-br	Exportar planilha
 exported	importexport	pt-br	exportado
+extra charsets for import / export	importexport	pt-br	Charsets extra para importação / exportação
+extra encodings	importexport	pt-br	Codificações extras
 false	importexport	pt-br	falso
+field labels	importexport	pt-br	Rótulos de campo
+field names	importexport	pt-br	Os nomes dos campos
+fieldseperator	importexport	pt-br	Separador de campo
+filters	importexport	pt-br	Filtros
 finish	importexport	pt-br	terminar
+from definition	importexport	pt-br	Da definição
 general	preferences	pt-br	Geral
 general fields:	preferences	pt-br	Campos gerais:
+header lines to skip	importexport	pt-br	Linhas de cabeçalho para pular
+human friendly values	importexport	pt-br	Valores amigáveis ​​Humanos
 import	importexport	pt-br	Importar
+import aborted	importexport	pt-br	Importação abortada
+import data is	importexport	pt-br	Importação de dados é
+import definition	importexport	pt-br	definição de Importação
+import definitions	common	pt-br	definições de importação
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	pt-br	Importar definições (Atenção: definições existentes com nomes iguais serão substituídas!!!)
+imported	importexport	pt-br	importados
+importexport	common	pt-br	Importação | Exportação
 importexport wizard finished successfully!	importexport	pt-br	Assistente de importação/exportação terminado com sucesso!
+include header	importexport	pt-br	incluir cabeçalho
+just me	importexport	pt-br	apenas eu
+last run	importexport	pt-br	Última corrida
 load sample file	importexport	pt-br	Carregar arquivo exemplo
+lock expired on previous run	importexport	pt-br	Bloqueio expirou em execução anterior
 manage mapping	importexport	pt-br	Gerenciar mapeamento
 next	importexport	pt-br	próximo
 next run	importexport	pt-br	Próxima execução
+no matches	importexport	pt-br	nenhuma correspondência
+no matching records	importexport	pt-br	Não há registros correspondentes
+no notifications	importexport	pt-br	Nenhuma notificação
+no records selected	importexport	pt-br	Nenhum registro selecionado!
+none found	importexport	pt-br	Nenhum encontrado
+old fixed definition	preferences	pt-br	Definição fixa Velho
+please select file to import	importexport	pt-br	Por favor, selecione o arquivo de importação
+plugin	importexport	pt-br	Plugin
 preview	importexport	pt-br	Pré-visualização
 previous	importexport	pt-br	anterior
+problems during import:	importexport	pt-br	Problemas durante a importação:
 save as definition	importexport	pt-br	Salvar como definição
 schedule	common	pt-br	agendar
+schedule import / export	common	pt-br	Importação Calendário | exportação
+schedule import | export	importexport	pt-br	Importação Calendário | exportação
+schedule not found	importexport	pt-br	Agenda não encontrada.
+schedule times are server time!  currently %s.	importexport	pt-br	Agenda vezes são tempo servidor! Atualmente% s.
 select definition	importexport	pt-br	Selecionar definição
 select plugin	importexport	pt-br	Selecionar plugin
+select...	importexport	pt-br	Selecione ...
+skipped	importexport	pt-br	Ignorado
 some nice text	importexport	pt-br	algum texto legal
+some records may not have been imported	importexport	pt-br	Alguns registros podem não ter sido importado.
+stop	importexport	pt-br	Pare
+stylite template folder	importexport	pt-br	Pasta de modelo Stylite
+target	importexport	pt-br	Alvo
+target field	importexport	pt-br	Campo Destino
+test only	importexport	pt-br	Só teste
+too many matches	importexport	pt-br	muitas correspondências
 translation	importexport	pt-br	Tradução
 true	importexport	pt-br	verdadeiro
+try	importexport	pt-br	Tentar
+unable to delete	importexport	pt-br	Não é possível excluir
+unable to link to %1 "%2"	importexport	pt-br	Incapaz de ligação para% 1 "% 2"
+unable to schedule	importexport	pt-br	Impossível programar.
+update categories	importexport	pt-br	Categorias atualização
 use default	importexport	pt-br	Usar o padrão
+use field from csv if possible	importexport	pt-br	Use o campo de CSV, se possível
+user preference	importexport	pt-br	Preferência do usuário
+user template folder	importexport	pt-br	Pasta de modelos do usuário
+users allowed to create their own definitions	importexport	pt-br	Pasta de modelos do usuário
+users allowed to share their own definitions	importexport	pt-br	Os usuários autorizados a criar suas próprias definições
+warnings	importexport	pt-br	Advertências
 which useres are allowed for this definition	importexport	pt-br	Quais usuários são permitidos para esta definição
+which users are allowed to use this definition	importexport	pt-br	Quais usuários estão autorizados a utilizar esta definição
 you need to select an app and format first!	importexport	pt-br	Você deve selecionar um aplicativo e um formato primeiro!

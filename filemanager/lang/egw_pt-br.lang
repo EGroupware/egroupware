@@ -1,30 +1,53 @@
 %1 already exists as a file	filemanager	pt-br	%1 já existe como um arquivo
+%1 already mounted on %2!	filemanager	pt-br	%1 já montada sobre %2!
 %1 directories and %2 files copied.	filemanager	pt-br	%1 diretórios e %2 arquivos copiados.
 %1 directories and %2 files deleted.	filemanager	pt-br	%1 diretórios e %2 arquivos removidos.
+%1 elements linked.	filemanager	pt-br	% 1 elementos ligados.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	pt-br	%1 erros copiando (%2 diretórios e %3 arquivos copiados)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	pt-br	%1 erros removendo (%2 diretórios e %3 arquivos removidos)!
+%1 errors linking (%2)!	filemanager	pt-br	% 1 erros de ligação (% 2)!
 %1 errors moving (%2 files moved)!	filemanager	pt-br	%1 erros movendo (%2 arquivos movidos)!
+%1 failed, %2 succeded	filemanager	pt-br	% 1 falhou,% 2 conseguiu.
+%1 files	common	pt-br	% 1 arquivos
 %1 files copied.	filemanager	pt-br	%1 arquivos copiados.
 %1 files deleted.	filemanager	pt-br	%1 arquivos removidos.
 %1 files moved.	filemanager	pt-br	%1 arquivos movidos.
 %1 starts with '%2'	filemanager	pt-br	%1 inicia com '%2'
+%1 successful unmounted.	filemanager	pt-br	1% de sucesso desmontado.
+%1 successful uploaded.	filemanager	pt-br	% 1 enviado com sucesso.
 %1 the following files into current directory	filemanager	pt-br	%1 os seguintes arquivos para o diretório atual.
 %1 urls %2 to clipboard.	filemanager	pt-br	%1 URLs %2 para a área de transferência.
+%d files successfully copied.	filemanager	pt-br	% d arquivos copiados com sucesso.
+%d files successfully moved.	filemanager	pt-br	% d arquivos movidos com sucesso.
 accessrights	filemanager	pt-br	Direitos de acesso
 acl added.	filemanager	pt-br	ACL adicionada
 acl deleted.	filemanager	pt-br	ACL removida.
 actions	filemanager	pt-br	Ações
+add to clipboard	filemanager	pt-br	Adicionar à prancheta
+administrators	filemanager	pt-br	Administradores
+all files	filemanager	pt-br	Todos os arquivos
 allow a maximum of the above configured folderlinks to be configured in settings	admin	pt-br	permite um número máximo de links para pastas acima indicado, a serem definidos nas configurações
 and all it's childeren	filemanager	pt-br	e todos seus subdiretórios
+application fields	filemanager	pt-br	campos de aplicação
 applications	common	pt-br	Aplicativos
+backend	filemanager	pt-br	Backend
+backend url	filemanager	pt-br	Backend URL
+backend url to mount	filemanager	pt-br	URL backend para montar
 basedirectory	filemanager	pt-br	Diretório base
+can't open directory %1!	filemanager	pt-br	Não é possível abrir a pasta% 1!
 cancel editing %1 without saving	filemanager	pt-br	Cancelar edição de %1 sem salvar
 cannot create directory because it begins or ends in a space	filemanager	pt-br	Não foi possível criar o diretório em razão do nome começar ou terminar com um espaço
+cautiously rejecting to remove folder '%1'!	filemanager	pt-br	Cautelosamente rejeitando para remover a pasta '% 1'!
 check all	filemanager	pt-br	Checar todos
+check virtual filesystem	common	pt-br	Verifique o sistema de arquivos virtual
 clear search	filemanager	pt-br	limpar pesquisa
+clipboard is empty!	filemanager	pt-br	Clipboard está vazio!
 comment	filemanager	pt-br	Comentário
+configuration changed.	filemanager	pt-br	Configuração alterada.
 copied	filemanager	pt-br	copiado
 copied %1 to %2	filemanager	pt-br	%1 copiado para %2
+copy	filemanager	pt-br	cópia
+copy into folder	filemanager	pt-br	Copie para a pasta
 copy to	filemanager	pt-br	Copiar para
 copy to clipboard	filemanager	pt-br	Copiar para a área de transferência
 could not copy %1 to %2	filemanager	pt-br	Não foi possível copiar %1 para %2
@@ -32,6 +55,7 @@ could not create %1	filemanager	pt-br	Não foi possível criar %1
 could not delete %1	filemanager	pt-br	Não foi possível remover %1
 could not move %1 to %2	filemanager	pt-br	Não foi possível mover %1 para %2
 could not rename %1 to %2	filemanager	pt-br	Não foi possível renomear %1 para %2
+create a link	filemanager	pt-br	Criar um link
 create directory	filemanager	pt-br	Criar diretório
 create file	filemanager	pt-br	Criar arquivo
 create folder	filemanager	pt-br	Criar pasta
@@ -42,27 +66,48 @@ current directory	filemanager	pt-br	Diretório atual
 custom fields	filemanager	pt-br	Campos personalizados
 cut	filemanager	pt-br	recortar
 cut to clipboard	filemanager	pt-br	Recortar para a área de transferência
+default document to insert entries	filemanager	pt-br	Documento padrão para inserir entradas
+delete these files or directories?	filemanager	pt-br	Excluir esses arquivos ou diretórios?
 delete this file or directory	filemanager	pt-br	Remover este arquivo ou diretório
 deleted %1	filemanager	pt-br	Removido %1
+directories sorted in	filemanager	pt-br	Diretórios ordenados em
 directory	filemanager	pt-br	Pasta
 directory %1 already exists	filemanager	pt-br	Diretório %1 já existe
 directory %1 does not exist	filemanager	pt-br	Diretório %1 não existe
 directory not found or no permission to access it!	filemanager	pt-br	Diretório não encontrado ou sem permissão para acessá-lo!
+directory successfully created.	filemanager	pt-br	Diretório criado com sucesso.
+directory with documents to insert entries	filemanager	pt-br	Diretório com documentos para inserir entradas
+disable	filemanager	pt-br	Desativar
+disable versioning for this mountpoint	filemanager	pt-br	Desativar o controle de versão para este ponto de montagem
 display and modification of content	filemanager	pt-br	Exibe a alteração do conteúdo
 display of content	filemanager	pt-br	Exibe o conteúdo
+do you want to overwrite the existing file %1?	filemanager	pt-br	Você quer substituir o arquivo existente 1%?
 download	filemanager	pt-br	Download
 edit comments	filemanager	pt-br	Editar comentários
 edit settings	filemanager	pt-br	Editar configurações
+enable	filemanager	pt-br	permitir
+enable versioning for given mountpoint	filemanager	pt-br	Ativar versão para determinado ponto de montagem
+enter setup user and password	filemanager	pt-br	Digite o usuário e senha de configuração
+enter setup user and password to get root rights	filemanager	pt-br	Digite o usuário de configuração e senha para obter direitos de root
 enter the complete vfs path to specify a fast access link to a folder	filemanager	pt-br	Informe o caminho VFS completo para especificar um link rápido à pasta
 enter the complete vfs path to specify your desired start folder.	filemanager	pt-br	Informe o caminho VFS completo para especificar sua pasta inicial desejada.
 error adding the acl!	filemanager	pt-br	Erro editanto a ACL!
+error creating symlink to target %1!	filemanager	pt-br	Erro ao criar link simbólico para atingir 1%!
 error deleting the acl entry!	filemanager	pt-br	Erro removendo o registro ACL!
+error mounting %1 on %2!	filemanager	pt-br	Erro de montagem% 1 em% 2!
+error unmounting %1!	filemanager	pt-br	Erro desmontar% 1!
 error uploading file!	filemanager	pt-br	Erro carregando arquivo!
+error while creating directory.	filemanager	pt-br	Erro ao criar diretório
+everyone	filemanager	pt-br	todo o mundo
 executable	filemanager	pt-br	Executável
+export definition to use for nextmatch export	filemanager	pt-br	Definição Exportar para usar para o próximo jogo exportação
 extended access control list	filemanager	pt-br	Lista de controle de acesso ampliada
 extended acl	filemanager	pt-br	ACL ampliada
+failed to change permissions of %1!	filemanager	pt-br	Falha ao alterar as permissões de% 1!
 failed to create directory!	filemanager	pt-br	Falha ao criar diretório!
+favorites	filemanager	pt-br	Favoritos
 file	filemanager	pt-br	Arquivo
+file %1 already exists	filemanager	pt-br	Arquivo% 1 já existe
 file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	Arquivo %1 pode ser muito grande. Entre em contato com o administrador do sistema para maiores informações.
 file deleted.	filemanager	pt-br	Arquivo removido.
@@ -71,7 +116,13 @@ file or directory not found!	filemanager	pt-br	Arquivo ou diretório não encont
 file successful uploaded.	filemanager	pt-br	Arquivo carregado com sucesso.
 filemanager	common	pt-br	Gerenciador de Arquivos
 filemanager configuration	admin	pt-br	configuração do Gerenciador de Arquivos
+filemanager fields:	filemanager	pt-br	Gerente de Campos do arquivo:
+filename must not be empty!	filemanager	pt-br	Matrícula não pode estar vazio!
+files from subdirectories	filemanager	pt-br	Arquivos de subdiretórios
 files in this directory	filemanager	pt-br	Arquivos neste diretório
+filesystem check reported no problems.	filemanager	pt-br	Verificação do sistema de arquivos não relatou nenhum problema.
+finally delete this version	filemanager	pt-br	Finalmente eliminar versão
+fix reported problems	filemanager	pt-br	Corrigir problemas relatados
 folder up	filemanager	pt-br	Pasta acima
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 general	filemanager	pt-br	Geral
@@ -84,25 +135,40 @@ id	filemanager	pt-br	ID
 inherited	filemanager	pt-br	Herdado
 link	filemanager	pt-br	Link
 link %1: %2	filemanager	pt-br	Link %1: %2
+link target	filemanager	pt-br	destino do link
+link target %1 not found!	filemanager	pt-br	Destino do link% 1 não encontrado!
 location	filemanager	pt-br	Localização
+log out as superuser	filemanager	pt-br	Sair como superusuário
+mail files	filemanager	pt-br	arquivos de correio
+mail paste	filemanager	pt-br	Correio pasta
 max folderlinks	admin	pt-br	máximo de links para pastas
 mime type	filemanager	pt-br	Tipo MIME
 modified	filemanager	pt-br	Modificado
 modified between	filemanager	pt-br	moficiado entre
 modify all subdirectories and their content	filemanager	pt-br	Modificar todos os subdiretórios e seus conteúdos
+mount	filemanager	pt-br	monte
+mountpoints	filemanager	pt-br	Pontos de Montagem
 move	filemanager	pt-br	Mover
+move into folder	filemanager	pt-br	Mover para pasta
 move to	filemanager	pt-br	Mover para
 moved %1 to %2	filemanager	pt-br	%1 movido para %2
 name of current user, all other contact fields are valid too	filemanager	pt-br	Nome do usuário atual, todos outros campos são válidos também
+new directory	filemanager	pt-br	Novo diretório
 no access	filemanager	pt-br	Sem acesso
 no files in this directory.	filemanager	pt-br	Nenhum arquivo neste diretório
 no preview available	filemanager	pt-br	Pré-visualização indisponível
 no version history for this file/directory	filemanager	pt-br	Nenhum histórico de versões para este arquivo/diretório
+noone	filemanager	pt-br	ninguém
+older versions or deleted files	filemanager	pt-br	As versões mais antigas ou arquivos apagados
 only owner can rename or delete the content	filemanager	pt-br	Apenas o proprietário pode renomear ou remover o conteúdo
 open	filemanager	pt-br	abrir
 operation	filemanager	pt-br	Operação
+paste link	filemanager	pt-br	Colar vínculo
+path %1 not found or not a directory!	filemanager	pt-br	Path% 1 não foi encontrado ou não um diretório!
+percentage	filemanager	pt-br	percentagem
 permission denied!	filemanager	pt-br	Permissão negada!
 permissions	filemanager	pt-br	Permissões
+permissions of %1 changed.	filemanager	pt-br	Permissão% 1 mudou.
 please select a file to delete.	filemanager	pt-br	Por favor, selecione um arquivo para remoção.
 preview	filemanager	pt-br	Pré-visualização
 preview %1	filemanager	pt-br	Pré-visualizar %1
@@ -118,26 +184,56 @@ rename, change permissions or ownership	filemanager	pt-br	Renomear, alterar perm
 renamed %1 to %2	filemanager	pt-br	%1 renomeado para %2
 renamed %1 to %2.	filemanager	pt-br	%1 renomeado para %2.
 replaced %1	filemanager	pt-br	%1 trocado
+replacements for inserting entries into documents	filemanager	pt-br	Substitutos para a inserção de entradas em documentos
 rights	filemanager	pt-br	Direitos
+root	filemanager	pt-br	raiz
+root access granted.	filemanager	pt-br	Acesso Root concedido.
+root access stopped.	filemanager	pt-br	Acesso Root parado.
 save %1	filemanager	pt-br	Salvar %1
 save %1, and go back to file listing	filemanager	pt-br	Salvar %1 e voltar à lista de arquivos
+save as	filemanager	pt-br	salvar como
+save as zip	filemanager	pt-br	Salvar como Zip
 save changes	filemanager	pt-br	Salvar alterações
 saved %1	filemanager	pt-br	%1 salvo
 saving properties failed!	filemanager	pt-br	Falha ao salvar propriedades!
+saving setting for document merge failed!	filemanager	pt-br	Salvar configuração para documento de mesclagem falhou!
 search for '%1'	filemanager	pt-br	Procurar por '%1'
 searchstring	filemanager	pt-br	parâmetro de pesquisa
 select action...	filemanager	pt-br	Selecionar ação...
 select file to upload in current directory	filemanager	pt-br	Selecionar arquivo para upload no diretório atual
+select file(s) from vfs	common	pt-br	Selecione o arquivo (s) a partir de VFS
+setting for document merge saved.	filemanager	pt-br	Definição para mesclar documento salvo.
 show	filemanager	pt-br	Exibir
+show hidden files	filemanager	pt-br	Mostrar arquivos ocultos
+show link "%1" in side box menu?	filemanager	pt-br	Mostrar link "% 1" no menu lateral
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	pt-br	Exibir link para o diretório base (/) na caixa lateral de menu?
 size	filemanager	pt-br	Tamanho
+sqlfs statistics	filemanager	pt-br	sqlFS Estatísticas
 start search	filemanager	pt-br	iniciar procura
+startfolder	filemanager	pt-br	pasta de inicialização
+successful mounted %1 on %2.	filemanager	pt-br	Montado sucedida 1% em 2%.
+superuser	filemanager	pt-br	Super usuário
+superuser (root)	filemanager	pt-br	Super usuário (root)
+symlink to %1 created.	filemanager	pt-br	Symlink para% 1 criado.
+tag to mark positions for address labels	filemanager	pt-br	Tag para marcar posições para etiquetas de endereço
+the following document-types are supported:	filemanager	pt-br	Os seguintes tipos de documentos são suportados:
 the requested path %1 is not available.	filemanager	pt-br	O caminho solicitado %1 não está disponível.
+there's already a directory with that name!	filemanager	pt-br	Já existe um diretório com esse nome!
+there's already a file with that name!	filemanager	pt-br	Já existe um arquivo com esse nome!
+to overwrite the existing file store again.	filemanager	pt-br	Para substituir o existente filestore novamente
 total files	filemanager	pt-br	Total de arquivos
+unmount	filemanager	pt-br	Desmonte
 unused space	filemanager	pt-br	Espaço não utilizado
 up	filemanager	pt-br	Acima
 updated comment for %1	filemanager	pt-br	Comentários para %1 atualizados
+upload fields	filemanager	pt-br	carregar campos
+upload files	filemanager	pt-br	Fazer upload de arquivos
 used space	filemanager	pt-br	Espaço utilizado
+users and groups	filemanager	pt-br	Os usuários e grupos
+versioning	filemanager	pt-br	O controle de versão
+vfs mounts and versioning	common	pt-br	Montagens VFS e versionamento
+wrong username or password!	filemanager	pt-br	Nome de usuário ou senha errada!
+you are not allowed to upload a script!	filemanager	pt-br	Você não tem permissão para fazer o upload de um script!
 you do not have access to %1	filemanager	pt-br	Você não possui acesso a %1
 you need to select an owner!	filemanager	pt-br	Você precisa selecionar um proprietário!
 you need to select some files first!	filemanager	pt-br	Você precisa selecionar alguns arquivos antes!
