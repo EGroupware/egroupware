@@ -108,10 +108,11 @@ class admin_hooks
 				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index');
 			}
 
+			/* disable old EGroupware error_log, as it is not used anymore
 			if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
 			{
 				$file['View Error Log']  = egw::link('/index.php','menuaction=admin.uilog.list_log');
-			}
+			}*/
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 			{
