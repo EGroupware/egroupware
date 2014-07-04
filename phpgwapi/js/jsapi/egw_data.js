@@ -21,7 +21,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
 	/**
 	 * How many UIDs we'll tell the server we know about.  No need to pass the whole list around.
-	 */ 
+	 */
 	var KNOWN_UID_LIMIT = 200;
 
 	var lastModification = null;
@@ -29,11 +29,15 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	/**
 	 * The uid function generates a session-unique id for the current
 	 * application by appending the application name to the given uid.
+	 *
+	 * @param {string} _uid
+	 * @param {string} _prefix
 	 */
-	function UID(_uid, prefix)
+	function UID(_uid, _prefix)
 	{
-		prefix = prefix ? prefix : _app;
-		return prefix + "::" + _uid;
+		_prefix = _prefix ? _prefix : _app;
+
+		return _prefix + "::" + _uid;
 	}
 
 	function parseServerResponse(_result, _callback, _context)
@@ -66,7 +70,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			for (var key in _result.data)
 			{
 				var uid = UID(key, (typeof _context == "object" && _context != null) ?_context.prefix : "");
-				if (_result.data[key] === null && 
+				if (_result.data[key] === null &&
 				(
 					typeof _context.refresh == "undefined" || _context.refresh && !jQuery.inArray(key,_context.refresh)
 				))
@@ -78,7 +82,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					egw.dataStoreUID(uid, _result.data[key]);
 				}
 			}
-			
+
 			// Tried to refresh a specific row and got nothing, so set it to null
 			// (triggers update for listeners), then remove it
 			if(_result.data.length == 0 && typeof _context == "object" && _context.refresh)
@@ -126,7 +130,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 	}
 		 * If a uid got deleted on the server above data is null.
 		 * If a uid is omitted from data, is has not changed since lastModification.
-		 * 
+		 *
 		 * If order/data is null, this means that nothing has changed for the
 		 * given range.
 		 * The dataFetch function stores new data for the uid's inside the
@@ -134,21 +138,18 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * data for those uids from the local storage using the
 		 * "dataRegisterUID" function.
 		 *
-		 * @param execId is the execution context of the etemplate instance
+		 * @param _execId is the execution context of the etemplate instance
 		 * 	you're querying the data for.
-		 * @param queriedRange is an object of the following form:
+		 * @param _queriedRange is an object of the following form:
 		 * 	{
 		 * 		start: <START INDEX>,
 		 * 		num_rows: <COUNT OF ENTRIES>
 		 * 	}
 		 * The range always corresponds to the given filter settings.
-		 * @param filters contains the filter settings. The filter settings are
+		 * @param _filters contains the filter settings. The filter settings are
 		 * 	those which are crucial for the mapping between index and uid.
-		 * @param widgetId id with full namespace of widget
-		 * @param knownUids is an array of uids already known to the client. 
-		 *  This parameter may be null in order to indicate that the client 
-		 *  currently has no data for the given filter settings.
-		 * @param callback is the function that should get called, once the data
+		 * @param _widgetId id with full namespace of widget
+		 * @param _callback is the function that should get called, once the data
 		 * 	is available. The data passed to the callback function has the
 		 * 	following form:
 		 * 	{
@@ -162,8 +163,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 * 	which are returned from the server are only unique inside the
 		 * 	application, the uids which are used on the client are "globally"
 		 * 	unique.
-		 * @param context is the context in which the callback function will get
+		 * @param _context is the context in which the callback function will get
 		 * 	called.
+		 * @param _knownUids is an array of uids already known to the client.
+		 *  This parameter may be null in order to indicate that the client
+		 *  currently has no data for the given filter settings.
 		 */
 		dataFetch: function (_execId, _queriedRange, _filters, _widgetId,
 				_callback, _context, _knownUids)
@@ -405,7 +409,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		/**
 		 * Returns whether data is available for the given uid.
 		 *
-		 * @param uid is the uid for which should be checked whether it has some
+		 * @param _uid is the uid for which should be checked whether it has some
 		 * 	data.
 		 */
 		dataHasUID: function (_uid) {
@@ -415,7 +419,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		/**
 		 * Returns data of a given uid.
 		 *
-		 * @param uid is the uid for which should be checked whether it has some
+		 * @param _uid is the uid for which should be checked whether it has some
 		 * 	data.
 		 */
 		dataGetUIDdata: function (_uid) {
@@ -424,6 +428,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 
 		/**
 		 * Returns all uids that have the given prefix
+		 *
+		 * @param {string} _prefix
+		 * @return {array}
 		 * TODO: Improve this
 		 */
 		dataKnownUIDs: function (_prefix) {
@@ -483,7 +490,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * Deletes the data for a certain uid from the local storage and
 		 * unregisters all callback functions associated to it.
 		 *
-		 * @param uid is the uid which should be deleted.
+		 * @param _uid is the uid which should be deleted.
 		 */
 		dataDeleteUID: function (_uid) {
 			if (typeof localStorage[_uid] !== "undefined")
@@ -498,14 +505,13 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 
 		/**
 		 * Force a refreash of the given uid from the server if known, and
-		 * calls all associated callbacks.  
+		 * calls all associated callbacks.
 		 *
 		 * If the UID does not have any registered callbacks, it cannot be refreshed because the required
 		 * execID and context are missing.
 		 *
-		 * @param uid is the uid which should be refreshed.
-		 *
-		 * @return boolean True if the uid is known and can be refreshed, false if unknown and will not be refreshed
+		 * @param {string} _uid is the uid which should be refreshed.
+		 * @return {boolean} True if the uid is known and can be refreshed, false if unknown and will not be refreshed
 		 */
 		dataRefreshUID: function (_uid) {
 			if (typeof localStorage[_uid] === "undefined") return false;
@@ -525,8 +531,98 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				return true;
 			}
 			return false;
+		},
+
+		/**
+		 * Search for exact UID string or regular expression and return widgets using it
+		 *
+		 * @param {string|RegExp) _uid is the uid which should be refreshed.
+		 * @return {object} UID: array of (nextmatch-)wigetIds
+		 */
+		dataSearchUIDs: function(_uid)
+		{
+			var matches = {};
+			var f = function(_uid)
+			{
+				if (typeof matches[_uid] == "undefined")
+				{
+					matches[_uid] = [];
+				}
+				if (typeof registeredCallbacks[_uid] !== "undefined")
+				{
+					for(var n=0; n < registeredCallbacks[_uid].length; ++n)
+					{
+						var callback = registeredCallbacks[_uid][n];
+						if (typeof callback.context != "undefined" &&
+							typeof callback.context.self != "undefined" &&
+							typeof callback.context.self._widget != "undefined")
+						{
+							matches[_uid].push(callback.context.self._widget);
+						}
+					}
+				}
+			};
+			if (typeof _uid == "object" && _uid.constructor.name == "RegExp")
+			{
+				for(var uid in localStorage)
+				{
+					if (_uid.test(uid))
+					{
+						f(uid);
+					}
+				}
+			}
+			else if (typeof localStorage[_uid] != "undefined")
+			{
+				f(_uid);
+			}
+			return matches;
+		},
+
+		/**
+		 * Search for exact UID string or regular expression and call registered (nextmatch-)widgets refresh function with given _type
+		 *
+		 * This method is preferable over dataRefreshUID for app code, as it takes care of things like counters too.
+		 *
+		 * It does not do anything for _type="add"!
+		 *
+		 * @param {string|RegExp) _uid is the uid which should be refreshed.
+		 * @param {string} _type "delete", "edit", "update", not useful for "add"!
+		 * @return {array} (nextmatch-)wigets refreshed
+		 */
+		dataRefreshUIDs: function(_uid, _type)
+		{
+			var uids = this.dataSearchUIDs(_uid);
+			var widgets = [];
+			var uids4widget = [];
+			for(var uid in uids)
+			{
+				for(var n=0; n < uids[uid].length; ++n)
+				{
+					var widget = uids[uid][n];
+					var idx = widgets.indexOf(widget);
+					if (idx == -1)
+					{
+						widgets.push(widget);
+						idx = widgets.length-1;
+					}
+					// uids for nextmatch.refesh do NOT contain the prefix
+					var nm_uid = uid.replace(RegExp('^'+widget.controller.dataStorePrefix+'::'), '');
+					if (typeof uids4widget[idx] == "undefined")
+					{
+						uids4widget[idx] = [nm_uid];
+					}
+					else
+					{
+						uids4widget[idx].push(nm_uid);
+					}
+				}
+			}
+			for(var w=0; w < widgets.length; ++w)
+			{
+				widgets[w].refresh(uids4widget[w], _type);
+			}
+			return widgets;
 		}
-
 	};
-
 });
