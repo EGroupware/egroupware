@@ -47,8 +47,6 @@ class auth_ldap implements auth_backend
 
 		if(!$ldap = common::ldapConnect())
 		{
-			$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
-			$GLOBALS['egw']->log->commit();
 			return False;
 		}
 
@@ -167,8 +165,6 @@ class auth_ldap implements auth_backend
 
 		if(!$ldap = common::ldapConnect())
 		{
-			$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
-			$GLOBALS['egw']->log->commit();
 			return False;
 		}
 

@@ -590,5 +590,9 @@ function phpgwapi_upgrade1_9_021()
 		}
 	}
 
+	// drop not used egw_log and egw_log_msg tables
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_log');
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_log_msg');
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.1';
 }

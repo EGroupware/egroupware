@@ -543,16 +543,6 @@ class egw_session
 		$GLOBALS['egw_info']['user'] = $this->read_repositories();
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
-			if(is_object($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-LoginFailure, account loginid %1 is expired',
-					'p1'   => $this->account_lid,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['egw']->log->commit();
-			}
 			$this->reason = 'account is expired';
 			$this->cd_reason = 98;
 
@@ -951,16 +941,6 @@ class egw_session
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
 			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) accounts is expired");
-			if(is_object($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-VerifySession, account loginid %1 is expired',
-					'p1'   => $this->account_lid,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['egw']->log->commit();
-			}
 			return false;
 		}
 		$this->passwd = base64_decode(egw_cache::getSession('phpgwapi', 'password'));
@@ -972,17 +952,6 @@ class egw_session
 		if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
 			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong domain");
-			if(is_object($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-VerifySession, the domains %1 and %2 don\'t match',
-					'p1'   => $userid_array[1],
-					'p2'   => $GLOBALS['egw_info']['user']['domain'],
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['egw']->log->commit();
-			}
 			return false;
 		}
 
@@ -992,18 +961,6 @@ class egw_session
 				$GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip()))
 			{
 				if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong IP");
-				if(is_object($GLOBALS['egw']->log))
-				{
-					// This needs some better wording
-					$GLOBALS['egw']->log->message(array(
-						'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
-						'p1'   => $this->getuser_ip(),
-						'p2'   => $GLOBALS['egw_info']['user']['session_ip'],
-						'line' => __LINE__,
-						'file' => __FILE__
-					));
-					$GLOBALS['egw']->log->commit();
-				}
 				return false;
 			}
 		}
@@ -1017,17 +974,6 @@ class egw_session
 		if (!$this->account_lid)
 		{
 			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) !account_lid");
-			if(is_object($GLOBALS['egw']->log))
-			{
-				// This needs some better wording
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-VerifySession, account_id is empty',
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['egw']->log->commit();
-			}
-			//echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
 			return false;
 		}
 

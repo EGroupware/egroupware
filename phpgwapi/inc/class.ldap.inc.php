@@ -129,12 +129,6 @@ class ldap
 	{
 		if(!function_exists('ldap_connect'))
 		{
-			/* log does not exist in setup(, yet) */
-			if(isset($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message('F-Abort, LDAP support unavailable');
-				$GLOBALS['egw']->log->commit();
-			}
 			if ($this->exception_on_error) throw new egw_exception_assertion_failed('LDAP support unavailable!');
 
 			printf('<b>Error: LDAP support unavailable</b><br>',$host);
@@ -196,12 +190,6 @@ class ldap
 		// connect to ldap server (never fails, as connection happens in bind!)
 		if(!$this->ds = ldap_connect($host, $port))
 		{
-			/* log does not exist in setup(, yet) */
-			if(isset($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server');
-				$GLOBALS['egw']->log->commit();
-			}
 			return False;
 		}
 
@@ -220,7 +208,7 @@ class ldap
 			$this->ldapServerInfo->host != $host)
 		{
 			//error_log("no ldap server info found");
-			$ldapbind = @ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
+			@ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
 
 			$this->ldapServerInfo = ldapserverinfo::get($this->ds, $host, $supportedLDAPVersion);
 			$this->saveSessionData();
@@ -228,12 +216,6 @@ class ldap
 
 		if(!@ldap_bind($this->ds, $dn, $passwd))
 		{
-			if(isset($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message('F-Abort, Failed binding to LDAP server');
-				$GLOBALS['egw']->log->commit();
-			}
-
 			return False;
 		}
 

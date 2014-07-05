@@ -471,7 +471,7 @@ class egw extends egw_minimal
 	 * @param  string The url ro redirect to
 	 * @param string $link_app=null appname to redirect for, default currentapp
 	 */
-	static function redirect($url, $link_app)
+	static function redirect($url, $link_app=null)
 	{
 		// Determines whether the current output buffer should be flushed
 		$do_flush = true;
