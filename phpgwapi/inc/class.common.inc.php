@@ -44,10 +44,10 @@ class common
 		}
 		else
 		{
-			list($lang,$country_from_lang) = explode('-',$lang);
-			$country_from_lang = strtoupper($country_from_lang);
+			list($lang,$lang2) = explode('-',$lang);
+			$country_from_lang = strtoupper($lang2);
 		}
-		if (is_null($charset)) $charset = $GLOBALS['egw']->translation->charset();
+		if (is_null($charset)) $charset = translation::charset();
 
 		foreach(array(
 			$lang.'_'.$country,
@@ -77,6 +77,7 @@ class common
 	 */
 	static function cmp_version($str1,$str2,$debug=False)
 	{
+		$regs = $regs2 = null;
 		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)/",$str1,$regs);
 		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)/",$str2,$regs2);
 		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
@@ -108,6 +109,7 @@ class common
 	 */
 	static function cmp_version_long($str1,$str2,$debug=False)
 	{
+		$regs = $regs2 = null;
 		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)/",$str1,$regs);
 		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)/",$str2,$regs2);
 		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
@@ -146,7 +148,7 @@ class common
 	{
 		if(empty($_appName) || empty($_eventID)) return false;
 
-		$suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
+		// not used: $suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
 		$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
 
 		return $prefix;
@@ -199,11 +201,10 @@ class common
 		$supportedLanguages = self::getInstalledLanguages();
 
 		// find usersupported language
-		foreach($userLanguages as $key => $value)
+		foreach($userLanguages as $lang)
 		{
 			// remove everything behind '-' example: de-de
-			$value = trim($value);
-			$pieces = explode('-', $value);
+			$pieces = explode('-', trim($lang));
 			$value = $pieces[0];
 			# print 'current lang $value<br>';
 			if ($supportedLanguages[$value])
@@ -324,14 +325,6 @@ class common
 	}
 
 	/**
-	 * @deprecated use ACL instead
-	 */
-	function check_owner($record,$link,$label,$extravars = '')
-	{
-		self::$debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
-	}
-
-	/**
 	 * return the fullname of a user
 	 *
 	 * @param $lid='' account loginid
@@ -402,6 +395,7 @@ class common
 	 */
 	static function grab_owner_name($accountid = '')
 	{
+		$lid = $fname = $lname = null;
 		if (!$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname))
 		{
 			return '#'.$accountid;
@@ -644,7 +638,7 @@ class common
 		{
 			return False;
 		}
-		if ($d = opendir($dir))
+		if (($d = opendir($dir)))
 		{
 			while ($f = readdir($d))
 			{
@@ -819,6 +813,7 @@ class common
 		// if image not found, check if it has an extension and try withoug
 		if (strpos($image, '.') !== false)
 		{
+			$name = null;
 			self::get_extension($image, $name);
 			return self::image($app, $name, $extension);
 		}
@@ -865,7 +860,7 @@ class common
 		{
 			return $map;
 		}
-		$starttime = microtime(true);
+		//$starttime = microtime(true);
 
 		// priority: : PNG->JPG->GIF
 		$img_types = array('png','jpg','gif','ico');
@@ -879,7 +874,7 @@ class common
 			if ($app[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) || !file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates')) continue;
 
 			$app_map =& $map[$app];
-			$app_map = array();
+			if (true) $app_map = array();
 			$imagedirs = array();
 			if ($app == 'phpgwapi')
 			{
@@ -900,9 +895,10 @@ class common
 				{
 					if ($img[0] == '.') continue;
 
-					unset($subdir);
+					$subdir = null;
 					foreach(is_dir($dir.'/'.$img) ? scandir($dir.'/'.($subdir=$img)) : (array) $img as $img)
 					{
+						$name = null;
 						if (!in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
 
 						if (isset($subdir)) $name = $subdir.'/'.$name;
@@ -916,7 +912,7 @@ class common
 			}
 		}
 		$app_map =& $map['vfs'];
-		$app_map = array();
+		if (true) $app_map = array();
 		if (($dir = $GLOBALS['egw_info']['server']['vfs_image_dir']) && egw_vfs::file_exists($dir) && egw_vfs::is_readable($dir))
 		{
 			foreach(egw_vfs::find($dir) as $img)
@@ -1227,11 +1223,11 @@ class common
 		);
 		foreach (array('first','last','account') as $name)
 		{
-			$$name = htmlentities($$name,ENT_QUOTES,$GLOBALS['egw']->translation->charset());
-			$$name = str_replace(array_keys($extra),array_values($extra),$$name);
-			$$name = preg_replace('/&([aAuUoO])uml;/','\\1e',$$name);	// replace german umlauts with the letter plus one 'e'
-			$$name = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$$name);	// remove all types of acents
-			$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$$name);	// remove all other entities
+			$entities = htmlentities($$name,ENT_QUOTES,translation::charset());
+			$extra_replaced = str_replace(array_keys($extra),array_values($extra),$entities);
+			$umlauts = preg_replace('/&([aAuUoO])uml;/','\\1e',$extra_replaced);	// replace german umlauts with the letter plus one 'e'
+			$accents = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$umlauts);	// remove all types of acents
+			$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$accents);	// remove all other entities
 		}
 		//echo " --> ('$first', '$last', '$account')";
 		if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
@@ -1256,37 +1252,6 @@ class common
 			($domain ? '@'.$domain : '');
 		//echo " = '$email'</p>\n";
 		return $email;
-	}
-
-	/**
-	 * create email preferences
-	 *
-	 * This is not the best place for it, but it needs to be shared between Aeromail and SM
-	 * @param $prefs
-	 * @param $account_id -optional defaults to : phpgw_info['user']['account_id']
-	 */
-	function create_emailpreferences($prefs='',$accountid='')
-	{
-		return $GLOBALS['egw']->preferences->create_email_preferences($accountid);
-		// ----  Create the email Message Class  if needed  -----
-		if (is_object($GLOBALS['egw']->msg))
-		{
-			$do_free_me = False;
-		}
-		else
-		{
-			$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
-			$do_free_me = True;
-		}
-
-		// this sets the preferences into the phpgw_info structure
-		$GLOBALS['egw']->msg->create_email_preferences();
-
-		// cleanup and return
-		if ($do_free_me)
-		{
-			unset ($GLOBALS['egw']->msg);
-		}
 	}
 
 	/**
