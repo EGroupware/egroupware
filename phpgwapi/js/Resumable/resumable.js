@@ -230,7 +230,7 @@
           window.setTimeout(function(){
             $.files.push(f);
             files.push(f);
-            f.container = event.srcElement;
+            f.container = (typeof event != 'undefined' ? event.srcElement : null);
             $.fire('fileAdded', f, event)
           },0);
         })()};
@@ -450,6 +450,7 @@
         params.push(['resumableIdentifier', encodeURIComponent($.fileObj.uniqueIdentifier)].join('='));
         params.push(['resumableFilename', encodeURIComponent($.fileObj.fileName)].join('='));
         params.push(['resumableRelativePath', encodeURIComponent($.fileObj.relativePath)].join('='));
+        params.push(['resumableTotalChunks', encodeURIComponent($.fileObj.chunks.length)].join('='));
         // Append the relevant chunk and send it
         $.xhr.open('GET', $h.getTarget(params));
         $.xhr.timeout = $.getOpt('xhrTimeout');
@@ -578,7 +579,7 @@
         if($.pendingRetry) {
           // if pending retry then that's effectively the same as actively uploading,
           // there might just be a slight delay before the retry starts
-          return('uploading')
+          return('uploading');
         } else if(!$.xhr) {
           return('pending');
         } else if($.xhr.readyState<4) {
@@ -771,8 +772,8 @@
       });
       return(totalSize>0 ? totalDone/totalSize : 0);
     };
-    $.addFile = function(file){
-      appendFilesFromFileList([file]);
+    $.addFile = function(file, event){
+      appendFilesFromFileList([file], event);
     };
     $.removeFile = function(file){
       for(var i = $.files.length - 1; i >= 0; i--) {

@@ -258,8 +258,10 @@ var et2_file = et2_inputWidget.extend(
 	 * If you pass a FileList or list of files, it will trigger the async upload
 	 * 
 	 * @param {FileList|File[]|false} value List of files to be uploaded, or false to reset.
+	 * @param {Event} event Most browsers require the user to initiate file transfers in some way.
+	 *	Pass the event in, if you have it.
 	 */
-	set_value: function(value) {
+	set_value: function(value, event) {
 		if(!value || typeof value == "undefined")
 		{
 			value = {};
@@ -278,7 +280,16 @@ var et2_file = et2_inputWidget.extend(
 		
 		if(typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name)
 		{
-			this.input[0].files = value;
+			try
+			{
+				this.input[0].files = value;
+			}
+			catch (e)
+			{
+				var self = this;
+				var args = arguments;
+				jQuery.each(value, function(i,file) {self.resumable.addFile(this,event);});
+			}
 		}
 	},
 	
@@ -349,6 +360,11 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	_fileAdded: function(file,event) {
+		// Manual additions have no event
+		if(typeof event == 'undefined')
+		{
+			event = {};
+		}
 		// Trigger start of uploading, calls callback
 		if(!this.resumable.isUploading())
 		{
