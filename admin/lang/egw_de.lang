@@ -21,7 +21,7 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 -  type	admin	de	-Typ
 access by	admin	de	Zugriff durch
-access control	admin	de	Zugriffskontrolle
+access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account	admin	de	Konto
