@@ -1180,9 +1180,12 @@ class egw_link extends solink
 	 */
 	static function link_file($app,$id,$file)//,$comment='')
 	{
+		// Don't try to link into app dir if there is no id
+		if(!$id) return;
+
 		$app_path = self::vfs_path($app,$id);
 		$ok = true;
-		if (file_exists($app_path) || ($ok = mkdir($app_path,0,true)))
+		if (egw_vfs::file_exists($app_path) || ($ok = egw_vfs::mkdir($app_path,0,true)))
 		{
 			if (!egw_vfs::stat($file))
 			{
