@@ -539,9 +539,10 @@ etemplate2.prototype.submit = function(button, async, no_validation)
 					target = target[idx];
 				}
 			}
-			else if (typeof values.button == 'undefined')
+			else if (typeof values.button == 'undefined' || jQuery.isEmptyObject(values.button))
 			{
-				values.button = button.id;
+				delete values.button;
+				values[button.id] = true;
 			}
 		}
 
