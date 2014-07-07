@@ -141,7 +141,12 @@ class importexport_widget_filter extends etemplate_widget_transformer
 error_log('Trying to filter with unsupported field type: ' . $field['type']);
 					}
 			}
-			
+
+			// Send select options
+			if($field['values'])
+			{
+				self::$request->sel_options[self::$prefix.$lname] = $field['values'];
+			}
 			$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$lname.'"/>', self::$prefix.$lname);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
