@@ -3012,7 +3012,6 @@ button.et2_button_with_image background-color[url$="svg"] {
  ######################################################################################## */
 input[type="submit"][id*="delete"],
 input[type="button"][id*="delete"],
-input[id*="delete"],
 button[id="delete"],
 button[id="infolog-edit_button[delete]"],
 button[id="addressbook-edit_button[delete]"],
@@ -3053,7 +3052,6 @@ button.et2_button_delete {
 }
 input[type="submit"][id*="delete"]:hover,
 input[type="button"][id*="delete"]:hover,
-input[id*="delete"]:hover,
 button[id="delete"]:hover,
 button[id="infolog-edit_button[delete]"]:hover,
 button[id="addressbook-edit_button[delete]"]:hover,
@@ -3092,7 +3090,6 @@ button.et2_button_delete:hover {
 }
 input[type="submit"][id*="delete"]:active,
 input[type="button"][id*="delete"]:active,
-input[id*="delete"]:active,
 button[id="delete"]:active,
 button[id="infolog-edit_button[delete]"]:active,
 button[id="addressbook-edit_button[delete]"]:active,
