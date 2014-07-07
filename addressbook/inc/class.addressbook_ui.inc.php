@@ -644,7 +644,7 @@ class addressbook_ui extends addressbook_bo
 					'csv'    => array(
 						'caption' => 'Export as CSV',
 						'allowOnMultiple' => true,
-						'url' => 'menuaction=importexport.importexport_export_ui.export_dialog&appname=addressbook&plugin=addressbook_export_contacts_csv&selection=$id',
+						'url' => 'menuaction=importexport.importexport_export_ui.export_dialog&appname=addressbook&plugin=addressbook_export_contacts_csv&selection=$id&select_all=$select_all',
 						'popup' => '850x440'
 					),
 					'vcard'  => array(

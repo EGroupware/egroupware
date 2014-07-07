@@ -52,6 +52,8 @@ class importexport_export_ui {
 		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
 		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
+		// Select all from context menu, means use all search results, not just selected
+		if($_GET['select_all']) $_GET['selection'] = 'search';
 		$_selection = $_content['selection'] ? $_content['selection'] : $_GET['selection'];
 		if($_GET['selection'] || $_content['selection_passed']) $content['selection_passed'] = $preserv['selection_passed'] = true;
 
