@@ -79,6 +79,11 @@ class etemplate_widget_checkbox extends etemplate_widget
 				{
 					$valid = $value;
 				}
+				elseif ( !$options && $selected_value && $value == $selected_value)
+				{
+					// Options set in template, not in sel_options
+					$valid = $selected_value;
+				}
 				elseif (!isset($valid))
 				{
 					$valid = '';	// do not overwrite value of an other radio-button of the same group (identical name)!

@@ -133,7 +133,7 @@ var et2_radiobox = et2_inputWidget.extend(
 			}
 		}, this, et2_radiobox);
 
-		return val;
+		return val == this.options.set_value ? this.options.set_value : null;
 	}
 });
 et2_register_widget(et2_radiobox, ["radio"]);
