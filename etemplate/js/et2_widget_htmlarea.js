@@ -168,19 +168,32 @@ var et2_htmlarea = et2_inputWidget.extend(
 			// when dragging, so we replace dropped images with error icon.
 			var replaceImgText = function(html) {
 				var ret = html.replace( /<img[^>]*src="(data:.*;base64,.*?)"[^>]*>/gi, function( img, src ){
-					return img.replace(src,egw.image('error'));
-				 });
+					return '';
+				});
 				return ret;
 			}
 
-			var chkImg = function() {
+			var chkImg = function(e) {
 				// don't execute code if the editor is readOnly
 				if (editor.readOnly)
 					return;
 
+				// Remove the image from the text
 				setTimeout( function() {
 					editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
 				},200);
+
+				// Try to pass the image into the first et2_file that will accept it
+				if(e.data.$.dataTransfer)
+				{
+					self.getRoot().iterateOver(function(widget) {
+						if(widget.options.drop_target)
+						{
+							widget.set_value(e.data.$.dataTransfer.files,e.data.$);
+							return;
+						}
+					},e.data.$,et2_file);
+				}
 			};
 
 			editor.on( 'contentDom', function() {
