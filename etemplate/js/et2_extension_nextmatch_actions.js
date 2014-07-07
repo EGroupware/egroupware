@@ -68,7 +68,10 @@ function nm_action(_action, _senders, _target, _ids)
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
 	{
-		url = _action.data.url.replace(/(\$|%24)id/,encodeURIComponent(ids));
+		// Add selected IDs to url
+		url = _action.data.url.replace(/(\$|%24)id/,encodeURIComponent(ids))
+			// Include select all flag too
+			.replace(/(\$|%24)select_all/,_ids.all);
 	}
 
 	var target = null;
