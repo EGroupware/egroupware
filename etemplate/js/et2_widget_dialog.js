@@ -540,7 +540,26 @@ jQuery.extend(et2_dialog,
 			value: _value
 		}, parent);
 	},
-
+	
+	/**
+	 * Show an alert message with OK button
+	 * 
+	 * @param {String} _message Message to be place in the dialog.
+	 * @param {String} _title Text in the top bar of the dialog.
+	 * @param integer _type One of the message constants.  This defines the style of the message.
+	 */
+	alert: function (_message, _title, _type)
+	{
+		var parent = et2_dialog._create_parent(et2_dialog._create_parent()._egw);
+		et2_createWidget("dialog", {
+			callback:function(){},
+			message: _message,
+			title: _title,
+			buttons: et2_dialog.BUTTONS_OK,
+			dialog_type: _type || et2_dialog.INFORMATION_MESSAGE
+			}, parent);
+	},
+	
 	/**
 	 * Show a prompt dialog
 	 *
@@ -582,11 +601,10 @@ jQuery.extend(et2_dialog,
 	 * @param {widget} _senders widget that has been clicked
 	 * @param {String} _dialogMsg message shows in dialog box
 	 * @param {String} _titleMsg message shows as a title of the dialog box
-	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
 	 *
 	 * @description submit the form contents including the button that has been pressed
 	 */
-	confirm: function(_senders,_dialogMsg, _titleMsg, _egw_or_appname)
+	confirm: function(_senders,_dialogMsg, _titleMsg)
 	{
 		var senders = _senders;
 		var buttonId = _senders.id;
