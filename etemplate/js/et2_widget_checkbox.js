@@ -35,13 +35,13 @@ var et2_checkbox = et2_inputWidget.extend(
 		"unselected_value": {
 			"name": "Unset value",
 			"type": "string",
-			"default": "false",
+			"default": "",
 			"description": "Value when not checked"
 		},
 		"ro_true": {
 			"name": "Read only selected",
 			"type": "string",
-			"default": "x",
+			"default": "X ",
 			"description": "What should be displayed when readonly and selected"
 		},
 		"ro_false": {
@@ -147,7 +147,7 @@ var et2_checkbox_ro = et2_checkbox.extend(
 
 		this.setDOMNode(this.span[0]);
 	},
-			
+
 	/**
 	 * note: checkbox is checked if even there is a value but not only if the _value is only "true"
 	 * it's an exceptional validation for cases that we pass non boolean values as checkbox _value
