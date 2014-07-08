@@ -664,7 +664,7 @@ class mail_hooks
 		}
 		$notified_mail_uidsCache = egw_cache::getCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
 		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
-
+		if (!is_array($folders2notify)) return true;
 		foreach ($folders2notify as $nFKey =>$notifyfolders)
 		{
 			try
