@@ -40,8 +40,8 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		$form_name = self::form_name($cname, $this->id);
 		if($this->getElementAttribute($form_name, 'customfields'))
 		{
-			// Already done?
-			return;
+			// Already done?  Still need to process, or sel_options may be missing
+			unset(self::$request->modifications[$form_name]);
 		}
 		$value =& self::get_array(self::$request->content, $form_name, true);
 		$fields = $value['fields'];
