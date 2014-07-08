@@ -2386,7 +2386,10 @@ class infolog_ui
 
 			if($button == 'save' || $button == 'cancel')
 			{
-				egw::redirect_link('/infolog/index.php');
+				egw::redirect_link('/index.php',array(
+						'menuaction' => 'infolog.infolog_ui.index',
+						'ajax' => 'true',
+				));
 			}
 		}
 		else
