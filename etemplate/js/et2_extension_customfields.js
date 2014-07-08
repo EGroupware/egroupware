@@ -167,7 +167,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		for(var field_name in this.options.customfields)
 		{
 			// Skip fields if we're filtering
-			if(!jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
+			if(this._type != 'customfields-list' && !jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
 
 			var field = this.options.customfields[field_name];
 
