@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
-		<hbox cols="1" rows="1" >
+		<hbox>
 			<description value="Start"/>
 			<date id="startdate"/>
 			<description value="End"/>
@@ -38,7 +38,7 @@
 								<nextmatch-filterheader id="ts_project" no_lang="1" options="All projects" search="false"/>
 							</row>
 							<row disabled="!@pm_integration=full">
-								<nextmatch-customfilter id="pm_id" options="projectmanager-select,All projects"/>
+								<nextmatch-entryheader id="pm_id" no_lang="1" blur="All projects" only_app="projectmanager"/>
 							</row>
 							<row>
 								<nextmatch-customfilter id="linked" options="link-entry"/>
@@ -53,7 +53,7 @@
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
 						<date-duration id="duration" readonly="true" options=",h,,,1"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-sortheader label="Quantity" id="ts_quantity"/>
 						<textbox type="float" id="quantity" readonly="true" precision="3"/>
 					</vbox>
@@ -68,7 +68,7 @@
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
-					<vbox options="0,0">
+					<vbox>
 						<link id="${row}[ts_link]" no_lang="1"/>
 						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
