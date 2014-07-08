@@ -516,7 +516,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		dataRefreshUID: function (_uid) {
 			if (typeof localStorage[_uid] === "undefined") return false;
 
-			if(registeredCallbacks[_uid].length > 0)
+			if(typeof registeredCallbacks[_uid] !== "undefined" && registeredCallbacks[_uid].length > 0)
 			{
 				var _execId = registeredCallbacks[_uid][0].execId;
 				// This widget ID MUST be a nextmatch, because the data call is to etemplate_widget_nexmatch
