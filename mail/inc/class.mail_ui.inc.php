@@ -3315,7 +3315,7 @@ $this->partID = $partID;
 
 		if (!empty($content))
 		{
-			error_log(__METHOD__.__LINE__.array2string($content));
+			//error_log(__METHOD__.__LINE__.array2string($content));
 			if ($content['divImportArea']['vfsfile'])
 			{
 				$file = $content['divImportArea']['vfsfile'] = array(
@@ -3398,6 +3398,8 @@ $this->partID = $partID;
 				$alert_msg .= $e->getMessage();
 			}
 			//_debug_array($Body);
+//error_log(__METHOD__.__LINE__.array2string($Header));
+//error_log(__METHOD__.__LINE__.array2string($Body));
 			$this->mail_bo->openConnection();
 			if (empty($_folder))
 			{
@@ -4367,6 +4369,8 @@ $this->partID = $partID;
 	{
 		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
 		$alreadyFlagged=false;
+		$flag2check='';
+		$filter2toggle = $query = array();
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if (isset($_messageList['all']) && $_messageList['all'])
@@ -4394,14 +4398,16 @@ $this->partID = $partID;
 					// flags read,flagged,label1,label2,label3,label4,label5 can be toggled: handle this when all mails in a folder
 					// should be affected serverside. here.
 					$messageList = $messageListForToggle = array();
-					if (in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')))
+					$flag2check = ($_flag=='read'?'seen':$_flag);
+					if (in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
+						!($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
 					{
 						$filter2toggle['status'] = array('un'.$_flag);
-						if ($query['filter'])
+						if ($query['filter'] && $query['filter']!='any')
 						{
 							$filter2toggle['status'][] = $query['filter'];
 						}
-						$_sR = $this->mail_bo->getSortedList(
+						$_sRt = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
 							$reverse=1,
@@ -4409,9 +4415,9 @@ $this->partID = $partID;
 							$rByUid=true,
 							false
 						);
-						$messageListForToggle = $_sR['match']->ids;
+						$messageListForToggle = $_sRt['match']->ids;
 						$filter['status'] = array($_flag);
-						if ($query['filter'])
+						if ($query['filter'] && $query['filter'] !='any')
 						{
 							$filter['status'][] = $query['filter'];
 						}
@@ -4439,7 +4445,10 @@ $this->partID = $partID;
 						$alreadyFlagged=true;
 						//unset($_messageList['all']);
 					}
-					elseif (!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) && !empty($filter))
+					elseif (!empty($filter) &&
+						(!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) ||
+						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
+						($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
 					{
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
@@ -4455,6 +4464,7 @@ $this->partID = $partID;
 					}
 					else
 					{
+						//error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
 						$alreadyFlagged=true;
 						$uidA = self::splitRowID($_messageList['msg'][0]);
 						$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
@@ -4474,6 +4484,7 @@ $this->partID = $partID;
 					$hA = self::splitRowID($rowID);
 					$messageList[] = $hA['msgUID'];
 				}
+				//error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
 				$this->mail_bo->flagMessages($_flag, ((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList),$folder);
 			}
 		}
@@ -4493,7 +4504,14 @@ $this->partID = $partID;
 		if ($_sendJsonResponse)
 		{
 			$response = egw_json_response::get();
-			$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder));
+			if ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
+			{
+				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder),'mail');
+			}
+			else
+			{
+				$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder));
+			}
 		}
 	}
 
@@ -4526,13 +4544,14 @@ $this->partID = $partID;
 							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{
 						$filter = array();
 					}
 					$messageList = array();
+					//error_log(__METHOD__.__LINE__."->".print_r($filter,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
 					$_sR = $this->mail_bo->getSortedList(
 						$folder,
 						$sort=0,
@@ -4647,7 +4666,7 @@ $this->partID = $partID;
 							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{
