@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -87,12 +87,9 @@ class infolog_customfields
 					{
 						break;
 					}
+					// fall through
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/index.php',array(
-						'menuaction' => 'infolog.infolog_ui.index',
-						'ajax' => 'true',
-					));
-					exit;
+					egw::redirect_link('/admin/index.php', null, 'admin');
 			}
 		}
 		else

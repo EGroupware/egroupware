@@ -40,10 +40,6 @@ class uiconfig
 		{
 			egw::redirect_link('/index.php');
 		}
-		$referer = $_POST['submit'] || $_POST['save'] || $_POST['apply'] || $_POST['cancel'] ? $_POST['referer'] :
-			common::get_referer('/admin/index.php',$_POST['referer']);
-		list(,$show_app) = explode('/',$referer);
-		if (!$show_app) $show_app = 'admin';
 
 		// load the translations of the app we show too, so they dont need to be in admin!
 		if ($_appname != 'admin')
@@ -111,7 +107,7 @@ class uiconfig
 		$c->read_repository();
 		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
 		{
-			egw::redirect_link($referer);
+			egw::redirect_link('/admin/index.php?ajax=true');
 		}
 
 		if ($_POST['submit'] || $_POST['save'] || $_POST['apply'])
@@ -157,7 +153,7 @@ class uiconfig
 			if(!$errors && !$_POST['apply'])
 			{
 				egw_framework::message(lang('Configuration saved.'), 'success');
-				egw::redirect_link($referer);
+				egw::redirect_link('/admin/index.php', null, 'admin');
 			}
 		}
 
@@ -178,8 +174,7 @@ class uiconfig
 		$t->set_var('th_text',   $GLOBALS['egw_info']['theme']['th_text']);
 		$t->set_var('row_on',    $GLOBALS['egw_info']['theme']['row_on']);
 		$t->set_var('row_off',   $GLOBALS['egw_info']['theme']['row_off']);
-		$t->set_var('hidden_vars', html::input_hidden('referer', $referer).
-			html::input_hidden('csrf_token', egw_csrf::token(__CLASS__)));
+		$t->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__CLASS__)));
 
 		$vars = $t->get_undefined('body');
 

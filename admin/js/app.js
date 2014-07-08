@@ -87,6 +87,11 @@ app.classes.admin = AppJS.extend(
 					var self = this;
 					jQuery(iframe.getDOMNode()).off('load.admin')
 						.bind('load.admin', function(){
+							if (this.contentDocument.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
+							{
+								this.contentDocument.location.href = 'about:blank';	// stops redirect from admin/index.php
+								self.load();	// load own top-level index aka user-list
+							}
 							self._hide_navbar.call(self);
 						}
 					);
@@ -115,6 +120,8 @@ app.classes.admin = AppJS.extend(
 		else
 		{
 			this.egw.app_header('');
+			// blank iframe, to not keep something running there
+			this.iframe.getDOMNode().contentDocument.location.href = 'about:blank';
 		}
 		this.iframe.set_disabled(!_url);
 		this.nm.set_disabled(!!_url);
@@ -159,6 +166,12 @@ app.classes.admin = AppJS.extend(
 							tree.refreshItem('/groups');
 							return false;	// --> no regular refresh
 					}
+				}
+				// not a user or group, eg. categories
+				else if (!_id)
+				{
+					this.load();
+					return false;	// --> no regular refresh needed
 				}
 		}
 	},
