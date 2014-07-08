@@ -194,7 +194,7 @@ class mail_ui
 			if ($exit)
 			{
 				common::egw_exit();
-			}	
+			}
 		}
 	}
 
@@ -211,7 +211,7 @@ class mail_ui
 			self::$icServerID = $_icServerID;
 		}
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
-		
+
 		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
@@ -221,7 +221,7 @@ class mail_ui
 			self::$icServerID = $_icServerID;
 			throw new egw_exception('Profile change failed!');
 		}
-		
+
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
@@ -230,7 +230,7 @@ class mail_ui
 		{
 			throw new egw_exception(__METHOD__." failed to change Profile to $_icServerID");
 		}
-		
+
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
@@ -790,7 +790,7 @@ class mail_ui
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
 	}
-	
+
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param mixed bool/string $_fetchCounters, wether to fetch extended information on folders
@@ -881,7 +881,7 @@ class mail_ui
 				continue;
 			}
 			//error_log(__METHOD__.__LINE__.array2string($accountObj));
-			if (empty($accountObj->acc_imap_host))
+			if (!$accountObj->is_imap())
 			{
 				// not to be used for IMAP Foldertree, as there is no Imap host
 				continue;
@@ -918,7 +918,7 @@ class mail_ui
 			}
 		}
 		//$endtime = microtime(true) - $starttime;
-	
+
 		if (!empty($folderObjects))
 		{
 			$delimiter = $this->mail_bo->getHierarchyDelimiter();
@@ -1136,7 +1136,7 @@ class mail_ui
 			foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($accountObj));
-				if (empty($accountObj->acc_imap_host))
+				if (!$accountObj->is_imap())
 				{
 					// not to be used for IMAP Foldertree, as there is no Imap host
 					continue;
@@ -2844,7 +2844,7 @@ class mail_ui
 		{
 			$mailbox = $this->mail_bo->sessionData['mailbox'];
 		}
-		
+
 		$attachments = $this->mail_bo->getMessageAttachments($message_id,null, null, false, true,true,$mailbox);
 
 		// put them in VFS so they can be zipped
@@ -2875,13 +2875,13 @@ class mail_ui
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
-		
+
 		// Zip it up
 		egw_vfs::download_zip($file_list);
 
 		// Clean up
 		egw_vfs::remove($temp_path);
-		
+
 		common::egw_exit();
 	}
 
@@ -4124,7 +4124,7 @@ $this->partID = $partID;
 	function ajax_changeProfile($icServerID, $getFolders = true)
 	{
 		$response = egw_json_response::get();
-		
+
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			try
@@ -4134,9 +4134,9 @@ $this->partID = $partID;
 			catch (Exception $e) {
 				self::callWizard($e->getMessage(),true);
 			}
-			
+
 		}
-		
+
 		//$folderInfo = $this->mail_bo->getFolderStatus($icServerID,false);
 
 		// Send full info back in the response
@@ -4470,7 +4470,7 @@ $this->partID = $partID;
 						$uidA = self::splitRowID($_messageList['msg'][0]);
 						$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 						$this->mail_bo->flagMessages($_flag, 'all', $folder);
-					}					
+					}
 				}
 			}
 			else
