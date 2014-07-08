@@ -1175,11 +1175,7 @@ class timesheet_ui extends timesheet_bo
 					if ($button == 'apply') break;
 					// fall-through
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/index.php',array(
-						'menuaction' => 'timesheet.timesheet_ui.index',
-						'msg' => $msg,
-					));
-					break;
+					$GLOBALS['egw']->redirect_link('/admin/index.php', null, 'admin');
 			}
 		}
 		if (isset($content['statis']['delete']))
