@@ -462,7 +462,7 @@ div.mail-compose_fileselector {
 	padding: 0px;
 	height: 16px !important;
 }
-#mail-display_toolbar .et2_button_icon {
+#mail-display_toolbar .et2_button_icon, .previewAttachmentArea .et2_button_icon, #mail-display_mail_displayattachments .et2_button_icon {
 	width: 16px;
 	height: 16px;
 }
@@ -491,12 +491,12 @@ div.mail-compose_fileselector {
 	right: 0;
 }
 #mail-index_previewAttachmentArea {
-	background-color:#efefdf;
+	background-color:#f0f0f0;
 	max-height: 1.6em;
 	max-width: 50%;
 	overflow:scroll;
 	overflow-x:hidden;
-	border: 1px solid red;
+	border: 1px solid grey;
 	opacity: 1;
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
@@ -527,6 +527,7 @@ div.mail-compose_fileselector {
 }
 .mailDisplayContainerFixedHeight {
 	bottom: 123px;
+	overflow: hidden;
 }
 .mailDisplayContainerFullHeight {
 	bottom: .1em;
@@ -539,11 +540,11 @@ div.mail-compose_fileselector {
 	margin:0px;
 }
 .mailDisplayAttachments {
-	background-color:#efefdf;
+	background-color:#f0f0f0;
 	height: 121px;
 	position: fixed;
 	bottom: .1em;
-	border: 1px solid red;
+	border: 1px solid grey;
 	opacity: 1;
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
