@@ -48,8 +48,6 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		unset($value['fields']);
 		$relative_dates = $this->attrs['relative_dates'];
 
-		$this->setElementAttribute($form_name, 'prefix', self::$prefix);
-		
 		// Fallback, so there's something there...
 		if(!is_array($fields))
 		{
@@ -60,6 +58,12 @@ class importexport_widget_filter extends etemplate_widget_transformer
 			);
 			return parent::beforeSendToClient($cname);
 		}
+
+		// Need to clear this if it's not needed.  It causes Chosen selectboxes
+		// to bind to this label.
+		self::$transformation['label'] = '';
+
+		$this->setElementAttribute($form_name, 'prefix', self::$prefix);
 		
 		$n = 1;
 		foreach($fields as $lname => &$field)
@@ -138,7 +142,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					}
 					else
 					{
-error_log('Trying to filter with unsupported field type: ' . $field['type']);
+						error_log('Trying to filter with unsupported field type: ' . $field['type']);
 					}
 			}
 
