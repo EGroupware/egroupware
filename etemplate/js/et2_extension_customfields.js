@@ -222,7 +222,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					row.attr('data-field', field_name);
 					row.attr('data-help', field.help);
 					this.detachedNodes.push(row[0]);
-				} else {
+				}
+				else
+				{
 					// Label in first column, widget in 2nd
 					cf.text(field.label + "");
 					cf = jQuery(document.createElement("td"))
@@ -238,7 +240,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			if(!this.options.fields || jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true)
 			{
 				jQuery(this.rows[field_name]).show();
-			} else {
+			}
+			else
+			{
 				jQuery(this.rows[field_name]).hide();
 			}
 
@@ -482,12 +486,48 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		delete(attrs.label);
 
 		attrs.label = field.label;
-		for(var key in field.values)
+		
+		// Simple case, one widget for a custom field
+		if(Object.keys(field.values).length == 1)
 		{
-			attrs.label = key;
-			attrs.onclick = field.values[key];
+			for(var key in field.values)
+			{
+				attrs.label = key;
+				attrs.onclick = field.values[key];
+			}
+			return !attrs.readonly;
 		}
-		return !attrs.readonly;
+		else if (this._type == 'customfields-list')
+		{
+			// No buttons in a list, it causes problems with detached nodes
+			return false;
+		}
+		else
+		{
+			// Complicated case, a single custom field you get multiple widgets
+			// Handle it all here, since this is the exception
+			var row = $j('tr',this.tbody).last();
+			var cf = $j('td',row);
+			// Label in first column, widget in 2nd
+			cf.text(field.label + "");
+			cf = jQuery(document.createElement("td"))
+				.appendTo(row);
+
+			for(var key in field.values)
+			{
+				var button_attrs = jQuery.extend({},attrs);
+				button_attrs.label = key;
+				button_attrs.onclick = field.values[key];
+				button_attrs.id = attrs.id + '_' + key;
+
+				// This controls where the button is placed in the DOM
+				this.rows[button_attrs.id] = cf[0];
+
+				// Do not store in the widgets list, one name for multiple widgets would cause problems
+				/*this.widgets[field_name] = */ et2_createWidget(attrs.type ? attrs.type : field.type, button_attrs, this);
+			}
+			return false;
+		}
 	},
 	_setup_link_entry: function(field_name, field, attrs) {
 		// No label on the widget itself
