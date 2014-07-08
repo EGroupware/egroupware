@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.wizard.folder" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Step 2: Folder" span="all" class="emailadmin_header"/>
+					<description/>
+				</row>
+				<row>
+					<description value="Sent folder" for="acc_folder_sent"/>
+					<menulist>
+						<menupopup id="acc_folder_sent" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Trash folder" for="acc_folder_trash"/>
+					<menulist>
+						<menupopup id="acc_folder_trash" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Drafts folder" for="acc_folder_draft"/>
+					<menulist>
+						<menupopup id="acc_folder_draft" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Templates folder" for="acc_folder_template"/>
+					<menulist>
+						<menupopup id="acc_folder_template" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Junk folder" for="acc_folder_junk"/>
+					<menulist>
+						<menupopup id="acc_folder_junk" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Continue" id="button[continue]" image="continue" background_image="1"/>
+						<button label="Back" id="button[back]" image="back" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+				<row>
+					<textbox multiline="true" id="folder_output" readonly="true" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
