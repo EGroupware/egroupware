@@ -107,12 +107,14 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 					'explode'=>	$settings[$field]
 				);
 				if($field == 'cat_id') {
-					$sel_options['explode_multiselects'][$row] = $cat_options;
+					$sel_options['explode_multiselects'][$row]['explode'] = $cat_options;
 				} else {
-					$sel_options['explode_multiselects'][$row] = $multi_options;
+					$sel_options['explode_multiselects'][$row]['explode'] = $multi_options;
 				}
 				$row++;
 			}
+			// Cheat server side validation, which can't handle different options per row
+			$sel_options['explode'] = $cat_options + $multi_options;
 			$preserv = $content;
 	//_debug_array($content['explode_multiselects']);
 			return $this->step_templates[$content['step']];
