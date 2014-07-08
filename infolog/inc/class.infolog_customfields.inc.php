@@ -88,7 +88,7 @@ class infolog_customfields
 						break;
 					}
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/admin/');
+					$GLOBALS['egw']->redirect_link('/infolog/');
 					exit;
 			}
 		}
