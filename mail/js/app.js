@@ -1662,6 +1662,7 @@ app.classes.mail = AppJS.extend(
 	mail_doActionCall: function(_action, _elems)
 	{
 	},
+
 	/**
 	 * mail_getActiveFilters
 	 *
@@ -1670,7 +1671,9 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_getActiveFilters: function(_action)
 	{
-		var obj_manager = egw_getObjectManager(this.nm_index, false);
+		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
+		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
+		var obj_manager = egw_getObjectManager(this.app).getObjectById(this.nm_index);
 		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
 		{
 			return obj_manager.manager.data.nextmatch.activeFilters;
