@@ -155,6 +155,9 @@ var et2_dataview_controller = Class.extend({
 
 			// Clear the queue
 			this._queue = {};
+
+			// Invalidate the change detection, re-fetches any known rows
+			this._lastModification = 0;
 		}
 		// Remove all rows which are outside the view range
 		this._grid.cleanup();
