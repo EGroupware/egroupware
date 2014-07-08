@@ -765,6 +765,7 @@ abstract class bo_merge
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
 				$replacements += $this->contact_replacements($user,'user');
+				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'account_primary_group'));
 			}
 			$replacements['$$date$$'] = egw_time::to('now',true);
 			$replacements['$$datetime$$'] = egw_time::to('now');
