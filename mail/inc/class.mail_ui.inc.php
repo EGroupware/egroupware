@@ -29,6 +29,7 @@ class mail_ui
 		'displayMessage'	=> True,
 		'displayImage'		=> True,
 		'getAttachment'		=> True,
+		'download_zip'		=> True,
 		'saveMessage'	=> True,
 		'vfsSaveAttachment' => True,
 		'vfsSaveMessage' => True,
@@ -424,6 +425,7 @@ class mail_ui
 		}
 		//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
 		//_debug_array($content);
+		//if (is_array($content)) error_log(__METHOD__.__LINE__.array2string($content));
 		if (!is_array($content))
 		{
 			$content = array(
@@ -2830,10 +2832,11 @@ class mail_ui
 	 * Zip all attachments and send to user
 	 * @param string $message_id
 	 */
-	function download_zip($message_id)
+	function download_zip($message_id=null)
 	{
-		//error_log(__METHOD__.__LINE__.$message_id);
 		// First, get all attachment IDs
+		if(isset($_GET['id'])) $message_id	= $_GET['id'];
+		//error_log(__METHOD__.__LINE__.$message_id);
 		if(!is_numeric($message_id))
 		{
 			$hA = self::splitRowID($message_id);

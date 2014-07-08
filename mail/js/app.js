@@ -2225,6 +2225,32 @@ app.classes.mail = AppJS.extend(
 		document.location = url;
 	},
 
+	saveAllAttachmentsToZip: function(tag_info, widget)
+	{
+		var mailid;
+		var attgrid;
+		if (this.mail_isMainWindow)
+		{
+			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			var p = widget.getParent();
+			var cont = p.getArrayMgr("content").data;
+			attgrid = cont[widget.id.replace(/\[save\]/,'')];
+		}
+		else
+		{
+			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
+		}
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width;
+		var height;
+		var windowName ='mail';
+		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
+		url += '&mode=save';
+		url += '&id='+mailid;
+		document.location = url;
+	},
+
 	saveAttachmentToVFS: function(tag_info, widget)
 	{
 		var mailid;

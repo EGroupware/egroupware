@@ -102,7 +102,7 @@
 						<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
 						<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
 						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
-						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_all" onclick="widget.getInstanceManager().postSubmit();" label="Save as Zip"/>
+						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToZip" label="Save as Zip"/>
 					   </row>
 					  </rows>
 					</grid>
