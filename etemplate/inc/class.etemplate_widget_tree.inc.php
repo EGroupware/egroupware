@@ -361,7 +361,7 @@ class etemplate_widget_tree extends etemplate_widget
 					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
 
 					// 1D array
-					$options[$cat['id']] = $cat + array(
+					$options[] = $cat + array(
 						'text'	=>	$s,
 						'path'	=>	$path,
 
