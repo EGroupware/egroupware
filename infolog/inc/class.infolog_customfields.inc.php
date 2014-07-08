@@ -88,7 +88,10 @@ class infolog_customfields
 						break;
 					}
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/infolog/');
+					$GLOBALS['egw']->redirect_link('/index.php',array(
+						'menuaction' => 'infolog.infolog_ui.index',
+						'ajax' => 'true',
+					));
 					exit;
 			}
 		}
