@@ -1,26 +1,84 @@
+(update in sec. %s)	notifications	pt-br	(Atualização em seg.% S)
+account:	notifications	pt-br	Conta:
+all possible notification backends	notifications	pt-br	Todas as possíveis backends de notificação
+browser	notifications	pt-br	Navegador
+browser is starting.	notifications	pt-br	Navegador está começando.
+cancal settings?	notifications	pt-br	Configurações Cancal?
+cancal?	notifications	pt-br	Cancal?
+certification-information:	notifications	pt-br	Certificação-informação:
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt-br	Escolha uma série de notificação. Você será notificado pelos métodos incluídos na série. <br />Nota: Se uma série de notificação estiver marcada como "desabilitada", seu administrador não permitiu um ou mais métodos incluídos naquela série e as notificações usarão o método "E-Mail".
+choose from mailsettings used for notification	admin	pt-br	Escolha as configurações de e-mail utilizado para a notificação de e-mail
 common chains	notifications	pt-br	Séries comuns
+connection error.	notifications	pt-br	Erro de conexão.
+continue to connect?	notifications	pt-br	Continue a conectar?
+cookies are required to login to this site.	notifications	pt-br	Cookies são necessários para acessar este site.
 disabled chains	notifications	pt-br	Séries desabilitadas
+do not notify me at all	notifications	pt-br	Não me notificar a todos
+domain not found, please check serveraddress.	notifications	pt-br	Domínio não encontrado, por favor verifique ServerAddress.
+e-mail only	notifications	pt-br	Email só
 egroupware has notifications for you	notifications	pt-br	O eGroupWare possui notificações para você
+egroupware login is starting, please wait.	notifications	pt-br	EGroupware de login está começando, aguarde.
+egroupware logindomain:	notifications	pt-br	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	pt-br	EGroupware Logindomains funda, por favor selecione.
+egroupware not found by url.	notifications	pt-br	EGroupware não foi encontrado pela URL.
+egroupware-popup and e-mail	notifications	pt-br	EGroupware pop-up e e-mail
+egroupware-popup and windows-popup	notifications	pt-br	EGroupware pop-up e pop-up do Windows
 egroupware-popup backend	admin	pt-br	Método eGroupWare-Popup
+egroupware-popup only	notifications	pt-br	EGroupware pop-up só
 egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do eGroupWare-Popup
 enable egroupware-popup backend	admin	pt-br	Habilitar método eGroupWare-Popup
 enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
 enabled chains	notifications	pt-br	Séries habilitadas
+error browser can`t start.	notifications	pt-br	Erro navegador pode `t começar.
+error on loading tray icon	notifications	pt-br	Erro no carregamento ícone da bandeja
+error ssl	notifications	pt-br	SSL erro
+exit	notifications	pt-br	Saída
 folder	notifications	pt-br	pasta
 from	notifications	pt-br	De
+host:	notifications	pt-br	Host:
 if set, embedded links get rendered special for external clients	notifications	pt-br	Se definido, links embutidos serão exibidos de forma especial para clientes externos
+info on load config file: create config file.	notifications	pt-br	Informações sobre o arquivo de configuração de carga: criar arquivo de configuração.
+issuer dn:	notifications	pt-br	Issuer DN:
+java desktop notification app	preferences	pt-br	Aplicativo notificação de desktop Java
 linked entries:	common	pt-br	Registros linkados:
+login aborted, application exit?	notifications	pt-br	Entrada abortada, sair da aplicação?
+login in egroupware:	notifications	pt-br	entrar em EGroupware:
+mail backend	admin	pt-br	Correio backend
 message from	notifications	pt-br	Mensagem de
 minutes	notifications	pt-br	minutos
 notification	common	pt-br	Notificação
+notifier	notifications	pt-br	Notifier
 notify me by	notifications	pt-br	Notificar-me por
 optimize e-mails for external mail client	notifications	pt-br	Optmizar e-mails para clientes externos
+page not found, please check serveraddress.	notifications	pt-br	Página não encontrada, por favor, verifique ServerAddress.
+password:	notifications	pt-br	Senha:
 permission	notifications	pt-br	Permissões
+permission denied for notifications application.	notifications	pt-br	Permissão negada a aplicação notificações.
+placeholders with user/ prefix	admin	pt-br	espaços reservados com usuário / prefixo
+please contact your egroupware admin.	notifications	pt-br	Por favor, contate o administrador EGroupware.
+please enter the url of your egroupware.	notifications	pt-br	Por favor, digite a URL do seu Egroupware.
+please enter your egroupware username.	notifications	pt-br	Digite seu nome de usuário Egroupware.
+please enter your password	notifications	pt-br	Por favor, digite a sua senha
+poll interval	notifications	pt-br	Intervalo Poll
 preferences for notification	notifications	pt-br	Preferências para notificação
+received	notifications	pt-br	Recebido
+repeat login?	notifications	pt-br	Repita o Login?
+run application	notifications	pt-br	executar o aplicativo
+save password	notifications	pt-br	salvar senha
+setting	notifications	pt-br	Cenário
+setting aborted, application exit	notifications	pt-br	Definir abortado, saída do aplicativo
 settings	notifications	pt-br	Configurações
 signature	admin	pt-br	Assinatura
+signature added to every change notification	admin	pt-br	Assinatura adicionado a cada notificação de alteração
+sorry, your login has expired	notifications	pt-br	Desculpe, seu login expirou
 step	notifications	pt-br	Etapa
+subject dn:	notifications	pt-br	Assunto DN:
+user:	notifications	pt-br	Usuário:
 warning	notifications	pt-br	Atenção
+windows-popup and e-mail	notifications	pt-br	Janelas pop-up e e-mail
 windows-popup backend	admin	pt-br	Método Windows-Popup
+windows-popup only	notifications	pt-br	Janelas pop-up só
+you can also use	admin	pt-br	Você também pode usar
+you have been successfully logged out	notifications	pt-br	Você foi desconectado com sucesso
+you've got new mail	notifications	pt-br	Você tem um novo e-mail
 your session could not be verified.	notifications	pt-br	Sua sessão não pôde ser verificada
