@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -186,8 +186,6 @@ function do_config($args)
  */
 function do_hooks($arg)
 {
-	global $setup_info;
-
 	list($domain,$user,$password) = explode(',',$arg);
 	_fetch_user_password($user,$password);
 
@@ -197,7 +195,7 @@ function do_hooks($arg)
 		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
 	}
 
-	foreach($domains as $domain => $data)
+	foreach(array_keys($domains) as $domain)
 	{
 		$cmd = new setup_cmd_hooks($domain,$user,$password);
 		echo "$domain: ".$cmd->run()."\n";
@@ -261,7 +259,7 @@ function do_backup($arg,$quite_check=false)
 	{
 		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
 	}
-	foreach($domains as $domain => $data)
+	foreach(array_keys($domains) as $domain)
 	{
 		$options[0] = $domain;
 
@@ -297,8 +295,6 @@ function do_backup($arg,$quite_check=false)
  */
 function do_update($arg)
 {
-	global $setup_info;
-
 	list($domain,$user,$password,$backup,$app) = explode(',',$arg);
 	_fetch_user_password($user,$password);
 
@@ -314,7 +310,8 @@ function do_update($arg)
 		_check_auth_config($arg,14);
 
 		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4 &&
-			(!$app || !in_array($app, setup_cmd::$apps_to_install) && !in_array($app, setup_cmd::$apps_to_upgrade)))
+			(!$app || !in_array($app, setup_cmd::$apps_to_install) && !in_array($app, setup_cmd::$apps_to_upgrade)) &&
+			!setup_cmd::check_autoinstall())
 		{
 			echo lang('No update necessary, domain %1(%2) is up to date.',$domain,$data['db_type'])."\n";
 		}
@@ -409,7 +406,7 @@ function do_header($create,&$arguments)
 	if (!$create)
 	{
 		// read password from enviroment or query it from user, if not given
-		@list($password,$user) = $options = explode(',',@$arguments[0]);
+		$options = explode(',',@$arguments[0]);
 		_fetch_user_password($options[1],$options[0]);
 		$arguments[0] = implode(',',$options);
 	}
@@ -570,6 +567,7 @@ function list_exit_codes()
 	{
 		$content = file_get_contents($setup_dir.'/'.$file);
 
+		$matches = null;
 		if (preg_match_all('/throw new (egw_exception[a-z_]*)\((.*),([0-9]+)\);/m',$content,$matches))
 		{
 			//echo $file.":\n"; print_r($matches);
@@ -577,8 +575,7 @@ function list_exit_codes()
 			{
 				//if (isset($codes[$code])) echo "$file redifines #$code: {$codes[$code]}\n";
 
-				$src = $matches[2][$key];
-				$src = preg_replace('/self::\$[a-z_>-]+/i',"''",$src);	// gives fatal error otherwise
+				$src = preg_replace('/self::\$[a-z_>-]+/i', "''", $matches[2][$key]);	// gives fatal error otherwise
 				@eval($src='$codes['.$code.'] = '.$src.';');
 				//echo "- codes[$code] => '{$codes[$code]}'\n";
 			}

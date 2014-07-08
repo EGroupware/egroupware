@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -268,7 +268,7 @@ abstract class setup_cmd extends admin_cmd
 			$messages[] = self::_echo_message($verbose,lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',
 				$versions['header'],' '.lang('and is up to date')));
 		}
-		$header_checks = false;	// no further output of the header checks
+		unset($header_checks);	// no further output of the header checks
 
 		$domains = $GLOBALS['egw_domain'];
 		if ($domain)	// domain to check given
@@ -349,6 +349,22 @@ abstract class setup_cmd extends admin_cmd
 			}
 		}
 		return $messages;
+	}
+
+	/**
+	 * Check if there are apps which should be autoinstalled
+	 *
+	 * @return array with app-names
+	 */
+	static function check_autoinstall()
+	{
+		$ret = array_filter(self::$apps_to_install, function($app)
+		{
+			global $setup_info;
+			return $setup_info[$app]['autoinstall'];
+		});
+		//error_log(__METHOD__."() apps_to_install=".array2string(self::$apps_to_install).' returning '.array2string($ret));
+		return $ret;
 	}
 
 	/**

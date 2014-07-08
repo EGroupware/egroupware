@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -51,7 +51,7 @@ class setup_cmd_update extends setup_cmd
 	 * run the command: update or install/update a single app ($this->app)
 	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
-	 * @return string serialized $GLOBALS defined in the header.inc.php
+	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
 	 */
@@ -65,10 +65,13 @@ class setup_cmd_update extends setup_cmd
 		$this->check_installed($this->domain,array(14),$this->verbose);
 
 		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4 &&
-			(!$this->app || !in_array($this->app, self::$apps_to_install) && !in_array($this->app, self::$apps_to_upgrade)))
+			(!$this->app || !in_array($this->app, self::$apps_to_install) && !in_array($this->app, self::$apps_to_upgrade)) &&
+			!self::check_autoinstall())
 		{
 			return lang('No update necessary, domain %1(%2) is up to date.',$this->domain,$GLOBALS['egw_domain'][$this->domain]['db_type']);
 		}
+		if ($check_only) return lang('Update necessary.');
+
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 
 		self::$egw_setup->process->init_process();	// we need a new schema-proc instance for each new domain
@@ -83,14 +86,14 @@ class setup_cmd_update extends setup_cmd
 
 			if ($setup_info[$this->app]['tables'])
 			{
-				$terror = self::$egw_setup->process->current($terror,$DEBUG);
-				$terror = self::$egw_setup->process->default_records($terror,$DEBUG);
+				$errors = self::$egw_setup->process->current($terror, $this->verbose);
+				$terror = self::$egw_setup->process->default_records($errors, $this->verbose);
 				echo $app_title . ' ' . lang('tables installed, unless there are errors printed above') . '.';
 			}
 			else
 			{
 				// check default_records for apps without tables, they might need some initial work too
-				$terror = self::$egw_setup->process->default_records($terror,$DEBUG);
+				$terror = self::$egw_setup->process->default_records($terror, $this->verbose);
 				if (self::$egw_setup->app_registered($setup_info[$this->app]['name']))
 				{
 					self::$egw_setup->update_app($setup_info[$this->app]['name']);
