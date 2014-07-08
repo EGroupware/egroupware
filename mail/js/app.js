@@ -1553,7 +1553,7 @@ app.classes.mail = AppJS.extend(
 		if (typeof _confirm == 'undefined') _confirm = false;
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.app).getObjectById(this.nm_index);
+		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		var that = this;
 		var rvMain = false;
 		if (obj_manager && _elems.length>1 && obj_manager.getAllSelected())
@@ -1673,7 +1673,7 @@ app.classes.mail = AppJS.extend(
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.app).getObjectById(this.nm_index);
+		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
 		{
 			return obj_manager.manager.data.nextmatch.activeFilters;
