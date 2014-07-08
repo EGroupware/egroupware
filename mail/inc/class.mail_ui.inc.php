@@ -2133,7 +2133,7 @@ class mail_ui
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages);
+		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 		//_debug_array($headers);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
@@ -2832,6 +2832,7 @@ class mail_ui
 	 */
 	function download_zip($message_id)
 	{
+		//error_log(__METHOD__.__LINE__.$message_id);
 		// First, get all attachment IDs
 		if(!is_numeric($message_id))
 		{
@@ -2844,10 +2845,10 @@ class mail_ui
 			$mailbox = $this->mail_bo->sessionData['mailbox'];
 		}
 		
-		$attachments = $this->mail_bo->getMessageAttachments($message_id);
+		$attachments = $this->mail_bo->getMessageAttachments($message_id,null, null, false, true,true,$mailbox);
 
 		// put them in VFS so they can be zipped
-		$header = $this->mail_bo->getMessageHeader($message_id);
+		$header = $this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox);
 		$temp_path = egw_vfs::get_home_dir() . "/.mail_$message_id";
 		if(egw_vfs::is_dir($temp_path)) egw_vfs::remove ($temp_path);
 
