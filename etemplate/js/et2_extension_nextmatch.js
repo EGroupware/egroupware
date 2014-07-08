@@ -874,18 +874,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Server side wants each cf listed as a seperate column
 		jQuery.merge(colDisplay, custom_fields);
 
-		// Save visible columns
-		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-		egw.set_preference(app, pref, colDisplay.join(","));
-
-		// Save adjusted column sizes
-		egw.set_preference(app, pref+"-size", colSize);
-
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
 
 		this.activeFilters.selectcols = colDisplay;
-
+		
 		// We don't need to re-query if they've removed a column
 		var changed = [];
 		ColLoop:
@@ -896,10 +889,27 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 			changed.push(colDisplay[i]);
 		}
-		if(changed.length)
-		{
-			this.applyFilters();
-		}
+
+		// If a custom field column was added, throw away cache to deal with
+		// efficient apps that didn't send all custom fields in the first request
+		var cf_added = $j(changed).filter($j(custom_fields)).length > 0;
+
+		// Save visible columns
+		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+		this.egw().set_preference(app, pref, colDisplay.join(","),
+			// Use callback after the preference gets set to trigger refresh, in case app
+			// isn't looking at selectcols and just uses preference
+			cf_added ? jQuery.proxy(function() {this.controller.update(true);}, this):null
+		);
+
+		// Save adjusted column sizes
+		this.egw().set_preference(app, pref+"-size", colSize);
+
+		// No significant change (just normal columns shown) and no need to wait,
+		// but the grid still needs to be redrawn if a custom field was removed because
+		// the cell content changed.  This is a cheaper refresh than the callback,
+		// this.controller.update(true)
+		if((changed.length || custom_fields.length) && !cf_added) this.applyFilters();
 	},
 
 	_parseHeaderRow: function(_row, _colData) {
