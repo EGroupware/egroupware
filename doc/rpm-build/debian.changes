@@ -1,3 +1,17 @@
+egroupware-epl (14.1.20140708-1) hardy; urgency=low
+
+  * Debian: aptitude install egroupware-epl now removes 1.8 community packages or updates all EPL 11.1 packages
+  * Calendar/API: allow not serialized data in async jobs, only run automatic purge if we have a real number > 0
+  * Admin: fixed user statistic submit to work in 14.1
+  * Admin/API: remove old database based error-log
+  * Mail/Infolog/Tracker: fix problem with converting mail to infolog/tracker entries, when forwarded messages are attached (message/rfc822 attachments)
+  * Setup: fixed fatal error "Cannot redeclare auth_type()", when there is a validation error on saving configuration
+  * Setup: config changed in setup did not update instance cache and was therefore not immediatly available
+  * Infolog: Edit adds an implicit user preference in order to remember the last chosen of infolog's type
+  * Addressbook,Calendar,InfoLog,Timesheet: switch on history / delete preventions, if there is not already a config
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 08 Jul 2014 14:07:30 +0200
+
 egroupware-epl (14.1.20140630-1) hardy; urgency=low
 
   * 14.1 release candidate: you need to visit setup for manual (non-package) installations!
