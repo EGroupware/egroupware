@@ -1323,11 +1323,12 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Download the given file list as a ZIP
 	 *
-	 * @param array $files
+	 * @param array $files List of files to include in the zip
+	 * @param string $name optional Zip file name.  If not provided, it will be determined automatically from the files
 	 *
 	 * @return undefined
 	 */
-	public static function download_zip(Array $files)
+	public static function download_zip(Array $files, $name = false)
 	{
 		error_log(__METHOD__ . ': '.implode(',',$files));
 		
@@ -1389,11 +1390,12 @@ class egw_vfs extends vfs_stream_wrapper
 		// A nice name for the user,
 		$filename = $GLOBALS['egw_info']['server']['site_title'] . '_' .
 			str_replace($replace,'_',(
+			$name ? $name : (
 			count($files) == 1 ?
 			// Just one file (hopefully a directory?) selected
 			self::basename($files[0]) :
 			// Use the lowest common directory (eg: Infolog, Open, nathan)
-			self::basename($base_dir)
+			self::basename($base_dir))
 		)) . '.zip';
 
 		// Make sure basename is a dir

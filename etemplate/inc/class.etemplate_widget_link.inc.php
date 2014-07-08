@@ -18,6 +18,10 @@
 class etemplate_widget_link extends etemplate_widget
 {
 
+	public $public_functions = array(
+		'download_zip' => true
+	);
+
 	protected $legacy_options = 'only_app';
 
 	/**
@@ -235,6 +239,33 @@ class etemplate_widget_link extends etemplate_widget
 	public function ajax_delete($value) {
 		$response = egw_json_response::get();
 		$response->data(egw_link::unlink($value));
+	}
+
+	/**
+	 * Download the files linked to the given entry as one ZIP.
+	 *
+	 * Because of the $public_functions entry, this is callable as a menuaction.
+	 * This lets us just open the URL with app & id parametrs and get a ZIP.  If
+	 * the entry has no linked files, the ZIP will still be returned, but it will
+	 * be empty.
+	 */
+	public function download_zip()
+	{
+		$app = $_GET['app'];
+		$id = $_GET['id'];
+		if(egw_link::file_access($app, $id))
+		{
+			$app_path = egw_link::vfs_path($app,$id,'',true);
+			
+			// Pass the files linked, not the entry path
+			$files = egw_vfs::find($app_path);
+			if($files[0] == $app_path)
+			{
+				array_shift($files);
+			}
+			egw_vfs::download_zip($files, egw_link::title($app, $id));
+			common::egw_exit();
+		}
 	}
 
 	/**

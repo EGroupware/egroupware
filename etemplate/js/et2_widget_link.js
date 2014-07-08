@@ -1493,6 +1493,19 @@ var et2_link_list = et2_link_string.extend(
 			}
 		});
 		this.context.addItem("-", "-");
+		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_all'), function(menu_item) {
+			// Highlight files for nice UI indicating what will be in the zip.
+			// Files have negative IDs.
+			$j('[id^="link_-"]',this.list).effect('highlight',{},2000);
+
+			// Download ZIP
+			window.location = self.egw().link('/index.php',{
+				menuaction: 'etemplate.etemplate_widget_link.download_zip',
+				app: self.value.to_app,
+				id: self.value.to_id
+			});
+		});
+		this.context.addItem("-", "-");
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
 			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
 			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
@@ -1626,6 +1639,8 @@ var et2_link_list = et2_link_string.extend(
 		row.bind("contextmenu", function(e) {
 			// File info only available for existing files
 			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
+			// Zip download only offered if there are at least 2 files
+			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
 
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
