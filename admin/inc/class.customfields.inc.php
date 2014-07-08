@@ -125,12 +125,11 @@ class customfields
 						{
 							break;
 						}
+					//fall through	
 					case 'cancel':
-						$GLOBALS['egw']->redirect_link($content['referer'] ? $content['referer'] : '/admin/index.php');
-						exit;
+						egw::redirect_link('/admin/index.php', null, 'admin');
 				}
 			}
-			$referer = $content['referer'];
 		}
 		else
 		{
@@ -140,8 +139,6 @@ class customfields
 				$this->content_type = $content_types[0];
 			}
 			$content['use_private'] = !isset($_GET['use_private']) || (boolean)$_GET['use_private'];
-
-			$referer = $GLOBALS['egw']->common->get_referer();
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 		$sel_options = array();
@@ -223,7 +220,6 @@ class customfields
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'fields' => $preserv_fields,
 			'appname' => $this->appname,
-			'referer' => $referer,
 			'use_private' => $content['use_private'],
 		));
 	}
