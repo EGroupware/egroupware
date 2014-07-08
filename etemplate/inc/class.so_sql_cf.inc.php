@@ -283,7 +283,7 @@ class so_sql_cf extends so_sql
 		{
 			return false;
 		}
-		if (($id = (int)$this->data[$this->autoinc_id]) && $this->customfields &&
+		if (($id = (int)$this->data[$this->db_key_cols[$this->autoinc_id]]) && $this->customfields &&
 			($cfs = $this->read_customfields($id)))
 		{
 			$this->data = array_merge($this->data,$cfs[$id]);
@@ -378,7 +378,7 @@ class so_sql_cf extends so_sql
 			$id2keys = array();
 			foreach($rows as $key => $row)
 			{
-				$id2keys[$row[$this->autoinc_id]] = $key;
+				$id2keys[$row[$this->db_key_cols[$this->autoinc_id]]] = $key;
 			}
 			// check if only certain cf's to show
 			if (!in_array('customfields', $selectcols))

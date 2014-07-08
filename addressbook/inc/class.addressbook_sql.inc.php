@@ -742,13 +742,6 @@ class addressbook_sql extends so_sql_cf
 		}
 		$contact = parent::read($keys,$extra_cols,$join);
 
-		// Change autoinc_id to match $this->db_cols
-		$this->autoinc_id = $this->db_cols[$this->autoinc_id];
-		if(($id = (int)$this->data[$this->autoinc_id]) && $cfs = $this->read_customfields($keys)) {
-			if (is_array($cfs[$id])) $contact = array_merge($contact,$cfs[$id]);
-		}
-		$this->autoinc_id = array_search($this->autoinc_id, $this->db_cols);
-
 		// enforce a minium uid strength
 		if (is_array($contact) && (!isset($contact['uid'])
 				|| strlen($contact['uid']) < $minimum_uid_length)) {
