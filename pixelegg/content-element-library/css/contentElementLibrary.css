@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18.12.2013, 12:21:34
+    Author     : stefanreinhardt
+*/
+
+
+
+#popupdialog { width: 642px ; height: 823px; border: 5px solid white; margin: 0 auto; width: 50%}
+
+#popupdialog-mail { width: 890px ; height: auto; border: 5px solid white; margin: 0 auto; width: 50%}
+
+#sidemenu { width: 220px ; height: auto; border: 5px solid white; margin: 0 auto; margin-left: 50%}
+
+
+div.back2index {background-color: white;padding: 2em;}
+div.back2index a {font-size: 2em; border: 1px solid black; padding:1em;}
+
+/*Mainbereich*/
+
+div.MainBox { 
+        width: 80% ; 
+        height: auto; 
+        border: 5px 5px 5px 200px solid white; 
+        margin: 0 auto; 
+}
+
+div.headline1 {font-size: 2em;}
+
+
+/*Navigation*/
+#navi { padding: 2em; margin: 0 auto;}
+
+ul.navigation {list-style: none;}
+ul.navigation li { border: 1px solid black; margin: 3px 0px; padding:0.2em; width: 270px;}
+
+
+div.show_content {
+    
+box-shadow: #0000FF 10px 13px 13px inset;
+margin: 1em;
+padding: 2em;
+    
+}

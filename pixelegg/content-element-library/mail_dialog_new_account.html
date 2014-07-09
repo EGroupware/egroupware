@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+[EGroupware] Content Element Library
+
+Author: Stefan Reinhardt (c) pixelegg
+-->
+<html>
+    <html>
+        <head>
+
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width">
+
+
+
+            <title> [EGroupware] Content Element Library</title>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="keywords" content="EGroupware" />
+            <meta name="description" content="EGroupware" />
+            <meta name="keywords" content="EGroupware" />
+            <meta name="copyright" content="Stylite AG 2013, see http://www.stylite.de/EPL" />
+            <meta name="language" content="de" />
+            <meta name="author" content="Stylite AG www.stylite.de" />
+
+            <meta name="robots" content="none" />
+            <link rel="icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico" />
+            <link rel="shortcut icon" href="/egroupware2/phpgwapi/templates/idots/images/favicon.ico" />
+            <link href="/egroupware2/phpgwapi/js/jscalendar/calendar-blue.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/phpgwapi/js/jquery/chosen/chosen.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/etemplate/templates/default/etemplate2.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/pixelegg/css/pixelegg.css" type="text/css" rel="StyleSheet" />
+            <link href="/egroupware2/phpgwapi/templates/idots/print.css" type="text/css" rel="StyleSheet" />
+
+            <!--mail-->
+            <link type="text/css" rel="stylesheet" href="/egroupware2/mail/templates/pixelegg/app.css">
+
+            <link type="text/css" rel="stylesheet" href="/egroupware2/pixelegg/content-element-library/css/contentElementLibrary.css">
+
+
+
+        </head>
+        <body>
+
+          <hr  class="clearer">
+          <div class="headline1"> 
+            <div class="headline1">Mail View Compose (Show Mail)</div>
+
+            <hr id="1" class="clearer">
+
+
+            <div id="popupdialog-mail">
+                <div class="et2_container" id="emailadmin-wizard"><div><table class="et2_grid" style="width: 100%;"><tbody><tr><td class="message" style="width: 120px;" colspan="2"><span class="et2_label message" id="emailadmin-wizard_msg"></span></td></tr><tr class="dialogHeader"><td class="emailadmin_header" style="width: 120px;" colspan="2"><span class="et2_label emailadmin_header">Step 1: IMAP - incoming mail</span></td></tr><tr><td style="width: 120px;"><span class="et2_label"><a href="ident_email">E-Mail-Adresse</a></span></td><td><span><input id="emailadmin-wizard_ident_email" name="ident_email" required="required" size="32" maxlength="128"><a class="et2_url email" href="mailto:sysop@sbtest-et2.egroupware.de"></a></span></td></tr><tr class="emailadmin_manual"><td style="width: 120px;"><label class="et2_label" for="acc_imap_username">Benutzername</label></td><td><input size="32" placeholder="if different from EMail address" class="et2_textbox" id="emailadmin-wizard_acc_imap_username" name="acc_imap_username" maxlength="128"></td></tr><tr><td style="width: 120px;"><label class="et2_label" for="acc_imap_password">Passwort</label></td><td><input type="password" size="32" class="et2_textbox" id="emailadmin-wizard_acc_imap_password" name="acc_imap_password" required="required" maxlength="128"></td></tr><tr class="emailadmin_manual"><td style="width: 120px;"><label class="et2_label" for="acc_imap_host">IMAP Server</label></td><td><input size="32" placeholder="Hostname or IP" class="et2_textbox" id="emailadmin-wizard_acc_imap_host" name="acc_imap_host" maxlength="128"></td></tr><tr class="emailadmin_manual"><td style="width: 120px;"><label class="et2_label" for="acc_imap_ssl">Sichere Verbindung</label></td><td><div class="et2_hbox et2_box_widget"><select class="et2_selectbox emailadmin_ssl" id="emailadmin-wizard_acc_imap_ssl" name="acc_imap_ssl"><option value="2">TLS</option><option value="3">SSL</option><option value="1">STARTTLS</option><option value="no">Nein</option></select><label class="et2_label">Port<input type="number" class="et2_textbox emailadmin_port" id="emailadmin-wizard_acc_imap_port" name="acc_imap_port" size="5"></label></div></td></tr><tr class="dialogFooterToolbar"><td style="width: 120px;" colspan="2"><div class="et2_hbox et2_box_widget"><button class="et2_button et2_button_text et2_button_with_image et2_clickable" id="emailadmin-wizard_button[continue]" style="background-image: url(&quot;https://sbtest-et2.egroupware.de/egw/pixelegg/images/continue.png&quot;);">Weiter</button><button class="et2_button et2_button_text et2_clickable" id="emailadmin-wizard_button[manual]">Manuelle Eingabe</button><button class="et2_button et2_button_text et2_button_with_image et2_clickable" id="emailadmin-wizard_button[cancel]" style="background-image: url(&quot;https://sbtest-et2.egroupware.de/egw/pixelegg/images/cancel.png&quot;);">Abbruch</button></div></td></tr><tr><td class="emailadmin_progress" style="width: 120px;" colspan="2"><img class="emailadmin_progress" src="https://sbtest-et2.egroupware.de/egw/emailadmin/templates/default/images/progress.gif" style="display: inline;"></td></tr><tr><td style="width: 120px;" colspan="2"><label class="et2_label" id="emailadmin-wizard_output"><span class="et2_textbox_ro"></span></label></td></tr></tbody></table></div></div>
+
+
+            </div>
+
+        </body>
+    </html>

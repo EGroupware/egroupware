@@ -1,0 +1,414 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for buttons
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+
+@import (reference) "def_design_pattern_color_font_shadow.less";
+
+
+
+
+//#####################
+//# Complete Button   #
+//#####################
+
+.Complete_Button_normal{
+    /*.border_normal;*/
+    /*.box_shadow_standard_light;*/
+    /*.rounded (3px);*/
+    color: @gray_100;
+
+    // switch off for Safari + Chrome
+    -webkit-appearance: none;
+        -webkit-transition-property: background-color;
+       -moz-transition-property: background-color;
+         -o-transition-property: background-color;
+            transition-property: background-color;
+    -webkit-transition-duration: 0.5s;
+       -moz-transition-duration: 0.5s;
+         -o-transition-duration: 0.5s;
+            transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+       -moz-transition-timing-function: linear;
+         -o-transition-timing-function: linear;
+            transition-timing-function: linear;
+    background-color: @gray_30;
+
+}
+
+.Complete_Button_hover{
+    //	.border_hover;
+    .box_shadow_standard_light_hover;
+    background-color: inherit;
+}
+
+.Complete_Button_active{
+    //	.border_hover;
+    .box_shadow_standard_light_inset;
+}
+
+.Complete_Button_focus{
+    //	.border_hover;
+    .box_shadow_standard_light_inset;
+}
+
+/*ADD / Hinzufügen*/
+.Complete_Button_add {
+    color: #FFF;
+    text-shadow: none;
+    .dimension_height_m;
+/*    height: auto;*/
+    background-image: none;
+    .border_radius_button_lefttop;
+
+    &:before {content: "+";font-size: 1.5em;color: @egw_color_1; line-height: 1.1em;}
+}
+
+.Complete_Button_add_hover {
+    background-color: @color_positive_action_active !important;
+    color: @egw_color_1;
+    .box_shadow_standard_light_hover;
+    .border_radius_button_lefttop;
+}
+
+
+/*ADD / Hinzufügen = only PLUS */
+.Complete_Button_add_only_plus {
+                height: 24px;
+                width: 32px;
+                /*border: 1px solid #0C5DA5;*/
+                margin: 6px 2px;
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+                padding: -0.5em;
+                background-color: @gray_10 !important;
+                background-size: 16px 16px;
+                .border_radius_button_lefttop;
+
+
+                &:before {
+                        content: "";
+                        font-size: 2em;
+                        color: @egw_color_2_a;
+                        line-height: 0.6em;
+                        padding-left: 0.1em;
+                        padding-right: 100em;
+
+                }
+
+                &:active {background-color: @color_positive_action_active;}
+}
+
+.Complete_Button_add_only_plus_hover {
+    background-color: @color_positive_action !important;
+    color: @egw_color_1;
+    .box_shadow_standard_light_hover;
+    .border_radius_button_lefttop;
+}
+
+
+.Complete_Button_hinweis{
+    .Button_size_square_32;
+    .border_normal;
+    padding: 0 0.2em;
+    border-left: 3px solid;
+    border-left-color: @lightgray;
+}
+/* ########################################################################################
+ *
+ * Button löschen / delete / => color-negative-action // red
+ *
+ ######################################################################################## */
+
+.Complete_Button_delete{
+    /*background-color: @color_negative_action_hover !important;*/
+    background-image:url('../images/delete.png')!important;
+    margin-left: 3em;
+    background-color: @gray_30;
+    .Complete_Button_text_icon_before;
+    /*background-color: @color-negative-action !important;*/
+    /*color: @gray_0 !important;*/
+
+            &:hover {
+
+                background-image:url('../images/delete-hover.png') !important;
+                background-color: @color_negative_action_hover !important;
+                .Complete_Button_text_icon_before;
+                color: @gray_0 !important;;
+            }
+            &:active {
+
+                background-image:url('../images/delete-hover.png') !important;
+                background-color: @color_negative_action_active !important;
+                .Complete_Button_text_icon_before;
+                color: @gray_0;
+            }
+}
+
+/* ########################################################################################
+ *
+ * Button cancel /  => color-cancel-action // yellow
+ *
+ ######################################################################################## */
+.Complete_Button_cancel{
+
+                background-image:url('../images/cancel.png') !important;
+                .Complete_Button_text_icon_before;
+                content: "ID missing";
+
+
+                &:hover {background-color: @color_cancel_action_hover !important; color: @gray_100; .box_shadow_standard_light_hover;}
+                &:active {background-color: @color_cancel_action_active !important; color: @gray_100; .box_shadow_standard_light_inset;}
+
+}
+
+/* ########################################################################################
+ *
+ * Button edit + save + apply + copy => color-positive-action // green
+ *
+ ######################################################################################## */
+
+.Complete_Button_save_apply_copy{
+
+                img[url*="svg"]{.gradient_vertical (@gray_30, @gray_30); fill: red;}
+
+
+                &:hover {
+                    background-color: @color_positive_action;
+                    color: @gray_100;
+                    .box_shadow_standard_light_hover;
+                }
+                &:active {background-color: @color_positive_action_active;}
+}
+
+
+// select
+
+.Complete_Button_select{
+    /*.box_shadow_standard_light;*/
+    width: auto;
+    margin: 5px 0em 5px 5px;
+    padding:3px;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+.Complete_Button_select_hover {
+    .box_shadow_standard_light_hover;
+}
+
+.Complete_Button_select_focus {
+    outline:0;
+    border-width:1px;
+    border-style: solid;
+    border-color: @gray_30;
+    -webkit-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+    -moz-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+    box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+}
+
+
+
+
+// Input
+
+.Complete_Button_input{
+    .border_normal;
+    border-color: @gray_30;
+    .box_shadow_standard_light;
+    width: auto;
+    /*margin: 0.5em 0em 0.5em 0;*/
+    .border_radius_button_normal;
+
+
+}
+
+.Complete_Button_input_hover{
+    .box_shadow_standard_light_hover;
+}
+
+
+
+.Complete_Button_input_focus {
+    outline:0;
+    border-width:1px;
+    border-style: solid;
+    border-color: @gray_30;
+    -webkit-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+    -moz-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+    box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+}
+
+
+
+// Suchen button
+
+.Complete_Button_search_action{
+    .border_normal;
+    border-color: @gray_30;
+    .box_shadow_standard_light;
+    width: 45px;
+    /*height: 1.6em;*/
+
+    .border_radius_button_righttop;
+    .background_color_search;
+
+    color: lighten(@egw_color_1, 15%);
+    text-decoration: none;
+
+    cursor: pointer;
+    padding: 0px;
+    margin: 7px;
+    margin-left: 0px;
+
+    background-image: url("../images/search.png");
+    background-position: center 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+// Buchstaben
+
+.Complete_Button_lettersearch{
+    .border_radius_button_normal;
+    .box_shadow_standard_light;
+    .border_normal;
+    //	border: 1px solid #D3DCE3;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+// Text
+
+.Complete_Button_text{
+    .border_radius_button_normal;
+    .background_color_10_gray;
+    border-color: @gray_50;
+    cursor: pointer;
+
+}
+
+.Complete_Button_text_hover {
+    .border_radius_button_normal;
+    .border_hover;
+    text-align: center;
+    cursor: pointer;
+    .background_color_30_gray;
+}
+.Complete_Button_text_active{
+    color: @gray;
+}
+
+
+.Complete_Button_text_icon_before{
+    .Complete_Button_normal;
+    padding-left: 30px !important;
+    background-position: 6px center !important;
+    background-repeat: no-repeat !important;
+    background-size: 20px auto !important;
+    /*.Button_size_h32_auto;*/
+    .dimension_height_m;
+}
+
+.Complete_Button_text_icon_before_hover{
+    .Complete_Button_text_icon_before;
+    .box_shadow_standard_light_hover;
+}
+
+.Complete_Button_text_icon_before_active{
+    .Complete_Button_text_icon_before;
+    .box_shadow_standard_light_hover;
+
+}
+
+// Buttons nur Icon
+
+.Complete_Button_Icon_normal {
+    /*.background_color_10_gray;*/
+    .box_shadow_standard_light;
+    .border_normal;
+
+    .border_radius_button_normal;
+}
+
+.Complete_Button_Icon_hover  {
+    /*.background_color_20_gray;*/
+    .box_shadow_standard_light_hover;
+    .border_hover;
+    .border_radius_button_normal;
+}
+
+.Complete_Button_Icon_active {
+    /*.background_color_30_gray;*/
+    .border_active;
+    .border_radius_button_normal;
+    .box_shadow_standard_light_inset;
+
+    background-color: @color_positive_action_active;
+}
+
+// #############################
+// Button Sub Menupunkte
+
+.Complete_Button_Module_Menu_Links{
+    .background_color_10_gray;
+}
+
+.Complete_Button_Module_Menu_Links_Hover{
+    .background_color_30_gray;
+    .color_5_gray;
+}
+
+.Complete_Button_Module_Menu_Links_active{
+    .background_color_10_gray;
+}
+
+
+// Button Sub Sub Menupunkte
+
+.Complete_Button_Module_Menu_Links_Sub_Hover {
+    margin-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    .border_normal;
+    .background_color_15_gray;
+}
+
+.Complete_Button_Module_Menu_Links_Sub {
+    margin-left: 3px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    .border_normal;
+    border-top-width: 0px;
+    .background_color_10_gray;
+
+    margin-top: -7px;
+    padding-left: 14px;
+
+    width: 93%;
+}
+
+
+/*#####################################################
+
+Images svg
+
+#####################################################*/
+
+
+/*delete*/
+img[url*="delete"]{.gradient_vertical (@gray_30, @gray_30);}
+
+//

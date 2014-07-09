@@ -1,0 +1,412 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 Messages
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "def_design_pattern_color_font_shadow.less";
+@import (reference) "def_buttons.less";
+
+// calender
+
+#uical_select_resource {background-color: @egw_color_1_e;}
+.uiaccountselection .primary_group {background-color: @egw_color_1_e;}
+
+option:checked {background-color: @egw_color_1_e;}
+
+.ui-tooltip {
+    padding: 8px;
+    position: absolute;
+    z-index: 9999;
+    max-width: 300px;
+
+    .box_shadow (0 0 5px #aaa);
+}
+
+/* Component containers
+----------------------------------*/
+.ui-widget {
+    .basefontfamily;
+    //	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    font-size: 1.1em;
+}
+.ui-widget .ui-widget {
+    font-size: 1em;
+}
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    .basefontfamily;
+    //	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    .fontsize_m;
+}
+.ui-widget-content {
+    /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
+
+    //	border: 1px solid #a6c9e2;
+    //	background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
+    //	color: #222222;
+    background-image: none;
+    .color_50_gray !important;
+    background: white;
+}
+.ui-widget-content a {
+    //	color: #222222;
+    .color_40_gray;
+}
+.ui-widget-header {
+    //	border: 1px solid #4297d7;
+    .bordered(0px, 0px, 0px,0px) !important;
+    /*.gradient_thead !important;*/
+    background-color: @egw_color_2_a;
+    /*border-color: @gray_10;*/
+    //	background: #5c9ccc url(images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) 50% 50% repeat-x;
+    //	color: #ffffff;
+    color : @gray_100;
+    font-weight: bold;
+    background-image: none;
+    border: 0px !important;
+}
+.ui-widget-header a {
+    //	color: #ffffff;
+    .color_0_gray;
+}
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+    .bordered(1px, 1px, 1px,1px);
+    border-color: @gray_30;
+    //	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
+    background: transparent;
+    font-weight: normal;
+    .color_90_gray;
+    //	float: left;
+    //	position: relative;
+}
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+    .color_40_gray;
+    text-decoration: none;
+}
+
+.ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-widget-content .ui-state-focus{
+    border-color: @gray_10;
+    background: @color_hint;
+    background-image: none;
+    color: @gray_0;
+
+}
+
+
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover{
+    .bordered(1px, 1px, 1px,1px);
+    border-color: @gray_10;
+    //	background: #d0e5f5 url(images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x;
+    background: @color_hint;
+    background-image: none;
+    //	font-size: 105%;
+    .color_0_gray;
+//    font-weight: normal !important;
+}
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited {
+    .color_50_gray;
+    text-decoration: none;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+    .bordered(1px, 1px, 1px,1px);
+    border-color: @gray_20;
+    background-image: none;
+    font-weight: bold;
+    .color_50_gray;
+}
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+    .color_50_gray;
+    text-decoration: none;
+}
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+    .bordered(1px, 1px, 1px,1px);
+    border-color: @gray_30;
+    background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+    .color_50_gray;
+}
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+    .color_10_gray;
+}
+.ui-state-error,
+.ui-widget-content .ui-state-error,
+.ui-widget-header .ui-state-error {
+    .bordered(1px, 1px, 1px,1px);
+    border-color: @gray_10;
+    //	background: #fef1ec url(images/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x;
+    .color_30_gray;
+}
+.ui-state-error a,
+.ui-widget-content .ui-state-error a,{
+    color: @red;
+}
+.ui-state-error-text,
+.ui-widget-content .ui-state-error-text,
+.ui-widget-header .ui-state-error-text {
+    color: @red;
+}
+
+// used in mail for drag and drop mails
+.drop-hover {background-color: @egw_color_1_e;}
+
+.ui-icon-close{
+    /*visibility: hidden;*/
+     /*background-image: url(../images/search.png);*/
+     background-image: url("../images/cancel.png");
+     background-repeat: no-repeat;
+     background-color: @gray_0;
+     background-size: 12px 12px;
+     .dimension_width_height_s;
+     margin: 2px;
+    padding: 1px;
+    margin-top: 1px;
+    background-position: 0px 0px;
+    .rounded (2px);
+
+    &:hover{ background-color: @gray_30;}
+
+    &:active { background-color: @color_cancel_action_active !important;    }
+}
+
+span.ui-icon-close {margin-top: 0px; top: 5px;}
+.et2_link_entry .ui-icon-close {margin-top: -5px; top: 9px !important;}
+
+/*Schliessen x*/
+.ui-icon-closethick {
+    background-image: url(../images/close.png) !important;
+     background-repeat: no-repeat;
+     background-color: @gray_0;
+     background-size: contain;
+     background-position: 0 0 !important;
+    .color_0_gray;
+    .dimension_height_s;
+
+      &:hover{ background-color: @gray_10; color: @gray_90; .box_shadow_standard_light_hover;}
+
+    &:active {
+                .box_shadow_standard_light_active !important;
+                background-color: @color_cancel_action_active !important;
+    }
+
+}
+/*###########################################*/
+/*Menu */
+
+.ui-menu{
+
+    .ui-menu-item {
+
+        padding: 0px;
+
+        a {
+            line-height: 24px;
+            margin: 0px;
+            padding: 2px 5px;
+
+            input {padding: 0;}
+            img {padding: 0;}
+        }
+        a.ui-state-focus {
+            margin: 0px !important;
+            line-height: 24px;
+            padding: 2px 5px;
+            border: none;
+        }
+    }
+
+}
+/*###########################################*/
+/* col selection */
+span.ui-multiselect-header {color: @gray_0;}
+
+
+
+span.ui-icon-search{
+    background-image: url(../images/search.png) !important;
+    background-position: 0px;
+    background-size: 10px 10px;
+
+}
+
+.ui-corner-all{.rounded(3px)}
+
+
+// e.g. Corner Favorites
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 3px;
+}
+
+// e.g. Corner Favorites
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 3px;
+}
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 3px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 3px;
+}
+
+/*###########################################*/
+/*Dialog: edit row*/
+
+.ui-widget-content {
+
+    border: 1px solid @egw_color_2_a;
+
+    .et2_selectbox {
+
+        button.et2_button_text,
+        select.et2_selectbox {height: 20px;}
+
+        button {background-image: none;}
+
+        div.ui-widget-header {
+
+            ul li label.ui-state-hover {background-color: @color_hint; font-weight: normal;}
+
+        }
+
+    }
+
+}
+
+/*###########################################*/
+/*Dialog: calendar edit series*/
+.ui-dialog-buttonpane {background-color: @egw_color_2_e;}
+
+.ui-dialog-buttonset{
+
+    button{
+        .Complete_Button_text_icon_before;
+
+        &:hover{ background-color: @gray_30; color: @gray_90;}
+    }
+
+    button.ui-button-text-only {background-color: @gray_20;
+                                background: inherit;
+                                color: @gray_100 !important;
+                                font-weight: normal !important;
+
+                                &:hover{ background-color: @gray_30;}
+    }
+}
+
+/*###########################################*/
+/*Dialog: calendar edit series*/
+
+ // Kalender Widget
+ div#ui-datepicker-div{
+        .rounded (3px);
+        border: 1px solid @gray_30;
+        .box_shadow_standard_light_inset;
+        }
+
+.ui-datepicker {
+
+    /*padding: 1px 0em;*/
+
+/*    .ui-widget-header .ui-icon {
+    background-image: url("images/ui-icons_d8e7f3_256x240.png");
+}*/
+    // Kalender Tabelle
+        table.ui-datepicker-calendar{
+
+            //aktiver Tag
+            .ui-state-active {background-color: @egw_color_2_a;color: @gray_0;}
+        }
+
+
+
+div.ui-timepicker-div{
+
+    padding: 3px;
+
+    //Uhrzeit - Label
+    dt.ui_tpicker_time_label{font-size: 0.9em}
+    //Uhrzeit
+    dd.ui_tpicker_time{font-size: 1.3em; padding-left: 75px; background-color: @egw_color_1_a;}
+
+    //Stunde - Label
+    dt.ui_tpicker_time_label{font-size: 0.9em}
+
+    // Minute - Label
+    dt.ui_tpicker_minute_label {font-size: 0.9em}
+
+    // Schieberegler
+    div.ui_tpicker_hour_slider{
+        a.ui-slider-handle {background-color: @egw_color_2_a;}
+    }
+    div.ui_tpicker_minute_slider{
+        a.ui-slider-handle {background-color: @egw_color_2_a;}
+    }
+
+
+
+}
+
+    //Buttons
+    div.ui-datepicker-buttonpane{
+        background-color: @color_button_panel_bg_color;
+
+    }
+
+    button.ui-datepicker-current .ui-state-hover{
+    background-color: @color_positive_action_active !important;
+    &:hover {background-color: @color_positive_action_active;}
+    &:active {background-color: @color_positive_action_active;}
+}
+
+}
+
+// Button now
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
+    &:hover {background-color: @color_positive_action_active;}
+    &:active {background-color: @color_positive_action_active;}
+}
+
+// Button close
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-close  {
+                &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
+                &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
+}
+
+
+//

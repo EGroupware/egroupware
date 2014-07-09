@@ -1,0 +1,23 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+
+1. Install IDE with less compiler
+
+2. Edit any .less file in folder /less/
+
+3. compile .less to .css + compile /css/pixelegg.less to .css (Important)
+
+--
+
+Reload page

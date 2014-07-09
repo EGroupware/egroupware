@@ -1,0 +1,44 @@
+
+/**
+ * Less-file for egroupware
+ * Definitionen Layout
+ * Raster
+ *
+ * Version 08.2013
+ * Author Stefan Reinhardt, Wolfgang Ott
+ *
+ */
+
+@import "def_design_pattern_color_font_shadow.less";
+
+/* #################################################
+* FOOTER
+* ##################################################
+*/
+#egw_fw_footer {
+	position: fixed;
+	bottom: 0px;
+	width: 50%;
+	text-align: left;
+	padding: 3px;
+
+	clear: both;
+	opacity: 1;
+
+	z-index: 100;
+
+	color: @gray_50;
+
+	a {color: @gray_60;}
+
+	a:last-child:after {content: " + Layout: pixelegg";}
+}
+
+
+#egw_fw_footer:hover {
+	opacity: 0.1;
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity;
+}
+//
