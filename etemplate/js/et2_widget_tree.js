@@ -151,7 +151,7 @@ var et2_tree = et2_inputWidget.extend(
 
 			// Try again according to ID
 			if(!content_options) content_options = this.getArrayMgr("sel_options").getEntry(this.id);
-			if(_attrs["select_options"] && content_options)
+			if(_attrs["select_options"] && !jQuery.isEmptyObject(_attrs["select_options"]) && content_options)
 			{
 				_attrs["select_options"] = jQuery.extend({},_attrs["select_options"],content_options);
 			} else if (content_options) {
@@ -250,10 +250,11 @@ var et2_tree = et2_inputWidget.extend(
 		}
 
 		// Structure data for category tree
-		if(this._type == 'tree-cat' && !jQuery.isArray(options)) {
+		if(this._type == 'tree-cat')
+		{
 			var data = {id:0,item:[]};
-			var stack = [];
-			for(var key in options)
+			var stack = {};
+			for(var key=0; key < options.length; key++)
 			{
 				// See if item has an icon
 				if(options[key].data && typeof options[key].data.icon !== 'undefined' && options[key].data.icon)

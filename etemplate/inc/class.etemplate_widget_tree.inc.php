@@ -126,6 +126,20 @@ class etemplate_widget_tree extends etemplate_widget
 	}
 
 	/**
+	 * Check if given $id is cat_id attribute of one of given array members
+	 *
+	 * @param int $id
+	 * @param array $cats
+	 * @return boolean
+	 */
+	public static function in_cats($id, array $cats)
+	{
+		return (boolean)array_filter($cats, function($cat) use($id){
+			return $cat['id'] == $id;
+		});
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * @param string $cname current namespace
@@ -149,7 +163,7 @@ class etemplate_widget_tree extends etemplate_widget
 				$allowed += self::selOptions($form_name);
 				foreach((array) $value as $val)
 				{
-					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !isset($allowed[$val]) ||
+					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !self::in_cats($val, $allowed) ||
 						$this->type == 'tree' && !self::in_tree($val, $allowed))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
@@ -169,7 +183,7 @@ class etemplate_widget_tree extends etemplate_widget
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
