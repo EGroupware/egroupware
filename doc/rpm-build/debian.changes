@@ -1,3 +1,15 @@
+egroupware-epl (14.1.20140710-1) hardy; urgency=low
+
+  * final 14.1 release
+  * Admin/all apps: fix refresh of admin after calling site configuration, categories, etc from apps
+  * Admin: custom-fields were not loaded, account was edited from admin not addressbook
+  * EMailAdmin: fixed migration of Sieve to use SSL/TLS for port 5190 and StartTLS for all other ports
+  * EMailAdmin: fixed mail accounts valid for groups or multiple users and switching regular accounts to or from that
+  * Addressbook: fixed sorting of category tree
+  * Added context menu to download all linked files in one zip file
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 09 Jul 2014 20:50:54 +0200
+
 egroupware-epl (14.1.20140708-1) hardy; urgency=low
 
   * Debian: aptitude install egroupware-epl now removes 1.8 community packages or updates all EPL 11.1 packages
