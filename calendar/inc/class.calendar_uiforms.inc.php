@@ -1544,7 +1544,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		// disabling the custom fields tab, if there are none
 		$readonlys['tabs'] = array(
-			'custom' => !count($this->bo->config['customfields']),
+			'custom' => !count($this->bo->customfields),
 			'participants' => $this->accountsel->account_selection == 'none',
 			'history' => !$event['id'],
 			'alarms' => $readonlys['tabs']['alarms'],
