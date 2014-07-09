@@ -1,23 +1,37 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
+%1 days	calendar	pt-br	% 1 dias
+%1 event(s) %2	calendar	pt-br	% 1 evento (s) 2%
+%1 hours	calendar	pt-br	% uma hora
+%1 minutes	calendar	pt-br	% 1 minuto
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
 %1 weeks	calendar	pt-br	%1 semanas
+%s the event	calendar	pt-br	% Do evento
+(%1 events in %2 seconds)	calendar	pt-br	(% 1% 2 eventos em segundos)
+(empty = use global limit, no = no export at all)	admin	pt-br	(= Vazias usar limite global, não = nenhuma exportação em tudo)
+, exceptions preserved	calendar	pt-br	, Exceções preservados
+, stati of participants reset	calendar	pt-br	, Estado de participantes redefinir
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt-br	<b>Atenção</b>: A Agenda usa os feriados de seu país, que está configurado como %1. Você pode alterá-lo em %2.<br/>Feriados são %3 automaticamente instalados de %4. Você pode alterar isso em %5.
 a non blocking event will not conflict with other events	calendar	pt-br	Um evento não bloqueador não irá conflitar com outros eventos
 accept	calendar	pt-br	aceitar
 accept or reject an invitation	calendar	pt-br	Aceitar ou rejeitar um convite
 accepted	calendar	pt-br	Aceito
 access denied to the calendar of %1 !!!	calendar	pt-br	Acesso negado à agenda de %1
+access to calendar of %1 denied!	calendar	pt-br	Acesso ao calendário de 1% negada!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt-br	Ação que provocou a notificação: (Adicionada, Cancelada, Aceita, Rejeitada, ...)
 actions	calendar	pt-br	Ações
 actions...	calendar	pt-br	Ações...
 add alarm	calendar	pt-br	Adicionar aviso
+add current view as favorite	calendar	pt-br	Adicionar visão atual como favorita
+add new alarm	calendar	pt-br	Adicionar novo alarme
+add new participants or resource	calendar	pt-br	Adicionar novos participantes ou recurso
 add timesheet entry	calendar	pt-br	Adicionar registro à planilha de tempo
 added	calendar	pt-br	Adicionado
 added by synchronisation	calendar	pt-br	Adicionado por sincronização
 after	calendar	pt-br	após
 after %1	calendar	pt-br	Após %1
 after current date	calendar	pt-br	Após data atual
+age:	calendar	pt-br	Idade:
 alarm	calendar	pt-br	Alarme
 alarm added	calendar	pt-br	Alarme adicionado
 alarm deleted	calendar	pt-br	Alarme removido
@@ -27,26 +41,39 @@ alarms	calendar	pt-br	Alarmes
 all categories	calendar	pt-br	Todas as categorias
 all day	calendar	pt-br	Todo o dia
 all events	calendar	pt-br	Todos os eventos
+all exceptions are converted into single events.	calendar	pt-br	Todas as exceções são convertidos em eventos individuais.
 all future	calendar	pt-br	Todos futuros
+all incl. rejected	calendar	pt-br	Todos incl. rejeitado
 all participants	calendar	pt-br	Todos os participantes
 allows to edit the event again	calendar	pt-br	Permite editar o evento novamente
 always	calendar	pt-br	sempre
 apply the changes	calendar	pt-br	aplicar as alterações
 are you sure you want to delete this country ?	calendar	pt-br	Você tem certeza que deseja remover este país?
 are you sure you want to delete this holiday ?	calendar	pt-br	Você tem certeza que deseja remover este feriado ?
+automatically purge old events after	admin	pt-br	Purgar automaticamente eventos antigos depois
 back half a month	calendar	pt-br	voltar metade de um mês
 back one month	calendar	pt-br	voltar um mês
+back one year	calendar	pt-br	Voltar um ano
+before	calendar	pt-br	Antes
 before %1	calendar	pt-br	Antes %1
 before current date	calendar	pt-br	Antes da data atual
 before the event	calendar	pt-br	antes do evento
 birthday	calendar	pt-br	Aniversário
 birthdays	admin	pt-br	Aniversários
+birthdays only	calendar	pt-br	Só Aniversários
+both, holidays and birthdays	calendar	pt-br	Ambos, feriados e aniversários
 busy	calendar	pt-br	ocupado
 by	calendar	pt-br	por
+calendar - list	calendar	pt-br	Calendário - Lista
+calendar - multi-weekly	calendar	pt-br	Calendário - multi semana
+calendar - planner	calendar	pt-br	Calendário - Planner
 calendar csv export	calendar	pt-br	Exportar Agenda em CVS
 calendar event	calendar	pt-br	Evento da Agenda
 calendar fields:	calendar	pt-br	Campos da Agenda:
 calendar holiday management	admin	pt-br	Gerenciamento de feriados da Agenda
+calendar ical export	calendar	pt-br	Calendário exportação iCal
+calendar ical import	calendar	pt-br	Importação calendário iCal
+calendar id	calendar	pt-br	Calendário ID
 calendar menu	calendar	pt-br	Menu da Agenda
 calendar preferences	calendar	pt-br	Preferências da Agenda
 calendar settings	admin	pt-br	Configurações da Agenda
@@ -54,37 +81,57 @@ calendar-fieldname	calendar	pt-br	Agenda-Nome do Campo
 can't add alarms in the past !!!	calendar	pt-br	Não é possível incluir alarmes no passado !!
 can't aquire lock!	calendar	pt-br	Não foi possível acesso exclusivo ao registro!
 canceled	calendar	pt-br	Cancelado
+category %1 removed because of missing rights	calendar	pt-br	Categoria% 1 removido por causa de direitos perdidos
+category acl	common	pt-br	Categoria ACL
+chair	calendar	pt-br	Cadeira
+change history	calendar	pt-br	Mudar a história
+change your status	calendar	pt-br	Alterar seu status
 charset of file	calendar	pt-br	Charset do arquivo
 check all	calendar	pt-br	Verificar todos
 choose a category	calendar	pt-br	Escolha uma categoria
 close the window	calendar	pt-br	Fechar a janela
 compose a mail to all participants after the event is saved	calendar	pt-br	compor um e-mail para todos os participantes após o evento ser salvo
+conflict	calendar	pt-br	Conflito
 copy of:	calendar	pt-br	Copiar para:
 copy this event	calendar	pt-br	Copiar este evento
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.
 countries	calendar	pt-br	Países
 country	calendar	pt-br	País
+create a new series	calendar	pt-br	Criar uma nova série
 create an exception for the given date	calendar	pt-br	Criar uma exceção para a data informada
+create an infolog from this event	calendar	pt-br	Criar um Infolog deste evento
 create exception	calendar	pt-br	Criar exceção
+create links for participants from addressbook	calendar	pt-br	Criar ligações para participantes de endereços
 create new links	calendar	pt-br	Criar novos links
 created	calendar	pt-br	Criado
 creator	calendar	pt-br	Criador
 csv	calendar	pt-br	CSV
 csv-fieldname	calendar	pt-br	CVS-Nome do Campo
 csv-filename	calendar	pt-br	CVS-Nome do arquivo
+custom	calendar	pt-br	Personalizado
 custom fields	common	pt-br	Campos Personalizados
+custom_2	common	pt-br	Free / Busy
 daily	calendar	pt-br	Diária
+daily tables	calendar	pt-br	Tabelas diárias
+data exchange settings	calendar	pt-br	Configurações de troca de dados
 day	calendar	pt-br	Dia
+day of week tables	calendar	pt-br	Dia de tabelas semana
 days	calendar	pt-br	dias
 days of the week for a weekly repeated event	calendar	pt-br	Dias da semana para um evento semanal recorrrente
 days repeated	calendar	pt-br	dias repetidos
 dayview	calendar	pt-br	Visão diária
+default alarm for regular events	calendar	pt-br	Alarme padrão para eventos regulares
+default alarm for whole-day events	calendar	pt-br	Alarme padrão para eventos de todo o dia
 default appointment length (in minutes)	calendar	pt-br	duração padrão do compromisso (em minutos)
 default calendar filter	calendar	pt-br	Filtro padrão da agenda
 default calendar view	calendar	pt-br	Visualização padrão da agenda
+default document to insert entries	calendar	pt-br	Documento padrão para inserir entradas
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pt-br	Duração padrão dos novos compromissos. A duração é em minutos, ex. 60 para 1 hora
+default type of resources selection	calendar	pt-br	Tipo padrão de seleção de recursos
 default week view	calendar	pt-br	Visualização semanal padrão
 delegated	calendar	pt-br	designado
+delete exceptions	calendar	pt-br	Excluir exceções
+delete selected events	calendar	pt-br	Excluir eventos selecionados
 delete series	calendar	pt-br	Remover série
 delete this alarm	calendar	pt-br	Remover este alarme
 delete this event	calendar	pt-br	Remover este evento
@@ -114,23 +161,32 @@ enddate / -time of the meeting, eg. for more then one day	calendar	pt-br	Data Fi
 enddate of the export	calendar	pt-br	Data Final da exportação
 ends	calendar	pt-br	termina
 error adding the alarm	calendar	pt-br	Erro adicionando o alarme
+error saving the event!	calendar	pt-br	Erro salvando o evento!
+error: can't delete original series!	calendar	pt-br	Erro: Não é possível excluir série original!
 error: importing the ical	calendar	pt-br	Erro importanto o iCal
 error: no participants selected !!!	calendar	pt-br	Erro: nenhum participante selecionado !!
 error: saving the event !!!	calendar	pt-br	Erro salvando o evento
 error: starttime has to be before the endtime !!!	calendar	pt-br	Erro: horário de início deve ser anterior ao horário de término
 error: the entry has been updated since you opened it for editing!	calendar	pt-br	Erro: O registro foi atualizado desde que você o abriu para edição!
+error: you can't shift a series from the past!	calendar	pt-br	Erro: Você não pode mudar uma série do passado!
 event copied - the copy can now be edited	calendar	pt-br	Evento copiado - agora a cópia pode ser editada
 event deleted	calendar	pt-br	Evento removido
 event details follow	calendar	pt-br	Seguem detalhes do evento
 event saved	calendar	pt-br	Evento salvo
 event will occupy the whole day	calendar	pt-br	Evento irá ocupar todo o dia
+every user can invite other users and groups	admin	pt-br	Cada usuário pode convidar outros usuários e grupos
 exception	calendar	pt-br	Exceção
 exception created - you can now edit or delete it	calendar	pt-br	Exceção criada - você agora pode editá-la ou removê-la
 exceptions	calendar	pt-br	Exceções
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
+exists	calendar	pt-br	Existe
+export definition to use for nextmatch export	calendar	pt-br	Definição Exportar para usar para exportação NextMatch
+exports events from your calendar in ical format.	calendar	pt-br	Exportações eventos do Calendário em formato iCal.
+exports events from your calendar into a csv file.	calendar	pt-br	Exportações eventos de seu calendário em um arquivo CSV.
 extended	calendar	pt-br	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt-br	Atualizações extendidas sempre incluem os detalhes completos do evento. iCals podem ser importados por certos aplicativos de calendários
+favorites	calendar	pt-br	Favoritos
 fieldseparator	calendar	pt-br	Separador de campos
 filemanager	calendar	pt-br	Gerenciador de Arquivos
 filename	calendar	pt-br	Nome do arquivo
@@ -143,22 +199,27 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	pt-br	Formato de atualizção de eventos
 forward half a month	calendar	pt-br	avançar metade de um mês
 forward one month	calendar	pt-br	avançar um mês
+forward one year	calendar	pt-br	Encaminhar um ano
 four days view	calendar	pt-br	Visão de 4 dias
+freebusy	common	pt-br	Free / Busy
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	pt-br	Disponibilidade: Usuário '%1' desconhecido, senha incorreta ou não disponível para os usuários acessando o sistema.
 freetime search	calendar	pt-br	Procurar disponibilidade
 fri	calendar	pt-br	Sex
 full description	calendar	pt-br	Descrição  Completa
 fullname of person to notify	calendar	pt-br	Nome completo da pessoa a ser notificada
 general fields:	calendar	pt-br	Campos gerais:
+general settings	calendar	pt-br	Definições gerais
 global categories	calendar	pt-br	Categorias Globais
 global public and group public	calendar	pt-br	Público global e Grupo público
 global public only	calendar	pt-br	Público global somente
 group invitation	calendar	pt-br	Convite de grupo
 group planner	calendar	pt-br	Planejamento do Grupo
 group public only	calendar	pt-br	Grupo público somente
+group(s) or user(s) to show	calendar	pt-br	Grupo (s) ou o utilizador (s) para mostrar
 groupmember(s) %1 not included, because you have no access.	calendar	pt-br	Membro(s) %1 não incluído(s), pois você não tem acesso.
 h	calendar	pt-br	h
 here is your requested alarm.	calendar	pt-br	Aqui está o alarme solicitado
+hide private events	calendar	pt-br	Ocultar eventos privados
 hide private infos	calendar	pt-br	Ocultar informações privadas
 high priority	calendar	pt-br	Alta prioridade
 history	calendar	pt-br	Histórico
@@ -166,10 +227,13 @@ history logging	admin	pt-br	Registro de histórico
 holiday	calendar	pt-br	Feriado
 holiday management	calendar	pt-br	Gerenciamento de Feriados
 holidays	calendar	pt-br	Feriados
+holidays only	calendar	pt-br	Feriados só
 hours	calendar	pt-br	horas
 how far to search (from startdate)	calendar	pt-br	até onde procurar (da data de início)
 how many minutes should each interval last?	calendar	pt-br	Quantos minutos cada intervalo deverá durar ?
 how many weeks should the multiple week view show?	calendar	pt-br	Quantas semanas a exibição múltipla deve mostrar?
+how much entries to skip	calendar	pt-br	Como entradas muito para pular?
+html link to the current record	calendar	pt-br	Link HTML para o registro atual
 ical	calendar	pt-br	iCal
 ical / rfc2445	calendar	pt-br	iCal / rfc2445
 ical export	calendar	pt-br	exportação iCal
@@ -177,21 +241,31 @@ ical file	calendar	pt-br	arquivo iCal
 ical import	calendar	pt-br	importação iCal
 ical successful imported	calendar	pt-br	iCal importado com sucesso
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	pt-br	Se os feriados coincidirem com o fim de semana, serão transferidos para a próxima segunda-feira.
+if start day differs	calendar	pt-br	Se data de início difere
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pt-br	Se você não configurar uma senha aqui a informação ficará disponível para qualquer um que souber a URL!
 ignore conflict	calendar	pt-br	Ignorar conflito
 import	calendar	pt-br	Importar
 import csv-file	common	pt-br	Importar arquivo-CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	pt-br	Importa eventos em sua Agenda de um arquivo CSV. CSV significa 'Comma Separated Values' ou 'Valores Separados por Vírgulas'. Entretanto na Aba de opções você pode escolher outros separadores.
+initially year aligned	calendar	pt-br	Inicialmente ano alinhado
+insert	calendar	pt-br	Inserir
 insert in document	calendar	pt-br	Inserir em documento
 interval	calendar	pt-br	Intervalo
 invalid email-address "%1" for user %2	calendar	pt-br	E-mail %1 inválido para o usuário %2
+invitations	calendar	pt-br	Convites
+invite	calendar	pt-br	Convidar
+it can not read timezones from sqlite database %1!	calendar	pt-br	Ele não pode ler fusos horários a partir de banco de dados SQLite% 1!
+keep exceptions	calendar	pt-br	Mantenha exceções
+keep the series unchanged.	calendar	pt-br	Manter a série inalterada.
 last	calendar	pt-br	Último
 last changed	calendar	pt-br	Última alteração
 lastname of person to notify	calendar	pt-br	Sobrenome da pessoa a ser notificada
 length of the time interval	calendar	pt-br	Duração do tempo de intervalo
 link to view the event	calendar	pt-br	Link para visualizar o evento
 links	calendar	pt-br	Links
+links and attached files	calendar	pt-br	Links e arquivos anexados
 links, attachments	calendar	pt-br	Links, Anexos
+list of files linked to the current record	calendar	pt-br	Lista de arquivos vinculados ao registro atual
 listview	calendar	pt-br	Visão em lista
 location	calendar	pt-br	Localização
 location to autoload from	admin	pt-br	Local de onde carregar automaticamente
@@ -199,8 +273,13 @@ location, start- and endtimes, ...	calendar	pt-br	Local, Horários de início e 
 mail all participants	calendar	pt-br	Enviar e-mail para todos os participantes
 make freebusy information available to not loged in persons?	calendar	pt-br	Mostrar informação de disponibilidade para pessoas não logadas?
 manage mapping	calendar	pt-br	Gerenciar mapeamento
+maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima disponível de 1% excedido!
+meeting request	calendar	pt-br	Pedido de reunião
+meetingrequest to all participants	calendar	pt-br	Meetingrequest a todos os participantes
+merge document...	calendar	pt-br	Mesclar documento ...
 minutes	calendar	pt-br	minutos
 modified	calendar	pt-br	Modificado
+modifier	calendar	pt-br	Modifier
 mon	calendar	pt-br	Seg
 month	calendar	pt-br	Mês
 monthly	calendar	pt-br	Mensalmente
@@ -209,24 +288,38 @@ monthly (by day)	calendar	pt-br	mensalmente (por dia)
 monthview	calendar	pt-br	Visão mensal
 multiple week view	calendar	pt-br	Exibição semanal múltipla
 name of current user, all other contact fields are valid too	calendar	pt-br	Nome do usuário atual, todos outros campos são válidos também
+needs action	calendar	pt-br	Necessidades ação
 new	calendar	pt-br	Novo
 new search with the above parameters	calendar	pt-br	nova pesquisa com os parâmetros acima
+no automatic purging	admin	pt-br	Sem purga automática
 no events found	calendar	pt-br	Nenhum evento encontrado
 no filter	calendar	pt-br	Sem filtro
 no matches found	calendar	pt-br	Nenhum registro encontrado
+no meeting requests	calendar	pt-br	Não há pedidos de reunião
+no owner selected	calendar	pt-br	Nenhum proprietário selecionado.
+no preview for ical	calendar	pt-br	Pré-visualização para iCal
+no recurrence	calendar	pt-br	Sem retorno
 no response	calendar	pt-br	Sem resposta
+no rights to export more than %1 entries!	calendar	pt-br	Nenhum direito a exportar mais de 1% entradas!
 non blocking	calendar	pt-br	Posse compartilhada
 not	calendar	pt-br	não
+not rejected	calendar	pt-br	Não rejeitado
+nothing to update, version is already %1.	calendar	pt-br	Nada de atualização, versão já é% 1.
 notification messages for added events	calendar	pt-br	Mensagem para notificação de eventos adicionados
 notification messages for canceled events	calendar	pt-br	Mensagem para notificação de eventos cancelados
 notification messages for disinvited participants	calendar	pt-br	Mensagem para notificação de participantes desconvidados
 notification messages for modified events	calendar	pt-br	Mensagem para notificação de eventos modificados
 notification messages for your alarms	calendar	pt-br	Mensagem para notificação de seus alarmes
 notification messages for your responses	calendar	pt-br	Mensagem para notificação de suas respostas
+notification settings	calendar	pt-br	Configurações de notificação
+notify non-egroupware users about event updates	calendar	pt-br	Notifique os usuários não eGroupWare sobre atualizações de eventos
 number of records to read (%1)	calendar	pt-br	Número de registros a serem lidos (%1)
+number of weeks to show	calendar	pt-br	Número de semanas para mostrar
 observance rule	calendar	pt-br	Regra de observância
 occurence	calendar	pt-br	Ocorrência
+old fixed definition	calendar	pt-br	Definição fixa Velho
 old startdate	calendar	pt-br	Data de Início anterior
+olddate	calendar	pt-br	Data original
 on %1 %2 %3 your meeting request for %4	calendar	pt-br	Em %1%2%3 sua requisição de compromisso para %4
 on all modification, but responses	calendar	pt-br	em todas as modificações, menos respostas
 on any time change too	calendar	pt-br	em qualquer alteração de horário também

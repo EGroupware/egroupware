@@ -99,7 +99,6 @@ custom fields	etemplate	pt-br	Campos personalizados
 custom javascript for onchange	etemplate	pt-br	Javascript personalizado para OnChange
 cut	etemplate	pt-br	Recortar
 date+time	etemplate	pt-br	Data+Horário
-datum	etemplate	pt-br	Referência
 day	etemplate	pt-br	Dia
 days	etemplate	pt-br	Dias
 db ensures that every row has a unique value in that column	etemplate	pt-br	O Bando de Dados assegura que cada linha tenha um valor original nessa coluna
