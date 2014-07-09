@@ -1426,13 +1426,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_emptyTrash: function(action,_senders) {
 		var server = _senders[0].iface.id.split('::');
-
+		var self = this;
 		this.egw.message(this.egw.lang('empty trash'));
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]])
-			.sendRequest(true);
-		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
-		// as the actions thereof are now bound to run after grid refresh
-		//this.mail_refreshFolderStatus();
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]],function(){self.lock_tree();})
+			.sendRequest(true);	
 	},
 
 	/**
@@ -1615,6 +1612,7 @@ app.classes.mail = AppJS.extend(
 							if (_action.id.substr(0,4)=='move') that.mail_callMove(_action, _elems,_target, rv);
 							if (_action.id.substr(0,4)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
 					}
+					if (rv !="cancel") that.lock_tree();
 				},
 				messageToDisplay,
 				this.egw.lang("Confirm"),
