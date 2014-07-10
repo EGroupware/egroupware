@@ -156,14 +156,17 @@ app.classes.admin = AppJS.extend(
 				if (_id < 0)
 				{
 					var tree = this.et2.getWidgetById('tree');
+					var nm = this.et2.getWidgetById('nm');
 					switch(_type)
 					{
 						case 'delete':
 							tree.deleteItem('/groups/'+_id, false);
+							if (nm) nm.applyFilters();
 							return false;	// --> no regular refresh
 
 						default:	// add, update, edit, null
 							tree.refreshItem('/groups');
+							if (nm) nm.applyFilters();
 							return false;	// --> no regular refresh
 					}
 				}
