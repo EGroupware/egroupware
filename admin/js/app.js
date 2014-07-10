@@ -161,14 +161,22 @@ app.classes.admin = AppJS.extend(
 					{
 						case 'delete':
 							tree.deleteItem('/groups/'+_id, false);
-							if (nm) nm.applyFilters();
-							return false;	// --> no regular refresh
+							if (nm) nm.getInstanceManager().submit();
+							break;
 
 						default:	// add, update, edit, null
-							tree.refreshItem('/groups');
-							if (nm) nm.applyFilters();
-							return false;	// --> no regular refresh
+							if (nm)
+							{
+								var activeFilters = nm.activeFilters;
+								nm.getInstanceManager().submit();
+								var nm = this.et2.getWidgetById('nm');
+								nm.applyFilters(activeFilters);
+							}
+							
 					}
+					var refreshTree = this.et2.getWidgetById('tree');
+					if (refreshTree) refreshTree.refreshItem('/groups');
+					return false;	// --> no regular refresh
 				}
 				// not a user or group, eg. categories
 				else if (!_id)
