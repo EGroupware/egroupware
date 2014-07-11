@@ -193,7 +193,9 @@ var et2_tree = et2_inputWidget.extend(
 			widget.setImages.apply(widget, widget.options.std_images.split(','));
 		}
 		// Add in the callback so we can keep the two in sync
-		widget.input.AJAX_callback = function() { widget._dhtmlxtree_json_callback(JSON.parse(this.response), widget.input.lastLoadedXMLId);};
+		widget.input.AJAX_callback = function(dxmlObject) { 
+			widget._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), widget.input.lastLoadedXMLId);
+		};
 
 		if (widget.options.autoloading)
 		{
@@ -538,7 +540,7 @@ var et2_tree = et2_inputWidget.extend(
 		else
 		{
 			this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}),
-				function() { self._dhtmlxtree_json_callback(JSON.parse(this.response), _id);}
+				function(dxmlObject) {self._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), _id);}
 			);
 		}
 	},
