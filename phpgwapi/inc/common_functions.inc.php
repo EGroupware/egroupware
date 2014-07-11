@@ -150,6 +150,12 @@ if (!function_exists('imap_rfc822_write_address'))
 	 */
 	function imap_rfc822_write_address($mailbox, $host, $personal)
 	{
+		if (is_array($personal)) {
+			foreach ($personal as $e) {
+					$p .= ($p?' ':'').$e;
+			}
+			$personal = $p;
+		}
 		//if (!preg_match('/^[!#$%&\'*+/0-9=?A-Z^_`a-z{|}~-]+$/u', $personal))	// that's how I read the rfc(2)822
 		if ($personal && !preg_match('/^[0-9A-Z -]*$/iu', $personal))	// but quoting is never wrong, so quote more then necessary
 		{
