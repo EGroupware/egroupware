@@ -491,6 +491,10 @@ class admin_categories
 				if(in_array($content['nm']['action'], array('owner')))
 				{
 					$action = $content['nm']['action'];
+					if ($content[$action.'_popup'])
+					{
+						$content = array_merge($content,$content[$action.'_popup']);
+					}
 					$content['nm']['action'] .= '_' . key($content[$action . '_action']);
 
 					if(is_array($content[$action]))
