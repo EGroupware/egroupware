@@ -583,7 +583,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		for(var i = 0; i < _nodes.length; i++)
 		{
 			// toggle() needs a boolean to do what we want
-			var key = _nodes[i].dataset.field;
+			var key = _nodes[i].getAttribute('data-field');
 			$j(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
 		}
 	}
