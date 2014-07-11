@@ -1654,8 +1654,8 @@ class felamimail_bo
 		}
 		switch ($structure->encoding) {
 			case 'BASE64':
-				// use imap_base64 to decode
-				$attachment = imap_base64($attachment);
+				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+				$attachment = base64_decode($attachment);
 				break;
 			case 'QUOTED-PRINTABLE':
 				// use imap_qprint to decode
@@ -1785,8 +1785,8 @@ class felamimail_bo
 
 		switch ($part_structure->encoding) {
 			case 'BASE64':
-				// use imap_base64 to decode
-				$attachment = imap_base64($attachment);
+				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+				$attachment = base64_decode($attachment);
 				break;
 			case 'QUOTED-PRINTABLE':
 				// use imap_qprint to decode

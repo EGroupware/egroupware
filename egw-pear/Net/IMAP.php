@@ -483,7 +483,8 @@ class Net_IMAP extends Net_IMAPProtocol {
         $num_requested = (is_array($msg_id)?count($msg_id):count(explode(',',$msg_id)));
         if (PEAR::isError($ret) || !isset($ret['PARSED']) ||
             (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && !count($ret['PARSED'])) ||
-            (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED']) < $num_requested)) {
+            (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED']) < $num_requested)||
+            (strtoupper($ret["RESPONSE"]["CODE"]) == "OK" && count($ret['PARSED']) < $num_requested)) {
             //error_log(__METHOD__."::".__LINE__."->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:count($ret['PARSED']))." Trying to retrieve (remaining) single messages.");
             if (PEAR::isError($ret) || !isset($ret['PARSED'])) unset($ret);
             else
