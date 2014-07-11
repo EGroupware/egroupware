@@ -266,7 +266,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 
 		// ************** Drag and Drop feature for toolbar *****
 		this.actionlist.find('span').sort( function (lg,g){
-			return +lg.dataset.group - +g.dataset.group;
+			return +lg.getAttribute('data-group') - +g.getAttribute('data-group');
 			}).appendTo(this.actionlist);
 
 		this.actionlist.appendTo(this.div);
