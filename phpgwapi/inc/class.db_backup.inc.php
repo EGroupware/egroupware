@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -79,6 +79,12 @@ class db_backup
 	 * @var boolean
 	 */
 	var $backup_files = false ;
+	/**
+	 * Reference to schema_proc's egw_db object
+	 *
+	 * @var egw_db
+	 */
+	var $db;
 
 	/**
 	 * Constructor
@@ -278,7 +284,7 @@ class db_backup
 		/* Sort the files by ctime. */
 		krsort($files);
 		$count = 0;
-		foreach($files as $ctime => $file)
+		foreach($files as $file)
 		{
 			if ($count >= $this->backup_mincount)//
 			{
@@ -411,6 +417,7 @@ class db_backup
 		}
 		$table = False;
 		$n = 0;
+		$rows = array();
 		while(!feof($f))
 		{
 			$line = trim(fgets($f)); ++$n;
@@ -620,7 +627,6 @@ class db_backup
 		if($type == 'zip')
 		{
 			fclose($f);
-			$f = $save_f;
 			unlink($name);
 			rmdir($dir.'/database_backup');
 		}
@@ -723,7 +729,7 @@ class db_backup
 
 		$str_pending = False;
 		$n = 0;
-		foreach($fields as $i => $field)
+		foreach($fields as $field)
 		{
 			if ($str_pending !== False)
 			{
@@ -839,12 +845,24 @@ class db_backup
 		{
 			if (in_array($table,$this->exclude_tables)) continue;	// dont backup
 
-			$total = 0;
+			// do we have a primary key?
+			// --> use it to order and limit rows, to kope with rows being added during backup
+			// otherwise new rows can cause rows being backed up twice and
+			// backups don't restore because of doublicate keys
+			$pk = $schema['pk'] && count($schema['pk']) == 1 ? $schema['pk'][0] : null;
+
+			$total = $max = 0;
 			do {
 				$num_rows = 0;
-				// querying only chunks for 100 rows, to not run into memory limit on huge tables
-				foreach($this->db->select($table, '*', false, __LINE__, __FILE__, $total, '', false, self::ROW_CHUNK) as $row)
+				// querying only chunks for 10000 rows, to not run into memory limit on huge tables
+				foreach($this->db->select($table, '*',
+					empty($pk) ? false : $pk.' > '.$max,		// limit by maximum primary key already received
+					__LINE__, __FILE__,
+					empty($pk) ? $total : 0,					// if no primary limit by number of received rows
+					empty($pk) ? '' : 'ORDER BY '.$pk.' ASC',	// order by primary key
+					false, self::ROW_CHUNK) as $row)
 				{
+					if (!empty($pk)) $max = $row[$pk];
 					if ($total === 0) fwrite($f,"\ntable: $table\n".implode(',',array_keys($row))."\n");
 
 					array_walk($row,array('db_backup','escape_data'),$schema['fd']);
@@ -870,14 +888,14 @@ class db_backup
 		//echo $name.'<br>';
 		$zip->addFile($name, 'database_backup/'.basename($name));
 		$count = 1;
-		foreach($file_list as $num => $file)
+		foreach($file_list as $file)
 		{
 			//echo substr($file,strlen($dir)+1).'<br>';
 			//echo $file.'<br>';
 			$zip->addFile($file,substr($file,strlen($dir)+1));//,substr($file);
 			if(($count++) == 100) { // the file descriptor limit
 				$zip->close();
-				if($zip = new ZipArchive()) {
+				if(($zip = new ZipArchive())) {
 					$zip->open($filename);
 					$count =0;
 				}
@@ -1009,7 +1027,7 @@ class db_backup
 			}
 			else
 			{
-				if (!$only_vals && $key === 'nullable')
+				if ($key === 'nullable')
 				{
 					$def .= $val ? 'True' : 'False';
 				}
