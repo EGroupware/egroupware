@@ -1220,8 +1220,8 @@
 
 			switch ($structure->encoding) {
 				case 'BASE64':
-					// use imap_base64 to decode
-					$attachment = imap_base64($attachment);
+					// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+					return base64_decode($attachment);
 					break;
 				case 'QUOTED-PRINTABLE':
 					// use imap_qprint to decode
@@ -1329,8 +1329,8 @@
 
 			switch ($structure->encoding) {
 				case 'BASE64':
-					// use imap_base64 to decode
-					$attachment = imap_base64($attachment);
+					// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+					return base64_decode($attachment);
 					break;
 				case 'QUOTED-PRINTABLE':
 					// use imap_qprint to decode
