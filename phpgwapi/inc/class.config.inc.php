@@ -309,7 +309,7 @@ class config
 			return json_decode($str, true);
 		}
 		// handling of not serialized strings
-		if ($str[0] != 'a' && $str[1] != ':')
+		if ($str[0] != 'a' || $str[1] != ':')
 		{
 			return $str;
 		}
