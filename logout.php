@@ -36,17 +36,7 @@ if($verified)
 	$GLOBALS['egw']->hooks->process('logout');
 	$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 }
-else
-{
-	if(is_object($GLOBALS['egw']->log))
-	{
-		$GLOBALS['egw']->log->write(array(
-			'text' => 'W-VerifySession, could not verify session during logout',
-			'line' => __LINE__,
-			'file' => __FILE__
-		));
-	}
-}
+
 $GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 $GLOBALS['egw']->session->egw_setcookie('sessionid');
 $GLOBALS['egw']->session->egw_setcookie('kp3');
