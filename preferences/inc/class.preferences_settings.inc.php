@@ -68,7 +68,11 @@ class preferences_settings
 				{
 					case 'save':
 					case 'apply':
-						// ToDo: save preferences
+						// check if user has rights to store preferences for $type and $account_id
+						if ($content['old_type'] !== 'user' && !$GLOBALS['egw_info']['user']['apps']['admin'])
+						{
+							throw new egw_exception_no_permission_admin;
+						}
 						list($type,$account_id) = explode(':', $content['old_type']);
 						// merge prefs of all tabs together again
 						$prefs = array();
@@ -463,7 +467,7 @@ class preferences_settings
 			'default' => 'Default preferences',
 			'forced' => 'Forced preferences',
 		);
-		if ($GLOBALS['egw_info']['apps']['admin'])
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$content['type'] = $type;
 			if (($id = $GLOBALS['egw']->preferences->get_account_id()) != $GLOBALS['egw_info']['user']['account_id'])
