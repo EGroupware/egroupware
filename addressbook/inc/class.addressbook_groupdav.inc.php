@@ -1110,7 +1110,7 @@ class addressbook_groupdav extends groupdav_handler
 			'type'   => 'multiselect',
 			'label'  => 'Addressbooks to sync in addition to personal addressbook',
 			'name'   => 'addressbook-home-set',
-			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').
+			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likely not be supported!').
 				'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CardDAV "addressbook-home-set"').
 				'<br/>'.lang('Select "%1", if your client does not support multiple addressbooks.',lang('Sync all selected into one')).
 				'<br/>'.lang('Select "%1", if your client support groups, eg. OS X or iOS addressbook.',lang('Distribution lists as groups')),
