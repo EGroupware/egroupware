@@ -313,17 +313,18 @@ class config
 		{
 			return $str;
 		}
-		// handling of old PHP serialized and addslashed prefs
+		// handling of old PHP serialized config values
 		$data = php_safe_unserialize($str);
 		if($data === false)
 		{
-			// manually retrieve the string lengths of the serialized array if unserialize failed
+			// manually retrieve the string lengths of the serialized array if unserialize failed (iso / utf-8 conversation)
 			$data = php_safe_unserialize(preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches)
 			{
 				return 's:'.mb_strlen($matches[2],'8bit').':"'.$matches[2].'";';
 			}, $str));
 		}
-		return $data;
+		// returning original string, if unserialize failed, eg. for "a:hello"
+		return $data === false ? $str : $data;
 	}
 
 	/**

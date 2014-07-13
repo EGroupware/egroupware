@@ -1549,7 +1549,7 @@ function php_safe_unserialize($str)
 		preg_match('/(^|;|{)[OC]:\d+:"/', $str))
 	{
 		error_log(__METHOD__."('$str') contains objects --> return false");
-		return false;
+		return null;	// null, not false, to not trigger behavior of returning string itself to app code
 	}
 	return unserialize($str);
 }
@@ -1601,18 +1601,16 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
 {
-	if ($str[0] == 'a' && $str[1] == ':' || $str === 'N;')
+	if (($str[0] == 'a' && $str[1] == ':' || $str === 'N;') &&
+		($arr = php_safe_unserialize($str)) !== false)
 	{
-		return php_safe_unserialize($str);
+		return $arr;
 	}
-	elseif (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{')
+	if (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{')
 	{
 		return json_decode($str, true);
 	}
-	else
-	{
-		return $str;
-	}
+	return $str;
 }
 
 /**
