@@ -519,7 +519,7 @@ oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
 on mouse over	common	fi	Hiirellä osoittamalla
 only private	common	fi	Vain yksityiset
-only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	fi	Toiminto tuettu vain muutamissa laitteissa. Jos URL täytyy syöttää, toiminto todennäköisesti ei ole tuettu.
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	fi	Toiminto tuettu vain muutamissa laitteissa. Jos URL täytyy syöttää, toiminto todennäköisesti ei ole tuettu.
 only yours	common	fi	Vain omat
 oops! you caught us in the middle of system maintainance.	common	fi	Hups... Huoltokatko meneillään!
 open	common	fi	Avaa

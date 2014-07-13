@@ -538,7 +538,7 @@ oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
 on mouse over	common	fr	Sur le relâchement du clic de la souris
 only private	common	fr	seulement privés
-only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	fr	Seulement supporté par les clients pleinement respectueux de la norme (ie. d'Apple).  Si vous devez entrer une URL, cela ne sera probablement pas supporté.
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	fr	Seulement supporté par les clients pleinement respectueux de la norme (ie. d'Apple).  Si vous devez entrer une URL, cela ne sera probablement pas supporté.
 only yours	common	fr	Seulement les vôtres
 oops! you caught us in the middle of system maintainance.	common	fr	Oups ! Vous êtes arrivé en pleine maintenance système.
 open	common	fr	Ouvrir
