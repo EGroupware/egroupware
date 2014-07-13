@@ -423,10 +423,20 @@ var et2_selectbox = et2_inputWidget.extend(
 		this.set_select_options(this.options.select_options);
 	},
 
+	/**
+	 * Regular expression, to check string-value contains multiple comma-separated values
+	 */
+	_is_multiple_regexp: /^[,0-9A-Za-z/_-]+$/,
+
+	/**
+	 * Set value
+	 *
+	 * @param _value
+	 */
 	set_value: function(_value)
 	{
 		if (typeof _value == "number") _value = ""+_value;	// convert to string for consitent matching
-		if(typeof _value == "string" && this.options.multiple && _value.match(/^[,0-9A-Za-z/-_]+$/) !== null)
+		if(typeof _value == "string" && this.options.multiple && _value.match(this._is_multiple_regexp) !== null)
 		{
 			_value = _value.split(',');
 		}
@@ -915,7 +925,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 
 		if(typeof _value == "string")
 		{
-			_value = _value.match(/^[,0-9A-Za-z]+$/) !== null ? _value.split(',') : [_value];
+			_value = _value.match(this._is_multiple_regexp) !== null ? _value.split(',') : [_value];
 		}
 		this.span.empty();
 
