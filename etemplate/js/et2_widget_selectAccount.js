@@ -291,7 +291,7 @@ var et2_selectAccount = et2_selectbox.extend(
 	 */
 	set_value: function(_value)
 	{
-		if(typeof _value == "string" && this.options.multiple && _value.match(/^[,0-9A-Za-z/-_]+$/) !== null)
+		if(typeof _value == "string" && this.options.multiple && _value.match(this._is_multiple_regexp) !== null)
 		{
 			_value = _value.split(',');
 		}
@@ -312,7 +312,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 				// Not having a value to look up causes an infinite loop
 				if(!search[j]) continue;
-				
+
 				// Options are not indexed, so we must look
 				for(var i = 0; !found && i < this.options.select_options.length; i++)
 				{
@@ -748,7 +748,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			.appendTo(option);
 		this.egw().link_title('home-accounts', value, function(name) {this.text(name).removeClass("loading");}, label);
 	},
-	
+
 	/**
 	 * Overwritten attachToDOM metod to modify attachToDOM
 	 */
