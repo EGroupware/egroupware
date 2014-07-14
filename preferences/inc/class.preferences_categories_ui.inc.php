@@ -1,7 +1,7 @@
 <?php
 /**
  * Preferences UI for regular users
- * 
+ *
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @package preferences
@@ -23,6 +23,7 @@ class preferences_categories_ui extends admin_categories {
 	protected $add_link = 'preferences.preferences_categories_ui.edit';
 
 	function __construct() {
+		egw_framework::includeCSS('/admin/templates/default/app.css');
 	}
 
 	public function get_rows(&$query, &$rows, &$readonlys) {

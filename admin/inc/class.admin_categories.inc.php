@@ -127,10 +127,10 @@ class admin_categories
 		{
 			$cats = new categories($content['owner'] ? $content['owner'] : categories::GLOBAL_ACCOUNT,$content['appname']);
 
-			if ($content['delete']['delete'])
+			if ($content['delete']['delete'] || $content['delete']['subs'])
 			{
 				$button = 'delete';
-				$delete_subs = $content['delete']['subs'];
+				$delete_subs = $content['delete']['subs']?true:false;
 			}
 			else
 			{
