@@ -54,7 +54,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 			error_log("$this has no fields");
 			self::$transformation = array(
 				'type' => 'label',
-				'label' => 'No fields'
+				'value' => 'No fields'
 			);
 			return parent::beforeSendToClient($cname);
 		}
