@@ -1,3 +1,15 @@
+egroupware-epl (11.1.20140714-1) hardy; urgency=low
+
+  * PHP 5.5: disabling deprecated warnings of 5.5 eg. preg_replace with /e
+  * API/htmLawed: upgrade to version 1.1.17
+  * Calendar/iCal/CalDAV: normalize enddates not on a recurrence-date, to recurrence-date before (not next)
+  * PostgreSQL: fixed not working installation (access to not yet existing table stalls transaction)
+  * PostgreSQL/Addressbook: fixed not displayed pictures
+  * Backup: backup could contain rows multiple times (which caused restore to fail)
+  * Setup: always try to use a TLS connection for mail auth
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 14 Jul 2014 18:34:09 +0200
+
 egroupware-epl (11.1.20140516-1) hardy; urgency=low
 
   * Admin: limiting a huge list of accounts returned not all accounts, because full search was limited too original number of requested rows
