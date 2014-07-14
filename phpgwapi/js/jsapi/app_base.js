@@ -285,8 +285,7 @@ var AppJS = Class.extend(
 				if(state.state && state.state.search) state.state.search = unescape(state.state.search);
 
 				// Apply
-				_widget.activeFilters = state.state || state.filter || {};
-				_widget.applyFilters();
+				_widget.applyFilters(state.state || state.filter || {});
 				nextmatched = true;
 			}, this, et2_nextmatch);
 			if(nextmatched) return false;
