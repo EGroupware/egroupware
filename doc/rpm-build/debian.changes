@@ -1,3 +1,16 @@
+egroupware-epl (14.1.20140714-1) hardy; urgency=low
+
+  * Backup: backup could contain rows multiple times (which caused restore to fail)
+  * API: fixed broken configuration, causing eg. ActiveDirectory or LDAP authentication to fail (you need to run Setup >> Clear cache!)
+  * Preferences: non-admins were allowed to changed default, forced or group preferences
+  * Preferences: do NOT use deny configuration for admins
+  * SiteMgr: fixed sliteshow (was loaded before jQuery)
+  * Mail: unlock tree again after copy/move actions
+  * ProjectManager: fix broken duration units causing times to display as undefined
+  * eTemplate2: several fixes in widgets
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 14 Jul 2014 18:40:34 +0200
+
 egroupware-epl (14.1.20140710-1) hardy; urgency=low
 
   * final 14.1 release
