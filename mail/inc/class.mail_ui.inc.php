@@ -2232,6 +2232,15 @@ class mail_ui
 		$content['mail_id']=$rowID;
 		$content['mailDisplayContainerClass']=(count($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight");
 		$content['mailDisplayAttachmentsClass']=(count($attachments)?"mailDisplayAttachments":"mail_DisplayNone");
+
+		// DRAG attachments actions
+		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
+			'file_drag' => array(
+				'dragType' => 'file',
+				'type' => 'drag',
+				'onExecute' => 'javaScript:app.mail.drag_attachment'
+			)
+		));
 //_debug_array($content);
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
@@ -2272,7 +2281,7 @@ class mail_ui
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-
+				
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
