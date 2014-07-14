@@ -83,8 +83,8 @@ class admin_categories
 	/**
 	 * Edit / add a category
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content = null
+	 * @param string $msg = ''
 	 */
 	public function edit(array $content=null,$msg='')
 	{
@@ -279,7 +279,7 @@ class admin_categories
 	/**
 	 * Return URL of an icon, or base url with trailing slash
 	 *
-	 * @param string $icon='' filename
+	 * @param string $icon = '' filename
 	 * @return string url
 	 */
 	static function icon_url($icon='')
@@ -369,7 +369,7 @@ class admin_categories
 				$row['class'] .= ' rowNoEdit rowNoDelete ';
 			}
 			// Can only edit (via context menu) categories for the selected app (backend restriction)
-			if($row['appname'] != $query['appname'])
+			if($row['appname'] != $query['appname'] || (array_sum($row['owner']) > 0))
 			{
 				$row['class'] .= ' rowNoEdit ';
 			}
@@ -399,8 +399,8 @@ class admin_categories
 	/**
 	 * Display the accesslog
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content = null
+	 * @param string $msg = ''
 	 */
 	public function index(array $content=null,$msg='')
 	{
@@ -626,7 +626,7 @@ class admin_categories
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
 	 * @param array $query get_rows parameter
 	 * @param string &$msg on return user feedback
-	 * @param boolean $skip_notifications=false true to NOT notify users about changes
+	 * @param boolean $skip_notifications = false true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
 	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
