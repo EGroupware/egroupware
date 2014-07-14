@@ -1586,6 +1586,7 @@ app.classes.mail = AppJS.extend(
 						case "cancel":
 							rv = 'cancel';
 					}
+					if (rv !="cancel") that.lock_tree();
 					switch (_action.id)
 					{
 						case "delete":
@@ -1612,7 +1613,6 @@ app.classes.mail = AppJS.extend(
 							if (_action.id.substr(0,4)=='move') that.mail_callMove(_action, _elems,_target, rv);
 							if (_action.id.substr(0,4)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
 					}
-					if (rv !="cancel") that.lock_tree();
 				},
 				messageToDisplay,
 				this.egw.lang("Confirm"),
@@ -2580,12 +2580,10 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_move2folder - implementation of the move action from action menu
 	 *
-	 * @param _action
+	 * @param _action _action.id holds folder target information
 	 * @param _elems - the representation of the elements to be affected
 	 */
 	mail_move2folder: function(_action, _elems) {
-		//alert('Copy or Move Called:'+_action.id);
-		// _action.id holds folder target information
 		this.mail_move(_action, _elems, null);
 	},
 
@@ -2612,14 +2610,13 @@ app.classes.mail = AppJS.extend(
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
-		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
-
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'])
+		var self = this;
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){self.unlock_tree();})
 			.sendRequest();
 		var nm = this.et2.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
@@ -2649,15 +2646,14 @@ app.classes.mail = AppJS.extend(
 		var target = _action.id == 'drop_copy_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
-		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
-
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
-			.sendRequest();
+		var self = this;
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
+			.sendRequest();	
 		// Server response contains refresh
 	},
 
