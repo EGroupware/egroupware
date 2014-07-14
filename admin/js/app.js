@@ -767,5 +767,27 @@ app.classes.admin = AppJS.extend(
 		}
 
 		return true;
+	},
+	
+	/**
+	 * Delete confirmation dialog
+	 * 
+	 */
+	delete_category: function ()
+	{
+		var _buttons = [
+				{"button_id": "delete[cancel]","text": 'Cancel', id: 'delete[cancel]', image: 'cancel', "default":true},
+				{"button_id": "delete[delete]","text": 'Delete', id: 'delete[delete]', image: 'delete'},
+				{"button_id": "delete[subs]","text": 'Delete including sub-enteries', id: 'delete[subs]', image: 'delete'},
+		];
+		var self = this;
+		var delDialog_callBack = function (_buttons)
+		{
+			if (_buttons != "delete[cancel]")
+			{
+				self.et2.getInstanceManager().submit(_buttons);
+			}
+		};
+		et2_dialog.show_dialog(delDialog_callBack,"Are you sure you want to delete this category ?","Delete",{},_buttons);
 	}
 });

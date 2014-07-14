@@ -17,14 +17,13 @@
 							</columns>
 							<rows>
 								<row height="30">
-									<description align="center" value="Are you sure you want to delete this category ?" span="all"/>
+									<description span="all"/>
 								</row>
 								<row>
-									<checkbox align="center" label="Do you also want to delete all global subcategories ?" id="delete[subs]" span="all"/>
+									<checkbox align="center" id="delete[subs]" span="all"/>
 								</row>
 								<row height="40">
 									<button align="center" label="Delete" id="delete[delete]" image="delete" background_image="1"/>
-									<buttononly align="center" label="Cancel" id="delete[cancel]" onclick="set_style_by_class('fieldset','confirmDelete','display','none');" image="cancel" background_image="1"/>
 								</row>
 							</rows>
 						</grid>
@@ -41,7 +40,6 @@
 				<column width="300"/>
 			</columns>
 			<rows>
-				
 				<row class="dialogHeader">
 					<description value="Name" for="name"/>
 					<textbox id="name" needed="1" size="50" maxlength="150" class="et2_fullWidth"/>
@@ -92,11 +90,12 @@
 						<button label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply" background_image="1"/>
 						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Are you sure you want to delete this category ?'); return false;" image="delete" background_image="1"/>
+						<buttononly align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="app.admin.delete_category" image="delete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
-		<template id="admin.categories.delete"/>
+		<template id="admin.categories.delete" class="globalCat_hiddenCatid"/>
 	</template>
+	
 </overlay>
