@@ -203,6 +203,13 @@ class calendar_merge extends bo_merge
 		$duration = ($event['end'] - $event['start'])/60;
 		$replacements['$$'.($prefix?$prefix.'/':'').'calendar_duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
+		// Add in contact stuff for owner
+		if (strpos($content,'$$calendar_owner/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($event['owner'],'person_id')))
+		{
+			$replacements += $this->contact_replacements($user,($prefix ? $prefix.'/':'').'calendar_owner');
+			$replacements['$$'.($prefix?$prefix.'/':'').'calendar_owner/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($event['owner'],'account_primary_group'));
+		}
+
 		if($content && strpos($content, '$$#') !== 0)
 		{
 			$this->cf_link_to_expand($event, $content, $replacements);
