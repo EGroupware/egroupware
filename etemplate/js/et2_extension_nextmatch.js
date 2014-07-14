@@ -387,6 +387,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * @param _set filter(s) to set eg. { filter: '' } to reset filter in NM header
 	 */
 	applyFilters: function(_set) {
+		var changed = false;
+
+		// Cleared explicitly
+		if(typeof _set != 'undefined' && jQuery.isEmptyObject(_set))
+		{
+			changed = true;
+			this.activeFilters = {};
+		}
 		if(typeof this.activeFilters == "undefined")
 		{
 			this.activeFilters = {col_filter: {}};
@@ -396,7 +404,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.activeFilters.col_filter = {};
 		}
 
-		var changed = false;
 		if (typeof _set == 'object')
 		{
 			for(var s in _set)
