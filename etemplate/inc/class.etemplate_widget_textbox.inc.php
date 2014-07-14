@@ -49,11 +49,12 @@ class etemplate_widget_textbox extends etemplate_widget
 	 * Reimplemented to handle legacy read-only by setting size < 0
 	 *
 	 * @param string|XMLReader $xml
-	 * @return etemplate_widget_textbox current object or clone, if any attribute was set
+	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 */
-	public function set_attrs($xml)
+	public function set_attrs($xml, $cloned=true)
 	{
-		parent::set_attrs($xml);
+		parent::set_attrs($xml, $cloned);
 
 		// Legacy handling only
 		// A negative size triggered the HTML readonly attibute, but not etemplate readonly,

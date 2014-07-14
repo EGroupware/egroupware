@@ -175,7 +175,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$cat_app = $value['cat_app'] ? $value['cat_app'] : $GLOBALS['egw_info']['flags']['current_app'];
 			$value['options-cat_id'] = array();
-			
+
 			// Add 'All', if not already there
 			if(!$value['options-cat_id'][''] && !($value['options-cat_id'][0] && $value['options-cat_id'][0]['value'] == ''))
 			{
@@ -369,7 +369,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if ($knownUids)
 		{
 			// row_id not set for nextmatch --> just skip them, we can't identify the rows
-			if (!$row_id)	
+			if (!$row_id)
 			{
 				foreach($knownUids as $uid)
 				{
@@ -1024,9 +1024,17 @@ class etemplate_widget_nextmatch_filterheader extends etemplate_widget_menupopup
  */
 class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopup
 {
-	public function set_attrs($xml)
+	/**
+	 * Parse and set extra attributes from xml in template object
+	 *
+	 * @param string|XMLReader $xml
+	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @return etemplate_widget_template current object or clone, if any attribute was set
+	 */
+	public function set_attrs($xml, $cloned=true)
 	{
-		parent::set_attrs($xml);
+		parent::set_attrs($xml, $cloned);
+
 		$this->attrs['type'] = 'select-account';
 	}
 }
