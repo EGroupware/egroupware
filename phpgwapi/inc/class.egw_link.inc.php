@@ -1192,8 +1192,9 @@ class egw_link extends solink
 				error_log(__METHOD__. ' (Link target ' . egw_vfs::decodePath($file) . ' not found!');
 				return false;
 			}
-			$link = egw_vfs::concat($app_path,egw_vfs::basename($file));
 		}
+
+		$link = egw_vfs::concat($app_path,egw_vfs::basename($file));
 		return egw_vfs::symlink($file,$link);
 	}
 	/**
