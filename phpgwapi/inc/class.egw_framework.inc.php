@@ -1405,7 +1405,8 @@ if ($app == 'home') continue;
 			),
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['server']['deny_'.$type] &&
-			array_intersect($memberships, (array)$GLOBALS['egw_info']['server']['deny_'.$type]))
+			array_intersect($memberships, (array)$GLOBALS['egw_info']['server']['deny_'.$type]) &&
+			!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			return;	// user has no access to preferences app
 		}
