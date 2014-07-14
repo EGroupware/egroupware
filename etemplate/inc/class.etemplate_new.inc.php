@@ -355,9 +355,6 @@ class etemplate_new extends etemplate_widget_template
 		error_log(__METHOD__."(,".array2string($content).')');
 		error_log(' validated='.array2string($validated));
 
-		// tell request call to remove request, if it is not modified eg. by call to exec in callback
-		self::$request->remove_if_not_modified();
-
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}
 
