@@ -358,7 +358,7 @@
     top: 5px;
     left: 5px;
   }
-  .et2_link_to .et2_file {
+  .et2_link_to div.et2_file {
     background-color: #ffffff !important;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
