@@ -455,10 +455,10 @@ class mail_ui
 				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
 		}
-		else if ($content['mailPreview']['mailPreviewHeadersAttachments']['previewAttachmentArea'][0]['save_zip'])
-		{
-			$this->download_zip(current($content[self::$nm_index]['selected']));
-		}
+//		else if ($content['mailPreview']['mailPreviewHeadersAttachments']['previewAttachmentArea'][0]['save_zip'])
+//		{
+//			$this->download_zip(current($content[self::$nm_index]['selected']));
+//		}
 		//$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 		$content[self::$nm_index]['csv_fields'] = false;
@@ -2100,10 +2100,10 @@ class mail_ui
 			$rowID = $_requesteddata['id'];
 			//unset($_REQUEST);
 		}
-		if($_requesteddata['mail_displayattachments'][0]['save_zip'])
-		{
-			$this->download_zip($_requesteddata['mail_id']);
-		}
+//		if($_requesteddata['mail_displayattachments'][0]['save_zip'])
+//		{
+//			$this->download_zip($_requesteddata['mail_id']);
+//		}
 		$preventRedirect=false;
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
@@ -2279,6 +2279,7 @@ class mail_ui
 						$linkData = array
 						(
 							'menuaction'	=> 'mail.mail_ui.displayMessage',
+							//'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail']

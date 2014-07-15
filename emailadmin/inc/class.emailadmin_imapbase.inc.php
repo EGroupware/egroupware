@@ -6023,7 +6023,7 @@ class emailadmin_imapbase
 	 * parseRawMessageIntoMailObject - parses a message/rfc mail from file to the mailobject and returns the header and body via reference
 	 *   throws egw_exception_assertion_failed when the required Pear Class is not found/loadable
 	 * @param object $mailObject instance of the SMTP Mailer Object
-	 * @param string $message string containing the RawMessage
+	 * @param mixed string/object $message string containing the RawMessage / object Mail_mimeDecoded message (part))
 	 * @param string &$Header  reference used to return the imported Mailheader
 	 * @param string &$Body reference to return the imported Body
 	 * @return void Mailheader and body is returned via Reference in $Header $Body
@@ -6038,8 +6038,15 @@ class emailadmin_imapbase
 			//echo '<pre>'.$message.'</pre>';
 			//error_log(__METHOD__.' ('.__LINE__.') '.$message);
 			if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false) throw new egw_exception_assertion_failed(lang('Required PEAR class Mail/mimeDecode.php not found.'));
-			$mailDecode = new Mail_mimeDecode($message);
-			$structure = $mailDecode->decode(array('include_bodies'=>true,'decode_bodies'=>true,'decode_headers'=>true));
+			if (is_string($message))
+			{
+				$mailDecode = new Mail_mimeDecode($message);
+				$structure = $mailDecode->decode(array('include_bodies'=>true,'decode_bodies'=>true,'decode_headers'=>true));
+			}
+			if (is_object($message))
+			{
+				$structure = $message;
+			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($structure));
 			//_debug_array($structure);
 			//exit;
@@ -6272,8 +6279,8 @@ class emailadmin_imapbase
 					//error_log( __METHOD__.' ('.__LINE__.') '." Recursion to fetch subparts:".$part->ctype_primary.'/'.$part->ctype_secondary);
 					$this->createBodyFromStructure($mailObject, $part, $parenttype=null, $decode);
 				}
-				//error_log(__METHOD__.' ('.__LINE__.') '.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary.' Part:'.array2string($part));
-				if ($part->body && ((strtolower($structure->ctype_secondary)=='mixed' && strtolower($part->ctype_primary)!='multipart') ||
+				//error_log(__METHOD__.' ('.__LINE__.') '.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary.' Part:'.array2string($part->body));
+				if (($part->body||strtolower($part->ctype_primary.'/'.$part->ctype_secondary)=="message/rfc822") && ((strtolower($structure->ctype_secondary)=='mixed' && strtolower($part->ctype_primary)!='multipart') ||
 					trim(strtolower($part->disposition)) == 'attachment' ||
 					trim(strtolower($part->disposition)) == 'inline' ||
 					isset($part->headers['content-id'])))
@@ -6347,12 +6354,26 @@ class emailadmin_imapbase
 						}
 						else
 						{
-							//error_log(__METHOD__.' ('.__LINE__.') '.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary);
-							$mailObject->AddStringAttachment($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
+							//error_log(__METHOD__.' ('.__LINE__.') '.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary.array2string($part->parts));
+							if (strtolower($part->ctype_primary.'/'.$part->ctype_secondary)=="message/rfc822")
+							{
+								$localMailObject = new egw_mailer();
+								$this->parseRawMessageIntoMailObject($localMailObject,$part->parts[0],$_Header,$_Body);
+								//error_log(__METHOD__.__LINE__.$_Header.$localMailObject->LE.$localMailObject->LE.$_Body);
+								$mailObject->AddStringAttachment($_Header.$localMailObject->LE.$localMailObject->LE.$_Body,
 													 $filename,
 													 ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'),
 													 $part->ctype_primary.'/'.$part->ctype_secondary
 													);
+							}
+							else
+							{
+								$mailObject->AddStringAttachment($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
+													 $filename,
+													 ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'),
+													 $part->ctype_primary.'/'.$part->ctype_secondary
+													);
+							}
 						}
 					}
 					if (!(trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)

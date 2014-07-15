@@ -2012,6 +2012,7 @@ app.classes.mail = AppJS.extend(
 		{
 			case 'MESSAGE/RFC822':
 				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
+				url += '&mode=display';//message/rfc822 attachments should be opened in display mode
 				url += '&id='+mailid;
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
