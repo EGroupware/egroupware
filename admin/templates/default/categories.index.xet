@@ -78,17 +78,6 @@
 				</row>
 			</rows>
 		</grid>
-		<box class="action_popup prompt" id="delete_popup">
-			<vbox class="prompt">
-				<description value="Delete" class="promptheader"/>
-				<description value="Delete selected entries?" id="delete_prompt"/>
-				<hbox>
-					<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
-					<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
-					<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
-				</hbox>
-			</vbox>
-		</box>
 		<box class="action_popup prompt" id="owner_popup">
 			<vbox>
 				<description value="Change owner" class="promptheader"/>

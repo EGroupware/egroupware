@@ -601,9 +601,9 @@ class admin_categories
 			'delete' => array(
 				'caption' => 'Delete',
 				'allowOnMultiple' => true,
-				'nm_action' => 'open_popup',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
+				'onExecute' => 'javaScript:app.admin.delete_category'
 			),
 		);
 
