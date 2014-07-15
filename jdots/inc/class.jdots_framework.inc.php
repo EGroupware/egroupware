@@ -307,7 +307,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 				$this->do_sidebox();
 			}
 			// for remote manual never check/create framework
-			if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('manual', 'login', 'logout')))
+			if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('manual', 'login', 'logout', 'sitemgr')))
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
 				$extra['check-framework'] = true;
