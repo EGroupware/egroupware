@@ -1640,7 +1640,7 @@ app.classes.mail = AppJS.extend(
 					case "flagged":
 					case "read":
 					case "undelete":
-						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current view?",this.egw.lang(_action.id))+" ";
 						break;
 					default:
 						var type = null;
@@ -1652,7 +1652,7 @@ app.classes.mail = AppJS.extend(
 						{
 							type = 'Copy';
 						}
-						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(type?type:_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
 				return et2_dialog.show_dialog(function(_button_id) {
 					var rv = false;
