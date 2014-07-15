@@ -105,6 +105,7 @@ class db_backup
 		}
 
 		$this->db = $this->schema_proc->m_odb;
+		if (!$this->db->Link_ID) $this->db->connect();
 		$this->adodb = $this->db->Link_ID;
 		if (isset($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']))		// called from setup
 		{

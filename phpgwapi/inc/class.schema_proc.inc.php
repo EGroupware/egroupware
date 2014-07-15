@@ -112,7 +112,7 @@ class schema_proc
 	    $this->m_odb->connect();
 		$this->capabilities =& $this->m_odb->capabilities;
 
-		$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
+		$this->sType = $dbms ? $dbms : $this->m_odb->Type;
 		$this->adodb = &$this->m_odb->Link_ID;
 		$this->dict = NewDataDictionary($this->adodb);
 
