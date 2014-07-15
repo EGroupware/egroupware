@@ -467,7 +467,6 @@ div.et2_file {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
-	width: 37%;
 	margin-left: 8px;
 	margin-top: 0;
 }
@@ -641,6 +640,25 @@ div.et2_link_entry input.ui-autocomplete-input {
   float: left;
   width: 22px;
 }
+.et2_link_to button.et2_vfs_btn{
+	float: left;
+	margin: 0;
+	text-align: left;
+	height: 24px !important;
+	padding-left: 30px !important;
+	background-repeat: no-repeat;
+	background-position: 4px center;
+	background-size: 20px auto;
+	width: 35%;
+}
+.et2_link_to div.et2_file{
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	width: 37%;
+	margin-left: 8px;
+	margin-top: 0;
+}
 .et2_link {
   cursor: pointer;
   color: #003075;
@@ -773,7 +791,6 @@ ul.et2_vfs {
   padding: 0.25ex;
 }
 button.et2_vfs_btn {
-	float:left;
 	margin: 0;
 	text-align: left;
 	height: 24px !important;
@@ -781,7 +798,6 @@ button.et2_vfs_btn {
     background-repeat: no-repeat;
     background-position:  4px center;
 	background-size: 20px auto;
-	width:35%;
 }
 
 /**
