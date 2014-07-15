@@ -180,6 +180,7 @@ colombia	common	fr	COLOMBIE
 common preferences	common	fr	Préférences communes
 comoros	common	fr	COMORRES
 company	common	fr	Société
+confirmation required	common	fr	Confirmation requise
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
 contacting server...	common	fr	Connexion au serveur...
@@ -214,6 +215,7 @@ delete	common	fr	Supprimer
 delete category	common	fr	Supprimer la catégorie
 delete file	common	fr	Supprimer le fichier
 delete row	common	fr	Supprimer ligne
+delete selected entries?	common	fr	Supprimer les entrées sélectionnées ?
 delete these entries	common	fr	Supprimer ces entrées
 delete this entry	common	fr	Supprimer cette entrée
 denmark	common	fr	DANEMARK
@@ -283,11 +285,14 @@ etag	common	fr	eTag
 ethiopia	common	fr	ETHIOPIE
 everything	common	fr	Tout
 exact	common	fr	exact
+failed to change password.	common	fr	Echec du changement de mot de passe.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fr	Impossible de contacter le serveur ou réponse invalide de ce dernier. Essayez de vous reconnecter. En cas de panne contactez votre administrateur.
 failed to create required directory "%1"!	admin	fr	Echec de la création du répertoire "%1"!
 failed to move unconnected %1 %2 to %3!	admin	fr	Echec à la suppression des %1 non connectés %2 à %3!
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	ILES FAROE
+favorite queries	common	fr	Requêtes en favoris
+favorites	common	fr	Favoris
 fax number	common	fr	Numéro de fax
 features of the editor?	common	fr	Fonctionnalités de l'éditeur
 february	common	fr	Février
@@ -437,6 +442,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	fr	Liste
 list members	common	fr	Liste les membres
 lithuania	common	fr	LITHUANIE
+load	common	fr	Charger
 local	common	fr	Local
 location calendars	groupdav	fr	Localisations des calendriers
 locations	common	fr	Localisations
@@ -447,6 +453,7 @@ logout	common	fr	Déconnexion
 lost login id	common	fr	Identifiant oublié
 lost password	common	fr	Mot de passe oublié
 low	common	fr	Bas
+lowercase letters	common	fr	lettres en minuscule
 lowest	common	fr	Plus bas
 luxembourg	common	fr	LUXEMBOURG
 macau	common	fr	MACAU
@@ -511,7 +518,9 @@ niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
+no - cancel	common	fr	Non, annuler
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
+no filters	common	fr	Aucun filtre
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no savant2 template directories were found in:	common	fr	Pas de  dossier modèle Savant2 n'a été trouvé dans:
 no subject	common	fr	Sans objet
@@ -525,12 +534,15 @@ not	common	fr	pas
 not a user yet? register now	common	fr	Pas encore identifié? Enregisrez-vous maintenant
 not assigned	common	fr	non assigné
 not readable %1 entry of user %2	common	fr	L'entrée %1 de l'utilisateur %2 est illisible
+not supported by current application!	common	fr	Non supporté par l'application active
 note	common	fr	Note
 notes	common	fr	Notes
+nothing to save.	common	fr	Rien à enregistrer.
 notifications	common	fr	Notifications
 notify window	common	fr	Fenêtre de notification
 notify your administrator to correct this situation	common	fr	Demandez à votre administrateur de corriger la situation
 november	common	fr	Novembre
+numbers	common	fr	nombres
 october	common	fr	Octobre
 ok	common	fr	OK
 old value	common	fr	Ancienne valeur
@@ -676,6 +688,7 @@ select user	common	fr	Sélectionner l'utilisateur
 select work email address	common	fr	Sélectionner l'email professionnel
 selection	common	fr	Sélection
 send	common	fr	Envoyer
+send succeeded to %1	common	fr	Envoi réussi vers %1
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
 serbia	common	fr	Serbie
@@ -720,6 +733,7 @@ south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	GEORGIE DU SUD ET LES ILES SANDWICH DU SUD
 space	common	fr	Espace
 spain	common	fr	ESPAGNE
+special characters	common	fr	caractères spéciaux
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date de début
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fr	Répertoire de début pour la navigation d'image dans l'éditeur riche dans le File Manager eGroupware
@@ -802,6 +816,7 @@ update the clock per minute or per second	common	fr	Mettre à jour l'horloge par
 upload	common	fr	Déposer
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
 upload requires the directory to be writable by the webserver!	common	fr	L'upload nécessite que le répertoire soit en écriture sur le serveur web !
+uppercase letters	common	fr	lettres majuscules
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
@@ -873,4 +888,3 @@ your settings have been updated	common	fr	Vos préférences ont été mises à j
 zambia	common	fr	ZAMBIE
 zimbabwe	common	fr	ZIMBABWE
 zoom	common	fr	Agrandissement
-nothing to save.	common	fr	Rien à enregistrer.

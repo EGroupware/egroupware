@@ -1,6 +1,9 @@
 %1 %2 in %3	calendar	fr	%1 %2 dans %3
+%1 days	calendar	fr	%1 jours
 %1 event(s) %2	calendar	fr	%1 événement(s) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	fr	%1 événement(s) %2, %3 en échec pour droits insuffisants !
+%1 hours	calendar	fr	%1 heures
+%1 minutes	calendar	fr	%1 minutes
 %1 participants removed because of missing invite grants	calendar	fr	%1 participant(s)  supprimé(s) pour manque de confirmation d'invitation.
 %1 records imported	calendar	fr	%1 enregistrement(s) importé(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fr	%1 enregistrements lus (pas encore importés, vous pouvez revenir en arrière et décocher Tester l'import)
@@ -22,6 +25,7 @@ actions	calendar	fr	Actions
 actions...	calendar	fr	Actions...
 add alarm	calendar	fr	Ajouter une alarme
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
+add new alarm	calendar	fr	Ajouter une alarme
 add new participants or resource	calendar	fr	Ajouter de nouveaux participants ou ressources
 add timesheet entry	calendar	fr	Ajouter une entrée feuille de temps
 added	calendar	fr	Ajouté
@@ -32,6 +36,7 @@ after current date	calendar	fr	Après la date courante
 age:	calendar	fr	Age :
 alarm	calendar	fr	Alarme
 alarm added	calendar	fr	Alarme ajoutée.
+alarm added automatic to new events before event start-time	calendar	fr	Alarme ajouté automatiquement aux nouveaux événements avant l'heure début
 alarm deleted	calendar	fr	Alarme supprimée.
 alarm for %1 at %2 in %3	calendar	fr	Alarme pour %1 à %2 dans %3
 alarm management	calendar	fr	Gestion des alarmes
@@ -112,6 +117,7 @@ creator	calendar	fr	Créateur
 csv	calendar	fr	CSV
 csv-fieldname	calendar	fr	CSV - Nom du champ
 csv-filename	calendar	fr	CSV - Nom du fichier
+custom	calendar	fr	Personnalisé
 custom fields	common	fr	Champs personnalisés
 custom_2	common	fr	Libre/Occupé
 daily	calendar	fr	Journalier
@@ -123,6 +129,8 @@ days	calendar	fr	jours
 days of the week for a weekly repeated event	calendar	fr	Jours de la semaine pour une répétition hebdomadaire
 days repeated	calendar	fr	Jours répétés
 dayview	calendar	fr	Vue journalière
+default alarm for regular events	calendar	fr	Alarme par défaut pour les événements récurrents
+default alarm for whole-day events	calendar	fr	Alarme par défaut pour les événements prenant une journée entière
 default appointment length (in minutes)	calendar	fr	Durée du rendez-vous par défaut (en minutes)
 default calendar filter	calendar	fr	Filtre de calendrier par défaut
 default calendar view	calendar	fr	Vue du calendrier par défaut
@@ -138,6 +146,7 @@ delete series	calendar	fr	Supprimer des occurences
 delete this alarm	calendar	fr	Supprimer cette alarme
 delete this event	calendar	fr	Supprimer cet événement
 delete this exception	calendar	fr	Supprimer cet exception
+delete this recurrence	calendar	fr	Supprimer cette récurrence
 delete this series of recuring events	calendar	fr	Supprimer ces occurences d'événements récurrents
 deleted	calendar	fr	Supprimé(s).
 deny ressources reservation for private events	calendar	fr	Refuser la réservation des ressources pour des événements privés.
@@ -168,6 +177,7 @@ edit series	calendar	fr	Modifier des occurrences
 edit status or alarms for this particular day	calendar	fr	Modifier les statuts ou alarmes de ce jour en particulier
 edit this event	calendar	fr	Modifier cet événement
 edit this series of recuring events	calendar	fr	Modifier cette série d'événements récurrents
+empty = no alarm	calendar	fr	vide = aucune alarme
 empty for all	calendar	fr	Vide pour tous
 end	calendar	fr	Fin
 end date/time	calendar	fr	Date/Heure de fin
@@ -307,6 +317,7 @@ maximum available quantity of %1 exceeded!	calendar	fr	Dépassement de la quanti
 meeting request	calendar	fr	Demande de rendez-vous
 meetingrequest to all participants	calendar	fr	Demande de rendez-vous à tous les participants
 merge document...	calendar	fr	Fusionner un document...
+midnight	calendar	fr	Minuit
 minutes	calendar	fr	Minutes
 modified	calendar	fr	Modifié
 modifier	calendar	fr	Editeur
@@ -318,6 +329,7 @@ monthly (by day)	calendar	fr	Mensuel (par jour)
 monthview	calendar	fr	Vue mensuelle
 multiple week view	calendar	fr	Vue multi-semaines
 name of current user, all other contact fields are valid too	calendar	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
+name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	fr	Jour de la semaine (ex: lundi), disponible comme première entrée sur chaque vue semaine ou journalière à l'intérieur d'une sélection.
 needs action	calendar	fr	Action nécessaire
 new	calendar	fr	Nouveau
 new search with the above parameters	calendar	fr	Nouvelle recherche avec les paramètres ci-dessus
@@ -496,6 +508,7 @@ this entry is currently opened by %1!	calendar	fr	Cet élément est actuellement
 this entry is opened by user:	calendar	fr	Cet élément a été ouvert dans l'interface de temps défini par l'utilisateur :
 this event is part of a series	calendar	fr	Cet événements fait partie d'une série
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fr	Ce groupe qui est présélectionné quand vous entrez dans le planificateur. Vous pouvez le modifier dans le planning chaque fois que vous le désirez.
+this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	fr	Ceci est un événement récurrent. Souhaitez-vous supprimer juste cette occurrence ou bien toute la série ?
 this mail contains a meeting request	calendar	fr	Cet email contient une demande de rendez-vous
 this mail contains a reply to a meeting request	calendar	fr	Cet email contient une réponse à une demande de rendez-vous
 this message is sent for canceled or deleted events.	calendar	fr	Ce message est envoyé pour les événements annulés ou effacés.
