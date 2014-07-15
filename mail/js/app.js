@@ -1628,7 +1628,7 @@ app.classes.mail = AppJS.extend(
 					{text: this.egw.lang("Yes"), id: "all", class: "ui-priority-primary", "default": true},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
-				var messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in current view?",this.egw.lang(_action.id))+" ";
+				var messageToDisplay = '';
 				switch (_action.id)
 				{
 					case "unlabel":
@@ -1640,10 +1640,21 @@ app.classes.mail = AppJS.extend(
 					case "flagged":
 					case "read":
 					case "undelete":
-						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in current view?",this.egw.lang(_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
 						break;
+					default:
+						var type = null;
+						if (_action.id.substr(0,4)=='move' || _action.id === "drop_move_mail")
+						{
+							type = 'Move';
+						}
+						if (_action.id.substr(0,4)=='copy' || _action.id === "drop_copy_mail")
+						{
+							type = 'Copy';
+						}
+						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(type?type:_action.id))+" ";
 				}
-				return et2_dialog.show_dialog(function(_button_id, _value) {
+				return et2_dialog.show_dialog(function(_button_id) {
 					var rv = false;
 					switch (_button_id)
 					{
