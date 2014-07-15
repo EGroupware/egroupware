@@ -170,8 +170,6 @@ class setup_process
 		try {
 			// flush instance cache
 			egw_cache::flush(egw_cache::INSTANCE);
-			// delete image-map, in case new apps get installed, or existing ones updated
-			common::delete_image_map();
 		}
 		catch(Exception $e) {
 			unset($e);
