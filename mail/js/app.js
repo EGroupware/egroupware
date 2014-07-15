@@ -964,7 +964,7 @@ app.classes.mail = AppJS.extend(
 			});
 
 		var data = _elems[0].data || {};
-		
+
 		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
 		// add filename or number of files for multiple files
 		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
@@ -1496,7 +1496,7 @@ app.classes.mail = AppJS.extend(
 		var self = this;
 		this.egw.message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]],function(){self.lock_tree();})
-			.sendRequest(true);	
+			.sendRequest(true);
 	},
 
 	/**
@@ -1628,7 +1628,7 @@ app.classes.mail = AppJS.extend(
 					{text: this.egw.lang("Yes"), id: "all", class: "ui-priority-primary", "default": true},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
-				var messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
+				var messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in current view?",this.egw.lang(_action.id))+" ";
 				switch (_action.id)
 				{
 					case "unlabel":
@@ -1640,7 +1640,7 @@ app.classes.mail = AppJS.extend(
 					case "flagged":
 					case "read":
 					case "undelete":
-						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current folder?",this.egw.lang(_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in current view?",this.egw.lang(_action.id))+" ";
 						break;
 				}
 				return et2_dialog.show_dialog(function(_button_id, _value) {
@@ -2720,7 +2720,7 @@ app.classes.mail = AppJS.extend(
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 		var self = this;
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
-			.sendRequest();	
+			.sendRequest();
 		// Server response contains refresh
 	},
 
