@@ -1605,7 +1605,7 @@ var et2_link_list = et2_link_string.extend(
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);})
+				.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);})
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
