@@ -2313,7 +2313,7 @@ class calendar_uiforms extends calendar_ui
 			unset($content['button']);
 			if ($button != 'cancel')	// store changed acl
 			{
-				foreach($content['rows'] as $data)
+				foreach($content as $data)
 				{
 					if (!($cat_id = $data['cat_id'])) continue;
 					foreach(array_merge((array)$data['add'],(array)$data['status'],array_keys((array)$data['old'])) as $account_id)
@@ -2330,7 +2330,7 @@ class calendar_uiforms extends calendar_ui
 				egw::redirect_link('/admin/index.php', null, 'admin');
 			}
 		}
-		$content['rows'] = $preserv['rows'] = array();
+		$content= $preserv = array();
 		$n = 1;
 		foreach($this->bo->get_cat_rights() as $Lcat_id => $data)
 		{
@@ -2345,8 +2345,8 @@ class calendar_uiforms extends calendar_ui
 				if ($rights & calendar_boupdate::CAT_ACL_ADD) $row['add'][] = $account_id;
 				if ($rights & calendar_boupdate::CAT_ACL_STATUS) $row['status'][] = $account_id;
 			}
-			$content['rows'][$n] = $row;
-			$preserv['rows'][$n] = array(
+			$content[$n] = $row;
+			$preserv[$n] = array(
 				'cat_id' => $cat_id,
 				'old' => $data,
 			);
@@ -2354,7 +2354,7 @@ class calendar_uiforms extends calendar_ui
 			++$n;
 		}
 		// add empty row for new entries
-		$content['rows'][] = array('cat_id' => '');
+		$content[] = array('cat_id' => '');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
 		$tmp = new etemplate_new('calendar.cat_acl');

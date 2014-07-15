@@ -6,7 +6,7 @@
 			<caption label="Category ACL"/>
 			<description value="Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!"/>
 		</groupbox>
-		<grid id="rows">
+		<grid>
 			<columns>
 				<column/>
 				<column/>
