@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20140715-1) hardy; urgency=low
+
+  * Setup: fixed fatal error when updating from 1.8
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 15 Jul 2014 13:10:25 +0200
+
 egroupware-epl (11.1.20140714-1) hardy; urgency=low
 
   * PHP 5.5: disabling deprecated warnings of 5.5 eg. preg_replace with /e
