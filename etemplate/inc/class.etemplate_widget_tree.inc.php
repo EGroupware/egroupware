@@ -51,12 +51,13 @@ class etemplate_widget_tree extends etemplate_widget
 	 * Reimplemented to parse our differnt attributes
 	 *
 	 * @param string|XMLReader $xml
+	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 */
-	public function set_attrs($xml)
+	public function set_attrs($xml, $cloned=true)
 	{
 		$this->attrs['type'] = $xml->localName;
-		parent::set_attrs($xml);
+		parent::set_attrs($xml, $cloned);
 
 		// set attrs[multiple] from attrs[options]
 		if ($this->attrs['options'] > 1)

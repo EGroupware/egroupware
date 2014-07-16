@@ -48,12 +48,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Reimplemented to parse our differnt attributes
 	 *
 	 * @param string|XMLReader $xml
+	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 * @todo Use legacy_attributes instead of leaving it to typeOptions method to parse them
 	 */
-	public function set_attrs($xml)
+	public function set_attrs($xml, $cloned=true)
 	{
-		parent::set_attrs($xml);
+		parent::set_attrs($xml, $cloned);
 
 		// set attrs[multiple] from attrs[options], unset options only if it just contains number or rows
 		if ($this->attrs['options'] > 1)
@@ -94,7 +95,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 				switch ($widget_type)
 				{
-					case 'select-account':	
+					case 'select-account':
 						// If in allowed options, skip account check to support app-specific options
 						if(count($allowed) > 0 && in_array($val,$allowed)) continue;
 
