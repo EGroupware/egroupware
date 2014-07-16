@@ -1,7 +1,7 @@
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * SVG
+ * lettersearch
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
@@ -9,44 +9,21 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
-
 @import (reference) "definitions.less";
 //##############################################################################################################
 
-
-
-* {
-    fill: @gray_60;
-    /*stroke: @gray_50;*/
-    /*fill: @gray_0;*/
-}
-/*
-svg#etemplate_navbar {
-    fill: @gray_40;
+/*SVG Filter / not for Logo */
+#egw_fw_sidebar img[src$="svg"]{
+            .gradient_vertical (@gray_60, @gray_60);
+            .rounded(3px);
+            border: 1px solid @gray_0;;
 }
 
-svg#infolog_navbar  {
-    fill: @gray_40;
+#egw_fw_main img[src$="svg"],
+#egw_fw_footer img[src$="svg"]{
+            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+            .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
+
 }
-
-svg#admin_navbar  {
-    fill: @gray_40;
-}
-
-.egw_fw_ui_tabs_header > svg *  {
-    fill: @egw_color_2_a !important;
-    stroke: @gray_0 !important;
-}
-
-svg#sambaadmin_navbar  {
-    fill: @gray_40;
-}
-
-svg#mail_navbar {
-    fill: @gray_40;
-}*/
-//
-
-//

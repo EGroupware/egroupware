@@ -1,0 +1,36 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
+
+## Definitions of all used fonts
+
+ */
+@import "definitions.less";
+
+
+
+ /*#####################################################################*/
+// Schriften
+
+.basefontfamily{
+    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+
+}
+
+@basefontsize : 11px;
+
+.fontsize_normal {font-size: @basefontsize;}
+
+.fontsize_xs {font-size: @basefontsize*0.25;} // h5
+.fontsize_s {font-size: @basefontsize*0.5;}   // h4
+.fontsize_m {font-size: @basefontsize*1;}     // p
+.fontsize_l {font-size: @basefontsize*1.1;}   // h3 + SIDEBAR APPS H1
+.fontsize_xl {font-size: @basefontsize*1.3;}  // h2
+.fontsize_xxl {font-size: @basefontsize*1.8;} // h1

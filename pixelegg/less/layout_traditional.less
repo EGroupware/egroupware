@@ -1,0 +1,323 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+@import (reference) "definitions.less";
+//##############################################################################################################
+
+/* traditional */
+
+
+
+form
+{
+    margin:0px;
+    padding:0px;
+}
+
+img
+{
+    border:0;
+
+}
+
+div{
+	color: #000000;
+}
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+{
+    .background_color_10_gray;
+    background-image: none;
+    border:  outset 1px #b9d5e3;
+    margin:  1px;
+    padding: 1px;
+    cursor:  pointer;
+    color:  #004e7d;
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+    .background_color_15_gray;
+    background-image: none;
+    border:  outset 1px #b9d5e3;
+    color:  #004e7d;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+{
+    border:  inset 1px #bbbbbb;
+}
+
+input[type=submit]:disabled,input[type=button]:disabled,input[type=reset]:disabled,button:disabled,.egwbutton:disabled
+{
+    background-color: transparent;
+    color: gray;
+}
+
+input.egwbutton
+{
+    background-color:#b9d5e3;
+    border:  outset 1px #b9d5e3;
+    margin:  1px;
+    padding: 1px;
+    cursor:  pointer;
+    color:  #004e7d;
+}
+
+input.egwbutton:hover
+{
+    background-color:#94bfd4;
+    border:  outset 1px #b9d5e3;
+    color:  #004e7d;
+}
+input.egwbutton:active
+{
+    border:  inset 1px #bbbbbb;
+}
+
+input[type=image]
+{
+    cursor: pointer;
+    border: 0;
+    .dimension_width_height_s;
+}
+
+#thesideboxcolumn
+{
+    width: 177px;
+    position:relative;
+}
+
+#sideresize
+{
+    background-image:url(../images/resize.png);
+    width:13px;
+    height:13px;
+    right:1px;
+    top:1px;
+    position:absolute;
+    z-index:9999;
+}
+
+
+
+
+
+.divSidebox
+{
+    position:relative;
+    border: #9c9c9c 1px solid;
+    overflow:auto;
+}
+
+.divSideboxHeader
+{
+    text-align:center;
+    .background_color_15_gray;
+    padding-top:2px;
+    .color_50_gray;
+}
+
+
+a.divSideboxEntry, .divSideboxEntry
+{
+    text-align:left;
+    background-color:#FDFDFD;
+}
+
+a.appTitles,.appTitles
+{
+    height:18px;
+    padding-top:2px;
+    padding-bottom:2px;
+}
+
+a.textSidebox
+{
+    padding: 0;
+    border-top: 0;
+}
+
+.textSidebox
+{
+    padding-top:3px;
+    padding-bottom:3px;
+    padding-left: 1px;
+    border-top: solid #aaaaaa 1px;
+    overflow: auto;
+}
+
+.sideboxSpace
+{
+    height:9px;
+}
+
+.greyLine
+{
+    margin:1px;
+    border-top:solid 1px #7e7e7e;
+    height:1px;
+}
+
+#extraIcons
+{
+    background-color:#eeeeee;
+    border:solid 1px #7e7e7e;
+}
+
+.extraIconsRow
+{
+    border:solid 1px #dddddd;
+    padding:2px;
+}
+
+#topmenu
+{
+    background-color: #0081c1;
+    background-image: url(../images/bgtopmenu2.png);
+    color:#006699;
+    /*border-top: solid 1px #7e7e7e;*/
+    border-bottom: solid #5793ff 1px;
+    height:20px;
+    padding-top:4px ;
+    line-height:16px;
+}
+#topmenu a
+{
+    color:#006699;
+}
+
+#topmenu_items
+{
+    float:left;
+}
+#topmenu_info
+{
+    float:right;
+}
+
+#divUpperTabs
+{
+    text-align:right;
+    height: 15px;
+    margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+    display:inline;
+    margin:0;
+    padding:10px 10px 0 1px;
+    list-style:none;
+}
+
+#divUpperTabs li
+{
+    float:right;
+    margin:0 5px 0 0;
+    padding:0 5px 0 5px;
+    border:solid 1px #9c9c9c;
+    border-bottom: 0px;
+}
+
+//#divAppIconBar
+//{
+//	background-color:silver;
+//	border:solid 1px #9c9c9c;
+//	background-image: url(../images/background-icon-bar.png);
+//	background-repeat: repeat-x;
+//	overflow:visible;
+//	height: 45px; /* prevents text line to show in IE7+8(Compatibilitymode) */
+//}
+
+/* Star-Plus-HTML Hack fix for the above */
+*:first-child+html #divAppIconBar
+{
+    height: 60px;
+}
+
+#divAppTextBar
+{
+    background-color:white;
+}
+
+#divStatusBar
+{
+    background-color:white;
+    height:18px;
+    padding-left:3px;
+}
+
+#tdSidebox
+{
+    width:170px;
+    background-color:white;
+    overflow:visible;
+}
+
+#tdAppbox
+{
+    background-color:white;
+    padding-left:5px;
+    width: 100%;
+}
+
+#divAppboxHeader
+{
+    background-image:url(../images/appbox-header-background.png);
+    background-repeat: repeat-x;
+    height: 25px;
+    border-bottom:solid 1px #c0c0c0;
+    text-align:center;
+    padding-bottom:0px;
+    border-top:solid 1px #9c9c9c;
+    border-left:solid 1px #9c9c9c;
+    border-right:solid 1px #9c9c9c;
+
+
+   table img {.dimension_height_s;}
+}
+
+#divAppbox
+{
+    background-color:#ffffff;
+    padding:5px;
+    border-bottom:solid 1px #9c9c9c;
+    border-left:solid 1px #9c9c9c;
+    border-right:solid 1px #9c9c9c;
+}
+
+#divGenTime,#divPoweredBy
+{
+    bottom:4px;
+    text-align:center;
+    width:99%;
+}
+
+.pageGenTime,#divPoweredBy
+ 	  	 {
+ 	         font-size: 80%;
+ 	         color: #ff0000;
+ 	  	 text-align: center;
+ 	  	 }
+
+ 	  	 .pageGenTime {
+ 	  	         margin-top: 1em;
+ 	  	 }
+
+ 	  	 .pageGenTime > span:after {
+ 	  	         content: ", ";
+ 	  	 }
+
+ 	  	 .pageGenTime > span:last-child:after {
+ 	  	         content: "";
+ 	 }

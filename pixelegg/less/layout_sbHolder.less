@@ -1,0 +1,141 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
+ */
+@import (reference) "definitions.less";
+//##############################################################################################################
+.sbHolder{
+    .Complete_Button_select;
+    //	background-color: #2d2d2d;
+    //	border: solid 1px #515151;
+    //	font-family: Arial, sans-serif;
+    .basefontfamily;
+    font-size: 1.2em;
+    font-weight: normal;
+    height: 30px;
+    position: relative;
+    width: 10em;
+
+    &:hover{.Complete_Button_select_hover;}
+    &:focus{.Complete_Button_select_focus;}
+
+}
+.sbHolder:focus .sbSelector{}
+
+.sbSelector{
+    display: block;
+    height: 30px;
+    left: 0;
+    line-height: 30px;
+    outline: none;
+    overflow: hidden;
+    position: absolute;
+    text-indent: 10px;
+    top: 0;
+    width: 170px;
+}
+.sbSelector:link, .sbSelector:visited, .sbSelector:hover{
+    //	color: #EBB52D;
+    .color_50_gray;
+    outline: none;
+    text-decoration: none;
+}
+.sbToggle{
+    background: url(../img/select-icons.png) 0 -116px no-repeat;
+    display: block;
+    height: 30px;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+}
+.sbToggle:hover{
+    background: url(../images/select-icons.png) 0 -167px no-repeat;
+}
+.sbToggleOpen{
+    background: url(../images/select-icons.png) 0 -16px no-repeat;
+}
+.sbToggleOpen:hover{
+    background: url(../images/select-icons.png) 0 -66px no-repeat;
+}
+.sbHolderDisabled{
+    background-color: #3C3C3C;
+    border: solid 1px #515151;
+}
+.sbHolderDisabled .sbHolder{
+
+}
+.sbHolderDisabled .sbToggle{
+
+}
+
+// Ausklappliste
+
+.sbOptions{
+    //	background-color: #212121;
+    .background_color_0_gray;
+    border: solid 1px #515151;
+    list-style: none;
+    left: -1px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 30px;
+    width: 200px;
+    z-index: 1;
+    overflow-y: auto;
+
+    li{
+        padding: 0 7px;
+    }
+
+    a{
+        border-bottom: dotted 1px #515151;
+        display: block;
+        outline: none;
+        padding: 7px 0 7px 3px;
+        color:@link_color;
+    }
+
+    a:link,
+    a:visited{
+        color:@link_color;
+        text-decoration: none;
+    }
+    a:hover,
+    a:focus,
+    a.sbFocus{
+        color: @link_color_active;
+    }
+    li.last a{
+        border-bottom: none;
+    }
+
+
+    .sbDisabled{
+        border-bottom: dotted 1px #515151;
+        color: #999;
+        display: block;
+        padding: 7px 0 7px 3px;
+    }
+    .sbGroup{
+        border-bottom: dotted 1px #515151;
+        color: #EBB52D;
+        display: block;
+        font-weight: bold;
+        padding: 7px 0 7px 3px;
+    }
+    .sbSub{
+        padding-left: 17px;
+    }
+}
