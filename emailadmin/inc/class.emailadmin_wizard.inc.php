@@ -839,7 +839,7 @@ class emailadmin_wizard
 		if ($content['acc_id'] || (isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0) ) emailadmin_imapbase::unsetCachedObjects($content['acc_id']?$content['acc_id']:$_GET['acc_id']);
 		$tpl = new etemplate_new('emailadmin.account');
 
-		if (!is_array($content) || !empty($content['acc_id']) && $content['acc_id'] != $content['old_acc_id'])
+		if (!is_array($content) || !empty($content['acc_id']) && isset($content['old_acc_id']) && $content['acc_id'] != $content['old_acc_id'])
 		{
 			if (!is_array($content)) $content = array();
 			if ($this->is_admin && isset($_GET['account_id']))
