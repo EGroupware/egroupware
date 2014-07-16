@@ -668,6 +668,29 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		}
 		if (($ok = parent::GET($options)))
 		{
+			// mitigate risk of serving javascript or css via webdav from our domain,
+			// which will get around same origin policy and CSP
+			list($type, $subtype) = explode('/', strtolower($options['mimetype']));
+			if (!$this->force_download && in_array($type, array('application', 'text')) &&
+				in_array($subtype, array('javascript', 'x-javascript', 'ecmascript', 'jscript', 'vbscript', 'css')))
+			{
+				// unfortunatly only Chrome and IE >= 8 allow to switch content-sniffing off with X-Content-Type-Options: nosniff
+				if (html::$user_agent == 'chrome' || html::$user_agent == 'msie' && html::$ua_version >= 8)
+				{
+					$options['mimetype'] = 'text/plain';
+					header('X-Content-Type-Options: nosniff');	// stop IE & Chrome from content-type sniffing
+				}
+				// for the rest we change mime-type to text/html and let code below handle it safely
+				// this stops Safari and Firefox from using it as src attribute in a script tag
+				else
+				{
+					$options['mimetype'] = 'text/html';
+					$options['data'] = '<pre>'.fread($options['stream'], $options['length']);
+					fclose($options['stream']);
+					unset($options['stream']);
+					$options['size'] += 4;
+				}
+			}
 			// mitigate risk of html downloads by using CSP or force download for IE
 			if (!$this->force_download && in_array($options['mimetype'], array('text/html', 'application/xhtml+xml')))
 			{
