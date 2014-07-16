@@ -3322,6 +3322,7 @@ $this->partID = $partID;
 
 	/**
 	 * importMessage
+	 * @param array $content = null an array of content
 	 */
 	function importMessage($content=null)
 	{
@@ -3330,20 +3331,20 @@ $this->partID = $partID;
 		if (!empty($content))
 		{
 			//error_log(__METHOD__.__LINE__.array2string($content));
-			if ($content['divImportArea']['vfsfile'])
+			if ($content['vfsfile'])
 			{
-				$file = $content['divImportArea']['vfsfile'] = array(
-					'name' => egw_vfs::basename($content['divImportArea']['vfsfile']),
-					'type' => egw_vfs::mime_content_type($content['divImportArea']['vfsfile']),
-					'file' => egw_vfs::PREFIX.$content['divImportArea']['vfsfile'],
-					'size' => filesize(egw_vfs::PREFIX.$content['divImportArea']['vfsfile']),
+				$file = $content['vfsfile'] = array(
+					'name' => egw_vfs::basename($content['vfsfile']),
+					'type' => egw_vfs::mime_content_type($content['vfsfile']),
+					'file' => egw_vfs::PREFIX.$content['vfsfile'],
+					'size' => filesize(egw_vfs::PREFIX.$content['vfsfile']),
 				);
 			}
 			else
 			{
-				$file = $content['divImportArea']['uploadForImport'];
+				$file = $content['uploadForImport'];
 			}
-			$destination = $content['divImportArea']['FOLDER'][0];
+			$destination = $content['FOLDER'][0];
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
 			try
@@ -3351,7 +3352,7 @@ $this->partID = $partID;
 				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
 			    $linkData = array
 			    (
-					'id'		=> $this->createRowID($destination, $messageUid, true),
+					'id' => $this->createRowID($destination, $messageUid, true),
 			    );
 			}
 			catch (egw_exception_wrong_userinput $e)
@@ -3366,8 +3367,8 @@ $this->partID = $partID;
 			}
 		}
 		if (!is_array($content)) $content = array();
-		if (empty($content['divImportArea']['FOLDER'])) $content['divImportArea']['FOLDER']=(array)$this->mail_bo->getDraftFolder();
-		if (!empty($content['divImportArea']['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
+		if (empty($content['FOLDER'])) $content['FOLDER']=(array)$this->mail_bo->getDraftFolder();
+		if (!empty($content['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
 
 		$etpl = new etemplate_new('mail.importMessage');
 		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');

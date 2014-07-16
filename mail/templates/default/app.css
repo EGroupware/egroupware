@@ -683,7 +683,13 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   height: 500px;
   overflow: auto;
 }
-
+.mail_importMessageFile{
+	width: 40%;
+}
+#mail-importMessage .dialogHeader {
+	font-weight: bold;
+	font-size:150%;
+}
 /* MAIL PRINT */
 @media print {
 	.mailDisplayHeaders {
