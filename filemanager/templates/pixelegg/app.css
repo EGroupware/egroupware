@@ -295,6 +295,17 @@ div.filemanager_navigation label input {
 #filemanager-index .filters #filemanager-index_filter {
   margin-top: 0.5em;
 }
+table.egwGridView_grid img {
+  /*filter grey*/
+  filter: none;
+  -webkit-filter: initial;
+  -moz-filter: initial;
+  -ms-filter: initial;
+  -o-filter: initial;
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: initial;
+  /* IE 6-9 */
+}
 /*// #####################################################*/
 /*Dialog filemanager*/
 #filemanager-select {
@@ -424,7 +435,7 @@ div#stylite-filemanager-upload .et2_file input {
   background-color: #0c5da5;
 }
 div#stylite-filemanager-upload .et2_file input:hover {
-  background-color: #66a1d2 !important;
+  background-color: #189800 !important;
   color: #ffc200;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
