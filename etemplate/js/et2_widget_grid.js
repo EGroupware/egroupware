@@ -916,8 +916,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			// Add a new action object to the object manager
 			var row = $j('tr', this.tbody)[i];
 			var aoi = new et2_action_object_impl(this, row);
+			var id = "row_"+i;
 			var content = this.getArrayMgr('content').getEntry(i);
-			var obj = widget_object.addObject(content.id || "row_"+i, aoi);
+			if(content && content.id)
+			{
+				id = content.id;
+			}
+			var obj = widget_object.addObject(id, aoi);
 
 			// Set the data to the content so it's available for the action
 			if(content)
