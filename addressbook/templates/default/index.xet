@@ -37,16 +37,16 @@
 			<columns>
 				<column width="20"/>
 				<column/>
-				<column disabled="@no_role"/>
-				<column/>
-				<column width="60" disabled="@no_photo"/>
 				<column/>
 				<column/>
-				<column disabled="@no_home_adr_two_countrycode_adr_two_postalcode"/>
+				<column width="60"/>
+				<column/>
+				<column/>
+				<column/>
 				<column/>
 				<column/>
 				<column disabled="@no_customfields"/>
-				<column disabled="@no_note"/>
+				<column/>
 				<column disabled="@no_distribution_list"/>
 				<column/>
 				<column/>

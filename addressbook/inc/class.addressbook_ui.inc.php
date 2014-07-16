@@ -1499,7 +1499,6 @@ window.egw_LAB.wait(function() {
 		$order = $query['order'];
 
 		$readonlys = array();
-		$photos = $homeaddress = $roles = $notes = false;
 		foreach($rows as $n => &$row)
 		{
 			$given = $row['n_given'] ? $row['n_given'] : ($row['n_prefix'] ? $row['n_prefix'] : '');
@@ -1570,9 +1569,6 @@ window.egw_LAB.wait(function() {
 
 				unset($row['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 
-				if ($row['photo']) $photos = true;
-				if ($row['role']) $roles = true;
-				if ($row['note']) $notes = true;
 				if (isset($customfields[$row['id']]))
 				{
 					foreach($this->customfields as $name => $data)
@@ -1592,13 +1588,6 @@ window.egw_LAB.wait(function() {
 						$row[$name] = $data;
 					}
 				}
-				if ($this->prefs['home_column'] != 'never' && !$homeaddress)
-				{
-					foreach(array('adr_two_countryname','adr_two_locality','adr_two_postalcode','adr_two_street','adr_two_street2') as $name)
-					{
-						if ($row[$name]) $homeaddress = true;
-					}
-				}
 			}
 
 			// hide region for address format 'postcode_city'
@@ -1613,20 +1602,8 @@ window.egw_LAB.wait(function() {
 		}
 		$readonlys['no_distrib_lists'] = (bool)$show_distributionlist;
 
-		if (!$this->prefs['no_auto_hide'])
-		{
-			// disable photo column, if view contains no photo(s)
-			if (!$photos) $rows['no_photo'] = true;
-			// disable homeaddress column, if we have no homeaddress(es)
-			if (!$homeaddress) $rows['no_home_adr_two_countrycode_adr_two_postalcode'] = true;
-			// disable roles column
-			if (!$roles) $rows['no_role'] = true;
-			// disable note column
-			if (!$notes) $rows['no_note'] = true;
-		}
 		// disable customfields column, if we have no customefield(s)
-		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
-
+		if (!$this->customfields) $rows['no_customfields'] = true;
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
