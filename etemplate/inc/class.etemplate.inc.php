@@ -1423,7 +1423,8 @@ class etemplate extends boetemplate
 					if ($multiple)
 					{
 						// add the set_val to the id to make it unique
-						$options = str_replace('id="'.$form_name,'id="'.substr($form_name,0,-2)."[$set_val]",$options);
+						$options = str_replace('id="'.self::get_id($form_name).'"',
+							'id="'.self::get_id(substr($form_name,0,-2)."[$set_val]"), $options);
 					}
 					$html .= html::input($form_name,$set_val,'checkbox',$options);
 
@@ -1450,7 +1451,8 @@ class etemplate extends boetemplate
 					$options .= ' checked="checked"';
 				}
 				// add the set_val to the id to make it unique
-				$options = str_replace('id="'.$form_name,'id="'.$form_name."[$set_val]",$options);
+				$options = str_replace('id="'.self::get_id($form_name).'"',
+					'id="'.self::get_id(substr($form_name,0,-2)."[$set_val]"), $options);
 
 				if ($readonly)
 				{
@@ -1502,7 +1504,7 @@ class etemplate extends boetemplate
 				{
 					if (!empty($img))
 					{
-						$options .= ' title="'.$title.'"';
+						$options .= ' title="'.html::htmlspecialchars($title).'"';
 					}
 					if ($cell['onchange'] && $cell['onchange'] != 1)
 					{
@@ -1990,7 +1992,7 @@ class etemplate extends boetemplate
 		// if necessary show validation-error behind field
 		if (isset(self::$validation_errors[$form_name]))
 		{
-			$html .= ' <span style="color: red; white-space: nowrap;">'.self::$validation_errors[$form_name].'</span>';
+			$html .= ' <span style="color: red; white-space: nowrap;">'.htmlspecialchars(self::$validation_errors[$form_name]).'</span>';
 		}
 		// generate an extra div, if we have an onclick handler and NO children or it's an extension
 		//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
@@ -2036,7 +2038,7 @@ class etemplate extends boetemplate
 				$id = $form_name;
 			}
 		}
-		return !empty($id) ? ' id="'.str_replace('"','&quot;',$id).'"' : '';
+		return !empty($id) ? ' id="'.htmlspecialchars($id).'"' : '';
 	}
 
 	/**

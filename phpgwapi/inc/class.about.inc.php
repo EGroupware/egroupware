@@ -54,22 +54,24 @@ class about
 		$nonavbar = false;
 
 		// application detail?
-		if (isset($_GET['app']) && $_GET['app'] != 'eGroupWare') {
-			$name = basename($_GET['app']);
+		if (isset($_GET['app']) && $_GET['app'] != 'eGroupWare' &&
+			($name = basename($_GET['app'])) &&
+			isset($GLOBALS['egw_info']['apps'][$name])) {
 			$type = 'application';
 			$detail = true;
 		}
 
 		// template detail?
-		if (isset($_GET['template']) && $_GET['template'] != 'eGroupWare') {
-			$name = basename($_GET['template']);
+		if (isset($_GET['template']) && $_GET['template'] != 'eGroupWare' &&
+			($name = basename($_GET['template'])) &&
+			(is_dir(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$name) || is_dir(EGW_SERVER_ROOT.'/'.$name))) {
 			$type = 'template';
 			$detail = true;
 		}
 
 		// navbar or not
 		if (isset($_GET['nonavbar'])) {
-			$nonavbar = $_GET['nonavbar'];
+			$nonavbar = (boolean)$_GET['nonavbar'];
 		}
 
 
@@ -185,7 +187,7 @@ from community developers.</p>
 	 *
 	 * @param	string	$name		application/template name
 	 * @param	string	$type		can be 'application' or 'template'	:default $type='application'
-	 * @param	string	$nonavbar 	don't show navbar	:default $nonavbar=false
+	 * @param	boolean	$nonavbar 	don't show navbar	:default $nonavbar=false
 	 * @return	nothing
 	 *
 	 * @access	private
