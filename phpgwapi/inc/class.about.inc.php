@@ -52,22 +52,24 @@ class about
 		$nonavbar = false;
 
 		// application detail?
-		if (isset($_GET['app']) && $_GET['app'] != 'eGroupWare') {
-			$name = basename($_GET['app']);
+		if (isset($_GET['app']) && $_GET['app'] != 'eGroupWare' &&
+			($name = basename($_GET['app'])) &&
+			isset($GLOBALS['egw_info']['apps'][$name])) {
 			$type = 'application';
 			$detail = true;
 		}
 
 		// template detail?
-		if (isset($_GET['template']) && $_GET['template'] != 'eGroupWare') {
-			$name = basename($_GET['template']);
+		if (isset($_GET['template']) && $_GET['template'] != 'eGroupWare' &&
+			($name = basename($_GET['template'])) &&
+			(is_dir(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$name) || is_dir(EGW_SERVER_ROOT.'/'.$name))) {
 			$type = 'template';
 			$detail = true;
 		}
 
 		// navbar or not
 		if (isset($_GET['nonavbar'])) {
-			$nonavbar = $_GET['nonavbar'];
+			$nonavbar = (boolean)$_GET['nonavbar'];
 		}
 
 
@@ -95,23 +97,23 @@ class about
 	function _listView()
 	{
 		$text_content = str_replace('GPLLINK',self::$knownLicenses['GPL'],'
-<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a> 
-enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos 
+<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a>
+enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos
 and many more for your whole business.</p>
-<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data 
-from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with 
-your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA 
+<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data
+from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with
+your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA
 via SyncML.</p>
-<p><b>EGroupware is international.</b> At the time, it supports more than 
+<p><b>EGroupware is international.</b> At the time, it supports more than
 <a href="http://www.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
-<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems. 
-On the client side, all you need is a internet browser such as Firefox, Safari, Chrome, Konqueror or Internet Explorer 
+<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems.
+On the client side, all you need is a internet browser such as Firefox, Safari, Chrome, Konqueror or Internet Explorer
 and many more.</p>
 <p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite AG</a></b> with contributions
 from community developers.</p>
 <br />
 <p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
-		
+
 		// get informations about the applications
 		$apps = array();
 		$apps[] = ''; // first empty row for eTemplate
@@ -177,7 +179,7 @@ from community developers.</p>
 	 *
 	 * @param	string	$name		application/template name
 	 * @param	string	$type		can be 'application' or 'template'	:default $type='application'
-	 * @param	string	$nonavbar 	don't show navbar	:default $nonavbar=false
+	 * @param	boolean	$nonavbar 	don't show navbar	:default $nonavbar=false
 	 * @return	nothing
 	 *
 	 * @access	private
@@ -379,7 +381,7 @@ from community developers.</p>
 		'PHP'   => 'http://opensource.org/licenses/php.php',
 	);
 
-	
+
 	/**
 	 * surround license string with link to license if it is known
 	 *
