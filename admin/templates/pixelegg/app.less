@@ -12,12 +12,28 @@
  * @version $Id$
  */
 
-@import (reference) "../../../pixelegg/less/def_buttons.less";
-@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+
+@import (reference) "../../../pixelegg/less/definitions.less";
 @import (less) "../default/app.css";
 
 
 @media all {
+
+    // ADMIN in SIDEBAR
+
+    div.dhtmlxTree {
+
+
+        // selected Item
+        td.standartTreeRow {
+
+            span.selectedTreeRow { background-color: @egw_color_1_e; color: @gray_90;}
+
+        }
+
+
+
+    }
 
 
 /* #############################################################################
@@ -43,6 +59,9 @@ iframe#admin-index_iframe{
      background-color: transparent;
 
      /*.egwGridView_scrollarea { min-height: 500px;}*/
+
+
+
 
     #admin-categories-index{
 
@@ -71,6 +90,11 @@ iframe#admin-index_iframe{
 
 } // iframe
 
+// gray Filter for images
+    table.egwGridView_grid img {
+            /*filter grey*/
+            .img_filter_gray;
+        }
 
 
 
@@ -80,7 +104,7 @@ iframe#admin-index_iframe{
 
 /*###########################################
 #                                           #
-#       dialog-header                       #
+#       dialogHeader                       #
 #############################################
 #                                           #
 #                                           #
