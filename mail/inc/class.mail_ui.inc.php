@@ -112,7 +112,6 @@ class mail_ui
 		if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
 		unset($_GET["resetConnection"]);
 
-		//$icServerID =& egw_cache::getSession('mail','activeProfileID');
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -127,7 +126,6 @@ class mail_ui
 			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
-			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
 			if ($_GET['menuaction'] != 'mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate')
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
@@ -137,25 +135,9 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			//error_log(__METHOD__.__LINE__.' Fetched IC Server failed:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			// redirect to mail wizard to handle it (redirect works for ajax too)
-/*
-			egw_framework::redirect_link('/index.php',
-				(self::$icServerID ? array(
-					'menuaction' => 'mail.mail_wizard.edit',
-					'acc_id' => self::$icServerID,
-				) : array(
-					'menuaction' => 'mail.mail_wizard.add',
-				)) + array(
-					'msg' => $e->getMessage()//.' ('.get_class($e).': '.$e->getCode().')',
-				));
-*/
 			self::callWizard($e->getMessage());
 		}
-
-
-		//$GLOBALS['egw']->session->commit_session();
-		//_debug_array($this->mail_bo->mailPreferences);
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
