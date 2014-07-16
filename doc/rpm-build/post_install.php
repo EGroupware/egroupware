@@ -239,6 +239,10 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 {
 	if (!file_exists($config[$name])) bail_out(1,$config[$name].' not found!');
 }
+
+// install/upgrade required pear packages
+check_install_pear_packages();
+
 $setup_cli = $config['php'].' -d memory_limit=256M '.$config['setup-cli'];
 
 if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
@@ -350,8 +354,6 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			system($config['start_webserver'].' reload');
 		}
 	}
-	// install/upgrade required pear packages
-	check_install_pear_packages();
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
@@ -404,8 +406,6 @@ else
 			echo "\nEGroupware successful updated\n";
 			break;
 	}
-	// install/upgrade required pear packages
-	check_install_pear_packages();
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
@@ -539,14 +539,22 @@ function usage($error=null)
 }
 
 /**
- * Check if required PEAR packges are installed and install them if not, update pear packages with to low version
+ * Get installed pear packages, optional from a certain channel
+ *
+ * @global type $config
+ * @param string $channel=''
+ * @return null|array with package => version
  */
-function check_install_pear_packages()
+function pear_list($channel='')
 {
 	global $config;
 
 	$out = $ret = null;
-	exec($config['pear'].' list',$out,$ret);
+	exec($config['pear'].' list'.($channel?' -c '.$channel:''),$out,$ret);
+	if ($channel && $ret == 1)
+	{
+		return null;
+	}
 	if ($ret)
 	{
 		echo "Error running pear command ($config[pear])!\n";
@@ -558,11 +566,29 @@ function check_install_pear_packages()
 		$matches = null;
 		if (preg_match('/^([a-z0-9_]+)\s+([0-9.]+[a-z0-9]*)\s+([a-z]+)/i',$line,$matches))
 		{
-			$packages_installed[$matches[1]] = $matches[2];
+			$packages_installed[($channel?$channel.'/':'').$matches[1]] = $matches[2];
 		}
 	}
+	return $packages_installed;
+}
+
+/**
+ * Check if required PEAR packges are installed and install them if not, update pear packages with to low version
+ */
+function check_install_pear_packages()
+{
+	global $config;
+	$packages_installed = pear_list();
+
+	// some setup files use autoloader
+	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
+	define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
+	include_once(EGW_API_INC.'/common_functions.inc.php');
+
 	// read required packages from apps
 	$packages = array('PEAR' => true, 'HTTP_WebDAV_Server' => '999.egw-pear');	// pear must be the first, to run it's update first!
+	$channels = array();
 	$egw_pear_packages = array();
 	$setup_info = array();
 	foreach(scandir($config['source_dir']) as $app)
@@ -578,6 +604,24 @@ function check_install_pear_packages()
 				if ($args['func'] == 'pear_check')
 				{
 					if (!$package) $package = 'PEAR';
+					// if package is prefixed with a channel, list or discover it first
+					if (strpos($package, '/'))
+					{
+						list($channel) = explode('/', $package);
+						if (!in_array($channel, $channels))
+						{
+							if (($channel_packages = pear_list($channel)))
+							{
+								$packages_installed += $channel_packages;
+							}
+							else
+							{
+								$discover_cmd = $config['pear'].' channel-discover '.$channel;
+								echo "$discover_cmd\n";	system($discover_cmd);
+							}
+							$channels[] = $channel;
+						}
+					}
 					// only overwrite lower version or no version
 					if (!isset($packages[$package]) || $packages[$package] === true || isset($args['version']) && version_compare($args['version'],$packages[$package],'>'))
 					{
@@ -631,7 +675,7 @@ function check_install_pear_packages()
 			}
 			if ($to_install)
 			{
-				$cmd = $config['pear'].' install '.implode(' ',$to_install);
+				$cmd = $config['pear'].' install '.implode(' ', $to_install);
 				echo "$cmd\n";	system($cmd);
 			}
 		}

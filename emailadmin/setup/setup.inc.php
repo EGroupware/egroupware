@@ -73,5 +73,10 @@ $setup_info['emailadmin']['check_install'] = array(
 		'func' => 'extension_check',
 		'from' => 'EMailAdmin',
 	),
+	// as alternative for PHP imap extension
+	'pear.horde.org/Horde_Mime' => array(
+		'func' => 'pear_check',
+		'from' => 'EMailAdmin',
+	),
 );
 

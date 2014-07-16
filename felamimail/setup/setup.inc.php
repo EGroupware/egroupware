@@ -77,6 +77,11 @@ $setup_info['felamimail']['check_install'] = array(
 	'imap' => array(
 		'func' => 'extension_check',
 	),
+	// as alternative for PHP imap extension
+	'pear.horde.org/Horde_Mime' => array(
+		'func' => 'pear_check',
+		'from' => 'EMailAdmin',
+	),
 	'magic_quotes_gpc' => array(
 		'func' => 'php_ini_check',
 		'value' => 0,
