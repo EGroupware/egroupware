@@ -135,7 +135,7 @@ class filemanager_ui
 				'caption' => lang('Save as ZIP'),
 				'group' => $group,
 				'allowOnMultiple' => true,
-				'icon' => 'filesave',
+				'icon' => 'save_zip',
 				'postSubmit' => true
 			),
 			'edit' => array(
