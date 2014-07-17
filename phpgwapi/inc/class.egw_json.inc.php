@@ -285,6 +285,25 @@ class egw_json_response
 	}
 
 	/**
+	 * Return json response data, after running beforeSendDataProcs
+	 *
+	 * Used to send json response with etemplate data in GET request
+	 *
+	 * @return array responseArray
+	 */
+	public static function returnResult()
+	{
+		$inst = self::get();
+
+		//Call each attached before send data proc
+		foreach ($inst->beforeSendDataProcs as $proc)
+		{
+			call_user_func_array($proc['proc'], $proc['params']);
+		}
+		return $inst->initResponseArray();
+	}
+
+	/**
 	 * xAjax compatibility function
 	 */
 	public function printOutput()

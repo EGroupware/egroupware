@@ -216,6 +216,17 @@ class etemplate_new extends etemplate_widget_template
 			{
 				echo '<div id="popupMainDiv">'."\n";
 			}
+			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
+			if(egw_json_response::isJSONResponse())
+			{
+				$load_array['response'] = egw_json_response::get()->returnResult();
+				/*$response = egw_json_response::get();
+				echo '<script>egw_LAB.wait(function() {var json = egw.json(); json.handleResponse(';
+				ob_flush();
+				$response->sendResult();
+				unset($response);
+				echo ')});</script>';*/
+			}
 			echo '<div id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(json_encode($load_array), true).'"></div>';
 
 			if ($output_mode == 2)
@@ -224,17 +235,6 @@ class etemplate_new extends etemplate_widget_template
 				echo $GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
-
-			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
-			if(egw_json_response::isJSONResponse())
-			{
-				$response = egw_json_response::get();
-				echo '<script>egw_LAB.wait(function() {var json = egw.json(); json.handleResponse(';
-				ob_flush();
-				$response->sendResult();
-				unset($response);
-				echo ')});</script>';
-			}
 		}
 		self::$request = null;
 	}
