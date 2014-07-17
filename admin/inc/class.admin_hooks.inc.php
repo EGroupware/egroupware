@@ -33,10 +33,6 @@ class admin_hooks
 	{
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
-		if (!isset($_GET['menuaction']) && substr($_SERVER['PHP_SELF'],-16) == '/admin/index.php')
-		{
-			admin_statistics::check();
-		}
 		$appname = 'admin';
 		$location = is_array($args) ? $args['location'] : $args;
 
