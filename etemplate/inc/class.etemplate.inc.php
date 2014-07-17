@@ -1432,8 +1432,8 @@ class etemplate extends boetemplate
 					if ($multiple)
 					{
 						// add the set_val to the id to make it unique
-						$options = str_replace(trim(self::get_id($form_name)),
-							trim(self::get_id(substr($form_name,0,-2)."[$set_val]")), $options);
+						$options = str_replace(self::get_id($form_name),
+							self::get_id(substr($form_name,0,-2)."[$set_val]"), $options);
 					}
 					$html .= html::input($form_name,$set_val,'checkbox',$options);
 
@@ -1460,8 +1460,8 @@ class etemplate extends boetemplate
 					$options .= ' checked="checked"';
 				}
 				// add the set_val to the id to make it unique
-				$options = str_replace(trim(self::get_id($form_name)),
-					trim(self::get_id($form_name."[$set_val]")), $options);
+				$options = str_replace(self::get_id($form_name),
+					self::get_id($form_name."[$set_val]"), $options);
 
 				if ($readonly)
 				{
