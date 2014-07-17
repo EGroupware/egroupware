@@ -18,8 +18,10 @@ add all my aliases	mail	en	Add all my aliases
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
 aliases+forwards	mail	en	Aliases+Forwards
+all	mail	en	all
 all adresses:	mail	en	All Adresses:
 all available info	admin	en	all available info
+all filtered	mail	en	all filtered
 all messages in the folder will be lost	mail	en	All messages in the folder will be lost
 all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost

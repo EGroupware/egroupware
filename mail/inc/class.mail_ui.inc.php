@@ -4531,6 +4531,7 @@ $this->partID = $partID;
 	{
 		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageList,true).' Method:'.$_forceDeleteMethod);
 		$error = null;
+		$filtered =  false;
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if (isset($_messageList['all']) && $_messageList['all'])
@@ -4549,6 +4550,7 @@ $this->partID = $partID;
 							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
+						$filtered =  true;
 						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
@@ -4603,7 +4605,7 @@ $this->partID = $partID;
 			$response = egw_json_response::get();
 			if (empty($error))
 			{
-				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',($messageList=='all'||$_messageList['all']?lang('all'):count($_messageList['msg'])),$folder),'msg'=>$_messageList['msg']));
+				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>lang('deleted %1 messages in %2',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($_messageList['msg'])),$folder),'msg'=>$_messageList['msg']));
 			}
 			else
 			{
@@ -4650,7 +4652,7 @@ $this->partID = $partID;
 			$lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]=$_folderName;
 			$changeFolderActions = true;
 		}
-
+		$filtered = false;
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			$error=false;
@@ -4671,6 +4673,7 @@ $this->partID = $partID;
 							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
+						$filtered = true;
 						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
@@ -4752,11 +4755,11 @@ $this->partID = $partID;
 			{
 				if ($_copyOrMove=='copy')
 				{
-					$response->call('egw.message',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder));
+					$response->call('egw.message',lang('copied %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder));
 				}
 				else
 				{
-					$response->call('egw.refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
+					$response->call('egw.refresh',lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
 				}
 			}
 			if ($changeFolderActions == true)
