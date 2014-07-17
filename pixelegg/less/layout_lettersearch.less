@@ -1,7 +1,7 @@
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * SVG
+ * lettersearch
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
@@ -11,42 +11,35 @@
  * @package pixelegg
  * @version $Id$
  */
-
 @import (reference) "definitions.less";
 //##############################################################################################################
 
+// Lettersearch
 
-
-* {
-    fill: @gray_60;
-    /*stroke: @gray_50;*/
-    /*fill: @gray_0;*/
-}
-/*
-svg#etemplate_navbar {
-    fill: @gray_40;
+.lettersearch {
+    .Complete_Button_lettersearch;
 }
 
-svg#infolog_navbar  {
-    fill: @gray_40;
+.lettersearch:hover {
+    .background_color_30_gray;
+    .color_0_gray;
 }
 
-svg#admin_navbar  {
-    fill: @gray_40;
+
+.lettersearch_active{
+    .Complete_Button_lettersearch;
+    .background_color_30_gray;
+    //		background-color: #808080 !important;
+    font-weight: bold;
 }
 
-.egw_fw_ui_tabs_header > svg *  {
-    fill: @egw_color_2_a !important;
-    stroke: @gray_0 !important;
+td.lettersearch {
+    //	border-color: #E0E0E0;
+    background-image: none;
 }
 
-svg#sambaadmin_navbar  {
-    fill: @gray_40;
-}
 
-svg#mail_navbar {
-    fill: @gray_40;
+/*.nextmatch_header table {
+        border: none !important;
+        width: 99% !important;
 }*/
-//
-
-//

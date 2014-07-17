@@ -966,7 +966,7 @@
     background-color: #1aa200;
   }
   button#admin-categories-index_add:hover {
-    background-color: #679fd2 !important;
+    background-color: #189800 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -1282,6 +1282,19 @@
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
   .nextmatch_header > .filters select {
     margin: 0px;
+  }
+}
+/*
+	Printing
+*/
+@media screen {
+  .onlyPrint {
+    display: none !important;
+  }
+}
+@media print {
+  .noPrint {
+    display: none !important;
   }
 }
 /*@import "../../phpgwapi/templates/idots/css/traditional.css";*/
@@ -1962,203 +1975,34 @@ div#ui-datepicker-div {
 /**
  * layout_*.less files are Pixelegg template specific
  */
-/*@import "../less/layout_buttons_global.less";*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * et2 Messages
- *
- * Please do NOT change css_files directly, instead change less-files and compile them!
+ * Please do NOT change css-files directly, instead change less-files and compile them!
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
  * @version $Id$
- */
-/* @group Base */
-.chzn-container {
-  color: #808080;
-}
-.chzn-container .chzn-drop {
-  width: auto;
-}
-/* @end */
-/* @group Single Chosen */
-.chzn-container-single .chzn-single span {
-  width: auto;
-}
-/* @end */
-/* @group Results */
-.chzn-container .chzn-results {
-  color: #808080;
-  margin: 0 4px 4px 0;
-  max-height: 240px;
-  padding: 0 0 0 4px;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-/* @end */
-/* @group Multi Chosen */
-/* @end */
-/* @group Active  */
-.chzn-container-active .chzn-choices li.search-field input {
-  color: #111 !important;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  width: auto;
-  /*margin: 0.5em 0em 0.5em 0;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-.chzn-container-active .chzn-choices li.search-field input:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-.chzn-container-active .chzn-choices li.search-field input:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-}
-/* @end */
-/* @group Disabled Support */
-/* @end */
-/* @group Right to Left */
-/* @end */
-/* @group Retina compatibility */
-/* @end */
-/**
- * Egw customizations for Chosen widget
+
+
+## Important ###########
+
+# Merge file for all .less layout_ Files
+
  */
 /**
- * EGroupware: CSS with less preprocessor
+ * EGroupware: Stylite Pixelegg template
  *
- * et2 Messages
+ * lettersearch
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
- * @version $Id$
- */
-#egwpopup {
-  background-color: #fafafa;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-right-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topright: 20px;
-  border-radius: 3px;
-  border-top-right-radius: 20px;
-  border-width: 9px 0px 0px 0px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  padding: 1em;
-  /*Button*/
-}
-#egwpopup input#egwpopup_ok_button,
-#egwpopup button#desktop_perms {
-  /*.border_normal;*/
-  /*.box_shadow_standard_light;*/
-  /*.rounded (3px);*/
-  color: #000000;
-  -webkit-appearance: none;
-  -webkit-transition-property: background-color;
-  -moz-transition-property: background-color;
-  -o-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  -webkit-transition-timing-function: linear;
-  -moz-transition-timing-function: linear;
-  -o-transition-timing-function: linear;
-  transition-timing-function: linear;
-  background-color: #b4b4b4;
-  height: 24px;
-  padding: 0 5px;
-}
-#egwpopup input#egwpopup_ok_button:hover,
-#egwpopup button#desktop_perms:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: inherit;
-}
-#egwpopup input#egwpopup_ok_button:active,
-#egwpopup button#desktop_perms:active {
-  background-color: #1aa200 !important;
-}
-/*popup Messsage*/
-div#egwpopup_message {
-  background-color: .color_gray_0;
-  padding: 1em;
-  overflow-y: auto;
-}
-#msg,
-.message {
-  color: red;
-  font-style: italic;
-  background: #ffffff;
-}
-.egw_fw_ui_app_header_container {
-  border-width: 9px 0px 0px 0px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  background-color: #cdcdcd;
-  height: auto;
-}
-.egw_fw_ui_app_header_container .egw_fw_ui_app_header {
-  padding: 7px 2px 6px 20px;
-  font-weight: normal;
-  color: #408dd2;
-  overflow: hidden;
-  line-height: 2em;
-}
-.colselection.ui-widget-content {
-  width: 33%;
-}
-/*Calendar ##############*/
-td.message {
-  background-color: #e6e6e6 !important;
-  height: 0px;
-  padding: 0px;
-}
-td.message span.message {
-  height: 35px;
-  border-bottom: 2px solid #e6e6e6;
-  color: red;
-  background: #e6e6e6;
-  height: auto;
-  width: 100%;
-}
-/**
- * EGroupware: CSS with less preprocessor
- *
- * Definitions for content-elements
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
  * @version $Id$
  */
 /**
@@ -2239,14 +2083,6 @@ table {
 iframe {
   border: none;
 }
-/* #######################################################################################
-*
-*
-* Inhaltselemente
-*
-*
-* ########################################################################################
-*/
 html * {
   font-size: 100%;
 }
@@ -2268,392 +2104,19 @@ body {
   line-height: 1.28;
   font-weight: normal;
 }
-body,
-textarea {
-  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-}
-#egw_fw_basecontainer {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
-  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-  background-color: #fafafa;
-}
-input {
-  /*    .Complete_Button_input;
-    .basefontfamily;
-    &:hover{.Complete_Button_input_hover;}
-    &:focus{.Complete_Button_input_focus;}*/
-}
-select {
-  padding: 3px;
-  margin: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-select:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-select:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-}
-:hover {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-}
-p {
-  font-size: 1em;
-}
-h1 {
-  font-size: 300%;
-  line-height: 330%;
-  margin: 0.4em 0 0;
-  font-weight: normal;
-}
-.headline_h1 {
-  font-size: 300%;
-  line-height: 330%;
-  margin: 0.4em 0 0;
-}
-h2 {
-  font-size: 250%;
-  line-height: 270%;
-  margin: 0.6em 0 0;
-}
-.headline_h2 {
-  font-size: 250%;
-  line-height: 270%;
-  margin: 0.6em 0 0;
-  font-weight: lighter;
-}
-h3 {
-  font-size: 200%;
-  line-height: 220%;
-  margin: 0.8571em 0 0;
-}
-.headline_h3 {
-  font-size: 200%;
-  line-height: 220%;
-  margin: 0.8571em 0 0;
-}
-h3 a {
-  color: #999999;
-}
-h4 {
-  font-size: 150%;
-  line-height: 160%;
-  margin: 1.125em 0 0;
-}
-.headline_h4 {
-  font-size: 150%;
-  line-height: 160%;
-  margin: 1.125em 0 0;
-}
-h5 {
-  font-size: 100%;
-  line-height: 110%;
-  margin: 1.2857em 0 0;
-}
-.headline_h5 {
-  font-size: 100%;
-  line-height: 110%;
-  margin: 1.2857em 0 0;
-}
-h6 {
-  font-size: 100%;
-  font-weight: bold;
-  line-height: 100%;
-  margin: 1.5em 0 0;
-}
-.headline_h6 {
-  font-size: 100%;
-  font-weight: bold;
-  line-height: 100%;
-  margin: 1.5em 0 0;
-}
-/*table {font-size: 16px;}*/
-select {
-  position: relative;
-}
-div.selectbox-wrapper ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-}
-div.selectbox-wrapper ul li.selected {
-  background-color: #EAF2FB;
-}
-div.selectbox-wrapper ul li.current {
-  background-color: #CDD8E4;
-}
-div.selectbox-wrapper ul li {
-  list-style-type: none;
-  display: block;
-  margin: 0;
-  padding: 2px;
-  cursor: pointer;
-}
-.sbHolder {
-  /*.box_shadow_standard_light;*/
-  width: auto;
-  margin: 5px 0em 5px 5px;
-  padding: 3px;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-  font-size: 1.2em;
-  font-weight: normal;
-  height: 30px;
-  position: relative;
-  width: 10em;
-}
-.sbHolder:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-}
-.sbHolder:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #b4b4b4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-}
-.sbSelector {
-  display: block;
-  height: 30px;
-  left: 0;
-  line-height: 30px;
-  outline: none;
-  overflow: hidden;
-  position: absolute;
-  text-indent: 10px;
-  top: 0;
-  width: 170px;
-}
-.sbSelector:link,
-.sbSelector:visited,
-.sbSelector:hover {
-  color: #808080;
-  outline: none;
-  text-decoration: none;
-}
-.sbToggle {
-  background: url(../img/select-icons.png) 0 -116px no-repeat;
-  display: block;
-  height: 30px;
-  outline: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 30px;
-}
-.sbToggle:hover {
-  background: url(../images/select-icons.png) 0 -167px no-repeat;
-}
-.sbToggleOpen {
-  background: url(../images/select-icons.png) 0 -16px no-repeat;
-}
-.sbToggleOpen:hover {
-  background: url(../images/select-icons.png) 0 -66px no-repeat;
-}
-.sbHolderDisabled {
-  background-color: #3C3C3C;
-  border: solid 1px #515151;
-}
-.sbOptions {
-  background-color: #ffffff;
-  border: solid 1px #515151;
-  list-style: none;
-  left: -1px;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  top: 30px;
-  width: 200px;
-  z-index: 1;
-  overflow-y: auto;
-}
-.sbOptions li {
-  padding: 0 7px;
-}
-.sbOptions a {
-  border-bottom: dotted 1px #515151;
-  display: block;
-  outline: none;
-  padding: 7px 0 7px 3px;
-  color: #26537c;
-}
-.sbOptions a:link,
-.sbOptions a:visited {
-  color: #26537c;
-  text-decoration: none;
-}
-.sbOptions a:hover,
-.sbOptions a:focus,
-.sbOptions a.sbFocus {
-  color: rgba(38, 83, 124, 0.6);
-}
-.sbOptions li.last a {
-  border-bottom: none;
-}
-.sbOptions .sbDisabled {
-  border-bottom: dotted 1px #515151;
-  color: #999;
-  display: block;
-  padding: 7px 0 7px 3px;
-}
-.sbOptions .sbGroup {
-  border-bottom: dotted 1px #515151;
-  color: #EBB52D;
-  display: block;
-  font-weight: bold;
-  padding: 7px 0 7px 3px;
-}
-.sbOptions .sbSub {
-  padding-left: 17px;
-}
-.th {
-  background-color: #e0e0e0;
-}
-a:link,
-a:visited,
-select,
-input,
-textarea {
-  color: #26537c;
-}
-select,
-input,
-button {
-  color: #000000;
-  /*font-size:99%;*/
-  padding: 2px 0px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #e6e6e6;
-}
-select {
-  /*font-size:100%;*/
-}
-a:link,
-a:visited {
-  cursor: pointer;
-  color: #26537c;
-  text-decoration: none;
-}
-a:hover,
-a:active {
-  cursor: pointer;
-  color: rgba(38, 83, 124, 0.6);
-  text-decoration: underline;
-}
-.divLoginboxHeader,
-.divSideboxHeader,
-a.appTitles,
-.appTitles,
-a.textSidebox,
-.textSidebox,
-#fmStatusBar {
-  font-size: 90%;
-}
-.prefSection {
-  font-weight: bold;
-  font-size: 145%;
-  line-height: 40px;
-}
-#divAppboxHeader {
-  line-height: 28px;
-  font-size: 125%;
-  font-weight: bold;
-  color: #666666;
-}
-#divGenTime,
-#divPoweredBy {
-  font-size: 80%;
-  color: #ff0000;
-}
-#divPoweredBy {
-  color: #000000;
-}
-#sideboxdragarea {
-  z-index: 100;
-  position: absolute;
-  left: 0px;
-  top: 105px;
-}
-#menu2handle {
-  padding-top: 10px;
-}
-#menu1close {
-  position: absolute;
-  right: 7px;
-  top: 7px;
-}
-hr.clearer {
-  clear: both;
-  height: 20px;
-  width: 100%;
-  background-color: #ffc200;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #000000;
-}
-.lettersearch {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  text-align: center;
-  cursor: pointer;
-}
-.lettersearch:hover {
-  background-color: #b3b3b3 !important;
-  color: #ffffff;
-}
-.lettersearch_active {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  text-align: center;
-  cursor: pointer;
-  background-color: #b3b3b3 !important;
-  font-weight: bold;
-}
-td.lettersearch {
-  background-image: none;
-}
-/*.nextmatch_header table {
-        border: none !important;
-        width: 99% !important;
-}*/
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
 .egw_fw_ui_ajaxloader {
   display: inline-block;
   width: 16px;
@@ -2663,270 +2126,19 @@ td.lettersearch {
   background-position: center;
   float: right;
 }
-/*############################*/
-/* traditional */
-form {
-  margin: 0px;
-  padding: 0px;
-}
-img {
-  border: 0;
-}
-/*SVG Filter / not for Logo */
-#egw_fw_sidebar img[src$="svg"] {
-  background-color: #696969;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #696969, #696969);
-  background-image: -ms-linear-gradient(top, #696969, #696969);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
-  background-image: -webkit-linear-gradient(top, #696969, #696969);
-  background-image: -o-linear-gradient(top, #696969, #696969);
-  background-image: linear-gradient(top, #696969, #696969);
-  background-repeat: repeat-x;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #ffffff;
-}
-#egw_fw_main img[src$="svg"],
-#egw_fw_footer img[src$="svg"] {
-  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
-  background-color: rgba(0, 0, 0, 0.5);
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-repeat: repeat-x;
-}
-div {
-  color: #000000;
-}
-input[type=submit],
-input[type=button],
-input[type=reset],
-button,
-.egwbutton {
-  background-color: #f0f0f0;
-  background-image: none;
-  border: outset 1px #b9d5e3;
-  margin: 1px;
-  padding: 1px;
-  cursor: pointer;
-  color: #004e7d;
-}
-input[type=submit]:hover,
-input[type=button]:hover,
-input[type=reset]:hover,
-button:hover,
-.egwbutton:hover {
-  background-color: #d9d9d9;
-  background-image: none;
-  border: outset 1px #b9d5e3;
-  color: #004e7d;
-}
-input[type=submit]:active,
-input[type=button]:active,
-input[type=reset]:active,
-button:active,
-.egwbutton:active {
-  border: inset 1px #bbbbbb;
-}
-input[type=submit]:disabled,
-input[type=button]:disabled,
-input[type=reset]:disabled,
-button:disabled,
-.egwbutton:disabled {
-  background-color: transparent;
-  color: gray;
-}
-input.egwbutton {
-  background-color: #b9d5e3;
-  border: outset 1px #b9d5e3;
-  margin: 1px;
-  padding: 1px;
-  cursor: pointer;
-  color: #004e7d;
-}
-input.egwbutton:hover {
-  background-color: #94bfd4;
-  border: outset 1px #b9d5e3;
-  color: #004e7d;
-}
-input.egwbutton:active {
-  border: inset 1px #bbbbbb;
-}
-input[type=image] {
-  cursor: pointer;
-  border: 0;
-  width: 16px;
-  height: 16px;
-}
-#thesideboxcolumn {
-  width: 177px;
-  position: relative;
-}
-#sideresize {
-  background-image: url(../images/resize.png);
-  width: 13px;
-  height: 13px;
-  right: 1px;
-  top: 1px;
-  position: absolute;
-  z-index: 9999;
-}
-.divSidebox {
-  position: relative;
-  border: #9c9c9c 1px solid;
-  overflow: auto;
-}
-.divSideboxHeader {
-  text-align: center;
-  background-color: #d9d9d9;
-  padding-top: 2px;
-  color: #808080;
-}
-a.divSideboxEntry,
-.divSideboxEntry {
-  text-align: left;
-  background-color: #FDFDFD;
-}
-a.appTitles,
-.appTitles {
-  height: 18px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-a.textSidebox {
-  padding: 0;
-  border-top: 0;
-}
-.textSidebox {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 1px;
-  border-top: solid #aaaaaa 1px;
-  overflow: auto;
-}
-.sideboxSpace {
-  height: 9px;
-}
-.greyLine {
-  margin: 1px;
-  border-top: solid 1px #7e7e7e;
-  height: 1px;
-}
-#extraIcons {
-  background-color: #eeeeee;
-  border: solid 1px #7e7e7e;
-}
-.extraIconsRow {
-  border: solid 1px #dddddd;
-  padding: 2px;
-}
-#topmenu {
-  background-color: #0081c1;
-  background-image: url(../images/bgtopmenu2.png);
-  color: #006699;
-  /*border-top: solid 1px #7e7e7e;*/
-  border-bottom: solid #5793ff 1px;
-  height: 20px;
-  padding-top: 4px ;
-  line-height: 16px;
-}
-#topmenu a {
-  color: #006699;
-}
-#topmenu_items {
-  float: left;
-}
-#topmenu_info {
-  float: right;
-}
-#divUpperTabs {
-  text-align: right;
-  height: 15px;
-  margin-right: 10px;
-}
-#divUpperTabs ul {
-  display: inline;
-  margin: 0;
-  padding: 10px 10px 0 1px;
-  list-style: none;
-}
-#divUpperTabs li {
-  float: right;
-  margin: 0 5px 0 0;
-  padding: 0 5px 0 5px;
-  border: solid 1px #9c9c9c;
-  border-bottom: 0px;
-}
-/* Star-Plus-HTML Hack fix for the above */
-*:first-child + html #divAppIconBar {
-  height: 60px;
-}
-#divAppTextBar {
-  background-color: white;
-}
-#divStatusBar {
-  background-color: white;
-  height: 18px;
-  padding-left: 3px;
-}
-#tdSidebox {
-  width: 170px;
-  background-color: white;
-  overflow: visible;
-}
-#tdAppbox {
-  background-color: white;
-  padding-left: 5px;
-  width: 100%;
-}
-#divAppboxHeader {
-  background-image: url(../images/appbox-header-background.png);
-  background-repeat: repeat-x;
-  height: 25px;
-  border-bottom: solid 1px #c0c0c0;
-  text-align: center;
-  padding-bottom: 0px;
-  border-top: solid 1px #9c9c9c;
-  border-left: solid 1px #9c9c9c;
-  border-right: solid 1px #9c9c9c;
-}
-#divAppboxHeader table img {
-  height: 16px;
-}
-#divAppbox {
-  background-color: #ffffff;
-  padding: 5px;
-  border-bottom: solid 1px #9c9c9c;
-  border-left: solid 1px #9c9c9c;
-  border-right: solid 1px #9c9c9c;
-}
-#divGenTime,
-#divPoweredBy {
-  bottom: 4px;
-  text-align: center;
-  width: 99%;
-}
-.pageGenTime,
-#divPoweredBy {
-  font-size: 80%;
-  color: #ff0000;
-  text-align: center;
-}
-.pageGenTime {
-  margin-top: 1em;
-}
-.pageGenTime > span:after {
-  content: ", ";
-}
-.pageGenTime > span:last-child:after {
-  content: "";
-}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
 /*##########################################
 #      Content Element                     #
 #      Button                              #
@@ -3371,35 +2583,97 @@ button[id="add"]:active {
   background-color: #1aa200 !important;
 }
 /*Button Ende #######################################################*/
-/*dhtml Submenu ##########################################################*/
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
-  /*filter grey*/
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
-  /*filter: url(grayscale.svg);  Firefox 4+ */
-  filter: gray;
-  /* IE 6-9 */
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 Messages
+ *
+ * Please do NOT change css_files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/* @group Base */
+.chzn-container {
+  color: #808080;
 }
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
-  background-color: #000000;
-  background-color: #1e1e1e;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -ms-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1e1e1e), to(#1e1e1e));
-  background-image: -webkit-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -o-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-repeat: repeat-x;
+.chzn-container .chzn-drop {
+  width: auto;
 }
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
-  background-color: #ffc200 !important;
-  background-image: none !important;
+/* @end */
+/* @group Single Chosen */
+.chzn-container-single .chzn-single span {
+  width: auto;
 }
+/* @end */
+/* @group Results */
+.chzn-container .chzn-results {
+  color: #808080;
+  margin: 0 4px 4px 0;
+  max-height: 240px;
+  padding: 0 0 0 4px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* @end */
+/* @group Multi Chosen */
+/* @end */
+/* @group Active  */
+.chzn-container-active .chzn-choices li.search-field input {
+  color: #111 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  width: auto;
+  /*margin: 0.5em 0em 0.5em 0;*/
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.chzn-container-active .chzn-choices li.search-field input:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+.chzn-container-active .chzn-choices li.search-field input:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+/* @end */
+/* @group Disabled Support */
+/* @end */
+/* @group Right to Left */
+/* @end */
+/* @group Retina compatibility */
+/* @end */
+/**
+ * Egw customizations for Chosen widget
+ */
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
 /**
 * Clientside Javascript error-log
 */
@@ -3432,6 +2706,178 @@ div.client_error_log tr td.stack > div {
   white-space: pre;
 }
 /**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for content-elements
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+/* #######################################################################################
+*
+*
+* Inhaltselemente
+*
+*
+* ########################################################################################
+*/
+body,
+textarea {
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+}
+#egw_fw_basecontainer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+  background-color: #fafafa;
+}
+input {
+  /*    .Complete_Button_input;
+    .basefontfamily;
+    &:hover{.Complete_Button_input_hover;}
+    &:focus{.Complete_Button_input_focus;}*/
+}
+select {
+  padding: 3px;
+  margin: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+select:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+select:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+:hover {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+p {
+  font-size: 1em;
+}
+div.selectbox-wrapper ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+div.selectbox-wrapper ul li.selected {
+  background-color: #EAF2FB;
+}
+div.selectbox-wrapper ul li.current {
+  background-color: #CDD8E4;
+}
+div.selectbox-wrapper ul li {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
+}
+select {
+  position: relative;
+}
+select,
+input,
+button {
+  color: #000000;
+  /*font-size:99%;*/
+  padding: 2px 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e6e6e6;
+}
+a:link,
+a:visited,
+select,
+input,
+textarea {
+  color: #26537c;
+}
+a:link,
+a:visited {
+  cursor: pointer;
+  color: #26537c;
+  text-decoration: none;
+}
+a:hover,
+a:active {
+  cursor: pointer;
+  color: rgba(38, 83, 124, 0.6);
+  text-decoration: underline;
+}
+.divLoginboxHeader,
+.divSideboxHeader,
+a.appTitles,
+.appTitles,
+a.textSidebox,
+.textSidebox,
+#fmStatusBar {
+  font-size: 90%;
+}
+.prefSection {
+  font-weight: bold;
+  font-size: 145%;
+  line-height: 40px;
+}
+#divAppboxHeader {
+  line-height: 28px;
+  font-size: 125%;
+  font-weight: bold;
+  color: #666666;
+}
+#divGenTime,
+#divPoweredBy {
+  font-size: 80%;
+  color: #ff0000;
+}
+#divPoweredBy {
+  color: #000000;
+}
+#sideboxdragarea {
+  z-index: 100;
+  position: absolute;
+  left: 0px;
+  top: 105px;
+}
+#menu2handle {
+  padding-top: 10px;
+}
+#menu1close {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+}
+hr.clearer {
+  clear: both;
+  height: 20px;
+  width: 100%;
+  background-color: #ffc200;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #000000;
+}
+/**
 * table_passord_change
 */
 table.table_passord_change {
@@ -3442,37 +2888,6 @@ table.table_passord_change tr {
 }
 table.table_passord_change td:first-child {
   padding-right: 4em;
-}
-/*z.b. Dateimanager overlay*/
-.egwGridView_grid span.iconOverlayContainer {
-  margin: 2px 5px 2px 2px;
-  position: relative;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  user-select: none;
-  overflow: visible;
-  display: inline-block;
-}
-.egwGridView_grid span.overlayContainer {
-  position: absolute;
-  right: -2px;
-  bottom: -2px;
-  vertical-align: bottom;
-  text-align: right;
-}
-.egwGridView_grid span.iconContainer {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-.egwGridView_grid span.overlayContainer img.overlay {
-  position: relative;
-  top: 1px;
-  margin: 0;
-  padding: 0;
-  height: 9px;
-  width: 11px;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select {
@@ -3486,7 +2901,7 @@ table.table_passord_change td:first-child {
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * et2 table
+ * lettersearch
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
@@ -3496,296 +2911,652 @@ table.table_passord_change td:first-child {
  * @package pixelegg
  * @version $Id$
  */
-/** #####################################################################################
- * et2
- * Tabellen
- * ######################################################################################
+/*dhtml Submenu ##########################################################*/
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(0%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
+  background-color: #000000;
+  background-color: #1e1e1e;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -ms-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1e1e1e), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: -o-linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-repeat: repeat-x;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
+  background-color: #ffc200 !important;
+  background-image: none !important;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * dialog
+
+ * define every dialog box in egw
+ * even popup or jquery
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
  */
-/* TABLE STYLE */
-.innerContainer {
-  overflow: hidden;
-  /*padding: 0;*/
-}
-.egwGridView_grid > tbody > tr.th > td {
-  background-color: #d9d9d9;
-  font-weight: normal;
-  padding: 0 2px 2px 0;
-  border-width: 0;
-  border-style: solid;
-  border-color: #b4b4b4;
-  border-left: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  background-image: none;
-  background-position: center;
-  background-repeat: repeat-x;
-  vertical-align: top;
-}
-table.egwGridView_outer {
-  background-color: #fafafa;
-  border-spacing: 0px;
-  font-size: 0.9em;
-}
-table.egwGridView_outer thead {
-  /*.background-color-5-gray;*/
-  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
-  /* IE6-9 */
-  max-height: 118px;
-  overflow-y: auto;
-}
-table.egwGridView_outer thead tr th {
-  background: transparent;
-  background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
-  font-weight: normal;
-  padding: 3px 0 3px 4px;
-  border-color: #b4b4b4;
-  border-left: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  vertical-align: top;
-  overflow: auto;
-}
-table.egwGridView_outer thead tr th:hover {
-  background-color: #bfbfbf;
-  color: #ffffff;
-  background-image: url(../images/hint-arrow-right.png);
-  background-position: right bottom;
-  background-repeat: no-repeat;
-  background-size: 15px 15px;
-}
-table.egwGridView_outer thead tr th:active {
-  background-color: #d9d9d9;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid silver;
-}
-table.egwGridView_outer thead tr th div.innerContainer {
-  max-height: 7em;
-  overflow-y: auto;
-}
-table.egwGridView_outer thead tr th.optcol {
-  padding: 0;
-  text-align: center;
-  background-image: none;
-  /*width: 32px !important;*/
-}
-table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: #189800;
-}
-table.egwGridView_outer thead tr th.optcol span.selectcols {
-  height: 9px;
-  padding: 4px 10px 0px 2px;
-  margin-top: 4px;
-  background-image: url(../images/selectcols_small.png);
-  background-repeat: no-repeat;
-  background-size: 10px 10px;
-  display: inline-block;
-}
-table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
-  background-color: #189800;
-}
-table.egwGridView_outer > tbody > tr {
-  /*Elements inside td*/
-}
-table.egwGridView_outer > tbody > tr td.frame {
-  /*border: 1px solid @gray_10; can't have - breaks grid scroll calculations'
-            /*padding: 0px 5px; no need*/
-}
-table.egwGridView_outer > tbody > tr > td .et2_link {
-  margin-left: 0px;
-  color: #26537c;
-}
-table.egwGridView_outer > tbody > tr > td img {
-  border: 1px solid transparent;
-  box-shadow: none;
-}
-table.egwGridView_outer > tbody > tr > td time {
-  display: block;
-}
-table.egwGridView_outer > tbody > tr > td img[src$="svg"] {
-  background-color: rgba(0, 0, 0, 0.5);
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-repeat: repeat-x;
-}
-/*########################################################*/
-table.egwGridView_grid {
-  font-size: 12px;
+/*body {
+    background-color: @gray_0;
+    background-image: url(../images/bgDialog.png);
+    background-repeat: repeat-x;
+}*/
+div#popupMainDiv {
+  padding: 8px;
   background-color: #ffffff;
-  border-spacing: 0px 1px;
-  width: 100%;
-  /*subentry*/
+  background-image: url(../images/bgDialog.png);
+  background-repeat: repeat-x;
 }
-table.egwGridView_grid img {
-  height: 16px;
-}
-table.egwGridView_grid img.iphoto {
-  height: 9em;
-  margin: 0.2em;
-  max-height: 60px;
-}
-table.egwGridView_grid tbody {
-  border-bottom: 1px solid #000000;
-  /*padding: 2px 3px 2px 4px;*/
-  margin: 0;
-  vertical-align: top;
-  /*        tr:nth-child(even) {background: @color_even;}
-        tr:nth-child(odd) {background: @color_odd;}*/
-  /*multiple choise*/
-}
-table.egwGridView_grid tbody tr:hover {
-  background: rgba(103, 159, 210, 0.2);
-}
-table.egwGridView_grid tbody tr.selected {
-  background-image: none;
-  /*background-color: @egw_color_1_e !important;*/
-  background-color: rgba(255, 194, 0, 0.5);
-}
-table.egwGridView_grid tbody tr.focused {
-  background-image: url(../images/yellow-stripe-a.png);
-  background-repeat: repeat;
-  background-color: rgba(255, 194, 0, 0.2);
-}
-table.egwGridView_grid tbody td {
-  padding: 3px 0 3px 3px;
-  border-bottom: 1px solid #e6e6e6;
-  color: #000000;
-}
-table.egwGridView_grid tbody td table.customfields tbody {
-  border-bottom: 0px;
-}
-table.egwGridView_grid tbody td table.customfields tbody tr {
-  border-bottom: 0px;
-  /*background-size: 12px 12px;*/
-}
-table.egwGridView_grid tbody td table.customfields tbody tr td {
-  border-bottom: 0px;
-  border: 0px;
-  padding: 0;
-  /*height: 12px;*/
-}
-table.egwGridView_grid tbody td table.customfields tbody tr td .et2_textbox_ro {
-  /*white-space: inherit;*/
-}
-table.egwGridView_grid > tr {
-  border-bottom: 1px solid;
-  border-color: #828282;
-}
-table.egwGridView_grid > tr > td {
-  border-left: 1px;
-  border-right: 1px;
-  padding: 0.3em 0 0.3em 0.3em;
-  border-bottom: 1px solid;
-  color: #e6e6e6;
-  /*&:hover {background-color: @egw_color_2_e;} legacy*/
-}
-table.egwGridView_grid > tr > td:active {
-  /*background-color: @egw_color_2_a;*/
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #ffffff;
-}
-table.egwGridView_grid > tr > td span {
-  color: #505050;
-}
-table.egwGridView_grid > tr > td span[id*="[info_subject]"] {
-  margin-right: 30px;
-}
-table.egwGridView_grid > tr > td span.high {
-  color: red;
-}
-table.egwGridView_grid > tr > td span.urgent {
-  color: red;
-  background-color: #ffdd73;
-}
-table.egwGridView_grid > tr > td span.low {
-  color: #373737;
-}
-table.egwGridView_grid tr.subentry {
-  background: rgba(255, 221, 115, 0.2) !important;
-}
-table.egwGridView_grid tr.subentry:hover {
-  background: #ffdd73 !important;
-}
-table.egwGridView_grid span.arrow {
-  -moz-user-select: none;
-  background-repeat: no-repeat;
-  display: inline-block;
-  height: 8px;
-  margin-right: 2px;
-  vertical-align: middle;
-  width: 8px;
-}
-table.egwGridView_grid span.arrow.opened {
-  background-image: url("../images/egw_action/arrows.png");
-  background-position: -8px 0;
-  cursor: pointer;
-}
-table.egwGridView_grid span.arrow.closed {
-  background-image: url("../images/egw_action/arrows.png");
-  background-position: 0 0;
-  cursor: pointer;
-}
-table.egwGridView_grid span.arrow.loading {
-  background-image: url("../egw_action/ajax-loader.gif");
-  background-position: 0 0;
-  cursor: pointer;
-}
-.nextmatch_header .selectcols {
-  background: none;
-}
-.nextmatch_header tr {
-  background: none;
-}
-/*Custom Fields*/
-table.customfields tbody tr:nth-child(2n) {
-  background: inherit;
-}
-table.customfields tr {
-  background-color: inherit !important;
-}
-table.customfields td {
-  line-height: 11px;
-}
-table.customfields td span > div {
-  display: inherit;
+div#popupMainDiv > * {
   margin: 0px;
 }
-/*########################################################*/
-table.nextmatch_header img {
+div.et2_container {
+  padding: 0;
+}
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select {
+  height: 20px;
+  padding: 0;
+  margin: 0px;
+  font-size: 0.95em;
+}
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
+  height: 20px;
+  padding: 0;
+  margin: 4px 4px 4px 5px;
+  font-size: 0.95em;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-topleft: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  /*.background-clip(padding-box);*/
+}
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker {
+  background-image: url("../images/datepopup.png");
+}
+div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
+  cursor: pointer;
+}
+div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs button.et2_button_with_image {
+  background-size: 12px auto !important;
+  margin-left: 32px;
+  padding: 0px;
+  height: 16px;
+}
+div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
+  background-color: #ffffff;
+}
+.high {
+  border-top: 5px solid #e6e6e6;
+  border-bottom: 5px solid #e6e6e6 !important;
+}
+/*Main div*/
+table.dialog-main-view {
+  width: 100%;
+}
+/*###########################################
+#                                           #
+#     dialogHeader                 app-img  #
+#############################################
+#                                           #
+#     dialogHeader2                         #
+#############################################
+#                                           #
+#     dialogHeader3                         #
+#############################################
+#                                           #
+#     dialogHeader4                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#    main + tabs                            #
+#                                           #
+#                                           #
+#############################################
+#   dialogOperators                        #
+#############################################
+#                                           #
+#  button | button | button         delete  #
+##############################################*/
+tr.dialogHeader td,
+tr.dialogHeader2 td,
+tr.dialogHeader3 td,
+tr.dialogHeader4 td,
+tr.dialogOperators td {
+  padding: 5px 6px 5px 0;
+  vertical-align: middle;
+}
+/*** dialogHeader on a box not table ***/
+div.dialogHeader {
+  /*background-color: @egw_color_2_a !important;*/
+  vertical-align: middle;
+  /*font-size: 150%*/
+}
+.dialogHeader2,
+.dialogHeader3,
+.dialogHeader4 {
+  /*font-size: 120%;*/
+}
+/**********    Header Part ********************/
+.dialogHeader {
+  /*.gradient_thead;*/
+  color: #000000;
+  height: 50px;
+}
+.dialogHeader img[src*="navbar"] {
+  padding: 0 0 0 15px;
+}
+.dialogHeader input[type="radio"],
+.dialogHeader input.et2_radiobox {
+  -webkit-appearance: none;
+  border: none;
+}
+.dialogHeader table.et2_grid {
+  border-top: none;
+}
+.dialogHeader table.et2_grid .th {
+  background-color: #0c5da5 !important;
+}
+.dialogHeader table.et2_grid tr {
+  height: 30px;
+}
+.dialogHeader table.et2_grid td {
+  padding: 0px 0px 0px 3px;
+  color: #000000;
+}
+.dialogHeader table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
+  float: left;
+}
+.dialogHeader input.et2_textbox {
+  font-size: 1.3em;
+}
+.dialogHeader .et2_label {
+  color: #000000;
+  vertical-align: middle;
+  padding: 0px 0px 0px 0px !important;
+  /*margin-right: 57px;*/
+  margin: 0px important;
+  font-size: 1em;
+  text-align: right;
+}
+.dialogHeader td.space span img {
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  /* Firefox 10+, Firefox on Android */
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
+}
+/**********    Header Row2 - 4 ********************/
+tr.dialogHeader2,
+tr.dialogHeader3,
+tr.dialogHeader4 {
+  background-color: #f2f2f2 !important;
+  vertical-align: middle;
+}
+tr.dialogHeader2 .et2_label,
+tr.dialogHeader3 .et2_label,
+tr.dialogHeader4 .et2_label {
+  color: #1a1a1a;
+  vertical-align: middle;
+  padding: 0px 0px 0px 0px !important;
+  /*margin-right: 55px;*/
+  margin: 0px;
+  font-size: 1em;
+  width: 50px !important;
+}
+/************* Tabs  *********************************/
+/**
+ * Tabs widget
+ */
+.et2_tabheader {
+  padding-left: 0em;
+  border-bottom: 1px solid #bfbfbf;
+  margin: 0;
+  background-image: none;
+  background-color: #ffffff;
+}
+.et2_tabheader :first-child {
+  margin-left: 0px;
+}
+.et2_tabflag,
+.etemplate_tab > div,
+.etemplate_tab_active > div {
+  margin: 1em 3px -1px 0;
+  padding: 4px;
+  background-color: #b4b4b4;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  min-width: 73px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 3px;
+  /*.background-clip(padding-box);*/
+}
+.et2_tabflag:hover,
+.etemplate_tab > div:hover,
+.etemplate_tab_active > div:hover {
+  color: #808080;
+  background-color: #bfbfbf;
+}
+.et2_tabflag:active,
+.etemplate_tab > div:active,
+.etemplate_tab_active > div:active {
+  background-color: #ffffff;
+  color: #ffffff;
+}
+td.etemplate_tab_active.th {
+  background-color: transparent;
+}
+.et2_tabflag.active,
+.etemplate_tab_active > div {
+  border-spacing: 0px;
+  background-color: white;
+  color: #000000;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #505050;
+}
+.et2_tabflag.active:hover,
+.etemplate_tab_active > div:hover {
+  color: #000000;
+  background-color: white;
+}
+.et2_tabs,
+.tab_body {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  padding: 5px;
+  /*overflow-y: auto;*/
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 11px;
+}
+.tab_body {
+  border-top-width: 1px;
+}
+.tab_body img {
+  /*filter grey*/
+  /*filter grey*/
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(0%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: gray;
+  /* IE 6-9 */
+}
+div#etemplate\.tab_widget {
+  margin-bottom: 11px;
+}
+/************* Main  **********************************/
+.dialogMainTimeframe div {
+  min-height: 100px;
+}
+/**********    Operators *******************************/
+/*#############################################
+#   dialogOperators                        #
+#############################################*/
+.dialogOperators {
+  background-color: #e6e6e6;
+  border-top: 0px solid #e6e6e6;
+  border-bottom: 0px solid #e6e6e6;
+}
+.dialogOperators td {
+  padding: 2px 2px;
+}
+.dialogOperators .et2_label {
+  margin-left: 6px;
+  display: inline-block;
+}
+/**********    Footer  *******************************/
+/*#############################################*/
+/*#  Toolbar                                  #*/
+/*#  button | button | button         delete  #*/
+/*##############################################*/
+.dialogFooterToolbar {
+  background-color: #679fd2;
+  margin: 10px 0 0 0;
+  padding: 3px;
+  white-space: nowrap;
+  /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
+}
+.dialogFooterToolbar td {
+  padding: 0px 5px 0px 0px;
+}
+.dialogFooterToolbar button {
+  height: 24px;
+  min-width: 86px;
+}
+.dialogFooterToolbar button:hover {
+  height: 24px;
+}
+.dialogFooterToolbar button:action {
+  height: 24px;
+}
+.dialogFooterToolbar button[id="addressbook-edit_button[delete]"] {
+  float: right;
+}
+.dialogFooterToolbar div.et2_hbox {
+  white-space: normal;
+}
+.dialogFooterToolbar div.et2_box_widget {
+  white-space: nowrap;
+}
+.dialogFooterToolbar label.et2_label {
+  white-space: nowrap;
+}
+.dialogFooterToolbar input.et2_checkbox {
+  top: 0px;
+}
+/*Dialog Calendar - Resourcen suchen*/
+div#divMain {
+  padding: 1em;
+}
+div#divMain img {
   width: 16px;
   height: 16px;
 }
-.egwGridView_empty {
+div#divMain input[type*="image"] {
+  width: 16px;
+  height: 16px;
+}
+/**
+ * admin - site configuration
+ */
+div.admin-config form > table {
+  width: 100%;
+  padding: 5px;
+}
+div.admin-config form > table tr.th td {
+  font-size: 110%;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+div.admin-config form > table td {
+  padding-left: 5px;
+  border-bottom: 1px solid #e0e0e0;
+}
+div.admin-config form > table td b {
+  font-weight: bold;
+}
+/**
+ * Styles for different egw_message-types
+ */
+.success_message,
+.warning_message,
+.error_message {
+  color: red;
+  font-weight: normal;
+  font-style: italic;
+  text-align: left;
+  margin-left: 5px;
+  padding-left: 20px;
+  background-image: url(../images/check.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  white-space: pre-wrap;
+}
+.warning_message {
+  background-image: url(../images/dialog_warning.png);
+}
+.error_message {
+  font-weight: bold;
+  background-image: url(../images/dialog_error.png);
+}
+/**
+ * Message in popup
+ */
+body > div#egw_message {
+  background-color: #e6e6e6;
+  /*border-radius: 10px;*/
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  /*        .border_normal;*/
+  border: 3px solid #ffc200;
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  -webkit-border-top-left-radius: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  -moz-border-radius-topleft: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 0px;
+  /*.background-clip(padding-box);*/
+  right: 33%;
+  top: 0px;
+  padding: 10px;
+  padding-left: 25px;
+  background-position-x: 5px;
+  /*border: 2px gray solid;*/
+  min-width: 100px;
+  z-index: 100000;
+  margin: 0px auto;
+  width: 22%;
+}
+/**
+ * Less-file for egroupware
+ * Definitionen Layout
+ * Raster
+ *
+ * Version 08.2013
+ * Author Stefan Reinhardt, Wolfgang Ott
+ *
+ */
+/* #################################################
+* FOOTER
+* ##################################################
+*/
+#egw_fw_footer {
+  position: fixed;
+  bottom: 0px;
+  width: 50%;
+  text-align: left;
+  padding: 3px;
+  clear: both;
+  opacity: 1;
+  z-index: 100;
+  color: #828282;
+}
+#egw_fw_footer a {
+  color: #696969;
+}
+#egw_fw_footer a:last-child:after {
+  content: " + Layout: pixelegg";
+}
+#egw_fw_footer:hover {
+  opacity: 0.1;
+  transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+h1 {
+  font-size: 300%;
+  /*line-height: 330%;*/
+  margin: 0.4em 0 0;
+  font-weight: normal;
+}
+.headline_h1 {
+  font-size: 300%;
+  /*line-height: 330%;*/
+  margin: 0.4em 0 0;
+}
+h2 {
+  font-size: 250%;
+  /*line-height: 270%;*/
+  margin: 0.6em 0 0;
+}
+.headline_h2 {
+  font-size: 250%;
+  /*line-height: 270%;*/
+  margin: 0.6em 0 0;
+  font-weight: lighter;
+}
+h3 {
+  font-size: 200%;
+  /*line-height: 220%;*/
+  margin: 0.8571em 0 0;
+}
+.headline_h3 {
+  font-size: 200%;
+  /*line-height: 220%;*/
+  margin: 0.8571em 0 0;
+}
+h3 a {
+  color: #999999;
+}
+h4 {
+  font-size: 150%;
+  /*line-height: 160%;*/
+  margin: 1.125em 0 0;
+}
+.headline_h4 {
+  font-size: 150%;
+  /*line-height: 160%;*/
+  margin: 1.125em 0 0;
+}
+h5 {
+  font-size: 100%;
+  /*line-height: 110%;*/
+  margin: 1.2857em 0 0;
+}
+.headline_h5 {
+  font-size: 100%;
+  /*line-height: 110%;*/
+  margin: 1.2857em 0 0;
+}
+h6 {
+  font-size: 100%;
+  font-weight: bold;
+  /*line-height: 100%;*/
+  margin: 1.5em 0 0;
+}
+.headline_h6 {
+  font-size: 100%;
+  font-weight: bold;
+  /*line-height: 100%;*/
+  margin: 1.5em 0 0;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+.lettersearch {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   text-align: center;
-  border-bottom: 1px solid silver;
-  font-size: 1.5em;
+  cursor: pointer;
 }
-.egwGridView_empty td {
-  color: #1e1e1e !important;
+.lettersearch:hover {
+  background-color: #b3b3b3 !important;
+  color: #ffffff;
 }
+.lettersearch_active {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  text-align: center;
+  cursor: pointer;
+  background-color: #b3b3b3 !important;
+  font-weight: bold;
+}
+td.lettersearch {
+  background-image: none;
+}
+/*.nextmatch_header table {
+        border: none !important;
+        width: 99% !important;
+}*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -4064,6 +3835,157 @@ table.nextmatch_header img {
   100% {
     opacity: 0;
   }
+}
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * et2 Messages
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+#egwpopup {
+  background-color: #fafafa;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-right-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topright: 20px;
+  border-radius: 3px;
+  border-top-right-radius: 20px;
+  border-width: 9px 0px 0px 0px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+  /*Button*/
+}
+#egwpopup input#egwpopup_ok_button,
+#egwpopup button#desktop_perms {
+  /*.border_normal;*/
+  /*.box_shadow_standard_light;*/
+  /*.rounded (3px);*/
+  color: #000000;
+  -webkit-appearance: none;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+  transition-timing-function: linear;
+  background-color: #b4b4b4;
+  height: 24px;
+  padding: 0 5px;
+}
+#egwpopup input#egwpopup_ok_button:hover,
+#egwpopup button#desktop_perms:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  background-color: inherit;
+}
+#egwpopup input#egwpopup_ok_button:active,
+#egwpopup button#desktop_perms:active {
+  background-color: #1aa200 !important;
+}
+/*popup Messsage*/
+div#egwpopup_message {
+  background-color: .color_gray_0;
+  padding: 1em;
+  overflow-y: auto;
+}
+#msg,
+.message {
+  color: red;
+  font-style: italic;
+  background: #ffffff;
+}
+.egw_fw_ui_app_header_container {
+  border-width: 9px 0px 0px 0px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  background-color: #cdcdcd;
+  height: auto;
+}
+.egw_fw_ui_app_header_container .egw_fw_ui_app_header {
+  padding: 7px 2px 6px 20px;
+  font-weight: normal;
+  color: #408dd2;
+  overflow: hidden;
+  line-height: 2em;
+}
+.colselection.ui-widget-content {
+  width: 33%;
+}
+/*Calendar ##############*/
+td.message {
+  background-color: #e6e6e6 !important;
+  height: 0px;
+  padding: 0px;
+}
+td.message span.message {
+  height: 35px;
+  border-bottom: 2px solid #e6e6e6;
+  color: red;
+  background: #e6e6e6;
+  height: auto;
+  width: 100%;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/*z.b. Dateimanager overlay*/
+.egwGridView_grid span.iconOverlayContainer {
+  margin: 2px 5px 2px 2px;
+  position: relative;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  overflow: visible;
+  display: inline-block;
+}
+.egwGridView_grid span.overlayContainer {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  vertical-align: bottom;
+  text-align: right;
+}
+.egwGridView_grid span.iconContainer {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.egwGridView_grid span.overlayContainer img.overlay {
+  position: relative;
+  top: 1px;
+  margin: 0;
+  padding: 0;
+  height: 9px;
+  width: 11px;
 }
 /**
  * EGroupware: Stylite Pixelegg template
@@ -5345,50 +5267,10 @@ button.image_button {
   background: none;
   border: none;
 }
-/*@import "../less/layout_nextmatch.less";*/
-/**
- * Less-file for egroupware
- * Definitionen Layout
- * Raster
- *
- * Version 08.2013
- * Author Stefan Reinhardt, Wolfgang Ott
- *
- */
-/* #################################################
-* FOOTER
-* ##################################################
-*/
-#egw_fw_footer {
-  position: fixed;
-  bottom: 0px;
-  width: 50%;
-  text-align: left;
-  padding: 3px;
-  clear: both;
-  opacity: 1;
-  z-index: 100;
-  color: #828282;
-}
-#egw_fw_footer a {
-  color: #696969;
-}
-#egw_fw_footer a:last-child:after {
-  content: " + Layout: pixelegg";
-}
-#egw_fw_footer:hover {
-  opacity: 0.1;
-  transition: opacity 0.5s ease-out;
-  -moz-transition: opacity 0.5s ease-out;
-  -webkit-transition: opacity;
-}
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * dialog
-
- * define every dialog box in egw
- * even popup or jquery
+ * lettersearch
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
  *
@@ -5398,454 +5280,734 @@ button.image_button {
  * @package pixelegg
  * @version $Id$
  */
-/*@import (reference) "def_content_elements.less";*/
-/*body {
-    background-color: @gray_0;
-    background-image: url(../images/bgDialog.png);
-    background-repeat: repeat-x;
-}*/
-div#popupMainDiv {
-  padding: 8px;
-  background-color: #ffffff;
-  background-image: url(../images/bgDialog.png);
-  background-repeat: repeat-x;
-}
-div#popupMainDiv > * {
-  margin: 0px;
-}
-div.et2_container {
-  padding: 0;
-}
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select {
-  height: 20px;
-  padding: 0;
-  margin: 0px;
-  font-size: 0.95em;
-}
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
-  height: 20px;
-  padding: 0;
-  margin: 4px 4px 4px 5px;
-  font-size: 0.95em;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-  /*.background-clip(padding-box);*/
-}
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker {
-  background-image: url("../images/datepopup.png");
-}
-div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
-  cursor: pointer;
-}
-div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs button.et2_button_with_image {
-  background-size: 12px auto !important;
-  margin-left: 32px;
-  padding: 0px;
-  height: 16px;
-}
-div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
-  background-color: #ffffff;
-}
-.high {
-  border-top: 5px solid #e6e6e6;
-  border-bottom: 5px solid #e6e6e6 !important;
-}
-/*Main div*/
-table.dialog-main-view {
-  width: 100%;
-}
-/*###########################################
-#                                           #
-#     dialogHeader                 app-img  #
-#############################################
-#                                           #
-#     dialogHeader2                         #
-#############################################
-#                                           #
-#     dialogHeader3                         #
-#############################################
-#                                           #
-#     dialogHeader4                         #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#    main + tabs                            #
-#                                           #
-#                                           #
-#############################################
-#   dialogOperators                        #
-#############################################
-#                                           #
-#  button | button | button         delete  #
-##############################################*/
-tr.dialogHeader td,
-tr.dialogHeader2 td,
-tr.dialogHeader3 td,
-tr.dialogHeader4 td,
-tr.dialogOperators td {
-  padding: 5px 6px 5px 0;
-  vertical-align: middle;
-}
-/*** dialogHeader on a box not table ***/
-div.dialogHeader {
-  /*background-color: @egw_color_2_a !important;*/
-  vertical-align: middle;
-  /*font-size: 150%*/
-}
-.dialogHeader2,
-.dialogHeader3,
-.dialogHeader4 {
-  /*font-size: 120%;*/
-}
-/**********    Header Part ********************/
-.dialogHeader {
-  /*.gradient_thead;*/
-  color: #000000;
-  height: 50px;
-}
-.dialogHeader img[src*="navbar"] {
-  padding: 0 0 0 15px;
-}
-.dialogHeader input[type="radio"],
-.dialogHeader input.et2_radiobox {
+.sbHolder {
+  /*.box_shadow_standard_light;*/
+  width: auto;
+  margin: 5px 0em 5px 5px;
+  padding: 3px;
+  outline: none;
+  display: inline-block;
   -webkit-appearance: none;
-  border: none;
-}
-.dialogHeader table.et2_grid {
-  border-top: none;
-}
-.dialogHeader table.et2_grid .th {
-  background-color: #0c5da5 !important;
-}
-.dialogHeader table.et2_grid tr {
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+  font-size: 1.2em;
+  font-weight: normal;
   height: 30px;
+  position: relative;
+  width: 10em;
 }
-.dialogHeader table.et2_grid td {
-  padding: 0px 0px 0px 3px;
-  color: #000000;
+.sbHolder:hover {
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
-.dialogHeader table.et2_grid table.et2_grid label.et2_label span.et2_selectbox li {
-  float: left;
-}
-.dialogHeader input.et2_textbox {
-  font-size: 1.3em;
-}
-.dialogHeader .et2_label {
-  color: #000000;
-  vertical-align: middle;
-  padding: 0px 0px 0px 0px !important;
-  /*margin-right: 57px;*/
-  margin: 0px important;
-  font-size: 1em;
-  text-align: right;
-}
-.dialogHeader td.space span img {
-  background: #ffffff;
-  border: 2px solid #ffffff;
-  /*filter grey*/
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  /* Firefox 10+, Firefox on Android */
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(100%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
-  /*filter: url(grayscale.svg);  Firefox 4+ */
-  filter: gray;
-  /* IE 6-9 */
-}
-/**********    Header Row2 - 4 ********************/
-tr.dialogHeader2,
-tr.dialogHeader3,
-tr.dialogHeader4 {
-  background-color: #f2f2f2 !important;
-  vertical-align: middle;
-}
-tr.dialogHeader2 .et2_label,
-tr.dialogHeader3 .et2_label,
-tr.dialogHeader4 .et2_label {
-  color: #1a1a1a;
-  vertical-align: middle;
-  padding: 0px 0px 0px 0px !important;
-  /*margin-right: 55px;*/
-  margin: 0px;
-  font-size: 1em;
-  width: 50px !important;
-}
-/************* Tabs  *********************************/
-/**
- * Tabs widget
- */
-.et2_tabheader {
-  padding-left: 0em;
-  border-bottom: 1px solid #bfbfbf;
-  margin: 0;
-  background-image: none;
-  background-color: #ffffff;
-}
-.et2_tabheader :first-child {
-  margin-left: 0px;
-}
-.et2_tabflag,
-.etemplate_tab > div,
-.etemplate_tab_active > div {
-  margin: 1em 3px -1px 0;
-  padding: 4px;
-  background-color: #b4b4b4;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  min-width: 73px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 0px;
-  -webkit-border-bottom-left-radius: 0px;
-  -webkit-border-top-left-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 0px;
-  -moz-border-radius-bottomleft: 0px;
-  -moz-border-radius-topleft: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 3px;
-  /*.background-clip(padding-box);*/
-}
-.et2_tabflag:hover,
-.etemplate_tab > div:hover,
-.etemplate_tab_active > div:hover {
-  color: #808080;
-  background-color: #bfbfbf;
-}
-.et2_tabflag:active,
-.etemplate_tab > div:active,
-.etemplate_tab_active > div:active {
-  background-color: #ffffff;
-  color: #ffffff;
-}
-td.etemplate_tab_active.th {
-  background-color: transparent;
-}
-.et2_tabflag.active,
-.etemplate_tab_active > div {
-  border-spacing: 0px;
-  background-color: white;
-  color: #000000;
-  border-width: 1px 1px 0px 1px;
-  border-style: solid;
-  border-color: #505050;
-}
-.et2_tabflag.active:hover,
-.etemplate_tab_active > div:hover {
-  color: #000000;
-  background-color: white;
-}
-.et2_tabs,
-.tab_body {
-  border-width: 0px 1px 1px 1px;
+.sbHolder:focus {
+  outline: 0;
+  border-width: 1px;
   border-style: solid;
   border-color: #b4b4b4;
-  padding: 5px;
-  /*overflow-y: auto;*/
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+.sbSelector {
+  display: block;
+  height: 30px;
+  left: 0;
+  line-height: 30px;
+  outline: none;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 10px;
+  top: 0;
+  width: 170px;
+}
+.sbSelector:link,
+.sbSelector:visited,
+.sbSelector:hover {
+  color: #808080;
+  outline: none;
+  text-decoration: none;
+}
+.sbToggle {
+  background: url(../img/select-icons.png) 0 -116px no-repeat;
+  display: block;
+  height: 30px;
+  outline: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+}
+.sbToggle:hover {
+  background: url(../images/select-icons.png) 0 -167px no-repeat;
+}
+.sbToggleOpen {
+  background: url(../images/select-icons.png) 0 -16px no-repeat;
+}
+.sbToggleOpen:hover {
+  background: url(../images/select-icons.png) 0 -66px no-repeat;
+}
+.sbHolderDisabled {
+  background-color: #3C3C3C;
+  border: solid 1px #515151;
+}
+.sbOptions {
   background-color: #ffffff;
+  border: solid 1px #515151;
+  list-style: none;
+  left: -1px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 30px;
+  width: 200px;
+  z-index: 1;
+  overflow-y: auto;
+}
+.sbOptions li {
+  padding: 0 7px;
+}
+.sbOptions a {
+  border-bottom: dotted 1px #515151;
+  display: block;
+  outline: none;
+  padding: 7px 0 7px 3px;
+  color: #26537c;
+}
+.sbOptions a:link,
+.sbOptions a:visited {
+  color: #26537c;
+  text-decoration: none;
+}
+.sbOptions a:hover,
+.sbOptions a:focus,
+.sbOptions a.sbFocus {
+  color: rgba(38, 83, 124, 0.6);
+}
+.sbOptions li.last a {
+  border-bottom: none;
+}
+.sbOptions .sbDisabled {
+  border-bottom: dotted 1px #515151;
+  color: #999;
+  display: block;
+  padding: 7px 0 7px 3px;
+}
+.sbOptions .sbGroup {
+  border-bottom: dotted 1px #515151;
+  color: #EBB52D;
+  display: block;
+  font-weight: bold;
+  padding: 7px 0 7px 3px;
+}
+.sbOptions .sbSub {
+  padding-left: 17px;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/*SVG Filter / not for Logo */
+#egw_fw_sidebar img[src$="svg"] {
+  background-color: #696969;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #696969, #696969);
+  background-image: -ms-linear-gradient(top, #696969, #696969);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
+  background-image: -webkit-linear-gradient(top, #696969, #696969);
+  background-image: -o-linear-gradient(top, #696969, #696969);
+  background-image: linear-gradient(top, #696969, #696969);
+  background-repeat: repeat-x;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin-bottom: 11px;
+  border: 1px solid #ffffff;
 }
-.tab_body {
-  border-top-width: 1px;
+#egw_fw_main img[src$="svg"],
+#egw_fw_footer img[src$="svg"] {
+  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-repeat: repeat-x;
 }
-.tab_body img {
-  /*filter grey*/
-  /*filter grey*/
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(0%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
-  /*filter: url(grayscale.svg);  Firefox 4+ */
-  filter: gray;
-  /* IE 6-9 */
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 table
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/** #####################################################################################
+ * et2
+ * Tabellen
+ * ######################################################################################
+ */
+/* TABLE STYLE */
+.th {
+  background-color: #e0e0e0;
 }
-div#etemplate\.tab_widget {
-  margin-bottom: 11px;
+.innerContainer {
+  overflow: hidden;
+  /*padding: 0;*/
 }
-/************* Main  **********************************/
-.dialogMainTimeframe div {
-  min-height: 100px;
+.egwGridView_grid > tbody > tr.th > td {
+  background-color: #d9d9d9;
+  font-weight: normal;
+  padding: 0 2px 2px 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: #b4b4b4;
+  border-left: 0px solid transparent;
+  border-top: 0px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  background-image: none;
+  background-position: center;
+  background-repeat: repeat-x;
+  vertical-align: top;
 }
-/**********    Operators *******************************/
-/*#############################################
-#   dialogOperators                        #
-#############################################*/
-.dialogOperators {
-  background-color: #e6e6e6;
-  border-top: 0px solid #e6e6e6;
-  border-bottom: 0px solid #e6e6e6;
+table.egwGridView_outer {
+  background-color: #fafafa;
+  border-spacing: 0px;
+  font-size: 0.9em;
 }
-.dialogOperators td {
-  padding: 2px 2px;
+table.egwGridView_outer thead {
+  /*.background-color-5-gray;*/
+  background: -moz-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(240, 240, 240, 0)), color-stop(100%, rgba(191, 191, 191, 0.65)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(191, 191, 191, 0.65) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf', GradientType=0);
+  /* IE6-9 */
+  max-height: 118px;
+  overflow-y: auto;
 }
-.dialogOperators .et2_label {
-  margin-left: 6px;
+table.egwGridView_outer thead tr th {
+  background: transparent;
+  background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+  font-weight: normal;
+  padding: 3px 0 3px 4px;
+  border-color: #b4b4b4;
+  border-left: 0px solid transparent;
+  border-top: 0px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  vertical-align: top;
+  overflow: auto;
+}
+table.egwGridView_outer thead tr th:hover {
+  background-color: #bfbfbf;
+  color: #ffffff;
+  background-image: url(../images/hint-arrow-right.png);
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+}
+table.egwGridView_outer thead tr th:active {
+  background-color: #d9d9d9;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid silver;
+}
+table.egwGridView_outer thead tr th div.innerContainer {
+  max-height: 7em;
+  overflow-y: auto;
+}
+table.egwGridView_outer thead tr th.optcol {
+  padding: 0;
+  text-align: center;
+  background-image: none;
+  /*width: 32px !important;*/
+}
+table.egwGridView_outer thead tr th.optcol:hover {
+  background-color: #189800;
+}
+table.egwGridView_outer thead tr th.optcol span.selectcols {
+  height: 9px;
+  padding: 4px 10px 0px 2px;
+  margin-top: 4px;
+  background-image: url(../images/selectcols_small.png);
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
   display: inline-block;
 }
-/**********    Footer  *******************************/
-/*#############################################*/
-/*#  Toolbar                                  #*/
-/*#  button | button | button         delete  #*/
-/*##############################################*/
-.dialogFooterToolbar {
-  background-color: #679fd2;
-  margin: 10px 0 0 0;
-  padding: 3px;
-  white-space: nowrap;
-  /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
+table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
+  background-color: #189800;
 }
-.dialogFooterToolbar td {
-  padding: 0px 5px 0px 0px;
+table.egwGridView_outer > tbody > tr {
+  /*Elements inside td*/
 }
-.dialogFooterToolbar button {
-  height: 24px;
-  min-width: 86px;
+table.egwGridView_outer > tbody > tr td.frame {
+  /*border: 1px solid @gray_10; can't have - breaks grid scroll calculations'
+            /*padding: 0px 5px; no need*/
 }
-.dialogFooterToolbar button:hover {
-  height: 24px;
+table.egwGridView_outer > tbody > tr > td .et2_link {
+  margin-left: 0px;
+  color: #26537c;
 }
-.dialogFooterToolbar button:action {
-  height: 24px;
+table.egwGridView_outer > tbody > tr > td img {
+  border: 1px solid transparent;
+  box-shadow: none;
 }
-.dialogFooterToolbar button[id="addressbook-edit_button[delete]"] {
+table.egwGridView_outer > tbody > tr > td time {
+  display: block;
+}
+table.egwGridView_outer > tbody > tr > td img[src$="svg"] {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-repeat: repeat-x;
+}
+/*########################################################*/
+table.egwGridView_grid {
+  font-size: 12px;
+  background-color: #ffffff;
+  border-spacing: 0px 1px;
+  width: 100%;
+  /*subentry*/
+}
+table.egwGridView_grid img {
+  height: 16px;
+}
+table.egwGridView_grid img.iphoto {
+  height: 9em;
+  margin: 0.2em;
+  max-height: 60px;
+}
+table.egwGridView_grid tbody {
+  border-bottom: 1px solid #000000;
+  /*padding: 2px 3px 2px 4px;*/
+  margin: 0;
+  vertical-align: top;
+  /*        tr:nth-child(even) {background: @color_even;}
+        tr:nth-child(odd) {background: @color_odd;}*/
+  /*multiple choise*/
+}
+table.egwGridView_grid tbody tr:hover {
+  background: rgba(103, 159, 210, 0.2);
+}
+table.egwGridView_grid tbody tr.selected {
+  background-image: none;
+  /*background-color: @egw_color_1_e !important;*/
+  background-color: rgba(255, 194, 0, 0.5);
+}
+table.egwGridView_grid tbody tr.focused {
+  background-image: url(../images/yellow-stripe-a.png);
+  background-repeat: repeat;
+  background-color: rgba(255, 194, 0, 0.2);
+}
+table.egwGridView_grid tbody td {
+  padding: 3px 0 3px 3px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000000;
+}
+table.egwGridView_grid tbody td table.customfields tbody {
+  border-bottom: 0px;
+}
+table.egwGridView_grid tbody td table.customfields tbody tr {
+  border-bottom: 0px;
+  /*background-size: 12px 12px;*/
+}
+table.egwGridView_grid tbody td table.customfields tbody tr td {
+  border-bottom: 0px;
+  border: 0px;
+  padding: 0;
+  /*height: 12px;*/
+}
+table.egwGridView_grid tbody td table.customfields tbody tr td .et2_textbox_ro {
+  /*white-space: inherit;*/
+}
+table.egwGridView_grid > tr {
+  border-bottom: 1px solid;
+  border-color: #828282;
+}
+table.egwGridView_grid > tr > td {
+  border-left: 1px;
+  border-right: 1px;
+  padding: 0.3em 0 0.3em 0.3em;
+  border-bottom: 1px solid;
+  color: #e6e6e6;
+  /*&:hover {background-color: @egw_color_2_e;} legacy*/
+}
+table.egwGridView_grid > tr > td:active {
+  /*background-color: @egw_color_2_a;*/
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+table.egwGridView_grid > tr > td span {
+  color: #505050;
+}
+table.egwGridView_grid > tr > td span[id*="[info_subject]"] {
+  margin-right: 30px;
+}
+table.egwGridView_grid > tr > td span.high {
+  color: red;
+}
+table.egwGridView_grid > tr > td span.urgent {
+  color: red;
+  background-color: #ffdd73;
+}
+table.egwGridView_grid > tr > td span.low {
+  color: #373737;
+}
+table.egwGridView_grid tr.subentry {
+  background: rgba(255, 221, 115, 0.2) !important;
+}
+table.egwGridView_grid tr.subentry:hover {
+  background: #ffdd73 !important;
+}
+table.egwGridView_grid span.arrow {
+  -moz-user-select: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 8px;
+  margin-right: 2px;
+  vertical-align: middle;
+  width: 8px;
+}
+table.egwGridView_grid span.arrow.opened {
+  background-image: url("../images/egw_action/arrows.png");
+  background-position: -8px 0;
+  cursor: pointer;
+}
+table.egwGridView_grid span.arrow.closed {
+  background-image: url("../images/egw_action/arrows.png");
+  background-position: 0 0;
+  cursor: pointer;
+}
+table.egwGridView_grid span.arrow.loading {
+  background-image: url("../egw_action/ajax-loader.gif");
+  background-position: 0 0;
+  cursor: pointer;
+}
+.nextmatch_header .selectcols {
+  background: none;
+}
+.nextmatch_header tr {
+  background: none;
+}
+/*Custom Fields*/
+table.customfields tbody tr:nth-child(2n) {
+  background: inherit;
+}
+table.customfields tr {
+  background-color: inherit !important;
+}
+table.customfields td {
+  line-height: 11px;
+}
+table.customfields td span > div {
+  display: inherit;
+  margin: 0px;
+}
+/*########################################################*/
+table.nextmatch_header img {
+  width: 16px;
+  height: 16px;
+}
+.egwGridView_empty {
+  text-align: center;
+  border-bottom: 1px solid silver;
+  font-size: 1.5em;
+}
+.egwGridView_empty td {
+  color: #1e1e1e !important;
+}
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/* traditional */
+form {
+  margin: 0px;
+  padding: 0px;
+}
+img {
+  border: 0;
+}
+div {
+  color: #000000;
+}
+input[type=submit],
+input[type=button],
+input[type=reset],
+button,
+.egwbutton {
+  background-color: #f0f0f0;
+  background-image: none;
+  border: outset 1px #b9d5e3;
+  margin: 1px;
+  padding: 1px;
+  cursor: pointer;
+  color: #004e7d;
+}
+input[type=submit]:hover,
+input[type=button]:hover,
+input[type=reset]:hover,
+button:hover,
+.egwbutton:hover {
+  background-color: #d9d9d9;
+  background-image: none;
+  border: outset 1px #b9d5e3;
+  color: #004e7d;
+}
+input[type=submit]:active,
+input[type=button]:active,
+input[type=reset]:active,
+button:active,
+.egwbutton:active {
+  border: inset 1px #bbbbbb;
+}
+input[type=submit]:disabled,
+input[type=button]:disabled,
+input[type=reset]:disabled,
+button:disabled,
+.egwbutton:disabled {
+  background-color: transparent;
+  color: gray;
+}
+input.egwbutton {
+  background-color: #b9d5e3;
+  border: outset 1px #b9d5e3;
+  margin: 1px;
+  padding: 1px;
+  cursor: pointer;
+  color: #004e7d;
+}
+input.egwbutton:hover {
+  background-color: #94bfd4;
+  border: outset 1px #b9d5e3;
+  color: #004e7d;
+}
+input.egwbutton:active {
+  border: inset 1px #bbbbbb;
+}
+input[type=image] {
+  cursor: pointer;
+  border: 0;
+  width: 16px;
+  height: 16px;
+}
+#thesideboxcolumn {
+  width: 177px;
+  position: relative;
+}
+#sideresize {
+  background-image: url(../images/resize.png);
+  width: 13px;
+  height: 13px;
+  right: 1px;
+  top: 1px;
+  position: absolute;
+  z-index: 9999;
+}
+.divSidebox {
+  position: relative;
+  border: #9c9c9c 1px solid;
+  overflow: auto;
+}
+.divSideboxHeader {
+  text-align: center;
+  background-color: #d9d9d9;
+  padding-top: 2px;
+  color: #808080;
+}
+a.divSideboxEntry,
+.divSideboxEntry {
+  text-align: left;
+  background-color: #FDFDFD;
+}
+a.appTitles,
+.appTitles {
+  height: 18px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+a.textSidebox {
+  padding: 0;
+  border-top: 0;
+}
+.textSidebox {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 1px;
+  border-top: solid #aaaaaa 1px;
+  overflow: auto;
+}
+.sideboxSpace {
+  height: 9px;
+}
+.greyLine {
+  margin: 1px;
+  border-top: solid 1px #7e7e7e;
+  height: 1px;
+}
+#extraIcons {
+  background-color: #eeeeee;
+  border: solid 1px #7e7e7e;
+}
+.extraIconsRow {
+  border: solid 1px #dddddd;
+  padding: 2px;
+}
+#topmenu {
+  background-color: #0081c1;
+  background-image: url(../images/bgtopmenu2.png);
+  color: #006699;
+  /*border-top: solid 1px #7e7e7e;*/
+  border-bottom: solid #5793ff 1px;
+  height: 20px;
+  padding-top: 4px ;
+  line-height: 16px;
+}
+#topmenu a {
+  color: #006699;
+}
+#topmenu_items {
+  float: left;
+}
+#topmenu_info {
   float: right;
 }
-.dialogFooterToolbar div.et2_hbox {
-  white-space: normal;
+#divUpperTabs {
+  text-align: right;
+  height: 15px;
+  margin-right: 10px;
 }
-.dialogFooterToolbar div.et2_box_widget {
-  white-space: nowrap;
+#divUpperTabs ul {
+  display: inline;
+  margin: 0;
+  padding: 10px 10px 0 1px;
+  list-style: none;
 }
-.dialogFooterToolbar label.et2_label {
-  white-space: nowrap;
+#divUpperTabs li {
+  float: right;
+  margin: 0 5px 0 0;
+  padding: 0 5px 0 5px;
+  border: solid 1px #9c9c9c;
+  border-bottom: 0px;
 }
-.dialogFooterToolbar input.et2_checkbox {
-  top: 0px;
+/* Star-Plus-HTML Hack fix for the above */
+*:first-child + html #divAppIconBar {
+  height: 60px;
 }
-/*Dialog Calendar - Resourcen suchen*/
-div#divMain {
-  padding: 1em;
+#divAppTextBar {
+  background-color: white;
 }
-div#divMain img {
-  width: 16px;
-  height: 16px;
+#divStatusBar {
+  background-color: white;
+  height: 18px;
+  padding-left: 3px;
 }
-div#divMain input[type*="image"] {
-  width: 16px;
-  height: 16px;
+#tdSidebox {
+  width: 170px;
+  background-color: white;
+  overflow: visible;
 }
-/**
- * admin - site configuration
- */
-div.admin-config form > table {
-  width: 100%;
-  padding: 5px;
-}
-div.admin-config form > table tr.th td {
-  font-size: 110%;
-  font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-div.admin-config form > table td {
+#tdAppbox {
+  background-color: white;
   padding-left: 5px;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
 }
-div.admin-config form > table td b {
-  font-weight: bold;
+#divAppboxHeader {
+  background-image: url(../images/appbox-header-background.png);
+  background-repeat: repeat-x;
+  height: 25px;
+  border-bottom: solid 1px #c0c0c0;
+  text-align: center;
+  padding-bottom: 0px;
+  border-top: solid 1px #9c9c9c;
+  border-left: solid 1px #9c9c9c;
+  border-right: solid 1px #9c9c9c;
 }
-/**
- * Styles for different egw_message-types
- */
-.success_message,
-.warning_message,
-.error_message {
-  color: red;
-  font-weight: normal;
-  font-style: italic;
-  text-align: left;
-  margin-left: 5px;
-  padding-left: 20px;
-  background-image: url(../images/check.png);
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  white-space: pre-wrap;
+#divAppboxHeader table img {
+  height: 16px;
 }
-.warning_message {
-  background-image: url(../images/dialog_warning.png);
+#divAppbox {
+  background-color: #ffffff;
+  padding: 5px;
+  border-bottom: solid 1px #9c9c9c;
+  border-left: solid 1px #9c9c9c;
+  border-right: solid 1px #9c9c9c;
 }
-.error_message {
-  font-weight: bold;
-  background-image: url(../images/dialog_error.png);
+#divGenTime,
+#divPoweredBy {
+  bottom: 4px;
+  text-align: center;
+  width: 99%;
 }
-/**
- * Message in popup
- */
-body > div#egw_message {
-  background-color: #e6e6e6;
-  /*border-radius: 10px;*/
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  /*        .border_normal;*/
-  border: 3px solid #ffc200;
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-bottom-right-radius: 15px;
-  -webkit-border-bottom-left-radius: 15px;
-  -webkit-border-top-left-radius: 0px;
-  -moz-border-radius-topright: 0px;
-  -moz-border-radius-bottomright: 15px;
-  -moz-border-radius-bottomleft: 15px;
-  -moz-border-radius-topleft: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 0px;
-  /*.background-clip(padding-box);*/
-  right: 33%;
-  top: 0px;
-  padding: 10px;
-  padding-left: 25px;
-  background-position-x: 5px;
-  /*border: 2px gray solid;*/
-  min-width: 100px;
-  z-index: 100000;
-  margin: 0px auto;
-  width: 22%;
+.pageGenTime,
+#divPoweredBy {
+  font-size: 80%;
+  color: #ff0000;
+  text-align: center;
 }
-/*
-	Printing
-*/
-@media screen {
-  .onlyPrint {
-    display: none !important;
-  }
+.pageGenTime {
+  margin-top: 1em;
 }
-@media print {
-  .noPrint {
-    display: none !important;
-  }
+.pageGenTime > span:after {
+  content: ", ";
 }
+.pageGenTime > span:last-child:after {
+  content: "";
+}
+/*@import "../less/layout_buttons_global.less";*/
+/*@import "../less/layout_chosen.less";*/
+/*@import "../less/layout_messages.less";*/
+/*@import "../less/layout_content_elements.less";*/
+/*@import "../less/layout_table.less";*/
+/*@import "../less/layout_loginPage.less";*/
+/*@import "../less/layout_raster.less";*/
+/*@import "../less/layout_nextmatch.less";*/
+/*@import "../less/layout_footer.less";*/
+/*@import "../less/layout_dialog.less";*/

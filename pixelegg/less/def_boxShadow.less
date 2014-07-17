@@ -1,0 +1,75 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
+
+## Definitions of all box shadows
+
+ */
+@import "definitions.less";
+
+// Box Shadow
+// none
+.box_shadow_none {
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow:  0px 0px 0px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+// auf hellem Hintergrund
+
+.box_shadow_standard_light {
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  0px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+// wird dunkler
+
+.box_shadow_standard_light_hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+
+}
+
+// für focus und active
+
+.box_shadow_standard_light_inset {
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+.box_shadow_standard_light_active {
+    -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+
+.box_shadow_message {
+    -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+// Rahmen für Dialoge
+
+.box_shadow_edit_dialog {
+
+    -moz-box-shadow: inset 0 0 5px 5px #888;
+    -webkit-box-shadow: inset 0 0 5px 5px #888;
+    box-shadow: inset 0 0 5px 5px #888;
+
+    margin: 5px ;
+    padding: 0%;
+    width: 100%;
+}
+
