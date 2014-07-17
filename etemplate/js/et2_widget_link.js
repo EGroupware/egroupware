@@ -1493,7 +1493,7 @@ var et2_link_list = et2_link_string.extend(
 			}
 		});
 		this.context.addItem("-", "-");
-		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_all'), function(menu_item) {
+		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
 			// Highlight files for nice UI indicating what will be in the zip.
 			// Files have negative IDs.
 			$j('[id^="link_-"]',this.list).effect('highlight',{},2000);
