@@ -87,6 +87,26 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * check and try to reinitialize et2 of module
+	 */
+	checkET2: function()
+	{
+		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
+		if (!this.et2) // if not defined try this in order to recover
+		{
+			try
+			{
+				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
+			}
+			catch(e)
+			{
+				return false;
+			}
+		}
+		return true;
+	},
+
+	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
@@ -883,18 +903,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_setQuotaDisplay: function(_data)
 	{
-		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
-		if (!this.et2)
-		{
-			try
-			{
-				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
-			}
-			catch(e)
-			{
-				return;
-			}
-		}
+		if (!this.et2 && !this.checkET2()) return;
 
 		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
 
@@ -989,21 +998,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_refreshVacationNotice: function(_data)
 	{
-		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
-		//var vacationnotice = this.et2.getWidgetById(this.nm_index+'[vacationnotice]');
-		//var vacationrange = this.et2.getWidgetById(this.nm_index+'[vacationrange]');
-		//try to set it via set_value and set label
-		if (!this.et2)
-		{
-			try
-			{
-				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
-			}
-			catch(e)
-			{
-				return;
-			}
-		}
+		if (!this.et2 && !this.checkET2()) return;
 		if (_data == null)
 		{
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
@@ -1026,17 +1021,8 @@ app.classes.mail = AppJS.extend(
 	{
 		//alert('mail_refreshFilter2Options');
 		if (_data == null) return;
-		if (!this.et2)
-		{
-			try
-			{
-				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
-			}
-			catch(e)
-			{
-				return;
-			}
-		}
+		if (!this.et2 && !this.checkET2()) return;
+
 		var filter2 = this.et2.getWidgetById('filter2');
 		var current = filter2.value;
 		var currentexists=false;
@@ -1058,17 +1044,8 @@ app.classes.mail = AppJS.extend(
 	{
 		//alert('mail_refreshFilterOptions');
 		if (_data == null) return;
-		if (!this.et2)
-		{
-			try
-			{
-				this.et2 = etemplate2.getByApplication('mail')[0].widgetContainer;
-			}
-			catch(e)
-			{
-				return;
-			}
-		}
+		if (!this.et2 && !this.checkET2()) return;
+
 		var filter = this.et2.getWidgetById('filter');
 		var current = filter.value;
 		var currentexists=false;
@@ -1166,6 +1143,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {array} _status
 	 */
 	mail_setFolderStatus: function(_status) {
+		if (!this.et2 && !this.checkET2()) return;
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		for (var i in _status) {
 			ftree.setLabel(i,_status[i]);
