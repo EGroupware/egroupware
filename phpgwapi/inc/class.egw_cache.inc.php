@@ -570,9 +570,7 @@ class egw_cache
 		}
 		else
 		{
-			$keys = array($level);
-			if ($app) $keys[] = $app;
-			if (!$provider->flush($keys))
+			if (!$provider->flush(self::keys($level, $app)))
 			{
 				if ($level == self::INSTANCE)
 				{
@@ -628,11 +626,11 @@ class egw_cache
 	 * Get keys array from $level, $app and $location
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE) or instance_id
-	 * @param string $app
-	 * @param string $location
+	 * @param string $app=null
+	 * @param string $location=null
 	 * @return array
 	 */
-	static public function keys($level,$app,$location)
+	static public function keys($level, $app=null, $location=null)
 	{
 		static $tree_key = null;
 
@@ -668,7 +666,13 @@ class egw_cache
 				$level_key = self::$instance_key;
 				break;
 		}
-		return array($level_key, $app, $location);
+		$keys = array($level_key);
+		if (isset($app))
+		{
+			$keys[] = $app;
+			if (isset($location)) $keys[] = $location;
+		}
+		return $keys;
 	}
 
 	/**
