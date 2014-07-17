@@ -18,8 +18,10 @@ add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add folder	mail	de	Neuer Ordner
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 aliases+forwards	mail	de	Aliase+Weiterleitungen
+all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
+all filtered	mail	de	alle gefilterten
 all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht werden.
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
