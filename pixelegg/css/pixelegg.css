@@ -3443,34 +3443,34 @@ body > div#egw_message {
  * @version $Id$
  */
 h1 {
-  font-size: 300%;
+  font-size: 200%;
   /*line-height: 330%;*/
   margin: 0.4em 0 0;
   font-weight: normal;
 }
 .headline_h1 {
-  font-size: 300%;
+  font-size: 200%;
   /*line-height: 330%;*/
   margin: 0.4em 0 0;
 }
 h2 {
-  font-size: 250%;
+  font-size: 150%;
   /*line-height: 270%;*/
   margin: 0.6em 0 0;
 }
 .headline_h2 {
-  font-size: 250%;
+  font-size: 150%;
   /*line-height: 270%;*/
   margin: 0.6em 0 0;
   font-weight: lighter;
 }
 h3 {
-  font-size: 200%;
+  font-size: 130%;
   /*line-height: 220%;*/
   margin: 0.8571em 0 0;
 }
 .headline_h3 {
-  font-size: 200%;
+  font-size: 130%;
   /*line-height: 220%;*/
   margin: 0.8571em 0 0;
 }
@@ -3478,12 +3478,12 @@ h3 a {
   color: #999999;
 }
 h4 {
-  font-size: 150%;
+  font-size: 110%;
   /*line-height: 160%;*/
   margin: 1.125em 0 0;
 }
 .headline_h4 {
-  font-size: 150%;
+  font-size: 110%;
   /*line-height: 160%;*/
   margin: 1.125em 0 0;
 }
