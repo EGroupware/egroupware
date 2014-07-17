@@ -66,13 +66,6 @@
 				<column disabled="!@nm[selectcols]=/legacy_actions/"/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<description align="center" id="msg" span="all" class="redItalic"/>
-					<description/>
-				</row>
-				<row>
-					<description/>
-				</row>
 				<row>
 					<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_right="admin.categories.index.right"/>
 				</row>
