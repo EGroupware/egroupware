@@ -37,8 +37,10 @@ class admin_ui
 	 */
 	public function index(array $content=null)
 	{
-		admin_statistics::check();
-
+		if (admin_statistics::check(false))
+		{
+			$_GET['load'] = 'admin.admin_statistics.submit';
+		}
 		$tpl = new etemplate_new('admin.index');
 
 		$content = array();

@@ -52,7 +52,7 @@ class admin_statistics
 				config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$content['postpone'],self::CONFIG_APP);
 				$what = 'postpone';
 			}
-			elseif(!$content['canceled'])
+			elseif(!$content['cancel'])
 			{
 				config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
 				config::save_value(self::CONFIG_SUBMIT_ID,empty($content['submit_id']) ? '***none***' : $content['submit_id'],self::CONFIG_APP);
@@ -280,21 +280,25 @@ class admin_statistics
 	/**
 	 * Check if next submission is due, in which case we call submit and NOT return to the admin hook
 	 *
+	 * @param boolean $redirect should we redirect or return true
+	 * @return boolean true if statistic submission is due
 	 */
-	public static function check()
+	public static function check($redirect=true)
 	{
-		if (isset($_GET['statistics']))
-		{
-			return;
-		}
 		$config = config::read(self::CONFIG_APP);
 
 		if (isset($config[self::CONFIG_POSTPONE_SUBMIT]) && $config[self::CONFIG_POSTPONE_SUBMIT] > time() ||
 			isset($config[self::CONFIG_LAST_SUBMIT ]) && $config[self::CONFIG_LAST_SUBMIT ] > time()-self::SUBMISION_RATE)
 		{
-			return;
+			return false;
 		}
+		if (!$redirect) return true;
+
 		//die('Due for new statistics submission: last_submit='.$config[self::CONFIG_LAST_SUBMIT ].', postpone='.$config[self::CONFIG_POSTPONE_SUBMIT].', '.function_backtrace());
-		egw::redirect_link('/index.php',array('menuaction'=>'admin.admin_statistics.submit'));
+		egw::redirect_link('/index.php',array(
+			'menuaction' => 'admin.admin_ui.index',
+			'ajax' => 'true',
+			'load' => 'admin.admin_statistics.submit',
+		));
 	}
 }

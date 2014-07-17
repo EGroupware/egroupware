@@ -113,6 +113,10 @@ app.classes.admin = AppJS.extend(
 	 */
 	load: function(_url)
 	{
+		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href.match(/menuaction=admin.admin_statistics.submit/))
+		{
+			return;	// do not allow to leave statistics submit
+		}
 		if (_url)
 		{
 			this.iframe.set_src(_url);
@@ -172,7 +176,7 @@ app.classes.admin = AppJS.extend(
 								var nm = this.et2.getWidgetById('nm');
 								nm.applyFilters(activeFilters);
 							}
-							
+
 					}
 					var refreshTree = this.et2.getWidgetById('tree');
 					if (refreshTree) refreshTree.refreshItem('/groups');
@@ -768,10 +772,10 @@ app.classes.admin = AppJS.extend(
 
 		return true;
 	},
-	
+
 	/**
 	 * Delete confirmation dialog
-	 * 
+	 *
 	 * @param {egw action} _action
 	 */
 	delete_category: function (_action)
@@ -801,7 +805,7 @@ app.classes.admin = AppJS.extend(
 							action.id = 'delete_sub';
 							nm_action(action);
 						}
-					}	
+					}
 				}
 				else
 				{
