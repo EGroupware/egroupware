@@ -682,13 +682,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				}
 				// for the rest we change mime-type to text/html and let code below handle it safely
 				// this stops Safari and Firefox from using it as src attribute in a script tag
-				else
+				// but only for "real" browsers, we dont want to modify data for our WebDAV clients
+				elseif (isset($_SERVER['HTTP_REFERER']))
 				{
 					$options['mimetype'] = 'text/html';
-					$options['data'] = '<pre>'.fread($options['stream'], $options['length']);
+					$options['data'] = '<pre>'.fread($options['stream'], $options['size']);
+					$options['size'] += 5;
 					fclose($options['stream']);
 					unset($options['stream']);
-					$options['size'] += 4;
 				}
 			}
 			// mitigate risk of html downloads by using CSP or force download for IE
