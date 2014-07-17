@@ -227,6 +227,11 @@
 			}
 			var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
 			et2.load(data.name,data.url,data.data);
+			if (typeof data.response != 'undefined')
+			{
+				var json_request = egw(window).json();
+				json_request.handleResponse({response: data.response});
+			}
 		});
 
 		$j(function() {
