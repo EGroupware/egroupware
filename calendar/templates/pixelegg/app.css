@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 47279 2014-06-16 16:49:45Z hnategh $ */
+/* $Id: app.css 47456 2014-07-01 12:03:39Z hnategh $ */
 /* Header classes */
 tr.dialogHeader td,
 tr.dialogHeader2 td,
@@ -849,7 +849,7 @@ div.calendar {
 .calendar tbody td.today {
   /* Cell showing selected date */
   font-weight: normal;
-  color: #0c5da5;
+  color: #189800;
   background-color: #ffc200;
 }
 .calendar tbody .disabled {
