@@ -874,6 +874,107 @@ abstract class egw_framework
 	}
 
 	/**
+	 * URL to check for security or maintenance updates
+	 */
+	const CURRENT_VERSION_URL = 'http://www.egroupware.org/currentversion';
+	/**
+	 * How long to cache (in secs) / often to check for updates
+	 */
+	const VERSIONS_CACHE_TIMEOUT = 7200;
+	/**
+	 * After how many days of not applied security updates, start warning non-admins too
+	 */
+	const WARN_USERS_DAYS = 3;
+
+	/**
+	 * Check update status
+	 *
+	 * @return string
+	 * @todo Check from client-side, if server-side check fails
+	 */
+	protected static function _get_update_notification()
+	{
+		$versions = egw_cache::getTree(__CLASS__, 'versions', function()
+		{
+			$versions = array();
+			$security = null;
+			if (($remote = file_get_contents(egw_framework::CURRENT_VERSION_URL)))
+			{
+				list($current, $security) = explode("\n", $remote);
+				if (empty($security)) $security = $current;
+				$versions = array(
+					'current'  => $current,		// last maintenance update
+					'security' => $security,	// last security update
+				);
+			}
+			return $versions;
+		}, array(), self::VERSIONS_CACHE_TIMEOUT);
+
+		$api = self::api_version();
+
+		if ($versions)
+		{
+			if (version_compare($api, $versions['security'], '<'))
+			{
+				if (!$GLOBALS['egw_info']['user']['apps']['admin'] && !self::update_older($versions['security'], self::WARN_USERS_DAYS))
+				{
+					return null;
+				}
+				return html::a_href(html::image('phpgwapi', 'security-update', lang('EGroupware security update %1 needs to be installed!', $versions['security'])),
+					'http://www.egroupware.org/changelog', null, ' target="_blank"');
+			}
+			if ($GLOBALS['egw_info']['user']['apps']['admin'] && version_compare($api, $versions['current'], '<'))
+			{
+				return html::a_href(html::image('phpgwapi', 'update', lang('EGroupware maintenance update %1 available', $versions['current'])),
+					'http://www.egroupware.org/changelog', null, ' target="_blank"');
+			}
+		}
+		elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			return html::a_href(html::image('phpgwapi', 'update', lang('Automatic update check failed, you need to check manually!')),
+				'http://www.egroupware.org/changelog', null, ' target="_blank" data-api-version="'.$api.'"');
+		}
+		return null;
+	}
+
+	/**
+	 * Check if version is older then $days days
+	 *
+	 * @param string $version eg. "14.1.20140715" last part is checked (only if > 20140000!)
+	 * @param int $days
+	 * @return boolean
+	 */
+	protected static function update_older($version, $days)
+	{
+		list(,,$date) = explode('.', $version);
+		if ($date < 20140000) return false;
+		$version_timestamp = mktime(0, 0, 0, (int)substr($date, 4, 2), (int)substr($date, -2), (int)substr($date, 0, 4));
+
+		return (time() - $version_timestamp) / 86400 > $days;
+	}
+
+	/**
+	 * Get API version from changelog or database, whichever is bigger
+	 *
+	 * @param string &$changelog on return path to changelog
+	 * @return string
+	 */
+	public static function api_version(&$changelog=null)
+	{
+		$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+		// parse version from changelog
+		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
+		$matches = null;
+		if (($f = fopen($changelog, 'r')) && preg_match('/egroupware-epl \(([0-9.]+)/', fread($f, 80), $matches) &&
+			version_compare($version, $matches[1], '<'))
+		{
+			$version = $matches[1];
+			fclose($f);
+		}
+		return $version;
+	}
+
+	/**
 	 * Get the link to an application's index page
 	 *
 	 * @param string $app
@@ -1373,6 +1474,10 @@ if ($app == 'home') continue;
 
 		$this->_add_topmenu_item($apps['logout']);
 
+		if (($update = self::_get_update_notification()))
+		{
+			$this->_add_topmenu_info_item($update, 'update');
+		}
 		if($GLOBALS['egw_info']['user']['apps']['notifications'])
 		{
 			$this->_add_topmenu_info_item(self::_get_notification_bell(), 'notifications');

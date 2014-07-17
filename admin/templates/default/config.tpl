@@ -9,26 +9,6 @@
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="row_on">
-    <td>{lang_Would_you_like_eGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
-    <td>
-     <select name="newsettings[checkfornewversion]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_checkfornewversion_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
-
-   <tr class="row_off">
-    <td>{lang_Would_you_like_to_show_each_application's_upgrade_status_?}:</td><td>
-     <select name="newsettings[checkappversions]">
-      <option value="">{lang_No}</option>
-      <option value="Admin"{selected_checkappversions_Admin}>{lang_Admins}</option>
-      <option value="All"{selected_checkappversions_All}>{lang_All_Users}</option>
-     </select>
-    </td>
-   </tr>
-
-   <tr class="row_on">
     <td>{lang_Should_the_login_page_include_a_language_selectbox_(useful_for_demo-sites)_?}:</td>
     <td>
      <select name="newsettings[login_show_language_selection]">

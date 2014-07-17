@@ -18,8 +18,8 @@
 	  </div>
 	  <?php endforeach?>
 
-	  <?php foreach($this->menuinfoitems as $mitems):?>
-	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;"><?php print $mitems?></div>
+	  <?php foreach($this->menuinfoitems as $id => $mitems):?>
+	  <div class="topmenu_info_item" id="topmenu_info_<?php print $id?>"><?php print $mitems?></div>
 	  <?php endforeach?>
    </div>
    <div style="clear:both;"></div>
