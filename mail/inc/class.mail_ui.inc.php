@@ -1943,13 +1943,13 @@ class mail_ui
 					}
 					if (count($attachments)==1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folderName);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 					}
 					if (count($attachments)>1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folderName);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
