@@ -412,7 +412,7 @@ class preferences
 		if ($this->account_id > 0)
 		{
 			$primary_group = accounts::id2name($this->account_id, 'account_primary_group');
-			foreach($GLOBALS['egw']->accounts->memberships($this->account_id, true) as $gid)
+			foreach((array)$GLOBALS['egw']->accounts->memberships($this->account_id, true) as $gid)
 			{
 				if ($gid != $primary_group) $to_read[] = $gid + self::DEFAULT_ID;	// need to offset it with DEFAULT_ID = -2!
 			}
