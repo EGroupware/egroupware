@@ -115,10 +115,6 @@ class db_tools
 	 */
 	function edit(array $content=null,$msg = '')
 	{
-		if (isset($_GET['app']))
-		{
-			$this->app = $_GET['app'];
-		}
 		if (is_array($content))
 		{
 			if ($this->debug)
