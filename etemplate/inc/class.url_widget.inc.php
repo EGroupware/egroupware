@@ -164,11 +164,6 @@ class url_widget
 				if ($value)
 				{
 					$link = (strpos($value,'://') === false) ? 'http://'.$value : $value;
-					if (!$GLOBALS['egw_info']['server']['usecookies'])	// if session-id is in url, use redirect.php to remove it from referrer
-					{
-						$link = $GLOBALS['egw_info']['server']['webserver_url'].'/redirect.php?go='.$link;
-						if ($link[0] == '/') $link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$link;
-					}
 					$cell['size'] = ','.$link.',,,_blank';
 				}
 				if (substr($value,0,7) == 'http://')
@@ -194,11 +189,6 @@ class url_widget
 				if ($value)
 				{
 					$link = self::phone2link($value);
-					if (!$GLOBALS['egw_info']['server']['usecookies'] && substr($link,0,4) == 'http')	// if session-id is in url, use redirect.php to remove it from referrer
-					{
-						$link = $GLOBALS['egw_info']['server']['webserver_url'].'/redirect.php?go='.$link;
-						if ($link[0] == '/') $link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$link;
-					}
 					$cell['size'] = ','.$link.($GLOBALS['egw_info']['server']['call_popup']=='none' ? '' :	// 'none' = no target
 						',,,calling,'.$GLOBALS['egw_info']['server']['call_popup']);
 				}

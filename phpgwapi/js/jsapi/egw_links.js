@@ -258,14 +258,6 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 
 			var vars = {};
-			/* not sure we still need to support that
-			// add session params if not using cookies
-			if (!$GLOBALS['egw_info']['server']['usecookies'])
-			{
-				$vars['sessionid'] = $GLOBALS['egw']->session->sessionid;
-				$vars['kp3'] = $GLOBALS['egw']->session->kp3;
-				$vars['domain'] = $GLOBALS['egw']->session->account_domain;
-			}*/
 
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
 			var url_othervars = _url.split('?',2);
