@@ -292,7 +292,7 @@ class preferences_settings
 	 */
 	function get_content($appname, $type, &$sel_options, &$readonlys, &$types, $tpl)
 	{
-		if (!$this->call_hook($appname, $type))
+		if (!$this->call_hook($appname, $type, $GLOBALS['egw']->preferences->get_account_id()))
 		{
 			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$appname);
 		}
@@ -543,10 +543,11 @@ class preferences_settings
 	 * Sets $this->appname and $this->settings
 	 *
 	 * @param string $appname appname or 'common'
-	 * @param string $type='user' 'default' or 'forced'
+	 * @param string $type='user' 'default', 'forced', 'user' or 'group'
+	 * @param int|string $account_id=null account_id for user or group prefs, or "forced" or "default"
 	 * @return boolean
 	 */
-	protected function call_hook($appname, $type='user')
+	protected function call_hook($appname, $type='user', $account_id=null)
 	{
 		$this->appname = $appname == 'common' ? 'preferences' : $appname;
 
@@ -559,10 +560,15 @@ class preferences_settings
 		}
 
 		// make type available, to hooks from applications can use it, eg. activesync
-		$GLOBALS['type'] = $type;
+		$hook_data = array(
+			'location' => 'settings',
+			'type' => $type,
+			'account_id' => $account_id,
+		);
+		$GLOBALS['type'] = $type;	// old global variable
 
 		// calling app specific settings hook
-		$settings = $GLOBALS['egw']->hooks->single('settings',$this->appname);
+		$settings = $GLOBALS['egw']->hooks->single($hook_data, $this->appname);
 		// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
 		if (isset($settings) && is_array($settings) && $settings)
 		{
@@ -578,7 +584,8 @@ class preferences_settings
 		}
 
 		// calling settings hook all apps can answer (for a specific app)
-		foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname,true) as $settings)
+		$hook_data['location'] = 'settings_'.$this->appname;
+		foreach($GLOBALS['egw']->hooks->process($hook_data, $this->appname,true) as $settings)
 		{
 			if (isset($settings) && is_array($settings) && $settings)
 			{
