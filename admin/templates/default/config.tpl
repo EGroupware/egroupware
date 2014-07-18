@@ -125,16 +125,6 @@
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>
 
-   <tr class="row_on">
-    <td>{lang_Use_cookies_to_pass_sessionid}:</td>
-    <td>
-     <select name="newsettings[usecookies]">
-      <option value="True"{selected_usecookies_True}>{lang_Yes} - {lang_more_secure}</option>
-      <option value=""{selected_usecookies_}>{lang_No}</option>
-     </select>
-    </td>
-   </tr>
-
    <tr class="row_off">
     <td>{lang_Cookie_path_(allows_multiple_eGW_sessions_with_different_directories,_has_problemes_with_SiteMgr!)}:</td>
     <td>
