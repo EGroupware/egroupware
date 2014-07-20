@@ -394,6 +394,11 @@ class emailadmin_account implements ArrayAccess
 	{
 		$class = $params['acc_smtp_type'];
 		if ($class=='defaultsmtp') $class='emailadmin_smtp';
+		// not all smtp plugins are autoloadable eg. postifxldap (qmailUser)
+		if (!class_exists($class) && file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+		{
+			require_once($file);
+		}
 		$smtp = new $class($params);
 		$smtp->editForwardingAddress = false;
 		$smtp->host = $params['acc_smtp_host'];
