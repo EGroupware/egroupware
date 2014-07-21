@@ -1411,7 +1411,7 @@ class nextmatch_widget
 			$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 			list($app) = explode('.',$name);
 			if (isset($extension_data['columnselection_pref'])) $name = $extension_data['columnselection_pref'];
-			$pref = !$GLOBALS['egw_info']['user']['apps']['admin'] && $value['default_prefs'] ? 'default' : 'user';
+			$pref = $GLOBALS['egw_info']['user']['apps']['admin'] && $value['default_prefs'] ? 'default' : 'user';
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->add($app,'nextmatch-'.$name,is_array($value['selectcols']) ?
 				implode(',',$value['selectcols']) : $value['selectcols'],$pref);
 			$GLOBALS['egw']->preferences->save_repository(false,$pref);
