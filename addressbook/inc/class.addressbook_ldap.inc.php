@@ -411,7 +411,7 @@ class addressbook_ldap
 			$filter = $this->id_filter($contact_id);
 		}
 		$rows = $this->_searchLDAP($this->allContactsDN,
-			$filter, $this->all_attributes, ADDRESSBOOK_ALL);
+			$filter, $this->all_attributes, ADDRESSBOOK_ALL, array('_posixaccount2egw'));
 
 		return $rows ? $rows[0] : false;
 	}
@@ -996,9 +996,10 @@ class addressbook_ldap
 	 * @param string $_filter
 	 * @param array $_attributes
 	 * @param int $_addressbooktype
+	 * @param array $_skipPlugins=null schema-plugins to skip
 	 * @return array/boolean with eGW contacts or false on error
 	 */
-	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype)
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null)
 	{
 		$this->total = 0;
 
@@ -1046,7 +1047,7 @@ class addressbook_ldap
 					}
 				}
 				$objectclass2egw = '_'.$objectclass.'2egw';
-				if (method_exists($this,$objectclass2egw))
+				if (!in_array($objectclass2egw, (array)$_skipPlugins) &&method_exists($this,$objectclass2egw))
 				{
 					if (($ret=$this->$objectclass2egw($contact,$entry)) === false)
 					{
