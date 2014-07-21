@@ -112,7 +112,6 @@ class mail_ui
 		if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
 		unset($_GET["resetConnection"]);
 
-		//$icServerID =& egw_cache::getSession('mail','activeProfileID');
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -127,7 +126,6 @@ class mail_ui
 			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
-			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
 			if ($_GET['menuaction'] != 'mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate')
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
@@ -137,25 +135,9 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			//error_log(__METHOD__.__LINE__.' Fetched IC Server failed:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			// redirect to mail wizard to handle it (redirect works for ajax too)
-/*
-			egw_framework::redirect_link('/index.php',
-				(self::$icServerID ? array(
-					'menuaction' => 'mail.mail_wizard.edit',
-					'acc_id' => self::$icServerID,
-				) : array(
-					'menuaction' => 'mail.mail_wizard.add',
-				)) + array(
-					'msg' => $e->getMessage()//.' ('.get_class($e).': '.$e->getCode().')',
-				));
-*/
 			self::callWizard($e->getMessage());
 		}
-
-
-		//$GLOBALS['egw']->session->commit_session();
-		//_debug_array($this->mail_bo->mailPreferences);
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
@@ -163,6 +145,7 @@ class mail_ui
 	 * callWizard
 	 *
 	 * @param string $message
+	 * @param boolean $exit If true, will call common::egw_exit() after opening the wizardpopup
 	 */
 	static function callWizard($message, $exit=true)
 	{
@@ -173,7 +156,7 @@ class mail_ui
 			) : array(
 				'menuaction' => 'mail.mail_wizard.add',
 			)) + array(
-				'msg' => $message//.' ('.get_class($e).': '.$e->getCode().')',
+				'msg' => $message
 			);
 
 		if (egw_json_response::isJSONResponse())
@@ -182,7 +165,10 @@ class mail_ui
 			$windowName = "editMailAccount".self::$icServerID;
 			$response->call("egw.open_link", egw::link('/index.php', $linkData), $windowName, "600x480");
 			egw_framework::message($message, 'error');
-			if ($_GET['menuaction'] == 'mail.mail_ui.index') $response->call('framework.setSidebox','mail',array(),'md5');
+			if ($_GET['menuaction'] == 'mail.mail_ui.index')
+			{
+				$response->call('framework.setSidebox','mail',array(),'md5');
+			}	
 			if ($exit)
 			{
 				common::egw_exit();
@@ -202,7 +188,8 @@ class mail_ui
 	/**
 	 * changeProfile
 	 *
-	 * @param int $icServerID
+	 * @param int $_icServerID
+	 * @param boolean $unsetCache
 	 */
 	function changeProfile($_icServerID,$unsetCache=false)
 	{
@@ -251,7 +238,7 @@ class mail_ui
 		$result = true;
 		$nameSpaces = $this->mail_bo->_getNameSpaces();
 
-		foreach($nameSpaces as $key => $value )
+		foreach($nameSpaces as &$value )
 		{
 			if (str_replace($value['delimiter'],"",$value['prefix']) == $folderName &&
 					$value['type'] == 'others' || $value['type'] == 'shared')
@@ -355,19 +342,9 @@ class mail_ui
 						}
 					}
 					$parentFolder='INBOX';
-/*
-					$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
-					if ($folderInfo['unseen'])
-					{
-						$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
-					}
-					if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
-					{
-						$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
-					}
-*/
+
 					$refreshData = array(
-						$content['profileId']/*.self::$delimiter.$parentFolder*/=>lang($parentFolder)//$folderInfo['shortDisplayName'])
+						$content['profileId'] => lang($parentFolder)
 					);
 
 					// Send full info back in the response
@@ -402,352 +379,310 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
-		//error_log(__METHOD__.__LINE__.function_backtrace());
-		if (mail_bo::$debugTimes) $starttime = microtime (true);
-		$this->mail_bo->restoreSessionData();
-		$sessionFolder = $this->mail_bo->sessionData['mailbox'];
-		//$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
-		if ($this->mail_bo->folderExists($sessionFolder))
-		{
-			try
-			{
-				$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
-				//$toSchema = $this->mail_bo->isDraftFolder($sessionFolder)||$this->mail_bo->isSentFolder($sessionFolder)||$this->mail_bo->isTemplateFolder($sessionFolder);
-			}
-			catch (Exception $e)
-			{
-				self::callWizard($e->getMessage());
-			}
-		}
-		else
-		{
-			$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
-		}
-		//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
-		//_debug_array($content);
-		//if (is_array($content)) error_log(__METHOD__.__LINE__.array2string($content));
-		if (!is_array($content))
-		{
-			$content = array(
-				self::$nm_index => egw_session::appsession('index','mail'),
-			);
-			if (!is_array($content[self::$nm_index]))
-			{
-				$content[self::$nm_index] = array(
-					'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'filter'         => 'any',	// filter is used to choose the mailbox
-					'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
-					'no_cat'         => true,	// I  disable the cat-selectbox
-					//'cat_is_select'	 => 'no_lang', // true or no_lang
-					'lettersearch'   => false,	// I  show a lettersearch
-					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
-					'start'          =>	0,		// IO position in list
-					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
-					'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-					//'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					//'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					//'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
-									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'actions'        => self::get_actions(),
-					'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
-					'placeholder_actions' => array('composeasnew')
+		try	{
+				//error_log(__METHOD__.__LINE__.function_backtrace());
+				if (mail_bo::$debugTimes) $starttime = microtime (true);
+				$this->mail_bo->restoreSessionData();
+				$sessionFolder = $this->mail_bo->sessionData['mailbox'];
+				if ($this->mail_bo->folderExists($sessionFolder))
+				{
+					$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+				}
+				else
+				{
+					$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
+				}
+				//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
+				if (!is_array($content))
+				{
+					$content = array(
+						self::$nm_index => egw_session::appsession('index','mail'),
+					);
+					if (!is_array($content[self::$nm_index]))
+					{
+						$content[self::$nm_index] = array(
+							'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+							'filter'         => 'any',	// filter is used to choose the mailbox
+							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
+							'no_cat'         => true,	// I  disable the cat-selectbox
+							//'cat_is_select'	 => 'no_lang', // true or no_lang
+							'lettersearch'   => false,	// I  show a lettersearch
+							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
+							'start'          =>	0,		// IO position in list
+							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
+							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
+							//'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+							//'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+							//'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
+											//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+							'actions'        => self::get_actions(),
+							'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
+							'placeholder_actions' => array('composeasnew')
+						);
+					}
+				}
+				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+				$content[self::$nm_index]['csv_fields'] = false;
+				if ($msg)
+				{
+					$content['msg'] = $msg;
+				}
+				else
+				{
+					unset($msg);
+					unset($content['msg']);
+				}
+
+				$quota = $this->mail_bo->getQuotaRoot();
+
+				if($quota !== false && $quota['limit'] != 'NOT SET') {
+					$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
+					$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
+					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
+					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
+				} else {
+					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
+					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
+					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
+				}
+
+				$vacation = $this->gatherVacation();
+				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
+				if($vacation) {
+					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
+					{
+						$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
+						$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
+						$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
+					}
+				}
+				if ($vacation==false)
+				{
+					$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
+					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
+				}
+				//$zstarttime = microtime (true);
+				$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial',null,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				//$zendtime = microtime(true) - $zstarttime;
+				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
+				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
+				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
+				if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+				{
+					$this->statusTypes = array_merge($this->statusTypes,array(
+						'keyword1'	=> 'important',//lang('important'),
+						'keyword2'	=> 'job',	//lang('job'),
+						'keyword3'	=> 'personal',//lang('personal'),
+						'keyword4'	=> 'to do',	//lang('to do'),
+						'keyword5'	=> 'later',	//lang('later'),
+					));
+				}
+				else
+				{
+					$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
+					foreach($keywords as &$k)
+					{
+						if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
+					}
+				}
+
+				if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+				if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+
+				$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
+
+				if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+				{
+					emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+					if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+				}
+				if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
+				$sel_options['filter2'] = $this->searchTypes;
+				$sel_options['filter'] = $this->statusTypes;
+
+				$etpl = new etemplate_new('mail.index');
+				$group=0;
+				// Set tree actions
+				$tree_actions = array(
+					'drop_move_mail' => array(
+						'type' => 'drop',
+						'acceptedTypes' => 'mail',
+						'icon' => 'move',
+						'caption' => 'Move to',
+						'onExecute' => 'javaScript:app.mail.mail_move'
+					),
+					'drop_copy_mail' => array(
+						'type' => 'drop',
+						'acceptedTypes' => 'mail',
+						'icon' => 'copy',
+						'caption' => 'Copy to',
+						'onExecute' => 'javaScript:app.mail.mail_copy'
+					),
+					'drop_cancel' => array(
+						'icon' => 'cancel',
+						'caption' => 'Cancel',
+						'acceptedTypes' => 'mail',
+						'type' => 'drop',
+					),
+					'drop_move_folder' => array(
+						'caption' => 'Move folder',
+						'hideOnDisabled' => true,
+						'type' => 'drop',
+						'acceptedTypes' => 'mailFolder',
+						'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+					),
+					// Tree does support this one
+					'add' => array(
+						'caption' => 'Add Folder',
+						'onExecute' => 'javaScript:app.mail.mail_AddFolder',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+					),
+					'edit' => array(
+						'caption' => 'Rename Folder',
+						'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+					),
+					'move' => array(
+						'caption' => 'Move Folder',
+						'type' => 'drag',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'dragType' => array('mailFolder')
+					),
+					'delete' => array(
+						'caption' => 'Delete Folder',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
+					),
+					'subscribe' => array(
+						'caption' => 'Subscribe folder ...',
+						//'icon' => 'configure',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'onExecute' => 'javaScript:app.mail.edit_subscribe',
+					),
+					'unsubscribe' => array(
+						'caption' => 'Unsubscribe folder',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
+					),
+					'sieve' => array(
+						'caption' => 'Mail filter',
+						'onExecute' => 'javaScript:app.mail.edit_sieve',
+						'group'	=> ++$group,	// new group for filter
+						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+						'icon' => 'etemplate/fav_filter',	// funnel
+					),
+					'vacation' => array(
+						'caption' => 'Vacation notice',
+						'icon' => 'mail/navbar',	// mail as in admin
+						'onExecute' => 'javaScript:app.mail.edit_vacation',
+						'group'	=> $group,
+						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+					),
+					'edit_account' => array(
+						'caption' => 'Edit account ...',
+						'icon' => 'configure',
+						'onExecute' => 'javaScript:app.mail.edit_account',
+						'group'	=> ++$group,	// new groups for account & acl
+					),
+					'edit_acl'	=> array(
+						'caption' => 'Edit folder ACL ...',
+						'icon'	=> 'lock',
+						'enabled'	=> 'javaScript:app.mail.acl_enabled',
+						'onExecute' => 'javaScript:app.mail.edit_acl',
+						'group'	=> $group,
+					),
 				);
-				//$content[self::$nm_index]['path'] = self::get_home_dir();
-			}
-		}
-//		else if ($content['mailPreview']['mailPreviewHeadersAttachments']['previewAttachmentArea'][0]['save_zip'])
-//		{
-//			$this->download_zip(current($content[self::$nm_index]['selected']));
-//		}
-		//$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-		$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-		$content[self::$nm_index]['csv_fields'] = false;
-		//$content[self::$nm_index]['actions'] = self::get_actions();
-		if ($msg)
-		{
-			$content['msg'] = $msg;
-		}
-		else
-		{
-			unset($msg);
-			unset($content['msg']);
-		}
-		//$content['preview'] = "<html><body style='background-color: pink;'/></html>";
+				// the preference prefaskformove controls actually if there is a popup on target or not
+				// if there are multiple options there is a popup on target, 0 for prefaskformove means
+				// that only move is available; 1 stands for move and cancel; 2 (should be the default if
+				// not set); so we are assuming this, when not set
+				if (isset($this->mail_bo->mailPreferences['prefaskformove']))
+				{
+					switch ($this->mail_bo->mailPreferences['prefaskformove'])
+					{
+						case 0:
+							unset($tree_actions['drop_copy_mail']);
+							unset($tree_actions['drop_cancel']);
+							break;
+						case 1:
+							unset($tree_actions['drop_copy_mail']);
+							break;
+						default:
+							// everything is fine
+					}
+				}
+				//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
+				if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
+				{
+					unset($tree_actions['subscribe']);
+					unset($tree_actions['unsubscribe']);
+				}
+				++$group;	// put delete in own group
+				switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
+				{
+					case 'move_to_trash':
+						$tree_actions['empty_trash'] = array(
+							'caption' => 'empty trash',
+							'icon' => 'dhtmlxtree/MailFolderTrash',
+							'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+							'group'	=> $group,
+						);
+						break;
+					case 'mark_as_deleted':
+						$tree_actions['compress_folder'] = array(
+							'caption' => 'compress folder',
+							'icon' => 'dhtmlxtree/MailFolderTrash',
+							'onExecute' => 'javaScript:app.mail.mail_compressFolder',
+							'group'	=> $group,
+						);
+						break;
+				}
 
-		// filter is used to choose the mailbox
-		//if (!isset($content[self::$nm_index]['foldertree'])) // maybe we fetch the folder here
-		/*
-		$sel_options[self::$nm_index]['foldertree'] =  array('id' => 0, 'item' => array(
-			array('id' => '/INBOX', 'text' => 'INBOX', 'im0' => 'kfm_home.png', 'child' => '1', 'item' => array(
-				array('id' => '/INBOX/sub', 'text' => 'sub'),
-				array('id' => '/INBOX/sub2', 'text' => 'sub2'),
-			)),
-			array('id' => '/user', 'text' => 'user', 'child' => '1', 'item' => array(
-				array('id' => '/user/birgit', 'text' => 'birgit'),
-			)),
-		));
+				// enforce global (group-specific) ACL
+				if (!mail_hooks::access('aclmanagement'))
+				{
+					unset($tree_actions['edit_acl']);
+				}
+				if (!mail_hooks::access('editfilterrules'))
+				{
+					unset($tree_actions['sieve']);
+				}
+				if (!mail_hooks::access('absentnotice'))
+				{
+					unset($tree_actions['vacation']);
+				}
+				if (!mail_hooks::access('managefolders'))
+				{
+					unset($tree_actions['add']);
+					unset($tree_actions['move']);
+					unset($tree_actions['delete']);
+					// manage folders should not affect the ability to subscribe or unsubscribe
+					// to existing folders, it should only affect add/rename/move/delete
+				}
 
-		$content[self::$nm_index]['foldertree'] = '/INBOX/sub';
-		*/
+				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
-		$quota = $this->mail_bo->getQuotaRoot();
+				// sending preview toolbar actions
+				$etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
-		if($quota !== false && $quota['limit'] != 'NOT SET') {
-			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
-			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
-			$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
-			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
-			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
-		} else {
-			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
-			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
-			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
+				if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
+				$readonlys = $preserv = array();
+				if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
-
-		$vacation = $this->gatherVacation();
-		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
-		if($vacation) {
-			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
-			{
-				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
-				$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
-				$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
-			}
-		}
-		if ($vacation==false)
+		catch (Exception $e)
 		{
-			$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
-			$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
+			self::callWizard($e->getMessage());
 		}
-		//$zstarttime = microtime (true);
-		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial',null,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		//$zendtime = microtime(true) - $zstarttime;
-		//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
-//$this->mail_bo->fetchUnSubscribedFolders();
-		//$sessionFolder = $this->mail_bo->sessionData['mailbox'];// already set and tested this earlier
-		//if ($this->mail_bo->folderExists($sessionFolder))
-		//{
-			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
-			//$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities: but did that earlier
-		//}
-		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
-		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
-		{
-			$this->statusTypes = array_merge($this->statusTypes,array(
-				'keyword1'	=> 'important',//lang('important'),
-				'keyword2'	=> 'job',	//lang('job'),
-				'keyword3'	=> 'personal',//lang('personal'),
-				'keyword4'	=> 'to do',	//lang('to do'),
-				'keyword5'	=> 'later',	//lang('later'),
-			));
-		}
-		else
-		{
-			foreach(array('keyword1','keyword2','keyword3','keyword4','keyword5') as $i => $k)
-			{
-				if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
-			}
-		}
-
-		if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-		if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-		$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
-		//$sel_options['cat_id'] = array(1=>'none');
-		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
-		{
-			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
-		}
-		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
-		$sel_options['filter2'] = $this->searchTypes;
-		$sel_options['filter'] = $this->statusTypes;
-		//if (!isset($content[self::$nm_index]['cat_id'])) $content[self::$nm_index]['cat_id'] = 'All';
-
-		$etpl = new etemplate_new('mail.index');
-		$group=0;
-		// Set tree actions
-		$tree_actions = array(
-			'drop_move_mail' => array(
-				'type' => 'drop',
-				'acceptedTypes' => 'mail',
-				'icon' => 'move',
-				'caption' => 'Move to',
-				'onExecute' => 'javaScript:app.mail.mail_move'
-			),
-			'drop_copy_mail' => array(
-				'type' => 'drop',
-				'acceptedTypes' => 'mail',
-				'icon' => 'copy',
-				'caption' => 'Copy to',
-				'onExecute' => 'javaScript:app.mail.mail_copy'
-			),
-			'drop_cancel' => array(
-				'icon' => 'cancel',
-				'caption' => 'Cancel',
-				'acceptedTypes' => 'mail',
-				'type' => 'drop',
-			),
-			'drop_move_folder' => array(
-				'caption' => 'Move folder',
-				'hideOnDisabled' => true,
-				'type' => 'drop',
-				'acceptedTypes' => 'mailFolder',
-				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
-			),
-			// Tree does support this one
-			'add' => array(
-				'caption' => 'Add Folder',
-				'onExecute' => 'javaScript:app.mail.mail_AddFolder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-			),
-			'edit' => array(
-				'caption' => 'Rename Folder',
-				'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-			),
-			'move' => array(
-				'caption' => 'Move Folder',
-				'type' => 'drag',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'dragType' => array('mailFolder')
-			),
-			'delete' => array(
-				'caption' => 'Delete Folder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
-			),
-			'subscribe' => array(
-				'caption' => 'Subscribe folder ...',
-				//'icon' => 'configure',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.edit_subscribe',
-			),
-			'unsubscribe' => array(
-				'caption' => 'Unsubscribe folder',
-				//'icon' => 'configure',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
-			),
-			'sieve' => array(
-				'caption' => 'Mail filter',
-				'onExecute' => 'javaScript:app.mail.edit_sieve',
-				'group'	=> ++$group,	// new group for filter
-				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
-				'icon' => 'etemplate/fav_filter',	// funnel
-			),
-			'vacation' => array(
-				'caption' => 'Vacation notice',
-				'icon' => 'mail/navbar',	// mail as in admin
-				'onExecute' => 'javaScript:app.mail.edit_vacation',
-				'group'	=> $group,
-				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
-			),
-			'edit_account' => array(
-				'caption' => 'Edit account ...',
-				'icon' => 'configure',
-				'onExecute' => 'javaScript:app.mail.edit_account',
-				//'enableId' => '^\\d+$',	// only show action on account itself
-				'group'	=> ++$group,	// new groups for account & acl
-			),
-			'edit_acl'	=> array(
-				'caption' => 'Edit folder ACL ...',
-				'icon'	=> 'lock',
-				'enabled'	=> 'javaScript:app.mail.acl_enabled',
-				'onExecute' => 'javaScript:app.mail.edit_acl',
-				'group'	=> $group,
-			),
-		);
-		// the preference prefaskformove controls actually if there is a popup on target or not
-		// if there are multiple options there is a popup on target, 0 for prefaskformove means
-		// that only move is available; 1 stands for move and cancel; 2 (should be the default if
-		// not set); so we are assuming this, when not set
-		if (isset($this->mail_bo->mailPreferences['prefaskformove']))
-		{
-			switch ($this->mail_bo->mailPreferences['prefaskformove'])
-			{
-				case 0:
-					unset($tree_actions['drop_copy_mail']);
-					unset($tree_actions['drop_cancel']);
-					break;
-				case 1:
-					unset($tree_actions['drop_copy_mail']);
-					break;
-				default:
-					// everything is fine
-			}
-		}
-		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
-		if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
-		{
-			unset($tree_actions['subscribe']);
-			unset($tree_actions['unsubscribe']);
-		}
-		++$group;	// put delete in own group
-		switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
-		{
-			case 'move_to_trash':
-				$tree_actions['empty_trash'] = array(
-					'caption' => 'empty trash',
-					'icon' => 'dhtmlxtree/MailFolderTrash',
-					'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
-					//'enableId' => '^\\d+$',	// only show action on account itself
-					'group'	=> $group,
-				);
-				break;
-			case 'mark_as_deleted':
-				$tree_actions['compress_folder'] = array(
-					'caption' => 'compress folder',
-					'icon' => 'dhtmlxtree/MailFolderTrash',
-					'onExecute' => 'javaScript:app.mail.mail_compressFolder',
-					//'enableId' => '^\\d+$',	// only show action on account itself
-					'group'	=> $group,
-				);
-				break;
-		}
-
-		// enforce global (group-specific) ACL
-		if (!mail_hooks::access('aclmanagement'))
-		{
-			unset($tree_actions['edit_acl']);
-		}
-		if (!mail_hooks::access('editfilterrules'))
-		{
-			unset($tree_actions['sieve']);
-		}
-		if (!mail_hooks::access('absentnotice'))
-		{
-			unset($tree_actions['vacation']);
-		}
-		if (!mail_hooks::access('managefolders'))
-		{
-			unset($tree_actions['add']);
-			unset($tree_actions['move']);
-			unset($tree_actions['delete']);
-			// manage folders should not affect the ability to subscribe or unsubscribe
-			// to existing folders, it should only affect add/rename/move/delete
-			//unset($tree_actions['subscribe']);
-			//unset($tree_actions['unsubscribe']);
-		}
-
-		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
-
-		// sending preview toolbar actions
-		$etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
-
-		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
-		$readonlys = $preserv = array();
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
 	/**
 	 * Ajax callback to subscribe / unsubscribe a Mailbox of an account
 	 *
-	 *
 	 * @param {int} $_acc_id profile Id of selected mailbox
 	 * @param {string} $_folderName name of mailbox needs to be subcribe or unsubscribed
 	 * @param {boolean} $_status set true for subscribe and false to unsubscribe
-	 *
 	 */
 	public function ajax_foldersubscription($_acc_id,$_folderName, $_status)
 	{
@@ -757,8 +692,6 @@ class mail_ui
 		if($this->mail_bo->subscribe($_folderName, $_status))
 		{
 			$this->mail_bo->resetFolderObjectCache($_acc_id);
-			// pref -> showAllFoldersInFolderPane
-			//$GLOBALS['egw_info']['user']['preferences']['mail'];
 			$this->ajax_reloadNode($_acc_id,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		}
 		else
@@ -781,10 +714,9 @@ class mail_ui
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
 		$subscribedOnly = (bool)(!is_null($_subscribedOnly)?$_subscribedOnly:!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
-		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
+		unset($_profileID);
 		if (!empty($_folderName)) $fetchCounters = true;
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
 		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly,true,true,false);
@@ -817,6 +749,7 @@ class mail_ui
 		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
 			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
+			unset($_folderName);
 			if (is_numeric($_profileID))
 			{
 				if ($_profileID && $_profileID != $this->mail_bo->profileID)
@@ -941,7 +874,6 @@ class mail_ui
 			}
 			//error_log(__METHOD__.__LINE__.' fc:'.$fetchCounters.'/'.$_fetchCounters.'('.$levelCt.'/'.$cmblevelsCt.')'.' for:'.array2string($key));
 			$fS = $this->mail_bo->getFolderStatus($key,false,($fetchCounters?false:true));
-			//_debug_array($fS);
 			//error_log(__METHOD__.__LINE__.array2string($fS));
 			$fFP = $folderParts = explode($obj->delimiter, $key);
 			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
@@ -954,7 +886,7 @@ class mail_ui
 			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
 			array_unshift($fFP,$this->mail_bo->profileID);
 			$oA['path'] = $fFP;
-			$path = $key; //$obj->folderName; //$obj->delimiter
+			$path = $key;
 			if ($path=='INBOX')
 			{
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "kfm_home.png";
@@ -964,10 +896,8 @@ class mail_ui
 			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
 			{
 				$oA['text'] = lang($oA['text']);
-				//echo $obj->shortFolderName.'<br>';
+
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$obj->shortFolderName.".png";
-				//$image2 = "'MailFolderPlain.png'";
-				//$image3 = "'MailFolderPlain.png'";
 			}
 			elseif (in_array($key,$userDefinedFunctionFolders))
 			{
@@ -985,7 +915,7 @@ class mail_ui
 				$oA['text'] = $oA['text'].' ('.$fS['unseen'].')';
 				$oA['style'] = 'font-weight: bold';
 			}
-			$path = $this->mail_bo->profileID.self::$delimiter.$key; //$obj->folderName; //$obj->delimiter
+			$path = $this->mail_bo->profileID.self::$delimiter.$key;
 			$oA['id'] = $path; // ID holds the PATH
 			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
 			{
@@ -1074,7 +1004,6 @@ class mail_ui
 				// throwing an exeption here seems to be unrecoverable, even if the cause is a something that can be handeled by the mailserver
 				error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
 				break;
-				//throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
 			}
 			foreach($insert['item'] as &$item)
 			{
@@ -1109,13 +1038,11 @@ class mail_ui
 	 * Get actions / context menu for index
 	 *
 	 * Changes here, require to log out, as $content[self::$nm_index] get stored in session!
-	 * @var &$action_links
-	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
-	private function get_actions(array &$action_links=array())
+	private function get_actions()
 	{
-		static $accArray; // buffer identity names on single request
+		static $accArray=array(); // buffer identity names on single request
 		// duplicated from mail_hooks
 		static $deleteOptions = array(
 			'move_to_trash'		=> 'move to trash',
@@ -1123,11 +1050,6 @@ class mail_ui
 			'remove_immediately' =>	'remove immediately',
 		);
 		// todo: real hierarchical folder list
-		$folders = array(
-			'INBOX' => 'INBOX',
-			'Drafts' => 'Drafts',
-			'Sent' => 'Sent',
-		);
 		$lastFolderUsedForMove = null;
 		$moveactions = array();
 		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
@@ -1135,7 +1057,7 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
 		if (is_null($accArray))
 		{
-			foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $acc_id => $accountObj)
+			foreach(emailadmin_account::search($only_current_user=true, false) as $acc_id => $accountObj)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($accountObj));
 				if (!$accountObj->is_imap())
@@ -1145,7 +1067,6 @@ class mail_ui
 				}
 				$identity_name = emailadmin_account::identity_name($accountObj);
 				$accArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
-				//	'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
 			}
 		}
 		if (!is_array($lastFoldersUsedForMoveCont)) $lastFoldersUsedForMoveCont=array();
@@ -1155,7 +1076,6 @@ class mail_ui
 			{
 				$_folder = $this->mail_bo->icServer->getCurrentMailbox();
 				//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFoldersUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
-				//if ($_folder!=$lastFoldersUsedForMoveCont[$this->mail_bo->profileID]) $this->mail_bo->icServer->selectMailbox($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]);
 				$counter =1;
 				foreach ($lastFoldersUsedForMoveCont[$this->mail_bo->profileID] as $i => $lastFolderUsedForMoveCont)
 				{
@@ -1164,7 +1084,7 @@ class mail_ui
 					{
 						$moveaction .= $lastFolderUsedForMoveCont;
 
-						if ($this->mail_bo->folderExists($i) /*&& $counter<4*/) // only 4 entries per mailaccount.Control this on setting the buffered folders
+						if ($this->mail_bo->folderExists($i)) // only 4 entries per mailaccount.Control this on setting the buffered folders
 						{
 							$fS['profileID'] = $this->mail_bo->profileID;
 							$fS['profileName'] = $accArray[$this->mail_bo->profileID];
@@ -1186,7 +1106,7 @@ class mail_ui
 				foreach ($lastFoldersUsedForMoveCont[$pid] as $i => $lastFolderUsedForMoveCont)
 				{
 					//error_log(__METHOD__.__LINE__."$i => $lastFolderUsedForMoveCont");
-					if (/*$counter<4 &&*/ !empty($lastFolderUsedForMoveCont)) // only 4 entries per mailaccount.Control this on setting the buffered folders
+					if (!empty($lastFolderUsedForMoveCont)) // only 4 entries per mailaccount.Control this on setting the buffered folders
 					{
 						$moveaction = 'move_';
 						$fS = array();
@@ -1196,15 +1116,11 @@ class mail_ui
 						$moveactions[$moveaction] = $fS;
 						$counter ++;
 					}
-					else
-					{
-						//unset($lastFoldersUsedForMoveCont[$pid][$i]);
-					}
 				}
 			}
-			//if ($_folder!=$lastFoldersUsedForMoveCont[$this->profileID]) $this->mail_bo->icServer->selectMailbox($_folder);
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
+		$group = 0;
 		$actions =  array(
 			'open' => array(
 				'caption' => lang('Open'),
@@ -1453,8 +1369,6 @@ class mail_ui
 							'icon' => 'unread_flagged_small',
 							'onExecute' => 'javaScript:app.mail.mail_flag',
 							'hint' => 'Flag or Unflag a mail',
-							//'disableClass' => 'flagged',
-							//'enabled' => "javaScript:mail_disabledByClass",
 							'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
 							'toolbarDefault' => true
 						),
@@ -1463,8 +1377,6 @@ class mail_ui
 							'caption' => 'Read / Unread',
 							'icon' => 'read_small',
 							'onExecute' => 'javaScript:app.mail.mail_flag',
-							//'enableClass' => 'unseen',
-							//'enabled' => "javaScript:mail_enabledByClass",
 							'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
 
 						),
@@ -1473,8 +1385,6 @@ class mail_ui
 							'caption' => 'Undelete',
 							'icon' => 'revert',
 							'onExecute' => 'javaScript:app.mail.mail_flag',
-							//'enableClass' => 'deleted',
-							//'enabled' => "javaScript:mail_enabledByClass",
 						),
 					),
 				),
@@ -1485,13 +1395,6 @@ class mail_ui
 					'onExecute' => 'javaScript:app.mail.mail_delete',
 					'toolbarDefault' => true
 				),
-/*
-				'select_all' => array(
-					'caption' => 'Select all',
-					'group' => ++$group,
-					'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, false, true),
-				),
-*/
 				'drag_mail' => array(
 					'dragType' => array('mail','file'),
 					'type' => 'drag',
@@ -1528,24 +1431,23 @@ class mail_ui
 	function get_rows($query,&$rows,&$readonlys)
 	{
 		unset($query['actions']);
-		//_debug_array($query);
-		//error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
-		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		if (mail_bo::$debugTimes) $starttime = microtime(true);
-		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
 
-		//error_log(__METHOD__.__LINE__.' Folder:'.array2string($_folderName).' FolderType:'.$folderType.' RowsFetched:'.array2string($rowsFetched)." these Uids:".array2string($uidOnly).' Headers passed:'.array2string($headers));
 		$this->mail_bo->restoreSessionData();
 		$maxMessages = 50; // match the hardcoded setting for data retrieval as inital value
-		$previewMessage = $this->mail_bo->sessionData['previewMessage'];
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
 		$this->mail_bo->saveSessionData();
 
 		$sRToFetch = null;
 		$_folderName=(!empty($query['selectedFolder'])?$query['selectedFolder']:$this->mail_bo->profileID.self::$delimiter.'INBOX');
 		list($_profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
-		if (strpos($folderName,self::$delimiter)!==false) list($app,$_profileID,$folderName) = explode(self::$delimiter,$_folderName,3);
+		if (strpos($folderName,self::$delimiter)!==false)
+		{
+			list($app,$_profileID,$folderName) = explode(self::$delimiter,$_folderName,3);
+			unset($app);
+		}	
 		if (is_numeric($_profileID))
 		{
 			if ($_profileID && $_profileID != $this->mail_bo->profileID)
@@ -1583,13 +1485,19 @@ class mail_ui
 		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
 		if (!empty($query['search']))
 		{
-			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
 			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
 			{
 				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+				{
+					emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+				}	
 			}
-			$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+			$filter = array(
+				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+				'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),
+				'string' => $query['search'],
+				'status' => 'any');
 		}
 		else
 		{
@@ -1682,12 +1590,10 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
 		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
-		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema,$previewMessage);
+		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
-//ajax_get_rows
-//error_log(__METHOD__.__LINE__.' MenuactionCalled:'.$_GET['menuaction'].'->'.function_backtrace());
 		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
 		{
 			$response = egw_json_response::get();
@@ -1750,7 +1656,8 @@ class mail_ui
 	function get_toolbar_actions()
 	{
 		$actions = $this->get_actions();
-		foreach(array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','view') as $a => $act)
+		$arrActions = array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','view');
+		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
 			switch ($act)
@@ -1787,42 +1694,21 @@ class mail_ui
 	 * @param array $cols cols to populate
 	 * @param array $_folderName to ensure the uniqueness of the uid over all folders
 	 * @param array $_folderType used to determine if we need to populate from/to
-	 * @param array $previewMessage the message previewed
 	 * @return array populated result array
 	 */
-	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0, $previewMessage=0)
+	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0)
 	{
 		if (mail_bo::$debugTimes) $starttime = microtime(true);
-		$timestamp7DaysAgo =
-			mktime(date("H"), date("i"), date("s"), date("m"), date("d")-7, date("Y"));
-		$timestampNow =
-			mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
-		$dateToday = date("Y-m-d");
 		$rv = array();
-
 		$i=0;
-		$firstuid = null;
 		foreach((array)$_headers as $header)
 		{
 			$i++;
 			$data = array();
 			//error_log(__METHOD__.array2string($header));
-			$result = array(
-				"id" => $header['uid'],
-				"group" => "mail", // activate the action links for mail objects
-			);
 			$message_uid = $header['uid'];
 			$data['uid'] = $message_uid;
 			$data['row_id']=$this->createRowID($_folderName,$message_uid);
-
-			//_debug_array($header);
-			#if($i<10) {$i++;continue;}
-			#if($i>20) {continue;} $i++;
-			// create the listing of subjects
-			$maxSubjectLength = 60;
-			$maxAddressLength = 20;
-			$maxSubjectLengthBold = 50;
-			$maxAddressLengthBold = 14;
 
 			$flags = "";
 			if(!empty($header['recent'])) $flags .= "R";
@@ -1855,16 +1741,6 @@ class mail_ui
 			}
 			if ($header['flagged']) {
 				$css_styles[] = 'flagged';
-/*
-				if (!$header['seen'])
-				{
-					$css_styles[] = 'flagged_unseen';
-				}
-				else
-				{
-					$css_styles[] = 'flagged_seen';
-				}
-*/
 			}
 			if (!$header['seen']) {
 				$css_styles[] = 'unseen'; // different status image for recent // solved via css !important
@@ -1906,7 +1782,6 @@ class mail_ui
 
 				if (!empty($header['subject'])) {
 					// make the subject shorter if it is to long
-					$fullSubject = $header['subject'];
 					$subject = $header['subject'];
 				} else {
 					$subject = '('. lang('no subject') .')';
@@ -1915,7 +1790,6 @@ class mail_ui
 				$data["subject"] = $subject; // the mailsubject
 			}
 
-			//_debug_array($header);
 			$imageTag = '';
 			$imageHTMLBlock = '';
 			//error_log(__METHOD__.__LINE__.array2string($header));
@@ -1943,13 +1817,13 @@ class mail_ui
 					}
 					if (count($attachments)==1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folderName);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 					}
 					if (count($attachments)>1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folderName);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
@@ -1989,7 +1863,7 @@ class mail_ui
 			//fromaddress
 			if (in_array("fromaddress", $cols))
 			{
-				$data["fromaddress"] = $header['sender_address'];//mail_bo::htmlentities($header['sender_address'],$this->charset);
+				$data["fromaddress"] = $header['sender_address'];
 			}
 			if (in_array("ccaddress", $cols))
 			{
@@ -1997,7 +1871,7 @@ class mail_ui
 			}
 			if (in_array("date", $cols))
 			{
-				$data["date"] = $header['date'];//$dateShort;//'<nobr><span style="font-size:10px" title="'.$dateLong.'">'.$dateShort.'</span></nobr>';
+				$data["date"] = $header['date'];
 			}
 			if (in_array("modified", $cols))
 			{
@@ -2011,7 +1885,7 @@ class mail_ui
 			//translate style-classes back to flags
 			$data['flags'] = Array();
 			if ($header['seen']) $data["flags"]['read'] = 'read';
-			foreach ($css_styles as $k => $flag) {
+			foreach ($css_styles as &$flag) {
 				if ($flag!='mail')
 				{
 					if ($flag=='labelone') {$data["flags"]['label1'] = 'label1';}
@@ -2025,8 +1899,6 @@ class mail_ui
 			}
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
-			if ($header['mdnsent']) $data["flags"]['mdnsent'];
-			if ($header['mdnnotsent']) $data["flags"]['mdnnotsent'];
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
@@ -2058,14 +1930,6 @@ class mail_ui
 		$this->mail_bo->reopen($mailbox);
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
 
-		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
-
-		#$nonDisplayAbleCharacters = array('[\016]','[\017]',
-		#		'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-		#		'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-
-		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
-
 		// add line breaks to $rawheaders
 		$newRawHeaders = explode("\n",$rawheaders);
 		reset($newRawHeaders);
@@ -2087,23 +1951,15 @@ class mail_ui
 
 	/**
 	 * display messages
-	 *
+	 * @param array $_requesteddata
 	 * all params are passed as GET Parameters, but can be passed via ExecMethod2 as array too
 	 */
 	function displayMessage($_requesteddata = null)
 	{
-//error_log(__METHOD__.__LINE__.array2string($_requesteddata));
-//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
-//error_log(__METHOD__.__LINE__);
 		if (!is_null($_requesteddata) && isset($_requesteddata['id']))
 		{
 			$rowID = $_requesteddata['id'];
-			//unset($_REQUEST);
 		}
-//		if($_requesteddata['mail_displayattachments'][0]['save_zip'])
-//		{
-//			$this->download_zip($_requesteddata['mail_id']);
-//		}
 		$preventRedirect=false;
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
@@ -2129,42 +1985,25 @@ class mail_ui
 			$error_msg[] = $headers->message;
 			$error_msg[] = array2string($headers->backtrace[0]);
 		}
-		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
+		if (!empty($uid)) $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($envelope));
-		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
+		$this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
-		//_debug_array($headers);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
-		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
-		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
-		//$mailBody = $this->get_load_email_data($uid, $partID, $mailbox, $htmlOptions,false);
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.display');
-		// Set cell attributes directly
-/*
-		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
-			'drop_move_mail' => array(
-				'type' => 'drop',
-				'acceptedTypes' => 'mail',
-				'icon' => 'move',
-				'caption' => 'Move to',
-				'onExecute' => 'javaScript:app.mail.mail_move'
-			),
-		));
-*/
-		$subject = /*mail_bo::htmlspecialchars(*/$this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false)/*,
-            mail_bo::$displayCharset)*/;
+		$subject = $this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false);
 
 		// Set up data for taglist widget(s)
 		if ($envelope['FROM']==$envelope['SENDER']) unset($envelope['SENDER']);
@@ -2174,17 +2013,12 @@ class mail_ui
 			foreach($envelope[$field] as $field_data)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($field_data));
-				$content[$field][] = $field_data;//['EMAIL'];
+				$content[$field][] = $field_data;
 				$sel_options[$field][] = array(
 					// taglist requires these - not optional
 					'id' => $field_data,
 					'label' => str_replace('"',"'",$field_data),
-					// Optional
-					//'title' => str_replace('"',"'",$field_data),//['RFC822_EMAIL']),
 				);
-				// Add all other data, will be preserved & passed to js onclick
-				// Also available in widget.options.select_options
-				//+ $field_data;
 			}
 		}
 		$actionsenabled = self::get_actions();
@@ -2222,17 +2056,23 @@ class mail_ui
 		$content['mail_id'] = $rowID;
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
-		//$content['mail_displaybody'] = $mailBody;
 		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
 		if (!empty($partID)) $linkData['_partID']=$partID;
 		if ($htmlOptions != $this->mail_bo->htmlOptions) $linkData['_htmloptions']=$htmlOptions;
 		$content['mailDisplayBodySrc'] = egw::link('/index.php',$linkData);
-		//_debug_array($attachments);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
 		$content['mail_id']=$rowID;
 		$content['mailDisplayContainerClass']=(count($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight");
 		$content['mailDisplayAttachmentsClass']=(count($attachments)?"mailDisplayAttachments":"mail_DisplayNone");
-//_debug_array($content);
+
+		// DRAG attachments actions
+		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
+			'file_drag' => array(
+				'dragType' => 'file',
+				'type' => 'drag',
+				'onExecute' => 'javaScript:app.mail.drag_attachment'
+			)
+		));
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
@@ -2251,19 +2091,14 @@ class mail_ui
 	static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox,$_returnFullHTML=false)
 	{
 		$attachmentHTMLBlock='';
+		$attachmentHTML = array();
 		if (is_array($attachments) && count($attachments) > 0) {
 			$url_img_vfs = html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
 			$url_img_vfs_save_all = html::image('mail','save_all', lang('Save all'));
 
-			$detectedCharSet=$charset2use=mail_bo::$displayCharset;
 			foreach ($attachments as $key => $value)
 			{
-				//_debug_array($value);
-				#$detectedCharSet = mb_detect_encoding($value['name'].'a',strtoupper($this->displayCharset).",UTF-8, ISO-8559-1");
 				if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
-				//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
-				//echo $value['name']."\n";
-				//$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)'));
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
@@ -2272,7 +2107,7 @@ class mail_ui
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-
+				
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
@@ -2417,87 +2252,6 @@ class mail_ui
 	}
 
 	/**
-	 * emailAddressToHTML
-	 */
-	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true)
-	{
-		// maybe envelop structure was different before, Horde returns either string with mail-address or array of mail-addresses
-		return is_array($_emailAddress) ? implode(', ', $_emailAddress) : $_emailAddress;
-		//_debug_array($_emailAddress);
-		// create some nice formated HTML for senderaddress
-
-		if(is_array($_emailAddress)) {
-			$senderAddress = '';
-			foreach($_emailAddress as $addressData) {
-				#_debug_array($addressData);
-				if($addressData['MAILBOX_NAME'] == 'NIL') {
-					continue;
-				}
-
-				if(!empty($senderAddress)) $senderAddress .= ', ';
-
-				if(strtolower($addressData['MAILBOX_NAME']) == 'undisclosed-recipients') {
-					$senderAddress .= 'undisclosed-recipients';
-					continue;
-				}
-				if($addressData['PERSONAL_NAME'] != 'NIL') {
-					$newSenderAddressORG = $newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
-					$decodedPersonalNameORG = $decodedPersonalName = $addressData['PERSONAL_NAME'];
-					if ($decode)
-					{
-						$newSenderAddress = mail_bo::decode_header($newSenderAddressORG);
-						$decodedPersonalName = mail_bo::decode_header($decodedPersonalName);
-						$addressData['EMAIL'] = mail_bo::decode_header($addressData['EMAIL'],true);
-					}
-					$realName =  $decodedPersonalName;
-					// add mailaddress
-					if ($allwaysShowMailAddress) {
-						$realName .= ' <'.$addressData['EMAIL'].'>';
-						$decodedPersonalNameORG .= ' <'.$addressData['EMAIL'].'>';
-					}
-					// add organization
-					if(!empty($_organisation)) {
-						$realName .= ' ('. $_organisation . ')';
-						$decodedPersonalNameORG .= ' ('. $_organisation . ')';
-					}
-					$addAction = egw_link::get_registry('mail','add');
-					$linkData = array (
-						'menuaction'	=> $addAction['menuaction'],
-						'send_to'	=> base64_encode($newSenderAddress)
-					);
-					$link = egw::link('/index.php',$linkData);
-
-					$newSenderAddress = mail_bo::htmlentities($newSenderAddress);
-					$realName = mail_bo::htmlentities($realName);
-
-					$senderAddress .= sprintf('<a href="%s" title="%s">%s</a>',
-								$link,
-								$newSenderAddress,
-								$realName);
-
-					$decodedPersonalName = $realName;
-				} else {
-					$addrEMailORG = $addrEMail = $addressData['EMAIL'];
-					$addAction = egw_link::get_registry('mail','add');
-					if ($decode) $addrEMail = mail_bo::decode_header($addrEMail,true);
-					$linkData = array (
-						'menuaction'	=> $addAction['menuaction'],
-						'send_to'	=> base64_encode($addressData['EMAIL'])
-					);
-					$link = egw::link('/index.php',$linkData);
-					$senderEMail = mail_bo::htmlentities($addrEMail);
-					$senderAddress .= sprintf('<a href="%s">%s</a>',
-								$link,$senderEMail);
-				}
-			}
-			return $senderAddress;
-		}
-
-		// if something goes wrong, just return the original address
-		return $_emailAddress;
-	}
-
-	/**
 	 * fetch vacation info from active Server using icServer object
 	 *
 	 * @return array|boolean array with vacation on success or false on failure
@@ -2507,19 +2261,12 @@ class mail_ui
 		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 
-		if ($vacation && (!($isSieveError = egw_cache::getCache(egw_cache::INSTANCE, 'email',
-			'icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']))) || !$isSieveError[self::$icServerID]))
+		if ($vacation)
 		{
 			$sieveServer = $this->mail_bo->icServer;
-			//error_log(__METHOD__.__LINE__.' Sieve Server:'.self::$icServerID.' InstanceOf:'.array2string(($sieveServer instanceof defaultimap)|| ($sieveServer instanceof emailadmin_oldimap)).':'.array2string($sieveServerClass));
-			try {
-				$sieveServer->retrieveRules();
-				$vacation = $sieveServer->getVacation();
-			}
-			catch (Exception $e)
-			{
-				$vacation = false;
-			}
+		
+			$sieveServer->retrieveRules();
+			$vacation = $sieveServer->getVacation();
 		}
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		return $vacation;
@@ -2564,7 +2311,7 @@ class mail_ui
 		}
 		$quota['class'] = $quotaBG;
 		$quota['text'] = lang('Quota: %1',$quotaText);
-		$quota['percent'] = (string)round(($_usage*100)/$_limit);//($_usage/$_limit*100);
+		$quota['percent'] = (string)round(($_usage*100)/$_limit);
 		return $quota;
 	}
 
@@ -2591,7 +2338,7 @@ class mail_ui
 
 		if ($attachment)
 		{
-			header("Content-Type: ". $attachment->getType());// ."; name=\"". $attachment['filename'] ."\"");
+			header("Content-Type: ". $attachment->getType());
 			header('Content-Disposition: inline; filename="'. $attachment->getDispositionParameter('filename') .'"');
 			//header("Expires: 0");
 			// the next headers are for IE and SSL
@@ -2611,7 +2358,6 @@ class mail_ui
 	function getAttachment()
 	{
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
-		if(isset($_GET['part'])) $partID = $_GET['part'];
 
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
@@ -2706,7 +2452,7 @@ class mail_ui
 	{
 		$display = false;
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
-		if(isset($_GET['part'])) $partID		= $_GET['part'];
+		if(isset($_GET['part'])) $partID = $_GET['part'];
 		if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
 
 		$hA = self::splitRowID($rowID);
@@ -2730,9 +2476,6 @@ class mail_ui
 			$GLOBALS['egw']->common->egw_exit();
 			exit;
 		}
-		//elseif ($display=='filemanager') // done in vfsSaveMessage
-		//{
-		//}
 		else
 		{
 			header('Content-type: text/html; charset=iso-8859-1');
@@ -2760,11 +2503,9 @@ class mail_ui
 			$hA = self::splitRowID($id);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
-			if ($mb != $this->mail_bo->mailbox) $this->mail_bo->reopen($mb = $mailbox);
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
 			$err=null;
-			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
-				!fwrite($fp,$message))
+			if (!($fp = egw_vfs::fopen($file=$path,'wb')) || !fwrite($fp,$message))
 			{
 				$err .= lang('Error saving %1!',$file);
 				$succeeded = false;
@@ -2784,9 +2525,7 @@ class mail_ui
 				egw_vfs::proppatch($file,$props);
 			}
 		}
-		//$this->mail_bo->closeConnection();
 		egw_framework::window_close(($err?$err:null));
-		//return $err.'window.close();';
 	}
 
 	/**
@@ -2825,13 +2564,11 @@ class mail_ui
 		}
 		$this->mail_bo->closeConnection();
 		egw_framework::window_close(($err?$err:null));
-		//return $err.'window.close();';
 	}
-
 
 	/**
 	 * Zip all attachments and send to user
-	 * @param string $message_id
+	 * @param string $message_id = null
 	 */
 	function download_zip($message_id=null)
 	{
@@ -2894,20 +2631,19 @@ class mail_ui
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
 		$this->mail_bo->reopen($mailbox);
-$this->mailbox = $mailbox;
-$this->uid = $uid;
-$this->partID = $partID;
+		$this->mailbox = $mailbox;
+		$this->uid = $uid;
+		$this->partID = $partID;
 		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, null, false, $mailbox);
 
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
-		$meetingRequest = false;
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true,true,$mailbox);
+		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
-		foreach ((array)$attachments as $key => $attach)
+		foreach ($attachments as &$attach)
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
 				(strtolower($attach['method']) == 'request' || strtolower($attach['method']) == 'reply') &&
@@ -2919,7 +2655,7 @@ $this->partID = $partID;
 					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
 					'attachment' => $attachment['attachment'],
 					'method' => $attach['method'],
-					'sender' => $sender,
+					'sender' => $mailbox,
 				));
 				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
 				translation::add_app('calendar');
@@ -2928,7 +2664,6 @@ $this->partID = $partID;
 				);
 			}
 		}
-//_debug_array($bodyParts); die(__METHOD__.__LINE__);
 		// Compose the content of the frame
 		$frameHtml =
 			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
@@ -2959,7 +2694,7 @@ $this->partID = $partID;
 	function showBody(&$body, $print=true,$fullPageTags=true)
 	{
 		$BeginBody = '<div class="mailDisplayBody">
- <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
+<table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';
 		if ($fullPageTags) $EndBody .= "</body></html>";
@@ -2997,8 +2732,6 @@ $this->partID = $partID;
 			if(!empty($body)) {
 				$body .= '<hr style="border:dotted 1px silver;">';
 			}
-			//_debug_array($singleBodyPart['charSet']);
-			//_debug_array($singleBodyPart['mimeType']);
 			//error_log($singleBodyPart['body']);
 			//error_log(__METHOD__.__LINE__.' CharSet:'.$singleBodyPart['charSet'].' mimeType:'.$singleBodyPart['mimeType']);
 			// some characterreplacements, as they fail to translate
@@ -3036,7 +2769,6 @@ $this->partID = $partID;
 			{
 				$test = @json_encode($singleBodyPart['body']);
 				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-				//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
 				if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
 				{
 					// try to fix broken utf8
@@ -3055,11 +2787,8 @@ $this->partID = $partID;
 				}
 			}
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
-			#$CharSetUsed = mb_detect_encoding($singleBodyPart['body'] . 'a' , strtoupper($singleBodyPart['charSet']).','.strtoupper(mail_bo::$displayCharset).',UTF-8, ISO-8859-1');
 			if($singleBodyPart['mimeType'] == 'text/plain')
 			{
-				//$newBody	= $singleBodyPart['body'];
-
 				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
 				// if empty and charset is utf8 try sanitizing the string in question
 				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
@@ -3092,7 +2821,6 @@ $this->partID = $partID;
 				//error_log($newBody);
 				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
 				$newBody	= "<pre>".mail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
-				//$newBody   = "<pre>".$newBody."</pre>";
 			}
 			else
 			{
@@ -3109,7 +2837,6 @@ $this->partID = $partID;
 				{
 					$test = @json_encode($newBody);
 					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
 					if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
 					{
 						$newBody = $newBodyBuff;
@@ -3143,7 +2870,6 @@ $this->partID = $partID;
 			}
 
 			$body .= $newBody;
-			#print "<hr><pre>$body</pre><hr>";
 		}
 		// create links for windows shares
 		// \\\\\\\\ == '\\' in real life!! :)
@@ -3313,6 +3039,7 @@ $this->partID = $partID;
 
 	/**
 	 * importMessage
+	 * @param array $content = null an array of content
 	 */
 	function importMessage($content=null)
 	{
@@ -3321,20 +3048,20 @@ $this->partID = $partID;
 		if (!empty($content))
 		{
 			//error_log(__METHOD__.__LINE__.array2string($content));
-			if ($content['divImportArea']['vfsfile'])
+			if ($content['vfsfile'])
 			{
-				$file = $content['divImportArea']['vfsfile'] = array(
-					'name' => egw_vfs::basename($content['divImportArea']['vfsfile']),
-					'type' => egw_vfs::mime_content_type($content['divImportArea']['vfsfile']),
-					'file' => egw_vfs::PREFIX.$content['divImportArea']['vfsfile'],
-					'size' => filesize(egw_vfs::PREFIX.$content['divImportArea']['vfsfile']),
+				$file = $content['vfsfile'] = array(
+					'name' => egw_vfs::basename($content['vfsfile']),
+					'type' => egw_vfs::mime_content_type($content['vfsfile']),
+					'file' => egw_vfs::PREFIX.$content['vfsfile'],
+					'size' => filesize(egw_vfs::PREFIX.$content['vfsfile']),
 				);
 			}
 			else
 			{
-				$file = $content['divImportArea']['uploadForImport'];
+				$file = $content['uploadForImport'];
 			}
-			$destination = $content['divImportArea']['FOLDER'][0];
+			$destination = $content['FOLDER'][0];
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
 			try
@@ -3342,7 +3069,7 @@ $this->partID = $partID;
 				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
 			    $linkData = array
 			    (
-					'id'		=> $this->createRowID($destination, $messageUid, true),
+					'id' => $this->createRowID($destination, $messageUid, true),
 			    );
 			}
 			catch (egw_exception_wrong_userinput $e)
@@ -3357,12 +3084,12 @@ $this->partID = $partID;
 			}
 		}
 		if (!is_array($content)) $content = array();
-		if (empty($content['divImportArea']['FOLDER'])) $content['divImportArea']['FOLDER']=(array)$this->mail_bo->getDraftFolder();
-		if (!empty($content['divImportArea']['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
+		if (empty($content['FOLDER'])) $content['FOLDER']=(array)$this->mail_bo->getDraftFolder();
+		if (!empty($content['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
 
 		$etpl = new etemplate_new('mail.importMessage');
 		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');
-		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,$readonlys,$preserv,2);
+		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,array(),array(),2);
 	}
 
 	/**
@@ -3393,6 +3120,8 @@ $this->partID = $partID;
 		if ($importfailed === false)
 		{
 			$mailObject = new egw_mailer();
+			$Header = '';
+			$Body = '';
 			try
 			{
 				$this->mail_bo->parseFileIntoMailObject($mailObject,$tmpFileName,$Header,$Body);
@@ -3402,9 +3131,6 @@ $this->partID = $partID;
 				$importfailed = true;
 				$alert_msg .= $e->getMessage();
 			}
-			//_debug_array($Body);
-//error_log(__METHOD__.__LINE__.array2string($Header));
-//error_log(__METHOD__.__LINE__.array2string($Body));
 			$this->mail_bo->openConnection();
 			if (empty($_folder))
 			{
@@ -3420,8 +3146,7 @@ $this->partID = $partID;
 					{
 						$messageUid = $this->mail_bo->appendMessage($_folder,
 							$Header.$mailObject->LE.$mailObject->LE,
-							$Body,
-							$flags);
+							$Body);
 					}
 					catch (egw_exception_wrong_userinput $e)
 					{
@@ -3531,7 +3256,6 @@ $this->partID = $partID;
 		}
 		egw::redirect_link('/index.php',$linkData);
 		exit;
-
 	}
 
 	/**
@@ -3547,7 +3271,7 @@ $this->partID = $partID;
 		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
 		if (!$_partID && !empty($_GET['_partID'])) $_partID = $_GET['_partID'];
 		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
-		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions,$_fullHeade");
+		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions");
 		if (empty($_messageID)) return "";
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
@@ -3571,7 +3295,7 @@ $this->partID = $partID;
 		//error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			foreach ($_folder as $_folderName)
 			{
@@ -3612,44 +3336,40 @@ $this->partID = $partID;
 	 */
 	function ajax_addFolder($_parentFolderName, $_newName)
 	{
-//		lang("Enter the name for the new Folder:");
-//		lang("Add a new Folder to %1:",$OldFolderName);
 		//error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
 		if ($_parentFolderName)
 		{
 			$created = false;
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_parentFolderName);
 			//the conversion is handeled by horde, frontend interaction is all utf-8
-			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);//translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
+			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			list($profileID,$parentFolderName) = explode(self::$delimiter,$decodedFolderName,2);
 			if (is_numeric($profileID))
 			{
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
 				$nA = explode($del,$_newName);
-				//if (strtoupper($parentFolderName)!= 'INBOX')
-				{
-					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
-					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 
-					$this->mail_bo->reopen('INBOX');
-					$parentName = $parentFolderName;
-					// if newName has delimiter ($del) in it, we need to create the subtree
-					if (!empty($nA))
+				//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+				$oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
+				//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
+
+				$this->mail_bo->reopen('INBOX');
+				$parentName = $parentFolderName;
+				// if newName has delimiter ($del) in it, we need to create the subtree
+				if (!empty($nA))
+				{
+					$c=0;
+					foreach($nA as $sTName)
 					{
-						$c=0;
-						foreach($nA as $sTName)
+						if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true)))
 						{
-							if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true)))
-							{
-								$c++;
-							}
+							$c++;
 						}
-						if ($c==count($nA)) $created=true;
 					}
-					$this->mail_bo->reopen($parentName);
+					if ($c==count($nA)) $created=true;
 				}
+				$this->mail_bo->reopen($parentName);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($created===true)
@@ -3669,8 +3389,6 @@ $this->partID = $partID;
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		//lang("Rename Folder %1 to:",$OldFolderName);
-		//lang("Rename Folder %1 ?",$OldFolderName);
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
@@ -3807,26 +3525,20 @@ $this->partID = $partID;
 	 * reload node
 	 *
 	 * @param string _folderName  folder to reload
-	 *
+	 * @param boolean $_subscribedOnly = true
 	 * @return void
 	 */
 	function ajax_reloadNode($_folderName,$_subscribedOnly=true)
 	{
 		translation::add_app('mail');
 		$oldPrefForSubscribedOnly = !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
-/*
+
 		// prefs are plain prefs; we discussed an approach to have user only prefs, and
 		// set them on rightclick action on foldertree
-		$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'] = !$_subscribedOnly;
-		$GLOBALS['egw']->preferences->add('mail','showAllFoldersInFolderPane',!$_subscribedOnly,'user');
-		// save prefs
-		$GLOBALS['egw']->preferences->save_repository(true);
-*/
 		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
 
 		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
-		$oA = array();
+		$this->mail_bo->getHierarchyDelimiter(false);
 		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 		// if pref and required mode dont match -> reset the folderObject cache to ensure
 		// that we get what we request
@@ -3880,7 +3592,6 @@ $this->partID = $partID;
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newLocation = $this->mail_bo->decodeEntityFolderName($_target);
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
-			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			list($newProfileID,$_newLocation) = explode(self::$delimiter,$_newLocation,2);
 			$hasChildren = false;
@@ -3892,9 +3603,7 @@ $this->partID = $partID;
 				$_newName = $namePart;
 				$oldParentFolder = implode($del,$pA);
 				$parentFolder = $_newLocation;
-//error_log(__METHOD__.__LINE__.'->'."$folderName");
-//error_log(__METHOD__.__LINE__.'->'."$parentFolder");
-//error_log(__METHOD__.__LINE__.'->'."$oldParentFolder");
+
 				if (strtoupper($folderName)!= 'INBOX' &&
 					(($oldParentFolder === $parentFolder) || //$oldParentFolder == $parentFolder means move on same level
 					(($oldParentFolder != $parentFolder &&
@@ -3911,7 +3620,7 @@ $this->partID = $partID;
 						$nameSpace = $this->mail_bo->_getNameSpaces();
 						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
 						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
-						$fragments = array();
+						
 						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
 						foreach ($subFolders as $k => $folder)
 						{
@@ -3925,7 +3634,6 @@ $this->partID = $partID;
 								$rv = $this->mail_bo->subscribe($folder, false);
 							}
 						}
-						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($fragments));
 					}
 
 					$this->mail_bo->reopen('INBOX');
@@ -3948,7 +3656,7 @@ $this->partID = $partID;
 						$msg = $e->getMessage();
 					}
 					$this->mail_bo->reopen($parentFolder);
-					$fS = $this->mail_bo->getFolderStatus($parentFolder,false);
+					$this->mail_bo->getFolderStatus($parentFolder,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
 					if ($hasChildren)
 					{
@@ -4011,9 +3719,6 @@ $this->partID = $partID;
 	 */
 	function ajax_deleteFolder($_folderName)
 	{
-		//lang("Do you really want to DELETE Folder %1 ?",OldFolderName);
-		//lang("All subfolders will be deleted too, and all messages in all affected folders will be lost");
-		//lang("All messages in the folder will be lost");
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
 		$success = false;
 		if ($_folderName)
@@ -4028,10 +3733,9 @@ $this->partID = $partID;
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
 				$pA = explode($del,$folderName);
 				array_pop($pA);
-				$parentFolder = implode($del,$pA);
 				if (strtoupper($folderName)!= 'INBOX')
 				{
-					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					//error_log(__METHOD__.__LINE__."$folderName,  implode($del,$pA), $_newName");
 					$oA = array();
 					$subFolders = array();
 					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
@@ -4039,7 +3743,7 @@ $this->partID = $partID;
 					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
 					{
 						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
-						//$msg = lang("refused to delete folder with subfolders");
+						$ftD = array();
 						$delimiter = $this->mail_bo->getHierarchyDelimiter();
 						$nameSpace = $this->mail_bo->_getNameSpaces();
 						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
@@ -4048,7 +3752,6 @@ $this->partID = $partID;
 						//error_log(__METHOD__.__LINE__.'->'."$folderName, $delimiter, $prefix");
 						foreach ($subFolders as $k => $f)
 						{
-							if (!isset($ftD[substr_count($f,$delimiter)])) $ftD[substr_count($f,$delimiter)]=array();
 							$ftD[substr_count($f,$delimiter)][]=$f;
 						}
 						krsort($ftD,SORT_NUMERIC);//sort per level
@@ -4095,7 +3798,7 @@ $this->partID = $partID;
 			$response = egw_json_response::get();
 			if ($success)
 			{
-				$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 				if (isset($folders2return[$this->mail_bo->profileID]))
 				{
 					//error_log(__METHOD__.__LINE__.array2string($folders2return[$this->mail_bo->profileID]));
@@ -4141,15 +3844,13 @@ $this->partID = $partID;
 
 		}
 
-		//$folderInfo = $this->mail_bo->getFolderStatus($icServerID,false);
-
 		// Send full info back in the response
 		if($getFolders)
 		{
 			translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],$returnNodeOnly=true)
+				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true)
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
@@ -4172,7 +3873,7 @@ $this->partID = $partID;
 		if($vacation) {
 			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
 			{
-				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
+				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				$refreshData['vacationnotice'] = lang('Vacation notice is active');
 				$refreshData['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
 			}
@@ -4218,7 +3919,8 @@ $this->partID = $partID;
 		}
 		else
 		{
-			foreach(array('keyword1','keyword2','keyword3','keyword4','keyword5') as $i => $k)
+			$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
+			foreach($keywords as &$k)
 			{
 				if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
 			}
@@ -4448,7 +4150,6 @@ $this->partID = $partID;
 							$this->mail_bo->flagMessages($flag2set, $messageList,$folder);
 						}
 						$alreadyFlagged=true;
-						//unset($_messageList['all']);
 					}
 					elseif (!empty($filter) &&
 						(!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) ||
@@ -4498,14 +4199,6 @@ $this->partID = $partID;
 			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 
-		// unset preview, as refresh would mark message again read
-/*
-		if ($_flag == 'unread' && in_array($this->sessionData['previewMessage'], $_messageList['msg']))
-		{
-			unset($this->sessionData['previewMessage']);
-			$this->saveSessionData();
-		}
-*/
 		if ($_sendJsonResponse)
 		{
 			$response = egw_json_response::get();
@@ -4559,12 +4252,14 @@ $this->partID = $partID;
 					}
 					$messageList = array();
 					//error_log(__METHOD__.__LINE__."->".print_r($filter,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
+					$reverse = 1;
+					$rByUid = true;
 					$_sR = $this->mail_bo->getSortedList(
 						$folder,
 						$sort=0,
-						$reverse=1,
+						$reverse,
 						$filter,
-						$rByUid=true,
+						$rByUid,
 						false
 					);
 					$messageList = $_sR['match']->ids;
@@ -4642,7 +4337,7 @@ $this->partID = $partID;
 			if ($lastFoldersUsedForMoveCont[$targetProfileID] && count($lastFoldersUsedForMoveCont[$targetProfileID])>3)
 			{
 				$keys = array_keys($lastFoldersUsedForMoveCont[$targetProfileID]);
-				foreach( $keys as $k => $f)
+				foreach( $keys as &$f)
 				{
 					if (count($lastFoldersUsedForMoveCont[$targetProfileID])>3) unset($lastFoldersUsedForMoveCont[$targetProfileID][$f]);
 					else break;
@@ -4681,10 +4376,12 @@ $this->partID = $partID;
 						$filter = array();
 					}
 					$messageList = array();
+					$reverse = 1;
+					$rByUid = true;
 					$_sR = $this->mail_bo->getSortedList(
 						$folder,
 						$sort=0,
-						$reverse=1,
+						$reverse,
 						$filter,
 						$rByUid=true,
 						false
@@ -4766,12 +4463,6 @@ $this->partID = $partID;
 			{
 				egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
 				$actionsnew = self::get_actions();
-/*
-				$actionsWithoutMoveTo = $actionsnew;
-				unset($actionsWithoutMoveTo['moveto']);
-				$actionsWithoutMoveTo = etemplate_widget_nextmatch::egw_actions($actionsWithoutMoveTo);
-				$response->call('app.mail.mail_rebuildActionsOnList',$actionsWithoutMoveTo);
-*/
 				$actionsnew = etemplate_widget_nextmatch::egw_actions($actionsnew);
 				$response->call('app.mail.mail_rebuildActionsOnList',$actionsnew);
 			}
