@@ -967,10 +967,6 @@ class emailadmin_wizard
 				case 'save':
 				case 'apply':
 					try {
-						// if admin username/password given, check if it is valid
-						$account = new emailadmin_account($content);
-						$imap = $account->imapServer();
-						if ($imap) $imap->checkAdminConnection();
 						// save none-standard identity for current user
 						if ($content['acc_id'] && $content['acc_id'] !== 'new' &&
 							$content['acc_further_identities'] &&
@@ -985,6 +981,12 @@ class emailadmin_wizard
 						}
 						elseif ($edit_access)
 						{
+							// if admin username/password given, check if it is valid
+							$account = new emailadmin_account($content);
+							$imap = $account->imapServer();
+							if ($imap) $imap->checkAdminConnection();
+							// test sieve connection, if enabled and credentials available
+							if ($account->acc_sieve_enabled && $account->acc_imap_username) $account->imapServer()->retrieveRules();
 							$new_account = !($content['acc_id'] > 0);
 							// check for deliveryMode="forwardOnly", if a forwarding-address is given
 							if ($content['acc_smtp_type'] != 'emailadmin_smtp' &&
@@ -1065,6 +1067,14 @@ class emailadmin_wizard
 						$tpl->set_validation_error('acc_imap_admin_username', $msg=lang($e->getMessage()));
 						$msg_type = 'error';
 						$content['tabs'] = 'emailadmin.account.imap';	// should happen automatic
+						break;
+					}
+					catch (PEAR_Exception $e)
+					{
+						_egw_log_exception($e);
+						$tpl->set_validation_error('acc_sieve_port', $msg=lang($e->getMessage()));
+						$msg_type = 'error';
+						$content['tabs'] = 'emailadmin.account.sieve';	// should happen automatic
 						break;
 					}
 					catch (Exception $e) {
