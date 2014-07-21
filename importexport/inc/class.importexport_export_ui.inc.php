@@ -224,6 +224,8 @@ class importexport_export_ui {
 						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
 					}
 				}
+				// Filter is used twice in template, but can't have the same ID
+				$content['filter_html'] = $content['filter_tpl'] = $content['filter'];
 			}
 		}
 
@@ -286,6 +288,7 @@ class importexport_export_ui {
 			// Set filter
 			// Note that because not all dates are DB dates, the plugin has to handle them
 			$filter = array();
+			$_content['filter'] = $_content['filter_html'] ? $_content['filter_html'] : $_content['filter_tpl'];
 			if(is_array($_content['filter']))
 			{
 				foreach($_content['filter'] as $key => $value)

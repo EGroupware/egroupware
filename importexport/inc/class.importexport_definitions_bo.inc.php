@@ -58,7 +58,24 @@ class importexport_definitions_bo {
 			$sql .= ') OR owner = '.$GLOBALS['egw_info']['user']['account_id'];
 			$query['col_filter'][] = $sql;
 		}
-
+		
+		// Handle allowed filter
+		if($query['col_filter']['allowed_users'])
+		{
+			$allowed = array();
+			foreach((array)$query['col_filter']['allowed_users'] as $id)
+			{
+				$allowed[] = 'allowed_users '.
+					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.
+					$GLOBALS['egw']->db->quote('%,'.str_replace('_','\\_',$id) .',%');
+			}
+			if($allowed)
+			{
+				unset($query['col_filter']['allowed_users']);
+				$query['col_filter'][] = '('.implode(' OR ', $allowed) . ')';
+			}
+		}
+		
 		$total = $this->so_sql->get_rows($query, $rows, $readonlys);
 		$ro_count = 0;
 		foreach($rows as &$row) {

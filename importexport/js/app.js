@@ -88,9 +88,9 @@ app.classes.importexport = AppJS.extend(
 			.show(100, jQuery.proxy(function() {
 				widget.clicked = true;
 				widget.getInstanceManager().submit(false, true);
-				widget.clicked = false;
-				$j(widget.getRoot().getWidgetById('preview_box').getDOMNode())
-					.removeClass('loading');
+					widget.clicked = false;
+					$j(widget.getRoot().getWidgetById('preview_box').getDOMNode())
+						.removeClass('loading');
 			},this));
 		return false;
 	},
@@ -114,5 +114,48 @@ app.classes.importexport = AppJS.extend(
 			appname: data.application,
 			definition: data.definition_id
 		}), false, '850x440', app);
+	},
+
+	/**
+	 * Allowed users widget has been changed, if 'All users' or 'Just me'
+	 * was selected, turn off any other options.
+	 */
+	allowed_users_change: function(node, widget)
+	{
+		var value = widget.getValue();
+
+		// Only 1 selected, no checking needed
+		if(value.length <= 1) return;
+
+		// Don't jump it to the top, it's weird
+		widget.selected_first = false;
+
+		var index = null;
+		var specials = ['','all']
+		for(var i = 0; i < specials.length; i++)
+		{
+			var special = specials[i];
+			if((index = value.indexOf(special)) >= 0)
+			{
+				if(window.event.target.value == special)
+				{
+					// Just clicked all/private, clear the others
+					value = [special];
+				}
+				else
+				{
+					// Just added another, clear special
+					value.splice(index,1);
+				}
+
+				// A little highlight to call attention to the change
+				$j('input[value="'+special+'"]',node).parent().parent().effect('highlight',{},500);
+				break;
+			}
+		}
+		if(index >= 0)
+		{
+			widget.set_value(value);
+		}
 	}
 });

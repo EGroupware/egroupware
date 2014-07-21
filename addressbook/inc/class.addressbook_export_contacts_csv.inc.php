@@ -100,8 +100,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					}
 					continue;
 				}
-				// Custom fields & listed are not filtered with contact_ prefix
-				if(strpos($field, '#') !== 0 && !in_array($field, array('tid')))
+				// Custom fields & listed exceptions are not filtered with contact_ prefix
+				if(strpos($field, '#') !== 0 && !in_array($field, array('tid','owner')))
 				{
 					$field = 'contact_'.$field;
 				}
@@ -118,6 +118,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		else
 		{
 			$selection = explode(',',$options['selection']);
+		}
+		if(!is_array($selection))
+		{
+			$selection = array();
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 

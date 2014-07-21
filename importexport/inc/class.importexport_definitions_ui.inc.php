@@ -170,11 +170,12 @@ class importexport_definitions_ui
 				'csv_fields'	=> false,	// Disable CSV export, uses own export
 				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
 				'row_id'	=> 'definition_id',
-				 'placeholder_actions' => array('add')
+				'placeholder_actions' => array('add')
 			);
 			if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
 		}
-		if(egw_session::appsession('index', 'importexport')) {
+		if(egw_session::appsession('index', 'importexport'))
+		{
 			$content['nm'] = array_merge($content['nm'], egw_session::appsession('index', 'importexport'));
 		}
 		$content['nm']['actions'] = $this->get_actions();
@@ -183,7 +184,10 @@ class importexport_definitions_ui
 				'import'	=> lang('import'),
 				'export'	=> lang('export'),
 			),
-			'allowed_users' => array(null => lang('Private'), 'all' => lang('all'))
+			'allowed_users' => array(
+				array('value' => 'private', 'label' => lang('Private')),
+				array('value' => 'all', 'label' => lang('all'))
+			)
 		);
 		foreach ($this->plugins as $appname => $options)
 		{
@@ -435,6 +439,13 @@ class importexport_definitions_ui
 	public function get_rows(&$query, &$rows, &$readonlys) {
 		$rows = array();
 		egw_session::appsession('index','importexport',$query);
+
+		// Special handling for allowed users 'private'
+		if($query['col_filter']['allowed_users'] == 'private')
+		{
+			unset($query['col_filter']['allowed_users']);
+			$query['col_filter'][] = 'allowed_users = ' . $GLOBALS['egw']->db->quote(',,');
+		}
 		$bodefinitions = new importexport_definitions_bo($query['col_filter'], true);
 		// We don't care about readonlys for the UI
 		return $bodefinitions->get_rows($query, $rows, $discard);
@@ -842,7 +853,7 @@ class importexport_definitions_ui
 			// Set owner for non-admins
 			$content['just_me'] = ((!$content['allowed_users'] || !$content['allowed_users'][0] && count($content['allowed_users']) ==1) && $content['owner']);
 			$content['all_users'] = is_array($content['allowed_users']) && array_key_exists('0',$content['allowed_users']) && $content['allowed_users'][0] == 'all' ||
-				$content['allowed_users'] == 'all';
+			$content['allowed_users'] == 'all';
 			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin'])
 			{
 				$content['allowed_users'] = array();
@@ -852,6 +863,12 @@ class importexport_definitions_ui
 				$content['just_me'] = true;
 			}
 
+			$sel_options = array(
+				'allowed_users' => array(
+					array('value' => null, 'label' => lang('Just me')),
+					array('value' => 'all', 'label' => lang('all users'))
+				)
+			);
 			// Hide 'just me' checkbox, users get confused by read-only
 			if($readonlys['just_me'] || !$this->can_edit($content))
 			{

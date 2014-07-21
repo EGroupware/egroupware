@@ -10,14 +10,8 @@
 				<row>
 					<description id="msg" no_lang="1"/>
 				</row>
-				<row disabled="@no_just_me">
-					<checkbox label="%s Just me" id="just_me"/>
-				</row>
-				<row disabled="@no_all_users">
-					<checkbox label="%s All users" id="all_users"/>
-				</row>
 				<row>
-					<listbox type="select-account" id="allowed_users" rows="5" account_type="groups"/>
+					<listbox type="select-account" id="allowed_users" rows="5" account_type="groups" onchange="app.importexport.allowed_users_change"/>
 				</row>
 			</rows>
 		</grid>

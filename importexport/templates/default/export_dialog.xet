@@ -65,7 +65,7 @@
 				<row valign="top" disabled="@plugin_selectors_template">
 					<html id="plugin_selectors_html" no_lang="1"/>
 					<box class="filters">
-						<filter id="filter"/>
+						<filter id="filter_html"/>
 					</box>
 				</row>
 				<row class="th" height="20" disabled="!@plugin_selectors_template">
@@ -75,7 +75,7 @@
 				<row valign="top" disabled="!@plugin_selectors_template">
 					<template id="@plugin_selectors_template"/>
 					<box onclick="jQuery('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
-						<filter id="filter"/>
+						<filter id="filter_tpl"/>
 					</box>
 				</row>
 			</rows>

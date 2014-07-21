@@ -17,14 +17,14 @@
 					<nextmatch-filterheader id="type" options="importexport" class="lr_padding"/>
 					<nextmatch-sortheader label="Name" id="name" class="lr_padding"/>
 					<nextmatch-filterheader id="application" options="Application" class="lr_padding"/>
-					<nextmatch-accountfilter align="center" label="Allowed users" id="allowed_users" options="All,groups" class="lr_padding"/>
-					<nextmatch-accountfilter label="Owner" id="owner"/>
+					<nextmatch-accountfilter align="center" id="allowed_users" options="Allowed users,groups" class="lr_padding"/>
+					<nextmatch-accountfilter empty_label="Owner" id="owner"/>
 				</row>
 				<row class="row $row_cont[class]">
 					<image src="${row}[type]" no_lang="1" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_${row_cont[type]}_ui.{$row_cont[type]}_dialog&amp;appname=${row_cont[application]}&amp;definition=${row_cont[name]}'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="lr_padding button"/>
 					<description id="${row}[name]" no_lang="1" class="lr_padding"/>
 					<description id="${row}[application]" class="lr_padding"/>
-					<listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5" options="both" class="lr_padding"/>
+					<listbox type="select-account" id="${row}[allowed_users]" no_lang="1" readonly="true" rows="5" empty_label='Private' class="lr_padding"/>
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
 					</menulist>
