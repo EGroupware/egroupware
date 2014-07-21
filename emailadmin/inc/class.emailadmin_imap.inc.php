@@ -1107,13 +1107,18 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			case 'retrieveRules':
 			case 'getVacation':
 			case 'setVacation':
-				if (is_null($this->sieve))
-				{
-					PEAR::setErrorHandling(PEAR_ERROR_EXCEPTION);
-					$this->sieve = new emailadmin_sieve($this);
-					$this->error =& $this->sieve->error;
+				try {
+					if (is_null($this->sieve))
+					{
+						PEAR::setErrorHandling(PEAR_ERROR_EXCEPTION);
+						$this->sieve = new emailadmin_sieve($this);
+						$this->error =& $this->sieve->error;
+					}
+					$ret = call_user_func_array(array($this->sieve,$name),$params);
 				}
-				$ret = call_user_func_array(array($this->sieve,$name),$params);
+				catch(Exception $e) {
+					throw new PEAR_Exception('Error in Sieve: '.$e->getMessage(), $e);
+				}
 				//error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
 				return $ret;
 		}
