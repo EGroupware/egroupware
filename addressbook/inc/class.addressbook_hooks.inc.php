@@ -153,15 +153,6 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$settings['no_auto_hide'] = array(
-			'type'   => 'check',
-			'label'  => 'Don\'t hide empty columns',
-			'name'   => 'no_auto_hide',
-			'help'   => 'Should the columns photo and home address always be displayed, even if they are empty.',
-			'xmlrpc' => True,
-			'admin'  => false,
-			'forced' => false,
-		);
 		$fileas_options = ExecMethod('addressbook.addressbook_bo.fileas_options');
 		$settings['link_title'] = array(
 			'type'   => 'select',
