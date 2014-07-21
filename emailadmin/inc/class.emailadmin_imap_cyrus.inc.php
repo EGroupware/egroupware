@@ -114,7 +114,8 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 	 */
 	function getUserData($_username)
 	{
-		$this->adminConnection();
+		// no need to switch to admin-connection for reading quota of current user
+		if ($_username !== $GLOBALS['egw_info']['user']['account_lid']) $this->adminConnection();
 		$userData = array();
 
 		if(($quota = $this->getQuotaByUser($_username,'ALL')))
@@ -124,7 +125,8 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 		}
 		//error_log(__LINE__.': '.__METHOD__."('$_username') quota=".array2string($quota).' returning '.array2string($userData));
 
-		$this->disconnect();
+		// $this->disconnect() does nothing anymore, need to use $this->adminConnection(false) instead!
+		if ($_username !== $GLOBALS['egw_info']['user']['account_lid']) $this->adminConnection(false);
 
 		return $userData;
 	}
