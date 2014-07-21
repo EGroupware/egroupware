@@ -142,7 +142,7 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
             }
             $base_path = $_SERVER['DOCUMENT_ROOT'].$base;
             // check base against symlinks to support aliases configured via symlinks
-            if (!(file_exists($base_path) && is_dir($base_path) && realpath($base_path) !== false) &&
+            if (!(file_exists($base_path) && is_dir($base_path) && @realpath($base_path) !== false) &&
             	isset($options['minifierOptions']['text/css']['symlinks'][$t='//'.trim($base, '/')]) &&
           		($base_path = realpath($options['minifierOptions']['text/css']['symlinks'][$t]))) {
           		$base_path .= '/';
