@@ -430,8 +430,8 @@
 			egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
 		}
 		catch(e) {
-			// if expression does NOT compile use it literally and log an error, but not stop execution
-			egw.debug("error", "Error compiling PHP "+_expr+" --> using it literally ("+
+			// if expression does NOT compile use it literally and log a warning, but not stop execution
+			egw.debug("warn", "Error compiling PHP "+_expr+" --> using it literally ("+
 				(typeof e == 'string' ? e : e.message)+")!");
 			return function(){ return _expr; };
 		}
