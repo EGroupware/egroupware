@@ -221,7 +221,7 @@ app.classes.mail = AppJS.extend(
 				break;
 
 			case 'emailadmin':	// update tree with given mail account _id and _type
-				var tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
 				var node = tree.getNode(_id);
 				switch(_type)
@@ -1141,7 +1141,8 @@ app.classes.mail = AppJS.extend(
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
 	mail_reloadNode: function(_status) {
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
+		if (!ftree) return;
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
