@@ -184,6 +184,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$form_name = $matches[2];
 		}
+		// happens in auto-repeat grids: $cname='', this->id='something[{$row}]'
+		elseif (preg_match('/([^[]+)\[({\$row})\]$/', $this->id, $matches))
+		{
+			$form_name = $matches[1];
+		}
 		else
 		{
 			$form_name = self::form_name($cname, $this->id);
@@ -223,6 +228,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 			if(!array_key_exists('search',$this->attrs) && count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
 			{
 				self::setElementAttribute($form_name, "search", true);
+			}
+			if(!self::$request->sel_options[$options])
+			{
+				unset(self::$request->sel_options[$options]);
 			}
 		}
 	}
@@ -493,30 +502,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				*/
 				$no_lang = True;
-				break;
-
-			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
-				// Get preference for selection display
-
-				// Get important attributes in a non-legacy way
-				if($widget != null && $widget->attrs['account_type'])
-				{
-					$type = $widget->attrs['account_type'];
-				}
-
-				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
-				// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
-				if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
-				if ($readonly || $select_pref == 'popup')
-				{
-					$no_lang = True;
-					foreach(is_array($value) ? $value : array($value) as $id)
-					{
-						$options[$id] = !$id && !is_numeric($rows) ? lang($rows) :
-							self::accountInfo($id, null, $type2, $type=='both');
-					}
-					break;
-				}
 				break;
 
 			case 'select-year':	// options: #rows,#before(default=3),#after(default=2)
