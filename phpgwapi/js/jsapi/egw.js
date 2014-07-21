@@ -214,27 +214,28 @@
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}
 
-		// load etemplate2 template(s)
-		$j('div.et2_container[data-etemplate]').each(function(index, node){
-			var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
-			var currentapp = data.data.currentapp || window.egw_appName;
-			if(popup || window.opener)
-			{
-				// Resize popup when et2 load is done
-				jQuery(node).one("load",function() {
-					window.resizeTo(jQuery(document).width()+25,jQuery(document).height()+70);
-				});
-			}
-			var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
-			et2.load(data.name,data.url,data.data);
-			if (typeof data.response != 'undefined')
-			{
-				var json_request = egw(window).json();
-				json_request.handleResponse({response: data.response});
-			}
-		});
-
+		// rest needs DOM to be ready
 		$j(function() {
+			// load etemplate2 template(s)
+			$j('div.et2_container[data-etemplate]').each(function(index, node){
+				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
+				var currentapp = data.data.currentapp || window.egw_appName;
+				if(popup || window.opener)
+				{
+					// Resize popup when et2 load is done
+					jQuery(node).one("load",function() {
+						window.resizeTo(jQuery(document).width()+25,jQuery(document).height()+70);
+					});
+				}
+				var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
+				et2.load(data.name,data.url,data.data);
+				if (typeof data.response != 'undefined')
+				{
+					var json_request = egw(window).json();
+					json_request.handleResponse({response: data.response});
+				}
+			});
+
 			// set app-header
 			if (window.framework && egw_script.getAttribute('data-app-header'))
 			{
