@@ -122,6 +122,9 @@ egw_LAB.wait(function() {
 				egw_getFramework().checkTabOverflow();
 				egw.set_preference('common', 'pixelegg_header_hidden', 'true');
 			}
+			window.setTimeout(function() {
+				egw_getFramework().notifyTabChange();
+			},1000);
 		});
 
 		// hide header, if pref says it is not shown
