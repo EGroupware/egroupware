@@ -188,12 +188,15 @@ var et2_tree = et2_inputWidget.extend(
 			image_path:	widget.options.image_path,
 			checkbox:	widget.options.multiple
 		});
+		// to allow "," in value, eg. folder-names, IF value is specified as array
+		widget.input.dlmtr = ':}-*(';
+
 		if (widget.options.std_images)
 		{
 			widget.setImages.apply(widget, widget.options.std_images.split(','));
 		}
 		// Add in the callback so we can keep the two in sync
-		widget.input.AJAX_callback = function(dxmlObject) { 
+		widget.input.AJAX_callback = function(dxmlObject) {
 			widget._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), widget.input.lastLoadedXMLId);
 		};
 
