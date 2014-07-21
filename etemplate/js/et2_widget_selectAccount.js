@@ -855,16 +855,12 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 			// No clicks either
 			.off();
 
-		if(this.options.select_options && this.options.select_options[_value] || this.options.empty_label)
+		if(this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || this.options.empty_label)
 		{
 			if(!_value)
 			{
 				// Empty label from selectbox
 				this.list.append("<li>"+this.options.empty_label+"</li>");
-			}
-			else if (this.options.select_options[_value])
-			{
-				this.list.append("<li>"+this.options.select_options[_value]+"</li>");
 			}
 			else if (typeof _value == 'object')
 			{
@@ -880,6 +876,32 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 					{
 						this.list.append("<li>"+this.options.select_options[_value]+"</li>");
 					}
+				}
+			}
+			else
+			{
+				// Options are not indexed, so we must look
+				var search = _value;
+				if (!jQuery.isArray(search))
+				{
+					search = [_value];
+				}
+				for(var j = 0; j < search.length; j++)
+				{
+					var found = false;
+
+					// Not having a value to look up causes an infinite loop
+					if(!search[j]) continue;
+
+					for(var i in this.options.select_options)
+					{
+						if(this.options.select_options[i].value == search[j])
+						{
+							this.list.append("<li>"+this.options.select_options[i].label+"</li>");
+							break;
+						}
+					}
+
 				}
 			}
 		}
