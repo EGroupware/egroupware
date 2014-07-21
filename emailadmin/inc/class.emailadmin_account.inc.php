@@ -579,9 +579,10 @@ class emailadmin_account implements ArrayAccess
 	 * For full list of placeholders see addressbook_merge.
 	 *
 	 * @param array|emailadmin_account $identity=null
+	 * @param int $account_id=null account_id of user, or current user
 	 * @return array with modified fields
 	 */
-	public /*static*/ function replace_placeholders($identity=null)
+	public /*static*/ function replace_placeholders($identity=null, $account_id=null)
 	{
 		static $fields = array('ident_name','ident_realname','ident_org','ident_email','ident_signature');
 
@@ -602,11 +603,12 @@ class emailadmin_account implements ArrayAccess
 		{
 			static $merge=null;
 			if (!isset($merge)) $merge = new addressbook_merge();
+			if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 			foreach($to_replace as $name => &$value)
 			{
 				$err = null;
 				$value = $merge->merge_string($value,
-					(array)accounts::id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id'),
+					(array)accounts::id2name($account_id, 'person_id'),
 					$err, $name == 'ident_signature' ? 'text/html' : 'text/plain');
 			}
 		}
@@ -1226,7 +1228,7 @@ class emailadmin_account implements ArrayAccess
 			{
 				$row = self::db2data($row);
 
-				if ($only_current_user)
+				if ($only_current_user === true)
 				{
 					//error_log(__METHOD__."(TRUE, $just_name) caching data for acc_id=$row[acc_id]");
 					self::$search_cache[$cache_key][$row['acc_id']] =& self::$cache[$row['acc_id']];
@@ -1251,11 +1253,11 @@ class emailadmin_account implements ArrayAccess
 		if (is_null(self::$search_cache[$cache_key])) self::$search_cache[$cache_key]=array();
 		return new egw_db_callback_iterator(new ArrayIterator(self::$search_cache[$cache_key]),
 			// process each row
-			function($row) use ($just_name, $replace_placeholders)
+			function($row) use ($just_name, $replace_placeholders, $account_id)
 			{
 				if ($replace_placeholders)
 				{
-					$row = array_merge($row, emailadmin_account::replace_placeholders($row));
+					$row = array_merge($row, emailadmin_account::replace_placeholders($row, $account_id));
 				}
 				if (is_string($just_name))
 				{
@@ -1263,9 +1265,9 @@ class emailadmin_account implements ArrayAccess
 				}
 				elseif ($just_name)
 				{
-					return emailadmin_account::identity_name($row, false);
+					return emailadmin_account::identity_name($row, false, $account_id);
 				}
-				return new emailadmin_account($row);
+				return new emailadmin_account($row, $account_id);
 			}, array(),
 			// return acc_id as key
 			function($row)
@@ -1315,9 +1317,10 @@ class emailadmin_account implements ArrayAccess
 	 *
 	 * @param array|emailadmin_account $account object or values for keys 'ident_(realname|org|email)', 'acc_(id|name|imap_username)'
 	 * @param boolean $replace_placeholders=true should placeholders like {{n_fn}} be replaced
+	 * @param int $account_id=null account_id of user we are called for
 	 * @return string with htmlencoded angle brackets
 	 */
-	public static function identity_name($account, $replace_placeholders=true)
+	public static function identity_name($account, $replace_placeholders=true, $account_id=null)
 	{
 		if ($replace_placeholders)
 		{
@@ -1351,9 +1354,10 @@ class emailadmin_account implements ArrayAccess
 					{
 						if (!isset($account['acc_imap_username']))
 						{
-							$account += emailadmin_credentials::read($account['acc_id']);
+							$account += emailadmin_credentials::read($account['acc_id'], null, array($account_id, 0));
 						}
-						if (empty($account['acc_imap_username']) && $account['acc_imap_logintype'])
+						if (empty($account['acc_imap_username']) && $account['acc_imap_logintype'] &&
+							(!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['account_id']))
 						{
 							$account = array_merge($account, emailadmin_credentials::from_session($account));
 						}
