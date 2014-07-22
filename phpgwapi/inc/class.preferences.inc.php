@@ -810,6 +810,7 @@ class preferences
 	 */
 	public static function copy_preferences($from_app, $to_app, array $names=null)
 	{
+		//error_log(__METHOD__."('$from_app', '$to_app', ".array2string($names).')');
 		$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 
 		foreach($db->select(self::TABLE, '*', array('preference_app' => $from_app), __LINE__, __FILE__) as $row)
@@ -825,12 +826,13 @@ class preferences
 			$row['preference_app'] = $to_app;
 			unset($row['preference_value']);
 
-			if (($values = $this->db->select(self::TABLE, 'preference_value', $row, __LINE__, __FILE__)->fetchColumn()))
+			if (($values = $db->select(self::TABLE, 'preference_value', $row, __LINE__, __FILE__)->fetchColumn()))
 			{
-				$prefs = array_merge($values, $prefs);
+				$prefs = array_merge(self::unserialize($values), $prefs);
 			}
 
-			$this->db->insert(self::TABLE, array(
+			//error_log(__LINE__.': '.__METHOD__."() inserting app=$row[preference_app], owner=$row[preference_owner]: ".array2string($prefs));
+			$db->insert(self::TABLE, array(
 				'preference_value' => json_encode($prefs)
 			), $row, __LINE__, __FILE__);
 
