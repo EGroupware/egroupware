@@ -417,7 +417,16 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 */
 	function getCurrentMailbox()
 	{
-		$mailbox = $this->currentMailbox();
+		try
+		{
+			$mailbox = $this->currentMailbox();
+		}
+		catch(Exception $e)
+		{
+			error_log(__METHOD__.' ('.__LINE__.') failed fetching currentMailbox:'.$e->getMessage());
+			//throw new egw_exception(__METHOD__.' ('.__LINE__.") failed to ".__METHOD__." :".$e->getMessage());
+			unset($e);
+		}
 		if (!empty($mailbox)) return $mailbox['mailbox'];
 		if (empty($mailbox) && $this->mailboxExist('INBOX')) return 'INBOX';
 		return null;
