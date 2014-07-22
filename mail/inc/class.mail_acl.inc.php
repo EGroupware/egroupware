@@ -62,10 +62,10 @@ class mail_acl
 	}
 
 	/**
-	 * Edit folder ACLs for account(s)
+	 * Edit folder ACLs of account(s)
 	 *
-	 * @param string $msg
-	 * @param array $content
+	 * @param string $content = null
+	 * @param array $msg = ''
 	 *
 	 */
 	function edit(array $content=null ,$msg='')
@@ -157,7 +157,7 @@ class mail_acl
 						$msg .= "\n".lang("Error: Could not save ACL").' '.lang("reason!");
 					}
 					//Send message
-					egw_framework::refresh_opener($msg, 'mail', 'update');
+					egw_framework::refresh_opener($msg, 'mail',null, 'update');
 					if ($button == "apply") break;
 
 
@@ -175,7 +175,7 @@ class mail_acl
 					{
 						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is wrong there");
 					}
-					egw_framework::refresh_opener($msg, 'mail', 'update');
+					egw_framework::refresh_opener($msg, 'mail', null,'update');
 			}
 		}
 		$readonlys = $sel_options = array();
@@ -184,8 +184,8 @@ class mail_acl
 		//Make the delete buttons readonly for entry filed and account owner
 		foreach($content['grid'] as $key => $field)
 		{
-			if ($field['acc_id'] == $this->mail_bo->icServer->acc_name ||
-					$field['acc_id'][0] == $this->mail_bo->icServer->acc_name)
+			if ($field['acc_id'] == $this->mail_bo->icServer->acc_imap_username ||
+					$field['acc_id'][0] == $this->mail_bo->icServer->acc_imap_username)
 			{
 				$readonlys['grid']['delete['.$key.']'] = true;
 			}
