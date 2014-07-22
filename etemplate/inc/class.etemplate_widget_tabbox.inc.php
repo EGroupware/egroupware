@@ -27,28 +27,51 @@
 class etemplate_widget_tabbox extends etemplate_widget
 {
 	/**
-	 * Fill additional tabs
+	 * Run a given method on all children
 	 *
-	 * @param string $cname
+	 * Default implementation only calls method on itself and run on all children.
+	 * Overridden here to apply readonlys for the tabbox to disabled on the tab
+	 * content.  This prevents running the method on disabled tabs.
+	 *
+	 * @param string $method_name
+	 * @param array $params=array('') parameter(s) first parameter has to be the cname, second $expand!
+	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
-	public function beforeSendToClient($cname)
+	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
-		unset($cname);
-		if($this->attrs['tabs'])
+		// add_tabs toggles replacing or adding to existing tabs
+		if(!$this->attrs['add_tabs'])
 		{
-			// add_tabs toggles replacing or adding to existing tabs
-			if(!$this->attrs['add_tabs'])
+			$this->children[1]->children = array();
+		}
+
+		// Make sure additional tabs are processed for any method
+		foreach($this->attrs['tabs'] as $tab)
+		{
+			$template= clone etemplate_widget_template::instance($tab['template']);
+			if($tab['id']) $template->attrs['content'] = $tab['id'];
+			$this->children[1]->children[] = $template;
+			unset($template);
+		}
+
+		// Check for disabled tabs set via readonly, and set them as disabled
+		$form_name = self::form_name($params[0], $this->id, $params[1]);
+		$readonlys = self::get_array(self::$request->readonlys, $form_name);
+		if($respect_disabled && $readonlys)
+		{
+			foreach($this->children[1]->children as $tab)
 			{
-				$this->children[1]->children = array();
-			}
-			foreach($this->attrs['tabs'] as $tab)
-			{
-				$template= clone etemplate_widget_template::instance($tab['template']);
-				if($tab['id']) $template->attrs['content'] = $tab['id'];
-				$this->children[1]->children[] = $template;
-				unset($template);
+				$ro_id = explode('.',$tab->template ? $tab->template : $tab->id);
+				$ro_id = $ro_id[count($ro_id)-1];
+				if($readonlys[$ro_id])
+				{
+					$tab->attrs['disabled'] = $readonlys[$ro_id];
+				}
 			}
 		}
+
+		// Tabs are set up now, continue as normal
+		parent::run($method_name, $params, $respect_disabled);
 	}
 
 	/**
@@ -68,27 +91,7 @@ class etemplate_widget_tabbox extends etemplate_widget
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
-			if (true) $valid = $value;
-
-			if(!$this->attrs['tabs'])
-			{
-				return;
-			}
-
-			// Make sure additional tabs are processed
-
-			// add_tabs toggles replacing or adding to existing tabs
-			if(!$this->attrs['add_tabs'])
-			{
-				$this->children[1]->children = array();
-			}
-			foreach($this->attrs['tabs'] as $tab)
-			{
-				$template= clone etemplate_widget_template::instance($tab['template']);
-				if($tab['id'] && $content[$tab['id']]) $template->attrs['content'] = $tab['id'];
-				$this->children[1]->children[] = $template;
-				unset($template);
-			}
+			if (true) $valid = $value;			
 		}
 	}
 }
