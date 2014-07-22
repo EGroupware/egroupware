@@ -802,6 +802,48 @@ class preferences
 	}
 
 	/**
+	 * Copy preferences from one app to an other
+	 *
+	 * @param string $from_app
+	 * @param string $to_app
+	 * @param array $names=null array of names to copy or null for all
+	 */
+	public static function copy_preferences($from_app, $to_app, array $names=null)
+	{
+		$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
+
+		foreach($db->select(self::TABLE, '*', array('preference_app' => $from_app), __LINE__, __FILE__) as $row)
+		{
+			$prefs = self::unserialize($row['preference_value']);
+
+			if ($names)
+			{
+				$prefs = array_intersect_key($prefs, array_flip($names));
+			}
+			if (!$prefs) continue;	// nothing to change, as nothing set
+
+			$row['preference_app'] = $to_app;
+			unset($row['preference_value']);
+
+			if (($values = $this->db->select(self::TABLE, 'preference_value', $row, __LINE__, __FILE__)->fetchColumn()))
+			{
+				$prefs = array_merge($values, $prefs);
+			}
+
+			$this->db->insert(self::TABLE, array(
+				'preference_value' => json_encode($prefs)
+			), $row, __LINE__, __FILE__);
+
+			// update instance-wide cache
+			if (($cached = egw_cache::getInstance(__CLASS__, $row['prefences_owner'])))
+			{
+				$cached[$from_app] = $prefs;
+				egw_cache::setInstance(__CLASS__, $row['preference_owner'], $cached);
+			}
+		}
+	}
+
+	/**
 	 * Save the the preferences to the repository
 	 *
 	 * User prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only!
