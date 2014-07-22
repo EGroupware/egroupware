@@ -67,11 +67,7 @@ class preferences_hooks
 			'br'	=> lang('br')
 		);
 
-		$rich_text_editor_skins = array(
-			'kama'    => lang ('Default theme'),
-			'moono'	=> lang('Moono theme'),
-			'moonocolor'	=> lang('Moono color theme'),
-		);
+		$rich_text_editor_skins = egw_ckeditor_config::getAvailableCKEditorSkins();
 
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),

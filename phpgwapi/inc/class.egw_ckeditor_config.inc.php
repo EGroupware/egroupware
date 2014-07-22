@@ -57,6 +57,21 @@ class egw_ckeditor_config
 	);
 
 	/**
+	 * Get available CKEditor Skins
+	 * @return array
+	 */
+	public static function getAvailableCKEditorSkins()
+	{
+		return array(
+			'kama'  => lang('kama theme'),
+			'moono'	=> lang('moono theme (default)'),
+			'moonocolor'	=> lang('moono color theme'),
+			'moono-dark'	=> lang('dark moono theme'),
+			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
+		);
+	}
+
+	/**
 	 * Get font size from preferences
 	 *
 	 * @param array $prefs=null default $GLOBALS['egw_info']['user']['preferences']
@@ -170,18 +185,24 @@ class egw_ckeditor_config
 			//Convert old fckeditor skin names to new ones
 			switch ($skin)
 			{
-				case 'silver':
-				case 'office2003':
-				case 'moono':
-					$skin = "moono";
-					break;
 				case 'kama':
-				case 'default':
+					$skin = "kama";
+					break;
+				case 'silver':
+				case 'bootstrapck':
+					$skin = "bootstrapck";
+					break;
+				case 'moono-dark':
+					$skin = "moono-dark";
+					break;
+				case 'office2003':
 				case 'moonocolor':
 					$skin = "moonocolor";
 					break;
+				case 'moono':
+				case 'default':
 				default:
-					$skin = "moonocolor";
+					$skin = "moono";
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
