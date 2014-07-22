@@ -157,7 +157,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 */
 	function getAvailableProfiles($params = null)
 	{
-		$allIdentities = mail_bo::getAllIdentities();
+		$allIdentities = mail_bo::getAllIdentities(($params['account_id']?$params['account_id']:null));
 		$identities = array();
 		if (!isset($params['setup']))
 		{
@@ -191,6 +191,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 */
 	function settings($hook_data)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($hook_data));
 		$identities = array();
 		if (!isset($hook_data['setup']))
 		{
