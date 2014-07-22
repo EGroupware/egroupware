@@ -1058,7 +1058,7 @@ class filemanager_ui
 					}
 					else
 					{
-						$msg .= egw_vfs::eacl($path,$content['rights'],$content['eacl_owner']) ?
+						$msg .= egw_vfs::eacl($path,$content['eacl']['rights'],$content['eacl_owner']) ?
 							lang('ACL added.') : lang('Error adding the ACL!');
 					}
 				}
