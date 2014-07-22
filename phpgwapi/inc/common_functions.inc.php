@@ -1601,8 +1601,8 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
 {
-	if (($str[0] == 'a' && $str[1] == ':' || $str === 'N;') &&
-		($arr = php_safe_unserialize($str)) !== false)
+	if ((in_array($str[0], array('a', 'i', 's', 'b', 'O', 'C')) && $str[1] == ':' || $str === 'N;') &&
+		($arr = php_safe_unserialize($str)) !== false || $str === 'b:0;')
 	{
 		return $arr;
 	}
