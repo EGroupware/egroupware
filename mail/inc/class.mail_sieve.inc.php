@@ -48,14 +48,14 @@ class mail_sieve
 	 * @var boolean
 	 */
 	var $is_admin_vac = false;
-	
+
 	/**
 	 * siteConfigs
 	 *
 	 * @var array
 	 */
 	var $mailConfig = array();
-	
+
 	/**
 	 * Constructor
 	 */
@@ -64,13 +64,13 @@ class mail_sieve
 		$this->displayCharset = translation::charset();
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
 		$this->mailConfig = config::read('mail');
-		
+
 		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : egw_cache::getSession(__CLASS__, 'acc_id');
 		if ($acc_id > 0)
 		{
 			$this->account = emailadmin_account::read($acc_id);
 		}
-		
+
 		$this->restoreSessionData();
 	}
 
@@ -507,6 +507,7 @@ class mail_sieve
 		elseif ($content['acc_id'])
 		{
 			$this->account = emailadmin_account::read($content['acc_id']);
+			$preserv['acc_id'] = $content['acc_id'];
 		}
 
 		$icServer = $this->account->imapServer($this->is_admin_vac ? $account_id : false);
@@ -614,7 +615,8 @@ class mail_sieve
 								// schedule job to switch message on/off, if request and not already in past
 								else
 								{
-									if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time())
+									if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time() ||
+										$vacRules && $vacRules['vacation']['status'] == 'by_date')
 									{
 										self::setAsyncJob($newVacation);
 									}
@@ -694,17 +696,22 @@ class mail_sieve
 		$async->delete($async_id);
 
 		$end_date = $_vacation['end_date'] + 24*3600;   // end-date is inclusive, so we have to add 24h
-		if ($_vacation['status'] == 'by_date' && time() < $end_date && $_reschedule===false)
+		if ($_vacation['status'] == 'by_date' && time() < $end_date && !$_reschedule)
 		{
 			$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
 			$async->set_timer($time,$async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
 		}
 		if ($_reschedule)
 		{
-			$time = time() + 60*3;
-			unset($_vacation['next']);
-			unset($_vacation['times']);
-			$async->set_timer($time, $async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
+			$_vacation['rescheduled'] = $_vacation['rescheduled'] ? 2*$_vacation['rescheduled'] : 5;
+			// only try to reschedule for 2 days max
+			if ($_vacation['rescheduled'] <= 2 * 24 * 60)
+			{
+				$time = time() + 60*($_vacation['rescheduled']);
+				unset($_vacation['next']);
+				unset($_vacation['times']);
+				$async->set_timer($time, $async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
+			}
 		}
  	}
 
@@ -726,6 +733,12 @@ class mail_sieve
 		try
 		{
 			$ret = $icServer->setVacationUser($_vacation['account_id'], null, $_vacation);
+			self::setAsyncJob($_vacation);
+		}
+		// if mail account no longer exists --> remove async job
+		catch (egw_exception_not_found $e)
+		{
+			$_vacation['status'] = 'off';
 			self::setAsyncJob($_vacation);
 		}
 		catch (Exception $e) {
