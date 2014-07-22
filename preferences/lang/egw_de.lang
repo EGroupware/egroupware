@@ -11,6 +11,7 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
+bootstrap theme for ckeditor	preferences	de	Bootstrap Schema für den CKEditor
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
@@ -22,6 +23,7 @@ charset for the csv export/import	preferences	de	Zeichensatz
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 color	preferences	de	Farbe
 country	preferences	de	Land
+dark moono theme	preferences	de	Dunkles Moono Schema
 data exchange settings	preferences	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
@@ -29,7 +31,6 @@ default application	preferences	de	Standard-Anwendung
 default font	preferences	de	Standard-Schrift
 default font size	preferences	de	Standard-Schriftgröße
 default preferences	preferences	de	Voreinstellungen
-default theme	preferences	de	Vorgabe Farbschema
 delete categories	preferences	de	Kategorie löschen
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
 display thumbnails for linked images	preferences	de	Zeige Vorschaubilder für verlinkte Bilder
@@ -69,11 +70,14 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
+kama theme	preferences	de	Kama Farbschema
 language	preferences	de	Sprache
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
 max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
+moono color theme	preferences	de	Farbiges Schema (Moono)
+moono theme	preferences	de	Einfarbiges Schema (Moono)
 no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
 note: this feature does *not* change your email password. this will	preferences	de	Anmerkung: Diese Funktion ändert nicht Ihr E-Mail Passwort.
@@ -81,7 +85,6 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
-office 2003 theme	preferences	de	Office 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist ungültig. Sie müssen ein neues Passwort vergeben.
 p: paragraph	preferences	de	p: Absatz
 password changed	preferences	de	Ihr Password wurde geändert
@@ -119,7 +122,6 @@ show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
-silver theme	preferences	de	Silbern
 special characters	preferences	de	Sonderzeichen
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 text editor settings	preferences	de	Einstellungen des Texteditors

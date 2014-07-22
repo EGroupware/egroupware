@@ -11,6 +11,7 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
 automatically start with this font	preferences	en	Automatically start with this font
 automatically start with this font size	preferences	en	Automatically start with this font size
+bootstrap theme for ckeditor	preferences	en	Bootstrap Theme for CKEditor
 br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change password	preferences	en	Change password
@@ -22,6 +23,7 @@ charset for the csv export/import	preferences	en	Character set
 click to select a color	preferences	en	Click to select a color
 color	preferences	en	Color
 country	preferences	en	Country
+dark moono theme	preferences	en	Dark Moono Theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format
 default	preferences	en	Default
@@ -29,7 +31,6 @@ default application	preferences	en	Default application
 default font	preferences	en	Default font
 default font size	preferences	en	Default font size
 default preferences	preferences	en	Default preferences
-default theme	preferences	en	Default theme
 delete categories	preferences	en	Delete categories
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
 display thumbnails for linked images	preferences	en	Display thumbnails for linked images
@@ -69,11 +70,14 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	en	Select the country. It sets some defaults e.g. in Calendar.
 interface/template selection	preferences	en	Interface | Template
 just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
+kama theme	preferences	en	Kama theme
 language	preferences	en	Language
 look & feel	preferences	en	Look & feel
 lowercase letters	preferences	en	lowercase letters
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
+moono color theme	preferences	en	Moono color theme
+moono theme	preferences	en	Moono theme (Default)
 no default	preferences	en	No default
 no user-selection at all	common	en	No user selection at all
 note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
@@ -81,7 +85,6 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	en	Notification settings
 number format	preferences	en	Number format
 numbers	preferences	en	numbers
-office 2003 theme	preferences	en	Office 2003 theme
 old password and new password are the same. this is invalid. you must enter a new password	preferences	en	Old password and new password are the same. You must enter a new password!
 p: paragraph	preferences	en	p: Paragraph
 password changed	preferences	en	Password changed.
@@ -119,7 +122,6 @@ show navigation bar as	preferences	en	Show navigation bar as
 show number of current users	preferences	en	Current users
 show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
-silver theme	preferences	en	Silver theme
 special characters	preferences	en	special characters
 spellchecker language	addressbook	en	Spellchecker language
 text editor settings	preferences	en	Text editor settings
