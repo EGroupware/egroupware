@@ -184,6 +184,7 @@ class egw_ckeditor_config
 			{
 				case 'kama':
 					$skin = "kama";
+					if (html::$user_agent=='firefox' || html::$user_agent=='msie') $skin='moonocolor';
 					break;
 				case 'silver':
 				case 'bootstrapck':
