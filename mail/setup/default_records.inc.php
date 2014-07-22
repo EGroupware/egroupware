@@ -28,3 +28,21 @@ if (!$GLOBALS['egw_setup']->db->affected_rows())
 
 // change common/default_app pref to mail, if it was felamimail
 preferences::change_preference('common', 'default_app', 'mail', 'felamimail');
+
+// copy felamimail preferences to new mail app, if they still exist there
+preferences::copy_preferences('felamimail', 'mail', array(
+	'htmlOptions',
+	'allowExternalIMGs',
+	'message_forwarding',
+	'composeOptions',
+	'replyOptions',
+	'disableRulerForSignatureSeparation',
+	'insertSignatureAtTopOffMessage',
+	'attachVCardAtCompose',
+	'deleteOptions',
+	'sendOptions',
+	'trustServerUnseenInfo',
+	'showAllFoldersInFolderPane',
+	'prefaskformove',
+	'saveAsOptions',
+));
