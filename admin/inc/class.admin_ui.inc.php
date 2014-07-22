@@ -128,6 +128,17 @@ class admin_ui
 				'group' => 2,
 			),
 		);
+		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		{
+			$actions['deny'] = array(
+				'caption'   => 'Deny access',
+				'enableId'  => '^/groups/-\\d+',
+				'url'       => 'menuaction=admin.uiaclmanager.list_apps&account_id=$id',
+				'onExecute' => 'javaScript:app.admin.group',
+				'icon'      => 'cancel',
+				'group'     => 2,
+			);
+		}
 		$group = 5;	// allow to place actions in different groups by hook, this is the default
 		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
 		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_group')));
