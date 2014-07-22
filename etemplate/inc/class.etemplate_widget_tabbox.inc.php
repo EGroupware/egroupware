@@ -39,19 +39,23 @@ class etemplate_widget_tabbox extends etemplate_widget
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
-		// add_tabs toggles replacing or adding to existing tabs
-		if(!$this->attrs['add_tabs'])
-		{
-			$this->children[1]->children = array();
-		}
 
 		// Make sure additional tabs are processed for any method
-		foreach($this->attrs['tabs'] as $tab)
+		if($this->attrs['tabs'])
 		{
-			$template= clone etemplate_widget_template::instance($tab['template']);
-			if($tab['id']) $template->attrs['content'] = $tab['id'];
-			$this->children[1]->children[] = $template;
-			unset($template);
+			// add_tabs toggles replacing or adding to existing tabs
+			if(!$this->attrs['add_tabs'])
+			{
+				$this->children[1]->children = array();
+			}
+
+			foreach($this->attrs['tabs'] as $tab)
+			{
+				$template= clone etemplate_widget_template::instance($tab['template']);
+				if($tab['id']) $template->attrs['content'] = $tab['id'];
+				$this->children[1]->children[] = $template;
+				unset($template);
+			}
 		}
 
 		// Check for disabled tabs set via readonly, and set them as disabled
