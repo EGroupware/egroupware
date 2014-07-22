@@ -157,17 +157,17 @@ class asyncservice
 		// as empty patterns get enumerated before the the last pattern and
 		// get set to the minimum after
 		//
-		$n = $first_set = $last_set = 0;
+		$i = $first_set = $last_set = 0;
 		foreach($units as $u => $date_pattern)
 		{
-			++$n;
+			++$i;
 			if (isset($times[$u]))
 			{
-				$last_set = $n;
+				$last_set = $i;
 
 				if (!$first_set)
 				{
-					$first_set = $n;
+					$first_set = $i;
 				}
 			}
 		}
@@ -261,6 +261,7 @@ class asyncservice
 		// now we have the times enumerated, lets find the first not expired one
 		//
 		$found = array();
+		$over = null;
 		while (!isset($found['min']))
 		{
 			$future = False;
@@ -276,7 +277,7 @@ class asyncservice
 					if ($this->debug) echo "--> already have a $u = ".$found[$u].", future='$future'<br>\n";
 					continue;	// already set
 				}
-				foreach($times[$u] as $unit_value => $nul)
+				foreach(array_keys($times[$u]) as $unit_value)
 				{
 					switch($u)
 					{
@@ -300,13 +301,13 @@ class asyncservice
 				}
 				if (!isset($found[$u]))		// we have to try the next one, if it exists
 				{
-					$next = array_keys($units);
+					$nexts = array_keys($units);
 					if (!isset($next[count($found)-1]))
 					{
 						if ($this->debug) echo "<p>Nothing found, exiting !!!</p>\n";
 						return False;
 					}
-					$next = $next[count($found)-1];
+					$next = $nexts[count($found)-1];
 					$over = $found[$next];
 					unset($found[$next]);
 					if ($this->debug) echo "<p>Have to try the next $next, $u's are over for $next=$over !!!</p>\n";
@@ -341,7 +342,7 @@ class asyncservice
 	function last_check_run($semaphore=False,$release=False,$run_by='')
 	{
 		//echo "<p>last_check_run(semaphore=".($semaphore?'True':'False').",release=".($release?'True':'False').")</p>\n";
-		if ($exists = $this->read('##last-check-run##'))
+		if (($exists = $this->read('##last-check-run##')))
 		{
 			list(,$last_run) = each($exists);
 		}
@@ -379,7 +380,7 @@ class asyncservice
 			if ($exists) $where = array('async_next=0 OR async_next<'.time()-600);
 		}
 		//echo "last_run=<pre>"; print_r($last_run); echo "</pre>\n";
-		return $this->write($last_run,!!$exits,$where) > 0;
+		return $this->write($last_run, !!$exists, $where) > 0;
 	}
 
 	/**
@@ -398,7 +399,7 @@ class asyncservice
 
 		if (($jobs = $this->read()))
 		{
-			foreach($jobs as $id => $job)
+			foreach($jobs as $job)
 			{
 				// checking / setting up egw_info/user
 				//
@@ -502,7 +503,16 @@ class asyncservice
 		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,$append,False,$num_rows) as $row)
 		{
 			$row['async_times'] = json_php_unserialize($row['async_times']);
-			$row['async_data'] = json_php_unserialize($row['async_data'], true);	// allow non-serialized data
+			// check for broken value during migration
+			if ($row['async_data'][0] == '"' && substr($row['async_data'], 0, 7) == '"\\"\\\\\\"')
+			{
+				$row['async_data'] = null;
+				$this->write(egw_db::strip_array_keys($row,'async_'), true);
+			}
+			else
+			{
+				$row['async_data'] = json_php_unserialize($row['async_data'], true);	// allow non-serialized data
+			}
 			$jobs[$row['async_id']] = egw_db::strip_array_keys($row,'async_');
 		}
 		if (!count($jobs))
@@ -520,7 +530,7 @@ class asyncservice
 	 * @param array $where additional where statemetn to update only if a certain condition is met, used for the semaphore
 	 * @return int affected rows, can be 0 if an additional where statement is given
 	 */
-	function write($job,$exists = False,$where=array())
+	function write($job, $exists = False, $where=array())
 	{
 		if (!is_a($this->db, 'egw_db')) return 0;
 
@@ -529,16 +539,17 @@ class asyncservice
 			'async_next'      => $job['next'],
 			'async_times'     => json_encode($job['times']),
 			'async_method'    => $job['method'],
-			'async_data'      => json_encode($job['data']),
+			'async_data'      => $job['data'] ? json_encode($job['data']) : null,
 			'async_account_id'=> $job['account_id'],
 		);
+		$where['async_id'] = $job['id'];
 		if ($exists)
 		{
-			$this->db->update($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
+			$this->db->update($this->db_table, $data, $where, __LINE__, __FILE__);
 		}
 		else
 		{
-			$this->db->insert($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
+			$this->db->insert($this->db_table, $data, $where, __LINE__, __FILE__);
 		}
 		return $this->db->affected_rows();
 	}
@@ -562,7 +573,10 @@ class asyncservice
 		{
 			return;
 		}
-		$run = True;
+		else
+		{
+			$run = True;
+		}
 
 		if (substr(php_uname(), 0, 7) == "Windows")
 		{
@@ -592,12 +606,12 @@ class asyncservice
 							$webserver = posix_getpwuid(posix_getuid ());
 							echo '<p>'.lang("You need to add the webserver user '%1' to the group '%2'.",$webserver['name'],$group['name'])."</p>\n";							}
 					}
-					if ($fd = popen('/bin/sh -c "type -p '.$name.'"','r'))
+					if (($fd = popen('/bin/sh -c "type -p '.$name.'"','r')))
 					{
 						$this->$name = fgets($fd,256);
 						@pclose($fd);
 					}
-					if ($pos = strpos($this->$name,"\n"))
+					if (($pos = strpos($this->$name,"\n")))
 					{
 						$this->$name = substr($this->$name,0,$pos);
 					}
@@ -641,6 +655,7 @@ class asyncservice
 		$this->other_cronlines = array();
 		if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -l" 2>&1','r')) !== False)
 		{
+			$n = 0;
 			while ($line = fgets($crontab,256))
 			{
 				if ($this->debug) echo 'line '.++$n.": $line<br>\n";
