@@ -644,13 +644,14 @@ class emailadmin_imapbase
 
 	/**
 	 * getAllIdentities - function to gather the identities connected to the current user
+	 * @param string/int $_accountToSearch; null; if set search accounts for user specified
 	 * @return array - array(email=>realname)
 	 */
-	static function getAllIdentities() {
+	static function getAllIdentities($_accountToSearch=null) {
 		$userEMailAdresses = array();
-		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
+		foreach(emailadmin_account::search($only_current_user=($_accountToSearch?$_accountToSearch:true), $just_name=true) as $acc_id => $identity_name)
 		{
-			$acc = emailadmin_account::read($acc_id);
+			$acc = emailadmin_account::read($acc_id,($_accountToSearch?$_accountToSearch:null));
 			$userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature'],'ident_name'=>$acc['ident_name']);
 			$identities = $acc->identities($acc_id);
 
