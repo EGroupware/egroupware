@@ -1547,7 +1547,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$calendars[$entry['grantor']] = $entry['name'];
 			}
-			unset($calendars[$user]);
+			if ($user > 0) unset($calendars[$user]);	// skip current user
 		}
 
 		$settings = array();
