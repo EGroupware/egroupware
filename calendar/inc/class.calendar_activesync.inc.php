@@ -1576,7 +1576,7 @@ END:VTIMEZONE
 	function settings($hook_data)
 	{
 		$cals = array();
-		if (!$hook_data['setup'] && is_numeric($hook_data['account_id']))
+		if (!$hook_data['setup'] && in_array($hook_data['type'], array('user', 'group')))
 		{
 			foreach (calendar_bo::list_calendars($hook_data['account_id']) as $entry)
 			{
