@@ -183,7 +183,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$this->default_addressbook = $this->user;	// admin set a default or forced pref for personal addressbook
 		}
-		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
+		$this->private_addressbook = self::private_addressbook($this->contact_repository == 'sql', $this->prefs);
 
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
@@ -312,22 +312,50 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Do we use a private addressbook (in comparison to a personal one)
+	 *
+	 * Used to set $this->private_addressbook for current user.
+	 *
+	 * @param string $contact_repository
+	 * @param array $prefs addressbook preferences
+	 * @return boolean
+	 */
+	public static function private_addressbook($contact_repository, array $prefs)
+	{
+		return $contact_repository == 'sql' && $prefs['private_addressbook'];
+	}
+
+	/**
 	 * Get the availible addressbooks of the user
 	 *
 	 * @param int $required=EGW_ACL_READ required rights on the addressbook or multiple rights or'ed together,
 	 * 	to return only addressbooks fullfilling all the given rights
 	 * @param string $extra_label first label if given (already translated)
+	 * @param int $user=null account_id or null for current user
 	 * @return array with owner => label pairs
 	 */
-	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null)
+	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null,$user=null)
 	{
 		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
 
+		if (is_null($user))
+		{
+			$user = $this->user;
+			$preferences = $GLOBALS['egw_info']['user']['preferences'];
+			$grants = $this->grants;
+		}
+		else
+		{
+			$prefs_obj = new preferences($user);
+			$preferences = $prefs_obj->read_repository();
+			$grants = $this->get_grants($user, 'addressbook', $preferences);
+		}
+
 		$addressbooks = $to_sort = array();
 		if ($extra_label) $addressbooks[''] = $extra_label;
-		$addressbooks[$this->user] = lang('Personal');
+		$addressbooks[$user] = lang('Personal');
 		// add all group addressbooks the user has the necessary rights too
-		foreach($this->grants as $uid => $rights)
+		foreach($grants as $uid => $rights)
 		{
 			if (($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 			{
@@ -339,20 +367,20 @@ class addressbook_bo extends addressbook_so
 			asort($to_sort);
 			$addressbooks += $to_sort;
 		}
-		if (!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] && (
-				($this->grants[0] & $required) == $required ||
-				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+		if (!$preferences['addressbook']['hide_accounts'] && (
+				($grants[0] & $required) == $required ||
+				$preferences['common']['account_selection'] == 'groupmembers' &&
 				$this->account_repository != 'ldap' && ($required & EGW_ACL_READ)))
 		{
 			$addressbooks[0] = lang('Accounts');
 		}
 		// add all other user addressbooks the user has the necessary rights too
 		$to_sort = array();
-		foreach($this->grants as $uid => $rights)
+		foreach($grants as $uid => $rights)
 		{
-			if ($uid != $this->user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			if ($uid != $user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
-				$to_sort[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
+				$to_sort[$uid] = common::grab_owner_name($uid);
 			}
 		}
 		if ($to_sort)
@@ -360,9 +388,9 @@ class addressbook_bo extends addressbook_so
 			asort($to_sort);
 			$addressbooks += $to_sort;
 		}
-		if ($this->private_addressbook)
+		if ($user > 0 && self::private_addressbook($this->contact_repository, $preferences['addressbook']))
 		{
-			$addressbooks[$this->user.'p'] = lang('Private');
+			$addressbooks[$user.'p'] = lang('Private');
 		}
 		//echo "<p>".__METHOD__."($required,'$extra_label')"; _debug_array($addressbooks);
 		return $addressbooks;
