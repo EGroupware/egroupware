@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	it	%1 che hai delegato, scade il %2
 %1 you delegated is starting at %2	infolog	it	%1 che hai delegato, inizia il %2
 (and children) deleted	infolog	it	(e figli) eliminati.
+(no subject)	infolog	it	(nessun oggetto)
 - subprojects from	infolog	it	- Sottoprogetti da
 0%	infolog	it	0%
 10%	infolog	it	10%
@@ -49,6 +50,7 @@ added	infolog	it	Aggiunto
 addressbook placeholders available	infolog	it	Variabili metasintattiche della rubrica disponibili
 all	infolog	it	Tutte
 all links and attachments	infolog	it	tutti i link links e gli allegati
+all other %1 fields are valid	infolog	it	Tutti gli altri %1 campi sono validi
 all projects	infolog	it	Tutti i progetti
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce)
 alternatives	infolog	it	Alternative
@@ -187,6 +189,10 @@ error: importing the ical	infolog	it	Errore: importando iCal
 error: no mail (mailbox / uid) given!	infolog	it	Errore: nessuna mail (casella/UID) data!
 error: saving the entry	infolog	it	Errore: durante il salvataggio della voce
 error: the entry has been updated since you opened it for editing!	infolog	it	Errore: la voce è stata aggiornata da quando l'hai aperta per la modifica!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	it	Esempio {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - cerca nel campo "n_prefix" il valore "Mr", se lo trova scrive "Hello Mr.", altrimenti scrive "Hello Ms."
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	it	Esempio {{NELF role}} - se il campo "ruolo" non è vuoto, si otterrà una nuova riga con il valore del campo "ruolo"
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	it	Esempio {{NELFNV role}} - se il campo "ruolo" non è vuoto, inserisce una nuova riga senza il valore del campo
 execute a further action for this entry	infolog	it	Esegui ancora una azione per questo inserimento
 existing links	infolog	it	Collegamenti esistenti
 exists	infolog	it	Esiste
@@ -205,6 +211,7 @@ for infolog type %1, %2 is required	infolog	it	Per schede attività di tipo %1, 
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 for which types should this field be used	infolog	it	per quali tipo devi usare questo campo
 from	infolog	it	Da
+full list of placeholder names	infolog	it	Lista completa dei nomi dei segnaposto
 general fields:	infolog	it	Campi generici
 general settings	infolog	it	Impostazioni generali
 global categories	infolog	it	Categorie Globali
@@ -220,6 +227,9 @@ id	infolog	it	ID
 id#	infolog	it	ID #
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	it	Se un tipo di schede ha come proprietario un gruppo, tutte le voci di quel tipo saranno di quel gruppo e NON dell'utente che le ha create!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	it	Se non impostato, la linea con ricerca e filtri viene nascosta per meno voci di "massime occorrenze per pagina" (come definito nelle tue preferenze comuni).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificata una directory (un percorso completo vfs), %1 visualizza una azione per ogni documento. Questa azione consente di scaricare lo specifico documento
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificato un documento (un percorso completo vfs), %1 visualizza una icona di documento aggiuntiva per ogni voce. Questa icona consente di scaricare lo specifico documento.
+if you specify an export definition, it will be used when you export	infolog	it	Se viene specificata un formato di esportazione, verrà utilizzato quando esporterai.
 import next set	infolog	it	importa il prossimo set
 importance	infolog	it	Importanza
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	it	Importa le schede attività in un file CSV. Puoi selezionare separatori anche diversi dalla virgola nella scheda opzioni.
@@ -266,6 +276,7 @@ linked to %1	infolog	it	Collegato a %1
 links	infolog	it	Links
 links and attached files	infolog	it	Collegamenti e file allegati
 links of this entry	infolog	it	Links della voce
+links to specified application.  example: {{links/infolog}}	infolog	it	Collegamento (link) alla applicazione specifica. Esempio: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	it	Collegamenti fra tag HREF con link allo scaricamento
 list all categories	infolog	it	Elenca tutte le categorie
 list no subs/childs	infolog	it	Non elencare Sub/figli
@@ -305,6 +316,7 @@ notification settings	infolog	it	Impostazioni di notifica
 number of records to read (%1)	infolog	it	Numero di record da leggere (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	it	numeri di righe per la casella di inserimento multilinea o linee per una select-box multipla
 offer	infolog	it	Offerta
+old fixed definition	infolog	it	Vecchia definizione fissa
 one day after	infolog	it	Un giorno dopo
 one day in advance	infolog	it	Un giorno in anticipo
 ongoing	infolog	it	In corso
@@ -325,6 +337,7 @@ own open and upcoming	infolog	it	Proprie aperte prossime
 own overdue	infolog	it	Proprie scaduti
 own upcoming	infolog	it	Proprie in arrivo
 owner does not have edit rights	infolog	it	Il proprietario non ha permessi di modifica
+owner, responsible	infolog	it	Proprietario, Responsabile
 parent	infolog	it	Superiore
 parent infolog	infolog	it	Scheda attività padre
 participants for scheduling an appointment	infolog	it	Partecipanti per programmare un appuntamento
@@ -448,6 +461,7 @@ task	infolog	it	ToDo
 tasks of	infolog	it	Task di
 template	infolog	it	Template
 test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	it	Il documento puà contenere dei segnaposto come {{%1}}, che saranno sostituiti con i dati
 the following document-types are supported:	infolog	it	I seguenti tipi di documento sono supportati
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 10 caratteri), cambiandolo rende i dati esistenti indisponibili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili
@@ -475,6 +489,7 @@ upcoming	infolog	it	Imminente
 urgency	infolog	it	Urgenza
 urgent	infolog	it	Urgente
 use all	infolog	it	Usa tutti
+use custom notification message	infolog	it	Utilizza un messaggio di notifica personalizzato
 use field from csv if possible	infolog	it	Usa i campi del CSV se possibile
 use search results	infolog	it	Usa i risultati della ricerca
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
