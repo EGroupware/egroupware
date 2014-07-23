@@ -791,13 +791,21 @@ jQuery.extend(et2_selectbox,
 			}
 
 			// Try name like widget[$row]
-			if(!content_options || content_options.length == 0)
+			if(name_parts.length > 1 && (!content_options || content_options.length == 0 ))
 			{
 				var pop_that = jQuery.extend([],name_parts);
 				while(pop_that.length > 0 && (!content_options || content_options.length == 0))
 				{
-					pop_that.pop();
+					var last = pop_that.pop();
 					content_options = widget.getArrayMgr('sel_options').getEntry(pop_that.join('['));
+
+					// Double check, might have found a normal parent namespace ( eg subgrid in subgrid[selectbox] )
+					// with an empty entry for the selecbox.  If there were valid options here,
+					// we would have found them already, and keeping this would result in the ID as an option
+					if(content_options && typeof content_options[last] != 'undefined' && content_options[last] )
+					{
+						content_options = content_options[last];
+					}
 				}
 			}
 
