@@ -37,15 +37,16 @@ class bo_acl
 	/**
 	 * Constructor
 	 *
+	 * @param int $user=null account_id of user whos rights to return, or null for current user
 	 * @param boolean $session
 	 */
-	function __construct($session=False)
+	function __construct($session=False, $user=null)
 	{
 		define('EGW_ACL_CAT_ADMIN',64);
 		define('EGW_ACL_DIRECT_BOOKING',128);
 		define('EGW_ACL_CALREAD',256);
 
-		$this->egw_cats = new categories('','resources');
+		$this->egw_cats = new categories($user, 'resources');
 		$this->debug = False;
 
 		//all this is only needed when called from uiacl.

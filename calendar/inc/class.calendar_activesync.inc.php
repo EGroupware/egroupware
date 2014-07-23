@@ -17,8 +17,8 @@
  */
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
-	interface activesync_plugin_write {};
-	interface activesync_plugin_meeting_requests {};
+	interface activesync_plugin_write {}
+	interface activesync_plugin_meeting_requests {}
 }
 
 /**
@@ -1576,14 +1576,12 @@ END:VTIMEZONE
 	function settings($hook_data)
 	{
 		$cals = array();
-		if (!$hook_data['setup'])
+		if (!$hook_data['setup'] && is_numeric($hook_data['account_id']))
 		{
-			if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
-
-			foreach ($this->calendar->list_cals() as $entry)
+			foreach (calendar_bo::list_calendars($hook_data['account_id']) as $entry)
 			{
 				$account_id = $entry['grantor'];
-				if ($account_id != $GLOBALS['egw_info']['user']['account_id'])
+				if ($account_id != $hook_data['account_id'])	// skip current user
 				{
 					$cals[$account_id] = $entry['name'];
 				}

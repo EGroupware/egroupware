@@ -1536,21 +1536,19 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	static function get_settings($hook_data)
 	{
-		$calendars = array();
-		if (!isset($hook_data['setup']))
+		$calendars = array(
+			'A'	=> lang('All'),
+			'G'	=> lang('Primary Group'),
+		);
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$cal_bo = new calendar_bo();
-			foreach ($cal_bo->list_cals() as $entry)
+			$user = $hook_data['account_id'];
+			foreach (calendar_bo::list_calendars($user) as $entry)
 			{
 				$calendars[$entry['grantor']] = $entry['name'];
 			}
 			unset($calendars[$user]);
 		}
-		$calendars = array(
-			'A'	=> lang('All'),
-			'G'	=> lang('Primary Group'),
-		) + $calendars;
 
 		$settings = array();
 		$settings['calendar-home-set'] = array(
