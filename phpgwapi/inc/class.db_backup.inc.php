@@ -457,15 +457,7 @@ class db_backup
 			if (substr($line,0,8) == 'schema: ')
 			{
 				// create the tables in the backup set
-				$schema = trim(substr($line,8));
-				if ($schema[0] == 'a' && $schema[1] == ':')
-				{
-					$this->schemas = php_safe_unserialize($schema);
-				}
-				else
-				{
-					$this->schema = json_decode($schema, true);
-				}
+				$this->schemas = json_php_unserialize(trim(substr($line,8)));
 				foreach($this->schemas as $table_name => $schema)
 				{
 					// if column is longtext in current schema, convert text to longtext, in case user already updated column
