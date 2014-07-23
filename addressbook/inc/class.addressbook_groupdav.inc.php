@@ -1067,36 +1067,37 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Return appliction specific settings
 	 *
-	 * @param array $hook_data
+	 * @param array $hook_data values for keys 'location', 'type' and 'account_id'
 	 * @return array of array with settings
 	 */
 	static function get_settings($hook_data)
 	{
-		$addressbooks = array();
-		if (!isset($hook_data['setup']))
-		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// allways synced
-			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
-		}
 		$addressbooks = array(
 			'A'	=> lang('All'),
 			'G'	=> lang('Primary Group'),
 			'U' => lang('Accounts'),
 			'O' => lang('Sync all selected into one'),
 			'D' => lang('Distribution lists as groups')
-		) + $addressbooks;
+		);
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
+		{
+			$user = $hook_data['account_id'];
+			$addressbook_bo = new addressbook_bo();
+			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
+			if ($user > 0)  unset($addressbooks[$user]);	// allways synced
+			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
+		}
 
 		// allow to force no other addressbooks
-		if ($GLOBALS['type'] === 'forced')
+		if ($hook_data['type'] === 'forced')
 		{
 			$addressbooks['N'] = lang('None');
 		}
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
-		if (!isset($addressbooks[0]))
+		// not removing it for default or forced prefs based on current users pref
+		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']))
 		{
 			unset($addressbooks['U']);
 		}

@@ -313,8 +313,10 @@ class addressbook_so
 	 * @param string $contact_app='addressbook'
 	 * @return array
 	 */
-	function get_grants($user,$contact_app='addressbook')
+	function get_grants($user, $contact_app='addressbook', $preferences=null)
 	{
+		if (!isset($preferences)) $preferences = $GLOBALS['egw_info']['user']['preferences'];
+
 		if ($user)
 		{
 			// contacts backend (contacts in LDAP require accounts in LDAP!)
@@ -336,12 +338,12 @@ class addressbook_so
 			// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
 			// if he has not set the hide_accounts preference
 			// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
-			if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], array('none','groupmembers')))
+			if (!in_array($preferences['common']['account_selection'], array('none','groupmembers')))
 			{
 				$grants[0] = EGW_ACL_READ;
 			}
-			// add account grants for admins
-			if ($this->is_admin())	// admin rights can be limited by ACL!
+			// add account grants for admins (only for current user!)
+			if ($user == $this->user && $this->is_admin())	// admin rights can be limited by ACL!
 			{
 				$grants[0] = EGW_ACL_READ;	// admins always have read-access
 				if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $grants[0] |= EGW_ACL_EDIT;

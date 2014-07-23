@@ -803,19 +803,21 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	{
 		$addressbooks = array();
 
-		if (!isset($hook_data['setup']))
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$user = $hook_data['account_id'];
 			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ);
-			unset($addressbooks[$user]);	// personal addressbook is allways synced
+			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
+			if ($user > 0)
+			{
+				unset($addressbooks[$user]);	// personal addressbook is allways synced
+				if (isset($addressbooks[$user.'p']))
+				{
+					$addressbooks[self::PRIVATE_AB] = lang('Private');
+				}
+			}
 			unset($addressbooks[$user.'p']);// private addressbook uses ID self::PRIVATE_AB
-
 			$fileas_options = array('0' => lang('use addressbooks "own sorting" attribute'))+$addressbook_bo->fileas_options();
-		}
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
-		{
-			$addressbooks[self::PRIVATE_AB] = lang('Private');
 		}
 		$addressbooks += array(
 			'G'	=> lang('Primary Group'),
@@ -823,13 +825,15 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			'A'	=> lang('All'),
 		);
 		// allow to force "none", to not show the prefs to the users
-		if ($GLOBALS['type'] == 'forced')
+		if ($hook_data['type'] == 'forced')
 		{
 			$addressbooks['N'] = lang('None');
 		}
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
-		if (!isset($addressbooks[0]))
+		// not removing it for default or forced prefs based on current users pref
+		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']))
 		{
 			unset($addressbooks['U']);
 		}
