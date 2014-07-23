@@ -1650,7 +1650,7 @@ class calendar_bo
 	/**
 	 *  This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4
 	 */
-	function _list_cals_add($id,&$users,&$groups)
+	private static function _list_cals_add($id,&$users,&$groups)
 	{
 		$name = common::grab_owner_name($id);
 		if (!($egw_name = $GLOBALS['egw']->accounts->id2name($id)))
@@ -1680,28 +1680,41 @@ class calendar_bo
 	 */
 	function list_cals()
 	{
+		return self::list_calendars($GLOBALS['egw_info']['user']['account_id'], $this->grants);
+	}
+
+	/**
+	 * generate list of user- / group-calendars or a given user
+	 *
+	 * @param int $user account_id of user to generate list for
+	 * @param array $grants=null calendar grants from user, or null to query them from acl class
+	 */
+	public static function list_calendars($user, array $grants=null)
+	{
+		if (is_null($grants)) $grants = $GLOBALS['egw']->acl->get_grants('calendar', true, $user);
+
 		$users = $groups = array();
-		foreach($this->grants as $id => $rights)
+		foreach(array_keys($grants) as $id)
 		{
-			$this->_list_cals_add($id,$users,$groups);
+			self::_list_cals_add($id,$users,$groups);
 		}
-		if (($memberships = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id'])))
+		if (($memberships = $GLOBALS['egw']->accounts->membership($user)))
 		{
 			foreach($memberships as $group_info)
 			{
-				$this->_list_cals_add($group_info['account_id'],$users,$groups);
+				self::_list_cals_add($group_info['account_id'],$users,$groups);
 
-				if ($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group_info['account_id'],EGW_ACL_READ,'calendar'))
+				if (($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group_info['account_id'],EGW_ACL_READ,'calendar')))
 				{
 					foreach($account_perms as $id)
 					{
-						$this->_list_cals_add($id,$users,$groups);
+						self::_list_cals_add($id,$users,$groups);
 					}
 				}
 			}
 		}
-		usort($users,array($this,'name_cmp'));
-		usort($groups,array($this,'name_cmp'));
+		usort($users, array(__CLASS__, 'name_cmp'));
+		usort($groups, array(__CLASS__, 'name_cmp'));
 
 		return array_merge($users, $groups);	// users first and then groups, both alphabeticaly
 	}
@@ -1713,7 +1726,7 @@ class calendar_bo
 	 * @param array $b
 	 * @return int
 	 */
-	function name_cmp(array $a, array $b)
+	public static function name_cmp(array $a, array $b)
 	{
 		return strnatcasecmp($a['name'], $b['name']);
 	}

@@ -1233,13 +1233,14 @@ class groupdav_principals extends groupdav_handler
 	/**
 	 * Get all resources (we cache the resources here, to only query them once per request)
 	 *
+	 * @param int $user=null account_if of user, or null for current user
 	 * @return array of array with values for res_id, cat_id and name (no other values1)
 	 */
-	public static function get_resources()
+	public static function get_resources($user=null)
 	{
 		if (!isset(self::$all_resources))
 		{
-			if (!isset(self::$resources)) self::$resources = new resources_bo();
+			if (!isset(self::$resources)) self::$resources = new resources_bo($user);
 
 			self::$all_resources = array();
 			$query = array(

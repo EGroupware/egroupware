@@ -66,10 +66,15 @@ class resources_bo
 		'accessory_of'	=> 'Accessory of'
 	);
 
-	function __construct()
+	/**
+	 * Constructor
+	 *
+	 * @param int $user=null account_id of user to use for acl, default current user
+	 */
+	function __construct($user=null)
 	{
 		$this->so = new resources_so();
-		$this->acl =& CreateObject('resources.bo_acl');
+		$this->acl = CreateObject('resources.bo_acl', $user);
 		$this->cats = $this->acl->egw_cats;
 
 		$this->cal_right_transform = array(
@@ -139,7 +144,7 @@ class resources_bo
 		{
 			$filter['deleted'] = null;
 		}
-		
+
 		if ($query['filter'])
 		{
 			if (($children = $this->acl->get_cats(EGW_ACL_READ,$query['filter'])))
@@ -393,7 +398,7 @@ class resources_bo
 				$this->so->save();
 			}
 		}
-			
+
 		$res_id = $this->so->save($resource);
 
 		// History & notifications
