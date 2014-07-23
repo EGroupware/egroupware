@@ -1581,11 +1581,9 @@ END:VTIMEZONE
 			foreach (calendar_bo::list_calendars($hook_data['account_id']) as $entry)
 			{
 				$account_id = $entry['grantor'];
-				if ($account_id != $hook_data['account_id'])	// skip current user
-				{
-					$cals[$account_id] = $entry['name'];
-				}
+				$cals[$account_id] = $entry['name'];
 			}
+			if ($hook_data['account_id'] > 0) unset($cals[$hook_data['account_id']]);	// skip current user
 		}
 		$cals['G'] = lang('Primary group');
 		$cals['A'] = lang('All');
