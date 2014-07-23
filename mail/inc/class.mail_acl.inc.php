@@ -143,24 +143,20 @@ class mail_acl
 								$tmpl->set_validation_error('grid['.$row.']'.'[acc_id]', "You must fill this field!");
 							}
 						}
-						else
-						{
-							$msg .= lang("The Folder %1 's ACLs saved!", $content['mailbox']);
-						}
+						
 						//Add new row at the end
 						if ($content['grid'][count($content['grid'])]['acc_id'])
 							array_push($content['grid'], array('acc_id'=>''));
-
 					}
 					else
 					{
 						$msg .= "\n".lang("Error: Could not save ACL").' '.lang("reason!");
 					}
 					//Send message
-					egw_framework::refresh_opener($msg, 'mail',null, 'update');
+					egw_framework::message($msg);
 					if ($button == "apply") break;
 
-
+				//Fall through
 				case 'cancel':
 					egw_framework::window_close();
 					common::egw_exit();
@@ -175,21 +171,29 @@ class mail_acl
 					{
 						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is wrong there");
 					}
-					egw_framework::refresh_opener($msg, 'mail', null,'update');
+					egw_framework::message($msg);
 			}
 		}
 		$readonlys = $sel_options = array();
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
 
-		//Make the delete buttons readonly for entry filed and account owner
-		foreach($content['grid'] as $key => $field)
+		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
+		foreach($content['grid'] as $key => $fields)
 		{
-			if ($field['acc_id'] == $this->mail_bo->icServer->acc_imap_username ||
-					$field['acc_id'][0] == $this->mail_bo->icServer->acc_imap_username)
+			if ($fields['acc_id'] == $this->mail_bo->icServer->acc_imap_username ||
+					$fields['acc_id'][0] == $this->mail_bo->icServer->acc_imap_username)
 			{
+				foreach ($fields as $index => $val)
+				{
+					$readonlys['grid'][$key][$index] = true;
+				}
 				$readonlys['grid']['delete['.$key.']'] = true;
+				$readonlys['grid'][$key]['acl_recursive'] = true;
+				$preserv ['grid'][$key] = $fields;
+				$preserv['grid'][$key]['acl_recursive'] = false;
 			}
 		}
+		//Make entry row's delete button readonly
 		$readonlys['grid']['delete['.count($content['grid']).']'] = true;
 		
 		$preserv ['mailbox'] = $content['mailbox'];
@@ -210,7 +214,7 @@ class mail_acl
 	function update_acl ($content, &$msg)
 	{
 		$validator = array();
-
+		
 		foreach ($content['grid'] as $keys => $value)
 		{
 			$recursive = $value['acl_recursive'];
@@ -229,7 +233,8 @@ class mail_acl
 					$options['rights'] .=  $right[1];
 				}
 			}
-			$username = $content['grid'][$keys]['acc_id'][0];
+			$username = $content['grid'][$keys]['acc_id'] == $this->mail_bo->icServer->acc_imap_username
+				?$content['grid'][$keys]['acc_id']:$content['grid'][$keys]['acc_id'][0];
 			//error_log(__METHOD__."(".__LINE__.") setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
 			if (is_numeric($username) && ($u = $this->mail_bo->icServer->getMailBoxUserName($username)))
 			{
@@ -238,7 +243,15 @@ class mail_acl
 			if (!empty($username))
 			{
 				//error_log(__METHOD__."() setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
-				$this->setACL($content['mailbox'], $username, $options, $recursive);
+				if (($ret=$this->setACL($content['mailbox'], $username, $options, $recursive, $msg)))
+				{
+					$msg = lang("The Folder %1 's ACLs saved!", $content['mailbox']);
+					
+				}
+				else
+				{
+					$msg = lang('Error while setting folder '.$content['mailbox']. $msg);
+				}
 			}
 			else
 			{
@@ -376,7 +389,7 @@ class mail_acl
 	/**
 	 * Set ACL rights of a folder or including subfolders to an account
 	 * @param String $mailbox folder name that needs to be edited
-	 * @param String $Identifier The identifier to set.
+	 * @param String $identifier The identifier to set.
 	 * @param Array $options Additional options:
 	 * 				- rights: (string) The rights to alter or set.
 	 * 				- action: (string, optional) If 'add' or 'remove', adds or removes the
@@ -387,7 +400,7 @@ class mail_acl
 	 * @return Boolean FALSE in case of any exceptions and TRUE in case of success,
 	 *
 	 */
-	function setACL($mailbox, $identifier,$options, $recursive)
+	function setACL($mailbox, $identifier,$options, $recursive, &$msg)
 	{
 		if ($recursive)
 		{
@@ -405,6 +418,7 @@ class mail_acl
 			}
 			catch (Exception $e)
 			{
+				$msg = $e->getMessage();
 				error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . " because of " .$e->getMessage());
 				return false;
 			}
