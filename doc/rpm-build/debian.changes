@@ -1,5 +1,6 @@
 egroupware-epl (14.1.20140724-1) hardy; urgency=low
 
+  * Admin: automatic update check displaying an icon for available (security-)updates for admins, escalating for security updates to all users after 3 days
   * EMailAdmin: if wizzard was called on error, it was not able to save fixed account (showed same error again)
   * API/Admin: fixed not working Admin >> Clear cache for default APC(u) and files backends
   * Admin/API: remove no longer fully supported method to not "store session-id in cookie", it is the safer default anyway
