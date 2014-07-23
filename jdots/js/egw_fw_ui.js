@@ -994,6 +994,7 @@ function egw_fw_ui_scrollarea(_contDiv)
 		if (delta)
 		{
 			self.scrollDelta(- delta * 30);
+			if (self.contHeight != this.scrollHeight) self.update();
 		}
 	});
 
@@ -1163,7 +1164,7 @@ egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
 {
 	this.mouseOver = _over;
 	this.dir = _dir;
-
+	this.update();
 	if (_over)
 	{
 		var _context = this;
