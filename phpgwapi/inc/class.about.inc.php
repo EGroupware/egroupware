@@ -159,17 +159,10 @@ from community developers.</p>
 			);
 		}
 
-		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
-		// parse version from changelog
-		$version = $GLOBALS['egw_info']['server']['versions']['phpgwapi'];
-		$matches = null;
-		if (preg_match('/egroupware-epl \(([0-9.]+)/', file_get_contents($changelog), $matches))
-		{
-			$version = preg_replace('/[0-9.]+/', $matches[1], $version);
-		}
 		// fill content array for eTemplate
+		$changelog = null;
 		$content = array(
-			'apiVersion'	=> '<p>'.lang('EGroupware version').' <b>'.$version.'</b></p>',
+			'apiVersion'	=> '<p>'.lang('EGroupware version').' <b>'.egw_framework::api_version($changelog).'</b></p>',
 			'applications'	=> $apps,
 			'templates'		=> $templates,
 			'translations'	=> $translations,

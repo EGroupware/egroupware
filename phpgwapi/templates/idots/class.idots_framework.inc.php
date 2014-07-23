@@ -450,8 +450,7 @@ class idots_framework extends egw_framework
 	*/
 	function _add_topmenu_info_item($content, $id=null)
 	{
-		unset($id);	// unused, but required in function signature
-		$this->tplsav2->menuinfoitems[] = $content;
+		$this->tplsav2->menuinfoitems[$id] = $content;
 	}
 
 	/**
