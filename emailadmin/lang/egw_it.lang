@@ -1,5 +1,10 @@
 %1 entries deleted.	emailadmin	it	%1 inserimenti cancellati
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	it	(imapclass deve supportare questa funzionalità interrogando il valore corrispondente in configurazione e passandolo come defaultquota al server imap)
+(no subject)	emailadmin	it	(nessun oggetto)
 account '%1' not found !!!	emailadmin	it	Account '%1' non trovato !!!
+account deleted.	emailadmin	it	Account cancellato
+account not found!	common	it	Account non trovato!
+account saved.	emailadmin	it	Account salvato.
 active templates	emailadmin	it	Modelli attivi
 add new email address:	emailadmin	it	Aggiungi un nuovo indirizzo di posta elettronica
 add profile	emailadmin	it	Aggiungi Profilo
@@ -8,6 +13,7 @@ admin password	emailadmin	it	password amministratore
 admin username	emailadmin	it	username amministratore
 advanced options	emailadmin	it	opzioni avanzate
 alternate email address	emailadmin	it	indirizzo email alternativo
+and logged in	emailadmin	it	e collegato
 any application	emailadmin	it	ogni applicazione
 any group	emailadmin	it	ogni gruppo
 any user	emailadmin	it	Qualsiasi utente
@@ -20,18 +26,27 @@ can be used by application	emailadmin	it	può essere usato da applicazione
 can be used by group	emailadmin	it	può essere usato da gruppo
 can be used by user	emailadmin	it	può essere usato dall'utente
 connection dropped by imap server.	emailadmin	it	Connessione interrotta dal sever IMAP.
+connection is not secure! everyone can read eg. your credentials.	emailadmin	it	La connessione NON è sicura! Chiunque può leggere, per esempio, le tue credenziali
 continue	emailadmin	it	Continua
+could not append message:	emailadmin	it	Impossibile accodare il Messaggio:
 could not complete request. reason given: %s	emailadmin	it	Impossibile completare la richiesta. Motivazione data: %s
 could not open secure connection to the imap server. %s : %s.	emailadmin	it	Non è possibile aprire una connessione sicura al server IMAP. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	it	CRAM-MD5 o DIGEST-MD5 richiede che il pacchetto Auth_SASL sia installato.
+create new account	emailadmin	it	Crea un nuovo Account
+create new identity	emailadmin	it	Crea una nuova identità
 cyrus imap server	emailadmin	it	Server IMAP Cyrus
 cyrus imap server administration	emailadmin	it	Amministrazione Server IMAP Cyrus
 default	emailadmin	it	predefinito
+delete identity	emailadmin	it	Cancella identità
+delete this account	emailadmin	it	Cancella questo account
 deliver extern	emailadmin	it	Consegna esterna
+displaying html messages is disabled	emailadmin	it	la visualizzazione html dei messaggi è disabilitata
+displaying plain messages is disabled	emailadmin	it	la visualizzazione semplice dei messaggi è disabilitata
 do not validate certificate	emailadmin	it	Non convalidare il certificato
 do you really want to delete this profile	emailadmin	it	Vuoi davvero cancellare questo profilo?
 do you really want to reset the filter for the profile listing	emailadmin	it	Vuoi davvero reimpostare il filtro per l'elenco dei profili?
 domainname	emailadmin	it	nome dominio
+drafts	emailadmin	it	Bozze
 edit email settings	emailadmin	it	modifica impostazioni email
 email account active	emailadmin	it	account email attivo
 email address	emailadmin	it	indirizzo email
@@ -48,14 +63,28 @@ entry saved	emailadmin	it	Inserimento salvato
 error connecting to imap server. %s : %s.	emailadmin	it	Errore in connessione al server IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	it	Errore in connessione al server IMAP: [%s] %s.
 error deleting entry!	emailadmin	it	Errore durante l'eliminazione dell'inserimento!
+error saving account!	emailadmin	it	Errore nel salvataggio dell'account
 error saving the entry!!!	emailadmin	it	Errore durante il salvataggio dell'inserimento
+error, no username!	emailadmin	it	Errore, nessun nome utente!
+event details follow	emailadmin	it	Errore, manca il nome utente
+failed to delete account!	emailadmin	it	Errore nella cancellazione dell'account
+field must not be empty !!!	emailadmin	it	Il campo non può essere vuoto!!!
+file rejected, no %2. is:%1	emailadmin	it	File rifiutato, non %2. è: %1
 filtered by account	emailadmin	it	Filtrati per account
 filtered by group	emailadmin	it	Filtrati per gruppo
 forward also to	emailadmin	it	Inoltra anche a
 forward email's to	emailadmin	it	Inoltra email a
 forward only	emailadmin	it	Inoltra solo
+forward only disables imap mailbox / storing of mails and just forwards them to given address.	emailadmin	it	L'inoltro esclusivo disabilita l'archiviazione delle email degli account IMAP e si limita ad inoltrarle all'indirizzo specificato.
+from	emailadmin	it	mittente
 global options	emailadmin	it	Opzioni globali
+hostname or ip	emailadmin	it	Nome del computer o indirizzo IP
+how username get constructed	emailadmin	it	Come viene costruito il nome utente
+identity deleted	emailadmin	it	Identità cancellata
+identity saved.	emailadmin	it	identità salvata
+if different from email address	emailadmin	it	se diverso dall'indirizzo email
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	it	Se stai usando SSL oppure TLS, devi aver caricato l'estensione SSL in PHP
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	emailadmin	it	se viene indicata la porta 5190 come porta del server sieve, verrà abilitato SSL per sieve (il serve deve supportarlo)
 imap admin password	admin	it	Password amministratore IMAP
 imap admin user	admin	it	User amministratore IMAP
 imap c-client version < 2001	emailadmin	it	Versione C-Cliente < 2001
@@ -67,8 +96,12 @@ imap server logintyp	emailadmin	it	Tipo login server IMAP
 imap server name	emailadmin	it	Nome del server IMAP
 imap server port	emailadmin	it	Porta server IMAP
 imap/pop3 server name	emailadmin	it	Nome server IMAP/POP3
+import of message %1 failed. no contacts to merge and send to specified.	emailadmin	it	Importazione del messaggio %1 fallita. nessun contatto da unificare ed inviare a quello specificato.
+importance	emailadmin	it	importanza
 in mbyte	emailadmin	it	in MByte
 inactive	emailadmin	it	Inattivo
+inbox	emailadmin	it	posta in ingresso
+junk	emailadmin	it	spazzatura
 ldap basedn	emailadmin	it	LDAP basedn
 ldap server	emailadmin	it	server LDAP
 ldap server accounts dn	emailadmin	it	DN account server LDAP
@@ -79,14 +112,21 @@ ldap settings	emailadmin	it	impostazioni LDAP
 leave empty for no quota	emailadmin	it	lascia vuoto per nessuna quota
 mail settings	admin	it	Impostazioni Posta
 manage stationery templates	emailadmin	it	Amministra i modelli
+manual entry	emailadmin	it	Inserimento manuale
+mb used	emailadmin	it	MB utilizzati
 name of organisation	emailadmin	it	Nome dell'organizzazione
 no alternate email address	emailadmin	it	nessun indirizzo email alternativo
 no encryption	emailadmin	it	Nessuna cifratura
 no forwarding email address	emailadmin	it	nessun indirizzo email di inoltro
 no message returned.	emailadmin	it	nessun messaggio ricevuto
+no plain text part found	emailadmin	it	non è stata trovata una parte in testo semplice
+no sieve support detected, either fix configuration manually or leave it switched off.	emailadmin	it	Non è stato rilevato il supporto per sieve, verificare la configurazione manualmente o disabilitarlo.
 no supported imap authentication method could be found.	emailadmin	it	Non è stato trovato alcun metodo di autenticazione supportato da IMAP
+notification folders updated.	emailadmin	it	cartelle di notifica aggiornate.
 order	emailadmin	it	ordine
 organisation	emailadmin	it	organizzazione
+organization	emailadmin	it	organizzazione
+outbox	emailadmin	it	Posta in Uscita
 plesk can't rename users --> request ignored	emailadmin	it	Plesk non può rinominare gli utenti --> richiesta ignorata
 plesk imap server (courier)	emailadmin	it	IMAP server Plesk (Courier)
 plesk mail script '%1' not found !!!	emailadmin	it	Script Plesk '%1' non trovato
@@ -96,6 +136,7 @@ pop3 server hostname or ip address	emailadmin	it	Nome host o IP server POP3
 pop3 server port	emailadmin	it	porta server POP3
 port	emailadmin	it	Porta
 postfix with ldap	emailadmin	it	Postfix con LDAP
+processing of file %1 failed. failed to meet basic restrictions.	emailadmin	it	Elaborazione del file %1 fallita. Non sono rispettate le restrizioni di base
 profile access rights	emailadmin	it	diritti di accesso profilo
 profile is active	emailadmin	it	Il profilo è attivo
 profile list	emailadmin	it	Elenco Profili
@@ -103,31 +144,49 @@ profile name	emailadmin	it	Nome Profilo
 qmaildotmode	emailadmin	it	qmaildotmode
 quota settings	emailadmin	it	impostazioni quota
 quota size in mbyte	emailadmin	it	dimensione quota in MByte
+relay access checked	emailadmin	it	Accesso Relay verificato
 remove	emailadmin	it	rimuovi
+required pear class mail/mimedecode.php not found.	emailadmin	it	Non è stata trovata la classe PEAR Mail/mimeDecode.php
 reset filter	emailadmin	it	Reimposta filtro
+save of message %1 failed. could not save message to folder %2 due to: %3	emailadmin	it	Salvataggio del messaggio %1 fallito. Non è possibile salvare messaggi nella cartella %2 in quanto %3
+saving of message %1 failed. destination folder %2 does not exist.	emailadmin	it	Salvataggio del messaggio %1 fallito. La cartella di destinazione %2 non esiste.
+secure connection	emailadmin	it	Connessione sicura
 select type of imap server	emailadmin	it	Seleziona il tipo di server IMAP
 select type of imap/pop3 server	emailadmin	it	Seleziona il tipo si server IMAP/POP3
 select type of smtp server	emailadmin	it	Seleziona il tipo di server SMTP
 send using this email-address	emailadmin	it	Invia utilizzando questo indirizzo email
+sender	emailadmin	it	mittente
+sent	emailadmin	it	Inviato
 server settings	emailadmin	it	impostazioni server
 sieve server hostname or ip address	emailadmin	it	Nome host o IP server Sieve
 sieve server port	emailadmin	it	porta server Sieve
 sieve settings	emailadmin	it	impostazioni SIeve
+skip imap	emailadmin	it	Salta IMAP
+skipping imap configuration!	emailadmin	it	Salta la configurazione IMAP
 smtp authentication	emailadmin	it	autenticazione smtp
 smtp options	emailadmin	it	opzioni smtp
+smtp server	emailadmin	it	Server SMT (posta in uscita)
 smtp server name	emailadmin	it	nome server SMTP
 smtp settings	emailadmin	it	impostazioni smtp
 smtp-server hostname or ip address	emailadmin	it	Nome host o IP server SMTP
 smtp-server port	emailadmin	it	porta server SMTP
 standard	emailadmin	it	Standard
+standard identity	emailadmin	it	Identità di base
 standard imap server	emailadmin	it	Server IMAP standard
 standard pop3 server	emailadmin	it	Server POP3 standard
 standard smtp-server	emailadmin	it	Server SMTP standard
 starts with	emailadmin	it	Comincia con
 stationery	emailadmin	it	Modeillo
+successful connected to %1 server%2.	emailadmin	it	Connessione avvenuta con success a %1 server %2.
+switch back to standard identity to save account.	emailadmin	it	Ritornare all'identità standard per conservare l'account
+switch back to standard identity to save other account data.	emailadmin	it	Ritornare all'identità standard per conservare gli altri dati dell'account
+templates	emailadmin	it	Modelli
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	it	Il server IMAP sembra non supportare il metodo di autenticazione scelto. Contatta il tuo amministratore di sistema.
+the mimeparser can not parse this message.	emailadmin	it	Il parser MIME non riesce ad elaborare questo messaggio
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	emailadmin	it	Questo non è un account personale di email!\n\nL'account verrà cancellato per TUTTI gli utenti!\n\nConfermi?
 this php has no imap support compiled in!!	emailadmin	it	PHP non è stato compilato con supporto IMAP!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	it	Per utilizzare una connessione TLS devi utilizzare una versione PHP 5.1.0 o superiore
+trash	emailadmin	it	Cestino
 unexpected response from server to authenticate command.	emailadmin	it	Risposta inaspettata dal server al comando AUTHENTICATE
 unexpected response from server to digest-md5 response.	emailadmin	it	Risposta inaspettata dal server alla risposta Digest-MD5
 unexpected response from server to login command.	emailadmin	it	Risposta inaspettata dal server al comando LOGIN
@@ -143,14 +202,19 @@ use users email-address (as seen in useraccount)	emailadmin	it	Utilizza l'indiri
 user can edit forwarding address	emailadmin	it	l'utente può modificare indirizzo di inoltro
 userid@domain eg. u1234@domain	emailadmin	it	UserId@dominio p.es. u1234@dominio
 username (standard)	emailadmin	it	Nome utente (standard)
+username specified below for all	emailadmin	it	Nome utente specificato per tutti
 username/password defined by admin	emailadmin	it	Nome utente / password definiti dall'amministratore
 username@domainname (virtual mail manager)	emailadmin	it	nomeutente@nome dominio (ManaGeR MAIL Virtuale)
 users can define their own emailaccounts	emailadmin	it	Gli utenti possono definire i propri account email
 users can define their own identities	emailadmin	it	Gli utenti possono definire le loro identità personali
 users can define their own signatures	emailadmin	it	Gli utenti possono definire le loro firme personali
 users can utilize these stationery templates	emailadmin	it	Gli utenti possono utilizzare questi modelli
+using data from mozilla ispdb for provider %1	emailadmin	it	Utilizzo dei dati da Mozilla ISPDB per il provider %1
+vacation messages with start- and end-date require an admin account to be set	emailadmin	it	Il messaggio di assenza (ferie) con data inizio e data fine richiede che sia impostato un account di amministratore
 virtual mail manager	emailadmin	it	ManaGeR MAIL Virtuale
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	it	Sì, utilizza le credenziali sottostanti solo per allarmi e notifiche, altrimenti usa le credenziali dell'utente attuale
 yes, use credentials of current user or if given credentials below	emailadmin	it	Sì, utilizza le credenziali dell'utente attuale oppure, se date, e credenziali qui sotto
 you have received a new message on the	emailadmin	it	Hai ricevuto un nuovo messaggio sul
+you need to specify a forwarding address, when checking "%1"!	emailadmin	it	Bisogna specificare un indirizzo di inoltro, quando si contolla "%1""
+your message to  %1 was displayed.	emailadmin	it	Il tuo messaggio per %1 è stato visualizzato
 your name	emailadmin	it	Il tuo nome

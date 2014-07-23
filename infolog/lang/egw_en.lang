@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	en	%1 you delegated is due at %2
 %1 you delegated is starting at %2	infolog	en	%1 you delegated is starting at %2
 (and children) deleted	infolog	en	(and children) deleted.
+(no subject)	infolog	en	(no subject)
 - subprojects from	infolog	en	- Sub projects from
 0%	infolog	en	0%
 10%	infolog	en	10%
@@ -49,6 +50,7 @@ added	infolog	en	Added
 addressbook placeholders available	infolog	en	Addressbook placeholders available
 all	infolog	en	All
 all links and attachments	infolog	en	All links and attachments
+all other %1 fields are valid	infolog	en	All other %1 fields are valid
 all projects	infolog	en	All projects
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
@@ -187,6 +189,10 @@ error: importing the ical	infolog	en	Error: importing the iCal
 error: no mail (mailbox / uid) given!	infolog	en	Error: no mail (Mailbox / UID) given!
 error: saving the entry	infolog	en	Error saving the entry!
 error: the entry has been updated since you opened it for editing!	infolog	en	Error: the entry has been updated since you opened it for editing!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	Exists
@@ -221,6 +227,9 @@ id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries than "max matches per page", as defined in your common preferences.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
@@ -267,6 +276,7 @@ linked to %1	infolog	en	Linked to %1
 links	infolog	en	Links
 links and attached files	infolog	en	Links and attached files
 links of this entry	infolog	en	Links of this entry
+links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application.  Example: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	en	Links wrapped in an HREF tag with download link
 list all categories	infolog	en	List all categories
 list no subs/childs	infolog	en	List no subs/childs
@@ -306,6 +316,7 @@ notification settings	infolog	en	Notification settings
 number of records to read (%1)	infolog	en	Number of records to read (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	en	Number of row for a multi line input field or line of a multi select box
 offer	infolog	en	Offer
+old fixed definition	infolog	en	Old fixed definition
 one day after	infolog	en	One day after
 one day in advance	infolog	en	One day in advance
 ongoing	infolog	en	Ongoing
@@ -450,6 +461,7 @@ task	infolog	en	ToDo
 tasks of	infolog	en	Tasks of
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test import . Show importable records <u>only</u> in browser.
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the following document-types are supported:	infolog	en	The following document-types are supported:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally,<= 10 chars, changing it makes existing data unavailable.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
