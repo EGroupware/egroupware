@@ -302,7 +302,7 @@ class asyncservice
 				if (!isset($found[$u]))		// we have to try the next one, if it exists
 				{
 					$nexts = array_keys($units);
-					if (!isset($next[count($found)-1]))
+					if (!isset($nexts[count($found)-1]))
 					{
 						if ($this->debug) echo "<p>Nothing found, exiting !!!</p>\n";
 						return False;
