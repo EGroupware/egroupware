@@ -13,19 +13,14 @@
  */
 
 @import (reference) "definitions.less";
+
+@import-once "def_colors.less";
 //##############################################################################################################
 
 
 /* ##################################################################################
  *       login page
- *
- * ##################################################################################
- *
- *
  */
-
-
-
 
 #loginMainDiv {
     padding: 0px;
@@ -34,7 +29,7 @@
     width: auto;
     border-bottom: 0px solid #7E7E7E;
     margin: 0 -2%;
-    background-color: @egw_color_2_e;
+    background-color: @egw_color_2_d;
 
     // Logo Leiste
     #divAppIconBar{
@@ -51,7 +46,7 @@
             margin-bottom: 2em;
             position: relative;
             top: 1px;
-            background-color: @egw_color_2_e;
+            background-color: @egw_color_2_d;
 
             img {
                 /*width: 70%;*/
@@ -64,7 +59,7 @@
             img[src$="svg"]{
             width: 70%;
             max-width: 2560px;
-            .gradient_vertical (@egw_color_2_e, @egw_color_2_e);
+            .gradient_vertical (@egw_color_2_d, @egw_color_2_d);
 }
         }
     }
@@ -73,13 +68,15 @@
     // Anmeldefenster / Box mit Mesaage + Form
     div#centerBox{
         margin: 0% auto;
-        width: 444px;
+        width: 57em;
         background-color: @gray_0;
         z-index: 100;
-        .border_radius (5px, 5px, 5px, 25px);
+        padding: 25px 10px 10px;
+        .border_radius (5px, 5px, 5px, 50px);
+        .gradient_vertical (@egw_color_2_e, @egw_color_2_a);
 
-        /*.bordered (@egw_color_1_a, @egw_color_1_a, @egw_color_2_e, @egw_color_2_e );*/
-        border-width: 14px;
+        .bordered (@egw_color_2_a, @egw_color_2_a, @egw_color_2_e, @egw_color_2_a );
+        border-width: 1px;
 
 
 
@@ -117,19 +114,20 @@
              margin: 1em;
 
 
+            // Table
             table.divLoginbox {
 
-                //			background-color: red;
-                .box_shadow_standard_light;
+                background-color: transparent;
                 .border_radius_button_lefttop;
 
 
                 tr.divLoginboxHeader{}
 
-                td { padding: 0.5em;}
+                td { padding: 0.5em; font-weight: bold; color: @egw_color_1_a}
 
                 select {
                     .Complete_Button_select;
+                    margin: 5px 0em 5px 0px;
                 }
 
                 select:hover {
@@ -138,6 +136,7 @@
 
                 input {
                     .Complete_Button_input;
+                    width: 250px;
                 }
                 input:hover{
                     .Complete_Button_input_hover;
@@ -151,13 +150,13 @@
                     .background_color_egw_normal; // Orange
                     // Hintergrund in EGW Farbe
                     .color_100_gray;
+                    .fontsize_xxl;
 
-
+                    &:hover{.Complete_Button_select_hover; background-color: @color_positive_action !important;}
+                    &:focus {.Complete_Button_input_focus;}
                 }
 
-                input[type="submit"]:focus {
-                    .Complete_Button_input_focus;
-                }
+
 
 
             }
