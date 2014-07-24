@@ -220,6 +220,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			case 'acc_imap_administration':
 				return !empty($this->params['acc_imap_admin_username']);
 
+			case 'acc_id':	// to not get an exception, if account is not yet stored, just return null
 			case 'ImapServerId':
 				return $this->params['acc_id'];
 
