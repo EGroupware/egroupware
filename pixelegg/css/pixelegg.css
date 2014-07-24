@@ -2118,6 +2118,14 @@ body {
  * @version $Id$
  */
 @import-once "def_colors.less";
+#socialMedia {
+  float: right;
+  position: relative;
+  top: -30px;
+}
+#socialMedia a {
+  margin-left: 10px;
+}
 /* ##################################################################################
  *       login page
  */
