@@ -444,6 +444,9 @@ abstract class egw_framework
 	*/
 	function login_screen($extra_vars)
 	{
+		//allow to include JSONP file with social media urls from egroupware.org
+		self::csp_script_src_attrs('https://www.egroupware.org');
+		
 		//error_log(__METHOD__."() server[template_dir]=".array2string($GLOBALS['egw_info']['server']['template_dir']).", this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
 		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
 
