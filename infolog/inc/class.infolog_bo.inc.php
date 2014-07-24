@@ -931,8 +931,6 @@ class infolog_bo
 			$values['info_id'] = $info_id;
 			$to_write['info_id'] = $info_id;
 
-					error_log(__LINE__);
-					error_log(array2string($values));
 			// if the info responbsible array is not passed, fetch it from old.
 			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
