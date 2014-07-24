@@ -1,4 +1,4 @@
-<script src="./pixelegg/js/login.js" type="text/javascript"></script>
+<script src="./phpgwapi/js/login.js" type="text/javascript"></script>
 
 
 <div id="loginMainDiv">
@@ -64,6 +64,9 @@
                     </td>
                 </tr>
                 <!-- END registration -->
+				<tr>
+					<td id="socialBox"></td>
+				</tr>
             </table>
         </form>
     </div>

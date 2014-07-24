@@ -68,18 +68,4 @@ class pixelegg_framework extends jdots_framework
 	{
 		return egw_framework::_get_css();
 	}
-
-	/**
-	 * displays a login screen
-	 *
-	 * Reimplemented to allow to include JSONP file with social media urls from egroupware.org
-	 *
-	 * @param string $extra_vars for login url
-	 */
-	function login_screen($extra_vars)
-	{
-		self::csp_script_src_attrs('https://www.egroupware.org');
-
-		return parent::login_screen($extra_vars);
-	}
 }
