@@ -24,7 +24,7 @@ egw_LAB.wait(function() {
 			for(var i=0; i < _data.length; ++i)
 			{
 				var data = _data[i];
-				var url = data.lang ? data.lang[$j('meta[name="language"]').attr('content')] : null || data.url;
+				var url = (data.lang ? data.lang[$j('meta[name="language"]').attr('content')] : null) || data.url;
 				$j(document.createElement('a')).attr({
 					href: url,
 					target: '_blank'
