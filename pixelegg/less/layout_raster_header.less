@@ -1,0 +1,267 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
+ */
+/*
+    Created on : 23.07.2014, 13:25:11
+    Author     : stefanreinhardt
+*/
+
+@import (reference) "definitions.less";
+
+
+// Header 
+#egw_fw_header{
+
+    width: 100%;
+    float: left;
+    background-color: @egw_color_2_e;
+
+    /* Logo EGW or Company - left top*/
+    #egw_divLogo {
+                    float: left;
+                    width: 255px;
+                    display: block;
+                    margin-left: -8px;
+                    text-align: center;
+                    height: 45px;
+                    /*.background_color_5_gray;*/
+
+                    img {
+                        max-width: 209px;
+                        border: none;
+                        position: absolute;
+                        top: 0.1em;
+                        left: 1em;
+                        height: 40px;
+                        /*.background_color_5_gray;*/
+                    }
+
+                }
+
+
+/*  ###########################################################################################################################################
+    Topmenu / Home / Einstellungen / Zugriff / Kategorien usw..
+    ###########################################################################################################################################
+*/
+
+    #egw_fw_topmenu ul,
+    #egw_fw_topmenu > * > ul > li,
+    .topmenu_info_item,
+    #egw_fw_topmenu_items,
+    #egw_fw_topmenu_info_items {
+        display: inline;
+    }
+
+    #egw_fw_topmenu{
+
+
+
+        #egw_fw_topmenu_items {
+            float: left;
+            padding-top: 14px;
+            width: 70%;
+
+            ul {
+                margin: 5px 2px;
+
+                li{
+                    color: @gray_0;
+                    /*.Button_size_square_32;*/
+                    padding: 8px 10px;
+                    /*.Complete_Button_normal;*/
+                    /*background-color: @gray_10;*/
+
+
+                    &:hover{.Complete_Button_hover; color: @gray_0;}
+                    &:active {.Complete_Button_active;}
+                    .transition (0.2s, ease-out);
+
+                    a {
+                        color: @gray_100;
+                        text-decoration: none;
+                        .dimension_height_l;
+                        /*font-size: 1.1em;*/
+                        .fontsize_l;
+                        line-height: 1.5em;
+
+
+                        &:hover {
+                            color: @gray_10;
+                            border-color: @gray_50;
+                            text-decoration: none !important;
+                        }
+
+                        &:before {
+                                /*.img_filter_gray;*/
+                                /*-webkit-filter: grayscale(100%) brightness(100%) contrast(100%);*/
+                                /*-webkit-filter: invert(100%);*/
+                        }
+                    }
+
+                }
+
+                /*Home*/
+                li:first-child{
+                    margin-left: 10px;
+                    :before{border: none;}
+                }
+
+                /*home*/
+                a#topmenu_home {
+                    margin-left: 0px;
+                    &:before {
+                        padding-right: 20px;
+                        .fontsize_l;
+                        content: " ";
+                        background-image: url(../images/topmenu_items/home.png);
+                        background-repeat: no-repeat;
+                        background-size: 20px 20px;
+                        .dimension_width_height_m;
+                    }
+
+                }
+
+
+                /*Setup / Einstellungen*/
+                a#topmenu_prefs{
+                    margin-left: 0px;
+                    &:before {
+                        padding-right: 20px;
+                        content: "";
+                        background-image: url(../images/topmenu_items/setup.png);
+                        background-repeat: no-repeat;
+/*                        background-size: 20px 20px;*/
+                        .dimension_width_height_xs;
+                    }
+                }
+
+                /*access / Zugriff */
+                a#topmenu_acl{
+                    &:before {
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_xs;
+                        background-image: url(../images/topmenu_items/access.png);
+                    }
+                }
+                /*category*/
+                a#topmenu_cats{
+                    &:before {
+                        background-image: url(../images/topmenu_items/category.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_xs;
+                    }
+                }
+                /*password*/
+                a#topmenu_preferences{
+                    &:before {
+                        background-image: url(../images/topmenu_items/password.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_xs;
+                    }
+                }
+                /*help*/
+                a#topmenu_manual{
+                    &:before {
+                        background-image: url(../images/topmenu_items/help.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_xs;
+                    }
+                }
+                /*Search*/
+                a#topmenu_search{
+                    &:before {
+                        background-image: url(../images/topmenu_items/search.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_xs;
+                    }
+                }
+                /*logout*/
+                a#topmenu_logout{
+                    &:before {
+                        background-image: url(../images/topmenu_items/logout.png);
+                        padding-right: 20px;
+                        content: "";
+                        background-repeat: no-repeat;
+                        .dimension_width_height_s;
+                    }
+                }
+            } // Ende ul
+
+
+        }	// Ende Items
+
+
+    } // Ende Topmenu
+
+
+} // Ende Header
+
+/* ###################################################
+   Slide Effekt
+   ###################################################*/
+
+
+#egw_fw_topmenu_slide{
+    width: auto;
+    text-align: center;
+    height: 15px;
+    float: left;
+    position: fixed;
+    left: 194px;
+
+}
+
+ /*ICON List*/
+#egw_fw_topmenu_slide.slidedown{
+    background-image: url("../images/list.png");
+    background-position: center center;
+    height: 15px;
+    width: 15px;
+    display: block;
+    margin-left: 5px;
+    margin-top: 10px;
+    background-size: 15px 15px;
+    float: left;
+    position: relative;
+    left: -5px;
+    cursor: pointer;
+}
+
+/*Icon ARROW UP*/
+#egw_fw_topmenu_slide.slideup{
+    background-image: url("../images/slideup.png");
+    background-position: center center;
+    height: 15px;
+    width: 15px;
+    display: block;
+    margin-top: -36px;
+    margin-left: 40px;
+    cursor: pointer;
+
+}
+
+#slidetoggle{
+    width: 20px;
+    height: 20px;
+    display: block;
+}

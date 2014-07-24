@@ -1,0 +1,253 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
+ */
+/*
+    Created on : 23.07.2014, 13:25:11
+    Author     : stefanreinhardt
+*/
+
+@import (reference) "definitions.less";
+
+/* ##################################################################################################
+*  Main
+// ##################################################################################
+// ## egw_divLogo ##  Toggle up / down | egw_fw_topmenu                             #
+// ##             ##                                                                #
+// ##################################################################################
+// ##             ##                                                                #
+// ##             ##                                                                #
+// ##             ##                                                                #
+// ##             ##                                                                #
+// ##             ##                                                                #
+// ##  SIDEBAR    ##             MAIN                                               #
+// ##             ##             #egw_fw_main                                       #
+// ##             ##                                                                #
+// ##             ##                                                                #
+// ##             ##                                                                #
+/* #####################################################################################################
+*/
+
+#egw_fw_main {
+    padding: 0;
+    width: auto;
+
+    // ########################################
+    // APPS
+    // CHrome hack
+/*     @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #egw_fw_tabs {
+        Chrome needs margin-top
+           margin-top: 3px;
+        }
+    }*/
+
+    // #######################################
+    // AREA for Content
+    #egw_fw_tabs{
+        position: relative;
+        background-color: transparent;
+        float: left;
+        width: 100%;
+        margin-top: 3px;
+
+
+        // ############################################################
+        // Tabnavigation
+        // Statusmeldung
+        // definiert in layout_messages.less
+        // .egw_fw_ui_app_header_container {	}
+
+
+
+        // ######################tabs header ##########################
+        // #      #      #     #     #     #     #     #     #     ####
+        // #      #      #     #     #     #     #     #     #     ####
+        // #  tab header #     #     #     #     #     #     #     ####
+        // #      #      #     #     #     #     #     #     #     ####
+        // ############################################################
+        // Div um Tabs
+
+        .egw_fw_ui_tabs_header {
+            margin: 0px 0 0 0;
+            padding: 1px 1px 0px 0px;
+            background-position: bottom;
+            background-repeat: repeat-x;
+            background-color: transparent;
+            height: 34px;
+
+                h1 {
+                    /*float: left;*/
+                    display: inline;
+                    width: 100%;
+                    text-align: center;
+                    -webkit-margin-before: 0;
+                    -webkit-margin-after: 0;
+                }
+
+                img{
+                    text-align:center;
+                    float: none;
+                    margin: 0 auto;
+                    .dimension_width_height_s;
+                }
+
+            // Tab
+            // ##########
+            // #        #
+            // #        #
+            // ##########
+            // inaktive
+
+            .egw_fw_ui_tab_header {
+                padding-left: 0;
+                position: relative;
+                .border_radius(5px,0, 0, 5px);
+                background: transparent;
+                display: inline-block;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+                margin: 0px 5px 0px 0px;
+                padding: 2px 5px 7px 2px;
+                cursor: pointer;
+                border-width: 1px 1px 0 1px;
+                border-style: solid;
+                border-color: @gray_30;;
+                background-repeat:repeat-x;
+                height: 24px;
+
+                &:hover {
+                    /*.background_color_20_gray ;*/
+                    background-color: @egw_color_1_e;
+                 }
+
+                // APP Name
+                h1 {
+                    /*font-size: 100%;*/
+                    .fontsize_m;
+                    line-height: 1em;
+                    margin:0 15px 2px 2px;
+                    vertical-align: super;
+                }
+
+                // Images
+                img.egw_fw_ui_tab_icon {
+                    display: inline-block;
+                    .dimension_width_height_s;
+                    margin: 5px 1px 0 1em;
+
+                    .img_filter_gray;
+                }
+
+                // FOR SVG IMG
+                object {
+                .dimension_width_height_s;
+                /*background-color: @gray_0;*/
+                margin: 8px 1px 0 5px;
+                .border_radius(5px,0, 0, 5px);
+
+
+                }
+
+
+            }
+
+            // ##########
+            // #        #
+            // #        #
+            // ##########
+            /*aktive Tabs*/
+            .egw_fw_ui_tab_header_active {
+                border-width: 1px 1px 0px 1px !important;
+                /*padding: 0 0 5px !important;*/
+                .background_color_30_gray ;
+                background-image:none !important;
+
+                &:hover {.background_color_25_gray ;}
+
+
+                // aktive Bilder
+                img.egw_fw_ui_tab_icon {
+                    display: inline-block;
+                    .dimension_width_height_s;
+                }
+                 /*aktive Objekte*/
+                 object {
+                .dimension_width_height_m;
+                margin: 0px 1px 0 5px;
+                .border_radius(2px,0, 0, 2px);
+
+                background-color: @gray_30;
+                }
+            }
+        }
+
+            // #################
+            // #       close x #
+            // #               #
+            // #################
+        .egw_fw_ui_tab_close_button {
+            right: 3px;
+            top: 1px;
+
+            display: inline-block;
+            .dimension_width_height_xs;
+            margin-left: 0px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(../images/close_button.png);
+            background-size: 10px 10px;
+            position: absolute;
+
+            :hover {
+                background-image: url(../images/close_button_hover.png);
+            }
+        }
+        // Ende Tabs
+    }
+
+
+    // ################################
+    // Hover
+    // no effect ?
+    .egw_fw_ui_tab_header_hover{
+        background-color: @egw_color_1_e;
+    }
+
+    // Der eigentliche Inhalt der APP
+    // ############################################################
+    // #      #      #     #     #     #     #     #     #     ####
+    // #      #      #     #     #     #     #     #     #     ####
+    // ############################################################
+    //
+    //    Content / Inhalt
+    //
+    // ############################################################
+
+    .egw_fw_ui_tab_content {
+
+
+        width: 100%;
+        padding: 0px;
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+
+        > div {
+            width: 100%;
+            padding: 0 0 0 0;
+        };
+    }
+    // Ende Main
+}
