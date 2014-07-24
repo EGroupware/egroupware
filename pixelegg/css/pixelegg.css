@@ -2089,7 +2089,7 @@ html * {
 html {
   margin: 0px !important;
   padding: 0px !important;
-  width: 99% !important;
+  width: 99.9% !important;
   height: 99% !important;
 }
 body {
@@ -2098,7 +2098,7 @@ body {
   color: #000000;
   margin: 0px !important;
   padding: 0px !important;
-  width: 99% !important;
+  width: 99.9% !important;
   height: 99% !important;
   font-size: 11px;
   line-height: 1.28;
@@ -2118,6 +2118,14 @@ body {
  * @version $Id$
  */
 @import-once "def_colors.less";
+#socialMedia {
+  float: right;
+  position: relative;
+  top: -30px;
+}
+#socialMedia a {
+  margin-left: 10px;
+}
 /* ##################################################################################
  *       login page
  */
