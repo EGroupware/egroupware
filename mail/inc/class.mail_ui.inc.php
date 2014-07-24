@@ -3146,7 +3146,7 @@ class mail_ui
 					{
 						$messageUid = $this->mail_bo->appendMessage($_folder,
 							$Header.$mailObject->LE.$mailObject->LE,
-							$Body);
+							$Body,'\\Seen');
 					}
 					catch (egw_exception_wrong_userinput $e)
 					{
