@@ -468,7 +468,11 @@ body {
 	position: relative;
 	background-repeat: no-repeat;
 	background-position: center 80px;
-	background-image: url(../images/login-background.jpg);
+	background-color: white;
+}
+#socialMedia {
+    left: 273px;
+    position: relative;
 }
 #loginScreenMessage {
 	text-align: center;
