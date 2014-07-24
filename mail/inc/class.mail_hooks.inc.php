@@ -476,7 +476,6 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'text',
 			),
-			'add_popup' => '870x800',
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;
