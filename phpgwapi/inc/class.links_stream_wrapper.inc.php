@@ -297,6 +297,25 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
+
+	/**
+	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
+	 *
+	 * Reimplemented to give no error, if entry directory does not exist.
+	 *
+	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
+	 * @param $options
+	 * @return booelan
+	 */
+	function dir_opendir ( $url, $options )
+	{
+		if (!parent::url_stat($url, STREAM_URL_STAT_QUIET) && self::url_stat($url, STREAM_URL_STAT_QUIET))
+		{
+			$this->opened_dir = array();
+			return true;
+		}
+		return parent::dir_opendir($url, $options);
+	}
 }
 
 stream_register_wrapper(links_stream_wrapper::SCHEME ,'links_stream_wrapper');
