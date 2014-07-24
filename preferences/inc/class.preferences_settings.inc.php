@@ -616,7 +616,7 @@ class preferences_settings
 			// only set not yet set default prefs, so user is able to unset it again with ""
 			// (only works with type vfs_*, other types delete empty values!)
 			if (!isset($GLOBALS['egw']->preferences->default[$appname][$name]) &&
-			((string)$data['default'] !== '' || (string)$data['forced'] !== ''))
+				((string)$data['default'] !== '' || (string)$data['forced'] !== ''))
 			{
 				$default = (string)$data['forced'] !== '' ? $data['forced'] : $data['default'];
 				//echo "<p>".__METHOD__."($appname) $this->appname/$appname/$name=$default NOT yet set!</p>\n";
