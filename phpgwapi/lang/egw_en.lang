@@ -91,7 +91,7 @@ austria	common	en	AUSTRIA
 author	common	en	Author
 autohide sidebox menu's	common	en	Autohide side menu
 autohide sidebox menus	common	en	Autohide side menu
-automatic update check failed, you need to check manually!	admin	en	Automatic update check failed, you need to check manually!
+automatic update check failed, you need to check manually!	common	en	Automatic update check failed, you need to check manually!
 automatically hide the sidebox menu's?	common	en	Automatically hide the side menu?
 automatically hide the sidebox menus?	common	en	Automatically hide the side menu?
 autosave default category	common	en	Auto-save default category.
@@ -267,7 +267,7 @@ edit categories	common	en	Edit categories
 edit category	common	en	Edit category
 egroupware	common	en	EGroupware
 egroupware api version	common	en	EGroupware API version
-egroupware maintenance update %1 available	admin	en	EGroupware maintenance update %1 available
+egroupware maintenance update %1 available	common	en	EGroupware maintenance update %1 available
 egroupware security update %1 needs to be installed!	common	en	EGroupware security update %1 needs to be installed!
 egroupware: login blocked for user '%1', ip %2	common	en	Login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
