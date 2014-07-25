@@ -238,6 +238,10 @@ var et2_date = et2_inputWidget.extend(
 			this.date.setMonth(0);
 			this.date.setFullYear(1970);
 		}
+		else if (this._type == 'date')
+		{
+			this.date.setHours(12);
+		}
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
 		return Math.round(this.date.valueOf() / 1000);
