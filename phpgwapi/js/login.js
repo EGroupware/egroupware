@@ -14,12 +14,13 @@ egw_LAB.wait(function() {
 	}).done(function(_data)
 	{
 		$j(document).ready(function() {
+			var isPixelegg = $j('link[href*="pixelegg.css"]')[0];
 			var social = $j(document.createElement('div'))
 				.attr({
 					id: "socialMedia",
 					class: "socialMedia"
 				})
-				.appendTo($j('#socialBox'));
+				 .appendTo($j( isPixelegg? 'form' : '#socialBox'));
 
 			for(var i=0; i < _data.length; ++i)
 			{
@@ -36,19 +37,3 @@ egw_LAB.wait(function() {
 		});
 	});
 });
-
-//	$j('img.bgfade').hide();
-////                                var dg_H = $j(window).height();
-////                                var dg_W = $j(window).width();
-////    $j('#wrap').css({'height':dg_H,'width':dg_W});
-//
-//    function anim() {
-//    $j("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(3500);
-//    $j("#wrap img").first().fadeIn(3500);
-//    setTimeout(anim, 7000);
-//    }
-//anim();
-//$j(window).resize(function(){window.location.href=window.location.href});
-//	});
-//
-//});
