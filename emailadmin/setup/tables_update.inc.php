@@ -520,6 +520,20 @@ function emailadmin_upgrade1_9_009()
 	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.010';
 }
 
+/**
+ * Convert utf7-imap encoded folder-names to utf-8
+ *
+ * @param string $folder
+ * @return string
+ */
+function utf7imap2utf8($folder)
+{
+	if (function_exists('mb_convert_encoding'))
+	{
+		$folder = mb_convert_encoding($folder, 'utf-8', 'utf7-imap');
+	}
+	return $folder;
+}
 
 /**
  * Migrate eMailAdmin profiles to accounts
@@ -578,10 +592,10 @@ function emailadmin_upgrade1_9_010()
 					'acc_sieve_host' => $row['ea_imap_sieve_server'],
 					'acc_sieve_ssl' => $row['fm_ic_sieve_port'] == 5190 ? 2 : 1,
 					'acc_sieve_port' => $row['ea_imap_sieve_port'],
-					'acc_folder_sent' => $pref_values['sentFolder'],
-					'acc_folder_trash' => $pref_values['trashFolder'],
-					'acc_folder_draft' => $pref_values['draftFolder'],
-					'acc_folder_template' => $pref_values['templateFolder'],
+					'acc_folder_sent' => utf7imap2utf8($pref_values['sentFolder']),
+					'acc_folder_trash' => utf7imap2utf8($pref_values['trashFolder']),
+					'acc_folder_draft' => utf7imap2utf8($pref_values['draftFolder']),
+					'acc_folder_template' => utf7imap2utf8($pref_values['templateFolder']),
 					'acc_smtp_type' => $row['ea_smtp_type'],
 					'acc_smtp_host' => $row['ea_smtp_server'],
 					'acc_smtp_ssl' => $smtp_ssl,
@@ -714,10 +728,10 @@ function emailadmin_upgrade1_9_011()
 					'acc_sieve_host' => $row['fm_ic_sieve_server'],
 					'acc_sieve_ssl' => $row['fm_ic_sieve_port'] == 5190 ? 2 : 1,
 					'acc_sieve_port' => $row['fm_ic_sieve_port'],
-					'acc_folder_sent' => $row['fm_ic_sentfolder'] ? $row['fm_ic_sentfolder'] : $pref_values['sentFolder'],
-					'acc_folder_trash' => $row['fm_ic_trashfolder'] ? $row['fm_ic_trashfolder'] : $pref_values['trashFolder'],
-					'acc_folder_draft' => $row['fm_ic_draftfolder'] ? $row['fm_ic_draftfolder'] : $pref_values['draftFolder'],
-					'acc_folder_template' => $row['fm_ic_templatefolder'] ? $row['fm_ic_templatefolder'] : $pref_values['templateFolder'],
+					'acc_folder_sent' => utf7imap2utf8($row['fm_ic_sentfolder'] ? $row['fm_ic_sentfolder'] : $pref_values['sentFolder']),
+					'acc_folder_trash' => utf7imap2utf8($row['fm_ic_trashfolder'] ? $row['fm_ic_trashfolder'] : $pref_values['trashFolder']),
+					'acc_folder_draft' => utf7imap2utf8($row['fm_ic_draftfolder'] ? $row['fm_ic_draftfolder'] : $pref_values['draftFolder']),
+					'acc_folder_template' => utf7imap2utf8($row['fm_ic_templatefolder'] ? $row['fm_ic_templatefolder'] : $pref_values['templateFolder']),
 					'acc_smtp_host' => $row['fm_og_hostname'],
 					'acc_smtp_ssl' => $og_ssl,
 					'acc_smtp_port' => $row['fm_og_port'],
