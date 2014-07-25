@@ -91,7 +91,7 @@ austria	common	de	ÖSTERREICH
 author	common	de	Autor
 autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
 autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
-automatic update check failed, you need to check manually!	admin	de	Automatischer Test fehlgeschlagen, Sie müssen selbst überprüfen ob neue Updates vorliegen!
+automatic update check failed, you need to check manually!	common	de	Automatischer Test fehlgeschlagen, Sie müssen selbst überprüfen ob neue Updates vorliegen!
 automatically hide the sidebox menu's?	common	de	Automatisch linkes Navigationsmenü ausblenden?
 automatically hide the sidebox menus?	common	de	Automatisch linkes Navigationsmenü ausblenden?
 autosave default category	common	de	Standard-Kategorie automatisch speichern
@@ -267,7 +267,7 @@ edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
 egroupware	common	de	EGroupware
 egroupware api version	common	de	EGroupware API Version
-egroupware maintenance update %1 available	admin	de	EGroupware Fehlerbehebungsupdate %1 ist verfügbar
+egroupware maintenance update %1 available	common	de	EGroupware Fehlerbehebungsupdate %1 ist verfügbar
 egroupware security update %1 needs to be installed!	common	de	EGroupware Sicherheitsupdate %1 muss installiert werden!
 egroupware: login blocked for user '%1', ip %2	common	de	EGroupware: Anmelden gesperrt für Benutzer '%1', IP %2
 egypt	common	de	ÄGYPTEN
