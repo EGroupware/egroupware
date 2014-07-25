@@ -62,7 +62,7 @@
 				</tr>
 <!-- END registration -->
 				<tr>
-					<td id="socialBox"></td>
+					<td id="socialBox" colspan="3"></td>
 				</tr>
 			</table>
 		</form>
