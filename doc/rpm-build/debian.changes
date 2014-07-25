@@ -1,3 +1,49 @@
+egroupware-epl (14.1.20140725-1) hardy; urgency=low
+
+  * Admin: restore backups from admin was not working (worked only from setup)
+  * Addressbook/all apps: dates change every time they get stored (temporary fix as conditions causing that are not clear)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 25 Jul 2014 12:18:25 +0200
+
+egroupware-epl (14.1.20140724-1) hardy; urgency=low
+
+  * Admin: automatic update check displaying an icon for available (security-)updates for admins, escalating for security updates to all users after 3 days
+  * EMailAdmin: if wizzard was called on error, it was not able to save fixed account (showed same error again)
+  * API/Admin: fixed not working Admin >> Clear cache for default APC(u) and files backends
+  * Admin/API: remove no longer fully supported method to not "store session-id in cookie", it is the safer default anyway
+  * Mail: fixed wrong folders displayed, if Cyrus administration was activated
+  * eTemplate2: fixed popups eg. tracker open empty, not rendering popup content
+  * Admin/LDAP: deactivated accounts could not be reactivated, as account popup was not showing selected account
+  * API/CKEditor: update to version 4.4.3 adding additional skins/themes
+  * Admin/Setup: restore of 14.1 backup was not working (backup file itself is correct)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 23 Jul 2014 18:50:31 +0200
+
+egroupware-epl (14.1.20140714-1) hardy; urgency=low
+
+  * Backup: backup could contain rows multiple times (which caused restore to fail)
+  * API: fixed broken configuration, causing eg. ActiveDirectory or LDAP authentication to fail (you need to run Setup >> Clear cache!)
+  * Preferences: non-admins were allowed to changed default, forced or group preferences
+  * Preferences: do NOT use deny configuration for admins
+  * SiteMgr: fixed sliteshow (was loaded before jQuery)
+  * Mail: unlock tree again after copy/move actions
+  * ProjectManager: fix broken duration units causing times to display as undefined
+  * eTemplate2: several fixes in widgets
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 14 Jul 2014 18:40:34 +0200
+
+egroupware-epl (14.1.20140710-1) hardy; urgency=low
+
+  * final 14.1 release
+  * Admin/all apps: fix refresh of admin after calling site configuration, categories, etc from apps
+  * Admin: custom-fields were not loaded, account was edited from admin not addressbook
+  * EMailAdmin: fixed migration of Sieve to use SSL/TLS for port 5190 and StartTLS for all other ports
+  * EMailAdmin: fixed mail accounts valid for groups or multiple users and switching regular accounts to or from that
+  * Addressbook: fixed sorting of category tree
+  * Added context menu to download all linked files in one zip file
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 09 Jul 2014 20:50:54 +0200
+
 egroupware-epl (14.1.20140708-1) hardy; urgency=low
 
   * Debian: aptitude install egroupware-epl now removes 1.8 community packages or updates all EPL 11.1 packages
