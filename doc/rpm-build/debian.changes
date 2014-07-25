@@ -1,3 +1,10 @@
+egroupware-epl (14.1.20140725-1) hardy; urgency=low
+
+  * Admin: restore backups from admin was not working (worked only from setup)
+  * Addressbook/all apps: dates change every time they get stored (temporary fix as conditions causing that are not clear)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 25 Jul 2014 12:18:25 +0200
+
 egroupware-epl (14.1.20140724-1) hardy; urgency=low
 
   * Admin: automatic update check displaying an icon for available (security-)updates for admins, escalating for security updates to all users after 3 days
