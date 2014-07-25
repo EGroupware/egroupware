@@ -562,6 +562,7 @@ function phpgwapi_upgrade1_9_021()
 	{
 		preferences::change_preference('common', 'template_set', 'pixelegg', null, 'forced');
 		preferences::change_preference('common', 'theme', 'pixelegg', null, 'forced');
+		preferences::change_preference('common', 'rte_skin', 'moono', null, 'forced');
 	}
 	preferences::change_preference('common', 'maxmatchs', '20', null, 'forced');
 
