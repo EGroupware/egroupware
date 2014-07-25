@@ -68,4 +68,22 @@ class pixelegg_framework extends jdots_framework
 	{
 		return egw_framework::_get_css();
 	}
+
+	/**
+	 * displays a login screen
+	 *
+	 * Reimplemented to remove site_title from login box and display it as loginscreenmessage, if none set.
+	 *
+	 * @param string $extra_vars for login url
+	 */
+	function login_screen($extra_vars)
+	{
+		if (empty($GLOBALS['loginscreenmessage']))
+		{
+			$GLOBALS['loginscreenmessage'] = '<h1>'.$GLOBALS['egw_info']['server']['site_title'].'</h1>';
+		}
+		unset($GLOBALS['egw_info']['server']['site_title']);
+
+		return parent::login_screen($extra_vars);
+	}
 }
