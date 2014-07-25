@@ -5171,6 +5171,7 @@ td.message span.message {
 }
 #egw_fw_topmenu_info_items .topmenu_info_item {
   overflow: visible;
+  display: inline-block;
 }
 #egw_fw_topmenu_info_items .topmenu_info_item:nth-child(2) {
   /*float: right;*/
