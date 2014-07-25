@@ -2241,6 +2241,35 @@ body {
   border-radius: 3px;
   border-top-left-radius: 10px;
 }
+#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage {
+  background-color: #b3ad54;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #408dd2);
+  background-image: -ms-linear-gradient(top, #ffc200, #408dd2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#408dd2));
+  background-image: -webkit-linear-gradient(top, #ffc200, #408dd2);
+  background-image: -o-linear-gradient(top, #ffc200, #408dd2);
+  background-image: linear-gradient(top, #ffc200, #408dd2);
+  background-repeat: repeat-x;
+}
+#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage img.passwordImage {
+  /*width: 70%;*/
+  /*margin-left: 15%;*/
+  margin: 0 auto;
+  max-width: 400px;
+  border-top: solid 1px 5px;
+  border-left: solid 1px #eeeeee;
+  border-right: solid 1px #eeeeee;
+  border-bottom: solid 1px #eeeeee;
+}
+#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage img.passwordImage[src$="svg"] {
+  border-top: solid 1px 5px;
+  border-left: solid 1px #eeeeee;
+  border-right: solid 1px #eeeeee;
+  border-bottom: solid 1px #eeeeee;
+  width: 40px;
+  height: 40px;
+}
 #loginMainDiv div#centerBox form table.divLoginbox td {
   padding: 0.5em;
   font-weight: bold;
