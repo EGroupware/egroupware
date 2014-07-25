@@ -149,7 +149,7 @@ class db_backup
 		}
 		else	// called from eGW
 		{
-			$this->schema_proc = CreateObject('phpgwapi.schema_proc');
+			$this->schema_proc = new schema_proc();
 			if (!($this->backup_dir = $GLOBALS['egw_info']['server']['backup_dir']))
 			{
 				$this->backup_dir = $GLOBALS['egw_info']['server']['files_dir'].'/db_backup';
@@ -437,7 +437,7 @@ class db_backup
 				@ini_set('mbstring.internal_encoding',$charset);
 
 				// check if we really need to convert the charset, as it's not perfect and can do some damage
-				if ($convert_to_system_charset && !strcasecmp($convert_to_system_charset,$charset))
+				if ($convert_to_system_charset && !strcasecmp($this->schema_proc->system_charset, $charset))
 				{
 					$convert_to_system_charset = false;	// no conversation necessary
 				}
@@ -567,8 +567,8 @@ class db_backup
 
 		if ($convert_to_system_charset)	// store the changed charset
 		{
-			$this->db->insert($GLOBALS['egw_setup']->config_table,array(
-				'config_value' => $GLOBALS['egw_setup']->system_charset,
+			$this->db->insert(config::TABLE, array(
+				'config_value' => $this->schema_proc->system_charset,
 			),array(
 				'config_app' => 'phpgwapi',
 				'config_name' => 'system_charset',

@@ -23,7 +23,7 @@ class admin_db_backup
 	{
 		$this->db_backup = new db_backup();
 
- 		if ($f = $this->db_backup->fopen_backup())
+ 		if (($f = $this->db_backup->fopen_backup()))
  		{
 			$this->db_backup->backup($f);
 			if(is_resource($f))
@@ -41,9 +41,11 @@ class admin_db_backup
 		$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
 		$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
 		translation::add_app('setup');
+		egw_framework::csp_script_src_attrs('unsafe-inline');
 
 		include EGW_SERVER_ROOT.'/setup/db_backup.php';
 
+		unset($tpl_root, $self);
 		common::egw_footer();
 	}
 }
