@@ -238,6 +238,8 @@ var et2_date = et2_inputWidget.extend(
 			this.date.setMonth(0);
 			this.date.setFullYear(1970);
 		}
+		// this is a hack, to work around birthdays changing one day for each time they are stored
+		// ToDo: either find and fix the reason, or send date as YYYY-mm-dd string to server
 		else if (this._type == 'date')
 		{
 			this.date.setHours(12);
