@@ -64,9 +64,6 @@
                     </td>
                 </tr>
                 <!-- END registration -->
-				<tr>
-					<td id="socialBox"></td>
-				</tr>
             </table>
         </form>
     </div>
