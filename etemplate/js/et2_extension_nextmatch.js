@@ -1082,7 +1082,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		this.dataview.grid.setTotalCount(total);
 
 		// Insert any data sent from server, so invalidate finds data already
-		if(this.options.settings.rows)
+		if(this.options.settings.rows && this.options.settings.num_rows)
 		{
 			this.controller.loadInitialData(
 				this.options.settings.dataStorePrefix,
@@ -1509,6 +1509,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// Set filters to current values
 			this.controller.setFilters(this.activeFilters);
+
+			// If no data was sent from the server, and num_rows is 0, the nm will be empty.
+			// This triggers a cache check.
+			if(!(this.options.settings.rows && this.options.settings.num_rows))
+			{
+				this.controller.update();
+			}
 
 			// Load the default sort order
 			if (this.options.settings.order && this.options.settings.sort)
