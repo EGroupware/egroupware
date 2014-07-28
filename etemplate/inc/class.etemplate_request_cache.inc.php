@@ -114,7 +114,9 @@ class etemplate_request_cache extends etemplate_request
 	 */
 	static function request_id()
 	{
-		return uniqid($GLOBALS['egw_info']['flags']['currentapp'].'_'.$GLOBALS['egw_info']['user']['account_lid'].'_',true);
+		// As we replace spaces with + for those account ids which contain spaces, therefore we need to do the same for getting request id too.
+		$userID = str_replace(' ', '+', rawurldecode($GLOBALS['egw_info']['user']['account_lid']));
+		return uniqid($GLOBALS['egw_info']['flags']['currentapp'].'_'.$userID.'_',true);
 	}
 
 	/**
