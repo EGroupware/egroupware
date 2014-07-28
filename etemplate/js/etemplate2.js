@@ -121,6 +121,8 @@ etemplate2.prototype.resize = function()
  */
 etemplate2.prototype.clear = function()
 {
+	$j(this.DOMContainer).trigger('clear');
+	
 	// Remove any handlers on window (resize)
 	if(this.uniqueId)
 	{
