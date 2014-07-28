@@ -27,6 +27,15 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	var lastModification = null;
 
 	/**
+	 * cacheCallback stores callbacks that determine if data is placed
+	 * into cacheStorage, or simply kept temporarily.  It is indexed
+	 * by prefix.
+	 *
+	 * @type Array
+	 */
+	var cacheCallback = {};
+
+	/**
 	 * The uid function generates a session-unique id for the current
 	 * application by appending the application name to the given uid.
 	 *
@@ -38,6 +47,35 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		_prefix = _prefix ? _prefix : _app;
 
 		return _prefix + "::" + _uid;
+	}
+
+	/**
+	 * Looks like too much data is cached.  Forget some.
+	 *
+	 * Tries to free up localStorage by removing cached data for the given
+	 * prefix, but if none is found it will remove all cached data.
+	 *
+	 * @param {string} _prefix UID / application prefix
+	 * @returns {Number} Number of cached recordsets removed
+	 */
+	function _clearCache(_prefix)
+	{
+		// Find cached items for the prefix, we prefer to expire just within the app
+		var indexes = [];
+		for(var i = 0; i < window.localStorage.length; i++)
+		{
+			if(window.localStorage.key(i).indexOf('cache_'+_prefix) == 0)
+			{
+				indexes.push(i);
+				window.localStorage.removeItem(window.localStorage.key(i));
+			}
+		}
+		// Nothing for that prefix?  Clear all cached data.
+		if(_prefix && indexes.length == 0)
+		{
+			return _clearCache('');
+		}
+		return indexes.length;
 	}
 
 	function parseServerResponse(_result, _callback, _context)
@@ -61,9 +99,12 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		if (_result.order && _result.data)
 		{
 			// Assemble the correct order uids
-			for (var i = 0; i < _result.order.length; i++)
+			if(!(_result.order.length && _result.order[0] && _result.order[0].indexOf(_context.prefix) == 0))
 			{
-				_result.order[i] = UID(_result.order[i], _context.prefix);
+				for (var i = 0; i < _result.order.length; i++)
+				{
+					_result.order[i] = UID(_result.order[i], _context.prefix);
+				}
 			}
 
 			// Load all data entries that have been sent or delete them
@@ -92,6 +133,37 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					var uid = UID(_context.refresh[i], _context.prefix);
 					egw.dataStoreUID(uid, null);
 					egw.dataDeleteUID(uid);
+				}
+			}
+
+			// Check to see if we need long-term caching of the query and its results
+			if(window.localStorage && _context.prefix && cacheCallback[_context.prefix])
+			{
+				// Ask registered callbacks if we should cache this
+				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
+				{
+					var cc = cacheCallback[_context.prefix][i];
+					var cache_key = false
+					if(cache_key = cc.callback.call(cc.context, _context))
+					{
+						cache_key = 'cache_' + _context.prefix + '::' + cache_key;
+						try
+						{
+							window.localStorage.setItem(cache_key,JSON.stringify(_result));
+						}
+						catch (e)
+						{
+							egw.debug('warning', 'Tried to cache some data', cache_key, e);
+
+							// Maybe ran out of space?  Free some up...
+							if(e.name == 'QuotaExceededError'	// storage quota is exceeded, remove cached data
+								|| 'NS_ERROR_DOM_QUOTA_REACHED')	// FF-name
+							{
+								var count = _clearCache(_context.prefix);
+								egw.debug('info', 'localStorage full, removed ' + count + ' stored datasets');
+							}
+						}
+					}
 				}
 			}
 
@@ -204,6 +276,29 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				knownUids.slice(typeof _queriedRange.start != "undefined" ? _queriedRange.start:0,KNOWN_UID_LIMIT);
 			}
 
+			// Check to see if we have long-term caching of the query and its results
+			if(window.localStorage && _context.prefix && cacheCallback[_context.prefix])
+			{
+				// Ask registered callbacks if we should cache this
+				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
+				{
+					var cc = cacheCallback[_context.prefix][i];
+					var cache_key = false
+					if(cache_key = cc.callback.call(cc.context, _context))
+					{
+						cache_key = 'cache_' + _context.prefix + '::' + cache_key;
+
+						var cached = window.localStorage.getItem(cache_key);
+						if(cached)
+						{
+							egw.debug('log', 'Data cached query: ' + cache_key + "\nprocessing...");
+							// Call right away with cached data.  We'll still ask the server
+							// though.
+							parseServerResponse(JSON.parse(cached), _callback, _context);
+						}
+					}
+				}
+			}
 			var request = egw.json(
 				_app+".etemplate_widget_nextmatch.ajax_get_rows.etemplate",
 				[
@@ -221,8 +316,59 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				true
 			);
 			request.sendRequest();
-		}
+		},
 
+		/**
+		 * Turn on long-term client side cache of a particular request
+		 * (cache the nextmatch query results) for fast, immediate response
+		 * with old data.
+		 *
+		 * The request is still sent to the server, and the cache is updated
+		 * with fresh data, and any needed callbacks are called again with
+		 * the fresh data.
+		 *
+		 * @param {string} prefix UID / Application prefix should match the
+		 *	individual record prefix
+		 * @param {function} callback A function that will analize the provided fetch
+		 *	parameters and return a reproducable cache key, or false to not cache
+		 *	the request.
+		 * @param {object} context Context for callback function.
+		 */
+		dataCacheRegister: function(prefix, callback, context)
+		{
+			if(typeof cacheCallback[prefix] == 'undefined')
+			{
+				cacheCallback[prefix] = [];
+			}
+			cacheCallback[prefix].push({
+				callback: callback,
+				context: context
+			});
+		},
+
+		/**
+		 * Unregister a previously registered cache callback
+		 * @param {string} prefix UID / Application prefix should match the
+		 *	individual record prefix
+		 * @param {function} [callback] Callback function to un-register.  If
+		 *	omitted, all functions for the prefix will be removed.
+		 */
+		dataCacheUnregister: function(prefix, callback)
+		{
+			if(typeof callback != 'undefined')
+			{
+				for(var i = 0; i < cacheCallback[prefix].length; i++)
+				{
+					if(cacheCallback[prefix][i].callback == callback)
+					{
+						cacheCallback[prefix].splice(i,1);
+						return;
+					}
+				}
+			}
+			// Callback not provided or not found, reset by prefix
+			cacheCallback[prefix] = [];
+		}
 	};
 
 });
