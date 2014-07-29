@@ -687,7 +687,7 @@ var et2_tree = et2_inputWidget.extend(
 	 */
 	getTreeNodeOpenItems: function (_nodeID, mode) {
 		if(this.input == null) return null;
-		var z = this.input.getSubItems(_nodeID).split(",");
+		var z = this.input.getSubItems(_nodeID).split(this.input.dlmtr);
 		var oS;
 		var PoS;
 		var rv;
