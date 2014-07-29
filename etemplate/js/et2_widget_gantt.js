@@ -229,6 +229,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	set_value: function(value) {
 		if(this.gantt == null) return false;
 
+		this.gantt.clearAll();
+		
 		// Ensure proper format, no extras
 		var safe_value = {
 			data: value.data || [],
@@ -505,11 +507,12 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		// Bind AJAX for dynamic expansion
 		// TODO: This could be improved
 		this.gantt.attachEvent("onTaskOpened", function(id, item) {
+			var task = this.getTask(id);
 			// Node children are already there & displayed
 			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
 
 			var request = gantt_widget.egw().json(gantt_widget.options.autoload,
-				[id,value],
+				[id,value,task.parent||false],
 				function(data) {
 					this.parse(data);
 				},
@@ -732,7 +735,7 @@ et2_register_widget(et2_gantt, ["gantt"]);
 $j(function() {
 	// Set icon to match application
 	gantt.templates.grid_file = function(item) {
-		if(!item.pe_app || !egw.image(item.pe_icon)) return "<div class='gantt_tree_icon gantt_file'></div>";
+		if(!item.pe_icon || !egw.image(item.pe_icon)) return "<div class='gantt_tree_icon gantt_file'></div>";
 		return "<div class='gantt_tree_icon' style='background-image: url(\"" + egw.image(item.pe_icon) + "\");'/></div>";
 	}
 
