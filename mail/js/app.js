@@ -277,7 +277,7 @@ app.classes.mail = AppJS.extend(
 	{
 		// Only cache first chunk of rows, if no search filter
 		if((!query_context || !query_context.start) && query_context.count == 0 && !(
-			query_context.self._filters.search || false)
+			!query_context.self._filters || query_context.self._filters.search || false)
 		)
 		{
 			// Make sure keys match, even if some filters are not defined
