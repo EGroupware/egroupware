@@ -2098,8 +2098,24 @@ class mail_ui
 
 			foreach ($attachments as $key => $value)
 			{
-				if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
-				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)'));
+				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $value['filename'] ? $value['filename'] : $value['name'] ) : lang('(no subject)'));
+				$test = @json_encode($attachmentHTML[$key]['filename']);
+				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+				if (($test=="null" || $test === false || is_null($test)) && strlen($attachmentHTML[$key]['filename'])>0)
+				{
+					// try to fix broken utf8
+					$x = utf8_encode($attachmentHTML[$key]['filename']);
+					$test = @json_encode($x);
+					if (($test=="null" || $test === false || is_null($test)) && strlen($attachmentHTML[$key]['filename'])>0)
+					{
+						// this should not be needed, unless something fails with charset detection/ wrong charset passed
+						$attachmentHTML[$key]['filename'] = (function_exists('mb_convert_encoding')?mb_convert_encoding($attachmentHTML[$key]['filename'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$attachmentHTML[$key]['filename']):$attachmentHTML[$key]['filename']));
+					}
+					else
+					{
+						$attachmentHTML[$key]['filename'] = $x;
+					}
+				}
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
