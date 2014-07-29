@@ -1512,7 +1512,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// If no data was sent from the server, and num_rows is 0, the nm will be empty.
 			// This triggers a cache check.
-			if(!(this.options.settings.rows && this.options.settings.num_rows))
+			if(!this.options.settings.num_rows)
 			{
 				this.controller.update();
 			}
