@@ -199,8 +199,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
-			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['apps']['admin'] && $select_pref == 'none')
+			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $select_pref == 'none')
 			{
+				self::$request->preserv[$this->id] = self::$request->content[$this->id];
+				unset(self::$request->content[$this->id]);				
 				$this->attrs['readonly'] = true;
 			}
 

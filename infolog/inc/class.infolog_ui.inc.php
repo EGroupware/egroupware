@@ -2060,8 +2060,6 @@ class infolog_ui
 		{
 			$readonlys['tabs']['project'] = true;	// disable the project tab
 		}
-		$readonlys['tabs']['delegation'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
-			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		$content['duration_format'] = $this->duration_format;
 		$content['hours_per_workday'] = $this->hours_per_workday;

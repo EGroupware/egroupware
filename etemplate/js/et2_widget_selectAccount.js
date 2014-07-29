@@ -111,7 +111,6 @@ var et2_selectAccount = et2_selectbox.extend(
 		switch(type)
 		{
 			case 'none':
-				break;
 			case 'selectbox':
 			case 'groupmembers':
 			default:
