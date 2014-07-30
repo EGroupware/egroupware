@@ -28,6 +28,7 @@
 			</columns>
 			<rows>
 				<row class="th">
+					<nextmatch-sortheader label="ID" id="ts_id"/>
 					<nextmatch-sortheader label="Date" id="ts_start"/>
 					<grid spacing="0" padding="0">
 						<columns>
@@ -67,6 +68,7 @@
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
+					<description id="${row}[ts_id]"/>
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
 					<vbox>
 						<link id="${row}[ts_link]" no_lang="1"/>
