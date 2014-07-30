@@ -736,6 +736,7 @@ class filemanager_ui
 			egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 				'path' => self::get_home_dir(),
 				'msg' => lang('The requested path %1 is not available.',egw_vfs::decodePath($query['path'])),
+				'ajax' => 'true'
 			));
 		}
 		$rows = $dir_is_writable = array();
