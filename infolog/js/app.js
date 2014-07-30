@@ -58,8 +58,7 @@ app.classes.infolog = AppJS.extend(
 				break;
 			case 'infolog.edit.print':
 				// Trigger print command if the infolog oppend for printing porpuse
-				var that = this;
-				jQuery('#infolog-edit-print').bind('load',function(){that.infolog_print_preview();});
+				this.infolog_print_preview_onload();
 		}
 	},
 
@@ -373,11 +372,35 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * Trigger print() onload window
+	 */
+	infolog_print_preview_onload: function ()
+	{
+		var that = this;
+		jQuery('#infolog-edit-print').bind('load',function(){
+			var isLoadingCompleted = true;
+			jQuery('#infolog-edit-print').bind("DOMSubtreeModified",function(event){
+					isLoadingCompleted = false;
+					jQuery('#infolog-edit-print').unbind("DOMSubtreeModified");
+			});
+			setTimeout(function(){isLoadingCompleted = false},1000);
+			var interval = setInterval(function(){
+				if (!isLoadingCompleted)
+				{
+					clearInterval(interval);
+					that.infolog_print_preview();
+				}
+
+			}, 100);
+		});
+	},
+	
+	/**
 	 * Trigger print() function to print the current window
 	 */
-	infolog_print_preview: function ()
+	infolog_print_preview: function()
 	{
-		this.egw.message('Printing....');
+		this.egw.message('Printing...');
 		this.egw.window.print();
 	},
 
