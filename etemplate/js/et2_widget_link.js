@@ -912,7 +912,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display','');
-		this.request = egw.json(this.egw().getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
+		this.request = egw.json(egw_getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
 			[this.app_select.val(), '', request.term, request.options],
 			this._results,
 			this,true,this
