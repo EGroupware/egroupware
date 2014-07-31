@@ -129,7 +129,7 @@ class mail_ui
 			
 			// RegEx to minimize extra openConnection
 			$needle = '/mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate|'
-					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
+//					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
 					. 'mail.mail_ui.ajax_changeProfile|'
 					. '^(?!mail)/';
 			if (!preg_match($needle,$_GET['menuaction']))
