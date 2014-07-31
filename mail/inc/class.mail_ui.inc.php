@@ -875,8 +875,10 @@ class mail_ui
 				if ($levelCt>$cmblevelsCt+1) $fetchCounters=false;
 			}
 			//error_log(__METHOD__.__LINE__.' fc:'.$fetchCounters.'/'.$_fetchCounters.'('.$levelCt.'/'.$cmblevelsCt.')'.' for:'.array2string($key));
-			$fS = $this->mail_bo->getFolderStatus($key,false,($fetchCounters?false:true));
-			//error_log(__METHOD__.__LINE__.array2string($fS));
+			$fS = $this->mail_bo->getFolderStatus($key,false,($fetchCounters?false:true),false);
+			//error_log(__METHOD__.__LINE__.'Object:'.array2string($obj));
+			//error_log(__METHOD__.__LINE__.'Status:'.array2string($fS));
+			//error_log(__METHOD__.__LINE__."-------------------------");
 			$fFP = $folderParts = explode($obj->delimiter, $key);
 			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
 			//get rightmost folderpart
@@ -3323,7 +3325,7 @@ class mail_ui
 					if ($profileID != $this->mail_bo->profileID) continue; // only current connection
 					if ($folderName)
 					{
-						$fS = $this->mail_bo->getFolderStatus($folderName,false);
+						$fS = $this->mail_bo->getFolderStatus($folderName,false,false,false);
 						if (in_array($fS['shortDisplayName'],mail_bo::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
@@ -3565,7 +3567,7 @@ class mail_ui
 		if (!empty($folderName))
 		{
 			$parentFolder=(!empty($folderName)?$folderName:'INBOX');
-			$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+			$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false,false,false);
 			if ($folderInfo['unseen'])
 			{
 				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
@@ -3629,7 +3631,7 @@ class mail_ui
 					strpos($parentFolder,$folderName)===false)))) // indicates that we move the older up the tree within its own branch
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false,false,false);
 					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
 					{
@@ -3674,7 +3676,7 @@ class mail_ui
 						$msg = $e->getMessage();
 					}
 					$this->mail_bo->reopen($parentFolder);
-					$this->mail_bo->getFolderStatus($parentFolder,false);
+					$this->mail_bo->getFolderStatus($parentFolder,false,false,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
 					if ($hasChildren)
 					{
@@ -3706,8 +3708,8 @@ class mail_ui
 			{
 				translation::add_app('mail');
 
-				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false);
-				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false);
+				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false,false,false);
+				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false,false,false);
 				$refreshData = array(
 					$profileID.self::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
 					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
@@ -3756,7 +3758,7 @@ class mail_ui
 					//error_log(__METHOD__.__LINE__."$folderName,  implode($del,$pA), $_newName");
 					$oA = array();
 					$subFolders = array();
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false,false,false);
 					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
 					{
@@ -4015,7 +4017,7 @@ class mail_ui
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
-			$oldFolderInfo = $this->mail_bo->getFolderStatus($trashFolder,false);
+			$oldFolderInfo = $this->mail_bo->getFolderStatus($trashFolder,false,false,false);
 			$response = egw_json_response::get();
 			$response->call('egw.message',lang('empty trash'));
 			$response->call('app.mail.mail_reloadNode',array($icServerID.self::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
