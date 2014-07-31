@@ -3974,9 +3974,10 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 			$this->changeProfile($icServerID);
 		}
-		if($this->mail_bo->connectionStatus !== false) {
+		try
+		{
 			$quota = $this->mail_bo->getQuotaRoot();
-		} else {
+		} catch (Exception $e) {
 			$quota['limit'] = 'NOT SET';
 		}
 
