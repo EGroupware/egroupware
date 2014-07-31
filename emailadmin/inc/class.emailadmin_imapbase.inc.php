@@ -1106,10 +1106,10 @@ class emailadmin_imapbase
 	 * @param _folderName string the foldername
 	 * @param ignoreStatusCache bool ignore the cache used for counters
 	 * @param basicInfoOnly bool retrieve only names and stuff returned by getMailboxes
-	 *
+	 * @param fetchSubscribedInfo bool fetch Subscribed Info on folder
 	 * @return array
 	 */
-	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false)
+	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
 		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
@@ -1196,8 +1196,13 @@ class emailadmin_imapbase
 			return $retValue;
 		}
 		// fetch all in one go for one request, instead of querying them one by one
+		// cache it for a minute 60*60*1
 		// this should reduce communication to the imap server
 		static $subscribedFolders;
+		if ($fetchSubscribedInfo && is_null($subscribedFolders)||empty($subscribedFolders[$this->profileID]))
+		{
+			$subscribedFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+		}
 		static $nameSpace;
 		static $prefix;
 		if (is_null($nameSpace) || empty($nameSpace[$this->profileID])) $nameSpace[$this->profileID] = $this->_getNameSpaces();
@@ -1212,16 +1217,20 @@ class emailadmin_imapbase
 		}
 		if (is_null($prefix) || empty($prefix[$this->profileID]) || empty($prefix[$this->profileID][$_folderName])) $prefix[$this->profileID][$_folderName] = $this->getFolderPrefixFromNamespace($nameSpace[$this->profileID], $_folderName);
 
-		//$subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes('', $_folderName);
-		if (is_null($subscribedFolders) || empty($subscribedFolders[$this->profileID])) $subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes();
+		if ($fetchSubscribedInfo && is_null($subscribedFolders) || empty($subscribedFolders[$this->profileID]))
+		{
+			$subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes();
+			egw_cache::setCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$subscribedFolders,$expiration=60*60*1);
+		}
 
-		if(is_array($subscribedFolders[$this->profileID]) && in_array($_folderName,$subscribedFolders[$this->profileID])) {
+		if($fetchSubscribedInfo && is_array($subscribedFolders[$this->profileID]) && in_array($_folderName,$subscribedFolders[$this->profileID])) {
 			$retValue['subscribed'] = true;
 		}
 
 		try
 		{
-			$folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache);
+			//$folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache);
+			$folderStatus = $this->getMailBoxCounters($_folderName,false);
 			$retValue['messages']		= $folderStatus['MESSAGES'];
 			$retValue['recent']		= $folderStatus['RECENT'];
 			$retValue['uidnext']		= $folderStatus['UIDNEXT'];
@@ -2180,6 +2189,14 @@ class emailadmin_imapbase
 		return true;
 	}
 
+	/**
+	 * subscribe: do the subscription or unsubscribe on a given folder
+	 * returns a boolean on success or failure.
+	 *
+	 * @param string $_folderName
+	 * @param boolean $_status subscribe on true, unsubscribe on false
+	 * @return boolean
+	 */
 	function subscribe($_folderName, $_status)
 	{
 		if (self::$debug) error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName);
@@ -2280,7 +2297,7 @@ class emailadmin_imapbase
 		$inboxData->shortDisplayName	= lang('INBOX');
 		$inboxData->subscribed = true;
 		if($_getCounters == true) {
-			$inboxData->counter = self::getMailBoxCounters('INBOX');
+			$inboxData->counter = $this->getMailBoxCounters('INBOX');
 		}
 		// force unsubscribed by preference showAllFoldersInFolderPane
 		if ($_subscribedOnly == true &&
@@ -2335,6 +2352,7 @@ class emailadmin_imapbase
 							foreach ($subscribedMailboxes as $k => $finfo)
 							{
 								//error_log(__METHOD__.__LINE__.$k.':#:'.array2string($finfo));
+								$subscribedFoldersForCache[$this->icServer->ImapServerId][$k]=
 								$folderBasicInfo[$this->icServer->ImapServerId][$k]=array(
 									'MAILBOX'=>$finfo['MAILBOX'],
 									'ATTRIBUTES'=>$finfo['ATTRIBUTES'],
@@ -2446,6 +2464,10 @@ class emailadmin_imapbase
 								'delimiter'=>$mbx['delimiter'],//lowercase for some reason???
 								'SUBSCRIBED'=>$mbx['SUBSCRIBED'],//seeded by getMailboxes
 							);
+							if ($mbx['SUBSCRIBED'] && !isset($subscribedFoldersForCache[$this->icServer->ImapServerId][$mbx['MAILBOX']]))
+							{
+								$subscribedFoldersForCache[$this->icServer->ImapServerId][$mbx['MAILBOX']] = $folderBasicInfo[$this->icServer->ImapServerId][$mbx['MAILBOX']];
+							}
 						}
 						if ($mbx['SUBSCRIBED'] && (empty($foldersNameSpace[$type]['subscribed']) || !in_array($mbx['MAILBOX'],$foldersNameSpace[$type]['subscribed'])))
 						{
@@ -2589,6 +2611,8 @@ class emailadmin_imapbase
 			}
 */
 		}
+		//subscribed folders may be used in getFolderStatus
+		egw_cache::setCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$subscribedFoldersForCache,$expiration=60*60*1);
 		//echo "<br>FolderNameSpace To Process:";_debug_array($foldersNameSpace);
 		$autoFolderObjects = array();
 		foreach( array('personal', 'others', 'shared') as $type) {
@@ -2726,14 +2750,15 @@ class emailadmin_imapbase
 	 *
 	 * function to retrieve the counters for a given folder
 	 * @param string $folderName
-	 * @return mixed false or array of counters array(MESSAGES,UNSEEN,RECENT,UIDNEXT,UIDVALIDITY)
+	 * @param boolean $_returnObject return the counters as object rather than an array
+	 * @return mixed false or array of counters array(MESSAGES,UNSEEN,RECENT,UIDNEXT,UIDVALIDITY) or object
 	 */
-	function getMailBoxCounters($folderName)
+	function getMailBoxCounters($folderName,$_returnObject=true)
 	{
 		try
 		{
-			$folderStatus = $this->_getStatus($folderName);
-			//error_log(__METHOD__.' ('.__LINE__.') '." FolderStatus:".array2string($folderStatus));
+			$folderStatus = $this->icServer->getMailboxCounters($folderName);
+			//error_log(__METHOD__.' ('.__LINE__.') '.$folderName.": FolderStatus:".array2string($folderStatus).function_backtrace());
 		}
 		catch (Exception $e)
 		{
@@ -2741,6 +2766,7 @@ class emailadmin_imapbase
 			return false;
 		}
 		if(is_array($folderStatus)) {
+			if ($_returnObject===false) return $folderStatus;
 			$status =  new stdClass;
 			$status->messages   = $folderStatus['MESSAGES'];
 			$status->unseen     = $folderStatus['UNSEEN'];

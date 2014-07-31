@@ -459,6 +459,29 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	}
 
 	/**
+	 * getMailboxCounters
+	 *
+	 * @param array/string $mailbox
+	 * @return array with counters
+	 */
+	function getMailboxCounters($mailbox)
+	{
+		try
+		{
+			$status = $this->status($mailbox);
+			foreach ($status as $key => $v)
+			{
+				$_status[strtoupper($key)]=$v;
+			}
+			return $_status;
+		}
+		catch (Exception $e)
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * getStatus
 	 *
 	 * @param string $mailbox
