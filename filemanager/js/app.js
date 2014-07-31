@@ -773,5 +773,32 @@ app.classes.filemanager = AppJS.extend(
 		event.preventDefault();
 		event.stopPropagation();
 		return false;
+	},
+	
+	/**
+	 * Set Sudo button's label and change its onclick handler according to its action
+	 * 
+	 * @param {widget object} _widget sudo buttononly
+	 * @param {string} _action string of action type {login|logout}
+	 */
+	set_sudoButton: function (_widget, _action)
+	{
+		var widget = _widget || this.et2.getWidgetById('sudouser');
+		if (widget)
+		{
+			switch (_action)
+			{
+				case 'login':
+					widget.set_label('Logout');
+					this.et2._inst.submit(widget);
+					break;
+					
+				default:
+					widget.set_label('Superuser');
+					widget.onclick = function(){
+						jQuery('.superuser').css('display','inline');
+					}
+			}
+		}
 	}
 });
