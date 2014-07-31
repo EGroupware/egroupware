@@ -126,7 +126,13 @@ class mail_ui
 			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
-			if ($_GET['menuaction'] != 'mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate')
+			
+			// RegEx to minimize extra openConnection
+			$needle = '/mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate|'
+					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
+					. 'mail.mail_ui.ajax_changeProfile|'
+					. '^(?!mail)/';
+			if (!preg_match($needle,$_GET['menuaction']))
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
