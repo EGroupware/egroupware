@@ -465,10 +465,7 @@ class emailadmin_imapbase
 	 *
 	 * 1) icServerIMAP_connectionError
 	 * 2) icServerSIEVE_connectionError
-	 * 3) defaultimap_nameSpace
-	 * 4) StructureCache (emailStructure Objects)
-	 * 5) SummaryCache (emailSummary Objects)
-	 * 6) INSTANCE OF MAIL_BO
+	 * 3) INSTANCE OF MAIL_BO
 	 *
 	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
@@ -480,18 +477,6 @@ class emailadmin_imapbase
 		if (!is_array($_profileID) && (is_numeric($_profileID) || !(stripos($_profileID,'tracker_')===false)))
 		{
 			self::resetConnectionErrorCache($_profileID);
-			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			if (isset($structure[$_profileID]))
-			{
-				unset($structure[$_profileID]);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
-			}
-			$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			if (isset($summary[$_profileID]))
-			{
-				unset($summary[$_profileID]);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary, $expiration=60*60*1);
-			}
 			$rawHeadersCache = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if (isset($rawHeadersCache[$_profileID]))
 			{
@@ -508,12 +493,6 @@ class emailadmin_imapbase
 				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			}
 
-			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
-			if (isset($nameSpace[$_profileID]))
-			{
-				unset($nameSpace[$_profileID]);
-				egw_cache::setSession('email','defaultimap_nameSpace',$nameSpace);
-			}
 			if (isset(self::$instances[$_profileID])) unset(self::$instances[$_profileID]);
 		}
 	}
@@ -984,68 +963,26 @@ class emailadmin_imapbase
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$this->icServer->ImapServerId.' Connected:'.$this->icServer->_connected);
 		static $_specialUseFolders;
 		if (is_null($_specialUseFolders)||empty($_specialUseFolders)) $_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
-		if (isset($_specialUseFolders[$this->icServer->ImapServerId]) &&!empty($_specialUseFolders[$this->icServer->ImapServerId]))
-		{
-			if(($this->icServer instanceof defaultimap))
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($specialUseFolders[$this->icServer->ImapServerId]));
-				// array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
-				if (empty($this->icServer->acc_folder_trash) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_trash = $f;
-				if (empty($this->icServer->acc_folder_draft) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_draft = $f;
-				if (empty($this->icServer->acc_folder_sent) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_sent = $f;
-				if (empty($this->icServer->acc_folder_template) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_template = $f;
-			}
-			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
-			self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_trash));
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_sent));
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_draft));
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_template));
+		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
+		if (isset($_specialUseFolders[$this->icServer->ImapServerId]) && !empty($_specialUseFolders[$this->icServer->ImapServerId]))
 			return $_specialUseFolders[$this->icServer->ImapServerId];
-		}
-		if(($this->icServer instanceof defaultimap) )
-		{
-			//error_log(__METHOD__.' ('.__LINE__.') ');
-			if(($this->hasCapability('SPECIAL-USE')))
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') ');
-				try
-				{
-					// do not query IMAP Server for SPECIAL-USE Folders, as we assume thev wizard already did that
-					$ret = null;//$this->icServer->getSpecialUseFolders();
-				} catch (Exception $e)
-				{
-					$ret=null;
-				}
-				if (empty($ret))
-				{
-					$_specialUseFolders[$this->icServer->ImapServerId]=array();
-					if (!empty($this->icServer->acc_folder_trash)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_trash]='Trash';
-					if (!empty($this->icServer->acc_folder_draft)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_draft]='Drafts';
-					if (!empty($this->icServer->acc_folder_sent)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_sent]='Sent';
-					if (!empty($this->icServer->acc_folder_template)) $_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]='Templates';
-				}
-				else
-				{
-					foreach ($ret as $k => $f)
-					{
-						if (isset($f['ATTRIBUTES']) && !empty($f['ATTRIBUTES']) &&
-							!in_array('\\nonexistent',$f['ATTRIBUTES']))
-						{
-							foreach (self::$autoFolders as $i => $n) // array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
-							{
-								if (in_array('\\'.strtolower($n),$f['ATTRIBUTES'])) $_specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
-							}
-						}
-					}
-				}
-				egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
-			}
-			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
-			if (empty($this->icServer->acc_folder_trash) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_trash = $f;
-			if (empty($this->icServer->acc_folder_draft) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_draft = $f;
-			if (empty($this->icServer->acc_folder_sent) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_sent = $f;
-			if (empty($this->icServer->acc_folder_template) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_template = $f;
-		}
-		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
-		return $_specialUseFolders[$this->icServer->ImapServerId];
+		$_specialUseFolders[$this->icServer->ImapServerId]=array();
+		//if (!empty($this->icServer->acc_folder_trash) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_trash]))
+			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_trash]='Trash';
+		//if (!empty($this->icServer->acc_folder_draft) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_draft]))
+			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_draft]='Drafts';
+		//if (!empty($this->icServer->acc_folder_sent) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_sent]))
+			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_sent]='Sent';
+		//if (!empty($this->icServer->acc_folder_template) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]))
+			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]='Templates';
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders));//.'<->'.array2string($this->icServer));
+		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
+		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
+		return $_specialUseFolders[$this->icServer->ImapServerId];	
 	}
 
 	/**
