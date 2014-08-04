@@ -65,6 +65,11 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
+
+		// Turn on client side, persistent cache
+		// egw.data system runs encapsulated below etemplate, so this must be
+		// done before the nextmatch is created.
+		this.egw.dataCacheRegister('mail',this.nm_cache, this);
 	},
 
 	/**
@@ -81,6 +86,10 @@ app.classes.mail = AppJS.extend(
 				$j(nm).off('refresh');
 			}
 		}
+		
+		// Unregister client side cache
+		this.egw.dataCacheUnregister('mail');
+
 		delete this.et2_obj;
 		// call parent
 		this._super.apply(this, arguments);
@@ -247,6 +256,32 @@ app.classes.mail = AppJS.extend(
 						break;
 				}
 		}
+	},
+
+	/**
+	 * Callback function for dataFetch caching.
+	 *
+	 * We only cache the first chunk (50 rows), and only if search filter is not set,
+	 * but we cache this for every combination of folder, filter & filter2.
+	 *
+	 * @param {object} query_context Query information from egw.dataFetch()
+	 * @returns {string|false} Cache key, or false to not cache
+	 */
+	nm_cache: function(query_context)
+	{
+		// Only cache first chunk of rows, if no search filter
+		if((!query_context || !query_context.start) && query_context.count == 0 && !(
+			query_context.self._filters.search || false)
+		)
+		{
+			// Make sure keys match, even if some filters are not defined
+			return JSON.stringify({
+				selectedFolder: query_context.self._filters.selectedFolder || '',
+				filter: query_context.self._filters.filter || '',
+				filter2: query_context.self._filters.filter2
+			});
+		}
+		return false;
 	},
 
 	/**
