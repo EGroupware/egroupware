@@ -52,11 +52,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	/**
 	 * Looks like too much data is cached.  Forget some.
 	 *
-	 * Tries to free up localStorage by removing cached data for the given
-	 * prefix, but if none is found it will remove all cached data.
+	 * Tries to free up localStorage by removing the oldest cached data for the
+	 * given prefix, but if none is found it will look at all cached data.
 	 *
 	 * @param {string} _prefix UID / application prefix
-	 * @returns {Number} Number of cached recordsets removed
+	 * @returns {Number} Number of cached recordsets removed, normally 1.
 	 */
 	function _clearCache(_prefix)
 	{
@@ -66,14 +66,38 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		{
 			if(window.localStorage.key(i).indexOf('cache_'+_prefix) == 0)
 			{
-				indexes.push(i);
-				window.localStorage.removeItem(window.localStorage.key(i));
+				var key = window.localStorage.key(i);
+				var cached = JSON.parse(window.localStorage.getItem(key));
+
+				if(cached.lastModification)
+				{
+					indexes.push({
+						key: key,
+						lastModification: cached.lastModification
+					});
+				}
+				else
+				{
+					// No way to know how old it is, just remove it
+					window.localStorage.removeItem(key);
+				}
 			}
 		}
 		// Nothing for that prefix?  Clear all cached data.
 		if(_prefix && indexes.length == 0)
 		{
 			return _clearCache('');
+		}
+		// Found some cached for that prefix, only remove the oldest
+		else if (indexes.length > 0)
+		{
+			indexes.sort(function(a,b) {
+				if(a.lastModification < b.lastModification) return 1;
+				if(a.lastModification > b.lastModification) return -1;
+				return 0;
+			})
+			window.localStorage.removeItem(indexes.pop().key);
+			return 1;
 		}
 		return indexes.length;
 	}
@@ -153,14 +177,17 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 						}
 						catch (e)
 						{
-							egw.debug('warning', 'Tried to cache some data', cache_key, e);
-
-							// Maybe ran out of space?  Free some up...
+							// Maybe ran out of space?  Free some up.
 							if(e.name == 'QuotaExceededError'	// storage quota is exceeded, remove cached data
 								|| 'NS_ERROR_DOM_QUOTA_REACHED')	// FF-name
 							{
 								var count = _clearCache(_context.prefix);
 								egw.debug('info', 'localStorage full, removed ' + count + ' stored datasets');
+							}
+							// No, something worse happened
+							else
+							{
+								egw.debug('warning', 'Tried to cache some data.  It did not work.', cache_key, e);
 							}
 						}
 					}
