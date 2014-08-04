@@ -113,7 +113,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$value = self::get_array(self::$request->content, $form_name, true);
 
 		$value['start'] = 0;
-		$value['num_rows'] = self::INITIAL_ROWS;
+		if(!array_key_exists('num_rows',$value))
+		{
+			$value['num_rows'] = self::INITIAL_ROWS;
+		}
+
 		$value['rows'] = array();
 
 		$send_value = $value;
@@ -159,7 +163,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$send_value['order'] = $send_value['sort']['id'];
 			$send_value['sort'] = $send_value['sort']['asc'] ? 'ASC' : 'DESC';
 		}
-		$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
+		if($value['num_rows'] != 0)
+		{
+			$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
+		}
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
 		// Add favorite here so app doesn't save it in the session
