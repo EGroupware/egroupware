@@ -123,7 +123,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		if (_result.order && _result.data)
 		{
 			// Assemble the correct order uids
-			if(!(_result.order.length && _result.order[0] && _result.order[0].indexOf(_context.prefix) == 0))
+			if(!(_result.order.length && _result.order[0] && _result.order[0].indexOf && _result.order[0].indexOf(_context.prefix) == 0))
 			{
 				for (var i = 0; i < _result.order.length; i++)
 				{
