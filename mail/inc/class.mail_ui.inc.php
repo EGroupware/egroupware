@@ -1576,6 +1576,13 @@ class mail_ui
 			$sR=array();
 			self::callWizard($e->getMessage(), false);
 		}
+		// unlock immediately after fetching the rows
+		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
+		{
+			//error_log(__METHOD__.__LINE__.' unlock tree ->'.$_GET['menuaction']);
+			$response = egw_json_response::get();
+			$response->call('app.mail.unlock_tree');
+		}
 		if (is_array($sR) && count($sR)>0)
 		{
 			foreach ((array)$sR as $key => $v)
@@ -1604,11 +1611,6 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
-		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
-		{
-			$response = egw_json_response::get();
-			$response->call('app.mail.unlock_tree');
-		}
 		return $rowsFetched['messages'];
 	}
 
