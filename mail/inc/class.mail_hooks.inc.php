@@ -513,6 +513,7 @@ class mail_hooks
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		$appname = 'mail';
 		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
+/*
 		$file = array();
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
@@ -545,6 +546,7 @@ class mail_hooks
 				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
 			}
 		}
+*/
 		$file=array();
 		// Destination div for folder tree
 		$file[] = array(
@@ -584,51 +586,7 @@ class mail_hooks
 		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
-/*
-		unset($file);
-		if ($preferences && $sieveEnabledServerCounter)
-		{
-			$menu_title = lang('Sieve');
-			$linkData = array
-			(
-				'menuaction'	=> 'mail.mail_sieve.index',
-				'ajax'			=> 'true'
-			);
-			if(empty($preferences['prefpreventeditfilterrules']) || $preferences['prefpreventeditfilterrules'] == 0)
-				$file['filter rules']	= egw::link('/index.php',$linkData);
 
-			$linkData = array
-			(
-				'menuaction'	=> 'mail.mail_sieve.editVacation',
-				'ajax'			=> 'true'
-			);
-			if(empty($preferences['prefpreventabsentnotice']) || $preferences['prefpreventabsentnotice'] == 0)
-			{
-				$file['vacation notice']	= egw::link('/index.php',$linkData);
-			}
-			if((empty($preferences['prefpreventnotificationformailviaemail']) ||
-				$preferences['prefpreventnotificationformailviaemail'] == 0))
-			{
-				$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification&ajax=true'); //Added email notifications
-			}
-			if ($sieveEnabledServerCounter>=1)
-			{
-				if($sieveEnabledServerCounter==1 && ($icServer instanceof defaultimap)) {
-					if($icServer->enableSieve)
-					{
-						if (count($file)) display_sidebox($appname,$menu_title,$file);
-						unset($file);
-					}
-				}
-				else
-				{
-					if (count($file)) display_sidebox($appname,$menu_title,$file);
-					unset($file);
-				}
-			}
-
-		}
-*/
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
