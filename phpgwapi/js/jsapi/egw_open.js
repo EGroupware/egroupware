@@ -238,8 +238,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * @param string _target optional target / window name
 		 * @param string _popup widthxheight, if a popup should be used
 		 * @param string _target_app app-name for opener
+		 * @param boolean _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+		 * - This option only makes sense to be enabled when the open_link requested without user interaction
 		 */
-		open_link: function(_link, _target, _popup, _target_app)
+		open_link: function(_link, _target, _popup, _target_app, _check_popup_blocker)
 		{
 			// Log for debugging purposes - don't use navigation here to avoid
 			// flooding log with details already captured by egw.open()
@@ -247,7 +249,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
 				_link,_target,_popup,_target_app
 			);
-
+			//Check browser pop-up blocker
+			if (_check_popup_blocker)
+			{
+				if (this._check_popupBlocker(_link, _target, _popup, _target_app)) return;
+			}	
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
 			{
@@ -311,6 +317,37 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			else
 			{
 				_wnd.location.href = _url;
+			}
+		},
+		
+		/**
+		 * Check if browser pop-up blocker is on/off
+		 * 
+		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+		 * @param string _target optional target / window name
+		 * @param string _popup widthxheight, if a popup should be used
+		 * @param string _target_app app-name for opener
+		 * 
+		 * @return boolean returns false if pop-up blocker is off
+		 * - returns true if pop-up blocker is on, 
+		 * - and re-call the open_link with provided parameters, after user interaction. 
+		 */
+		_check_popupBlocker: function(_link, _target, _popup, _target_app)
+		{
+			var popup = window.open("","",'top='+(screen.height/2)+',left='+(screen.width/2)+',width=1,height=1,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,dependent=yes');
+
+			if (!popup||popup == 'undefined'||popup == null)
+			{
+				et2_dialog.show_dialog(function(){
+					window.egw.open_link(_link, _target, _popup, _target_app);
+				},egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1",window.location.hostname) ,
+				"Popup Blocker Warning",{},et2_dialog.BUTTONS_OK,et2_dialog.WARNING_MESSAGE);
+				return true;
+			}
+			else
+			{
+				popup.close();
+				return false;
 			}
 		}
 	};

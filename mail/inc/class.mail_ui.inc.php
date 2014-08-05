@@ -169,7 +169,7 @@ class mail_ui
 		{
 			$response = egw_json_response::get();
 			$windowName = "editMailAccount".self::$icServerID;
-			$response->call("egw.open_link", egw::link('/index.php', $linkData), $windowName, "600x480");
+			$response->call("egw.open_link", egw::link('/index.php', $linkData), $windowName, "600x480",null,true);
 			egw_framework::message($message, 'error');
 			if ($_GET['menuaction'] == 'mail.mail_ui.index')
 			{
