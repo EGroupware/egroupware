@@ -466,6 +466,7 @@ class emailadmin_imapbase
 	 * 1) icServerIMAP_connectionError
 	 * 2) icServerSIEVE_connectionError
 	 * 3) INSTANCE OF MAIL_BO
+	 * 4) HierarchyDelimiter
 	 *
 	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
@@ -482,6 +483,12 @@ class emailadmin_imapbase
 			{
 				unset($rawHeadersCache[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeadersCache, $expiration=60*60*1);
+			}
+			$HierarchyDelimiterCache = egw_cache::getCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+			if (isset($HierarchyDelimiterCache[$_profileID]))
+			{
+				unset($HierarchyDelimiterCache[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$HierarchyDelimiterCache, $expiration=60*60*24*5);
 			}
 			//reset folderObject cache, to trigger reload
 			self::resetFolderObjectCache($_profileID);
@@ -556,7 +563,7 @@ class emailadmin_imapbase
 			{
 				unset($folders2return[$_ImapServerId]);
 			}
-			$folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+			$folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*5);
 			if (isset($folderInfo[$_ImapServerId]))
 			{
 				unset($folderInfo[$_ImapServerId]);
@@ -581,7 +588,7 @@ class emailadmin_imapbase
 			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
 		//egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders,$expiration=60*60*12);
@@ -2098,6 +2105,8 @@ class emailadmin_imapbase
 		{
 			throw new egw_exception(__METHOD__." failed for $oldFolderName (rename to: $newFolderName) with error:".$e->getMessage());;
 		}
+		// clear FolderExistsInfoCache
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
 
 		return $newFolderName;
 
@@ -2122,6 +2131,8 @@ class emailadmin_imapbase
 		{
 			throw new egw_exception("Deleting Folder $_foldername failed! Error:".$e->getMessage());;
 		}
+		// clear FolderExistsInfoCache
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
 
 		return true;
 	}
@@ -3049,9 +3060,9 @@ class emailadmin_imapbase
 			if ($_forceCheck===true) error_log(__METHOD__.' ('.__LINE__.') '.' Called with empty Folder:'.$_folder.function_backtrace());
 			return false;
 		}
-		// reduce traffic within the Instance per User; Expire every 5 Minutes
+		// reduce traffic within the Instance per User; Expire every 5 hours
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Called with Folder:'.$_folder.function_backtrace());
-		if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+		if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*5);
 		//error_log(__METHOD__.' ('.__LINE__.') '.'Cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.($forceCheck?'(forcedCheck)':'').':'.array2string($folderInfo));
 		if (!empty($folderInfo) && isset($folderInfo[$this->profileID]) && isset($folderInfo[$this->profileID][$_folder]) && $forceCheck===false)
 		{
@@ -3090,7 +3101,7 @@ class emailadmin_imapbase
 		{
 			$folderInfo[$this->profileID][$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
 		}
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
 		return (!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) ? $folderInfo[$this->profileID][$_folder] : false);
 	}
 

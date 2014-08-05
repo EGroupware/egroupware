@@ -440,9 +440,8 @@ class mail_ui
 					unset($msg);
 					unset($content['msg']);
 				}
-
-				$quota = $this->mail_bo->getQuotaRoot();
-
+				// call getQuotaRoot asynchronously in getRows by initiating a client Server roundtrip
+				$quota = false;//$this->mail_bo->getQuotaRoot();
 				if($quota !== false && $quota['limit'] != 'NOT SET') {
 					$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
 					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
@@ -454,8 +453,8 @@ class mail_ui
 					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
 					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 				}
-
-				$vacation = $this->gatherVacation();
+				// call gatherVacation asynchronously in getRows by initiating a client Server roundtrip
+				$vacation = false;//$this->gatherVacation();
 				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 				if($vacation) {
 					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
@@ -1478,13 +1477,13 @@ class mail_ui
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
 		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
-		if ($this->mail_bo->folderExists($_folderName,true))
+		if ($this->mail_bo->folderExists($_folderName))
 		{
 			$toSchema = $this->mail_bo->isDraftFolder($_folderName)||$this->mail_bo->isSentFolder($_folderName)||$this->mail_bo->isTemplateFolder($_folderName);
 		}
 		else
 		{
-			error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
+			//error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
 			$query['selectedFolder']=$this->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
 		}
 		$this->mail_bo->saveSessionData();
@@ -1576,13 +1575,16 @@ class mail_ui
 			$sR=array();
 			self::callWizard($e->getMessage(), false);
 		}
+		$response = egw_json_response::get();
 		// unlock immediately after fetching the rows
 		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
 		{
 			//error_log(__METHOD__.__LINE__.' unlock tree ->'.$_GET['menuaction']);
-			$response = egw_json_response::get();
 			$response->call('app.mail.unlock_tree');
 		}
+		// done asynchronously initiating a client->server roundtrip to save time on the initial call
+		$response->call('app.mail.mail_callRefreshVacationNotice',$this->mail_bo->profileID);
+		$response->call('app.mail.mail_refreshQuotaDisplay',$this->mail_bo->profileID);
 		if (is_array($sR) && count($sR)>0)
 		{
 			foreach ((array)$sR as $key => $v)
