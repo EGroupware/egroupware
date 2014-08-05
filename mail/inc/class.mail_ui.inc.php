@@ -123,7 +123,7 @@ class mail_ui
 		}
 
 		try {
-			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID);
+			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID,$_validate=true, $_oldImapServerObject=false, $_reuseCache=true);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 			
@@ -207,7 +207,7 @@ class mail_ui
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 
 		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
-		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
+		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID,$_validate=true, $_oldImapServerObject=false, $_reuseCache=true);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
