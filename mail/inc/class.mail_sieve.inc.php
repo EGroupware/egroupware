@@ -620,6 +620,8 @@ class mail_sieve
 									{
 										self::setAsyncJob($newVacation);
 									}
+									//Reset vacationNotice cache which is used in mail_ui get_rows
+									egw_cache::unsetCache(egw_cache::INSTANCE,'email', 'vacationNotice'+$icServer->acc_id);
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}

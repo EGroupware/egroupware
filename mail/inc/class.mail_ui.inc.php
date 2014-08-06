@@ -2296,8 +2296,20 @@ class mail_ui
 			$sieveServer = $this->mail_bo->icServer;
 			try
 			{
-				$sieveServer->retrieveRules();
-				$vacation = $sieveServer->getVacation();
+				//Get vacation from cache if it's available
+				$vacationCached = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$sieveServer->acc_id);
+				
+				if (!$vacationCached)
+				{
+					$sieveServer->retrieveRules();
+					$vacation = $sieveServer->getVacation();
+					// Set vacation to the instance cache for particular account
+					egw_cache::setCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$sieveServer->acc_id, $vacation);
+				}
+				else
+				{
+					return $vacationCached;
+				}
 			} catch (PEAR_Exception $ex) {
 				$this->callWizard($ex->getMessage());
 			}
