@@ -55,7 +55,7 @@ class admin_ui
 			'order' => 'account_lid',
 			'sort' => 'ASC',
 			'row_id' => 'account_id',
-			'default_cols' => '!account_id,account_created',
+			'default_cols' => '!account_id,created',
 			'actions' => self::user_actions(),
 		);
 		//$content['msg'] = 'Hi Ralf ;-)';
