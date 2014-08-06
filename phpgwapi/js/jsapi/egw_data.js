@@ -24,6 +24,17 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	 */
 	var KNOWN_UID_LIMIT = 200;
 
+	/**
+	 * Cache lifetime
+	 *
+	 * If cached results are used, we check their timestamp.  If the timestamp
+	 * is older than this, we will also ask for fresh data.  For cached data
+	 * younger than this, we only return the cache
+	 *
+	 * 29 seconds, 1 less then the fastest nextmatch autorefresh option
+	 */
+	var CACHE_LIFETIME = 29; // seconds
+
 	var lastModification = null;
 
 	/**
@@ -161,7 +172,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			}
 
 			// Check to see if we need long-term caching of the query and its results
-			if(window.localStorage && _context.prefix && cacheCallback[_context.prefix])
+			if(window.localStorage && _context.prefix && cacheCallback[_context.prefix]  && !_context.no_cache)
 			{
 				// Ask registered callbacks if we should cache this
 				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
@@ -318,10 +329,39 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 						var cached = window.localStorage.getItem(cache_key);
 						if(cached)
 						{
-							egw.debug('log', 'Data cached query: ' + cache_key + "\nprocessing...");
-							// Call right away with cached data.  We'll still ask the server
-							// though.
-							parseServerResponse(JSON.parse(cached), _callback, _context);
+							cached = JSON.parse(cached);
+							var needs_update = true;
+
+							// Check timestamp
+							if(cached.lastModification && ((Date.now()/1000) - cached.lastModification) < CACHE_LIFETIME)
+							{
+								needs_update = false;
+							}
+
+							egw.debug('log', 'Data cached query from ' + new Date(cached.lastModification*1000)+': ' + cache_key + '('+
+								(needs_update ? 'will be' : 'will not be')+" updated)\nprocessing...");
+
+							// Call right away with cached data, but set no_cache flag
+							// to avoid re-caching this data with a new timestamp.
+							// We may still ask the server though.
+							var no_cache = _context.no_cache;
+							_context.no_cache = true;
+							parseServerResponse(cached, _callback, _context);
+							_context.no_cache = no_cache;
+
+
+							// If cache registrant wants notification of cache useage,
+							// let it know
+							if(cc.notification)
+							{
+								cc.notification.call(cc.context, needs_update);
+							}
+
+							if(!needs_update)
+							{
+								// Cached data is new enough, skip the server call
+								return;
+							}
 						}
 					}
 				}
@@ -356,20 +396,25 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		 *
 		 * @param {string} prefix UID / Application prefix should match the
 		 *	individual record prefix
-		 * @param {function} callback A function that will analize the provided fetch
+		 * @param {function} callback_function A function that will analize the provided fetch
 		 *	parameters and return a reproducable cache key, or false to not cache
 		 *	the request.
+		 * @param {function} notice_function A function that will be called whenever
+		 *	cached data is used.  It is passed one parameter, a boolean that indicates
+		 *	if the server is or will be queried to refresh the cache.  Do not fetch additional data
+		 *	inside this callback, and return quickly.
 		 * @param {object} context Context for callback function.
 		 */
-		dataCacheRegister: function(prefix, callback, context)
+		dataCacheRegister: function(prefix, callback_function, notice_function, context)
 		{
 			if(typeof cacheCallback[prefix] == 'undefined')
 			{
 				cacheCallback[prefix] = [];
 			}
 			cacheCallback[prefix].push({
-				callback: callback,
-				context: context
+				callback: callback_function,
+				notification: notice_function || false,
+				context: context || null
 			});
 		},
 
