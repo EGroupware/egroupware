@@ -27,8 +27,8 @@
 					<nextmatch-sortheader label="EMail" id="account_email"/>
 					<nextmatch-sortheader label="Primary group" id="account_primary_group"/>
 					<nextmatch-sortheader label="Expires" id="account_expires"/>
-					<nextmatch-sortheader label="Created" id="account_created"/>
-					<nextmatch-sortheader label="Last modified" id="account_modified"/>
+					<nextmatch-sortheader label="Created" id="created"/>
+					<nextmatch-sortheader label="Last modified" id="modified"/>
 				</row>
 				<row class="$row_cont[status_class]">
 					<description id="${row}[account_lid]" no_lang="1"/>
