@@ -15,6 +15,7 @@
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
+				<column/>
 				<column width="15%"/>
 				<column width="50%"/>
 				<column/>
