@@ -69,7 +69,17 @@ app.classes.mail = AppJS.extend(
 		// Turn on client side, persistent cache
 		// egw.data system runs encapsulated below etemplate, so this must be
 		// done before the nextmatch is created.
-		this.egw.dataCacheRegister('mail',this.nm_cache, this);
+		this.egw.dataCacheRegister('mail',
+			// Called to determine cache key
+			this.nm_cache,
+			// Called whenever cache is used
+			// TODO: Change this as needed
+			function(server_query)
+			{
+				if(!server_query) this.unlock_tree();
+			},
+			this
+		);
 	},
 
 	/**
