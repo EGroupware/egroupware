@@ -1118,7 +1118,7 @@ class filemanager_ui
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
-					$eacl['path'] = parse_url($eacl['path'],PHP_URL_PATH);
+					$eacl['path'] = rtrim(parse_url($eacl['path'],PHP_URL_PATH),'/');		
 					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] ||
 						$eacl['path'] != $content['path'] || !$content['is_owner'];
 				}
