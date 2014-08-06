@@ -2294,9 +2294,13 @@ class mail_ui
 		if ($vacation)
 		{
 			$sieveServer = $this->mail_bo->icServer;
-		
-			$sieveServer->retrieveRules();
-			$vacation = $sieveServer->getVacation();
+			try
+			{
+				$sieveServer->retrieveRules();
+				$vacation = $sieveServer->getVacation();
+			} catch (PEAR_Exception $ex) {
+				$this->callWizard($ex->getMessage());
+			}
 		}
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		return $vacation;
