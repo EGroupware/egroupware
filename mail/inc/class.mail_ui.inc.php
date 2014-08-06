@@ -1582,9 +1582,7 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.' unlock tree ->'.$_GET['menuaction']);
 			$response->call('app.mail.unlock_tree');
 		}
-		// done asynchronously initiating a client->server roundtrip to save time on the initial call
-		$response->call('app.mail.mail_callRefreshVacationNotice',$this->mail_bo->profileID);
-		$response->call('app.mail.mail_refreshQuotaDisplay',$this->mail_bo->profileID);
+		
 		if (is_array($sR) && count($sR)>0)
 		{
 			foreach ((array)$sR as $key => $v)
