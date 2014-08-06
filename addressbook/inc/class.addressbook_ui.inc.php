@@ -2366,7 +2366,7 @@ window.egw_LAB.wait(function() {
 							case 'infolog':
 							case 'tracker':
 							default:
-								egw_json_response::get()->apply('app.addressbook.view_set_list',Array('linked',$contact_id));
+								egw_json_response::get()->apply('app.addressbook.view_set_list',Array(Array('action'=>'addressbook', 'action_id' => $contact_id)));
 								break;
 						}
 
@@ -2387,7 +2387,6 @@ window.egw_LAB.wait(function() {
 					'ajax' => 'true'
 				));
 			}
-			$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 			if (isset($_GET['index']))
 			{
 				$content['index'] = (int)$_GET['index'];
@@ -2399,6 +2398,7 @@ window.egw_LAB.wait(function() {
 				$num_rows = $this->get_rows($query, $rows, $readonlys, true);
 			}
 		}
+		$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 
 		// make everything not explicit mentioned readonly
 		$readonlys['__ALL__'] = true;

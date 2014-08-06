@@ -104,10 +104,9 @@ app.classes.addressbook = AppJS.extend(
 	/**
 	 * Set link filter for the already open & rendered  list
 	 *
-	 * @param {string} col_filter_name Name of the column filter to set
-	 * @param {string} contact_id New contact ID
+	 * @param {Object} filter Object with key / value pairs of filters to set
 	 */
-	view_set_list: function(col_filter_name, contact_id)
+	view_set_list: function(filter)
 	{
 		// Find the infolog list
 		var list = etemplate2.getById(
@@ -116,9 +115,6 @@ app.classes.addressbook = AppJS.extend(
 		var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
 		if(nm)
 		{
-			// Update the link filter to new contact
-			var filter = {col_filter:{}};
-			filter.col_filter[col_filter_name] = 'addressbook:'+contact_id;
 			nm.applyFilters(filter);
 		}
 	},
