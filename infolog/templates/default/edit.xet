@@ -30,7 +30,7 @@
 		<grid width="100%" height="245">
 			<columns>
 				<column width="80" class="infolog_normalWrap"/>
-				<column width="90"/>
+				<column width="190"/>
 				<column width="100"/>
 				<column/>
 			</columns>
@@ -40,7 +40,7 @@
 				</row>
 				<row class="row">
 					<description value="Project"/>
-					<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None'/>
+					<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None' class="infolog_projectName"/>
 				</row>
 				<row class="row">
 					<description value="Price"/>

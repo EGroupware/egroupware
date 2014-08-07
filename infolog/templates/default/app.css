@@ -35,7 +35,7 @@ table.infolog_fullWidth { width: 100%; }
 /* date-duration styling in project manager tab */
 .infolog_date_duration:first-child input.et2_date_duration{
 	float: left;
-	width:88px;
+	width:137px;
 }
 .infolog_date_duration select.et2_date_duration {
 	width: 52%;
@@ -51,4 +51,8 @@ tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 t
 tr.dialogOperators td,.dialogFooterToolbar {
 	padding: 5px 0 5px 0;
 	vertical-align: middle;
+}
+/*Project Name*/
+#infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
+  width: 291px;
 }

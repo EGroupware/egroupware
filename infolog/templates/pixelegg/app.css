@@ -105,7 +105,7 @@ table.infolog_fullWidth {
 /* date-duration styling in project manager tab */
 .infolog_date_duration:first-child input.et2_date_duration {
   float: left;
-  width: 88px;
+  width: 137px;
 }
 .infolog_date_duration select.et2_date_duration {
   width: 52%;
@@ -124,6 +124,10 @@ tr.dialogOperators td,
 .dialogFooterToolbar {
   padding: 5px 0 5px 0;
   vertical-align: middle;
+}
+/*Project Name*/
+#infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
+  width: 291px;
 }
 /* #############################################################################
 // iframe
@@ -383,10 +387,6 @@ input#infolog-edit_info_subject {
 /*Delegation ************************************/
 #infolog-edit_infolog-edit-delegation .inputFullWidth input {
   width: 96%;
-}
-/*Projektmanager*/
-#infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
-  width: auto;
 }
 /*Historie*/
 /**/
