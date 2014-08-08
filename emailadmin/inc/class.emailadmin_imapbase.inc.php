@@ -503,7 +503,7 @@ class emailadmin_imapbase
 				unset($eMailListContainsDeletedMessages[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($account_id),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			}
-			$vacationCached = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.trim($account_id),null,$expiration=60*60*24*1);
+			$vacationCached = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.trim($account_id),$callback=null,$callback_params=array(),$expiration=60*60*24*1);
 			if (isset($vacationCached[$_profileID]))
 			{
 				unset($vacationCached[$_profileID]);
