@@ -469,6 +469,7 @@ class emailadmin_imapbase
 	 * 2) icServerSIEVE_connectionError
 	 * 3) INSTANCE OF MAIL_BO
 	 * 4) HierarchyDelimiter
+	 * 5) VacationNotice
 	 *
 	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
@@ -502,6 +503,12 @@ class emailadmin_imapbase
 				unset($eMailListContainsDeletedMessages[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($account_id),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			}
+			$vacationCached = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.trim($account_id),null,$expiration=60*60*24*1);
+			if (isset($vacationCached[$_profileID]))
+			{
+				unset($vacationCached[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','vacationNotice'.trim($account_id),$vacationCached, $expiration=60*60*24*1);
+			}
 
 			if (isset(self::$instances[$_profileID])) unset(self::$instances[$_profileID]);
 		}
@@ -518,6 +525,7 @@ class emailadmin_imapbase
 				egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($account_id),array(), $expiration=60*60*1);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($account_id),array(), $expiration=60*60*24*5);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($account_id),array(), $expiration=60*60*1);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','vacationNotice'.trim($account_id),array(), $expiration=60*60*24*1);
 			}
 		}
 	}
