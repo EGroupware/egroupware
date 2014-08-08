@@ -142,7 +142,7 @@ class mail_ui
 		catch (Exception $e)
 		{
 			// redirect to mail wizard to handle it (redirect works for ajax too)
-			self::callWizard($e->getMessage());
+			self::callWizard($e->getMessage(),true,'error');
 		}
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
@@ -152,8 +152,9 @@ class mail_ui
 	 *
 	 * @param string $message
 	 * @param boolean $exit If true, will call common::egw_exit() after opening the wizardpopup
+	 * @param string $msg_type = 'success' message type
 	 */
-	static function callWizard($message, $exit=true)
+	static function callWizard($message, $exit=true, $msg_type='success')
 	{
 		//error_log(__METHOD__."('$message', $exit) ".function_backtrace());
 		$linkData=(self::$icServerID ? array(
@@ -162,7 +163,8 @@ class mail_ui
 			) : array(
 				'menuaction' => 'mail.mail_wizard.add',
 			)) + array(
-				'msg' => $message
+				'msg' => $message,
+				'msg_type' => $msg_type
 			);
 
 		if (egw_json_response::isJSONResponse())
@@ -679,7 +681,7 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			self::callWizard($e->getMessage());
+			self::callWizard($e->getMessage(),true, 'error');
 		}
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -807,7 +809,7 @@ class mail_ui
 			$folderObjects=array();
 			if ($_popWizard)
 			{
-				self::callWizard($e->getMessage(), false);
+				self::callWizard($e->getMessage(), false, 'error');
 			}
 			$c = 1;
 		}
@@ -1573,7 +1575,7 @@ class mail_ui
 		{
 			$sortResultwH=array();
 			$sR=array();
-			self::callWizard($e->getMessage(), false);
+			self::callWizard($e->getMessage(), false, 'error');
 		}
 		$response = egw_json_response::get();
 		// unlock immediately after fetching the rows
@@ -2309,7 +2311,7 @@ class mail_ui
 					return $vacationCached;
 				}
 			} catch (PEAR_Exception $ex) {
-				$this->callWizard($ex->getMessage());
+				$this->callWizard($ex->getMessage(), true, 'error');
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
@@ -3883,7 +3885,7 @@ class mail_ui
 				$this->changeProfile($icServerID);
 			}
 			catch (Exception $e) {
-				self::callWizard($e->getMessage(),true);
+				self::callWizard($e->getMessage(),true, 'error');
 			}
 
 		}
