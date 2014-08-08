@@ -834,7 +834,7 @@ class emailadmin_wizard
 		// app is trying to tell something, while redirecting to wizard
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))
 		{
-			if (stripos($_GET['msg'],'fatal error:')!==false) $msg_type = 'error';
+			if (stripos($_GET['msg'],'fatal error:')!==false || $_GET['msg_type'] == 'error') $msg_type = 'error';
 		}
 		if ($content['acc_id'] || (isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0) ) emailadmin_imapbase::unsetCachedObjects($content['acc_id']?$content['acc_id']:$_GET['acc_id']);
 		$tpl = new etemplate_new('emailadmin.account');
