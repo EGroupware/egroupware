@@ -1540,10 +1540,11 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_emptyTrash: function(action,_senders) {
 		var server = _senders[0].iface.id.split('::');
+		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
+		
 		this.egw.message(this.egw.lang('empty trash'));
-		this.lock_tree();
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]],function(){self.unlock_tree();})
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree()})
 			.sendRequest(true);
 	},
 

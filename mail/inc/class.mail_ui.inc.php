@@ -4020,16 +4020,17 @@ class mail_ui
 	}
 
 	/**
-	 * empty trash folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * Empty trash folder
 	 *
 	 * @param string $icServerID id of the server to empty its trashFolder
+	 * @param string $selectedFolder seleted(active) folder by nm filter
 	 * @return nothing
 	 */
-	function ajax_emptyTrash($icServerID)
+	function ajax_emptyTrash($icServerID, $selectedFolder)
 	{
 		//error_log(__METHOD__.__LINE__.' '.$icServerID);
 		translation::add_app('mail');
-
+		$response = egw_json_response::get();
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
@@ -4038,20 +4039,23 @@ class mail_ui
 		}
 		$trashFolder = $this->mail_bo->getTrashFolder();
 		if(!empty($trashFolder)) {
+			if ($selectedFolder == $icServerID.self::$delimiter.$trashFolder)
+			{
+				// Lock the tree if the active folder is Trash folder
+				$response->call('app.mail.lock_tree');
+			}
 			$this->mail_bo->compressFolder($trashFolder);
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
 			$oldFolderInfo = $this->mail_bo->getFolderStatus($trashFolder,false,false,false);
-			$response = egw_json_response::get();
 			$response->call('egw.message',lang('empty trash'));
 			$response->call('app.mail.mail_reloadNode',array($icServerID.self::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
 			$this->changeProfile($rememberServerID);
 		}
-		else
+		else if ($selectedFolder == $icServerID.self::$delimiter.$trashFolder)
 		{
-			$response = egw_json_response::get();
 			$response->call('egw.refresh',lang('empty trash'),'mail');
 		}
 	}
