@@ -889,7 +889,7 @@ class timesheet_ui extends timesheet_bo
 		$sel_options = array(
 			'ts_owner'   => $read_grants,
 			'pm_id'      => array(lang('No project')),
-			'cat_id'     => array(lang('None')),
+			'cat_id'     => array(array('value' => '', 'label' => lang('all')), array('value' => 0, 'label'=>lang('None'))),
 			'ts_status'  => $this->status_labels+array(lang('No status')),
 		);
 		if($this->config_data['history'])
