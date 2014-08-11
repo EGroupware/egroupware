@@ -991,7 +991,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_callRefreshVacationNotice: function(_server)
 	{
-		egw.jsonq('mail.mail_ui.ajax_refreshVacationNotice',[_server]);
+		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
 	},
 	/**
 	 * Make sure attachments have all needed data, so they can be found for
