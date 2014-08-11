@@ -132,7 +132,7 @@ class mail_ui
 //					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
 					. 'mail.mail_ui.ajax_changeProfile|'
 					. '^(?!mail)/';
-			if (!preg_match($needle,$_GET['menuaction']))
+			if (!preg_match($needle,$_GET['menuaction']) && !egw_json_request::isJSONRequest())
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
@@ -793,10 +793,10 @@ class mail_ui
 			$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
 			//$endtime = microtime(true) - $starttime;
 			//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
-			$trashFolder = $this->mail_bo->getTrashFolder();
-			$templateFolder = $this->mail_bo->getTemplateFolder();
-			$draftFolder = $this->mail_bo->getDraftFolder();
-			$sentFolder = $this->mail_bo->getSentFolder();
+			$trashFolder = $this->mail_bo->getTrashFolder(false);
+			$templateFolder = $this->mail_bo->getTemplateFolder(false);
+			$draftFolder = $this->mail_bo->getDraftFolder(false);
+			$sentFolder = $this->mail_bo->getSentFolder(false);
 			$userDefinedFunctionFolders = array();
 			if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
 			if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
@@ -881,11 +881,6 @@ class mail_ui
 			{
 				if ($levelCt>$cmblevelsCt+1) $fetchCounters=false;
 			}
-			//error_log(__METHOD__.__LINE__.' fc:'.$fetchCounters.'/'.$_fetchCounters.'('.$levelCt.'/'.$cmblevelsCt.')'.' for:'.array2string($key));
-			$fS = $this->mail_bo->getFolderStatus($key,false,($fetchCounters?false:true),false);
-			//error_log(__METHOD__.__LINE__.'Object:'.array2string($obj));
-			//error_log(__METHOD__.__LINE__.'Status:'.array2string($fS));
-			//error_log(__METHOD__.__LINE__."-------------------------");
 			$fFP = $folderParts = explode($obj->delimiter, $key);
 			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
 			//get rightmost folderpart
@@ -921,10 +916,14 @@ class mail_ui
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
-			if ($fS['unseen'])
+			if ($fetchCounters)
 			{
-				$oA['text'] = $oA['text'].' ('.$fS['unseen'].')';
-				$oA['style'] = 'font-weight: bold';
+				$count = $this->mail_bo->getMailBoxCounters($key,true);
+				if($count->unseen)
+				{
+					$oA['text'] = $oA['text'].' ('.$count->unseen.')';
+					$oA['style'] = 'font-weight: bold';
+				}
 			}
 			$path = $this->mail_bo->profileID.self::$delimiter.$key;
 			$oA['id'] = $path; // ID holds the PATH
@@ -3918,7 +3917,7 @@ class mail_ui
 			if (empty($icServerID)) $icServerID = $mail->mail_bo->profileID;
 			if ($icServerID != $mail->mail_bo->profileID) return;
 
-			$vacation = $mail->gatherVacation($cachedVacations);
+			$vacation = $mail->gatherVacation();
 		}
 
 		if($vacation) {
