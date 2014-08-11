@@ -1064,10 +1064,11 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_queueRefreshFolderList: function(_folders)
 	{
+		var self = this;
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders]);
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree()});
 		}, 100);
 	},
 
