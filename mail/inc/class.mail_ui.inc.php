@@ -2284,20 +2284,25 @@ class mail_ui
 	/**
 	 * fetch vacation info from active Server using icServer object
 	 *
+	 * @param array $cachedVacations an array of cached vacations for an user
 	 * @return array|boolean array with vacation on success or false on failure
 	 */
-	function gatherVacation()
+	function gatherVacation($cachedVacations = array())
 	{
-		$vacation = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
+		$isVacationEnabled = $this->mail_bo->icServer->acc_sieve_enabled && ($this->mail_bo->icServer->acc_sieve_host||$this->mail_bo->icServer->acc_imap_host);
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 
-		if ($vacation)
+		if ($isVacationEnabled)
 		{
 			$sieveServer = $this->mail_bo->icServer;
 			try
 			{
 				$sieveServer->retrieveRules();
 				$vacation = $sieveServer->getVacation();
+				
+				$cachedVacations = array($sieveServer->acc_id => $vacation) + $cachedVacations;
+				// Set vacation to the instance cache for particular account with expiration of one day
+				egw_cache::setCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations, 60*60*24);
 			} catch (PEAR_Exception $ex) {
 				$this->callWizard($ex->getMessage(), true, 'error');
 			}
@@ -3897,13 +3902,23 @@ class mail_ui
 	 *						if other than active profile; nothing is done!
 	 * @return nothing
 	 */
-	function ajax_refreshVacationNotice($icServerID=null)
+	public static function ajax_refreshVacationNotice($icServerID=null)
 	{
-		//error_log(__METHOD__.__LINE__.array2string($icServerId));
-		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
-		if ($icServerID != $this->mail_bo->profileID) return;
-		$vacation = $this->gatherVacation();
-		//error_log(__METHOD__.__LINE__.array2string($vacation));
+		//Get vacation from cache if it's available
+		$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid']);
+		$vacation = $cachedVacations[$icServerID];
+
+		if (!$vacation)
+		{
+			// Create mail app object
+			$mail = new mail_ui();
+			
+			if (empty($icServerID)) $icServerID = $mail->mail_bo->profileID;
+			if ($icServerID != $mail->mail_bo->profileID) return;
+			
+			$vacation = $mail->gatherVacation($cachedVacations);
+		}
+		
 		if($vacation) {
 			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
 			{
