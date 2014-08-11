@@ -126,7 +126,7 @@ class mail_ui
 			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID,$_validate=true, $_oldImapServerObject=false, $_reuseCache=true);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
-			
+
 			// RegEx to minimize extra openConnection
 			$needle = '/mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate|'
 //					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
@@ -176,7 +176,7 @@ class mail_ui
 			if ($_GET['menuaction'] == 'mail.mail_ui.index')
 			{
 				$response->call('framework.setSidebox','mail',array(),'md5');
-			}	
+			}
 			if ($exit)
 			{
 				common::egw_exit();
@@ -1458,7 +1458,7 @@ class mail_ui
 		{
 			list($app,$_profileID,$folderName) = explode(self::$delimiter,$_folderName,3);
 			unset($app);
-		}	
+		}
 		if (is_numeric($_profileID))
 		{
 			if ($_profileID && $_profileID != $this->mail_bo->profileID)
@@ -1502,7 +1502,7 @@ class mail_ui
 				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
 				{
 					emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
-				}	
+				}
 			}
 			$filter = array(
 				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
@@ -1584,7 +1584,7 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.' unlock tree ->'.$_GET['menuaction']);
 			$response->call('app.mail.unlock_tree');
 		}
-		
+
 		if (is_array($sR) && count($sR)>0)
 		{
 			foreach ((array)$sR as $key => $v)
@@ -2137,7 +2137,7 @@ class mail_ui
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-				
+
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
@@ -2299,11 +2299,13 @@ class mail_ui
 			{
 				$sieveServer->retrieveRules();
 				$vacation = $sieveServer->getVacation();
-				
-				$cachedVacations = array($sieveServer->acc_id => $vacation) + $cachedVacations;
+
+				$cachedVacations = array($sieveServer->acc_id => $vacation) + (array)$cachedVacations;
 				// Set vacation to the instance cache for particular account with expiration of one day
 				egw_cache::setCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations, 60*60*24);
-			} catch (PEAR_Exception $ex) {
+			}
+			catch (PEAR_Exception $ex)
+			{
 				$this->callWizard($ex->getMessage(), true, 'error');
 			}
 		}
@@ -3659,7 +3661,7 @@ class mail_ui
 						$nameSpace = $this->mail_bo->_getNameSpaces();
 						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
 						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
-						
+
 						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
 						foreach ($subFolders as $k => $folder)
 						{
@@ -3912,13 +3914,13 @@ class mail_ui
 		{
 			// Create mail app object
 			$mail = new mail_ui();
-			
+
 			if (empty($icServerID)) $icServerID = $mail->mail_bo->profileID;
 			if ($icServerID != $mail->mail_bo->profileID) return;
-			
+
 			$vacation = $mail->gatherVacation($cachedVacations);
 		}
-		
+
 		if($vacation) {
 			if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
 			{
