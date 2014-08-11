@@ -705,6 +705,10 @@ class timesheet_ui extends timesheet_bo
 
 				// Remove fake modified date, it breaks nextmatch checks
 				unset($row['ts_modified']);
+				
+				// Set flag to avoid actions on these rows
+				$row['no_actions'] = true;
+				
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
