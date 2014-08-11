@@ -35,6 +35,12 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	 */
 	var CACHE_LIFETIME = 29; // seconds
 
+	/**
+	 * Cached fetches are differentiated from actual results by using this prefix
+	 * @type String
+	 */
+	var CACHE_KEY_PREFIX = 'cached_fetch_';
+
 	var lastModification = null;
 
 	/**
@@ -75,9 +81,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		var indexes = [];
 		for(var i = 0; i < window.localStorage.length; i++)
 		{
-			if(window.localStorage.key(i).indexOf('cache_'+_prefix) == 0)
+			var key = window.localStorage.key(i);
+
+			// This is a cached fetch for many rows
+			if(key.indexOf(CACHE_KEY_PREFIX+_prefix) == 0)
 			{
-				var key = window.localStorage.key(i);
 				var cached = JSON.parse(window.localStorage.getItem(key));
 
 				if(cached.lastModification)
@@ -85,6 +93,23 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					indexes.push({
 						key: key,
 						lastModification: cached.lastModification
+					});
+				}
+				else
+				{
+					// No way to know how old it is, just remove it
+					window.localStorage.removeItem(key);
+				}
+			}
+			// Actual cached data
+			else if (key.indexOf(_prefix) == 0)
+			{
+				var cached = JSON.parse(window.localStorage.getItem(key));
+				if(cached.timestamp)
+				{
+					indexes.push({
+						key: key,
+						lastModification: cached.timestamp
 					});
 				}
 				else
@@ -181,9 +206,37 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					var cache_key = false
 					if(cache_key = cc.callback.call(cc.context, _context))
 					{
-						cache_key = 'cache_' + _context.prefix + '::' + cache_key;
+						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 						try
 						{
+							for (var key in _result.data)
+							{
+								var uid = UID(key, (typeof _context == "object" && _context != null) ? _context.prefix : "");
+								
+								// Register a handler on each data so we can know if it is updated or removed
+								egw.dataUnregisterUID(uid, null, cache_key);
+								egw.dataRegisterUID(uid, function(data, _uid) {
+									// If data item is removed, remove it from cached fetch too
+									if(data == null)
+									{
+										var cached = JSON.parse(window.localStorage[this]) || false;
+										if(cached && cached.order && cached.order.indexOf(_uid) >= 0)
+										{
+											cached.order.splice(cached.order.indexOf(_uid),1);
+											if(cached.total) cached.total--;
+											window.localStorage[this] = JSON.stringify(cached);
+										}
+										window.localStorage.removeItem(_uid);
+									}
+									else
+									{
+										// Update or store data in long-term storage
+										window.localStorage[_uid] = JSON.stringify({timestamp: (new Date).getTime(), data: data});
+									}
+								},cache_key);
+							}
+							// Don't keep data in long-term cache with request also
+							_result.data = {};
 							window.localStorage.setItem(cache_key,JSON.stringify(_result));
 						}
 						catch (e)
@@ -324,7 +377,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					var cache_key = false
 					if(cache_key = cc.callback.call(cc.context, _context))
 					{
-						cache_key = 'cache_' + _context.prefix + '::' + cache_key;
+						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 
 						var cached = window.localStorage.getItem(cache_key);
 						if(cached)
@@ -388,7 +441,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		/**
 		 * Turn on long-term client side cache of a particular request
 		 * (cache the nextmatch query results) for fast, immediate response
-		 * with old data.
+		 * with old data.  
 		 *
 		 * The request is still sent to the server, and the cache is updated
 		 * with fresh data, and any needed callbacks are called again with
@@ -509,6 +562,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 
 				// Delete the data from the localStorage
 				delete localStorage[uid];
+
+				// We don't clean long-term storage because of age until it runs
+				// out of space
 			}
 		}
 	}, CLEANUP_INTERVAL);
@@ -551,7 +607,13 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			{
 				// Update the timestamp and call the given callback function
 				localStorage[_uid].timestamp = (new Date).getTime();
-				_callback.call(_context, localStorage[_uid].data);
+				_callback.call(_context, localStorage[_uid].data, _uid);
+			}
+			// Check long-term storage
+			else if(window.localStorage && window.localStorage[_uid])
+			{
+				localStorage[_uid] = JSON.parse(window.localStorage[_uid]);
+				_callback.call(_context, localStorage[_uid].data, _uid);
 			}
 			else if (_execId && _widgetId)
 			{
@@ -694,7 +756,8 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 					try {
 						registeredCallbacks[_uid][i].callback.call(
 							registeredCallbacks[_uid][i].context,
-							_data
+							_data,
+							_uid
 						);
 					} catch (e) {
 						// Remove this callback from the list
