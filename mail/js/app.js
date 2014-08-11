@@ -76,6 +76,7 @@ app.classes.mail = AppJS.extend(
 			// TODO: Change this as needed
 			function(server_query)
 			{
+				// Unlock tree if using a cache, since the server won't
 				if(!server_query) this.unlock_tree();
 			},
 			this
@@ -284,11 +285,32 @@ app.classes.mail = AppJS.extend(
 			query_context.self._filters.search || false)
 		)
 		{
+			// Tree is not a child of nextmatch, so we need to
+			// set nextmatch filter 'selectedFolder' to initial value, but in that
+			// case, the normal structure is not fully set up yet.
+			if(!query_context.self._filters.selectedFolder && query_context.self._widget)
+			{
+				var tree = query_context.self._widget;
+				while(tree.getParent() != null)
+				{
+					// find root
+					tree = tree.getParent();
+				}
+				if(tree)
+				{
+					tree = tree.getWidgetById('nm[foldertree]');
+				}
+				if(tree)
+				{
+					query_context.self._filters.selectedFolder = tree.getValue();
+				}
+			}
 			// Make sure keys match, even if some filters are not defined
 			return JSON.stringify({
 				selectedFolder: query_context.self._filters.selectedFolder || '',
 				filter: query_context.self._filters.filter || '',
-				filter2: query_context.self._filters.filter2
+				filter2: query_context.self._filters.filter2 || '',
+				sort: query_context.self._filters.sort
 			});
 		}
 		return false;
@@ -316,10 +338,9 @@ app.classes.mail = AppJS.extend(
 		{
 			if (_reset == true)
 			{
-				//var nm = this.et2.getWidgetById(nm_index);
-				//if (this.mail_currentlyFocussed!='') nm.refresh([this.mail_currentlyFocussed],'delete');//egw.dataDeleteUID(this.mail_currentlyFocussed);
-				if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
-				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
+				// Request updated data, if possible
+				if (this.mail_currentlyFocussed!='') egw.dataRefreshUID(this.mail_currentlyFocussed);
+				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataRefreshUID(this.mail_selectedMails[k]);
 				//nm.refresh(this.mail_selectedMails,'delete');
 			}
 			this.mail_selectedMails = [];
@@ -1552,7 +1573,6 @@ app.classes.mail = AppJS.extend(
 		// Update non-grid
 		this.mail_refreshFolderStatus(_folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
-		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
 		if (server[0]!=previousServer[0])
 		{
