@@ -241,7 +241,8 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 				{
 					return $this->getParam($name);
 				}
-				throw new egw_exception_wrong_parameter("Tried to access unknown attribute '$name'!");
+				// calling Horde_Imap_Client's __get() method available since 2.24.1
+				return parent::__get($name);
 		}
 	}
 
