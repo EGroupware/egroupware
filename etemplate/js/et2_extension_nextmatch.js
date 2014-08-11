@@ -2080,7 +2080,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
+		if(name == 'cat_id' && options != null && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
 		{
 			widget_options.empty_label = this.egw().lang('All');
 			this.egw().debug('warn', 'Nextmatch category filter had no "All" option.  Added, but you should fix that.');
