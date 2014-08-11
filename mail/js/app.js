@@ -1473,7 +1473,8 @@ app.classes.mail = AppJS.extend(
 		var server = _senders[0].iface.id.split('::');
 		var self = this;
 		this.egw.message(this.egw.lang('empty trash'));
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]],function(){self.lock_tree();})
+		this.lock_tree();
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0]],function(){self.unlock_tree();})
 			.sendRequest(true);
 	},
 
