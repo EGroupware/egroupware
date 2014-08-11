@@ -277,6 +277,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		array $knownUids=null, $lastModified=null)
 	{
 		self::$request = etemplate_request::read($exec_id);
+		// fix for somehow empty etemplate request content
+		if (!is_array(self::$request->content))
+		{
+			self::$request->content = array($form_name => array());
+		}
 		self::$response = egw_json_response::get();
 
 		$value = self::get_array(self::$request->content, $form_name, true);
