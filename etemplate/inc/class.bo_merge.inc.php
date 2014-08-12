@@ -1381,7 +1381,7 @@ abstract class bo_merge
 					$LF = "\n";
 			}
 		if($is_xml) {
-			$this->replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$LF),$this->replacements);
+			$this->replacements = str_replace(array('&','&amp;amp;','<','>',"\r","\n"),array('&amp;','&amp;','&lt;','&gt;','',$LF),$this->replacements);
 		}
 		if (strpos($param[0],'$$NELF') === 0)
 		{	//sets a Pagebreak and value, only if the field has a value
