@@ -212,6 +212,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 * Allow read access to former public attributes
 	 *
 	 * @param type $name
+	 * @return mixed null for an unknown attribute
 	 */
 	public function __get($name)
 	{
@@ -242,7 +243,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 					return $this->getParam($name);
 				}
 				// calling Horde_Imap_Client's __get() method available since 2.24.1
-				return parent::__get($name);
+				return is_callable('parent::__get') ? parent::__get($name) : null;
 		}
 	}
 
@@ -478,6 +479,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		}
 		catch (Exception $e)
 		{
+			unset($e);
 			return false;
 		}
 	}
@@ -588,11 +590,11 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		//but then allMailboxes are not all, ....
 		//if (!empty($mailbox) && !isset($ret[$mailbox]))
 		{
-			$mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_UNSUBSCRIBED, $options);
+			$unsub_mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_UNSUBSCRIBED, $options);
 			//$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
 			//_debug_array($mboxes->count());
 			//error_log(__METHOD__.__LINE__.' '.$mailbox.':'.count((array)$mailboxes).'->'.function_backtrace());
-			foreach ((array)$mailboxes as $k =>$box)
+			foreach ((array)$unsub_mailboxes as $k =>$box)
 			{
 				//error_log(__METHOD__.__LINE__.' Box:'.$k.' already In?'.array_key_exists($k,$boxexists).'->'.array2string($box));
 				if(!array_key_exists($k,$ret))
