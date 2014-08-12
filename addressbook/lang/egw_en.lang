@@ -105,7 +105,6 @@ charset of file	addressbook	en	Charset of file
 check all	addressbook	en	Check all
 choose an icon for this contact type	admin	en	Choose an icon for this contact type
 choose charset	addressbook	en	Choose charset
-choose export options	addressbook	en	Choose export options
 choose owner of imported data	addressbook	en	Choose owner of imported data
 chosse an etemplate for this contact type	admin	en	Chose an eTemplate for this contact type
 city	common	en	City
@@ -461,7 +460,6 @@ type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.
 unable to delete	addressbook	en	unable to delete
-unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
 unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
