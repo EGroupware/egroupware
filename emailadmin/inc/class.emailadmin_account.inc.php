@@ -167,13 +167,6 @@ class emailadmin_account implements ArrayAccess
 	protected $imapServer;
 
 	/**
-	 * Instance of old imap server
-	 *
-	 * @var emailadmin_oldimap
-	 */
-	protected $oldImapServer;
-
-	/**
 	 * Instance of smtp server
 	 *
 	 * @var emailadmin_smtp
@@ -247,7 +240,6 @@ class emailadmin_account implements ArrayAccess
 		$this->params = $params;
 
 		unset($this->imapServer);
-		unset($this->oldImapServer);
 		unset($this->smtpServer);
 
 		$this->user = $called_for ? $called_for : $GLOBALS['egw_info']['user']['account_id'];
