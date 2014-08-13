@@ -63,6 +63,8 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 * does the server with the serverID support keywords
 	 * this information is filled/provided by examineMailbox
 	 *
+	 * init_static references this to a session-variable, so it persists
+	 *
 	 * @var array of boolean for each known serverID
 	 */
 	static $supports_keywords;
@@ -736,12 +738,15 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 * examineMailbox
 	 *
 	 * @param string $mailbox
+	 * @param int $flags=null default Horde_Imap_Client::STATUS_ALL | Horde_Imap_Client::STATUS_FLAGS | Horde_Imap_Client::STATUS_PERMFLAGS
 	 * @return array of counters for mailbox
 	 */
-	function examineMailbox($mailbox)
+	function examineMailbox($mailbox, $flags=null)
 	{
 		if ($mailbox=='') return false;
 		$mailboxes = $this->listMailboxes($mailbox);
+
+		if (is_null($flags)) $flags = Horde_Imap_Client::STATUS_ALL | Horde_Imap_Client::STATUS_FLAGS | Horde_Imap_Client::STATUS_PERMFLAGS;
 
 		$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
 		//_debug_array($mboxes->count());
@@ -751,13 +756,17 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			unset($box);
 			if ($k!='user' && $k != '' && $k==$mailbox)
 			{
-				$status = $this->status($k, Horde_Imap_Client::STATUS_ALL | Horde_Imap_Client::STATUS_FLAGS | Horde_Imap_Client::STATUS_PERMFLAGS);
+				$status = $this->status($k, $flags);
 				//error_log(__METHOD__.__LINE__.array2string($status));
 				foreach ($status as $key => $v)
 				{
 					$_status[strtoupper($key)]=$v;
 				}
-				self::$supports_keywords[$this->ImapServerId] = stripos(array2string($_status['FLAGS']),'$label')!==false;
+				if ($flags & (Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS))
+				{
+					self::$supports_keywords[$this->ImapServerId] = stripos(implode('', $status['flags']), '$label') !== false ||
+						in_array('\\*', $status['permflags']);	// arbitrary keyswords also allow keywords
+				}
 				return $_status;
 			}
 		}
@@ -790,16 +799,19 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	/**
 	 * Query a single capability
 	 *
-	 * @deprecated use queryCapability($capability)
 	 * @param string $capability
 	 * @return boolean
 	 */
 	function hasCapability($capability)
 	{
-		//return $this->queryCapability($capability);
 		if ($capability=='SUPPORTS_KEYWORDS')
 		{
-			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords));
+			// if pseudo-flag is not set, call examineMailbox now to set it (no STATUS_ALL = counters necessary)
+			if (!isset(self::$supports_keywords[$this->ImapServerId]))
+			{
+				$this->examineMailbox('INBOX', Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS);
+			}
+			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
 			return self::$supports_keywords[$this->ImapServerId];
 		}
 		try
@@ -1226,4 +1238,13 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	{
 		return array();
 	}
+
+	/**
+	 * Init static variables
+	 */
+	public function init_static()
+	{
+		self::$supports_keywords =& egw_cache::getSession (__CLASS__, 'supports_keywords');
+	}
 }
+emailadmin_imap::init_static();
