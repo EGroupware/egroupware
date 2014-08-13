@@ -3012,14 +3012,22 @@ app.classes.mail = AppJS.extend(
 	*
 	* @param {egw object} _egw
 	* @param {widget object} _widget
-	* @param {window object} _window
 	*/
-	submitOnChange: function(_egw, _widget, _window) {
+	submitOnChange: function(_egw, _widget)
+	{
 		if (!jQuery.isEmptyObject(_widget))
 		{
-			if (!jQuery.isEmptyObject(_widget.getValue()))
+			if (typeof _widget.id !== 'undefined') var widgetId = _widget.id;
+			switch (widgetId)
 			{
-				this.et2_obj.submit();
+				case 'mimeType':
+					this.et2_obj.submit();
+					break;
+				default:
+					if (!jQuery.isEmptyObject(_widget.getValue()))
+					{
+						this.et2_obj.submit();
+					}
 			}
 		}
 	},
