@@ -155,12 +155,19 @@ class importexport_helper_functions {
 				$skip = true; // Skip the next one, it's the first name
 				continue ;
 			}
+
+			// Deal with groups listed as <name> Group, remove the Group
+			if(substr(trim($account_lid),-strlen(lang('Group'))) == lang('Group'))
+			{
+				$account_lid = trim(substr(trim($account_lid), 0, -strlen(lang('Group'))));
+			}
+
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
 				unset($account_lids[$key]);
 				continue;
 			}
-			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid, 'account_fullname' )) {
+			if ( $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lid), 'account_fullname' )) {
 				$account_ids[] = $account_id;
 				unset($account_lids[$key]);
 				continue;
@@ -174,7 +181,7 @@ class importexport_helper_functions {
 				continue;
 			}
 			// Group, <name> - remove the Group part
-			if($account_lid == 'Group')
+			if($account_lid == lang('Group'))
 			{
 				unset($account_lids[$key]);
 				continue;
@@ -494,7 +501,7 @@ class importexport_helper_functions {
 	public static function load_defaults($appname) {
 		// Check for new definitions to import from $appname/setup/*.xml
 		$appdir = EGW_INCLUDE_ROOT. "/$appname/setup";
-		if(!is_dir($appdir)) continue;
+		if(!is_dir($appdir)) return;
 		$d = dir($appdir);
 
 		// step through each file in app's setup
