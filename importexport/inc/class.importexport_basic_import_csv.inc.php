@@ -224,8 +224,8 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	*/
 	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
-		if ( $this->_definition->plugin_options['conditions'] ) {
-			foreach ( $this->_definition->plugin_options['conditions'] as $condition ) {
+		if ( $this->definition->plugin_options['conditions'] ) {
+			foreach ( $this->definition->plugin_options['conditions'] as $condition ) {
 				$result = false;
 				switch ( $condition['type'] ) {
 					// exists
