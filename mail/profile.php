@@ -38,12 +38,18 @@ $acc_id = isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0 ? (int)$_GET['acc_i
 // calling emailadmin_account::read with explicit account_id to not cache object for current user!
 $account = emailadmin_account::read($acc_id, $GLOBALS['egw_info']['user']['account_id']);
 
+// switching off caching by default
+// if caching is enabled mail_times will always provit from previous running horde_times!
+$cache = isset($_GET['cache']) && $_GET['cache'];
+if (!$cache) unset(emailadmin_imap::$default_params['cache']);
+
 $accounttime = microtime(true);
 
 $times = array(
 	'header' => $headertime - $starttime,
 	'acc_id' => $acc_id,
 	'account' => (string)$account,
+	'cache' => $cache,
 	'read' => $accounttime - $headertime,
 );
 
@@ -55,6 +61,7 @@ echo json_encode($times, JSON_PRETTY_PRINT);
 
 function mail_times($acc_id, array &$times, $prefix='mail_')
 {
+	global $cache;
 	$starttime = microtime(true);
 	// instanciate mail for given acc_id - have to set it as preference ;-)
 	$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $acc_id;
@@ -64,7 +71,8 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 	$logintime = microtime(true);
 
 	// fetch mailboxes
-	$mboxes = $mail_ui->getFolderTree();
+	$mboxes = $mail_ui->getFolderTree(/*$_fetchCounters=*/false, null, /*$_subscribedOnly=*/true,
+		/*$_returnNodeOnly=*/true, $cache, /*$_popWizard=*/false);
 	$listmailboxestime = microtime(true);
 
 	// get first 20 mails
