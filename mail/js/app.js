@@ -97,7 +97,7 @@ app.classes.mail = AppJS.extend(
 				$j(nm).off('refresh');
 			}
 		}
-		
+
 		// Unregister client side cache
 		this.egw.dataCacheUnregister('mail');
 
@@ -1542,7 +1542,7 @@ app.classes.mail = AppJS.extend(
 		var server = _senders[0].iface.id.split('::');
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
-		
+
 		this.egw.message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree()})
 			.sendRequest(true);
@@ -1598,7 +1598,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
 
 		this.lock_tree();
-		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders], jQuery.proxy(function() {
+		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
 			_widget.reSelectItem(inbox);
@@ -3075,12 +3075,12 @@ app.classes.mail = AppJS.extend(
 		if (addr)
 		{
 			tmp = aliases.concat(addr.get_value());
-			
+
 			// returns de-duplicate items of an array
 			var deDuplicator = function (item,pos){
-									return tmp.indexOf(item) == pos	
+									return tmp.indexOf(item) == pos
 			};
-			
+
 			aliases = tmp.filter(deDuplicator);
 			addr.set_value(aliases);
 		}

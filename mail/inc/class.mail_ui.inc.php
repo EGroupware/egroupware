@@ -1327,6 +1327,9 @@ class mail_ui
 							'caption' => 'Set / Remove Labels',
 							'icon' => 'tag_message',
 							'group' => ++$group,
+							// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
+							'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+							'hideOnDisabled' => true,
 							'children' => array(
 								'unlabel' => array(
 									'group' => ++$group,
@@ -1422,12 +1425,6 @@ class mail_ui
 		{
 			unset($actions['tracker']);
 		}
-		// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
-		if (!$this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
-		{
-			unset($actions['mark']['children']['setLabel']);
-			unset($actions['mark']['children']['unsetLabel']);
-		}
 		return $actions;
 	}
 
@@ -1438,9 +1435,9 @@ class mail_ui
 	 * @param array &$rows
 	 * @param array &$readonlys
 	 */
-	function get_rows($query,&$rows,&$readonlys)
+	function get_rows(&$query,&$rows,&$readonlys)
 	{
-		unset($query['actions']);
+//		unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		if (mail_bo::$debugTimes) $starttime = microtime(true);
 		//$query['search'] is the phrase in the searchbox
@@ -1466,6 +1463,7 @@ class mail_ui
 				try
 				{
 					$this->changeProfile($_profileID);
+					$query['actions'] = $this->get_actions();
 				}
 				catch(Exception $e)
 				{
@@ -2037,7 +2035,6 @@ class mail_ui
 		$actionsenabled = self::get_actions();
 		unset($actionsenabled['open']);
 		unset($actionsenabled['mark']['children']['setLabel']);
-		unset($actionsenabled['mark']['children']['unsetLabel']);
 		unset($actionsenabled['mark']['children']['read']);
 		unset($actionsenabled['mark']['children']['unread']);
 		unset($actionsenabled['mark']['children']['undelete']);
@@ -3868,7 +3865,7 @@ class mail_ui
 	 * @param bool $getFolders The client needs the folders for the profile
 	 * @return nothing
 	 */
-	function ajax_changeProfile($icServerID, $getFolders = true)
+	function ajax_changeProfile($icServerID, $getFolders = true, $exec_id=null)
 	{
 		$response = egw_json_response::get();
 
@@ -3876,7 +3873,18 @@ class mail_ui
 		{
 			try
 			{
+				if ($exec_id) $old_actions = $this->get_actions();
 				$this->changeProfile($icServerID);
+				// if we have an eTemplate exec_id, also send changed actions
+				if ($exec_id && ($actions = $this->get_actions()) != $old_actions)
+				{
+					$response->generic('assign', array(
+						'etemplate_exec_id' => $exec_id,
+						'id' => 'nm',
+						'key' => 'actions',
+						'value' => $actions,
+					));
+				}
 			}
 			catch (Exception $e) {
 				self::callWizard($e->getMessage(),true, 'error');
