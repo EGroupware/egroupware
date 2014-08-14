@@ -3366,100 +3366,122 @@ class emailadmin_imapbase
 			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
 			return false;
 		}
-		elseif ($_messageUID==='all')
+		$this->icServer->openMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
+		$folder = $this->icServer->getCurrentMailbox();
+		if (is_array($_messageUID)&& count($_messageUID)>50)
 		{
-			$uidsToModify= null;
+			$count = $this->getMailBoxCounters($folder,true);
+			if ($count->messages == count($_messageUID)) $_messageUID='all';
+		}
+
+		if ($_messageUID==='all')
+		{
+			$messageUIDs = array('all');
 		}
 		else
 		{
-			$uidsToModify = new Horde_Imap_Client_Ids();
 			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
-			$uidsToModify->add($_messageUID);
+			$messageUIDs = array_chunk($_messageUID,50,true);
 		}
-
-		$this->icServer->openMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
-		$folder = $this->icServer->getCurrentMailbox();;
-		switch($_flag) {
-			case "delete":
-				$ret = $this->icServer->store($folder, array('add'=>array('\\Deleted'), 'ids'=> $uidsToModify));
-				break;
-			case "undelete":
-				$ret = $this->icServer->store($folder, array('remove'=>array('\\Deleted'), 'ids'=> $uidsToModify));
-				break;
-			case "flagged":
-				$ret = $this->icServer->store($folder, array('add'=>array('\\Flagged'), 'ids'=> $uidsToModify));
-				break;
-			case "read":
-			case "seen":
-				$ret = $this->icServer->store($folder, array('add'=>array('\\Seen'), 'ids'=> $uidsToModify));
-				break;
-			case "forwarded":
-				$ret = $this->icServer->store($folder, array('add'=>array('$Forwarded'), 'ids'=> $uidsToModify));
-			case "answered":
-				$ret = $this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
-				break;
-			case "unflagged":
-				$ret = $this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
-				break;
-			case "unread":
-			case "unseen":
-				$ret = $this->icServer->store($folder, array('remove'=>array('\\Seen','\\Answered','$Forwarded'), 'ids'=> $uidsToModify));
-				break;
-			case "mdnsent":
-				$ret = $this->icServer->store($folder, array('add'=>array('MDNSent'), 'ids'=> $uidsToModify));
-				break;
-			case "mdnnotsent":
-				$ret = $this->icServer->store($folder, array('add'=>array('MDNnotSent'), 'ids'=> $uidsToModify));
-				break;
-			case "label1":
-			case "labelone":
-				$ret = $this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel1":
-			case "unlabelone":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
-				break;
-			case "label2":
-			case "labeltwo":
-				$ret = $this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel2":
-			case "unlabeltwo":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
-				break;
-			case "label3":
-			case "labelthree":
-				$ret = $this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel3":
-			case "unlabelthree":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
-				break;
-			case "label4":
-			case "labelfour":
-				$ret = $this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel4":
-			case "unlabelfour":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
-				break;
-			case "label5":
-			case "labelfive":
-				$ret = $this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel5":
-			case "unlabelfive":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
-				break;
-			case "unlabel":
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
-				$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
-				break;
+		try
+		{
+			foreach($messageUIDs as $k => $uids)
+			{
+				if ($uids==='all')
+				{
+					$uidsToModify=null;
+				}
+				else
+				{
+					$uidsToModify = new Horde_Imap_Client_Ids();
+					$uidsToModify->add($uids);
+				}
+				switch($_flag) {
+					case "delete":
+						$ret = $this->icServer->store($folder, array('add'=>array('\\Deleted'), 'ids'=> $uidsToModify));
+						break;
+					case "undelete":
+						$ret = $this->icServer->store($folder, array('remove'=>array('\\Deleted'), 'ids'=> $uidsToModify));
+						break;
+					case "flagged":
+						$ret = $this->icServer->store($folder, array('add'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						break;
+					case "read":
+					case "seen":
+						$ret = $this->icServer->store($folder, array('add'=>array('\\Seen'), 'ids'=> $uidsToModify));
+						break;
+					case "forwarded":
+						$ret = $this->icServer->store($folder, array('add'=>array('$Forwarded'), 'ids'=> $uidsToModify));
+					case "answered":
+						$ret = $this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
+						break;
+					case "unflagged":
+						$ret = $this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						break;
+					case "unread":
+					case "unseen":
+						$ret = $this->icServer->store($folder, array('remove'=>array('\\Seen','\\Answered','$Forwarded'), 'ids'=> $uidsToModify));
+						break;
+					case "mdnsent":
+						$ret = $this->icServer->store($folder, array('add'=>array('MDNSent'), 'ids'=> $uidsToModify));
+						break;
+					case "mdnnotsent":
+						$ret = $this->icServer->store($folder, array('add'=>array('MDNnotSent'), 'ids'=> $uidsToModify));
+						break;
+					case "label1":
+					case "labelone":
+						$ret = $this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel1":
+					case "unlabelone":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
+						break;
+					case "label2":
+					case "labeltwo":
+						$ret = $this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel2":
+					case "unlabeltwo":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
+						break;
+					case "label3":
+					case "labelthree":
+						$ret = $this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel3":
+					case "unlabelthree":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
+						break;
+					case "label4":
+					case "labelfour":
+						$ret = $this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel4":
+					case "unlabelfour":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
+						break;
+					case "label5":
+					case "labelfive":
+						$ret = $this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel5":
+					case "unlabelfive":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
+						break;
+					case "unlabel":
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
+						$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
+						break;
+				}
+			}
 		}
-
+		catch(Exception $e)
+		{
+			error_log(__METHOD__.__LINE__.' Error, could not flag messages in folder '.$folder.' Reason:'.$e->getMessage());
+		}
 		self::$folderStatusCache[$this->profileID][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
 
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
