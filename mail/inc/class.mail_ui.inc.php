@@ -1478,7 +1478,7 @@ class mail_ui
 		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
 		if ($this->mail_bo->folderExists($_folderName))
 		{
-			$toSchema = $this->mail_bo->isDraftFolder($_folderName)||$this->mail_bo->isSentFolder($_folderName)||$this->mail_bo->isTemplateFolder($_folderName);
+			$toSchema = $this->mail_bo->isDraftFolder($_folderName,false)||$this->mail_bo->isSentFolder($_folderName,false)||$this->mail_bo->isTemplateFolder($_folderName,false);
 		}
 		else
 		{
