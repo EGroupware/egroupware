@@ -50,6 +50,17 @@ require_once EGW_INCLUDE_ROOT.'/emailadmin/inc/class.defaultimap.inc.php';
 class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 {
 	/**
+	 * Default parameters for Horde_Imap_Client constructor
+	 *
+	 * @var array
+	 */
+	static public $default_params = array(
+		//'debug' => '/tmp/imap.log', // uncomment to log communitcation with IMAP server
+		//'debug_literal' => true,    // uncomment to log mail contents returned by IMAP server
+		'cache' => true,              // default caching via emailadmin_horde_cache / egw_cache
+	);
+
+	/**
 	 * Label shown in EMailAdmin
 	 */
 	const DESCRIPTION = 'standard IMAP server';
@@ -161,21 +172,24 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		}
 		if ($_adminConnection) $this->adminConnection($username);
 
-		parent::__construct(array(
+		$parent_params = array(
 			'username' => $this->params[$_adminConnection ? 'acc_imap_admin_username' : 'acc_imap_username'],
 			'password' => $this->params[$_adminConnection ? 'acc_imap_admin_password' : 'acc_imap_password'],
 			'hostspec' => $this->params['acc_imap_host'],
 			'port' => $this->params['acc_imap_port'],
 			'secure' => $secure,
 			'timeout' => $_timeout,
-			//'debug_literal' => true,
-			//'debug' => '/tmp/imap.log',
-			'cache' => array(
+		)+self::$default_params;
+
+		if ($parent_params['cache'] === true)
+		{
+			$parent_params['cache'] = array(
 				'backend' => new Horde_Imap_Client_Cache_Backend_Cache(array(
 					'cacheob' => new emailadmin_horde_cache(),
 				)),
-			),
-		));
+			);
+		}
+		parent::__construct($parent_params);
 	}
 
 	/**
