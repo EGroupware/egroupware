@@ -1364,10 +1364,18 @@ class emailadmin_imapbase
 			$uidsToFetch->add($sortResult);
 
 			$fquery = new Horde_Imap_Client_Fetch_Query();
-			// as we need the prio, we are not using the Envelope (which is not providing it)
-			// fetching both headers and envelope takes too much time
-			$fquery->headerText(array('peek'=>true)); // needed for getHeaderText; needed for X-Priority
-			//$fquery->envelope();
+
+			// Pre-cache the headers we want, 'fetchHeaders' is a label into the cache
+			$fquery->headers('fetchHeaders',array(
+				'DISPOSITION-NOTIFICATION-TO','RETURN-RECEIPT-TO','X-CONFIRM-READING-TO',
+				'DATE','SUBJECT','FROM','TO','CC',
+				'X-PRIORITY'
+			),array(
+				// Cache headers, we'll look at them below
+				'cache' => true,
+				// Set peek so messages are not flagged as read
+				'peek' => true
+			));
 			$fquery->size();
 			$fquery->structure();
 			$fquery->flags();
@@ -1405,9 +1413,9 @@ class emailadmin_imapbase
 				$headerObject['MSG_NUM'] = $_headerObject->getSeq();
 				$headerObject['SIZE'] = $_headerObject->getSize();
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
-				// as we need the prio, we are not using the Envelope (which is not providing it)
-				// fetching both headers and envelope takes too much time
-				$headerForPrio = array_change_key_case($_headerObject->getHeaderText(0,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
+
+				// Get already cached headers, 'fetchHeaders' is a label matchimg above
+				$headerForPrio = array_change_key_case($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
 				if ( isset($headerForPrio['DISPOSITION-NOTIFICATION-TO']) ) {
 					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
