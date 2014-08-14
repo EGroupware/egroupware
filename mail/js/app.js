@@ -1616,7 +1616,7 @@ app.classes.mail = AppJS.extend(
 		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		var that = this;
 		var rvMain = false;
-		if (obj_manager && _elems.length>1 && obj_manager.getAllSelected())
+		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected()) || _action.id=='readall')
 		{
 			if (_confirm)
 			{
@@ -1627,6 +1627,9 @@ app.classes.mail = AppJS.extend(
 				var messageToDisplay = '';
 				switch (_action.id)
 				{
+					case "readall":
+						messageToDisplay = this.egw.lang("Do you really want to mark ALL messages as read in the current folder?")+" ";
+						break;
 					case "unlabel":
 					case "label1":
 					case "label2":
@@ -1666,6 +1669,7 @@ app.classes.mail = AppJS.extend(
 						case "delete":
 							that.mail_callDelete(_action, _elems,rv);
 							break;
+						case "readall":
 						case "unlabel":
 						case "label1":
 						case "label2":
@@ -1806,6 +1810,7 @@ app.classes.mail = AppJS.extend(
 
 		var classToProcess = _action.id;
 		if (_action.id=='read') classToProcess='seen';
+		else if (_action.id=='readall') classToProcess='seen';
 		else if (_action.id=='label1') classToProcess='labelone';
 		else if (_action.id=='label2') classToProcess='labeltwo';
 		else if (_action.id=='label3') classToProcess='labelthree';
@@ -1817,7 +1822,7 @@ app.classes.mail = AppJS.extend(
 			msg = this.mail_getFormData(_elems);
 			msg['all'] = _allMessagesChecked;
 			if (msg['all']=='cancel') return false;
-			msg['activeFilters'] = this.mail_getActiveFilters(_action);
+			msg['activeFilters'] = (_action.id=='readall'?false:this.mail_getActiveFilters(_action));
 			if (_action.id.substring(0,2)=='un') {
 				//old style, only available for undelete and unlabel (no toggle)
 				if ( _action.id=='unlabel') // this means all labels should be removed
@@ -1832,6 +1837,10 @@ app.classes.mail = AppJS.extend(
 					this.mail_setRowClass(_elems,_action.id);
 					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 				}
+			}
+			else if (_action.id=='readall')
+			{
+				this.mail_flagMessages('read',msg,(do_nmactions?false:true));
 			}
 			else
 			{
@@ -1901,7 +1910,7 @@ app.classes.mail = AppJS.extend(
 		}
 		// only refresh counter. not grid as the ajaxmethod is called asyncronously
 		// on flagging, only seen/unseen has effect on counterdisplay
-		if (_action.id=='read') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
+		if (_action.id=='read' || _action.id=='readall') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
 		//this.mail_refreshFolderStatus();
 	},
 

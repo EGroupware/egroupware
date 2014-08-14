@@ -1393,6 +1393,14 @@ class mail_ui
 							'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
 
 						),
+						'readall' => array(
+							'group' => ++$group,
+							'caption' => "<font color='#ff0000'>".lang('mark all as read')."</font>",
+							'icon' => 'read_small',
+							'onExecute' => 'javaScript:app.mail.mail_flag',
+							'hint' => 'mark all messages in folder as read',
+							'toolbarDefault' => false
+						),
 						'undelete' => array(
 							'group' => $group,
 							'caption' => 'Undelete',
@@ -4272,7 +4280,7 @@ class mail_ui
 		if ($_sendJsonResponse)
 		{
 			$response = egw_json_response::get();
-			if ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
+			if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
 				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder),'mail');
 			}

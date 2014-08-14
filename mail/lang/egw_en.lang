@@ -95,6 +95,7 @@ displaying plain messages is disabled	mail	en	displaying plain messages is disab
 do not auto create folders	mail	en	do not auto create folders
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
+do you really want to mark ALL messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
 do you really want to toggle flag %1 for all messages in current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
@@ -233,6 +234,7 @@ mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
 mailinglist	mail	en	Mailinglist
+mark all as read	mail	en	mark all as read
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
 matches	mail	en	matches
