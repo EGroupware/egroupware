@@ -1478,6 +1478,22 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('empty trash'));
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree()})
 			.sendRequest(true);
+
+		// Directly delete any trash cache for selected server
+		if(window.localStorage)
+		{
+			for(var i = 0; i < window.localStorage.length; i++)
+			{
+				var key = window.localStorage.key(i);
+
+				// Find directly by what the key would look like
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
+					key.toLowerCase().indexOf(egw.lang('trash').toLowerCase()) > 0)
+				{
+					window.localStorage.removeItem(key);
+				}
+			}
+		}
 	},
 
 	/**
