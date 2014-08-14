@@ -79,32 +79,32 @@
 				<hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
 					<description value="Attachments"/>
 					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea">
-					  <columns>
-					   <column disabled="!@showtempname"/>
-					   <column disabled="!@showtempname"/>
-					   <column disabled="!@showtempname"/>
-					   <column disabled="!@showtempname"/>
-					   <column width="70%" />
-					   <column width="11%" />
-					   <column width="3%"/>
-					   <column width="3%"/>
-					   <column width="3%"/>
-					   <column />
-					  </columns>
-					  <rows>
-					   <row >
-						<description id="${row}[attachment_number]" />
-						<description id="${row}[partID]" />
-						<description id="${row}[type]" />
-						<description id="${row}[winmailFlag]" />
-						<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
-						<description align="right" id="${row}[size]" />
-						<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
-						<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
-						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
-						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToZip" label="Save as Zip"/>
-					   </row>
-					  </rows>
+						<columns>
+							<column disabled="!@showtempname"/>
+							<column disabled="!@showtempname"/>
+							<column disabled="!@showtempname"/>
+							<column disabled="!@showtempname"/>
+							<column width="70%" />
+							<column width="11%" />
+							<column width="3%"/>
+							<column width="3%"/>
+							<column width="3%"/>
+							<column />
+						</columns>
+						<rows>
+							<row >
+								<description id="${row}[attachment_number]" />
+								<description id="${row}[partID]" />
+								<description id="${row}[type]" />
+								<description id="${row}[winmailFlag]" />
+								<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
+								<description align="right" id="${row}[size]" />
+								<buttononly id="${row}[save]" image="fileexport" onclick="app.mail.saveAttachment"/>
+								<buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
+								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
+								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAllAttachmentsToZip" label="Save as Zip"/>
+							</row>
+						</rows>
 					</grid>
 					<buttononly class="et2_button ui-button" label="Show all attachments" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
