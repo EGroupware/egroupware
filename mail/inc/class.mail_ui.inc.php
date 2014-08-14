@@ -3925,7 +3925,7 @@ class mail_ui
 			if (empty($icServerID)) $icServerID = $mail->mail_bo->profileID;
 			if ($icServerID != $mail->mail_bo->profileID) return;
 
-			$vacation = $mail->gatherVacation();
+			$vacation = $mail->gatherVacation($cachedVacations);
 		}
 
 		if($vacation) {
