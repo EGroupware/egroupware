@@ -1,3 +1,20 @@
+egroupware-epl (14.1.20140812-1) hardy; urgency=low
+
+  * EMailAdmin/Mail: fix to work with Horde_Imap_Client 2.24.1+ (Tried to access unknown attribute "capability"!)
+  * Mail: performance improvements and bug fixes
+  * Mail: add all aliases to vacation message
+  * Addressbook: next/previous button in CRM view was not working
+  * Filemanager: fixed delete button for extended ACL
+  * Addressbook/Mail: Dutch translations from our translation server
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 12 Aug 2014 14:42:56 +0200
+
+egroupware-epl (14.1.20140731-1) hardy; urgency=low
+
+  * Mail: handle broken filenames (non utf8) in attachments
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 31 Jul 2014 15:57:50 +0200
+
 egroupware-epl (14.1.20140725-1) hardy; urgency=low
 
   * Admin: restore backups from admin was not working (worked only from setup)
