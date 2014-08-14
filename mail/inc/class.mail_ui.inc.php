@@ -4212,13 +4212,13 @@ class mail_ui
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
-							//error_log(__METHOD__.__LINE__." toggle un$_flag -> $flag2set ".array2string($filter2toggle).array2string($messageListForToggle));
+							if(mail_bo::$debug) error_log(__METHOD__.__LINE__." toggle un$_flag -> $flag2set ".array2string($filter2toggle).array2string($messageListForToggle));
 							$this->mail_bo->flagMessages($flag2set, $messageListForToggle,$folder);
 						}
 						if (count($messageList)>0)
 						{
 							$flag2set = 'un'.$_flag;
-							//error_log(__METHOD__.__LINE__." $_flag -> $flag2set ".array2string($filter).array2string($messageList));
+							if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag -> $flag2set ".array2string($filter).array2string($messageList));
 							$this->mail_bo->flagMessages($flag2set, $messageList,$folder);
 						}
 						$alreadyFlagged=true;
@@ -4228,6 +4228,13 @@ class mail_ui
 						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
 						($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
 					{
+						if ($query['filter'] && $query['filter'] !='any')
+						{
+							$filter['status'] = $query['filter'];
+							// since we toggle and we toggle by the filtered flag we must must change _flag
+							$_flag = ($query['filter']=='unseen' && $_flag=='read' ? 'read' : ($query['filter']=='seen'&& $_flag=='read'?'unread':($_flag==$query['filter']?'un'.$_flag:$_flag)));
+						}
+						if(mail_bo::$debug) error_log(__METHOD__.__LINE__." flag all with $_flag on filter used:".array2string($filter));
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
@@ -4242,7 +4249,7 @@ class mail_ui
 					}
 					else
 					{
-						//error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
+						if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
 						$alreadyFlagged=true;
 						$uidA = self::splitRowID($_messageList['msg'][0]);
 						$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
@@ -4262,7 +4269,7 @@ class mail_ui
 					$hA = self::splitRowID($rowID);
 					$messageList[] = $hA['msgUID'];
 				}
-				//error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
+				if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
 				$this->mail_bo->flagMessages($_flag, ((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList),$folder);
 			}
 		}
