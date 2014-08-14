@@ -1397,7 +1397,9 @@ class mail_compose
 			 * Use ajax_merge to merge & send multiple
 			 */
 			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
-			$document_merge = new addressbook_merge();
+			preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge'], $merge_class);
+			$merge_class = $merge_class[1] ? $merge_class[1] : 'addressbook_merge';
+			$document_merge = new $merge_class();
 			$this->mail_bo->openConnection();
 			$merge_ids = $_REQUEST['preset']['mailtocontactbyid'] ? $_REQUEST['preset']['mailtocontactbyid'] : $mail_id;
 			$merge_ids = is_array($merge_ids) ? $merge_ids : explode(',',$merge_ids);

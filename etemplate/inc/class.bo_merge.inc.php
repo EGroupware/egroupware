@@ -1831,7 +1831,7 @@ abstract class bo_merge
 	private static function document_mail_action(Array &$action, $file)
 	{
 		unset($action['postSubmit']);
-
+		
 		// Lots takes a while, confirm
 		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
 
@@ -1839,6 +1839,7 @@ abstract class bo_merge
 		$extra = array(
 			'from=merge',
 			'document='.$file['path'],
+			'merge='.get_called_class()
 		);
 
 		// egw.open() used if only 1 row selected
