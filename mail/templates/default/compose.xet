@@ -70,7 +70,7 @@
 						</row>
 						<row class="mailComposeHeaders" >
 							<description value="To"/>
-							<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
 							<hbox>
 								<description id="cc_expander" value="Cc" onclick="app.mail.compose_fieldExpander"/>
 								<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_fieldExpander"/>
@@ -78,12 +78,12 @@
 						</row>
 						<row class="mailComposeHeaders mailComposeJQueryCc">
 							<description value="Cc"/>
-							<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
 							<description/>
 						</row>
 						<row  class="mailComposeHeaders mailComposeJQueryBcc">
 							<description value="Bcc"/>
-							<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2"/>
+							<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
 							<description/>
 						</row>
 						<row class="mailComposeHeaders">
