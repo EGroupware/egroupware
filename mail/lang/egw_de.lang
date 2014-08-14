@@ -95,6 +95,7 @@ displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text E-Mail
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
+do you really want to mark ALL messages as read in the current folder?	mail	de	Wollen Sie wirklich alle eMails im aktuellen Ordner als gelesen markieren?
 do you really want to toggle flag %1 for all messages in current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
@@ -233,6 +234,7 @@ mail source	mail	de	Nachrichtenquelltext anzeigen
 mail-address	mail	de	Mail-Adresse
 mailaccount	mail	de	Mailkonto
 mailinglist	mail	de	Mailingliste
+mark all as read	mail	de	alle als Gelesen markieren
 mark as deleted	mail	de	als gelöscht markieren
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
