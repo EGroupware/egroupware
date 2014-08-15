@@ -380,7 +380,7 @@ subscribe folder	mail	it	Sottoscrivi cartella
 subscribe folder ...	mail	it	Sottoscrivi cartella...
 subscription faild!	mail	it	Sottoscrizione fallita!
 subscription folders	mail	it	Cartelle da sottoscrivere
-subscription successfully saved!	mail	it	Sottoscrizione salvata corretamente!
+subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.
 successfully connected	mail	it	Connesso con successo
 template folder	mail	it	Cartella dei modelli
 templates	mail	it	Modelli

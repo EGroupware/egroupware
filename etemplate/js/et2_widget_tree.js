@@ -819,6 +819,19 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Set state of node incl. it's children
+	 *
+	 * @param {string} _id id of node
+	 * @param {boolean|string} _state or "toggle" to toggle state
+	 */
+	setSubChecked: function(_id, _state)
+	{
+		if (_state === "toggle") _state = !this.input.isItemChecked(_id);
+
+		this.input.setSubChecked(_id, _state);
+	},
+
+	/**
 	 * Get URL relative to image_path option
 	 *
 	 * Both URL start with EGroupware webserverUrl and image_path gets allways appended to images by tree.

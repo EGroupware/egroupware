@@ -191,7 +191,7 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
-				
+
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
@@ -203,7 +203,7 @@ app.classes.mail = AppJS.extend(
 				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});
 
 				this.compose_fieldExpander();
-				
+
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
 				break;
@@ -1139,7 +1139,7 @@ app.classes.mail = AppJS.extend(
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree()});
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
 		}, 100);
 	},
 
@@ -1547,7 +1547,7 @@ app.classes.mail = AppJS.extend(
 		var self = this;
 
 		this.egw.message(this.egw.lang('empty trash'));
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree()})
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
 			.sendRequest(true);
 
 		// Directly delete any trash cache for selected server
@@ -3097,8 +3097,9 @@ app.classes.mail = AppJS.extend(
 			tmp = aliases.concat(addr.get_value());
 
 			// returns de-duplicate items of an array
-			var deDuplicator = function (item,pos){
-									return tmp.indexOf(item) == pos
+			var deDuplicator = function (item,pos)
+			{
+				return tmp.indexOf(item) == pos;
 			};
 
 			aliases = tmp.filter(deDuplicator);
@@ -3372,6 +3373,19 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
+	},
+
+	/**
+	 * Onclick for node/foldername in subscription popup
+	 *
+	 * Used to (un)check node including all children
+	 *
+	 * @param {string} _id id of clicked node
+	 * @param {et2_tree} _widget reference to tree widget
+	 */
+	subscribe_onclick: function(_id, _widget)
+	{
+		_widget.setSubChecked(_id, "toggle");
 	},
 
 	/**
@@ -3661,16 +3675,16 @@ app.classes.mail = AppJS.extend(
 	vacation_change_account: function (_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
-	}, 
-	
+	},
+
 	/**
-	 * Set email items draggable 
+	 * Set email items draggable
 	 **/
 	set_dragging_dndCompose: function ()
 	{
 		var zIndex = 100;
 		var self = this;
-		
+
 		jQuery('div.ms-sel-item:not(div.ui-draggable)').draggable({
 			appendTo:'body',
 			//Performance wise better to not add ui-draggable class to items since we are not using that class
@@ -3679,9 +3693,9 @@ app.classes.mail = AppJS.extend(
 			cursor:'move',
 			cursorAt:{left:2},
 			//cancel dragging on close button to avoid conflict with close action
-			cancel:'.ms-close-btn', 
+			cancel:'.ms-close-btn',
 			/**
-			 * function to act on draggable item on revert's event 
+			 * function to act on draggable item on revert's event
 			 * @returns {Boolean} return true
 			 */
 			revert: function (){
@@ -3690,6 +3704,9 @@ app.classes.mail = AppJS.extend(
 			},
 			/**
 			 * function to act as draggable starts dragging
+			 *
+			 * @param {type} event
+			 * @param {type} ui
 			 */
 			start:function(event, ui)
 			{
@@ -3703,7 +3720,7 @@ app.classes.mail = AppJS.extend(
 				jQuery(this).css('position','absolute');
 			},
 			/**
-			 * 
+			 *
 			 * @param {type} event
 			 * @param {type} ui
 			 */
@@ -3713,27 +3730,27 @@ app.classes.mail = AppJS.extend(
 			}
 		});
 	},
-	
+
 	/**
 	 * Initialize dropping targets for draggable emails
 	 * -
-	 */ 
+	 */
 	init_dndCompose: function ()
 	{
-		
+
 		var self = this;
 		//Call to make new items draggable
 		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').hover(function(){
 			self.set_dragging_dndCompose();
 		});
-		//Make used email-tag list widgets in mail compose droppable 
+		//Make used email-tag list widgets in mail compose droppable
 		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').droppable({
 			access:'.ms-sel-item',
-			
+
 			/**
 			 * Run after a draggable email item dropped over one of the email-taglists
 			 * -Set the dropped item to the dropped current target widget
-			 * 
+			 *
 			 * @param {type} event
 			 * @param {type} ui
 			 */
@@ -3743,22 +3760,22 @@ app.classes.mail = AppJS.extend(
 				var emails = [];
 				var fromWidget = {};
 				var draggedValue = ui.draggable.text();
-				
+
 				if (typeof widget != 'undefined')
 				{
 					emails = widget.get_value();
-					
-					if (emails) emails = emails.concat([draggedValue])
-					
+
+					if (emails) emails = emails.concat([draggedValue]);
+
 					widget.set_value(emails);
-				
+
 					var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
 					if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
 					{
 						fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
 					}
-										
-					if (!jQuery.isEmptyObject(fromWidget) 
+
+					if (!jQuery.isEmptyObject(fromWidget)
 							&& !(ui.draggable.attr('class').search('mailCompose_copyEmail') > -1))
 					{
 						if (!_removeDragged(fromWidget, draggedValue))
@@ -3773,16 +3790,16 @@ app.classes.mail = AppJS.extend(
 								.removeClass('mailCompose_copyEmail')
 								.css('cursor','move');
 					}
-					
+
 					//Destroy draggables after dropping, we need to enable them again
 					jQuery('div.ms-sel-item').draggable('destroy');
 				}
-			},
+			}
 		});
-		
+
 		/**
 		 * Remove dragged item from the widget which the item was dragged
-		 * 
+		 *
 		 * @param {type} _widget
 		 * @param {type} _value
 		 * @return {boolean} true if successul | false unsuccessul
@@ -3804,7 +3821,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 			return true;
-		}
+		};
 	}
 });
 

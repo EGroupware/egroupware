@@ -12,7 +12,7 @@
 				</row>
 				<row>
 					<box scrolling="auto">
-						<tree id="foldertree" onclick=""  multiple="true"/>
+						<tree id="foldertree" onclick="app.mail.subscribe_onclick"  multiple="true"/>
 					</box>
 				</row>
 			</rows>
@@ -20,7 +20,7 @@
 		<hbox  class="dialogFooterToolbar">
 			<button statustext="Saves subscription changes" label="Save" id="button[save]"/>
 			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
-			<button label="Cancel" id="button[cancel]"/>
+			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>
 		</hbox>
 	</template>
 </overlay>

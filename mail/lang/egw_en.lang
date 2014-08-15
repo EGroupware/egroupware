@@ -95,7 +95,7 @@ displaying plain messages is disabled	mail	en	displaying plain messages is disab
 do not auto create folders	mail	en	do not auto create folders
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
-do you really want to mark ALL messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
+do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
 do you really want to toggle flag %1 for all messages in current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
@@ -147,6 +147,8 @@ failed to delete %1 ! reason: %2	mail	en	failed to delete %1 ! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
 failed to move %1 ! reason: %2	mail	en	failed to move %1 ! Reason: %2
 failed to rename %1 ! reason: %2	mail	en	failed to rename %1 ! Reason: %2
+failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
+failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!
 file into	mail	en	file into
 file into:	mail	en	File into:
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
@@ -271,6 +273,7 @@ no text body supplied, check attachments for message text	mail	en	no text body s
 no valid %1 folder configured!	mail	en	No valid %1 folder configured!
 non	mail	en	Non
 none, create all	mail	en	none, create all
+nothing to change.	mail	en	Nothing to change.
 notify about new mail in this folders	mail	en	Notify about new mail in this folders
 notify when new mails arrive in these folders	mail	en	notify when new mails arrive in these folders
 on	mail	en	on
@@ -392,9 +395,8 @@ subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
-subscription faild!	mail	en	Subscription faild!
 subscription folders	mail	en	Subscription folders
-subscription successfully saved!	mail	en	Subscription successfully saved!
+subscription successfully saved.	mail	en	Subscription successfully saved.
 successfully connected	mail	en	Successfully connected
 template folder	mail	en	template folder
 templates	mail	en	Templates
