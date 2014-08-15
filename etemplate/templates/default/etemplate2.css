@@ -484,11 +484,13 @@ div.et2_file {
 }
 /* Remove icon displayed when hovering */
 .et2_file .progress li div.remove {
-  display: inline-block;
+  display: inline;
   cursor: pointer;
   margin: 0px;
   width: 16px;
   height: 16px;
+  padding: 0;
+  border-radius: 0;
 }
 .et2_file .progress li:hover div.remove {
   width: 16px;
