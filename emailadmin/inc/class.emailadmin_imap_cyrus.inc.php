@@ -40,7 +40,7 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 	/**
 	 * Updates an account
 	 *
-	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
+	 * @param array $_hookValues only value for key 'account_lid' and 'account_passwd' is used
 	 */
 	function addAccount($_hookValues)
 	{
@@ -160,7 +160,7 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 	/**
 	 * Updates an account
 	 *
-	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
+	 * @param array $_hookValues only value for key 'account_lid' and 'account_passwd' is used
 	 */
 	function updateAccount($_hookValues)
 	{
@@ -181,7 +181,25 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 		{
 			try {
 				$this->createMailbox($mailboxName);
-				$this->setACL($mailboxName, $username, "lrswipcda");
+				$this->setACL($mailboxName, $username, array('rights' => 'aeiklprstwx'));
+				// create defined folders and subscribe them (have to use user-credentials to subscribe!)
+				$userimap = null;
+				foreach($this->params as $name => $value)
+				{
+					if (substr($name, 0, 11) == 'acc_folder_' && !empty($value))
+					{
+						if (!isset($userimap))
+						{
+							$params = $this->params;
+							$params['acc_imap_username'] = $username;
+							$params['acc_imap_password'] = $_hookValues['account_passwd'];
+							$userimap = new emailadmin_imap_cyrus($params);
+						}
+						$userimap->createMailbox($value);
+						$userimap->subscribeMailbox($value);
+					}
+				}
+				if (isset($userimap)) $userimap->logout();
 			}
 			catch(Horde_Imap_Client_Exception $e) {
 				_egw_log_exception($e);
