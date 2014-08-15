@@ -1068,7 +1068,7 @@ app.classes.mail = AppJS.extend(
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree()});
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
 		}, 100);
 	},
 
@@ -1476,7 +1476,7 @@ app.classes.mail = AppJS.extend(
 		var self = this;
 
 		this.egw.message(this.egw.lang('empty trash'));
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree()})
+		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
 			.sendRequest(true);
 
 		// Directly delete any trash cache for selected server
@@ -3290,6 +3290,19 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
+	},
+
+	/**
+	 * Onclick for node/foldername in subscription popup
+	 *
+	 * Used to (un)check node including all children
+	 *
+	 * @param {string} _id id of clicked node
+	 * @param {et2_tree} _widget reference to tree widget
+	 */
+	subscribe_onclick: function(_id, _widget)
+	{
+		_widget.setSubChecked(_id, "toggle");
 	},
 
 	/**

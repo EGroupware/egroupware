@@ -1020,7 +1020,7 @@ class emailadmin_imapbase
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders));//.'<->'.array2string($this->icServer));
 		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
 		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
-		return $_specialUseFolders[$this->icServer->ImapServerId];	
+		return $_specialUseFolders[$this->icServer->ImapServerId];
 	}
 
 	/**
@@ -2182,42 +2182,6 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * subscribe: do the subscription or unsubscribe on a given folder
-	 * returns a boolean on success or failure.
-	 *
-	 * @param string $_folderName
-	 * @param boolean $_status subscribe on true, unsubscribe on false
-	 * @return boolean
-	 */
-	function subscribe($_folderName, $_status)
-	{
-		if (self::$debug) error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName);
-		if($_status === true) {
-			try
-			{
-				$rv = $this->icServer->subscribeMailbox($_folderName);
-			}
-			catch (Exception $e)
-			{
-				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$e->getMessage);
-				return false;
-			}
-		} else {
-			try
-			{
-				$rv = $this->icServer->subscribeMailbox($_folderName,false);
-			}
-			catch (Exception $e)
-			{
-				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$e->getMessage);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * fetchUnSubscribedFolders: get unsubscribed IMAP folder list
 	 *
 	 * returns an array of unsubscribed IMAP folder names.
@@ -2634,7 +2598,7 @@ class emailadmin_imapbase
 					if(!$_subscribedOnly) {
 						#echo $folderName."->".$type."<br>";
 						#_debug_array($foldersNameSpace[$type]['subscribed']);
-						$folderObject->subscribed = in_array($folderName, $foldersNameSpace[$type]['subscribed']);
+						$folderObject->subscribed = in_array($folderName, (array)$foldersNameSpace[$type]['subscribed']);
 					}
 
 					if($_getCounters == true) {

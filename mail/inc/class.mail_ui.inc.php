@@ -231,86 +231,35 @@ class mail_ui
 	}
 
 	/**
-	 * Subscribe or Unsubscribe to a folder
-	 * also it is consider if the folder is valid to un/subscribe
-	 *
-	 * @param boolean $folderName subscribe if true and unsubscribe if false
-	 * @param string $status folder name
-	 *
-	 * @example setSubscribe('INBOX', true) subscribe to folder INBOX
-	 *
-	 */
-	function setSubscribe ($folderName,$status=true)
-	{
-		$validFolder = true;
-		$result = true;
-		$nameSpaces = $this->mail_bo->_getNameSpaces();
-
-		foreach($nameSpaces as &$value )
-		{
-			if (str_replace($value['delimiter'],"",$value['prefix']) == $folderName &&
-					$value['type'] == 'others' || $value['type'] == 'shared')
-			{
-				$validFolder = false;
-			}
-		}
-
-		if ($status && $validFolder)
-		{
-			try
-			{
-				$this->mail_bo->subscribe($folderName, $status);
-			} catch (Exception $e)
-			{
-				$result = false;
-				error_log(__METHOD__.__LINE__."() error ".$e->getMessage()." happend while subscribing to folder ". $folderName );
-			}
-
-		}
-		else if($validFolder)
-		{
-			try
-			{
-				$this->mail_bo->subscribe($folderName, $status);
-			} catch (Exception $e)
-			{
-				$result = false;
-				error_log(__METHOD__.__LINE__."() error ".$e->getMessage()." happend while unsubscribing of folder ". $folderName );
-			}
-		}
-		return $result;
-	}
-
-	/**
 	 * Subscription popup window
 	 *
 	 * @param array $content
 	 * @param type $msg
 	 */
-	function subscription(array $content=null ,$msg='')
+	function subscription(array $content=null ,$msg=null)
 	{
 		$stmpl = new etemplate_new('mail.subscribe');
 
-		$profileId = $_GET['acc_id'];
-
-		$allFolders = $this->mail_bo->getFolderObjects(false,false,false,false);
-		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId,false,false);
+		if(is_array($content))
+		{
+			$profileId = $content['profileId'];
+		}
+		elseif (!($profileId = (int)$_GET['acc_id']))
+		{
+			egw_framework::window_close('Missing acc_id!');
+		}
+		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId, false, false);
 
 		if (!is_array($content))
 		{
-			if ($profileId)
+			$content['foldertree'] = array();
+			$allFolders = $this->mail_bo->getFolderObjects(false,false,false,false);
+			foreach ($allFolders as $folder)
 			{
-
-				$content['foldertree'] = array();
-				$content['profileId'] = $profileId;
-
-				foreach ($allFolders as $folder)
+				$folderName = $profileId . self::$delimiter . $folder->folderName;
+				if ($folder->subscribed)
 				{
-					$folderName = $profileId . self::$delimiter . $folder->folderName;
-					if ($folder->subscribed)
-					{
-						array_push($content['foldertree'], $folderName);
-					}
+					array_push($content['foldertree'], $folderName);
 				}
 			}
 		}
@@ -322,48 +271,65 @@ class mail_ui
 				case 'save':
 				case 'apply':
 				{
-					foreach ($allFolders as $folder)
+					// do not let user (un)subscribe namespace roots eg. "other", "user" or "INBOX", same for tree-root/account itself
+					$namespace_roots = array($profileId);
+					foreach($this->mail_bo->_getNameSpaces() as $namespace)
 					{
-						$folderName = $content['profileId'] . self::$delimiter . $folder->folderName;
-						if (!in_array($folderName, $content['foldertree']))
+						$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
+					}
+					error_log(__METHOD__."() namespace_roots=".array2string($namespace_roots));
+					$to_subscribe = array_diff($content['foldertree'], $content['current_subscribed'], $namespace_roots);
+					$to_unsubscribe = array_diff($content['current_subscribed'], $content['foldertree'], $namespace_roots);
+					foreach(array_merge($to_subscribe, $to_unsubscribe) as $mailbox)
+					{
+						$subscribe = in_array($mailbox, $to_subscribe);
+						list(,$mailbox) = explode(self::$delimiter, $mailbox);	// remove profileId and delimiter
+						try {
+							$this->mail_bo->icServer->subscribeMailbox($mailbox, $subscribe);
+						}
+						catch (Exception $ex)
 						{
-							if($this->setSubscribe($folder->folderName, false))
+							$msg_type = 'error';
+							if ($subscribe)
 							{
-								$msg = lang('Subscription successfully saved!');
-
+								$msg .= lang('Failed to subscribe folder %1!', $mailbox).' '.$ex->getMessage();
 							}
 							else
 							{
-								$msg = lang('Subscription faild!');
+								$msg .= lang('Failed to unsubscribe folder %1!', $mailbox).' '.$ex->getMessage();
 							}
+						}
+					}
+					if (!isset($msg))
+					{
+						$msg_type = 'success';
+						if ($to_subscribe || $to_unsubscribe)
+						{
+							$msg = lang('Subscription successfully saved.');
 						}
 						else
 						{
-							if($this->setSubscribe($folder->folderName, true))
-							{
-								$msg = lang('Subscription successfully saved!');
-							}
-							else
-							{
-								$msg = lang('Subscription faild!');
-							}
+							$msg = lang('Nothing to change.');
 						}
 					}
+					// update foldertree in main window
 					$parentFolder='INBOX';
-
 					$refreshData = array(
-						$content['profileId'] => lang($parentFolder)
+						$profileId => lang($parentFolder)
 					);
-
-					// Send full info back in the response
 					$response = egw_json_response::get();
 					foreach($refreshData as $folder => &$name)
 					{
-						$name = $this->getFolderTree(true, $folder, true, true,false);
+						$name = $this->getFolderTree(true, $folder, true, true, false);
 					}
+					// give success/error message to opener and popup itself
 					$response->call('opener.app.mail.mail_reloadNode',$refreshData);
-					egw_framework::refresh_opener($msg, 'mail');
-					if ($button == 'apply') break;
+					egw_framework::refresh_opener($msg, 'mail', null, null, null, null, null, $msg_type);
+					if ($button == 'apply')
+					{
+						egw_framework::message($msg, $msg_type);
+						break;
+					}
 				}
 				case 'cancel':
 				{
@@ -372,9 +338,9 @@ class mail_ui
 			}
 		}
 
-		$preserv['profileId'] = $content['profileId'];
+		$preserv['profileId'] = $profileId;
+		$preserv['current_subscribed'] = $content['foldertree'];
 		$readonlys = array();
-
 
 		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
 	}

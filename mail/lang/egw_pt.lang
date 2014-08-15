@@ -341,7 +341,7 @@ subscribe folder	mail	pt	Assinar pasta
 subscribe folder ...	mail	pt	Assinar pasta ...
 subscription faild!	mail	pt	Faild Assinatura!
 subscription folders	mail	pt	Pastas de Subscrição
-subscription successfully saved!	mail	pt	Assinatura salvo com sucesso!
+subscription successfully saved.	mail	pt	Assinatura salvo com sucesso.
 successfully connected	mail	pt	Conectado com sucesso
 template folder	mail	pt	pasta de modelo
 templates	mail	pt	Templates
