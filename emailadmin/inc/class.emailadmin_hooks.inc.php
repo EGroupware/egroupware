@@ -64,6 +64,8 @@ class emailadmin_hooks
      */
 	static function deleteaccount(array $data)
 	{
+		self::run_plugin_hooks('deleteAccount', $data);
+
 		// as mail accounts contain credentials, we do NOT assign them to user users
 		emailadmin_account::delete(0, $data['account_id']);
 	}
@@ -91,7 +93,17 @@ class emailadmin_hooks
 	static function addaccount(array $data)
 	{
 		$method = $data['location'] == 'addaccount' ? 'addAccount' : 'updateAccount';
+		self::run_plugin_hooks($method, $data);
+	}
 
+	/**
+	 * Run hook on plugins of all mail-accounts of given account_id
+	 *
+	 * @param string $method plugin method to run
+	 * @param array $data hook-data incl. value for key account_id
+	 */
+	protected static function run_plugin_hooks($method, array $data)
+	{
 		foreach(emailadmin_account::search((int)$data['account_id'], 'params') as $params)
 		{
 			if (!emailadmin_account::is_multiple($params)) continue;	// no need to waste time on personal accounts

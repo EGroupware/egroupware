@@ -82,16 +82,15 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 		$this->adminConnection();
 
 		$mailboxName = $this->getUserMailboxString($username);
-		list($reference,$restriction) = explode($username,$mailboxName,2);
 
 		try {
-			$mboxes = $this->getMailboxes($reference,$username.$restriction);
+			$mboxes = (array)$this->getMailboxes($mailboxName, 1);
 			//error_log(__METHOD__."('$username') getMailboxes('$reference','$username$restriction') = ".array2string($mboxes));
 
-			foreach($mboxes as $mbox)
+			foreach(array_keys($mboxes) as $mbox)
 			{
 				// give the admin account the rights to delete this mailbox
-				$this->setACL($mbox, $this->adminUsername, 'lrswipcda');
+				$this->setACL($mbox, $this->acc_imap_admin_username, array('rights' => 'aeiklprstwx'));
 				$this->deleteMailbox($mbox);
 			}
 		}
