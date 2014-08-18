@@ -23,6 +23,11 @@
 /**
  * Class which implements the "date" XET-Tag
  *
+ * Care must be taken anytime a date from the user is parsed.  eTemplate client
+ * side dates are all in 'user time', which is dealt with on the server and has
+ * no timezone.  Javascript uses the browser's timezone, which affects parsing
+ * and calculations.
+ *
  * @augments et2_inputWidget
  */
 var et2_date = et2_inputWidget.extend(
@@ -146,7 +151,8 @@ var et2_date = et2_inputWidget.extend(
 						return;
 					}
 					this.set_validation_error(false);
-					this.date.setHours(parsed.hour);
+					// Avoid javascript timezone offset, hour is in 'user time'
+					this.date.setUTCHours(parsed.hour);
 					this.date.setMinutes(parsed.minute);
 					this.input_date.val(_value);
 					if(old_value !== this.getValue())
@@ -173,7 +179,6 @@ var et2_date = et2_inputWidget.extend(
 								var DTformat = this.options.data_format.split(' ');
 								var parsed = jQuery.datepicker.parseDateTime(this.egw().dateTimeFormat(DTformat[0]),this.egw().dateTimeFormat(DTformat[1]), _value);
 						}
-						this.date = new Date(parsed);
 					}
 					else  // Parse other date widgets date with timepicker date/time format to date onject
 					{
@@ -184,9 +189,12 @@ var et2_date = et2_inputWidget.extend(
 							this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
 							return;
 						}
-						this.date = new Date(parsed);
 					}
-
+					// Update local variable, but remove the timezone offset that javascript adds
+					if(parsed)
+					{
+						this.date = new Date(parsed.valueOf() - (parsed.getTimezoneOffset()*60*1000));
+					}
 
 					this.set_validation_error(false);
 			}
@@ -204,7 +212,10 @@ var et2_date = et2_inputWidget.extend(
 		_value = '';
 		if(this._type != 'date-timeonly')
 		{
-			_value = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),this.date);
+			_value = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),
+				// Add timezone offset for datepicker format, or it will lose that many hours
+				new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000))
+			);
 		}
 		if(this._type != 'date')
 		{
@@ -238,12 +249,7 @@ var et2_date = et2_inputWidget.extend(
 			this.date.setMonth(0);
 			this.date.setFullYear(1970);
 		}
-		// this is a hack, to work around birthdays changing one day for each time they are stored
-		// ToDo: either find and fix the reason, or send date as YYYY-mm-dd string to server
-		else if (this._type == 'date')
-		{
-			this.date.setHours(12);
-		}
+		
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
 		return Math.round(this.date.valueOf() / 1000);
@@ -645,6 +651,13 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 						jQuery.datepicker.parseDateTime(this.egw().preference('dateformat'),this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', _value);
 
 			var text = new Date(parsed);
+
+			// Update local variable, but remove the timezone offset that javascript adds
+			if(parsed)
+			{
+				this.date = new Date(text.valueOf() - (text.getTimezoneOffset()*60*1000));
+			}
+
 			// JS dates use milliseconds
 			this.date.setTime(text.valueOf());
 		}

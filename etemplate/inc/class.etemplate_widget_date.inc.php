@@ -66,6 +66,12 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
+			// Client / etemplate always deals in 'user time', which has no timezone
+			// The change to server time is handled elsewhere
+			// Change to UTC to avoid PHP doing automatic timezone math
+			$default_tz = date_default_timezone_get();
+			date_default_timezone_set('UTC');
+
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
@@ -92,6 +98,8 @@ class etemplate_widget_date extends etemplate_widget_transformer
 				// this is not really a user error, but one of the clientside engine
 				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
 			}
+
+			date_default_timezone_set($default_tz);
 		}
 	}
 }
