@@ -61,16 +61,19 @@ class etemplate_widget_checkbox extends etemplate_widget
 			$type = $this->type ? $this->type : $this->attrs['type'];
 			$value_attr = $type == 'radio' ? 'set_value' : 'selected_value';
 			// defaults for set and unset values
-			if (!$this->attrs[$value_attr] && !$this->attrs['unselected_value'])
+			$selected_value = true;
+			$unselected_value = false;
+			if (array_key_exists($value_attr, $this->attrs) || array_key_exists('unselected_value',$this->attrs))
 			{
-				$selected_value = true;
-				$unselected_value = false;
-			}
-			else
-			{
-				// Expand any content stuff
-				$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
-				$unselected_value = self::expand_name($this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				if(array_key_exists($value_attr, $this->attrs))
+				{
+					// Expand any content stuff
+					$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				}
+				if(array_key_exists('unselected_value',$this->attrs))
+				{
+					$unselected_value = self::expand_name($this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+				}
 			}
 			if ($type == 'radio')
 			{
