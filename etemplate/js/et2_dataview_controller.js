@@ -634,20 +634,24 @@ var et2_dataview_controller = Class.extend({
 
 			var links = null;
 
-			// Get the action links if the links callback is set
-			if (this.self._linkCallback)
+			// Look for a flag in the row to avoid actions.  Use for sums or extra header rows.
+			if(!_data.no_actions)
 			{
-				links = this.self._linkCallback.call(
-						this.self._context,
-						_data,
-						this.entry.idx,
-						this.entry.uid
-				);
-			}
+				// Get the action links if the links callback is set
+				if (this.self._linkCallback)
+				{
+					links = this.self._linkCallback.call(
+							this.self._context,
+							_data,
+							this.entry.idx,
+							this.entry.uid
+					);
+				}
 
-			// Register the row in the selection manager
-			this.self._selectionMgr.registerRow(this.entry.uid, this.entry.idx,
-					tr, links);
+				// Register the row in the selection manager
+				this.self._selectionMgr.registerRow(this.entry.uid, this.entry.idx,
+						tr, links);
+			}
 
 			// Invalidate the current row entry
 			this.entry.row.invalidate();
