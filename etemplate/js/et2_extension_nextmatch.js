@@ -686,6 +686,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(this.options.settings.selectcols)
 		{
 			columnPreference = this.options.settings.selectcols;
+			negated = false;
 		}
 		if(!this.options.settings.columnselection_pref)
 		{
