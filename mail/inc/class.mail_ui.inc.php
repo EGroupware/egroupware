@@ -2057,6 +2057,7 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.drag_attachment'
 			)
 		));
+//_debug_array($content);
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
@@ -2107,7 +2108,7 @@ class mail_ui
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-
+				
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':

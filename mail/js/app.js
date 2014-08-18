@@ -180,6 +180,12 @@ app.classes.mail = AppJS.extend(
 					}
 				}
 				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+
+				// Register attachments for drag
+				this.register_for_drag(
+					this.et2.getArrayMgr("content").getEntry('mail_id'),
+					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
+				);
 				break;
 			case 'mail.compose':
 				var that = this;
@@ -986,6 +992,67 @@ app.classes.mail = AppJS.extend(
 	mail_callRefreshVacationNotice: function(_server)
 	{
 		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
+	},
+	/**
+	 * Make sure attachments have all needed data, so they can be found for
+	 * HTML5 native dragging
+	 *
+	 * @param {string} mail_id Mail UID
+	 * @param {array} attachments Attachment information.
+	 */
+	register_for_drag: function(mail_id, attachments)
+	{
+		// Put required info in global store
+		var data = {};
+		for (var i = 0; i < attachments.length; i++)
+		{
+			var data = attachments[i] || {};
+			if(!data.filename || !data.type) continue;
+
+			// Add required info
+			data.mime = data.type;
+			data.download_url = egw.link('/index.php', {
+				menuaction: 'mail.mail_ui.getAttachment',
+				id: mail_id,
+				part: data.partID,
+				is_winmail: data.winmailFlag
+			});
+			data.name = data.filename;
+		}
+	},
+
+	/**
+	 * Display helper for dragging attachments
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionElement[]} _elems
+	 * @returns {DOMNode}
+	 */
+	drag_attachment: function(_action, _elems)
+	{
+		var div = $j(document.createElement("div"))
+			.css({
+				position: 'absolute',
+				top: '0px',
+				left: '0px',
+				width: '300px'
+			});
+
+		var data = _elems[0].data || {};
+		
+		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
+		// add filename or number of files for multiple files
+		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
+		div.append(text);
+
+		// Add notice of Ctrl key, if supported
+		if(window.FileReader && 'draggable' in document.createElement('span') &&
+			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
+		{
+			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			text.append('<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
+		}
+		return div;
 	},
 
 	/**

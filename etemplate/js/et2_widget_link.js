@@ -1511,6 +1511,11 @@ var et2_link_list = et2_link_string.extend(
 			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
 			self._delete_link(link_id, row);
 		});
+
+		// Native DnD - Doesn't play nice with jQueryUI Sortable
+		// Tell jQuery to include this property
+		jQuery.event.props.push('dataTransfer');
+		
 	},
 
 	destroy: function() {
@@ -1569,6 +1574,7 @@ var et2_link_list = et2_link_string.extend(
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
 			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : _link_data.link_id))
+			.attr("draggable", _link_data.app == 'file' ? "true" : "")
 			.appendTo(this.list);
 
 		// Icon
@@ -1646,12 +1652,72 @@ var et2_link_list = et2_link_string.extend(
 			self.context.showAt(e.pageX, e.pageY, true);
 			e.preventDefault();
 		});
+
+
+		// Drag - adapted from egw_action_dragdrop, sidestepping action system
+		// so all linked files get it
+		// // Unfortunately, dragging files is currently only supported by Chrome
+		if(navigator && navigator.userAgent.indexOf('Chrome') >= 0)
+		{
+			row.on("dragstart", _link_data, function(event) {
+				if(event.dataTransfer == null) {
+					return;
+				}
+				var data = event.data || {};
+				if(data && data.type && data.download_url)
+				{
+					event.dataTransfer.dropEffect="copy";
+					event.dataTransfer.effectAllowed="copy";
+
+					var url = data.download_url;
+
+					// NEED an absolute URL
+					if (url[0] == '/') url = egw.link(url);
+					// egw.link adds the webserver, but that might not be an absolute URL - try again
+					if (url[0] == '/') url = window.location.origin+url;
+
+					// Unfortunately, dragging files is currently only supported by Chrome
+					if(navigator && navigator.userAgent.indexOf('Chrome'))
+					{
+						event.dataTransfer.setData("DownloadURL", data.type+':'+data.title+':'+url);
+					}
+
+					// Include URL as a fallback
+					event.dataTransfer.setData("text/uri-list", url);
+				}
+
+				if(event.dataTransfer.types.length == 0)
+				{
+					// No file data? Abort: drag does nothing
+					event.preventDefault();
+					return;
+				}
+				//event.dataTransfer.setDragImage(event.delegate.target,0,0);
+				var div = $j(document.createElement("div"))
+					.attr('id', 'drag_helper')
+					.css({
+						position: 'absolute',
+						top: '0px',
+						left: '0px',
+						width: '300px'
+					});
+				div.append(event.target.cloneNode(true));
+
+				self.list.append(div);
+
+				event.dataTransfer.setDragImage(div.get(0),0,0)
+			})
+			.on('drag', function() {
+				$j('#drag_helper',self.list).remove();
+			});
+		}
 	},
 	_delete_link: function(link_id, row) {
 		if(row)
 		{
 			var delete_button = jQuery('.delete',row);
 			delete_button.removeClass("delete").addClass("loading");
+			row.off();
 		}
 		if(typeof link_id != "object")
 		{
