@@ -664,7 +664,7 @@ class mail_ui
 		//Change the mail_bo object to related profileId
 		$this->changeProfile($_acc_id);
 
-		if($this->mail_bo->subscribe($_folderName, $_status))
+		if($this->mail_bo->icServer->subscribeMailbox($_folderName, $_status))
 		{
 			$this->mail_bo->resetFolderObjectCache($_acc_id);
 			$this->ajax_reloadNode($_acc_id,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
@@ -3439,7 +3439,7 @@ class mail_ui
 							}
 							else
 							{
-								$rv = $this->mail_bo->subscribe($folder, false);
+								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, false);
 								$fragments[$profileID.self::$delimiter.$folder] = substr($folder,strlen($folderName));
 							}
 						}
@@ -3454,8 +3454,8 @@ class mail_ui
 						{
 							$this->mail_bo->resetFolderObjectCache($profileID);
 							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
-							$rv = $this->mail_bo->subscribe($newFolderName, true);
-							$rv = $this->mail_bo->subscribe($folderName, false);
+							$rv = $this->mail_bo->icServer->subscribeMailbox($newFolderName, true);
+							$rv = $this->mail_bo->icServer->subscribeMailbox($folderName, false);
 							$success = true;
 						}
 					}
@@ -3479,7 +3479,7 @@ class mail_ui
 							}
 							else
 							{
-								$rv = $this->mail_bo->subscribe($folder, true);
+								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, true);
 							}
 						}
 						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
@@ -3642,7 +3642,7 @@ class mail_ui
 							}
 							else
 							{
-								$rv = $this->mail_bo->subscribe($folder, false);
+								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, false);
 							}
 						}
 					}
@@ -3655,8 +3655,8 @@ class mail_ui
 						{
 							$this->mail_bo->resetFolderObjectCache($profileID);
 							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
-							$rv = $this->mail_bo->subscribe($newFolderName, true);
-							$rv = $this->mail_bo->subscribe($folderName, false);
+							$rv = $this->mail_bo->icServer->subscribeMailbox($newFolderName, true);
+							$rv = $this->mail_bo->icServer->subscribeMailbox($folderName, false);
 							$this->mail_bo->resetFolderObjectCache($profileID);
 							$success = true;
 						}
@@ -3681,7 +3681,7 @@ class mail_ui
 							}
 							else
 							{
-								$rv = $this->mail_bo->subscribe($folder, true);
+								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, true);
 							}
 						}
 						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
