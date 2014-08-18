@@ -1149,31 +1149,15 @@ class emailadmin_wizard
 					$sel_options['acc_folder_junk'] = $sel_options['notify_folders'] =
 						self::mailboxes(self::imap_client ($content));
 			}
-			// call wizard, if we have a connection error: Horde_Imap_Client_Exception
-			catch(Horde_Imap_Client_Exception $e) {
-				_egw_log_exception($e);
-				// if we are not comming from wizard --> try it
-				if (!$content['output'])
-				{
-					return $this->add($content, $e->getMessage(), 'error');
-				}
-				// we already been in wizard, wont get better, let admin try fixing it
-				egw_framework::message($e->getMessage(), 'error');
+			catch(Exception $e) {
+				// let user know what the problem is and that he can fix it using wizard or deleting
+				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
+				$msg_type = 'error';
 				// cant connection to imap --> allow free entries in taglists
-				foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template') as $folder)
+				foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
 				{
 					$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
 				}
-			}
-			// call wizard, if we have missing credentials: InvalidArgumentException
-			catch(InvalidArgumentException $e) {
-				_egw_log_exception($e);
-				return $this->add($content, $e->getMessage());
-			}
-			// and for the rest also ...
-			catch(Exception $e) {
-				_egw_log_exception($e);
-				return $this->add($content, $e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
 			}
 		}
 		$sel_options['acc_imap_type'] = emailadmin_base::getIMAPServerTypes(false);
