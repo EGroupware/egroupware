@@ -2764,6 +2764,21 @@ app.classes.mail = AppJS.extend(
 		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
+
+		// Directly delete any cache for target
+		if(window.localStorage)
+		{
+			for(var i = 0; i < window.localStorage.length; i++)
+			{
+				var key = window.localStorage.key(i);
+
+				// Find directly by what the key would look like
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+_target.id+'"') == 0)
+				{
+					window.localStorage.removeItem(key);
+				}
+			}
+		}
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
