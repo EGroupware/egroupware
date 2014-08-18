@@ -948,6 +948,16 @@ function etemplate2_handle_validation_error(_type, _response)
 		if(widget)
 		{
 			widget.showMessage(_response.data[id],'validation_error');
+
+			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
+			var tmpWidget = widget;
+			while(tmpWidget._parent && tmpWidget._type != 'tabbox')
+			{
+				tmpWidget = tmpWidget._parent;
+			}
+			//Acvtivate the tab where the widget with validation error is located
+			if (tmpWidget._type == 'tabbox') tmpWidget.activateTab(widget);
+
 		}
 	}
 	egw().debug("warn","Validation errors", _response.data);
