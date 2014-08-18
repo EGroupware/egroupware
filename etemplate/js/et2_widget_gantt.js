@@ -236,6 +236,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			data: value.data || [],
 			links: value.links || []
 		};
+		this.gantt.config.start_date = null;
+		this.gantt.config.end_date = null;
 		this.gantt.parse(safe_value);
 
 		// Set some things from the value
@@ -343,8 +345,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			{
 				level = 3;
 			}
-			// More than 3 days
-			else if (difference > 259200)
+			// More than 1 day
+			else if (difference > 86400)
 			{
 				level = 2;
 			}
