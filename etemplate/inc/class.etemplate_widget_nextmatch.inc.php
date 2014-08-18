@@ -181,10 +181,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if(!$value['no_cat'] && !$value['cat_is_select'])
 		{
 			$cat_app = $value['cat_app'] ? $value['cat_app'] : $GLOBALS['egw_info']['flags']['current_app'];
-			$value['options-cat_id'] = array();
+			$value['options-cat_id'] = self::$request->sel_options['cat_id'] ? self::$request->sel_options['cat_id'] : array();
 
 			// Add 'All', if not already there
-			if(!$value['options-cat_id'][''] && !($value['options-cat_id'][0] && $value['options-cat_id'][0]['value'] == ''))
+			if(!$value['options-cat_id'][''] && !$value['options-cat_id'][0])
 			{
 				$value['options-cat_id'][''] = lang('all');
 			}
