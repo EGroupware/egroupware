@@ -53,11 +53,78 @@ $times = array(
 	'read' => $accounttime - $headertime,
 );
 
+php_times($account, $times);
 horde_times($account, $times);
 mail_times($acc_id, $times);
 
 Header('Content-Type: application/json; charset=utf-8');
 echo json_encode($times, JSON_PRETTY_PRINT);
+
+function php_times($account, array &$times, $prefix='php_')
+{
+	$starttime = microtime(true);
+	switch($account->acc_imap_ssl & ~emailadmin_account::SSL_VERIFY)
+	{
+		case emailadmin_account::SSL_SSL:
+			$schema = 'ssl';
+			break;
+		case emailadmin_account::SSL_TLS:
+			$schema = 'tls';
+			break;
+		case emailadmin_account::SSL_STARTTLS:
+		default:
+			$schema = 'tcp';
+			break;
+	}
+	$error_number = $error_string = null;
+	$stream = stream_socket_client(
+		$schema . '://' . $account->acc_imap_host . ':' . $account->acc_imap_port,
+		$error_number,
+		$error_string,
+		20,
+		STREAM_CLIENT_CONNECT,
+		/* @todo: As of PHP 5.6, TLS connections require valid certs.
+		 * However, this is BC-breaking to this library. For now, keep
+		 * pre-5.6 behavior. */
+		stream_context_create(array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false
+			)
+		))
+	);
+	$connect_response = fgets($stream);
+
+	// starttls (untested)
+	if ($stream && ($account->acc_imap_ssl & ~emailadmin_account::SSL_VERIFY) == emailadmin_account::SSL_STARTTLS)
+	{
+		fwrite($stream, "10 STARTTLS\r\n");
+		stream_socket_enable_crypto($stream, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+		$starttls_response = fgets($stream);
+	}
+	stream_set_timeout($stream, 20);
+
+	if (function_exists('stream_set_read_buffer')) {
+		stream_set_read_buffer($stream, 0);
+	}
+	stream_set_write_buffer($stream, 0);
+
+	$connect = microtime(true);
+
+	fwrite($stream, "20 LOGIN $account->acc_imap_username $account->acc_imap_password\r\n");
+	$login_response = fgets($stream);
+	$endtime = microtime(true);
+
+	$times += array(
+		$prefix.'connect' => $connect - $starttime,
+		//$prefix.'connect_response' => $connect_response,
+		$prefix.'login' => $endtime - $starttime,
+		//$prefix.'login_response' => $login_response,
+	);
+
+	fclose($stream);
+	unset($connect_response, $starttls_response, $login_response, $error_number, $error_string);
+}
 
 function mail_times($acc_id, array &$times, $prefix='mail_')
 {
