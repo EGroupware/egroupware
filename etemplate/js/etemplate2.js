@@ -51,6 +51,7 @@
 	et2_widget_selectAccount;
 	et2_widget_ajaxSelect;
 	et2_widget_vfs;
+	et2_widget_video;
 	et2_widget_itempicker;
 
 	et2_extension_nextmatch;
