@@ -41,9 +41,17 @@
 		if (overlay == null || helper == null)
 		{
 			// Prevent text selection
-			_elem[0].onselectstart = function() {
-				return false;
-			};
+			// FireFox handles highlight prevention (text selection) different than other browsers
+			if (typeof _elem[0].style.MozUserSelect !="undefined")
+			{
+				_elem[0].style.MozUserSelect = "none";
+			}
+			else
+			{
+				_elem[0].onselectstart = function() {
+					return false;
+				};
+			}
 
 			// Reset the "didResize" flag
 			didResize = false;
