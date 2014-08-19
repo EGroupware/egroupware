@@ -1986,6 +1986,24 @@ class emailadmin_imapbase
 		else
 		{
 			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
+			$test = @json_encode($_string);
+			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+			if (($test=="null" || $test === false || is_null($test)) && strlen($_string)>0)
+			{
+				// try to fix broken utf8
+				$x = utf8_encode($_string);
+				$test = @json_encode($x);
+				if (($test=="null" || $test === false || is_null($test)) && strlen($_string)>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					$_string = (function_exists('mb_convert_encoding')?mb_convert_encoding($_string,'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$_string):$_string));
+				}
+				else
+				{
+					$_string = $x;
+				}
+			}
+
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
 				$rfcAddr = imap_rfc822_parse_adrlist(str_replace(',','\,',$_string),'');
