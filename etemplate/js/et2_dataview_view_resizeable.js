@@ -36,7 +36,7 @@
 	var didResize = false;
 	var resizeWidth = 0;
 
-	function startResize(_outerElem, _elem, _callback)
+	function startResize(_outerElem, _elem, _callback, _column)
 	{
 		if (overlay == null || helper == null)
 		{
@@ -72,7 +72,8 @@
 				.bind("mousemove", function(e) {
 					didResize = true;
 					resizeWidth = Math.max(e.pageX - left + RESIZE_ADD,
-						RESIZE_MIN_WIDTH);
+						_column && _column.minWidth ? _column.minWidth : RESIZE_MIN_WIDTH
+					);
 					helper.css("width", resizeWidth + "px");
 				})
 
@@ -126,7 +127,7 @@
 				// Start the resizing
 				startResize(outerTable, _elem, function(_w) {
 					_callback.call(_context, _w);
-				});
+				}, _context);
 			}
 
 		});

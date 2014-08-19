@@ -803,7 +803,18 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				var colName = this._getColumnName(_row[i].widget);
 				if(!colName) continue;
 
-				if(size[colName]) _colData[i].width = size[colName];
+				if(size[colName])
+				{
+					// Make sure percentages stay percentages, and forget any preference otherwise
+					if(_colData[i].width.charAt(_colData[i].width.length - 1) == "%")
+					{
+						_colData[i].width = typeof size[colName] == 'string' && size[colName].charAt(size[colName].length - 1) == "%" ? size[colName] : _colData[i].width;
+					}
+					else
+					{
+						_colData[i].width = parseInt(size[colName])+'px';
+					}
+				}
 				for(var j = 0; j < columnDisplay.length; j++)
 				{
 					if(columnDisplay[j] == colName)
@@ -955,7 +966,15 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				"visibility": (!_colData[x] || _colData[x].disabled) ?
 					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
 				"width": _colData[x] ? _colData[x].width : 0
-			};
+			}
+			if(_colData[x].minWidth)
+			{
+				columnData[x].minWidth = _colData[x].minWidth;
+			}
+			if(_colData[x].maxWidth)
+			{
+				columnData[x].maxWidth = _colData[x].maxWidth;
+			}
 
 			// No action columns in et2
 			var colName = this._getColumnName(_row[x].widget);

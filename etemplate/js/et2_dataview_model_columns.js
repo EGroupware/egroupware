@@ -59,8 +59,14 @@ var et2_dataview_column = ClassWithAttributes.extend({
 		"width": {
 			"name": "Width",
 			"type": "dimension",
-			"default": "auto",
+			"default": "80px",
 			"description": "Width of the column."
+		},
+		"minWidth": {
+			"name": "Minimum width",
+			"type": "integer",
+			"default": 50,
+			"description": "Minimum width of the column, in pixels.  Values below this are rejected."
 		},
 		"maxWidth": {
 			"name": "Maximum width",
@@ -90,12 +96,16 @@ var et2_dataview_column = ClassWithAttributes.extend({
 		// 	1. "100" => fixedWidth 100px
 		// 	2. "100px" => fixedWidth 100px
 		// 	3. "50%" => relativeWidth 50%
-		// 	4. "auto" => fixedWidth false, relativeWidth false
+		// 	4. 0.5 => relativeWidth 50%
 		this.relativeWidth = false;
 		this.fixedWidth = false;
 		var w = _value;
 
-		if (w.charAt(w.length - 1) == "%" && !isNaN(w.substr(0, w.length - 1)))
+		if (typeof w == 'number')
+		{
+			this.relativeWidth = parseFloat(w.toFixed(3));
+		}
+		else if (w.charAt(w.length - 1) == "%" && !isNaN(w.substr(0, w.length - 1)))
 		{
 			this.relativeWidth = parseInt(w.substr(0, w.length - 1)) / 100;
 
@@ -145,6 +155,7 @@ var et2_dataview_columns = Class.extend({
 	init: function(_columnData) {
 		// Initialize some variables
 		this.totalWidth = 0;
+		this.totalFixed = 0;
 		this.columnWidths = [];
 
 		// Create the columns object
@@ -308,9 +319,8 @@ var et2_dataview_columns = Class.extend({
 
 		// Calculate how many space is - relatively - not occupied with columns with
 		// relative or fixed width
-		var remRelWidth = 1;
-		var fixedTotal = 0;
-		var noWidthCount = 0;
+		var totalRelative = 0;
+		this.totalFixed = 0;
 
 		for (var i = 0; i < this.columns.length; i++)
 		{
@@ -328,72 +338,14 @@ var et2_dataview_columns = Class.extend({
 				}
 				if (col.relativeWidth)
 				{
-					remRelWidth -= col.relativeWidth;
+					totalRelative += col.relativeWidth;
 				}
 				else if (col.fixedWidth)
 				{
-					fixedTotal += col.fixedWidth;
-				}
-				else
-				{
-					noWidthCount++;
+					this.totalFixed += col.fixedWidth;
 				}
 			}
 		}
-		remRelWidth -= fixedTotal / tw;
-
-		// Check whether the width of columns with relative width is larger than their
-		// maxWidth
-		var done;
-		do
-		{
-			done = true;
-
-			var noWidth = remRelWidth / noWidthCount;
-
-			for (var i = 0; i < this.columns.length; i++)
-			{
-				var col = this.columns[i];
-
-				if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE)
-				{
-					if (col.maxWidth && !col._larger)
-					{
-						if (col.relativeWidth)
-						{
-							var w = col.relativeWidth * tw;
-							col._larger = w > col.maxWidth;
-							if (col._larger)
-							{
-								// Recalculate the remaining relative width:
-								// col.maxWidth / w is the relative amount of space p which
-								// is remaining for the element. E.g. an element with
-								// w = 150px and maxWidth = 100px => p = 2/3
-								// The space which got removed is 1 - p => 1/3
-								// ==> we have to add 1/3 * oldRelWidth to the remRelWidth
-								// variable.
-								remRelWidth += col.relativeWidth * (1 - col.maxWidth / w);
-								done = false;
-								break;
-							}
-						}
-						else
-						{
-							col._larger = noWidth * tw > col.maxWidth;
-							if (col._larger)
-							{
-								remRelWidth -= col.maxWidth / tw;
-								noWidthCount--;
-								done = false;
-								break;
-							}
-						}
-					}
-				}
-			}
-		// As some columns take their max width, new space might come available, which
-		// requires other columns to take their maximum width.
-		} while (!done);
 
 		// Now calculate the absolute width of the columns in pixels
 		var usedTotal = 0;
@@ -414,16 +366,18 @@ var et2_dataview_columns = Class.extend({
 				}
 				else if (col.relativeWidth)
 				{
-					w = Math.round(tw * col.relativeWidth);
+					// Reset relative to an actual percentage (of 1.00) or
+					// resizing eventually sends them to 0
+					col.relativeWidth = col.relativeWidth / totalRelative;
+					w = Math.round((tw-this.totalFixed) * col.relativeWidth);
 				}
-				else
+				if (w > tw || (col.maxWidth && w > col.maxWidth))
 				{
-					w = Math.round(tw * (remRelWidth / noWidthCount));
+					w = Math.min(tw - usedTotal, col.maxWidth);
 				}
-
-				if (w < 0)
+				if (w < 0 || w < col.minWidth)
 				{
-					w = 0;
+					w = Math.max(0, col.minWidth);
 				}
 			}
 			this.columnWidths.push(w);
@@ -468,8 +422,7 @@ var et2_dataview_columns = Class.extend({
 			}
 			else
 			{
-				this.columnWidths[columnIndex] -= remaining_width;
-				column.set_width(column.relativeWidth ? (this.columnWidths[columnIndex] / self.totalWidth * 100) + "%" : this.columnWidths[columnIndex] + "px");
+				this.columnWidths[columnIndex] = Math.max(column.minWidth, this.columnWidths[columnIndex] - remaining_width);
 			}
 		}
 	}

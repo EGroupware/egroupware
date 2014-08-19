@@ -180,6 +180,16 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				colDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				colDataEntry["align"] = et2_readAttrWithDefault(node, "align", "");
 				colDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
+				
+				// Keep any others attributes set, there's no 'column' widget
+				for(var i in node.attributes)
+				{
+					var attr = node.attributes[i];
+					if(attr.nodeType == 2 && typeof colDataEntry[attr.nodeName] == 'undefined')
+					{
+						colDataEntry[attr.nodeName] = attr.value;
+					}
+				}
 			}
 			else
 			{
