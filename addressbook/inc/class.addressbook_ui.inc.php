@@ -496,6 +496,7 @@ class addressbook_ui extends addressbook_bo
 		// move to AB
 		if (($move2addressbooks = $this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
 		{
+			unset($move2addressbooks[0]);	// do not offer action to move contact to an account, as we dont support that currrently
 			foreach($move2addressbooks as $owner => $label)
 			{
 				$this->type_icon((int)$owner, substr($owner,-1) == 'p', 'n', $icon, $type_label);
@@ -2066,6 +2067,7 @@ window.egw_LAB.wait(function() {
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_ADD);
+		if ($content['owner']) unset($sel_options['owner'][0]);	// do not offer to switch to accounts, as we do not support moving contacts to accounts
 		if ((string) $content['owner'] !== '')
 		{
 			if (!isset($sel_options['owner'][(int)$content['owner']]))
