@@ -2773,7 +2773,7 @@ app.classes.mail = AppJS.extend(
 				var key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
-				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+_target.id+'"') == 0)
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+target+'"') == 0)
 				{
 					window.localStorage.removeItem(key);
 				}
