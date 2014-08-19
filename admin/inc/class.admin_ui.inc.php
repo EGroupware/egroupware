@@ -225,7 +225,6 @@ class admin_ui
 			$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
 			foreach($apps as $app)
 			{
-if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
 				$GLOBALS['menuData'] = $data = array();
 				$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
 				if (!is_array($data)) $data = $GLOBALS['menuData'];
@@ -264,6 +263,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 				'group' => ++$group,
 				'popup' => '400x200',
 				'url' => 'menuaction=admin.admin_account.delete&account_id=$id',
+				'allowOnMultiple' => false,
 			);
 		}
 		//error_log(__METHOD__."() actions=".array2string($actions));

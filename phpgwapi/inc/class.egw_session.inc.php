@@ -522,7 +522,7 @@ class egw_session
 
 		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
 		// --> allows this stateless protocolls which use basic auth to use sessions!
-		if ($this->sessionid = self::get_sessionid(true))
+		if (($this->sessionid = self::get_sessionid(true)))
 		{
 			$no_session = true;	// no need to set cookie
 			session_id($this->sessionid);
@@ -577,7 +577,7 @@ class egw_session
 				if ($reason)	// called hook requests to deny the session
 				{
 					$this->reason = $this->cd_reason = $reason;
-					$this->log_access($this->reason,$login,$user_ip,$this->account_id);		// log unsuccessfull login
+					$this->log_access($this->reason,$login,$user_ip,0);		// log unsuccessfull login
 					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 					return false;
 				}
@@ -1677,6 +1677,7 @@ class egw_session
 			$order_by = 'session_dla DESC';
 		}
 		$filter['lo'] = null;
+		$filter[] = 'account_id>0';
 		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
 		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
 		foreach($GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, '*', $filter, __LINE__, __FILE__,
@@ -1690,12 +1691,13 @@ class egw_session
 	/**
 	 * Query number of sessions (not more then once every N secs)
 	 *
-	 * @param array $filter=array() extra filter for sessions
+	 * @param array $filter =array() extra filter for sessions
 	 * @return int number of active sessions
 	 */
 	public static function session_count(array $filter=array())
 	{
 		$filter['lo'] = null;
+		$filter[] = 'account_id>0';
 		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
 		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
 		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', $filter, __LINE__, __FILE__)->fetchColumn();
@@ -1708,7 +1710,7 @@ class egw_session
 	 */
 	public static function heartbeat_limit()
 	{
-		static $limit;
+		static $limit=null;
 
 		if (is_null($limit))
 		{
