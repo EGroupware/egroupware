@@ -30,9 +30,10 @@
  *
  * @todo validation of date-duration
  *
- * @info beforeSendToClient is no longer neccessary, in order to handle date/time conversion, for this widget
- *		 as we are handling both timestamp and string date/time formats on client side
- *
+ * @info Communication between client and server is always done as a string in ISO8601/W3C
+ * format ("Y-m-d\TH:i:sP").  If the application specifies a different format
+ * for the field, the conversion is done as needed understand what the application
+ * sends, and to give the application what it wants when the form is submitted.
  */
 class etemplate_widget_date extends etemplate_widget_transformer
 {
@@ -49,7 +50,46 @@ class etemplate_widget_date extends etemplate_widget_transformer
 
 
 	/**
+	 * Convert the provided date into the format needed for unambiguous communication
+	 * with browsers (Javascript).  We use W3C format to avoid timestamp issues.
+	 */
+	public function beforeSendToClient($cname)
+	{
+		if($this->type == 'date-houronly')
+		{
+			return parent::beforeSendToClient($cname);
+		}
+
+		$form_name = self::form_name($cname, $this->id);
+		$value =& self::get_array(self::$request->content, $form_name, false, true);
+		
+		if($this->type != 'date-duration' && $value)
+		{
+			// string with formatting letters like for php's date() method
+			if ($this->attrs['dataformat'] && !is_numeric($value))
+			{
+				$date = date_create_from_format($this->attrs['dataformat'], $value, new DateTimeZone('UTC'));
+			}
+			else
+			{
+				$date = new egw_time((int)$value, new DateTimeZone('UTC'));
+			}
+			if($date)
+			{
+				// Set timezone to UTC so javascript doesn't add/subtract anything
+				$date->setTimezone(new DateTimeZone('UTC'));
+				$value = $date->format(egw_time::W3C);
+			}
+		}
+	}
+
+	/**
 	 * Validate input
+	 *
+	 * For dates (except duration), it is always a full timestamp in W3C format,
+	 * which we then convert to the format the application is expecting.  This can
+	 * be either a unix timestamp, just a date, just time, or whatever is
+	 * specified in the template.
 	 *
 	 * @param string $cname current namespace
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
@@ -65,13 +105,7 @@ class etemplate_widget_date extends etemplate_widget_transformer
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
-
-			// Client / etemplate always deals in 'user time', which has no timezone
-			// The change to server time is handled elsewhere
-			// Change to UTC to avoid PHP doing automatic timezone math
-			$default_tz = date_default_timezone_get();
-			date_default_timezone_set('UTC');
-
+			
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
@@ -84,12 +118,21 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
+			if($value)
+			{
+				$date = new egw_time($value);
+			}
+			if(!$value)
+			{
+				// Not null, blank
+				$value = '';
+			}
 			elseif (empty($this->attrs['dataformat']))	// integer timestamp
 			{
-				$valid = (int)$value;
+				$valid = $date->format('ts');
 			}
 			// string with formatting letters like for php's date() method
-			elseif (($valid = date($this->attrs['dataformat'], $value)))
+			elseif (($valid = $date->format($this->attrs['dataformat'])))
 			{
 				// Nothing to do here
 			}
@@ -98,8 +141,7 @@ class etemplate_widget_date extends etemplate_widget_transformer
 				// this is not really a user error, but one of the clientside engine
 				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
 			}
-
-			date_default_timezone_set($default_tz);
+			//error_log("$this : ($valid)" . egw_time::to($valid));
 		}
 	}
 }

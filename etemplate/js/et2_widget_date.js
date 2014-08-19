@@ -23,10 +23,8 @@
 /**
  * Class which implements the "date" XET-Tag
  *
- * Care must be taken anytime a date from the user is parsed.  eTemplate client
- * side dates are all in 'user time', which is dealt with on the server and has
- * no timezone.  Javascript uses the browser's timezone, which affects parsing
- * and calculations.
+ * Dates are passed to the server in ISO8601 format ("Y-m-d\TH:i:sP"), and data_format is
+ * handled server-side.
  *
  * @augments et2_inputWidget
  */
@@ -40,7 +38,7 @@ var et2_date = et2_inputWidget.extend(
 			"ignore": false
 		},
 		"data_format": {
-			"ignore": false,
+			"ignore": true,
 			"description": "Date/Time format. Can be set as an options to date widget",
 			"default": ''
 		}
@@ -57,7 +55,7 @@ var et2_date = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.date = new Date();
-		this.date.setHours(0);
+		this.date.setUTCHours(0);
 		this.date.setMinutes(0);
 		this.date.setSeconds(0);
 		this.input = null;
@@ -126,6 +124,11 @@ var et2_date = et2_inputWidget.extend(
 			return;
 		}
 
+		// Check for full timestamp
+		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/))
+		{
+			_value = new Date(_value);
+		}
 		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value))
 		{
@@ -163,7 +166,7 @@ var et2_date = et2_inputWidget.extend(
 							this.change(this.input_date);
 						}
 					}
-					this._oldValue = _value;
+					this._oldValue = this.date.toJSON();
 					return;
 				default:
 					// Parse customfields's date with storage data_format to date object
@@ -189,11 +192,13 @@ var et2_date = et2_inputWidget.extend(
 							this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
 							return;
 						}
+						// These should be the same, but this should clear any offset problems
+						parsed.setUTCHours(parsed.getHours());
 					}
-					// Update local variable, but remove the timezone offset that javascript adds
+					// Update local variable, but remove the timezone offset that javascript adds by using timestamp
 					if(parsed)
 					{
-						this.date = new Date(parsed.valueOf() - (parsed.getTimezoneOffset()*60*1000));
+						this.date = new Date(parsed.valueOf());
 					}
 
 					this.set_validation_error(false);
@@ -210,11 +215,11 @@ var et2_date = et2_inputWidget.extend(
 
 		// Update input - popups do, but framework doesn't
 		_value = '';
+		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 		if(this._type != 'date-timeonly')
 		{
 			_value = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),
-				// Add timezone offset for datepicker format, or it will lose that many hours
-				new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000))
+				formatDate
 			);
 		}
 		if(this._type != 'date')
@@ -222,7 +227,7 @@ var et2_date = et2_inputWidget.extend(
 			if(this._type != 'date-timeonly') _value += ' ';
 
 			_value += jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
-				hour: this.date.getHours(),
+				hour: this.date.getUTCHours(),
 				minute: this.date.getMinutes(),
 				seconds: 0,
 				timezone: 0
@@ -249,10 +254,15 @@ var et2_date = et2_inputWidget.extend(
 			this.date.setMonth(0);
 			this.date.setFullYear(1970);
 		}
+		else if (this._type == 'date')
+		{
+			this.date.setUTCHours(0);
+			this.date.setUTCMinutes(0);
+		}
 		
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
-		return Math.round(this.date.valueOf() / 1000);
+		return this.date.toJSON();
 	}
 });
 et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
