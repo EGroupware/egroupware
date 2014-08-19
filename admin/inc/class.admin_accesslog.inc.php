@@ -68,6 +68,7 @@ class admin_accesslog
 			$query['col_filter']['lo'] = null;	// not logged out
 			$query['col_filter'][0] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
 			$query['col_filter'][1] = "(notification_heartbeat IS NULL OR notification_heartbeat > $heartbeat_limit)";
+			$query['col_filter'][2] = 'account_id>0';
 		}
 		$total = $this->so->get_rows($query,$rows,$readonlys);
 
