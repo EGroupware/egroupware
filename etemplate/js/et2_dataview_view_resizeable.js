@@ -112,7 +112,8 @@
 
 		// Bind the "mousedown" event in the "resize" namespace
 		_elem.bind("mousedown.resize", function(e) {
-			if (inResizeRegion(e.pageX, _elem))
+			// Do not triger startResize if clicked element is select-tag, as it may causes conflict in some browsers
+			if (inResizeRegion(e.pageX, _elem) && e.target.tagName != 'SELECT')
 			{
 				// Start the resizing
 				startResize(outerTable, _elem, function(_w) {
