@@ -23,8 +23,8 @@
 				<column width="15%" disabled="@no_customfields"/>
 				<column/>
 				<column width="120"/>
-				<column/>
-				<column/>
+				<column width="65"/>
+				<column width="65"/>
 				<column width="120" disabled="@no_info_owner_info_responsible"/>
 				<column width="120"/>
 			</columns>
