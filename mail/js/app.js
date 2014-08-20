@@ -284,36 +284,21 @@ app.classes.mail = AppJS.extend(
 	 * We only cache the first chunk (50 rows), and only if search filter is not set,
 	 * but we cache this for every combination of folder, filter & filter2.
 	 *
+	 * We do not cache, if we dont find selectedFolder in query_context,
+	 * as looking it up in tree causes mails to be cached for wrong folder
+	 * (Probably because user already clicked on an other folder)!
+	 *
 	 * @param {object} query_context Query information from egw.dataFetch()
 	 * @returns {string|false} Cache key, or false to not cache
 	 */
 	nm_cache: function(query_context)
 	{
 		// Only cache first chunk of rows, if no search filter
-		if((!query_context || !query_context.start) && query_context.count == 0 && !(
-			!query_context.self._filters || query_context.self._filters.search || false)
+		if((!query_context || !query_context.start) && query_context.count == 0 &&
+			query_context.self._filters.selectedFolder &&
+			!(!query_context.self._filters || query_context.self._filters.search)
 		)
 		{
-			// Tree is not a child of nextmatch, so we need to
-			// set nextmatch filter 'selectedFolder' to initial value, but in that
-			// case, the normal structure is not fully set up yet.
-			if(!query_context.self._filters.selectedFolder && query_context.self._widget)
-			{
-				var tree = query_context.self._widget;
-				while(tree.getParent() != null)
-				{
-					// find root
-					tree = tree.getParent();
-				}
-				if(tree)
-				{
-					tree = tree.getWidgetById('nm[foldertree]');
-				}
-				if(tree)
-				{
-					query_context.self._filters.selectedFolder = tree.getValue();
-				}
-			}
 			// Make sure keys match, even if some filters are not defined
 			return JSON.stringify({
 				selectedFolder: query_context.self._filters.selectedFolder || '',
