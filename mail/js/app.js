@@ -1601,7 +1601,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
 
 		this.lock_tree();
-		egw.json('mail.mail_ui.ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
+		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
 			_widget.reSelectItem(inbox);
