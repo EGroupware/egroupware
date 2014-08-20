@@ -192,13 +192,12 @@ var et2_date = et2_inputWidget.extend(
 							this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
 							return;
 						}
-						// These should be the same, but this should clear any offset problems
-						parsed.setUTCHours(parsed.getHours());
 					}
-					// Update local variable, but remove the timezone offset that javascript adds by using timestamp
+					// Update local variable, but remove the timezone offset that
+					// javascript adds when we parse
 					if(parsed)
 					{
-						this.date = new Date(parsed.valueOf());
+						this.date = new Date(parsed.valueOf() - parsed.getTimezoneOffset() * 60000);
 					}
 
 					this.set_validation_error(false);
@@ -215,6 +214,7 @@ var et2_date = et2_inputWidget.extend(
 
 		// Update input - popups do, but framework doesn't
 		_value = '';
+		// Add timezone offset back in, or formatDate will lose those hours
 		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 		if(this._type != 'date-timeonly')
 		{
@@ -227,8 +227,8 @@ var et2_date = et2_inputWidget.extend(
 			if(this._type != 'date-timeonly') _value += ' ';
 
 			_value += jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
-				hour: this.date.getUTCHours(),
-				minute: this.date.getMinutes(),
+				hour: formatDate.getHours(),
+				minute: formatDate.getMinutes(),
 				seconds: 0,
 				timezone: 0
 			});
