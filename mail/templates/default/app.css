@@ -280,9 +280,6 @@ pre {
 	overflow: hidden;
 	word-wrap: break-word;
 	float: left;
-	&:after{
-		content: " ...";
-	}
 }
 #mail-index {
 	position: relative
