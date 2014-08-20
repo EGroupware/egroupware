@@ -162,7 +162,7 @@
 					<template id="dates"/>
 					<template id="header_right"/>
 				</row>
-				<row>
+				<row class="$cont[action]Hooked">
 					<nextmatch id="nm" template="infolog.index.rows" span="all"/>
 				</row>
 				<row>

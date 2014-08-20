@@ -95,3 +95,6 @@ img.iphoto {
 #addressbook-edit_room {
 	float:right;
 }
+.addressbookHooked .egwGridView_grid label>span.et2_link {
+	display: none;
+}
