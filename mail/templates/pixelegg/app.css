@@ -276,9 +276,6 @@ pre {
   word-wrap: break-word;
   float: left;
 }
-.useEllipsis:after {
-  content: " ...";
-}
 #mail-index {
   position: relative;
 }
@@ -1787,8 +1784,7 @@ div#displayToolbar-menulist img {
   /*Label*/
 }
 #mail-subscribe table.et2_grid tr td .mail_subscription_header {
-  font-size: 250%;
-  line-height: 270%;
+  /*line-height: 270%;*/
   margin: 0.6em 0 0;
   font-weight: lighter;
   line-height: 2em;
