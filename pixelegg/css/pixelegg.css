@@ -5772,6 +5772,9 @@ table.egwGridView_grid tbody td table.customfields tbody tr td {
 table.egwGridView_grid tbody td table.customfields tbody tr td .et2_textbox_ro {
   /*white-space: inherit;*/
 }
+table.egwGridView_grid tbody td[align="right"] {
+  padding: 3px 5px 3px 0;
+}
 table.egwGridView_grid > tr {
   border-bottom: 1px solid;
   border-color: #828282;
