@@ -41,9 +41,17 @@
 		if (overlay == null || helper == null)
 		{
 			// Prevent text selection
-			_elem[0].onselectstart = function() {
-				return false;
-			};
+			// FireFox handles highlight prevention (text selection) different than other browsers
+			if (typeof _elem[0].style.MozUserSelect !="undefined")
+			{
+				_elem[0].style.MozUserSelect = "none";
+			}
+			else
+			{
+				_elem[0].onselectstart = function() {
+					return false;
+				};
+			}
 
 			// Reset the "didResize" flag
 			didResize = false;
@@ -112,7 +120,8 @@
 
 		// Bind the "mousedown" event in the "resize" namespace
 		_elem.bind("mousedown.resize", function(e) {
-			if (inResizeRegion(e.pageX, _elem))
+			// Do not triger startResize if clicked element is select-tag, as it may causes conflict in some browsers
+			if (inResizeRegion(e.pageX, _elem) && e.target.tagName != 'SELECT')
 			{
 				// Start the resizing
 				startResize(outerTable, _elem, function(_w) {
