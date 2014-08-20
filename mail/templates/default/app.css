@@ -663,7 +663,6 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	background-image: url(../../../phpgwapi/templates/default/images/ajax-loader.gif);
 	background-position: left top;
 	background-repeat: no-repeat;
-	background-color: rgba(255,255,255,0.5);
 }
 
 .mail_subscription_header
