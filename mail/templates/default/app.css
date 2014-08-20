@@ -451,6 +451,9 @@ div.mail-compose_fileselector {
 #mail-compose_toolbar > button {
 	padding: .2em .4em;
 }
+#mail-compose_to div.ms-sel-ctn, #mail-compose_cc .ms-sel-ctn {
+	max-height: 75px;
+}
 #mail-display_toolbar > button > span {
 	padding: .2em .4em;
 }
