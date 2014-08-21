@@ -1054,7 +1054,9 @@ class emailadmin_account implements ArrayAccess
 		}
 
 		// store notification folders
-		emailadmin_notifications::write($data['acc_id'], (int)$data['notify_account_id'], (array)$data['notify_folders']);
+		emailadmin_notifications::write($data['acc_id'], $data['notify_save_default'] ? 0 :
+			($data['called_for'] ? $data['called_for'] : $GLOBALS['egw_info']['user']['account_id']),
+			(array)$data['notify_folders']);
 
 		// store account-information of managed mail server
 		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != 'emailadmin_smtp')
