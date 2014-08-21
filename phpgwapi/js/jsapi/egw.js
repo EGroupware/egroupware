@@ -41,7 +41,7 @@
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
-	if(console.timeline) console.timeline("egw");
+	if(typeof console != "undefined" && console.timeline) console.timeline("egw");
 
 	// Flag for if this is opened in a popup
 	var popup = (window.opener != null);
@@ -185,7 +185,7 @@
 			egw.open_link.apply(egw, egw_popup);
 		}
 
-		if(console.timelineEnd) console.timelineEnd("egw");
+		if(typeof console != "undefined" && console.timelineEnd) console.timelineEnd("egw");
 		var end_time = (new Date).getTime();
 		var gen_time_div = $j('#divGenTime_'+window.egw_appName);
 		if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
