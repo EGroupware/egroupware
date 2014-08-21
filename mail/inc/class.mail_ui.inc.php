@@ -400,7 +400,7 @@ class mail_ui
 											//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 							'actions'        => self::get_actions(),
 							'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
-							'placeholder_actions' => array('composeasnew')
+							'placeholder_actions' => array('composeasnew'),
 						);
 					}
 				}
@@ -451,6 +451,7 @@ class mail_ui
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
+				error_log(__METHOD__."() setting nm[selectedFolder]={$content[self::$nm_index]['selectedFolder']}");
 				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
 				if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 				{
