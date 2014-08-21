@@ -62,13 +62,13 @@
 				</row>
 				<row class="@manual_class">
 					<description for="acc_imap_username" value="Username"/>
-					<textbox id="acc_imap_username" size="32" maxlength="128"/>
+					<textbox id="acc_imap_username" size="32" maxlength="128" autocomplete="off"/>
 					<description for="acc_domain" value="Domain" class="emailadmin_no_single"/>
 					<textbox id="acc_domain" size="32" maxlength="128" class="emailadmin_no_single"/>
 				</row>
 				<row>
 					<description for="acc_imap_password" value="Password"/>
-					<passwd id="acc_imap_password" options="32,128"/>
+					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off"/>
 					<description id="acc_imap_account_id" class="emailadmin_diagnostic"/>
 					<description/>
 				</row>
@@ -98,11 +98,11 @@
 							<rows>
 								<row>
 									<description for="acc_imap_admin_username" value="Admin user"/>
-									<textbox id="acc_imap_admin_username" size="32" maxlength="128"/>
+									<textbox id="acc_imap_admin_username" size="32" maxlength="128" autocomplete="off"/>
 								</row>
 								<row>
 									<description for="acc_imap_admin_password" value="Password"/>
-									<passwd id="acc_imap_admin_password" options="32,128"/>
+									<passwd id="acc_imap_admin_password" size="32" maxlength="128" autocomplete="off"/>
 								</row>
 							</rows>
 						</grid>
@@ -208,12 +208,12 @@
 				</row>
 				<row class="@manual_class">
 					<description for="acc_smtp_username" value="Username"/>
-					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128"/>
+					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
 					<description for="acc_smtp_password" value="Password"/>
 					<hbox>
-						<passwd id="acc_smtp_password" options="32,128"/>
+						<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off"/>
 						<description id="acc_smtp_account_id" class="emailadmin_diagnostic"/>
 					</hbox>
 				</row>

@@ -14,15 +14,15 @@
 				</row>
 				<row>
 					<description value="EMail address"/>
-					<url-email id="ident_email" needed="1" options="32,128"/>
+					<url-email id="ident_email" needed="1"  size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
 					<description value="Username" for="acc_imap_username"/>
-					<textbox blur="if different from EMail address" id="acc_imap_username" size="32" maxlength="128"/>
+					<textbox blur="if different from EMail address" id="acc_imap_username" size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row>
 					<description value="Password" for="acc_imap_password"/>
-					<passwd id="acc_imap_password" needed="1" options="32,128"/>
+					<passwd id="acc_imap_password" needed="1"  size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
 					<description value="IMAP server" for="acc_imap_host"/>

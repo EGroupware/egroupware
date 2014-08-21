@@ -68,6 +68,12 @@ var et2_textbox = et2_inputWidget.extend(
 			"type": "string",
 			"default": et2_no_init,
 			"description": "Perl regular expression eg. '/^[0-9][a-f]{4}$/i'"
+		},
+		"autocomplete": {
+			"name": "Autocomplete",
+			"type": "string",
+			"default": "",
+			"description": "Weither or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form)"
 		}
 	},
 
@@ -107,6 +113,7 @@ var et2_textbox = et2_inputWidget.extend(
 			if(this.options.type == "passwd") {
 				this.input.attr("type", "password");
 			}
+			if (this.options.autocomplete) this.input.attr("autocomplete", this.options.autocomplete);
 		}
 
 		if(this.options.size) {

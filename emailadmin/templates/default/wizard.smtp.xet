@@ -14,11 +14,11 @@
 				</row>
 				<row class="@manual_class">
 					<description value="Username" for="acc_smtp_username"/>
-					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128"/>
+					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
 					<description value="Password" for="acc_smtp_password"/>
-					<passwd id="acc_smtp_password" options="32,128"/>
+					<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
 					<description value="SMTP server" for="acc_smtp_host"/>
