@@ -893,23 +893,29 @@ class accounts
 			$this->config['auto_create_expire'] == 'never' ? -1 :
 			time() + $this->config['auto_create_expire'] + 2;
 
-		if (!($default_group_id = $this->name2id($this->config['default_group_lid'],'account_lid','g')))
+		$memberships = array();
+		$default_group_id = null;
+		// check if we have a comma or semicolon delimited list of groups --> add first as primary and rest as memberships
+		foreach(preg_split('/[,;] */',$this->config['default_group_lid']) as $group_lid)
 		{
-			// check if we have a comma or semicolon delimited list of groups --> add first as primary and rest as memberships
-			foreach(preg_split('/[,;] */',$this->config['default_group_lid']) as $group_lid)
+			if (($group_id = $this->name2id($group_lid,'account_lid','g')))
 			{
-				if (($group_id = $this->name2id($group_lid,'account_lid','g')))
-				{
-					if (!$default_group_id) $default_group_id = $group_id;
-					$memberships[] = $group_id;
-				}
+				if (!$default_group_id) $default_group_id = $group_id;
+				$memberships[] = $group_id;
 			}
-			if (!$default_group_id) $default_group_id = $this->name2id('Default','account_lid','g');
 		}
+		if (!$default_group_id && ($default_group_id = $this->name2id('Default','account_lid','g')))
+		{
+			$memberships[] = $default_group_id;
+		}
+
 		$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
 			$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) === 'g' ?
 			(int)$GLOBALS['auto_create_acct']['primary_group'] : $default_group_id;
-
+		if ($primary_group && !in_array($primary_group, $memberships))
+		{
+			$memberships[] = $primary_group;
+		}
 		$data = array(
 			'account_lid'           => $account_lid,
 			'account_type'          => 'u',
@@ -932,6 +938,11 @@ class accounts
 		{
 			return false;
 		}
+		// set memberships if given
+		if ($memberships)
+		{
+			$this->set_memberships($memberships,$data['account_id']);
+		}
 		// set the appropriate value for the can change password flag (assume users can, if the admin requires users to change their password)
 		$data['changepassword'] = (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'];
 		if(!$data['changepassword'])
@@ -950,11 +961,7 @@ class accounts
 			'order' => array('felamimail','fudforum'),
 		),False,True);  // called for every app now, not only enabled ones
 		unset($data['changepassword']);
-		// set memberships if given
-		if ($memberships)
-		{
-			$this->set_memberships($memberships,$data['account_id']);
-		}
+
 		return $data['account_id'];
 	}
 
