@@ -300,7 +300,8 @@ app.classes.mail = AppJS.extend(
 		)
 		{
 			// Make sure keys match, even if some filters are not defined
-			return JSON.stringify({
+			// using JSON.stringfy() directly gave a crash in Safari 7.0.4
+			return this.egw.jsonEncode({
 				selectedFolder: query_context.self._filters.selectedFolder || '',
 				filter: query_context.self._filters.filter || '',
 				filter2: query_context.self._filters.filter2 || '',
