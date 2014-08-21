@@ -3071,12 +3071,23 @@ app.classes.mail = AppJS.extend(
 	sieve_vac_all_aliases: function()
 	{
 		var aliases = [];
+		var tmp = [];
 		var addr = this.et2.getWidgetById('addresses');
 		var addresses = this.et2.getArrayMgr('sel_options').data.addresses;
 
 		for(var id in addresses) aliases.push(id);
-
-		addr.set_value(aliases);
+		if (addr)
+		{
+			tmp = aliases.concat(addr.get_value());
+			
+			// returns de-duplicate items of an array
+			var deDuplicator = function (item,pos){
+									return tmp.indexOf(item) == pos	
+			};
+			
+			aliases = tmp.filter(deDuplicator);
+			addr.set_value(aliases);
+		}
 	},
 
 	/**
