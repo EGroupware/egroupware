@@ -992,6 +992,7 @@ app.classes.mail = AppJS.extend(
 	{
 		// Put required info in global store
 		var data = {};
+		if (!attachments) return;
 		for (var i = 0; i < attachments.length; i++)
 		{
 			var data = attachments[i] || {};
