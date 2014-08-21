@@ -1869,7 +1869,7 @@ class calendar_uiviews extends calendar_ui
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
 		if ($this->use_time_grid &&
-			$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
+			((int)$event['id'] || substr($event['id'],0,7) == 'infolog') && $this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			if (!$event['whole_day_on_top'] &&
 				!$event['whole_day'] &&
