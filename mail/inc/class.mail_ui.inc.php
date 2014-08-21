@@ -10,10 +10,19 @@
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
-
 /**
- * Mail Interface class
+ * Mail User Interface
+ *
+ * As we do NOT want to connect to previous imap server, when a profile change is triggered
+ * by user get_rows and ajax_changeProfile are not static methods and instanciates there own
+ * mail_ui object.
+ *
+ * If they detect a profile change is to be triggered they call:
+ *		$mail_ui = new mail_ui(false);	// not call constructor / connect to imap server
+ *		$mail_ui->changeProfile($_profileID);
+ * If no profile change is needed they just call:
+ *		$mail_ui = new mail_ui();
+ * Afterwards they use $mail_ui instead of $this.
  */
 class mail_ui
 {
@@ -98,9 +107,12 @@ class mail_ui
 	/**
 	 * Constructor
 	 *
+	 * @param boolean $run_constructor =true false: no not run constructor and therefore do NOT connect to imap server
 	 */
-	function __construct()
+	function __construct($run_constructor=true)
 	{
+		if (!$run_constructor) return;
+
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
@@ -128,10 +140,7 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 
 			// RegEx to minimize extra openConnection
-			$needle = '/mail.etemplate_widget_nextmatch.ajax_get_rows.etemplate|'
-//					. 'mail.mail_ui.ajax_refreshQuotaDisplay|'
-					. 'mail.mail_ui.ajax_changeProfile|'
-					. '^(?!mail)/';
+			$needle = '^(?!mail)/';
 			if (!preg_match($needle,$_GET['menuaction']) && !egw_json_request::isJSONRequest())
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
@@ -375,7 +384,7 @@ class mail_ui
 					if (!is_array($content[self::$nm_index]))
 					{
 						$content[self::$nm_index] = array(
-							'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+							'get_rows'       =>	'mail_ui::get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 							'filter'         => 'any',	// filter is used to choose the mailbox
 							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
 							'no_cat'         => true,	// I  disable the cat-selectbox
@@ -1405,61 +1414,67 @@ class mail_ui
 	/**
 	 * Callback to fetch the rows for the nextmatch widget
 	 *
+	 * Function is static to not automatic call constructor in case profile is changed.
+	 *
 	 * @param array $query
 	 * @param array &$rows
 	 * @param array &$readonlys
 	 */
-	function get_rows(&$query,&$rows,&$readonlys)
+	public static function get_rows(&$query,&$rows,&$readonlys)
 	{
-//		unset($query['actions']);
-		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
-		if (mail_bo::$debugTimes) $starttime = microtime(true);
-		//$query['search'] is the phrase in the searchbox
-
-		$this->mail_bo->restoreSessionData();
-		$maxMessages = 50; // match the hardcoded setting for data retrieval as inital value
-		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
-		$this->mail_bo->saveSessionData();
-
-		$sRToFetch = null;
-		$_folderName=(!empty($query['selectedFolder'])?$query['selectedFolder']:$this->mail_bo->profileID.self::$delimiter.'INBOX');
-		list($_profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
-		if (strpos($folderName,self::$delimiter)!==false)
+		// handle possible profile change in get_rows
+		if (!empty($query['selectedFolder']))
 		{
-			list($app,$_profileID,$folderName) = explode(self::$delimiter,$_folderName,3);
-			unset($app);
-		}
-		if (is_numeric($_profileID))
-		{
-			if ($_profileID && $_profileID != $this->mail_bo->profileID)
+			list($_profileID,$folderName) = explode(self::$delimiter, $query['selectedFolder'], 2);
+			if (is_numeric(($_profileID)) && $_profileID != $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
-				try
-				{
-					$this->changeProfile($_profileID);
-					$query['actions'] = $this->get_actions();
+				try {
+					$mail_ui = new mail_ui(false);	// do NOT run constructor, as we change profile anyway
+					$mail_ui->changeProfile($_profileID);
+					$query['actions'] = $mail_ui->get_actions();
 				}
 				catch(Exception $e)
 				{
 					$rows=array();
 					return 0;
 				}
+				if (empty($folderName)) $query['selectedFolder'] = $_profileID.self::$delimiter.'INBOX';
 			}
-			$_folderName = (!empty($folderName)?$folderName:'INBOX');
+		}
+		if (!isset($mail_ui))
+		{
+			$mail_ui = new mail_ui(true);	// run constructor for current profile
+			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
+		}
+
+		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
+		if (mail_bo::$debugTimes) $starttime = microtime(true);
+		//$query['search'] is the phrase in the searchbox
+
+		$mail_ui->mail_bo->restoreSessionData();
+		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
+		$mail_ui->mail_bo->saveSessionData();
+
+		$sRToFetch = null;
+		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
+		if (strpos($_folderName,self::$delimiter)!==false)
+		{
+			list($app,$_profileID,$_folderName) = explode(self::$delimiter,$_folderName,3);
+			unset($app);
 		}
 		//save selected Folder to sessionData (mailbox)->currentFolder
-		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['mailbox']=$_folderName;
+		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$_folderName;
 		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
-		if ($this->mail_bo->folderExists($_folderName))
+		if ($mail_ui->mail_bo->folderExists($_folderName))
 		{
-			$toSchema = $this->mail_bo->isDraftFolder($_folderName,false)||$this->mail_bo->isSentFolder($_folderName,false)||$this->mail_bo->isTemplateFolder($_folderName,false);
+			$toSchema = $mail_ui->mail_bo->isDraftFolder($_folderName,false)||$mail_ui->mail_bo->isSentFolder($_folderName,false)||$mail_ui->mail_bo->isTemplateFolder($_folderName,false);
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
-			$query['selectedFolder']=$this->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
+			$query['selectedFolder']=$mail_ui->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
 		}
-		$this->mail_bo->saveSessionData();
+		$mail_ui->mail_bo->saveSessionData();
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -1467,17 +1482,17 @@ class mail_ui
 		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
 		if (!empty($query['search']))
 		{
-			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
 			{
 				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-				if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+				if (!isset(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
 				{
-					emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+					emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
 				}
 			}
 			$filter = array(
-				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-				'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),
+				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+				'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
 				'string' => $query['search'],
 				'status' => 'any');
 		}
@@ -1490,12 +1505,12 @@ class mail_ui
 			$filter['status'] = $query['filter'];
 		}
 		$reverse = ($query['sort']=='ASC'?false:true);
-		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
+		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($mail_ui->sessionData['messageFilter']));
 		try
 		{
 			if ($maxMessages > 75)
 			{
-				$_sR = $this->mail_bo->getSortedList(
+				$_sR = $mail_ui->mail_bo->getSortedList(
 					$_folderName,
 					$sort,
 					$reverse,
@@ -1516,7 +1531,7 @@ class mail_ui
 					//error_log(__METHOD__.__LINE__.' Headers to fetch with UIDs:'.count($sRToFetch).' Data:'.array2string($sRToFetch));
 					$sortResult = array();
 					// fetch headers
-					$sortResultwH = $this->mail_bo->getHeaders(
+					$sortResultwH = $mail_ui->mail_bo->getHeaders(
 						$_folderName,
 						$offset,
 						$maxMessages,
@@ -1531,7 +1546,7 @@ class mail_ui
 			{
 				$sortResult = array();
 				// fetch headers
-				$sortResultwH = $this->mail_bo->getHeaders(
+				$sortResultwH = $mail_ui->mail_bo->getHeaders(
 					$_folderName,
 					$offset,
 					$maxMessages,
@@ -1580,7 +1595,7 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
 		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
-		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
+		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
@@ -3836,22 +3851,26 @@ class mail_ui
 	/**
 	 * empty changeProfile - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
+	 * Made static to NOT call __construct, as it would connect to old server, before going to new one
+	 *
 	 * @param int $icServerID New profile / server ID
 	 * @param bool $getFolders The client needs the folders for the profile
 	 * @return nothing
 	 */
-	function ajax_changeProfile($icServerID, $getFolders = true, $exec_id=null)
+	public static function ajax_changeProfile($icServerID, $getFolders = true, $exec_id=null)
 	{
 		$response = egw_json_response::get();
 
-		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		$previous_id = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+
+		if ($icServerID && $icServerID != $previous_id)
 		{
+			$mail_ui = new mail_ui(false);	// do NOT run constructor, as we call changeProfile anyway
 			try
 			{
-				if ($exec_id) $old_actions = $this->get_actions();
-				$this->changeProfile($icServerID);
+				$mail_ui->changeProfile($icServerID);
 				// if we have an eTemplate exec_id, also send changed actions
-				if ($exec_id && ($actions = $this->get_actions()) != $old_actions)
+				if ($exec_id && ($actions = $mail_ui->get_actions()))
 				{
 					$response->generic('assign', array(
 						'etemplate_exec_id' => $exec_id,
@@ -3864,7 +3883,10 @@ class mail_ui
 			catch (Exception $e) {
 				self::callWizard($e->getMessage(),true, 'error');
 			}
-
+		}
+		else
+		{
+			$mail_ui = new mail_ui(true);	// run constructor
 		}
 
 		// Send full info back in the response
@@ -3873,7 +3895,7 @@ class mail_ui
 			translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $this->getFolderTree(true, $icServerID, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true)
+				$icServerID => $mail_ui->getFolderTree(true, $icServerID, !$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true)
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
