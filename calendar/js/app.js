@@ -119,7 +119,7 @@ app.classes.calendar = AppJS.extend(
 				break;
 		}
 	},
-	
+
 	/**
 	 * Observer method receives update notifications from all applications
 	 *
@@ -155,7 +155,7 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;	
+				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;
 				switch (_type)
 				{
 					case 'add':
@@ -175,9 +175,9 @@ app.classes.calendar = AppJS.extend(
 				}
 			}
 			break;
-		}	
+		}
 	},
-	
+
 	/**
 	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
 	 *
@@ -602,7 +602,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			//Get infologID if in case if it's an integrated infolog event
 			var infolog_id = eventId.split('infolog')[1];
-			
+
 			if (infolog_id)
 			{
 				// If it is an integrated infolog event we need to edit infolog entry
@@ -720,7 +720,7 @@ app.classes.calendar = AppJS.extend(
 	{
 		this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
 	},
-	
+
 	/**
 	 * control delete_series popup visibility
 	 *
@@ -755,7 +755,7 @@ app.classes.calendar = AppJS.extend(
 					id: 'dialog[cancel]',
 					image: 'cancel'
 				}
-				
+
 			];
 			var self = this;
 			et2_dialog.show_dialog
@@ -988,7 +988,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// nm action - show popup
 				nm_open_popup(_action,_senders);
-			}	
+			}
 			return;
 		}
 
@@ -1244,7 +1244,6 @@ app.classes.calendar = AppJS.extend(
 		var alarm_date = this.et2.getWidgetById('new_alarm[date]');
 		var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
 		var start = this.et2.getWidgetById('start');
-		var date = 0;
 
 		if (alarm_date && alarm_options
 					&& start)
@@ -1260,7 +1259,8 @@ app.classes.calendar = AppJS.extend(
 			var startDate = start.get_value();
 			if (startDate)
 			{
-				date = startDate - parseInt(alarm_options.get_value());
+				var date = new Date(startDate);
+				date.setTime(date.getTime() - 1000 * parseInt(alarm_options.get_value()));
 				alarm_date.set_value(date);
 			}
 		}
