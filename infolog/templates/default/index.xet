@@ -19,14 +19,14 @@
 		<grid width="100%">
 			<columns>
 				<column width="65"/>
-				<column/>
-				<column disabled="@no_customfields"/>
+				<column width="45%"/>
+				<column width="15%" disabled="@no_customfields"/>
 				<column/>
 				<column width="120"/>
 				<column/>
 				<column/>
-				<column width="8%" disabled="@no_info_owner_info_responsible"/>
-				<column width="12%"/>
+				<column width="120" disabled="@no_info_owner_info_responsible"/>
+				<column width="120"/>
 			</columns>
 			<rows>
 				<row class="th">

@@ -636,7 +636,7 @@ class infolog_ui
 	 * @param array/string $values etemplate content or 'reset_action_view' if called by index.php to reset an action-view
 	 * @param string $action if set only entries liked to that $action:$action_id are shown
 	 * @param string $action_id if set only entries liked to that $action:$action_id are shown
-	 * @param mixed $ca$called_asis is how we got called, for a hook eg. the call-params of that page containing the hook
+	 * @param mixed $called_as is how we got called, for a hook eg. the call-params of that page containing the hook
 	 * @param boolean $e$extra_app_header * @param boolean $return_html=false
 	 * @param string $own_referer='' this is our own referer
 	 * @param string $action_title='' app_header for the action, if '' we try the link-title
