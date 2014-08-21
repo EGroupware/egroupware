@@ -255,6 +255,7 @@ var et2_appicon = et2_image.extend(
 	set_src: function(_app)
 	{
 		if (!_app) _app = this.egw().app_name();
+		this.image.addClass('et2_appicon');
 		this._super.call(this, _app == 'sitemgr-link' ? 'sitemgr/sitemgr-link' :	// got removed from jdots
 			(this.egw().app(_app, 'icon_app') || _app)+'/'+(this.egw().app(_app, 'icon') || 'navbar'));
 	}
