@@ -191,7 +191,7 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
-				
+
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
@@ -203,7 +203,7 @@ app.classes.mail = AppJS.extend(
 				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});
 
 				this.compose_fieldExpander();
-				
+
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
 				break;
@@ -1027,7 +1027,7 @@ app.classes.mail = AppJS.extend(
 			});
 
 		var data = _elems[0].data || {};
-		
+
 		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
 		// add filename or number of files for multiple files
 		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
@@ -2757,7 +2757,7 @@ app.classes.mail = AppJS.extend(
 				var key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
-				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+_target.id+'"') == 0)
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+target+'"') == 0)
 				{
 					window.localStorage.removeItem(key);
 				}
@@ -3094,12 +3094,13 @@ app.classes.mail = AppJS.extend(
 		if (addr)
 		{
 			tmp = aliases.concat(addr.get_value());
-			
+
 			// returns de-duplicate items of an array
-			var deDuplicator = function (item,pos){
-									return tmp.indexOf(item) == pos	
+			var deDuplicator = function (item,pos)
+			{
+				return tmp.indexOf(item) == pos;
 			};
-			
+
 			aliases = tmp.filter(deDuplicator);
 			addr.set_value(aliases);
 		}
@@ -3673,16 +3674,16 @@ app.classes.mail = AppJS.extend(
 	vacation_change_account: function (_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
-	}, 
-	
+	},
+
 	/**
-	 * Set email items draggable 
+	 * Set email items draggable
 	 **/
 	set_dragging_dndCompose: function ()
 	{
 		var zIndex = 100;
 		var self = this;
-		
+
 		jQuery('div.ms-sel-item:not(div.ui-draggable)').draggable({
 			appendTo:'body',
 			//Performance wise better to not add ui-draggable class to items since we are not using that class
@@ -3691,9 +3692,9 @@ app.classes.mail = AppJS.extend(
 			cursor:'move',
 			cursorAt:{left:2},
 			//cancel dragging on close button to avoid conflict with close action
-			cancel:'.ms-close-btn', 
+			cancel:'.ms-close-btn',
 			/**
-			 * function to act on draggable item on revert's event 
+			 * function to act on draggable item on revert's event
 			 * @returns {Boolean} return true
 			 */
 			revert: function (){
@@ -3702,6 +3703,9 @@ app.classes.mail = AppJS.extend(
 			},
 			/**
 			 * function to act as draggable starts dragging
+			 *
+			 * @param {type} event
+			 * @param {type} ui
 			 */
 			start:function(event, ui)
 			{
@@ -3715,7 +3719,7 @@ app.classes.mail = AppJS.extend(
 				jQuery(this).css('position','absolute');
 			},
 			/**
-			 * 
+			 *
 			 * @param {type} event
 			 * @param {type} ui
 			 */
@@ -3725,27 +3729,27 @@ app.classes.mail = AppJS.extend(
 			}
 		});
 	},
-	
+
 	/**
 	 * Initialize dropping targets for draggable emails
 	 * -
-	 */ 
+	 */
 	init_dndCompose: function ()
 	{
-		
+
 		var self = this;
 		//Call to make new items draggable
 		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').hover(function(){
 			self.set_dragging_dndCompose();
 		});
-		//Make used email-tag list widgets in mail compose droppable 
+		//Make used email-tag list widgets in mail compose droppable
 		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').droppable({
 			access:'.ms-sel-item',
-			
+
 			/**
 			 * Run after a draggable email item dropped over one of the email-taglists
 			 * -Set the dropped item to the dropped current target widget
-			 * 
+			 *
 			 * @param {type} event
 			 * @param {type} ui
 			 */
@@ -3755,22 +3759,22 @@ app.classes.mail = AppJS.extend(
 				var emails = [];
 				var fromWidget = {};
 				var draggedValue = ui.draggable.text();
-				
+
 				if (typeof widget != 'undefined')
 				{
 					emails = widget.get_value();
-					
-					if (emails) emails = emails.concat([draggedValue])
-					
+
+					if (emails) emails = emails.concat([draggedValue]);
+
 					widget.set_value(emails);
-				
+
 					var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
 					if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
 					{
 						fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
 					}
-										
-					if (!jQuery.isEmptyObject(fromWidget) 
+
+					if (!jQuery.isEmptyObject(fromWidget)
 							&& !(ui.draggable.attr('class').search('mailCompose_copyEmail') > -1))
 					{
 						if (!_removeDragged(fromWidget, draggedValue))
@@ -3785,16 +3789,16 @@ app.classes.mail = AppJS.extend(
 								.removeClass('mailCompose_copyEmail')
 								.css('cursor','move');
 					}
-					
+
 					//Destroy draggables after dropping, we need to enable them again
 					jQuery('div.ms-sel-item').draggable('destroy');
 				}
-			},
+			}
 		});
-		
+
 		/**
 		 * Remove dragged item from the widget which the item was dragged
-		 * 
+		 *
 		 * @param {type} _widget
 		 * @param {type} _value
 		 * @return {boolean} true if successul | false unsuccessul
@@ -3816,7 +3820,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 			return true;
-		}
+		};
 	}
 });
 
