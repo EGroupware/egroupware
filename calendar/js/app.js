@@ -40,8 +40,8 @@ app.classes.calendar = AppJS.extend(
 		{
 			window.top.app.calendar = this;
 		}
-		//Drag_n_Drop
-		this.drag_n_drop();
+		//Drag_n_Drop (need to wait for DOM ready to init dnd)
+		jQuery(jQuery.proxy(this.drag_n_drop,this));
 	},
 
 	/**
