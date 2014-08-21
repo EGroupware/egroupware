@@ -713,4 +713,6 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	.et2_button {
 		display: none;
 	}
+	.mailCompose_emailCopy {
+	}
 }

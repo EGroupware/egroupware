@@ -191,7 +191,7 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
-
+				
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
@@ -203,6 +203,9 @@ app.classes.mail = AppJS.extend(
 				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});
 
 				this.compose_fieldExpander();
+				
+				//Call drag_n_drop initialization for emails on compose
+				this.init_dndCompose();
 				break;
 		}
 	},
@@ -3644,6 +3647,150 @@ app.classes.mail = AppJS.extend(
 	vacation_change_account: function (_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
+	}, 
+	
+	/**
+	 * Set email items draggable 
+	 **/
+	set_dragging_dndCompose: function ()
+	{
+		var zIndex = 100;
+		var self = this;
+		
+		jQuery('div.ms-sel-item:not(div.ui-draggable)').draggable({
+			appendTo:'body',
+			//Performance wise better to not add ui-draggable class to items since we are not using that class
+			containment:'document',
+			distance: 0,
+			cursor:'move',
+			cursorAt:{left:2},
+			//cancel dragging on close button to avoid conflict with close action
+			cancel:'.ms-close-btn', 
+			/**
+			 * function to act on draggable item on revert's event 
+			 * @returns {Boolean} return true
+			 */
+			revert: function (){
+				this.parent().find('.ms-sel-item').css('position','relative');
+				return true;
+			},
+			/**
+			 * function to act as draggable starts dragging
+			 */
+			start:function(event, ui)
+			{
+				if (event.ctrlKey)
+				{
+					jQuery(this)
+							.addClass('mailCompose_copyEmail')
+							.css('cursor','copy');
+				}
+				jQuery(this).css ('z-index',zIndex++);
+				jQuery(this).css('position','absolute');
+			},
+			/**
+			 * 
+			 * @param {type} event
+			 * @param {type} ui
+			 */
+			create:function(event,ui)
+			{
+				jQuery(this).css('css','move');
+			}
+		});
+	},
+	
+	/**
+	 * Initialize dropping targets for draggable emails
+	 * -
+	 */ 
+	init_dndCompose: function ()
+	{
+		
+		var self = this;
+		//Call to make new items draggable
+		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').hover(function(){
+			self.set_dragging_dndCompose();
+		});
+		//Make used email-tag list widgets in mail compose droppable 
+		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').droppable({
+			access:'.ms-sel-item',
+			
+			/**
+			 * Run after a draggable email item dropped over one of the email-taglists
+			 * -Set the dropped item to the dropped current target widget
+			 * 
+			 * @param {type} event
+			 * @param {type} ui
+			 */
+			drop:function (event, ui)
+			{
+				var widget = self.et2.getWidgetById(this.getAttribute('name'));
+				var emails = [];
+				var fromWidget = {};
+				var draggedValue = ui.draggable.text();
+				
+				if (typeof widget != 'undefined')
+				{
+					emails = widget.get_value();
+					
+					if (emails) emails = emails.concat([draggedValue])
+					
+					widget.set_value(emails);
+				
+					var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
+					if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
+					{
+						fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
+					}
+										
+					if (!jQuery.isEmptyObject(fromWidget) 
+							&& !(ui.draggable.attr('class').search('mailCompose_copyEmail') > -1))
+					{
+						if (!_removeDragged(fromWidget, draggedValue))
+						{
+							//Not successful remove, returns the item to its origin
+							jQuery(ui.draggable).draggable('option','revert',true);
+						}
+					}
+					else
+					{
+						ui.draggable
+								.removeClass('mailCompose_copyEmail')
+								.css('cursor','move');
+					}
+					
+					//Destroy draggables after dropping, we need to enable them again
+					jQuery('div.ms-sel-item').draggable('destroy');
+				}
+			},
+		});
+		
+		/**
+		 * Remove dragged item from the widget which the item was dragged
+		 * 
+		 * @param {type} _widget
+		 * @param {type} _value
+		 * @return {boolean} true if successul | false unsuccessul
+		 */
+		var _removeDragged = function (_widget, _value)
+		{
+			if (_widget && _value)
+			{
+				var emails = _widget.get_value();
+				var itemIndex = emails.indexOf(_value);
+				if (itemIndex > -1)
+				{
+					emails.splice(itemIndex,1);
+					_widget.set_value(emails);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 });
 
