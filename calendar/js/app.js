@@ -155,7 +155,7 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [id^="infolog'+_id+'"]').length > 0) do_refresh = true;	
+				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;	
 				switch (_type)
 				{
 					case 'add':
@@ -566,12 +566,19 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
-	 * DropEvent
+	 * This function tries to recognise the type of dropped event, and sends relative request to server accordingly
+	 *	-ATM we have three different requests:
+	 *		-1. Event part of series
+	 *		-2. Single Event (Normall Cal Event)
+	 *		-3. Integrated Infolog Event
 	 *
 	 * @param {string} _id dragged event id
 	 * @param {array} _date array of date,hour, and minute of dropped cell
 	 * @param {string} _duration description
-	 * @param {string} _eventFlag Flag to distinguesh wheter the event is Whole Day, Series, or Single
+	 * @param {string} _eventFlag Flag to distinguish whether the event is Whole Day, Series, or Single
+	 *	- S represents Series
+	 *	- WD represents Whole Day
+	 *	- '' represents Single
 	 */
 	dropEvent : function(_id, _date, _duration, _eventFlag)
 	{
@@ -579,7 +586,6 @@ app.classes.calendar = AppJS.extend(
 		var calOwner = _id.substring(_id.lastIndexOf("_O")+2,_id.lastIndexOf("_C"));
 		var eventOwner = _id.substring(_id.lastIndexOf("_C")+2,_id.lastIndexOf(""));
 		var date = this.cal_dnd_tZone_converter(_date);
-		var moveOrder = false;
 
 		if (_eventFlag == 'S')
 		{
@@ -587,32 +593,26 @@ app.classes.calendar = AppJS.extend(
 			{
 				if (_button_id == et2_dialog.OK_BUTTON)
 				{
-					egw().json(
-						'calendar.calendar_uiforms.ajax_moveEvent',
-						[eventId,
-						calOwner,
-						date,
-						eventOwner,
-						_duration]
-					).sendRequest();
+					egw().json('calendar.calendar_uiforms.ajax_moveEvent', [eventId, calOwner, date, eventOwner, _duration]).sendRequest();
 				}
 			},this.egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
 			this.egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
 		}
 		else
 		{
-			moveOrder = true;
-		}
-		if (moveOrder)
-		{
-			egw().json(
-				'calendar.calendar_uiforms.ajax_moveEvent',
-				[eventId,
-				calOwner,
-				date,
-				eventOwner,
-				_duration]
-			).sendRequest();
+			//Get infologID if in case if it's an integrated infolog event
+			var infolog_id = eventId.split('infolog')[1];
+			
+			if (infolog_id)
+			{
+				// If it is an integrated infolog event we need to edit infolog entry
+				egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent', [infolog_id, date,_duration]).sendRequest();
+			}
+			else
+			{
+				//Edit calendar event
+				egw().json('calendar.calendar_uiforms.ajax_moveEvent',[eventId,	calOwner, date,	eventOwner,	_duration]).sendRequest();
+			}
 		}
 	},
 

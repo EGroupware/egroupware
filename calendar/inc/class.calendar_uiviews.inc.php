@@ -1868,10 +1868,8 @@ class calendar_uiviews extends calendar_ui
 
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
-		// ATM we do not support whole day events or recurring events for dragdrop
-		$dd_emulation = "";
 		if ($this->use_time_grid &&
-			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
+			$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			if (!$event['whole_day_on_top'] &&
 				!$event['whole_day'] &&
