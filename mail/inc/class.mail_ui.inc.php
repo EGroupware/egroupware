@@ -140,7 +140,7 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 
 			// RegEx to minimize extra openConnection
-			$needle = '^(?!mail)/';
+			$needle = '/^(?!mail)/';
 			if (!preg_match($needle,$_GET['menuaction']) && !egw_json_request::isJSONRequest())
 			{
 				//error_log(__METHOD__.__LINE__.' Fetched IC Server openConnection:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
