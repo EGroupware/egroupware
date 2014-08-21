@@ -155,7 +155,7 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;	
+				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;
 				switch (_type)
 				{
 					case 'add':
@@ -602,7 +602,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			//Get infologID if in case if it's an integrated infolog event
 			var infolog_id = eventId.split('infolog')[1];
-			
+
 			if (infolog_id)
 			{
 				// If it is an integrated infolog event we need to edit infolog entry
@@ -1260,7 +1260,7 @@ app.classes.calendar = AppJS.extend(
 			if (startDate)
 			{
 				var date = new Date(startDate);
-				date.setTime(date.getTime() - parseInt(alarm_options.get_value()));
+				date.setTime(date.getTime() - 1000 * parseInt(alarm_options.get_value()));
 				alarm_date.set_value(date);
 			}
 		}
