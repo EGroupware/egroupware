@@ -273,7 +273,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			if (typeof _replace != 'undefined')
 			{
-				href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, typeof _with != 'undefined' ? _with : '');
+				href = href.replace(typeof _replace == 'string' ? new RegExp(_replace) : _replace, (typeof _with != 'undefined' && _with != null) ? _with : '');
 			}
 
 			if (href.indexOf('msg=') != -1)
