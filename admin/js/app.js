@@ -781,9 +781,9 @@ app.classes.admin = AppJS.extend(
 	delete_category: function (_action)
 	{
 		var _buttons = [
-				{"button_id": "delete[cancel]","text": 'Cancel', id: 'delete[cancel]', image: 'cancel', "default":true},
-				{"button_id": "delete[delete]","text": 'Delete', id: 'delete[delete]', image: 'delete'},
-				{"button_id": "delete[subs]","text": 'Delete including sub-enteries', id: 'delete[subs]', image: 'delete'},
+				{"button_id": "delete[cancel]","text": this.egw.lang('Cancel'), id: 'delete[cancel]', image: 'cancel', "default":true},
+				{"button_id": "delete[delete]","text": this.egw.lang('Delete'), id: 'delete[delete]', image: 'delete'},
+				{"button_id": "delete[subs]","text": this.egw.lang('Delete including sub-enteries'), id: 'delete[subs]', image: 'delete'},
 		];
 		var action = _action;
 		var self = this;
@@ -813,6 +813,6 @@ app.classes.admin = AppJS.extend(
 				}
 			}
 		};
-		et2_dialog.show_dialog(delDialog_callBack,"Are you sure you want to delete this category ?","Delete",{},_buttons);
+		et2_dialog.show_dialog(delDialog_callBack,this.egw.lang("Are you sure you want to delete this category ?"),this.egw.lang("Delete"),{},_buttons,et2_dialog.WARNING_MESSAGE,null,'admin');
 	}
 });
