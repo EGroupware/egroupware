@@ -5925,7 +5925,10 @@ class emailadmin_imapbase
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($contact));
 							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-							$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
+							if($email)
+							{
+								$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
+							}
 						}
 						$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset);
 						if (!empty($AltBody))
