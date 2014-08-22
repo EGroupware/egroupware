@@ -36,22 +36,22 @@
 		<grid width="100%">
 			<columns>
 				<column width="20"/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="40%"/>
+				<column width="70"/>
+				<column width="100"/>
 				<column width="60"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="@no_customfields"/>
-				<column/>
-				<column disabled="@no_distribution_list"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="80"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="80" disabled="@no_customfields"/>
+				<column width="80"/>
+				<column width="80" disabled="@no_distribution_list"/>
+				<column width="80"/>
+				<column width="50"/>
+				<column width="80"/>
+				<column width="120"/>
 			</columns>
 			<rows>
 				<row class="th">

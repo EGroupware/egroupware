@@ -18,13 +18,13 @@
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
-				<column width="65"/>
+				<column width="120"/>
 				<column width="45%"/>
 				<column width="15%" disabled="@no_customfields"/>
 				<column/>
 				<column width="120"/>
-				<column width="65"/>
-				<column width="65"/>
+				<column/>
+				<column/>
 				<column width="120" disabled="@no_info_owner_info_responsible"/>
 				<column width="120"/>
 			</columns>
@@ -162,7 +162,7 @@
 					<template id="dates"/>
 					<template id="header_right"/>
 				</row>
-				<row class="$cont[action]Hooked">
+				<row>
 					<nextmatch id="nm" template="infolog.index.rows" span="all"/>
 				</row>
 				<row>

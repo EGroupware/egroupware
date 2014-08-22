@@ -6,10 +6,9 @@
 			<columns>
 				<column width="20"/>
 				<column width="20"/>
-				<column/>
-				<column/>
-				<column/>
-				<column width="90"/>
+				<column width="40%"/>
+				<column width="30%"/>
+				<column width="30%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -18,10 +17,6 @@
 					<nextmatch-sortheader id="org_name" label="Organisation"/>
 					<nextmatch-header label="Department" id="org_unit"/>
 					<nextmatch-header label="Business address" id="business"/>
-					<hbox align="center" class="noPrint">
-						<nextmatch-header label="Actions" align="center" id="legacy_actions"/>
-						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
-					</hbox>
 				</row>
 				<row class="row" valign="top">
 					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
@@ -37,13 +32,6 @@
 						<description no_lang="1" id="${row}[adr_one_street]"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
 					</vbox>
-					<hbox options="0" class="noPrint" orient="0">
-						<button image="view" label="View" id="view[$row_cont[id]]" statustext="Show the contacts of this organisation"/>
-						<button image="new" label="Add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;org=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="add[$row_cont[id]]" statustext="Add a contact to this organisation"/>
-						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this organisation including ALL its contacts" onclick="et2_dialog.confirm(widget,'Delete this organisation including ALL its contacts','Delete');"/>
-						<button image="infolog" label="InfoLog" id="infolog[$row_cont[id]]" statustext="Show InfoLog entries for this organisation"/>
-						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>

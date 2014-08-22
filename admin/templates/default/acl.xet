@@ -7,18 +7,18 @@
 	<template id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="24"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="25"/>
+				<column width="140"/>
+				<column width="50%"/>
+				<column width="50%"/>
+				<column width="70"/>
+				<column width="80"/>
+				<column width="75"/>
+				<column width="70"/>
+				<column width="70"/>
+				<column width="70"/>
+				<column width="70"/>
+				<column width="70"/>
 			</columns>
 			<rows>
 				<row>

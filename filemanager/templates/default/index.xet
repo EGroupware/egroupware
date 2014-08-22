@@ -4,16 +4,16 @@
 	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="50"/>
+				<column width="50%"/>
+				<column width="80"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="80"/>
+				<column width="80"/>
+				<column width="80"/>
 				<column width="30%"/>
-				<column/>
-				<column width="120"/>
-				<column width="120"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="20%"/>
 			</columns>
 			<rows>
 				<row class="th">

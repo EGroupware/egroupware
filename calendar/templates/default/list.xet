@@ -12,18 +12,18 @@
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="125"/>
+				<column width="80%"/>
 				<column width="40%"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="40%"/>
+				<column width="135"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="130"/>
+				<column width="20%"/>
 			</columns>
 			<rows>
 				<row class="th">

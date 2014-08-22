@@ -15,17 +15,17 @@
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="50"/>
+				<column width="135"/>
+				<column width="70%"/>
 				<column width="15%"/>
-				<column width="50%"/>
-				<column/>
-				<column/>
-				<column disabled="@no_ts_quantity"/>
-				<column disabled="@no_ts_unitprice"/>
-				<column disabled="@no_ts_total"/>
-				<column disabled="@no_owner_col"/>
-				<column disabled="@no_ts_status"/>
-				<column/>
+				<column width="60"/>
+				<column width="60" disabled="@no_ts_quantity"/>
+				<column width="60" disabled="@no_ts_unitprice"/>
+				<column width="60" disabled="@no_ts_total"/>
+				<column width="130" disabled="@no_owner_col"/>
+				<column width="10%" disabled="@no_ts_status"/>
+				<column width="15%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -79,7 +79,7 @@
 					<menulist class="noWrap">
 						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
 					</menulist>
-					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
+					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1" align="right"/>
 					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
 					<description id="${row}[ts_unitprice]" no_lang="1"/>
 					<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
