@@ -161,6 +161,9 @@ class egw_json_request
 		$parameters = translation::convert($parameters, 'utf-8');
 
 		call_user_func_array(array($ajaxClass, $functionName), $parameters);
+
+		// check if we have push notifications, if notifications app available
+		if (class_exists('notifications_push')) notifications_push::get();
 	}
 }
 
