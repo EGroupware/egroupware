@@ -60,7 +60,9 @@ class send extends egw_mailer
 		$this->Username = $account->acc_smtp_username;
 		$this->Password = $account->acc_smtp_password;
 		$this->defaultDomain = $account->acc_domain;
-		$this->Sender = $account->acc_smtp_username?$account->acc_smtp_username:emailadmin_account::rfc822($account);
+		// use smpt-username as sender, if available, but only if it is a full email address
+		$this->Sender = $account->acc_smtp_username && strpos($account->acc_smtp_username, '@') !== false ?
+			$account->acc_smtp_username : $account->acc_ident_email;
 
 		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 
@@ -82,7 +84,6 @@ class send extends egw_mailer
 
 		$this->FromName = $GLOBALS['egw_info']['user']['account_fullname'];
 		$this->From = $GLOBALS['egw_info']['user']['account_email'];
-		$this->Sender = '';
 
 		$this->AddCustomHeader('X-Mailer:eGroupWare (http://www.eGroupWare.org)');
 	}
