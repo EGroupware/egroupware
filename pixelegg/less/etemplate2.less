@@ -37,6 +37,16 @@ input,button,select {
 }
 
 /**
+ * img gray filter
+ */
+
+img.et2_appicon,
+.et2_appicon img{
+    .img_filter_gray;
+
+}
+
+/**
  * VBox widget
  */
 div.et2_vbox>* {
@@ -1243,17 +1253,19 @@ iframe#admin-index_iframe{
     table.egwGridView_grid{
                 img {
                     /*filter grey*/
-                    .img_filter_gray;
+                    .img_filter_none;
                 }
         }
 
 // Image Size
 #late-sidebox{
 
-    table {
-            img {.dimension_width_height_s;}
-           }
+            table {
+                    img {.dimension_width_height_s;}
+                   }
     }
+
+.admin_aclAPP {.img_filter_none;}
 
 /*#################################### END ADMIN PART #####################################################*/
 
