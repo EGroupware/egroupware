@@ -191,6 +191,7 @@ delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
 delete group	admin	de	Gruppe löschen
+delete including sub-enteries	common	de	Inklusive Untereinträge löschen
 delete peer server	admin	de	Server von Serververbund löschen
 delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
