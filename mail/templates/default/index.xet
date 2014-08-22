@@ -7,12 +7,12 @@
 				<column width="25"/>
 				<column width="20"/>
 				<column width="20"/>
-				<column width="40%"/>
+				<column/>
 				<column width="95"/>
-				<column width="30%"/>
-				<column width="30%"/>
-				<column width="30%"/>
-				<column width="80"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -99,10 +99,10 @@
 								<description id="${row}[winmailFlag]" />
 								<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
 								<description align="right" id="${row}[size]" />
-								<buttononly id="${row}[save]" image="fileexport" onclick="app.mail.saveAttachment"/>
-								<buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
-								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
-								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAllAttachmentsToZip" label="Save as Zip"/>
+								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
+								<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
+								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
+								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAllAttachmentsToZip" label="Save as Zip"/>
 							</row>
 						</rows>
 					</grid>
