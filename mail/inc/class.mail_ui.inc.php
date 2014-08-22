@@ -4057,6 +4057,15 @@ class mail_ui
 				$response->call('app.mail.lock_tree');
 			}
 			$this->mail_bo->compressFolder($trashFolder);
+			
+			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
+			$fShortName =  array_pop(explode($heirarchyDelimeter, $trashFolder));
+			$fStatus = array(
+				$icServerID.self::$delimiter.$trashFolder => $fShortName
+			);
+			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
+			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
+			$response->call('app.mail.mail_setFolderStatus',$fStatus);
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
