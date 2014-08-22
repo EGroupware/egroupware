@@ -1133,6 +1133,7 @@ abstract class bo_merge
 		// Some different formats dates could be in, depending what they've been through
 		$formats = array(
 			'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat.':s',
+			'!'.egw_time::$user_dateformat . '*' .egw_time::$user_timeformat.':s',
 			'!'.egw_time::$user_dateformat . '* ' .egw_time::$user_timeformat,
 			'!'.egw_time::$user_dateformat . '*',
 			'!'.egw_time::$user_dateformat,
