@@ -2072,7 +2072,6 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.drag_attachment'
 			)
 		));
-//_debug_array($content);
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
@@ -2123,7 +2122,7 @@ class mail_ui
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-				
+
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
@@ -4056,7 +4055,7 @@ class mail_ui
 				$response->call('app.mail.lock_tree');
 			}
 			$this->mail_bo->compressFolder($trashFolder);
-			
+
 			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
 			$fShortName =  array_pop(explode($heirarchyDelimeter, $trashFolder));
 			$fStatus = array(
