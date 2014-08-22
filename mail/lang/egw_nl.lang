@@ -1,5 +1,6 @@
 %1 attachments	mail	nl	Bijlage
 %1 is not writable by you!	mail	nl	%1 is NIET voor uw schrijfbaar
+%1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
 (not connected)	mail	nl	(nier verbonden)
@@ -19,6 +20,7 @@ all available info	admin	nl	Alle beschikbare informatie
 all filtered	mail	nl	Alle gefilterde
 all messages in the folder will be lost	mail	nl	Alle berichten in de map zullen verloren gaan
 all of	mail	nl	alles van
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	nl	Alle onderliggende mappen zullen ook verwijdert worden, en alle berichten in de betrokken folders zullen ook worden verwijdert.
 allow external images	mail	nl	Sts externe afbeeldingen toe
 allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
@@ -181,6 +183,7 @@ no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
 no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
 no signature	mail	nl	geen ondertekening
 no subject given!	mail	nl	Geen onderwerp opgegeven!
+non	mail	nl	geen
 none, create all	mail	nl	geen, maak ze allemaal
 on	mail	nl	op
 one address is not valid	mail	nl	Een adres is ongeldig
@@ -188,6 +191,7 @@ only one window	mail	nl	uitsluitend één venster
 organisation	admin	nl	organisatie
 organization	mail	nl	Organisatie
 original message	mail	nl	originele bericht
+outbox	mail	nl	Te verzenden
 please select a address	mail	nl	Kies s.v.p. een adres
 please select the number of days to wait between responses	mail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
 please supply the message to send with auto-responses	mail	nl	Vul s.v.p. het bericht in dat met de automatisch antwoorden meegezonden moet worden
