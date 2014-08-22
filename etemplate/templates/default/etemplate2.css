@@ -1393,7 +1393,7 @@ div.ms-sel-ctn {
 	padding: 0;
 }
 .et2_toolbar-dropdown ul{
-	z-index: 1000;
+	z-index: 1000 !important;
 	position: absolute;
 }
 .et2_toolbar-dropdown ul >li{
