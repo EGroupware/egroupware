@@ -973,7 +973,7 @@ class emailadmin_imapbase
 	function getHierarchyDelimiter($_useCache=true)
 	{
 		static $HierarchyDelimiter;
-		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter =& egw_cache::getSession('mail','HierarchyDelimiter');
+		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter = egw_cache::getCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
 		if ($_useCache===false) unset($HierarchyDelimiter[$this->icServer->ImapServerId]);
 		if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])&&!empty($HierarchyDelimiter[$this->icServer->ImapServerId]))
 		{
@@ -988,6 +988,7 @@ class emailadmin_imapbase
 		{
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
+		egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$HierarchyDelimiter, $expiration=60*60*24*5);
 		return $HierarchyDelimiter[$this->icServer->ImapServerId];
 	}
 
