@@ -17,12 +17,18 @@
 button#resources-show_add {
   height: 24px;
   width: 32px;
-  border: 1px solid #0C5DA5;
+  /*border: 1px solid #0C5DA5;*/
   margin: 6px 2px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   padding: -0.5em;
   background-color: #e6e6e6 !important;
   background-size: 16px 16px;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 10px;
+  border-radius: 3px;
+  border-top-left-radius: 10px;
   background-color: #0c5da5;
 }
 button#resources-show_add:before {
@@ -31,13 +37,13 @@ button#resources-show_add:before {
   color: #0c5da5;
   line-height: 0.6em;
   padding-left: 0.1em;
-  padding-right: 4em;
+  padding-right: 100em;
 }
 button#resources-show_add:active {
   background-color: #1aa200;
 }
 button#resources-show_add:hover {
-  background-color: #66a1d2 !important;
+  background-color: #189800 !important;
   color: #ffc200;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);

@@ -7,13 +7,13 @@
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="@no_customfields"/>
-				<column width="5%"/>
+				<column width="70"/>
+				<column width="50%"/>
+				<column width="50"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%" disabled="@no_customfields"/>
 			</columns>
 			<rows>
 				<row class="th">

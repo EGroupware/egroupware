@@ -7,12 +7,12 @@
 				<column width="25"/>
 				<column width="20"/>
 				<column width="20"/>
-				<column/>
+				<column width="40%"/>
 				<column width="95"/>
-				<column width="120"/>
-				<column width="120"/>
-				<column width="120"/>
-				<column width="50"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="80"/>
 			</columns>
 			<rows>
 				<row class="th">
