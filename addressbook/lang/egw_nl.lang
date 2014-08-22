@@ -1,7 +1,9 @@
 %1 added	addressbook	nl	%1 toegevoegd
 %1 contact(s) %2	addressbook	nl	%1 contact(en) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten !!!
+%1 contacts updated (%2 errors).	addressbook	nl	%1 contacten bijgewerkt (%2 fouten)
 %1 fields in %2 other organisation member(s) changed	addressbook	nl	%1 velden in %2 andere organisatie lid/leden gewijzigd
+%1 not implemented for %2!	addressbook	nl	%1 niet geimplemnteerd voor %2!
 %1 records imported	addressbook	nl	%1 adressen geïmporteerd
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geïmporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten)
 %1 starts with '%2'	addressbook	nl	%1 begint met '%2'
@@ -16,15 +18,21 @@ accounts	addressbook	nl	Accounts
 actions	addressbook	nl	Acties
 add %1	addressbook	nl	%1 toevoegen
 add a contact to this organisation	addressbook	nl	Voeg een contact toe aan deze organisatie
+add a customfield to link title	addressbook	nl	Voeg een zelf gedinieerd veld toe om titel te linken
 add a new contact	addressbook	nl	Voeg een contact toe
 add a new infolog	addressbook	nl	Voeg een nieuw Infolog record toe
 add a new list	addressbook	nl	Voeg een nieuwe lijst toe
 add a single entry by passing the fields.	addressbook	nl	Voeg een enkele invoer toe door door de velden te geven
+add appointment	addressbook	nl	Voeg een afspraak toe
 add business email of whole distribution list?	addressbook	nl	Voeg bedrijfsemail of hele distributielijst toe?
 add custom field	addressbook	nl	Aangepast veld toevoegen
 add emails of whole distribution list?	addressbook	nl	Voeg emailadressen van de hele distributie lijst toe?
 add or delete categories	addressbook	nl	Toevoegen of verwijderen categoriën
+add to bcc	addressbook	nl	Voeg aan BCc toe
+add to cc	addressbook	nl	Voeg aan CC toe
+add to distribution list	addressbook	nl	Voeg toe aan distributie lijst
 add to distribution list:	addressbook	nl	Voeg toe aan distributielijst:
+add to to	addressbook	nl	Voeg toe aan
 added	addressbook	nl	toegevoegd
 added by synchronisation	addressbook	nl	toegevoegd tijdens synchronisatie
 added to distribution list	addressbook	nl	toegevoegd aan distributielijst
@@ -33,17 +41,25 @@ address book	common	nl	Adresboek
 address book - vcard in	addressbook	nl	Adresboek - VCard in
 address book - view	addressbook	nl	Adresboek - weergave
 address line 2	addressbook	nl	Adresregel 2
+address line 2 (private)	addressbook	nl	Adresregel 2 (prive)
 address type	addressbook	nl	Adrestype
 addressbook	common	nl	Adresboek
 addressbook csv export	addressbook	nl	Adresboek CSV export
+addressbook csv import	addressbook	nl	Adresboek CSV import
+addressbook field	addressbook	nl	Adresboek veld
 addressbook menu	addressbook	nl	Adresboek menu
+addressbook of	addressbook	nl	Adresboek v an
 addressbook preferences	addressbook	nl	Adresboek voorkeuren
 addressbook the contact should be saved to	addressbook	nl	Adresboek waarin het contact opgeslagen moet worden
 addressbook the contact should be shown	addressbook	nl	Adresboek waarin de contact weergegeven moet worden
+addressbook vcard export	addressbook	nl	Adresboek vCard export
+addressbook vcard import	addressbook	nl	Adresboek vCard import
 addressbook-fieldname	addressbook	nl	Adresboek-veldnaam
 addvcard	addressbook	nl	VCard toevoegen
 advanced search	addressbook	nl	UItgebreid zoeken
 all contacts	addressbook	nl	Alle contacten
+all in one field	addressbook	nl	Alles im 1 veld
+allow members of following groups to edit contact-data of accounts	addressbook	nl	Sta alle leden van de volgende groepen toe alle contact data te wijzigen van accounts
 allow users to maintain their own account-data	admin	nl	Laat gebruikers toe hun eigen accountgegevens te beheren
 alt. csv import	addressbook	nl	Alternatief CSV-bestand importeren
 always	addressbook	nl	altijd
@@ -58,8 +74,10 @@ birthdays	common	nl	Verjaardagen
 blank	addressbook	nl	Blanco
 business	common	nl	Bedrijf
 business address	addressbook	nl	Adres bedrijf
+business address line 2	addressbook	nl	Adres bedrijf regel 2
 business city	addressbook	nl	Plaats Bedrijf
 business country	addressbook	nl	Land Bedrijf
+business country code	addressbook	nl	Land bedrijf code
 business email	addressbook	nl	Email Bedrijf
 business fax	addressbook	nl	Fax Bedrijf
 business phone	addressbook	nl	Telefoon Bedrijf
@@ -69,31 +87,40 @@ business zip code	addressbook	nl	Postcode Bedrijf
 calendar fields:	addressbook	nl	Kaldendervelden:
 calendar uri	addressbook	nl	Kalender URI
 can be changed via setup >> configuration	admin	nl	Kan gewijzigd worden via Setup >> Configuratie
+can't create dn %1	addressbook	nl	Kan dn %1 niet maken
 car phone	addressbook	nl	Autotelefoon
 categorie	addressbook	nl	categorie
 categorie added	addressbook	nl	categorie toegevoegd
 categorie delete	addressbook	nl	categorie verwijderd
 categories, notes, ...	addressbook	nl	Categorieën, notities, ...
+category path	addressbook	nl	Pad Categorie
 category tree	admin	nl	Categorie boom
 cell phone	addressbook	nl	Mobilofoon
 change all organisation members	addressbook	nl	wijzig alle  leden van de organisatie
 charset for the csv export	addressbook	nl	Karakterset voor de CSV export
+charset for the vcard export	addressbook	nl	Karakterset voor de vCard export
+charset for the vcard import and export	addressbook	nl	Karakterset voor de vCard im -en export
 charset of file	addressbook	nl	Karakterset van bestand
 check all	addressbook	nl	Markeer alles
 choose an icon for this contact type	admin	nl	Kies een pictogram voor dit  type contact
+choose charset	addressbook	nl	Kies karakterset
 choose owner of imported data	addressbook	nl	Kies de eigenaar van de geimporteerde gegevens
 chosse an etemplate for this contact type	admin	nl	Kies een eTemplate voor dit type contact
 city	common	nl	Stad
+city (private)	addressbook	nl	Stad (prive)
 company	common	nl	Bedrijf
 company name	addressbook	nl	Bedrijfsnaam
 configuration	common	nl	Instelling
 contact	common	nl	Contact
 contact application	admin	nl	Contactaanvraag
 contact copied	addressbook	nl	Contact gekopieerd
+contact data	addressbook	nl	Contactgegevens
 contact deleted	addressbook	nl	Contact verwijderd
 contact fields to show	addressbook	nl	Contactvelden die getoond moeten worden
 contact fields:	addressbook	nl	Contactvelden:
 contact id	addressbook	nl	Contact ID
+contact id cannot be changed by import	addressbook	nl	Contact ID kan niet worden gewijzigd bij import.
+contact maintenance	admin	nl	Contact onderhoud
 contact modified by %1 at %2	addressbook	nl	Contact is op %2 gewijzigd door %1
 contact not found!	addressbook	nl	Contact niet gevonden!
 contact repository	admin	nl	Contact databasegegevens
@@ -108,11 +135,17 @@ contains	addressbook	nl	bevat
 copied	addressbook	nl	gekopieerd
 copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2.
 copy a contact and edit the copy	addressbook	nl	Kopieer een contact en bewerk de kopie
+copy instead of move	addressbook	nl	Kopieer in plaats van verplaats
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	nl	Kopieer je wijzigingen naar het klembord, %1 herlaad het record %2 en voeg ze samen.
 country	common	nl	Land
+country (private)	addressbook	nl	Land (prive)
+country code	addressbook	nl	Land Code
+country code (private)	addressbook	nl	Land code (prive)
 create new links	addressbook	nl	Nieuwe links aanmaken
 created	addressbook	nl	Gecreëerd
 credit	addressbook	nl	Credit
+crm view list	addressbook	nl	CRM overzicht lijst
+crm-view	addressbook	nl	CRM-overzicht
 csv-fieldname	addressbook	nl	CSV-Veldnaam
 csv-filename	addressbook	nl	CSV-Bestandsnaam
 custom	addressbook	nl	Aangepast
@@ -120,6 +153,7 @@ custom etemplate for the contactform	addressbook	nl	Aangepaste eTemplate voor he
 custom fields	addressbook	nl	Aangepast velden
 debug output in browser	addressbook	nl	Debug resultaat in browser
 default	addressbook	nl	standaard
+default action on double-click	addressbook	nl	Standaard actie bij dubbel klikken
 default address format	addressbook	nl	Standaard adresformaat
 default addressbook for adding contacts	addressbook	nl	Standaardadresboek om contacten toe te voegen
 default document to insert contacts	addressbook	nl	Standaard document om contacten in te voegen
@@ -140,6 +174,8 @@ display contact	addressbook	nl	Contact weergeven
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen op de voorpagina (de pagina die je te zien krijgt als je eGroupWare start of wanneer je op het voorpagina ikoon klikt)
 distribution list deleted	addressbook	nl	Distributielijst verwijderd
 distribution lists	addressbook	nl	Distributielijsten
+distribution lists, ...	addressbook	nl	Distributielijsten, ....
+do you really want to delete this contact?	addressbook	nl	Wilt u dit contact werkelijk verwijdenren ?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	nl	Wil je een persoonlijk adresboek dat niet door andere gebruikers bekeken kan worden, jij verleent toegang tot je persoonlijke adresboek
 do your really want to delete this contact?	addressbook	nl	Wilt u dit contact werkelijk verwijderen?
 doesn't matter	addressbook	nl	maakt niets uit
@@ -149,10 +185,14 @@ download	addressbook	nl	Download
 download export file (uncheck to debug output in browser)	addressbook	nl	Download export bestand (uitzetten om in verkenner te tonen)
 download this contact as vcard file	addressbook	nl	dit contact als vCardbestand downloaden
 duration	addressbook	nl	Duur
+each category in its own field	addressbook	nl	Elke categorie in zijn eigen veld
+each option in its own field	addressbook	nl	Elke optie in zin eigen veld
+edit contact	addressbook	nl	Wijzig contact
 edit custom field	addressbook	nl	Aangepast veld wijzigen
 edit custom fields	admin	nl	Aangepaste velden wijzigen
 edit extra account-data in the addressbook	admin	nl	Extra account-gegevens in het adresboek wijzigen
-edit phonenumbers -	addressbook	nl	Telefoonnummers wijzigen
+edit phonenumbers	addressbook	nl	Telefoonnummers wijzigen
+edit phonenumbers -	addressbook	nl	Telefoonnummers wijzigen -
 either the configured email addesses are wrong or the mail configuration.	addressbook	nl	Of de ingestelde emailadressen zijn onjuist of de email configuratie is onjuist.
 email & internet	addressbook	nl	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	nl	Emailadressen (kommagescheiden) om de contactgegevens te verzenden
@@ -323,19 +363,27 @@ select the type of conversion	addressbook	nl	Kies type conversie
 select the type of conversion:	addressbook	nl	Kies type conversie:
 select where you want to store / retrieve contacts	admin	nl	Kies waar je contacten wilt opslaan / ophalen
 selected contacts	addressbook	nl	geselecteerde contacten
+send emailcopy to receiver	addressbook	nl	Zend een kopie mail naar ontvanger
+send succeeded to %1	common	nl	Zend verzenden gelukt naar %1
+seperator	addressbook	nl	Scheidingsteken
+set only full name	addressbook	nl	Geef alleen de volledig naam
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	nl	Moeten de kolommen foto en thuisadres altijd worden weergegeven, zelfs als ze leeg zijn?
 show	addressbook	nl	Toon
 show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen weergeven op hoofdscherm
 show infolog entries for this organisation	addressbook	nl	InfoLog details van deze organisatie weergeven
 show the contacts of this organisation	addressbook	nl	Toon de contacten van deze organisatie
+similar contacts found:	addressbook	nl	Zelfde contacten gevonden:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	nl	Afmetingen van de popup (BxH, bijvoorbeeld 400x300, als een popup nodig is)
 start	admin	nl	Start
 startrecord	addressbook	nl	Startbestand
 state	common	nl	Provincie / Staat / Streek
+state (private)	addressbook	nl	Provincie (prive)
 street	common	nl	Straatnaam
+street (private)	addressbook	nl	Straat (prive)
 subject for email	addressbook	nl	Onderwerp voor het emailbericht
 successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 record geïmporteerd naar uw adresboek
 suffix	addressbook	nl	Achtervoegsel
+tag to mark positions for address labels	addressbook	nl	Tag voor markering tbv adreslabels
 tel home	addressbook	nl	tel thuis
 telephony integration	admin	nl	Telefonie integratie
 test import (show importable records <u>only</u> in browser)	addressbook	nl	Test Import (te importeren adressen ALLEEN WEERGEVEN in uw browser)
@@ -344,27 +392,37 @@ that field name has been used already !	addressbook	nl	Het veldnaam is al in  ge
 the anonymous user has probably no add rights for this addressbook.	addressbook	nl	De anonieme gebruiker heeft waarschijnlijk geen toevoegrechten voor dit adresboek.
 the anonymous user needs add rights for it!	addressbook	nl	De anonieme gebruiker moet hier toevoegrechten voor hebben!
 the anonymous user needs read it!	addressbook	nl	De anonieme gebruiker moet hier leesrechten voor hebben!
+the following document-types are supported:	addressbook	nl	De volgende document types worden ondersteund :
 there was an error saving your data :-(	addressbook	nl	Er ontstond een fout tijdens het opslaan van uw gegevens :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	nl	Deze module toont een contact formulier dat gegevens direct opslaat in het adresboek.
 this module displays block from a adddressbook group.	addressbook	nl	Deze module toont een blok van een adresboek groep.
 this person's first name was not in the address book.	addressbook	nl	De voornaam van deze persoon staat niet het adresboek.
 this person's last name was not in the address book.	addressbook	nl	De achternaam van deze persoon staat niet het adresboek.
 timezone	addressbook	nl	Tijdszone
+title	addressbook	nl	functie titel
 to many might exceed your execution-time-limit	addressbook	nl	Te veel kan mogelijk uw uitvoertijd van dit programme overschrijden
 today is %1's birthday!	common	nl	Vandaag is %1 jarig !
 tomorrow is %1's birthday.	common	nl	Morgen is %1 jarig
 translation	addressbook	nl	Vertaling
+two of: %1	addressbook	nl	Twee van: %1
 type	addressbook	nl	Type
+un-delete	addressbook	nl	Verwijderen ongedaan maken
+unable to delete	addressbook	nl	Niet mogelijk te verwijderen
+unique id (uid)	addressbook	nl	Uniek ID (UID)
 update a single entry by passing the fields.	addressbook	nl	Een record bijwerken door de velden te geven
 update fields by edited organisations?	admin	nl	Velden van de gewijzigde organisatie bijwerken?
 updated	addressbook	nl	Bijgewerkt
 upload or delete the photo	addressbook	nl	Upload of verwijder de foto
+url (business)	addressbook	nl	url (zakelijk)
+url (private)	addressbook	nl	url (prive)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	nl	URL waaraan telefoonnummers gelinkt moeten worden (gebruik %1 = nummer dat je wilt bellen, %u = account naam, %t = account telefoonnummer)
+use addressbooks "own sorting" attribute	addressbook	nl	Gebruik adresboek zijn "eigen sorteer" methode
 use an extra category tab?	addressbook	nl	Een extra categorie tabblad gebruiken?
 use an extra tab for private custom fields?	admin	nl	Een extra categorie tabblad gebruiken voor persoonlijke aangepaste velden?
 use country list	addressbook	nl	Gebruik Landenlijst
 use setup for a full account-migration	admin	nl	gebruik setup voor een volledige accountmigratie
 used for links and for the own sorting of the list	addressbook	nl	gebruikt voor links en voor eigen sortering van de lijst
+user preference	addressbook	nl	Gebrukers voorkeur
 vcard	common	nl	VCard
 vcards require a first name entry.	addressbook	nl	VCard vereist dat de voornaam ingevoerd is.
 vcards require a last name entry.	addressbook	nl	VCard vereist dat de achternaam ingevoerd is.
@@ -379,6 +437,7 @@ where to add the email address	addressbook	nl	waar moet het emailadres toegevoeg
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	nl	Welk adresformaat moet het adresboek gebruiken voor landen waarvan het adresformaat nog niet bekend is. Indien het adresformaat van een land bekend is wordt het ongeacht deze instelling gebruikt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	nl	Welke adresboek moet geselecteerd worden wanneer een contact wordt bijgevoegd EN wanneer u geen toevoegingsrecht heb bij het huidige adresboek.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze eGroupWare installatie.
+which charset should be used for the vcard export.	addressbook	nl	Welke karakterset moet gebruikt worden voor de vCard export
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	nl	Welke velden moeten geexporteerd worden. "Alles" betekent elke veld dat in het adresboek is opgeslagen, inclusief de aangepaste velden. "Alleen bedrijf adres of privé adres" betekent dat alleen naam, organisatie en het gekozen adres wordt geexporteerd.
 whole query	addressbook	nl	gehele query
 work email if given, else home email	addressbook	nl	Zakelijke emailadres indien bekend, ander privé emailadres
@@ -390,6 +449,7 @@ yes, for the next two weeks	addressbook	nl	Ja, voor de volgende twee dagen
 yes, for the next week	addressbook	nl	Ja, voor de volgende week
 yes, for today and tomorrow	addressbook	nl	Ja, voor vandaag en morgen
 yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
+yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 you are not permitted to delete contact %1	addressbook	nl	U bent niet bevoegd om contact %1 te verwijderen
 you are not permittet to delete this contact	addressbook	nl	U bent niet bevoegd om dit contact te verwijderen
 you are not permittet to edit this contact	addressbook	nl	U bent niet bevoegd om dit contact te wijzigen
@@ -401,4 +461,5 @@ you must select at least 1 column to display	addressbook	nl	U moet een op z'n mi
 you need to select a distribution list	addressbook	nl	U moet een distributielijst kiezen
 you need to select some contacts first	addressbook	nl	U moet eerst enkele contacten selecteren
 zip code	common	nl	Postcode
+zip code (private)	addressbook	nl	ZIP code (prive)
 zip_note	addressbook	nl	<p><b>Opmerking:</b> Het bestand mag een zip file zijn bestaande uit .csv, .vcf, of .ldif bestanden. Echter, geen meerdere types per import.
