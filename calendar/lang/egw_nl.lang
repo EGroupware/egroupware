@@ -1,4 +1,10 @@
 %1 %2 in %3	calendar	nl	%1 %2 in %3
+%1 days	calendar	nl	%1 dagen
+%1 event(s) %2	calendar	nl	%1 evenement(en) %2
+%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	nl	%1 evenment(en) %2, %3 mislukt vanwege onvoldoende rechten
+%1 hours	calendar	nl	%1 uren
+%1 minutes	calendar	nl	%1 minuten
+%1 participants removed because of missing invite grants	calendar	nl	%1 deelnemers verwijdert vanwege het ontbreken van uitnodigingen
 %1 records imported	calendar	nl	%1 records geïmporteerd
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 %1 weeks	calendar	nl	%1 weken
@@ -42,6 +48,7 @@ before current date	calendar	nl	Voor de huidige datum
 before the event	calendar	nl	voor de afspraak
 birthday	calendar	nl	Verjaardag
 birthdays	admin	nl	Verjaardagen
+birthdays only	calendar	nl	Alleen verjaardagen
 busy	calendar	nl	bezet
 by	calendar	nl	door
 calendar csv export	calendar	nl	Kalender CSV export
@@ -97,7 +104,7 @@ delete this event	calendar	nl	Deze gebeurtenis verwijderen
 delete this exception	calendar	nl	Deze uitzondering verwijderen
 delete this series of recuring events	calendar	nl	Deze serie herhalende gebeurtenissen verwijderen
 deleted	calendar	nl	verwijderd
-deny ressources reservation for private events	calendar	nl	Verbied hulpmiddelen reserveringen voor priv&euml; gebeurtenissen
+deny ressources reservation for private events	calendar	nl	Verbied hulpmiddelen reserveringen voor privë gebeurtenissen
 disinvited	calendar	nl	Uitnodiging teruggetrokken
 display status of events	calendar	nl	Status van afspraken weergeven
 displayed view	calendar	nl	getoonde weergave
@@ -123,7 +130,7 @@ ends	calendar	nl	eindigt
 error adding the alarm	calendar	nl	Fout bij instellen van de herinnering
 error: importing the ical	calendar	nl	Fout: importing van de iCal
 error: no participants selected !!!	calendar	nl	Fout: geen deelnemers geselecteerd !!!
-error: ressources reservation in private events is not allowed!!!	calendar	nl	Fout: hulpmiddelen reserveren is niet toegestaan in priv&euml; gebeurtenissen !!!
+error: ressources reservation in private events is not allowed!!!	calendar	nl	Fout: hulpmiddelen reserveren is niet toegestaan in privë gebeurtenissen !!!
 error: saving the event !!!	calendar	nl	Fout: opslaan van de gebeurtenis !!!
 error: starttime has to be before the endtime !!!	calendar	nl	Fout: Begintijd moet voor de eindtijd liggen !!!
 error: the entry has been updated since you opened it for editing!	calendar	nl	Fout: het record is gewijzigd sinds je het opende voor bewerking!
