@@ -276,7 +276,7 @@
 							<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
 							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						</hbox>
-						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" background_image="1"/>
+						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" background_image="1"/>
 					</hbox>
 				</row>
 				<row>
@@ -298,7 +298,11 @@
 								</row>
 								<row>
 									<description/>
-									<button label="Submit" id="button[setup]"/>
+									<hbox>
+										<button label="Submit" id="button[setup]"/>
+										<buttononly label="Cancel" onclick="jQuery('.superuser').hide();"/>
+									</hbox>
+									
 								</row>
 							</rows>
 						</grid>
