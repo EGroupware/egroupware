@@ -1179,11 +1179,17 @@ class filemanager_ui
 		}
 		if (egw_vfs::$is_root)
 		{
-			$tpl->setElementAttribute('sudo', 'label', 'Logout');
-			$tpl->setElementAttribute('sudo', 'help','Log out as superuser');
+			$tpl->setElementAttribute('sudouser', 'label', 'Logout');
+			$tpl->setElementAttribute('sudouser', 'help','Log out as superuser');
 			// Need a more complex submit because button type is buttononly, which doesn't submit
-			$tpl->setElementAttribute('sudo', 'onclick','widget.getInstanceManager().submit(widget)');
+			$tpl->setElementAttribute('sudouser', 'onclick','app.filemanager.set_sudoButton(widget,"login")');
 
+		}
+		elseif ($button == 'sudo')
+		{
+			$tpl->setElementAttribute('sudouser', 'label', 'Superuser');
+			$tpl->setElementAttribute('sudouser', 'help','Enter setup user and password to get root rights');
+			$tpl->setElementAttribute('sudouser', 'onclick','app.filemanager.set_sudoButton(widget,"logout")');
 		}
 		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
 		{
