@@ -477,7 +477,7 @@ class emailadmin_imapbase
 	static function unsetCachedObjects($_profileID=null)
 	{
 		if (is_null($_profileID)) $_profileID = emailadmin_account::get_default_acc_id();
-		$account_id = $_profileID['account_id'];
+		if (is_array($_profileID) && $_profileID['account_id']) $account_id = $_profileID['account_id'];
 		//error_log(__METHOD__.__LINE__.' called with ProfileID:'.array2string($_profileID).' from '.function_backtrace());
 		if (!is_array($_profileID) && (is_numeric($_profileID) || !(stripos($_profileID,'tracker_')===false)))
 		{
