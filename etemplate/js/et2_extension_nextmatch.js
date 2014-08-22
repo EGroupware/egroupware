@@ -686,6 +686,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(this.options.settings.selectcols)
 		{
 			columnPreference = this.options.settings.selectcols;
+			negated = false;
 		}
 		if(!this.options.settings.columnselection_pref)
 		{
@@ -1531,7 +1532,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// If no data was sent from the server, and num_rows is 0, the nm will be empty.
 			// This triggers a cache check.
-			if(!(this.options.settings.rows && this.options.settings.num_rows))
+			if(!this.options.settings.num_rows)
 			{
 				this.controller.update();
 			}
@@ -2099,7 +2100,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
+		if(name == 'cat_id' && options != null && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
 		{
 			widget_options.empty_label = this.egw().lang('All');
 			this.egw().debug('warn', 'Nextmatch category filter had no "All" option.  Added, but you should fix that.');
