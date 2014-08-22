@@ -26,6 +26,11 @@
  * Requires: 1.2.2+
  */
 
+/**
+ * 
+ * @param {type} $
+ * @returns {undefined}
+ */
 (function($) {
 
 var types = ['DOMMouseScroll', 'mousewheel'];
@@ -109,13 +114,14 @@ function handler(event) {
 /**
  * The constructor of the egw_fw_ui_sidemenu_entry class.
  *
- * @param object _parent specifies the parent egw_fw_ui_sidemenu
- * @param object _baseDiv specifies "div" element the entries should be appended to.
- * @param string _name specifies the title of the entry in the side menu
- * @param string _icon specifies the icon which should be viewd besides the title in the side menu
- * @param function(_sender) _callback specifies the function which should be called when the entry is clicked. The _sender parameter passed is a reference to this egw_fw_ui_sidemenu_entry element.
- * @param object _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
- * @param string _app application name
+ * @param {object} _parent specifies the parent egw_fw_ui_sidemenu
+ * @param {object} _baseDiv specifies "div" element the entries should be appended to.
+ * @param {object} _elemDiv 
+ * @param {string} _name specifies the title of the entry in the side menu
+ * @param {string} _icon specifies the icon which should be viewd besides the title in the side menu
+ * @param {function}(_sender) _callback specifies the function which should be called when the entry is clicked. The _sender parameter passed is a reference to this egw_fw_ui_sidemenu_entry element.
+ * @param {object} _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
+ * @param {string} _app application name
  */
 function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _callback,
 	_tag, _app)
@@ -225,7 +231,7 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
  * which should care about adding an closing bottom line to the sidemenu. These classes are removed from
  * all other entries in the side menu.
  *
- * @param array _entryList is a reference to the list which contains the sidemenu_entry entries.
+ * @param {array} _entryList is a reference to the list which contains the sidemenu_entry entries.
  */
 egw_fw_ui_sidemenu_entry.prototype.setBottomLine = function(_entryList)
 {
@@ -237,19 +243,19 @@ egw_fw_ui_sidemenu_entry.prototype.setBottomLine = function(_entryList)
 	}
 	$j(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content_bottom");
 	$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_bottom");
-}
+};
 
 /**
  * setContent replaces the content of the sidemenu entry with the content given by _content.
  *
- * @param string _content HTML/Text which should be displayed.
+ * @param {string} _content HTML/Text which should be displayed.
  */
 egw_fw_ui_sidemenu_entry.prototype.setContent = function(_content)
 {
 	//Set the content of the contentDiv
 	$j(this.contentDiv).empty();
 	$j(this.contentDiv).append(_content);
-}
+};
 
 /**
  * open openes this sidemenu_entry and displays the content.
@@ -263,7 +269,7 @@ egw_fw_ui_sidemenu_entry.prototype.open = function()
 
 	$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_active");
 	$j(this.contentDiv).show();
-}
+};
 
 /**
  * close closes this sidemenu_entry and hides the content.
@@ -280,7 +286,7 @@ egw_fw_ui_sidemenu_entry.prototype.close = function()
 
 	$j(this.headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_active");
 	$j(this.contentDiv).hide();
-}
+};
 
 /**egw_fw_ui_sidemenu_entry_header_active
  * showAjaxLoader shows the AjaxLoader animation which should be displayed when
@@ -289,7 +295,7 @@ egw_fw_ui_sidemenu_entry.prototype.close = function()
 egw_fw_ui_sidemenu_entry.prototype.showAjaxLoader = function()
 {
 	$j(this.ajaxloader).show();
-}
+};
 
 /**
  * showAjaxLoader hides the AjaxLoader animation
@@ -297,7 +303,7 @@ egw_fw_ui_sidemenu_entry.prototype.showAjaxLoader = function()
 egw_fw_ui_sidemenu_entry.prototype.hideAjaxLoader = function()
 {
 	$j(this.ajaxloader).hide();
-}
+};
 
 /**
  * Removes this entry.
@@ -306,7 +312,7 @@ egw_fw_ui_sidemenu_entry.prototype.remove = function()
 {
 	$j(this.headerDiv).remove();
 	$j(this.contentDiv).remove();
-}
+};
 
 
 /**
@@ -318,7 +324,8 @@ egw_fw_ui_sidemenu_entry.prototype.remove = function()
 /**
  * The constructor of the egw_fw_ui_sidemenu.
  *
- * @param object _baseDiv specifies the "div" in which all entries added by the addEntry function should be displayed.
+ * @param {object} _baseDiv specifies the "div" in which all entries added by the addEntry function should be displayed.
+ * @param {function} _sortCallback 
  */
 function egw_fw_ui_sidemenu(_baseDiv, _sortCallback)
 {
@@ -333,6 +340,9 @@ function egw_fw_ui_sidemenu(_baseDiv, _sortCallback)
 /**
  * Funtion used internally to recursively step through a dom tree and add all appliction
  * markers in their order of appereance
+ * 
+ * @param {array} _resultArray
+ * @param {array} _children
  */
 egw_fw_ui_sidemenu.prototype._searchMarkers = function(_resultArray, _children)
 {
@@ -347,7 +357,7 @@ egw_fw_ui_sidemenu.prototype._searchMarkers = function(_resultArray, _children)
 
 		this._searchMarkers(_resultArray, child.childNodes);
 	}
-}
+};
 
 egw_fw_ui_sidemenu.prototype.startDrag = function()
 {
@@ -356,7 +366,7 @@ egw_fw_ui_sidemenu.prototype.startDrag = function()
 		$j(this.activeEntry.marker).show();
 		$j(this.elemDiv).sortable("refresh");
 	}
-}
+};
 
 egw_fw_ui_sidemenu.prototype.stopDrag = function()
 {
@@ -365,7 +375,7 @@ egw_fw_ui_sidemenu.prototype.stopDrag = function()
 		$j(this.activeEntry.marker).hide();
 		$j(this.elemDiv).sortable("refresh");
 	}
-}
+};
 
 /**
  * Called by the sidemenu elements whenever they were sorted. An array containing
@@ -379,16 +389,16 @@ egw_fw_ui_sidemenu.prototype.refreshSort = function()
 
 	//Call the sort callback with the array containing the sidemenu_entries
 	this.sortCallback(resultArray);
-}
+};
 
 /**
  * Adds an entry to the sidemenu.
  *
- * @param string _name specifies the title of the new sidemenu entry
- * @param string _icon specifies the icon displayed aside the title
- * @param function(_sender) _callback specifies the function which should be called when a callback is clicked
- * @param object _tag extra data
- * @param string _app application name
+ * @param {string} _name specifies the title of the new sidemenu entry
+ * @param {string} _icon specifies the icon displayed aside the title
+ * @param {function}(_sender) _callback specifies the function which should be called when a callback is clicked
+ * @param {object} _tag extra data
+ * @param {string} _app application name
  */
 egw_fw_ui_sidemenu.prototype.addEntry = function(_name, _icon, _callback, _tag, _app)
 {
@@ -398,12 +408,12 @@ egw_fw_ui_sidemenu.prototype.addEntry = function(_name, _icon, _callback, _tag, 
 	this.entries[this.entries.length] = entry;
 
 	return entry;
-}
+};
 
 /**
  * Openes the specified entry whilst closing all other entries in the list.
  *
- * @param object _entry specifies the entry which should be opened.
+ * @param {object} _entry specifies the entry which should be opened.
  */
 egw_fw_ui_sidemenu.prototype.open = function(_entry)
 {
@@ -422,7 +432,7 @@ egw_fw_ui_sidemenu.prototype.open = function(_entry)
 	}
 
 	this.activeEntry = _entry;
-}
+};
 
 
 /**
@@ -436,7 +446,7 @@ egw_fw_ui_sidemenu.prototype.clean = function()
 	}
 
 	this.entries = new Array();
-}
+};
 
 
 /**
@@ -448,14 +458,14 @@ egw_fw_ui_sidemenu.prototype.clean = function()
 /**
  * The constructor of the egw_fw_ui_tab class.
  *
- * @param object _parent specifies the parent egw_fw_ui_tabs class
- * @param object _contHeaderDiv specifies the container "div" element, which should contain the headers
- * @param object _contDiv specifies the container "div" element, which should contain the contents of the tabs
- * @param string _icon specifies the icon which should be viewed besides the title of the tab
- * @param function(_sender) _callback specifies the function which should be called when the tab title is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
- * @param function(_sender) _closeCallback specifies the function which should be called when the tab close button is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
- * @param object _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
- * @param int _pos is the position where the tab will be inserted
+ * @param {object} _parent specifies the parent egw_fw_ui_tabs class
+ * @param {object} _contHeaderDiv specifies the container "div" element, which should contain the headers
+ * @param {object} _contDiv specifies the container "div" element, which should contain the contents of the tabs
+ * @param {string} _icon specifies the icon which should be viewed besides the title of the tab
+ * @param {function}(_sender) _callback specifies the function which should be called when the tab title is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
+ * @param {function}(_sender) _closeCallback specifies the function which should be called when the tab close button is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
+ * @param {object} _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
+ * @param {int} _pos is the position where the tab will be inserted
  */
 function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	_closeCallback,	_tag, _pos)
@@ -489,7 +499,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 				$j(this).addClass("egw_fw_ui_tab_header_hover");
 		},
 		function() {
-			$j(this).removeClass("egw_fw_ui_tab_header_hover")
+			$j(this).removeClass("egw_fw_ui_tab_header_hover");
 		}
 	);
 
@@ -569,25 +579,25 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 /**
  * setTitle sets the title of this tab. An existing title will be removed.
  *
- * @param string _title HTML/Text which should be displayed.
+ * @param {string} _title HTML/Text which should be displayed.
  */
 egw_fw_ui_tab.prototype.setTitle = function(_title)
 {
 	this.title = _title;
 	$j(this.headerH1).empty();
 	$j(this.headerH1).text(_title);
-}
+};
 
 /**
  * setTitle sets the content of this tab. Existing content is removed.
  *
- * @param string _content HTML/Text which should be displayed.
+ * @param {string} _content HTML/Text which should be displayed.
  */
 egw_fw_ui_tab.prototype.setContent = function(_content)
 {
 	$j(this.contentDiv).empty();
 	$j(this.contentDiv).append(_content);
-}
+};
 
 /**
  * Shows the content of the tab. Only one tab should be displayed at once. By using egw_fw_ui_tabs.showTab
@@ -607,7 +617,7 @@ egw_fw_ui_tab.prototype.show = function()
 			$j(this.tag.browser.contentDiv).trigger('show');
 		}
 	}
-}
+};
 
 /**
  * Hides the content of this tab.
@@ -626,7 +636,7 @@ egw_fw_ui_tab.prototype.hide = function()
 			$j(this.tag.browser.contentDiv).trigger('hide');
 		}
 	}
-}
+};
 
 /**
  * Removes this tab and all its content.
@@ -636,12 +646,12 @@ egw_fw_ui_tab.prototype.remove = function()
 	this.hide();
 	$j(this.contentDiv).remove();
 	$j(this.headerDiv).remove();
-}
+};
 
 /**
  * Sets whether the close button is shown/the close callback ever gets called.
  *
- * @param boolean _closeable if true, the close button is shown, if false, the close button is hidden. default is true.
+ * @param {boolean} _closeable if true, the close button is shown, if false, the close button is hidden. default is true.
  */
 egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
 {
@@ -650,7 +660,7 @@ egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
 		$j(this.closeButton).show();
 	else
 		$j(this.closeButton).hide();
-}
+};
 
 
 /**
@@ -662,7 +672,7 @@ egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
 /**
  * The constructor of the egw_fw_ui_sidemenu_tabs class. Two "divs" are created inside the specified container element, one for the tab headers and one for the tab contents.
  *
- * @param object _contDiv specifies "div" element the tab ui element should be displayed in.
+ * @param {object} _contDiv specifies "div" element the tab ui element should be displayed in.
  */
 function egw_fw_ui_tabs(_contDiv)
 {
@@ -691,7 +701,8 @@ function egw_fw_ui_tabs(_contDiv)
 /**
  * Sets the "appHeader" text below the tabs list.
  *
- * @param string _text is the text which will be seen in the appHeader.
+ * @param {string} _text is the text which will be seen in the appHeader.
+ * @param {string} _msg_class css class for message
  */
 egw_fw_ui_tabs.prototype.setAppHeader = function(_text, _msg_class)
 {
@@ -716,15 +727,15 @@ egw_fw_ui_tabs.prototype.cleanHistory = function()
 			array_remove(this.tabHistory, i);
 		}
 	}
-}
+};
 
 /**
  * Adds a new tab to the tabs ui element.
- * @param string _icon which should be displayed on the tab sheet header
- * @param function _callback(_sender) function which should be called whenever the tab header is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
- * @param function _closeCallback(_sender) function which should be called whenever the close button of the tab is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
- * @param object _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
- * @param int _pos specifies the position in the tab list. If _pos is -1, the tab will be added to the end of the tab list
+ * @param {string} _icon which should be displayed on the tab sheet header
+ * @param {function} _callback (_sender) function which should be called whenever the tab header is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
+ * @param {function} _closeCallback (_sender) function which should be called whenever the close button of the tab is clicked. The _sender parameter passed is a reference to this egw_fw_ui_tab element.
+ * @param {object} _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
+ * @param {int} _pos specifies the position in the tab list. If _pos is -1, the tab will be added to the end of the tab list
  */
 egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _tag, _pos)
 {
@@ -759,13 +770,13 @@ egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _ta
 		this.showTab(tab);
 
 	return tab;
-}
+};
 
 /**
  * Removes the specified tab from the tab list whilst trying to keep one tab open.
  * The tab which will be opened is determined throughout the tab open history.
  *
- * @param object _tab is the object which should be closed.
+ * @param {object} _tab is the object which should be closed.
  */
 egw_fw_ui_tabs.prototype.removeTab = function(_tab)
 {
@@ -804,12 +815,12 @@ egw_fw_ui_tabs.prototype.removeTab = function(_tab)
 		if (this.tabs[i] == _tab)
 			array_remove(this.tabs, i);
 	}
-}
+};
 
 /**
  * Shows the specified _tab whilst closing all others.
  *
- * @param object _tab is the object which should be opened.
+ * @param {object} _tab is the object which should be opened.
  */
 egw_fw_ui_tabs.prototype.showTab = function(_tab)
 {
@@ -835,10 +846,12 @@ egw_fw_ui_tabs.prototype.showTab = function(_tab)
 			array_remove(this.tabHistory, 0);
 		}
 	}
-}
+};
 
 /**
  * Calls the setCloseable function of all tabs in the list.
+ * 
+ * @param {boolean} _closeable
  */
 egw_fw_ui_tabs.prototype.setCloseable = function(_closeable)
 {
@@ -846,7 +859,7 @@ egw_fw_ui_tabs.prototype.setCloseable = function(_closeable)
 	{
 		this.tabs[i].setCloseable(_closeable);
 	}
-}
+};
 
 /**
  * Clears all data, removes all tabs, independently from the question, whether they may be closed or
@@ -866,14 +879,21 @@ egw_fw_ui_tabs.prototype.clean = function()
 	this.tabHistroy = new Array();
 
 	return true;
-}
+};
 
 
 /**
  * Class: egw_fw_ui_category
  * A class which manages and renderes a simple menu with categories, which can be opened and shown
+ * 
+ * @param {object} _contDiv
+ * @param {string} _name
+ * @param {string} _title
+ * @param {object} _content
+ * @param {function} _callback
+ * @param {function} _animationCallback
+ * @param {object} _tag
  */
-
 
 function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _animationCallback, _tag)
 {
@@ -933,7 +953,7 @@ egw_fw_ui_category.prototype.open = function(_instantly)
 			this._parent.animationCallback.call(this._parent);
 		});
 	}
-}
+};
 
 egw_fw_ui_category.prototype.close = function(_instantly)
 {
@@ -951,17 +971,19 @@ egw_fw_ui_category.prototype.close = function(_instantly)
 			this._parent.animationCallback.call(this._parent);
 		});
 	}
-}
+};
 
 egw_fw_ui_category.prototype.remove = function()
 {
 	//Delete the content and header div
 	$j(this.contDiv).remove();
 	$j(this.headerDiv).remove();
-}
+};
 
 /**
  * egw_fw_ui_scrollarea class
+ * 
+ * @param {object} _contDiv
  */
 
 function egw_fw_ui_scrollarea(_contDiv)
@@ -1093,12 +1115,12 @@ egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 		//Apply the calculated scroll position to the scrollDiv
 		this.scrollDiv.style.top = Math.round(-_pos) + 'px';
 	}
-}
+};
 
 egw_fw_ui_scrollarea.prototype.scrollDelta = function(_delta)
 {
 	this.setScrollPos(this.scrollPos + _delta);
-}
+};
 
 egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 {
@@ -1118,7 +1140,7 @@ egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 	}
 
 	this.buttonsVisible = _visible;
-}
+};
 
 egw_fw_ui_scrollarea.prototype.update = function()
 {
@@ -1128,7 +1150,7 @@ egw_fw_ui_scrollarea.prototype.update = function()
 
 	this.toggleButtons(this.contHeight > this.boxHeight);
 	this.setScrollPos(this.scrollPos);
-}
+};
 
 egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
 {
@@ -1144,7 +1166,7 @@ egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
 
 	//Return the actual delta value
 	return curScrollSpeed * _timeGap;
-}
+};
 
 egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
 {
@@ -1155,10 +1177,10 @@ egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
 	if (_context.mouseOver)
 	{
 		//Set the next timeout
-		setTimeout(function(){_context.mouseOverCallback(_context)},
+		setTimeout(function(){_context.mouseOverCallback(_context);},
 			Math.round(_context.timerInterval * 1000));
 	}
-}
+};
 
 egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
 {
@@ -1168,14 +1190,14 @@ egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
 	if (_over)
 	{
 		var _context = this;
-		setTimeout(function(){_context.mouseOverCallback(_context)},
+		setTimeout(function(){_context.mouseOverCallback(_context);},
 			Math.round(_context.timerInterval * 1000));
 	}
 	else
 	{
 		this.scrollTime = 0.0;
 	}
-}
+};
 
 /**
  * egw_fw_ui_splitter class
@@ -1296,7 +1318,7 @@ egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
 	}
 
 	return result;
-}
+};
 
 egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
 {
@@ -1309,7 +1331,7 @@ egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
 			this.startPos = ui.offset.left;
 			break;
 	}
-}
+};
 
 egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
 {
@@ -1327,7 +1349,7 @@ egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
 			$j(this.splitterDiv).data('draggable').offset.click.left += (old - clipped);
 			break;
 	}*/
-}
+};
 
 
 egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
@@ -1350,5 +1372,5 @@ egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
 	this.constraints[1].size -= delta;
 
 	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
-}
+};
 
