@@ -64,7 +64,7 @@ class notifications_push implements egw_json_push_backend
 			), __LINE__, __FILE__, false, 'ORDER BY notify_id ASC', self::APP) as $row)
 			{
 				$message = json_decode($row['notify_message'], true);
-				error_log(__METHOD__."() already_send=$already_send, message=".array2string($message));
+				//error_log(__METHOD__."() already_send=$already_send, message=".array2string($message));
 				if (is_array($message) && method_exists($response, $message['method']))
 				{
 					call_user_func_array(array($response, $message['method']), (array)$message['data']);
@@ -72,7 +72,7 @@ class notifications_push implements egw_json_push_backend
 				$already_send = $row['notify_id'];
 			}
 		}
-		error_log(__METHOD__."() max_id=$max_id, already_sent=$already_send");
+		//error_log(__METHOD__."() max_id=$max_id, already_sent=$already_send");
 	}
 
 	/**
