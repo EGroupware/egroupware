@@ -8,15 +8,15 @@
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="15%"/>
 				<column width="30"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="35%"/>
+				<column width="15%"/>
+				<column width="90"/>
+				<column width="120"/>
+				<column width="120"/>
 			</columns>
 			<rows>
 				<row>
