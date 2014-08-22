@@ -66,10 +66,10 @@
 
 
             img[src$="svg"]{
-            width: 70%;
-            max-width: 2560px;
-            .gradient_vertical (@egw_color_2_d, @egw_color_2_d);
-}
+                    width: 70%;
+                    max-width: 2560px;
+                    .gradient_vertical (@egw_color_2_d, @egw_color_2_d);
+                }
         }
     }
 
@@ -131,6 +131,29 @@
 
 
                 tr.divLoginboxHeader{}
+
+
+
+
+                // Passwort Image
+                div.LoginPasswordImage{
+                    .gradient_vertical (@egw_color_1_a, @egw_color_2_d);
+                    
+                                    img.passwordImage {
+                                        /*width: 70%;*/
+                                        /*margin-left: 15%;*/
+                                        margin: 0 auto;
+                                        max-width: 400px;
+                                        .bordered(5px);
+                                        }
+
+                                    img.passwordImage[src$="svg"]{
+                                                .bordered(5px);
+
+                                                .dimension_width_height_xl;
+                                            }
+                }
+
 
                 td { padding: 0.5em; font-weight: bold; color: @egw_color_1_a}
 

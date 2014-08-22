@@ -297,22 +297,6 @@
             background-color: @gray_30;
             &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
             &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
-  }
-  /*
-        Link to / Selector Widget
-*/
-  .et2_link_to {
-    min-height: 78px;
-    /*
-        .et2_button_icon {
-            .Complete_Button_Icon_normal;
-            float: left;
-            margin: 0px 20px;
-            padding: 3px;
-            .dimension_width_height_m;
-            background-color: @gray_30;
-            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
-            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
 }*/
   }
   .et2_link_to div:first-child {
@@ -1318,16 +1302,6 @@
     /* IE 6-9 */
   }
   /*#################################### END ADMIN PART #####################################################*/
-    filter: none;
-    -webkit-filter: initial;
-    -moz-filter: initial;
-    -ms-filter: initial;
-    -o-filter: initial;
-    /*filter: url(grayscale.svg);  Firefox 4+ */
-    filter: initial;
-    /* IE 6-9 */
-  }
-  /*#################################### END ADMIN PART #####################################################*/
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
@@ -2292,10 +2266,10 @@ body {
   border-radius: 3px;
   border-top-left-radius: 10px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox td {
-  padding: 0.5em;
-  font-weight: bold;
-  color: #ffc200;
+#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage {
+  background-color: #b3ad54;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #ffc200, #408dd2);
   background-image: -ms-linear-gradient(top, #ffc200, #408dd2);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffc200), to(#408dd2));
   background-image: -webkit-linear-gradient(top, #ffc200, #408dd2);
@@ -5815,9 +5789,9 @@ table.egwGridView_grid img.iphoto {
   -moz-filter: initial;
   -ms-filter: initial;
   -o-filter: initial;
-  height: 9em;
-  margin: 0.2em;
-  max-height: 60px;
+  /*filter: url(grayscale.svg);  Firefox 4+ */
+  filter: initial;
+  /* IE 6-9 */
 }
 table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;

@@ -2,7 +2,7 @@
 
 
 <div id="loginMainDiv">
-    
+
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}" /></a></div>
     </div>
@@ -20,7 +20,7 @@
                         <input type="hidden" name="account_type" value="u" />
                     </td>
                     <td rowspan="6">
-                        <img src="{template_set}/images/password.svg" />
+                        <img src="{template_set}/images/password.svg" class="passwordImage" />
                     </td>
                 </tr>
                 <!-- BEGIN language_select -->
