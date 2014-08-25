@@ -481,39 +481,42 @@ class timesheet_ui extends timesheet_bo
 		{
 			$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
 
-			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
-			$end   = explode('-',date('Y-m-d',$query_in['enddate'] ? $query_in['enddate'] : $query_in['startdate']+7.5*24*60*60));
+			if ($query_in['startdate'])
+			{
+				$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
+				$end   = explode('-',date('Y-m-d',$query_in['enddate'] ? $query_in['enddate'] : $query_in['startdate']+7.5*24*60*60));
 
-			// show year-sums, if we are year-aligned (show full years)?
-			if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
-			{
-				$this->show_sums[] = 'year';
-			}
-			// show month-sums, if we are month-aligned (show full monthes)?
-			if ((int)$start[2] == 1 && (int)$end[2] == (int)date('d',mktime(12,0,0,$end[1]+1,0,$end[0])))
-			{
-				$this->show_sums[] = 'month';
-			}
-			// show week-sums, if we are week-aligned (show full weeks)?
-			$week_start_day = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
-			if (!$week_start_day) $week_start_day = 'Sunday';
-			switch($week_start_day)
-			{
-				case 'Sunday': $week_end_day = 'Saturday'; break;
-				case 'Monday': $week_end_day = 'Sunday'; break;
-				case 'Saturday': $week_end_day = 'Friday'; break;
-			}
-			$filter_start_day = date('l',$query_in['startdate']+12*60*60);
-			$filter_end_day   = $query_in['enddate'] ? date('l',$query_in['enddate']+12*60*60) : false;
-			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
-			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
-			{
-				$this->show_sums[] = 'week';
-			}
-			// show day-sums, if range <= 5 weeks
-			if (!$query_in['enddate'] || $query_in['enddate'] - $query_in['startdate'] < 36*24*60*60)
-			{
-				$this->show_sums[] = 'day';
+				// show year-sums, if we are year-aligned (show full years)?
+				if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
+				{
+					$this->show_sums[] = 'year';
+				}
+				// show month-sums, if we are month-aligned (show full monthes)?
+				if ((int)$start[2] == 1 && (int)$end[2] == (int)date('d',mktime(12,0,0,$end[1]+1,0,$end[0])))
+				{
+					$this->show_sums[] = 'month';
+				}
+				// show week-sums, if we are week-aligned (show full weeks)?
+				$week_start_day = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
+				if (!$week_start_day) $week_start_day = 'Sunday';
+				switch($week_start_day)
+				{
+					case 'Sunday': $week_end_day = 'Saturday'; break;
+					case 'Monday': $week_end_day = 'Sunday'; break;
+					case 'Saturday': $week_end_day = 'Friday'; break;
+				}
+				$filter_start_day = date('l',$query_in['startdate']+12*60*60);
+				$filter_end_day   = $query_in['enddate'] ? date('l',$query_in['enddate']+12*60*60) : false;
+				//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
+				if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
+				{
+					$this->show_sums[] = 'week';
+				}
+				// show day-sums, if range <= 5 weeks
+				if (!$query_in['enddate'] || $query_in['enddate'] - $query_in['startdate'] < 36*24*60*60)
+				{
+					$this->show_sums[] = 'day';
+				}
 			}
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
@@ -651,7 +654,7 @@ class timesheet_ui extends timesheet_bo
 					$GLOBALS['egw_info']['flags']['app_header'] .= ' - ' . date('W',$query['enddate']-36*60*60) . '/' . $end[0];
 				}
 			}
-			else
+			elseif ($query['startdate'])
 			{
 				$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . common::show_date($query['startdate']+12*60*60,$df,false);
@@ -705,10 +708,10 @@ class timesheet_ui extends timesheet_bo
 
 				// Remove fake modified date, it breaks nextmatch checks
 				unset($row['ts_modified']);
-				
+
 				// Set flag to avoid actions on these rows
 				$row['no_actions'] = true;
-				
+
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
