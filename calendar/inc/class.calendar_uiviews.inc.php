@@ -1887,12 +1887,23 @@ class calendar_uiviews extends calendar_ui
 		if (!$event['whole_day_on_top'] &&
 				!$event['whole_day'])
 		{
-			$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.($event['recur_type']?'S':'');
+			// S represents Series
+			// '' represents Single
+			$eventTypeTag = $event['recur_type']?'S':'';
+		}
+		else if (!$event['recur_type'])
+		{
+			// WD represents Whole Day
+			$eventTypeTag = 'WD';
 		}
 		else
 		{
-			$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.'WD';
+			// WDS represents Whole Day Series (recurrent whole day event)
+			$eventTypeTag = 'WDS';
 		}
+		// Helps client-side to bind handler to events with specific types tag
+		$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.$eventTypeTag;
+		
 		$html = $indent.'<div id="'.$draggableID.'" data-tooltip ="'.$tooltip .'" data-resize="'.$resizableHelper.'" class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			'>'.$prefix_icon."\n".$html."\n".

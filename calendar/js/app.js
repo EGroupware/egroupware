@@ -276,7 +276,7 @@ app.classes.calendar = AppJS.extend(
 				create:function(event, ui)
 				{
 					var resizeHelper = event.target.getAttribute('data-resize').split("|")[3];
-					if (resizeHelper == 'WD' )
+					if (resizeHelper == 'WD' || resizeHelper == 'WDS')
 					{
 						$j(this).resizable('destroy');
 					}
@@ -443,7 +443,7 @@ app.classes.calendar = AppJS.extend(
 				var appName = Id.replace(/-?\d+\.?\d*/g,'');
 				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
 				var eventFlag = ev.currentTarget.getAttribute('data-resize').split("|")[3];
-				if (eventFlag != 'S')
+				if (eventFlag != 'S' && eventFlag != 'WDS')
 				{
 					that.egw.open(eventId,appName !=""?appName:'calendar','edit');
 				}
@@ -577,7 +577,8 @@ app.classes.calendar = AppJS.extend(
 	 * @param {string} _duration description
 	 * @param {string} _eventFlag Flag to distinguish whether the event is Whole Day, Series, or Single
 	 *	- S represents Series
-	 *	- WD represents Whole Day
+	 *	- WD represents Whole Day 
+	 *	- WDS represents Whole Day Series (recurrent whole day event)
 	 *	- '' represents Single
 	 */
 	dropEvent : function(_id, _date, _duration, _eventFlag)
