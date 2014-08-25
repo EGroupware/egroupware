@@ -94,7 +94,7 @@ class emailadmin_notifications
 	{
 		if (!is_numeric($account_id) || !($account_id >= 0))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."($acc_id, ".array2string($account_id).", ...) account_id NOT >= 0!");
+			return 0;	// nothing to save, happens eg. in setup
 		}
 
 		if ($account_id && !$folders && ($default = self::read($acc_id, 0)) && $default['notify_folders'])
