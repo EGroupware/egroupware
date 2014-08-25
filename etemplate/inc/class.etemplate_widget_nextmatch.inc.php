@@ -289,6 +289,22 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$value = ($value) ? array($value) : array();
 		}
+
+		// Validate filters
+		if (($template = etemplate_widget_template::instance(self::$request->template['name'], self::$request->template['template_set'],
+			self::$request->template['version'], self::$request->template['load_via'])))
+		{
+			$template = $template->getElementById($form_name);
+			$expand = array(
+				'cont' => array($form_name => $filters),
+			);
+			$valid_filters = array();
+
+			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
+			$filters = $valid_filters[$form_name];
+			//error_log($this . " Valid filters: " . array2string($filters));
+		}
+
 		$value = $value_in = array_merge($value, $filters);
 
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
@@ -987,10 +1003,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			parent::run($method_name, $params, $respect_disabled);
 			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 
-			if ($this->attrs['template'])
+			// Run on all the sub-templates
+			foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
 			{
-				$row_template = etemplate_widget_template::instance($this->attrs['template']);
-				$row_template->run($method_name, $params, $respect_disabled);
+				if($this->attrs[$sub_template])
+				{
+					$row_template = etemplate_widget_template::instance($this->attrs[$sub_template]);
+					$row_template->run($method_name, $params, $respect_disabled);
+				}
 			}
 		}
 		$params[0] = $old_param0;
