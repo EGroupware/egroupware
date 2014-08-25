@@ -372,7 +372,11 @@ class infolog_ui
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
-		$columselection = $this->prefs['nextmatch-infolog.index.rows'.($details?'-details':'')];
+		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
+			.($details ? '-details' : '');
+
+		$columselection = $this->prefs[$columnselection_pref];
+
 		//_debug_array($columselection);
 		if ($columselection)
 		{
@@ -394,13 +398,11 @@ class infolog_ui
 		// add a '-details' to the name of the columnselection pref
 		if ($details)
 		{
-			$query['columnselection_pref'] = 'nextmatch-'.(is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
-			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
+			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		else
 		{
-			$query['columnselection_pref'] = 'nextmatch-infolog.index.rows';
-			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id,actions';
+			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
 		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
@@ -861,7 +863,7 @@ class infolog_ui
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change();";
 
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
-		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
+		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change";
 
 		// disable favories dropdown button, if not running as infolog
 		if ($called_as && $called_as != 'infolog')
@@ -878,9 +880,11 @@ class infolog_ui
 		$values['nm']['placeholder_actions'] = array('new');
 
 		// disable columns for main entry as set in the pref for details or no details
+		$values['nm']['columnselection_pref'] = 'nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows')
+			.($values['nm']['filter2']=='all' ? '-details' : '');
 		if ($action == 'sp')
 		{
-			$pref = 'nextmatch-infolog.index.rows'.($values['nm']['filter2']=='all'?'-details':'');
+			$pref = $values['nm']['columnselection_pref'];
 			foreach(array('info_used_time_info_planned_time_info_replanned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
 			{
 				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;

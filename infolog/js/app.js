@@ -151,11 +151,12 @@ app.classes.infolog = AppJS.extend(
 	 * show or hide the details of rows by selecting the filter2 option
 	 * either 'all' for details or 'no_description' for no details
 	 *
+	 * @param {Event} event Change event
+	 * @param {et2_nextmatch} nm The nextmatch widget that owns the filter
 	 */
-	filter2_change: function()
+	filter2_change: function(event, nm)
 	{
-		var nm = this.et2.getWidgetById('nm');
-		var filter2 = this.et2.getWidgetById('filter2');
+		var filter2 = nm.getWidgetById('filter2');
 
 		if (nm && filter2)
 		{
@@ -163,16 +164,17 @@ app.classes.infolog = AppJS.extend(
 			this.show_details(filter2.value == 'all');
 
 			// Change preference location - widget is nextmatch
-			nm.options.settings.columnselection_pref = 'infolog.index.rows'+(filter2.value == 'all' ? '-details' :'');
-
+			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.value == 'all' ? '-details' :'');
+			
 			// Load new preferences
-			var colData = [];
-			for(var i = 0; i < nm.columns.length; i++) colData[i] = {disabled: true, width: '20'};
+			var colData = nm.columns.slice();
+			for(var i = 0; i < nm.columns.length; i++) colData[i].disabled=false;
 			nm._applyUserPreferences(nm.columns, colData);
+
+			// Now apply them to columns
 			for(var i = 0; i < colData.length; i++)
 			{
-				// Wants a string
-				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width + 'px');
+				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
 				nm.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
 			}
 			nm.dataview.getColumnMgr().updated = true;
