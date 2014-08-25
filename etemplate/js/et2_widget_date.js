@@ -157,9 +157,9 @@ var et2_date = et2_inputWidget.extend(
 					// Avoid javascript timezone offset, hour is in 'user time'
 					this.date.setUTCHours(parsed.hour);
 					this.date.setMinutes(parsed.minute);
-					this.input_date.val(_value);
-					if(old_value !== this.getValue())
+					if(this.input_date.val() != _value)
 					{
+						this.input_date.val(_value);
 						this.input_date.timepicker('setTime',_value);
 						if (this._oldValue !== et2_no_init)
 						{

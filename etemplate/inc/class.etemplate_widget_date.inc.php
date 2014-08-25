@@ -74,6 +74,10 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				$date = new egw_time((int)$value, new DateTimeZone('UTC'));
 			}
+			if($this->type == 'date-timeonly')
+			{
+				$date->setDate(1970, 1, 1);
+			}
 			if($date)
 			{
 				// Set timezone to UTC so javascript doesn't add/subtract anything
