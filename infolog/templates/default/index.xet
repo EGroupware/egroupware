@@ -163,7 +163,7 @@
 					<template id="header_right"/>
 				</row>
 				<row>
-					<nextmatch id="nm" template="infolog.index.rows" span="all"/>
+					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>
 					<hbox class=" ">

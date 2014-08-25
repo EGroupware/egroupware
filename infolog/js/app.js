@@ -115,22 +115,33 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * Enable or disable the date filter
 	 *
+	 * If the filter is set to something that needs dates, we enable the
+	 * header_left template.  Otherwise, it is disabled.
 	 */
 	filter_change: function()
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var nm = this.et2.getWidgetById('nm');
+		var dates = this.et2.getWidgetById('infolog.index.dates');
 		if(nm && filter)
 		{
 			switch(filter.getValue())
 			{
 				case 'bydate':
 				case 'duedate':
-					nm.set_header_left('infolog.index.dates');
+
+					if (filter && dates)
+					{
+						dates.set_disabled(false);
+					}
 					break;
 				default:
-					nm.set_header_left();
+					if (dates)
+					{
+						dates.set_disabled(true);
+					}
 					break;
 			}
 		}
