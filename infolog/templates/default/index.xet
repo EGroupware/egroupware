@@ -107,26 +107,26 @@
 					<vbox>
 						<hbox readonly="true">
 							<hbox readonly="true">
-								<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+								<date-duration id="${row}[info_used_time]" readonly="true" options="@@duration_format"/>
+								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@@duration_format" class="timesheet"/>
 							</hbox>
 							<description/>
 						</hbox>
-						<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="infolog_planned"/>
+						<date-duration id="${row}[info_planned_time]" readonly="true" options="@@duration_format" span="all" class="infolog_planned"/>
 					</vbox>
 					<vbox>
 						<hbox id="r_used_time">
 							<image label="Times" src="timesheet"/>
-							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
-							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@@duration_format" class="timesheet"/>
 						</hbox>
 						<hbox id="planified">
 							<image label="planned time" src="k_alarm.png"/>
-							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="infolog_planned"/>
+							<date-duration id="${row}[info_planned_time]" readonly="true" options="@@duration_format" span="all" class="infolog_planned"/>
 						</hbox>
 						<hbox id="replanified">
 							<image label="Re-planned time" src="agt_reload.png"/>
-							<date-duration id="${row}[info_replanned_time]" readonly="true" options="@duration_format" span="all" class="replanned"/>
+							<date-duration id="${row}[info_replanned_time]" readonly="true" options="@@duration_format" span="all" class="replanned"/>
 						</hbox>
 					</vbox>
 					<vbox>

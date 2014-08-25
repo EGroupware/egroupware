@@ -475,7 +475,6 @@ class infolog_ui
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
-		$rows['duration_format'] = ','.$this->duration_format.',,1';
 
 		// switch cf column off, if we have no cf's
 		if (!$query['custom_fields']) $rows['no_customfields'] = true;
@@ -906,6 +905,7 @@ class infolog_ui
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
+		$values['duration_format'] = ','.$this->duration_format;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 
