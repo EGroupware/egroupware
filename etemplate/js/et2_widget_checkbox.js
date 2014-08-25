@@ -96,7 +96,7 @@ var et2_checkbox = et2_inputWidget.extend(
 	set_value: function(_value) {
 		if(_value != this.value) {
 			if(_value == this.options.selected_value ||
-					_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"] &&
+					_value && this.options.selected_value == this.attributes.selected_value["default"] &&
 					_value != this.options.unselected_value) {
 				this.input.prop("checked", true);
 			} else {
@@ -153,7 +153,7 @@ var et2_checkbox_ro = et2_checkbox.extend(
 	 * it's an exceptional validation for cases that we pass non boolean values as checkbox _value
 	 */
 	set_value: function(_value) {
-		if(_value == this.options.selected_value ||_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"] &&
+		if(_value == this.options.selected_value ||_value && this.options.selected_value == this.attributes.selected_value["default"] &&
 					_value != this.options.unselected_value) {
 			this.span.text(this.options.ro_true);
 			this.value = _value;
