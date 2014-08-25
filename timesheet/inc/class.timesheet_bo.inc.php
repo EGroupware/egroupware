@@ -384,7 +384,7 @@ class timesheet_bo extends so_sql_cf
 			}
 			else
 			{
-				$end = $start + 8*24*60*60;
+				$end = $start + 7*24*60*60;
 			}
 		}
 		else
@@ -433,8 +433,9 @@ class timesheet_bo extends so_sql_cf
 				$start = $weekstart + $sweek*7*24*60*60;
 				$end   = $weekstart + $eweek*7*24*60*60;
 			}
-			$end_param = $end - 24*60*60;
 		}
+		$end_param = $end - 24*60*60;
+
 		//echo "<p align='right'>date_filter($name,$start,$end) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n";
 		// convert start + end from user to servertime for the filter
 		return '('.($start-$this->tz_offset_s).' <= ts_start AND ts_start < '.($end-$this->tz_offset_s).')';
