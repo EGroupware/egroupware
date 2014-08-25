@@ -76,7 +76,7 @@ egw_LAB.wait(function() {
 				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
 			//console.log('setting height of '+appbox_height);
 			$j('#divAppbox').css('min-height', appbox_height+'px');
-			$j('.et2_container').last().height(appbox_height-7);
+			$j('.et2_container').height(appbox_height-7);
 		});
 		$j(window).resize();
 		$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
