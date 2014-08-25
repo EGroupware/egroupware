@@ -792,11 +792,15 @@ class egw_session
 		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
 		// --> allows this stateless protocolls which use basic auth to use sessions!
 		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
-			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')))
+			(in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')) ||
+				$_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync'))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'));
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				// for ActiveSync we add the DeviceID
+				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : ''));
+			//error_log(__METHOD__."($only_basic_auth) HTTP_HOST=$_SERVER[HTTP_HOST], PHP_AUTH_USER=$_SERVER[PHP_AUTH_USER], DeviceId=$_GET[DeviceId]: sessionid=$sessionid");
 		}
 		// same for digest auth
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
