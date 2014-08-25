@@ -172,7 +172,8 @@ egw_LAB.wait(function() {
 				});
 				$j('select', this).css({
 					transition: "0.1s linear 0.2s",
-					visibility: "visible"
+					visibility: "visible",
+					width:"120px"
 				});
 			}
 			ev.stopPropagation();
@@ -189,7 +190,8 @@ egw_LAB.wait(function() {
 				});
 				$j('select', this).css({
 					transition: "0s linear 0s",
-					visibility: "hidden"
+					visibility: "hidden",
+					width:"10px"
 				});
 			}
 			ev.stopPropagation();
@@ -204,7 +206,8 @@ egw_LAB.wait(function() {
 			});
 			$j('select', this).css({
 				transition: "0s linear 0s",
-				visibility: "hidden"
+				visibility: "hidden",
+				width:"10px"
 			});
 		}
 	});
