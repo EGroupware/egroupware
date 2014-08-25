@@ -56,9 +56,12 @@ div.filemanager_navigation > label > input {
 	width: 130px;
 	margin-top: 2px;
 }
-#filemanager-index-buttons div.et2_file .progress {
-  position: absolute;
-  right: 0px;
+#filemanager-index_buttons div.et2_file .progress {
+  width:auto;
+  margin:0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: none;
 }
 
 /**

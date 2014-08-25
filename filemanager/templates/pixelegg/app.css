@@ -87,9 +87,12 @@ div.filemanager_navigation > label > input {
   width: 130px;
   margin-top: 2px;
 }
-#filemanager-index-buttons div.et2_file .progress {
-  position: absolute;
-  right: 0px;
+#filemanager-index_buttons div.et2_file .progress {
+  width: auto;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: none;
 }
 /**
  * Select file dialog
@@ -261,6 +264,9 @@ div.filemanager_navigation label input {
 }
 #filemanager-index_buttons div.et2_file div.progress {
   z-index: 1;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #filemanager-index_buttons > * {
   padding-left: 3px;
