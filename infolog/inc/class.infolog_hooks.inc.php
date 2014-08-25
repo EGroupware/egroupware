@@ -226,15 +226,6 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> '1',	// Yes
 			),
-			'listNoSubs' => array(
-				'type'   => 'check',
-				'label'  => 'List no Subs/Childs',
-				'name'   => 'listNoSubs',
-				'help'   => 'Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '0',	// No = List subs
-			),
 			'show_links' => array(
 				'type'   => 'select',
 				'label'  => 'Show in the InfoLog list',
