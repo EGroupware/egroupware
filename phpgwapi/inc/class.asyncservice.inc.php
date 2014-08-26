@@ -376,7 +376,7 @@ class asyncservice
 			);
 			// as the async_next column is used as a semaphore we only update it,
 			// if it is 0 (semaphore released) or older then 10min to recover from failed or crashed attempts
-			if ($exists) $where = array('async_next=0 OR async_next<'.time()-600);
+			if ($exists) $where = array('async_next=0 OR async_next<'.(time()-600));
 		}
 		//echo "last_run=<pre>"; print_r($last_run); echo "</pre>\n";
 		return $this->write($last_run,!!$exits,$where) > 0;
