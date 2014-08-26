@@ -28,9 +28,9 @@
 	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
-				<column/>
-				<column/>
 				<column disabled="!@type2"/>
+				<column/>
+				<column/>
 				<column/>
 				<column disabled="!@use_private"/>
 				<column/>
