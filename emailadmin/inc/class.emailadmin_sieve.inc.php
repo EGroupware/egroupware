@@ -49,6 +49,18 @@ class emailadmin_sieve extends Net_Sieve
 	{
 		parent::Net_Sieve();
 
+		// TODO: since we seem to have major problems authenticating via DIGEST-MD5 and CRAM-MD5 in SIEVE, we skip MD5-METHODS for now
+		if (!is_null($_icServer))
+		{
+			$_icServer->supportedAuthMethods = array('PLAIN' , 'LOGIN');
+			$_icServer->supportedSASLAuthMethods=array();
+		}
+		else
+		{
+			$this->supportedAuthMethods = array('PLAIN' , 'LOGIN');
+			$this->supportedSASLAuthMethods=array();
+		}
+
 		$this->scriptName = !empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName']) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
 
 		$this->displayCharset	= $GLOBALS['egw']->translation->charset();
