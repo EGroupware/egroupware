@@ -127,7 +127,7 @@ class egw_customfields implements IteratorAggregate
 	 */
 	public static function get($app, $all_private_too=false, $only_type2=null)
 	{
-		$cache_key = $app.':'.(bool)$all_private_too.':'.$only_type2;
+		$cache_key = $app.':'.($all_private_too?'all':$GLOBALS['egw_info']['user']['account_id']).':'.$only_type2;
 		$cfs = egw_cache::getInstance(__CLASS__, $cache_key);
 
 		if (!isset($cfs))
