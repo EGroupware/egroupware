@@ -739,6 +739,7 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 */
 /*Border around iframe*/
 iframe#mail-display_mailDisplayBodySrc {
+  height: 99%;
   /*border: 4px solid yellow;*/
 }
 /*Border around iframe*/
@@ -2643,7 +2644,7 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   overflow-y: auto;
   border: 0px solid silver;
   top: 120px;
-  bottom: 100px;
+  bottom: 110px;
 }
 .mailDisplayHeaders {
   overflow: hidden;

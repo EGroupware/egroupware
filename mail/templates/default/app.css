@@ -549,6 +549,9 @@ div.mail-compose_fileselector {
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
 }
+#mail-display_mailDisplayBodySrc {
+	height:100%;
+}
 #divGenTime_mail {
 	display: none;
 }
