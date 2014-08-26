@@ -2616,7 +2616,9 @@ class mail_ui
 
 		// put them in VFS so they can be zipped
 		$header = $this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox);
-		$temp_path = egw_vfs::get_home_dir() . "/.mail_$message_id";
+		//get_home_dir may fetch the users startfolder if set; if not writeable, action will fail. TODO: use temp_dir
+		$homedir = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
+		$temp_path = $homedir/*egw_vfs::get_home_dir()*/ . "/.mail_$message_id";
 		if(egw_vfs::is_dir($temp_path)) egw_vfs::remove ($temp_path);
 
 		// Add subject to path, so it gets used as the file name
