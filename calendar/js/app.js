@@ -32,14 +32,17 @@ app.classes.calendar = AppJS.extend(
 	 */
 	init: function()
 	{
-		// call parent
-		this._super.apply(this, arguments);
-
 		// make calendar object available, even if not running in top window, as sidebox does
 		if (window.top !== window)
 		{
+			// we have to explicitly delete old object or IE11 complains about accessing an already freed script
+			delete window.top.app.calendar;
 			window.top.app.calendar = this;
 		}
+
+		// call parent
+		this._super.apply(this, arguments);
+
 		//Drag_n_Drop (need to wait for DOM ready to init dnd)
 		jQuery(jQuery.proxy(this.drag_n_drop,this));
 	},
@@ -577,7 +580,7 @@ app.classes.calendar = AppJS.extend(
 	 * @param {string} _duration description
 	 * @param {string} _eventFlag Flag to distinguish whether the event is Whole Day, Series, or Single
 	 *	- S represents Series
-	 *	- WD represents Whole Day 
+	 *	- WD represents Whole Day
 	 *	- WDS represents Whole Day Series (recurrent whole day event)
 	 *	- '' represents Single
 	 */
