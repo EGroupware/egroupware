@@ -268,7 +268,7 @@ leave it empty	infolog	en	Leave it empty
 leave it empty for a full week	infolog	en	Leave it empty for a full week
 leave without saveing the entry	infolog	en	Leave without saving the entry
 leaves without saveing	infolog	en	Leaves without saving
-length	admin	en	Length
+length	infolog	en	Length
 limit number of description lines (default 5, 0 for no limit)	infolog	en	Limit number of description lines. Default = 5, 0 = no limit.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	en	Limit width of description column. Effective only if lines limit is set. 0 = no limit.
 link	infolog	en	Link
@@ -392,7 +392,7 @@ responsible upcoming	infolog	en	Responsible upcoming
 responsible user, priority	infolog	en	Responsible user, priority
 returns a list / search for records.	infolog	en	Returns a list / search for records.
 rights for the responsible	infolog	en	Rights for the responsible
-rows	admin	en	Rows
+rows	infolog	en	Rows
 same day	infolog	en	Same day
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	Saves the changes and leaves
