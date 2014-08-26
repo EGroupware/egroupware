@@ -71,7 +71,7 @@
 						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
 						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
-					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
+					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="4" cols="30"/>
 					<vbox>
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
 						<textbox type="integer" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>

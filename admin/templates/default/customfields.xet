@@ -67,7 +67,7 @@
 						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
 					<listbox type="select-account" align="center" statustext="Select accounts for which the custom field should be visible" id="${row}[private]" rows="3" options="both"/>
-					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="2" cols="30"/>
+					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="4" cols="30"/>
 					<vbox>
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
 						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
