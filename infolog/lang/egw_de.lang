@@ -261,7 +261,7 @@ leave it empty	infolog	de	leer lassen
 leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbruch ohne speichern
-length	admin	de	Länge
+length	infolog	de	Länge
 limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
 link	infolog	de	Verknüpfung
@@ -382,7 +382,7 @@ responsible upcoming	infolog	de	verantwortlich zukünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
-rows	admin	de	Zeilen
+rows	infolog	de	Zeilen
 same day	infolog	de	gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
