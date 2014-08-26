@@ -377,7 +377,7 @@ var et2_taglist_account = et2_taglist.extend(
 	init:function ()
 	{
 		this._super.apply(this, arguments);
-		
+
 		// Counter to prevent infinite looping while fetching account names
 		this.deferred_loading = 0;
 
@@ -401,7 +401,7 @@ var et2_taglist_account = et2_taglist.extend(
 		}
 	},
 
-	int_reg_exp: /^[0-9]+$/,
+	int_reg_exp: /^-?[0-9]+$/,
 
 	/**
 	 * Set value(s) of taglist, reimplemented to automatic resolve numerical account_id's
