@@ -989,6 +989,13 @@ class infolog_bo
 			}
 			// merge changes (keeping extra values from the UI)
 			$values_in = array_merge($values_in,$values);
+
+			// Update modified timestamp of parent
+			if($values['info_id_parent'])
+			{
+				$parent = $this->read($values['info_id_parent'], false, 'server',true);
+				$this->write($parent,false, true, false, true);
+			}
 		}
 		return $info_id;
 	}

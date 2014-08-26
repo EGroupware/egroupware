@@ -1023,23 +1023,6 @@ class infolog_ui
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,
 			),
-			'view' => array(
-				'caption' => 'View subs',
-				'icon' => 'egw_action/arrow_left',
-				'group' => $group,
-				'hint' => 'View all subs of this entry',
-				'enableClass' => 'infolog_rowHasSubs',
-				'enabled' => true,
-			),
-			'parent' => array(
-				'caption' => 'View parent',
-				'icon' => 'egw_action/arrow_up',
-				'group' => $group,
-				'hideOnDisabled' => true,
-				'hint' => 'View the parent of this entry and all his subs',
-				'enabled' => true,
-				'enableClass' => 'infolog_rowHasParent'
-			),
 			'add' => array(
 				'caption' => 'Add',
 				'group' => $group,
@@ -1302,26 +1285,6 @@ class infolog_ui
 				$msg = $document_merge->download($settings, $checked, '', $this->prefs['document_dir']);
 				$failed = count($checked);
 				return false;
-
-			case 'parent':
-				$parent_query = array('col_filter' => array('info_id' => $checked));
-				$result = $this->bo->search($parent_query);
-				$parents = array();
-				foreach($result as $key => $info)
-				{
-					if(is_numeric($key))
-					{
-						$parents[] = $info['info_id_parent'];
-					}
-				}
-				$checked = array_unique($parents);
-				// Fall through
-
-			case 'view':
-				// remember filter to restore it, if infolog icon get's clicked next time
-				if ($query['filter']) egw_cache::setSession('infolog', 'filter_reset_from', $query['filter']);
-				$this->index(array(),'sp',$checked,0);
-				common::egw_exit();
 			case 'ical':
 				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
