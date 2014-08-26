@@ -983,10 +983,16 @@ class emailadmin_wizard
 						{
 							// if admin username/password given, check if it is valid
 							$account = new emailadmin_account($content);
-							$imap = $account->imapServer();
-							if ($imap) $imap->checkAdminConnection();
-							// test sieve connection, if enabled and credentials available
-							if ($account->acc_sieve_enabled && $account->acc_imap_username) $account->imapServer()->retrieveRules();
+							if ($account->acc_imap_administration)
+							{
+								$imap = $account->imapServer(true);
+								if ($imap) $imap->checkAdminConnection();
+							}
+							// test sieve connection, if not called for other user, enabled and credentials available
+							if (!$content['called_for'] && $account->acc_sieve_enabled && $account->acc_imap_username)
+							{
+								$account->imapServer()->retrieveRules();
+							}
 							$new_account = !($content['acc_id'] > 0);
 							// check for deliveryMode="forwardOnly", if a forwarding-address is given
 							if ($content['acc_smtp_type'] != 'emailadmin_smtp' &&
