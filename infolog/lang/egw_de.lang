@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	de	%1 die Sie delegierten ist am %2 fällig
 %1 you delegated is starting at %2	infolog	de	%1 die Sie delegierten startet am %2
 (and children) deleted	infolog	de	(und Untereinträge) gelöscht.
+(no subject)	infolog	de	(kein Betreff)
 - subprojects from	infolog	de	- Untereinträge von
 0%	infolog	de	0%
 10%	infolog	de	10%
@@ -49,6 +50,7 @@ added	infolog	de	Hinzugefügt
 addressbook placeholders available	infolog	de	Adressbuch-Platzhalter verfügbar
 all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
+all other %1 fields are valid	infolog	de	Alle anderen %1 Felder sind gültig
 all projects	infolog	de	Alle Projekte
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, z.B. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
@@ -163,6 +165,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	de	Wol
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	infolog	de	geschlossen
 download	infolog	de	Datei laden
+download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
@@ -183,11 +186,13 @@ enter a textual description of the log-entry	infolog	de	geben Sie eine textliche
 enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
 error: importing the ical	infolog	de	Fehler beim Import der iCal Import!
+error: no mail (mailbox / uid) given!	infolog	de	Fehler: keine Mail (Mailbox / UID) angegeben!
 error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
 error: the entry has been updated since you opened it for editing!	infolog	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
+export definition to use for nextmatch export	infolog	de	Exportdefinition für Listenexport
 exports in ical format.	infolog	de	Export im iCal Format.
 exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei.
 favorites	infolog	de	Favoriten
@@ -248,7 +253,7 @@ insert in document	infolog	de	In ein Dokument einfügen
 invalid filename	infolog	de	Ungültiger Dateiname
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer ID: %1. Ist möglicher Weise eine falsche Feld Übersetzung. Es wird %2 anstatt dem ursprünglichen Wert verwendet.
 invalid status for entry type %1.	infolog	de	Ungültiger Status für den eingegebenen Typ %1
-label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
+label<br>helptext	infolog	de	Beschriftung\nHilfetext
 last changed	infolog	de	letzte Änderung
 last modified	infolog	de	zuletzt geändert
 leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
@@ -256,7 +261,7 @@ leave it empty	infolog	de	leer lassen
 leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbruch ohne speichern
-length<br>rows	infolog	de	Länge<br />Zeilen
+length	admin	de	Länge
 limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
 link	infolog	de	Verknüpfung
@@ -377,6 +382,7 @@ responsible upcoming	infolog	de	verantwortlich zukünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
+rows	admin	de	Zeilen
 same day	infolog	de	gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
@@ -464,6 +470,7 @@ typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
 type ...	infolog	de	Typ ...
 type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
+type of field	infolog	de	Art des Feldes
 type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	de	Verknüpfung zu  %3 eines Benutzerdefinierten Feldes "%1": "%4" nicht möglich. %2 würde passen
 unknown type: %1	infolog	de	Unbekannter Typ %1
