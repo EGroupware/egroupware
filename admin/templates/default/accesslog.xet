@@ -4,15 +4,15 @@
 	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
-				<column/>
-				<column disabled="@no_sessionstatus"/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="@no_lo"/>
-				<column disabled="@no_total"/>
-				<column/>
-				<column/>
+				<column width="30%"/>
+				<column width="80" disabled="@no_sessionstatus"/>
+				<column width="30%"/>
+				<column width="120"/>
+				<column width="130"/>
+				<column disabled="@no_lo" width="130"/>
+				<column disabled="@no_total" width="80"/>
+				<column width="80"/>
+				<column width="40%"/>
 			</columns>
 			<rows>
 				<row class="th">
