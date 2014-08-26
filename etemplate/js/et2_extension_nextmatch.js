@@ -955,9 +955,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		for (var x = 0; x < _row.length; x++)
 		{
-			this.columns[x] = {
+			this.columns[x] = jQuery.extend({
 				"widget": _row[x].widget
-			};
+			},_colData[x]);
 
 
 			columnData[x] = {
