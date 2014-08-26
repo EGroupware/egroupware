@@ -107,7 +107,7 @@ var et2_date = et2_inputWidget.extend(
 	},
 
 	set_value: function(_value) {
-		var old_value = this.getValue();
+		var old_value = this._oldValue;
 		if(_value === null || _value === "" || _value === undefined ||
 			// allow 0 as empty-value for date and date-time widgets, as that is used a lot eg. in InfoLog
 			_value == 0 && (this._type == 'date-time' || this._type == 'date'))
@@ -125,7 +125,7 @@ var et2_date = et2_inputWidget.extend(
 		}
 
 		// Check for full timestamp
-		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-](\d{2})\:(\d{2})/))
+		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
 		{
 			_value = new Date(_value);
 		}
