@@ -849,7 +849,8 @@ class db_backup
 				$num_rows = 0;
 				// querying only chunks for 10000 rows, to not run into memory limit on huge tables
 				foreach($this->db->select($table, '*',
-					empty($pk) ? false : $pk.' > '.$max,		// limit by maximum primary key already received
+					// limit by maximum primary key already received
+					empty($pk) || !$max ? false : $pk.' > '.$this->db->quote($max, $schema['fd'][$pk]['type']),
 					__LINE__, __FILE__,
 					empty($pk) ? $total : 0,					// if no primary limit by number of received rows
 					empty($pk) ? '' : 'ORDER BY '.$pk.' ASC',	// order by primary key
