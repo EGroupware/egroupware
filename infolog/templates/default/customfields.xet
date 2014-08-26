@@ -48,28 +48,31 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Typ"/>
+					<description value="Type"/>
 					<description value="Name"/>
 					<description value="Label"/>
-					<description value="Type"/>
+					<description value="Type of field"/>
 					<description value="Values for selectbox"/>
-					<html label="Length&lt;br&gt;Rows"/>
+					<vbox>
+						<description value="Length"/>
+						<description value="Rows"/>
+					</vbox>
 					<description value="Order"/>
 					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
 				<row class="row" valign="top">
 					<listbox statustext="for which types should this field be used" id="${row}[type2]" no_lang="1" rows="3"/>
 					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="${row}[name]" size="20" maxlength="32"/>
-					<vbox options="0,0">
+					<vbox>
 						<textbox statustext="the text displayed to the user" id="${row}[label]" maxlength="255"/>
 						<description id="${row}[label]"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
 						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
 					<textbox multiline="true" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" id="${row}[values]" rows="2" cols="30"/>
-					<vbox options="0,0">
+					<vbox>
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
 						<textbox type="integer" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
 					</vbox>
@@ -101,7 +104,7 @@
 					<button statustext="deletes the selected typ" label="Delete" id="button[delete]"/>
 					<textbox blur="new name" statustext="name of new type to create" id="new_name" size="10" maxlength="40"/>
 					<button statustext="creates a new typ with the given name" label="Create" id="button[create]"/>
-					<description align="center" id="error_msg" no_lang="1" class="error_msg"/>
+					<description align="center" id="error_msg" no_lang="1" class="msg"/>
 				</row>
 				<row class="header">
 					<description value="Custom status for typ" id="typ" span="all"/>
@@ -116,7 +119,7 @@
 					<template id="fields" content="fields" span="all"/>
 				</row>
 				<row>
-					<hbox options="0,0" span="all">
+					<hbox span="all">
 						<description value="Group owner for" id="type2" class="header"/>
 						<menulist class="infolog_lpadding5">
 							<menupopup type="select-account" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
@@ -134,7 +137,6 @@
 		</grid>
 		<styles>
 			.header { font-weight: bold; font-size: 120%; }
-.error_msg { color: red; font-style: italics; }
 		</styles>
 	</template>
 </overlay>
