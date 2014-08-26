@@ -96,10 +96,12 @@ class emailadmin_sieve extends Net_Sieve
 		if (!is_null($_icServer))
 		{
 			$_icServer->supportedAuthMethods = array('PLAIN' , 'LOGIN');
+			$_icServer->supportedSASLAuthMethods=array();
 		}
 		else
 		{
 			$this->supportedAuthMethods = array('PLAIN' , 'LOGIN');
+			$this->supportedSASLAuthMethods=array();
 		}
 
 		$this->displayCharset	= translation::charset();
