@@ -65,7 +65,7 @@ var et2_dataview_column = ClassWithAttributes.extend({
 		"minWidth": {
 			"name": "Minimum width",
 			"type": "integer",
-			"default": 50,
+			"default": 20,
 			"description": "Minimum width of the column, in pixels.  Values below this are rejected."
 		},
 		"maxWidth": {
