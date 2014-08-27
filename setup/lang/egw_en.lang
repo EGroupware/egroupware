@@ -299,6 +299,7 @@ filename	setup	en	File name
 filesystem	setup	en	File system
 filesystem (default)	setup	en	File system (default)
 force selectbox	setup	en	Force select box
+found, but unknown version	setup	en	Found, but unknown version
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
 give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	en	Give LDAP root DN and password, if you need to create an instance specific admin user, user- or group-context
 gives further options	setup	en	Gives further options

@@ -379,13 +379,13 @@ function pear_check($package,$args)
 	// check if egw-pear is availible and packages is included
 	if ($package && is_dir('../egw-pear') && file_exists('../egw-pear/'.str_replace('_','/',$package).'.php'))
 	{
-		$available = true;
+		$available = $found = true;
 		$version_available = '999.egw-pear';
 	}
 	// packages found in the pear registry --> use that info
 	elseif ($pear_packages)
 	{
-		$pear_available = true;
+		$pear_available = $found = true;
 		// check if package is installed
 		if ($package && isset($pear_packages[$package])) $available = true;
 		// check if it's the right version
@@ -399,20 +399,21 @@ function pear_check($package,$args)
 
 			if (!class_exists('PEAR')) $pear_available = false;
 		}
+		$found = $pear_available;
 		if ($pear_available && $package)
 		{
 			$file = str_replace('_','/',$package == 'Mail_Mime' ? 'Mail_mime' : $package).'.php';
 
-			$available = @include_once($file);
+			$found = @include_once($file);
 
-			if (!class_exists($package)) $available = false;
+			if (!class_exists($package)) $found = false;
 		}
 	}
 	// is the right version availible
-	$available = (@$available || $pear_available && !$package) && (!$min_version || version_compare($min_version,$version_available) <= 0);
+	$available = $found && (!$min_version || version_compare($min_version,$version_available) <= 0);
 	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
 		lang('Checking PEAR%1 is installed',($package?($channel?' '.$channel.'/':'::').$package:'').($min_version?" ($min_version)":'')).': '.
-		($available ? ($version_available ? $version_available : lang('True')) : lang('False'))."</span></div>\n";
+		($available ? lang('True') : ($found ? lang('Found, but unknown version') : lang('False')))."</span></div>\n";
 
 	if (!$available)	// give further info only if not availible
 	{
@@ -421,25 +422,25 @@ function pear_check($package,$args)
 
 		if (!$pear_available)
 		{
-			echo ' '.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
+			echo '<br/>'.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
 				'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
 		}
-		elseif ($package)
+		elseif ($package && !$found)
 		{
-			echo ' '.lang('You can install it by running:').
+			echo '<br/>'.lang('You can install it by running:').
 				($channel ? ' pear channel-discover '.$channel.' ;' : '').
 				' pear install '.($channel ? $channel.'/' : '').$package;
 		}
+		elseif ($min_version && !$version_available)
+		{
+			echo '<br/>'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
+		}
+		elseif ($min_version && version_compare($min_version,$version_available) > 0)
+		{
+			echo '<br/>'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
+				$package,$version_available,$min_version).' pear update '.$package;
+		}
 		echo "</div>";
-	}
-	elseif ($min_version && !$version_available)
-	{
-		echo '<div class="setup_info">'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version).'</div>';
-	}
-	elseif ($min_version && version_compare($min_version,$version_available) > 0)
-	{
-		echo '<div class="setup_info">'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
-			$package,$version_available,$min_version).' pear update '.$package.'</div>';
 	}
 	echo "\n";
 
