@@ -413,7 +413,8 @@ function pear_check($package,$args)
 	$available = $found && (!$min_version || version_compare($min_version,$version_available) <= 0);
 	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
 		lang('Checking PEAR%1 is installed',($package?($channel?' '.$channel.'/':'::').$package:'').($min_version?" ($min_version)":'')).': '.
-		($available ? lang('True') : ($found ? lang('Found, but unknown version') : lang('False')))."</span></div>\n";
+		($available ? ($version_available ? $version_available : lang('True')) :
+		($found ? lang('Found, but unknown version') : lang('False')))."</span></div>\n";
 
 	if (!$available)	// give further info only if not availible
 	{
