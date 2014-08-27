@@ -154,6 +154,10 @@ var et2_date = et2_inputWidget.extend(
 						return;
 					}
 					this.set_validation_error(false);
+					// this.date is on current date, changing it in get_value() to 1970-01-01, gives a time-difference, if we are currently on DST
+					this.date.setDate(1);
+					this.date.setMonth(0);
+					this.date.setFullYear(1970);
 					// Avoid javascript timezone offset, hour is in 'user time'
 					this.date.setUTCHours(parsed.hour);
 					this.date.setMinutes(parsed.minute);
@@ -259,7 +263,7 @@ var et2_date = et2_inputWidget.extend(
 			this.date.setUTCHours(0);
 			this.date.setUTCMinutes(0);
 		}
-		
+
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
 		return this.date.toJSON();
