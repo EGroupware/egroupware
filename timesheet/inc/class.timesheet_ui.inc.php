@@ -129,12 +129,7 @@ class timesheet_ui extends timesheet_bo
 				// check if negative duration is caused by wrap over midnight
 				if ($content['ts_duration'] < 0 && $content['ts_duration'] > -24*60)
 				{
-					$yesterday = new egw_time();
-					$yesterday->modify('-1day');
-					if ($start->format('Y-m-d') == $yesterday->format('Y-m-d'))
-					{
-						$content['ts_duration'] += 24*60;
-					}
+					$content['ts_duration'] += 24*60;
 				}
 				//echo "<p>end_time=$content[end_time], start_time=$content[start_time] --> duration=$content[ts_duration]</p>\n";
 			}
@@ -186,9 +181,9 @@ class timesheet_ui extends timesheet_bo
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
 					}
-					if ($this->data['ts_duration'] < 0)	// for layout purpose we show the error behind the quantity field
+					if ($this->data['ts_duration'] < 0)
 					{
-						$etpl->set_validation_error('ts_quantity',lang('Starttime has to be before endtime !!!'));
+						$etpl->set_validation_error('start_time',lang('Starttime has to be before endtime !!!'));
 					}
 					// only store project-blur, if a project is selected
 					if (!$this->data['ts_project'] && $this->data['pm_id']) $this->data['ts_project'] = $this->data['ts_project_blur'];
