@@ -45,6 +45,12 @@ function nm_action(_action, _senders, _target, _ids)
 			_action.data.nextmatch = nm;
 		}
 	}
+	// temp. fix for _ids containing (wrong) selections from different hierarchy levels
+	_ids.ids = [];
+	for(var i = 0; i < _senders.length; i++)
+	{
+		if (_senders[i].id) _ids.ids.push(_senders[i].id);
+	}
 
 	// Translate the internal uids back to server uids
 	var idsArr = _ids.ids;
@@ -110,7 +116,7 @@ function nm_action(_action, _senders, _target, _ids)
 			// freezing for a while.  If egw_open is set, and only 1 row selected,
 			// egw_open will be used instead.
 			if(doLongTask(idsArr, _action, mgr)) break;
-			
+
 			// Fall through
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
@@ -202,7 +208,7 @@ function nm_action(_action, _senders, _target, _ids)
 					// Otherwise, old info will be sent and could overwrite the new,
 					// depending on timing.
 					nextmatch.refresh(idsArr);
-			
+
 					// Reset action in case there's another one
 					nextmatch.getValue = old_value;
 				}
