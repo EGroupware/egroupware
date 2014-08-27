@@ -116,6 +116,7 @@ class addressbook_hooks
 		);
 		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')	// calendar config
 		{
+			/* disabled until we have a home app again
 			$settings['mainscreen_showbirthdays'] = array(
 				'type'   => 'select',
 				'label'  => 'Show birthday reminders on main screen',
@@ -131,7 +132,7 @@ class addressbook_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 3,
-			);
+			);*/
 		}
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 		{

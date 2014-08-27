@@ -284,6 +284,7 @@ class calendar_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
+			/* disabled until we have a home app again
 			'mainscreen_showevents' => array(
 				'type'   => 'select',
 				'label'  => 'Which view to show on home page',
@@ -293,7 +294,7 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> '1',	// 1 = week
-			),
+			),*/
 			'days_in_weekview' => array(
 				'type'   => 'select',
 				'label'  => 'default week view',

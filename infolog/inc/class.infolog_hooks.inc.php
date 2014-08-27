@@ -183,6 +183,7 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> '',
 			),
+			/* disabled until we have a home app again
 			'homeShowEvents' => array(
 				'type'   => 'select',
 				'label'  => 'InfoLog filter for the main screen',
@@ -192,7 +193,7 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 'responsible-open-today',
-			),
+			),*/
 			'set_start' => array(
 				'type'   => 'select',
 				'label'  => 'Startdate for new entries',
@@ -362,8 +363,6 @@ class infolog_hooks
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
-			$link = egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements');
-
 			$settings['default_document'] = array(
 				'type'   => 'vfs_file',
 				'size'   => 60,
