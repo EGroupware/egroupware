@@ -1,3 +1,32 @@
+egroupware-epl (14.1.20140827-1) hardy; urgency=low
+
+  * all apps: current user was not taken into account for private custom-fields
+  * all apps/eTemplate2: fixing various timezone related issues
+  * all apps: fixed column sizes and stretch (which columns change when window size changes)
+  * all apps: fix problem with resizing listviews' columns in FireFox (FF) and Internet Explorer (IE)
+  * PostgreSQL/Admin/Setup: backup stopped with SQL error
+  * PostgreSQL/Mail: fixed SQL error in compose
+  * LDAP/AD: auto-created accounts not allways set primary group also as membership
+  * eSync: limit creation of sessions to one per device and user (like already done for CalDAV)
+  * Mail: keyword actions were not always displayed (eg. never for Dovecot and GMail)
+  * Mail: fix problem on not applied but possibly set status filter on all message actions for flagging
+  * Mail: fixed sometimes not working (un)subscribe of mailboxes, added better diagnostic and automatic (de)select children
+  * Mail: fix for failed zip-download when users startfolder is not writeable
+  * Mail: make to/cc/bcc fields in compose draggable and droppable
+  * EMailAdmin/Admin/Cyrus: fixed mailbox creation for new users incl. Sent,Trash,Drafts,Templates,Spam subfolders, if defined in account
+  * EMailAdmin/Admin/Cyrus: deleting of users did not delete mailbox on managed Cyrus server
+  * EMailAdmin: folders to notify about were always stored as default for all users, if editied by an admin
+  * Projectmanager: Load all sub-views at the start, and switch between them as needed.  This gives faster switching between sub-views, and lower overall load times.
+  * Projectmanager: dynamic loading of project tree leaves (speed up for huge number of projects)
+  * Addressbook: no longer offering to move contacts to accounts addressbook, as we do not support that
+  * Calendar: Fix recurrent whole day events do not pop up edit series dialog
+  * Calendar/IE11: fixed calendar and other apps were not working, if doing something in the calendar in IE11
+  * Calendar/InfoLog: Implement drag,drop and resize for integrated infolog events in all calendar views
+  * Tracker: database update to fix new public tickets were not visible for technicians (change tr_private from NULL to "0")
+  * InfoLog: subentries are now shown only in hierarchical view and updates to them also update modification time of parent
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 27 Aug 2014 10:16:27 +0200
+
 egroupware-epl (14.1.20140812-1) hardy; urgency=low
 
   * EMailAdmin/Mail: fix to work with Horde_Imap_Client 2.24.1+ (Tried to access unknown attribute "capability"!)
