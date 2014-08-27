@@ -38,7 +38,7 @@
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[class]">
-					<image id="${row}[picture_thumb]" width="100%" extra_link_target="_blank" href="webdav.php/apps/resources/${row_cont[res_id]}/.picture.jpg" src="${row}[picture_thumb]" />
+					<image id="${row}[picture_thumb]" width="100%" height="auto" extra_link_target="_blank" href="webdav.php/apps/resources/${row_cont[res_id]}/.picture.jpg" src="${row}[picture_thumb]" />
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
