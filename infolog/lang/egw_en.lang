@@ -54,6 +54,7 @@ all other %1 fields are valid	infolog	en	All other %1 fields are valid
 all projects	infolog	en	All projects
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
+always show them	infolog	en	Always show them
 application mail expected but got: %1	infolog	en	Application mail expected but got: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!!!
 apply the changes	infolog	en	Apply the changes
@@ -279,7 +280,6 @@ links of this entry	infolog	en	Links of this entry
 links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application.  Example: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	en	Links wrapped in an HREF tag with download link
 list all categories	infolog	en	List all categories
-list no subs/childs	infolog	en	List no subs/childs
 list of files linked to the current record	infolog	en	List of files linked to the current record
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	en	Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)
 location	infolog	en	Location
@@ -322,6 +322,8 @@ one day in advance	infolog	en	One day in advance
 ongoing	infolog	en	Ongoing
 only for details	infolog	en	Only for details
 only if i get assigned or removed	infolog	en	Only if I get assigned or removed
+only show them if there is a filter	infolog	en	Only show them if there is a filter
+only show them while searching	infolog	en	Only show them while searching
 only the attachments	infolog	en	Only the attachments
 only the links	infolog	en	Only the links
 open and upcoming	infolog	en	Open and upcoming
@@ -438,6 +440,7 @@ show full usernames	infolog	en	Show full user names
 show in the infolog list	infolog	en	Show in the InfoLog list
 show last modified	infolog	en	Show last modified
 show status and percent done separate	infolog	en	Show status and percent done separate
+show sub-entries	infolog	en	Show sub-entries
 show ticket id	infolog	en	Show ticket ID
 show times	infolog	en	Show times
 small view	infolog	en	Small view

@@ -54,6 +54,7 @@ all other %1 fields are valid	infolog	de	Alle anderen %1 Felder sind gültig
 all projects	infolog	de	Alle Projekte
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, z.B. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
+always show them	infolog	de	Immer anzeigen
 application mail expected but got: %1	infolog	de	Mail-Applikation erwartet aber %1 erhalten
 apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze !!
 apply the changes	infolog	de	Übernimmt die Änderungen
@@ -270,7 +271,6 @@ links	infolog	de	Verknüpfungen
 links and attached files	infolog	de	Verknüpfungen und Dateianhänge
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 list all categories	infolog	de	Alle Kategorien anzeigen
-list no subs/childs	infolog	de	Untereinträge nicht anzeigen
 list of files linked to the current record	infolog	de	Liste der Dateien die mit dem aktuellen Datensatz verknüpft sind
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
 location	infolog	de	Ort
@@ -312,6 +312,8 @@ one day in advance	infolog	de	am Vortag
 ongoing	infolog	de	in Arbeit
 only for details	infolog	de	Nur bei Details
 only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
+only show them if there is a filter	infolog	de	Nur anzeigen wenn gefiltert wird
+only show them while searching	infolog	de	Nur bei einer Suche anzeigen
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
 open and upcoming	infolog	de	zukünftige und offene
@@ -428,6 +430,7 @@ show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
 show last modified	infolog	de	Zuletzt geändert anzeigen
 show status and percent done separate	infolog	de	Status und Prozent erledigt separat anzeigen
+show sub-entries	infolog	de	Untereinträge anzeigen
 show ticket id	infolog	de	Ticketnummer anzeigen
 show times	infolog	de	Zeiten anzeigen
 small view	infolog	de	schmale Ansicht
