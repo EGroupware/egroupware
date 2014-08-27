@@ -500,7 +500,7 @@ var et2_date_duration = et2_date.extend(
 			return this.options.empty_not_0 ? '' : 0;
 		}
 		// Put value into minutes for further processing
-		switch(this.format ? this.format.val() : this.options.display_format)
+		switch(this.format && this.format.val() ? this.format.val() : this.options.display_format)
 		{
 			case 'd':
 				value *= this.options.hours_per_day;
