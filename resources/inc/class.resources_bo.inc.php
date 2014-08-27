@@ -251,7 +251,7 @@ class resources_bo
 			}
 			else
 			{
-				$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+				$rows[$num]['picture_thumb'] = $this->get_picture($resource, true);
 			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
@@ -829,10 +829,6 @@ class resources_bo
 				if ($fullsize)
 				{
 					$picture = egw::link(egw_vfs::download_url($picture));
-				}
-				else
-				{
-					$picture = egw::link('/etemplate/thumbnail.php',array('path' => $picture));
 				}
 				break;
 
