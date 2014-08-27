@@ -281,7 +281,7 @@ class infolog_ui
 		if (!$query['csv_export'])
 		{
 			unset($query['no_actions']);
-			$parent_id = $query['col_filter']['parent_id'];
+			$parent_id = (int)$query['col_filter']['parent_id'];
 			unset($query['col_filter']['parent_id']);
 			if(!$query['action'])
 			{
@@ -295,7 +295,7 @@ class infolog_ui
 			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
 		}
 		$orginal_colfilter = $query['col_filter'];
-		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (int)$parent_id;
+		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (string)$parent_id;
 
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
