@@ -299,6 +299,7 @@ filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
 force selectbox	setup	de	Auswahl erzwingen
+found, but unknown version	setup	de	Gefunden, aber unbekannte Version
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
 give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	de	Tragen Sie das LDAP root DN und Passwort ein, wenn Sie einen Instanzspezifischen Adminbenutzer oder Gruppen-Kontext benötigen
 gives further options	setup	de	gibt zusätzliche Optionen
