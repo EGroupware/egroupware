@@ -686,7 +686,7 @@ class infolog_so
 			'event'       => 'calendar'
 		);
 		// query children independent of action
-		if (empty($query['col_filter']['info_id_parent']))
+		if ((string)$query['col_filter']['info_id_parent'] === '')
 		{
 			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
 			if ($action)
@@ -748,7 +748,7 @@ class infolog_so
 					continue;
 				}
 				if ($col[0] != '#' && substr($col,0,5) != 'info_' && isset($table_def['fd']['info_'.$col])) $col = 'info_'.$col;
-				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
+				if ((string)$data !== '' && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
 					switch ($col)
 					{
