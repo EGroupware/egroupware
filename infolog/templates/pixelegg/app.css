@@ -349,9 +349,6 @@ tr.dialogOperators td,
 #infolog-edit table.egwGridView_outer {
   max-width: 100%;
 }
-#infolog-edit #infolog-edit_history {
-  max-width: 785px;
-}
 #infolog-edit div.et2_hbox {
   white-space: nowrap;
 }

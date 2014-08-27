@@ -294,14 +294,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if (($template = etemplate_widget_template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
-			$template = $template->getElementById($form_name);
+			$template = $template->getElementById($form_name, strpos($form_name, 'history') == 0 ? 'historylog' : 'nextmatch');
 			$expand = array(
 				'cont' => array($form_name => $filters),
 			);
 			$valid_filters = array();
 
-			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
-			$filters = $valid_filters[$form_name];
+			if($template)
+			{
+				$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
+				$filters = $valid_filters[$form_name];
+			}
 			//error_log($this . " Valid filters: " . array2string($filters));
 		}
 

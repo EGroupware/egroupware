@@ -944,7 +944,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				for(var o in this.optionValues)
 				{
 					var option = this.optionValues[o];
-					var key = typeof option == 'object' && typeof option.value != 'undefined' ? option.value : o;
+					var key = typeof option == 'object' && option != null && typeof option.value != 'undefined' ? option.value : o;
 					if (key != _value[i]) continue;
 					var label = typeof option == 'object' ? option.label : option;
 					if (_value.length == 1)
