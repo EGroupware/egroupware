@@ -268,6 +268,27 @@ class infolog_ui
 	}
 
 	/**
+	 * Check if no filter is active
+	 *
+	 * @param array $query
+	 * @return string name of 1. filter found or null
+	 */
+	protected static function filter(array $query)
+	{
+		$filter = $query['filter'] ? 'filter' : ($query['cat_id'] ? 'cat_id' : null);
+		foreach((array)$query['col_filter'] as $name => $value)
+		{
+			if ((string)$value !== '')
+			{
+				$filter = $name;
+				break;
+			}
+		}
+		//error_log(__METHOD__."(col_filter=".array2string($query['col_filter']).") returning ".array2string($filter));
+		return $filter;
+	}
+
+	/**
 	 * Callback for nextmatch widget
 	 *
 	 * @param array &$query
@@ -281,7 +302,16 @@ class infolog_ui
 		if (!$query['csv_export'])
 		{
 			unset($query['no_actions']);
-			$parent_id = (int)$query['col_filter']['parent_id'];
+			if (!$query['col_filter']['parent_id'] && !$query['search'] &&
+				($this->prefs['listNoSubs'] == '1' || $this->prefs['listNoSubs'] === 'filter' && !self::filter($query)))
+			{
+				$parent_id = 0;
+			}
+			else
+			{
+				$parent_id = $query['col_filter']['parent_id'];
+			}
+			//error_log(__METHOD__."() prefs[listNoSubs]=".array2string($this->prefs['listNoSubs'])." --> parent_id=$parent_id");
 			unset($query['col_filter']['parent_id']);
 			if(!$query['action'])
 			{

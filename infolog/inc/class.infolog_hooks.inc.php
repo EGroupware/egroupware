@@ -227,6 +227,20 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> '1',	// Yes
 			),
+			'listNoSubs' => array(
+				'type'   => 'select',
+				'label'  => 'Show sub-entries',
+				'name'   => 'listNoSubs',
+				'values' => array(
+					'0'  => lang('Always show them'),
+					'filter' => lang('Only show them if there is a filter'),
+					'1'  => lang('Only show them while searching'),
+				),
+				'help'   => 'Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> '0',	// Allways show them
+			),
 			'show_links' => array(
 				'type'   => 'select',
 				'label'  => 'Show in the InfoLog list',

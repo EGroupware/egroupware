@@ -838,7 +838,9 @@ class infolog_so
 		}
 		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
-		if ($action != 'sp' || isset($query['subs']) && $query['subs'] || $action != 'sp' && !empty($query['search']))
+		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] != '1' && $action != 'sp' ||
+			(string)$query['col_filter']['info_id_parent'] !== '' ||
+			 isset($query['subs']) && $query['subs'] || $action != 'sp' && !empty($query['search']))
 		{
 			$pid = '';
 		}
