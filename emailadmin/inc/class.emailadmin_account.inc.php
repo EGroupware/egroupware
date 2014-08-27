@@ -448,7 +448,7 @@ class emailadmin_account implements ArrayAccess
 			' JOIN '.self::TABLE.' ON '.self::TABLE.'.acc_id='.self::IDENTITIES_TABLE.'.acc_id'.
 			' LEFT JOIN '.emailadmin_credentials::TABLE.' ON '.self::TABLE.'.acc_id='.emailadmin_credentials::TABLE.'.acc_id AND '.
 				emailadmin_credentials::TABLE.'.account_id='.(int)$GLOBALS['egw_info']['user']['account_id'].' AND '.
-				'cred_type&'.emailadmin_credentials::IMAP);
+				'(cred_type&'.emailadmin_credentials::IMAP.') > 0');
 		//error_log(__METHOD__."(acc_id=$acc_id, replace_placeholders=$replace_placeholders, field='$field') sql=".$rs->sql);
 
 		return new egw_db_callback_iterator($rs,
