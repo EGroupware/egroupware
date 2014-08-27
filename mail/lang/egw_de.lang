@@ -220,7 +220,7 @@ importance	mail	de	Wichtigkeit
 important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mailordner: %1, mit der ID: %2 und der PartID: %3
 inbox	mail	de	Posteingang
-inline	mail	de	Eingebunden Text
+inline	mail	de	Weiterleiten Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
 junk	mail	de	Spammails
