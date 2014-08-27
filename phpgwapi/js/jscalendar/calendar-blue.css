@@ -9,6 +9,7 @@ div.calendar { position: relative; }
   cursor: default;
   background: #eef;
   font-family: tahoma,verdana,sans-serif;
+  border-collapse: initial;
 }
 
 /* Header part -- contains navigation buttons and day names. */
@@ -65,7 +66,7 @@ div.calendar { position: relative; }
 /* The body part -- contains all the days in month. */
 
 .calendar tbody .day { /* Cells <TD> containing month days dates */
-  width: 2em;
+  width: 100px;
   color: #456;
   text-align: right;
   padding: 2px 4px 2px 2px;
