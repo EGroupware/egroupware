@@ -33,6 +33,7 @@
  */
 var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 {
+	createNamespace: true,
 	attributes: {
 		"value": {
 			"name": "Value",
@@ -52,8 +53,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time'},
 		{'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account'},
 		{'id': 'status', caption: 'Changed', 'width': '120px', widget_type: 'select'},
-		{'id': 'new_value', caption: 'New Value', 'width': 'auto'},
-		{'id': 'old_value', caption: 'Old Value', 'width': 'auto'}
+		{'id': 'new_value', caption: 'New Value', 'width': '50%'},
+		{'id': 'old_value', caption: 'Old Value', 'width': '50%'}
 	],
 
 	TIMESTAMP: 0, OWNER: 1, FIELD: 2, NEW_VALUE: 3, OLD_VALUE: 4,
@@ -415,7 +416,13 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 			{
 				nodes = self.columns[i].nodes.clone();
 			}
-			else if (self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]) ||
+			else if ((
+				// Already parsed & cached
+				typeof _data[self.columns[self.NEW_VALUE].id] == "object" &&
+				typeof _data[self.columns[self.NEW_VALUE].id].new != "undefined") ||
+				// Large old value
+				self._needsDiffWidget(_data['status'], _data[self.columns[self.OLD_VALUE].id]) ||
+				// Large new value
 				self._needsDiffWidget(_data['status'], _data[self.columns[self.NEW_VALUE].id]))
 			{
 				// Large text value - span both columns, and show a nice diff
@@ -426,10 +433,13 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
 
-					_data[self.columns[i].id] = {
-						'old': _data[self.columns[i+1].id],
-						'new': _data[self.columns[i].id]
-					};
+					if (typeof _data[self.columns[self.NEW_VALUE].id] == "string")
+					{
+						_data[self.columns[i].id] = {
+							'old': _data[self.columns[i+1].id],
+							'new': _data[self.columns[i].id]
+						};
+					}
 
 					// Skip column 4
 					jthis.parents("td").attr("colspan", 2)

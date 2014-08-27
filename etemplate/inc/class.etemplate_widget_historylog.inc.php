@@ -63,4 +63,27 @@ class etemplate_widget_historylog extends etemplate_widget
 			}
 		}
 	}
+
+	/**
+	 * Validate input
+	 *
+	 * For dates (except duration), it is always a full timestamp in W3C format,
+	 * which we then convert to the format the application is expecting.  This can
+	 * be either a unix timestamp, just a date, just time, or whatever is
+	 * specified in the template.
+	 *
+	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 * @return boolean true if no validation error, false otherwise
+	 */
+	public function validate($cname, array $expand, array $content, &$validated=array())
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+		$value = self::get_array($content, $form_name);
+		$valid =& self::get_array($validated, $form_name, true);
+		$valid = $value;
+		return true;
+	}
 }
