@@ -3398,7 +3398,7 @@ app.classes.mail = AppJS.extend(
 	edit_acl: function(_action, _senders)
 	{
 		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1], acc_id = mailbox[0];
+		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
 		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder)+'&acc_id='+acc_id, '_blank', '640x480');
 	},
 
