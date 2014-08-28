@@ -181,6 +181,7 @@ unexpected response from server to login command.	emailadmin	en	Unexpected respo
 unknown imap response from the server. server responded: %s	emailadmin	en	Unknown IMAP response from the server. %s
 unsupported action '%1' !!!	emailadmin	en	Unsupported action '%1' !
 update current email address:	emailadmin	en	Update current email address:
+use default	emailadmin	en	use default
 use ldap defaults	emailadmin	en	Use LDAP defaults
 use predefined username and password defined below	emailadmin	en	Use predefined username and password defined below
 use smtp auth	emailadmin	en	Use SMTP authentication
