@@ -45,11 +45,10 @@ function nm_action(_action, _senders, _target, _ids)
 			_action.data.nextmatch = nm;
 		}
 	}
-	// temp. fix for _ids containing (wrong) selections from different hierarchy levels
-	_ids.ids = [];
-	for(var i = 0; i < _senders.length; i++)
+	// default action when doubleclicked contains (previous selected) ids of other hierarchy levels
+	if (_action.default)
 	{
-		if (_senders[i].id) _ids.ids.push(_senders[i].id);
+		_ids.ids = [_senders[0].id];
 	}
 
 	// Translate the internal uids back to server uids
@@ -57,6 +56,12 @@ function nm_action(_action, _senders, _target, _ids)
 	for (var i = 0; i < idsArr.length; i++)
 	{
 		idsArr[i] = idsArr[i].split("::").pop();
+		// empty placeholder gets reported --> ignore it
+		if (!idsArr[i])
+		{
+			delete idsArr[i];
+			i--;
+		}
 	}
 
 	// Calculate the ids parameters
