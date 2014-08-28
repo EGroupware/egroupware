@@ -1,3 +1,10 @@
+egroupware-epl (14.1.20140828-1) hardy; urgency=low
+
+  * EMailAdmin/Mail: folders on personal accounts where not stored, automatic unsetting "use default" when changing/adding folders
+  * eTemplate2: fixed regressions from not published 14.1.20140827 package
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 28 Aug 2014 11:55:09 +0200
+
 egroupware-epl (14.1.20140827-1) hardy; urgency=low
 
   * all apps: current user was not taken into account for private custom-fields
