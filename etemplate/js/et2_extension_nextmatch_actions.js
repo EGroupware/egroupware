@@ -46,7 +46,8 @@ function nm_action(_action, _senders, _target, _ids)
 		}
 	}
 	// default action when doubleclicked contains (previous selected) ids of other hierarchy levels
-	if (_action.default)
+	// same is true (and fixable here) for right-click in sub for actions allowing no multiple entries
+	if (_action.default || !_action.allowOnMultiple)
 	{
 		_ids.ids = [_senders[0].id];
 	}
