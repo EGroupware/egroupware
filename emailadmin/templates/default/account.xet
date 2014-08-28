@@ -147,7 +147,7 @@
 				<row>
 					<description for="acc_folder_junk" value="Notify about new mail in this folders"/>
 					<vbox>
-						<taglist id="notify_folders" empty_label="Select one ..." autocomplete_url=""/>
+						<taglist id="notify_folders" empty_label="Select one ..." autocomplete_url="" onchange="app.emailadmin.change_folders"/>
 						<checkbox id="notify_save_default" label="save as default"/>
 						<checkbox id="notify_use_default" label="use default"/>
 					</vbox>

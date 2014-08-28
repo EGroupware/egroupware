@@ -930,6 +930,7 @@ class emailadmin_wizard
 			unset($content['acc_imap_login_type']);
 			$content['acc_smtp_type'] = 'emailadmin_smtp';
 			unset($content['acc_smtp_auth_session']);
+			unset($content['notify_use_default']);
 		}
 		$edit_access = emailadmin_account::check_access(EGW_ACL_EDIT, $content);
 

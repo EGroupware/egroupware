@@ -240,6 +240,18 @@ app.classes.emailadmin = AppJS.extend(
 	{
 		// todo check dirty and query user to a) save changes, b) discard changes, c) cancel selection
 		_widget.getInstanceManager().submit();
+	},
+
+	/**
+	 * Callback if user changes notification folders: unset use-default checkbox
+	 *
+	 * @param {object} _event
+	 * @param {et2_widget} _widget
+	 */
+	change_folders: function(_event, _widget)
+	{
+		var use_default = this.et2.getWidgetById('notify_use_default');
+		if (use_default) use_default.set_value(false);
 	}
 });
 
