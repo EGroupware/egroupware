@@ -341,7 +341,7 @@ class emailadmin_credentials
 				if (($row['cred_pw_enc'] != self::USER || !$mcrypt) &&
 					!($mcrypt = self::init_crypt($row['cred_pw_enc'] == self::USER)))
 				{
-					throw new egw_exception_wrong_parameter("Password encryption type $row[cred_pw_enc] NOT available!");
+					throw new egw_exception_wrong_parameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
 				}
 				return (!empty($row['cred_password'])?trim(mdecrypt_generic($mcrypt, base64_decode($row['cred_password']))):'');
 		}
@@ -412,6 +412,7 @@ class emailadmin_credentials
 			elseif ($user)
 			{
 				$session_key = egw_cache::getSession('phpgwapi', 'password');
+				error_log(__METHOD__."() no session password available!");
 				if (empty($session_key)) return false;
 				$key = base64_decode($session_key);
 			}
