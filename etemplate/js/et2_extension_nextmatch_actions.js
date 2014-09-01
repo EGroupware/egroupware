@@ -355,12 +355,12 @@ function nm_open_popup(_action, _selected)
 		if(_selected.length && typeof _selected[0] == 'object')
 		{
 			_action.data.nextmatch = _selected[0]._context._widget;
-			nm_popup_ids = _ids
+			nm_popup_ids = _selected
 		}
 		else
 		{
 			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject',_ids);
-			nm_popup_ids = _ids;
+			nm_popup_ids = _selected;
 		}
 
 		var dialog = jQuery('.action_popup-content',popup);
