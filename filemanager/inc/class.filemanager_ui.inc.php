@@ -579,6 +579,14 @@ class filemanager_ui
 				foreach((array)$selected as $target)
 				{
 					$link = egw_vfs::concat($dir, egw_vfs::basename($target));
+					if (!egw_vfs::stat($dir) || ($ok = egw_vfs::mkdir($dir,0,true)))
+					{
+						if(!$ok)
+						{
+							$errs++;
+							continue;
+						}
+					}
 					if ($target[0] != '/') $target = egw_vfs::concat($dir, $target);
 					if (!egw_vfs::stat($target))
 					{
