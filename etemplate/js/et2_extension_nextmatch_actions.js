@@ -337,33 +337,29 @@ var nm_popup_action, nm_popup_ids = null;
  *
  * Popup needs to have eTemplate name of action id plus "_popup"
  *
- * @param _action
- * @param _ids
+ * @param {egwAction} _action
+ * @param {egwActionObject[]} _selected
  */
-function nm_open_popup(_action, _ids)
+function nm_open_popup(_action, _selected)
 {
 	//Check if there is nextmatch on _action otherwise gets the uniqueid from _ids
 	var uid;
 	if (typeof _action.data.nextmatch !== 'undefined')
 		uid = _action.data.nextmatch.getInstanceManager().uniqueId;
-	else if(typeof _ids[0] !== 'undefined')
-		uid = _ids[0].manager.data.nextmatch.getInstanceManager().uniqueId;
+	else if(typeof _selected[0] !== 'undefined')
+		uid = _selected[0].manager.data.nextmatch.getInstanceManager().uniqueId;
 	// Find the popup div
 	var popup = jQuery("#"+(uid||"") + "_"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
 	if (popup) {
 		nm_popup_action = _action;
-		if(_ids.length && typeof _ids[0] == 'object')
+		if(_selected.length && typeof _selected[0] == 'object')
 		{
-			egw().debug("warn", 'Not proper format for IDs, should be array',_ids);
-			_action.data.nextmatch = _ids[0]._context._widget;
-			nm_popup_ids = [];
-			for(var i = 0; i < _ids.length; i++)
-			{
-				nm_popup_ids.push(_ids[i].id);
-			}
+			_action.data.nextmatch = _selected[0]._context._widget;
+			nm_popup_ids = _ids
 		}
 		else
 		{
+			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject',_ids);
 			nm_popup_ids = _ids;
 		}
 
@@ -451,16 +447,22 @@ function nm_submit_popup(button)
 	}
 
 	// Mangle senders to get IDs where nm_action() wants them
-	// No idea why this is needed
-	var ids = {ids:[]};
-	for(var i in nm_popup_ids)
+	if(nm_popup_ids.length && typeof nm_popup_ids[0] != 'object')
 	{
-		ids.ids.push(nm_popup_ids[i]);
+		// Legacy ID just as string
+		var ids = {ids:[]};
+		for(var i in nm_popup_ids)
+		{
+			if(nm_popup_ids[i])
+			ids.ids.push(nm_popup_ids[i]);
+		}
 	}
+
 	// call regular nm_action to transmit action and senders correct
-	nm_action(nm_popup_action,nm_popup_ids, button, ids);
+	nm_action(nm_popup_action,nm_popup_ids, button, ids );
 
 	nm_hide_popup(button, null);
+	nm_popup_ids = null;
 }
 
 /**
