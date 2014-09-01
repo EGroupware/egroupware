@@ -56,13 +56,13 @@ function nm_action(_action, _senders, _target, _ids)
 	var idsArr = _ids.ids;
 	for (var i = 0; i < idsArr.length; i++)
 	{
-		idsArr[i] = idsArr[i].split("::").pop();
 		// empty placeholder gets reported --> ignore it
 		if (!idsArr[i])
 		{
-			delete idsArr[i];
-			i--;
+			idsArr.splice(i,1);
+			continue;
 		}
+		idsArr[i] = idsArr[i].split("::").pop();
 	}
 
 	// Calculate the ids parameters
