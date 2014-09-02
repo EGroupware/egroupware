@@ -45,12 +45,6 @@ function nm_action(_action, _senders, _target, _ids)
 			_action.data.nextmatch = nm;
 		}
 	}
-	// default action when doubleclicked contains (previous selected) ids of other hierarchy levels
-	// same is true (and fixable here) for right-click in sub for actions allowing no multiple entries
-	if (_action.default || !_action.allowOnMultiple)
-	{
-		_ids.ids = [_senders[0].id];
-	}
 
 	// Translate the internal uids back to server uids
 	var idsArr = _ids.ids;
