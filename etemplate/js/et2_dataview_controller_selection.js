@@ -181,6 +181,10 @@ var et2_dataview_selectionManager = Class.extend(
 		{
 			this.setSelected(key, false);
 		}
+		for(var i = 0; i < this._children.length; i++)
+		{
+			this._children[i].resetSelection();
+		}
 	},
 
 	setSelected: function (_uid, _selected) {
@@ -453,7 +457,12 @@ var et2_dataview_selectionManager = Class.extend(
 		// If not "_ctrl" is set, reset the selection
 		if (!_ctrl)
 		{
-			this.resetSelection();
+			var top = this;
+			while(top._parent !== null)
+			{
+				top = top._parent;
+			}
+			top.resetSelection();
 			this._actionObjectManager.setAllSelected(false); // needed for hirachical stuff
 		}
 
