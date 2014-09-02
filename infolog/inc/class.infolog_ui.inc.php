@@ -324,6 +324,12 @@ class infolog_ui
 			$query['is_parent'] = 'info_anz_subs';
 			$query['action_var'] = 'multi_action';	// as 'action' is already used in infolog
 		}
+		// nextmatch opened an infolog containing children --> do not filter them, always show all children
+		elseif($query['csv_export'] === 'children')
+		{
+			$query['filter'] = $query['search'] = $query['cat_id'] = '';
+			$query['col_filter'] = array('info_id_parent' => $query['col_filter']['info_id_parent']);
+		}
 		$orginal_colfilter = $query['col_filter'];
 		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (string)$parent_id;
 
