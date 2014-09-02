@@ -129,8 +129,10 @@ class etemplate_widget_taglist extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
+			//error_log(__METHOD__.__LINE__.$form_name.'#'.array2string($validated).'#'.array2string($value));
 			$valid =& self::get_array($validated, $form_name, true);
-			if (true) $valid = $value;
+			//error_log(__METHOD__.__LINE__.$form_name.'#'.array2string($validated).'#'.array2string($valid));
+			if (true) $valid = (is_array($value)&&empty($value)&&empty($valid)?null:$value);
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
