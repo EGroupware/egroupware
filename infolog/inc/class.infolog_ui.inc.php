@@ -893,7 +893,6 @@ class infolog_ui
 			'no_describtion' => 'no details',
 			'all'            => 'details',
 		);
-		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change();";
@@ -914,6 +913,8 @@ class infolog_ui
 
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
+
+		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows').'-details-pref'];
 
 		// disable columns for main entry as set in the pref for details or no details
 		$values['nm']['columnselection_pref'] = 'nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows')

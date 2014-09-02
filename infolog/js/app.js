@@ -163,6 +163,9 @@ app.classes.infolog = AppJS.extend(
 			// Show / hide descriptions
 			this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
 
+			// Store selection as implicit preference
+			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.value);
+
 			// Change preference location - widget is nextmatch
 			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.value == 'all' ? '-details' :'');
 			
