@@ -238,6 +238,15 @@ et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
  */
 var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
+	attributes: {
+		"contact_plus": {
+			"name": "Add contact button",
+			"type": "boolean",
+			"default": false,
+			"description": "Allow to add email as contact to addressbook"
+		}
+	},
+	
 	/**
 	 * Constructor
 	 *
@@ -329,6 +338,51 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		if (typeof _values["class"] != "undefined")
 		{
 			_nodes[0].setAttribute("class", _values["class"]);
+		}
+		// Add contact_plus button
+		if (this.options.contact_plus && this._type == "url-email" )
+		{
+			// If user doesn't have access to addressbook, stop
+			if(!egw.app('addressbook')) return;
+			
+			// Bind onmouseenter event on <a> tag in order to add contact plus
+			this.span.on ({
+				mouseenter: function (event)
+				{
+					event.stopImmediatePropagation();
+					var self = this;
+					jQuery(this).tooltip({
+						items: 'a.et2_email',
+						position: {my:"right top", at:"left top", collision:"flipfit"},
+						tooltipClass: "et2_email_popup",
+						content: function()
+						{
+							// Here we could do all sorts of things
+							var extra = {
+								'presets[email]': jQuery(this).text()
+							};
+							
+							return jQuery('<a href="#" title="'+egw.lang('Add a new contact')+'"><img src="'+egw.image("new") +'" style="height:12px;width:12px"/></a>')
+								.on('click', function() {
+									egw.open('','addressbook','add',extra);
+								});
+						},
+						close: function( event, ui ) 
+						{
+							ui.tooltip.hover(
+								function () {
+									jQuery(this).stop(true).fadeTo(400, 1);
+									//.fadeIn("slow"); // doesn't work because of stop()
+								},
+								function () {
+									jQuery(this).fadeOut("400", function(){	jQuery(this).remove();});
+								}
+							);
+						}
+					})
+					.tooltip("open");
+				},
+			});
 		}
 	}
 });
