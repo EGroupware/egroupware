@@ -161,7 +161,7 @@ app.classes.infolog = AppJS.extend(
 		if (nm && filter2)
 		{
 			// Show / hide descriptions
-			this.show_details(filter2.value == 'all');
+			this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
 
 			// Change preference location - widget is nextmatch
 			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.value == 'all' ? '-details' :'');
@@ -188,10 +188,10 @@ app.classes.infolog = AppJS.extend(
 	 *
 	 * @param show
 	 */
-	show_details: function(show)
+	show_details: function(show, dom_node)
 	{
 		// Show / hide descriptions
-        egw.css(".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
+        egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + ".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
 	},
 
 	confirm_delete_2: function (_action, _senders)
