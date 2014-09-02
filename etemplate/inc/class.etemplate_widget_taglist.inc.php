@@ -129,10 +129,10 @@ class etemplate_widget_taglist extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
-			//error_log(__METHOD__.__LINE__.$form_name.'#'.array2string($validated).'#'.array2string($value));
 			$valid =& self::get_array($validated, $form_name, true);
-			//error_log(__METHOD__.__LINE__.$form_name.'#'.array2string($validated).'#'.array2string($valid));
-			if (true) $valid = (is_array($value)&&empty($value)&&empty($valid)?null:$value);
+			// returning null instead of array(), as array() will be overwritten by etemplate_new::complete_array_merge()
+			// with preserved old content and therefore user can not empty a taglist
+			if (true) $valid = $value ? $value : null;
 			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
