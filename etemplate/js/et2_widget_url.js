@@ -331,7 +331,8 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 										'presets[email]': jQuery(this).text()
 									};
 
-									return jQuery('<a href="#" title="'+egw.lang('Add a new contact')+'"><img src="'+egw.image("new") +'" style="height:12px;width:12px"/></a>')
+									return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
+											+egw.image("new") +'"/></a>')
 										.on('click', function() {
 											egw.open('','addressbook','add',extra);
 										});
