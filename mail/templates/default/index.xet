@@ -32,9 +32,9 @@
 					<html id="${row}[attachments]"/>
 					<description id="${row}[subject]" no_lang="1"/>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
-					<url-email id="${row}[address]" readonly="true"/>
-					<url-email id="${row}[toaddress]" readonly="true"/>
-					<url-email id="${row}[fromaddress]" readonly="true"/>
+					<url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
+					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
+					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
 				</row>
 			</rows>
@@ -54,7 +54,7 @@
 			<vbox id="mailPreview" width="100%">
 				<hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
 					<description value="From"/>
-					<url-email id="previewFromAddress" readonly="true"/>
+					<url-email id="previewFromAddress" contact_plus = "true" readonly="true"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
 					<description value="Subject"/>
