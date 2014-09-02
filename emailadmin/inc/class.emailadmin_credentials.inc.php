@@ -412,8 +412,11 @@ class emailadmin_credentials
 			elseif ($user)
 			{
 				$session_key = egw_cache::getSession('phpgwapi', 'password');
-				error_log(__METHOD__."() no session password available!");
-				if (empty($session_key)) return false;
+				if (empty($session_key))
+				{
+					error_log(__METHOD__."() no session password available!");
+					return false;
+				}
 				$key = base64_decode($session_key);
 			}
 			else
