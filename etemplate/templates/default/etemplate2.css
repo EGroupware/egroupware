@@ -162,6 +162,10 @@ a.et2_url.phone {
 a.et2_url.url {
   background-image: url(images/url.png);
 }
+.et2_url_email_contactPlus >img {
+	width: 16px;
+	height: 16px;
+}
 .et2_email_popup {
 	border:0 !important;
 	padding: 0 !important;
