@@ -70,6 +70,16 @@ class calendar_uiforms extends calendar_ui
 	{
 		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
 
+		// if participant is a contact, add its link title as title
+		foreach($extra_participants as $uid)
+		{
+			if ($uid[0] == 'c')
+			{
+				$title = egw_link::title('addressbook', substr($uid, 1));
+				break;
+			}
+		}
+
 		if (isset($_GET['owner']))
 		{
 			$owner = $_GET['owner'];
@@ -175,6 +185,7 @@ class calendar_uiforms extends calendar_ui
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,
 			'alarm' => $alarms,
 			'recur_exception' => array(),
+			'title' => $title ? $title : '',
 		);
 	}
 
@@ -393,6 +404,11 @@ class calendar_uiforms extends calendar_ui
 										$msg .= lang('Permission denied!');
 										$msg_permission_denied_added = true;
 									}
+								}
+								// if participant is a contact and no title yet, add its link title as title
+								if ($app == 'addressbook' && empty($event['title']))
+								{
+									$event['title'] = egw_link::title($app, substr($uid, 1));
 								}
 								break;
 							}
@@ -994,7 +1010,7 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save'?'update': 'delete');
-			}	
+			}
 			egw_framework::window_close();
 			common::egw_exit();
 		}
