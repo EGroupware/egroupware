@@ -131,7 +131,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				if(a.lastModification < b.lastModification) return 1;
 				if(a.lastModification > b.lastModification) return -1;
 				return 0;
-			})
+			});
 			window.localStorage.removeItem(indexes.pop().key);
 			return 1;
 		}
@@ -203,8 +203,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
 				{
 					var cc = cacheCallback[_context.prefix][i];
-					var cache_key = false
-					if(cache_key = cc.callback.call(cc.context, _context))
+					var cache_key = cc.callback.call(cc.context, _context);
+					if(cache_key)
 					{
 						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 						try
@@ -212,7 +212,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 							for (var key in _result.data)
 							{
 								var uid = UID(key, (typeof _context == "object" && _context != null) ? _context.prefix : "");
-								
+
 								// Register a handler on each data so we can know if it is updated or removed
 								egw.dataUnregisterUID(uid, null, cache_key);
 								egw.dataRegisterUID(uid, function(data, _uid) {
@@ -374,8 +374,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
 				{
 					var cc = cacheCallback[_context.prefix][i];
-					var cache_key = false
-					if(cache_key = cc.callback.call(cc.context, _context))
+					var cache_key = cc.callback.call(cc.context, _context);
+					if(cache_key)
 					{
 						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 
@@ -441,7 +441,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		/**
 		 * Turn on long-term client side cache of a particular request
 		 * (cache the nextmatch query results) for fast, immediate response
-		 * with old data.  
+		 * with old data.
 		 *
 		 * The request is still sent to the server, and the cache is updated
 		 * with fresh data, and any needed callbacks are called again with
@@ -771,6 +771,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * Deletes the data for a certain uid from the local storage and
 		 * unregisters all callback functions associated to it.
 		 *
+		 * This does NOT update nextmatch!
+		 * Application code should use: egw(window).refresh(msg, app, id, "delete");
+		 *
 		 * @param _uid is the uid which should be deleted.
 		 */
 		dataDeleteUID: function (_uid) {
@@ -817,7 +820,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		/**
 		 * Search for exact UID string or regular expression and return widgets using it
 		 *
-		 * @param {string|RegExp) _uid is the uid which should be refreshed.
+		 * @param {string|RegExp} _uid is the uid which should be refreshed.
 		 * @return {object} UID: array of (nextmatch-)wigetIds
 		 */
 		dataSearchUIDs: function(_uid)
