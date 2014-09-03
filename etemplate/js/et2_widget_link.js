@@ -85,7 +85,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 		this.link_button = null;
 		this.status_span = null;
-		
+
 		this.link_entry = null;
 		this.file_upload = null;
 
@@ -95,7 +95,7 @@ var et2_link_to = et2_inputWidget.extend(
 	destroy: function() {
 		this.link_button = null;
 		this.status_span = null;
-		
+
 		this.link_entry.destroy();
 		this.link_entry = null;
 		this.file_upload.destroy();
@@ -107,8 +107,8 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Override to provide proper node for sub widgets to go in
-	 * 
-	 * @param {Object} _sender 
+	 *
+	 * @param {Object} _sender
 	 */
 	getDOMNode: function(_sender) {
 		if(_sender == this) {
@@ -256,8 +256,8 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Create a link using the current internal values
-	 * 
-	 * @param {Object} event 
+	 *
+	 * @param {Object} event
 	 */
 	createLink: function(event) {
 		// Disable link button
@@ -271,7 +271,7 @@ var et2_link_to = et2_inputWidget.extend(
 		// Links to other entries
 		event.data = self.link_entry;
 		self.link_entry.createLink(event,links);
-		
+
 		// Files
 		if(!self.options.no_files)
 		{
@@ -304,7 +304,7 @@ var et2_link_to = et2_inputWidget.extend(
 
 	/**
 	 * Sent some links, server has a result
-	 * 
+	 *
 	 * @param {Object} success
 	 */
 	_link_result: function(success) {
@@ -457,7 +457,7 @@ var et2_link_apps = et2_selectbox.extend(
 			// Register to update preference
 			var self = this;
 			this.input.bind("click",function() {
-				if (typeof self.options.value != 'undefined') var appname = self.options.value.to_app; 
+				if (typeof self.options.value != 'undefined') var appname = self.options.value.to_app;
 				egw.set_preference(appname || self.egw().getAppName(),'link_app',self.getValue());
 			});
 		}
@@ -465,7 +465,7 @@ var et2_link_apps = et2_selectbox.extend(
 
 	/**
 	 * We get some minor speedups by overriding parent searching and directly setting select options
-	 * 
+	 *
 	 * @param {Array} _attrs an array of attributes
 	 */
 	transformAttributes: function(_attrs) {
@@ -474,8 +474,11 @@ var et2_link_apps = et2_selectbox.extend(
 		// Limit to one app
 		if(_attrs.only_app) {
 			select_options[_attrs.only_app] = this.egw().lang(_attrs.only_app);
+		} else if (_attrs.application_list) {
+			select_options = _attrs.application_list;
 		} else {
-			select_options = _attrs.application_list ? _attrs.application_list : egw.link_app_list('query');
+			select_options = egw.link_app_list('query');
+			delete select_options['addressbook-email'];
 		}
 		_attrs.select_options = select_options;
 		this._super.apply(this, arguments);
@@ -729,6 +732,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		else
 		{
 			_attrs["select_options"] = this.egw().link_app_list('query');
+			delete _attrs["select_options"]["addressbook-email"];
 		}
 
 		// Check whether the options entry was found, if not read it from the
@@ -880,9 +884,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Ask server for entries matching selected app/type and filtered by search string
-	 * 
+	 *
 	 * @param {Object} request
-	 * @param {Object} response 
+	 * @param {Object} response
 	 */
 	query: function(request, response) {
 		// If there is a pending request, abort it
@@ -904,7 +908,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		if((typeof request.no_cache == 'undefined' && !request.no_cache) && request.term in this.cache) {
 			return response(this.cache[request.term]);
 		}
-		
+
 		// Remember callback
 		this.response = response;
 
@@ -921,10 +925,10 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * User selected a value
-	 * 
+	 *
 	 * @param {Object} event
 	 * @param {Object} selected
-	 * 
+	 *
 	 */
 	select: function(event, selected) {
 		if(selected.item.value !== null && typeof selected.item.value == "string")
@@ -959,7 +963,7 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Server found some results
-	 * 
+	 *
 	 * @param {Array} data
 	 */
 	_results: function(data) {
@@ -978,7 +982,7 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Create a link using the current internal values
-	 * 
+	 *
 	 * @param {Object} event
 	 * @param {Object} _links
 	 */
@@ -1021,9 +1025,9 @@ var et2_link_entry = et2_inputWidget.extend(
 
 	/**
 	 * Sent some links, server has a result
-	 * 
+	 *
 	 * @param {Object} success
-	 * 
+	 *
 	 */
 	_link_result: function(success) {
 		if(success) {
@@ -1153,7 +1157,7 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Sets the text to be displayed.
 	 * Used as a callback, so node is provided to make sure we get the right one
-	 * 
+	 *
 	 * @param {Object} node
 	 * @param {String} _value description
 	 */
@@ -1166,7 +1170,7 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
-	 * 
+	 *
 	 * @param {Array} _attrs an array of attributes
 	 */
 	getDetachedAttributes: function(_attrs) {
@@ -1335,7 +1339,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Creates a list of attributes which can be set when working in the
 	 * "detached" mode. The result is stored in the _attrs array which is provided
 	 * by the calling code.
-	 * 
+	 *
 	 * @param {Array} _attrs an array of attributes
 	 */
 	getDetachedAttributes: function(_attrs) {
@@ -1379,7 +1383,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.list = $j(_nodes[0]);
 
 		this.set_value(_values["value"]);
-		
+
 		// Special detached, to prevent DOM node modification of the normal method
 		this._labelContainer = _nodes.length > 1 ? $j(_nodes[1]) : null;
 		if(_values['label'])
@@ -1515,7 +1519,7 @@ var et2_link_list = et2_link_string.extend(
 		// Native DnD - Doesn't play nice with jQueryUI Sortable
 		// Tell jQuery to include this property
 		jQuery.event.props.push('dataTransfer');
-		
+
 	},
 
 	destroy: function() {
