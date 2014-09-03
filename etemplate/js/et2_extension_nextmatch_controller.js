@@ -239,8 +239,11 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Initialize the object manager - look for application
 		// object manager 1 level deep
 		var gom = egw_getObjectManager(this.egw.appName,true,1);
-		this._objectManager = gom.addObject(
+		if(this._objectManager == null)
+		{
+			this._objectManager = gom.addObject(
 				new egwActionObjectManager(uid, this._actionManager));
+		}
 		this._objectManager.flags = this._objectManager.flags
 				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
 	},
