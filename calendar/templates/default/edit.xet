@@ -119,7 +119,7 @@
 							<menupopup class="selectRole" id="role"/>
 						</menulist>
 					</vbox>
-					<button align="center" label="Add" id="add" image="add" background_image="1"/>
+					<button align="center" label="Add" id="add" image="add" background_image="1" novalidate="1"/>
 					<description/>
 				</row>
 				<row class="th gray">
