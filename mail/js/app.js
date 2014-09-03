@@ -1942,8 +1942,8 @@ app.classes.mail = AppJS.extend(
 
 					// Update cache & call callbacks - updates list
 					dataElem.data.class = classes.join(' ');
-					egw.dataStoreUID(msg.msg[i],dataElem.data);					
-					
+					egw.dataStoreUID(msg.msg[i],dataElem.data);
+
 					//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
 					this.updateFilter_data(msg.msg[i], _action.id, msg.activeFilters);
 				}
@@ -1973,11 +1973,11 @@ app.classes.mail = AppJS.extend(
 		if (_action.id=='read' || _action.id=='readall') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
 		//this.mail_refreshFolderStatus();
 	},
-	
+
 	/**
 	 * Update changes on filtered mail rows in nm, triggers manual refresh
-	 * 
-	 * @param {type} _uid mail uid 
+	 *
+	 * @param {type} _uid mail uid
 	 * @param {type} _actionId action id sended by nm action
 	 * @param {type} _filters activefilters
 	 */
@@ -2003,16 +2003,16 @@ app.classes.mail = AppJS.extend(
 			case 'label1':
 				action = 'keyword1';
 				break;
-			case 'label2':	
+			case 'label2':
 				action = 'keyword2';
 				break;
-			case 'label3':	
+			case 'label3':
 				action = 'keyword3';
 				break;
-			case 'label4':	
+			case 'label4':
 				action = 'keyword4';
 				break;
-			case 'label4':	
+			case 'label4':
 				action = 'keyword4';
 				break;
 		}
@@ -2021,7 +2021,7 @@ app.classes.mail = AppJS.extend(
 			egw.refresh('','mail',uid, 'delete');
 		}
 	},
-	
+
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
 	 *
@@ -2699,6 +2699,14 @@ app.classes.mail = AppJS.extend(
 				// Update class
 				dataElem.data.class += ' ' + _class;
 
+				// need to update flags too
+				switch(_class)
+				{
+					case 'unseen':
+						delete dataElem.data.flags.read;
+						break;
+				}
+
 				// Update record, which updates all listeners (including nextmatch)
 				egw.dataStoreUID(mail_uid,dataElem.data);
 			}
@@ -2748,6 +2756,14 @@ app.classes.mail = AppJS.extend(
 				{
 					classes.splice(classes.indexOf(_class),1);
 					dataElem.data.class = classes.join(' ');
+
+					// need to update flags too
+					switch(_class)
+					{
+						case 'unseen':
+							dataElem.data.flags.read = true;
+							break;
+					}
 
 					// Update record, which updates all listeners (including nextmatch)
 					egw.dataStoreUID(mail_uid,dataElem.data);
