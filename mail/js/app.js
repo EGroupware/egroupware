@@ -3049,13 +3049,24 @@ app.classes.mail = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-//			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
-//			widget.set_value('');
-//			request.sendRequest();//false, this._upload_callback, this);
 			this.et2_obj.submit();
 		}
 	},
 
+	/**
+	 * Visible attachment box in compose dialog as soon as the file starts to upload
+	 */
+	composeUploadStart: function ()
+	{
+		var boxAttachment = this.et2.getWidgetById('mailUploadProgress');
+		if (boxAttachment)
+		{
+			var groupbox = boxAttachment.getParent();
+			if (groupbox) groupbox.set_disabled(false);
+		}
+		return true;
+	},
+	
 	/**
 	* Upload for import (VFS)
 	*
