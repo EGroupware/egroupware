@@ -138,7 +138,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 		return indexes.length;
 	}
 
-	function parseServerResponse(_result, _callback, _context)
+	function parseServerResponse(_result, _callback, _context, _execId, _widgetId)
 	{
 		// Check whether the result is valid
 		// This result is not for us, quietly return
@@ -233,7 +233,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 										// Update or store data in long-term storage
 										window.localStorage[_uid] = JSON.stringify({timestamp: (new Date).getTime(), data: data});
 									}
-								},cache_key);
+								}, cache_key, _execId, _widgetId);
 							}
 							// Don't keep data in long-term cache with request also
 							_result.data = {};
@@ -243,7 +243,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 						{
 							// Maybe ran out of space?  Free some up.
 							if(e.name == 'QuotaExceededError'	// storage quota is exceeded, remove cached data
-								|| 'NS_ERROR_DOM_QUOTA_REACHED')	// FF-name
+								|| e.name == 'NS_ERROR_DOM_QUOTA_REACHED')	// FF-name
 							{
 								var count = _clearCache(_context.prefix);
 								egw.debug('info', 'localStorage full, removed ' + count + ' stored datasets');
@@ -399,7 +399,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 							// We may still ask the server though.
 							var no_cache = _context.no_cache;
 							_context.no_cache = true;
-							parseServerResponse(cached, _callback, _context);
+							parseServerResponse(cached, _callback, _context, _execId, _widgetId);
 							_context.no_cache = no_cache;
 
 
@@ -430,7 +430,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					lm
 				],
 				function(result) {
-					parseServerResponse(result, _callback, _context);
+					parseServerResponse(result, _callback, _context, _execId, _widgetId);
 				},
 				this,
 				true
