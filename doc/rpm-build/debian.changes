@@ -1,3 +1,21 @@
+egroupware-epl (14.1.20140903-1) hardy; urgency=low
+
+  * Timesheet: fixed not working custom date filter
+  * Mail/EMailAdmin: change minimum version for Horde_Imap_Client to 2.24.2 to fix an error with namespaces
+  * Mail: Fix changing flags and (un)read does not affect immidiately on mail list
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 03 Sep 2014 12:56:57 +0200
+
+egroupware-epl (14.1.20140902-1) hardy; urgency=low
+
+  * ActiveSync: recreate session, if session does not contain correct password, fixes broken sync on some devices
+  * InfoLog: fixed selection over multiple hierarchy levels (eg. deleting a child from an opened InfoLog also deleted previously selected top-level entry!)
+  * InfoLog: allways show all children when opening an InfoLog containing children in list (not applying filters or search)
+  * Tracker/eTemplate: user could not empty CC field (taglist-email)
+  * EMail: show add icon if hovering over email address for adding it to addressbook (instead of white tooltip, covering further addresses)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 02 Sep 2014 15:16:43 +0200
+
 egroupware-epl (14.1.20140828-1) hardy; urgency=low
 
   * EMailAdmin/Mail: folders on personal accounts where not stored, automatic unsetting "use default" when changing/adding folders
