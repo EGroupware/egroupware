@@ -1,3 +1,11 @@
+egroupware-epl (14.1.20140903-1) hardy; urgency=low
+
+  * Timesheet: fixed not working custom date filter
+  * Mail/EMailAdmin: change minimum version for Horde_Imap_Client to 2.24.2 to fix an error with namespaces
+  * Mail: Fix changing flags and (un)read does not affect immidiately on mail list
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 03 Sep 2014 12:56:57 +0200
+
 egroupware-epl (14.1.20140902-1) hardy; urgency=low
 
   * ActiveSync: recreate session, if session does not contain correct password, fixes broken sync on some devices
