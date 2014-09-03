@@ -3064,6 +3064,8 @@ app.classes.mail = AppJS.extend(
 			var groupbox = boxAttachment.getParent();
 			if (groupbox) groupbox.set_disabled(false);
 		}
+		//Resize the compose dialog
+		this.compose_resizeHandler();
 		return true;
 	},
 	

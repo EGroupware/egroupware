@@ -174,6 +174,16 @@ A.sieveRowInActive {
 .bodyDIVAttachment {
   bottom: 80px;
 }
+table tr.attachmentRow > td {
+  padding: 0 !important;
+}
+table tr.attachmentRow > td > img {
+  background: transparent;
+  padding-left: 5px;
+}
+#mail-compose_attachments.egwGridView_grid {
+  display: table !important;
+}
 #attachmentSpanAllDIV {
   background-color: #efefdf;
   height: 260px;
@@ -270,11 +280,9 @@ pre {
 }
 .useEllipsis {
   text-overflow: ellipsis;
-  width: 250px;
   white-space: nowrap;
   overflow: hidden;
   word-wrap: break-word;
-  float: left;
 }
 #mail-index {
   position: relative;
@@ -539,7 +547,6 @@ div.mail-compose_fileselector {
   margin: 0px;
 }
 .mailDisplayAttachments {
-  background-color: #f0f0f0;
   height: 121px;
   position: fixed;
   bottom: .1em;
@@ -547,6 +554,9 @@ div.mail-compose_fileselector {
   opacity: 1;
   -moz-opacity: 1;
   filter: alpha(opacity=100);
+}
+#mail-display_mailDisplayBodySrc {
+  height: 100%;
 }
 #divGenTime_mail {
   display: none;
@@ -1402,10 +1412,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin: 0px 8px;
 }
 #mail-compose fieldset.mailUploadSection {
+  border: 1px solid silver;
   font-size: 0.8em;
-  border: none;
   margin: 8px 0;
-  background-color: #d9d9d9;
 }
 #divGenTime_mail {
   display: none;
@@ -2123,9 +2132,9 @@ pre {
 }
 .useEllipsis {
   text-overflow: ellipsis;
-  width: 250px;
   white-space: nowrap;
   overflow: hidden;
+  word-wrap: break-word;
 }
 #mail-index {
   position: relative;

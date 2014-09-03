@@ -52,14 +52,13 @@
 			</box>
 			<box class="$cont[mailDisplayAttachmentsClass]">
 				<!-- <html id="mail_displayattachments"/> -->
-				<grid disabled="@no_griddata" id="mail_displayattachments">
+				<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
 					<columns>
 						<column disabled="!@showtempname"/>
 						<column disabled="!@showtempname"/>
 						<column disabled="!@showtempname"/>
 						<column disabled="!@showtempname"/>
-						<column width="50%" />
-						<column width="20%" />
+						<column width="70%" />
 						<column width="11%" />
 						<column width="3%"/>
 						<column width="3%"/>
@@ -67,13 +66,12 @@
 						<column />
 					</columns>
 					<rows>
-						<row >
+						<row class="row attachmentRow" >
 							<description id="${row}[attachment_number]" />
 							<description id="${row}[partID]" />
 							<description id="${row}[type]" />
 							<description id="${row}[winmailFlag]" />
 							<description class="useEllipsis et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
-							<description id="${row}[mimetype]" />
 							<description align="right" id="${row}[size]" />
 							<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
 							<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
