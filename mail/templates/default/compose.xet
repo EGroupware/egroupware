@@ -14,7 +14,7 @@
                     </description>
 					<description class="email-button-group file">
 						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
-						<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+						<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
 					</description>
                     <description class="email-button-group egw">
 		                <description class="$cont[noSaveAsAvailable]" value="Save:"/>
@@ -115,7 +115,6 @@
 				</groupbox>
 				<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
 					<caption label="Files"/>
-					<box class="mailUploadProgress" id="mailUploadProgress" width="99%"/>
 					<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
 						<columns>
 							<column disabled="!@showtempname" width="10%"/>
