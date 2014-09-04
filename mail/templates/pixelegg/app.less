@@ -56,7 +56,9 @@ iframe#mail-display_mailDisplayBodySrc{
     border: 0px;
 }
 
-
+body {
+	background-color: white;
+}
 
 
 
@@ -635,9 +637,13 @@ div#mail-index{
 
     // Anhang
     fieldset.mailUploadSection{
-		border:1px solid silver;
-        font-size: 0.8em;
-        margin: 8px 0;
+		border-top: 1px solid silver;
+		font-size: 0.8em;
+		margin: 8px 0;
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		width: 99%;
     }
 
 
@@ -869,19 +875,16 @@ div#popupMainDiv{
 
     .mailDisplayAttachments {
         //	background-color:#efefdf;
-        .background_color_10_gray;
-
-        max-height: 10%;
+        max-height: 12%;
         position: fixed;
-        bottom: 26px;
-
         border: 0px solid @egw_color_3_a;
-
+		
         border-bottom: 0px;
         opacity: 1;
         -moz-opacity:1;
         //	filter: Alpha(opacity=100);
-
+		margin-left: 10px;
+		width:98%;
         img {width: 16px;}
 
     }
@@ -1838,9 +1841,13 @@ div.mailPreviewHeaders div.mail_extraEmails {
     position: fixed;
     overflow: hidden;
     overflow-y: auto;
-    border: 0px solid silver;
-    top: 120px;
-    bottom: 110px;
+	border-top: 2px solid silver;
+	top: 120px;
+	bottom: 108px;
+	border-bottom: 1px solid silver;
+	width: 98%;
+	background-color: white;
+	margin-left: 10px;
 }
 
 .mailDisplayHeaders {

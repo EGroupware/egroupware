@@ -3058,7 +3058,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	composeUploadStart: function ()
 	{
-		var boxAttachment = this.et2.getWidgetById('mailUploadProgress');
+		var boxAttachment = this.et2.getWidgetById('attachments');
 		if (boxAttachment)
 		{
 			var groupbox = boxAttachment.getParent();

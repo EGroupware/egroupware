@@ -180,6 +180,7 @@ table tr.attachmentRow > td {
 table tr.attachmentRow > td > img {
   background: transparent;
   padding-left: 5px;
+  cursor: pointer;
 }
 #mail-compose_attachments.egwGridView_grid {
   display: table !important;
@@ -755,6 +756,9 @@ iframe#mail-display_mailDisplayBodySrc {
 /*Border around iframe*/
 .mailDisplayContainer {
   border: 0px;
+}
+body {
+  background-color: white;
 }
 div#mail-index {
   margin: 0 1% 0 0 !important;
@@ -1412,9 +1416,13 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin: 0px 8px;
 }
 #mail-compose fieldset.mailUploadSection {
-  border: 1px solid silver;
+  border-top: 1px solid silver;
   font-size: 0.8em;
   margin: 8px 0;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  width: 99%;
 }
 #divGenTime_mail {
   display: none;
@@ -1705,14 +1713,14 @@ div#popupMainDiv {
   background-color: .background_color_15_gray;
 }
 #mail-display .mailDisplayAttachments {
-  background-color: #f0f0f0;
-  max-height: 10%;
+  max-height: 12%;
   position: fixed;
-  bottom: 26px;
   border: 0px solid #560ead;
   border-bottom: 0px;
   opacity: 1;
   -moz-opacity: 1;
+  margin-left: 10px;
+  width: 98%;
 }
 #mail-display .mailDisplayAttachments img {
   width: 16px;
@@ -2651,9 +2659,13 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   position: fixed;
   overflow: hidden;
   overflow-y: auto;
-  border: 0px solid silver;
+  border-top: 2px solid silver;
   top: 120px;
-  bottom: 110px;
+  bottom: 108px;
+  border-bottom: 1px solid silver;
+  width: 98%;
+  background-color: white;
+  margin-left: 10px;
 }
 .mailDisplayHeaders {
   overflow: hidden;
