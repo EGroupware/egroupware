@@ -411,7 +411,12 @@ var et2_file = et2_inputWidget.extend(
 		this.hideMessage();
 
 		// Disable buttons
-		this.disabled_buttons = $j("input[type='submit'], button").not("[disabled]").attr("disabled", true);
+		this.disabled_buttons = $j("input[type='submit'], button")
+				.not("[disabled]")
+				.attr("disabled", true)
+				.addClass('et2_button_ro')
+				.removeClass('et2_clickable')
+				.css('cursor', 'default');
 
 		event.data = this;
 
@@ -424,7 +429,7 @@ var et2_file = et2_inputWidget.extend(
 	 * Re-enables submit buttons when done
 	 */
 	onFinish: function() {
-		this.disabled_buttons.attr("disabled", false);
+		this.disabled_buttons.attr("disabled", false).css('cursor','pointer');
 		
 		var file_count = this.resumable.files.length;
 
