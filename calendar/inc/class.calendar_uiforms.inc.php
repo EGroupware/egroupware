@@ -1920,6 +1920,16 @@ class calendar_uiforms extends calendar_ui
 		$response = egw_json_response::get();
 		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
+		// convert start/end date-time values to timestamps
+		foreach(array('start', 'end') as $name)
+		{
+			if (!empty($edit_content[$name]))
+			{
+				$date = new egw_time($edit_content[$name]);
+				$edit_content[$name] = $date->format('ts');
+			}
+		}
+
 		if ($edit_content['duration'])
 		{
 			$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];

@@ -838,14 +838,8 @@ app.classes.calendar = AppJS.extend(
 
 			var sTime = this.et2.getWidgetById(selectedId+'start');
 
-			var eTime = this.et2.getWidgetById(selectedId+'[end]');
-			 //Catches the start time from freetime content
-			var str = sTime.get_value();
-
-			var end = parseInt(str) + parseInt(content['duration']);
-
 			//check the parent window is still open before to try to access it
-			if (window.opener)
+			if (window.opener && sTime)
 			{
 				var editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
 				if (typeof editWindowObj != "undefined")
@@ -854,8 +848,9 @@ app.classes.calendar = AppJS.extend(
 					var endTime = editWindowObj.widgetContainer.getWidgetById('end');
 					if (startTime && endTime)
 					{
-						startTime.set_value(str);
-						endTime.set_value(end);
+						startTime.set_value(sTime.get_value());
+						endTime.set_value(sTime.get_value());
+						endTime.set_value('+'+content['duration']);
 					}
 				}
 			}

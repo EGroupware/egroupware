@@ -106,6 +106,15 @@ var et2_date = et2_inputWidget.extend(
 		}
 	},
 
+	/**
+	 * Setting date
+	 *
+	 * @param {string|number|Date} _value supported are the following formats:
+	 * - Date object with usertime as UTC value
+	 * - string like Date.toJSON()
+	 * - string or number with timestamp in usertime like server-side uses it
+	 * - string starting with + or - to add/substract given number of seconds from current value, "+600" to add 10 minutes
+	 */
 	set_value: function(_value) {
 		var old_value = this._oldValue;
 		if(_value === null || _value === "" || _value === undefined ||
@@ -211,9 +220,17 @@ var et2_date = et2_inputWidget.extend(
 		} else if (typeof _value == 'object' && _value.valueOf) {
 			this.date = _value;
 		} else if (typeof _value == 'number' || !isNaN(_value)) {
-			// Timestamp
-			// JS dates use milliseconds
-			this.date.setTime(parseInt(_value)*1000);
+			// string starting with + or - --> add/substract number of seconds from current value
+			if (typeof _value == 'string' && (_value[0] == '+' || _value[0] == '-'))
+			{
+				this.date.setTime(this.date.getTime()+1000*parseInt(_value));
+			}
+			else
+			{
+				// Timestamp in usertime need to be corrected with timezoneoffset as we internally use UTC for egw usertime
+				// JS dates use milliseconds
+				this.date.setTime(1000*(parseInt(_value)-60*this.date.getTimezoneOffset()));
+			}
 		}
 
 		// Update input - popups do, but framework doesn't
