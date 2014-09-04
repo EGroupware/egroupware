@@ -250,8 +250,8 @@ class admin_account
 	 */
 	public static function ajax_check(array $data, $changed)
 	{
-		// generate default email address
-		if (empty($data['account_email']) || !$data['account_id'] && in_array($changed, array('n_given', 'n_family')))
+		// generate default email address, but only for new accounts
+		if (!$data['account_id'] && in_array($changed, array('n_given', 'n_family', 'account_lid')))
 		{
 			$email = common::email_address($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
 			if ($email && $email[0] != '@' && strpos($email, '@'))	// only add valid email addresses

@@ -670,7 +670,6 @@ app.classes.addressbook = AppJS.extend(
 			case 'account_lid':
 			case 'n_family':
 			case 'n_given':
-			case 'email':
 			case 'account_passwd_2':
 				var values = this.et2._inst.getValues(this.et2);
 				var data = {
