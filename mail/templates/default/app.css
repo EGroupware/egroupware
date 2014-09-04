@@ -183,7 +183,6 @@ A.sieveRowInActive
 }
 table tr.attachmentRow > td{
 	padding:0 !important;
-	max-width: 0px;
 }
 table tr.attachmentRow > td > img {
 	background:transparent;
@@ -289,6 +288,7 @@ pre {
 	white-space: nowrap;
 	overflow: hidden;
 	word-wrap: break-word;
+	max-width: 0px;
 }
 #mail-index {
 	position: relative
