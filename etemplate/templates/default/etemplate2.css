@@ -266,14 +266,14 @@ button#cancel {
  * Text box
  */
 .et2_textbox {
-  resize: none;
+
 }
 .et2_textbox_ro {
   white-space: pre-wrap;
 }
 /*Switch of FF red border validation*/
 .et2_textbox:invalid{
-	 box-shadow: none;
+	box-shadow: none;
 }
 .et2_bold {
   font-weight: bold;
