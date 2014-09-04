@@ -1150,7 +1150,7 @@ class so_sql
 			if ($col == '*')
 			{
 				// MySQL does NOT allow to GROUP BY table.*
-			$col = $columns[$n] = $table_name.'.'.($GLOBALS['egw']->db->Type == 'mysql' ? $autoinc_id : '*');
+				$col = $columns[$n] = $table_name.'.'.($GLOBALS['egw']->db->Type == 'mysql' ? $autoinc_id : '*');
 				++$changes;
 			}
 			// only check columns and non-aggregate functions
