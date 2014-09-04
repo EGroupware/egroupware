@@ -7,15 +7,17 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright Stylite 2012
+ * @copyright Stylite AG 2012-14
  * @version $Id$
  */
 
 /**
  * Default action for nextmatch rows, runs action specified _action.data.nm_action: see nextmatch_widget::egw_actions()
  *
- * @param _action action object with attributes caption, id, nm_action, ...
- * @param _senders array of rows selected
+ * @param {egwAction} _action action object with attributes caption, id, nm_action, ...
+ * @param {array} _senders array of rows selected
+ * @param {object} _target
+ * @param {object} _ids attributs all and ids (array of string)
  */
 function nm_action(_action, _senders, _target, _ids)
 {
@@ -182,13 +184,13 @@ function nm_action(_action, _senders, _target, _ids)
 				jQuery.extend(value, this.activeFilters, {
 					"selected": idsArr,
 					"select_all": _ids.all,
-					"checkboxes": checkbox_values,
+					"checkboxes": checkbox_values
 				});
 				value[nextmatch.options.settings.action_var]= _action.id;
 
 				nextmatch.getValue = function() {
 					return value;
-				}
+				};
 
 
 				// downloads need a regular submit via POST (no Ajax)
@@ -349,11 +351,11 @@ function nm_open_popup(_action, _selected)
 		if(_selected.length && typeof _selected[0] == 'object')
 		{
 			_action.data.nextmatch = _selected[0]._context._widget;
-			nm_popup_ids = _selected
+			nm_popup_ids = _selected;
 		}
 		else
 		{
-			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject',_ids);
+			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject',_selected);
 			nm_popup_ids = _selected;
 		}
 
@@ -426,6 +428,8 @@ function nm_open_popup(_action, _selected)
 
 /**
  * Submit a popup action
+ *
+ * @param {DOMNode} button DOM node of button
  */
 function nm_submit_popup(button)
 {
@@ -461,6 +465,10 @@ function nm_submit_popup(button)
 
 /**
  * Hide popup
+ *
+ * @param {DOMNode} element
+ * @param {string} div_id
+ * @returns {Boolean}
  */
 function nm_hide_popup(element, div_id)
 {
@@ -479,6 +487,9 @@ function nm_hide_popup(element, div_id)
 
 /**
  * Activate/click first link in row
+ *
+ * @param {egwAction} _action
+ * @param {array} _senders of egwActionObject
  */
 function nm_activate_link(_action, _senders)
 {
