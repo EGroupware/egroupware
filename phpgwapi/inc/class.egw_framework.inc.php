@@ -101,7 +101,7 @@ abstract class egw_framework
 	 *
 	 * EGroupware itself currently still requires 'unsafe-eval'!
 	 *
-	 * @param string|array $set=array() 'unsafe-eval' and/or 'unsafe-inline' (without quotes!)
+	 * @param string|array $set =array() 'unsafe-eval' and/or 'unsafe-inline' (without quotes!) or URL (incl. protocol!)
 	 * @return string with attributes eg. "'unsafe-eval' 'unsafe-inline'"
 	 */
 	public static function csp_script_src_attrs($set=null)
@@ -120,6 +120,41 @@ abstract class egw_framework
 		}
 		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
 		return implode(' ', self::$csp_script_src_attrs);
+	}
+
+	/**
+	 * Additional attributes or urls for CSP style-src 'self'
+	 *
+	 * 'unsafe-inline' is currently allways added, as it is used in a couple of places.
+	 *
+	 * @var array
+	 */
+	private static $csp_style_src_attrs = array("'unsafe-inline'");
+
+	/**
+	 * Set/get Content-Security-Policy attributes for style-src: 'unsafe-inline'
+	 *
+	 * EGroupware itself currently still requires 'unsafe-inline'!
+	 *
+	 * @param string|array $set =array() 'unsafe-inline' (without quotes!) and/or URL (incl. protocol!)
+	 * @return string with attributes eg. "'unsafe-inline'"
+	 */
+	public static function csp_style_src_attrs($set=null)
+	{
+		foreach((array)$set as $attr)
+		{
+			if (in_array($attr, array('none', 'self', 'unsafe-inline')))
+			{
+				$attr = "'$attr'";	// automatic add quotes
+			}
+			if (!in_array($attr, self::$csp_style_src_attrs))
+			{
+				self::$csp_style_src_attrs[] = $attr;
+				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
+			}
+		}
+		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
+		return implode(' ', self::$csp_style_src_attrs);
 	}
 
 	/**
@@ -146,11 +181,13 @@ abstract class egw_framework
 		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
 		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
 		$frame_src = array("'self'", 'manual.egroupware.org');
-		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_merge($frame_src, $additional);
+		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_unique(array_merge($frame_src, $additional));
 
-		$csp = "script-src 'self' ".($script_attrs=self::csp_script_src_attrs()).
-			"; connect-src 'self'; style-src 'self' 'unsafe-inline'; frame-src ".implode(' ', $frame_src);
-		//error_log(__METHOD__."() script_attrs=$script_attrs");
+		$csp = "script-src 'self' ".self::csp_script_src_attrs().
+			"; connect-src 'self'".
+			"; style-src 'self' ".self::csp_style_src_attrs().
+			"; frame-src ".implode(' ', $frame_src);
+
 		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
 		header("Content-Security-Policy: $csp");
 		header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
@@ -446,7 +483,7 @@ abstract class egw_framework
 	{
 		//allow to include JSONP file with social media urls from egroupware.org
 		self::csp_script_src_attrs('https://www.egroupware.org');
-		
+
 		//error_log(__METHOD__."() server[template_dir]=".array2string($GLOBALS['egw_info']['server']['template_dir']).", this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
 		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
 

@@ -92,10 +92,10 @@
     <td>{lang_Enable_spellcheck_in_rich_text_editor}:</td>
     <td>
      <select name="newsettings[enabled_spellcheck]">
-      <option value="">{lang_No}</option>
+      <option value="">{lang_No} - {lang_more_secure}</option>
       <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
 	  <option value="YesNoSCAYT"{selected_enabled_spellcheck_YesNoSCAYT}>{lang_Yes,_but_no_SCAYT}</option>
-	  <option value="YesBrowserBased"{selected_enabled_spellcheck_YesBrowserBased}>{lang_Yes,_use_browser_based_spell_checking_engine}</option>
+	  <option value="YesBrowserBased"{selected_enabled_spellcheck_YesBrowserBased}>{lang_Yes,_use_browser_based_spell_checking_engine} - {lang_more_secure}</option>
 	  <option value="YesUseWebSpellCheck"{selected_enabled_spellcheck_YesUseWebSpellCheck}>{lang_Yes,_use_WebSpellChecker}</option>
      </select>
     </td>
@@ -266,15 +266,6 @@
    </tr>
 -->
 
-   <tr class="row_off">
-    <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
-    <td>
-      <select name="newsettings[soap_enabled]">
-         <option value="">{lang_No}</option>
-         <option value="True"{selected_soap_enabled_True}>{lang_Yes}</option>
-       </select>
-    </td>
-   </tr>
    <tr class="row_on">
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:<br />{lang_This_controls_exports_and_merging.}</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>

@@ -423,6 +423,11 @@ class egw_ckeditor_config
 	}
 
 	/**
+	 * URL webspellchecker uses for scripts and style-sheets
+	 */
+	const WEBSPELLCHECK_HOST = 'svc.webspellchecker.net';
+
+	/**
 	 * Set for CK-Editor necessary CSP script-src attributes
 	 *
 	 * Get's called automatic from get_ckeditor_config(_array)
@@ -430,11 +435,14 @@ class egw_ckeditor_config
 	public static function set_csp_script_src_attrs()
 	{
 		$attrs = array('unsafe-eval', 'unsafe-inline');
+		$url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').self::WEBSPELLCHECK_HOST;
 
 		// if webspellchecker is enabled in EGroupware config, allow access to it's url
 		if (in_array($GLOBALS['egw_info']['server']['enabled_spellcheck'], array('True', 'YesUseWebSpellCheck')))
 		{
-			$attrs[] = 'https://svc.webspellchecker.net';
+			$attrs[] = $url;
+
+			egw_framework::csp_style_src_attrs($url);
 		}
 		//error_log(__METHOD__."() egw_info[server][enabled_spellcheck]='{$GLOBALS['egw_info']['server']['enabled_spellcheck']}' --> attrs=".array2string($attrs));
 		// tell framework CK Editor needs eval and inline javascript :(

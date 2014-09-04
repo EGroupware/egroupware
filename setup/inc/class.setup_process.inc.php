@@ -240,8 +240,8 @@ class setup_process
 		{
 			unset($current_config['aspell_path']);
 		}
-		// always enable spellchecker, ckeditor now uses spell-as-you-type via a public webservice
-		$current_config['enabled_spellcheck'] = 'True';
+		// always enable browser based spellchecker
+		$current_config['enabled_spellcheck'] = 'YesBrowserBased';
 
 		// always enable history logging for calendar, addressbook and infolog
 		$current_config['history'] = 'history';	// addressbook: only admin
