@@ -62,6 +62,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		
 		// Duration is a unitless field.  This is the unit.
 		duration_unit: 'minute',
+		duration_step: 60,
 
 		show_progress: true,
 		order_branch: true,
@@ -73,7 +74,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		round_dnd_dates: false,
 		// Round resolution
 		time_step: parseInt(this.egw().preference('interval','calendar') || 15),
-		min_duration: 1 * 60 * 1000, // 1 minute
+		min_duration: 1 * 60 * 1000, // 1 minute in ms
 
 		scale_unit: 'day',
 		date_scale: '%d',
@@ -220,6 +221,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	 *			{id:1, source:1, target:2, type:"1"},
 	 *			{id:2, source:2, target:3, type:"0"}
 	 *		]
+	 *		// Optional:
+	 *		zoom: 1-4,
+	 *
 	 * };
 	 * Any additional data can be included and used, but the above is the minimum
 	 * required data.
@@ -229,37 +233,30 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	set_value: function(value) {
 		if(this.gantt == null) return false;
 
+		// Clear previous value
 		this.gantt.clearAll();
-		
+
+		// Set zoom to max, in case data spans a large time
+		this.set_zoom(value.zoom || 4);
+
 		// Ensure proper format, no extras
 		var safe_value = {
 			data: value.data || [],
 			links: value.links || []
 		};
-		this.gantt.config.start_date = null;
-		this.gantt.config.end_date = null;
+		this.gantt.config.start_date = value.start_date || null;
+		this.gantt.config.end_date = value.end_date || null;
+
 		this.gantt.parse(safe_value);
-
-		// Set some things from the value
-
-		// Set zoom
-		if(!this.options.zoom) this.set_zoom();
-
-		// If this is not the first gantt chart the browser renders, sometimes it needs a nudge
-		try
-		{
-			this.gantt.render();
-		}
-		catch (e)
-		{
-			this.egw().debug('warning', 'Problem rendering gantt', e);
-		}
 	},
 	/**
 	 * getValue has to return the value of the input widget
 	 */
 	getValue: function() {
-		return this.value;
+		return jQuery.extend({}, this.value, {
+			zoom: this.options.zoom,
+			duration_unit: this.gantt.config.duration_unit
+		});
 	},
 
 	/**
@@ -329,7 +326,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			// Make sure we have the most up to date info for the calculations
 			// There may be a more efficient way to trigger this though
 			try {
-				this.gantt.render();
+				this.gantt.refreshData();
 			}
 			catch (e)
 			{}
@@ -534,14 +531,14 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					case 'end_date':
 						if(_widget.getValue())
 						{
-							display = display && ((task['start_date'].valueOf() / 1000) < _widget.getValue() + 86400 );
+							display = display && ((task['start_date'].valueOf() / 1000) < (new Date(_widget.getValue()).valueOf() / 1000) + 86400 );
 						}
 						return;
 					case 'start_date':
 						// End date is not actually a required field, so accept undefined too
 						if(_widget.getValue())
 						{
-							display = display && (typeof task['end_date'] == 'undefined' || !task['end_date'] || ((task['end_date'].valueOf() / 1000) >= _widget.getValue()));
+							display = display && (typeof task['end_date'] == 'undefined' || !task['end_date'] || ((task['end_date'].valueOf() / 1000) >= (new Date(_widget.getValue()).valueOf() / 1000)));
 						}
 						return;
 				}
@@ -598,9 +595,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					{
 						var start = this.getWidgetById('start_date');
 						var end = this.getWidgetById('end_date');
-						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue() * 1000) : gantt_widget.gantt.getState().min_date;
+						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue()) : gantt_widget.gantt.getState().min_date;
 						// End date is inclusive
-						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date((end.getValue()+86400) * 1000) : gantt_widget.gantt.getState().max_date;
+						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(new Date(end.getValue()).valueOf()+86400000) : gantt_widget.gantt.getState().max_date;
 						if(gantt_widget.gantt.config.end_date <= gantt_widget.gantt.config.start_date)
 						{
 							gantt_widget.gantt.config.end_date = null;
