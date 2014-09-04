@@ -35,14 +35,13 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description class="calendar_size120b" value="Freetime Search"/>
-					<description class="message" no_lang="1" id="msg"/>
+					<description class="calendar_freetime_header" value="Freetime Search" span="all"/>
 				</row>
-				<row class="dialogOperators high">
+				<row >
 					<description value="Startdate / -time"/>
 					<date-time id="start" statustext="Startdate and -time of the search"/>
 				</row>
-				<row class="dialogOperators">
+				<row>
 					<description value="Duration"/>
 					<hbox>
 						<menulist>
@@ -51,17 +50,17 @@
 						<date-time id="end" statustext="Enddate / -time of the meeting, eg. for more then one day"/>
 					</hbox>
 				</row>
-				<row class="dialogOperators">
+				<row>
 					<description value="Timeframe"/>
-					<hbox>
+					<hbox class="calendar_freetime_timeframe">
 						<date-timeonly id="start_time" statustext="Timeframe to search"/>
 						<description value="til"/>
 						<date-timeonly id="end_time" statustext="Timeframe to search"/>
 						<description value="Weekdays"/>
-						<listbox type="select-dow" rows="3" id="weekdays" statustext="Weekdays to use in search"/>
+						<select-dow rows="10" id="weekdays" statustext="Weekdays to use in search" class="calendar_freetime_dow"/>
 					</hbox>
 				</row>
-				<row class="dialogOperators">
+				<row>
 					<button label="New search" id="search" statustext="new search with the above parameters"/>
 					<hbox>
 						<menulist>
@@ -70,14 +69,13 @@
 						<button id="cancel" label="Cancel" statustext="Close the window" onclick="window.close();"/>
 					</hbox>
 				</row>
-				<row class="dialogOperators">
+				<row>
 					<template content="freetime" span="all" id="calendar.freetimesearch.rows"/>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.calendar_size120b { text-size: 120%; font-weight: bold; }
-			.end_hide { visibility: hidden; }
+			body { background-color: white; }
 		</styles>
 	</template>
 </overlay>
