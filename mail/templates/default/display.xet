@@ -80,7 +80,7 @@
 							</row>
 						</rows>
 					</grid>
-			</groupbox>
+			</box>
 		</vbox>
 	</template>
 </overlay>
