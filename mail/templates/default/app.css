@@ -288,6 +288,7 @@ pre {
 	white-space: nowrap;
 	overflow: hidden;
 	word-wrap: break-word;
+	max-width: 0px;
 }
 #mail-index {
 	position: relative

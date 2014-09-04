@@ -362,13 +362,14 @@ div#mail-index{
         background: transparent;
 
 
+        // Senden Button
         button[id="mail-compose_button[sent]"],
         button.et2_button{
-/*            background-color: @gray_30;*/
+                /*            background-color: @gray_30;*/
 
-            /*height: 33px;*/
-            /*margin: 0px 3px 0 !important;*/
-        }
+                            /*height: 33px;*/
+                            /*margin: 0px 3px 0 !important;*/
+                        }
 
 
         span.email-button-group {
@@ -433,6 +434,7 @@ div#mail-index{
         button.et2_button { }
 
 
+        // Senden Button
         .mail-compose_button{
             height: 27px;
             /*margin-right: 3px !important;*/
@@ -443,13 +445,14 @@ div#mail-index{
             padding-left: 20px;
             width: 71px;
             float: left;
-            background-image: url(images/mail_send.png) !important;
+            background-image: url(images/mail_send.png);
             background-position: left;
             background-repeat: no-repeat;
             background-size: 16px 16px;
             background-color: @egw_color_2_a;
             color: @gray_0;
             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
+            &:disabled {background-color: @color_disabled !important;}
 
         }
         /*######################################*/
@@ -878,7 +881,7 @@ div#popupMainDiv{
         max-height: 12%;
         position: fixed;
         border: 0px solid @egw_color_3_a;
-		
+
         border-bottom: 0px;
         opacity: 1;
         -moz-opacity:1;

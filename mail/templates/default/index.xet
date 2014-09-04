@@ -78,7 +78,7 @@
 				</hbox>
 				<hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
 					<description value="Attachments"/>
-					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea">
+					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea egwGridView_grid">
 						<columns>
 							<column disabled="!@showtempname"/>
 							<column disabled="!@showtempname"/>
@@ -92,12 +92,12 @@
 							<column />
 						</columns>
 						<rows>
-							<row >
+							<row class="row attachmentRow">
 								<description id="${row}[attachment_number]" />
 								<description id="${row}[partID]" />
 								<description id="${row}[type]" />
 								<description id="${row}[winmailFlag]" />
-								<description class="et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
+								<description class="et2_link useEllipsis" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
 								<description align="right" id="${row}[size]" />
 								<buttononly id="${row}[save]" image="fileexport" onclick="app.mail.saveAttachment"/>
 								<buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
