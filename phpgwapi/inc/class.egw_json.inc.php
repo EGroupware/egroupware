@@ -591,14 +591,20 @@ class egw_json_response extends egw_json_msg
 		/* Wrap the result array into a parent "response" Object */
 		$res = array('response' => $inst->responseArray);
 
-		return json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+		return self::json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 	}
 
+	/**
+	 * More fault-tollerant version of json_encode removing everything that does not json_encode eg. because not utf-8
+	 *
+	 * @param mixed $var
+	 * @return string
+	 */
 	public function json_encode($var)
 	{
 		$ret = json_encode($var);
 
-		if (($err = json_last_error()))
+		if ($ret === false && ($err = json_last_error()))
 		{
 			static $json_err2str = array(
 	        	JSON_ERROR_NONE => 'No errors',
@@ -609,8 +615,39 @@ class egw_json_response extends egw_json_msg
 	        	JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
 	        );
 			error_log(__METHOD__.'('.array2string($var).') json_last_error()='.$err.'='.$json_err2str[$err]);
+
+			if (($var = self::fix_content($var)))
+			{
+				return self::json_encode($var);
+			}
 		}
 		return $ret;
+	}
+
+	/**
+	 * Set everything in $var to null, that does not json_encode, eg. because no valid utf-8
+	 *
+	 * @param midex $var
+	 * @param string $prefix =''
+	 * @return mixed
+	 */
+	public function fix_content($var, $prefix='')
+	{
+		if (json_encode($var) !== false) return $var;
+
+		if (is_scalar($var))
+		{
+			error_log(__METHOD__."() json_encode($prefix='$var') === false --> setting it to null");
+			$var = null;
+		}
+		else
+		{
+			foreach($var as $name => &$value)
+			{
+				$value = self::fix_content($value, $prefix ? $prefix.'['.$name.']' : $name);
+			}
+		}
+		return $var;
 	}
 
 	/**
