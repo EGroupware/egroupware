@@ -1083,7 +1083,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   padding-left: 20px;
   width: 71px;
   float: left;
-  background-image: url(images/mail_send.png) !important;
+  background-image: url(images/mail_send.png);
   background-position: left;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -1095,6 +1095,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
+}
+#mail-compose .mail-compose_toolbar .mail-compose_button:disabled {
+  background-color: rgba(12, 93, 165, 0.2) !important;
 }
 #mail-compose .mail-compose_toolbar img[id="mail-compose_button[saveAsDraftAndPrint]"],
 #mail-compose .mail-compose_toolbar img[id="mail-compose_button[saveAsDraft]"] {
