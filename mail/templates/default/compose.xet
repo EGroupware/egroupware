@@ -116,25 +116,22 @@
 				<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
 					<caption label="Files"/>
 					<box class="mailUploadProgress" id="mailUploadProgress" width="99%"/>
-					<grid id="attachments" width="100%" maxheight="165" overflow="auto">
-					  <columns>
-					   <column disabled="!@showtempname"/>
-					   <column width="50%" />
-					   <column width="25%" />
-					   <column width="15%"/>
-					   <column />
-					  </columns>
-					  <rows>
-					   <row >
-						<description id="${row}[tmp_name]" />
-						<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
-						<description id="${row}[type]" />
-						<description align="right" id="${row}[size]" />
-						<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" />
-					   </row>
-					  </rows>
+					<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
+						<columns>
+							<column disabled="!@showtempname" width="10%"/>
+							<column width="85%"/>
+							<column width="8%"/>
+							<column width="" />
+						</columns>
+						<rows>
+							<row class="row attachmentRow">
+								<description id="${row}[tmp_name]"/>
+								<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+								<description align="right" id="${row}[size]" />
+								<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
+							</row>
+						</rows>
 					</grid>
-
 				</groupbox>
 			</vbox>
 	</template>
