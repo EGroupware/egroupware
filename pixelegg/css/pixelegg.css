@@ -2503,6 +2503,37 @@ body {
 #      Content Element                     #
 #      Button                              #
 ###########################################*/
+/*input,button,select
+{
+	border: solid 1px #bbbbbb;
+}*/
+/*input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+{
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}*/
+/*input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #004e7d;
+}*/
+/*input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+{
+	border:  inset 1px #bbbbbb;
+}*/
+input[type=submit]:disabled,
+input[type=button]:disabled,
+input[type=reset]:disabled,
+button:disabled,
+.egwbutton:disabled {
+  background-color: rgba(12, 93, 165, 0.2);
+  color: gray;
+}
 button.et2_button_text background-image[src$="svg"],
 input[type=button] background-image[src$="svg"] {
   background-color: #b4b4b4;
