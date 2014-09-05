@@ -1310,8 +1310,10 @@ app.classes.calendar = AppJS.extend(
 			else
 			{
 				jQuery('#calendar-edit_alarm > tbody :nth-child(1)').show();
-				start.date.setHours(0);
-				time.set_value(start.get_value() - 60 * def_alarm);
+				start.set_hours(0);
+				start.set_minutes(0);
+				time.set_value(start.get_value());
+				time.set_value('-'+(60 * def_alarm));
 				event.set_value(_secs_to_label(60 * def_alarm));
 			}
 		}
