@@ -663,11 +663,21 @@ app.classes.mail = AppJS.extend(
 					content = content[0].split(',');
 				}
 				// Add for current record
+				var remembervalue = '';
 				for(var i = 0; i < content.length; i++)
 				{
-					var value = content[i];
-					var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
-					email.loadingFinished();
+					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
+					if (content[i].indexOf('@')<0)
+					{
+						remembervalue = content[i];
+					}
+					else
+					{
+						var value = remembervalue+(remembervalue?',':'')+content[i];
+						var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
+						email.loadingFinished();
+						remembervalue = '';
+					}
 				}
 			}
 			else
