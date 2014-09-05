@@ -590,12 +590,12 @@ class emailadmin_imapbase
 		else
 		{
 			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($account_id),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			if (isset($folders2return[$_ImapServerId]))
+			if (!empty($folders2return) && isset($folders2return[$_ImapServerId]))
 			{
 				unset($folders2return[$_ImapServerId]);
 			}
 			$folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($account_id),null,array(),$expiration=60*60*5);
-			if (isset($folderInfo[$_ImapServerId]))
+			if (!empty($folderInfo) && isset($folderInfo[$_ImapServerId]))
 			{
 				unset($folderInfo[$_ImapServerId]);
 			}
@@ -607,12 +607,12 @@ class emailadmin_imapbase
 			}
 			*/
 			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($account_id),null,array(),$expiration=60*60*1);
-			if (isset($folderBasicInfo[$_ImapServerId]))
+			if (!empty($folderBasicInfo) && isset($folderBasicInfo[$_ImapServerId]))
 			{
 				unset($folderBasicInfo[$_ImapServerId]);
 			}
 			$_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($account_id),null,array(),$expiration=60*60*12);
-			if (isset($_specialUseFolders[$_ImapServerId]))
+			if (!empty($_specialUseFolders) && isset($_specialUseFolders[$_ImapServerId]))
 			{
 				unset($_specialUseFolders[$_ImapServerId]);
 				self::$specialUseFolders=null;
@@ -2007,25 +2007,32 @@ class emailadmin_imapbase
 
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
-				$rfcAddr = imap_rfc822_parse_adrlist(str_replace(',','\,',$_string),'');
+				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
-				$stringA = array();
-				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
-				foreach ((array)$rfcAddr as $_rfcAddr)
+				if (isset(self::$idna2))
 				{
-					if ($_rfcAddr->host=='.SYNTAX-ERROR.')
+					$stringA = array();
+					//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
+					foreach ((array)$rfcAddr as $_rfcAddr)
 					{
-						$stringA = array();
-						break; // skip idna conversion if we encounter an error here
+						if ($_rfcAddr->host=='.SYNTAX-ERROR.')
+						{
+							$stringA = array();
+							break; // skip idna conversion if we encounter an error here
+						}
+						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
 					}
-					$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
+					if (!empty($stringA)) $_string = implode(',',$stringA);
 				}
-				if (!empty($stringA)) $_string = implode(',',$stringA);
 			}
 			if ($_tryIDNConversion==='FORCE')
 			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.'->'.$_string.'='.self::$idna2->decode($_string));
-				$_string = self::$idna2->decode($_string);
+				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
+				if (isset(self::$idna2))
+				{
+					//error_log(__METHOD__.' ('.__LINE__.') '.'->'.$_string.'='.self::$idna2->decode($_string));
+					$_string = self::$idna2->decode($_string);
+				}
 			}
 			return $_string;
 		}
@@ -5331,13 +5338,16 @@ class emailadmin_imapbase
 					else
 					{
 						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],0,false,false));
+
 						if (empty($attachments[$num]['attachment'])&&$attachments[$num]['cid'])
 						{
 							$c = $mailClass->getAttachmentByCID($uid, $attachment['cid'], $attachment['partID'],true);
 							$attachments[$num]['attachment'] = $c->getContents();
 						}
-						if (isset($attachments[$num]['charset'])) {
-							if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = translation::detect_encoding($attachments[$num]['attachment']);
+						// no attempt to convert, if we dont know about the charset
+						if (isset($attachments[$num]['charset'])&&!empty($attachments[$num]['charset'])) {
+							// we do not try guessing the charset, if it is not set
+							//if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = translation::detect_encoding($attachments[$num]['attachment']);
 							translation::convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
 						}
 						$attachments[$num]['type'] = $attachments[$num]['mimeType'];
@@ -5443,7 +5453,7 @@ class emailadmin_imapbase
 				$returnAddr .= (strlen($returnAddr)>0?',':'');
 				//error_log(__METHOD__.' ('.__LINE__.') '.$p.' <'.$mb.'@'.$h.'>');
 				$buff = imap_rfc822_write_address($addressObject->mailbox, self::$idna2->decode($addressObject->host), $addressObject->personal);
-				$buff = str_replace(array('<','>'),array('[',']'),$buff);
+				$buff = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
 				if ($createHTML) $buff = emailadmin_imapbase::htmlspecialchars($buff);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Address: '.$returnAddr);
 				$returnAddr .= $buff;
@@ -5453,7 +5463,7 @@ class emailadmin_imapbase
 		{
 			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
 			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
-			$rfcAddressArray = str_replace(array('<','>'),array('[',']'),$rfcAddressArray);
+			$rfcAddressArray = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$rfcAddressArray);
 			if (is_string($rfcAddressArray)) return ($createHTML ? emailadmin_imapbase::htmlspecialchars($rfcAddressArray) : $rfcAddressArray);
 		}
 		return $returnAddr;
