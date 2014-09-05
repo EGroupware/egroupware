@@ -80,7 +80,10 @@ class admin_account
 					'loginshell' => $GLOBALS['egw_info']['server']['ldap_account_shell'],
 				);
 			}
-			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'];
+			// should we show extra ldap attributes home-directory and login-shell
+			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
+				get_class($GLOBALS['egw']->accounts) === 'accounts_ldap';
+
 			$readonlys = array();
 
 			if ($deny_edit)
