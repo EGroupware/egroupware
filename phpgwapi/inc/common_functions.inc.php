@@ -102,7 +102,7 @@ if (!function_exists('imap_rfc822_parse_adrlist'))
 		foreach(explode(',', $address) as $part)
 		{
 			$trimmed = trim(($pending ? $pending.',' : '').$part);
-			if ($trimmed[0] == '"' && substr($trimmed, -1) != '>')
+			if (($trimmed[0] == '"' && substr($trimmed, -1) != '>')||strpos($part, '@')===false)
 			{
 				$pending .= ($pending ? $pending.',' : '').$part;
 				continue;
