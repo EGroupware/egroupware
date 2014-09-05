@@ -200,7 +200,9 @@ app.classes.mail = AppJS.extend(
 					}
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
-				jQuery('#mail-compose').load ('load', function() {that.compose_resizeHandler();});
+				jQuery('#mail-compose').on ('load',function() {
+					window.setTimeout(function(){that.compose_resizeHandler()}, 100);
+				});
 
 				this.compose_fieldExpander();
 
