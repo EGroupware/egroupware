@@ -107,6 +107,113 @@ var et2_date = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Set (full) year of current date
+	 *
+	 * @param {number} _value 4-digit year
+	 */
+	set_year: function(_value)
+	{
+		this.date.setUTCFullYear(_value);
+		this.set_value(this.date);
+	},
+	/**
+	 * Set month (1..12) of current date
+	 *
+	 * @param {number} _value 1..12
+	 */
+	set_month: function(_value)
+	{
+		this.date.setUTCMonth(_value-1);
+		this.set_value(this.date);
+	},
+	/**
+	 * Set day of current date
+	 *
+	 * @param {number} _value 1..31
+	 */
+	set_date: function(_value)
+	{
+		this.date.setUTCDate(_value);
+		this.set_value(this.date);
+	},
+	/**
+	 * Set hour (0..23) of current date
+	 *
+	 * @param {number} _value 0..23
+	 */
+	set_hours: function(_value)
+	{
+		this.date.setUTCHours(_value);
+		this.set_value(this.date);
+	},
+	/**
+	 * Set minute (0..59) of current date
+	 *
+	 * @param {number} _value 0..59
+	 */
+	set_minutes: function(_value)
+	{
+		this.date.setUTCMinutes(_value);
+		this.set_value(this.date);
+	},
+	/**
+	 * Get (full) year of current date
+	 *
+	 * @return {number|null} 4-digit year or null for empty
+	 */
+	get_year: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getUTCFullYear();
+	},
+	/**
+	 * Get month (1..12) of current date
+	 *
+	 * @return {number|null} 1..12 or null for empty
+	 */
+	get_month: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getUTCMonth()+1;
+	},
+	/**
+	 * Get day of current date
+	 *
+	 * @return {number|null} 1..31 or null for empty
+	 */
+	get_date: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getUTCDate();
+	},
+	/**
+	 * Get hour (0..23) of current date
+	 *
+	 * @return {number|null} 0..23 or null for empty
+	 */
+	get_hours: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getUTCHours();
+	},
+	/**
+	 * Get minute (0..59) of current date
+	 *
+	 * @return {number|null} 0..59 or null for empty
+	 */
+	get_minutes: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getUTCMinutes();
+	},
+	/**
+	 * Get timestamp
+	 *
+	 * You can use set_value to set a timestamp.
+	 *
+	 * @return {number|null} timestamp (seconds since 1970-01-01
+	 */
+	get_time: function()
+	{
+		return this.input_date.val() == "" ? null : this.date.getTime();
+	},
+
+	/**
 	 * Setting date
 	 *
 	 * @param {string|number|Date} _value supported are the following formats:
