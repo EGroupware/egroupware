@@ -1062,7 +1062,7 @@ class emailadmin_account implements ArrayAccess
 		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != 'emailadmin_smtp')
 		{
 			$smtp = self::_smtp($data);
-			$smtp->setUserData($user, $data['mailAlternateAddress'], $data['mailForwardingAddress'],
+			$smtp->setUserData($user, (array)$data['mailAlternateAddress'], (array)$data['mailForwardingAddress'],
 				$data['deliveryMode'], $data['accountStatus'], $data['mailLocalAddress'], $data['quotaLimit']);
 		}
 		if ($user > 0 && $data['acc_imap_type'] && $data['acc_imap_type'] != 'emailadmin_imap')
