@@ -811,7 +811,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				};
 				uid = uid.join("::");
 
-				this.dataFetch(_execId, {'refresh':uid}, {}, nextmatchId,false, context, [uid]);
+				// need to send nextmatch filters too, as server-side will merge old version from request otherwise
+				this.dataFetch(_execId, {'refresh':uid}, registeredCallbacks[_uid][0].context.self._filters || {},
+					nextmatchId, false, context, [uid]);
+
 				return true;
 			}
 			return false;
