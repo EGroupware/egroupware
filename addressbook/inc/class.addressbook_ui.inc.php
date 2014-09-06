@@ -2153,7 +2153,11 @@ window.egw_LAB.wait(function() {
 		$content['jpegphoto'] = !empty($content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 		$this->tmpl->setElementAttribute('tabs', 'add_tabs', true);
 		$tabs =& $this->tmpl->getElementAttribute('tabs', 'tabs');
-		if (true) $tabs = array();
+		if (($first_call = !isset($tabs)))
+		{
+			$tabs = array();
+		}
+		//error_log(__LINE__.': '.__METHOD__."() first_call=$first_call");
 		$hook_data = $GLOBALS['egw']->hooks->process(array('location' => 'addressbook_edit')+$content);
 		//error_log(__METHOD__."() hook_data=".array2string($hook_data));
 		foreach($hook_data as $extra_tabs)
@@ -2162,12 +2166,6 @@ window.egw_LAB.wait(function() {
 
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
-				$tabs[] = array(
-					'label' =>	$extra_tab['label'],
-					'template' =>	$extra_tab['name'],
-					'prepend' => $extra_tab['prepend'],
-				);
-				//error_log(__METHOD__."() changed tabs=".array2string($tabs));
 				if ($extra_tab['data'] && is_array($extra_tab['data']))
 				{
 					$content = array_merge($content, $extra_tab['data']);
@@ -2180,6 +2178,9 @@ window.egw_LAB.wait(function() {
 				{
 					$readonlys = array_merge($readonlys, $extra_tab['readonlys']);
 				}
+				// we must NOT add tabs and callbacks more then once!
+				if (!$first_call) continue;
+
 				if (!empty($extra_tab['pre_save_callback']))
 				{
 					$preserve['pre_save_callbacks'][] = $extra_tab['pre_save_callback'];
@@ -2188,6 +2189,15 @@ window.egw_LAB.wait(function() {
 				{
 					$preserve['post_save_callbacks'][] = $extra_tab['post_save_callback'];
 				}
+				if (!empty($extra_tab['label']) && !empty($extra_tab['name']))
+				{
+					$tabs[] = array(
+						'label' =>	$extra_tab['label'],
+						'template' =>	$extra_tab['name'],
+						'prepend' => $extra_tab['prepend'],
+					);
+				}
+				//error_log(__METHOD__."() changed tabs=".array2string($tabs));
 			}
 		}
 		return $this->tmpl->exec('addressbook.addressbook_ui.edit', $content, $sel_options, $readonlys, $preserve, 2);
