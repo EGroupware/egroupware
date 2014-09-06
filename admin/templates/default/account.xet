@@ -43,10 +43,10 @@
 				</row>
 				<row disabled="!@ldap_extra_attributes">
 					<description value="Home directory" for="homedirectory"/>
-					<passwd id="homedirectory" class="et2_fullWidth"/>
+					<textbox id="homedirectory" class="et2_fullWidth"/>
 					<description/>
 					<description value="Login shell" for="loginshell"/>
-					<passwd id="Login shell" class="et2_fullWidth"/>
+					<textbox id="Login shell" class="et2_fullWidth"/>
 					<description/>
 				</row>
 				<row>
