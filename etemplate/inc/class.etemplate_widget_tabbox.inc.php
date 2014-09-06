@@ -41,8 +41,10 @@ class etemplate_widget_tabbox extends etemplate_widget
 	{
 
 		// Make sure additional tabs are processed for any method
-		if($this->attrs['tabs'])
+		if($this->attrs['tabs'] && !$this->tabs_attr_evaluated)
 		{
+			$this->tabs_attr_evaluated = true;	// we must not evaluate tabs attribte more then once!
+
 			// add_tabs toggles replacing or adding to existing tabs
 			if(!$this->attrs['add_tabs'])
 			{
@@ -95,7 +97,7 @@ class etemplate_widget_tabbox extends etemplate_widget
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
-			if (true) $valid = $value;			
+			if (true) $valid = $value;
 		}
 	}
 }
