@@ -956,7 +956,7 @@ class addressbook_bo extends addressbook_so
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 
 			// if contact is an account and account-relevant data got updated, handle it like account got updated
-			if ($contact['account_id'] &&
+			if ($contact['account_id'] && $isUpdate &&
 				($old['email'] != $contact['email'] || $old['n_family'] != $contact['n_family'] || $old['n_given'] != $contact['n_given']))
 			{
 				// invalidate the cache of the accounts class
@@ -968,7 +968,7 @@ class addressbook_bo extends addressbook_so
 				),False,True);	// called for every app now, not only enabled ones)
 			}
 			// notify interested apps about changes in the account-contact data
-			if (!$to_write['owner'] && $to_write['account_id'])
+			if (!$to_write['owner'] && $to_write['account_id'] && $isUpdate)
 			{
 				$to_write['location'] = 'editaccountcontact';
 				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
