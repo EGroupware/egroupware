@@ -464,7 +464,10 @@ class so_sql_cf extends so_sql
 			foreach($criteria as $name => $val)
 			{
 				// only add extra_join, if we really need it
-				if (!$extra_join_added && is_int($name) && strpos($val, $this->extra_value) !== false)
+				if (!$extra_join_added && (
+					is_int($name) && strpos($val, $this->extra_value) !== false ||
+					is_string($name) && $this->is_cf($name)
+				))
 				{
 					$join .= $this->extra_join;
 					$extra_join_added = true;
