@@ -784,7 +784,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
 		{
 			this.date = new Date(_value);
-			this.date = new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000))
+			this.date = new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000));
 		}
 		else if(typeof _value == 'string' && isNaN(_value))
 		{
