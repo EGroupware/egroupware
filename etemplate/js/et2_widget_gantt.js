@@ -51,6 +51,12 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			"default": "",
 			"description": "AJAX menuaction to be called when the user changes a task.  The function should take two parameters: the updated element, and all template values."
 		},
+		"duration_unit": {
+			"name": "Duration unit",
+			"type": "string",
+			"default": "minute",
+			"description": "The unit for task duration values.  One of minute, hour, week, year."
+		},
 		value: {type: 'any'}
 	},
 	
@@ -62,7 +68,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		
 		// Duration is a unitless field.  This is the unit.
 		duration_unit: 'minute',
-		duration_step: 60,
+		duration_step: 1,
 
 		show_progress: true,
 		order_branch: true,
@@ -148,21 +154,30 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		{
 			config.end_date = end_date.getValue() ? new Date(end_date.getValue() * 1000): null;
 		}
+		if(this.options.duration_unit)
+		{
+			config.duration_unit = this.options.duration_unit;
+		}
 
 		// Initialize chart
 		this.gantt = this.gantt_node.dhx_gantt(config);
 
+		if(this.options.zoom)
+		{
+			this.set_zoom(this.options.zoom);
+		}
+		
 		if(this.options.value)
 		{
 			this.set_value(this.options.value);
 		}
-
+		
 		// Update start & end dates with chart values for consistency
-		if(start_date)
+		if(start_date && this.options.value.data && this.options.value.data.length)
 		{
 			start_date.set_value(this.gantt.getState().min_date);
 		}
-		if(end_date)
+		if(end_date && this.options.value.data && this.options.value.data.length)
 		{
 			end_date.set_value(this.gantt.getState().max_date);
 		}
@@ -208,6 +223,22 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	},
 
 	/**
+	 * Changes the units for duration
+	 * @param {string} duration_unit One of minute, hour, week, year
+	 */
+	set_duration_unit: function(duration_unit)
+	{
+		this.options.duration_unit = duration_unit;
+		if(this.gantt && this.gantt.config.duration_unit != duration_unit)
+		{
+			this.gantt.config.duration_unit = duration_unit;
+			// Clear the end date, or previous end date may break time scale
+			this.gantt.config.end_date = null;
+			this.gantt.refreshData();
+		}
+	},
+
+	/**
 	 * Sets the data to be displayed in the gantt chart.
 	 *
 	 * Data is a JSON object with 'data' and 'links', both of which are arrays.
@@ -233,21 +264,46 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	set_value: function(value) {
 		if(this.gantt == null) return false;
 
+		// Unselect task before removing it, or we get errors later if it is accessed
+		this.gantt.unselectTask();
+
 		// Clear previous value
 		this.gantt.clearAll();
+
+		if(value.duration_unit)
+		{
+			this.set_duration_unit(value.duration_unit);
+		}
+
+		this.gantt.showCover();
 
 		// Set zoom to max, in case data spans a large time
 		this.set_zoom(value.zoom || 4);
 
-		// Ensure proper format, no extras
-		var safe_value = {
-			data: value.data || [],
-			links: value.links || []
-		};
-		this.gantt.config.start_date = value.start_date || null;
-		this.gantt.config.end_date = value.end_date || null;
+		// Wait until zoom is done before continuing so timescales are done
+		var gantt_widget = this;
+		var zoom_wait = this.gantt.attachEvent('onGanttRender', function() {
+			this.detachEvent(zoom_wait);
 
-		this.gantt.parse(safe_value);
+			// Ensure proper format, no extras
+			var safe_value = {
+				data: value.data || [],
+				links: value.links || []
+			};
+			this.config.start_date = value.start_date || null;
+			this.config.end_date = value.end_date || null;
+			this.parse(safe_value);
+
+			// Zoom to specified or auto level
+			var auto_zoom = this.attachEvent('onGanttRender', function() {
+				this.detachEvent(auto_zoom);
+				gantt_widget.set_zoom(value.zoom || false);
+				this.render();
+				this.hideCover();
+			});
+			this.render();
+		})
+		this.gantt.render();
 	},
 	/**
 	 * getValue has to return the value of the input widget
@@ -392,6 +448,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		this.gantt.config.min_column_width = min_column_width;
 
 		this.options.zoom = level;
+		
+		this.gantt.refreshData();
 		return level;
 	},
 
@@ -425,7 +483,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				},100);
 			});
 			
-			if(this.parentNode.firstChild == this)
+			if(this.parentNode && this.parentNode.firstChild == this)
 			{
 				// Zoom out
 				gantt_widget.set_zoom(gantt_widget.options.zoom + 1);
@@ -510,10 +568,12 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			// Node children are already there & displayed
 			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
 
+			this.showCover();
 			var request = gantt_widget.egw().json(gantt_widget.options.autoload,
 				[id,value,task.parent||false],
 				function(data) {
 					this.parse(data);
+					this.hideCover();
 				},
 				this,true,this
 			).sendRequest();
