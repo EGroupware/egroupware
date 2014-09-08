@@ -27,7 +27,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	/**
 	 * Instance of mail_bo
 	 *
-	 * @var mail
+	 * @var mail_bo
 	 */
 	private $mail;
 
@@ -126,61 +126,20 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			}
 		}
 		if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' Profile Selected (after reading Prefs):'.array2string(self::$profileID));
-		$params =null;
-		if (isset($GLOBALS['egw_setup'])) $params['setup']=true;
-		$identities = $this->getAvailableProfiles($params);
-		//error_log(__METHOD__.__LINE__.array2string($identities));
-		if (array_key_exists(self::$profileID,$identities))
-		{
-			// everything seems to be in order self::$profileID REMAINS UNCHANGED
-		}
-		else
-		{
-			foreach (array_keys((array)$identities) as $k => $ident) if ($ident <0) self::$profileID = $ident;
-			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string(self::$profileID));
-			if (!array_key_exists(self::$profileID,$identities))
-			{
-				// everything failed, try first profile found
-				$keys = array_keys((array)$identities);
-				if (count($keys)>0) self::$profileID = array_shift($keys);
-				else self::$profileID = 0;
-			}
-		}
-		if ($this->debugLevel>0) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.self::$profileID.' -> '.$identities[self::$profileID]);
-		//$this->debugLevel=0;
-	}
 
-	/**
-	 * fetches available Profiles
-	 *
-	 * @return array
-	 */
-	function getAvailableProfiles($params = null)
-	{
-		$allIdentities = mail_bo::getAllIdentities(($params['account_id']?$params['account_id']:null));
-		$identities = array();
-		if (!isset($params['setup']))
+		// verify we are on an existing profile, if not running in setup (settings can not be static according to interface!)
+		if (!isset($GLOBALS['egw_setup']))
 		{
-			$profileID=(self::$profileID=='G'?emailadmin_account::get_default_acc_id():self::$profileID);
-			if (!$this->mail) $this->mail = mail_bo::getInstance(true,$profileID,true,false,true);
-			foreach($allIdentities as $key => $singleIdentity) {
-				if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
-				$iS = mail_bo::generateIdentityString($singleIdentity);
-				if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
-				{
-					$id_prepend ='';
-				}
-				else
-				{
-					$id_prepend = '('.$singleIdentity['ident_id'].') ';
-				}
-				if (array_search($id_prepend.$iS,$identities)===false)
-				{
-					$identities[$singleIdentity['acc_id']] = $id_prepend.$iS;
-				}
+			try {
+				emailadmin_account::read(self::$profileID);
+			}
+			catch(Exception $e) {
+				unset($e);
+				self::$profileID = emailadmin_account::get_default_acc_id();
 			}
 		}
-		return $identities;
+		if ($this->debugLevel>0) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.self::$profileID);
+		//$this->debugLevel=0;
 	}
 
 	/**
@@ -193,9 +152,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	{
 		//error_log(__METHOD__.__LINE__.array2string($hook_data));
 		$identities = array();
-		if (!isset($hook_data['setup']))
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
-			$identities = $this->getAvailableProfiles($hook_data);
+			$identities = iterator_to_array(emailadmin_account::search((int)$hook_data['account_id']));
 		}
 		$identities += array(
 			'G' => lang('Primary Profile'),
@@ -2172,7 +2131,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			{
 				//error_log(__METHOD__.__LINE__." error decoding with json");
 				$this->folderHashes = unserialize($hashes);
-			}			
+			}
 		}
 		else
 		{
