@@ -811,9 +811,22 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				};
 				uid = uid.join("::");
 
+				// find filters, even if context is not always from nextmatch, eg. caching uses it's a string context
+				var filters = {};
+				for(var i=0; i < registeredCallbacks[_uid].length; i++)
+				{
+					var callback = registeredCallbacks[_uid][i];
+					if (typeof callback.context == 'object' &&
+						typeof callback.context.self == 'object' &&
+						typeof callback.context.self._filters == 'object')
+					{
+						filters = callback.context.self._filters;
+						break;
+					}
+				}
+
 				// need to send nextmatch filters too, as server-side will merge old version from request otherwise
-				this.dataFetch(_execId, {'refresh':uid}, registeredCallbacks[_uid][0].context.self._filters || {},
-					nextmatchId, false, context, [uid]);
+				this.dataFetch(_execId, {'refresh':uid}, filters, nextmatchId, false, context, [uid]);
 
 				return true;
 			}
