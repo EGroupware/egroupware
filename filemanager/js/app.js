@@ -69,6 +69,13 @@ app.classes.filemanager = AppJS.extend(
 
 		this.path_widget = this.et2.getWidgetById('path');
 
+		if(this.et2.getWidgetById('nm'))
+		{
+			// Legacy JS only supports 2 arguments (event and widget), so set
+			// to the actual function here
+			this.et2.getWidgetById('nm').set_onfiledrop(jQuery.proxy(this.filedrop, this));
+		}
+
 		// get clipboard from browser localstore and update button tooltips
 		if (typeof window.localStorage != 'undefined' && typeof window.localStorage[this.clipboard_localstore_key] != 'undefined')
 		{
@@ -580,10 +587,9 @@ app.classes.filemanager = AppJS.extend(
 	 * This is a callback from nextmatch to prevent the default link action, and just upload instead.
 	 *
 	 * @param {string} row_uid UID of the row the files were dropped on
-	 * @param {et2_nextmatch} widget widget that got the drop
-	 * @param {array} files
+	 * @param {Files[]} files
 	 */
-	filedrop: function(row_uid, widget ,files)
+	filedrop: function(row_uid, files)
 	{
 		var self = this;
 		var data = egw.dataGetUIDdata(row_uid);
