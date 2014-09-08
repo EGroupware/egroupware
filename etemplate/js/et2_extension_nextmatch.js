@@ -1642,9 +1642,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 *
 	 * @param {String|Function} handler
 	 */
-	 set_onfiledrop: function(handler) {
+	set_onfiledrop: function(handler) {
 		this.options.onfiledrop = handler;
-	 },
+	},
 
 	/**
 	 * Handle drops of files by linking to the row, if possible.
@@ -1657,7 +1657,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * @param {object} event
 	 * @param {object} target
 	 */
-	 handle_drop: function(event, target) {
+	handle_drop: function(event, target) {
 		// Check to see if we can handle the link
 		// First, find the UID
 		var row = this.controller.getRowByNode(target);
@@ -1732,7 +1732,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		// Upload and link - this triggers the upload, which triggers the link, which triggers the cleanup and refresh
 		link.file_upload.set_value(files);
-	 },
+	},
 
 	getDOMNode: function(_sender) {
 		if (_sender == this)

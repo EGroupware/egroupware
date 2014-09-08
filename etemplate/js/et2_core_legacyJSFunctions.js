@@ -143,6 +143,10 @@
 			// Dump the executed code for debugging
 			egw.debug('log', 'Executing legacy JS code: ', _code);
 
+			if(arguments && arguments.length > 2)
+			{
+				egw.debug('warn', 'Legacy JS code only supports 2 arguments (event and widget)', _code, arguments);
+			}
 			// Return the result of the called function
 			return func.call(context, ev, _widget);
 		};
