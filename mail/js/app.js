@@ -667,16 +667,19 @@ app.classes.mail = AppJS.extend(
 				for(var i = 0; i < content.length; i++)
 				{
 					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
-					if (content[i].indexOf('@')<0)
-					{
-						remembervalue = content[i];
-					}
-					else
-					{
-						var value = remembervalue+(remembervalue?',':'')+content[i];
-						var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
-						email.loadingFinished();
-						remembervalue = '';
+					if (content[i] != 'undefined' && content[i])
+					{	
+						if (content[i].indexOf('@')< 0)
+						{
+							remembervalue = content[i];
+						}
+						else
+						{
+							var value = remembervalue+(remembervalue?',':'')+content[i];
+							var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
+							email.loadingFinished();
+							remembervalue = '';
+						}
 					}
 				}
 			}
