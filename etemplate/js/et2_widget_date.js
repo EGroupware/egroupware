@@ -735,7 +735,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	attributes: {
 		"value": {
-			"type": "integer"
+			"type": "string"
 		},
 		"type": {
 			"ignore": false
@@ -781,7 +781,12 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			return;
 		}
 
-		if(typeof _value == 'string' && isNaN(_value))
+		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
+		{
+			this.date = new Date(_value);
+			this.date = new Date(this.date.valueOf() + (this.date.getTimezoneOffset()*60*1000))
+		}
+		else if(typeof _value == 'string' && isNaN(_value))
 		{
 			// parseDateTime to handle string PHP: DateTime local date/time format
 			var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
