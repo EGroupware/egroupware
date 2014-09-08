@@ -297,17 +297,17 @@ app.classes.mail = AppJS.extend(
 	{
 		// Only cache first chunk of rows, if no search filter
 		if((!query_context || !query_context.start) && query_context.count == 0 &&
-			query_context.self._filters.selectedFolder &&
-			!(!query_context.self._filters || query_context.self._filters.search)
+			query_context.filters && query_context.filters.selectedFolder &&
+			!(!query_context.filters || query_context.filters.search)
 		)
 		{
 			// Make sure keys match, even if some filters are not defined
 			// using JSON.stringfy() directly gave a crash in Safari 7.0.4
 			return this.egw.jsonEncode({
-				selectedFolder: query_context.self._filters.selectedFolder || '',
-				filter: query_context.self._filters.filter || '',
-				filter2: query_context.self._filters.filter2 || '',
-				sort: query_context.self._filters.sort
+				selectedFolder: query_context.filters.selectedFolder || '',
+				filter: query_context.filters.filter || '',
+				filter2: query_context.filters.filter2 || '',
+				sort: query_context.filters.sort
 			});
 		}
 		return false;
@@ -3083,7 +3083,7 @@ app.classes.mail = AppJS.extend(
 		this.compose_resizeHandler();
 		return true;
 	},
-	
+
 	/**
 	* Upload for import (VFS)
 	*
