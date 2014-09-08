@@ -419,6 +419,9 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					}
 				}
 			}
+			// create a clone of filters, which can be used in parseServerResponse and cache callbacks
+			// independent of changes happening while waiting for the response
+			_context.filters = jQuery.extend({}, _filters);
 			var request = egw.json(
 				_app+".etemplate_widget_nextmatch.ajax_get_rows.etemplate",
 				[
