@@ -34,7 +34,6 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		//delete this.et2;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -492,14 +491,29 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
-	 *
+	 * Apply advanced search filters to index nextmatch
 	 */
-	 adv_search: function()
-	 {
-		var link = opener.location.href;
-		link = link.replace(/#/,'');
-		opener.location.href=link.replace(/\#/,'');
-	 },
+	adv_search: function(filters)
+	{
+		var index = window.opener.etemplate2.getById('addressbook-index');
+		if(!index)
+		{
+			alert('Could not find index');
+			window.close();
+			return false;
+		}
+		var nm = index.widgetContainer.getWidgetById('nm');
+		if(!index)
+		{
+			window.opener.egw.message('Could not find list', 'error');
+			window.close();
+			return false;
+		}
+		// Reset filters first
+		nm.activeFilters = {};
+		nm.applyFilters(filters);
+		return false;
+	},
 
 	/**
 	 * Mail vCard
