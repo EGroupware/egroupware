@@ -181,7 +181,7 @@ class infolog_merge extends bo_merge
 
 		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
-		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name'), 'info_sum_timesheets' => lang('Used time')) + $tracking->field2label;
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
 		translation::add_app('projectmanager');
 		foreach($fields as $name => $label)
 		{
