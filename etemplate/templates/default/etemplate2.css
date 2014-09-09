@@ -1152,6 +1152,13 @@ div.et2_progress > div {
   height: 100%;
   min-height: 5px;
 }
+
+/**
+ * For resizing (nextmatch columns)
+ */
+table.egwGridView_outer.egwResizing .fixedWidth {
+  opacity: 0.5;
+}
 .egwResizeOverlay {
   position: fixed;
   width: 100%;

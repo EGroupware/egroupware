@@ -386,6 +386,11 @@ var et2_dataview = Class.extend({
 				.attr("align", "left")
 				.append(cont)
 				.appendTo(this.headTr);
+			
+			if(this.columnMgr && this.columnMgr.columns[i])
+			{
+				column.addClass(this.columnMgr.columns[i].fixedWidth ? 'fixedWidth' : 'relativeWidth');
+			}
 
 			// make column resizable
 			var enc_column = self.columnMgr.getColumnById(col.id);

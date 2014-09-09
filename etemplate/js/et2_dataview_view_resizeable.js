@@ -53,6 +53,9 @@
 				};
 			}
 
+			// Indicate resizing is in progress
+			$j(_outerElem).addClass('egwResizing');
+
 			// Reset the "didResize" flag
 			didResize = false;
 
@@ -78,7 +81,7 @@
 				})
 
 				.bind("mouseup", function() {
-					stopResize();
+					stopResize(_outerElem);
 
 					// Reset text selection
 					_elem[0].onselectstart = null;
@@ -93,8 +96,10 @@
 		}
 	}
 
-	function stopResize()
+	function stopResize(_outerElem)
 	{
+
+		$j(_outerElem).removeClass('egwResizing');
 		if (helper != null)
 		{
 			helper.remove();
