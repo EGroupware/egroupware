@@ -479,11 +479,14 @@ class mail_compose
 			if (stripos($content['mail_htmltext'],'<pre>')!==false)
 			{
 				$contentArr = html::splithtmlByPRE($content['mail_htmltext']);
-				foreach ($contentArr as $k =>&$elem)
+				if (is_array($contentArr))
 				{
-					if (stripos($elem,'<pre>')!==false) $elem = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$elem);
+					foreach ($contentArr as $k =>&$elem)
+					{
+						if (stripos($elem,'<pre>')!==false) $elem = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$elem);
+					}
+					$content['mail_htmltext'] = implode('',$contentArr);
 				}
-				$content['mail_htmltext'] = implode('',$contentArr);
 			}
 			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext'], false, false);
 			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,$stripcrl=false,$stripalltags=true);
@@ -1305,6 +1308,8 @@ class mail_compose
 		$preserv['serverID'] = $content['serverID'];
 		$preserv['lastDrafted'] = $content['lastDrafted'];
 		$preserv['processedmail_id'] = $content['processedmail_id'];
+		$preserv['references'] = $content['references'];
+		$preserv['in-reply-to'] = $content['in-reply-to'];
 		$preserv['mode'] = $content['mode'];
 		// convert it back to checkbox expectations
 		if($content['mimeType'] == 'html') {
@@ -1945,7 +1950,8 @@ class mail_compose
 		//$headers	= $mail_bo->getMessageHeader($_uid, $_partID, true, true, $_folder);
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
-		$this->sessionData['in-reply-to'] = $headers['MESSAGE_ID'];
+		$this->sessionData['in-reply-to'] = ($headers['IN-REPLY-TO']?$headers['IN-REPLY-TO']:$headers['MESSAGE_ID']);
+		$this->sessionData['references'] = ($headers['REFERENCES']?$headers['REFERENCES']:$headers['MESSAGE_ID']);
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
 		// check for Reply-To: header and use if available
 		if(!empty($headers['REPLY-TO']) && ($headers['REPLY-TO'] != $headers['FROM'])) {
