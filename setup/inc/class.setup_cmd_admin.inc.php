@@ -76,7 +76,7 @@ class setup_cmd_admin extends setup_cmd
 
 		if (!$this->admin_firstname) $this->set_defaults['admin_firstname'] = $this->admin_firstname = lang('Admin');
 		if (!$this->admin_lastname) $this->set_defaults['admin_lastname'] = $this->admin_lastname = lang('User');
-		if (strpos($this->admin_email,'$') !== false) 
+		if (strpos($this->admin_email,'$') !== false)
 		{
 			$this->set_defaults['email'] = $this->admin_email = str_replace(
 				array('$domain','$uid','$account_lid'),
@@ -102,12 +102,15 @@ class setup_cmd_admin extends setup_cmd
 				throw new egw_exception_wrong_userinput(lang('Error in group-creation !!!'),42);
 		}
 		$this->restore_db();
-		
-		// run admin/admin-cli.php --add-user to store the new accounts once in EGroupware 
+
+		// run admin/admin-cli.php --add-user to store the new accounts once in EGroupware
 		// to run all hooks (some of them can NOT run inside setup)
 		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --add-user '.
 			escapeshellarg($this->admin_user.'@'.$this->domain.','.$this->admin_password.','.$this->admin_user);
-		exec($cmd,$output,$ret);
+		if (php_sapi_name() !== 'cli' || !file_exists(EGW_SERVER_ROOT.'/stylite') || file_exists(EGW_SERVER_ROOT.'/managementserver'))
+		{
+			exec($cmd,$output,$ret);
+		}
 		$output = implode("\n",$output);
 		//echo "ret=$ret\n".$output;
 		if ($ret)
