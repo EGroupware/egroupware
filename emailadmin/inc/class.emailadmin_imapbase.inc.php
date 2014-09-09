@@ -5202,6 +5202,10 @@ class emailadmin_imapbase
 	 */
 	function appendMessage($_folderName, $_header, $_body, $_flags)
 	{
+		if (stripos($_header,'message-id:')===false)
+		{
+			$_header = 'Message-ID: <'.self::getRandomString().'@localhost>'."\n".$_header;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '."$_folderName, $_header, $_body, $_flags");
 		$header = ltrim(str_replace("\n","\r\n",$_header));
 		$body   = str_replace("\n","\r\n",$_body);
@@ -5214,7 +5218,13 @@ class emailadmin_imapbase
 		try
 		{
 			$dataNflags = array();
-			$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$header"."$body")), 'flags'=>array($_flags));
+			// both methods below are valid for appending a message to a mailbox.
+			// the commented version fails in retrieving the uid of the created message if the server
+			// is not returning the uid upon creation, as the method in append for detecting the uid
+			// expects data to be a string. this string is parsed for message-id, and the mailbox
+			// searched for the message-id then returning the uid found
+			//$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$header"."$body")), 'flags'=>array($_flags));
+			$dataNflags[] = array('data'=>"$header"."$body", 'flags'=>array($_flags));
 			$messageid = $this->icServer->append($_folderName,$dataNflags);
 		}
 		catch (Exception $e)
@@ -5225,7 +5235,7 @@ class emailadmin_imapbase
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.' appended UID:'.$messageid);
 		//$messageid = true; // for debug reasons only
-		if ($messageid === true) // try to figure out the message uid
+		if ($messageid === true || empty($messageid)) // try to figure out the message uid
 		{
 			$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null, $_cacheResult=false);
 			if ($list)
