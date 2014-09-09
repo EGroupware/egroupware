@@ -1,3 +1,23 @@
+egroupware-epl (14.1.20140909-1) hardy; urgency=low
+
+  * All apps/IE: fix not working file upload in IE
+  * eTemplate2/all apps: fixed not displayed readonly dates outside lists (eg. created/modified dates in dialogs)
+  * Spellchecker: marking "browser based" (default for new installs) and "No" as safer and fixing CSP policy for web-spell-checker
+  * Projectmanager: speed improvements for large gantt charts
+  * Projectmanager/all apps: fix not working popups, eg. add existing action in elements list
+  * Calendar: if contact is added as participant and event has not yet a title add contact as title
+  * Calendar: fixed freetime search to correctly read and set times from edit window
+  * Mail: fix mail compose attachment is not shown while it's on upload progress for the first time
+  * Mail: improvement of attachment area UI in compose,display and preview dialogs
+  * Mail: handle problem on Mail2Infolog/Mail2Tracker when creating the header info section on mails
+  * Mail: make the saveAsDraft and print functionality working in mail compose dialog
+  * Addressbook: fixed diverse problem with advanced search
+  * InfoLog: keep pm link when changing contact
+  * Filemanager: fixed not working file drop in with Firefox
+  * Tracker/PostgreSQL: fix SQL error originating from timesheet
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 09 Sep 2014 15:20:16 +0200
+
 egroupware-epl (14.1.20140903-1) hardy; urgency=low
 
   * Timesheet: fixed not working custom date filter
