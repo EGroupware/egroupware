@@ -439,7 +439,8 @@ var et2_file = et2_inputWidget.extend(
 			this.resumable.removeFile(this.resumable.files[i]);
 		}
 
-		var event = new Event('upload');
+		var event = jQuery.Event('upload');
+		
 		event.data = this;
 
 		var result = false;
