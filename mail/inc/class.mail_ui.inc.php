@@ -1951,27 +1951,30 @@ class mail_ui
 
 	/**
 	 * display messages
-	 * @param array $_requesteddata
+	 * @param array $_requesteddata etemplate content
 	 * all params are passed as GET Parameters, but can be passed via ExecMethod2 as array too
 	 */
 	function displayMessage($_requesteddata = null)
 	{
-		if (!is_null($_requesteddata) && isset($_requesteddata['id']))
-		{
-			$rowID = $_requesteddata['id'];
-		}
+		if (is_null($_requesteddata)) $_requesteddata = $_GET;
+
 		$preventRedirect=false;
-		if(isset($_GET['id'])) $rowID	= $_GET['id'];
-		if(isset($_GET['part'])) $partID = $_GET['part'];
-		if(isset($_GET['mode'])) $preventRedirect   = ($_GET['mode']=='display'?true:false);
+		if(isset($_requesteddata['id'])) $rowID	= $_requesteddata['id'];
+		if(isset($_requesteddata['part'])) $partID = $_requesteddata['part'];
+		if(isset($_requesteddata['mode'])) $preventRedirect   = (($_requesteddata['mode']=='display' || $_requesteddata['mode'] == 'print')?true:false);
 		$htmlOptions = $this->mail_bo->htmlOptions;
-		if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
-		if (!empty($_GET['tryashtml'])) $htmlOptions  = "always_display";
+		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
+		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
 
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		//error_log(__METHOD__.__LINE__.array2string($hA));
+		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
+		{
+			$response = egw_json_response::get();
+			$response->call('app.mail.print_for_compose', $rowID);
+		}
 		if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
 		{
 			egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));

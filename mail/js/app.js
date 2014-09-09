@@ -390,7 +390,7 @@ app.classes.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_") );
+		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_")+'&mode='+_mode);
 		egw(h).ready(function() {
 			h.document.title = subject;
 		});
@@ -3163,7 +3163,7 @@ app.classes.mail = AppJS.extend(
 	{
 		this.et2_obj.submit();
 	},
-
+	
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
 	 *
@@ -3537,7 +3537,7 @@ app.classes.mail = AppJS.extend(
 		var textArea = this.et2.getWidgetById('mail_plaintext');
 		var toolbar = jQuery('.mailSignature');
 
-		if (typeof textArea != 'undefined')
+		if (typeof textArea != 'undefined' && textArea != null)
 		{
 			var textAreaH = textArea.node.clientHeight;
 			if (textArea.getParent().disabled)
@@ -3712,14 +3712,43 @@ app.classes.mail = AppJS.extend(
 		switch (currentTemp)
 		{
 			case 'mail.index':
-				this.mail_prev_print();
+				this.mail_prev_print(_action, _senders);
 				break;
 			case 'mail.display':
 				this.mail_display_print();
 		}
 
 	},
-
+	
+	/**
+	 * Print a mail from compose
+	 * @param {stirng} _id id of new draft
+	 */
+	mail_compose_print:function (_id)
+	{
+		this.egw.open(_id,'mail','view','&print='+_id+'&mode=print');
+	},
+	
+	/**
+	 * Bind special handler on print media. 
+	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus 
+	 */
+	print_for_compose: function()
+	{
+		var afterprint = function (){
+			window.close();
+		};
+		
+		if (!window.onafterprint)
+		{
+			window.onfocus = afterprint;
+		}
+		else
+		{
+			window.onafterprint = afterprint;
+		}
+	}, 
+	
 	/**
 	 * Print a mail from Display
 	 *
