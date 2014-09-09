@@ -4624,6 +4624,8 @@ class emailadmin_imapbase
 				'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
 				'MESSAGE_ID'	=> $headers['MESSAGE-ID']
 			);
+			if (isset($headers['IN-REPLY-TO'])) $newData['IN-REPLY-TO'] = $headers['IN-REPLY-TO'];
+			if (isset($headers['REFERENCES'])) $newData['REFERENCES'] = $headers['REFERENCES'];
 			//_debug_array($newData);
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO');
 			foreach($recepientList as $recepientType) {
