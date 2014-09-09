@@ -1444,9 +1444,10 @@ window.egw_LAB.wait(function() {
 			$op = 'OR';
 			if ($query['advanced_search'])
 			{
-				$op = $query['advanced_search']['operator'];
+				// Make sure op & wildcard are only valid options
+				$op = $query['advanced_search']['operator'] == $op ? $op : 'AND';
 				unset($query['advanced_search']['operator']);
-				$wildcard = $query['advanced_search']['meth_select'];
+				$wildcard = $query['advanced_search']['meth_select'] == $wildcard ? $wildcard : false;
 				unset($query['advanced_search']['meth_select']);
 			}
 			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home');
@@ -2628,20 +2629,27 @@ window.egw_LAB.wait(function() {
 				{
 					if(!$value) unset($query['advanced_search'][$key]);
 				}
+				// Skip n_fn, it causes problems in sql
+				unset($query['advanced_search']['n_fn']);
 			}
-			$query['start'] = 0;
 			$query['search'] = '';
 			// store the index state in the session
 			egw_session::appsession('index','addressbook',$query);
 
 			// store the advanced search in the session to call it again
 			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
-			if ($_content['button']['search']) $response->call("app.addressbook.adv_search");
-			if ($_content['button']['cancelsearch']) egw_framework::window_close (); //$response->addScript('this.close();');
+
+			// Update client / nextmatch with filters, or clear
+			$response->call("app.addressbook.adv_search", array('advanced_search' => $_content['button']['search'] ? $query['advanced_search'] : ''));
+			if ($_content['button']['cancelsearch'])
+			{
+				egw_framework::window_close (); //$response->addScript('this.close();');
+
+				// No need to reload popup
+				return;
+			}
 		}
 
-		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 
 		// initialize etemplate arrays
@@ -2668,7 +2676,7 @@ window.egw_LAB.wait(function() {
 		{
 			foreach($this->customfields as $name => $data)
 			{
-				if ($data['type'] == 'select')
+				if (substr($data['type'], 0, 6) == 'select' && !($data['rows'] > 1))
 				{
 					if (!isset($content['#'.$name])) $content['#'.$name] = '';
 					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');
