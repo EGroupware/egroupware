@@ -370,7 +370,7 @@ var et2_selectAccount = et2_selectbox.extend(
 				}
 				else
 				{
-					this.options.select_options.push({value: key, label: options});
+					this.options.select_options.push({value: key, label: options[key]});
 				}
 			}
 		}

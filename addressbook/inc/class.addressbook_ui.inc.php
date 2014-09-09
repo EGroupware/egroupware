@@ -2676,7 +2676,7 @@ window.egw_LAB.wait(function() {
 		{
 			foreach($this->customfields as $name => $data)
 			{
-				if ($data['type'] == 'select')
+				if (substr($data['type'], 0, 6) == 'select' && !($data['rows'] > 1))
 				{
 					if (!isset($content['#'.$name])) $content['#'.$name] = '';
 					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');

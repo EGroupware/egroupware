@@ -262,6 +262,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				$widget->attrs['only_app'] = $field['type'];
 				break;
 
+			case 'text':
+				break;
+
+			default:
+				if (substr($type, 0, 7) !== 'select-') break;
+				// fall-through for all select-* widgets
 			case 'select':
 				$this->attrs['multiple'] = $field['rows'] > 1;
 				// fall through
@@ -270,7 +276,15 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					$field['values'] = self::_get_options_from_file($field['values']['@']);
 				}
-				self::$request->sel_options[self::$prefix.$fname] = $field['values'];
+				// keep extra values set by app code, eg. addressbook advanced search
+				if (is_array(self::$request->sel_options[self::$prefix.$fname]))
+				{
+					self::$request->sel_options[self::$prefix.$fname] += (array)$field['values'];
+				}
+				else
+				{
+					self::$request->sel_options[self::$prefix.$fname] = $field['values'];
+				}
 				//error_log(__METHOD__."('$fname', ".array2string($field).") request->sel_options['".self::$prefix.$fname."']=".array2string(self::$request->sel_options[$this->id]));
 				break;
 		}
