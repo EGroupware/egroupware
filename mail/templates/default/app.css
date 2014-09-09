@@ -730,6 +730,9 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	.et2_button {
 		display: none;
 	}
+	blockquote {
+		margin:0;
+	}
 	.mailCompose_copyEmail {
 	}
 }
