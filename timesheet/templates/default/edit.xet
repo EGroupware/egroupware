@@ -35,7 +35,7 @@
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
 					<description value="comment"/>
-					<textbox multiline="true" id="ts_description" rows="5" cols="50" class="et2_fullWidth"/>
+					<textbox multiline="true" id="ts_description_short" rows="5" cols="50" class="et2_fullWidth"/>
 					<description/>
 					<description/>
 					<description/>

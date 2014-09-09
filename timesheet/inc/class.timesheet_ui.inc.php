@@ -107,6 +107,7 @@ class timesheet_ui extends timesheet_bo
 			if ($this->ts_viewtype == 'short')
 			{
 				$content['start_time']=$content['end_time']=null;
+				$content['ts_description'] = $content['ts_description_short'];
 			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if (isset($content['start_time']))		// start-time specified
@@ -438,6 +439,7 @@ class timesheet_ui extends timesheet_bo
 		if($this->ts_viewtype == 'short')
 		{
 			$content['ts_viewtype'] = $readonlys['tabs']['notes'] = true;
+			$content['ts_description_short'] = $content['ts_description'];
 		}
 		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
 		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
