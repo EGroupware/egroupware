@@ -871,7 +871,7 @@
                     style: cfg.style
                 }).width(w);
                 ms.container.focus($.proxy(handlers._onFocus, this));
-                ms.container.blur($.proxy(handlers._onBlur, this));
+                ms.container.focusout($.proxy(handlers._onBlur, this));
                 ms.container.keydown($.proxy(handlers._onKeyDown, this));
                 ms.container.keyup($.proxy(handlers._onKeyUp, this));
 
@@ -886,7 +886,7 @@
                 }, cfg.inputCfg)).width(w - (cfg.hideTrigger ? 16 : 42));
 
                 ms.input.focus($.proxy(handlers._onInputFocus, this));
-				
+
                 ms.input.click($.proxy(handlers._onInputClick, this));
 
                 // holds the trigger on the right side
