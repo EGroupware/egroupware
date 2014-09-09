@@ -758,6 +758,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var columnDisplay = prefs.visible;
 		var size = prefs.size;
 		var negated = prefs.visible_negated;
+		var colName = '';
 
 		// Add in display preferences
 		if(columnDisplay && columnDisplay.length > 0)
@@ -765,6 +766,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			RowLoop:
 			for(var i = 0; i < _row.length; i++)
 			{
+				colName = '';
 				if(_row[i].disabled)
 				{
 					_colData[i].disabled = true;
@@ -789,7 +791,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 							// Resets field visibility too
 							_row[i].widget._getColumnName();
 							_colData[i].disabled = negated || jQuery.isEmptyObject(_row[i].widget.options.fields);
-							continue RowLoop;
+							break;
 						}
 					}
 					// Disable if there are no custom fields
@@ -798,9 +800,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						_colData[i].disabled = true;
 						continue;
 					}
+					colName = _row[i].widget.id;
 				}
-
-				var colName = this._getColumnName(_row[i].widget);
+				else
+				{
+					colName = this._getColumnName(_row[i].widget);
+				}
 				if(!colName) continue;
 
 				if(size[colName])
