@@ -390,9 +390,36 @@ var et2_dataview = Class.extend({
 			// make column resizable
 			var enc_column = self.columnMgr.getColumnById(col.id);
 			et2_dataview_makeResizeable(column, function(_w) {
-				this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
-				self.columnMgr.updated = true;
-				self.updateColumns();
+
+				// User wants the column to stay where they put it, even for relative
+				// width columns, so set it explicitly first and adjust other relative
+				// columns to match.
+				if(this.relativeWidth)
+				{
+					// Set to selected width
+					this.set_width(_w + "px");
+					self.columnMgr.updated = true;
+					self.updateColumns();
+
+					// Set relative widths to match
+					var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
+					this.set_width(_w / relative);
+					for(var i = 0; i < self.columnMgr.columns.length; i++)
+					{
+						var col = self.columnMgr.columns[i];
+						if(col == this || col.fixedWidth) continue;
+						col.set_width(self.columns[i].width / relative);
+					}
+					// Don't update now, or columns might change a little.
+					// Save it for next time.
+				}
+				else
+				{
+					this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
+					self.columnMgr.updated = true;
+					self.updateColumns();
+				}
+
 			}, enc_column);
 
 			// Store both nodes in the columnNodes array
