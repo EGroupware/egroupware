@@ -202,7 +202,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $select_pref == 'none')
 			{
 				self::$request->preserv[$this->id] = self::$request->content[$this->id];
-				unset(self::$request->content[$this->id]);				
+				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;
 			}
 
@@ -256,12 +256,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 			// either uses the same ID in the template, or adds the options twice
 			if(is_numeric($value) && (!is_array($label) || is_array($label) && !array_key_exists('value',$label)))
 			{
-				$check_value = is_array($label) && array_key_exists('value', $label) ? $label['value'] : $value;
-				if($value == $check_value)
+				$check_value = (string)(is_array($label) && array_key_exists('value', $label) ? $label['value'] : $value);
+				if((string)$value === $check_value)
 				{
 					foreach($options as $key => $existing)
 					{
-						if(is_array($existing) && $existing['value'] == $check_value && $key != $value)
+						if(is_array($existing) && isset($existing['value']) && (string)$existing['value'] === $check_value && $key != $value)
 						{
 							unset($options[$value]);
 							continue 2;

@@ -188,8 +188,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				$value['options-cat_id'][''] = lang('all');
 			}
-			$value['options-cat_id'] = array_merge($value['options-cat_id'],
-				etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']));
+			$value['options-cat_id'] += etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
 			etemplate_widget_menupopup::fix_encoded_options($value['options-cat_id']);
 		}
 
