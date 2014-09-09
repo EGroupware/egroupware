@@ -244,7 +244,7 @@ class addressbook_ui extends addressbook_bo
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
-		$sel_options['cat_id'] = array(array('value' => '', 'label' => lang('all')), array('value' => 0, 'label'=>lang('None')));
+		$sel_options['cat_id'] = array('' => lang('all'), '0' => lang('None'));
 
 		// Delete list action depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
