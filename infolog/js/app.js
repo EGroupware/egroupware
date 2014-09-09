@@ -55,6 +55,7 @@ app.classes.infolog = AppJS.extend(
 		{
 			case 'infolog.index':
 				this.filter_change();
+				this.filter2_change(null, this.et2.getWidgetById('nm'));
 				break;
 			case 'infolog.edit.print':
 				// Trigger print command if the infolog oppend for printing porpuse
