@@ -175,7 +175,7 @@ class timesheet_ui extends timesheet_bo
 				case 'apply':
 					if ((!$this->data['ts_quantity'] || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
-						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
+						$this->data['ts_quantity'] = round($this->data['ts_duration'] / 60.0, 2);
 					}
 					if (!$this->data['ts_quantity'])
 					{
@@ -732,6 +732,10 @@ class timesheet_ui extends timesheet_bo
 				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete';
 				$row['titleClass'] = 'timesheet_titleSum';
 				continue;
+			}
+			if($row['ts_quantity'])
+			{
+				$row['ts_quantity'] = round($row['ts_quantity'], 2);
 			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{
