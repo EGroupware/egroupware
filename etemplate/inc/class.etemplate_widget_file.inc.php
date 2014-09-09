@@ -113,7 +113,7 @@ class etemplate_widget_file extends etemplate_widget
 	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
 	{
 		// Chunks get mangled a little
-		if($file['name'] == 'blob' && $file['type'] == 'application/octet-stream')
+		if($file['name'] == 'blob')
 		{
 			$file['name'] = $_POST['resumableFilename'];
 			$file['type'] = $_POST['resumableType'];
@@ -133,7 +133,7 @@ class etemplate_widget_file extends etemplate_widget
 					return false;
 				}
 			}
-			
+
 			// Resumable / chunked uploads
 			// init the destination file (format <filename.ext>.part<#chunk>
 			// the file is stored in a temporary directory
@@ -149,7 +149,7 @@ class etemplate_widget_file extends etemplate_widget
 			// move the temporary file
 			if (!move_uploaded_file($file['tmp_name'], $dest_file))
 			{
-				$file_date[$file['name']] = 'Error saving (move_uploaded_file) chunk '.(int)$_POST['resumableChunkNumber'].' for file '.$_POST['resumableFilename'];
+				$file_data[$file['name']] = 'Error saving (move_uploaded_file) chunk '.(int)$_POST['resumableChunkNumber'].' for file '.$_POST['resumableFilename'];
 			}
 			else
 			{
