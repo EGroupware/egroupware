@@ -78,7 +78,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	_readTabs: function(tabData, tabs) {
 		var selected = "";
-		this.selected_index = 0;
+		this.selected_index = false;
 		var hidden = {};
 		if (this.id)
 		{
@@ -131,6 +131,12 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			}
 			i++;
 		}, this);
+
+		// Make sure we don't try to display a hidden tab
+		for(var i = 0; i < tabData.length && this.selected_index === false; i++)
+		{
+			if(!tabData[i].hidden) this.selected_index = i;
+		}
 	},
 
 	_readTabPanels: function(tabData, tabpanels) {
