@@ -528,10 +528,12 @@ class timesheet_bo extends so_sql_cf
 		// if we only want to return the summary (sum of duration and sum of price) we have to take care that the customfield table
 		// is not joined, as the join causes a multiplication of the sum per customfield found
 		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
-		$this->summary = parent::search(($only_summary?false:$criteria),
+		$this->summary = parent::search($only_summary ? null : $criteria,
 			"SUM(ts_duration) AS duration,SUM($total_sql) AS price,MAX(ts_modified) AS max_modified".
-			($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
-			'','',$wildcard,$empty,$op,false,($only_summary&&is_array($criteria)&&is_array($filter)?array_merge($criteria,$filter):$filter),($only_summary?'':$join));
+				($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
+			'', '', $wildcard, $empty, $op, false,
+			$only_summary && is_array($criteria) ? ($filter ? array_merge($criteria, (array)$filter) : $criteria) : $filter,
+			$only_summary ? '' : $join);
 		$this->summary = $this->summary[0];
 		$this->summary['max_modified'] = egw_time::server2user($this->summary['max_modified']);
 
@@ -765,6 +767,10 @@ class timesheet_bo extends so_sql_cf
 	 */
 	function sum($ids)
 	{
+		if (!$ids)
+		{
+			return array('duration' => 0, 'quantity' => 0, 'price' => 0, 'max_modified' => null);
+		}
 		return $this->search(array('ts_id'=>$ids),true,'','','',false,'AND',false,null,'',false,true);
 	}
 
