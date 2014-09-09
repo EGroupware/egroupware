@@ -124,7 +124,10 @@ function set_distro_defaults($distro=null)
 			// enable mcrypt
 			if (file_exists('/usr/sbin/php5enmod'))
 			{
-				$config['php5enmod'] = '/usr/sbin/php5enmod -s ALL mcrypt';
+				$config['php5enmod'] = '/usr/sbin/php5enmod';
+				// Ubuntu only needs "-s ALL" and Debian gives an error, because it does not support it
+				if (!file_exists('/etc/php5/conf.d/')) $config['php5enmod'] = ' -s ALL';
+				$config['php5enmod'] = 'mcrypt';
 			}
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
