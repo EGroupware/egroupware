@@ -246,7 +246,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			"description": "Allow to add email as contact to addressbook"
 		}
 	},
-	
+
 	/**
 	 * Constructor
 	 *
@@ -337,7 +337,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 											egw.open('','addressbook','add',extra);
 										});
 								},
-								close: function( event, ui ) 
+								close: function( event, ui )
 								{
 									ui.tooltip.hover(
 										function () {
@@ -351,7 +351,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 								}
 							})
 							.tooltip("open");
-						},
+						}
 					});
 				}
 				break;
@@ -385,7 +385,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
-		
+
 	}
 });
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
