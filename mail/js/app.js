@@ -3741,7 +3741,10 @@ app.classes.mail = AppJS.extend(
 		
 		if (!window.onafterprint)
 		{
-			window.onfocus = afterprint;
+			// For browsers which does not support onafterprint event, eg. Chrome
+			setTimeout(function() {
+				window.close();
+			}, 2000);
 		}
 		else
 		{
