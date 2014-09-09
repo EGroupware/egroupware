@@ -448,6 +448,10 @@ class mail_compose
 				$response = egw_json_response::get();
 				if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id) $response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$previouslyDrafted,'delete');
 				$response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$draft_id,'add');
+				if ($_content['button']['saveAsDraftAndPrint'])
+				{
+					$response->call('app.mail.mail_compose_print',"mail::" .$draft_id);
+				}	
 			}
 		}
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
@@ -2376,7 +2380,7 @@ class mail_compose
 		}
 		$mail_bo->closeConnection();
 	}
-
+	
 	function saveAsDraft($_formData, &$savingDestination='')
 	{
 		$mail_bo	= $this->mail_bo;
