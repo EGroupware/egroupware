@@ -1078,13 +1078,10 @@ div.message.floating {
  * Grid / nextmatch Hierarchy
  */
 /* Make sure arrow & cell content don't overlap */
-.egwGridView_grid span.arrow {
+.et2_nextmatch .egwGridView_grid span.arrow {
   margin: 6px -12px 4px 4px;
   float: left;
   position: relative;
-}
-.egwGridView_grid span.arrow ~ div.innerContainer {
-  display: inline;
 }
 /* Indent the sub-grid */
 .egwGridView_grid .egwGridView_grid {
