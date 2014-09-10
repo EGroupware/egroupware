@@ -1,3 +1,12 @@
+egroupware-epl (14.1.20140910-1) hardy; urgency=low
+
+  * all apps: fixed regressions in yesterdays package
+  * Timesheet: fix lost comment when viewtype was set to simple
+  * Mail: Colorize mail contents according to their hierarchy in body
+  * Projectmanager: fix SQL error when filtering by an application in element list, close and reopen PM
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 10 Sep 2014 14:35:39 +0200
+
 egroupware-epl (14.1.20140909-1) hardy; urgency=low
 
   * All apps/IE: fix not working file upload in IE
