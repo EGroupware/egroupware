@@ -220,14 +220,8 @@ class etemplate_new extends etemplate_widget_template
 			if(egw_json_response::isJSONResponse())
 			{
 				$load_array['response'] = egw_json_response::get()->returnResult();
-				/*$response = egw_json_response::get();
-				echo '<script>egw_LAB.wait(function() {var json = egw.json(); json.handleResponse(';
-				ob_flush();
-				$response->sendResult();
-				unset($response);
-				echo ')});</script>';*/
 			}
-			echo '<div id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(json_encode($load_array), true).'"></div>';
+			echo '<div id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(egw_json_response::json_encode($load_array), true).'"></div>';
 
 			if ($output_mode == 2)
 			{
