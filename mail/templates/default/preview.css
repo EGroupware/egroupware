@@ -38,6 +38,28 @@ blockquote[type=cite] {
 	margin-left: 0;
 	color: blue;
 }
+blockquote {
+	margin: 0;
+	border-left: 2px solid gray;
+	padding-left: 7px;
+	margin-left: 0;
+	color: black;
+}
+blockquote blockquote{
+	border-color: blue !important;
+}
+blockquote blockquote blockquote{
+	border-color: purple !important;
+}
+blockquote blockquote blockquote blockquote{
+	border-color: green !important;
+}
+blockquote blockquote blockquote blockquote blockquote{
+	border-color:  orange !important;
+}
+blockquote blockquote blockquote blockquote blockquote blockquote{
+	border-color:  gray !important;
+}
 .pageGenTime {
 	display: none;
 }
