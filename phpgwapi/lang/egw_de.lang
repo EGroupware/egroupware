@@ -194,6 +194,7 @@ congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLI
 contacting server...	common	de	Kontaktiere Server...
 content type	common	de	Content Typ
 cook islands	common	de	COOK INSELN
+cookies are required to login to this site	login	de	Cookies werden benötigt um sich hier anzumelden
 copy	common	de	Kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
@@ -914,7 +915,7 @@ your password is about to expire in %1 days, you may change your password now	co
 your password might not match the password policy.	common	de	Ihr Passwort könnte den Richtlinien nicht entsprechen.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
-your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
+your session timed out, please log in again	login	de	Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
