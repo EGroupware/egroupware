@@ -269,6 +269,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 
 		// Clear previous value
 		this.gantt.clearAll();
+		
+		// Clear the end date, or previous end date may break time scale
+		this.gantt.config.end_date = null;
 
 		if(value.duration_unit)
 		{
