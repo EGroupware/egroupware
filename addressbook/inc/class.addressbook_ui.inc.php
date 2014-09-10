@@ -2614,6 +2614,8 @@ window.egw_LAB.wait(function() {
 		if(!empty($_content))
 		{
 
+			$_content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $_content['cat_id_tree'] : $_content['cat_id'];
+
 			$response = egw_json_response::get();
 
 			$query = egw_session::appsession('index','addressbook');
@@ -2656,6 +2658,8 @@ window.egw_LAB.wait(function() {
 		$sel_options = $readonlys = array();
 		$content = egw_session::appsession('advanced_search','addressbook');
 		$content['n_fn'] = $this->fullname($content);
+		// Avoid ID conflict with tree & selectboxes
+		$content['cat_id_tree'] = $content['cat_id'];
 
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
