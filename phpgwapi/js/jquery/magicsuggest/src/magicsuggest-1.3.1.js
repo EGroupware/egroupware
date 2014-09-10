@@ -871,7 +871,7 @@
                     style: cfg.style
                 }).width(w);
                 ms.container.focus($.proxy(handlers._onFocus, this));
-                ms.container.focusout($.proxy(handlers._onBlur, this));
+                ms.container.blur($.proxy(handlers._onBlur, this));
                 ms.container.keydown($.proxy(handlers._onKeyDown, this));
                 ms.container.keyup($.proxy(handlers._onKeyUp, this));
 

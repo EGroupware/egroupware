@@ -343,6 +343,8 @@ var et2_taglist = et2_selectbox.extend(
 	getValue: function()
 	{
 		if(this.taglist == null) return null;
+		// trigger blur on taglist to not loose just typed value
+		jQuery(this.taglist.container).trigger('blur');
 		return this.taglist.getValue();
 	}
 });
