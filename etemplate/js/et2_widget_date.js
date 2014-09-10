@@ -206,7 +206,7 @@ var et2_date = et2_inputWidget.extend(
 	 *
 	 * You can use set_value to set a timestamp.
 	 *
-	 * @return {number|null} timestamp (seconds since 1970-01-01
+	 * @return {number|null} timestamp (seconds since 1970-01-01)
 	 */
 	get_time: function()
 	{
@@ -390,7 +390,7 @@ var et2_date = et2_inputWidget.extend(
 
 		// Convert to timestamp - no seconds
 		this.date.setSeconds(0,0);
-		return this.date.toJSON();
+		return this.date.toJSON().replace(/\.\d{3}Z$/, 'Z');
 	}
 });
 et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
