@@ -150,18 +150,18 @@ else
 			case 2:
 				return lang('Sorry, your login has expired');
 			case 4:
-				return lang('Cookies are required to login to this site.');
+				return lang('Cookies are required to login to this site');
 			case 5:
-				return '<font color="red">' . lang('Bad login or password') . '</font>';
+				return lang('Bad login or password');
 			case 98:
-				return '<font color="red">' . lang('Account is expired') . '</font>';
+				return lang('Account is expired');
 			case 99:
-				return '<font color="red">' . lang('Blocked, too many attempts') . '</font>';
+				return lang('Blocked, too many attempts');
 			case 10:
 				$GLOBALS['egw']->session->egw_setcookie('sessionid');
 				$GLOBALS['egw']->session->egw_setcookie('kp3');
 				$GLOBALS['egw']->session->egw_setcookie('domain');
-				return '<font color="red">' . lang('Your session could not be verified.') . '</font>';
+				return lang('Your session timed out, please log in again');
 			default:
 				if (!$code)
 				{
@@ -252,10 +252,10 @@ else
 			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 			egw::redirect_link('/login.php','cd=5');
 		}
-		#if(!isset($_COOKIE['eGroupWareLoginTime']))
-		#{
-		#	$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=4'));
-		#}
+		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
+		{
+			egw::redirect_link('/login.php','cd=4');
+		}
 
 		// don't get login data again when $submit is true
 		if($submit == false)
@@ -408,6 +408,10 @@ else
 				$lang = substr($lang,0,2);
 			}
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $lang;
+		}
+		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
+		{
+			egw_session::egw_setcookie('eGW_cookie_test','enabled',0);
 		}
 		#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
 		translation::init();	// this will set the language according to the (new) set prefs
