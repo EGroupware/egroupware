@@ -81,14 +81,11 @@ if (isset($_GET['menuaction']))
 			'disable_Template_class'	=> True,
 			'autocreate_session_callback' => 'login_redirect',
 			'no_exception_handler' => true,	// we already installed our own
-			'no_dla_update' => $appName == 'notifications',	// otherwise session never time out
+			// only log ajax requests which represent former GET requests or submits
+			// cuts down updates to egw_access_log table
+			'no_dla_update' => !preg_match('/(\.etemplate_new\.ajax_process_content\.etemplate|\.jdots_framework\.ajax_exec\.template)$/', $_GET['menuaction']),
 		)
 	);
-	if ($_GET['menuaction']=='felamimail.ajaxfelamimail.refreshMessageList' ||
-		$_GET['menuaction']=='felamimail.ajaxfelamimail.refreshFolderList')
-	{
-		$GLOBALS['egw_info']['flags']['no_dla_update']=true;
-	}
 	include_once('./header.inc.php');
 
 
