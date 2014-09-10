@@ -700,6 +700,28 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	font-weight: bold;
 	font-size:150%;
 }
+blockquote {
+	margin: 0;
+	border-left: 2px solid gray;
+	padding-left: 7px;
+	margin-left: 0;
+	color: black;
+}
+blockquote blockquote{
+	border-color: blue !important;
+}
+blockquote blockquote blockquote{
+	border-color: purple !important;
+}
+blockquote blockquote blockquote blockquote{
+	border-color: green !important;
+}
+blockquote blockquote blockquote blockquote blockquote{
+	border-color:  orange !important;
+}
+blockquote blockquote blockquote blockquote blockquote blockquote{
+	border-color:  gray !important;
+}
 /* MAIL PRINT */
 @media print {
 	.mailDisplayHeaders {
