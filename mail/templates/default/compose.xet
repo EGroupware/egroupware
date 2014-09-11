@@ -57,6 +57,11 @@
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="mode"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="lastdrafted"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="references"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"/>
+								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="list-id"/>
 							</hbox>
 							<taglist-email id="replyto" empty_label="Reply to" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
 							<hbox>

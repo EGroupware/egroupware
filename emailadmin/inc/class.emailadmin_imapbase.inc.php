@@ -4626,6 +4626,9 @@ class emailadmin_imapbase
 			);
 			if (isset($headers['IN-REPLY-TO'])) $newData['IN-REPLY-TO'] = $headers['IN-REPLY-TO'];
 			if (isset($headers['REFERENCES'])) $newData['REFERENCES'] = $headers['REFERENCES'];
+			if (isset($headers['THREAD-TOPIC'])) $newData['THREAD-TOPIC'] = $headers['THREAD-TOPIC'];
+			if (isset($headers['THREAD-INDEX'])) $newData['THREAD-INDEX'] = $headers['THREAD-INDEX'];
+			if (isset($headers['LIST-ID'])) $newData['LIST-ID'] = $headers['LIST-ID'];
 			//_debug_array($newData);
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO');
 			foreach($recepientList as $recepientType) {
