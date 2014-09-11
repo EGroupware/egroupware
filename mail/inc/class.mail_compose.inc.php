@@ -2147,12 +2147,26 @@ class mail_compose
 		return $_body;
 	}
 
+	static function _getHostName()
+	{
+		if (isset($_SERVER['SERVER_NAME'])) {
+			$result = $_SERVER['SERVER_NAME'];
+		} else {
+			$result = 'localhost.localdomain';
+		}
+		return $result;
+	}
+
 	function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false, $_convertLinks=false)
 	{
 		$mail_bo	= $this->mail_bo;
 		$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
 		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
 		$_mailObject->IsSMTP();
+		// we make sure the message ID is set here, that way, we make sure its not created on the fly upon header creation
+		$host = self::_getHostName();
+		if (empty($_mailObject->MessageID)) $_mailObject->MessageID = '<'.md5(uniqid(time())).'@'.trim($host?$host:'localhost').'>';
+
 		$_mailObject->CharSet	= $this->displayCharset;
 		// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
 		// sending in the name of someone else
@@ -2621,6 +2635,7 @@ class mail_compose
 			$mail->Username = $username;
 			$mail->Password	= $ogServer->password;
 		}
+
 		// we switch back from authentication data to the account we used to work on
 		if ($_formData['serverID']!=$_formData['mailaccount'])
 		{
