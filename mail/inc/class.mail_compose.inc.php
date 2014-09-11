@@ -1310,6 +1310,9 @@ class mail_compose
 		$preserv['processedmail_id'] = $content['processedmail_id'];
 		$preserv['references'] = $content['references'];
 		$preserv['in-reply-to'] = $content['in-reply-to'];
+		$preserv['thread-topic'] = $content['thread-topic'];
+		$preserv['thread-index'] = $content['thread-index'];
+		$preserv['list-id'] = $content['list-id'];
 		$preserv['mode'] = $content['mode'];
 		// convert it back to checkbox expectations
 		if($content['mimeType'] == 'html') {
@@ -1952,6 +1955,9 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = ($headers['IN-REPLY-TO']?$headers['IN-REPLY-TO']:$headers['MESSAGE_ID']);
 		$this->sessionData['references'] = ($headers['REFERENCES']?$headers['REFERENCES']:$headers['MESSAGE_ID']);
+		if ($headers['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $headers['THREAD-TOPIC'];
+		if ($headers['THREAD-INDEX']) $this->sessionData['thread-index'] = $headers['THREAD-INDEX'];
+		if ($headers['LIST-ID']) $this->sessionData['list-id'] = $headers['LIST-ID'];
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
 		// check for Reply-To: header and use if available
 		if(!empty($headers['REPLY-TO']) && ($headers['REPLY-TO'] != $headers['FROM'])) {
@@ -2170,10 +2176,26 @@ class mail_compose
 		$_mailObject->Encoding = 'quoted-printable';
 		$_mailObject->AddCustomHeader('X-Mailer: EGroupware-Mail');
 		if(isset($_formData['in-reply-to']) && !empty($_formData['in-reply-to'])) {
+			if (stripos($_formData['in-reply-to'],'<')===false) $_formData['in-reply-to']='<'.trim($_formData['in-reply-to']).'>';
+			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(In-Reply-To: '. $_formData['in-reply-to'].")");
 			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
 		}
 		if(isset($_formData['references']) && !empty($_formData['references'])) {
+			if (stripos($_formData['references'],'<')===false) $_formData['references']='<'.trim($_formData['references']).'>';
+			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(References: '. $_formData['references'].")");
 			$_mailObject->AddCustomHeader('References: '. $_formData['references']);
+		}
+		if(isset($_formData['thread-topic']) && !empty($_formData['thread-topic'])) {
+			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(Tread-Topic: '. $_formData['thread-topic'].")");
+			$_mailObject->AddCustomHeader('Thread-Topic: '. $_formData['thread-topic']);
+		}
+		if(isset($_formData['thread-index']) && !empty($_formData['thread-index'])) {
+			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(Tread-Index: '. $_formData['thread-index'].")");
+			$_mailObject->AddCustomHeader('Thread-Index: '. $_formData['thread-index']);
+		}
+		if(isset($_formData['list-id']) && !empty($_formData['list-id'])) {
+			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(List-Id: '. $_formData['list-id'].")");
+			$_mailObject->AddCustomHeader('List-Id: '. $_formData['list-id']);
 		}
 		if($_formData['disposition']) {
 			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity['ident_email']);
