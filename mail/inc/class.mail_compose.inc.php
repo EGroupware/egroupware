@@ -2169,8 +2169,11 @@ class mail_compose
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
 		$_mailObject->AddCustomHeader('X-Mailer: EGroupware-Mail');
-		if(isset($_formData['in-reply-to'])) {
+		if(isset($_formData['in-reply-to']) && !empty($_formData['in-reply-to'])) {
 			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
+		}
+		if(isset($_formData['references']) && !empty($_formData['references'])) {
+			$_mailObject->AddCustomHeader('References: '. $_formData['references']);
 		}
 		if($_formData['disposition']) {
 			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity['ident_email']);
