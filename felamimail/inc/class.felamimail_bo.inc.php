@@ -325,12 +325,14 @@ class felamimail_bo
 		//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
 		$identitys =& $defaultProfile->identities;
 		$icServers =& $defaultProfile->ic_server;
-		foreach ($identitys as $tmpkey => $identity)
+		if (is_array($identitys))
 		{
-			if (empty($icServers[$tmpkey]->host)) continue;
-			$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+			foreach ($identitys as $tmpkey => $identity)
+			{
+				if (empty($icServers[$tmpkey]->host)) continue;
+				$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+			}
 		}
-
 		//error_log(__METHOD__.__LINE__.array2string($identities));
 		if (array_key_exists($_profileID,$identities))
 		{
