@@ -10,7 +10,7 @@
                     </description>
                    <description class="email-button-group save">
 		                <buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
-		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
+		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraft"/>
                     </description>
 					<description class="email-button-group file">
 						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
@@ -56,7 +56,7 @@
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="mode"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="lastdrafted"/>
+								<textbox class="mail-index_quotaDisplayNone" id="lastDrafted"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="references"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"/>
 								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"/>

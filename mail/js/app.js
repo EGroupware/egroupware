@@ -3139,29 +3139,99 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 	},
-
+	
 	/**
-	* Save as Draft (VFS)
-	*
-	* @param {egw object} _egw
-	* @param {widget object} _widget
-	* @param {window object} _window
-	*/
-	saveAsDraft: function(_egw, _widget, _window)
+	 * Save as Draft (VFS)
+	 * -handel both actions save as draft and save as draft and print
+	 * 
+	 * @param {egw object} _egw
+	 * @param {widget object} _widget
+	 * @param {string} _action autosaving trigger action
+	 */
+	saveAsDraft: function(_egw, _widget, _action)
 	{
-		this.et2_obj.submit();
+		//this.et2_obj.submit();
+		var content = this.et2.getArrayMgr('content').data;
+		if (_widget )
+		{
+			var action = _action == 'autosaving'?_action: _widget.id;
+		}
+		
+		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount', 'mail_htmltext', 'mail_plaintext', 'lastDrafted'];
+		var widget = {};
+		for (var index in widgets)
+		{
+			widget = this.et2.getWidgetById(widgets[index]);
+			if (widget)
+			{
+				content[widgets[index]] = widget.get_value();
+			}
+		}
+		var self = this;
+		if (content) 
+		{	
+			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content],function(_data){
+				self.savingDraft_response(_data,action);
+			}).sendRequest(true);
+		}
 	},
 
 	/**
-	* Save as Draf and pring (VFS)
-	*
-	* @param {egw object} _egw
-	* @param {widget object} _widget
-	* @param {window object} _window
-	*/
-	saveAsDraftAndPrint: function(_egw, _widget, _window)
+	 * Set content of drafted message with new information sent back from server
+	 * This function would be used as callback of send request to ajax_saveAsDraft.
+	 * 
+	 * @param {object} _responseData response data sent back from server by ajax_saveAsDraft function.
+	 *  the object conatins below items:
+	 *  -draftedId: new drafted id created by server
+	 *  -message: resault message
+	 *  -success: true if saving was successful otherwise false
+	 *  
+	 * @param {string} _action action is the element which caused saving draft, it could be as such:
+	 *  -button[saveAsDraft]
+	 *  -button[saveAsDraftAndPrint]
+	 *  -autosaving
+	 */
+	savingDraft_response: function(_responseData, _action)
 	{
-		this.et2_obj.submit();
+		//Make sure there's a response from server otherwise shoot an error message
+		if (jQuery.isEmptyObject(_responseData))
+		{
+			this.egw.message('Could not saved the message. Besause, the response from server failed.', 'error');
+			return false;
+		}
+			
+		if (_responseData.success)
+		{
+			var content = this.et2.getArrayMgr('content');
+			var lastDrafted = this.et2.getWidgetById('lastDrafted');
+			if (content)
+			{
+				var prevDraftedId = content.data.lastDrafted;
+				content.data.lastDrafted = _responseData.draftedId;
+				this.et2.setArrayMgr('content', content);
+				lastDrafted.set_value(_responseData.draftedId);
+				if (prevDraftedId)
+				{
+					opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
+				}
+				this.egw.refresh(_responseData.message,'mail',_responseData.draftedId,'add');
+				switch (_action)
+				{
+					case 'button[saveAsDraftAndPrint]':
+						this.mail_compose_print('mail::'+_responseData.draftedId);
+						this.egw.message(_responseData.message, 'add');
+						break;
+					case 'autosaving':
+						//Any sort of thing if it's an autosaving action
+					default:
+						this.egw.message(_responseData.message, 'add');
+				}
+			}
+		}
+		else
+		{
+			this.egw.message(_responseData.message, 'error');
+		}
 	},
 	
 	/**
