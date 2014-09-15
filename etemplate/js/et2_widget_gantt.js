@@ -316,44 +316,53 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			
 			this.parse(safe_value);
 
+			gantt_widget.gantt_loading = false;
 			// Once we force the start / end date (below), gantt won't recalculate
 			// them if the user clears the date, so we store them and use them
 			// if the user clears the date.
 			//gantt_widget.stored_state = jQuery.extend({},this.getState());
 
-			// Zoom to specified or auto level
-			var auto_zoom = this.attachEvent('onGanttRender', function() {
-				this.detachEvent(auto_zoom);
-				gantt_widget.set_zoom(value.zoom || false);
-				this.render();
-				this.hideCover();
-
-				// Doing this again here forces the gantt chart to trim the tasks
-				// to fit the date range, rather than drawing all the dates out
-				// to the start date.
-				// No speed improvement, but it makes a lot more sense in the UI
+			// Doing this again here forces the gantt chart to trim the tasks
+			// to fit the date range, rather than drawing all the dates out
+			// to the start date.
+			// No speed improvement, but it makes a lot more sense in the UI
+			var range = this.attachEvent('onGanttRender', function() {
+				this.detachEvent(range);
 				if(value.start_date  || value.end_date)
 				{
-					/*
 					// TODO: Some weirdness in this when changing dates
-					if(gantt_widget.getWidgetById('start_date') && value.start_date > gantt_widget.stored_state._min_date)
+					// If this is done, gantt does not respond when user clears the start date
+					/*
+					this.refreshData();
+					debugger;
+					if(gantt_widget.getWidgetById('start_date') && new Date(value.start_date) > this._min_date)
 					{
 						gantt_widget.getWidgetById('start_date').set_value(value.start_date || null);
 					}
-					if(gantt_widget.getWidgetById('end_date') && value.end_date < gantt_widget.stored_state._max_date)
+					if(gantt_widget.getWidgetById('end_date') && new Date(value.end_date) < this._max_date)
 					{
 						gantt_widget.getWidgetById('end_date').set_value(value.end_date || null);
 					}
+					this.refreshData();
+					this.render();
 					*/
+
 					this.scrollTo(this.posFromDate(new Date(value.end_date || value.start_date )),0);
 				}
 
-				if(console.timeEnd) console.timeEnd("Gantt set_value");
-				if(console.groupEnd) console.groupEnd();
-				if(console.profile) console.profileEnd();
+				// Zoom to specified or auto level
+				var auto_zoom = this.attachEvent('onGanttRender', function() {
+					this.detachEvent(auto_zoom);
+					gantt_widget.set_zoom(value.zoom || false);
+					this.render();
+					this.hideCover();
+
+					if(console.timeEnd) console.timeEnd("Gantt set_value");
+					if(console.groupEnd) console.groupEnd();
+					if(console.profile) console.profileEnd();
+				});
 			});
-			gantt_widget.gantt_loading = false;
-		})
+		});
 		this.gantt.render();
 	},
 	/**
@@ -444,8 +453,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			{
 				level = 4;
 			}
-			// More than 2 months
-			else if(difference > 5256000 || this.gantt.getState().max_date.getMonth() != this.gantt.getState().min_date.getMonth())
+			// More than 3 days
+			else if(difference > 86400 * 3 || this.gantt.getState().max_date.getMonth() != this.gantt.getState().min_date.getMonth())
 			{
 				level = 3;
 			}
@@ -454,6 +463,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			{
 				level = 2;
 			}
+			// Less than a day
 			else
 			{
 				level = 1;
