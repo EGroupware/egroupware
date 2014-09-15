@@ -100,6 +100,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		// Gantt instance
 		this.gantt = null;
 
+		// Flag to avoid re-rendering several times while loading
+		this.gantt_loading = false;
+
 		// DOM Nodes
 		this.filters = $j(document.createElement("div"))
 			.addClass('et2_gantt_header');
@@ -264,6 +267,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	set_value: function(value) {
 		if(this.gantt == null) return false;
 
+
+		if(console.time) console.time("Gantt set_value");
+
 		// Unselect task before removing it, or we get errors later if it is accessed
 		this.gantt.unselectTask();
 
@@ -293,9 +299,27 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				data: value.data || [],
 				links: value.links || []
 			};
-			this.config.start_date = value.start_date || null;
-			this.config.end_date = value.end_date || null;
+
+			this.config.start_date = value.start_date ? new Date(value.start_date) : null;
+			this.config.end_date = value.end_date ? new Date(value.end_date) : null;
+			
+			// Set flag so events don't trigger an extra render
+			gantt_widget.gantt_loading = true;
+			if(gantt_widget.getWidgetById('start_date'))
+			{
+				gantt_widget.getWidgetById('start_date').set_value(value.start_date || null);
+			}
+			if(gantt_widget.getWidgetById('end_date'))
+			{
+				gantt_widget.getWidgetById('end_date').set_value(value.end_date || null);
+			}
+			
 			this.parse(safe_value);
+
+			// Once we force the start / end date (below), gantt won't recalculate
+			// them if the user clears the date, so we store them and use them
+			// if the user clears the date.
+			//gantt_widget.stored_state = jQuery.extend({},this.getState());
 
 			// Zoom to specified or auto level
 			var auto_zoom = this.attachEvent('onGanttRender', function() {
@@ -303,8 +327,32 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				gantt_widget.set_zoom(value.zoom || false);
 				this.render();
 				this.hideCover();
+
+				// Doing this again here forces the gantt chart to trim the tasks
+				// to fit the date range, rather than drawing all the dates out
+				// to the start date.
+				// No speed improvement, but it makes a lot more sense in the UI
+				if(value.start_date  || value.end_date)
+				{
+					/*
+					// TODO: Some weirdness in this when changing dates
+					if(gantt_widget.getWidgetById('start_date') && value.start_date > gantt_widget.stored_state._min_date)
+					{
+						gantt_widget.getWidgetById('start_date').set_value(value.start_date || null);
+					}
+					if(gantt_widget.getWidgetById('end_date') && value.end_date < gantt_widget.stored_state._max_date)
+					{
+						gantt_widget.getWidgetById('end_date').set_value(value.end_date || null);
+					}
+					*/
+					this.scrollTo(this.posFromDate(new Date(value.end_date || value.start_date )),0);
+				}
+
+				if(console.timeEnd) console.timeEnd("Gantt set_value");
+				if(console.groupEnd) console.groupEnd();
+				if(console.profile) console.profileEnd();
 			});
-			this.render();
+			gantt_widget.gantt_loading = false;
 		})
 		this.gantt.render();
 	},
@@ -645,6 +693,9 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			var widget_change = _widget.change;
 
 			var change = function(_node) {
+				// Stop if we're in the middle of loading
+				if(gantt_widget.gantt_loading) return false;
+				
 				// Call previously set change function
 				var result = widget_change.call(_widget,_node);
 
@@ -661,6 +712,13 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue()) : gantt_widget.gantt.getState().min_date;
 						// End date is inclusive
 						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(new Date(end.getValue()).valueOf()+86400000) : gantt_widget.gantt.getState().max_date;
+
+						/*
+						// TODO: some weirdness here when we start changing min_date
+						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue()) : gantt_widget.stored_state.min_date || gantt_widget.gantt.getState().min_date;
+						// End date is inclusive
+						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(new Date(end.getValue()).valueOf()+86400000) : gantt_widget.stored_state.max_date || gantt_widget.gantt.getState().max_date;
+						 */
 						if(gantt_widget.gantt.config.end_date <= gantt_widget.gantt.config.start_date)
 						{
 							gantt_widget.gantt.config.end_date = null;
