@@ -55,7 +55,10 @@ app.classes.infolog = AppJS.extend(
 		{
 			case 'infolog.index':
 				this.filter_change();
-				this.filter2_change(null, this.et2.getWidgetById('nm'));
+				// Show / hide descriptions according to details filter
+				var nm = this.et2.getWidgetById('nm');
+				var filter2 = nm.getWidgetById('filter2');
+				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
 				break;
 			case 'infolog.edit.print':
 				// Trigger print command if the infolog oppend for printing porpuse
