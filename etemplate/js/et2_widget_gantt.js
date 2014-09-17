@@ -287,7 +287,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		this.gantt.showCover();
 
 		// Set zoom to max, in case data spans a large time
-		this.set_zoom(value.zoom || 4);
+		this.set_zoom(value.zoom || 5);
 
 		// Wait until zoom is done before continuing so timescales are done
 		var gantt_widget = this;
@@ -353,8 +353,18 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				// Zoom to specified or auto level
 				var auto_zoom = this.attachEvent('onGanttRender', function() {
 					this.detachEvent(auto_zoom);
-					gantt_widget.set_zoom(value.zoom || false);
-					this.render();
+
+					var old_zoom;
+
+					// Zooming out re-scales the gantt start & end dates and
+					// changes what values they can have,
+					// so to zoom in we have to do it step by step
+					do
+					{
+						this.render();
+						old_zoom = gantt_widget.options.zoom;
+						gantt_widget.set_zoom(value.zoom || false);
+					} while(gantt_widget.options.zoom != old_zoom)
 					this.hideCover();
 
 					if(console.timeEnd) console.timeEnd("Gantt set_value");
@@ -362,7 +372,11 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					if(console.profile) console.profileEnd();
 				});
 			});
+			// This render re-calculates start/end dates
+			// this.render();
 		});
+
+		// This render re-sizes gantt to work at highest zoom
 		this.gantt.render();
 	},
 	/**
@@ -437,7 +451,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		var min_column_width = this.gantt_config.min_column_width;
 
 		// No level?  Auto calculate.
-		if(level > 4) level = 4;
+		if(level > 5) level = 5;
 		if(!level || level < 1) {
 			// Make sure we have the most up to date info for the calculations
 			// There may be a more efficient way to trigger this though
@@ -448,31 +462,37 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			{}
 
 			var difference = (this.gantt.getState().max_date - this.gantt.getState().min_date)/1000; // seconds
-			// Spans more than a year
-			if(difference > 31536000 || this.gantt.getState().max_date.getFullYear() != this.gantt.getState().min_date.getFullYear())
+			// Spans more than 3 years
+			if(difference > 94608000)
+			{
+				level = 5;
+			}
+			// Spans more than 3 months
+			else if(difference > 7776000)
 			{
 				level = 4;
 			}
 			// More than 3 days
-			else if(difference > 86400 * 3 || this.gantt.getState().max_date.getMonth() != this.gantt.getState().min_date.getMonth())
+			else if(difference > 86400 * 3)
 			{
 				level = 3;
 			}
 			// More than 1 day
-			else if (difference > 86400)
-			{
-				level = 2;
-			}
-			// Less than a day
 			else
 			{
-				level = 1;
+				level = 2;
 			}
 		}
 
 		// Adjust Gantt settings for specified level
 		switch(level)
 		{
+			case 5:
+				// Several years
+				//subscales.push({unit: "year", step: 1, date: '%Y'});
+				scale_unit = 'year';
+				date_scale = '%Y';
+				break;
 			case 4:
 				// A year or more, scale in weeks
 				subscales.push({unit: "month", step: 1, date: '%F %Y'});
@@ -544,7 +564,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				},100);
 			});
 			
-			if(this.parentNode && this.parentNode.firstChild == this)
+			if(this.parentNode && this.parentNode.firstChild == this && this.parentNode.childElementCount > 1)
 			{
 				// Zoom out
 				gantt_widget.set_zoom(gantt_widget.options.zoom + 1);
