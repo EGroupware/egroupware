@@ -503,7 +503,10 @@ egw_fw.prototype.applicationTabNavigate = function(_app, _url, _hidden, _pos)
 	{
 		_url = _app.indexUrl;
 	}
-	else if (_app.browser != null && _app.browser.iframe == null && _url == _app.browser.currentLocation)
+	else if (_app.browser != null && 
+		// check if app has its own linkHandler
+		!(this.applications[_app.appName].app_refresh) &&
+		_app.browser.iframe == null && _url == _app.browser.currentLocation)
 	{
 		// Just do an egw_refresh to avoid a full reload
 		egw_refresh('',_app.appName);
