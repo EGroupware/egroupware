@@ -663,8 +663,10 @@ var et2_dataview_controller = Class.extend({
 	 */
 	_destroyCallback: function (_row) {
 
-		// Unregister the row from the selection manager
-		if (this.entry.row)
+		// Unregister the row from the selection manager, if not selected
+		// If it is selected, leave it there - allows selecting rows and scrolling
+		var selection = this.self._selectionMgr._getRegisteredRowsEntry(this.entry.uid);
+		if (this.entry.row && selection && !egwBitIsSet(selection.state, EGW_AO_STATE_SELECTED))
 		{
 			var tr = this.entry.row.getDOMNode();
 			this.self._selectionMgr._updateState(this.entry.uid, EGW_AO_STATE_NORMAL)
