@@ -1083,7 +1083,7 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			$user = $hook_data['account_id'];
 			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
+			$addressbooks += $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
 			if ($user > 0)  unset($addressbooks[$user]);	// allways synced
 			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
 		}
