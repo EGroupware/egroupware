@@ -119,6 +119,10 @@ var et2_dataview_column = ClassWithAttributes.extend({
 		{
 			this.fixedWidth = parseInt(w.substr(0, w.length - 2));
 		}
+		else if (typeof w == 'string' && !isNaN(w))
+		{
+			this.fixedWidth = parseInt(w);
+		}
 	},
 
 	set_visibility: function(_value) {
