@@ -270,8 +270,8 @@ class admin_acl
 				!$GLOBALS['egw']->acl->check('account_access', 64, 'admin');	// ! because this denies access!
 			$own_access = $admin_access || isset($GLOBALS['egw_info']['user']['apps']['preferences']);
 		}
-		if (!($location === 'run' || (int)$account_id) ||
-			!((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'] ? $own_access : $admin_access))
+		if (!(int)$account_id || !((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'] && $location !== 'run' ?
+				$own_access : $admin_access))
 		{
 			if ($throw) throw new egw_exception_no_permission(lang('Permission denied!!!'));
 			return false;
@@ -307,43 +307,48 @@ class admin_acl
 	 */
 	public static function ajax_change_acl($ids, $rights=null)
 	{
-		foreach((array)$ids as $id)
-		{
-			list($app, $account_id, $location) = explode(':', $id, 3);
-
-			self::check_access($account_id, $location);	// throws exception, if no rights
-
-			$acl = $GLOBALS['egw']->acl;
-
-			if (!(int)$rights)	// this also handles taking away all rights as delete
+		try {
+			foreach((array)$ids as $id)
 			{
-				$acl->delete_repository($app, $location, $account_id);
+				list($app, $account_id, $location) = explode(':', $id, 3);
+
+				self::check_access($account_id, $location);	// throws exception, if no rights
+
+				$acl = $GLOBALS['egw']->acl;
+
+				if (!(int)$rights)	// this also handles taking away all rights as delete
+				{
+					$acl->delete_repository($app, $location, $account_id);
+				}
+				else
+				{
+					$acl->add_repository($app, $location, $account_id, $rights);
+				}
+			}
+			if (!(int)$rights)
+			{
+				if (count($ids) > 1)
+				{
+					$msg = lang('%1 ACL entries deleted.', count($ids));
+				}
+				else
+				{
+					$msg = lang('ACL entry deleted.');
+				}
 			}
 			else
 			{
-				$acl->add_repository($app, $location, $account_id, $rights);
+				$msg = lang('ACL updated');
 			}
+			egw_json_response::get()->data(array(
+				'msg' => $msg,
+				'ids' => $ids,
+				'type' => !(int)$rights ? 'delete' : 'add',
+			));
 		}
-		if (!(int)$rights)
-		{
-			if (count($ids) > 1)
-			{
-				$msg = lang('%1 ACL entries deleted.', count($ids));
-			}
-			else
-			{
-				$msg = lang('ACL entry deleted.');
-			}
+		catch (Exception $e) {
+			egw_json_response::get()->call('egw.message', $e->getMessage(), 'error');
 		}
-		else
-		{
-			$msg = lang('ACL updated');
-		}
-		egw_json_response::get()->data(array(
-			'msg' => $msg,
-			'ids' => $ids,
-			'type' => !(int)$rights ? 'delete' : 'add',
-		));
 	}
 
 	/**
