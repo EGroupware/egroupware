@@ -468,6 +468,11 @@ app.classes.admin = AppJS.extend(
 			{
 				content.acl_location = this.et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
 			}
+			// If no admin rights, change UI to not allow adding access to apps
+			if(content.acl_location == 'run' && !egw.user('apps')['admin'])
+			{
+				content.acl_location = null;
+			}
 			if(content.acl_location == 'run')
 			{
 				// These are the apps the account has access to
