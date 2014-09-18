@@ -156,6 +156,7 @@ class timesheet_bo extends so_sql_cf
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
+		$this->columns_to_search[] = self::EXTRA_TABLE.'.ts_extra_value';
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
