@@ -409,10 +409,12 @@ class admin_acl
 				'caption' => 'Edit',
 				'default' => true,
 				'allowOnMultiple' => false,
+				'disableClass' => 'rowNoEdit',
 				'onExecute' => 'javaScript:app.admin.acl',
 			),
 			'add' => array(
 				'caption' => 'Add',
+				'disableClass' => 'rowNoEdit',
 				'onExecute' => 'javaScript:app.admin.acl',
 			),
 			'delete' => array(
