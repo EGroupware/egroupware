@@ -323,7 +323,9 @@ class emailadmin_sieve extends Net_Sieve
 		$methods = array();
 		if($userMethod != null ){
 			$methods[] = $userMethod;
-			array_push($methods,$this->supportedAuthMethods);
+			foreach ( $this->supportedAuthMethods as $method ) {
+				$methods[]=$method;
+			}
 		}else{
 			$methods = $this->supportedAuthMethods;
 		}
