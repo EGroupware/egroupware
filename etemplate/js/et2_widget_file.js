@@ -558,10 +558,16 @@ var et2_file = et2_inputWidget.extend(
 
 	/**
 	 * Remove a file from the list of values
+	 *
+	 * @param {File|string} File object, or file name, to remove
 	 */
 	remove_file: function(file)
 	{
 		//console.info(filename);
+		if(typeof file == 'string')
+		{
+			file = {fileName: file};
+		}
 		for(var key in this.options.value)
 		{
 			if(this.options.value[key].name == file.fileName)
@@ -571,7 +577,7 @@ var et2_file = et2_inputWidget.extend(
 				return;
 			}
 		}
-		if(!file.isComplete()) file.cancel();
+		if(file.isComplete && !file.isComplete() && file.cancel) file.cancel();
 	},
 
 	/**
