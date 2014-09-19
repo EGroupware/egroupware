@@ -207,7 +207,7 @@ class emailadmin_sieve extends Net_Sieve
 			$this->supportedAuthMethods = $sieveAuthMethods[$_icServerID];
 		}
 
-		if(PEAR::isError($this->error = $this->login($username, $password, null, $euser) ) )
+		if(PEAR::isError($this->error = $this->login($username, $password, 'LOGIN', $euser) ) )
 		{
 			if ($this->debug)
 			{
@@ -299,6 +299,49 @@ class emailadmin_sieve extends Net_Sieve
         return true;
     }
 
+	/**
+	* Own _getBestAuthMethod as Net/Sieve.php assumes SASLMethods to be working
+	* Returns the name of the best authentication method that the server
+	* has advertised.
+	*
+	* @param string if !=null,check this one first if reported as serverMethod.
+	*                  if so, return as bestauthmethod
+	* @return mixed    Returns a string containing the name of the best
+	*                  supported authentication method or a PEAR_Error object
+	*                  if a failure condition is encountered.
+	*/
+	function _getBestAuthMethod($userMethod = null)
+	{
+		//error_log(__METHOD__.__LINE__.'->'.$userMethod.'<->'.array2string($this->_capability['sasl']));
+		if( isset($this->_capability['sasl']) ){
+			$serverMethods=$this->_capability['sasl'];
+		}else{
+			// if the server don't send an sasl capability fallback to login auth
+			//return 'LOGIN';
+			return PEAR::raiseError("This server don't support any Auth methods SASL problem?");
+		}
+		$methods = array();
+		if($userMethod != null ){
+			$methods[] = $userMethod;
+			array_push($methods,$this->supportedAuthMethods);
+		}else{
+			$methods = $this->supportedAuthMethods;
+		}
+		if( ($methods != null) && ($serverMethods != null)){
+			foreach ( $methods as $method ) {
+				if ( in_array( $method , $serverMethods ) ) {
+					return $method;
+				}
+			}
+			$serverMethods=implode(',' , $serverMethods );
+			$myMethods=implode(',' ,$this->supportedAuthMethods);
+			return PEAR::raiseError("$method NOT supported authentication method!. This server " .
+				"supports these methods= $serverMethods, but I support $myMethods");
+		}else{
+			return PEAR::raiseError("This server don't support any Auth methods");
+		}
+	}
+
     /**
      * Handles the authentication using any known method
      * overwritten function from Net_Sieve to support fallback
@@ -321,7 +364,7 @@ class emailadmin_sieve extends Net_Sieve
         //error_log(__METHOD__.__LINE__.' using AuthMethod: '.$method);
         switch ($method) {
             case 'DIGEST-MD5':
-                $result = $this->_authDigest_MD5( $uid , $pwd , $euser );
+                $result = $this->_authDigestMD5( $uid , $pwd , $euser );
                 if (!PEAR::isError($result))
 				{
 					break;
@@ -331,7 +374,7 @@ class emailadmin_sieve extends Net_Sieve
                 $this->supportedAuthMethods = array_diff($this->supportedAuthMethods,array($method,'CRAM-MD5'));
                 return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'CRAM-MD5':
-                $result = $this->_authCRAM_MD5( $uid , $pwd, $euser);
+                $result = $this->_authCRAMMD5( $uid , $pwd, $euser);
                 if (!PEAR::isError($result))
 				{
 					break;
