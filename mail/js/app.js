@@ -3187,6 +3187,7 @@ app.classes.mail = AppJS.extend(
 	 *  -draftedId: new drafted id created by server
 	 *  -message: resault message
 	 *  -success: true if saving was successful otherwise false
+	 *  -draftfolder: Name of draft folder including its delimiter
 	 *  
 	 * @param {string} _action action is the element which caused saving draft, it could be as such:
 	 *  -button[saveAsDraft]
@@ -3198,7 +3199,7 @@ app.classes.mail = AppJS.extend(
 		//Make sure there's a response from server otherwise shoot an error message
 		if (jQuery.isEmptyObject(_responseData))
 		{
-			this.egw.message('Could not saved the message. Besause, the response from server failed.', 'error');
+			this.egw.message('Could not saved the message. Because, the response from server failed.', 'error');
 			return false;
 		}
 			
@@ -3206,17 +3207,22 @@ app.classes.mail = AppJS.extend(
 		{
 			var content = this.et2.getArrayMgr('content');
 			var lastDrafted = this.et2.getWidgetById('lastDrafted');
+			var folderTree = opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+			var activeFolder = folderTree?folderTree.getSelectedNode():null;
 			if (content)
 			{
 				var prevDraftedId = content.data.lastDrafted;
 				content.data.lastDrafted = _responseData.draftedId;
 				this.et2.setArrayMgr('content', content);
 				lastDrafted.set_value(_responseData.draftedId);
-				if (prevDraftedId)
+				if (typeof activeFolder.id !='undefined'&& activeFolder && _responseData.draftfolder == activeFolder.id)
 				{
-					opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
+					if (prevDraftedId)
+					{
+						opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
+					}
+					this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
 				}
-				this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
 				switch (_action)
 				{
 					case 'button[saveAsDraftAndPrint]':
