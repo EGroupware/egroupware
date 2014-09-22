@@ -938,7 +938,7 @@ abstract class egw_framework
 		{
 			$versions = array();
 			$security = null;
-			if (($remote = file_get_contents(egw_framework::CURRENT_VERSION_URL)))
+			if (($remote = file_get_contents(egw_framework::CURRENT_VERSION_URL, false, self::proxy_context())))
 			{
 				list($current, $security) = explode("\n", $remote);
 				if (empty($security)) $security = $current;
@@ -975,6 +975,43 @@ abstract class egw_framework
 				'http://www.egroupware.org/changelog', null, ' target="_blank" data-api-version="'.$api.'"');
 		}
 		return null;
+	}
+
+	/**
+	 * Get context to use with file_get_context or fopen to use our proxy settings from setup
+	 *
+	 * @param string $username =null username for regular basic auth
+	 * @param string $password =null password --------- " ----------
+	 * @return resource|null context to use with file_get_context/fopen or null if no proxy configured
+	 */
+	public static function proxy_context($username=null, $password=null)
+	{
+		if (empty($GLOBALS['egw_info']['server']['httpproxy_server']))
+		{
+			return null;
+		}
+
+		$opts = array (
+			'method' => 'GET',
+			'proxy'  => 'tcp://'.$GLOBALS['egw_info']['server']['httpproxy_server'].':'.
+				($GLOBALS['egw_info']['server']['httpproxy_port'] ? $GLOBALS['egw_info']['server']['httpproxy_port'] : 8080),
+			'request_fulluri' => true,
+		);
+		// proxy authentication
+		if (!empty($GLOBALS['egw_info']['server']['httpproxy_server_username']))
+		{
+			$opts['header'][] = 'Proxy-Authorization: Basic '.base64_encode($GLOBALS['egw_info']['server']['httpproxy_server_username'].':'.
+				$GLOBALS['egw_info']['server']['httpproxy_server_password']);
+		}
+		// optional authentication
+		if (isset($username))
+		{
+			$opts['header'][] = 'Authorization: Basic '.base64_encode($username.':'.$password);
+		}
+		return stream_context_create(array(
+			'http' => $opts,
+			'https' => $opts,
+		));
 	}
 
 	/**
