@@ -3216,17 +3216,17 @@ app.classes.mail = AppJS.extend(
 				{
 					opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
 				}
-				this.egw.refresh(_responseData.message,'mail',_responseData.draftedId,'add');
+				this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
 				switch (_action)
 				{
 					case 'button[saveAsDraftAndPrint]':
 						this.mail_compose_print('mail::'+_responseData.draftedId);
-						this.egw.message(_responseData.message, 'add');
+						this.egw.message(_responseData.message);
 						break;
 					case 'autosaving':
 						//Any sort of thing if it's an autosaving action
 					default:
-						this.egw.message(_responseData.message, 'add');
+						this.egw.message(_responseData.message);
 				}
 			}
 		}
