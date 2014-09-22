@@ -1159,6 +1159,17 @@
     background-image: url(../images/selectarrowdown.png);
     background-size: 16px 16px;
   }
+  /**
+ * Grid / nextmatch Hierarchy
+ */
+  /**
+ * This class' margin-right is used to line up columns at each indent level
+ * Classes level_# are created programmatically with margin-right * depth
+ * Margin-right = -(indent + border)
+ */
+  .indentation {
+    margin-right: -15px;
+  }
   /* End of hierarchy */
   /* Mangled link-to widget inside a nextmatch - used for DnD uploads */
   .et2_nextmatch * .et2_link_to {
