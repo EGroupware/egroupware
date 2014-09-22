@@ -627,10 +627,11 @@ class egw_db
 	* @param int $offset row to start from, default 0
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
 	* @param array/boolean $inputarr array for binding variables to parameters or false (default)
-	* @param int $fetchmode=egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param int $fetchmode =egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false,$fetchmode=egw_db::FETCH_BOTH)
+	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=egw_db::FETCH_BOTH, $reconnect=true)
 	{
 		if ($Query_String == '')
 		{
@@ -683,6 +684,11 @@ class egw_db
 		}
 		if (!$this->Query_ID)
 		{
+			if ($reconnect && $this->Type == 'mysql' && $this->Errno == 2006)	// Server has gone away
+			{
+				$this->disconnect();
+				return $this->query($Query_String, $line, $file, $offset, $num_rows, $inputarr, $fetchmode, false);
+			}
 			$this->halt("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 				($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''),
 				$line, $file);
