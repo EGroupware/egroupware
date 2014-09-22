@@ -11,6 +11,7 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
+bootstrap theme for ckeditor	preferences	fr	Thème Bootstrap pour le CKEditor
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
@@ -22,6 +23,7 @@ charset for the csv export/import	preferences	fr	Jeu de caractères
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
+dark moono theme	preferences	fr	Thème Dark Moono
 data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
@@ -29,7 +31,6 @@ default application	preferences	fr	Application par défaut
 default font	preferences	fr	Police par défaut
 default font size	preferences	fr	Taille de police par défaut
 default preferences	preferences	fr	Préférences par défaut
-default theme	preferences	fr	Thème par défaut
 delete categories	preferences	fr	Supprimer les catégories
 deny following groups access to acl (grant access)	admin	fr	Refuser aux groupes suivants l'accès aux ACL (autoriser l'accès)
 deny following groups access to edit categories	admin	fr	Refuser aux groupes suivants de modifier les catégories
@@ -72,13 +73,14 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	fr	Dans quel pays êtes-vous ? Ceci est utilisé pour définir certaines valeurs par défaut.
 interface/template selection	preferences	fr	Sélection de l'interface/modèle
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
+kama theme	preferences	fr	Thème Kama
 language	preferences	fr	Langue
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
 moono color theme	preferences	fr	Couleur de thème Moono
-moono theme	preferences	fr	Thème Moono
+moono theme (default)	preferences	fr	Thème Moono (défaut)
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
@@ -86,7 +88,6 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	fr	Paramètres de notification
 number format	preferences	fr	Format de nombre
 numbers	preferences	fr	nombres
-office 2003 theme	preferences	fr	Thème office 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fr	L'ancien mot de masse est identique au nouveau. Vous devez entrer un nouveau mot de passe !
 p: paragraph	preferences	fr	p: Paragraphe
 password changed	preferences	fr	Mot de passe changé
@@ -125,7 +126,6 @@ show navigation bar as	preferences	fr	Afficher la barre de navigation comme
 show number of current users	preferences	fr	Afficher le nombre d'utilisateurs courants
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
-silver theme	preferences	fr	Thème Argent
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte

@@ -43,7 +43,9 @@ active	common	fr	Actif
 active directory requires ssl or tls to change passwords!	common	fr	L'Active Directory nécessite SSL ou TLS pour le changement des mots de passe !
 add	common	fr	Ajouter
 add %1 category for	common	fr	Ajouter la catégorie %1 pour
+add a new contact	common	fr	Ajouter un nouveau conct
 add category	common	fr	Ajouter catégorie
+add current	common	fr	Ajouter la sélection
 add shortcut	common	fr	Ajouter raccourci
 add sub	common	fr	Ajouter enfant
 add user to responsibles	groupdav	fr	rattacher un utilisateur à des responsables
@@ -88,6 +90,7 @@ austria	common	fr	AUTRICHE
 author	common	fr	Auteur
 autohide sidebox menu's	common	fr	Cacher automatiquement la barre de menu latérale
 autohide sidebox menus	common	fr	Cacher automatiquement la barre de menu latérale
+automatic update check failed, you need to check manually!	common	fr	Vérification automatique de la mise à jour en échec, vous devriez vérifier manuellement !
 automatically hide the sidebox menu's?	common	fr	Cacher automatiquement la barre de menu latérale ?
 automatically hide the sidebox menus?	common	fr	Cacher automatiquement la barre de menu latérale ?
 autosave default category	common	fr	Enregistrement automatique dans catégorie par défaut
@@ -142,12 +145,14 @@ categories for	common	fr	catégories pour
 category	common	fr	Catégorie
 category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
 category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
+category owner	common	fr	Propriétaire de la catégorie
 cayman islands	common	fr	ILES CAIMAN
 cc	common	fr	Cc
 centered	common	fr	centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
+change owner	common	fr	Changer le propriétaire
 charset	common	fr	utf-8
 check installation	common	fr	Vérifier l'installation
 check now	common	fr	Vérifier maintenant
@@ -158,6 +163,7 @@ choose a background color for the icons	common	fr	Choisissez une couleur de fond
 choose a background image.	common	fr	Choisissez une image de fond
 choose a background style.	common	fr	Choisissez un style de fond
 choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
+choose file...	common	fr	Sélectionner le fichier...
 choose the category	common	fr	Choisir la catégorie
 choose the parent category	common	fr	Choisir la catégorie parent
 chosen parent category no longer exists	common	fr	La catégorie mère sélectionnée n'existe plus
@@ -186,6 +192,7 @@ congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE D
 contacting server...	common	fr	Connexion au serveur...
 content type	common	fr	Type de contenu
 cook islands	common	fr	ILES COOK
+cookies are required to login to this site	login	fr	Les cookies sont nécessaire pour se connecter à ce site
 copy	common	fr	Copier
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
@@ -259,6 +266,8 @@ edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 egroupware	common	fr	eGroupWare
 egroupware api version	common	fr	Version de l'API eGroupware
+egroupware maintenance update %1 available	common	fr	Mise à jour de maintenance eGroupware %1 disponible
+egroupware security update %1 needs to be installed!	common	fr	Mise à jour de sécurité %1 doit être installée !
 egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
@@ -506,6 +515,7 @@ netherlands antilles	common	fr	ANTILLES HOLLANDAISES
 never	common	fr	Jamais
 new caledonia	common	fr	NOUVELLE CALEDONIE
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
+new favorite	common	fr	Nouveau favoris
 new main category	common	fr	Nouvelle catégorie principale
 new value	common	fr	Nouvelle valeur
 new zealand	common	fr	NOUVELLE ZELANDE
@@ -544,6 +554,7 @@ notify your administrator to correct this situation	common	fr	Demandez à votre 
 november	common	fr	Novembre
 numbers	common	fr	nombres
 october	common	fr	Octobre
+off	groupdav	fr	Inactif
 ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
@@ -605,8 +616,10 @@ poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
 powered by	common	fr	Motorisé par
+pre	common	fr	Pré
 preferences	common	fr	Préférences
 preferences for the %1 template set	preferences	fr	Préférences pour le template %1
+prev	common	fr	Préc.
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
@@ -671,11 +684,14 @@ search accounts	common	fr	Chercher des comptes
 search or select accounts	common	fr	Rechercher ou sélectionner des comptes
 second	common	fr	seconde
 section	common	fr	Section
+securest	common	fr	Test de sécurité
 select	common	fr	Sélectionner
 select "%1", if your client does not support multiple addressbooks.	groupdav	fr	Sélectionner "%1" si votre client ne supporte pas plusieurs carnets d'adresses.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	fr	Sélectionner "%1" si votre client supporte les groupes (ex : OS X ou carnet d'adresses iOS)
 select action	common	fr	Sélectionner une action
+select all	common	fr	Tout sélectionner
 select all %1 %2 for %3	common	fr	Sélectionner tous les %11 %2 pour %3
+select all entries	common	fr	Sélectionner tous les éléments
 select category	common	fr	Sélectionner la catégorie
 select date	common	fr	Sélectionner la date
 select group	common	fr	Sélectionner le groupe
@@ -695,6 +711,7 @@ serbia	common	fr	Serbie
 server %1 has been added	common	fr	Le serveur %1 a été ajouté
 server answered. processing response...	common	fr	Le serveur a répondu. Traitement de la réponse...
 server contacted. waiting for response...	common	fr	Le serveur a été contacté. Attente de la réponse...
+server is unwilling to perform.	common	fr	Le serveur ne souhaite pas exécuter.
 server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été interrompue
 set user as only responsible user, but keeping groups	groupdav	fr	définir l'utilisateur comme l'unique responsable, mais garder les groupes
@@ -765,6 +782,7 @@ text color:	common	fr	Couleur du Texte:
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	fr	Le bloqueur de popup est activé. Veuillez cliquer sur OK pour voir la pop-up. \n\nSi vous ne souhaitez plus voir ce message, autoriser votre navigateur à ouvrir les pop-up de ce site %1
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 the mail server returned	common	fr	Le serveur email a renvoyé
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	fr	Il y a déjà un utilisateur système avec ce nom. Veuillez choisir un autre nom.
@@ -803,6 +821,7 @@ tuvalu	common	fr	TUVALU
 type	common	fr	Type
 uganda	common	fr	OUGANDA
 ukraine	common	fr	UKRAINE
+un-delete	common	fr	Dé-supprimer
 unconnected nodes will be moved to %1.	admin	fr	Les nœuds non connectés seront déplacés vers %1.
 underline	common	fr	Souligné
 unicode	common	fr	Unicode
@@ -860,6 +879,8 @@ written by:	common	fr	Ecrit par:
 year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
+yes - delete	common	fr	Oui - Supprimer.
+yes - delete including sub-entries	common	fr	Oui - Supprimer y compris les sous-éléments
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
 you can customize how many icons and toolbars the editor shows.	common	fr	Combien d'icônes et de barres d'outils l'éditeur doit-il afficher ?
 you have been successfully logged out	login	fr	Déconnexion réussie
@@ -883,7 +904,7 @@ your password failed the following criteria:	common	fr	Votre mot de passe ne res
 your password is about to expire in %1 days, you may change your password now	common	fr	Votre mot de passe expire dans %1 jour(s), vous pouvez changer votre mot de passe maintenant.
 your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
 your search returned 1 match	common	fr	Votre recherche a retourné 1 résultat
-your session could not be verified.	login	fr	Votre session n'a pas pu être vérifiée.
+your session timed out, please log in again	login	fr	Votre sesssion est expirée, veuillez vous reconnecter.
 your settings have been updated	common	fr	Vos préférences ont été mises à jour
 zambia	common	fr	ZAMBIE
 zimbabwe	common	fr	ZIMBABWE

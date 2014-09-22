@@ -49,6 +49,7 @@ check message against next rule also	mail	en	Check message against next rule als
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	en	check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)
 check to save as infolog on send	mail	en	check to save as infolog on send
 check to save as trackerentry on send	mail	en	check to save as trackerentry on send
+choose file	mail	en	Choose file
 common acl	mail	en	Common ACL
 compose	mail	en	compose
 compose as new	mail	en	Compose as new
@@ -130,6 +131,7 @@ enable	mail	en	Enable
 enabled!	mail	en	enabled!
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
+error while setting folder	mail	en	Error while setting folder
 error:	mail	en	Error:
 error: could not save acl	mail	en	Error: Could not save ACL
 error: could not save message as draft	mail	en	Error: Could not save Message as Draft
@@ -236,6 +238,7 @@ mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
 mailinglist	mail	en	Mailinglist
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	mark all as read
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:

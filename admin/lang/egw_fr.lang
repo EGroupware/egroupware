@@ -143,6 +143,8 @@ change owner	admin	fr	Changer le propriétaire
 change password for %1	admin	fr	Changer le mot de passe pour %1
 change password hash to	admin	fr	Changer le cryptage du mot de passe pour
 changed password hash for %1 to %2.	admin	fr	Changer le cryptage du mot de passe de %1 pour %2.
+changelog	admin	fr	Changelog
+changelog and versions	admin	fr	Changelog et versions
 check acl for entries of not (longer) existing accounts	admin	fr	Vérifier les ACL pour les entrées de compte inexistants.
 check categories for not (longer) existing accounts	admin	fr	Vérifier les catégories des comptes n'existant pas ou plus
 check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les sessions
@@ -154,6 +156,7 @@ color	admin	fr	Couleur
 command scheduled to run at %1	admin	fr	Commande programmée pour s'executer à %1
 commercial: all sorts of companies	admin	fr	Commercial : toutes sortes d'entreprises
 config password or md5 hash from the header.inc.php	admin	fr	Mot de passe de configuration ou clé cryptée md5 du header.inc.php.
+configuration saved.	admin	fr	Configuration enregistrée.
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	fr	Domaine du cookie. Vide par défaut utilise le nom de domaine complet. Par exemple, dans le Gestionnaire de site ".domaine.com" permet d'utiliser le même cookie pour egw.domaine.com et www.domaine.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fr	Chemin vers le cookie. Permet des sessions d'EGroupware multiple avec des répertoires différents.
 could not remote execute the command	admin	fr	Echec de l'execution à distance de la commande
@@ -176,6 +179,7 @@ day	admin	fr	Jour
 day of week<br>(0-6, 0=sun)	admin	fr	Jour de la semaine<br>(0-6, 0=Dim)
 db backup and restore	admin	fr	Sauvegarde et restauration de la BDD
 deactivate	admin	fr	Désactiver
+debug	admin	fr	Debug
 default	admin	fr	Défaut
 default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
@@ -198,6 +202,7 @@ delete this user	admin	fr	Supprimer cet utilisateur
 deleted	admin	fr	supprimé
 deletes this field	admin	fr	Supprimer ce champ
 deliver extern	admin	fr	Envoi externe
+deny access	admin	fr	Refuser l'accès
 deny access to access log	admin	fr	Refuser l'accès au log d'accès
 deny access to application registery	admin	fr	Refuser l'accès à l'enregistrement d'applications
 deny access to applications	admin	fr	Refuser l'accès aux applications
@@ -321,6 +326,7 @@ forward also to	admin	fr	Transférer également à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Transférer seulement à
 full name	admin	fr	Nom complet
+general	admin	fr	Général
 global categories	common	fr	Catégories globales
 go directly to admin menu, returning here the next time you click on administration.	admin	fr	Aller directement au menu admin, revenir ici la prochaine fois que vous cliquer sur administration.
 governmental: incl. state or municipal authorities or services	admin	fr	Gouvernemental: incluant les autorités et services d'état ou de municipalité
@@ -370,6 +376,7 @@ ip	admin	fr	IP
 jobs	admin	fr	Travaux
 kill	admin	fr	Tuer
 kill session	admin	fr	Tuer la session
+languages	admin	fr	Langues
 last %1 logins	admin	fr	Dernières %1 connexions
 last %1 logins for %2	admin	fr	Dernières %1 connexions pour %2
 last action	admin	fr	Dernière action
@@ -516,6 +523,7 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	fr	Requis
 return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administration
 return to view account	admin	fr	Revenir à l'affichage du compte
+rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à
 rpm or debian package	admin	fr	Paquet RPM ou Debian
 run	admin	fr	exécuter

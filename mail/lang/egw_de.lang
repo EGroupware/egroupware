@@ -49,6 +49,7 @@ check message against next rule also	mail	de	Nachricht auch gegen nächste Regel
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. mache Empfänger keine Bestätigung senden möchten.)
 check to save as infolog on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Infolog erstellt wird.
 check to save as trackerentry on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Ticket erstell werden kann.
+choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
 compose	mail	de	Verfassen
 compose as new	mail	de	Als neu bearbeiten
@@ -139,7 +140,7 @@ error: message could not be displayed.	mail	de	FEHLER: Die Nachricht kann nicht 
 error:could not save the acl! because some names are empty!	mail	de	Fehler: Zugriffskontrolle konnte nicht gespeichert werden! Einige Namen sind leer!
 esync will fail without a working email configuration!	mail	de	eSync steht Ihnen nicht zur Verfügung, weil kein gültiges Mailkonto eingestellt wurde!
 event details follow	mail	de	Details zum Termin folgen
-every:	mail	de	all wie viele Tage erneut senden?
+every:	mail	de	Nach wie vielen Tagen erneut senden?
 everyone	mail	de	Alle Anwender
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
@@ -170,7 +171,7 @@ force html	mail	de	erzwinge HTML
 force plain text	mail	de	erzwinge Text
 forward	mail	de	Weiterleiten als
 forward as attachment	mail	de	weiterleiten als Anhang
-forward inline	mail	de	Inline weiterleiten
+forward inline	mail	de	weiterleiten
 forward messages to:	mail	de	Nachricht weiterleiten an:
 forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
 forward to	mail	de	weiterleiten an
@@ -193,7 +194,7 @@ how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
 html	mail	de	HTML
 html mode	mail	de	HTML Modus
 identity	mail	de	Identität
-identity+signature	mail	de	Identität+Signature
+identity+signature	mail	de	Identität+Signatur
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
 if different from email address	mail	de	falls abweichend zur E-Mail
@@ -223,7 +224,7 @@ inbox	mail	de	Posteingang
 inline	mail	de	Weiterleiten Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
-junk	mail	de	Spammails
+junk	mail	de	Spam
 junk folder	mail	de	Ordner für SPAM Nachrichten
 keep a copy of the message in your inbox	mail	de	eine Kopie der Nachricht in der INBOX behalten
 kilobytes	mail	de	Kilobytes
@@ -394,8 +395,8 @@ store to folder	mail	de	Ablageordner
 subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren
-subscribe folder ...	mail	de	Ordner abonieren ...
-subscription folders	mail	de	Ordner Abonieren
+subscribe folder ...	mail	de	Ordner abonnieren ...
+subscription folders	mail	de	Ordner Abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 successfully connected	mail	de	erfolgreich verbunden
 template folder	mail	de	Vorlagen Ordner
