@@ -191,7 +191,12 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
-
+				
+				// Set autosaving interval to 2 minutes for compose message
+				window.setInterval(function (){
+					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
+				}, 120000);
+				
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
