@@ -499,6 +499,12 @@ div.mail-compose_fileselector {
   left: 3px;
   right: 0;
 }
+#mail-index_mailPreviewContainer.previewNoAttachment {
+  top: 51px;
+}
+#mail-index_mailPreviewContainer.previewNoAttachmentButCC {
+  top: 67px;
+}
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
   max-height: 1.6em;
@@ -834,7 +840,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
   position: absolute;
   right: 0px;
-  margin: 25px 5px 0 0;
+  margin: 3px 5px 0 0;
 }
 div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 58%;
@@ -2291,7 +2297,7 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
   position: absolute;
   border: 1px solid .color_10_gray;
-  top: 97px;
+  top: 113px;
   bottom: 0;
   left: 3px;
   right: 0;

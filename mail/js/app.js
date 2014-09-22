@@ -755,16 +755,32 @@ app.classes.mail = AppJS.extend(
 		// Empty values, just in case selected is empty (user cleared selection)
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
+		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		var previewContainer = this.et2.getWidgetById('mailPreviewContainer');
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
 		}
-		//get_class does not exist yet
-		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
-		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
+
+		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
+			if (!dataElem.data.attachmentsBlock)
+			{
+				if (!dataElem.data.ccaddress)
+				{
+					previewContainer.set_class('previewNoAttachment');
+				}
+				else
+				{
+					previewContainer.set_class('previewNoAttachmentButCC');
+				}
+			}
+			else
+			{
+				jQuery(previewContainer.node).removeClass('previewNoAttachment previewNoAttachmentButCC');
+			}
 		}
 		else
 		{
@@ -776,7 +792,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 			return;
 		}
-
+		
 		// Widget ID:data key map of widgets we can directly set from cached data
 		var data_widgets = {
 			'previewFromAddress':	'fromaddress',
