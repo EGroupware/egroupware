@@ -2430,7 +2430,8 @@ class mail_compose
 		$response->data(array(
 			'draftedId' => $draft_id,
 			'message' => $msg,
-			'success' => $success
+			'success' => $success,
+			'draftfolder' => $this->mail_bo->profileID.mail_ui::$delimiter.$this->mail_bo->getDraftFolder()
 		));
 	}
 	
