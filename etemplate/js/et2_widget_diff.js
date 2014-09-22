@@ -49,7 +49,7 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	set_value: function(value) {
 		jQuery(this.div).empty();
-		if(value['old'] && value['new']) {
+		if(typeof value['old'] == 'string' && typeof value['new'] == 'string') {
 			// Build diff
 			var old_text = difflib.stringAsLines(value['old'].toString());
 			var new_text = difflib.stringAsLines(value['new'].toString());
