@@ -2353,7 +2353,10 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($button != 'apply')	// end dialog
 			{
-				egw::redirect_link('/admin/index.php', null, 'admin');
+				egw::redirect_link('/index.php', array(
+					'menuaction' => 'admin.admin_ui.index',
+					'ajax' => 'true'
+				), 'admin');
 			}
 		}
 		$content= $preserv = array();
