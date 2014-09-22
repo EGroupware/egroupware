@@ -568,6 +568,17 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	addEmail: function(action, selected)
 	{
+		// Check for all selected.  
+		var nm = this.et2.getWidgetById('nm');
+		if(fetchAll(selected, nm, jQuery.proxy(function(ids) {
+			// fetchAll() returns just the ID, no prefix, so map it to match normal selected
+			this.addEmail(action, ids.map(function(num) {return {id:'addressbook::'+num};}));
+		}, this)))
+		{
+			// Need more IDs, will use the above callback when they're ready.
+			return;
+		}
+
 		// Go through selected & pull email addresses from data
 		var emails = [];
 		for(var i = 0; i < selected.length; i++)

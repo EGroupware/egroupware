@@ -117,7 +117,7 @@ function nm_action(_action, _senders, _target, _ids)
 			// Run a long task once for each ID with a nice dialog instead of
 			// freezing for a while.  If egw_open is set, and only 1 row selected,
 			// egw_open will be used instead.
-			if(doLongTask(idsArr, _action, mgr)) break;
+			if(doLongTask(idsArr, ids.all,_action, mgr.data.nextmatch)) break;
 
 			// Fall through
 		case 'egw_open':
@@ -221,63 +221,91 @@ function nm_action(_action, _senders, _target, _ids)
 			}
 			break;
 	}
+}
 
-	function doLongTask(idsArr, _action, mgr)
+/**
+ * Fetch all IDs to the client side, user wants to do something with them...
+ *
+ * @param {string[]} ids Array of selected IDs
+ * @param {et2_nextmatch} nextmatch
+ * @param {function} callback Callback function
+ * @returns {Boolean}
+ */
+function fetchAll(ids, nextmatch, callback)
+{
+	if(!nextmatch || !nextmatch.controller) return false;
+	var selection = nextmatch.getSelection();
+	if(!selection.all) return false;
+
+	if(nextmatch.controller._grid && nextmatch.controller._grid.getTotalCount() > ids.length)
 	{
-		if(idsArr.length > 1 || typeof _action.data.egw_open == 'undefined')
-		{
-			if(_ids.all)
-			{
+		// Need to actually fetch all (TODO: just ids) to do this client side
+		var idsArr = [];
+		var count = idsArr.length;
+		var total = nextmatch.controller._grid.getTotalCount();
+		var cancel = false;
+		var dialog = et2_dialog.show_dialog(
+			// Abort the long task if they canceled the data load
+			function() {count = total; cancel=true;},
+			egw.lang('Loading'), egw.lang('please wait...'),{},[
+				{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
+			]
+		);
 
-				var nextmatch = mgr.data.nextmatch;
-				if(nextmatch && nextmatch.controller && nextmatch.controller._grid && nextmatch.controller._grid.getTotalCount() > idsArr.length)
+		// dataFetch() is asyncronous, so all these requests just get fired off...
+		// 200 rows chosen arbitrarily to reduce requests.
+		do {
+			nextmatch.controller.dataFetch({start:count, num_rows: 200}, function(data) {
+				if(data && data.order)
 				{
-					// Need to actually fetch all (TODO: just ids) to do this client side
-					var idsArr = [];
-					var count = idsArr.length;
-					var total = nextmatch.controller._grid.getTotalCount();
-					var cancel = false;
-					var dialog = et2_dialog.show_dialog(
-						// Abort the long task if they canceled the data load
-						function() {count = total; cancel=true;},
-						egw.lang('Loading'), egw.lang('please wait...'),{},[
-							{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
-						]
-					);
-
-					// dataFetch() is asyncronous, so all these requests just get fired off...
-					// 200 rows chosen arbitrarily to reduce requests.
-					do {
-						nextmatch.controller.dataFetch({start:count, num_rows: 200}, function(data) {
-							if(data && data.order)
-							{
-								for(var i = 0; i < data.order.length; i++)
-								{
-									idsArr.push(data.order[i].split("::").pop());
-								}
-							}
-							// Update total, just in case it changed
-							if(data && data.total) total = data.total;
-
-							if(idsArr.length >= total)
-							{
-								dialog.destroy();
-								if(!cancel)
-								{
-									et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
-								}
-							}
-						},_action);
-						count += 200;
-					} while (count < total)
-					return true;
+					for(var i = 0; i < data.order.length; i++)
+					{
+						idsArr.push(data.order[i].split("::").pop());
+					}
 				}
-			}
-			et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
-			return true;
-		}
-		return false;
+				// Update total, just in case it changed
+				if(data && data.total) total = data.total;
+
+				if(idsArr.length >= total)
+				{
+					dialog.destroy();
+					if(!cancel)
+					{
+						callback.call(this, idsArr);
+					}
+				}
+			},this);
+			count += 200;
+		} while (count < total)
+		return true;
 	}
+	return false;
+}
+
+/**
+ * Fetch all IDs and run a long task.
+ * 
+ * @param {String[]} idsArr Array of IDs
+ * @param {boolean} all True if all IDs are selected.  They'll have to be fetched if missing.
+ * @param {type} _action
+ * @param {et2_nextmatch} nextmatch
+ * @returns {Boolean}
+ */
+function doLongTask(idsArr, all, _action, nextmatch)
+{
+	if(all || idsArr.length > 1 || typeof _action.data.egw_open == 'undefined')
+	{
+		if(all)
+		{
+			var fetching = fetchAll(idsArr, nextmatch,function(idsArr){
+				et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+			});
+			if(fetching) return true;
+		}
+		et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+		return true;
+	}
+	return false;
 }
 
 /**
