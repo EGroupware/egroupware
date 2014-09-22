@@ -1,19 +1,19 @@
-%1 attachments	mail	nl	%1 Bijlagen
-%1 is not writable by you!	mail	nl	%1 is NIET voor uw schrijfbaar
+%1 attachments	mail	nl	%1 bijlagen
+%1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	nl	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
-(not connected)	mail	nl	(nier verbonden)
+(not connected)	mail	nl	(niet verbonden)
 (select mails by clicking on the line, like a checkbox)	mail	nl	(selecteer berichten door op te klikken op de regel, zoals bij een checkbox)
 (with checkbox enforced)	mail	nl	(met checkbox geforceerd)
-account editable by user	mail	nl	Accountdoor gebruiker te wijzigen
+account editable by user	mail	nl	Account door gebruiker te wijzigen
 acl rights retrive failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend !
 acl rights retrived successfully!	mail	nl	ACL rechten succesvol opgehaald
-action	mail	nl	Aktie
+action	mail	nl	Actie
 activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
-add a new folder to %1:	mail	nl	Voeg een neiuwe map toe %1
+add a new folder to %1:	mail	nl	Voeg een neiuwe map toe %1:
 add all my aliases	mail	nl	Voeg al mijn aliassen toe
 add folder	mail	nl	Voeg map toe
 add to addressbook	mail	nl	Aan adresboek toevoegen
@@ -49,6 +49,7 @@ check message against next rule also	mail	nl	Controleer het bercicht ook met de 
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	nl	Selecteer dit vakje, als u een melding wilt ontvangen als het bericht is gelezen (Let op : niet alle mail programma's ondersteunen of je een bevestiging kunt krijgen van de ontvanger dat hij of zij het bericht heeft gelezen)
 check to save as infolog on send	mail	nl	selecteer om ook als infolog te bewaren
 check to save as trackerentry on send	mail	nl	selecteer om ook als invoer voor tracker te bewaren
+choose file	mail	nl	Kies bestand
 common acl	mail	nl	ACL Standaard
 compose	mail	nl	Schrijf nieuw bericht
 compose as new	mail	nl	Stel samen als nieuw
@@ -64,13 +65,13 @@ contains(*)	mail	nl	Bevat (*)
 convert mail to item and attach its attachments to this item (standard)	mail	nl	Converteer Bericht naar bestand en voeg de bijlagen aan dit bestand toe (Standaard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	nl	Converteer bericht naar bestand, voeg de bijlagen toe en voeg dit bericht (bericht/rfc822 (.eml) toe als bijlage
 convert only mail to item (ignore possible attachments)	mail	nl	Converteer alleen Bericht naar een item (laat mogelijke bijlagen buiten beschouwing)
-copied %1 message(s) from %2 to %3	mail	nl	Koipeer %1 bericht(en) van %2 naar %3
+copied %1 message(s) from %2 to %3	mail	nl	Kopieer %1 bericht(en) van %2 naar %3
 copy to	mail	nl	Kopieer naar
 could not append message:	mail	nl	Kon niet aan bericht toevoegen:
 could not save the acl! because some names are empty!	mail	nl	Kon niet naar ACL opslaan ! Omdat sommige namen leeg zijn !
 create new account	mail	nl	Maak een nieuwe gebruiker aan
 currently:	mail	nl	Momenteel:
-date(newest first)	mail	nl	Datum (nieuwste eerst)
+date(newest first)	mail	nl	Datum (meest recente eerst)
 date(oldest first)	mail	nl	Datum (oudste eerst)
 deactive	mail	nl	Niet actief
 default sorting order	mail	nl	Standaard volgorde
@@ -78,11 +79,11 @@ default your name and email	common	nl	Standaard uw naam en email
 delete folder	mail	nl	Verwijder map
 delete folder %1 ?	mail	nl	VERWIJDER Map %1 ?
 deleted	mail	nl	verwijdert
-deleted %1 messages in %2	mail	nl	verwijder %1 berichten in %2
+deleted %1 messages in %2	mail	nl	verwijder %1 bericht(en) in %2
 deleted!	mail	nl	verwijdert!
 deny certain groups access to following features	mail	nl	Weiger bepaalde groepen toegang tot de volgende eigenschappen
 disable	mail	nl	Zet uit
-disable ruler for separation of mailbody and signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van  hoofdtekst en handtekening
+disable ruler for separation of mailbody and signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van hoofdtekst en handtekening
 disabled!	mail	nl	Niet actief!
 discard	mail	nl	negeer
 discard message	mail	nl	Negeer bericht
@@ -130,6 +131,7 @@ enable	mail	nl	Activeer
 enabled!	mail	nl	Geactiveerd !
 enter the name for the new folder:	mail	nl	Voer de naam in voor de nieuwe map
 error saving %1!	mail	nl	Fout bij bewaren %1
+error while setting folder	mail	nl	Fout bij instellen map
 error:	mail	nl	Fout:
 error: could not save acl	mail	nl	Fout: Kon ACL niet bewaren
 error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opgeslagen als Concept
@@ -236,13 +238,14 @@ mail source	mail	nl	Berichten oorsporng
 mail-address	mail	nl	Bericht-adres
 mailaccount	mail	nl	Berichtaccount
 mailinglist	mail	nl	Berichtenlijst
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	nl	Mailserver rapporteert: \n%1 \n wilt u werkelijk doorgaan met het meteen verwijderen van alle geselecteerde berichten (klik op ok) ?\n als u dit niet probeer eerst dan de prullenbak te legen voordat u verder gaat. (klik op annuleren)
 mark all as read	mail	nl	Markeer alle als gelzezen
 mark as deleted	mail	nl	Markeer als verwijderd
 match:	mail	nl	Komt overeen:
 matches	mail	nl	komt overeen met
 matches regexp	mail	nl	komt overeen met regexp
 mbstring.func_overload=0 is required for correct mail processing!	mail	nl	mbstring.func_overload=0 is nodig voor het correct afhandelen van berichten !
-message body	mail	nl	Berichten Hoofdtekst
+message body	mail	nl	Bericht Hoofdtekst
 message preview area	mail	nl	Berichten voorbeeld gebied
 message saved successfully.	mail	nl	Bericht succesvol bewaard
 message send failed: %1	mail	nl	Bericht versturen mislukt : %1
@@ -250,7 +253,7 @@ message send successfully.	mail	nl	Bericht succesvol verstuurd
 move selected to	mail	nl	verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
 move to trash	mail	nl	Verplaatsen naar prullenmand
-moved %1 message(s) from %2 to %3	mail	nl	Bericht %1 verplaatst van %2 naar %3
+moved %1 message(s) from %2 to %3	mail	nl	%1 bericht verplaatst van %2 naar %3
 name of account	mail	nl	Naam van
 never display html emails	mail	nl	Nooit HTML-emails weergeven
 new mail notification	mail	nl	Melding nieuw bericht
@@ -307,18 +310,18 @@ read	mail	nl	Lezen
 read / unread	mail	nl	Lezen / Niet gelezen
 readable	mail	nl	Beschrijfbaar
 reason!	mail	nl	reden !
-recieve notification	mail	nl	Ontvang bevestiging
-recursively	mail	nl	Recusief
+recieve notification	mail	nl	Ontvangst bevestiging
+recursively	mail	nl	Recursief
 refresh time in minutes	mail	nl	Ververstijd in minuten
 refused to delete folder inbox	mail	nl	Het verwiijderen van INBOX is geweigerd
-refused to delete folder with subfolders	mail	nl	Mappen mt submappen moegen niet worden verwijdert
+refused to delete folder with subfolders	mail	nl	Mappen met submappen mogen niet worden verwijdert
 reject with	mail	nl	weiger met
 remove all	mail	nl	Alles verwijderen
 remove immediately	mail	nl	Meteen verwijderen
 rename folder	mail	nl	Wijzig map naam
 rename folder %1 ?	mail	nl	Wijzigen naam map %1
 rename folder %1 to:	mail	nl	Naam map %1 wijzigen in :
-replied	mail	nl	gereageerd
+replied	mail	nl	geantwoord
 reply	mail	nl	Antwoord
 reply all	mail	nl	Antwoord aan Allen
 reply message type	mail	nl	Type antwoord bericht
@@ -350,7 +353,7 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	nl	Bewar
 saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1.Controleer folder %2
 saving the rule failed:	mail	nl	Bewaren voor de regel is mislukt:
 select all	mail	nl	Selecteer alles
-select file to attach to message	mail	nl	Selecteer het bestand gekoppeld aan dit bericht
+select file to attach to message	mail	nl	Selecteer een bestand om met dit bericht te verzenden
 select file to import into folder	mail	nl	Selecteer het bestand om in deze map te importeren
 select file(s) from vfs	mail	nl	Selecteer het cq de bestand(en) van VFS
 selected	mail	nl	Geselecteerd
@@ -460,7 +463,7 @@ which method to use when forwarding a message	mail	nl	Welke methode gebruiken wa
 with message:	mail	nl	Met berciht:
 write	mail	nl	Schrijf
 wrote	mail	nl	schreef
-yes, but mask all passwords	mail	nl	Ja, maar bverberg alle wachtwoorden
+yes, but mask all passwords	mail	nl	Ja, maar verberg alle wachtwoorden
 yes, but mask all usernames and passwords	mail	nl	Ja, maar verberg alle gebruikersnamen en wachtwoorden
 yes, offer copy option	mail	nl	Ja, stel kopieer functie voor
 yes, only trigger connection reset	mail	nl	Ja, geef alleen herinitialering verbinding aam

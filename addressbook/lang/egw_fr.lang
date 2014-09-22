@@ -105,7 +105,6 @@ charset of file	addressbook	fr	Jeu de caractères du fichier
 check all	addressbook	fr	Vérifier tout
 choose an icon for this contact type	admin	fr	Choisisser une icône pour ce type de contact
 choose charset	addressbook	fr	Sélectionner un jeu de caractères
-choose export options	addressbook	fr	Sélectionner des options d'export
 choose owner of imported data	addressbook	fr	Choisisser le propriétaire de données importées
 chosse an etemplate for this contact type	admin	fr	Choisissez un eTemplate pour ce type de contact
 city	common	fr	Ville
@@ -161,11 +160,13 @@ default action on double-click	addressbook	fr	Action par défaut du double-clic
 default address format	addressbook	fr	Format de l'adresse par défaut
 default addressbook for adding contacts	addressbook	fr	Carnet d'adresses par défaut pour l'ajout de contacts
 default document to insert contacts	addressbook	fr	Document par défaut pour l'ajout de contacts
+default file as format	addressbook	fr	Format de fichier par défaut
 default filter	addressbook	fr	Filtre par défaut
+default format for fileas, eg. for new entries.	addressbook	fr	Format par défaut pour le nom complet (pour les nouvelles entrées)
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	fr	Le comportement par défaut est d'ouvrir les adresses email dans l'application email eGroupware, si l'utilisateur y a accès.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	fr	Quelle adresse email est utilisée par défaut pour les listes de diffusion.
 delete a single entry by passing the id.	addressbook	fr	Effacer une seule entrée en passant l'ID.
-delete selected distribution list!	addressbook	fr	Effacer la liste de diffusion sélectionnée!
+delete selected distribution list!	addressbook	fr	Effacer la liste de diffusion sélectionnée !
 delete this contact	addressbook	fr	Supprimer ce contact
 delete this organisation including all its contacts	addressbook	fr	Détruire cette organisation et tous ses contacts
 deleted	addressbook	fr	supprimé
@@ -220,6 +221,9 @@ export file name	addressbook	fr	Nom du fichier d'exportation
 export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
 export selection	addressbook	fr	Sélection pour l'exportation
 exported	addressbook	fr	exporté
+exports contacts from your addressbook into a csv file.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+exports contacts from your addressbook into a vcard file.	addressbook	fr	Exporter les contacts de votre carnet d'adresses vers un fichier vCard.
 extra	addressbook	fr	Supplément
 extra encodings	addressbook	fr	Encodage supplémentairess
 extra private	addressbook	fr	Extra privé
@@ -277,6 +281,8 @@ import multiple vcard	addressbook	fr	Importation VCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
 import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format VCard.
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
 in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
 income	addressbook	fr	Revenus
 infolog	addressbook	fr	InfoLog
@@ -336,9 +342,10 @@ no categories selected	addressbook	fr	Aucune catégorie sélectionnée
 no vcard	addressbook	fr	Pas de VCard
 number	addressbook	fr	Numéro
 number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
-open %1 crm view	addressbook	fr	Ouvrir %1 dans la vue CRM
 open email addresses in external mail program	addressbook	fr	Ouvrir les adresses email dans un programme externe
 open for editing?	addressbook	fr	Ouvrir en modification ?
+open infolog crm view	preferences	fr	Ouvrir la vue CRM de l'Infolog
+open tracking system crm view	preferences	fr	Ouvrir la vue CRM du Traqueur
 options for type	admin	fr	Options pour le type
 organisation	addressbook	fr	organisation
 organisations	addressbook	fr	Organisations
@@ -383,6 +390,7 @@ required fields *	addressbook	fr	Champs nécessaires *
 role	addressbook	fr	Rôle
 room	addressbook	fr	Salle
 search for '%1'	addressbook	fr	Recherche de '%1'
+search letter	addressbook	fr	Chercher sur une lettre
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fr	Sélectionner une photo jpeg en mode portrait. Elle sera reformatée en 60 pixels de largeur.
 select a view	addressbook	fr	Sélectionnez une vue
 select addressbook type	addressbook	fr	Sélectionnez un type de carnet d'adresse
@@ -434,6 +442,7 @@ this module displays block from a adddressbook group.	addressbook	fr	Ce module a
 this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
 this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
 timezone	addressbook	fr	Fuseau horaire
+title	addressbook	fr	Titre
 to many might exceed your execution-time-limit	addressbook	fr	trop pourrait dépasser votre temps limite d'exécution
 today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
@@ -441,8 +450,8 @@ translation	addressbook	fr	Traduction
 two of: %1	addressbook	fr	Deux de : %1
 type	addressbook	fr	Type
 un-delete	addressbook	fr	Dé-supprimer
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	fr	Impossible de convertir "%1" vers un compte.  Utilisation du paramètre de plugin (%2) pour le propriétaire.
 unable to delete	addressbook	fr	impossible de supprimer
-unable to import into %1, using %2	addressbook	fr	Impossible d'importer vers %1, en utilisant %2
 unique id (uid)	addressbook	fr	ID unique (UID)
 unique id<br />(to update existing records)	addressbook	fr	ID Unique<br />pour mettre à jour des enregistrements existants
 update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
@@ -468,6 +477,7 @@ warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT : Tous
 warning: template "%1" not found, using default template instead.	addressbook	fr	AVERTISSEMENT : template "%1" introubable, utilisation du template par défaut.
 weekday	addressbook	fr	Jour de la semaine
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fr	Que devraient afficher les liens du carnet d'adresses dans les autres applications. Les valeurs vides ne seront pas prises en compte. Vous devez vous reconnecter si vous modifiez ce paramètre!
+when viewing a contact, show linked entries from the selected application	addressbook	fr	A l'affichage du contact, afficher les entrées liées sur les applications sélectionnées
 where to add the email address	addressbook	fr	Où ajouter des adresses email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fr	Sélectionner quel format doit être utilisée pour les pays avec un format d'adresse inconnu.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fr	Quel carnet d'adresses devra être sélectionné quand vous ajoutez un contact ET que vous n'avez pas d'autorisation pour le carnet d'adresses en cours.
