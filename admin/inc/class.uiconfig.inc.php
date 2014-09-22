@@ -153,7 +153,10 @@ class uiconfig
 			if(!$errors && !$_POST['apply'])
 			{
 				egw_framework::message(lang('Configuration saved.'), 'success');
-				egw::redirect_link('/admin/index.php', null, 'admin');
+				egw::redirect_link('/index.php', array(
+					'menuaction' => 'admin.admin_ui.index',
+					'ajax' => 'true'
+				), 'admin');
 			}
 		}
 
