@@ -624,7 +624,7 @@ var et2_dataview_controller = Class.extend({
 				if(this.entry.idx == 0)
 				{
 					// Set the CSS for the level - required so columns line up
-					var indent = $j("<span class='indentation'/>").appendTo(tr);
+					var indent = $j("<span class='indentation'/>").appendTo('body');
 					egw.css(".subentry td div.innerContainer.level_"+d,
 						"margin-right:" + (parseInt(indent.css("margin-right")) * d) + "px"
 					);
