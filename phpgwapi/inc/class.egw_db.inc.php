@@ -617,10 +617,12 @@ class egw_db
 	* @param int $offset row to start from, default 0
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
 	* @param array/boolean $inputarr array for binding variables to parameters or false (default)
-	* @param int $fetchmode=egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param int $fetchmode =egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
+	* @throws egw_exception_db_invalid_sql with $this->Link_ID->ErrorNo() as code
 	*/
-	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1,$inputarr=false,$fetchmode=egw_db::FETCH_BOTH)
+	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=egw_db::FETCH_BOTH, $reconnect=true)
 	{
 		unset($line, $file);	// not used anymore
 
@@ -675,9 +677,14 @@ class egw_db
 		}
 		if (!$this->Query_ID)
 		{
+			if ($reconnect && $this->Type == 'mysql' && $this->Errno == 2006)	// Server has gone away
+			{
+				$this->disconnect();
+				return $this->query($Query_String, $line, $file, $offset, $num_rows, $inputarr, $fetchmode, false);
+			}
 			throw new egw_exception_db_invalid_sql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 				"\n$this->Error ($this->Errno)".
-				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''));
+				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
 		return $this->Query_ID;
 	}
