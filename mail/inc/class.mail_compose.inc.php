@@ -386,74 +386,7 @@ class mail_compose
 				egw_framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
 			}
 		}
-		if ($_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
-		{
-			$buttonClicked = $suppressSigOnTop = true;
-			$savedOK = true;
-			try
-			{
-				$_content['isDraft'] = 1;
-				$previouslyDrafted = $_content['lastDrafted'];
-				// save as draft
-				$folder = $this->mail_bo->getDraftFolder();
-				$this->mail_bo->reopen($folder);
-				$status = $this->mail_bo->getFolderStatus($folder);
-				//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
-				$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
-				$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
-				$messageUid = $this->saveAsDraft($_content,$folder); // folder may change
-				if (!$messageUid) {
-					//try to reopen the mail from session data
-					throw new egw_exception_wrong_userinput(lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data"));
-				}
-				// saving as draft, does not mean closing the message
-				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.'/'.gettype($messageUid).' in folder:'.$folder);
-				if ($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder))
-				{
-					$draft_id = mail_ui::createRowID($folder, $messageUid);
-					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$draft_id.'/'.$previouslyDrafted.' in folder:'.$folder);
-					if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id)
-					{
-						$dhA = mail_ui::splitRowID($previouslyDrafted);
-						$duid = $dhA['msgUID'];
-						$dmailbox = $dhA['folder'];
-						try
-						{
-							//error_log(__METHOD__.__LINE__."->".print_r($duid,true).' folder:'.$dmailbox.' Method:'.'remove_immediately');
-							$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
-						}
-						catch (egw_exception $e)
-						{
-							$error = str_replace('"',"'",$e->getMessage());
-							error_log(__METHOD__.__LINE__.$error);
-						}
-					}
-					$_content['lastDrafted'] = $draft_id;
-					//$draftContent = $this->bocompose->getDraftData($this->mail_bo->icServer, $folder, $messageUid);
-					//$this->compose($draftContent,null,'to',true);
-					//return true;
-				}
-			}
-			catch (egw_exception_wrong_userinput $e)
-			{
-				$error = str_replace('"',"'",$e->getMessage());
-				error_log(__METHOD__.__LINE__.$error);
-				$savedOK = false;
-			}
-			//error_log(__METHOD__.__LINE__.' :'.$draft_id.'->'.$savedOK);
-			if ($savedOK)
-			{
-				egw_framework::message(lang('Message saved successfully.'),'mail');
-				$response = egw_json_response::get();
-				if (isset($previouslyDrafted) && $previouslyDrafted!=$draft_id) $response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$previouslyDrafted,'delete');
-				$response->call('opener.egw_refresh',lang('Message saved successfully.'),'mail',$draft_id,'add');
-				if ($_content['button']['saveAsDraftAndPrint'])
-				{
-					$response->call('app.mail.mail_compose_print',"mail::" .$draft_id);
-				}	
-			}
-		}
+
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
@@ -1322,7 +1255,7 @@ class mail_compose
 		}
 
 		//error_log(__METHOD__.__LINE__.array2string($content));
-		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
+		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
 
 	/**
@@ -2426,6 +2359,88 @@ class mail_compose
 		$mail_bo->closeConnection();
 	}
 	
+	/**
+	 * Save compose mail as draft
+	 *
+	 * @param array $content content sent from client-side
+	 */
+	public function ajax_saveAsDraft ($content)
+	{
+		$response = egw_json_response::get();
+		$success = true;
+		
+		// check if default account is changed then we need to change profile
+		if (!empty($content['serverID']) && $content['serverID'] != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($content['serverID']);
+		}
+		
+		$formData = array_merge($content, array(
+				'isDrafted' => 1,
+				'body' => $content['mail_'.($content['mimeType']?'htmltext':'plaintext')],
+				'mimeType' => $content['mimeType']?'html':'plain' // checkbox has only true|false value
+		));
+		
+		//Saving draft procedure
+		try
+		{
+			$folder = $this->mail_bo->getDraftFolder();
+			$this->mail_bo->reopen($folder);
+			$status = $this->mail_bo->getFolderStatus($folder);
+			if (($messageUid = $this->saveAsDraft($formData,$folder)))
+			{
+				// saving as draft, does not mean closing the message
+				$messageUid = ($messageUid===true ? $status['uidnext'] : $messageUid);
+				if (is_array($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder)))
+				{
+					$draft_id = mail_ui::createRowID($folder, $messageUid);
+					if ($content['lastDrafted'] != $draft_id && isset($content['lastDrafted']))
+					{
+						$dhA = mail_ui::splitRowID($content['lastDrafted']);
+						$duid = $dhA['msgUID'];
+						$dmailbox = $dhA['folder'];
+						try
+						{
+							$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
+						}
+						catch (egw_exception $e)
+						{
+							$msg = str_replace('"',"'",$e->getMessage());
+							$success = false;
+							error_log(__METHOD__.__LINE__.$msg);
+						}
+					}
+				}
+			}
+			else
+			{
+				throw new egw_exception_wrong_userinput(lang("Error: Could not save Message as Draft"));
+			}
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+			$msg = str_replace('"',"'",$e->getMessage());
+			error_log(__METHOD__.__LINE__.$msg);
+			$success = false;
+		}
+
+		if ($success) $msg = lang('Message saved successfully.');
+		
+		// Include new information to json respose, because we need them in client-side callback
+		$response->data(array(
+			'draftedId' => $draft_id,
+			'message' => $msg,
+			'success' => $success
+		));
+	}
+	
+	/**
+	 * Save message as draft to specific folder
+	 *
+	 * @param type $_formData content
+	 * @param type $savingDestination destination folder
+	 * @return boolean return messageUID| false due to an error
+	 */
 	function saveAsDraft($_formData, &$savingDestination='')
 	{
 		$mail_bo	= $this->mail_bo;
