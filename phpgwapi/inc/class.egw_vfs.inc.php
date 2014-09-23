@@ -495,7 +495,7 @@ class egw_vfs extends vfs_stream_wrapper
 			{
 				self::_check_add($options,$path,$result);
 			}
-			if ($is_dir && (!isset($options['maxdepth']) || $options['maxdepth'] > 0) && ($dir = @opendir($path)))
+			if ($is_dir && (!isset($options['maxdepth']) || ($options['maxdepth'] > 0 && $options['depth'] < $options['maxdepth'])) && ($dir = @opendir($path)))
 			{
 				while(($file = readdir($dir)) !== false)
 				{
@@ -514,7 +514,7 @@ class egw_vfs extends vfs_stream_wrapper
 					{
 						$opts = $options;
 						if ($opts['mindepth']) $opts['mindepth']--;
-						if ($opts['maxdepth']) $opts['maxdepth']++;
+						if ($opts['maxdepth']) $opts['depth']++;;
 						unset($opts['order']);
 						unset($opts['limit']);
 						foreach(self::find($options['url']?$file:parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)

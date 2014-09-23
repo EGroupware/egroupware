@@ -457,6 +457,8 @@ class filemanager_ui
 			'' => 'Current directory',
 			'2' => 'Directories sorted in',
 			'3' => 'Show hidden files',
+			'4' => 'All subdirectories',
+			'5' => 'Files from next subdirectory',
 			'0'  => 'Files from subdirectories',
 		);
 
@@ -767,11 +769,14 @@ class filemanager_ui
 
 		// Re-map so 'No filters' favorite ('') is depth 1
 		$filter = $query['filter'] === '' ? 1 : $query['filter'];
+
+		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
+		if($filter == 5) $maxdepth = 2;
 		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
 			'mindepth' => 1,
-			'maxdepth' => $filter ? (int)(boolean)$filter : null,
+			'maxdepth' => $maxdepth,
 			'dirsontop' => $filter <= 1,
-			'type' => $filter ? null : 'f',
+			'type' => $filter && $filter != 5 ? ($filter == 4 ? 'd' : null) : 'f',
 			'order' => $query['order'], 'sort' => $query['sort'],
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
