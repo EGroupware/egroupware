@@ -1,3 +1,19 @@
+egroupware-epl (14.1.20140923-1) hardy; urgency=low
+
+  * Preferences: non-admin user was able to give himself run-rights to any app incl. admin
+  * Mail: automatic save as draft during compose every 2 minutes
+  * Mail: support the propagation of Thread-Topic, Thread-Index and List-Id on reply too
+  * Mail: resolve distributionlists upon saving as draft, infolog, tracker and storing sent message in designated send-folder
+  * ProjectManager: Gantt chart speed improvements and other bug fixes
+  * Tracker: fix problem with correct resolution initzialization for new tracker entries
+  * Tracker/Mailhandling: handle/catch problem with failed notification initialization
+  * CardDAV/Addressbook/Preferences: accounts, primary group, all, ... were not selectable in personal preferences
+  * Login: disabling cookie-enabled-check again, as it causes a redirect look under certain conditions and browsers
+  * API/MySQL: automatic try to reconnect once, if server closed connection "MySQL server has gone away"
+  * Admin: using proxy configuration from setup for update-check and retrieving EPL license from my.stylite.de
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 23 Sep 2014 11:30:14 +0200
+
 egroupware-epl (14.1.20140910-1) hardy; urgency=low
 
   * all apps: fixed regressions in yesterdays package
