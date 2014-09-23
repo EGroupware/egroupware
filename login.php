@@ -252,10 +252,11 @@ else
 			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 			egw::redirect_link('/login.php','cd=5');
 		}
+		/* cookie enabled check comment out, as it seems to cause a redirect loop under certain conditions and browsers :-(
 		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
 		{
 			egw::redirect_link('/login.php','cd=4');
-		}
+		}*/
 
 		// don't get login data again when $submit is true
 		if($submit == false)
