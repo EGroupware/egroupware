@@ -55,7 +55,16 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Keep a reference to the widget
 		this._widget = _widget;
 
+		// Copy the given parameters
+		this._actionLinks = _actionLinks;
+		this._execId = _execId;
+		this._widgetId = _widget.id;
+		this._parentId = _parentId;
+		this._rowProvider = _rowProvider;
+
 		// Initialize the action and the object manager
+		// _initActions calls _init_link_dnd, which uses this._actionLinks,
+		// so this must happen after the above parameter copying
 		if (!_objectManager)
 		{
 			this._initActions(_actions);
@@ -72,13 +81,6 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Call the parent et2_dataview_controller constructor
 		this._super(_parentController, _grid, this, this._rowCallback,
 			this._linkCallback, this, this._objectManager);
-
-		// Copy the given parameters
-		this._actionLinks = _actionLinks;
-		this._execId = _execId;
-		this._widgetId = _widget.id;
-		this._parentId = _parentId;
-		this._rowProvider = _rowProvider;
 
 		// We start with no filters
 		this._filters = {};
@@ -246,6 +248,101 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		}
 		this._objectManager.flags = this._objectManager.flags
 				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
+
+		this._init_links_dnd(this._actionManager);
+	},
+
+	/**
+	 * Automatically add dnd support for linking
+	 */
+	_init_links_dnd: function() {
+		var mgr = this._actionManager;
+		var self = this;
+
+		var drop_action = mgr.getActionById('egw_link_drop');
+		var drag_action = mgr.getActionById('egw_link_drag');
+
+		// Check if this app supports linking
+		if(!egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'query') ||
+			egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'title'))
+		{
+			if(drop_action) drop_action.remove();
+			if(drag_action) drag_action.remove();
+			return;
+		}
+
+		// Don't re-add
+		if(drop_action == null)
+		{
+			// Create the drop action that links entries
+			drop_action = mgr.addAction('drop', 'egw_link_drop', this.egw.lang('link'), 'link', function(action, source, dropped) {
+				// Extract link IDs
+				var links = [];
+				var id = '';
+				for(var i = 0; i < source.length; i++)
+				{
+					if(!source[i].id) continue;
+					id = source[i].id.split('::');
+					links.push({app: id[0] == 'filemanager' ? 'link' : id[0], id: id[1]});
+				}
+				if(!links.length)
+				{
+					return;
+				}
+
+				// Link the entries
+				self.egw.json(self.egw.getAppName()+".etemplate_widget_link.ajax_link.etemplate",
+					dropped.id.split('::').concat([links]),
+					function(result) {
+						if(result)
+						{
+							// Update the target to show the liks
+							this._widget.refresh(dropped.id,'update');
+						}
+					},
+					self,
+					true,
+					self
+				).sendRequest();
+				
+			},true);
+		}
+		if(this._actionLinks.indexOf(drop_action.id) < 0)
+		{
+			this._actionLinks.push(drop_action.id);
+		}
+		// Accept other links, and files dragged from the filemanager
+		// This does not handle files dragged from the desktop.  They are
+		// handled by et2_nextmatch, since it needs DOM stuff
+		if(drop_action.acceptedTypes.indexOf('link') == -1)
+		{
+			drop_action.acceptedTypes.push('link');
+		}
+
+		// Don't re-add
+		if(drag_action == null)
+		{
+			// Create drag action that allows linking
+			drag_action = mgr.addAction('drag', 'egw_link_drag', this.egw.lang('link'), 'link', function(action, selected) {
+				// Drag helper - list titles.  Arbitrarily limited to 10.
+				var helper = $j(document.createElement("div"));
+				for(var i = 0; i < selected.length && i < 10; i++)
+				{
+					var id = selected[i].id.split('::');
+					var span = $j(document.createElement('span')).appendTo(helper);
+					self.egw.link_title(id[0],id[1], function(title) {
+						this.append(title);
+						this.append('<br />');
+					}, span);
+				}
+				return helper;
+			},true);
+		}
+		if(this._actionLinks.indexOf(drag_action.id) < 0)
+		{
+			this._actionLinks.push(drag_action.id);
+		}
+		drag_action.set_dragType('link');
 	},
 
 	/**
