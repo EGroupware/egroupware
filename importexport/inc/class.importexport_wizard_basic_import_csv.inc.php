@@ -203,16 +203,17 @@ class importexport_wizard_basic_import_csv
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
 				$content['charset'] = $content['plugin_options']['charset'];
 			}
-			if(!$content['has_header_line'] && $content['plugin_options']['has_header_line']) {
-				$content['num_header_lines'] = 1;
-			}
-			if(!$content['num_header_lines'] && $content['plugin_options']['num_header_lines']) {
-				$content['num_header_lines'] = $content['plugin_options']['num_header_lines'];
-			}
-			else
+			if(!array_key_exists('num_header_lines', $content))
 			{
-				// Default to 1 line
-				$content['num_header_lines'] = 1;
+				if(array_key_exists('num_header_lines', $content['plugin_options']))
+				{
+					$content['num_header_lines'] = $content['plugin_options']['num_header_lines'];
+				}
+				else
+				{
+					// Default to 1 line
+					$content['num_header_lines'] = 1;
+				}
 			}
 			if(!$content['update_cats'] && $content['plugin_options']['update_cats']) {
 				$content['update_cats'] = $content['plugin_options']['update_cats'];
