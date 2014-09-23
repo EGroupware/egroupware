@@ -1531,7 +1531,7 @@ class calendar_uiforms extends calendar_ui
 			$readonlys['__ALL__'] = true;	// making everything readonly, but widgets set explicitly to false
 			$readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
 				$readonlys['before_after'] = $readonlys['button[add_alarm]'] = $readonlys['new_alarm[owner]'] =
-				$readonlys['new_alarm[options]'] = false;
+				$readonlys['new_alarm[options]'] = $readonlys['new_alarm[date]'] = false;
 
 			$content['participants']['no_add'] = true;
 

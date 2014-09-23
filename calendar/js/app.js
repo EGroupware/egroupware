@@ -1256,7 +1256,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				alarm_date.set_class('');
 			}
-			var startDate = start.get_value();
+			var startDate = typeof start.get_value != 'undefined'?start.get_value():start.value;
 			if (startDate)
 			{
 				var date = new Date(startDate);
