@@ -100,9 +100,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		// Gantt instance
 		this.gantt = null;
 
-		// Flag to avoid re-rendering several times while loading
-		this.gantt_loading = false;
-
 		// DOM Nodes
 		this.filters = $j(document.createElement("div"))
 			.addClass('et2_gantt_header');
@@ -127,6 +124,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	destroy: function() {
 		if(this.gantt !== null)
 		{
+			// Unselect task before removing it, or we get errors later if it is accessed
+			this.gantt.unselectTask();
 			this.gantt.detachAllEvents();
 			this.gantt.clearAll();
 			this.gantt = null;
@@ -267,9 +266,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	set_value: function(value) {
 		if(this.gantt == null) return false;
 
-
-		if(console.time) console.time("Gantt set_value");
-
 		// Unselect task before removing it, or we get errors later if it is accessed
 		this.gantt.unselectTask();
 
@@ -299,21 +295,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 				data: value.data || [],
 				links: value.links || []
 			};
-
-			this.config.start_date = value.start_date ? new Date(value.start_date) : null;
-			this.config.end_date = value.end_date ? new Date(value.end_date) : null;
-			
-			// Set flag so events don't trigger an extra render
-			gantt_widget.gantt_loading = true;
-			if(gantt_widget.getWidgetById('start_date'))
-			{
-				gantt_widget.getWidgetById('start_date').set_value(value.start_date || null);
-			}
-			if(gantt_widget.getWidgetById('end_date'))
-			{
-				gantt_widget.getWidgetById('end_date').set_value(value.end_date || null);
-			}
-			
+			this.config.start_date = value.start_date || null;
+			this.config.end_date = value.end_date || null;
 			this.parse(safe_value);
 
 			gantt_widget.gantt_loading = false;
@@ -387,6 +370,81 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			zoom: this.options.zoom,
 			duration_unit: this.gantt.config.duration_unit
 		});
+	},
+
+	/**
+	 * Refresh given tasks for specified change
+	 *
+	 * Change type parameters allows for quicker refresh then complete server side reload:
+	 * - update: request just modified data for given tasks
+	 * - edit:  same as edit
+	 * - delete: just delete the given tasks clientside (no server interaction neccessary)
+	 * - add: requires full reload
+	 *
+	 * @param {string[]|string} _task_ids tasks to refresh
+	 * @param {?string} _type "update", "edit", "delete" or "add"
+	 *
+	 * @see jsapi.egw_refresh()
+	 * @fires refresh from the widget itself
+	 */
+	refresh: function(_task_ids, _type) {
+		// Framework trying to refresh, but gantt not fully initialized
+		if(!this.gantt || !this.gantt_node || !this.options.autoload) return;
+
+		// Sanitize arguments
+		if (typeof _type == 'undefined') _type = 'edit';
+		if (typeof _task_ids == 'string' || typeof _task_ids == 'number') _task_ids = [_task_ids];
+		if (typeof _task_ids == "undefined" || _task_ids === null)
+		{
+			// Use the root
+			_task_ids = this.gantt._branches[0];
+		}
+
+		id_loop:
+		for(var i = 0; i < _task_ids.length; i++)
+		{
+			var task = this.gantt.getTask(_task_ids[i]);
+			if(!task) _type = null;
+			switch(_type)
+			{
+				case "edit":
+				case "update":
+					var value = this.getInstanceManager().getValues(this.getInstanceManager().widgetContainer);
+					this.gantt.showCover();
+					this.egw().json(this.options.autoload,
+						[_task_ids[i],value,task.parent||false],
+						function(data) {
+							debugger;
+							this.gantt.parse(data);
+							this.gantt.hideCover();
+						},
+						this,true,this
+					).sendRequest();
+					break;
+				case "delete":
+					this.gantt.deleteTask(_task_ids[i]);
+					break;
+				case "add":
+					var data = null;
+					if(data = this.egw().dataGetUIDdata(_task_ids[i]) && data.data)
+					{
+						this.gantt.parse(data.data);
+					}
+					else
+					{
+						// Refresh the whole thing
+						this.refresh();
+						break id_loop;
+					}
+					break;
+				default:
+					// Refresh the whole thing
+					this.refresh();
+			}
+		}
+
+		// Trigger an event so app code can act on it
+		$j(this).triggerHandler("refresh",[this,_task_ids,_type]);
 	},
 
 	/**
@@ -645,19 +703,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		// Bind AJAX for dynamic expansion
 		// TODO: This could be improved
 		this.gantt.attachEvent("onTaskOpened", function(id, item) {
-			var task = this.getTask(id);
-			// Node children are already there & displayed
-			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
-
-			this.showCover();
-			var request = gantt_widget.egw().json(gantt_widget.options.autoload,
-				[id,value,task.parent||false],
-				function(data) {
-					this.parse(data);
-					this.hideCover();
-				},
-				this,true,this
-			).sendRequest();
+			gantt_widget.refresh(id);
 		});
 
 		// Filters
@@ -723,9 +769,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			var widget_change = _widget.change;
 
 			var change = function(_node) {
-				// Stop if we're in the middle of loading
-				if(gantt_widget.gantt_loading) return false;
-				
 				// Call previously set change function
 				var result = widget_change.call(_widget,_node);
 
@@ -742,13 +785,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue()) : gantt_widget.gantt.getState().min_date;
 						// End date is inclusive
 						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(new Date(end.getValue()).valueOf()+86400000) : gantt_widget.gantt.getState().max_date;
-
-						/*
-						// TODO: some weirdness here when we start changing min_date
-						gantt_widget.gantt.config.start_date = start && start.getValue() ? new Date(start.getValue()) : gantt_widget.stored_state.min_date || gantt_widget.gantt.getState().min_date;
-						// End date is inclusive
-						gantt_widget.gantt.config.end_date = end && end.getValue() ? new Date(new Date(end.getValue()).valueOf()+86400000) : gantt_widget.stored_state.max_date || gantt_widget.gantt.getState().max_date;
-						 */
 						if(gantt_widget.gantt.config.end_date <= gantt_widget.gantt.config.start_date)
 						{
 							gantt_widget.gantt.config.end_date = null;
