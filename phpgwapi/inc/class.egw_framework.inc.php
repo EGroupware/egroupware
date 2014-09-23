@@ -986,22 +986,22 @@ abstract class egw_framework
 	 */
 	public static function proxy_context($username=null, $password=null)
 	{
-		if (empty($GLOBALS['egw_info']['server']['httpproxy_server']))
-		{
-			return null;
-		}
-
-		$opts = array (
+		$opts = array(
 			'method' => 'GET',
-			'proxy'  => 'tcp://'.$GLOBALS['egw_info']['server']['httpproxy_server'].':'.
-				($GLOBALS['egw_info']['server']['httpproxy_port'] ? $GLOBALS['egw_info']['server']['httpproxy_port'] : 8080),
-			'request_fulluri' => true,
 		);
-		// proxy authentication
-		if (!empty($GLOBALS['egw_info']['server']['httpproxy_server_username']))
+		if (!empty($GLOBALS['egw_info']['server']['httpproxy_server']))
 		{
-			$opts['header'][] = 'Proxy-Authorization: Basic '.base64_encode($GLOBALS['egw_info']['server']['httpproxy_server_username'].':'.
-				$GLOBALS['egw_info']['server']['httpproxy_server_password']);
+			$opts += array (
+				'proxy'  => 'tcp://'.$GLOBALS['egw_info']['server']['httpproxy_server'].':'.
+					($GLOBALS['egw_info']['server']['httpproxy_port'] ? $GLOBALS['egw_info']['server']['httpproxy_port'] : 8080),
+				'request_fulluri' => true,
+			);
+			// proxy authentication
+			if (!empty($GLOBALS['egw_info']['server']['httpproxy_server_username']))
+			{
+				$opts['header'][] = 'Proxy-Authorization: Basic '.base64_encode($GLOBALS['egw_info']['server']['httpproxy_server_username'].':'.
+					$GLOBALS['egw_info']['server']['httpproxy_server_password']);
+			}
 		}
 		// optional authentication
 		if (isset($username))
