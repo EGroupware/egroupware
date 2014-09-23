@@ -191,12 +191,12 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_hide();
-				
+
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
 					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
 				}, 120000);
-				
+
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
@@ -636,9 +636,12 @@ app.classes.mail = AppJS.extend(
 			var content = _dataElem.data[field.data] || [];
 
 			// Add in single address, if there
-			if(typeof field.data_one != 'undefined')
+			if(typeof field.data_one != 'undefined' && field.data != field.data_one)
 			{
-				content.unshift(_dataElem.data[field.data_one]);
+				if (jQuery.isArray(_dataElem.data[field.data_one]))
+					content = content.concat(_dataElem.data[field.data_one]);
+				else
+					content.unshift(_dataElem.data[field.data_one]);
 				// Unique
 				content = content.filter(function(value, index, self) {
 					return self.indexOf(value) === index;
@@ -673,7 +676,7 @@ app.classes.mail = AppJS.extend(
 				{
 					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
 					if (content[i] != 'undefined' && content[i])
-					{	
+					{
 						if (content[i].indexOf('@')< 0)
 						{
 							remembervalue = content[i];
@@ -792,7 +795,7 @@ app.classes.mail = AppJS.extend(
 			this.mail_disablePreviewArea(true);
 			return;
 		}
-		
+
 		// Widget ID:data key map of widgets we can directly set from cached data
 		var data_widgets = {
 			'previewFromAddress':	'fromaddress',
@@ -3160,11 +3163,11 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Save as Draft (VFS)
 	 * -handel both actions save as draft and save as draft and print
-	 * 
+	 *
 	 * @param {egw object} _egw
 	 * @param {widget object} _widget
 	 * @param {string} _action autosaving trigger action
@@ -3177,7 +3180,7 @@ app.classes.mail = AppJS.extend(
 		{
 			var action = _action == 'autosaving'?_action: _widget.id;
 		}
-		
+
 		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount', 'mail_htmltext', 'mail_plaintext', 'lastDrafted'];
 		var widget = {};
 		for (var index in widgets)
@@ -3189,8 +3192,8 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		var self = this;
-		if (content) 
-		{	
+		if (content)
+		{
 			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content],function(_data){
 				self.savingDraft_response(_data,action);
 			}).sendRequest(true);
@@ -3200,14 +3203,14 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Set content of drafted message with new information sent back from server
 	 * This function would be used as callback of send request to ajax_saveAsDraft.
-	 * 
+	 *
 	 * @param {object} _responseData response data sent back from server by ajax_saveAsDraft function.
 	 *  the object conatins below items:
 	 *  -draftedId: new drafted id created by server
 	 *  -message: resault message
 	 *  -success: true if saving was successful otherwise false
 	 *  -draftfolder: Name of draft folder including its delimiter
-	 *  
+	 *
 	 * @param {string} _action action is the element which caused saving draft, it could be as such:
 	 *  -button[saveAsDraft]
 	 *  -button[saveAsDraftAndPrint]
@@ -3221,7 +3224,7 @@ app.classes.mail = AppJS.extend(
 			this.egw.message('Could not saved the message. Because, the response from server failed.', 'error');
 			return false;
 		}
-			
+
 		if (_responseData.success)
 		{
 			var content = this.et2.getArrayMgr('content');
@@ -3260,7 +3263,7 @@ app.classes.mail = AppJS.extend(
 			this.egw.message(_responseData.message, 'error');
 		}
 	},
-	
+
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
 	 *
@@ -3816,7 +3819,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 	},
-	
+
 	/**
 	 * Print a mail from compose
 	 * @param {stirng} _id id of new draft
@@ -3825,17 +3828,17 @@ app.classes.mail = AppJS.extend(
 	{
 		this.egw.open(_id,'mail','view','&print='+_id+'&mode=print');
 	},
-	
+
 	/**
-	 * Bind special handler on print media. 
-	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus 
+	 * Bind special handler on print media.
+	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus
 	 */
 	print_for_compose: function()
 	{
 		var afterprint = function (){
 			window.close();
 		};
-		
+
 		if (!window.onafterprint)
 		{
 			// For browsers which does not support onafterprint event, eg. Chrome
@@ -3847,8 +3850,8 @@ app.classes.mail = AppJS.extend(
 		{
 			window.onafterprint = afterprint;
 		}
-	}, 
-	
+	},
+
 	/**
 	 * Print a mail from Display
 	 *
