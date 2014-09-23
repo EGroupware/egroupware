@@ -323,9 +323,8 @@ class calendar_uiforms extends calendar_ui
 
 						case 'add':
 							// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
-							// ToDo: get eTemplate to return that field
 							$matches = array();
-							if (($email = $_POST['exec']['participants']['resource']['query']) &&
+							if (($email = $content['participants']['resource']['search']) &&
 									(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 							{
 								$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
