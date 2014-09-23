@@ -2155,20 +2155,7 @@ class mail_compose
 		// Expand any mailing lists
 		foreach(array('to','cc','bcc') as $field)
 		{
-			foreach((array)$_formData[$field] as $field_key => $address)
-			{
-				if(is_int($address))
-				{
-					// List was selected, expand to addresses
-					unset($_formData[$field][$field_key]);
-					$list = $GLOBALS['egw']->contacts->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
-					// Just add email addresses, they'll be checked below
-					foreach($list as $email)
-					{
-						$_formData[$field][] = $email['email'] ? $email['email'] : $email['email_home'];
-					}
-				}
-			}
+			$_formData[$field] = self::resolveEmailAddressList($_formData[$field]);
 		}
 
 		foreach((array)$_formData['to'] as $address) {
@@ -2434,6 +2421,37 @@ class mail_compose
 			'draftfolder' => $this->mail_bo->profileID.mail_ui::$delimiter.$this->mail_bo->getDraftFolder()
 		));
 	}
+
+	/**
+	 * resolveEmailAddressList
+	 * @param array $_emailAddressList list of emailaddresses, may contain distributionlists
+	 * @return array return the list of emailaddresses with distributionlists resolved
+	 */
+	static function resolveEmailAddressList($_emailAddressList)
+	{
+		$addrFromList=array();
+		foreach((array)$_emailAddressList as $ak => $address) {
+			if(is_int($address))
+			{
+				// List was selected, expand to addresses
+				unset($_emailAddressList[$ak]);
+				$list = $GLOBALS['egw']->contacts->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
+				// Just add email addresses, they'll be checked below
+				foreach($list as $email)
+				{
+					$addrFromList[] = $email['email'] ? $email['email'] : $email['email_home'];
+				}
+			}
+		}
+		if (!empty($addrFromList))
+		{
+			foreach ($addrFromList as $addr)
+			{
+				if (!empty($addr)) $_emailAddressList[]=$addr;
+			}
+		}
+		return $_emailAddressList;
+	}
 	
 	/**
 	 * Save message as draft to specific folder
@@ -2471,7 +2489,7 @@ class mail_compose
 		$BCCmail = '';
 
 		$this->createMessage($mail, $_formData, $identity);
-
+		$this->sessionData['bcc'] = self::resolveEmailAddressList($this->sessionData['bcc']);
 		foreach((array)$this->sessionData['bcc'] as $address) {
 			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 			foreach((array)$address_array as $addressObject) {
@@ -2536,9 +2554,9 @@ class mail_compose
 		$messageIsDraft	=  false;
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
-		$this->sessionData['to']	= $_formData['to'];
-		$this->sessionData['cc']	= $_formData['cc'];
-		$this->sessionData['bcc']	= $_formData['bcc'];
+		$this->sessionData['to']	= self::resolveEmailAddressList($_formData['to']);
+		$this->sessionData['cc']	= self::resolveEmailAddressList($_formData['cc']);
+		$this->sessionData['bcc']	= self::resolveEmailAddressList($_formData['bcc']);
 		$this->sessionData['folder']	= $_formData['folder'];
 		$this->sessionData['replyto']	= $_formData['replyto'];
 		$this->sessionData['subject']	= trim($_formData['subject']);
@@ -2748,6 +2766,7 @@ class mail_compose
 		}
 		// if copying mail to folder, or saving mail to infolog, we need to gather the needed information
 		if (count($folder) > 0 || $_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') {
+			//error_log(__METHOD__.__LINE__.array2string($this->sessionData['bcc']));
 			foreach((array)$this->sessionData['bcc'] as $address) {
 				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
