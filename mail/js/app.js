@@ -3210,7 +3210,8 @@ app.classes.mail = AppJS.extend(
 		{
 			var content = this.et2.getArrayMgr('content');
 			var lastDrafted = this.et2.getWidgetById('lastDrafted');
-			var folderTree = opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+			var folderTree = typeof opener.etemplate2.getByApplication('mail')[0] !='undefined'? 
+								opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]'): null;
 			var activeFolder = folderTree?folderTree.getSelectedNode():null;
 			if (content)
 			{
@@ -3218,14 +3219,17 @@ app.classes.mail = AppJS.extend(
 				content.data.lastDrafted = _responseData.draftedId;
 				this.et2.setArrayMgr('content', content);
 				lastDrafted.set_value(_responseData.draftedId);
-				if (typeof activeFolder.id !='undefined'&& activeFolder && _responseData.draftfolder == activeFolder.id)
+				if (folderTree && activeFolder)
 				{
-					if (prevDraftedId)
+					if (typeof activeFolder.id !='undefined' && _responseData.draftfolder == activeFolder.id)
 					{
-						opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
+						if (prevDraftedId)
+						{
+							opener.egw_refresh(_responseData.message,'mail', prevDraftedId, 'delete');
+						}
+						this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
 					}
-					this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
-				}
+				}	
 				switch (_action)
 				{
 					case 'button[saveAsDraftAndPrint]':
