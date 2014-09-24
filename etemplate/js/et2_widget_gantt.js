@@ -414,7 +414,6 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					this.egw().json(this.options.autoload,
 						[_task_ids[i],value,task.parent||false],
 						function(data) {
-							debugger;
 							this.gantt.parse(data);
 							this.gantt.hideCover();
 						},
