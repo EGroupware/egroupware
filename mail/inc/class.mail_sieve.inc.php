@@ -481,17 +481,27 @@ class mail_sieve
 		{
 			foreach(emailadmin_account::search($account_id, false, null, false, 0, false) as $account)
 			{
-				// check if account is valid for multiple users, has admin credentials and sieve enabled
-				if (emailadmin_account::is_multiple($account) &&
-					($icServer = $account->imapServer(true)) &&	// check on icServer object, so plugins can overwrite
-					$icServer->acc_imap_admin_username && $icServer->acc_sieve_enabled)
-				{
-					$allAccounts[$account->acc_id] = $account->acc_name;
-					$accounts[$account->acc_id] = $account;
+				try {
+					// check if account is valid for multiple users, has admin credentials and sieve enabled
+					if (emailadmin_account::is_multiple($account) &&
+						($icServer = $account->imapServer(true)) &&	// check on icServer object, so plugins can overwrite
+						$icServer->acc_imap_admin_username && $icServer->acc_sieve_enabled)
+					{
+						$allAccounts[$account->acc_id] = $account->acc_name;
+						$accounts[$account->acc_id] = $account;
+					}
+				}
+				catch(Exception $e) {
+					unset($e);
+					// ignore broken accounts
 				}
 			}
 
 			$profileID = !isset($content['acc_id']) ? key($accounts):$content['acc_id'];
+			if (isset($_GET['acc_id']) && isset($allAccounts[$_GET['acc_id']]))
+			{
+				$profileID = $content['acc_id'] = (int)$_GET['acc_id'];
+			}
 
 			//Chooses the right account
 			$this->account = $accounts[$profileID];
@@ -624,7 +634,7 @@ class mail_sieve
 									$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid']);
 									$cachedVacations = array($icServer->acc_id => $newVacation) + (array)$cachedVacations;
 									egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
-									
+
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
 							}

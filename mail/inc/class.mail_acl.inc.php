@@ -44,22 +44,17 @@ class mail_acl
 	var $mail_bo;
 
 	/**
+	 * imap object instanciated in constructor for account to edit
+	 *
+	 * @var emailadmin_imap
+	 */
+	var $imap;
+
+	/**
 	 *
 	 * @var mail_account
 	 */
 	var $current_account;
-
-	/**
-	 * Constructor
-	 *
-	 *
-	 */
-	function __construct()
-	{
-		$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->mail_bo = mail_bo::getInstance(false, $acc_id);
-
-	}
 
 	/**
 	 * Edit folder ACLs of account(s)
@@ -70,12 +65,33 @@ class mail_acl
 	 */
 	function edit(array $content=null ,$msg='')
 	{
+		if (!is_array($content))
+		{
+			$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+			if (isset($_GET['account_id']) && !isset($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				egw_framework::window_close(lang('Permission denied'));
+			}
+			$account_id = $_GET['account_id'];
+		}
+		else
+		{
+			$acc_id = $content['acc_id'];
+			$account_id = $content['account_id'];
+		}
+		$account = emailadmin_account::read($acc_id, $account_id);
+		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
+
 		$tmpl = new etemplate_new('mail.acl');
 		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
-		
+		if (empty($mailbox))
+		{
+			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($this->imap->isAdminConnection) : 'INBOX';
+		}
+
 		// Unset the content if folder is changed, in order to read acl rights for new selected folder
 		if (!is_array($content['button']) && is_array($content['mailbox']) && !is_array($content['grid']['delete'])) unset($content);
-		
+
 		if (!is_array($content))
 		{
 			if (!empty($mailbox))
@@ -107,9 +123,9 @@ class mail_acl
 					{
 						$content['grid'][$n]['acl'] = 'custom';
 					}
-					if (($account_id = $this->mail_bo->icServer->getMailBoxAccountId($key)))
+					if (($user = $this->imap->getMailBoxAccountId($key)))
 					{
-						$content['grid'][$n++]['acc_id'] = $account_id;
+						$content['grid'][$n++]['acc_id'] = $user;
 					}
 					else
 					{
@@ -146,7 +162,7 @@ class mail_acl
 								$tmpl->set_validation_error('grid['.$row.']'.'[acc_id]', "You must fill this field!");
 							}
 						}
-						
+
 						//Add new row at the end
 						if ($content['grid'][count($content['grid'])]['acc_id'])
 							array_push($content['grid'], array('acc_id'=>''));
@@ -183,8 +199,8 @@ class mail_acl
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
 		foreach($content['grid'] as $key => $fields)
 		{
-			if ($fields['acc_id'] == $this->mail_bo->icServer->acc_imap_username ||
-					$fields['acc_id'][0] == $this->mail_bo->icServer->acc_imap_username)
+			if ($fields['acc_id'] == $this->imap->acc_imap_username ||
+					$fields['acc_id'][0] == $this->imap->acc_imap_username)
 			{
 				foreach ($fields as $index => $val)
 				{
@@ -198,10 +214,12 @@ class mail_acl
 		}
 		//Make entry row's delete button readonly
 		$readonlys['grid']['delete['.count($content['grid']).']'] = true;
-		
-		$preserv ['mailbox'] = $content['mailbox'];
-		$content['msg'] = $msg;
-		$content['grid']['account_type'] = $this->mail_bo->icServer->supportsGroupAcl() ? 'both' : 'accounts';
+
+		$preserv['mailbox'] = $content['mailbox'];
+		$preserv['acc_id'] = $acc_id;
+		$preserv['account_id'] = $account_id;
+		$content['grid']['account_type'] = $this->imap->supportsGroupAcl() ? 'both' : 'accounts';
+
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
 	}
 
@@ -217,7 +235,7 @@ class mail_acl
 	function update_acl ($content, &$msg)
 	{
 		$validator = array();
-		
+
 		foreach ($content['grid'] as $keys => $value)
 		{
 			$recursive = $value['acl_recursive'];
@@ -236,10 +254,10 @@ class mail_acl
 					$options['rights'] .=  $right[1];
 				}
 			}
-			$username = $content['grid'][$keys]['acc_id'] == $this->mail_bo->icServer->acc_imap_username
+			$username = $content['grid'][$keys]['acc_id'] == $this->imap->acc_imap_username
 				?$content['grid'][$keys]['acc_id']:$content['grid'][$keys]['acc_id'][0];
 			//error_log(__METHOD__."(".__LINE__.") setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
-			if (is_numeric($username) && ($u = $this->mail_bo->icServer->getMailBoxUserName($username)))
+			if (is_numeric($username) && ($u = $this->imap->getMailBoxUserName($username)))
 			{
 				$username = $u;
 			}
@@ -248,12 +266,12 @@ class mail_acl
 				//error_log(__METHOD__."() setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
 				if (($ret=$this->setACL($content['mailbox'], $username, $options, $recursive, $msg)))
 				{
-					$msg = lang("The Folder %1 's ACLs saved!", $content['mailbox']);
-					
+					$msg = lang("The Folder %1 's ACLs saved", $content['mailbox']);
+
 				}
 				else
 				{
-					$msg = lang('Error while setting folder '.$content['mailbox']. $msg);
+					$msg = lang('Error while setting ACL for folder %1!', $content['mailbox']).' '.$msg;
 				}
 			}
 			else
@@ -268,7 +286,7 @@ class mail_acl
 		if (is_array($validator))
 		{
 			return $validator;
-		}	
+		}
 	}
 
 	/**
@@ -279,7 +297,7 @@ class mail_acl
 	{
 		if (($acl = $this->getACL($mailbox)))
 		 {
-			$msg = lang('ACL rights retrived successfully!');
+			$msg = lang('ACL rights retrived successfully');
 			return $acl;
 		 }
 		 else
@@ -304,7 +322,8 @@ class mail_acl
 		if ($row_num) $row_num = $row_num[0];
 		$recursive = $content['grid'][$row_num]['acl_recursive'];
 		$identifier = $content['grid'][$row_num]['acc_id'][0];
-		if (is_numeric($identifier) && ($u = $this->mail_bo->icServer->getMailBoxUserName($identifier)))
+		if (is_array($content['mailbox'])) $content['mailbox'] = $content['mailbox'][0];
+		if (is_numeric($identifier) && ($u = $this->imap->getMailBoxUserName($identifier)))
 		{
 			$identifier = $u;
 		}
@@ -315,18 +334,18 @@ class mail_acl
 			unset($content['grid']['delete']);
 			if ($recursive)
 			{
-				$msg = lang("The %1 's acl, including its subfolders, removed from the %2!",$content['mailbox'],$identifier);
+				$msg = lang("The %1 's acl, including its subfolders, removed from the %2",$content['mailbox'],$identifier);
 			}
 			else
 			{
-				$msg = lang("The %1 's acl removed from the %2!",$content['mailbox'],$identifier);
+				$msg = lang("The %1 's acl removed from the %2",$content['mailbox'],$identifier);
 			}
 
 			return array_combine(range(1, count($content['grid'])), array_values($content['grid']));
 		}
 		else
 		{
-			$msg = lang("An error happend while trying to remove ACL rights from the account %1.",$identifier);
+			$msg = lang("An error happend while trying to remove ACL rights from the account %1!",$identifier);
 			return false;
 		}
 	}
@@ -355,7 +374,7 @@ class mail_acl
 		{
 			try
 			{
-				$this->mail_bo->icServer->deleteACL($sbFolders, $identifier);
+				$this->imap->deleteACL($sbFolders, $identifier);
 			}
 			catch (Exception $e)
 			{
@@ -376,14 +395,14 @@ class mail_acl
 	 */
 	function getSubfolders($mailbox)
 	{
-		$delimiter = $this->mail_bo->getHierarchyDelimiter();
-		$nameSpace = $this->mail_bo->_getNameSpaces();
+		$delimiter = $this->imap->getDelimiter();
+/*		$nameSpace = $this->mail_bo->_getNameSpaces();
 		$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $mailbox);
 		if (($subFolders = $this->mail_bo->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
 		{
 			return $subFolders;
 		}
-		else
+		else*/
 		{
 			return array();
 		}
@@ -417,7 +436,7 @@ class mail_acl
 		{
 			try
 			{
-				$this->mail_bo->icServer->setACL($sbFolders,$identifier,$options);
+				$this->imap->setACL($sbFolders,$identifier,$options);
 			}
 			catch (Exception $e)
 			{
@@ -439,7 +458,7 @@ class mail_acl
 	{
 		try
 		{
-			$acl = $this->mail_bo->icServer->getACL($mailbox);
+			$acl = $this->imap->getACL($mailbox);
 			return $acl;
 		} catch (Exception $e) {
 			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . " because of " .$e->getMessage());

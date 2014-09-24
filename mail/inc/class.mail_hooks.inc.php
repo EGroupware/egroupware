@@ -37,11 +37,11 @@ class mail_hooks
 					'caption' => 'Folder ACL',
 					'icon' => 'lock',
 					'popup' => '750x420',
-					'url' => array(
+					'url' => egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_acl.edit',
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
-					),
+					)),
 				);
 			}
 			if ($account['acc_sieve_enabled'] || $account['acc_imap_type'] == 'managementserver_imap')
@@ -51,11 +51,11 @@ class mail_hooks
 					'caption' => 'Vacation notice',
 					'icon' => 'mail/navbar',
 					'popup' => '750x420',
-					'url' => array(
+					'url' => egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_sieve.editVacation',
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
-					),
+					)),
 				);
 			}
 		}
