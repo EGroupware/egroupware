@@ -19,9 +19,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * Constructor
 	 *
 	 * @param string/int/array $account account name or id (!$account to add a new account), or array with all parameters
-	 * @param array $set=null array with all data to change
-	 * @param string $password=null password
-	 * @param boolean $run_addaccount_hook=null default run addaccount for new accounts and editaccount for existing ones
+	 * @param array $set =null array with all data to change
+	 * @param string $password =null password
+	 * @param boolean $run_addaccount_hook =null default run addaccount for new accounts and editaccount for existing ones
 	 */
 	function __construct($account,$set=null,$password=null,$run_addaccount_hook=null)
 	{
@@ -41,7 +41,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	/**
 	 * change the password of a given user
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
 	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
@@ -147,6 +147,10 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 				if (is_null($value)) $value = $old[$name];
 			}
 		}
+		else
+		{
+			unset($data['account_id']);	// otherwise add will fail under postgres
+		}
 		// hook allowing apps to intercept adding/editing accounts before saving them
 		$GLOBALS['egw']->hooks->process($data+array(
 			'location' => $this->account ? 'pre_editaccount' : 'pre_addaccount',
@@ -221,7 +225,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * parse the expired string and return the expired date as timestamp
 	 *
 	 * @param string $str date, 'never', 'already' or '' (=dont change, or default of never of new accounts)
-	 * @param boolean $exists
+	 * @param boolean $existing
 	 * @return int timestamp, 0 for already, -1 for never or null for dont change
 	 * @throws egw_exception_wrong_userinput(lang('Invalid formated date "%1"!',$datein),6);
 	 */
