@@ -2,71 +2,83 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
-		<vbox>
-			<hbox>
-				<description id="msg" class="message"/>
-			</hbox>
-			<vbox  >
-				<description id="mailbox" align="center"/>
-			</vbox>
-			<grid id="grid">
-				<columns>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-					<column/>
-				</columns>
-				<rows>
-					<row class="th dialogHeader">
-						<description value="Name"/>
-						<description value="Common ACL"/>
-						<description align="center" value="L"/>
-						<description align="center" value="R"/>
-						<description align="center" value="S"/>
-						<description align="center" value="W"/>
-						<description align="center" value="I"/>
-						<description align="center" value="P"/>
-						<description align="center" value="C"/>
-						<description align="center" value="D"/>
-						<description align="center" value="A"/>
-						<description align="center" value="Recursively"/>
-						<description value="Action"/>
-					</row>
-					<row class="row">
-						<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" account_type="@account_type" />
-						<menulist>
-							<menupopup id="${row}[acl]"  onchange="app.mail.acl_common_rights_selector"/>
-						</menulist>
-						<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
-						<checkbox align="center" id="${row}[acl_recursive]"/>
-						<hbox orient=",0,0">
-							<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
-						</hbox>
-					</row>
-				</rows>
-			</grid>
-			<hbox class="dialogFooterToolbar">
-				<button statustext="Saves this ACL" label="Save" id="button[save]"/>
-				<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
-				<button label="Cancel" id="button[cancel]"/>
-			</hbox>
-		</vbox>
+		<grid width="100%">
+			<columns>
+				<column width="10%"/>
+				<column width="90%"/>
+			</columns>	
+			<rows>
+				<row class="dialogHeader">
+					<description value="Mail ACL"  />
+				</row>
+				<row>
+					<description value="Folder:"/>
+					<taglist id="mailbox" width="100%" autocomplete_url='mail.mail_compose.ajax_searchFolder' maxSelection="1" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+				</row>
+				<row>
+					<description value="Rights:"/>
+					<grid id="grid" width="100%">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Name"/>
+								<description value="Common ACL"/>
+								<description align="center" value="L"/>
+								<description align="center" value="R"/>
+								<description align="center" value="S"/>
+								<description align="center" value="W"/>
+								<description align="center" value="I"/>
+								<description align="center" value="P"/>
+								<description align="center" value="C"/>
+								<description align="center" value="D"/>
+								<description align="center" value="A"/>
+								<description align="center" value="Recursively"/>
+								<description value="Action"/>
+							</row>
+							<row class="row">
+								<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" account_type="@account_type" />
+								<menulist>
+									<menupopup id="${row}[acl]"  onchange="app.mail.acl_common_rights_selector"/>
+								</menulist>
+								<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_recursive]"/>
+								<hbox orient=",0,0">
+									<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
+								</hbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<hbox class="dialogFooterToolbar">
+						<button statustext="Saves this ACL" label="Save" id="button[save]"/>
+						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+						<button label="Cancel" id="button[cancel]"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>	
 	</template>
 </overlay>

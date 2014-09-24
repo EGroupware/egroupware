@@ -70,9 +70,12 @@ class mail_acl
 	 */
 	function edit(array $content=null ,$msg='')
 	{
-
 		$tmpl = new etemplate_new('mail.acl');
-		$mailbox = base64_decode($_GET['mailbox']);
+		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
+		
+		// Unset the content if folder is changed, in order to read acl rights for new selected folder
+		if (!is_array($content['button']) && is_array($content['mailbox']) && !is_array($content['grid']['delete'])) unset($content);
+		
 		if (!is_array($content))
 		{
 			if (!empty($mailbox))
