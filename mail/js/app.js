@@ -206,7 +206,7 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					window.setTimeout(function(){that.compose_resizeHandler()}, 100);
+					window.setTimeout(function(){that.compose_resizeHandler();}, 100);
 				});
 
 				this.compose_fieldExpander();
@@ -3602,7 +3602,7 @@ app.classes.mail = AppJS.extend(
 	},
 	
 	/**
-	 *
+	 * Submit new selected folder back to server in order to read its acl's rights
 	 */
 	acl_folderChange: function ()
 	{
