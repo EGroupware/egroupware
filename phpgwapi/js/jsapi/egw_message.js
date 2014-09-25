@@ -255,14 +255,14 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// etemplate2 specific to avoid reloading whole page
-			if(typeof etemplate2 != "undefined" && etemplate2.app_refresh)
+			if(typeof win.etemplate2 != "undefined" && win.etemplate2.app_refresh)
 			{
-				var refresh_done = etemplate2.app_refresh(_msg, _app, _id, _type);
+				var refresh_done = win.etemplate2.app_refresh(_msg, _app, _id, _type);
 
 				// Refresh target or current app too
 				if ((_targetapp || this.app_name()) != _app)
 				{
-					refresh_done = etemplate2.app_refresh(_msg, _targetapp || this.app_name()) || refresh_done;
+					refresh_done = win.etemplate2.app_refresh(_msg, _targetapp || this.app_name()) || refresh_done;
 				}
 				//In case that we have etemplate2 ready but it's empty and refresh is not done
 				if (refresh_done) return;
