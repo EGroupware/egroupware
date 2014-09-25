@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -91,7 +91,6 @@ class admin_categories
 		// read the session, as the global_cats param is stored with it.
 		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:categories::GLOBAL_APPNAME);
 		$session = egw_cache::getSession(__CLASS__.$appname,'nm');
-		$global_cats = $session['global_cats'];
 		unset($session);
 		if (!isset($content))
 		{
@@ -139,6 +138,8 @@ class admin_categories
 			}
 			unset($content['delete']);
 
+			$refresh_app = $this->appname == 'preferences' ? $content['appname'] : $this->appname;
+
 			switch($button)
 			{
 				case 'save':
@@ -152,7 +153,7 @@ class admin_categories
 						// to reload the whole nextmatch instead of just the row
 						$data = $cats->id2name($content['id'],'data');
 						$change_color = ($data['color'] != $content['data']['color']);
-						
+
 						try {
 							$cats->edit($content);
 							$msg = lang('Category saved.');
@@ -176,7 +177,7 @@ class admin_categories
 					}
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, 'admin', $content['id'], $change_color ? 'edit' : 'update');
+						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', 'admin');
 						egw_framework::window_close();
 					}
 					break;
@@ -187,7 +188,7 @@ class admin_categories
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
 						// Refresh internally looks for template name, which starts with 'admin'
-						egw_framework::refresh_opener($msg, 'admin', $content['id'],'delete');
+						egw_framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', 'admin');
 						egw_framework::window_close();
 						return;
 					}
@@ -199,7 +200,7 @@ class admin_categories
 					break;
 			}
 			// Refresh internally looks for template name, which starts with 'admin'
-			egw_framework::refresh_opener($msg, 'admin', $content['id'], $change_color ? 'edit' : 'update');
+			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', 'admin');
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -246,7 +247,7 @@ class admin_categories
 			{
 				if ($acc['account_type'] == 'g')
 				{
-					$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+					$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc);
 				}
 			}
 			$content['no_private'] = true;
@@ -264,7 +265,7 @@ class admin_categories
 		}
 
 		egw_framework::validate_file('.','global_categories','admin');
-		
+
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
@@ -296,6 +297,7 @@ class admin_categories
 	{
 		$dir = dir(EGW_SERVER_ROOT.self::ICON_PATH);
 		$icons = array();
+		$matches = null;
 		while(($file = $dir->read()))
 		{
 			if (preg_match('/^(.*)\\.(png|gif|jpe?g)$/i',$file,$matches))
@@ -341,11 +343,10 @@ class admin_categories
 		{
 			$filter['appname'] = $query['col_filter']['app'];
 		}
-		$old_cats = $GLOBALS['egw']->categories;
 		$GLOBALS['egw']->categories = $cats = new categories($filter['owner'],$query['appname']);
-		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
+		$globals = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
 		$parent = $query['search'] ? false : 0;
-		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true,$filter);
+		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globals,$parent,true,$filter);
 		$count = $cats->total_records;
 		foreach($rows as $key => &$row)
 		{
@@ -377,7 +378,7 @@ class admin_categories
 			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
 			$readonlys["delete[$row[id]]"] = !self::$acl_delete;
 		}
-		$rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
+		if (true) $rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
 		// make appname available for actions
 		$rows['appname'] = $query['appname'];
 		$rows['edit_link'] = $this->edit_link;
@@ -503,8 +504,10 @@ class admin_categories
 					}
 					$content['nm']['action'] .= '_' . $content[$action];
 				}
+				$success = $failed = 0;
+				$action_msg = null;
 				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-					$success,$failed,$action_msg,$content['nm'],$msg))
+					$success,$failed,$action_msg,$content['nm']))
 				{
 					$msg .= lang('%1 category(s) %2',$success,$action_msg);
 				}
@@ -528,14 +531,14 @@ class admin_categories
 			'public'  => 'No',
 			'private' => 'Yes',
 		);
-		
+
 		$sel_options['owner'][0] = lang('All users');
 		$accs = $GLOBALS['egw']->accounts->get_list('groups');
 		foreach($accs as $acc)
 		{
 			if ($acc['account_type'] == 'g')
 			{
-				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc,$type2,$type=='both');
+				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc);
 			}
 		}
 
@@ -618,19 +621,16 @@ class admin_categories
 	/**
 	 * Handles actions on multiple entries
 	 *
-	 * @param action
+	 * @param string $_action
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all entries of the current selection (in the session)
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
 	 * @param array $query get_rows parameter
-	 * @param string &$msg on return user feedback
-	 * @param boolean $skip_notifications = false true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
-		array $query, &$msg, $skip_notifications = false)
+	function action($_action, $checked, $use_all, &$success, &$failed, &$action_msg, array $query)
 	{
 		//echo '<p>'.__METHOD__."('$action',".array2string($checked).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
@@ -638,6 +638,7 @@ class admin_categories
 		{
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
+			$result = $readonlys = array();
 			$this->get_rows($query,$result,$readonlys);
 			$checked = array();
 			foreach($result as $key => $info)
@@ -652,7 +653,7 @@ class admin_categories
 		$app = $query['col_filter']['app'] ? $query['col_filter']['app'] : $query['appname'];
 		$cats = new categories($owner,$app);
 
-		list($action, $settings) = explode('_', $action, 2);
+		list($action, $settings) = explode('_', $_action, 2);
 
 		switch($action)
 		{
@@ -666,8 +667,8 @@ class admin_categories
 				break;
 			case 'owner':
 				$action_msg = lang('updated');
-				list($add_remove, $ids) = explode('_', $settings, 2);
-				$ids = explode(',',$ids);
+				list($add_remove, $ids_csv) = explode('_', $settings, 2);
+				$ids = explode(',', $ids_csv);
 				// Adding 'All users' removes all the others
 				if($add_remove == 'add' && array_search(categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(categories::GLOBAL_ACCOUNT);
 
