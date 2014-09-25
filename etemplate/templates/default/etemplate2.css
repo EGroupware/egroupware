@@ -1344,7 +1344,8 @@ div.ms-sel-ctn {
 	padding: 0 !important;
 }
 .et2_toolbar button {
-	margin: 1px;
+	margin:1px;
+	margin-right: 3px;
 	height: 24px;
 }
 .et2_toolbar-dropdown{
