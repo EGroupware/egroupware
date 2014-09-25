@@ -2667,12 +2667,14 @@ class mail_ui
 		$this->partID = $partID;
 		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
-		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, null, false, $mailbox);
+		// fetching structure now, to supply it to getMessageBody and getMessageAttachment, so it does not get fetched twice
+		$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
+		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox);
 
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true,true,$mailbox);
+		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, $structure, $fetchEmbeddedImages, true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		foreach ($attachments as &$attach)
 		{
