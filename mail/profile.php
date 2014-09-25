@@ -156,11 +156,24 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 	$mail_ui->get_rows($query, $rows, $readonlys);
 	$fetchtime = microtime(true);
 
+	if (isset($_GET['uid']) && (int)$_GET['uid'] > 0)
+	{
+		$uid = (int)$_GET['uid'];
+	}
+	else	// use uid of first returned row
+	{
+		$row = array_shift($rows);
+		$uid = $row['uid'];
+	}
+	$mail_ui->get_load_email_data($uid, null, 'INBOX');
+	$bodytime = microtime(true);
+
 	$times += array(
 		$prefix.'login' => $logintime - $starttime,
 		$prefix.'listmailboxes' => $listmailboxestime - $logintime,
 		$prefix.'fetch' => $fetchtime - $listmailboxestime,
 		$prefix.'total' => $fetchtime - $starttime,
+		$prefix.'body' => $bodytime - $fetchtime,
 		//$prefix.'mboxes' => $mboxes,
 	);
 	unset($mboxes);
