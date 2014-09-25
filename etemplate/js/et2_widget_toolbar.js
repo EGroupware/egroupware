@@ -111,12 +111,12 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
 		//Set the default actions for the first time
-		if (typeof pref === 'undefined' || jQuery.isEmptyObject(pref))
+		if (typeof pref === 'undefined')
 		{
 			for (var name in actions)
 			{
 				if (!actions[name].toolbarDefault &&
-						(typeof actions[name].children === 'undefined' || !this.flat_list))
+						(typeof actions[name].children === 'undefined' || !this.options.flat_list))
 					this.set_prefered(actions[name].id,'add');
 			}
 		}
@@ -294,7 +294,15 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			helper:"clone",
 			appendTo:'body',
 			zIndex: 1000,
-			cursor:"move"
+			cursor:"move",
+			start: function()
+			{
+				jQuery(that.actionlist).addClass('et2_toolbarDropArea');
+			},
+			stop: function()
+			{
+				jQuery(that.actionlist).removeClass('et2_toolbarDropArea');
+			},
 		});
 		toolbox.children().droppable({
 			accept:toolbar,

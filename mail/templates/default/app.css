@@ -491,6 +491,9 @@ div.mail-compose_fileselector {
 	padding: 0px;
 	height: 16px !important;
 }
+#mail-index_toolbar > #toolbar-actionlist {
+	width:auto;
+}
 #mail-index_mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;

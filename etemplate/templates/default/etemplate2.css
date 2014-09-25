@@ -1073,6 +1073,10 @@ div.message.floating {
 		width: 100% !important;
 		height: auto;
 	}
+	#cke_1_top.cke_top {
+		display: none;
+		border:none;
+	}
 }
 /**
  * Grid / nextmatch Hierarchy
@@ -1459,6 +1463,11 @@ div.ui-toolbar-menulist{
 }
 .et2_toolbar_actionlist{
 	float:left;
+	width:80%;
+	height:24px;
+}
+.et2_toolbarDropArea{
+	border: 1px dashed lightgray;
 }
 .et2_label > input.et2_checkbox {
 	margin-right: 5px;
