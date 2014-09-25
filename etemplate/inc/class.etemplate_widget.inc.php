@@ -310,6 +310,12 @@ class etemplate_widget
 				{
 					$class_name = self::$widget_registry[$basetype];
 				}
+				// Look for old widgets that were adapted but not renamed
+				else if (class_exists($class_name = $basetype.'_widget') && in_array('etemplate_widget', class_parents($class_name)))
+				{
+					// Side-effects set $class_name
+					//error_log("Ported old widget: $class_name");
+				}
 				else
 				{
 					// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
