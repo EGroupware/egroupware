@@ -518,7 +518,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(_type == "delete")
 		{
 			// Record current & next index
-			var uid = _row_ids[0].indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[0] : this.controller.dataStorePrefix + "::" + _row_ids[0];
+			var uid = _row_ids[0].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[0] : this.controller.dataStorePrefix + "::" + _row_ids[0];
 			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
 			var next = (entry.ao?entry.ao.getNext(_row_ids.length):null);
 			if(next == null || !next.id || next.id == uid)
@@ -531,7 +531,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.dataview.grid.doInvalidate = false;
 			for(var i = 0; i < _row_ids.length; i++)
 			{
-				uid = _row_ids[i].indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+				uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
 
 				// Delete from internal references
 				this.controller.deleteRow(uid);
@@ -557,7 +557,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		id_loop:
 		for(var i = 0; i < _row_ids.length; i++)
 		{
-			var uid = _row_ids[i].indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
+			var uid = _row_ids[i].toString().indexOf(this.controller.dataStorePrefix) == 0 ? _row_ids[i] : this.controller.dataStorePrefix + "::" + _row_ids[i];
 			switch(_type)
 			{
 				case "update":
