@@ -754,6 +754,7 @@ class mail_hooks
 	{
 		if (substr($name, 0, 5) != 'deny_')
 		{
+			if ($name == 'edit_user') return;	// to ease upgrade, as hook is removed
 			throw new egw_exception_wrong_parameter("No method $name!");
 		}
 		$accountsel = new uiaccountsel();
