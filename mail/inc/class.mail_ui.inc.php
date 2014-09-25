@@ -121,15 +121,14 @@ class mail_ui
 		}
 		// no autohide of the sidebox, as we use it for folderlist now.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
-		if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
-		unset($_GET["resetConnection"]);
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
 			self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		if ($connectionReset)
+		if ($_GET["resetConnection"])
 		{
+			unset($_GET["resetConnection"]);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		}
