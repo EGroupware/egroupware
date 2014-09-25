@@ -938,7 +938,7 @@ abstract class egw_framework
 		{
 			$versions = array();
 			$security = null;
-			if (($remote = file_get_contents(egw_framework::CURRENT_VERSION_URL, false, self::proxy_context())))
+			if (($remote = file_get_contents(egw_framework::CURRENT_VERSION_URL, false, egw_framework::proxy_context())))
 			{
 				list($current, $security) = explode("\n", $remote);
 				if (empty($security)) $security = $current;
