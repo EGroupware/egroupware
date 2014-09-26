@@ -754,6 +754,11 @@ var et2_link_entry = et2_inputWidget.extend(
 		if(typeof this.options.value == 'object' && !this.options.value.app)
 		{
 			this.options.value.app = egw.preference('link_app',this.options.value.to_app || this.egw().getAppName());
+			// If there's no value set for app, then take the first one from the selectbox
+			if (typeof this.options.value.app == 'undefined' || this.options.value.app)
+			{
+				this.options.value.app = Object.keys(this.options.select_options)[0];
+			}
 			this.app_select.val(this.options.value.app);
 		}
 		return this._super.apply(this,arguments);
