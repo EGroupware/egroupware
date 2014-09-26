@@ -308,13 +308,35 @@ class emailadmin_account implements ArrayAccess
 	 *
 	 * Checks if an imap host, username and for managaged mail-servers accountStatus="active" and NOT deliveryMode="forwardOnly" is set
 	 *
-	 * return boolean
+	 * @param boolean $try_connect =true true: try connecting for validation, false: read user-data to determine it's imap
+	 *	(matters only for imap servers managed by EGroupware!)
+	 * @return boolean
 	 */
-	public function is_imap()
+	public function is_imap($try_connect=true)
 	{
-		return !empty($this->acc_imap_host) && !empty($this->acc_imap_username) && !empty($this->acc_imap_password) &&
-			($this->acc_smtp_type == 'emailadmin_smtp' ||
-				$this->deliveryMode != emailadmin_smtp::FORWARD_ONLY && $this->accountStatus == emailadmin_smtp::MAIL_ENABLED);
+		if (empty($this->acc_imap_host) || empty($this->acc_imap_username) || empty($this->acc_imap_password))
+		{
+			return false;	// no imap host or credentials
+		}
+		// if we are not managing the mail-server, we do NOT need to check deliveryMode and accountStatus
+		if ($this->acc_smtp_type == 'emailadmin_smtp')
+		{
+			return true;
+		}
+		// it is quicker to try connection, assuming we want to do that anyway, instead of reading user-data
+		if ($try_connect)
+		{
+			// as querying user-data is a lot slower then just trying to connect, and we need probably need to connect anyway, we try that
+			$imap = $this->imapserver();
+			try {
+				$imap->login();
+				return true;
+			}
+			catch (Exception $ex) {
+				unset($ex);
+			}
+		}
+		return $this->deliveryMode != emailadmin_smtp::FORWARD_ONLY && $this->accountStatus == emailadmin_smtp::MAIL_ENABLED;
 	}
 
 	/**
