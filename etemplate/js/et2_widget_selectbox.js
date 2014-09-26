@@ -717,7 +717,8 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			var value = [];
 			jQuery("input:checked",this.multiOptions).each(function(){value.push(this.value);});
-			this.value = value;
+			// we need to return null for no value instead of empty array, which gets overwritten by preserved value on server-side
+			this.value = value.length > 0 ? value : null;
 		}
 		else
 		{
