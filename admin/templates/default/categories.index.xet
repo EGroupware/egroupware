@@ -9,12 +9,12 @@
 	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="@no_access"/>
-				<column width="40"/>
+				<column width="45%"/>
+				<column width="52%"/>
+				<column width="174"/>
+				<column width="170"/>
+				<column disabled="@no_access" width="106"/>
+				<column width="56"/>
 				<column width="80"/>
 				<column/>
 				<column width="30"/>
