@@ -2288,24 +2288,20 @@ class emailadmin_imapbase
 		{
 			$_subscribedOnly = false;
 		}
-		#$inboxData->attributes = 64;
 		$inboxFolderObject = array('INBOX' => $inboxData);
-		#_debug_array($folders);
 
 		//$nameSpace = $this->icServer->getNameSpaces();
 		$nameSpace = $this->_getNameSpaces();
+		$fetchedAllInOneGo = false;
 		//error_log(__METHOD__.__LINE__.array2string($nameSpace));
-		//_debug_array($nameSpace);
-		//_debug_array($delimiter);
 		if (is_array($nameSpace))
 		{
 			foreach($nameSpace as $k => $singleNameSpace) {
 				$type = $singleNameSpace['type'];
-				$prefix_present = $singleNameSpace['prefix_present'];
 				// the following line (assumption that for the same namespace the delimiter should be equal) may be wrong
 				$foldersNameSpace[$type]['delimiter']  = $singleNameSpace['delimiter'];
 
-				if(is_array($singleNameSpace)) {
+				if(is_array($singleNameSpace)&&$fetchedAllInOneGo==false) {
 					// fetch and sort the subscribed folders
 					// we alway fetch the subscribed, as this provides the only way to tell
 					// if a folder is subscribed or not
@@ -2313,10 +2309,14 @@ class emailadmin_imapbase
 					{
 						try
 						{
-							$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($singleNameSpace['prefix'],0,true);
-							if (empty($subscribedMailboxes) && $type == 'shared')
+							$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0,true);
+							if (!empty($subscribedMailboxes))
 							{
-								$subscribedMailboxes = $this->icServer->listSubscribedMailboxes('',0,true);
+								$fetchedAllInOneGo = true;
+							}
+							else
+							{
+								$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($singleNameSpace['prefix'],0,true);
 							}
 						}
 						catch(Exception $e)
@@ -2358,28 +2358,6 @@ class emailadmin_imapbase
 						}
 
 					}
-					// skip the checks here completely; we rely on Hordes code/results as for now
-					// this improves speed tremendously for the !$_subscribedOnly - mode
-					/*
-					// only check for Folder in FolderMaintenance for Performance Reasons
-					if(!$_subscribedOnly) {
-						foreach ((array)$foldersNameSpace[$type]['subscribed'] as $folderName)
-						{
-							if ($singleNameSpace['prefix'] == $folderName || $singleNameSpace['prefix'] == $folderName.$singleNameSpace['delimiter']) continue;
-							//echo __METHOD__."Checking $folderName for existence<br>";
-							if (!$this->folderExists($folderName,true)) {
-								//echo("eMail Folder $folderName failed to exist; should be unsubscribed; Trying ...");
-								if ($this->subscribe($folderName, false))
-								{
-									$r = " success.";
-								} else {
-									$r = " failed.";
-								}
-								error_log(__METHOD__."-> $folderName in NS: $type failed to be here; should be unsubscribed....".$r);
-							}
-						}
-					}
-					*/
 
 					// fetch and sort all folders
 					//echo $type.'->'.$singleNameSpace['prefix'].'->'.($type=='shared'?0:2)."<br>";
@@ -2397,38 +2375,6 @@ class emailadmin_imapbase
 						error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve all Boxes:'.$e->getMessage());
 						$allMailboxesExt = array();
 					}
-/*
-					if (empty($allMailboxesExt) && $type == 'shared')
-					{
-						try
-						{
-							$allMailboxesExt = $this->icServer->getMailboxes('',0,true);
-						}
-						catch (Exception $e)
-						{
-							$allMailboxesExt = array();
-						}
-					}
-					else
-					{
-						if ($prefix_present=='forced' && $type=='personal') // you cannot trust dovecots assumed prefix
-						{
-							try
-							{
-								$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
-							}
-							catch (Exception $e)
-							{
-								$allMailboxesExtAll=array();
-							}
-							foreach ($allMailboxesExtAll as $kaMEA => $aMEA)
-							{
-								if (!in_array($aMEA,$allMailboxesExt)) $allMailboxesExt[] = $aMEA;
-							}
-						}
-					}
-					$allMailBoxesExtSorted = array();
-*/
 					if (!is_array($allMailboxesExt))
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Expected Array but got:'.array2string($allMailboxesExt). 'Type:'.$type.' Prefix:'.$singleNameSpace['prefix']);
@@ -2469,20 +2415,6 @@ class emailadmin_imapbase
 					//_debug_array(array_keys($allMailBoxesExtSorted));
 					$allMailboxes = array();
 					foreach ((array)$allMailBoxesExtSorted as $mbx) {
-						//echo $mbx['MAILBOX']."<br>";
-						// this is not used when we are callinglistMailboxes with $restriction_search = 0
-						// this lists all mailboxes so fetching mailboxes for each level would be obsolete
-						/*
-						if (in_array('\HasChildren',$mbx["ATTRIBUTES"]) || in_array('\Haschildren',$mbx["ATTRIBUTES"]) || in_array('\haschildren',$mbx["ATTRIBUTES"])) {
-							unset($buff);
-							if (!in_array($mbx['MAILBOX'],$allMailboxes)) $buff = self::getMailBoxesRecursive($mbx['MAILBOX'],$delimiter,$foldersNameSpace[$type]['prefix'],1);
-							if( PEAR::isError($buff) ) {
-								continue;
-							}
-							#_debug_array($buff);
-							if (is_array($buff)) $allMailboxes = array_merge($allMailboxes,$buff);
-						}
-						*/
 						if (!in_array($mbx['MAILBOX'],$allMailboxes)) $allMailboxes[] = $mbx['MAILBOX'];
 						//echo "Result:";_debug_array($allMailboxes);
 					}
@@ -2490,108 +2422,6 @@ class emailadmin_imapbase
 					if (is_array($foldersNameSpace[$type]['all'])) sort($foldersNameSpace[$type]['all']);
 				}
 			}
-/*
-			// check for autocreated folders
-			if(isset($foldersNameSpace['personal']['prefix'])) {
-				$personalPrefix = $foldersNameSpace['personal']['prefix'];
-				$personalDelimiter = $foldersNameSpace['personal']['delimiter'];
-				if(!empty($personalPrefix)) {
-					if(substr($personalPrefix, -1) != $personalDelimiter) {
-						$folderPrefix = $personalPrefix . $personalDelimiter;
-					} else {
-						$folderPrefix = $personalPrefix;
-					}
-				}
-				else
-				{
-					if(substr($personalPrefix, -1) != $personalDelimiter) {
-						$folderPrefixAsInbox = 'INBOX' . $personalDelimiter;
-					} else {
-						$folderPrefixAsInbox = 'INBOX';
-					}
-				}
-				if (!$_alwaysGetDefaultFolders && $this->mailPreferences['notavailableautofolders'] && !empty($this->mailPreferences['notavailableautofolders']))
-				{
-					$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences['notavailableautofolders']));
-				} else {
-					$foldersToCheck = self::$autoFolders;
-				}
-				//error_log(__METHOD__.' ('.__LINE__.') '." foldersToCheck:".array2string($foldersToCheck));
-				//error_log(__METHOD__.' ('.__LINE__.') '." foldersToCheck:".array2string( $this->mailPreferences['sentFolder']));
-				foreach($foldersToCheck as $personalFolderName) {
-					$folderName = (!empty($personalPrefix) ? $folderPrefix.$personalFolderName : $personalFolderName);
-					//error_log(__METHOD__.' ('.__LINE__.') '." foldersToCheck: $personalFolderName / $folderName");
-					if(!is_array($foldersNameSpace['personal']['all']) || !in_array($folderName, $foldersNameSpace['personal']['all'])) {
-						$createfolder = true;
-						switch($personalFolderName)
-						{
-							case 'Drafts': // => Entwürfe
-								$draftFolder = $this->getDraftFolder();
-								if ($draftFolder && $draftFolder=='none')
-									$createfolder=false;
-								break;
-							case 'Junk': //] => Spammails
-								$junkFolder = $this->getJunkFolder();
-								if ($junkFolder && $junkFolder=='none')
-									$createfolder=false;
-								break;
-							case 'Sent': //] => Gesendet
-								// ToDo: we may need more sophistcated checking here
-								$sentFolder = $this->getSentFolder();
-								if ($sentFolder && $sentFolder=='none')
-									$createfolder=false;
-								break;
-							case 'Trash': //] => Papierkorb
-								$trashFolder = $this->getTrashFolder();
-								if ($trashFolder && $trashFolder=='none')
-									$createfolder=false;
-								break;
-							case 'Templates': //] => Vorlagen
-								$templateFolder = $this->getTemplateFolder();
-								if ($templateFolder && $templateFolder=='none')
-									$createfolder=false;
-								break;
-							case 'Outbox': // Nokia Outbox for activesync
-								//if ($this->mailPreferences['outboxFolder'] && $this->mailPreferences['outboxFolder']=='none')
-									$createfolder=false;
-								if ($GLOBALS['egw_info']['user']['apps']['activesync']) $createfolder = true;
-								break;
-						}
-						// check for the foldername as constructed with prefix (or not)
-						if ($createfolder && $this->folderExists($folderName))
-						{
-							$createfolder = false;
-						}
-						// check for the folder as it comes (no prefix)
-						if ($createfolder && $personalFolderName != $folderName && $this->folderExists($personalFolderName))
-						{
-							$createfolder = false;
-							$folderName = $personalFolderName;
-						}
-						// check for the folder as it comes with INBOX prefixed
-						$folderWithInboxPrefixed = $folderPrefixAsInbox.$personalFolderName;
-						if ($createfolder && $folderWithInboxPrefixed != $folderName && $this->folderExists($folderWithInboxPrefixed))
-						{
-							$createfolder = false;
-							$folderName = $folderWithInboxPrefixed;
-						}
-						// now proceed with the folderName that may be altered in the progress of testing for existence
-						if ($createfolder === false && $_alwaysGetDefaultFolders)
-						{
-							if (!in_array($folderName,$foldersNameSpace['personal']['all'])) $foldersNameSpace['personal']['all'][] = $folderName;
-							if (!in_array($folderName,$foldersNameSpace['personal']['subscribed'])) $foldersNameSpace['personal']['subscribed'][] = $folderName;
-						}
-
-						if($createfolder === true && $this->createFolder('', $folderName, true)) {
-							$foldersNameSpace['personal']['all'][] = $folderName;
-							$foldersNameSpace['personal']['subscribed'][] = $folderName;
-						} else {
-							#print "FOLDERNAME failed: $folderName<br>";
-						}
-					}
-				}
-			}
-*/
 		}
 		//subscribed folders may be used in getFolderStatus
 		egw_cache::setCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$subscribedFoldersForCache,$expiration=60*60*1);
@@ -2607,6 +2437,7 @@ class emailadmin_imapbase
 				foreach((array)$listOfFolders as $folderName) {
 					//echo "<br>FolderToCheck:$folderName<br>";
 					//error_log(__METHOD__.__LINE__.'#Delimiter:'.$delimiter.':#'.$folderName);
+					if ($_subscribedOnly && empty($foldersNameSpace[$type]['all'])) continue;//when subscribedonly, we fetch all folders in one go.
 					if($_subscribedOnly && !(in_array($folderName, $foldersNameSpace[$type]['all'])||in_array($folderName.$foldersNameSpace[$type]['delimiter'], $foldersNameSpace[$type]['all']))) {
 						#echo "$folderName failed to be here <br>";
 						continue;
