@@ -2309,7 +2309,7 @@ class emailadmin_imapbase
 					// fetch and sort the subscribed folders
 					// we alway fetch the subscribed, as this provides the only way to tell
 					// if a folder is subscribed or not
-					if ($_subscribedOnly == true);
+					if ($_subscribedOnly == true)
 					{
 						try
 						{
@@ -2339,7 +2339,7 @@ class emailadmin_imapbase
 									'MAILBOX'=>$finfo['MAILBOX'],
 									'ATTRIBUTES'=>$finfo['ATTRIBUTES'],
 									'delimiter'=>$finfo['delimiter'],//lowercase for some reason???
-									'SUBSCRIBED'=>$mbx['SUBSCRIBED'],//seeded by getMailboxes
+									'SUBSCRIBED'=>$finfo['SUBSCRIBED'],//seeded by getMailboxes
 								);
 								if (empty($foldersNameSpace[$type]['subscribed']) || !in_array($k,$foldersNameSpace[$type]['subscribed']))
 								{
@@ -4952,11 +4952,11 @@ class emailadmin_imapbase
 	 * Returns not the attachments itself, but an array of information about the attachment
 	 *
 	 * @param int $_uid the messageuid,
-	 * @param string $_partID=null , the partID, may be omitted
-	 * @param Horde_Mime_Part $_structure=null if given use structure for parsing
-	 * @param boolean $fetchEmbeddedImages=true,
-	 * @param boolean $fetchTextCalendar=false,
-	 * @param boolean $resolveTNEF=true
+	 * @param string $_partID = null , the partID, may be omitted
+	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
+	 * @param boolean $fetchEmbeddedImages = true,
+	 * @param boolean $fetchTextCalendar = false,
+	 * @param boolean $resolveTNEF = true
 	 * @param string $_folder folder to work on
 	 * @return array  an array of information about the attachment: array of array(name, size, mimeType, partID, encoding)
 	 */
@@ -5020,6 +5020,50 @@ class emailadmin_imapbase
 			}
 		}
 		return $attachments;
+	}
+
+	/**
+	 * Decode TNEF type attachment into Multipart/mixed attachment
+	 *
+	 * @param MIME object $data Mime part object
+	 *
+	 * @return boolean|Horde_Mime_part Multipart/Mixed part decoded attachments |
+	 *	return false if there's no attachments or failure
+	 */
+	public function tnef_decoder($_uid, $data )
+	{
+
+		$parts_obj = $this->getStructure($_uid);
+		$parts_obj->setType('multipart/mixed');
+
+		$tnef_object = Horde_Compress::factory('tnef');
+		try
+		{
+			$tnef_data = $tnef_object->decompress($data);
+		} catch (Horde_Exception $ex) {
+			return false;
+		}
+		if (is_array($tnef_data))
+		{
+			foreach ($tnef_data as &$data)
+			{
+				$tmp_part = $this->getStructure($_uid);
+
+				$tmp_part->setName($data['name']);
+				$tmp_part->setContents($data['stream']);
+				$tmp_part->setDescription($data['name']);
+
+				$type = $data['type'] . '/' . $data['subtype'];
+				if (in_array($type, array('application/octet-stream', 'application/base64')))
+				{
+					$type = Horde_Mime_Magic::filenameToMIME($data['name']);
+				}
+				$tmp_part->setType($data['type']);
+				$parts_obj->addPart($tmp_part);
+			}
+			return $parts_obj;
+		}
+		return false;
 	}
 
 	/**
