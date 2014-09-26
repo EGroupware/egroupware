@@ -42,6 +42,7 @@ class mail_hooks
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
 					)),
+					'toolbarDefault' => true,
 				);
 			}
 			if ($account['acc_sieve_enabled'] || $account['acc_imap_type'] == 'managementserver_imap')
@@ -56,6 +57,7 @@ class mail_hooks
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
 					)),
+					'toolbarDefault' => true,
 				);
 			}
 		}
