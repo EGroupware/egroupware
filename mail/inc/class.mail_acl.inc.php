@@ -209,7 +209,7 @@ class mail_acl
 			if ($fields['acc_id'] == $this->imap->acc_imap_username ||
 					$fields['acc_id'][0] == $this->imap->acc_imap_username)
 			{
-				foreach ($fields as $index => $val)
+				foreach (array_keys($fields) as $index)
 				{
 					$readonlys['grid'][$key][$index] = true;
 				}
@@ -227,7 +227,52 @@ class mail_acl
 		$preserv['account_id'] = $account_id;
 		$content['grid']['account_type'] = $this->imap->supportsGroupAcl() ? 'both' : 'accounts';
 
+		// set a custom autocomplete method for mailbox taglist
+		if ($account_id)
+		{
+			$tmpl->setElementAttribute('mailbox', 'autocomplete_url', __CLASS__.'::ajax_folders');
+			$tmpl->setElementAttribute('mailbox', 'autocomplete_params', array(
+				'acc_id' => $acc_id,
+				'account_id' => $account_id,
+			));
+		}
+
 		$tmpl->exec('mail.mail_acl.edit', $content, $sel_options, $readonlys, $preserv,2);
+	}
+
+	/**
+	 * Autocomplete for folder taglist
+	 *
+	 * @throws egw_exception_no_permission_admin
+	 */
+	public static function ajax_folders()
+	{
+		if (!empty($_GET['account_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			throw new egw_exception_no_permission_admin;
+		}
+		$account = emailadmin_account::read($_GET['acc_id'], $_GET['account_id']);
+		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
+		$mailbox = $imap->isAdminConnection ? $imap->getUserMailboxString($imap->isAdminConnection) : 'INBOX';
+
+		$folders = array();
+		foreach(self::getSubfolders($mailbox, $imap) as $folder)
+		{
+			if (stripos($folder, $_GET['query']) !== false)
+			{
+				$folders[] = array(
+					'id' => $folder,
+					'label' => $folder,
+				);
+			}
+		}
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($folders);
+
+		common::egw_exit();
 	}
 
 	/**
@@ -371,7 +416,7 @@ class mail_acl
 	{
 		if ($recursive)
 		{
-			$folders = $this->getSubfolders($mailbox);
+			$folders = self::getSubfolders($mailbox, $this->imap);
 		}
 		else
 		{
@@ -396,16 +441,15 @@ class mail_acl
 	 * Get subfolders of a mailbox
 	 *
 	 * @param string $mailbox structural folder name
-	 *
+	 * @param emailadmin_imap $imap
 	 * @return Array an array including all subfolders of given mailbox| returns an empty array in case of no subfolders
-	 *
 	 */
-	function getSubfolders($mailbox)
+	protected static function getSubfolders($mailbox, emailadmin_imap $imap)
 	{
-		$delimiter = $this->imap->getDelimiter();
-		$nameSpace = $this->imap->getNameSpace();
-		$prefix = $this->imap->getFolderPrefixFromNamespace($nameSpace, $mailbox);
-		if (($subFolders = $this->imap->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
+		$delimiter = $imap->getDelimiter();
+		$nameSpace = $imap->getNameSpace();
+		$prefix = $imap->getFolderPrefixFromNamespace($nameSpace, $mailbox);
+		if (($subFolders = $imap->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
 		{
 			return $subFolders;
 		}
@@ -433,7 +477,7 @@ class mail_acl
 	{
 		if ($recursive)
 		{
-			$folders = $this->getSubfolders($mailbox);
+			$folders = self::getSubfolders($mailbox, $this->imap);
 		}
 		else
 		{
