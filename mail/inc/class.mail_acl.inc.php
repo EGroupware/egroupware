@@ -65,6 +65,7 @@ class mail_acl
 	 */
 	function edit(array $content=null ,$msg='')
 	{
+		$tmpl = new etemplate_new('mail.acl');
 		if (!is_array($content))
 		{
 			$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -82,13 +83,19 @@ class mail_acl
 		$account = emailadmin_account::read($acc_id, $account_id);
 		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
 
-		$tmpl = new etemplate_new('mail.acl');
 		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
 		if (empty($mailbox))
 		{
 			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($this->imap->isAdminConnection) : 'INBOX';
 		}
-
+		if (!$this->imap->isAdminConnection)
+		{
+			$tmpl->setElementAttribute('mailbox', 'autocomplete_url', 'mail.mail_compose.ajax_searchFolder');
+		}
+		else
+		{
+			//Todo: Implement autocomplete_url function with admin stuffs consideration
+		}
 		// Unset the content if folder is changed, in order to read acl rights for new selected folder
 		if (!is_array($content['button']) && is_array($content['mailbox']) && !is_array($content['grid']['delete'])) unset($content);
 
@@ -396,13 +403,13 @@ class mail_acl
 	function getSubfolders($mailbox)
 	{
 		$delimiter = $this->imap->getDelimiter();
-/*		$nameSpace = $this->mail_bo->_getNameSpaces();
-		$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $mailbox);
-		if (($subFolders = $this->mail_bo->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
+		$nameSpace = $this->imap->getNameSpace();
+		$prefix = $this->imap->getFolderPrefixFromNamespace($nameSpace, $mailbox);
+		if (($subFolders = $this->imap->getMailBoxesRecursive($mailbox, $delimiter, $prefix)))
 		{
 			return $subFolders;
 		}
-		else*/
+		else
 		{
 			return array();
 		}

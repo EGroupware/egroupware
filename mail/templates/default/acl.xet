@@ -13,7 +13,7 @@
 				</row>
 				<row>
 					<description value="Folder:"/>
-					<taglist id="mailbox" width="100%" autocomplete_url='mail.mail_compose.ajax_searchFolder' maxSelection="1" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+					<taglist id="mailbox" width="100%" maxSelection="1" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
 				</row>
 				<row>
 					<description value="Rights:"/>
