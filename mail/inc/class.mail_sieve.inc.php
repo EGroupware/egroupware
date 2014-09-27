@@ -631,9 +631,9 @@ class mail_sieve
 										self::setAsyncJob($newVacation);
 									}
 									//Reset vacationNotice cache which is used in mail_ui get_rows
-									$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid']);
+									$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
 									$cachedVacations = array($icServer->acc_id => $newVacation) + (array)$cachedVacations;
-									egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
+									egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
 
 									$msg = lang('Vacation notice sucessfully updated.');
 								}
