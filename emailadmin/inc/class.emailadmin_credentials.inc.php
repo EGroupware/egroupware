@@ -22,7 +22,7 @@ class emailadmin_credentials
 {
 	const APP = 'emailadmin';
 	const TABLE = 'egw_ea_credentials';
-	const USER_EDITABLE_JOIN = 'JOIN egw_ea_accounts ON egw_ea_accounts.acc_id=egw_ea_credentials.acc_id AND acc_user_editable=1';
+	const USER_EDITABLE_JOIN = 'JOIN egw_ea_accounts ON egw_ea_accounts.acc_id=egw_ea_credentials.acc_id AND acc_user_editable=';
 
 	/**
 	 * Credentials for type IMAP
@@ -365,7 +365,7 @@ class emailadmin_credentials
 		$old_mcrypt = null;
 		foreach(self::$db->select(self::TABLE, self::TABLE.'.*', array(
 			'account_id' => $data['account_id']
-		),__LINE__, __FILE__, false, '', 'emailadmin', 0, self::USER_EDITABLE_JOIN) as $row)
+		),__LINE__, __FILE__, false, '', 'emailadmin', 0, self::USER_EDITABLE_JOIN.self::$db->quote(true, 'bool')) as $row)
 		{
 			if (!isset($old_mcrypt))
 			{
