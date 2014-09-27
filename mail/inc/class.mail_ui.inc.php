@@ -2290,7 +2290,7 @@ class mail_ui
 
 				$cachedVacations = array($sieveServer->acc_id => $vacation) + (array)$cachedVacations;
 				// Set vacation to the instance cache for particular account with expiration of one day
-				egw_cache::setCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations, 60*60*24);
+				egw_cache::setCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations, 60*60*24);
 			}
 			catch (PEAR_Exception $ex)
 			{
@@ -3917,7 +3917,7 @@ class mail_ui
 	public static function ajax_refreshVacationNotice($icServerID=null)
 	{
 		//Get vacation from cache if it's available
-		$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'+$GLOBALS['egw_info']['user']['account_lid']);
+		$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
 		$vacation = $cachedVacations[$icServerID];
 
 		if (!$vacation)
