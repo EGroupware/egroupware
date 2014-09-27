@@ -570,7 +570,7 @@ abstract class egw_framework
 		$tmpl->set_var('template_set',$this->template);
 
 		if (substr($GLOBALS['egw_info']['server']['login_logo_file'], 0, 4) == 'http' ||
-			strpos($GLOBALS['egw_info']['server']['login_logo_file'], '//') !== false)
+			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
 		{
 			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
 		}
