@@ -1568,3 +1568,17 @@ ul.et2_nowrap, div.et2_nowrap{
 	width: 77%;
 	float: right;
 }
+
+/*et2_image_widget*/
+div.et2_image_tooltipPopup {
+	background: white;
+	color: black;
+	border: 1px solid gray;
+	padding: 0;
+	opacity: 1;
+	max-width: 600px;
+	max-height: 480px;
+	box-shadow: 5px 5px 11px gray;
+	overflow:auto;
+}
+

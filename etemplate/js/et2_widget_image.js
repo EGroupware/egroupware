@@ -62,6 +62,12 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 			"name": "Label",
 			"type": "string",
 			"description": "Label for image"
+		},
+		"image_tooltip":{
+			"name": "Image tooltip",
+			"type": "string",
+			"default": false,
+			"description": "Clicking on an image would popup a tooltip which shows the actual size of the image"
 		}
 	},
 	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],
@@ -149,9 +155,52 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM],
 		var href = this.options.href;
 		var popup = this.options.extra_link_popup;
 		var target = this.options.extra_link_target;
+		var self = this;
+		if (self.options.image_tooltip)
+		{
+			this.image.parent().tooltip({
+				position: {my:"left center", at:"right+10 center", collision:"none"},
+				tooltipClass:'et2_image_tooltipPopup',
+				content: function()
+				{
+					return jQuery('<div><img src="'+ href +'"/></div>');
+				},
+				close: function()
+				{
+					jQuery(this).tooltip('disable');
+				}
+			}).tooltip('disable');
+		}
 		this.image.parent().click(function(e)
 		{
-			egw.open_link(href,target,popup);
+			if (self.options.image_tooltip)
+			{
+				var ttElem = jQuery(e.target).parent();
+				var ttOptions = ttElem.tooltip('option');
+				
+				if (!ttOptions.disabled)
+				{
+					ttElem.tooltip('disable');
+					
+					jQuery(e.target).trigger('mouseout');
+				}
+				else
+				{
+					ttElem.tooltip('enable');
+					jQuery(e.target).trigger('mouseover');
+				}
+				jQuery(e.target).on('mouseout', function (event){
+					if (ttOptions.disabled)
+					{
+						jQuery(event.target).trigger('mouseover');
+					}
+				});
+			}
+			else
+			{
+				egw.open_link(href,target,popup);
+			}
+			
 			e.preventDefault();
 			return false;
 		});
