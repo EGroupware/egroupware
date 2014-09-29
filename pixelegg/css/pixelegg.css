@@ -3406,12 +3406,6 @@ div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasD
 div.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
   cursor: pointer;
 }
-div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs button.et2_button_with_image {
-  background-size: 12px auto !important;
-  margin-left: 32px;
-  padding: 0px;
-  height: 16px;
-}
 div.et2_container div table.et2_grid tbody tr td .et2_tabbox .et2_tabs table.et2_grid {
   background-color: #ffffff;
 }
