@@ -341,8 +341,8 @@ class emailadmin_wizard
 	 * Step 2: Folder - let user select trash, sent, drafs and template folder
 	 *
 	 * @param array $content
-	 * @param string $msg=''
-	 * @param Horde_Imap_Client_Socket $imap=null
+	 * @param string $msg =''
+	 * @param Horde_Imap_Client_Socket $imap =null
 	 */
 	public function folder(array $content, $msg='', Horde_Imap_Client_Socket $imap=null)
 	{
@@ -452,7 +452,7 @@ class emailadmin_wizard
 	 * Step 3: Sieve
 	 *
 	 * @param array $content
-	 * @param string $msg=''
+	 * @param string $msg =''
 	 */
 	public function sieve(array $content, $msg='')
 	{
@@ -618,7 +618,7 @@ class emailadmin_wizard
 	 * Step 4: SMTP
 	 *
 	 * @param array $content
-	 * @param string $msg=''
+	 * @param string $msg =''
 	 */
 	public function smtp(array $content, $msg='')
 	{
@@ -825,9 +825,9 @@ class emailadmin_wizard
 	 *
 	 * b) via mail_wizard proxy class by regular mail user to edit (acc_id GET parameter) or create new mail account
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
-	 * @param string $msg_type='success'
+	 * @param array $content =null
+	 * @param string $msg =''
+	 * @param string $msg_type ='success'
 	 */
 	public function edit(array $content=null, $msg='', $msg_type='success')
 	{
@@ -1236,6 +1236,22 @@ class emailadmin_wizard
 			$tpl->setElementAttribute('account_id', 'multiple', true);
 			$readonlys['button[multiple]'] = true;
 		}
+		// when called by admin for existing accounts, display further administrative actions
+		if ($content['called_for'] && $content['acc_id'])
+		{
+			$admin_actions = array();
+			foreach($GLOBALS['egw']->hooks->process(array(
+				'location' => 'emailadmin_edit',
+				'account_id' => $content['called_for'],
+				'acc_id' => $content['acc_id'],
+			)) as $actions)
+			{
+				if ($actions) $admin_actions = array_merge($admin_actions, $actions);
+			}
+			if ($admin_actions) $tpl->setElementAttribute('admin_actions', 'actions', $admin_actions);
+		}
+		$content['admin_actions'] = (bool)$admin_actions;
+
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -1243,7 +1259,7 @@ class emailadmin_wizard
 	 * Replace 0 with '' or back
 	 *
 	 * @param string|array &$account_id on return always array
-	 * @param boolean $back=false
+	 * @param boolean $back =false
 	 */
 	private static function fix_account_id_0(&$account_id=null, $back=false)
 	{
@@ -1263,7 +1279,7 @@ class emailadmin_wizard
 	 * Instanciate imap-client
 	 *
 	 * @param array $content
-	 * @param int $timeout=null default use value returned by emailadmin_imap::getTimeOut()
+	 * @param int $timeout =null default use value returned by emailadmin_imap::getTimeOut()
 	 * @return Horde_Imap_Client_Socket
 	 */
 	protected static function imap_client(array $content, $timeout=null)
@@ -1302,7 +1318,7 @@ class emailadmin_wizard
 	 * therefore we try it with the found MX and it's domain-part (host-name removed).
 	 *
 	 * @param string $domain domain or email
-	 * @param boolean $try_mx=true if domain itself is not found, try mx or domain-part (host removed) of mx
+	 * @param boolean $try_mx =true if domain itself is not found, try mx or domain-part (host removed) of mx
 	 * @return array with values for keys 'displayName', 'imap', 'smtp', 'pop3', which each contain
 	 *	array of arrays with values for keys 'hostname', 'port', 'socketType'=(SSL|STARTTLS), 'username'=%EMAILADDRESS%
 	 */
@@ -1365,7 +1381,7 @@ class emailadmin_wizard
 	 *  - MX for $domain
 	 *
 	 * @param string $email email address
-	 * @param string $type='imap' 'imap' or 'smtp', used as hostname beside 'mail'
+	 * @param string $type ='imap' 'imap' or 'smtp', used as hostname beside 'mail'
 	 * @return array of hostname => true pairs
 	 */
 	protected function guess_hosts($email, $type='imap')

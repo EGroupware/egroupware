@@ -206,7 +206,7 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					window.setTimeout(function(){that.compose_resizeHandler()}, 100);
+					window.setTimeout(function(){that.compose_resizeHandler();}, 100);
 				});
 
 				this.compose_fieldExpander();
@@ -3581,7 +3581,23 @@ app.classes.mail = AppJS.extend(
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
 		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder)+'&acc_id='+acc_id, '_blank', '640x480');
 	},
-
+	
+	/**
+	 * Submit new selected folder back to server in order to read its acl's rights
+	 */
+	acl_folderChange: function ()
+	{
+		var mailbox = this.et2.getWidgetById('mailbox');
+		
+		if (mailbox)
+		{
+			if (mailbox.taglist.getValue().length > 0)
+			{
+				this.et2._inst.submit();
+			}	
+		}
+	},
+	
 	/**
 	 * Edit a mail account
 	 *

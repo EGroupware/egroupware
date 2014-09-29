@@ -57,7 +57,7 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 	 *
 	 * Prefixes adminUsername with real username (separated by an asterisk)
 	 *
-	 * @param string $_username=null create an admin connection for given user or $this->acc_imap_username
+	 * @param string $_username =null create an admin connection for given user or $this->acc_imap_username
 	 */
 	function adminConnection($_username=null)
 	{
@@ -70,6 +70,29 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 			'*'.$this->acc_imap_admin_username;
 
 		parent::adminConnection($_username);
+	}
+
+	/**
+	 * Create mailbox string from given mailbox-name and user-name
+	 *
+	 * Admin connection in Dovecot is always for a given user, we can simply use INBOX here.
+	 *
+	 * @param string $_username
+	 * @param string $_folderName =''
+	 * @return string utf-7 encoded (done in getMailboxName)
+	 */
+	function getUserMailboxString($_username, $_folderName='')
+	{
+		unset($_username);	// not used, but required by function signature
+
+		$mailboxString = 'INBOX';
+
+		if (!empty($_folderName))
+		{
+			$nameSpaces = $this->getNameSpaceArray();
+			$mailboxString .= $nameSpaces['others'][0]['delimiter'] . $_folderName;
+		}
+		return $mailboxString;
 	}
 
 	/**
@@ -190,10 +213,7 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 	{
 		if (isset($this->username)) $bufferUsername = $this->username;
 		if (isset($this->loginName)) $bufferLoginName = $this->loginName;
-		$this->username = $_username;
-		$nameSpaces = $this->getNameSpaces();
-		$mailBoxName = $this->getUserMailboxString($this->username);
-		$this->loginName = str_replace((is_array($nameSpaces)?$nameSpaces['others'][0]['name']:'user/'),'',$mailBoxName); // we need to strip the namespacepart
+		$this->username = $this->loginName = $_username;
 
 		// now disconnect to be able to reestablish the connection with the targetUser while we go on
 		try
@@ -203,6 +223,7 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 		catch (Exception $e)
 		{
 			// error_log(__METHOD__.__LINE__." Could not establish admin Connection!".$e->getMessage());
+			unset($e);
 			return array();
 		}
 

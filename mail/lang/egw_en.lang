@@ -30,7 +30,7 @@ allow images from external sources in html emails	mail	en	allow images from exte
 allow users to create further identities	mail	en	allow users to create further identities
 allways a new window	mail	en	allways a new window
 always show html emails	mail	en	always show html emails
-an error happend while trying to remove acl rights from the account %1.	mail	en	An error happend while trying to remove ACL rights from the account %1.
+an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
 any status	mail	en	any status
@@ -97,6 +97,7 @@ do not auto create folders	mail	en	do not auto create folders
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
 do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
+do you really want to remove all rights from this account	mail	en	Do you really want to remove all rights from this account
 do you really want to toggle flag %1 for all messages in current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
@@ -409,9 +410,9 @@ test connection and display basic information about the selected profile	mail	en
 text	mail	en	Text
 text mode	mail	en	Text mode
 text/plain	mail	en	text/plain
-the %1 's acl removed from the %2!	mail	en	The %1 's acl removed from the %2!
-the %1 's acl, including its subfolders, removed from the %2!	mail	en	The %1 's acl, including its subfolders, removed from the %2!
-the folder %1 's acls saved!	mail	en	The Folder %1 's ACLs saved!
+the %1 's acl removed from the %2	mail	en	The %1 's acl removed from the %2
+the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1 's acl, including its subfolders, removed from the %2
+the folder %1 's acls saved	mail	en	The Folder %1 's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The mimeparser can not parse this message.

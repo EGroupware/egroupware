@@ -252,6 +252,20 @@ app.classes.emailadmin = AppJS.extend(
 	{
 		var use_default = this.et2.getWidgetById('notify_use_default');
 		if (use_default) use_default.set_value(false);
+	},
+
+	/**
+	 * default onExecute for admin actions
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders
+	 */
+	account_edit_action: function(_action, _senders)
+	{
+		if (_action.data.url)
+		{
+			this.egw.open_link(_action.data.url, _action.data.target || '_blank', _action.data.popup);
+		}
 	}
 });
 

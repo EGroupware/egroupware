@@ -36,7 +36,7 @@ $setup_info['mail']['hooks']['session_creation'] = 'mail_bo::resetConnectionErro
 $setup_info['mail']['hooks']['verify_settings'] = 'mail_bo::forcePrefReload';
 $setup_info['mail']['hooks']['clear_cache'] = 'mail_bo::unsetCachedObjects';
 $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_mailbox';
-$setup_info['mail']['hooks']['edit_user'] = 'mail_hooks::edit_user';
+$setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 
 /*
 $setup_info['mail']['hooks'][] = 'home';
