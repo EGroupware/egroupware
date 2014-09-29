@@ -440,7 +440,9 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			_value = _value.split(',');
 		}
-		if(this.input !== null && this.options.select_options && this.input.children().length == 0)
+		if(this.input !== null && this.options.select_options && (
+				!jQuery.isEmptyObject(this.options.select_options) || this.options.select_options.length > 0
+			) && this.input.children().length == 0)
 		{
 			// No options set yet
 			this.set_select_options(this.options.select_options);
