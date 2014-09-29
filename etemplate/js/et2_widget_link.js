@@ -478,7 +478,10 @@ var et2_link_apps = et2_selectbox.extend(
 			select_options = _attrs.application_list;
 		} else {
 			select_options = egw.link_app_list('query');
-			delete select_options['addressbook-email'];
+			if(typeof select_options['addressbook-email'] !== 'undefined')
+			{
+				delete select_options['addressbook-email'];
+			}
 		}
 		_attrs.select_options = select_options;
 		this._super.apply(this, arguments);
