@@ -3413,27 +3413,34 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * Helper function to handle wrong or unrecognized timezones
-	 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
-	 * @param string date to be parsed/formatted
-	 * @param string format string, if none is passed, use the users common dateformat supplemented by the time hour:minute:second
-	 * @return string returns the date as it is parseable by strtotime, or current timestamp if everything failes
+	 * Parse dates, also handle wrong or unrecognized timezones, falling back to current time
+	 *
+	 * @param string $_date to be parsed/formatted
+	 * @param string $format ='' if none is passed, use user prefs
+	 * @return string returns the date as it is parseable by strtotime, or current timestamp if everything fails
 	 */
-	static function _strtotime($date='',$format=NULL,$convert2usertime=false)
+	static function _strtotime($_date='', $format='', $convert2usertime=false)
 	{
-		if ($format==NULL) $format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s');
-		$date2return = ($convert2usertime ? egw_time::server2user($date,$format) : egw_time::to($date,$format));
-		if ($date2return==null)
+		try {
+			$date = new egw_time($_date);	// parse date & time including timezone (throws exception, if not parsable)
+			if ($convert2usertime) $date->setUser();	// convert to user-time
+			$date2return = $date->format($format);
+		}
+		catch(Exception $e)
 		{
-			$dtarr = explode(' ',$date);
-			$test = null;
-			while ($test===null && count($dtarr)>=1)
+			unset($e);	// not used
+
+			// remove last space-separated part and retry
+			$parts = explode(' ',$_date);
+			if (count($parts) > 1)
 			{
-				array_pop($dtarr);
-				$test= ($convert2usertime ? egw_time::server2user(implode(' ',$dtarr),$format): egw_time::to(implode(' ',$dtarr),$format));
-				if ($test) $date2return = $test;
+				array_pop($parts);
+				$date2return = self::_strtotime(implode(' ', $parts), $format, $convert2usertime);
 			}
-			if ($test===null) $date2return = egw_time::to('now',$format);
+			else	// not last part, use current time
+			{
+				$date2return = egw_time::to('now', $format);
+			}
 		}
 		return $date2return;
 	}
@@ -3442,38 +3449,16 @@ class emailadmin_imapbase
 	 * htmlentities
 	 * helperfunction to cope with wrong encoding in strings
 	 * @param string $_string  input to be converted
-	 * @param mixed $charset false or string -> Target charset, if false emailadmin_imapbase displayCharset will be used
+	 * @param mixed $_charset false or string -> Target charset, if false emailadmin_imapbase displayCharset will be used
 	 * @return string
 	 */
 	static function htmlentities($_string, $_charset=false)
 	{
 		//setting the charset (if not given)
 		if ($_charset===false) $_charset = self::$displayCharset;
-		$_stringORG = $_string;
-		$_string = @htmlentities($_string,ENT_QUOTES,$_charset, false);
-		if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities(translation::convert($_stringORG,translation::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
-		return $_string;
-	}
-
-	/**
-	 * htmlspecialchars
-	 * helperfunction to cope with wrong encoding in strings;
-	 * seems to be outdated and not needed any more for et2
-	 * @param string $_string  input to be converted
-	 * @param mixed $charset false or string -> Target charset, if false mail displayCharset will be used
-	 * @return string
-	 */
-	static function htmlspecialchars($_string, $_charset=false)
-	{
-		return $_string;
-/*
-		//setting the charset (if not given)
-		if ($_charset===false) $_charset = self::$displayCharset;
-		$_stringORG = $_string;
-		$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
-		if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars(translation::convert($_stringORG,translation::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
-		return $_string;
-*/
+		$string = @htmlentities($_string, ENT_QUOTES, $_charset, false);
+		if (empty($string) && !empty($_string)) $string = @htmlentities(translation::convert($_string,translation::detect_encoding($_string),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+		return $string;
 	}
 
 	/**
