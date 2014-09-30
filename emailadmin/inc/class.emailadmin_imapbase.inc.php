@@ -4299,7 +4299,6 @@ class emailadmin_imapbase
 				$message .= $newBody;
 				continue;
 			}
-			$newBody =self::htmlspecialchars($newBody);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after specialchars):'.$newBody);
 			$newBody = strip_tags($newBody); //we need to fix broken tags (or just stuff like "<800 USD/p" )
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after strip tags):'.$newBody);
@@ -5329,7 +5328,6 @@ class emailadmin_imapbase
 				//error_log(__METHOD__.' ('.__LINE__.') '.$p.' <'.$mb.'@'.$h.'>');
 				$buff = imap_rfc822_write_address($addressObject->mailbox, self::$idna2->decode($addressObject->host), $addressObject->personal);
 				$buff = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
-				if ($createHTML) $buff = emailadmin_imapbase::htmlspecialchars($buff);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Address: '.$returnAddr);
 				$returnAddr .= $buff;
 			}
@@ -5339,7 +5337,7 @@ class emailadmin_imapbase
 			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
 			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
 			$rfcAddressArray = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$rfcAddressArray);
-			if (is_string($rfcAddressArray)) return ($createHTML ? emailadmin_imapbase::htmlspecialchars($rfcAddressArray) : $rfcAddressArray);
+			if (is_string($rfcAddressArray)) return $rfcAddressArray;
 		}
 		return $returnAddr;
 	}
