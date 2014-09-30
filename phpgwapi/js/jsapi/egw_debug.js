@@ -42,11 +42,13 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	var DEBUGLEVEL = 3;
 
 	/**
-	 * Log-level for local storage
+	 * Log-level for local storage and error-display in GUI
 	 *
 	 * @type Number
+	 * 0 = off, no logging AND no global error-handler bound
+	 * 1 = ... see above
 	 */
-	var LOCAL_LOG_LEVEL = 2;
+	var LOCAL_LOG_LEVEL = 0;
 	/**
 	 * Number of log-entries stored on client, new errors overwrite old ones
 	 *
@@ -280,28 +282,31 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		}
 	}
 
-	// bind to global error handler
-	jQuery(_wnd).on('error', function(e)
+	// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
+	if (LOCAL_LOG_LEVEL)
 	{
-		// originalEvent does NOT always exist in IE
-		var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
-		// IE(11) gives a syntaxerror on each pageload pointing to first line of html page (doctype).
-		// As I cant figure out what's wrong there, we are ignoring it for now.
-		if (navigator.userAgent.match(/Trident/i) && typeof event.name == 'undefined' &&
-			Object.prototype.toString.call(event) == '[object ErrorEvent]' &&
-			event.lineno == 1 && event.filename.indexOf('/index.php') != -1)
+		jQuery(_wnd).on('error', function(e)
 		{
-			return false;
-		}
-		log_on_client('error', [event.message], typeof event.stack != 'undefined' ? event.stack : null);
-		raise_error();
-		// rethrow error to let browser log and show it in usual way too
-		if (typeof event.error == 'object')
-		{
-			throw event.error;
-		}
-		throw event.message;
-	});
+			// originalEvent does NOT always exist in IE
+			var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
+			// IE(11) gives a syntaxerror on each pageload pointing to first line of html page (doctype).
+			// As I cant figure out what's wrong there, we are ignoring it for now.
+			if (navigator.userAgent.match(/Trident/i) && typeof event.name == 'undefined' &&
+				Object.prototype.toString.call(event) == '[object ErrorEvent]' &&
+				event.lineno == 1 && event.filename.indexOf('/index.php') != -1)
+			{
+				return false;
+			}
+			log_on_client('error', [event.message], typeof event.stack != 'undefined' ? event.stack : null);
+			raise_error();
+			// rethrow error to let browser log and show it in usual way too
+			if (typeof event.error == 'object')
+			{
+				throw event.error;
+			}
+			throw event.message;
+		});
+	}
 
 	/**
 	 * The debug function can be used to send a debug message to the
