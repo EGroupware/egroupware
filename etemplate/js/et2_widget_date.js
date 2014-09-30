@@ -240,6 +240,11 @@ var et2_date = et2_inputWidget.extend(
 			return;
 		}
 
+		// timestamp in usertime, convert to 'Y-m-d\\TH:i:s\\Z', as we do on server-side with equivalent of PHP date()
+		if (typeof _value == 'number' || typeof _value == 'string' && !isNaN(_value) && _value[0] != '+' && _value[0] != '-')
+		{
+			_value = date('Y-m-d\\TH:i:s\\Z', _value);
+		}
 		// Check for full timestamp
 		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
 		{
@@ -326,18 +331,10 @@ var et2_date = et2_inputWidget.extend(
 			this.date = _value.date;
 		} else if (typeof _value == 'object' && _value.valueOf) {
 			this.date = _value;
-		} else if (typeof _value == 'number' || !isNaN(_value)) {
-			// string starting with + or - --> add/substract number of seconds from current value
-			if (typeof _value == 'string' && (_value[0] == '+' || _value[0] == '-'))
-			{
-				this.date.setTime(this.date.getTime()+1000*parseInt(_value));
-			}
-			else
-			{
-				// Timestamp in usertime need to be corrected with timezoneoffset as we internally use UTC for egw usertime
-				// JS dates use milliseconds
-				this.date.setTime(1000*(parseInt(_value)-60*this.date.getTimezoneOffset()));
-			}
+		} else
+		// string starting with + or - --> add/substract number of seconds from current value
+		{
+			this.date.setTime(this.date.getTime()+1000*parseInt(_value));
 		}
 
 		// Update input - popups do, but framework doesn't
@@ -806,8 +803,8 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else
 		{
-			// JS dates use milliseconds
-			this.date.setTime(parseInt(_value)*1000);
+			// _value is timestamp in usertime, ready to be used with date() function identical to PHP date()
+			this.date = _value;
 		}
 		var display = this.date.toString();
 
