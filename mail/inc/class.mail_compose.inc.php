@@ -1969,7 +1969,7 @@ class mail_compose
 		//_debug_array($bodyParts);
 		$styles = mail_bo::getStyles($bodyParts);
 
-		$fromAddress = mail_bo::htmlspecialchars(implode(', ', str_replace(array('<','>'),array('[',']'),$headers['FROM'])));
+		$fromAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$headers['FROM']));
 
 		$toAddressA = array();
 		$toAddress = '';
@@ -1978,7 +1978,7 @@ class mail_compose
 		}
 		if (count($toAddressA)>0)
 		{
-			$toAddress = mail_bo::htmlspecialchars(implode(', ', str_replace(array('<','>'),array('[',']'),$toAddressA)));
+			$toAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$toAddressA));
 			$toAddress = @htmlspecialchars(lang("to")).": ".$toAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 		}
 		$ccAddressA = array();
@@ -1988,7 +1988,7 @@ class mail_compose
 		}
 		if (count($ccAddressA)>0)
 		{
-			$ccAddress = mail_bo::htmlspecialchars(implode(', ', str_replace(array('<','>'),array('[',']'),$ccAddressA)));
+			$ccAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$ccAddressA));
 			$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 		}
 		if($bodyParts['0']['mimeType'] == 'text/html') {
@@ -2345,7 +2345,7 @@ class mail_compose
 		}
 		$mail_bo->closeConnection();
 	}
-	
+
 	/**
 	 * Save compose mail as draft
 	 *
@@ -2355,19 +2355,19 @@ class mail_compose
 	{
 		$response = egw_json_response::get();
 		$success = true;
-		
+
 		// check if default account is changed then we need to change profile
 		if (!empty($content['serverID']) && $content['serverID'] != $this->mail_bo->profileID)
 		{
 			$this->changeProfile($content['serverID']);
 		}
-		
+
 		$formData = array_merge($content, array(
 				'isDrafted' => 1,
 				'body' => $content['mail_'.($content['mimeType']?'htmltext':'plaintext')],
 				'mimeType' => $content['mimeType']?'html':'plain' // checkbox has only true|false value
 		));
-		
+
 		//Saving draft procedure
 		try
 		{
@@ -2412,7 +2412,7 @@ class mail_compose
 		}
 
 		if ($success) $msg = lang('Message saved successfully.');
-		
+
 		// Include new information to json respose, because we need them in client-side callback
 		$response->data(array(
 			'draftedId' => $draft_id,
@@ -2452,7 +2452,7 @@ class mail_compose
 		}
 		return $_emailAddressList;
 	}
-	
+
 	/**
 	 * Save message as draft to specific folder
 	 *
