@@ -48,7 +48,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Reimplemented to parse our differnt attributes
 	 *
 	 * @param string|XMLReader $xml
-	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 * @todo Use legacy_attributes instead of leaving it to typeOptions method to parse them
 	 */
@@ -212,6 +212,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+			// need to run that here manually, automatic run through etemplate_new::exec() already happend
+			self::fix_encoded_options(self::$request->sel_options[$form_name]);
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
@@ -224,8 +226,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
 		{
-			self::fix_encoded_options(self::$request->sel_options[$options]);
-
 			// Turn on search, if there's a lot of rows (unless explicitly set)
 			if(!array_key_exists('search',$this->attrs) && count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
 			{
@@ -239,10 +239,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 	}
 
 	/**
-	 * Fix already html-encoded options, eg. "&nbps"
+	 * Fix already html-encoded options, eg. "&nbps" AND optinal re-index array to keep order
+	 *
+	 * Get run automatic for everything in $sel_options by etemplate_new::exec / etemplate_new::fix_sel_options
 	 *
 	 * @param array $options
-	 * @param boolean $use_array_of_options Re-indexes options, making everything more complicated
+	 * @param boolean $use_array_of_objects Re-indexes options, making everything more complicated
 	 */
 	public static function fix_encoded_options(array &$options, $use_array_of_objects=null)
 	{
@@ -303,7 +305,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Get options from $sel_options array for a given selectbox name
 	 *
 	 * @param string $name
-	 * @param boolean $return_values=false true: return array with option values, instead of value => label pairs
+	 * @param boolean $return_values =false true: return array with option values, instead of value => label pairs
 	 * @return array
 	 */
 	public static function selOptions($name, $return_values=false)
@@ -663,7 +665,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	/**
 	 * Get available apps as options
 	 *
-	 * @param string $type2='installed' 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
+	 * @param string $type2 ='installed' 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
 	 * @return array app => label pairs sorted by label
 	 */
 	public static function app_options($type2)
@@ -701,7 +703,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * internal function to format account-data
 	 *
 	 * @param int $id
-	 * @param array $acc=null optional values for keys account_(type|lid|lastname|firstname) to not read them again
+	 * @param array $acc =null optional values for keys account_(type|lid|lastname|firstname) to not read them again
 	 * @param int $longnames
 	 * @param boolean $show_type true: return array with values for keys label and icon, false: only label
 	 * @return string|array
