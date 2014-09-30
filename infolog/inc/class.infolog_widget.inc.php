@@ -21,7 +21,7 @@
  * 3) colon (:) separted list of alternative fields: the first non-empty one is used if the selected value is empty
  * There's a special field "sum" in 1), which sums up all fields given in alternatives.
  */
-class infolog_widget
+class infolog_widget extends etemplate_widget_entry
 {
 	/**
 	 * exported methods of this class
@@ -56,14 +56,29 @@ class infolog_widget
 	/**
 	 * Constructor of the extension
 	 *
-	 * @param string $ui '' for html
 	 */
-	function __construct($ui)
+	function __construct($xml)
 	{
-		$this->ui = $ui;
+		parent::__construct($xml);
 		$this->infolog = new infolog_bo();
 	}
 
+	public function get_entry($value, array $attrs)
+	{
+		// Already done
+		if (is_array($value) && !(array_key_exists('app',$value) && array_key_exists('id', $value))) return $value;
+
+		// Link entry, already in array format
+		if(is_array($value) && array_key_exists('app', $value) && array_key_exists('id', $value)) $value = $value['id'];
+
+		// Link entry, in string format
+		if (substr($value,0,8) == 'infolog:') $value = substr($value,8);
+		if($value)
+		{
+			return $this->infolog->read($value);
+		}
+		return array();
+	}
 	/**
 	 * pre-processing of the extension
 	 *
@@ -258,3 +273,6 @@ class infolog_widget
 		return $fields;
 	}
 }
+
+// register widgets for etemplate2
+etemplate_widget::registerWidget('infolog_widget',array('infolog-value', 'infolog-fields'));

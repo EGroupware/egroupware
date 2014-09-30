@@ -93,11 +93,11 @@ var et2_entry = et2_valueWidget.extend(
 		}
 		var attrs = {
 			id: this.options.field,
-			type: entry.type,
+			type: entry.type || 'label',
 			readonly: this.options.readonly
 		};
 		var widget = et2_createWidget(attrs.type, attrs, this);
 	}
 });
 
-et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template']);
+et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value','tracker-value']);

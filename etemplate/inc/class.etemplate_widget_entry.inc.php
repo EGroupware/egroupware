@@ -68,6 +68,9 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 		$form_name = self::form_name($cname, $this->id);
 		$data_id = $this->value ? self::form_name($cname, $this->value) : self::form_name($cname, self::ID_PREFIX . $this->id);
 
+		// No need to proceed
+		if(!$this->id) return;
+
 		// Find out which record to load
 		$value = self::get_array(self::$request->content, $form_name, false, true);
 
