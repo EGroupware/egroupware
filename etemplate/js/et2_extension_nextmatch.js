@@ -2718,7 +2718,7 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 	 */
 	createInputWidget: function() {
 		// Make sure there's an option for all
-		if(!this.options.empty_label && !this.options.select_options[""])
+		if(!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""]))
 		{
 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
 		}
