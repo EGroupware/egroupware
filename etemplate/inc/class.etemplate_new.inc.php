@@ -109,7 +109,7 @@ class etemplate_new extends etemplate_widget_template
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->content = self::$cont = $content;
 		self::$request->changes = $changes;
-		self::$request->sel_options = $sel_options ? $sel_options : array();
+		self::$request->sel_options = is_array($sel_options) ? self::fix_sel_options($sel_options) : array();
 		self::$request->readonlys = $readonlys ? $readonlys : array();
 		self::$request->preserv = $preserv ? $preserv : array();
 		self::$request->method = $method;
@@ -231,6 +231,28 @@ class etemplate_new extends etemplate_widget_template
 			ob_flush();
 		}
 		self::$request = null;
+	}
+
+	/**
+	 * Fix all sel_options, as etemplate_widget_menupopup::beforeSendToClient is not run for auto-repeated stuff not understood by server
+	 *
+	 * @param array $sel_options
+	 * @return array
+	 */
+	static protected function fix_sel_options(array $sel_options)
+	{
+		foreach($sel_options as &$options)
+		{
+			foreach($options as $key => $value)
+			{
+				if (is_numeric($key) && (!is_array($value) || !isset($value['value'])))
+				{
+					etemplate_widget_menupopup::fix_encoded_options($options, true);
+					break;
+				}
+			}
+		}
+		return $sel_options;
 	}
 
 	/**
