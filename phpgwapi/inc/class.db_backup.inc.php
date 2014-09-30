@@ -188,8 +188,8 @@ class db_backup
 	/**
 	 * Opens the backup-file using the highest available compression
 	 *
-	 * @param $name=false string/boolean filename to use, or false for the default one
-	 * @param $reading=false opening for reading ('rb') or writing ('wb')
+	 * @param $name =false string/boolean filename to use, or false for the default one
+	 * @param $reading =false opening for reading ('rb') or writing ('wb')
 	 * @return string/resource/zip error-msg of file-handle
 	 */
 	function fopen_backup($name=false,$reading=false)
@@ -302,8 +302,8 @@ class db_backup
 	/**
 	 * Save the housekeeping configuration in the database and update the local variables.
 	 *
-	 * @param int $mincount Minimum number of backups to keep.
-	 * @param boolean $backup_files include files in backup or not, default dont change!
+	 * @param int $minCount Minimum number of backups to keep.
+	 * @param boolean $backupFiles include files in backup or not, default dont change!
 	 */
 	function saveConfig($minCount,$backupFiles=null)
 	{
@@ -341,10 +341,10 @@ class db_backup
 	 * Backup all data in the form of a (compressed) csv file
 	 *
 	 * @param resource $f file opened with fopen for reading
-	 * @param boolean $convert_to_system_charset=true convert the restored data to the selected system-charset
-	 * @param string $filename='' gives the file name which is used in case of a zip archive.
-	 * @param boolean $protect_system_config=true should above system_config values be protected (NOT overwritten)
-	 * @param int $insert_n_rows=10 how many rows to insert in one sql statement
+	 * @param boolean $convert_to_system_charset =true obsolet, it's now allways done
+	 * @param string $filename ='' gives the file name which is used in case of a zip archive.
+	 * @param boolean $protect_system_config =true should above system_config values be protected (NOT overwritten)
+	 * @param int $insert_n_rows =10 how many rows to insert in one sql statement
 	 *
 	 * @returns An empty string or an error message in case of failure.
 	 */
@@ -353,7 +353,7 @@ class db_backup
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
 
-		$convert_to_system_charset = true;	// enforce now utf-8 as system charset restores of old backups
+		if (true) $convert_to_system_charset = true;	// enforce now utf-8 as system charset restores of old backups
 
 		if ($protect_system_config)
 		{
@@ -630,6 +630,18 @@ class db_backup
 				return lang('Restore failed');
 			}
 		}
+		// generate an install_id if we dont have one (it breaks egw_cache::flush() stalling the upgrade)
+		unset($GLOBALS['egw_info']['server']['install_id']);
+		if (!($GLOBALS['egw_info']['server']['install_id'] = egw_cache::get_system_config('install_id', false)))
+		{
+			$GLOBALS['egw_info']['server']['install_id'] = md5(microtime(true).$_SERVER['HTTP_HOST']);
+			$this->db->insert('egw_config', array(
+				'config_value' => $GLOBALS['egw_info']['server']['install_id'],
+			), array(
+				'config_name' => 'install_id',
+				'config_app'  => 'phpgwapi',
+			), __LINE__, __FILE__);
+		}
 		// flush instance cache
 		egw_cache::flush(egw_cache::INSTANCE);
 
@@ -671,8 +683,8 @@ class db_backup
 	 * Split one line of a csv file into an array and does all unescaping
 	 *
 	 * @param string $line line to split
-	 * @param array $keys=null keys to use or null to use numeric ones
-	 * @param array $blobs=array() blob columns
+	 * @param array $keys =null keys to use or null to use numeric ones
+	 * @param array $blobs =array() blob columns
 	 * @return array
 	 */
 	public static function csv_split($line, $keys=null, $blobs=array())
@@ -905,8 +917,8 @@ class db_backup
 	 * gets a list of all files on $f
 	 *
 	 * @param string file $f
-	 * @param int $cnt=0
-	 * @param string $path_name=''
+	 * @param int $cnt =0
+	 * @param string $path_name =''
 	 *
 	 * @return array (list of files)
 	 */
