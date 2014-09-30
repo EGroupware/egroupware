@@ -15,7 +15,7 @@
  *
  * This widget can be used to fetch fields of a contact specified by contact-id
  */
-class contact_widget extends etemplate_widget_transformer
+class contact_widget extends etemplate_widget_entry
 {
 	/**
 	 * exported methods of this class
@@ -89,19 +89,12 @@ class contact_widget extends etemplate_widget_transformer
 				'options' => 'None',
 			),
 			'contact-template' => array(
-				'value' => array('__callback__' => 'get_contact'),
 				'type' => 'template',
 				'options' => '',
-				'label' => array(
-					'' => array('id' => '@value[@id]'),
-					'__default__' => array('id' => '@label@value[@id]'),	// non-empty label prefixes value
-				),
+				'template' => array('__callback__' => 'parse_template'),
 			),
 			'__default__' => array(
-				'value' => array('__callback__' => 'get_contact'),
-				'id' => '@id[@options]',
 				'options' => array(
-					'' => array('id' => '@value[@id]'),
 					'bday' => array('type' => 'date', 'options' => 'Y-m-d'),
 					'owner' => array('type' => 'select-account', 'options' => ''),
 					'modifier' => array('type' => 'select-account', 'options' => ''),
@@ -111,7 +104,6 @@ class contact_widget extends etemplate_widget_transformer
 					'cat_id' => array('type' => 'select-cat', 'options' => ''),
 					'__default__' => array('type' => 'label', 'options' => ''),
 				),
-				'readonly' => true,
 				'no_lang' => 1,
 			),
 		),
@@ -132,6 +124,16 @@ class contact_widget extends etemplate_widget_transformer
 	}
 
 	/**
+	 * Legacy support for putting the template name in 'label' param
+	 * @param string $label
+	 * @param array $attrs
+	 */
+	public function parse_template($template, &$attrs)
+	{
+		return sprintf($template ? $template : $attrs['label'], $attrs['value']);
+	}
+
+	/**
 	 * Get all contact-fields
 	 *
 	 * @return array
@@ -148,6 +150,10 @@ class contact_widget extends etemplate_widget_transformer
 		return $options;
 	}
 
+	public function get_entry($value, array $attrs)
+	{
+		return $this->get_contact($value, $attrs);
+	}
 	/**
 	 * Get contact data, if $value not already contains them
 	 *
@@ -157,8 +163,10 @@ class contact_widget extends etemplate_widget_transformer
 	 */
 	public function get_contact($value, array $attrs)
 	{
-		if (is_array($value)) return $value;
+		$field = $attrs['field'] ? $attrs['field'] : '';
+		if (is_array($value) && !(array_key_exists('app',$value) && array_key_exists('id', $value))) return $value;
 
+		if(is_array($value) && array_key_exists('app', $value) && array_key_exists('id', $value)) $value = $value['id'];
 		switch($attrs['type'])
 		{
 			case 'contact-account':

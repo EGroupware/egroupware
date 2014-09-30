@@ -21,6 +21,7 @@
 	et2_widget_button;
 	et2_widget_color;
 	et2_widget_description;
+	et2_widget_entry;
 	et2_widget_textbox;
 	et2_widget_number;
 	et2_widget_url;
