@@ -4922,8 +4922,14 @@ class emailadmin_imapbase
 	 */
 	public function tnef_decoder( $data )
 	{
-		if (class_exists('Horde_Compress',true)==false) return false;
-
+		foreach(array('Horde_Compress', 'Horde_Icalendar', 'Horde_Mapi') as $class)
+		{
+			if (!class_exists($class))
+			{
+				error_log(__METHOD__."() missing required PEAR package $class --> aborting");
+				return false;
+			}
+		}
 		$parts_obj = new Horde_Mime_part;
 		$parts_obj->setType('multipart/mixed');
 
@@ -4931,7 +4937,10 @@ class emailadmin_imapbase
 		try
 		{
 			$tnef_data = $tnef_object->decompress($data);
-		} catch (Horde_Exception $ex) {
+		}
+		catch (Horde_Exception $ex)
+		{
+			error_log(__METHOD__."() ".$ex->getMessage().' --> aborting');
 			return false;
 		}
 		if (is_array($tnef_data))
@@ -5053,7 +5062,7 @@ class emailadmin_imapbase
 						if (empty($attachment['filename'])) $attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
 						$wmattach = $attachment;
 						$wmattach['attachment'] = $part->getContents(array('stream'=>$_stream));
-					
+
 					}
 				}
 			}

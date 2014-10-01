@@ -85,7 +85,7 @@ $setup_info['emailadmin']['check_install'] = array(
 		'from' => 'EMailAdmin',
 		'version' => '1.3.0',
 	),
-	// next 3 are required for TNEF support
+	// next 4 are required for TNEF support
 	'pear.horde.org/Horde_Compress' => array(
 		'func' => 'pear_check',
 		'from' => 'EMailAdmin',
@@ -100,6 +100,10 @@ $setup_info['emailadmin']['check_install'] = array(
 		'func' => 'pear_check',
 		'from' => 'EMailAdmin',
 		'version' => '1.0.0',
+	),
+	'bcmath' => array(
+		'func' => 'extension_check',
+		'from' => 'EMailAdmin',
 	),
 );
 
