@@ -149,6 +149,7 @@ class infolog_bo
 		'own-open-overdue'         => 'own overdue',
 		'own-upcoming'             => 'own upcoming',
 		'own-open-upcoming'		   => 'own open and upcoming',
+		'private'                  => 'private',
 		'open-today'               => 'open(status)',
 		'open-overdue'             => 'overdue',
 		'upcoming'                 => 'upcoming',
@@ -1037,6 +1038,10 @@ class infolog_bo
 		{
 			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_enddate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
 			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_enddate <= '.$GLOBALS['egw']->db->quote($query['enddate']+(60*60*24)-1);
+		}
+		elseif ($query['filter'] == 'private')
+		{
+			$query['col_filter'][] = 'info_access = ' . $GLOBALS['egw']->db->quote('private');
 		}
 		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
