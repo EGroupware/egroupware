@@ -356,13 +356,12 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 					_wnd.console.error.apply(_wnd.console, args);
 				}
 			}
-			// raise errors to user
-			if (_level == "error") raise_error(args);
+			// raise errors to user, if LOCAL_LOG_LEVEL > 0
+			if (LOCAL_LOG_LEVEL_level == "error") raise_error(args);
 
 			// log to html5 localStorage
 			if (typeof stack != 'undefined') args.pop();	// remove stacktrace again
 			log_on_client(_level, args);
-
 		},
 
 		/**
