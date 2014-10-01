@@ -480,6 +480,25 @@ div.et2_file {
 	margin-left: 8px;
 	margin-top: 0;
 }
+.et2_file .progress_dropDown_fileList {
+	background: white;
+	position: absolute;
+	border: 1px solid gray;
+	border-top: 0;
+	margin-top: 6px !important;
+	margin-left: 0 !important;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	max-height: 300px;
+	width: 181px !important;
+	z-index: 201 !important;
+	box-shadow: 6px 6px 9px gray;
+}
+.et2_file .totalProgress_loader {
+	background-repeat: no-repeat;
+	background-image: url('images/ajax-loader.gif');
+}
+
 .et2_file .progress {
   width: 300px;
   max-height: 6em;
