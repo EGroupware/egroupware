@@ -1,3 +1,21 @@
+egroupware-epl (14.1.20141001-1) hardy; urgency=low
+
+  * Mail: decoding of TNEF/winmail.dat as attachments, requires installation of PEAR packages Horde_Compress, Horde_Icalendar, Horde_Mapi and PHP bcmath extension
+  * Mail: fetch all subscribed folders for a given account in a single pass
+  * Mail: vaction notice indicator in mail showed result of other users
+  * Admin: New setting for admin users with available administrator password to be able to modify mail ACL rights and vacation notices (no longer in admin context menu but under edit account->forward... tab) of each accounts via both mail and admin app.
+  * Samabaadmin: fix fatal error when calling app
+  * Preferences: opening forced preferences set selectboxes for not set values to first real value not "Users Choice"
+  * Timesheet: fix SQL error when searching and NO custom fields defined
+  * Calendar: user without edit access to event could not delete own alarm
+  * Filemanager: New styling and access to list of uploading files in progress
+  * PostgreSQL/Admin: adding new accounts failed
+  * PostgreSQL/Mail: changing password gave SQL error
+  * PostgreSQL/Projectmanager: fix various SQL errors around filtering by app-name in element list
+  * Mail/Calendar/eTemplate2: fix timezone problems of times in grid or lists, if server_timezone differs from php.ini date.timezone
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 01 Oct 2014 22:04:59 +0200
+
 egroupware-epl (14.1.20140923-1) hardy; urgency=low
 
   * Preferences: non-admin user was able to give himself run-rights to any app incl. admin
