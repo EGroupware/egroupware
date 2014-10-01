@@ -55,11 +55,12 @@ class etemplate_widget_link extends etemplate_widget
 	 * Set the options for the application select.
 	 *
 	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		$attrs = $this->attrs;
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
 		if($value && !is_array($value) && !$this->attrs['only_app'])
@@ -258,7 +259,7 @@ class etemplate_widget_link extends etemplate_widget
 		if(egw_link::file_access($app, $id))
 		{
 			$app_path = egw_link::vfs_path($app,$id,'',true);
-			
+
 			// Pass the files linked, not the entry path
 			$files = egw_vfs::find($app_path);
 			if($files[0] == $app_path)

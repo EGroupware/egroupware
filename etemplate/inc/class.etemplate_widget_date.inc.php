@@ -52,15 +52,18 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	/**
 	 * Convert the provided date into the format needed for unambiguous communication
 	 * with browsers (Javascript).  We use W3C format to avoid timestamp issues.
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		if($this->type == 'date-houronly')
 		{
-			return parent::beforeSendToClient($cname);
+			return parent::beforeSendToClient($cname, $expand);
 		}
 
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, false, true);
 
 		if($this->type != 'date-duration' && $value)
