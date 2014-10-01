@@ -811,7 +811,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		switch(this._type) {
 			case "date-time_today":
 				// Today - just the time
-				if(this.date.toDateString() == new Date().toDateString())
+				if(date('Y-m-d', this.date) == date('Y-m-d'))
 				{
 					display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
 				}
