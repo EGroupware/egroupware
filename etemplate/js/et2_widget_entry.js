@@ -34,8 +34,20 @@ var et2_entry = et2_valueWidget.extend(
 	attributes: {
 		field: {
 			'name': 'Fields',
-			'description': 'Which entry field to display',
+			'description': 'Which entry field to display, or "sum" to add up the alternate_fields',
 			'type': 'string'
+		},
+		compare: {
+			name: 'Compare',
+			description: 'if given, the selected field is compared with its value and an X is printed on equality, nothing otherwise',
+			default: et2_no_init,
+			type: 'string'
+		},
+		alternate_fields: {
+			name: 'Alternate fields',
+			description: 'colon (:) separated list of alternative fields.  The first non-empty one is used if the selected field is empty',
+			type: 'string',
+			default: et2_no_init
 		},
 		value: {
 			type: 'any'
@@ -45,7 +57,7 @@ var et2_entry = et2_valueWidget.extend(
 		}
 	},
 
-	legacyOptions: ["field"],
+	legacyOptions: ["field","compare","alternate_fields"],
 
 	// Doesn't really need a namespace, but this simplifies the sub-widgets
 	createNamespace: true,
@@ -83,13 +95,11 @@ var et2_entry = et2_valueWidget.extend(
 	 */
 	loadField: function() {
 		// Create widget of correct type
+		var entry = {type: 'label'};
 		var modifications = this.getArrayMgr("modifications");
-		if(modifications && this.options.field) {
-			var entry = modifications.getEntry(this.options.field);
-			if(entry == null)
-			{
-				entry = {type: 'label'};
-			}
+		if(modifications && this.options.field)
+		{
+			jQuery.extend(entry, modifications.getEntry(this.options.field));
 		}
 		var attrs = {
 			id: this.options.field,
@@ -97,6 +107,30 @@ var et2_entry = et2_valueWidget.extend(
 			readonly: this.options.readonly
 		};
 		var widget = et2_createWidget(attrs.type, attrs, this);
+
+		if(this.options.compare)
+		{
+			widget.options.value = this.getArrayMgr('content').getEntry(this.options.field) == this.options.compare ? 'X' : '';
+		}
+		if(this.options.alternate_fields)
+		{
+			var sum = 0;
+			var fields = this.options.alternate_fields.split(':');
+			for(var i = 0; i < fields.length; i++)
+			{
+				var value = this.getArrayMgr('content').getEntry(fields[i]);
+				sum += parseFloat(value);
+				if(value && this.options.field !== 'sum')
+				{
+					widget.options.value = value;
+					break;
+				}
+			}
+			if(this.options.field == 'sum')
+			{
+				widget.options.value = sum;
+			}
+		}
 	}
 });
 
