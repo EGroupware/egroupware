@@ -128,7 +128,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						var store = _id < 0 ? accountStore.groups : accountStore.accounts;
 						for(var i=0; i < store.length; ++i)
 						{
-							if (_id == store[i].value)
+							if (store && typeof store[i] != 'undefined' && _id == store[i].value)
 							{
 								if (_type == 'delete')
 								{
