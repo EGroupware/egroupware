@@ -78,7 +78,13 @@ var et2_file = et2_inputWidget.extend(
 			"type": "string",
 			"default": "Choose file...",
 			"description": "String caption to be displayed on file upload span"
-		}
+		},
+		progress_dropdownlist: {
+			"name": "List on files in progress like dropdown",
+			"type": "boolean",
+			"default": false,
+			"description": "Style list of files in uploading progress like dropdown list with a total upload progress indicator"
+		},
 	},
 
 	asyncOptions: {},
@@ -419,7 +425,13 @@ var et2_file = et2_inputWidget.extend(
 				.css('cursor', 'default');
 
 		event.data = this;
-
+		
+		//Add dropdown_progress
+		if (this.options.progress_dropdownlist)
+		{
+			this._build_progressDropDownList();
+		}
+		
 		// Callback
 		if(this.options.onStart) return et2_call(this.options.onStart, event, file_count);
 		return true;
@@ -457,8 +469,41 @@ var et2_file = et2_inputWidget.extend(
 			// Fire legacy change action when done
 			this.change(this.input);
 		}
+		
+		//Remove progress_dropDown_fileList class and unbind the click handler from body
+		if (this.options.progress_dropdownlist)
+		{
+			this.progress.removeClass("progress_dropDown_fileList");
+			jQuery(this.node).find('span').removeClass('totalProgress_loader');
+			jQuery('body').off('click');
+		}	
 	},
-
+	
+	/**
+	 * Build up dropdown progress with total count indicator
+	 * 
+	 * @todo Implement totalProgress bar instead of ajax-loader, in order to show how much percent of uploading is completed
+	 */
+	_build_progressDropDownList: function ()
+	{
+		this.progress.addClass("progress_dropDown_fileList");
+		
+		//Add uploading indicator and bind hover handler on it
+		jQuery(this.node).find('span')
+				.addClass('totalProgress_loader')
+				.hover(function(){
+					jQuery('.progress_dropDown_fileList').show();
+		});
+		
+		//Bind click handler to dismiss the dropdown while uploading
+		jQuery('body').on('click', function(event){
+			if (event.target.className != 'remove')
+			{
+				jQuery('.progress_dropDown_fileList').hide();
+			}	
+		});
+		
+	},
 	
 	/**
 	 * Creates the elements used for displaying the file, and it's upload status, and
