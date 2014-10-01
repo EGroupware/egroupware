@@ -1366,6 +1366,11 @@ class egw_link extends solink
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
+		if($data[egw_link::OLD_LINK_TITLE] && egw_json_response::isJSONResponse())
+		{
+			// Update client side with new title
+			egw_json_response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
+		}
 	}
 
 	/**
