@@ -71,12 +71,19 @@ var et2_entry = et2_valueWidget.extend(
 	 */
 	init: function(parent, attrs) {
 		// Often the ID conflicts, so check prefix
-		if(attrs.id && attrs.id.indexOf(this.prefix) < 0 && typeof attrs.value == 'undefined')
+		if(attrs.id && attrs.id.indexOf(this.prefix) < 0)
 		{
 			attrs.id = this.prefix + attrs.id;
 		}
+		var value = attrs.value;
 
 		this._super.apply(this, arguments);
+
+		// Save value from parsing, but only if set
+		if(value)
+		{
+			this.options.value = value;
+		}
 
 		this.widget = null;
 		this.setDOMNode(document.createElement('span'));
@@ -108,9 +115,15 @@ var et2_entry = et2_valueWidget.extend(
 		};
 		var widget = et2_createWidget(attrs.type, attrs, this);
 
+		// If value is not set, etemplate takes care of everything
+		// If value was set, find the record explicitly.
+		if(typeof this.options.value == 'string')
+		{
+			widget.options.value = this.getRoot().getArrayMgr('content').getEntry(this.prefix+this.options.value + '['+this.options.field+']');
+		}
 		if(this.options.compare)
 		{
-			widget.options.value = this.getArrayMgr('content').getEntry(this.options.field) == this.options.compare ? 'X' : '';
+			widget.options.value = widget.options.value == this.options.compare ? 'X' : '';
 		}
 		if(this.options.alternate_fields)
 		{

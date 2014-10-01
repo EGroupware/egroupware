@@ -66,10 +66,10 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 		$attrs['id'] = $this->id;
 		
 		$form_name = self::form_name($cname, $this->id);
-		$data_id = $this->value ? self::form_name($cname, $this->value) : self::form_name($cname, self::ID_PREFIX . $this->id);
-
+		$data_id = $attrs['value'] ? self::form_name($cname, $attrs['value']) : self::form_name($cname, self::ID_PREFIX . $this->id);
+		
 		// No need to proceed
-		if(!$this->id) return;
+		if(!$data_id) return;
 
 		// Find out which record to load
 		$value = self::get_array(self::$request->content, $form_name, false, true);
@@ -89,7 +89,7 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 		// Check for conflict - more than one with same id/field and different type
 		if($old_type && $old_type != $this->type)
 		{
-			self::set_validation_error($this->id, lang('%1, duplicate ID', $this));
+			//self::set_validation_error($this->id, lang('%1, duplicate ID', $this));
 		}
 	}
 
