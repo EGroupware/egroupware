@@ -494,6 +494,9 @@ div.et2_file {
 	z-index: 201 !important;
 	box-shadow: 6px 6px 9px gray;
 }
+.et2_file .progress_dropDown_fileList > li {
+	border-bottom: 1px solid lightgray;
+}
 .et2_file .totalProgress_loader {
 	background-repeat: no-repeat;
 	background-image: url('images/ajax-loader.gif');
