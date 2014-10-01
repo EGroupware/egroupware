@@ -156,7 +156,7 @@ class timesheet_bo extends so_sql_cf
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
-		$this->columns_to_search[] = self::EXTRA_TABLE.'.ts_extra_value';
+		if ($this->customfields) $this->columns_to_search[] = self::EXTRA_TABLE.'.ts_extra_value';
 		$this->config_data = config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
@@ -269,7 +269,7 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * get list of specified grants as uid => Username pairs
 	 *
-	 * @param int $required=EGW_ACL_READ
+	 * @param int $required =EGW_ACL_READ
 	 * @return array with uid => Username pairs
 	 */
 	function grant_list($required=EGW_ACL_READ)
@@ -292,8 +292,8 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * Rights are given via status config admin/noadmin
 	 *
-	 * @param array|int $data=null use $this->data or $this->data['ts_id'] (to fetch the data)
-	 * @param int $user=null for which user to check, default current user
+	 * @param array|int $data =null use $this->data or $this->data['ts_id'] (to fetch the data)
+	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if the rights are ok, false if no rights
 	 */
 	function check_statusForEditRights($data=null,$user=null)
@@ -327,8 +327,8 @@ class timesheet_bo extends so_sql_cf
 	 * Rights are given via owner grants or role based acl
 	 *
 	 * @param int $required EGW_ACL_READ, EGW_ACL_WRITE, EGW_ACL_ADD, EGW_ACL_DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET
-	 * @param array|int $data=null project or project-id to use, default the project in $this->data
-	 * @param int $user=null for which user to check, default current user
+	 * @param array|int $data =null project or project-id to use, default the project in $this->data
+	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if the rights are ok, null if not found, false if no rights
 	 */
 	function check_acl($required,$data=null,$user=null)
@@ -448,18 +448,18 @@ class timesheet_bo extends so_sql_cf
 	 * reimplemented to limit result to users we have grants from
 	 *
 	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	 * @param boolean $only_summary=false If true only return the sums as array with keys duration and price, default false
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $only_summary =false If true only return the sums as array with keys duration and price, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
@@ -585,7 +585,7 @@ class timesheet_bo extends so_sql_cf
 	 * read a timesheet entry
 	 *
 	 * @param int $ts_id
-	 * @param boolean $ignore_acl=false should the acl be checked
+	 * @param boolean $ignore_acl =false should the acl be checked
 	 * @return array|boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
 	function read($ts_id,$ignore_acl=false)
@@ -608,8 +608,8 @@ class timesheet_bo extends so_sql_cf
 	 * reimplemented to notify the link-class
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
-	 * @param boolean $touch_modified=true should modification date+user be set, default yes
-	 * @param boolean $ignore_acl=false should the acl be checked, returns true if no edit-rigts
+	 * @param boolean $touch_modified =true should modification date+user be set, default yes
+	 * @param boolean $ignore_acl =false should the acl be checked, returns true if no edit-rigts
 	 * @return int 0 on success and errno != 0 else
 	 */
 	function save($keys=null,$touch_modified=true,$ignore_acl=false)
@@ -674,7 +674,7 @@ class timesheet_bo extends so_sql_cf
 	 * deletes a timesheet entry identified by $keys or the loaded one, reimplemented to notify the link class (unlink)
 	 *
 	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
-	 * @param boolean $ignore_acl=false should the acl be checked, returns false if no delete-rigts
+	 * @param boolean $ignore_acl =false should the acl be checked, returns false if no delete-rigts
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
 	function delete($keys=null,$ignore_acl=false)
@@ -736,8 +736,8 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * set a status for timesheet entry identified by $keys
 	 *
-	 * @param array $keys=null if given array with col => value pairs to characterise single timesheet or null for $this->data
-	 * @param int $status=0
+	 * @param array $keys =null if given array with col => value pairs to characterise single timesheet or null for $this->data
+	 * @param int $status =0
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
 	function set_status($keys=null, $status=0)
@@ -780,7 +780,7 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param int/array $entry int ts_id or array with timesheet entry
+	 * @param int|array $entry int ts_id or array with timesheet entry
 	 * @return string/boolean string with title, null if timesheet not found, false if no perms to view it
 	 */
 	function link_title( $entry )
@@ -861,8 +861,8 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
-	 * @param string $rel_path=null currently not used in InfoLog
-	 * @param int $user=null for which user to check, default current user
+	 * @param string $rel_path =null currently not used in InfoLog
+	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
 	function file_access($id,$check,$rel_path=null,$user=null)
