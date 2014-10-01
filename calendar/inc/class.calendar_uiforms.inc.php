@@ -1506,7 +1506,7 @@ class calendar_uiforms extends calendar_ui
 					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 					$content['alarm'][] = $alarm;
 
-					$readonlys['delete_alarm['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
+					$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 				}
 			}
 			else
@@ -1530,7 +1530,7 @@ class calendar_uiforms extends calendar_ui
 		if ($view)
 		{
 			$readonlys['__ALL__'] = true;	// making everything readonly, but widgets set explicitly to false
-			$readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
+			$readonlys['button[cancel]'] = $readonlys['action'] =
 				$readonlys['before_after'] = $readonlys['button[add_alarm]'] = $readonlys['new_alarm[owner]'] =
 				$readonlys['new_alarm[options]'] = $readonlys['new_alarm[date]'] = false;
 
