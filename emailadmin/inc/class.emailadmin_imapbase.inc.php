@@ -1486,9 +1486,8 @@ class emailadmin_imapbase
 						$headerObject['ATTACHMENTS'][$mime_id]['cid'] = $cid;
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
 						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
-						if ($headerObject['ATTACHMENTS'][$mime_id]['name']=='winmail.dat' &&
-							($headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/octet-stream' ||
-							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef'))
+						if (strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
+							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
 						{
 							$tnefResolved=false;
 							$tnef_data = $this->getAttachment($headerObject['ATTACHMENTS'][$mime_id]['uid'],$headerObject['ATTACHMENTS'][$mime_id]['partID'],0,false);
@@ -4866,7 +4865,7 @@ class emailadmin_imapbase
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.' Part:'.$_partID.'->'.$mime_id.':'.array2string($attachment));
 				//typical winmail.dat attachment is
 				//Array([size] => 1462762[filename] => winmail.dat[mimeType] => application/ms-tnef[uid] => 100[partID] => 2[name] => winmail.dat)
-				if ($resolveTNEF && $attachment['mimeType']=='application/ms-tnef')
+				if ($resolveTNEF && ($attachment['mimeType']=='application/ms-tnef' || !strcasecmp($attachment['name'],'winmail.dat')))
 				{
 					$tnefParts[] = $attachment;
 				}
