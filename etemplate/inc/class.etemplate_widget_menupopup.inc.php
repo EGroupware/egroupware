@@ -170,8 +170,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
 		$matches = null;
@@ -191,7 +192,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		}
 		else
 		{
-			$form_name = self::form_name($cname, $this->id);
+			$form_name = self::form_name($cname, $this->id, $expand);
 		}
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		$type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;

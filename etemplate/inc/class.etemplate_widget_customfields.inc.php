@@ -80,13 +80,14 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		// No name, no way to get parameters client-side.
 		if(!$this->id) $this->id = self::GLOBAL_ID;
 
-		$form_name = self::form_name($cname, $this->id);
+		$form_name = self::form_name($cname, $this->id, $expand);
 
 		// Store properties at top level, so all customfield widgets can share
 		$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
@@ -183,7 +184,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				}
 				self::$transformation['type'][$type]['sel_options'] = $sel_options;
 				self::$transformation['type'][$type]['no_lang'] = true;
-				return parent::beforeSendToClient($cname);
+				return parent::beforeSendToClient($cname, $expand);
 			case 'customfields-list':
 				foreach(array_reverse($fields) as $lname => $field)
 				{
@@ -211,7 +212,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				array_fill_keys(array_keys($fields), true)
 			));
 		}
-		parent::beforeSendToClient($cname);
+		parent::beforeSendToClient($cname, $expand);
 
 		// Re-format date custom fields from Y-m-d
 		$field_settings =& self::get_array(self::$request->modifications, "{$this->id}[customfields]",true);
@@ -223,7 +224,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			$widget = $this->_widget($fname, $field);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
-				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $this->id);
+				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $this->id, $expand);
 			}
 		}
 	}

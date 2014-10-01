@@ -108,7 +108,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
-		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array(self::$request->content, $form_name, true);
 
@@ -167,14 +166,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
 		}
-		$value =& self::get_array(self::$request->content, $form_name, true);
+		if (true) $value =& self::get_array(self::$request->content, $form_name, true);
 
 		// Add favorite here so app doesn't save it in the session
 		if($_GET['favorite'])
 		{
 			$send_value['favorite'] = $safe_name;
 		}
-		$value = $send_value;
+		if (true) $value = $send_value;
 		$value['total'] = $total;
 
 		// Send categories
@@ -188,7 +187,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				$value['options-cat_id'][''] = lang('all');
 			}
-			$value['options-cat_id'] += etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
+			$value['options-cat_id'] += etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang=true,false,$value['cat_id']);
 			etemplate_widget_menupopup::fix_encoded_options($value['options-cat_id']);
 		}
 
@@ -265,9 +264,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param string $exec_id identifys the etemplate request
 	 * @param array $queriedRange array with values for keys "start", "num_rows" and optional "refresh", "parent_id"
 	 * @param array $filters Search and filter parameters, passed to data source
-	 * @param string $form_name='nm' full id of widget incl. all namespaces
-	 * @param array $knownUids=null uid's know to client
-	 * @param int $lastModified=null date $knowUids last checked
+	 * @param string $form_name ='nm' full id of widget incl. all namespaces
+	 * @param array $knownUids =null uid's know to client
+	 * @param int $lastModified =null date $knowUids last checked
 	 * @todo for $queriedRange[refresh] first check if there's any modification since $lastModified, return $result[order]===null
 	 * @return array with values for keys 'total', 'rows', 'readonlys', 'order', 'data' and 'lastModification'
 	 */
@@ -306,7 +305,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			//error_log($this . " Valid filters: " . array2string($filters));
 		}
 
-		$value = $value_in = array_merge($value, $filters);
+		if (true) $value = $value_in = array_merge($value, $filters);
 
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
@@ -354,8 +353,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
 
-		if($no_rows) $rows = Array();
-
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
 
@@ -385,7 +382,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				// '' => 'All'
 				if($n == 'sel_options')
 				{
-					foreach($row as $select => &$options)
+					foreach($row as &$options)
 					{
 						etemplate_widget_menupopup::fix_encoded_options($options,true);
 					}
@@ -528,9 +525,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 *
 	 * @param array &$value
 	 * @param array &$rows on return: rows are indexed by their row-number: $value[start], ..., $value[start]+$value[num_rows]-1
-	 * @param array &$readonlys=null
-	 * @param object $obj=null (internal)
-	 * @param string|array $method=null (internal)
+	 * @param array &$readonlys =null
+	 * @param object $obj =null (internal)
+	 * @param string|array $method =null (internal)
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
 	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null)
@@ -571,7 +568,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}
 		}
-		if (!is_array($raw_rows)) $raw_rows = array();
+		$raw_rows = array();
 		if (!is_array($readonlys)) $readonlys = array();
 		if(is_callable($method))	// php5.2.3+ static call (value is always a var param!)
 		{
@@ -597,6 +594,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$is_parent = $value['is_parent'];
 		$is_parent_value = $value['is_parent_value'];
+		$parent_id = $value['parent_id'];
 
 		// remove empty rows required by old etemplate to compensate for header rows
 		$first = $total ? null : 0;
@@ -613,15 +611,16 @@ class etemplate_widget_nextmatch extends etemplate_widget
 						$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
 					$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
 				}
-				$rows[$n-$first+$value['start']] = $row;
+				// run beforeSendToClient methods of widgets in row on row-data
+				$rows[$n-$first+$value['start']] = self::run_beforeSendToClient($row);
 			}
 			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
 			{
 				if($n == 'sel_options')
 				{
-					foreach($row as $name => &$options)
+					foreach($row as &$options)
 					{
-						foreach($options as $key => &$label)
+						foreach($options as &$label)
 						{
 							if(!is_array($label))
 							{
@@ -641,8 +640,37 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
 	}
+
 	/**
-	 * Default maximum lenght for context submenus, longer menus are put as a "More" submenu
+	 * Run beforeSendToClient methods of widgets in row over row-data
+	 *
+	 * This is currently only a hack to convert everything looking like a timestamp to a 'Y-m-d\TH:i:s\Z' string, fix timezone problems!
+	 *
+	 * @todo instanciate row of template and run it's beforeSendToClient
+	 * @param array $row
+	 * @return array
+	 */
+	private static function run_beforeSendToClient(array $row)
+	{
+		$is_timestamp = array();
+		foreach($row as $name => &$value)
+		{
+			if (!isset($is_timestamp[$name]))
+			{
+				$is_timestamp[$name] = preg_match('/(start|end|time|modified|created|date|payed|confirmed|closed|deleted|since|timestamp|expires|last_mod|lastmod|begin|completed|recurrence)$/', $name);
+			}
+			if ($is_timestamp[$name] && $value &&
+				(is_int($value) || is_string($value) && is_numeric($value)) &&
+				($value > 21000000 || $value < 19000000))
+			{
+				$value = egw_time::to($value, 'Y-m-d\TH:i:s\Z');
+			}
+		}
+		return $row;
+	}
+
+	/**
+	 * Default maximum length for context submenus, longer menus are put as a "More" submenu
 	 */
 	const DEFAULT_MAX_MENU_LENGTH = 14;
 
@@ -682,11 +710,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - boolean 'postSubmit' eg. downloads need a submit via POST request not our regular Ajax submit, only works with nm_action=submit!
 	 *
 	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
-	 * @param string $template_name='' name of the template, used as default for app name of images
-	 * @param string $prefix='' prefix for ids
-	 * @param array &$action_links=array() on return all first-level actions plus the ones with enabled='javaScript:...'
-	 * @param int $max_length=self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
-	 * @param array $default_attrs=null default attributes
+	 * @param string $template_name ='' name of the template, used as default for app name of images
+	 * @param string $prefix ='' prefix for ids
+	 * @param array &$action_links =array() on return all first-level actions plus the ones with enabled='javaScript:...'
+	 * @param int $max_length =self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
+	 * @param array $default_attrs =null default attributes
 	 * @return array
 	 */
 	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
@@ -813,19 +841,19 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * Automatic switch to hierarchical display, if more then $max_cats_flat=14 cats found.
 	 *
 	 * @param string $app
-	 * @param int $group=0 see self::egw_actions
-	 * @param string $caption='Change category'
-	 * @param string $prefix='cat_' prefix category id to get action id
-	 * @param boolean $globals=true application global categories too
-	 * @param int $parent_id=0 only returns cats of a certain parent
-	 * @param int $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
+	 * @param int $group =0 see self::egw_actions
+	 * @param string $caption ='Change category'
+	 * @param string $prefix ='cat_' prefix category id to get action id
+	 * @param boolean $globals =true application global categories too
+	 * @param int $parent_id =0 only returns cats of a certain parent
+	 * @param int $max_cats_flat =self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
 	 * @return array like self::egw_actions
 	 */
 	public static function category_action($app, $group=0, $caption='Change category',
 		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
 	{
 		$cat = new categories(null,$app);
-		$cats = $cat->return_sorted_array($start=0, $limit=false, $query='', $sort='ASC', $order='cat_name', $globals, $parent_id, $unserialize_data=true);
+		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
 
 		// if more then max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
@@ -862,9 +890,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	/**
 	 * Return one level of the category hierarchy
 	 *
-	 * @param array $cats=null all cats if already read
-	 * @param string $prefix='cat_' prefix category id to get action id
-	 * @param int $parent_id=0 only returns cats of a certain parent
+	 * @param array $cats =null all cats if already read
+	 * @param string $prefix ='cat_' prefix category id to get action id
+	 * @param int $parent_id =0 only returns cats of a certain parent
 	 * @return array
 	 */
 	private static function category_hierarchy(array $cats, $prefix, $parent_id=0)
@@ -918,7 +946,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param string $cname current namespace
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
-	 * @param array &$validated=array() validated content
+	 * @param array &$validated =array() validated content
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
@@ -962,7 +990,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// Set columns + refresh as default for all users
 			// Columns included in submit, preference might not be updated yet
 			$cols = $value['selectcols'];
-			$prefs = $GLOBALS['egw']->preferences->read();
+			$GLOBALS['egw']->preferences->read();
 			$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols, $pref_level);
 
 			// Autorefresh
@@ -970,7 +998,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$GLOBALS['egw']->preferences->add($app,$refresh_pref_name,(int)$refresh,$pref_level);
 
 			$GLOBALS['egw']->preferences->save_repository(true,$pref_level);
-			$prefs = $GLOBALS['egw']->preferences->read(true);
+			$GLOBALS['egw']->preferences->read(true);
 
 			if($value['nm_col_preference'] == 'reset')
 			{
@@ -991,8 +1019,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * Reimplemented to add namespace, and make sure row template gets included
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be cname, second $expand!
-	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param array $params =array('') parameter(s) first parameter has to be cname, second $expand!
+	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
@@ -1034,10 +1062,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - add: requires full reload
 	 *
 	 * @param array|string $row_ids rows to refresh
-	 * @param string $type='edit' "edit" (default), "delete" or "add"
+	 * @param string $type ='edit' "edit" (default), "delete" or "add"
 	 */
 	public function refresh($row_ids, $type='edit')
 	{
+		unset($row_ids, $type);	// not used, but required by function signature
+
 		throw new Exception('Not yet implemented');
 	}
 }
@@ -1061,7 +1091,7 @@ class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopu
 	 * Parse and set extra attributes from xml in template object
 	 *
 	 * @param string|XMLReader $xml
-	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 */
 	public function set_attrs($xml, $cloned=true)
@@ -1084,8 +1114,9 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		switch($this->attrs['type'])
 		{
@@ -1093,7 +1124,7 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 				self::$transformation['type'] = $this->attrs['type'] = 'nextmatch-entryheader';
 				break;
 			default:
-				list($type, $subtype) = explode('-',$this->attrs['type'],2);
+				list($type) = explode('-',$this->attrs['type']);
 				if($type == 'select')
 				{
 					$this->attrs['type'] = 'nextmatch-filterheader';
@@ -1104,9 +1135,8 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 
 		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
-		parent::beforeSendToClient($cname);
+		parent::beforeSendToClient($cname, $expand);
 		$this->setElementAttribute($form_name, 'type', $this->attrs['type']);
-
 	}
 }
 
