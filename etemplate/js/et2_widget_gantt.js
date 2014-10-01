@@ -390,6 +390,80 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	},
 
 	/**
+	 * Refresh given tasks for specified change
+	 *
+	 * Change type parameters allows for quicker refresh then complete server side reload:
+	 * - update: request just modified data for given tasks
+	 * - edit:  same as edit
+	 * - delete: just delete the given tasks clientside (no server interaction neccessary)
+	 * - add: requires full reload
+	 *
+	 * @param {string[]|string} _task_ids tasks to refresh
+	 * @param {?string} _type "update", "edit", "delete" or "add"
+	 *
+	 * @see jsapi.egw_refresh()
+	 * @fires refresh from the widget itself
+	 */
+	refresh: function(_task_ids, _type) {
+		// Framework trying to refresh, but gantt not fully initialized
+		if(!this.gantt || !this.gantt_node || !this.options.autoload) return;
+
+		// Sanitize arguments
+		if (typeof _type == 'undefined') _type = 'edit';
+		if (typeof _task_ids == 'string' || typeof _task_ids == 'number') _task_ids = [_task_ids];
+		if (typeof _task_ids == "undefined" || _task_ids === null)
+		{
+			// Use the root
+			_task_ids = this.gantt._branches[0];
+		}
+
+		id_loop:
+		for(var i = 0; i < _task_ids.length; i++)
+		{
+			var task = this.gantt.getTask(_task_ids[i]);
+			if(!task) _type = null;
+			switch(_type)
+			{
+				case "edit":
+				case "update":
+					var value = this.getInstanceManager().getValues(this.getInstanceManager().widgetContainer);
+					this.gantt.showCover();
+					this.egw().json(this.options.autoload,
+						[_task_ids[i],value,task.parent||false],
+						function(data) {
+							this.gantt.parse(data);
+							this.gantt.hideCover();
+						},
+						this,true,this
+					).sendRequest();
+					break;
+				case "delete":
+					this.gantt.deleteTask(_task_ids[i]);
+					break;
+				case "add":
+					var data = null;
+					if(data = this.egw().dataGetUIDdata(_task_ids[i]) && data.data)
+					{
+						this.gantt.parse(data.data);
+					}
+					else
+					{
+						// Refresh the whole thing
+						this.refresh();
+						break id_loop;
+					}
+					break;
+				default:
+					// Refresh the whole thing
+					this.refresh();
+			}
+		}
+
+		// Trigger an event so app code can act on it
+		$j(this).triggerHandler("refresh",[this,_task_ids,_type]);
+	},
+
+	/**
 	 * Is dirty returns true if the value of the widget has changed since it
 	 * was loaded.
 	 */
