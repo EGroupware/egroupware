@@ -534,6 +534,7 @@ div.et2_file {
   background-color: green;
   height: 5px;
   margin: 0px;
+  width: 0px;
 }
 /* Hide progress bar when completed */
 .et2_file .progress li.success > span.progressBar {
