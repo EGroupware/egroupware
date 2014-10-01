@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2009-13 by RalfBecker@outdoor-training.de
+ * @copyright 2009-14 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -105,15 +105,15 @@ class so_sql_cf extends so_sql
 	 * @param string $app application name to load table schemas
 	 * @param string $table name of the table to use
 	 * @param string $extra_table name of the custom field table
-	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
-	 * @param string $extra_key='_name' column name for cf name column (will be prefixed with colum prefix, if starting with _)
-	 * @param string $extra_value='_value' column name for cf value column (will be prefixed with colum prefix, if starting with _)
-	 * @param string $extra_id='_id' column name for cf id column (will be prefixed with colum prefix, if starting with _)
-	 * @param egw_db $db=null database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
-	 * @param boolean $no_clone=true can we avoid to clone the db-object, default yes (different from so_sql!)
+	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param string $extra_key ='_name' column name for cf name column (will be prefixed with colum prefix, if starting with _)
+	 * @param string $extra_value ='_value' column name for cf value column (will be prefixed with colum prefix, if starting with _)
+	 * @param string $extra_id ='_id' column name for cf id column (will be prefixed with colum prefix, if starting with _)
+	 * @param egw_db $db =null database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
+	 * @param boolean $no_clone =true can we avoid to clone the db-object, default yes (different from so_sql!)
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * @param boolean $allow_multiple_values=false should we allow AND store multiple values (1:N relations)
-	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects
+	 * @param boolean $allow_multiple_values =false should we allow AND store multiple values (1:N relations)
+	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects
 	 */
 	function __construct($app,$table,$extra_table,$column_prefix='',
 		$extra_key='_name',$extra_value='_value',$extra_id='_id',
@@ -171,7 +171,7 @@ class so_sql_cf extends so_sql
 	 * Read all customfields of the given id's
 	 *
 	 * @param int|array $ids one ore more id's
-	 * @param array $field_names=null custom fields to read, default all
+	 * @param array $field_names =null custom fields to read, default all
 	 * @return array id => $this->cf_field(name) => value
 	 */
 	function read_customfields($ids,$field_names=null)
@@ -210,7 +210,7 @@ class so_sql_cf extends so_sql
 	* saves custom field data
 	*
 	* @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
-	* @param array $extra_cols=array()
+	* @param array $extra_cols =array()
 	* @return bool false on success, errornumber on failure
 	*/
 	function save_customfields($data, array $extra_cols=array())
@@ -297,7 +297,7 @@ class so_sql_cf extends so_sql
 	 * reimplented to also save the custom fields
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
-	 * @param string|array $extra_where=null extra where clause, eg. to check an etag, returns true if no affected rows!
+	 * @param string|array $extra_where =null extra where clause, eg. to check an etag, returns true if no affected rows!
 	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
 	function save($keys=null,$extra_where=null)
@@ -321,8 +321,8 @@ class so_sql_cf extends so_sql
 	 *
 	 * reimplented to also delete the custom fields
 	 *
-	 * @param array|int $keys=null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
-	 * @param boolean $only_return_ids=false return $ids of delete call to db object, but not run it (can be used by extending classes!)
+	 * @param array|int $keys =null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
+	 * @param boolean $only_return_ids =false return $ids of delete call to db object, but not run it (can be used by extending classes!)
 	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
 	 */
 	function delete($keys=null,$only_return_ids=false)
@@ -360,11 +360,11 @@ class so_sql_cf extends so_sql
 	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
 	 * @param array &$rows returned rows/competitions
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	 * @param mixed $only_keys=false, see search
-	 * @param string|array $extra_cols=array()
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param mixed $only_keys =false, see search
+	 * @param string|array $extra_cols =array()
 	 * @return int total number of rows
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
@@ -405,18 +405,18 @@ class so_sql_cf extends so_sql
 	 * Reimplemented to search, order and filter by custom fields
 	 *
 	 * @param array|string $criteria array of key and data cols, OR string with search pattern (incl. * or ? as wildcards)
-	 * @param boolean|string/array $only_keys=true True returns only keys, False returns all cols. or
+	 * @param boolean|string/array $only_keys =true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array|NULL array of matching rows (the row is an array of the cols) or NULL
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)

@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-13 by RalfBecker@outdoor-training.de
+ * @copyright 2002-14 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -172,10 +172,10 @@ class so_sql
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param egw_db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
-	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
-	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
+	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param boolean $no_clone =false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
+	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 * 	'object' use egw_time objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 *
 	 * @return so_sql
@@ -213,7 +213,7 @@ class so_sql
 	/**
 	 * Set class vars timestamp_type, now and tz_offset_s
 	 *
-	 * @param string|boolean $timestamp_type=false default false do NOT set time_stamptype,
+	 * @param string|boolean $timestamp_type =false default false do NOT set time_stamptype,
 	 * 	null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects,
 	 *  'string' use DB timestamp (Y-m-d H:i:s) string
 	 */
@@ -253,7 +253,7 @@ class so_sql
 	 *
 	 * @param string $app app-name $table belongs too
 	 * @param string $table table-name
-	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param string $colum_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 */
 	function setup_table($app,$table,$colum_prefix='')
 	{
@@ -371,7 +371,7 @@ class so_sql
 	 * 		return parent::db2data($intern ? null : $data);	// important to use null, if $intern!
 	 * }
 	 *
-	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
+	 * @param array $data =null if given works on that array and returns result, else works on internal data-array
 	 * @return array
 	 */
 	function db2data($data=null)
@@ -437,7 +437,7 @@ class so_sql
 	 * 		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
 	 * }
 	 *
-	 * @param array $data=null if given works on that array and returns result, else works on internal data-array
+	 * @param array $data =null if given works on that array and returns result, else works on internal data-array
 	 * @return array
 	 */
 	function data2db($data=null)
@@ -462,7 +462,7 @@ class so_sql
 	/**
 	 * initializes data with the content of key
 	 *
-	 * @param array $keys=array() array with keys in form internalName => value
+	 * @param array $keys =array() array with keys in form internalName => value
 	 * @return array internal data after init
 	 */
 	function init($keys=array())
@@ -485,8 +485,8 @@ class so_sql
 	 * reads row matched by key and puts all cols in the data array
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
-	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 * @return array|boolean data if row could be retrived else False
 	 */
 	function read($keys,$extra_cols='',$join='')
@@ -598,8 +598,8 @@ class so_sql
 	/**
 	 * saves the content of data to the db
 	 *
-	 * @param array $keys=null if given $keys are copied to data before saveing => allows a save as
-	 * @param string|array $extra_where=null extra where clause, eg. to check an etag, returns true if no affected rows!
+	 * @param array $keys =null if given $keys are copied to data before saveing => allows a save as
+	 * @param string|array $extra_where =null extra where clause, eg. to check an etag, returns true if no affected rows!
 	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
 	function save($keys=null,$extra_where=null)
@@ -710,15 +710,15 @@ class so_sql
 	/**
 	 * Update only the given fields, if the primary key is not given, it will be taken from $this->data
 	 *
-	 * @param array $fields
-	 * @param boolean $merge=true if true $fields will be merged with $this->data (after update!), otherwise $this->data will be just $fields
+	 * @param array $_fields
+	 * @param boolean $merge =true if true $fields will be merged with $this->data (after update!), otherwise $this->data will be just $fields
 	 * @return int|boolean 0 on success, or errno != 0 on error, or true if $extra_where is given and no rows affected
 	 */
-	function update($fields,$merge=true)
+	function update($_fields,$merge=true)
 	{
-		if ($merge) $this->data_merge($fields);
+		if ($merge) $this->data_merge($_fields);
 
-		$fields = $this->data2db($fields);
+		$fields = $this->data2db($_fields);
 
 		// extract the keys from $fields or - if not set there - from $this->data
 		$keys = array();
@@ -759,8 +759,8 @@ class so_sql
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
-	 * @param array|int $keys=null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
-	 * @param boolean $only_return_query=false return $query of delete call to db object, but not run it (used by so_sql_cf!)
+	 * @param array|int $keys =null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
+	 * @param boolean $only_return_query =false return $query of delete call to db object, but not run it (used by so_sql_cf!)
 	 * @return int|array affected rows, should be 1 if ok, 0 if an error or array with id's if $only_return_ids
 	 */
 	function delete($keys=null,$only_return_query=false)
@@ -806,18 +806,18 @@ class so_sql
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
 	 * @param array|string $criteria array of key and data cols, OR string with search pattern (incl. * or ? as wildcards)
-	 * @param boolean|string|array $only_keys=true True returns only keys, False returns all cols. or
+	 * @param boolean|string|array $only_keys =true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
 	 * @todo return an interator instead of an array
 	 * @return array|NULL array of matching rows (the row is an array of the cols) or NULL
 	 */
@@ -1185,16 +1185,16 @@ class so_sql
 	/**
 	 * Return criteria array for a given search pattern
 	 *
-	 * @param string $pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
-	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
-	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
-	 * @param string $extra_col=null extra column to search
-	 * @param array $search_cols=array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @param string $_pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string &$wildcard ='' on return wildcard char to use, if pattern does not already contain wildcards!
+	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
+	 * @param string $extra_col =null extra column to search
+	 * @param array $search_cols =array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
 	 * @return array or column => value pairs
 	 */
-	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
 	{
-		$pattern = trim($pattern);
+		$pattern = trim($_pattern);
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
 		if(strpos($pattern, 'CAST(COALESCE(') !== false)
@@ -1408,8 +1408,8 @@ class so_sql
 	 * extract the requested columns from $only_keys and $extra_cols param of a search
 	 *
 	 * @internal
-	 * @param boolean|string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @return array with columns as db-name => internal-name pairs
 	 */
 	function _get_columns($only_keys,$extra_cols)
@@ -1478,11 +1478,11 @@ class so_sql
 	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
 	 * @param array &$rows returned rows/competitions
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	 * @param mixed $only_keys=false, see search
-	 * @param string|array $extra_cols=array()
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param mixed $only_keys =false, see search
+	 * @param string|array $extra_cols =array()
 	 * @return int total number of rows
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
@@ -1510,7 +1510,7 @@ class so_sql
 	/**
 	 * Check if values for unique keys and the primary keys are unique are unique
 	 *
-	 * @param array $data=null data-set to check, defaults to $this->data
+	 * @param array $data =null data-set to check, defaults to $this->data
 	 * @return int 0: all keys are unique, 1: first key not unique, 2: ...
 	 */
 	function not_unique($data=null)
@@ -1566,9 +1566,9 @@ class so_sql
 	 *
 	 * @param string $value_col array of column-names for the values of the array, can also be an expression aliased with AS,
 	 *	if more then one column given, an array with keys identical to the given ones is returned and not just the value of the column
-	 * @param string $key_col='' column-name for the keys, default '' = same as (first) $value_col: returns a distinct list
-	 * @param array $filter=array() to filter the entries
-	 * @param string $order='' order, default '' = same as (first) $value_col
+	 * @param string $key_col ='' column-name for the keys, default '' = same as (first) $value_col: returns a distinct list
+	 * @param array $filter =array() to filter the entries
+	 * @param string $order ='' order, default '' = same as (first) $value_col
 	 * @return array with key_col => value_col pairs or array if more then one value_col given (keys as in value_col)
 	 */
 	function query_list($value_col,$key_col='',$filter=array(),$order='')
@@ -1624,7 +1624,7 @@ class so_sql
 	/**
 	 * Get comments for all columns or a specific one
 	 *
-	 * @param $column=null name of column or null for all (default)
+	 * @param string $column =null name of column or null for all (default)
 	 * @return array|string array with internal-name => comment pairs, or string with comment, if $column given
 	 */
 	public function get_comments($column=null)
