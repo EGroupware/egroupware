@@ -1457,6 +1457,7 @@ class calendar_uiforms extends calendar_ui
 			$content['participants']['cal_resources'] = '';
 			foreach($this->bo->resources as $data)
 			{
+				if ($data['app'] == 'email') continue;	// make no sense, as we cant search for email
 				$content['participants']['cal_resources'] .= ','.$data['app'];
 			}
 			// adding extra content for the resource link-entry widget to
