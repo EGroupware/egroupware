@@ -65,10 +65,10 @@ class asyncservice
 	 * 	eg. '<app><id>X' where id is the internal id of app and X might indicate the action.
 	 * @param string $method Method to be called via ExecMethod($method,$data). $method has the form
 	 * 	'<app>.<class>.<public function>'.
-	 * @param mixed $data=null This data is passed back when the method is called. If it is an array,
+	 * @param mixed $data =null This data is passed back when the method is called. If it is an array,
 	 * 	EGroupware will add the rest of the job parameters like id, next (sheduled exec time), times, ...
 	 * @param int $account_id account_id, under which the methode should be called or False for the actual user
-	 * @param boolean $debug=false
+	 * @param boolean $debug =false
 	 * @return boolean False if $id already exists, else True
 	 */
 	function set_timer($times,$id,$method,$data=null,$account_id=False,$debug=false)
@@ -472,10 +472,10 @@ class asyncservice
 	 *
 	 * @param string $id =0 reads all expired rows / jobs ready to run\
 	 * 	!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
-	 * @param array|string $cols='*' string or array of column-names / select-expressions
-	 * @param int|bool $offset=False offset for a limited query or False (default)
-	 * @param string $append='ORDER BY async_next' string to append to the end of the query
-	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
+	 * @param array|string $cols ='*' string or array of column-names / select-expressions
+	 * @param int|bool $offset =False offset for a limited query or False (default)
+	 * @param string $append ='ORDER BY async_next' string to append to the end of the query
+	 * @param int $num_rows =0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @return array/boolean db-rows / jobs as array or False if no matches
 	 */
 	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
@@ -526,7 +526,7 @@ class asyncservice
 	 * write a job / db-row to the db
 	 *
 	 * @param array $job db-row as array
-	 * @param boolean $exits if True, we do an update, else we check if update or insert necesary
+	 * @param boolean $exists if True, we do an update, else we check if update or insert necesary
 	 * @param array $where additional where statemetn to update only if a certain condition is met, used for the semaphore
 	 * @return int affected rows, can be 0 if an additional where statement is given
 	 */
@@ -586,7 +586,6 @@ class asyncservice
 		{
 			$binarys = array(
 				'php'  => '/usr/bin/php',
-				'php4' => '/usr/bin/php4',		// this is for debian
 				'php5' => '/usr/bin/php5',		// SuSE 9.3 with php5
 				'crontab' => '/usr/bin/crontab'
 			);
@@ -621,10 +620,6 @@ class asyncservice
 					$this->$name = $name;	// hopefully its in the path
 				}
 				//echo "<p>$name = '".$this->$name."'</p>\n";
-			}
-			if ($this->php4{0} == '/')	// we found a php4 binary
-			{
-				$this->php = $this->php4;
 			}
 			if ($this->php5{0} == '/')	// we found a php5 binary
 			{
