@@ -57,7 +57,7 @@ class egw_favorites
 		$filters =  self::get_favorites($app);
 		$is_admin = $GLOBALS['egw_info']['user']['apps']['admin'];
 		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
-		
+
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
 		if (!isset($default_filter) || !isset($filters[$default_filter]))
 		{
@@ -78,7 +78,7 @@ class egw_favorites
 				error_log(__METHOD__.'Favorite filter is not suppose to be empty, it should be an array. filter = '. array2string($filters[$name]));
 				continue;
 			}
-				
+
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
 			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
 			$li .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
@@ -106,7 +106,7 @@ class egw_favorites
 			),
 		);
 	}
-	
+
 	/**
 	 * Get preferenced favorites sorted list
 	 *
@@ -118,7 +118,7 @@ class egw_favorites
 	public static function get_fav_sort_pref ($app)
 	{
 		$fav_sorted_list = array();
-		
+
 		if (($fav_sorted_list = $GLOBALS['egw_info']['user']['preferences'][$app]['fav_sort_pref']))
 		{
 			return $fav_sorted_list;
@@ -128,7 +128,7 @@ class egw_favorites
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Get a list of actual user favorites
 	 * The default 'Blank' favorite is not included here
@@ -150,12 +150,12 @@ class egw_favorites
 			)
 		);
 		$pref_prefix = 'favorite_';
-		
+
 		$sorted_list = array();
 		$fav_sort_pref = self::get_fav_sort_pref($app);
-		
+
 		// Look through all preferences & pull out favorites
-		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
+		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
 		{
 			if(strpos($pref_name, $pref_prefix) === 0)
 			{
@@ -193,16 +193,16 @@ class egw_favorites
 	 * Current user needs to be an admin or it will just do nothing quietly
 	 *
 	 * @param string $app Current application, needed to save preference
-	 * @param string $name Name of the favorite
+	 * @param string $_name Name of the favorite
 	 * @param string $action "add" or "delete"
 	 * @param boolean|int|String $group ID of the group to create the favorite for, or 'all' for all users
 	 * @param array $filters key => value pairs for the filter
 	 * @return boolean Success
 	 */
-	public static function set_favorite($app, $name, $action, $group, $filters = array())
+	public static function set_favorite($app, $_name, $action, $group, $filters = array())
 	{
 		// Only use alphanumeric for preference name, so it can be used directly as DOM ID
-		$name = strip_tags($name);
+		$name = strip_tags($_name);
 		$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
 
 		// older group-favorites have just true as their group and are not deletable, if we dont find correct group
