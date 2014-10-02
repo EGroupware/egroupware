@@ -6160,7 +6160,13 @@ class emailadmin_imapbase
 						if (stripos($val,'calendar')) $contenttypecalendar = $val;
 						break;
 					case 'subject':
-						$mailObject->Subject = $mailObject->EncodeHeader($mailObject->SecureHeader($val));
+/*
+error_log(__METHOD__.__LINE__.$val);
+error_log(__METHOD__.__LINE__.$mailObject->SecureHeader($val));
+error_log(__METHOD__.__LINE__.translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
+error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeader($val)));
+*/
+						$mailObject->Subject = $mailObject->EncodeHeader(translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
 						$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
 						break;
 					default:
