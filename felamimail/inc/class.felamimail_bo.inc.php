@@ -5846,7 +5846,7 @@ class felamimail_bo
 						if (stripos($val,'calendar')) $contenttypecalendar = $val;
 						break;
 					case 'subject':
-						$mailObject->Subject = $mailObject->EncodeHeader($mailObject->SecureHeader($val));
+						$mailObject->Subject = $mailObject->EncodeHeader(translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
 						$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
 						break;
 					default:
