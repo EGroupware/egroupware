@@ -344,7 +344,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$value['csv_export'] = 'refresh';
 		}
 		$rows = $result['data'] = $result['order'] = array();
-		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
+		// we can NOT run run_beforeSendToClient in call_get_rows, as it would modify row_modified timestamp, which is used below
+		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys'], null, null, false);
 		$result['lastModification'] = egw_time::to('now', 'ts')-1;
 
 		if (isset($GLOBALS['egw_info']['flags']['app_header']) && self::$request->app_header != $GLOBALS['egw_info']['flags']['app_header'])
@@ -372,7 +373,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
 				{
-					$result['data'][$id] = $row;
+					$result['data'][$id] = self::run_beforeSendToClient($row);
 				}
 				if ($kUkey !== false) unset($knownUids[$kUkey]);
 			}
@@ -530,7 +531,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param string|array $method =null (internal)
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
-	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null)
+	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, $run_beforeSendToClient=true)
 	{
 		if (is_null($method)) $method = $value['get_rows'];
 
@@ -612,7 +613,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
 				}
 				// run beforeSendToClient methods of widgets in row on row-data
-				$rows[$n-$first+$value['start']] = self::run_beforeSendToClient($row);
+				$rows[$n-$first+$value['start']] = $run_beforeSendToClient ? self::run_beforeSendToClient($row) : $row;
 			}
 			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
 			{
@@ -657,7 +658,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			if (!isset($is_timestamp[$name]))
 			{
-				$is_timestamp[$name] = preg_match('/(start|end|time|modified|created|date|payed|confirmed|closed|deleted|since|timestamp|expires|last_mod|lastmod|begin|completed|recurrence)$/', $name);
+				$is_timestamp[$name] = $name[0] != '#' && preg_match('/(start|end|time|modified|created|date|payed|confirmed|closed|deleted|since|timestamp|expires|last_mod|lastmod|begin|completed|recurrence)$/', $name);
 			}
 			if ($is_timestamp[$name] && $value &&
 				(is_int($value) || is_string($value) && is_numeric($value)) &&
