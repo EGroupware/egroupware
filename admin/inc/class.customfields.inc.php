@@ -70,7 +70,7 @@ class customfields
 		if(!$this->appname) die(lang('Error! No appname found'));
 
 		translation::add_app('infolog');	// til we move the translations
-		$this->tmpl = new etemplate();
+		$this->tmpl = new etemplate_new();
 		// do we manage content-types?
 		if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 		$this->fields = egw_customfields::get($this->appname,true);
@@ -125,7 +125,7 @@ class customfields
 						{
 							break;
 						}
-					//fall through	
+					//fall through
 					case 'cancel':
 						egw::redirect_link('/index.php', array('menuaction'=>'admin.admin_ui.index','ajax'=>'true'), 'admin');
 				}

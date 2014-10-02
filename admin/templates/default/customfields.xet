@@ -18,7 +18,7 @@
 					<menulist>
 						<menupopup id="types" no_lang="1" onchange="1"/>
 					</menulist>
-					<button label="Delete" id="delete" onclick="et2_dialog.confirm(widget,'WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.','Delete')"/>
+					<button label="Delete" id="delete" onclick="return confirm('WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.');"/>
 					<textbox blur="new name" id="name"/>
 					<button label="Create" id="create"/>
 				</row>
@@ -40,10 +40,10 @@
 			</columns>
 			<rows>
 				<row class="th">
+					<description value="Type"/>
 					<description statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
 					<description value="Label"/>
-					<description value="Subtype"/>
-					<description value="Type"/>
+					<description value="Type of field"/>
 					<description value="Private"/>
 					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
 					<vbox>
@@ -54,19 +54,17 @@
 					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
 				<row class="row" valign="top">
+					<listbox statustext="for which types should this field be used" id="${row}[type2]" no_lang="1" rows="3"/>
 					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="${row}[name]" size="20" maxlength="32"/>
 					<vbox>
 						<textbox statustext="the text displayed to the user" id="${row}[label]" maxlength="255"/>
 						<description id="${row}[label]"/>
 					</vbox>
-					<menulist>
-						<menupopup id="${row}[type2]" no_lang="1" options="All"/>
-					</menulist>
-					<vbox options="0,0">
+					<vbox>
 						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
 						<checkbox label="required" id="${row}[needed]"/>
 					</vbox>
-					<listbox type="select-account" align="center" statustext="Select accounts for which the custom field should be visible" id="${row}[private]" rows="3" options="both"/>
+					<taglist-account statustext="Select accounts for which the custom field should be visible" id="${row}[private]" rows="3" account_type="both"/>
 					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="4" cols="30"/>
 					<vbox>
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
@@ -94,7 +92,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description align="center" id="error_msg" no_lang="1" span="all" class="redItalic"/>
+					<description align="center" id="error_msg" no_lang="1" span="all" class="msg"/>
 					<description/>
 					<description/>
 					<description/>
@@ -120,8 +118,5 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.redItalic { color: red; font-style: italics; }
-		</styles>
 	</template>
 </overlay>
