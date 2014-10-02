@@ -1,3 +1,10 @@
+egroupware-epl (14.1.20141002-1) hardy; urgency=low
+
+  * All apps: fixed diverse regressions found while testing
+  * Addressbook/Tracker/other apps: custom-fields were not saved (existing custom-fields and InfoLog worked)
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 02 Oct 2014 11:37:36 +0200
+
 egroupware-epl (14.1.20141001-1) hardy; urgency=low
 
   * Mail: decoding of TNEF/winmail.dat as attachments, requires installation of PEAR packages Horde_Compress, Horde_Icalendar, Horde_Mapi and PHP bcmath extension
