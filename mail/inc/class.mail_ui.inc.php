@@ -2056,6 +2056,10 @@ class mail_ui
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		// Send mail ID so we can use it for actions
 		$content['mail_id'] = $rowID;
+		if (!is_array($headers) || !isset($headers['DATE']))
+		{
+			$headers['DATE'] = (is_array($envelope)&&$envelope['DATE']?$envelope['DATE']:'');
+		}
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
 		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
