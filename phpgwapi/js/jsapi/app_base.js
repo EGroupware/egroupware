@@ -285,7 +285,7 @@ var AppJS = Class.extend(
 				if(state.state && state.state.search) state.state.search = unescape(state.state.search);
 
 				// Apply
-				if(state.state.sort && state.state.sort.id)
+				if(state.state && state.state.sort && state.state.sort.id)
 				{
 					_widget.sortBy(state.state.sort.id, state.state.sort.asc,false);
 				}
