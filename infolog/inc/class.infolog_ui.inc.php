@@ -2570,7 +2570,7 @@ class infolog_ui
 				}
 			}
 			//_debug_array($attachments);
-			$body_striped = strip_tags($mailClass::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" )
+			$body_striped = strip_tags($_body); //we need to fix broken tags (or just stuff like "<800 USD/p" )
 			$body_decoded = htmlspecialchars_decode($body_striped,ENT_QUOTES);
 			$body = $mailClass::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
