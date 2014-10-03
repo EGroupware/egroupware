@@ -768,8 +768,8 @@ var et2_link_entry = et2_inputWidget.extend(
 	},
 
 	getValue: function() {
-		var value = this.options.only_app ? this.options.value.id : this.options.value;
-		if(!this.options.only_app)
+		var value = this.options && this.options.only_app ? this.options.value.id : this.options.value || null;
+		if(!this.options.only_app && this.search)
 		{
 			value.search = this.search.val();
 		}
