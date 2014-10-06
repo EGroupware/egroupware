@@ -378,7 +378,8 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 			this._filters,
 			this.id,
 			_callback,
-			_context
+			_context,
+			[]
 		);
 	},
 
