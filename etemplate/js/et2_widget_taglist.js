@@ -495,6 +495,15 @@ var et2_taglist_email = et2_taglist.extend(
 
 	selectionRenderer: function(item)
 	{
+		// Trim
+		if(typeof item.id == 'string')
+		{
+			item.id = item.id.trim();
+		}
+		if(typeof item.label == 'string')
+		{
+			item.label = item.label.trim();
+		}
 		// We check free entries for valid email, and render as invalid if it's not.
 		var valid = item.id != item.label || et2_url.prototype.EMAIL_PREG.test(item.id || '');
 
