@@ -65,30 +65,62 @@ class etemplate_widget_date extends etemplate_widget_transformer
 
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, false, true);
-
+		
 		if($this->type != 'date-duration' && $value)
 		{
-			// string with formatting letters like for php's date() method
-			if ($this->attrs['dataformat'] && !is_numeric($value))
-			{
-				$date = date_create_from_format($this->attrs['dataformat'], $value, egw_time::$user_timezone);
-			}
-			else
-			{
-				$date = new egw_time($value);
-			}
-			if($this->type == 'date-timeonly')
-			{
-				$date->setDate(1970, 1, 1);
-			}
-			if($date)
-			{
-				// postfix date-string with "Z" so javascript doesn't add/subtract anything
-				$value = $date->format('Y-m-d\TH:i:s\Z');
-			}
+			$value = $this->format_date($value);
 		}
 	}
 
+	/**
+	 * Perform any needed data manipulation on each row
+	 * before sending it to client.
+	 *
+	 * This is used by etemplate_widget_nextmatch on each row to do any needed
+	 * adjustments.  If not needed, don't implement it.
+	 *
+	 * @param type $cname
+	 * @param array $expand
+	 * @param array $data Row data
+	 * @return type
+	 */
+	public function set_row_value($cname, Array $expand, Array &$data)
+	{
+		if($this->type == 'date-duration') return;
+
+		$form_name = self::form_name($cname, $this->id, $expand);
+		$value =& $this->get_array($data, $form_name, true);
+
+		$value = $this->format_date($value);
+	}
+
+	/**
+	 * Put date in the proper format for sending to client
+	 * @param string|int $value
+	 * @param string $format
+	 */
+	public function format_date($value)
+	{
+		if ($this->attrs['dataformat'] && !is_numeric($value))
+		{
+			$date = date_create_from_format($this->attrs['dataformat'], $value, egw_time::$user_timezone);
+		}
+		else
+		{
+			$date = new egw_time($value);
+		}
+		if($this->type == 'date-timeonly')
+		{
+			$date->setDate(1970, 1, 1);
+		}
+		if($date)
+		{
+			// postfix date-string with "Z" so javascript doesn't add/subtract anything
+			$value = $date->format('Y-m-d\TH:i:s\Z');
+		}
+		return $value;
+	}
+	
 	/**
 	 * Validate input
 	 *

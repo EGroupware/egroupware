@@ -356,6 +356,24 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
+		
+		if($template && $template->attrs['template'])
+		{
+			$row_template = $template->getElementById($template->attrs['template']);
+			if(!$row_template)
+			{
+				$row_template = etemplate_widget_template::instance($template->attrs['template']);
+			}
+
+			// Try to find just the repeating part
+			$repeating_child = null;
+			// First child should be a grid, we want last row
+			foreach($row_template->children[0]->children[1]->children as $child)
+			{
+				if($child->type == 'row') $repeating_child = $child;
+			}
+			$row_template = $repeating_child ? $repeating_child : null;
+		}
 
 		foreach($rows as $n => $row)
 		{
@@ -373,8 +391,21 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
 				{
-					$result['data'][$id] = self::run_beforeSendToClient($row);
+					if($row_template)
+					{
+						// Change anything by widget for each row ($row set to 1)
+						$_row = array(1 => &$row);
+						$row_template->run('set_row_value', array('',array('row' => 1), &$_row), true);
+						$result['data'][$id] = $row;
+					}
+					else if (!$template && !get_class($template) != 'etemplate_widget_historylog')
+					{
+						// Fallback based on widget names
+						error_log(self::$request->template['name'] . ' had to fallback to run_beforeSendToClient() because it could not find the row' );
+						$result['data'][$id] = self::run_beforeSendToClient($row);
+					}
 				}
+				
 				if ($kUkey !== false) unset($knownUids[$kUkey]);
 			}
 			else	// non-row data set by get_rows method
