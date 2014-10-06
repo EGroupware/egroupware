@@ -4070,7 +4070,7 @@ class mail_ui
 			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
 			$fShortName =  array_pop(explode($heirarchyDelimeter, $trashFolder));
 			$fStatus = array(
-				$icServerID.self::$delimiter.$trashFolder => $fShortName
+				$icServerID.self::$delimiter.$trashFolder => lang($fShortName)
 			);
 			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
 			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
