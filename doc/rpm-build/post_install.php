@@ -82,7 +82,7 @@ $config['source_dir'] = dirname(dirname(dirname(__FILE__)));
 /**
  * Set distribution spezific defaults
  *
- * @param string $distro=null default autodetect
+ * @param string $distro =null default autodetect
  */
 function set_distro_defaults($distro=null)
 {
@@ -144,7 +144,13 @@ function set_distro_defaults($distro=null)
 			// fall through
 		case 'rh':
 			// some MySQL packages (mysql.com, MariaDB, ...) use "mysql" as service name instead of RH default "mysqld"
-			if (!file_exists('/etc/init.d/mysqld') && file_exists('/etc/init.d/mysql'))
+			if (file_exists('/usr/bin/systemctl'))	// RHEL 7
+			{
+				$config['autostart_db'] = $config['autostart_webserver'] = '';
+				$config['start_db'] = '/usr/bin/systemctl %s mariadb';
+				$config['start_webserver'] = '/usr/bin/systemctl %s httpd';
+			}
+			elseif (!file_exists('/etc/init.d/mysqld') && file_exists('/etc/init.d/mysql'))
 			{
 				foreach(array('start_db','autostart_db') as $name)
 				{
@@ -253,11 +259,11 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check for localhost if database server is started and start it (permanent) if not
 	if ($config['db_host'] == 'localhost' && $config['start_db'])
 	{
-		exec($config['start_db'].' status',$dummy,$ret);
+		exec(build_cmd('start_db', 'status'), $dummy, $ret);
 		if ($ret)
 		{
-			system($config['start_db'].' start');
-			system($config['autostart_db']);
+			system(build_cmd('start_db', 'start'));
+			if (!empty($config['autostart_db'])) system($config['autostart_db']);
 		}
 	}
 	// create database
@@ -343,15 +349,15 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check if webserver is started and start it (permanent) if not
 	if ($config['start_webserver'])
 	{
-		exec($config['start_webserver'].' status',$dummy,$ret);
+		exec(build_cmd('start_webserver', 'status'),$dummy,$ret);
 		if ($ret)
 		{
-			system($config['start_webserver'].' start');
-			system($config['autostart_webserver']);
+			system(build_cmd('start_webserver', 'start'));
+			if (!empty($config['autostart_webserver'])) system($config['autostart_webserver']);
 		}
 		else
 		{
-			system($config['start_webserver'].' reload');
+			system(build_cmd('start_webserver', 'reload'));
 		}
 	}
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
@@ -411,9 +417,27 @@ else
 
 	// restart running Apache, to force APC to update changed sources and/or Apache configuration
 	$output = array();
-	run_cmd($config['start_webserver'].' status && '.$config['start_webserver'].' restart', $output, true);
+	run_cmd(build_cmd('start_webserver', 'status').' && '.build_cmd('start_webserver', 'restart'), $output, true);
 
 	exit($ret);
+}
+
+/**
+ * Build command to execute
+ *
+ * @param string $cmd command or index into $config, which either incl. %s for arg or arg with be appended
+ * @param string $arg argument
+ * @return string
+ */
+function build_cmd($cmd, $arg)
+{
+	global $config;
+
+	if (isset($config[$cmd])) $cmd = $config[$cmd];
+
+	if (strpos($cmd, '%s')) return str_replace('%s', $arg, $cmd);
+
+	return $cmd.' '.$arg;
 }
 
 /**
@@ -447,7 +471,7 @@ function patch_header($filename,&$user,$password)
  *
  * @param string $cmd
  * @param array &$output=null $output of command
- * @param int|array|true $no_bailout=null exit code(s) to NOT bail out, or true to never bail out
+ * @param int|array|true $no_bailout =null exit code(s) to NOT bail out, or true to never bail out
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
@@ -475,7 +499,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 /**
  * Stop programm execution with a given exit code and optional extra message
  *
- * @param int $ret=1
+ * @param int $ret =1
  * @param array|string $output line(s) to output before temination notice
  */
 function bail_out($ret=1,$output=null)
@@ -488,7 +512,7 @@ function bail_out($ret=1,$output=null)
 /**
  * Return a rand string, eg. to generate passwords
  *
- * @param int $len=16
+ * @param int $len =16
  * @return string
  */
 function randomstring($len=16)
@@ -513,7 +537,7 @@ function randomstring($len=16)
 /**
  * Give usage information and an optional error-message, before stoping program execution with exit-code 90 or 0
  *
- * @param string $error=null optional error-message
+ * @param string $error =null optional error-message
  */
 function usage($error=null)
 {
