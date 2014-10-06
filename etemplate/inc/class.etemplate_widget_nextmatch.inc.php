@@ -674,7 +674,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	private static function get_timestamps()
 	{
-		egw_cache::unsetTree(__CLASS__, 'timestamps');
 		return egw_cache::getTree(__CLASS__, 'timestamps', function()
 		{
 			$timestamps = array();
@@ -702,7 +701,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					}
 				}
 			}
-			error_log(__METHOD__."() returning ".array2string($timestamps));
+			//error_log(__METHOD__."() returning ".array2string($timestamps));
 			return $timestamps;
 		}, array(), 86400);	// cache for 1 day
 	}
