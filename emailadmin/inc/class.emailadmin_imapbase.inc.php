@@ -1486,7 +1486,7 @@ class emailadmin_imapbase
 						$headerObject['ATTACHMENTS'][$mime_id]['cid'] = $cid;
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
 						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
-						if (strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
+						if (!strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
 							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
 						{
 							$tnefResolved=false;
