@@ -674,6 +674,7 @@ app.classes.mail = AppJS.extend(
 				var remembervalue = '';
 				for(var i = 0; i < content.length; i++)
 				{
+					if (typeof content[i] != 'string' || !content[i]) continue;
 					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
 					if (content[i].indexOf('@')<0)
 					{
@@ -3210,7 +3211,7 @@ app.classes.mail = AppJS.extend(
 		{
 			var content = this.et2.getArrayMgr('content');
 			var lastDrafted = this.et2.getWidgetById('lastDrafted');
-			var folderTree = typeof opener.etemplate2.getByApplication('mail')[0] !='undefined'? 
+			var folderTree = typeof opener.etemplate2.getByApplication('mail')[0] !='undefined'?
 								opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]'): null;
 			var activeFolder = folderTree?folderTree.getSelectedNode():null;
 			if (content)
@@ -3229,7 +3230,7 @@ app.classes.mail = AppJS.extend(
 						}
 						this.egw.refresh(_responseData.message,'mail',_responseData.draftedId);
 					}
-				}	
+				}
 				switch (_action)
 				{
 					case 'button[saveAsDraftAndPrint]':
@@ -3581,23 +3582,23 @@ app.classes.mail = AppJS.extend(
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
 		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder)+'&acc_id='+acc_id, '_blank', '640x480');
 	},
-	
+
 	/**
 	 * Submit new selected folder back to server in order to read its acl's rights
 	 */
 	acl_folderChange: function ()
 	{
 		var mailbox = this.et2.getWidgetById('mailbox');
-		
+
 		if (mailbox)
 		{
 			if (mailbox.taglist.getValue().length > 0)
 			{
 				this.et2._inst.submit();
-			}	
+			}
 		}
 	},
-	
+
 	/**
 	 * Edit a mail account
 	 *
