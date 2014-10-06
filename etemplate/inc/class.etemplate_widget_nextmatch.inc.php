@@ -653,14 +653,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	private static function run_beforeSendToClient(array $row)
 	{
-		$is_timestamp = array();
+		$timestamps = self::get_timestamps();
+
 		foreach($row as $name => &$value)
 		{
-			if (!isset($is_timestamp[$name]))
-			{
-				$is_timestamp[$name] = $name[0] != '#' && preg_match('/(start|end|time|modified|created|date|payed|confirmed|closed|deleted|since|timestamp|expires|last_mod|lastmod|begin|completed|recurrence)$/', $name);
-			}
-			if ($is_timestamp[$name] && $value &&
+			if ($name[0] != '#' && in_array($name, $timestamps) && $value &&
 				(is_int($value) || is_string($value) && is_numeric($value)) &&
 				($value > 21000000 || $value < 19000000))
 			{
@@ -668,6 +665,46 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 		}
 		return $row;
+	}
+
+	/**
+	 * Get all timestamp columns incl. names with removed prefixes like cal_ or contact_
+	 *
+	 * @return array
+	 */
+	private static function get_timestamps()
+	{
+		egw_cache::unsetTree(__CLASS__, 'timestamps');
+		return egw_cache::getTree(__CLASS__, 'timestamps', function()
+		{
+			$timestamps = array();
+			foreach(scandir(EGW_SERVER_ROOT) as $app)
+			{
+				$dir = EGW_SERVER_ROOT.'/'.$app;
+				if (is_dir($dir) && file_exists($dir.'/setup/tables_current.inc.php') &&
+					($tables_defs = $GLOBALS['egw']->db->get_table_definitions($app)))
+				{
+					foreach($tables_defs as $defintion)
+					{
+						foreach($defintion['fd'] as $col => $data)
+						{
+							if ($data['type'] == 'timestamp' || $data['meta'] == 'timestamp')
+							{
+								$timestamps[] = $col;
+								// some apps remove a prefix --> add prefix-less version too
+								$matches = null;
+								if (preg_match('/^(tz|acl|async|cal|contact|lock|history|link|cf|cat|et)_(.+)$/', $col, $matches))
+								{
+									$timestamps[] = $matches[2];
+								}
+							}
+						}
+					}
+				}
+			}
+			error_log(__METHOD__."() returning ".array2string($timestamps));
+			return $timestamps;
+		}, array(), 86400);	// cache for 1 day
 	}
 
 	/**
