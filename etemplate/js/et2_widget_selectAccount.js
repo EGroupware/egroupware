@@ -111,6 +111,11 @@ var et2_selectAccount = et2_selectbox.extend(
 		switch(type)
 		{
 			case 'none':
+				if(typeof egw.user('apps').admin == 'undefined')
+				{
+					this.options.select_options = {};
+					break;
+				}
 			case 'selectbox':
 			case 'groupmembers':
 			default:
@@ -164,9 +169,10 @@ var et2_selectAccount = et2_selectbox.extend(
 	 */
 	createMultiSelect: function() {
 
-		this._super.apply(this, arguments);
-
 		var type = this.egw().preference('account_selection', 'common');
+		if(type == 'none' && typeof egw.user('apps').admin == 'undefined') return;
+
+		this._super.apply(this, arguments);
 
 		this.options.select_options = this._get_accounts();
 
