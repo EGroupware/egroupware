@@ -576,7 +576,7 @@ class asyncservice
 					{
 						echo '<p>'.lang('%1 is not executable by the webserver !!!',$this->$name)."</p>\n";
 						$perms = fileperms($this->$name);
-						if (!($perms & 0x0001) && ($perms & 0x0008))	// only executable by group
+						if (!($perms & 0x0001) && ($perms & 0x0008) && function_exists('posix_getuid'))	// only executable by group
 						{
 							$group = posix_getgrgid(filegroup($this->$name));
 							$webserver = posix_getpwuid(posix_getuid ());
