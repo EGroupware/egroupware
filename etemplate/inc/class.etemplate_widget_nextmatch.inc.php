@@ -398,11 +398,15 @@ class etemplate_widget_nextmatch extends etemplate_widget
 						$row_template->run('set_row_value', array('',array('row' => 1), &$_row), true);
 						$result['data'][$id] = $row;
 					}
-					else if (!$template && !get_class($template) != 'etemplate_widget_historylog')
+					else if (!$template || get_class($template) != 'etemplate_widget_historylog')
 					{
 						// Fallback based on widget names
 						error_log(self::$request->template['name'] . ' had to fallback to run_beforeSendToClient() because it could not find the row' );
 						$result['data'][$id] = self::run_beforeSendToClient($row);
+					}
+					else
+					{
+						$result['data'][$id] = $row;
 					}
 				}
 				
