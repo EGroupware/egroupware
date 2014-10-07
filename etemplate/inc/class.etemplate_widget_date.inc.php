@@ -65,7 +65,7 @@ class etemplate_widget_date extends etemplate_widget_transformer
 
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, false, true);
-		
+
 		if($this->type != 'date-duration' && $value)
 		{
 			$value = $this->format_date($value);
@@ -101,6 +101,8 @@ class etemplate_widget_date extends etemplate_widget_transformer
 	 */
 	public function format_date($value)
 	{
+		if (!$value) return $value;	// otherwise we will get current date or 1970-01-01 instead of an empty value
+
 		if ($this->attrs['dataformat'] && !is_numeric($value))
 		{
 			$date = date_create_from_format($this->attrs['dataformat'], $value, egw_time::$user_timezone);
@@ -120,7 +122,7 @@ class etemplate_widget_date extends etemplate_widget_transformer
 		}
 		return $value;
 	}
-	
+
 	/**
 	 * Validate input
 	 *
