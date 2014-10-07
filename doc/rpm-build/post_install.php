@@ -146,9 +146,10 @@ function set_distro_defaults($distro=null)
 			// some MySQL packages (mysql.com, MariaDB, ...) use "mysql" as service name instead of RH default "mysqld"
 			if (file_exists('/usr/bin/systemctl'))	// RHEL 7
 			{
-				$config['autostart_db'] = $config['autostart_webserver'] = '';
 				$config['start_db'] = '/usr/bin/systemctl %s mariadb';
+				$config['autostart_db'] = build_cmd('start_db', 'enable');
 				$config['start_webserver'] = '/usr/bin/systemctl %s httpd';
+				$config['autostart_webserver'] = build_cmd('start_webserver', 'enable');
 			}
 			elseif (!file_exists('/etc/init.d/mysqld') && file_exists('/etc/init.d/mysql'))
 			{
