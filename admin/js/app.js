@@ -552,6 +552,13 @@ app.classes.admin = AppJS.extend(
 				if(_value.acl_account && (_value.acl_appname && _value.acl_location || _value.apps))
 				{
 					var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
+					if(content && content.id && id != content.id)
+					{
+						// Changed the account or location, remove previous or we
+						// get a new line instead of an edit
+						this.egw.json(className+'::ajax_change_acl', [content.id, 0], null,this,false,this)
+							.sendRequest();
+					}
 					var rights = 0;
 					for(var i in _value.acl)
 					{
