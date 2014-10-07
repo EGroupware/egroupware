@@ -404,7 +404,8 @@ var et2_dataview = Class.extend({
 					// Set to selected width
 					this.set_width(_w + "px");
 					self.columnMgr.updated = true;
-					self.updateColumns();
+					// Just triggers recalculation
+					self.columnMgr.getColumnWidth(0);
 
 					// Set relative widths to match
 					var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
@@ -415,8 +416,8 @@ var et2_dataview = Class.extend({
 						if(col == this || col.fixedWidth) continue;
 						col.set_width(self.columns[i].width / relative);
 					}
-					// Don't update now, or columns might change a little.
-					// Save it for next time.
+					// Triggers column change callback, which saves
+					self.updateColumns();
 				}
 				else
 				{
