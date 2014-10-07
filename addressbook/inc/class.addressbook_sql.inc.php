@@ -444,13 +444,13 @@ class addressbook_sql extends so_sql_cf
 	 * fix cat_id criteria to search in comma-separated multiple cats
 	 *
 	 * @internal
-	 * @param int/array $cats
+	 * @param int|array|string $cats
 	 * @return array of sql-strings to be OR'ed or AND'ed together
 	 */
 	function _cat_search($cats)
 	{
 		$cat_filter = array();
-		foreach(is_array($cats) ? $cats : array($cats) as $cat)
+		foreach(is_array($cats) ? $cats : (is_numeric($cats) ? array($cats) : explode(',',$cats)) as $cat)
 		{
 			if (is_numeric($cat)) $cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
 		}
