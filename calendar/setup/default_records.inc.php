@@ -29,10 +29,9 @@ try
 	calendar_timezones::import_sqlite();
 	calendar_timezones::import_tz_aliases();
 }
-// catch broken sqlite extension exception and output message, as user can't do anything about it
-// all other exceptions are fatal, to get user to fix them!
+// catch missing or broken sqlite support and use timezones.db_backup to install timezones
 catch (egw_exception_wrong_userinput $e)	// all other exceptions are fatal
 {
-	_egw_log_exception($e);
-	echo '<p>'.$e->getMessage()."</p>\n";
+	$db_backup = new db_backup();
+	$db_backup->restore($db_backup->fopen_backup(EGW_SERVER_ROOT.'/calendar/setup/timezones.db_backup', true), true, '', false);
 }
