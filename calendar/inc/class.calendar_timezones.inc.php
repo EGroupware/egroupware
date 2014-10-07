@@ -197,13 +197,12 @@ class calendar_timezones
 	 *
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
-	 * @param boolean $check_version=true true: check version and only act, if it's different
 	 * @return string message about update
 	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
 	 * @throws egw_exception_assertion_failed if no PDO sqlite support
 	 * @throws egw_exception_wrong_userinput for broken sqlite extension
 	 */
-	public static function import_sqlite(&$updated=null,$file='calendar/setup/timezones.sqlite',$check_version=true)
+	public static function import_sqlite(&$updated=null, $file='calendar/setup/timezones.sqlite')
 	{
 		$path = EGW_SERVER_ROOT.'/'.$file;
 
@@ -213,7 +212,9 @@ class calendar_timezones
 		}
 		if (!check_load_extension('pdo') || !check_load_extension('pdo_sqlite'))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__."('$file') required SQLite support (PHP extension pdo_sqlite) missing!");
+			throw new egw_exception_wrong_userinput(__METHOD__."('$file') required SQLite support (PHP extension pdo_sqlite) missing!"."\n".
+				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
+					'', ' (http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2)'));
 		}
 		$pdo = new PDO('sqlite:'.$path);
 		// some PHP pdo_sqlite can for whatever reason NOT read the timezones database (reported eg. on Gentu)
@@ -221,9 +222,9 @@ class calendar_timezones
 		if (!($rs = $pdo->query('SELECT version FROM tz_schema_version')))
 		{
 			throw new egw_exception_wrong_userinput(
-				lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path).'<br />'.
+				lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path)."\n".
 				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
-					'<a href="http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2">','</a>'));
+					'', ' (http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2)'));
 		}
 		if ($rs->fetchColumn() != 1)
 		{

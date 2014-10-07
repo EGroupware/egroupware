@@ -481,6 +481,7 @@ class db_backup
 				}
 				$rows = array();
 				$table = substr($line,7);
+				if (!isset($this->schemas[$table])) $this->schemas[$table] = $this->db->get_table_definitions(true, $table);
 
 				$cols = self::csv_split($line=fgets($f)); ++$n;
 				$blobs = array();
