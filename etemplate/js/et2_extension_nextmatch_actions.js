@@ -117,7 +117,7 @@ function nm_action(_action, _senders, _target, _ids)
 			// Run a long task once for each ID with a nice dialog instead of
 			// freezing for a while.  If egw_open is set, and only 1 row selected,
 			// egw_open will be used instead.
-			if(doLongTask(idsArr, ids.all,_action, mgr.data.nextmatch)) break;
+			if(doLongTask(idsArr, _ids.all,_action, mgr.data.nextmatch)) break;
 
 			// Fall through
 		case 'egw_open':
