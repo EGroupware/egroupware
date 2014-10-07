@@ -84,7 +84,7 @@ class calendar_timezones
 	 * - calendar_timezone::tz2id('Europe/Berlin','component') returns VTIMEZONE component for given TZID
 	 *
 	 * @param string $tzid TZID
-	 * @param string $what='id' what to return, default id, null for whole array
+	 * @param string $what ='id' what to return, default id, null for whole array
 	 * @return int tz_id or null if not found
 	 */
 	public static function tz2id($tzid,$what='id')
@@ -105,7 +105,7 @@ class calendar_timezones
 		if (!isset($id) && stripos($tzid, 'America/') === 0 && count($parts = explode('/', $tzid)) == 2)
 		{
 			if (($data = $GLOBALS['egw']->db->select(self::TABLE,'*',array(
-				'tz_tzid LIKE '.$GLOBALS['egw']->db->quote($parts[0].'/%/'.$part[1]),
+				'tz_tzid LIKE '.$GLOBALS['egw']->db->quote($parts[0].'/%/'.$parts[1]),
 			),__LINE__,__FILE__,false,'','calendar')->fetch()))
 			{
 				$id = $data['tz_id'];
@@ -129,7 +129,7 @@ class calendar_timezones
 	 * - calendar_timezone::id2tz($id,'component') returns VTIMEZONE component for the given id
 	 *
 	 * @param int $id
-	 * @param string $what='tzid' what data to return or null for whole data array, with keys 'id', 'tzid', 'component', 'alias', 'latitude', 'longitude'
+	 * @param string $what ='tzid' what data to return or null for whole data array, with keys 'id', 'tzid', 'component', 'alias', 'latitude', 'longitude'
 	 * @return mixed false: if not found
 	 */
 	public static function id2tz($id,$what='tzid')
@@ -177,17 +177,21 @@ class calendar_timezones
 		// check for updated timezones once per session
 		if (!egw_cache::getSession(__CLASS__, 'tzs_checked'))
 		{
+			$updated = false;
 			try
 			{
 				$msg = self::import_sqlite($updated);
 				if ($updated) error_log($msg);	// log that timezones have been updated
-				$msg = self::import_tz_aliases($updated);
-				if ($updated) error_log($msg);	// log that timezone aliases have been updated
 			}
-			catch (Exception $e)
+			catch (egw_exception_wrong_userinput $e)
 			{
-				_egw_log_exception($e);	// log the exception to error_log, but do not stall program execution
+				unset($e);
+				$msg = self::import_db_backup($updated);
+				if ($updated) error_log($msg);	// log that timezones have been updated
 			}
+			$alias_msg = self::import_tz_aliases($updated);
+			if ($updated) error_log($alias_msg);	// log that timezone aliases have been updated
+
 			egw_cache::setSession(__CLASS__, 'tzs_checked', true);
 		}
 	}
@@ -196,10 +200,10 @@ class calendar_timezones
 	 * Import timezones from sqlite file
 	 *
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
-	 * @param string $file='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
+	 * @param string $file ='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
 	 * @return string message about update
 	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
-	 * @throws egw_exception_assertion_failed if no PDO sqlite support
+	 * @throws egw_exception_wrong_userinput if no PDO sqlite support
 	 * @throws egw_exception_wrong_userinput for broken sqlite extension
 	 */
 	public static function import_sqlite(&$updated=null, $file='calendar/setup/timezones.sqlite')
@@ -271,15 +275,46 @@ class calendar_timezones
 	}
 
 	/**
-	 * Import timezone aliases
+	 * Import timezone via db_backup of egw_cal_timezones
 	 *
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
-	 * @param string $file='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
-	 * @param boolean $check_mtime=true true: check version and only act, if it's different
+	 * @param string $file ='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
 	 * @return string message about update
 	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
 	 */
-	public static function import_tz_aliases(&$updated=null,$file='calendar/setup/tz_aliases.inc.php',$check_mtime=true)
+	public static function import_db_backup(&$updated=null,$file='calendar/setup/timezones.db_backup')
+	{
+		$path = EGW_SERVER_ROOT.'/'.$file;
+
+		if (!file_exists($path) || !is_readable($path))
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
+		}
+		$config = config::read('phpgwapi');
+		$tz_version = date('Y-m-d H:i:s', filemtime($path));
+		if ($tz_version === $config['tz_version'])
+		{
+			$updated = false;
+			return lang('Nothing to update, version is already %1.',$tz_version);
+		}
+		$db_backup = new db_backup();
+		$rows = $db_backup->db_restore($db_backup->fopen_backup($path, true), 'tz_tzid');
+
+		config::save_value('tz_version', $tz_version, 'phpgwapi');
+
+		$updated = true;
+		return lang('Timezones updated to version %1 (%2 records updated).', $tz_version, $rows-8);	// -8 because of header-lines
+	}
+
+	/**
+	 * Import timezone aliases
+	 *
+	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
+	 * @param string $file ='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
+	 * @return string message about update
+	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
+	 */
+	public static function import_tz_aliases(&$updated=null,$file='calendar/setup/tz_aliases.inc.php')
 	{
 		$path = EGW_SERVER_ROOT.'/'.$file;
 
@@ -294,6 +329,7 @@ class calendar_timezones
 			$updated = false;
 			return lang('Nothing to update, version is already %1.',$tz_aliases_mtime);
 		}
+		$tz_aliases = array();
 		include($path);	// sets $tz_aliases
 
 		$updates = 0;
@@ -328,10 +364,17 @@ class calendar_timezones
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		$GLOBALS['egw']->framework->render(
-			'<h3>'.self::import_sqlite()."</h3>\n".
-			'<h3>'.self::import_tz_aliases()."</h3>\n",
-			lang('Update timezones'),true);
+		try {
+			$output = '<h3>'.self::import_sqlite()."</h3>\n";
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+			unset($e);
+			$output = '<h3>'.self::import_db_backup()."</h3>\n";
+		}
+		$output .= '<h3>'.self::import_tz_aliases()."</h3>\n";
+
+		$GLOBALS['egw']->framework->render($output, lang('Update timezones'), true);
 	}
 
 	/**
@@ -347,7 +390,7 @@ class calendar_timezones
 		// checking type of $val, now we included the object definition (no need to always include it!)
 		if (!$vcal instanceof Horde_iCalendar)
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($val).", '$tzid') no Horde_iCalendar!");
+			throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($vcal).", '$tzid') no Horde_iCalendar!");
 		}
 		// check if we have vtimezone component data for $tzid
 		if (!($vtimezone = calendar_timezones::tz2id($tzid, 'component')))
@@ -362,16 +405,16 @@ class calendar_timezones
 		$standard = $horde_vtimezone->findComponent('STANDARD');
 		if (is_a($standard, 'Horde_iCalendar'))
 		{
-			$dtstart = $standard->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+			$time = $standard->getAttribute('DTSTART');
+			$dtstart = new egw_time($time, egw_time::$server_timezone);
 			$dtstart->setTimezone(egw_time::$server_timezone);
 			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
 		$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
 		if (is_a($daylight, 'Horde_iCalendar'))
 		{
-			$dtstart = $daylight->getAttribute('DTSTART');
-			$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+			$time = $daylight->getAttribute('DTSTART');
+			$dtstart = new egw_time($time, egw_time::$server_timezone);
 			$dtstart->setTimezone(egw_time::$server_timezone);
 			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
@@ -384,8 +427,8 @@ class calendar_timezones
 	/**
 	 * Query timezone of a given user, returns 'tzid' or VTIMEZONE 'component'
 	 *
-	 * @param int $user=null
-	 * @param string $type='vcalendar' 'tzid' or everything tz2id supports, default 'vcalendar' = full vcalendar component
+	 * @param int $user =null
+	 * @param string $type ='vcalendar' 'tzid' or everything tz2id supports, default 'vcalendar' = full vcalendar component
 	 * @return string
 	 */
 	public static function user_timezone($user=null, $type='vcalendar')

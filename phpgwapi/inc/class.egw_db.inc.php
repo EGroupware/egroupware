@@ -1750,7 +1750,7 @@ class egw_db
 					$this->select($table,'count(*)',$where,$line,$file);
 					if ($this->next_record() && $this->f(0))
 					{
-						return !!$this->update($table,$data,$where,$line,$file,$app);
+						return !!$this->update($table,$data,$where,$line,$file,$app,$use_prepared_statement,$table_def);
 					}
 					break;
 			}

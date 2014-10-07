@@ -27,11 +27,10 @@ foreach(array(
 try
 {
 	calendar_timezones::import_sqlite();
-	calendar_timezones::import_tz_aliases();
 }
 // catch missing or broken sqlite support and use timezones.db_backup to install timezones
 catch (egw_exception_wrong_userinput $e)	// all other exceptions are fatal
 {
-	$db_backup = new db_backup();
-	$db_backup->restore($db_backup->fopen_backup(EGW_SERVER_ROOT.'/calendar/setup/timezones.db_backup', true), true, '', false);
+	calendar_timezones::import_db_backup();
 }
+calendar_timezones::import_tz_aliases();
