@@ -666,8 +666,7 @@ var et2_widget = ClassWithAttributes.extend(
 			}
 			if(entry && entry.type)
 			{
-				_nodeName = entry.type;
-				_node.setAttribute("type", entry.type);
+				_nodeName = attributes["type"] = entry.type;
 			}
 			entry = null;
 		}
@@ -676,8 +675,7 @@ var et2_widget = ClassWithAttributes.extend(
 		// we need to expand it now as it defines the constructor and by that attributes parsed via parseXMLAttrs!
 		if (_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
 		{
-			_nodeName = this.getArrayMgr('content').expandName(_nodeName);
-			_node.setAttribute("type", _nodeName);
+			_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
 		}
 
 		// Get the constructor - if the widget is readonly, use the special "_ro"
