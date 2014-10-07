@@ -1789,7 +1789,6 @@ class mail_ui
 				$data["subject"] = $subject; // the mailsubject
 			}
 
-			$imageTag = '';
 			$imageHTMLBlock = '';
 			//error_log(__METHOD__.__LINE__.array2string($header));
 			if (in_array("attachments", $cols))
@@ -1806,7 +1805,6 @@ class mail_ui
 					$header['mimetype'] == 'multipart/alternative')
 				{
 					$image = html::image('mail','attach');
-					$imageTag = '';
 					$imageHTMLBlock = '';
 					$datarowid = $this->createRowID($_folderName,$message_uid,true);
 					$attachments = $header['attachments'];
@@ -1817,13 +1815,11 @@ class mail_ui
 					if (count($attachments)==1)
 					{
 						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
-						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 					}
 					if (count($attachments)>1)
 					{
 						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
-						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
 
@@ -1898,7 +1894,6 @@ class mail_ui
 			}
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
-			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
 			$rv[] = $data;
