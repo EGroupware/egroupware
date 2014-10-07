@@ -38,6 +38,7 @@ var et2_url = et2_textbox.extend(
 	 * + "<rb@stylite.de>" or "rb@stylite.de"
 	 * + '"Becker, Ralf" <rb@stylite.de>'
 	 * + "'Becker, Ralf' <rb@stylite.de>"
+	 * + "Ralf Becker <rb@stylite.de"
 	 * but NOT:
 	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
@@ -48,7 +49,7 @@ var et2_url = et2_textbox.extend(
 	 *
 	 * Same preg is in etemplate_widget_url PHP class!
 	 */
-	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/i),
+	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|\042[^\042]+)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?\042?$/i),
 	/**
 	 * @memberOf et2_url
 	 */
