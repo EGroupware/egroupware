@@ -416,155 +416,7 @@ class db_backup
 			$backup_db_halt_on_error = $this->db->Halt_On_Error;
 			$this->db->Halt_On_Error = 'no';
 		}
-		$table = False;
-		$n = 0;
-		$rows = array();
-		while(!feof($f))
-		{
-			$line = trim(fgets($f)); ++$n;
-
-			if (empty($line)) continue;
-
-			if (substr($line,0,9) == 'version: ')
-			{
-				$api_version = trim(substr($line,9));
-				continue;
-			}
-			if (substr($line,0,9) == 'charset: ')
-			{
-				$charset = trim(substr($line,9));
-				// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
-				@ini_set('mbstring.internal_encoding',$charset);
-
-				// check if we really need to convert the charset, as it's not perfect and can do some damage
-				if ($convert_to_system_charset && !strcasecmp($this->schema_proc->system_charset, $charset))
-				{
-					$convert_to_system_charset = false;	// no conversation necessary
-				}
-				// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
-				if ((!$convert_to_system_charset || $this->db->capabilities['client_encoding']) &&
-					(substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) ||
-					$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019')))
-				{
-					$this->db->Link_ID->SetCharSet($charset);
-					if (!$convert_to_system_charset)
-					{
-						$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
-					}
-				}
-				continue;
-			}
-			if (substr($line,0,8) == 'schema: ')
-			{
-				// create the tables in the backup set
-				$this->schemas = json_php_unserialize(trim(substr($line,8)));
-				foreach($this->schemas as $table_name => $schema)
-				{
-					// if column is longtext in current schema, convert text to longtext, in case user already updated column
-					foreach($schema['fd'] as $col => &$def)
-					{
-						if ($def['type'] == 'text' && $this->db->get_column_attribute($col, $table_name, true, 'type') == 'longtext')
-						{
-							$def['type'] = 'longtext';
-						}
-					}
-					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
-					$this->schema_proc->CreateTable($table_name, $schema);
-				}
-				continue;
-			}
-			if (substr($line,0,7) == 'table: ')
-			{
-				if ($rows)	// flush pending rows of last table
-				{
-					$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
-				}
-				$rows = array();
-				$table = substr($line,7);
-				if (!isset($this->schemas[$table])) $this->schemas[$table] = $this->db->get_table_definitions(true, $table);
-
-				$cols = self::csv_split($line=fgets($f)); ++$n;
-				$blobs = array();
-				foreach($this->schemas[$table]['fd'] as $col => $data)
-				{
-					if ($data['type'] == 'blob') $blobs[] = $col;
-				}
-
-				if (feof($f)) break;
-				continue;
-			}
-			if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
-			{
-				if ($GLOBALS['egw_setup'])
-				{
-					if (!is_object($GLOBALS['egw_setup']->translation->sql))
-					{
-						$GLOBALS['egw_setup']->translation->setup_translation_sql();
-					}
-				}
-			}
-			if ($table)	// do we already reached the data part
-			{
-				$import = true;
-				$data = self::csv_split($line, $cols, $blobs);
-
-				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
-				{
-					//echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
-					//echo 'data=<pre>'.print_r($data,true)."</pre>\n";
-					$import = false;
-				}
-				if (in_array($table,$this->exclude_tables))
-				{
-					echo '<p><b>'.lang("Table %1 is excluded from backup and restore. Data will not be restored.",$table)."</b></p>\n";
-					$import = false; // dont restore data of excluded tables
-				}
-				if ($import)
-				{
-					if (count($data) == count($cols))
-					{
-						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
-						{
-							$data = translation::convert($data,$charset);
-						}
-						if ($insert_n_rows > 1)
-						{
-							$rows[] = $data;
-							if (count($rows) == $insert_n_rows)
-							{
-								$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
-								$rows = array();
-							}
-						}
-						else
-						{
-							$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
-						}
-					}
-					else
-					{
-						echo '<p>'.lang("Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
-						echo 'data=<pre>'.print_r($data,true)."</pre>\n";
-					}
-				}
-			}
-		}
-		if ($rows)	// flush pending rows
-		{
-			$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
-		}
-		// updated the sequences, if the DB uses them
-		foreach($this->schemas as $table => $schema)
-		{
-			foreach($schema['fd'] as $column => $definition)
-			{
-				if ($definition['type'] == 'auto')
-				{
-					$this->schema_proc->UpdateSequence($table,$column);
-					break;	// max. one per table
-				}
-			}
-		}
+		$this->db_restore($f, $insert_n_rows);
 
 		if ($convert_to_system_charset)	// store the changed charset
 		{
@@ -650,6 +502,177 @@ class db_backup
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
 		return '';
+	}
+
+	/**
+	 * Restore data from a (compressed) csv file
+	 *
+	 * @param resource $f file opened with fopen for reading
+	 * @param int|string $insert_n_rows =10 how many rows to insert in one sql statement, or string with column-name used as unique key for insert
+	 * @returns int number of rows read from csv file
+	 */
+	function db_restore($f, $insert_n_rows=10)
+	{
+		$convert_to_system_charset = true;
+		$table = False;
+		$n = 0;
+		$rows = array();
+		while(!feof($f))
+		{
+			$line = trim(fgets($f)); ++$n;
+
+			if (empty($line)) continue;
+
+			if (substr($line,0,9) == 'version: ')
+			{
+				$api_version = trim(substr($line,9));
+				continue;
+			}
+			if (substr($line,0,9) == 'charset: ')
+			{
+				$charset = trim(substr($line,9));
+				// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
+				@ini_set('mbstring.internal_encoding',$charset);
+
+				// check if we really need to convert the charset, as it's not perfect and can do some damage
+				if ($convert_to_system_charset && !strcasecmp($this->schema_proc->system_charset, $charset))
+				{
+					$convert_to_system_charset = false;	// no conversation necessary
+				}
+				// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
+				if ((!$convert_to_system_charset || $this->db->capabilities['client_encoding']) &&
+					(substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) ||
+					$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019')))
+				{
+					$this->db->Link_ID->SetCharSet($charset);
+					if (!$convert_to_system_charset)
+					{
+						$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
+					}
+				}
+				continue;
+			}
+			if (substr($line,0,8) == 'schema: ')
+			{
+				// create the tables in the backup set
+				$this->schemas = json_php_unserialize(trim(substr($line,8)));
+				foreach($this->schemas as $table_name => $schema)
+				{
+					// if column is longtext in current schema, convert text to longtext, in case user already updated column
+					foreach($schema['fd'] as $col => &$def)
+					{
+						if ($def['type'] == 'text' && $this->db->get_column_attribute($col, $table_name, true, 'type') == 'longtext')
+						{
+							$def['type'] = 'longtext';
+						}
+					}
+					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
+					$this->schema_proc->CreateTable($table_name, $schema);
+				}
+				continue;
+			}
+			if (substr($line,0,7) == 'table: ')
+			{
+				if ($rows)	// flush pending rows of last table
+				{
+					$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+				}
+				$rows = array();
+				$table = substr($line,7);
+				if (!isset($this->schemas[$table])) $this->schemas[$table] = $this->db->get_table_definitions(true, $table);
+				$auto_id = count($this->schemas[$table]['pk']) == 1 ? $this->schemas[$table]['pk'][0] : null;
+
+				$cols = self::csv_split($line=fgets($f)); ++$n;
+				$blobs = array();
+				foreach($this->schemas[$table]['fd'] as $col => $data)
+				{
+					if ($data['type'] == 'blob') $blobs[] = $col;
+				}
+
+				if (feof($f)) break;
+				continue;
+			}
+			if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+			{
+				if ($GLOBALS['egw_setup'])
+				{
+					if (!is_object($GLOBALS['egw_setup']->translation->sql))
+					{
+						$GLOBALS['egw_setup']->translation->setup_translation_sql();
+					}
+				}
+			}
+			if ($table)	// do we already reached the data part
+			{
+				$import = true;
+				$data = self::csv_split($line, $cols, $blobs);
+
+				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
+				{
+					//echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
+					//echo 'data=<pre>'.print_r($data,true)."</pre>\n";
+					$import = false;
+				}
+				if (in_array($table,$this->exclude_tables))
+				{
+					echo '<p><b>'.lang("Table %1 is excluded from backup and restore. Data will not be restored.",$table)."</b></p>\n";
+					$import = false; // dont restore data of excluded tables
+				}
+				if ($import)
+				{
+					if (count($data) == count($cols))
+					{
+						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+						{
+							$data = translation::convert($data,$charset);
+						}
+						if ($insert_n_rows > 1)
+						{
+							$rows[] = $data;
+							if (count($rows) == $insert_n_rows)
+							{
+								$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+								$rows = array();
+							}
+						}
+						// update existing table using given unique key in $insert_n_rows (also removing auto-id/sequence)
+						elseif(!is_numeric($insert_n_rows))
+						{
+							$where = array($insert_n_rows => $data[$insert_n_rows]);
+							unset($data[$insert_n_rows]);
+							if ($auto_id) unset($data[$auto_id]);
+							$this->db->insert($table,$data,$where,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+						}
+						else
+						{
+							$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+						}
+					}
+					else
+					{
+						echo '<p>'.lang("Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
+						echo 'data=<pre>'.print_r($data,true)."</pre>\n";
+					}
+				}
+			}
+		}
+		if ($rows)	// flush pending rows
+		{
+			$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+		}
+		// updated the sequences, if the DB uses them
+		foreach($this->schemas as $table => $schema)
+		{
+			foreach($schema['fd'] as $column => $definition)
+			{
+				if ($definition['type'] == 'auto')
+				{
+					$this->schema_proc->UpdateSequence($table,$column);
+					break;	// max. one per table
+				}
+			}
+		}
+		return $n;
 	}
 
 	/**
