@@ -99,7 +99,13 @@ var et2_taglist = et2_selectbox.extend(
 		// Selectbox attributes that are not applicable
 		"multiple": { ignore: true},
 		"rows": { ignore: true},
-		"tags": { ignore: true}
+		"tags": { ignore: true},
+		useCommaKey: {
+			name: "comma will start validation",
+			type: "boolean",
+			"default": true,
+			description: "Set to false to allow comma in entered content"
+		}
 	},
 
 	// Allows sub-widgets to override options to the library
@@ -160,6 +166,7 @@ var et2_taglist = et2_selectbox.extend(
 			required: this.options.required,
 			allowFreeEntries: this.options.allowFreeEntries,
 			useTabKey: true,
+			useCommaKey: this.options.useCommaKey,
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
@@ -474,8 +481,14 @@ var et2_taglist_email = et2_taglist.extend(
 			description:"Include mailing lists in search results",
 			default: false,
 			type: "boolean"
-		}
 		},
+		useCommaKey: {
+			name: "comma will start validation",
+			type: "boolean",
+			"default": false,
+			description: "Set to false to allow comma in entered content"
+		}
+	},
 	lib_options: {
 		// Search function limits to 3 anyway
 		minChars: 3
@@ -506,6 +519,48 @@ var et2_taglist_email = et2_taglist.extend(
 		}
 		// We check free entries for valid email, and render as invalid if it's not.
 		var valid = item.id != item.label || et2_url.prototype.EMAIL_PREG.test(item.id || '');
+
+		if (!valid && item.id)
+		{
+			// automatic quote 'Becker, Ralf <rb@stylite.de>' as '"Becker, Ralf" <rb@stylite.de>'
+			var matches = item.id.match(/^(.*) ?<(.*)>$/);
+			if (matches && et2_url.prototype.EMAIL_PREG.test('"'+matches[1].trim()+'" <'+matches[2].trim()+'>'))
+			{
+				item.id = item.label = '"'+matches[1].trim()+'" <'+matches[2].trim()+'>';
+				valid = true;
+			}
+			// automatic insert multiple comma-separated emails like "rb@stylite.de, hn@stylite.de"
+			if (!valid)
+			{
+				var parts = item.id.split(/, */);
+				if (parts.length > 1)
+				{
+					valid = true;
+					for(var i=0; i < parts.length; ++i)
+					{
+						parts[i] = parts[i].trim();
+						if (!et2_url.prototype.EMAIL_PREG.test(parts[i]))
+						{
+							valid = false;
+							break;
+						}
+					}
+					if (valid)
+					{
+						item.id = item.label = parts.shift();
+						// insert further parts into taglist, after validation first one
+						var taglist = this.taglist;
+						window.setTimeout(function()
+						{
+							for(var i=0; i < parts.length; ++i)
+							{
+								taglist.addToSelection({id: parts[i], label: parts[i]});
+							}
+						}, 10);
+					}
+				}
+			}
+		}
 
 		var label = jQuery('<span>').text(item.label);
 		if (item.class) label.addClass(item.class);

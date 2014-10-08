@@ -1291,7 +1291,9 @@
                         }
                         break;
                     case 188: // comma
+						if(!cfg.useCommaKey) break;
 						if(e.shiftKey) break; // Shift + , = < on some keyboards
+						if(e.originalEvent && e.originalEvent.keyIdentifier && e.originalEvent.keyIdentifier != "U+002C") break;
                     case 9: // tab
                     case 13: // enter
                         e.preventDefault();
@@ -1348,7 +1350,8 @@
                     break;
                     case 13:case 9:case 188:// enter, tab, comma
 								// Shift + comma = < on English keyboard
-                    if(e.keyCode !== 188 || (cfg.useCommaKey === true && !e.shiftKey)) {
+                    if(e.keyCode !== 188 || (cfg.useCommaKey === true &&
+						!(e.shiftKey || e.originalEvent && e.originalEvent.keyIdentifier && e.originalEvent.keyIdentifier != "U+002C"))) {
                         e.preventDefault();
                         if(cfg.expanded === true){ // if a selection is performed, select it and reset field
                             selected = ms.combobox.find('.ms-res-item-active:first');
