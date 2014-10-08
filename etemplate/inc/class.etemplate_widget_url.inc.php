@@ -25,7 +25,6 @@ class etemplate_widget_url extends etemplate_widget
 	 * + "<rb@stylite.de>" or "rb@stylite.de"
 	 * + '"Becker, Ralf" <rb@stylite.de>'
 	 * + "'Becker, Ralf' <rb@stylite.de>"
-	 * + "Ralf Becker <rb@stylite.de"
 	 * but NOT:
 	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
@@ -34,7 +33,7 @@ class etemplate_widget_url extends etemplate_widget
 	 *
 	 * Same preg is in et2_widget_url Javascript class, but no \x00 allowed and /u modifier for utf8!
 	 */
-	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|\042[^\042]+)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?\042?$/iu";
+	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}>?$/iu";
 
 	/**
 	 * Validate input
