@@ -40,7 +40,7 @@ add a new entry	infolog	de	einen neuen Eintrag anlegen
 add a new note	infolog	de	eine neue Notiz anlegen
 add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
 add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Untereintrag erstellen.
-add a new todo	infolog	de	einen neuen Aufgage anlegen
+add a new todo	infolog	de	eine neue Aufgabe anlegen
 add file	infolog	de	Datei hinzufügen
 add or delete links	infolog	de	Verknüpfungen hinzufügen oder löschen
 add sub	infolog	de	neuen Untereintrag anlegen
