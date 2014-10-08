@@ -416,6 +416,22 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 		return true;
 	},
+	_setup_float: function(field_name, field, attrs) {
+		// No label on the widget itself
+		delete(attrs.label);
+
+		field.type = 'float';
+
+		if(field.len)
+		{
+			var size = field.len.split(',');
+			attrs.maxlength = size[0];
+			attrs.size = size.length > 1 && size[1] !== '' ? size[1] : size[0];
+			if (size.length > 2 && size[2] !== '') attrs.min = size[2];
+			if (size.length > 3 && size[3] !== '') attrs.max = size[3];
+		}
+		return true;
+	},
 	_setup_select: function(field_name, field, attrs) {
 		// No label on the widget itself
 		delete(attrs.label);
@@ -486,7 +502,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		delete(attrs.label);
 
 		attrs.label = field.label;
-		
+
 		// Simple case, one widget for a custom field
 		if(Object.keys(field.values).length == 1)
 		{
