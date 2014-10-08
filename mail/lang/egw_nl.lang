@@ -187,11 +187,11 @@ get acl rights failed from imap server!	mail	nl	Ophalen ACL rechten van IMAP ser
 greater than	mail	nl	groter dan
 header	mail	nl	Kop
 header lines	mail	nl	Kop lijnen
-home page folders	mail	nl	Thuis pagina mappen
+home page folders	mail	nl	Thuis mappen
 hostname or ip	mail	nl	Hostnaam of IP
 how often to check with the server for new mail	mail	nl	Hoe vaak moet de server controleren op nieuwe mail
 how should the available information on identities be displayed	admin	nl	Hoe moet de informatie voor identiteiten worden getoond
-how to forward messages	mail	nl	hoe berichten doorgestuurd moeten worden
+how to forward messages	mail	nl	hoe berichten moeten worden doorgestuurd
 html	mail	nl	HTML
 html mode	mail	nl	HTML mode
 identity	mail	nl	Identiteit
@@ -218,7 +218,7 @@ import of message %1 failed. could not save message to folder %2 due to: %3	mail
 import of message %1 failed. destination folder %2 does not exist.	mail	nl	Importeren van bericht %1 mislukt. Opgegeven map %2 bestaat niet.
 import of message %1 failed. destination folder not set.	mail	nl	Importeren van bericht %1 mislukt. Geen map gekozen om bericht op te slaan.
 import of message %1 failed. no contacts to merge and send to specified.	mail	nl	Importeren van bericht %1 mislukt. Geen contacten gevonden om mee samen te voegen.
-importance	mail	nl	Belangrijkheid
+importance	mail	nl	Mate van belang
 important	mail	nl	belangrijk
 in mailbox: %1, with id: %2, and partid: %3	mail	nl	In Berichtenmap:  %1 met ID:%@ en PartID: %3
 inbox	mail	nl	POSTVAK IN
@@ -399,7 +399,7 @@ subject(z->a)	mail	nl	Onderwerp (Z->A)
 subscribe folder	mail	nl	Abonneer op map
 subscribe folder ...	mail	nl	Abonneer op map....
 subscription folders	mail	nl	Gabonneerde mappen
-subscription successfully saved.	mail	nl	Abonenment succesvol bewaard.
+subscription successfully saved.	mail	nl	Het abonnerren op deze map is succesvol bewaard.
 successfully connected	mail	nl	Succesvol verbonden
 template folder	mail	nl	Sjabloon folder
 templates	mail	nl	Sjablonen
@@ -417,7 +417,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
 the rule with priority %1 successfully saved!	mail	nl	De regel met prioriteit %1 is succesvol bewaard!
 then	mail	nl	DAN
-there is no imap server configured.	mail	nl	Er is geen Imap server geconfigureerd
+there is no imap server configured.	mail	nl	Er is geen IMAP server geconfigureerd
 timeout on connections to your imap server	mail	nl	Timeout op connecties met de IMAP server
 to do	mail	nl	te doen
 toggle all folders view for %1	mail	nl	Toogle alle mappen in overzicht %1
@@ -427,7 +427,7 @@ trust servers seen / unseen info	mail	nl	Vertrouw GETOONDE / NIET GETOONDE  info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	nl	Vertrouw de server als de status van een map wordt opgehaald. Als u nee selecteert, zullen wij naar de nog niet bekeken berichten zoeken en deze zelf tellen.
 trying to recover from session data	mail	nl	probeer  vanaf sessie data te herstellen.
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	nl	Zet de horizontale liniaal uit tussen de handtekening en het geschreven bericht (Dit is niet volgens RFC). Als u sjablonen gebruikt, is deze optie alleen van toepassing op het gedeelte van de tekst van het bericht.
-unable to fetch vacation!	mail	nl	Niet mogelijk afwezigheidsbericht te laden.
+unable to fetch vacation!	mail	nl	Niet mogelijk afwezigheidsbericht te tonen.
 undelete	mail	nl	Verwijderen ongedaan maken
 unflagged	mail	nl	Niet gemarkeerd
 unread	mail	nl	ongelezen
