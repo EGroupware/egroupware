@@ -113,7 +113,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			"description": "Hide the second filter",
 			"default": et2_no_init,
 		},
-		
+
 		"onselect": {
 			"name": "onselect",
 			"type": "js",
@@ -206,7 +206,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Unbind handler used for toggling autorefresh
 		$j(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
 		$j(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
-		
+
 		// Free the grid components
 		this.dataview.free();
 		this.rowProvider.free();
@@ -303,10 +303,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Implements the et2_IResizeable interface - lets the dynheight manager
 	 * update the width and height and then update the dataview container.
 	 */
-	resize: function() {
-		this.dynheight.update(function(_w, _h) {
-			this.dataview.resize(_w, _h);
-		}, this);
+	resize: function()
+	{
+		if (this.dynheight)
+		{
+			this.dynheight.update(function(_w, _h) {
+				this.dataview.resize(_w, _h);
+			}, this);
+		}
 	},
 
 	/**
@@ -731,7 +735,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(this.options.settings.columnselection_pref && app)
 		{
 			var size_pref = this.options.settings.columnselection_pref +"-size";
-			
+
 			// If columnselection pref is missing prefix, add it in
 			if(size_pref.indexOf('nextmatch') == -1)
 			{
@@ -902,7 +906,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
 
 		this.activeFilters.selectcols = colDisplay;
-		
+
 		// We don't need to re-query if they've removed a column
 		var changed = [];
 		ColLoop:
@@ -1094,7 +1098,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.options.settings.dataStorePrefix = list[0];
 		}
 		this.controller.setPrefix(this.options.settings.dataStorePrefix);
-		
+
 		// Load the initial order
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
@@ -1437,7 +1441,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
 					// Check in case it was stopped / destroyed since
 					if(!this._autorefresh_timer || !this.getInstanceManager()) return;
-					
+
 					$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 						// Important to use anonymous function instead of just 'this.refresh' because
 						// of the parameters passed
@@ -1621,7 +1625,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.resize();
 		}
 	},
-	
+
 	/**
 	 * Actions are handled by the controller, so ignore these during init.
 	 *

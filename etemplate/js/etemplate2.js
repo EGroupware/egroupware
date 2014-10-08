@@ -124,7 +124,7 @@ etemplate2.prototype.resize = function()
 etemplate2.prototype.clear = function()
 {
 	$j(this.DOMContainer).trigger('clear');
-	
+
 	// Remove any handlers on window (resize)
 	if(this.uniqueId)
 	{
@@ -244,6 +244,22 @@ etemplate2.prototype.unbind_unload = function()
 		window.onbeforeunload = null;
 	}
 	delete this.destroy_session;
+};
+
+/**
+ * Download a URL not triggering our unload handler and therefore destroying our et2 request
+ *
+ * @param {string} _url
+ */
+etemplate2.prototype.download = function(_url)
+{
+	// need to unbind unload handler to NOT destroy et2 session
+	this.unbind_unload();
+
+	document.location = _url;
+
+	// bind unload handler again (can NOT do it direct, as this would be quick enough to be still triggered!)
+	window.setTimeout(jQuery.proxy(this.bind_unload, this), 100);
 };
 
 /**

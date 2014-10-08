@@ -2174,7 +2174,7 @@ app.classes.mail = AppJS.extend(
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes');
-		document.location = url;
+		this.et2._inst.download(url);
 	},
 
 	/**
@@ -2310,8 +2310,7 @@ app.classes.mail = AppJS.extend(
 				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
 				width = 870;
 				height = 600;
-				//document.location = url;
-				//return;
+				break;
 		}
 		egw_openWindowCentered(url,windowName,width,height);
 	},
@@ -2418,8 +2417,7 @@ app.classes.mail = AppJS.extend(
 				windowName = windowName+'displayAttachment_'+attgrid.file.replace(/\//g,"_");
 				width = 870;
 				height = 600;
-				//document.location = url;
-				//return;
+				break;
 		}
 		egw_openWindowCentered(url,windowName,width,height);
 	},
@@ -2441,15 +2439,12 @@ app.classes.mail = AppJS.extend(
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
 		}
 		var url = window.egw_webserverUrl+'/index.php?';
-		var width;
-		var height;
-		var windowName ='mail';
 		url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
 		url += '&mode=save';
 		url += '&id='+mailid;
 		url += '&part='+attgrid.partID;
 		url += '&is_winmail='+attgrid.winmailFlag;
-		document.location = url;
+		this.et2._inst.download(url);
 	},
 
 	saveAllAttachmentsToZip: function(tag_info, widget)
@@ -2469,13 +2464,10 @@ app.classes.mail = AppJS.extend(
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
 		}
 		var url = window.egw_webserverUrl+'/index.php?';
-		var width;
-		var height;
-		var windowName ='mail';
 		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
 		url += '&mode=save';
 		url += '&id='+mailid;
-		document.location = url;
+		this.et2._inst.download(url);
 	},
 
 	saveAttachmentToVFS: function(tag_info, widget)
@@ -2573,8 +2565,6 @@ app.classes.mail = AppJS.extend(
 		url += '&method=mail.mail_ui.vfsSaveMessage';
 		url += '&id='+_elems[0].id;
 		url += '&label=Save';
-		//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
-		//document.location = url;
 		egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'640','570',window.outerWidth/2,window.outerHeight/2);
 
 	},
