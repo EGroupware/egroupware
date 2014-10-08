@@ -1251,9 +1251,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			autoRefresh.set_id("nm_autorefresh");
 			autoRefresh.set_select_options({
 				0: "off",
-				30: "30 seconds",
-				60: "1 Minute",
-				300: "5 Minutes"
+				// Cause [unknown] problems with mail
+				//30: "30 seconds",
+				//60: "1 Minute",
+				300: "5 Minutes",
+				900: "15 Minutes",
+				1800: "30 Minutes"
 			});
 			autoRefresh.set_value(this._get_autorefresh());
 			autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
