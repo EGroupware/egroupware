@@ -414,7 +414,7 @@ var et2_dataview = Class.extend({
 					{
 						var col = self.columnMgr.columns[i];
 						if(col == this || col.fixedWidth) continue;
-						col.set_width(self.columns[i].width / relative);
+						col.set_width(self.columnMgr.columnWidths[i] / relative);
 					}
 					// Triggers column change callback, which saves
 					self.updateColumns();
