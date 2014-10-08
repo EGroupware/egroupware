@@ -177,6 +177,8 @@ class etemplate_request
 			list($app) = explode('.', $_GET['menuaction']);
 			$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
 				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
+			// add a unique token to redirect to avoid client-side framework tries refreshing via nextmatch
+			$index_url .= (strpos($index_url, '?') ? '&' : '?').'redirect='.microtime(true);
 			error_log(__METHOD__."('$id', ...) eT2 request not found / expired --> redirecting app $app to $index_url (_GET[menuaction]=$_GET[menuaction], isJSONRequest()=".array2string(egw_json_request::isJSONRequest()).')');
 			if (egw_json_request::isJSONRequest())
 			{
