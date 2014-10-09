@@ -158,6 +158,33 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Additional attributes or urls for CSP connect-src 'self'
+	 *
+	 * @var array
+	 */
+	private static $csp_connect_src_attrs = array();
+
+	/**
+	 * Set/get Content-Security-Policy attributes for connect-src:
+	 *
+	 * @param string|array $set =array() URL (incl. protocol!)
+	 * @return string with attributes eg. "'unsafe-inline'"
+	 */
+	public static function csp_connect_src_attrs($set=null)
+	{
+		foreach((array)$set as $attr)
+		{
+			if (!in_array($attr, self::$csp_connect_src_attrs))
+			{
+				self::$csp_connect_src_attrs[] = $attr;
+				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
+			}
+		}
+		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
+		return implode(' ', self::$csp_connect_src_attrs);
+	}
+
+	/**
 	 * Query additional CSP frame-src from current app
 	 *
 	 * @return array
@@ -184,7 +211,7 @@ abstract class egw_framework
 		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_unique(array_merge($frame_src, $additional));
 
 		$csp = "script-src 'self' ".self::csp_script_src_attrs().
-			"; connect-src 'self'".
+			"; connect-src 'self'".self::csp_connect_src_attrs().
 			"; style-src 'self' ".self::csp_style_src_attrs().
 			"; frame-src ".implode(' ', $frame_src);
 
@@ -229,11 +256,12 @@ abstract class egw_framework
 	 *
 	 * @param string $url	The url the link is for
 	 * @param string|array	$extravars	Extra params to be passed to the url
-	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
+	 * @param string $link_app =null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
 	static function link($url, $extravars = '', $link_app=null)
 	{
+		unset($link_app);	// not used by required by function signature
 		return $GLOBALS['egw']->session->link($url, $extravars);
 	}
 
@@ -242,7 +270,7 @@ abstract class egw_framework
 	 *
 	 * @param string $url	The url the link is for
 	 * @param string|array	$extravars	Extra params to be passed to the url
-	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
+	 * @param string $link_app =null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
 	static function redirect_link($url, $extravars='', $link_app=null)
@@ -256,8 +284,8 @@ abstract class egw_framework
 	 * This is the (new) prefered way to render a page in eGW!
 	 *
 	 * @param string $content html of the main application area
-	 * @param string $app_header=null application header, default what's set in $GLOBALS['egw_info']['flags']['app_header']
-	 * @param string $navbar=null show the navigation, default !$GLOBALS['egw_info']['flags']['nonavbar'], false gives a typical popu
+	 * @param string $app_header =null application header, default what's set in $GLOBALS['egw_info']['flags']['app_header']
+	 * @param string $navbar =null show the navigation, default !$GLOBALS['egw_info']['flags']['nonavbar'], false gives a typical popu
 	 *
 	 */
 	function render($content,$app_header=null,$navbar=null)
@@ -294,8 +322,8 @@ abstract class egw_framework
 	 *
 	 * @param string $msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param string $app application name
-	 * @param string|int $id=null id of entry to refresh
-	 * @param string $type=null either 'update', 'edit', 'delete', 'add' or null
+	 * @param string|int $id =null id of entry to refresh
+	 * @param string $type =null either 'update', 'edit', 'delete', 'add' or null
 	 * - update: request just modified data from given rows.
 	 *	Sorting and filtering are not considered, so if the sort field is changed,
 	 *	the row will not be moved.  If the current filtering could include or exclude
@@ -304,13 +332,14 @@ abstract class egw_framework
 	 * - delete: just delete the given rows clientside (no server interaction neccessary)
 	 * - add: requires full reload for proper sorting
 	 * - null: full reload
-	 * @param string $targetapp=null which app's window should be refreshed, default current
-	 * @param string|RegExp $replace=null regular expression to replace in url
-	 * @param string $with=null
-	 * @param string $msg_type=null 'error', 'warning' or 'success' (default)
+	 * @param string $targetapp =null which app's window should be refreshed, default current
+	 * @param string|RegExp $replace =null regular expression to replace in url
+	 * @param string $with =null
+	 * @param string $msg_type =null 'error', 'warning' or 'success' (default)
 	 */
 	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null, $msg_type=null)
 	{
+		unset($msg, $app, $id, $type, $targetapp, $replace, $with, $msg_type);	// used only via func_get_args();
 		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
 	}
@@ -321,10 +350,11 @@ abstract class egw_framework
 	 * Calls egw_message on client-side in a content security save way
 	 *
 	 * @param string $msg message to show
-	 * @param string $type='success' 'error', 'warning' or 'success' (default)
+	 * @param string $type ='success' 'error', 'warning' or 'success' (default)
 	 */
 	public static function message($msg, $type='success')
 	{
+		unset($msg, $type);	// used only via func_get_args();
 		self::$extra['message'] = func_get_args();
 	}
 
@@ -337,6 +367,7 @@ abstract class egw_framework
 	 */
 	public static function popup($link, $target='_blank', $popup='640x480')
 	{
+		unset($link, $target, $popup);	// used only via func_get_args()
 		// default params are not returned by func_get_args!
 		$args = func_get_args()+array(null, '_blank', '640x480');
 
@@ -353,7 +384,7 @@ abstract class egw_framework
 	/**
 	 * Close (popup) window, use to replace egw_framework::onload('window.close()') in a content security save way
 	 *
-	 * @param string $alert_msg='' optional message to display as alert, before closing the window
+	 * @param string $alert_msg ='' optional message to display as alert, before closing the window
 	 */
 	public static function window_close($alert_msg='')
 	{
@@ -463,7 +494,7 @@ abstract class egw_framework
 	 * @param string $appname
 	 * @param string $menu_title
 	 * @param array $file
-	 * @param string $type=null 'admin', 'preferences', 'favorites', ...
+	 * @param string $type =null 'admin', 'preferences', 'favorites', ...
 	 */
 	abstract function sidebox($appname,$menu_title,$file,$type=null);
 
@@ -495,7 +526,7 @@ abstract class egw_framework
 
 		if($GLOBALS['egw_info']['server']['show_domain_selectbox'])
 		{
-			foreach($GLOBALS['egw_domain'] as $domain => $data)
+			foreach(array_keys($GLOBALS['egw_domain']) as $domain)
 			{
 				$domains[$domain] = $domain;
 			}
@@ -704,7 +735,7 @@ abstract class egw_framework
 			$GLOBALS['egw_info']['flags']['currentapp'] != 'logout' &&
 			!@$GLOBALS['egw_info']['flags']['noappfooter'])
 		{
-			list($app,$class,$method) = explode('.',(string)$_GET['menuaction']);
+			list(, $class) = explode('.',(string)$_GET['menuaction']);
 			if ($class && is_object($GLOBALS[$class]) && is_array($GLOBALS[$class]->public_functions) &&
 				isset($GLOBALS[$class]->public_functions['footer']))
 			{
@@ -724,7 +755,7 @@ abstract class egw_framework
 	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
-	 * @param array $extra=array() extra attributes passed as data-attribute to egw.js
+	 * @param array $extra =array() extra attributes passed as data-attribute to egw.js
 	 * @return array
 	 */
 	protected function _get_header(array $extra=array())
@@ -829,12 +860,6 @@ abstract class egw_framework
 		elseif($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] && $GLOBALS['egw_info']['user']['account_lastpwd_change'] < time() - (86400*$GLOBALS['egw_info']['server']['change_pwd_every_x_days']))
 		{
 			$api_messages = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
-		}
-
-		// This is gonna change
-		if(isset($cd))
-		{
-			$var['messages'] = $api_messages . '<br />' . checkcode($cd);
 		}
 
 		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http' ||
@@ -1113,7 +1138,7 @@ abstract class egw_framework
 	 *
 	 * This is similar to the former common::navbar() method - though it returns the vars and does not place them in global scope.
 	 *
-	 * @param boolean $svg=false should svg images be returned or not:
+	 * @param boolean $svg =false should svg images be returned or not:
 	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return array
 	 */
@@ -1285,7 +1310,7 @@ if ($app == 'home') continue;
 		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 		if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 		$css_files = '';
-		foreach(self::$css_include_files as $n => $path)
+		foreach(self::$css_include_files as $path)
 		{
 			foreach(self::resolve_css_includes($path) as $path)
 			{
@@ -1324,6 +1349,7 @@ if ($app == 'home') continue;
 	 */
 	protected static function resolve_css_includes($path, &$pathes=array())
 	{
+		$matches = null;
 		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$path, false, null, -1, 1024)) &&
 			stripos($to_check, '/*@import') !== false && preg_match_all('|/\*@import url\("([^"]+)"|i', $to_check, $matches))
 		{
@@ -1354,7 +1380,7 @@ if ($app == 'home') continue;
 	 * in eGW.  One change then all templates will support it (as long as they
 	 * include a call to this method).
 	 *
-	 * @param array $extra=array() extra data to pass to egw.js as data-parameter
+	 * @param array $extra =array() extra data to pass to egw.js as data-parameter
 	 * @return string the javascript to be included
 	 */
 	public static function _get_js(array $extra=array())
@@ -1407,7 +1433,7 @@ if ($app == 'home') continue;
 
 		if(@isset($_GET['menuaction']))
 		{
-			list($app,$class,$method) = explode('.',$_GET['menuaction']);
+			list(, $class) = explode('.',$_GET['menuaction']);
 			if(is_array($GLOBALS[$class]->public_functions) &&
 				$GLOBALS[$class]->public_functions['java_script'])
 			{
@@ -1432,7 +1458,7 @@ if ($app == 'home') continue;
 	 *
 	 * Themes are css file in the template directory
 	 *
-	 * @param string $themes_dir='css'
+	 * @param string $themes_dir ='css'
 	 */
 	function list_themes()
 	{
@@ -1455,7 +1481,7 @@ if ($app == 'home') continue;
 	/**
 	 * List available templates
 	 *
-	 * @param boolean $full_data=false true: value is array with values for keys 'name', 'title', ...
+	 * @param boolean $full_data =false true: value is array with values for keys 'name', 'title', ...
 	 * @returns array alphabetically sorted list of templates
 	 */
 	static function list_templates($full_data=false)
@@ -1484,8 +1510,8 @@ if ($app == 'home') continue;
 		}
 		$d->close();
 		// templates packaged like apps in own directories (containing as setup/setup.inc.php file!)
-		$d = dir(EGW_SERVER_ROOT);
-		while (($entry=$d->read()))
+		$dr = dir(EGW_SERVER_ROOT);
+		while (($entry=$dr->read()))
 		{
 			if ($entry != '..' && !isset($GLOBALS['egw_info']['apps'][$entry]) && is_dir(EGW_SERVER_ROOT.'/'.$entry) &&
 				file_exists($f = EGW_SERVER_ROOT . '/' . $entry .'/setup/setup.inc.php'))
@@ -1498,7 +1524,7 @@ if ($app == 'home') continue;
 				}
 			}
 		}
-		$d->close();
+		$dr->close();
 
 		return array_filter($list);
 	}
@@ -1569,7 +1595,7 @@ if ($app == 'home') continue;
 	 */
 	protected function add_preferences_topmenu($type='prefs')
 	{
-		static $memberships;
+		static $memberships=null;
 		if (!isset($memberships)) $memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 		static $types = array(
 			'prefs' => array(
@@ -1628,7 +1654,7 @@ if ($app == 'home') continue;
 	* Add info items to the topmenu template class to be displayed
 	*
 	* @param string $content html of item
-	* @param string $id=null
+	* @param string $id =null
 	* @access protected
 	* @return void
 	*/
@@ -1706,8 +1732,8 @@ if ($app == 'home') continue;
 	/**
 	 * Sets an onLoad action for a page
 	 *
-	 * @param string $code='' javascript to be used
-	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @param string $code ='' javascript to be used
+	 * @param boolean $replace =false false: append to existing, true: replace existing tag
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onload($code='',$replace=false)
@@ -1726,8 +1752,8 @@ if ($app == 'home') continue;
 	/**
 	 * Sets an onUnload action for a page
 	 *
-	 * @param string $code='' javascript to be used
-	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @param string $code ='' javascript to be used
+	 * @param boolean $replace =false false: append to existing, true: replace existing tag
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onunload($code='',$replace=false)
@@ -1746,8 +1772,8 @@ if ($app == 'home') continue;
 	/**
 	 * Sets an onBeforeUnload action for a page
 	 *
-	 * @param string $code='' javascript to be used
-	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @param string $code ='' javascript to be used
+	 * @param boolean $replace =false false: append to existing, true: replace existing tag
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onbeforeunload($code='',$replace=false)
@@ -1766,8 +1792,8 @@ if ($app == 'home') continue;
 	/**
 	* Sets an onResize action for a page
 	*
-	* @param string $code='' javascript to be used
-	* @param boolean $replace=false false: append to existing, true: replace existing tag
+	* @param string $code ='' javascript to be used
+	* @param boolean $replace =false false: append to existing, true: replace existing tag
 	* @return string content of onXXX tag after adding code
 	*/
 	static function set_onresize($code='',$replace=false)
@@ -1821,9 +1847,9 @@ if ($app == 'home') continue;
 	*    --> /phpgwapi/inc/calendar-setup.js?lang=de
 	*
 	* @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
-	* @param string|array $file=null file to be included - no ".js" on the end or array with get params
-	* @param string $app='phpgwapi' application directory to search - default = phpgwapi
-	* @param boolean $append=true should the file be added
+	* @param string|array $file =null file to be included - no ".js" on the end or array with get params
+	* @param string $app ='phpgwapi' application directory to search - default = phpgwapi
+	* @param boolean $append =true should the file be added
 	*
 	* @discuss The browser specific option loads the file which is in the correct
 	*          browser folder. Supported folder are those supported by class.browser.inc.php
@@ -1838,8 +1864,8 @@ if ($app == 'home') continue;
 	/**
 	 * Set or return all javascript files set via validate_file, optionally clear all files
 	 *
-	 * @param array $files=null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
-	 * @param boolean $clear_files=false true clear files after returning them
+	 * @param array $files =null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
+	 * @param boolean $clear_files =false true clear files after returning them
 	 * @return array with pathes relative to EGW_SERVER_ROOT
 	 */
 	static function js_files(array $files=null, $clear_files=false)
@@ -1857,8 +1883,8 @@ if ($app == 'home') continue;
 	 * NOTE: This method should only be called by the template class.
 	 * The validation is done when the file is added so we don't have to worry now
 	 *
-	 * @param boolean $return_pathes=false false: return html script tags, true: return array of file pathes relative to webserver_url
-	 * @param boolean $clear_files=false true clear files after returning them
+	 * @param boolean $return_pathes =false false: return html script tags, true: return array of file pathes relative to webserver_url
+	 * @param boolean $clear_files =false true clear files after returning them
 	 * @return string|array see $return_pathes parameter
 	 */
 	static public function get_script_links($return_pathes=false, $clear_files=false)
@@ -1896,6 +1922,7 @@ if ($app == 'home') continue;
 			}
 		}
 		$to_include = $included_bundles = array();
+		$query = null;
 		foreach($js_includes as $file)
 		{
 			if (!isset($to_include[$file]))
@@ -1918,7 +1945,7 @@ if ($app == 'home') continue;
 				}
 				else
 				{
-					$query = '';
+					unset($query);
 					list($path, $query) = explode('?', $file, 2);
 					$mod = filemtime(EGW_SERVER_ROOT.$path);
 
@@ -1937,7 +1964,7 @@ if ($app == 'home') continue;
 	 * Generate bundle url(s) for given js files
 	 *
 	 * @param array $js_includes
-	 * @param int& $max_modified=null on return maximum modification time of bundle
+	 * @param int& $max_modified =null on return maximum modification time of bundle
 	 * @return array js-files (can be more then one, if one of given files can not be bundeled)
 	 */
 	protected static function bundle_urls(array $js_includes, &$max_modified=null)
@@ -1945,6 +1972,7 @@ if ($app == 'home') continue;
 		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		$to_include = $to_minify = array();
 		$max_modified = 0;
+		$query = null;
 		foreach($js_includes as $path)
 		{
 			if ($path == '/phpgwapi/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
@@ -2073,9 +2101,9 @@ if ($app == 'home') continue;
 	 * Include a css file, either speicified by it's path (relative to EGW_SERVER_ROOT) or appname and css file name
 	 *
 	 * @param string $app path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
-	 * @param string $name=null name of css file in $app/templates/{default|$this->template}/$name.css
-	 * @param boolean $append=true true append file, false prepend (add as first) file used eg. for template itself
-	 * @param boolean $no_default_css=false true do NOT load any default css, only what app explicitly includes
+	 * @param string $name =null name of css file in $app/templates/{default|$this->template}/$name.css
+	 * @param boolean $append =true true append file, false prepend (add as first) file used eg. for template itself
+	 * @param boolean $no_default_css =false true do NOT load any default css, only what app explicitly includes
 	 * @return boolean false: css file not found, true: file found
 	 */
 	public static function includeCSS($app, $name=null, $append=true, $no_default_css=false)
@@ -2129,9 +2157,10 @@ if ($app == 'home') continue;
 		self::includeCSS($app,'app');
 
 		// add all css files from egw_framework::includeCSS()
+		$query = null;
 		foreach(self::$css_include_files as $path)
 		{
-			$query = '';
+			unset($query);
 			list($path,$query) = explode('?',$path,2);
 			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
@@ -2141,8 +2170,7 @@ if ($app == 'home') continue;
 		self::validate_file('.', 'app', $app);
 
 		// add all js files from egw_framework::validate_file()
-		$files = self::$js_include_mgr->get_included_files();
-		$files = self::bundle_js_includes($files);
+		$files = self::bundle_js_includes(self::$js_include_mgr->get_included_files());
 		foreach($files as $path)
 		{
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
@@ -2192,7 +2220,7 @@ if ($app == 'home') continue;
 	 * Include favorites when generating the page server-side
 	 *
 	 * @param string $app application, needed to find preferences
-	 * @param string $default=null preference name for default favorite, default "nextmatch-$app.index.rows-favorite"
+	 * @param string $default =null preference name for default favorite, default "nextmatch-$app.index.rows-favorite"
 	 * @deprecated use egw_favorites::favorite_list
 	 * @return array with a single sidebox menu item (array) containing html for favorites
 	 */
@@ -2210,7 +2238,7 @@ if ($app == 'home') continue;
 	 * @param string $name Name of the favorite
 	 * @param string $action "add" or "delete"
 	 * @param boolean|int|string $group ID of the group to create the favorite for, or 'all' for all users
-	 * @param array $filters=array() key => value pairs for the filter
+	 * @param array $filters =array() key => value pairs for the filter
 	 * @return boolean Success
 	 */
 	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
@@ -2272,9 +2300,9 @@ if (!function_exists('display_sidebox'))
 	 *
 	 * @deprecated use $GLOBALS['egw']->framework->sidebox()
 	 */
-	function display_sidebox($appname,$menu_title,$file)
+	function display_sidebox($appname,$menu_title,$_file)
 	{
-		$file = str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $file);
+		$file = str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $_file);
 		$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 	}
  }
