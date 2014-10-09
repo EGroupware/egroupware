@@ -85,7 +85,7 @@ app.classes.calendar = AppJS.extend(
 		this._init_sidebox(sidebox);
 
 		var content = this.et2.getArrayMgr('content');
-
+		
 		switch (_name)
 		{
 			case 'calendar.list':
@@ -173,7 +173,20 @@ app.classes.calendar = AppJS.extend(
 					}
 					else
 					{
-						window.location.reload();
+						var iframe = parent.jQuery(parent.document).find('.egw_fw_content_browser_iframe');
+						var calTab = iframe.parentsUntil(jQuery('.egw_fw_ui_tab_content'),'.egw_fw_ui_tab_content');
+						
+						if (!calTab.is(':visible')) 
+						{
+							// F.F can not handle to style correctly an iframe which is hidden (display:none), therefore we need to 
+							// bind a handler to refresh the calendar views after it shows up
+							iframe.one('show',function(){egw_refresh('','calendar');})
+						}
+						else
+						{	
+							//window.location.reload();
+							window.egw_refresh('refreshing calendar','calendar');
+						}
 					}
 				}
 			}
