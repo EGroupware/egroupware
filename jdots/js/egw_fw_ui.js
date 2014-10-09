@@ -616,6 +616,10 @@ egw_fw_ui_tab.prototype.show = function()
 		{
 			$j(this.tag.browser.contentDiv).trigger('show');
 		}
+		else if(content) // if the content is an iframe (eg. Calendar views)
+		{
+			$j(content).find('.egw_fw_content_browser_iframe').trigger('show');
+		}
 	}
 };
 
