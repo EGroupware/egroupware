@@ -1648,6 +1648,7 @@ class calendar_boupdate extends calendar_bo
 		$event_arr = $this->event2array($event);
 		foreach($event_arr as $key => $val)
 		{
+			if ($key == 'recur_type') $key = 'repetition';
 			$details[$key] = $val['data'];
 		}
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
