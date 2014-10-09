@@ -463,7 +463,9 @@ class ajaxfelamimail
 
 			$response = new xajaxResponse();
 
-			$escaped = str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content);
+			//$escaped = str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content);
+			// make sure content that is sent to client is utf-8 as expected
+			$escaped = translation::convert(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content),felamimail_bo::detect_encoding($_content),'UTF-8');
 			if ($_mode == 'simple')
 				$response->addScript("showHTMLEditor('$escaped');");
 			else
@@ -1502,7 +1504,7 @@ class ajaxfelamimail
 		{
 			// we need a lot of encoding/decoding transforming here to get at least some acceptable result
 			// the changing does not work with all sigs, as the old Signature may not match the Signaturepart in Content
-			if($this->_debug) error_log(__METHOD__.$_oldSig.','.$_signatureID.'#');
+			if($this->_debug) error_log(__METHOD__.$_oldSig.','.$_signatureID.'#CurrentMode:'.$_currentMode.'#Content:'.$_content);
 			$bocompose  = CreateObject('felamimail.bocompose', $_composeID);
 			// prepare signatures, the selected sig may be used on top of the body
 			require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
@@ -1515,9 +1517,12 @@ class ajaxfelamimail
 			//error_log(__METHOD__.'New:'.$sigText.'#');
 			if ($_currentMode == 'plain')
 			{
-				$oldSigText = utf8_decode($bocompose->convertHTMLToText($oldSigText,true,true));
-				$sigText = utf8_decode($bocompose->convertHTMLToText($sigText,true,true));
-				$_content = utf8_decode($_content);
+				// try to normalize all involved => use UTF-8 for that
+				$oldSigText = $bocompose->convertHTMLToText($oldSigText,true,true);
+				$sigText = $bocompose->convertHTMLToText($sigText,true,true);
+				$oldSigText = translation::convert($oldSigText,felamimail_bo::detect_encoding($oldSigText),'UTF-8');
+				$sigText = translation::convert($sigText,felamimail_bo::detect_encoding($sigText),'UTF-8');
+				$_content = translation::convert($_content);
 				if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
 			}
 
@@ -1552,6 +1557,12 @@ class ajaxfelamimail
 				{
 					// try the old way
 					$found = strpos($_content,trim($oldSigText));
+					// maybe content is toggled to text and back to html
+					if ($found === false)
+					{
+						// after toggling to text and back replacing the signature is bound to produce garbage
+						if($this->_debug) error_log(__METHOD__."() seems we cannot find the old signature within the message! Note: after toggling to text and back replacing the signature is bound to produce garbage; so we dont do it");
+					}
 				}
 			}
 			else
@@ -1564,7 +1575,7 @@ class ajaxfelamimail
 				//error_log(__METHOD__.'Old Content:'.$_content.'#');
 				$_oldSigText = preg_quote($oldSigText,'~');
 				//error_log(__METHOD__.'Old(masked):'.$_oldSigText.'#');
-				$_content = preg_replace('~'.$_oldSigText.'~mi',$sigText,$_content,1);
+				$_content = preg_replace('~'.$_oldSigText.'~mi',$sigText,$_content,1,$found);
 				//error_log(__METHOD__.'new Content:'.$_content.'#');
 			}
 
@@ -1572,7 +1583,7 @@ class ajaxfelamimail
 			{
 				// if there is no sig selected, there is no way to replace a signature
 			}
-
+			if ($found === false && $_currentMode=='html'&&$replaced) $found=$replaced;
 			if ($found === false)
 			{
 				if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigText);
@@ -1584,12 +1595,8 @@ class ajaxfelamimail
 				//error_log($styles);
 				$_content = $styles.$_content;
 			}
-			if ($_currentMode == 'html')
-			{
-				$_content = utf8_decode($_content);
-			}
-
-			$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
+			// make sure content that is sent to client is utf-8 as expected
+			$escaped = translation::convert(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content),felamimail_bo::detect_encoding($_content),'UTF-8');
 			//error_log(__METHOD__.$escaped);
 			if ($_currentMode == 'html')
 				$response->addScript("showHTMLEditor('$escaped');");
