@@ -305,6 +305,7 @@ last changed	calendar	de	letzte Änderung
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	de	Anzahl Zeilen der Beschreibung in der Listenansicht (voreingestellt 5, 0 für alle)
+link	calendar	de	Termin-URL
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
 links and attached files	calendar	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
