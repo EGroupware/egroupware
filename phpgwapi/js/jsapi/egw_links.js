@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
@@ -19,7 +17,9 @@
 /**
  * @augments Class
  */
-egw.extend('links', egw.MODULE_GLOBAL, function() {
+egw.extend('links', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	/**
 	 * Link registry
@@ -54,9 +54,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Check if $app is in the registry and has an entry for $name
 		 *
-		 * @param string $app app-name
-		 * @param string $name name / key in the registry, eg. 'view'
-		 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
+		 * @param {string} _app app-name
+		 * @param {string} _name name / key in the registry, eg. 'view'
+		 * @return {boolean|string} false if $app is not registered, otherwise string with the value for $name
 		 * @memberOf egw
 		 */
 		link_get_registry: function(_app, _name)
@@ -105,8 +105,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Get mime-type information from app-registry
 		 *
-		 * @param string _type
-		 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
+		 * @param {string} _type
+		 * @return {object} with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 		 */
 		get_mime_info: function(_type)
 		{
@@ -127,9 +127,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Get handler (link-data) for given path and mime-type
 		 *
-		 * @param string|object _path vfs path or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
-		 * @param string _type mime-type, if not given in _path object
-		 * @return string|object string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
+		 * @param {string|object} _path vfs path or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
+		 * @param {string} _type mime-type, if not given in _path object
+		 * @return {string|object} string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 		 */
 		mime_open: function(_path, _type)
 		{
@@ -182,8 +182,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Get list of link-aware apps the user has rights to use
 		 *
-		 * @param string $must_support capability the apps need to support, eg. 'add', default ''=list all apps
-		 * @return array with app => title pairs
+		 * @param {string} _must_support capability the apps need to support, eg. 'add', default ''=list all apps
+		 * @return {object} with app => title pairs
 		 */
 		link_app_list: function(_must_support)
 		{
@@ -218,8 +218,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Set link registry
 		 *
-		 * @param object _registry whole registry or entries for just one app
-		 * @param string _app
+		 * @param {object} _registry whole registry or entries for just one app
+		 * @param {string} _app
 		 */
 		set_link_registry: function (_registry, _app)
 		{
@@ -238,10 +238,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		 *
 		 * Please note, the values of the query get url encoded!
 		 *
-		 * @param string _url a url relative to the egroupware install root, it can contain a query too
-		 * @param array|string _extravars query string arguements as string or array (prefered)
+		 * @param {string} _url a url relative to the egroupware install root, it can contain a query too
+		 * @param {object|string} _extravars query string arguements as string or array (prefered)
 		 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
-		 * @return string generated url
+		 * @return {string} generated url
 		 */
 		link: function(_url, _extravars)
 		{
@@ -332,11 +332,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		 * Query a title of _app/_id
 		 *
 		 * @param {string} _app
-		 * @param {(string|int)} _id
+		 * @param {string|number} _id
 		 * @param {function} _callback optinal callback, required if for responses from the server
 		 * @param {object} _context context for the callback
 		 * @param {boolean} _force_reload true load again from server, even if already cached
-		 * @return string|boolean|null string with title if it exist in local cache or null if not
+		 * @return {string|boolean|null} string with title if it exist in local cache or null if not
 		 */
 		link_title: function(_app, _id, _callback, _context, _force_reload)
 		{
@@ -374,7 +374,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Callback to add all current title requests
 		 *
-		 * @param array of parameters, only first parameter is used
+		 * @param {object} _params of parameters, only first parameter is used
 		 */
 		link_title_before_send: function(_params)
 		{
@@ -396,7 +396,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Callback for server response
 		 *
-		 * @param object _response _app => _id => title
+		 * @param {object} _response _app => _id => title
 		 */
 		link_title_callback: function(_response)
 		{
@@ -432,8 +432,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Create quick add selectbox
 		 *
-		 * @param _parent parent to create selectbox in
-		 * @returns
+		 * @param {DOMnode} _parent parent to create selectbox in
 		 */
 		link_quick_add: function(_parent)
 		{
@@ -461,6 +460,4 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			});
 		}
 	};
-
 });
-
