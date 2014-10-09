@@ -368,7 +368,6 @@ phone numbers	common	en	Phone numbers
 photo	addressbook	en	Photo
 please enter a name for that field !	addressbook	en	Enter a name to that field!
 please select only one category	addressbook	en	Select only one category
-please update the templatename in your customfields section!	addressbook	en	Update the template name in custom fields section!
 postal	common	en	Postal
 pref	addressbook	en	Pref
 preferred email address to use in distribution lists	addressbook	en	Preferred email address
@@ -484,7 +483,6 @@ verification	addressbook	en	Verification
 view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
-warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
 weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	Address book links displayed in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 when viewing a contact, show linked entries from the selected application	addressbook	en	When viewing a contact, show linked entries from the selected application

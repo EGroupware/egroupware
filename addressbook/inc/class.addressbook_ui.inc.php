@@ -2144,12 +2144,9 @@ window.egw_LAB.wait(function() {
 
 		if ($content['private']) $content['owner'] .= 'p';
 
-		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-
-		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
+		// for custom types, check if we have a custom edit template named "addressbook.edit.$type", $type is the name
+		if (in_array($content['tid'], array('n',self::DELETED_TYPE)) || !$this->tmpl->read('addressbook.edit.'.$this->content_types[$content['tid']]['name']))
 		{
-			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
-			$content['msg'] .= lang('Please update the templatename in your customfields section!');
 			$this->tmpl->read('addressbook.edit');
 		}
 
