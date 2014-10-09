@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -48,13 +48,14 @@ class admin_accesslog
 	function __construct()
 	{
 		$this->so = new so_sql(self::APP,self::TABLE,null,'',true);
-		$this->so->timestamps = array('li', 'lo', 'session_dla', 'notification_hartbeat');
+		$this->so->timestamps = array('li', 'lo', 'session_dla', 'notification_heartbeat');
 	}
 
 	/**
 	 * query rows for the nextmatch widget
 	 *
-	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
+	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter' and
+	 *	'session_list' true: all sessions, false: whole access-log, 'active': only sessions with session-status active (browser, no sync)
 	 * @param array &$rows returned rows/competitions
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @return int total number of rows
@@ -67,23 +68,32 @@ class admin_accesslog
 		{
 			$query['col_filter']['lo'] = null;	// not logged out
 			$query['col_filter'][0] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
-			$query['col_filter'][1] = "(notification_heartbeat IS NULL OR notification_heartbeat > $heartbeat_limit)";
+			switch((string)$query['session_list'])
+			{
+				case 'active':	// remove status != 'active', eg. CalDAV/eSync
+					$query['col_filter'][1] = "notification_heartbeat > $heartbeat_limit";
+					$query['col_filter'][3] = "session_php NOT LIKE '% %'";	// remove blocked, bad login, etc
+					break;
+				default:
+					$query['col_filter'][1] = "(notification_heartbeat IS NULL OR notification_heartbeat > $heartbeat_limit)";
+					break;
+			}
 			$query['col_filter'][2] = 'account_id>0';
 		}
 		$total = $this->so->get_rows($query,$rows,$readonlys);
 
-		$no_kill = !$GLOBALS['egw']->acl->check('current_sessions_access',8,'admin') && !$query['session_list'];
+		$heartbeat_limit_user = egw_time::server2user($heartbeat_limit, 'ts');
 
 		foreach($rows as &$row)
 		{
 			$row['sessionstatus'] = lang('success');
-			if ($row['notification_heartbeat'] > $heartbeat_limit)
+			if ($row['notification_heartbeat'] > $heartbeat_limit_user)
 			{
 				$row['sessionstatus'] = lang('active');
 			}
 			if (stripos($row['session_php'],'blocked') !== false ||
 				stripos($row['session_php'],'bad login') !== false ||
-				strpos($row['sessioin_php'],' ') !== false)
+				strpos($row['session_php'],' ') !== false)
 			{
 				$row['sessionstatus'] = $row['session_php'];
 			}
@@ -120,9 +130,9 @@ class admin_accesslog
 	/**
 	 * Display the access log or session list
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
-	 * @param boolean $sessions_list=false
+	 * @param array $content =null
+	 * @param string $msg =''
+	 * @param boolean $sessions_list =false
 	 */
 	function index(array $content=null, $msg='', $sessions_list=false)
 	{
@@ -183,7 +193,8 @@ class admin_accesslog
 
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
-				$total = $this->get_rows($query,$all,$readonlys);
+				$all = $readonlys = array();
+				$this->get_rows($query,$all,$readonlys);
 				$content['nm']['selected'] = array();
 				foreach($all as $session)
 				{
@@ -196,7 +207,7 @@ class admin_accesslog
 			}
 			else
 			{
-
+				$success = $failed = $action = $action_msg = null;
 				if ($this->action($content['nm']['action'],$content['nm']['selected']
 					,$success,$failed,$action_msg,$msg))
 				{ // In case of action success
@@ -229,7 +240,7 @@ class admin_accesslog
 			__LINE__,__FILE__)->fetchColumn();
 
 		$tmpl = new etemplate_new('admin.accesslog');
-		$tmpl->exec('admin.admin_accesslog.index',$content,$sel_options,$readonlys,array(
+		$tmpl->exec('admin.admin_accesslog.index', $content, array(), $readonlys, array(
 			'nm' => $content['nm'],
 		));
 	}
@@ -243,10 +254,9 @@ class admin_accesslog
 	 * @param type $success
 	 * @param int $failed
 	 * @param type $action_msg
-	 * @param type $msg
 	 * @return type number of failed
 	 */
-	function action($action,$checked,&$success,&$failed,&$action_msg,&$msg)
+	function action($action,$checked,&$success,&$failed,&$action_msg)
 	{
 		$success = $failed = 0;
 		//error_log(__METHOD__.'selected:' . array2string($checked). 'action:' . $action);
@@ -297,7 +307,7 @@ class admin_accesslog
 	 */
 	private static function get_actions($sessions_list)
 	{
-
+		$group = 0;
 		if ($sessions_list)
 		{
 		//	error_log(__METHOD__. $sessions_list);
@@ -343,11 +353,11 @@ class admin_accesslog
 	/**
 	 * Display session list
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content =null
+	 * @param string $msg =''
 	 */
 	function sessions(array $content=null, $msg='')
 	{
-		return $this->index(null,$msg,true);
+		return $this->index($content, $msg, true);
 	}
 }
