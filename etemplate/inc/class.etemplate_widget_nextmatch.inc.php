@@ -164,7 +164,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		if($value['num_rows'] != 0)
 		{
-			$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
+			$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys, null, null, $this);
 		}
 		if (true) $value =& self::get_array(self::$request->content, $form_name, true);
 
@@ -344,8 +344,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$value['csv_export'] = 'refresh';
 		}
 		$rows = $result['data'] = $result['order'] = array();
-		// we can NOT run run_beforeSendToClient in call_get_rows, as it would modify row_modified timestamp, which is used below
-		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys'], null, null, false);
+		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys'], null, null, $template);
 		$result['lastModification'] = egw_time::to('now', 'ts')-1;
 
 		if (isset($GLOBALS['egw_info']['flags']['app_header']) && self::$request->app_header != $GLOBALS['egw_info']['flags']['app_header'])
@@ -368,13 +367,20 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$id = $row_id ? $row[$row_id] : $n;
 				$result['order'][] = $id;
 
+				$modified = $row[$row_modified];
+				if (isset($modified) && !(is_int($modified) || is_string($modified) && is_numeric($modified)))
+				{
+					$modified = egw_time::to(str_replace('Z', '', $modified), 'ts');
+				}
+
 				// check if we need to send the data
 				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . egw_time::to($row[$row_modified]) . ' > ' . egw_time::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
-					!$lastModified || !isset($row[$row_modified]) || $row[$row_modified] > $lastModified)
+					!$lastModified || !isset($modified) || $modified > $lastModified)
 				{
-					$result['data'][$id] = self::run_beforeSendToClient($row);
+					$result['data'][$id] = $row;
 				}
+
 				if ($kUkey !== false) unset($knownUids[$kUkey]);
 			}
 			else	// non-row data set by get_rows method
@@ -529,9 +535,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param array &$readonlys =null
 	 * @param object $obj =null (internal)
 	 * @param string|array $method =null (internal)
+	 * @param etemplate_widget $widget =null instanciated nextmatch widget to let it's widgets transform each row
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
-	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, $run_beforeSendToClient=true)
+	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, etemplate_widget $widget=null)
 	{
 		if (is_null($method)) $method = $value['get_rows'];
 
@@ -583,13 +590,23 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$total = false;	// method not callable
 		}
-		/* no automatic fallback to start=0
-		if ($method && $total && $value['start'] >= $total)
+		// if we have a nextmatch widget, find the repeating row
+		if ($widget && $widget->attrs['template'])
 		{
-			$value['start'] = 0;
-			$total = self::call_get_rows($value,$rows,$readonlys,$obj,$method);
+			$row_template = $widget->getElementById($widget->attrs['template']);
+			if(!$row_template)
+			{
+				$row_template = etemplate_widget_template::instance($widget->attrs['template']);
+			}
+
+			// Try to find just the repeating part
+			$repeating_row = null;
+			// First child should be a grid, we want last row
+			foreach($row_template->children[0]->children[1]->children as $child)
+			{
+				if($child->type == 'row') $repeating_row = $child;
+			}
 		}
-		*/
 		// otherwise we might get stoped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
 
@@ -613,7 +630,19 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
 				}
 				// run beforeSendToClient methods of widgets in row on row-data
-				$rows[$n-$first+$value['start']] = $run_beforeSendToClient ? self::run_beforeSendToClient($row) : $row;
+				if($repeating_row)
+				{
+					// Change anything by widget for each row ($row set to 1)
+					$_row = array(1 => &$row);
+					$repeating_row->run('set_row_value', array('',array('row' => 1), &$_row), true);
+				}
+				else if (!$widget || get_class($widget) != 'etemplate_widget_historylog')
+				{
+					// Fallback based on widget names
+					error_log(self::$request->template['name'] . ' had to fallback to run_beforeSendToClient() because it could not find the row');
+					$row = self::run_beforeSendToClient($row);
+				}
+				$rows[$n-$first+$value['start']] = $row;
 			}
 			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
 			{
