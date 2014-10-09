@@ -1,6 +1,6 @@
 /**
  * EGroupware Notifications - clientside javascript
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
  * @subpackage ajaxpoup
@@ -13,10 +13,10 @@
  * Installs app.notifications used to poll notifications from server and display them
  */
 (function()
-{	
+{
 	var notifymessages = {};
-	var EGW_BROWSER_NOTIFY_ALLOWED = 0;	
-	
+	var EGW_BROWSER_NOTIFY_ALLOWED = 0;
+
 	/**
 	 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
 	 */
@@ -24,10 +24,22 @@
 		var notification_script = document.getElementById('notifications_script_id');
 		var popup_poll_interval = notification_script && notification_script.getAttribute('data-poll-interval');
 		this.setTimeout(popup_poll_interval || 60);
-		var self = this;
-		jQuery('#egwpopup_ok_button').click(function() { self.button_ok.apply(self); });
-		jQuery('#egwpopup_close_button').click(function() { self.button_close.apply(self); });
-		jQuery('#notificationbell').click(function() { self.display.apply(self); });
+		jQuery('#egwpopup_ok_button').click(jQuery.proxy(this.button_ok, this));
+		jQuery('#egwpopup_close_button').click(jQuery.proxy(this.button_close, this));
+		jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
+		// query notifictions now
+		this.get_notifications();
+	};
+
+	/**
+	 * Poll server for new notifications
+	 */
+	notifications.prototype.get_notifications = function()
+	{
+		egw.json(
+			"notifications.notifications_ajax.get_notifications",
+			this.check_browser_notify()
+		).sendRequest();
 	};
 
 	/**
@@ -37,22 +49,18 @@
 	notifications.prototype.setTimeout = function(_i) {
 		var self = this;
 		window.setTimeout(function(){
-			var request = egw.json(
-				"notifications.notifications_ajax.get_notifications",
-				self.check_browser_notify()
-			);
-			request.sendRequest();
+			self.get_notifications();
 			self.setTimeout(_i);
 		}, _i*1000);
 	};
-	
+
 	/**
 	 * Check to see if browser supports / allows desktop notifications
 	 */
 	notifications.prototype.check_browser_notify = function() {
 		return window.webkitNotifications && window.webkitNotifications.checkPermission() == EGW_BROWSER_NOTIFY_ALLOWED;
 	};
-	
+
 	/**
 	 * Display notifications window
 	 */
@@ -91,17 +99,17 @@
 			} catch(err) {}
 			var desktop_button = jQuery('<button id="desktop_perms">' + label + '</button>')
 				.click(function() {
-					window.webkitNotifications.requestPermission(); 
+					window.webkitNotifications.requestPermission();
 					jQuery(this).hide();
 				});
 			desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
 		}
 	};
-	
+
 	/**
 	 * Display or hide notifcation-bell
-	 * 
-	 * @param String mode "active"
+	 *
+	 * @param {string} mode "active"
 	 */
 	notifications.prototype.bell = function(mode) {
 		var notificationbell;
@@ -112,7 +120,7 @@
 			notificationbell.style.display = "none";
 		}
 	};
-	
+
 	/**
 	 * Callback for OK button: confirms message on server and hides display
 	 */
@@ -122,22 +130,22 @@
 		egwpopup = document.getElementById("egwpopup");
 		egwpopup_message = document.getElementById("egwpopup_message");
 		egwpopup_message.scrollTop = 0;
-	
+
 		for(var confirmed in notifymessages) break;
 		var request = egw.json("notifications.notifications_ajax.confirm_message", [confirmed]);
 		request.sendRequest();
 		delete notifymessages[confirmed];
-		
+
 		for(var id in notifymessages) break;
 		if (id == undefined) {
 			egwpopup.style.display = "none";
 			egwpopup_message.innerHTML = "";
 			this.bell("inactive");
-		} else {	
+		} else {
 			this.display();
 		}
 	};
-	
+
 	/**
 	 * Callback for close button: close and mark all as read
 	 */
@@ -155,10 +163,10 @@
 		egwpopup_message.innerHTML = "";
 		this.bell("inactive");
 	};
-	
+
 	/**
 	 * Add message to internal display-queue
-	 * 
+	 *
 	 * @param _id
 	 * @param _message
 	 * @param _browser_notify
@@ -171,7 +179,7 @@
 		}
 		// Prevent the same thing popping up multiple times
 		notifymessages[_id] = _message;
-	
+
 		// Notification API
 		if(_browser_notify)
 		{
@@ -193,7 +201,7 @@
 					_message = _message.replace(/<(?:.|\n)*?>/gm, '');
 				}
 				notice = webkitNotifications.createNotification('', "Egroupware",_message);
-	
+
 				// When they click, bring up the popup for full info
 				notice.onclick = function() {
 					window.focus();
@@ -205,7 +213,7 @@
 			{
 				notice.ondisplay = function() {
 					// Confirm when user gets to see it - no close needed
-					// Wait a bit to let it load first, or it might not be there when requested.  
+					// Wait a bit to let it load first, or it might not be there when requested.
 					window.setTimeout( function() {
 						var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
 						request.sendRequest();
@@ -215,7 +223,7 @@
 			}
 		}
 	};
-	
+
 	var lab = egw_LAB || $LAB;
 	var self = notifications;
 	lab.wait(function(){

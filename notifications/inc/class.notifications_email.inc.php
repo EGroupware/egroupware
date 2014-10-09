@@ -108,11 +108,14 @@ class notifications_email implements notifications_iface {
 			$this->mail->AltExtended = $_attachments[0]->string;
 			$this->mail->AltExtendedContentType = $_attachments[0]->type;
 			unset($_attachments[0]);
+			$this->mail->Body = $body_plain;
 		}
-		$this->mail->IsHTML(($isMeetingRequestNotif?false:true));
-		$this->mail->Body = $body_html;
-		$this->mail->AltBody = $body_plain;
-
+		else
+		{
+			$this->mail->IsHTML();
+			$this->mail->Body = $body_html;
+			$this->mail->AltBody = $body_plain;
+		}
 		if(is_array($_attachments) && count($_attachments) > 0)
 		{
 			foreach($_attachments as $attachment)
