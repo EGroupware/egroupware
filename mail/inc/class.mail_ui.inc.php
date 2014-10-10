@@ -2025,6 +2025,7 @@ class mail_ui
 		unset($actionsenabled['mark']['children']['unread']);
 		unset($actionsenabled['mark']['children']['undelete']);
 		unset($actionsenabled['mark']['children']['readall']);
+		unset($actionsenabled['moveto']);
 		unset($actionsenabled['drag_mail']);
 		$actionsenabled['mark']['children']['flagged']=array(
 			'group' => $actionsenabled['mark']['children']['flagged']['group'],
