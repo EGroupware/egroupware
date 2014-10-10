@@ -138,13 +138,21 @@ var et2_color = et2_inputWidget.extend(
 				resizable: false,
 				width: "auto"
 			});
-
+			jQuery('table.jPicker').each(function(){
+				if (!this.getAttribute('class').match(/jPickerColorIden/))
+				{
+					//Add an identifier to dialog for later on to bind a click handler to it
+					//as jquery dialog has already an unique id, we make a unique class identifier with help of the widget id
+					jQuery(this).addClass('jPickerColorIden-'+self.id);
+					return false;
+				}
+			});
 			// Hide original move bar
 			jQuery('table.jPicker .Move').hide();
 
 			// Trigger dialog opening
 			jQuery('.Image',self.$node.next()).click(function() {
-				jQuery("table.jPicker").dialog("open");
+				jQuery("table.jPickerColorIden-"+self.id).dialog("open");
 			});
 		},500);
 		return true;
