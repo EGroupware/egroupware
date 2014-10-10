@@ -20,6 +20,8 @@
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer!
 '%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
 1 minute	etemplate	en	1 Minute
+15 minutes	etemplate	en	15 Minutes
+30 minutes	etemplate	en	30 Minutes
 30 seconds	etemplate	en	30 seconds
 5 minutes	etemplate	en	5 Minutes
 a pattern to be searched for	etemplate	en	Pattern to be searched for
