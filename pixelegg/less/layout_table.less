@@ -74,6 +74,7 @@ table.egwGridView_outer{
 
     thead {
         .gradient_thead;
+
            max-height: 118px;
             overflow-y: auto;
 
@@ -82,7 +83,8 @@ table.egwGridView_outer{
             th {
 
                 background: transparent;
-                .gradient();
+                /*.gradient();*/
+                background-position: -200px;
 
                 font-weight: normal;
                 padding: 3px 0 3px 4px;
@@ -99,11 +101,13 @@ table.egwGridView_outer{
                 &:hover {
                     .background_color_25_gray;
                     .color_0_gray;
-                    //						border-right: 5px solid white;
+                    /*border-right: 5px solid white;*/
                     background-image: url(../images/hint-arrow-right.png);
                     background-position: right bottom;
                     background-repeat: no-repeat;
                     background-size: 15px 15px;
+                    .transition (0.0s, ease-out);
+                    /*transition-delay: 1s;*/
 
                 }
 

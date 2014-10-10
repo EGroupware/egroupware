@@ -1222,6 +1222,20 @@
     margin: 0 !important;
     padding: 0 !important;
   }
+  .et2_toolbar-dropdown button {
+    /*        height: 100% !important;
+                    border: none !important;
+                    background: #E0E0E0 !important;
+                    background-color: #E0E0E0 !important;
+                    border-radius: 0 !important;
+                    color: #101010 !important;
+                    font-size: 9pt !important;
+                    font-weight: normal !important;
+                    vertical-align: bottom !important;
+                    padding: 1px !important;
+                    margin: 2px !important;
+                    min-height: 19px;*/
+  }
   div.ui-toolbar-menulist {
     position: absolute;
     height: inherit !important;
@@ -5723,8 +5737,8 @@ table.egwGridView_outer thead {
 }
 table.egwGridView_outer thead tr th {
   background: transparent;
-  background: #f5f5f5, -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(1, #ffffff)), -ms-linear-gradient(bottom, #eeeeee, #ffffff), -moz-linear-gradient(center bottom, #eeeeee 0%, #ffffff 100%), -o-linear-gradient(#ffffff, #eeeeee);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+  /*.gradient();*/
+  background-position: -200px;
   font-weight: normal;
   padding: 3px 0 3px 4px;
   border-color: #b4b4b4;
@@ -5738,10 +5752,16 @@ table.egwGridView_outer thead tr th {
 table.egwGridView_outer thead tr th:hover {
   background-color: #bfbfbf;
   color: #ffffff;
+  /*border-right: 5px solid white;*/
   background-image: url(../images/hint-arrow-right.png);
   background-position: right bottom;
   background-repeat: no-repeat;
   background-size: 15px 15px;
+  -webkit-transition: all 0s ease-out;
+  -moz-transition: all 0s ease-out;
+  -o-transition: all 0s ease-out;
+  transition: all 0s ease-out;
+  /*transition-delay: 1s;*/
 }
 table.egwGridView_outer thead tr th:active {
   background-color: #d9d9d9;
