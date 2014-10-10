@@ -1,3 +1,12 @@
+egroupware-epl (14.1.20141010-1) hardy; urgency=low
+
+  * Mail: fix download/saving of mail or attachments lead to redirect loop on next refresh
+  * Mail: allow to enter name+mail eg. "Ralf Becker <rb@stylite.de>" in compose, automatic fix unquoted commas in entered mail addresses
+  * all apps: custom fields of type "float" allow to specify maxlength,size,min,max comma-separated in length field
+  * Sambaadmin: fix editing user-data
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 10 Oct 2014 19:21:37 +0200
+
 egroupware-epl (14.1.20141007-1) hardy; urgency=low
 
   * Mail: handle (and correct if needed) charset for subject on import of messages
