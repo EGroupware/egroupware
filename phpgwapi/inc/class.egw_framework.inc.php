@@ -1725,6 +1725,7 @@ if ($app == 'home') continue;
 	/**
 	 * Body tags for onLoad, onUnload and onResize
 	 *
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
 	 * @var array
 	 */
 	protected static $body_tags = array();
@@ -1734,6 +1735,7 @@ if ($app == 'home') continue;
 	 *
 	 * @param string $code ='' javascript to be used
 	 * @param boolean $replace =false false: append to existing, true: replace existing tag
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onload($code='',$replace=false)
@@ -1754,6 +1756,7 @@ if ($app == 'home') continue;
 	 *
 	 * @param string $code ='' javascript to be used
 	 * @param boolean $replace =false false: append to existing, true: replace existing tag
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onunload($code='',$replace=false)
@@ -1774,6 +1777,7 @@ if ($app == 'home') continue;
 	 *
 	 * @param string $code ='' javascript to be used
 	 * @param boolean $replace =false false: append to existing, true: replace existing tag
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
 	 * @return string content of onXXX tag after adding code
 	 */
 	static function set_onbeforeunload($code='',$replace=false)
@@ -1790,12 +1794,13 @@ if ($app == 'home') continue;
 	}
 
 	/**
-	* Sets an onResize action for a page
-	*
-	* @param string $code ='' javascript to be used
-	* @param boolean $replace =false false: append to existing, true: replace existing tag
-	* @return string content of onXXX tag after adding code
-	*/
+	 * Sets an onResize action for a page
+	 *
+	 * @param string $code ='' javascript to be used
+	 * @param boolean $replace =false false: append to existing, true: replace existing tag
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
+	 * @return string content of onXXX tag after adding code
+	 */
 	static function set_onresize($code='',$replace=false)
 	{
 		if ($replace || empty(self::$body_tags['onResize']))
@@ -1812,6 +1817,7 @@ if ($app == 'home') continue;
 	/**
 	 * Adds on(Un)Load= attributes to the body tag of a page
 	 *
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
 	 * @returns string the attributes to be used
 	 */
 	static public function _get_body_attribs()
