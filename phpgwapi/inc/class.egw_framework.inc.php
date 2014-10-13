@@ -211,7 +211,7 @@ abstract class egw_framework
 		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_unique(array_merge($frame_src, $additional));
 
 		$csp = "script-src 'self' ".self::csp_script_src_attrs().
-			"; connect-src 'self'".self::csp_connect_src_attrs().
+			"; connect-src 'self' ".self::csp_connect_src_attrs().
 			"; style-src 'self' ".self::csp_style_src_attrs().
 			"; frame-src ".implode(' ', $frame_src);
 
