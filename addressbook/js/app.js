@@ -66,6 +66,14 @@ app.classes.addressbook = AppJS.extend(
 						window.app.infolog = new window.app.classes.infolog();
 					}
 				}
+				// Call check value if the AB got opened with presets
+				if (window.location.href.match(/&presets\[email\]/g) && content.presets_fields)
+				{
+					for(var i=0;i< content.presets_fields.length;i++)
+					{
+						this.check_value(this.et2.getWidgetById(content.presets_fields),0);
+					}
+				}
 				break;
 		}
 

@@ -1717,6 +1717,11 @@ window.egw_LAB.wait(function() {
 			{
 				case 'save':
 				case 'apply':
+					if ($content['presets_fields'])
+					{
+						// unset the duplicate_filed after submit because we don't need to warn user for second time about contact duplication
+						unset($content['presets_fields']);
+					}
 					if ($content['delete_photo'])
 					{
 						$content['jpegphoto'] = null;
@@ -1985,7 +1990,9 @@ window.egw_LAB.wait(function() {
 					{
 						if (!empty($content[$field]))
 						{
-							egw_framework::set_onload("app.addressbook.check_value(document.getElementById('exec[$field]'),0);");
+							//Set the presets fields in content in order to be able to use them later in client side for checking duplication only on first time load
+							// after save/apply we unset them
+							$content['presets_fields'][]= $field;
 							break;
 						}
 					}
