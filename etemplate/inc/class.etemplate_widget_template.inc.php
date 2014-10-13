@@ -38,17 +38,17 @@ class etemplate_widget_template extends etemplate_widget
 	/**
 	 * Get instance of template specified by name, template(-set) and version
 	 *
-	 * @param string $name
-	 * @param string $template_set=null default try template-set from user and if not found "default"
-	 * @param string $version=''
-	 * @param string $load_via='' use given template to load $name
+	 * @param string $_name
+	 * @param string $template_set =null default try template-set from user and if not found "default"
+	 * @param string $version =''
+	 * @param string $load_via ='' use given template to load $name
 	 * @todo Reading customized templates from database
 	 * @return etemplate_widget_template|boolean false if not found
 	 */
-	public static function instance($name, $template_set=null, $version='', $load_via='')
+	public static function instance($_name, $template_set=null, $version='', $load_via='')
 	{
 		//$start = microtime(true);
-		list($name) = explode('?', $name);	// remove optional cache-buster
+		list($name) = explode('?', $_name);	// remove optional cache-buster
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
 		{
 			if ((!$path || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
@@ -119,8 +119,8 @@ class etemplate_widget_template extends etemplate_widget
 	 * Get path/URL relative to EGroupware install of a template of full vfs url
 	 *
 	 * @param string $name
-	 * @param string $template_set=null default try template-set from user and if not found "default"
-	 * @param string $version=''
+	 * @param string $template_set =null default try template-set from user and if not found "default"
+	 * @param string $version =''
 	 * @return string path of template xml file or null if not found
 	 */
 	public static function relPath($name, $template_set=null, $version='')
@@ -188,10 +188,12 @@ class etemplate_widget_template extends etemplate_widget
 			}
 			else
 			{
-				// no mtime postfix, as our WebDAV treats ? literal and not ignore them like Apache for static files!
 				$url = egw_vfs::download_url($path);
 
 				if ($url[0] == '/') $url = egw::link($url);
+
+				// mtime postfix has to use '?download=', as our WebDAV treats everything else literal and not ignore them like Apache for static files!
+				$url .= '?download='.filemtime(egw_vfs::PREFIX.$path);
 			}
 		}
 		//error_log(__METHOD__."('$path') returning $url");
@@ -204,8 +206,8 @@ class etemplate_widget_template extends etemplate_widget
 	 * Reimplemented because templates can have an own namespace specified in attrs[content], NOT id!
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be cname, second $expand!
-	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param array $params =array('') parameter(s) first parameter has to be cname, second $expand!
+	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
