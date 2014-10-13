@@ -128,6 +128,9 @@ var et2_color = et2_inputWidget.extend(
 
 		// Make it look better - plugin defers initialization, so we have to also
 		setTimeout(function() {
+			//Regex to exclude invalid charachters from class identifier name, to be able to address the class name with jquery selector later.
+			var regExClassName = /[\[\]']+/g;
+			
 			// Make the buttons look like all the others
 			jQuery("div.jPicker :button").addClass("et2_button et2_button_text");
 
@@ -143,7 +146,7 @@ var et2_color = et2_inputWidget.extend(
 				{
 					//Add an identifier to dialog for later on to bind a click handler to it
 					//as jquery dialog has already an unique id, we make a unique class identifier with help of the widget id
-					jQuery(this).addClass('jPickerColorIden-'+self.id);
+					jQuery(this).addClass('jPickerColorIden-'+self.id.replace(regExClassName, '_'));
 					return false;
 				}
 			});
@@ -152,7 +155,7 @@ var et2_color = et2_inputWidget.extend(
 
 			// Trigger dialog opening
 			jQuery('.Image',self.$node.next()).click(function() {
-				jQuery("table.jPickerColorIden-"+self.id).dialog("open");
+				jQuery("table.jPickerColorIden-"+self.id.replace(regExClassName, '_')).dialog("open");
 			});
 		},500);
 		return true;
