@@ -225,7 +225,9 @@ class boetemplate extends soetemplate
 					$name = str_replace($matches[3],$value,$name);
 				}
 			}
-			if (eval($code='$name = "'.str_replace(array('\\', '"'), array('\\\\', '\\"'), $name).'";') === false)
+			if (eval($code='$name = "'.str_replace(array('\\', '"'), array('\\\\', '\\"'),
+				// fix non-fatal PHP Parse error, when $j was used eg. in onload
+				str_replace(array('$j.', '$j('), array('jQuery.', 'jQuery('), $name)).'";') === false)
 			{
 					error_log(__METHOD__."(name='$name', c='$c', row=$row, c_='$c_', row_=$row_, ...) line ".__LINE__." ERROR parsing: $code");
 					error_log(function_backtrace());
