@@ -406,7 +406,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			var path = this.get_path();
 			this._do_action('createdir', dir, true);	// true=synchronous request
-			this.change_dir(path+'/'+dir);
+			this.change_dir((path == '/' ? '' : path)+'/'+dir);
 		}
 	},
 
@@ -462,7 +462,7 @@ app.classes.filemanager = AppJS.extend(
 			var data = egw.dataGetUIDdata(_senders[i].id);
 			var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[i].id);
 			if (url[0] == '/') url = egw.link(url);
-			
+
 			var a = document.createElement('a');
 			if(typeof a.download == "undefined")
 			{
@@ -494,7 +494,7 @@ app.classes.filemanager = AppJS.extend(
 	is_multiple_allowed: function(action, selected)
 	{
 		var allowed = typeof document.createElement('a').download != "undefined";
-		
+
 		if(typeof action == "undefined") return allowed;
 
 		return (allowed || selected.length <= 1) && action.not_disableClass.apply(action, arguments);
@@ -780,10 +780,10 @@ app.classes.filemanager = AppJS.extend(
 		event.stopPropagation();
 		return false;
 	},
-	
+
 	/**
 	 * Set Sudo button's label and change its onclick handler according to its action
-	 * 
+	 *
 	 * @param {widget object} _widget sudo buttononly
 	 * @param {string} _action string of action type {login|logout}
 	 */
@@ -798,7 +798,7 @@ app.classes.filemanager = AppJS.extend(
 					widget.set_label('Logout');
 					this.et2._inst.submit(widget);
 					break;
-					
+
 				default:
 					widget.set_label('Superuser');
 					widget.onclick = function(){

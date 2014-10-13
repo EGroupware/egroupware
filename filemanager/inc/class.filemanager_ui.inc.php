@@ -623,7 +623,7 @@ class filemanager_ui
 			case 'saveaszip':
 				egw_vfs::download_zip($selected);
 				common::egw_exit();
-			
+
 			default:
 				list($action, $settings) = explode('_', $action, 2);
 				switch($action)
@@ -1125,7 +1125,7 @@ class filemanager_ui
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
-					$eacl['path'] = rtrim(parse_url($eacl['path'],PHP_URL_PATH),'/');		
+					$eacl['path'] = rtrim(parse_url($eacl['path'],PHP_URL_PATH),'/');
 					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] ||
 						$eacl['path'] != $content['path'] || !$content['is_owner'];
 				}
@@ -1242,6 +1242,11 @@ class filemanager_ui
 	 */
 	public static function ajax_action($action, $selected, $dir=null, $props=null)
 	{
+		// do we have root rights, need to run here too, as method is static and therefore does NOT run __construct
+		if (egw_session::appsession('is_root','filemanager'))
+		{
+			egw_vfs::$is_root = true;
+		}
 		$response = egw_json_response::get();
 
 		$arr = array(
