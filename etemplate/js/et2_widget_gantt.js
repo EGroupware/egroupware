@@ -592,6 +592,67 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	},
 
 	/**
+	 * Exports the gantt chart to an external service that generates a file.
+	 *
+	 * @param {string} to One of PDF or PNG
+	 * @returns {undefined}
+	 */
+	_export: function(to) {
+		var w = egw.open_link(egw.link('/etemplate/gantt_print.php'),'_blank','400x400');
+		var self = this;
+		jQuery(w).load(function() {
+			w.egw_LAB.wait(function() {
+				w.gantt = jQuery.extend(true,{},self.gantt);
+
+				// Loading it twice breaks export
+				if(typeof w.gantt.exportToPNG == 'undefined')
+				{
+					w.egw_LAB.script("https://export.dhtmlx.com/gantt/api.js");
+				}
+				w.egw_LAB.wait(function() {
+					$j(w.gantt.$container).parent().clone().appendTo(w.document.body);
+					// Custom CSS - just send it all
+					var css = '';
+					$j("link[type='text/css']").each(function() {css += this.outerHTML;});
+
+					var options = {
+						name: (w.gantt.getTask(w.gantt._order[0]).text||'gantt').replace(/ /g,'_')+'.'+to.toLowerCase(),
+						header: css + egw.config('site_title','phpgwapi'),
+						footer: $j('#egw_fw_footer',w.opener).html(),
+						// Doesn't work, export never happens:
+						// callback: function() {w.setTimeout(function() {w.close();}, 5000);}
+					};
+					console.log(options);
+					switch(to)
+					{
+						case 'PNG':
+							w.gantt.exportToPNG(options);
+							break;
+						case 'PDF':
+							w.gantt.exportToPDF(options);
+					}
+					w.setTimeout(function() {w.close();}, 5000);
+				});
+			});
+		});
+	},
+
+
+	/**
+	 * Exports the gantt chart do dhtmlx's external service, and makes a PDF
+	 */
+	exportToPDF: function() {
+		this._export('PDF');
+	},
+
+	/**
+	 * Exports the gantt chart do dhtmlx's external service, and makes a PNG
+	 */
+	exportToPNG: function() {
+		this._export('PNG');
+	},
+
+	/**
 	 * Bind all the internal gantt events for nice widget actions
 	 */
 	_bindGanttEvents: function() {
