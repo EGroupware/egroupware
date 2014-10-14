@@ -82,7 +82,7 @@ class admin_account
 			}
 			// should we show extra ldap attributes home-directory and login-shell
 			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
-				get_class($GLOBALS['egw']->accounts) === 'accounts_ldap';
+				get_class($GLOBALS['egw']->accounts->backend) === 'accounts_ldap';
 
 			$readonlys = array();
 
