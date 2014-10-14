@@ -3332,7 +3332,9 @@ class emailadmin_imapbase
 		{
 			error_log(__METHOD__.__LINE__.' Error, could not flag messages in folder '.$folder.' Reason:'.$e->getMessage());
 		}
-		self::$folderStatusCache[$this->profileID][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
+		if ($folder instanceof Horde_Imap_Client_Mailbox) $_folder = $folder->utf8;
+		//error_log(__METHOD__.__LINE__.'#'.$this->icServer->ImapServerId.'#'.array2string($_folder).'#');
+		self::$folderStatusCache[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
 
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue
@@ -3347,48 +3349,54 @@ class emailadmin_imapbase
 	 * @param string $currentFolder
 	 * @param boolean $returnUIDs - control wether or not the action called should return the new uids
 	 *						caveat: not all servers do support that
-	 * @param int $_targetProfileID - target profile ID, should only be handed over when target server is differen from source
+	 * @param int $_sourceProfileID - source profile ID, should be handed over, if not $this->icServer->ImapServerId is used
+	 * @param int $_targetProfileID - target profile ID, should only be handed over when target server is different from source
 	 *
 	 * @return mixed/bool true,false or new uid
 	 */
-	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_targetProfileID = Null)
+	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
 		$msglist = '';
-
+		$source = emailadmin_account::read(($_sourceProfileID?$_sourceProfileID:$this->icServer->ImapServerId))->imapServer();
 		$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
 		if (empty($_messageUID))
 		{
-			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+			if (self::$debug) error_log(__METHOD__." no Message(s): ".implode(',',$_messageUID));
 			return false;
 		}
 		elseif ($_messageUID==='all')
 		{
+			//error_log(__METHOD__." all Message(s): ".implode(',',$_messageUID));
 			$uidsToMove= null;
 		}
 		else
 		{
+			//error_log(__METHOD__." Message(s): ".implode(',',$_messageUID));
 			$uidsToMove = new Horde_Imap_Client_Ids();
 			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
 			$uidsToMove->add($_messageUID);
 		}
 		$sourceFolder = (!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']);
-		if (!is_null($_targetProfileID) && $_targetProfileID !== $this->icServer->ImapServerId)
+		//error_log(__METHOD__.__LINE__."$_targetProfileID !== ".array2string($source->ImapServerId));
+		if (!is_null($_targetProfileID) && $_targetProfileID !== $source->ImapServerId)
 		{
-			$sourceFolder = $this->icServer->getMailbox($sourceFolder);
-			$target = emailadmin_account::read($_targetProfileID)->imapServer();
-			$foldername = $target->getMailbox($_foldername);
-			//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$this->icServer->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
-			$this->icServer->openMailbox($sourceFolder);
+			$sourceFolder = $source->getMailbox($sourceFolder);
+			$source->openMailbox($sourceFolder);
 			$uidsToFetch = new Horde_Imap_Client_Ids();
 			$uidsToFetch->add($_messageUID);
 
 			$fquery = new Horde_Imap_Client_Fetch_Query();
 			$fquery->fullText(array('peek'=>true));
 			$fquery->flags();
-			$headersNew = $this->icServer->fetch($sourceFolder, $fquery, array(
+			$headersNew = $source->fetch($sourceFolder, $fquery, array(
 				'ids' => $uidsToFetch,
 			));
+			//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' mailheaders:'.array2string($headersNew));
+
 			if (is_object($headersNew)) {
+				$target = emailadmin_account::read($_targetProfileID)->imapServer();
+				$foldername = $target->getMailbox($_foldername);
+				//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
 				$c=0;
 				$retUid = new Horde_Imap_Client_Ids();
 				// make sure the target folder is open and ready
@@ -3397,9 +3405,10 @@ class emailadmin_imapbase
 				foreach($headersNew as $id=>$_headerObject) {
 					$c++;
 					$flags = $_headerObject->getFlags(); //unseen status seems to be lost when retrieving the full message
+					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($id));
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
 					$body = $_headerObject->getFullMsg();
-					$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$body")), 'flags'=>$flags);
+					$dataNflags[] = array('data'=>$body, 'flags'=>$flags);
 					if ($c==5)
 					{
 						$ret = $target->append($foldername,$dataNflags);
@@ -3415,11 +3424,15 @@ class emailadmin_imapbase
 					$retUid->add($ret);
 					unset($dataNflags);
 				}
+				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retUid));
 				// make sure we are back to source
-				$this->icServer->openMailbox($sourceFolder);
+				$source->openMailbox($sourceFolder);
 				if ($deleteAfterMove)
 				{
+					$remember = $this->icServer;
+					$this->icServer = $source;
 					$this->deleteMessages($_messageUID, $sourceFolder, $_forceDeleteMethod='remove_immediately');
+					$this->icServer = $remember;
 				}
 			}
 		}
@@ -3427,7 +3440,7 @@ class emailadmin_imapbase
 		{
 			try
 			{
-				$retUid = $this->icServer->copy($sourceFolder, $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
+				$retUid = $source->copy($sourceFolder, $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
 			}
 			catch (exception $e)
 			{
