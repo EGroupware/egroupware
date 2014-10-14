@@ -2864,6 +2864,10 @@ app.classes.mail = AppJS.extend(
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+		
+		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name) 
+		if (!target.match(/::/g)) target += '::INBOX';
+		
 		var self = this;
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){self.unlock_tree();})
 			.sendRequest();
