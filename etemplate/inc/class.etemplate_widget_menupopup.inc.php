@@ -224,7 +224,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		}
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
-		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
+		$options = (isset(self::$request->sel_options[$form_name]) ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
 		{
 			// Turn on search, if there's a lot of rows (unless explicitly set)
