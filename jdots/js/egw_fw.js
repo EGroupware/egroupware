@@ -503,7 +503,7 @@ egw_fw.prototype.applicationTabNavigate = function(_app, _url, _hidden, _pos)
 	{
 		_url = _app.indexUrl;
 	}
-	else if (_app.browser != null && 
+	else if (_app.browser != null &&
 		// check if app has its own linkHandler
 		!(this.applications[_app.appName].app_refresh) &&
 		_app.browser.iframe == null && _url == _app.browser.currentLocation)
@@ -1533,7 +1533,7 @@ egw_LAB.wait(function() {
 
 	$j(document).ready(function() {
 		window.framework = new egw_fw("egw_fw_sidemenu", "egw_fw_tabs", "egw_fw_splitter",
-			window.egw_webserverUrl, egw_setSideboxSize, 225, 185);
+			window.egw_webserverUrl, egw_setSideboxSize, 255, 215);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 		window.callManual = window.framework.callManual;
 		jQuery('#egw_fw_print').click(function(){window.framework.print()});
 		jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });

@@ -25,8 +25,18 @@ class jdots_framework extends egw_framework
 	 */
 	const APP = 'jdots';
 
-	const MIN_SIDEBAR_WIDTH = 185;
-	const DEFAULT_SIDEBAR_WIDTH = 225;
+	/**
+	 * Minimum width of sidebar eg. from German 2-letter daynames in Calendar
+	 *
+	 * Need to be changed in js/egw_fw.js around line 1536 too!
+	 */
+	const MIN_SIDEBAR_WIDTH = 215;
+	/**
+	 * Default width need to be tested with English 3-letter day-names and Pixelegg template in Calendar
+	 *
+	 * Need to be changed in js/egw_fw.js around line 1536 too!
+	 */
+	const DEFAULT_SIDEBAR_WIDTH = 255;
 	/**
 	 * Whether javascript:egw_link_handler calls (including given app) should be returned by the "link" function
 	 * or just the link
@@ -310,7 +320,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('manual', 'login', 'logout', 'sitemgr')))
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
-				$extra['check-framework'] = true;
+				$extra['check-framework'] = $_GET['cd'] !== 'no';
 			}
 		}
 		$this->tpl->set_var($this->_get_header($extra));
