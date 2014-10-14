@@ -4484,8 +4484,8 @@ class mail_ui
 				}
 				try
 				{
-					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
-					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod.' '.$targetProfileID.'/'.$sourceProfileID);
+					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,$sourceProfileID,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
 				}
 				catch (egw_exception $e)
 				{
@@ -4511,8 +4511,8 @@ class mail_ui
 				}
 				try
 				{
-					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod);
-					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod.' '.$targetProfileID.'/'.$sourceProfileID);
+					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,$sourceProfileID,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
 				}
 				catch (egw_exception $e)
 				{
