@@ -512,7 +512,7 @@ class importexport_definitions_ui
 		if(is_array($content) &&! $content['edit'])
 		{
 			if(self::_debug) error_log('importexport.wizard->$content '. print_r($content,true));
-			foreach($content as $key => $val) error_log(" $key : ".array2string($val));
+			//foreach($content as $key => $val) error_log(" $key : ".array2string($val));
 			// fetch plugin object
 			if($content['plugin'] && $content['application'])
 			{
