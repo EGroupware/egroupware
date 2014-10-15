@@ -1709,6 +1709,11 @@ function _egw_log_exception(Exception $e,&$headline=null)
  */
 function egw_exception_handler(Exception $e)
 {
+	// handle redirects without logging
+	if (is_a($e, 'egw_exception_redirect'))
+	{
+		egw::redirect($e->url, $e->app);
+	}
 	// logging all exceptions to the error_log (if not cli) and get headline
 	$headline = null;
 	_egw_log_exception($e,$headline);

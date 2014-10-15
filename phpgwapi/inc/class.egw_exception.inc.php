@@ -27,6 +27,10 @@
 class egw_exception extends Exception
 {
 	// nothing fancy yet
+	function __construct($msg=null,$code=100,Exception $previous=null)
+	{
+		return parent::__construct($msg, $code, $previous);
+	}
 }
 
 /**
@@ -38,8 +42,8 @@ class egw_exception_no_permission extends egw_exception
 	/**
 	 * Constructor
 	 *
-	 * @param string $msg=null message, default "Permission denied!"
-	 * @param int $code=100 numerical code, default 100
+	 * @param string $msg =null message, default "Permission denied!"
+	 * @param int $code =100 numerical code, default 100
 	 */
 	function __construct($msg=null,$code=100)
 	{
@@ -106,8 +110,8 @@ class egw_exception_not_found extends egw_exception
 	/**
 	 * Constructor
 	 *
-	 * @param string $msg=null message, default "Entry not found!"
-	 * @param int $code=99 numerical code, default 2
+	 * @param string $msg =null message, default "Entry not found!"
+	 * @param int $code =99 numerical code, default 2
 	 */
 	function __construct($msg=null,$code=2)
 	{
@@ -145,8 +149,8 @@ class egw_exception_db extends egw_exception
 	/**
 	 * Constructor
 	 *
-	 * @param string $msg=null message, default "Database error!"
-	 * @param int $code=100
+	 * @param string $msg =null message, default "Database error!"
+	 * @param int $code =100
 	 */
 	function __construct($msg=null,$code=100)
 	{
@@ -180,3 +184,30 @@ class egw_exception_db_invalid_sql extends egw_exception_db { }
  * EGroupware not (fully) installed, visit setup
  */
 class egw_exception_db_setup extends egw_exception_db { }
+
+/**
+ * Allow callbacks to request a redirect
+ *
+ * Can be caught be applications and is otherwise handled by global exception handler.
+ */
+class egw_exception_redirect extends egw_exception
+{
+	public $url;
+	public $app;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $url
+	 * @param string $app
+	 * @param string $msg
+	 * @param int $code
+	 */
+	function __construct($url,$app=null,$msg=null,$code=301)
+	{
+		$this->url = $url;
+		$this->app = $app;
+
+		parent::__construct($msg, $code);
+	}
+}

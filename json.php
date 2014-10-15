@@ -35,6 +35,11 @@ function login_redirect(&$anon_account)
  */
 function ajax_exception_handler(Exception $e)
 {
+	// handle redirects without logging
+	if (is_a($e, 'egw_exception_redirect'))
+	{
+		egw::redirect($e->url, $e->app);
+	}
 	// logging all exceptions to the error_log
 	$message = null;
 	if (function_exists('_egw_log_exception'))

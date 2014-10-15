@@ -406,6 +406,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			{
 				egw_topWindow().location.href = res.data.url;
 			}
+			// json request was originating from a different window --> redirect that one
+			else if(this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window)
+			{
+				this.DOMContainer.ownerDocument.location.href = res.data.url;
+			}
+			// main window, open url in respective tab
 			else
 			{
 				egw_appWindowOpen(res.data.app, res.data.url);

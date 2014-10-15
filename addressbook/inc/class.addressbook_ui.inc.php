@@ -1791,6 +1791,10 @@ window.egw_LAB.wait(function() {
 									$content['msg'] .= ', '.$success_msg;
 								}
 							}
+							catch(egw_exception_redirect $r)
+							{
+								// catch it to continue execution and rethrow it later
+							}
 							catch (Exception $ex) {
 								$content['msg'] .= ', '.$ex->getMessage();
 								$button = 'apply';	// do not close dialog
@@ -1837,6 +1841,12 @@ window.egw_LAB.wait(function() {
 					}
 					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'update' : 'add',
 						null, null, null, $this->error ? 'error' : 'success');
+
+					// re-throw redirect exception, if there's no error
+					if (!$this->error && isset($r))
+					{
+						throw $r;
+					}
 					if ($button == 'save')
 					{
 						egw_framework::window_close();
