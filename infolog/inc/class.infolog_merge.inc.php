@@ -135,11 +135,7 @@ class infolog_merge extends bo_merge
 		{
 			$timesheets = array();
 			$links = egw_link::get_links('infolog',$id,'timesheet');
-			foreach($links as $link)
-			{
-				$timesheets[] = $link['id'];
-			}
-			$sum = ExecMethod('timesheet.timesheet_bo.sum',$timesheets);
+			$sum = ExecMethod('timesheet.timesheet_bo.sum',$links);
 			$info['$$info_sum_timesheets$$'] = $sum['duration'];
 		}
 
