@@ -526,6 +526,9 @@ div.mail-compose_fileselector {
 	display: none !important;
 }
 
+#mail-display, #mail-compose {
+	min-height: 500px;
+}
 .mailDisplayContainer, .mailDisplayAttachments {
 	display: block;
 	display: -moz-inline-stack;
