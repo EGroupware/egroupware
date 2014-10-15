@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package calendar
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -271,7 +271,8 @@ class calendar_merge extends bo_merge
 			'offset' => 0,
 			'num_rows' => 20,
 			'order' => 'cal_start',
-			'daywise' => true
+			'daywise' => true,
+			'cfs' => array(),	// read all custom-fields
 		));
 
 		$days = array();
@@ -370,7 +371,8 @@ class calendar_merge extends bo_merge
 			'offset' => 0,
 			'num_rows' => 20,
 			'order' => 'cal_start',
-			'daywise' => true
+			'daywise' => true,
+			'cfs' => array(),	// read all custom-fields
 		));
 
 		$replacements = array();
