@@ -1510,7 +1510,10 @@ div.ui-toolbar-menulist{
 {
 	background-size: 18px;
 }
-
+.et2_gantt .gantt_side_content
+{
+	overflow: visible;
+}
 .et2_gantt .gantt_task_progress
 {
 	text-align: left;
@@ -1543,6 +1546,36 @@ div.ui-toolbar-menulist{
 .et2_gantt .gantt_task_link.invalid_constraint .gantt_link_arrow_right
 {
 	border-left-color: red;
+}
+.et2_gantt .gantt_task_planned
+{
+	margin-top: 7px;
+	position: absolute;
+	opacity: 0.3;
+	border-style: outset;
+	border-width: 2px;
+	border-top: none;
+	border-bottom: none;
+	width: 2px;
+}
+.et2_gantt .gantt_task_planned:hover span {
+	display:inline;
+}
+.et2_gantt .gantt_task_planned span
+{
+	z-index: 10;
+	display: none;
+	background: white;
+	position: relative;
+	top: 2em;
+}
+.et2_gantt .gantt_left .gantt_task_planned
+{
+	border-right: none;
+}
+.et2_gantt .gantt_right .gantt_task_planned
+{
+	border-left: none;
 }
 
 /**

@@ -1011,6 +1011,31 @@ $j(function() {
 		}
 	};
 
+	gantt.templates.leftside_text = function(start, end, task) {
+		var text = '';
+		if(task.planned_start)
+		{
+			if(typeof task.planned_start == 'string') task.planned_start = new Date(task.planned_start);
+			var p_start = gantt.posFromDate(task.planned_start) - gantt.posFromDate(start);
+			text = "<div class='gantt_task_line gantt_task_planned' style='width:"+Math.abs(p_start)+"px; right:"+(p_start > 0 ? -p_start : 0)+"px; height:100%'><span>"
+				+ gantt.date.date_to_str(gantt.config.api_date)(task.planned_start)
+				+ "</span></div>";
+		}
+		return text;
+	};
+	gantt.templates.rightside_text = function(start, end, task) {
+		var text = '';
+		if(task.planned_end)
+		{
+			if(typeof task.planned_end == 'string') task.planned_end = new Date(task.planned_end);
+			var p_end = gantt.posFromDate(task.planned_end) - gantt.posFromDate(end);
+			text = "<div class='gantt_task_line gantt_task_planned' style='left:"+p_end +"px; height:100%'><span>"
+				+ gantt.date.date_to_str(gantt.config.api_date)(task.planned_end)
+				+ "</span></div>";
+		}
+		return text;
+	};
+
 	// Link styling
 	gantt.templates.link_class = function(link) {
 		var link_class = '';
