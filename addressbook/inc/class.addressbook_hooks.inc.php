@@ -361,13 +361,13 @@ class addressbook_hooks
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
 			'edit_id' => 'contact_id',
-			'edit_popup'  => '800x525',
+			'edit_popup'  => '859x550',
 			'add' => array(
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '800x525',
+			'add_popup'  => '859x550',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'file_access'=> 'addressbook.addressbook_bo.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
