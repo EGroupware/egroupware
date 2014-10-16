@@ -5296,7 +5296,7 @@ class emailadmin_imapbase
 				}
 			}
 			//error_log(array2string($bodyParts));
-			$attachments = $includeAttachments?$mailClass->getMessageAttachments($uid,$partid):array();
+			$attachments = $includeAttachments?$mailClass->getMessageAttachments($uid,$partid,null,true,false,true,$mailbox):array();
 
 			if ($mailClass->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
 			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
@@ -5320,7 +5320,7 @@ class emailadmin_imapbase
 						//_debug_array($mailClass->getMessageHeader($uid, $attachment['partID']));
 						//_debug_array($mailClass->getMessageBody($uid,'', $attachment['partID']));
 						//_debug_array($mailClass->getMessageAttachments($uid, $attachment['partID']));
-						$mailcontent = self::get_mailcontent($mailClass,$uid,$attachment['partID']);
+						$mailcontent = self::get_mailcontent($mailClass,$uid,$attachment['partID'],$mailbox);
 						$headdata ='';
 						if ($mailcontent['headers'])
 						{
