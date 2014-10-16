@@ -313,7 +313,7 @@ class infolog_ui
 			}
 			//error_log(__METHOD__."() prefs[listNoSubs]=".array2string($this->prefs['listNoSubs'])." --> parent_id=$parent_id");
 			unset($query['col_filter']['parent_id']);
-			if(!$query['action'])
+			if(!$query['col_filter']['action'])
 			{
 				egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			}
@@ -345,9 +345,10 @@ class infolog_ui
 			$links['linked'] = array();
 			unset($query['col_filter']['linked']);
 		}
-		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
+		if($query['col_filter']['action'] && in_array($query['col_filter']['action']['app'], array_keys($GLOBALS['egw_info']['apps'])))
 		{
-			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
+			$link_filters['action'] = $query['col_filter']['action'];
+			unset($query['col_filter']['action']);
 			$links['action'] = array();
 		}
 		foreach($link_filters as $key => $link)
@@ -408,7 +409,7 @@ class infolog_ui
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
-		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
+		$columnselection_pref = 'nextmatch-'.($link_filters['action'] ? 'infolog.'.$link_filters['action']['app'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
 			.($details ? '-details' : '');
 
 		$columselection = $this->prefs[$columnselection_pref];
@@ -454,17 +455,17 @@ class infolog_ui
 		// Don't add parent in if info_id_parent (expanding to show subs)
 		if ($query['action_id'] && !$query['col_filter']['info_id_parent'])
 		{
-			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
-			if (count($parents) == 1 && is_array($query['action_id']))
+			$parents = $link_filters['action'] && $link_filters['action']['app'] == 'sp' ? (array)$link_filters['action']['id'] : array();
+			if (count($parents) == 1 && is_array($link_filters['action']['id']))
 			{
-				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
+				$link_filters['action']['id'] = array_shift($link_filters['action']['id']);	// display single parent as app_header
 			}
 		}
 
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
-		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id'])) $query['total']++;
+		if($parent_first || $link_filters['action'] && $link_filters['action']['app'] == 'sp' && is_array($link_filters['action']['id'])) $query['total']++;
 
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
@@ -540,14 +541,14 @@ class infolog_ui
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
-			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
-				$query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
+			if ($link_filters['action'] && ($title = $link_filters['action']['title'] || is_array($link_filters['action']['id']) ?
+				$link_filters['action']['title'] : egw_link::title($link_filters['action']['app'] == 'sp' ? 'infolog' : $link_filters['action']['app'], $link_filters['action']['id'])))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
 		}
 
-		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
+		if ($link_filters) $query['col_filter'] += $link_filters;  // add linked and action back to col_filter
 
 		return $query['total'];
 	}
@@ -943,9 +944,14 @@ class infolog_ui
 				if (is_int($colfk)) unset($values['nm']['col_filter']);
 			}
 		}
-		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
-		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
-		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
+		$values['action'] = $persist['action'] = $action;
+		$values['action_id'] = $persist['action_id'] = $action_id;
+		$values['action_title'] = $persist['action_title'] = $action_title;
+		$values['nm']['col_filter']['action'] = $action && $action_id ? array(
+			'app' => $action,
+			'id' => $action_id,
+			'title' => $action_title,
+		) : null;
 		$values['duration_format'] = ','.$this->duration_format;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
@@ -1240,7 +1246,7 @@ class infolog_ui
 	/**
 	 * Handles actions on multiple infologs
 	 *
-	 * @param action
+	 * @param string $_action
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all entries of the current selection (in the session)
 	 * @param int &$success number of succeded actions
@@ -1251,7 +1257,7 @@ class infolog_ui
 	 * @param boolean $skip_notifications true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
+	function action($_action, $checked, $use_all, &$success, &$failed, &$action_msg,
 		array $query, &$msg, $skip_notifications = false)
 	{
 		//echo '<p>'.__METHOD__."('$action',".array2string($checked).','.(int)$use_all.",...)</p>\n";
@@ -1273,7 +1279,7 @@ class infolog_ui
 		}
 
 		// Actions with options in the selectbox
-		list($action, $settings) = explode('_', $action, 2);
+		list($action, $settings) = explode('_', $_action, 2);
 
 		// Actions that can handle a list of IDs
 		switch($action)
@@ -1476,14 +1482,14 @@ class infolog_ui
 	 * Closes an infolog
 	 *
 	 * @param int|array $values=0 info_id (default _GET[info_id])
-	 * @param string $referer=''
+	 * @param string $_referer=''
 	 * @param boolean $closesingle=false
 	 */
-	function close($values=0,$referer='',$closesingle=false,$skip_notification = false)
+	function close($values=0,$_referer='',$closesingle=false,$skip_notification = false)
 	{
 		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
-		$referer = is_array($values) ? $values['referer'] : $referer;
+		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if ($info_id)
 		{
@@ -1526,14 +1532,14 @@ class infolog_ui
 	 * Deletes an InfoLog entry
 	 *
 	 * @param array|int $values info_id (default _GET[info_id])
-	 * @param string $referer
+	 * @param string $_referer
 	 * @param string $called_by
 	 * @param boolean $skip_notification Do not send notification of deletion
 	 */
-	function delete($values=0,$referer='',$called_by='',$skip_notification=False)
+	function delete($values=0,$_referer='',$called_by='',$skip_notification=False)
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
-		$referer = is_array($values) ? $values['referer'] : $referer;
+		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
 		{
