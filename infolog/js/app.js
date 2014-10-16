@@ -121,7 +121,7 @@ app.classes.infolog = AppJS.extend(
 	/**
 	 * Retrieve the current state of the application for future restoration
 	 *
-	 * Reimplemented to add col_filter.action from content set by server
+	 * Reimplemented to add action/action_id from content set by server
 	 * when eg. viewing infologs linked to contacts.
 	 *
 	 * @return {object} Application specific map representing the current state
@@ -131,10 +131,28 @@ app.classes.infolog = AppJS.extend(
 		// call parent
 		var state = this._super.apply(this, arguments);
 
-		var filters = this.et2 ? this.et2.getArrayMgr('content').data.nm.col_filter : {};
-		state.col_filter.action = filters.action || null;
+		var nm = this.et2 ? this.et2.getArrayMgr('content').data.nm : {};
+		state.action = nm.action || null;
+		state.action_id = nm.action_id || null;
 
 		return state;
+	},
+
+	/**
+	 * Set the application's state to the given state.
+	 *
+	 * Reimplemented to also reset action/action_id.
+	 *
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.
+	 *
+	 * @return {boolean} false - Returns false to stop event propagation
+	 */
+	setState: function(state)
+	{
+		if (typeof state.state.action == 'undefined') state.state.action = null;
+
+		return this._super.apply(this, arguments);
 	},
 
 	/**

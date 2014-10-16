@@ -313,7 +313,7 @@ class infolog_ui
 			}
 			//error_log(__METHOD__."() prefs[listNoSubs]=".array2string($this->prefs['listNoSubs'])." --> parent_id=$parent_id");
 			unset($query['col_filter']['parent_id']);
-			if(!$query['col_filter']['action'])
+			if(!$query['action'])
 			{
 				egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			}
@@ -345,10 +345,9 @@ class infolog_ui
 			$links['linked'] = array();
 			unset($query['col_filter']['linked']);
 		}
-		if($query['col_filter']['action'] && in_array($query['col_filter']['action']['app'], array_keys($GLOBALS['egw_info']['apps'])))
+		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
 		{
-			$link_filters['action'] = $query['col_filter']['action'];
-			unset($query['col_filter']['action']);
+			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
 			$links['action'] = array();
 		}
 		foreach($link_filters as $key => $link)
@@ -409,7 +408,7 @@ class infolog_ui
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
-		$columnselection_pref = 'nextmatch-'.($link_filters['action'] ? 'infolog.'.$link_filters['action']['app'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
+		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
 			.($details ? '-details' : '');
 
 		$columselection = $this->prefs[$columnselection_pref];
@@ -455,17 +454,17 @@ class infolog_ui
 		// Don't add parent in if info_id_parent (expanding to show subs)
 		if ($query['action_id'] && !$query['col_filter']['info_id_parent'])
 		{
-			$parents = $link_filters['action'] && $link_filters['action']['app'] == 'sp' ? (array)$link_filters['action']['id'] : array();
-			if (count($parents) == 1 && is_array($link_filters['action']['id']))
+			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
+			if (count($parents) == 1 && is_array($query['action_id']))
 			{
-				$link_filters['action']['id'] = array_shift($link_filters['action']['id']);	// display single parent as app_header
+				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 			}
 		}
 
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
-		if($parent_first || $link_filters['action'] && $link_filters['action']['app'] == 'sp' && is_array($link_filters['action']['id'])) $query['total']++;
+		if($parent_first || $query['action'] == 'sp' && is_array($query['action_id'])) $query['total']++;
 
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
@@ -541,14 +540,14 @@ class infolog_ui
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
 			}
-			if ($link_filters['action'] && ($title = $link_filters['action']['title'] || is_array($link_filters['action']['id']) ?
-				$link_filters['action']['title'] : egw_link::title($link_filters['action']['app'] == 'sp' ? 'infolog' : $link_filters['action']['app'], $link_filters['action']['id'])))
+			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
+				$query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
 		}
 
-		if ($link_filters) $query['col_filter'] += $link_filters;  // add linked and action back to col_filter
+		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter
 
 		return $query['total'];
 	}
@@ -944,14 +943,9 @@ class infolog_ui
 				if (is_int($colfk)) unset($values['nm']['col_filter']);
 			}
 		}
-		$values['action'] = $persist['action'] = $action;
-		$values['action_id'] = $persist['action_id'] = $action_id;
-		$values['action_title'] = $persist['action_title'] = $action_title;
-		$values['nm']['col_filter']['action'] = $action && $action_id ? array(
-			'app' => $action,
-			'id' => $action_id,
-			'title' => $action_title,
-		) : null;
+		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
+		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
+		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
 		$values['duration_format'] = ','.$this->duration_format;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
