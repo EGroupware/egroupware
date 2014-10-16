@@ -235,6 +235,31 @@ function egwDragActionImplementation()
 					"start": function(e) {
 						return ai.helper != null;
 					},
+					revert: function(valid)
+					{
+						var dTarget = this;
+						if (!valid)
+						{
+							// Tolerance value of pixels arround the draggable target
+							// to distinguish whether the action was intended for dragging or selecting content.
+							var tipTelorance = 10;
+							var helperTop = ai.helper.position().top;
+									
+							if (helperTop >= dTarget.offset().top 
+									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
+							{
+								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+								egw.message(egw.lang('Hold %1 key to select content.', key),'info');
+							}
+							// Invalid target
+							return true;
+						}
+						else
+						{
+							// Valid target
+							return false;
+						}
+					},
 					// Solves problem with scroll position changing in the grid
 					// component
 					"refreshPositions": true,
