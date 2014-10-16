@@ -2561,6 +2561,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_infolog: function(_action, _elems)
 	{
+		//define/preset w_h in case something fails
+		var reg = '750x580';
+		var w_h =reg.split('x');
+
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -2588,7 +2592,7 @@ app.classes.mail = AppJS.extend(
 				}
 				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
 				{
-					var w_h =app_registry['edit_popup'].split('x');
+					w_h =app_registry['edit_popup'].split('x');
 				}
 			}
 		}
@@ -2606,6 +2610,9 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_tracker: function(_action, _elems)
 	{
+		//define/preset w_h in case something fails
+		var reg = '780x535';
+		var w_h =reg.split('x');
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -2633,7 +2640,7 @@ app.classes.mail = AppJS.extend(
 				}
 				if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
 				{
-					var w_h =app_registry['add_popup'].split('x');
+					w_h =app_registry['add_popup'].split('x');
 				}
 			}
 		}
