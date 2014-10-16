@@ -3623,20 +3623,39 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Hide Folder, Cc and Bcc rows from the compose popup
-	 *
+	 *	-Only fields which have no content should get hidden
 	 */
 	compose_fieldExpander_hide: function ()
 	{
-		var widgets = {cc:{},bcc:{},folder:{}};
+		var widgets = {
+			cc:{
+				widget:{},
+				jQClass: '.mailComposeJQueryCc'
+			},
+			bcc:{
+				widget:{},
+				jQClass: '.mailComposeJQueryBcc'
+			},
+			folder:{
+				widget:{},
+				jQClass: '.mailComposeJQueryFolder'
+			}};
+		
 		for(var widget in widgets)
 		{
-			widgets[widget] = this.et2.getWidgetById(widget+'_expander');
-			if (typeof widgets[widget] != 'undefined')
+			var expanderBtn = widget + '_expander';
+			widgets[widget].widget = this.et2.getWidgetById(widget);
+			// Add expander button widget to the widgets object
+			widgets[expanderBtn] = {widget:this.et2.getWidgetById(expanderBtn)};
+			
+			if (typeof widgets[widget].widget != 'undefined' 
+					&& typeof widgets[expanderBtn].widget != 'undefined'
+					&& widgets[widget].widget.get_value().length == 0)
 			{
-				widgets[widget].set_disabled(false);
+				widgets[expanderBtn].widget.set_disabled(false);
+				jQuery(widgets[widget].jQClass).hide();
 			}
 		}
-		jQuery(".mailComposeJQueryCc,.mailComposeJQueryBcc,.mailComposeJQueryFolder").hide();
 	},
 
 	/**
