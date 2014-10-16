@@ -384,11 +384,6 @@ class addressbook_hooks
 			),
 			'merge' => true,
 		);
-		if($GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~')
-		{
-			$links['view'] = $links['edit'];
-			$links['view_popup'] = $links['edit_popup'];
-		}
 		return $links;
 	}
 

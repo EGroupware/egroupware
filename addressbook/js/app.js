@@ -500,6 +500,8 @@ app.classes.addressbook = AppJS.extend(
 
 	/**
 	 * Apply advanced search filters to index nextmatch
+	 *
+	 * @param {object} filters
 	 */
 	adv_search: function(filters)
 	{
@@ -576,7 +578,7 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	addEmail: function(action, selected)
 	{
-		// Check for all selected.  
+		// Check for all selected.
 		var nm = this.et2.getWidgetById('nm');
 		if(fetchAll(selected, nm, jQuery.proxy(function(ids) {
 			// fetchAll() returns just the ID, no prefix, so map it to match normal selected

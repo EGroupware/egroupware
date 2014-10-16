@@ -368,7 +368,7 @@ class addressbook_ui extends addressbook_bo
 					'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~',
 					'allowOnMultiple' => false,
 					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
-					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+					'popup' => egw_link::get_registry('addressbook', 'edit_popup'),
 					'group' => $group,
 				),
 				'add' => array(
