@@ -236,10 +236,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 		// We can do this and not wind up with 2 because child is a template,
 		// which has special handling
-		// disabling immediate direct call for selected tab seems to have no recognisable impact and
-		// some widgets, eg. color-picker have problems with calling doLoadingFinished twice
-		// (color input gets re-rendered second time after hitting [Apply], if color-picker is in a tab)
-		//this._children[0].loadingFinished(promises);
+		this._children[0].loadingFinished(promises);
 
 		// Defer parsing & loading of other tabs until later
 		window.setTimeout(function() {
