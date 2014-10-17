@@ -503,6 +503,7 @@ please enter a name	admin	en	Enter a name
 please enter a name for that server !	admin	en	Enter a name for that server!
 please run setup to become current	admin	en	Run setup to become current
 please select	admin	en	Please select
+please submit (or postpone) statistic first	admin	en	Please submit (or postpone) statistic first
 postfix with ldap	admin	en	Postfix with LDAP
 postpone for	admin	en	Postpone for
 preferences	admin	en	Preferences
