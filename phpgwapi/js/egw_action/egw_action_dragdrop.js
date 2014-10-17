@@ -82,7 +82,62 @@ function egwDragActionImplementation()
 	ai.helper = null;
 	ai.ddTypes = [];
 	ai.selected = [];
+	
+	// Define default helper DOM
+	ai.defaultDDHelper = function (_selected)
+	{
+		// Table containing clone of rows
+		var table = $j(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
+		// tr element to use as last row to show lable more ...
+		var moreRow = $j(document.createElement('tr')).addClass('et2_egw_action_ddHelper_tip');
+		// Main div helper container
+		var div = $j(document.createElement("div")).append(table);
+		// Lable to show number of items
+		var spanCnt = $j(document.createElement('span'))
+				.addClass('et2_egw_action_ddHelper_itemsCnt')
+				.appendTo(div);
+		
+		// TODO: get the right drag item next to the number
+		var itemsLabel = '';
+		spanCnt.text(_selected.length + itemsLabel);
+		
+		var rows = [];
+		// Maximum number of rows to show
+		var maxRows = 3;
+		
+		var index = 0;
+		for (var i = 0; i < _selected.length;i++)
+		{
+			var row = $j(_selected[i].iface.getDOMNode()).clone();
+			if (row)
+			{
+				rows.push(row);
+				table.append(row);
+			}
+			index++;
+			if (index == maxRows)
+			{
+				var restRows = _selected.length - maxRows;
+				if (restRows)	moreRow.text((_selected.length - maxRows) +' '+egw.lang('more selected ...'));
+				table.append(moreRow);
+				break;
+			}
+		}
+		
+		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_textArea');
+		div.append(text);
 
+		// Add notice of Ctrl key, if supported
+		if('draggable' in document.createElement('span') &&
+			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
+		{
+			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			
+			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemsLabel));
+		}
+		return div;
+	}
+	
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode();
@@ -221,6 +276,9 @@ function egwDragActionImplementation()
 
 						if (ai.helper)
 						{
+							// Add a basic class to the helper in order to standardize the background layout
+							ai.helper.addClass('et2_egw_action_ddHelper');
+							
 							// Append the helper object to the body element - this
 							// fixes a bug in IE: If the element isn't inserted into
 							// the DOM-tree jquery appends it to the parent node.
@@ -230,7 +288,7 @@ function egwDragActionImplementation()
 						}
 
 						// Return an empty div if the helper dom node is not set
-						return $j(document.createElement("div"));
+						return $j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
 					},
 					"start": function(e) {
 						return ai.helper != null;
@@ -264,7 +322,7 @@ function egwDragActionImplementation()
 					// component
 					"refreshPositions": true,
 					"scroll": false,
-					"containment": "document",
+					//"containment": "document",
 					"iframeFix": true
 				}
 			);
@@ -332,9 +390,7 @@ function egwDragActionImplementation()
 		// If no helper has been defined, create an default one
 		if (!this.helper && hasLink)
 		{
-			this.helper = $j(document.createElement("div"));
-			this.helper.addClass("egw_action_ddHelper");
-			this.helper.text("(" + _selected.length + ")");
+			this.helper = ai.defaultDDHelper(_selected);
 		}
 
 		return true;

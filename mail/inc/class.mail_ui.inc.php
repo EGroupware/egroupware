@@ -1393,7 +1393,7 @@ class mail_ui
 				'drag_mail' => array(
 					'dragType' => array('mail'),
 					'type' => 'drag',
-					'onExecute' => 'javaScript:app.mail.mail_dragStart',
+					//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 				)
 			)
 		);

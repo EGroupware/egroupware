@@ -1638,3 +1638,41 @@ div.et2_image_tooltipPopup {
 	overflow:auto;
 }
 
+/*egw_action_ddHelper*/
+div.et2_egw_action_ddHelper {
+
+}
+div.et2_egw_action_ddHelper_tip {
+	position: relative;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	float: left;
+	background-color: rgba(0, 0, 0, 0.70);
+	box-shadow: 6px 6px 8px gray;
+	border: 1px solid black;
+	border-top: none;
+	color: white;
+}
+div.et2_egw_action_ddHelper table.et2_egw_action_ddHelper_row {
+	background-color: rgba(255, 194, 0, 0.70);
+	box-shadow: 6px 6px 8px gray;
+	border: 1px solid black;
+}
+table.et2_egw_action_ddHelper_row tr {
+	background: none;
+	max-height: 20px;
+}
+table.et2_egw_action_ddHelper_row * {
+	white-space: nowrap !important;
+}
+span.et2_egw_action_ddHelper_itemCnt {
+	background: transparent;
+	position: absolute;
+	left: 20px;
+	top: 8%;
+	font-size: 367%;
+	color: rgba(255, 255, 255, 1);
+	text-align: center;
+	font-weight: bold;
+}
