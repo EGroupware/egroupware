@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare admin - Timed Asynchron Services
+ * EGgroupware admin - Timed Asynchron Services
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -59,7 +59,7 @@ class uiasyncservice
 				{
 					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
 				}
-				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',(array)$GLOBALS['egw_info']['user']['account_email']))
+				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['egw_info']['user']['account_email']))
 				{
 					echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
 				}
@@ -93,11 +93,7 @@ class uiasyncservice
 
 		if (isset($_POST['asyncservice']) && $_POST['asyncservice'] != $GLOBALS['egw_info']['server']['asyncservice'])
 		{
-			$config =& CreateObject('phpgwapi.config','phpgwapi');
-			$config->read_repository();
-			$config->value('asyncservice',$GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice']);
-			$config->save_repository();
-			unset($config);
+			config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
 		}
 		if (!$async->only_fallback)
 		{
@@ -189,7 +185,6 @@ class uiasyncservice
 		}
 		echo '<p><input type="submit" name="update" value="'.lang('Update').'"></p>'."\n";
 		echo "</form>\n";
-
 	}
 
 	function test($to)

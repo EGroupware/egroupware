@@ -246,7 +246,7 @@ function array2string($var)
  * Check if a given extension is loaded or load it if possible (requires sometimes disabled or unavailable dl function)
  *
  * @param string $extension
- * @param boolean $throw=false should we throw an exception, if $extension could not be loaded, default false = no
+ * @param boolean $throw =false should we throw an exception, if $extension could not be loaded, default false = no
  * @return boolean true if loaded now, false otherwise
  */
 function check_load_extension($extension,$throw=false)
@@ -1118,7 +1118,7 @@ function filesystem_separator()
  * print an array or object as pre-formatted html
  *
  * @param mixed $array
- * @param boolean $print=true print or return the content
+ * @param boolean $print =true print or return the content
  * @return string if !$print
  */
 function _debug_array($array,$print=True)
@@ -1324,7 +1324,7 @@ function prepend_tables_prefix($prefix,$tables)
  * backtrace of the calling functions for php4.3+ else menuaction/scriptname
  *
  * @author RalfBecker-AT-outdoor-training.de
- * @param int $remove=0 number of levels to remove
+ * @param int $remove =0 number of levels to remove
  * @return string function-names separated by slashes (beginning with the calling function not this one)
  */
 function function_backtrace($remove=0)
@@ -1356,7 +1356,7 @@ function function_backtrace($remove=0)
  *
  * @internal
  * @param array &$var reference of array to check
- * @param string $name='' name of the array
+ * @param string $name ='' name of the array
  */
 function _check_script_tag(&$var,$name='')
 {
@@ -1499,7 +1499,7 @@ if (!function_exists('lang') || defined('NO_LANG'))	// setup declares an own ver
 	 * function to handle multilanguage support
 	 *
 	 * @param string $key message in englich with %1, %2, ... placeholders
-	 * @param string $vars=null multiple values to replace the placeholders
+	 * @param string $vars =null multiple values to replace the placeholders
 	 * @return string translated message with placeholders replaced
 	 */
 	function lang($key,$vars=null)
@@ -1520,7 +1520,7 @@ if (!function_exists('lang') || defined('NO_LANG'))	// setup declares an own ver
  * as calling lang would try to load the translations, evtl. cause more errors, eg. because there's no db-connection.
  *
  * @param string $key message in englich with %1, %2, ... placeholders
- * @param string $vars=null multiple values to replace the placeholders
+ * @param string $vars =null multiple values to replace the placeholders
  * @return string translated message with placeholders replaced
  */
 function try_lang($key,$vars=null)
@@ -1596,7 +1596,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  * Used to migrate from PHP serialized database values to json-encoded ones.
  *
  * @param string $str string with serialized array
- * @param boolean $allow_not_serialized=false true: return $str as is, if it is no serialized array
+ * @param boolean $allow_not_serialized =false true: return $str as is, if it is no serialized array
  * @return array|str|false
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
@@ -1606,9 +1606,9 @@ function json_php_unserialize($str, $allow_not_serialized=false)
 	{
 		return $arr;
 	}
-	if (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{')
+	if (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{' || $str[0] == '"' || $str === 'null' || ($val = json_decode($str)) !== null)
 	{
-		return json_decode($str, true);
+		return isset($val) ? $val : json_decode($str, true);
 	}
 	return $str;
 }

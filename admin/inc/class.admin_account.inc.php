@@ -190,7 +190,7 @@ class admin_account
 	/**
 	 * Delete an account
 	 *
-	 * @param array $content=null
+	 * @param array $content =null
 	 */
 	public static function delete(array $content=null)
 	{
