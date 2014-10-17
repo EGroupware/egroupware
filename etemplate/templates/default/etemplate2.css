@@ -1549,7 +1549,7 @@ div.ui-toolbar-menulist{
 }
 .et2_gantt .gantt_task_planned
 {
-	margin-top: 7px;
+	height: 10px;
 	position: absolute;
 	opacity: 0.3;
 	border-style: outset;
@@ -1576,6 +1576,7 @@ div.ui-toolbar-menulist{
 .et2_gantt .gantt_right .gantt_task_planned
 {
 	border-left: none;
+	top: 25px;
 }
 
 /**

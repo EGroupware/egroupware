@@ -73,6 +73,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		show_progress: true,
 		order_branch: true,
 		min_column_width: 30,
+		task_height: 25,
 		fit_tasks: true,
 		autosize: '',
 		// Date rounding happens either way, but this way it rounds to the displayed grid resolution
@@ -1015,9 +1016,9 @@ $j(function() {
 		var text = '';
 		if(task.planned_start)
 		{
-			if(typeof task.planned_start == 'string') task.planned_start = new Date(task.planned_start);
+			if(typeof task.planned_start == 'string') task.planned_start = gantt.date.parseDate(task.planned_start, "xml_date");
 			var p_start = gantt.posFromDate(task.planned_start) - gantt.posFromDate(start);
-			text = "<div class='gantt_task_line gantt_task_planned' style='width:"+Math.abs(p_start)+"px; right:"+(p_start > 0 ? -p_start : 0)+"px; height:100%'><span>"
+			text = "<div class='gantt_task_line gantt_task_planned' style='width:"+Math.abs(p_start)+"px; right:"+(p_start > 0 ? -p_start : 0)+"px;'><span>"
 				+ gantt.date.date_to_str(gantt.config.api_date)(task.planned_start)
 				+ "</span></div>";
 		}
@@ -1027,9 +1028,9 @@ $j(function() {
 		var text = '';
 		if(task.planned_end)
 		{
-			if(typeof task.planned_end == 'string') task.planned_end = new Date(task.planned_end);
+			if(typeof task.planned_end == 'string') task.planned_end = gantt.date.parseDate(task.planned_end, "xml_date");
 			var p_end = gantt.posFromDate(task.planned_end) - gantt.posFromDate(end);
-			text = "<div class='gantt_task_line gantt_task_planned' style='left:"+p_end +"px; height:100%'><span>"
+			text = "<div class='gantt_task_line gantt_task_planned' style='left:"+(p_end > 0 ? 0 : p_end) +"px; width:"+Math.abs(p_end)+"px'><span>"
 				+ gantt.date.date_to_str(gantt.config.api_date)(task.planned_end)
 				+ "</span></div>";
 		}
