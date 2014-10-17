@@ -191,7 +191,6 @@ delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
 delete group	admin	de	Gruppe löschen
-delete including sub-enteries	common	de	Inklusive Untereinträge löschen
 delete peer server	admin	de	Server von Serververbund löschen
 delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
@@ -504,6 +503,7 @@ please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
 please select	admin	de	Bitte auswählen
+please submit (or postpone) statistic first	admin	de	Bitte Statistik erst abschicken (oder aufschieben)
 postfix with ldap	admin	de	Postfix mit LDAP
 postpone for	admin	de	Aufschieben um
 preferences	admin	de	Einstellungen

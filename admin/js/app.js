@@ -115,6 +115,7 @@ app.classes.admin = AppJS.extend(
 	{
 		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href.match(/menuaction=admin.admin_statistics.submit/))
 		{
+			this.egw.message(this.egw.lang('Please submit (or postpone) statistic first'), 'info');
 			return;	// do not allow to leave statistics submit
 		}
 		if (_url)
