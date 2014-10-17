@@ -152,6 +152,13 @@ class timesheet_bo extends so_sql_cf
 	*/
 	var $columns_to_search = array('egw_timesheet.ts_id', 'ts_project', 'ts_title', 'ts_description', 'ts_duration', 'ts_quantity', 'ts_unitprice');
 
+	/**
+	 * all cols in data which are not (direct)in the db, for data_merge
+	 *
+	 * @var array
+	 */
+	var $non_db_cols = array('pm_id');
+
 	function __construct()
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
@@ -627,19 +634,21 @@ class timesheet_bo extends so_sql_cf
 			$this->user = $this->data['ts_modifier'];
 		}
 
-		// check if we have a real modification
-		// read the old record
-		$new =& $this->data;
-		unset($this->data);
-		$this->read($new['ts_id']);
-		$old =& $this->data;
-		$this->data =& $new;
-		$changed[] = array();
-		if (isset($old)) foreach($old as $name => $value)
+		// check if we have a real modification of an existing record
+		if ($this->data['ts_id'])
 		{
-			if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
+			$new =& $this->data;
+			unset($this->data);
+			$this->read($new['ts_id']);
+			$old =& $this->data;
+			$this->data =& $new;
+			$changed = array();
+			if (isset($old)) foreach($old as $name => $value)
+			{
+				if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
+			}
 		}
-		if (!$changed)
+		if (isset($old) && !$changed)
 		{
 			return false;
 		}
@@ -665,7 +674,6 @@ class timesheet_bo extends so_sql_cf
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
-
 
 		return $err;
 	}
@@ -969,5 +977,69 @@ class timesheet_bo extends so_sql_cf
 			}
 		}
 		if ($backup) $this->data = $backup;
+	}
+
+
+	/**
+	 * changes the data from the db-format to your work-format
+	 *
+	 * Reimplemented to store just ts_project in db, but have pm_id and ts_project in memory,
+	 * with ts_project only set, if it contains a custom project name.
+	 *
+	 * @param array $data =null if given works on that array and returns result, else works on internal data-array
+	 * @return array
+	 */
+	function db2data($data=null)
+	{
+		if (($intern = !is_array($data)))
+		{
+			$data =& $this->data;
+		}
+		// get pm_id from links and ts_project: either project matching ts_project or first found project
+		if (!isset($data['pm_id']) && $data['ts_id'])
+		{
+			$first_pm_id = null;
+			foreach(egw_link::get_links('timesheet', $data['ts_id'], 'projectmanager') as $pm_id)
+			{
+				if (!isset($first_pm_id)) $first_pm_id = $pm_id;
+				if ($data['ts_project'] == egw_link::title('projectmanager', $pm_id))
+				{
+					$data['pm_id'] = $pm_id;
+					$data['ts_project_blur'] = $data['ts_project'];
+					$data['ts_project'] = '';
+					break;
+				}
+			}
+			if (!isset($data['pm_id']) && isset($first_pm_id)) $data['pm_id'] = $first_pm_id;
+		}
+		elseif ($data['ts_id'] && $data['pm_id'] && egw_link::title('projectmanager', $data['pm_id']) == $data['ts_project'])
+		{
+			$data['ts_project_blur'] = $data['ts_project'];
+			$data['ts_project'] = '';
+		}
+		return parent::db2data($intern ? null : $data);	// important to use null, if $intern!
+	}
+
+	/**
+	 * changes the data from your work-format to the db-format
+	 *
+	 * Reimplemented to store just ts_project in db, but have pm_id and ts_project in memory,
+	 * with ts_project only set, if it contains a custom project name.
+	 *
+	 * @param array $data =null if given works on that array and returns result, else works on internal data-array
+	 * @return array
+	 */
+	function data2db($data=null)
+	{
+		if (($intern = !is_array($data)))
+		{
+			$data =& $this->data;
+		}
+		// allways store ts_project to be able to search for it, even if no custom project is set
+		if (empty($data['ts_project']))
+		{
+			$data['ts_project'] = $data['pm_id'] ? egw_link::title('projectmanager', $data['pm_id']) : '';
+		}
+		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
 	}
 }

@@ -91,6 +91,7 @@ class timesheet_ui extends timesheet_bo
 				$only_admin_edit = true;
 				$msg = lang('only Admin can edit this status');
 			}
+			$this->data['ts_project_blur'] = $this->data['pm_id'] ? egw_link::title('projectmanager', $this->data['pm_id']) : '';
 		}
 		else
 		{
@@ -144,18 +145,11 @@ class timesheet_ui extends timesheet_bo
 			list($button) = @each($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
+			$content['ts_project_blur'] = $content['pm_id'] ? egw_link::title('projectmanager', $content['pm_id']) : '';
 			$this->data = $content;
 			foreach(array('button','view','referer','tabs','start_time') as $key)
 			{
 				unset($this->data[$key]);
-			}
-			// user switched project to none --> remove project and blur
-			if ($this->data['ts_project_blur'] && !$this->data['pm_id'] && $this->data['old_pm_id'])
-			{
-				unset($this->data['ts_project_blur']);
-				unset($content['ts_project_blur']);
-				unset($this->data['ts_project']);
-				unset($content['ts_project']);
 			}
 			switch($button)
 			{
@@ -186,8 +180,6 @@ class timesheet_ui extends timesheet_bo
 					{
 						$etpl->set_validation_error('start_time',lang('Starttime has to be before endtime !!!'));
 					}
-					// only store project-blur, if a project is selected
-					if (!$this->data['ts_project'] && $this->data['pm_id']) $this->data['ts_project'] = $this->data['ts_project_blur'];
 					// set ts_title to ts_project if short viewtype (title is not editable)
 					if($this->ts_viewtype == 'short')
 					{
@@ -213,6 +205,20 @@ class timesheet_ui extends timesheet_bo
 					}
 					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
 
+					// account for changed project --> remove old one from links and add new one
+					if ((int) $this->data['pm_id'] != (int) $this->data['old_pm_id'])
+					{
+						// update links accordingly
+						if ($this->data['pm_id'])
+						{
+							egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
+						}
+						if ($this->data['old_pm_id'])
+						{
+							egw_link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
+							unset($this->data['old_pm_id']);
+						}
+					}
 					// check if we are linked to a project, but that is NOT set as project
 					if (!$this->data['pm_id'] && is_array($content['link_to']['to_id']))
 					{
@@ -221,6 +227,7 @@ class timesheet_ui extends timesheet_bo
 							if ($data['app'] == 'projectmanager')
 							{
 								$this->data['pm_id'] = $data['id'];
+								$this->data['ts_project_blur'] = egw_link::title('projectmanager', $data['id']);
 								break;
 							}
 						}
@@ -234,19 +241,6 @@ class timesheet_ui extends timesheet_bo
 					else
 					{
 						$msg = lang('Entry saved');
-						if ((int) $this->data['pm_id'] != (int) $this->data['old_pm_id'])
-						{
-							// update links accordingly
-							if ($this->data['pm_id'])
-							{
-								egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
-							}
-							if ($this->data['old_pm_id'])
-							{
-								egw_link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
-								unset($this->data['old_pm_id']);
-							}
-						}
 						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
 							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
@@ -371,10 +365,6 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['pm_id'] = $preserv['old_pm_id'];
 		}
-		if ($content['pm_id'])
-		{
-			$preserv['ts_project_blur'] = $content['ts_project_blur'] = egw_link::title('projectmanager',$content['pm_id']);
-		}
 		if ($this->pm_integration == 'full')
 		{
 			$preserv['ts_project'] = $preserv['ts_project_blur'];
@@ -392,7 +382,7 @@ class timesheet_ui extends timesheet_bo
 
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
-		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
+		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $content['ts_project_blur'];
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
 			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,

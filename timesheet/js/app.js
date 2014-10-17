@@ -96,4 +96,20 @@ app.classes.timesheet = AppJS.extend(
 			egw.css(".et2_label.ts_description","display:" + (filter2.getValue() == '1' ? "block;" : "none;"));
 		}
 	},
+
+	/**
+	 * Change handler for project selection to set empty ts_project string, if project get deleted
+	 *
+	 * @param {type} _egw
+	 * @param {et2_widget_link_entry} _widget
+	 * @returns {undefined}
+	 */
+	pm_id_changed: function(_egw, _widget)
+	{
+		var ts_project = this.et2.getWidgetById('ts_project');
+		if (ts_project)
+		{
+			ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
+		}
+	}
 });

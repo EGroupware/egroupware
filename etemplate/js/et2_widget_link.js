@@ -545,6 +545,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.search = null;
+		this.clear = null;
 		this.app_select = null;
 		this._oldValue = {
 			id: null,
@@ -570,6 +571,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.search.autocomplete("destroy");
 		}
 		this.search = null;
+		this.clear = null;
 		this.app_select = null;
 		this.request = null;
 	},
@@ -691,6 +693,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		this.clear = $j(document.createElement("span"))
 			.addClass("ui-icon ui-icon-close")
 			.click(function(e){
+				if (!self.search) return;	// only gives an error, we should never get into that situation
 				// No way to tell if the results is open, so if they click the button while open, it clears
 				if(self.last_search && self.last_search != self.search.val())
 				{
@@ -705,7 +708,11 @@ var et2_link_entry = et2_inputWidget.extend(
 					self.search.autocomplete("close");
 					self.set_value(null);
 					self.search.val("");
-					self.search.trigger("change");
+					// call trigger, after finishing this handler, not in the middle of it
+					window.setTimeout(function()
+					{
+						self.search.trigger("change");
+					}, 0);
 				}
 				self.search.focus();
 			})

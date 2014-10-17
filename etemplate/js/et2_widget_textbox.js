@@ -217,8 +217,10 @@ var et2_textbox = et2_inputWidget.extend(
 				});
 			}
 		} else {
+			if (!this.getValue()) this.input.val('');
 			this.input.removeAttr("placeholder");
 		}
+		this.options.blur = _value;
 	}
 });
 et2_register_widget(et2_textbox, ["textbox", "passwd"]);

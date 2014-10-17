@@ -16,7 +16,7 @@
 				<row>
 					<description value="Project" for="ts_project"/>
 					<hbox disabled="@pm_integration=none">
-						<link-entry id="pm_id" onchange="1" only_app='projectmanager' blur='None' class="et2_fullWidth"/>
+						<link-entry id="pm_id" onchange="app.timesheet.pm_id_changed" only_app='projectmanager' blur='None' class="et2_fullWidth"/>
 					</hbox>
 					<description/>
 					<hbox disabled="@pm_integration=full" span="all">
