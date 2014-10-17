@@ -1240,7 +1240,7 @@ class infolog_ui
 	/**
 	 * Handles actions on multiple infologs
 	 *
-	 * @param action
+	 * @param string $_action
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all entries of the current selection (in the session)
 	 * @param int &$success number of succeded actions
@@ -1251,7 +1251,7 @@ class infolog_ui
 	 * @param boolean $skip_notifications true to NOT notify users about changes
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg,
+	function action($_action, $checked, $use_all, &$success, &$failed, &$action_msg,
 		array $query, &$msg, $skip_notifications = false)
 	{
 		//echo '<p>'.__METHOD__."('$action',".array2string($checked).','.(int)$use_all.",...)</p>\n";
@@ -1273,7 +1273,7 @@ class infolog_ui
 		}
 
 		// Actions with options in the selectbox
-		list($action, $settings) = explode('_', $action, 2);
+		list($action, $settings) = explode('_', $_action, 2);
 
 		// Actions that can handle a list of IDs
 		switch($action)
@@ -1476,14 +1476,14 @@ class infolog_ui
 	 * Closes an infolog
 	 *
 	 * @param int|array $values=0 info_id (default _GET[info_id])
-	 * @param string $referer=''
+	 * @param string $_referer=''
 	 * @param boolean $closesingle=false
 	 */
-	function close($values=0,$referer='',$closesingle=false,$skip_notification = false)
+	function close($values=0,$_referer='',$closesingle=false,$skip_notification = false)
 	{
 		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
-		$referer = is_array($values) ? $values['referer'] : $referer;
+		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if ($info_id)
 		{
@@ -1526,14 +1526,14 @@ class infolog_ui
 	 * Deletes an InfoLog entry
 	 *
 	 * @param array|int $values info_id (default _GET[info_id])
-	 * @param string $referer
+	 * @param string $_referer
 	 * @param string $called_by
 	 * @param boolean $skip_notification Do not send notification of deletion
 	 */
-	function delete($values=0,$referer='',$called_by='',$skip_notification=False)
+	function delete($values=0,$_referer='',$called_by='',$skip_notification=False)
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
-		$referer = is_array($values) ? $values['referer'] : $referer;
+		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
 		{

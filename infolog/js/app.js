@@ -90,7 +90,7 @@ app.classes.infolog = AppJS.extend(
 		if (typeof _links != 'undefined')
 		{
 			if (typeof _links.infolog != 'undefined')
-			{	
+			{
 				switch (_app)
 				{
 					case 'timesheet':
@@ -105,17 +105,54 @@ app.classes.infolog = AppJS.extend(
 		{
 			var info_type = egw.dataGetUIDdata(_app+"::"+_id)?egw.dataGetUIDdata(_app+"::"+_id).data.info_type:false;
 			var cal_show = egw.preference('cal_show','infolog')||false;
-			
+
 			if (info_type && cal_show)
 			{
 				var rex = RegExp(info_type,'gi');
 				if (cal_show.match(rex))
 				{
-					//Trigger refresh the whole calendar if the changed infolog entry is integrated one 
+					//Trigger refresh the whole calendar if the changed infolog entry is integrated one
 					if (typeof app['calendar'] != 'undefined') app.calendar.egw.window.location.reload();
-				}	
+				}
 			}
 		}
+	},
+
+	/**
+	 * Retrieve the current state of the application for future restoration
+	 *
+	 * Reimplemented to add action/action_id from content set by server
+	 * when eg. viewing infologs linked to contacts.
+	 *
+	 * @return {object} Application specific map representing the current state
+	 */
+	getState: function()
+	{
+		// call parent
+		var state = this._super.apply(this, arguments);
+
+		var nm = this.et2 ? this.et2.getArrayMgr('content').data.nm : {};
+		state.action = nm.action || null;
+		state.action_id = nm.action_id || null;
+
+		return state;
+	},
+
+	/**
+	 * Set the application's state to the given state.
+	 *
+	 * Reimplemented to also reset action/action_id.
+	 *
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.
+	 *
+	 * @return {boolean} false - Returns false to stop event propagation
+	 */
+	setState: function(state)
+	{
+		if (typeof state.state.action == 'undefined') state.state.action = null;
+
+		return this._super.apply(this, arguments);
 	},
 
 	/**
@@ -172,7 +209,7 @@ app.classes.infolog = AppJS.extend(
 
 			// Change preference location - widget is nextmatch
 			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.value == 'all' ? '-details' :'');
-			
+
 			// Load new preferences
 			var colData = nm.columns.slice();
 			for(var i = 0; i < nm.columns.length; i++) colData[i].disabled=false;
@@ -193,7 +230,8 @@ app.classes.infolog = AppJS.extend(
 	/**
 	 * Show or hide details by changing the CSS class
 	 *
-	 * @param show
+	 * @param {boolean} show
+	 * @param {DOMNode} dom_node
 	 */
 	show_details: function(show, dom_node)
 	{
@@ -403,18 +441,19 @@ app.classes.infolog = AppJS.extend(
 					isLoadingCompleted = false;
 					jQuery('#infolog-edit-print').unbind("DOMSubtreeModified");
 			});
-			setTimeout(function(){isLoadingCompleted = false},1000);
+			setTimeout(function() {
+				isLoadingCompleted = false;
+			}, 1000);
 			var interval = setInterval(function(){
 				if (!isLoadingCompleted)
 				{
 					clearInterval(interval);
 					that.infolog_print_preview();
 				}
-
 			}, 100);
 		});
 	},
-	
+
 	/**
 	 * Trigger print() function to print the current window
 	 */
