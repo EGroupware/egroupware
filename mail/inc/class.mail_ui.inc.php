@@ -3112,8 +3112,10 @@ class mail_ui
 			}
 			if (!$importFailed)
 			{
+				list($width, $height) = explode('x', egw_link::get_registry('mail', 'add_popup'));
+				if ($width > 0 && $height > 0) egw_json_response::get()->call('resizeTo', $width, $height);
 				ExecMethod2('mail.mail_ui.displayMessage',$linkData);
-				exit;
+				return;
 			}
 		}
 		if (!is_array($content)) $content = array();
