@@ -1464,10 +1464,14 @@ class emailadmin_imapbase
 					$part = $mailStructureObject->getPart($mime_id);
 					$partdisposition = $part->getDisposition();
 					$partPrimaryType = $part->getPrimaryType();
+					//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.' Disp:'.$partdisposition.' Type:'.$partPrimaryType);
 					$cid = $part->getContentId();
 					if (empty($partdisposition) && $partPrimaryType != 'multipart' && $partPrimaryType != 'text')
 					{
-						$partdisposition=($partPrimaryType == 'image'&&!empty($cid)?'inline':'attachment');
+						// the presence of an cid does not necessarily indicate its inline. it may lack the needed
+						// link to show the image. Considering this: we "list" everything that matches the above criteria
+						// as attachment in order to not loose/miss information on our data
+						$partdisposition='attachment';//($partPrimaryType == 'image'&&!empty($cid)?'inline':'attachment');
 					}
 					if ($mime_type=='message/rfc822')
 					{
@@ -4846,6 +4850,14 @@ class emailadmin_imapbase
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
 				foreach($part->contentTypeMap() as $sub_id => $sub_type) if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;
+			}
+			if (empty($partDisposition) && $partPrimaryType != 'multipart' && $partPrimaryType != 'text')
+			{
+				// the absence of an partDisposition does not necessarily indicate there is no attachment. it may be an
+				// attachment with no link to show the attachment inline.
+				// Considering this: we "list" everything that matches the above criteria
+				// as attachment in order to not loose/miss information on our data
+				$partDisposition='attachment';
 			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.' Part:'.$_partID.'->'.$mime_id.':'.array2string($skipParts));
 			if (array_key_exists($mime_id,$skipParts)) continue;
