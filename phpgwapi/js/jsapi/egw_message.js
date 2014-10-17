@@ -147,7 +147,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			var popup = false;
 			try {
-				if (_wnd.opener && typeof _wnd.opener.top.egw == 'function')
+				if (_wnd.opener && _wnd.opener != _wnd && typeof _wnd.opener.top.egw == 'function')
 				{
 					popup = true;
 				}
