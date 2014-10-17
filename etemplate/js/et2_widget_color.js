@@ -99,7 +99,11 @@ var et2_color = et2_inputWidget.extend(
 		this._super.call(this, arguments);
 	},
 
-	doLoadingFinished: function() {
+	doLoadingFinished: function()
+	{
+		// as tabs can cause a double loading, we check here if jPicker is already initialised
+		if (this.get_jPicker()) return;
+
 		this._super.apply(this, arguments);
 
 		var self = this;
@@ -130,7 +134,7 @@ var et2_color = et2_inputWidget.extend(
 		setTimeout(function() {
 			//Regex to exclude invalid charachters from class identifier name, to be able to address the class name with jquery selector later.
 			var regExClassName = /[\[\]']+/g;
-			
+
 			// Make the buttons look like all the others
 			jQuery("div.jPicker :button").addClass("et2_button et2_button_text");
 
@@ -163,14 +167,17 @@ var et2_color = et2_inputWidget.extend(
 
 	/**
 	 * Get the jPicker object for this widget, so further things can be done to it
+	 *
+	 * Id of jPicker node is either our id+'_jPicker' or our dom_id (no idea why).
 	 */
 	get_jPicker: function() {
-		if(jQuery.jPicker.List.length)
+		for(var i=0; i < jQuery.jPicker.List.length; ++i)
 		{
-			var self = this;
-			return jQuery(jQuery.jPicker.List.filter(function(elem,index) {
-				return (elem && elem.id == self.id + "_jPicker");
-			}))[0];
+			var node = jQuery.jPicker.List[i];
+			if (node && (node.id == this.id+'_jPicker' || node.id == this.dom_id))
+			{
+				return node;
+			}
 		}
 		return null;
 	},

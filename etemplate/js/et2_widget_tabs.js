@@ -242,6 +242,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 		window.setTimeout(function() {
 			for (var i = 0; i < tabs.tabData.length; i++)
 			{
+				if (i == tabs.selected_index) continue;
 				tabs._loadTab(i,promises);
 			}
 			jQuery.when.apply(jQuery,promises).then(function() {
@@ -343,7 +344,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	/**
 	 * Gets the index of the currently active tab
-	 * 
+	 *
 	 * @returns {number}
 	 */
 	get_active_tab: function() {
@@ -352,7 +353,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 
 	/**
 	 * Sets the currently active tab by index
-	 * 
+	 *
 	 * @param {number} _idx
 	 */
 	setActiveTab: function(_idx) {
