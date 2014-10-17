@@ -130,6 +130,15 @@ class infolog_merge extends bo_merge
 		// Links
 		$array += $this->get_all_links('infolog', $id, $prefix, $content);
 
+		// Timesheet time
+		if(strpos($content, 'info_sum_timesheets'))
+		{
+			$timesheets = array();
+			$links = egw_link::get_links('infolog',$id,'timesheet');
+			$sum = ExecMethod('timesheet.timesheet_bo.sum',$links);
+			$info['$$info_sum_timesheets$$'] = $sum['duration'];
+		}
+
 		// Check for linked project ID
 		$links = egw_link::get_links('infolog', $id, 'projectmanager');
 		foreach($links as $link_id => $app_id) {
@@ -168,7 +177,7 @@ class infolog_merge extends bo_merge
 
 		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
-		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label;
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
 		translation::add_app('projectmanager');
 		foreach($fields as $name => $label)
 		{
