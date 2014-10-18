@@ -327,7 +327,7 @@ class vfs_widget
 				{
 					if (substr($path,0,6) == '/apps/')
 					{
-						$path = parse_url(egw_vfs::resolve_url_symlinks($path),PHP_URL_PATH);
+						$path = egw_vfs::parse_url(egw_vfs::resolve_url_symlinks($path),PHP_URL_PATH);
 					}
 
 					//Assemble the thumbnail parameters

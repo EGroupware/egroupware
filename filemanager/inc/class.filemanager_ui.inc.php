@@ -1107,7 +1107,7 @@ class filemanager_ui
 		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
 		// only owner can change group & perms
 		if (($readonlys['gid'] = !$content['is_owner'] ||
-			parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
+			egw_vfs::parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
 		{
 			if (!$content['gid']) $content['ro_gid_root'] = 'root';
 			foreach($content['perms'] as $name => $value)
@@ -1147,7 +1147,7 @@ class filemanager_ui
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
-					$eacl['path'] = rtrim(parse_url($eacl['path'],PHP_URL_PATH),'/');
+					$eacl['path'] = rtrim(egw_vfs::parse_url($eacl['path'],PHP_URL_PATH),'/');
 					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] ||
 						$eacl['path'] != $content['path'] || !$content['is_owner'];
 				}
