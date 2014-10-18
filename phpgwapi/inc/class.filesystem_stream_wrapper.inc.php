@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -160,7 +160,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		}
 
 		// open the "real" file
-		if (!($this->opened_stream = fopen($path=egw_vfs::decodePath(parse_url($url,PHP_URL_PATH)),$mode,$options)))
+		if (!($this->opened_stream = fopen($path=egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH)),$mode,$options)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) fopen('$path','$mode',$options) returned false!");
 			return false;
@@ -302,7 +302,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function unlink ( $url )
 	{
-		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
 
 		// check access rights (file need to exist and directory need to be writable
 		if (!file_exists($path) || is_dir($path) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
@@ -327,8 +327,8 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rename ( $url_from, $url_to )
 	{
-		$from = parse_url($url_from);
-		$to   = parse_url($url_to);
+		$from = egw_vfs::parse_url($url_from);
+		$to   = egw_vfs::parse_url($url_to);
 
 		// check access rights
 		if (!($from_stat = self::url_stat($url_from,0)) || !egw_vfs::check_access(egw_vfs::dirname($url_from),egw_vfs::WRITABLE))
@@ -378,7 +378,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mkdir ( $url, $mode, $options )
 	{
-		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
 		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
 
 		// find the real parent (might be more then one level if $recursive!)
@@ -410,7 +410,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $url, $options )
 	{
-		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -432,7 +432,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
-		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -499,7 +499,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 
 		$this->opened_dir = null;
 
-		$path = egw_vfs::decodePath(parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(egw_vfs::parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
 
 		// ToDo: check access rights
 
@@ -539,7 +539,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		$parts = parse_url($url);
+		$parts = egw_vfs::parse_url($url);
 		$path = egw_vfs::decodePath($parts['path']);
 
 		$stat = @stat($path);	// suppressed the stat failed warnings
@@ -712,7 +712,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function deny_script($url)
 	{
-		$parts = parse_url($url);
+		$parts = egw_vfs::parse_url($url);
 		parse_str($parts['query'],$get);
 
 		$deny = !$get['exec'] && preg_match(self::SCRIPT_EXTENSIONS_PREG,$parts['path']);

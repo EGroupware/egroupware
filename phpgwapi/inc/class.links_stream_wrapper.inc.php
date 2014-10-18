@@ -74,7 +74,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		{
 			return true;
 		}
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
@@ -154,7 +154,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		// if entry directory does not exist --> return fake directory
 		elseif (!($ret = parent::url_stat($url,$flags,$eacl_check)) && $eacl_check)
 		{
-			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', parse_url($url, PHP_URL_PATH), 5);
+			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', egw_vfs::parse_url($url, PHP_URL_PATH), 5);
 			if ($id && !isset($rel_path))
 			{
 				$ret = array(
@@ -230,8 +230,8 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 
 		if($path[0] != '/')
 		{
-			if (strpos($path,'?') !== false) $query = parse_url($path,PHP_URL_QUERY);
-			$path = parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
+			if (strpos($path,'?') !== false) $query = egw_vfs::parse_url($path,PHP_URL_QUERY);
+			$path = egw_vfs::parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
 		}
 		list(,$apps,$app,$id) = explode('/',$path);
 
