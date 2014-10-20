@@ -613,7 +613,7 @@ class calendar_uiviews extends calendar_ui
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
 		$this->use_time_grid = !$this->cal_prefs['use_time_grid'] || $this->cal_prefs['use_time_grid'] == 'all';	// all views
-		
+
 		// Merge print
 		if($weeks)
 		{
@@ -657,7 +657,7 @@ class calendar_uiviews extends calendar_ui
 
 		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
 		$navHeader = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
-		
+
 		$days =& $this->bo->search(array(
 			'start'   => $this->first,
 			'end'     => $this->last,
@@ -684,13 +684,13 @@ class calendar_uiviews extends calendar_ui
 
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
-		
+
 		$navHeader = '<div class="calendar_calMonthNavHeader calendar_calMonth">'
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("-".$weekNavH,  $weeks? $this->first: $this->bo->date2ts($this->date))),
 				)). ' <span>'.$navHeader;
-			
+
 		$navHeader = $navHeader.'</span> '.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',strtotime("+".$weekNavH, $weeks? $this->first: $this->bo->date2ts($this->date))),
@@ -813,7 +813,7 @@ class calendar_uiviews extends calendar_ui
 			$this->last = strtotime("+$days days",$this->first) - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
 			$navHeader =lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
-		}	
+		}
 		else
 		{
 			$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
@@ -850,18 +850,18 @@ class calendar_uiviews extends calendar_ui
 		#
 		#		$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
-		
+
 		$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->first-$days*DAY_s),
 				)). '<span>'.$navHeader;
-			
+
 		$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->last+$days*DAY_s),
 				)).'</div>';
-		
+
 		$merge = $this->merge();
 		if($merge)
 		{
@@ -898,12 +898,12 @@ class calendar_uiviews extends calendar_ui
 				if (count($users) > $headerCounter)
 				{
 					$content .= $navHeader;
-				}	
+				}
 			}
 		}
-		
+
 		$content = $navHeader.$content;
-			
+
 		if (!$home)
 		{
 			$this->do_header();
@@ -984,7 +984,7 @@ class calendar_uiviews extends calendar_ui
 			unset($holidays);
 
 			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
-			
+
 			if (count($users) > 1)
 			{
 				$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
@@ -992,13 +992,13 @@ class calendar_uiviews extends calendar_ui
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->first-1),
 				)). '<span>'.$this->bo->long_date($this->first,0,false,true);
-			
+
 				$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => date('Ymd',$this->last+1),
 				)).'</div>';
 			}
-			
+
 			// only show todo's for a single user
 			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
 			{
@@ -1026,7 +1026,7 @@ class calendar_uiviews extends calendar_ui
 				$cols[0] = $navHeader . $cols[0];
 				echo $cols[0];
 			}
-			
+
 		}
 		else
 		{
@@ -1903,7 +1903,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		// Helps client-side to bind handler to events with specific types tag
 		$resizableHelper = $this->bo->date2string($event['start']). '|' .$this->bo->format_date($event['start'],false) . '|' . $this->cal_prefs['interval'].'|'.$eventTypeTag;
-		
+
 		$html = $indent.'<div id="'.$draggableID.'" data-tooltip ="'.$tooltip .'" data-resize="'.$resizableHelper.'" class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			'>'.$prefix_icon."\n".$html."\n".
@@ -2296,9 +2296,11 @@ class calendar_uiviews extends calendar_ui
 		if (!is_array($cat2sort))
 		{
 			$cat2sort = array();
+			$cat_filter = $this->cat_id ? (array)$this->cat_id : array();
 			foreach((array)$this->categories->return_sorted_array(0,false,'','','',true) as $data)
 			{
-				if (in_array($data['parent'], (array)$this->cat_id) || in_array($data['id'], (array)$this->cat_id))	// cat is a direct sub of $this->cat_id
+				if (in_array($data['parent'], $cat_filter) || in_array($data['id'], $cat_filter) ||
+					!$data['parent'] && !$cat_filter)	// cat is a direct sub of $this->cat_id
 				{
 					$cat2sort[$data['id']] = $data['id'];
 					$sort2label[$data['id']] = stripslashes($data['name']);
