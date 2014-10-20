@@ -815,10 +815,11 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
 				}
-				// Before today - just the date
+				// Before today - date and time
 				else
 				{
-					display = date(this.egw().preference('dateformat'), this.date);
+					display = date(this.egw().preference('dateformat') + " " +
+						(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
 				}
 				break;
 			case "date":
