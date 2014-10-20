@@ -335,7 +335,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 						this.append('<br />');
 					}, span);
 				}
-				return helper;
+				// As we wanted to have a general defaul helper interface, we return null here and not using customize helper for links
+				// TODO: Need to decide if we need to create a customized helper interface for links anyway
+				//return helper;
+				return null;
 			},true);
 		}
 		if(this._actionLinks.indexOf(drag_action.id) < 0)

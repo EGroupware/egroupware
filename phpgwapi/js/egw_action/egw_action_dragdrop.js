@@ -84,22 +84,15 @@ function egwDragActionImplementation()
 	ai.selected = [];
 	
 	// Define default helper DOM
+	// default helper also can be called later in application code in order to customization
 	ai.defaultDDHelper = function (_selected)
 	{
 		// Table containing clone of rows
 		var table = $j(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
 		// tr element to use as last row to show lable more ...
-		var moreRow = $j(document.createElement('tr')).addClass('et2_egw_action_ddHelper_tip');
+		var moreRow = $j(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
 		// Main div helper container
 		var div = $j(document.createElement("div")).append(table);
-		// Lable to show number of items
-		var spanCnt = $j(document.createElement('span'))
-				.addClass('et2_egw_action_ddHelper_itemsCnt')
-				.appendTo(div);
-		
-		// TODO: get the right drag item next to the number
-		var itemsLabel = '';
-		spanCnt.text(_selected.length + itemsLabel);
 		
 		var rows = [];
 		// Maximum number of rows to show
@@ -117,14 +110,26 @@ function egwDragActionImplementation()
 			index++;
 			if (index == maxRows)
 			{
+				// Lable to show number of items
+				var spanCnt = $j(document.createElement('span'))
+						.addClass('et2_egw_action_ddHelper_itemsCnt')
+						.appendTo(div);
+
+				// TODO: get the right drag item next to the number
+				var itemLabel = '';
+				spanCnt.text(_selected.length + itemLabel);
+				
 				var restRows = _selected.length - maxRows;
-				if (restRows)	moreRow.text((_selected.length - maxRows) +' '+egw.lang('more selected ...'));
+				if (restRows)
+				{
+					moreRow.text((_selected.length - maxRows) +' '+egw.lang('more %1 selected ...', itemLabel));
+				}
 				table.append(moreRow);
 				break;
 			}
 		}
 		
-		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_textArea');
+		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
@@ -132,9 +137,9 @@ function egwDragActionImplementation()
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
 			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-			
-			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemsLabel));
+			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemLabel));
 		}
+		// Final html DOM return as helper structor
 		return div;
 	}
 	
@@ -288,7 +293,7 @@ function egwDragActionImplementation()
 						}
 
 						// Return an empty div if the helper dom node is not set
-						return $j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
+						return ai.defaultDDHelper(ai.selected);//$j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
 					},
 					"start": function(e) {
 						return ai.helper != null;

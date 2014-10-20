@@ -1643,6 +1643,7 @@ div.et2_image_tooltipPopup {
 div.et2_egw_action_ddHelper {
 
 }
+/* The last div which shows Ctrl tip to user*/
 div.et2_egw_action_ddHelper_tip {
 	position: relative;
 	text-overflow: ellipsis;
@@ -1664,10 +1665,20 @@ table.et2_egw_action_ddHelper_row tr {
 	background: none;
 	max-height: 20px;
 }
+/* Apply to all displaied rows in order to get same result*/
 table.et2_egw_action_ddHelper_row * {
 	white-space: nowrap !important;
+	max-height: 15px;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	max-width: 400px;
 }
-span.et2_egw_action_ddHelper_itemCnt {
+/* Last row of items which shows the number of more items*/
+tr.et2_egw_action_ddHelper_moreRow{
+    
+}
+/* The big total item counter*/
+span.et2_egw_action_ddHelper_itemsCnt {
 	background: transparent;
 	position: absolute;
 	left: 20px;
