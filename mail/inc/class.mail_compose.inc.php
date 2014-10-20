@@ -1414,9 +1414,9 @@ class mail_compose
 
 	function generateRFC822Address($_addressObject)
 	{
-		if(!empty($_addressObject->personal) && !empty($_addressObject->mailbox) && !empty($_addressObject->host)) {
+		if($_addressObject->personal && $_addressObject->mailbox && $_addressObject->host) {
 			return sprintf('"%s" <%s@%s>', $this->mail_bo->decode_header($_addressObject->personal), $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
-		} elseif(!empty($_addressObject->mailbox) && !empty($_addressObject->host)) {
+		} elseif($_addressObject->mailbox && $_addressObject->host) {
 			return sprintf("%s@%s", $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
 		} else {
 			return $this->mail_bo->decode_header($_addressObject->mailbox,true);
@@ -1492,7 +1492,7 @@ class mail_compose
 			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
-			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
@@ -1513,7 +1513,7 @@ class mail_compose
 			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
-			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
@@ -2163,8 +2163,8 @@ class mail_compose
 			{
 				foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
 					if (!$addressObject->valid) continue;
-					$_emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
+					$_emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
+					$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
 					$_mailObject->$method($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
 				}
 			}
@@ -2456,7 +2456,7 @@ class mail_compose
 		$this->sessionData['bcc'] = self::resolveEmailAddressList($this->sessionData['bcc']);
 		foreach((array)$this->sessionData['bcc'] as $address) {
 			foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				$mailAddr[] = array($emailAddress, $addressObject->personal);
 			}
 		}
@@ -2732,7 +2732,7 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.array2string($this->sessionData['bcc']));
 			foreach((array)$this->sessionData['bcc'] as $address) {
 				foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
-					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+					$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 					$mailAddr[] = array($emailAddress, $addressObject->personal);
 				}
 			}
