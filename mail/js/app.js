@@ -190,7 +190,7 @@ app.classes.mail = AppJS.extend(
 			case 'mail.compose':
 				var that = this;
 				this.mail_isMainWindow = false;
-				this.compose_fieldExpander_hide();
+				this.compose_fieldExpander_init();
 
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
@@ -200,7 +200,7 @@ app.classes.mail = AppJS.extend(
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
-						that.compose_fieldExpander_hide();
+						that.compose_fieldExpander_init();
 						that.compose_fieldExpander();
 					}
 				});
@@ -581,6 +581,7 @@ app.classes.mail = AppJS.extend(
 		if (content['cc'] || content['bcc'])
 		{
 			this.compose_fieldExpander();
+			this.compose_fieldExpander_init();
 		}
 		return success;
 	},
@@ -3617,10 +3618,10 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Hide Folder, Cc and Bcc rows from the compose popup
-	 *	-Only fields which have no content should get hidden
+	 * Set expandable fields (Folder, Cc and Bcc) based on their content
+	 * - Only fields which have no content should get hidden
 	 */
-	compose_fieldExpander_hide: function ()
+	compose_fieldExpander_init: function ()
 	{
 		var widgets = {
 			cc:{
