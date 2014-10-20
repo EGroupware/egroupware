@@ -2040,15 +2040,15 @@ class emailadmin_imapbase
 
 			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
 			{
-				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
+				$rfcAddr = self::parseAddressList($_string);
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 				if (isset(self::$idna2))
 				{
 					$stringA = array();
 					//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
-					foreach ((array)$rfcAddr as $_rfcAddr)
+					foreach ($rfcAddr as $_rfcAddr)
 					{
-						if ($_rfcAddr->host=='.SYNTAX-ERROR.')
+						if (!$_rfcAddr->valid)
 						{
 							$stringA = array();
 							break; // skip idna conversion if we encounter an error here
@@ -4495,8 +4495,7 @@ class emailadmin_imapbase
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {
 					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
-					$addresses = imap_rfc822_parse_adrlist($headers[$recepientType], '');
-					foreach($addresses as $singleAddress) {
+					foreach(self::parseAddressList($headers[$recepientType]) as $singleAddress) {
 						$addressData = array(
 							'PERSONAL_NAME'		=> $singleAddress->personal ? $singleAddress->personal : 'NIL',
 							'AT_DOMAIN_LIST'	=> $singleAddress->adl ? $singleAddress->adl : 'NIL',
@@ -5458,16 +5457,16 @@ class emailadmin_imapbase
 				}
 				if ($addressData['RFC822_EMAIL'])
 				{
-					$addressObjectA = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($addressData['RFC822_EMAIL']):$addressData['RFC822_EMAIL']),'');
+					$addressObjectA = self::parseAddressList($addressData['RFC822_EMAIL']);
 				}
 				else
 				{
 					$emailaddress = ($addressData['PERSONAL_NAME']?$addressData['PERSONAL_NAME'].' <'.$addressData['EMAIL'].'>':$addressData['EMAIL']);
-					$addressObjectA = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($emailaddress):$emailaddress),'');
+					$addressObjectA = self::parseAddressList($emailaddress);
 				}
 				$addressObject = $addressObjectA[0];
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($addressObject));
-				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
+				if (!$addressObject->valid) continue;
 				//$mb =(string)$addressObject->mailbox;
 				//$h = (string)$addressObject->host;
 				//$p = (string)$addressObject->personal;
@@ -6065,190 +6064,207 @@ class emailadmin_imapbase
 	 */
 	function parseFileIntoMailObject($mailObject,$tmpFileName,&$Header,&$Body)
 	{
-			$message = file_get_contents($tmpFileName);
-			try
-			{
-				return $this->parseRawMessageIntoMailObject($mailObject,$message,$Header,$Body);
-			}
-			catch (egw_exception_assertion_failed $e)
-			{	// not sure that this is needed to pass on exeptions
-				throw new egw_exception_assertion_failed($e->getMessage());
-			}
+		$message = file_get_contents($tmpFileName);
+		try
+		{
+			return $this->parseRawMessageIntoMailObject($mailObject,$message,$Header,$Body);
+		}
+		catch (egw_exception_assertion_failed $e)
+		{	// not sure that this is needed to pass on exeptions
+			throw new egw_exception_assertion_failed($e->getMessage());
+		}
 	}
 
 	/**
-	 * parseRawMessageIntoMailObject - parses a message/rfc mail from file to the mailobject and returns the header and body via reference
-	 *   throws egw_exception_assertion_failed when the required Pear Class is not found/loadable
-	 * @param object $mailObject instance of the SMTP Mailer Object
-	 * @param mixed string/object $message string containing the RawMessage / object Mail_mimeDecoded message (part))
+	 * Parses a message/rfc mail from file to the mailobject and returns the header and body via reference
+	 *
+	 * @param PHPMailer $mailObject instance of the SMTP Mailer Object
+	 * @param string|Horde_Mime_Part $message string containing the RawMessage / object Mail_mimeDecoded message (part))
 	 * @param string &$Header  reference used to return the imported Mailheader
 	 * @param string &$Body reference to return the imported Body
+	 * @throws egw_exception_assertion_failed when the required Horde_Mail_Part not found
 	 * @return void Mailheader and body is returned via Reference in $Header $Body
 	 */
-	function parseRawMessageIntoMailObject($mailObject,$message,&$Header,&$Body)
+	function parseRawMessageIntoMailObject(PHPMailer $mailObject, $message, &$Header, &$Body)
 	{
-			/**
-			 * pear/Mail_mimeDecode requires package "pear/Mail_Mime" (version >= 1.4.0, excluded versions: 1.4.0)
-			 * ./pear upgrade Mail_Mime
-			 * ./pear install Mail_mimeDecode
-			 */
-			//echo '<pre>'.$message.'</pre>';
-			//error_log(__METHOD__.' ('.__LINE__.') '.$message);
-			if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false) throw new egw_exception_assertion_failed(lang('Required PEAR class Mail/mimeDecode.php not found.'));
-			if (is_string($message))
+		/**
+		 * pear/Mail_mimeDecode requires package "pear/Mail_Mime" (version >= 1.4.0, excluded versions: 1.4.0)
+		 * ./pear upgrade Mail_Mime
+		 * ./pear install Mail_mimeDecode
+		 */
+		//echo '<pre>'.$message.'</pre>';
+		//error_log(__METHOD__.' ('.__LINE__.') '.$message);
+		if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false) throw new egw_exception_assertion_failed(lang('Required PEAR class Mail/mimeDecode.php not found.'));
+		if (is_string($message))
+		{
+			$mailDecode = new Mail_mimeDecode($message);
+			$structure = $mailDecode->decode(array('include_bodies'=>true,'decode_bodies'=>true,'decode_headers'=>true));
+		}
+		elseif (is_object($message))
+		{
+			$structure = $message;
+		}
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($structure));
+		//_debug_array($structure);
+		//exit;
+		// now create a message to view, save it in Drafts and open it
+		$mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
+		$mailObject->IsSMTP();
+		$mailObject->CharSet = self::$displayCharset; // some default, may be altered by BodyImport
+		if (isset($structure->ctype_parameters['charset'])) $mailObject->CharSet = trim($structure->ctype_parameters['charset']);
+		$mailObject->Encoding = 'quoted-printable'; // some default, may be altered by BodyImport
+
+		$contenttypecalendar = '';
+		$myReplyTo = '';
+
+		// use Horde code to parse header, Mail_mimeDecode fails with utf-8
+		$headers = Horde_Mime_Headers::parseHeaders(substr($message, 0, strpos($message, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL)));
+
+		foreach($headers->toArray(array('charset' => self::$displayCharset)) as $key => $val)
+		{
+			$key = strtolower($key);
+			//error_log(__METHOD__.' ('.__LINE__.') '.$key.'->'.$val);
+			foreach((array)$val as $i => $v)
 			{
-				$mailDecode = new Mail_mimeDecode($message);
-				$structure = $mailDecode->decode(array('include_bodies'=>true,'decode_bodies'=>true,'decode_headers'=>true));
-			}
-			if (is_object($message))
-			{
-				$structure = $message;
-			}
-			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($structure));
-			//_debug_array($structure);
-			//exit;
-			// now create a message to view, save it in Drafts and open it
-			$mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
-			$mailObject->IsSMTP();
-			$mailObject->CharSet = self::$displayCharset; // some default, may be altered by BodyImport
-			if (isset($structure->ctype_parameters['charset'])) $mailObject->CharSet = trim($structure->ctype_parameters['charset']);
-			$mailObject->Encoding = 'quoted-printable'; // some default, may be altered by BodyImport
-/*
-			$mailObject->AddAddress($emailAddress, $addressObject->personal);
-			$mailObject->AddCC($emailAddress, $addressObject->personal);
-			$mailObject->AddBCC($emailAddress, $addressObject->personal);
-			$mailObject->AddReplyto($emailAddress, $addressObject->personal);
-*/
-			$result ='';
-			$contenttypecalendar = '';
-			$myReplyTo = '';
-			foreach((array)$structure->headers as $key => $val)
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.$key.'->'.$val);
-				foreach((array)$val as $i => $v)
+				if ($key!='content-type' && $key !='content-transfer-encoding' &&
+					$key != 'message-id'  &&
+					$key != 'subject' &&
+					$key != 'from' &&
+					$key != 'to' &&
+					$key != 'cc' &&
+					$key != 'bcc' &&
+					$key != 'reply-to' &&
+					$key != 'x-priority') // the omitted values to that will be set at the end
 				{
-					if ($key!='content-type' && $key !='content-transfer-encoding' &&
-						$key != 'message-id'  &&
-						$key != 'subject' &&
-						$key != 'from' &&
-						$key != 'to' &&
-						$key != 'cc' &&
-						$key != 'bcc' &&
-						$key != 'reply-to' &&
-						$key != 'x-priority') // the omitted values to that will be set at the end
-					{
-						$Header .= $mailObject->HeaderLine($key, trim($v));
-					}
+					$Header .= $mailObject->HeaderLine($key, trim($v));
 				}
-				switch ($key)
-				{
-					case 'x-priority':
-						$mailObject->Priority = $val;
-						break;
-					case 'message-id':
-						$mailObject->MessageID  = $val; // ToDo: maybe we want to regenerate the message id all the time
-						break;
-					case 'sender':
-						$mailObject->Sender  = $val;
-						break;
-					case 'to':
-					case 'cc':
-					case 'bcc':
-					case 'from':
-					case 'reply-to':
-						$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($val):$val),'');
-						$i = 0;
-						foreach((array)$address_array as $addressObject)
+			}
+			switch ($key)
+			{
+				case 'x-priority':
+					$mailObject->Priority = $val;
+					break;
+				case 'message-id':
+					$mailObject->MessageID  = $val; // ToDo: maybe we want to regenerate the message id all the time
+					break;
+				case 'sender':
+					$mailObject->Sender  = $val;
+					break;
+				case 'to':
+				case 'cc':
+				case 'bcc':
+				case 'from':
+				case 'reply-to':
+					$address_array  = self::parseAddressList($val);
+					$i = 0;
+					foreach($address_array as $addressObject)
+					{
+						$mb = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+						$pName = $addressObject->personal;
+						if ($key=='from')
 						{
-							$mb = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-							$pName = $addressObject->personal;
-							if ($key=='from')
-							{
-								$mailObject->From = $mb;
-								$mailObject->FromName = $pName;
-							}
-							${$key}[$i] = array($mb,$pName);
-							$i++;
+							$mailObject->From = $mb;
+							$mailObject->FromName = $pName;
 						}
-						if ($key=='reply-to')
-						{
-							$myReplyTo = ${$key};
-							//break; // break early as we add that later
-						}
-						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend(ucfirst($key),${$key})));
-						break;
-					case 'content-transfer-encoding':
-						$mailObject->Encoding = $val;
-						break;
-					case 'content-type':
-						//error_log(__METHOD__.' ('.__LINE__.') '.' '.$key.'->'.$val);
-						if (stripos($val,'calendar')) $contenttypecalendar = $val;
-						break;
-					case 'subject':
+						${$key}[$i] = array($mb,$pName);
+						$i++;
+					}
+					if ($key=='reply-to')
+					{
+						$myReplyTo = ${$key};
+						//break; // break early as we add that later
+					}
+					$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend(ucfirst($key),${$key})));
+					break;
+				case 'content-transfer-encoding':
+					$mailObject->Encoding = $val;
+					break;
+				case 'content-type':
+					//error_log(__METHOD__.' ('.__LINE__.') '.' '.$key.'->'.$val);
+					if (stripos($val,'calendar')) $contenttypecalendar = $val;
+					break;
+				case 'subject':
 /*
 error_log(__METHOD__.__LINE__.$val);
 error_log(__METHOD__.__LINE__.$mailObject->SecureHeader($val));
 error_log(__METHOD__.__LINE__.translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
 error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeader($val)));
 */
-						$mailObject->Subject = $mailObject->EncodeHeader(translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
-						$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
-						break;
-					default:
-						// stuff like X- ...
-						//$mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
-						if (!strtolower(substr($key,0,2))=='x-') break;
-					//case 'priority': // priority is a cusom header field
-					//	$mailObject->Priority = $val;
-					//	break;
-					case 'disposition-notification-to':
-					case 'organization':
-						foreach((array)$val as $i => $v) $mailObject->AddCustomHeader($key.': '. $v);
-						break;
-				}
+					$mailObject->Subject = $mailObject->EncodeHeader(translation::convert($mailObject->SecureHeader($val),false,$mailObject->CharSet));
+					$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
+					break;
+				default:
+					// stuff like X- ...
+					//$mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
+					if (!strtolower(substr($key,0,2))=='x-') break;
+				//case 'priority': // priority is a cusom header field
+				//	$mailObject->Priority = $val;
+				//	break;
+				case 'disposition-notification-to':
+				case 'organization':
+					foreach((array)$val as $i => $v) $mailObject->AddCustomHeader($key.': '. $v);
+					break;
 			}
-			// handle reply-to, wich may be set, set the first one found
-			if (!empty($myReplyTo))
-			{
-				$mailObject->ClearReplyTos();
-				$mailObject->AddReplyTo($myReplyTo[0][0],$myReplyTo[0][1]);
-			}
+		}
+		// handle reply-to, wich may be set, set the first one found
+		if (!empty($myReplyTo))
+		{
+			$mailObject->ClearReplyTos();
+			$mailObject->AddReplyTo($myReplyTo[0][0],$myReplyTo[0][1]);
+		}
 
-			$seemsToBePlainMessage = false;
-			if (strtolower($structure->ctype_primary)=='text' && $structure->body)
+		$seemsToBePlainMessage = false;
+		if (strtolower($structure->ctype_primary)=='text' && $structure->body)
+		{
+			$mailObject->IsHTML(strtolower($structure->ctype_secondary)=='html'?true:false);
+			if (strtolower($structure->ctype_primary) == 'text' && strtolower($structure->ctype_secondary) == 'plain' &&
+				is_array($structure->ctype_parameters) && isset($structure->ctype_parameters['format']) &&
+				trim(strtolower($structure->ctype_parameters['format']))=='flowed'
+			)
 			{
-				$mailObject->IsHTML(strtolower($structure->ctype_secondary)=='html'?true:false);
-				if (strtolower($structure->ctype_primary) == 'text' && strtolower($structure->ctype_secondary) == 'plain' &&
-					is_array($structure->ctype_parameters) && isset($structure->ctype_parameters['format']) &&
-					trim(strtolower($structure->ctype_parameters['format']))=='flowed'
-				)
-				{
-					if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
-					$structure->body = str_replace("\r\n ","\r\n", $structure->body);
-				}
-				$mailObject->Body = $structure->body;
-				$seemsToBePlainMessage = true;
+				if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+				$structure->body = str_replace("\r\n ","\r\n", $structure->body);
 			}
-			$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
-			$mailObject->SetMessageType();
-			$mailObject->CreateHeader(); // this sets the boundary stufff
-			//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
-			//$boundary ='';
-			//if (isset($structure->ctype_parameters['boundary'])) $boundary = ' boundary="'.$mailObject->FetchBoundary(1).'";';
-			if ($seemsToBePlainMessage && !empty($contenttypecalendar) && strtolower($mailObject->ContentType)=='text/plain')
-			{
-				$Header .= $mailObject->HeaderLine('Content-Transfer-Encoding', $mailObject->Encoding);
-				$Header .= $mailObject->HeaderLine('Content-type', $contenttypecalendar);
-			}
-			else
-			{
-				$Header .= $mailObject->GetMailMIME();
-			}
-			$Body = $mailObject->getMessageBody(); // this is a method of the egw_mailer/phpmailer class
-			//_debug_array($Header);
-			//_debug_array($Body);
-			//_debug_array($mailObject);
-			//exit;
+			$mailObject->Body = $structure->body;
+			$seemsToBePlainMessage = true;
+		}
+		$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
+		$mailObject->SetMessageType();
+		$mailObject->CreateHeader(); // this sets the boundary stufff
+		//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
+		//$boundary ='';
+		//if (isset($structure->ctype_parameters['boundary'])) $boundary = ' boundary="'.$mailObject->FetchBoundary(1).'";';
+		if ($seemsToBePlainMessage && !empty($contenttypecalendar) && strtolower($mailObject->ContentType)=='text/plain')
+		{
+			$Header .= $mailObject->HeaderLine('Content-Transfer-Encoding', $mailObject->Encoding);
+			$Header .= $mailObject->HeaderLine('Content-type', $contenttypecalendar);
+		}
+		else
+		{
+			$Header .= $mailObject->GetMailMIME();
+		}
+		$Body = $mailObject->getMessageBody(); // this is a method of the egw_mailer/phpmailer class
+		//_debug_array($Header);
+		//_debug_array($Body);
+		//_debug_array($mailObject);
+		//exit;
+	}
+
+	/**
+	 * Parse an address-list
+	 *
+	 * Replaces imap_rfc822_parse_adrlist, which fails for utf-8, if not our replacement in common_functions is used!
+	 *
+	 * @param string $addresses
+	 * @param string $default_domain
+	 * @return Horde_Mail_Rfc822_List iteratable Horde_Mail_Rfc822_Address objects with attributes mailbox, host, personal and valid
+	 */
+	public static function parseAddressList($addresses, $default_domain=null)
+	{
+		$rfc822 = new Horde_Mail_Rfc822();
+		$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
+		//foreach($ret as $i => $adr) error_log(__METHOD__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal --> ".$adr);
+		return $ret;
 	}
 
 	/**
@@ -6486,7 +6502,7 @@ error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeade
 		} else if ( isset($headers['X-CONFIRM-READING-TO']) ) {
 			$toAddr = $headers['X-CONFIRM-READING-TO'];
 		} else return false;
-		$singleAddress = imap_rfc822_parse_adrlist($toAddr,'');
+		$singleAddress = self::parseAddressList($toAddr);
 		if (self::$debug) error_log(__METHOD__.__LINE__.' To Address:'.$singleAddress[0]->mailbox."@".$singleAddress[0]->host.", ".$singleAddress[0]->personal);
 		$send->AddAddress($singleAddress[0]->mailbox."@".$singleAddress[0]->host, $singleAddress[0]->personal);
 		$send->AddCustomHeader('References: '.$headers['MESSAGE-ID']);

@@ -1140,9 +1140,7 @@ class mail_compose
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
-				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
-				//unset($content[strtolower($destination)]);
-				foreach((array)$address_array as $addressObject) {
+				foreach(emailadmin_imapbase::parseAddressList($value) as $addressObject) {
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
 					//$address = mail_bo::htmlentities($address, $this->displayCharset);
@@ -1416,9 +1414,9 @@ class mail_compose
 
 	function generateRFC822Address($_addressObject)
 	{
-		if(!empty($_addressObject->personal) && !empty($_addressObject->mailbox) && !empty($_addressObject->host)) {
+		if($_addressObject->personal && $_addressObject->mailbox && $_addressObject->host) {
 			return sprintf('"%s" <%s@%s>', $this->mail_bo->decode_header($_addressObject->personal), $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
-		} elseif(!empty($_addressObject->mailbox) && !empty($_addressObject->host)) {
+		} elseif($_addressObject->mailbox && $_addressObject->host) {
 			return sprintf("%s@%s", $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
 		} else {
 			return $this->mail_bo->decode_header($_addressObject->mailbox,true);
@@ -1491,10 +1489,10 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
 		foreach((array)$headers['CC'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
+			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
-			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
-			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
+			if (!$_rfcAddr->valid) continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
@@ -1512,10 +1510,10 @@ class mail_compose
 				$this->sessionData['to'][] = $val;
 				continue;
 			}
-			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
+			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
-			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
-			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
+			if (!$_rfcAddr->valid) continue;
+			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
@@ -1528,9 +1526,9 @@ class mail_compose
 		}
 
 		foreach((array)$headers['REPLY-TO'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
+			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
-			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
@@ -1544,9 +1542,9 @@ class mail_compose
 		}
 
 		foreach((array)$headers['BCC'] as $val) {
-			$rfcAddr=imap_rfc822_parse_adrlist($val, '');
+			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
-			if ($_rfcAddr->host=='.SYNTAX-ERROR.') continue;
+			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
 				continue;
 			}
@@ -2153,56 +2151,22 @@ class mail_compose
 		}
 
 		// Expand any mailing lists
-		foreach(array('to','cc','bcc') as $field)
+		foreach(array(
+			'to' => 'AddAddress',
+			'cc' => 'AddCC',
+			'bcc' => 'AddBCC',
+			'replyto' => 'AddReplyto') as $field => $method)
 		{
-			$_formData[$field] = self::resolveEmailAddressList($_formData[$field]);
-		}
+			if ($field != 'replyto') $_formData[$field] = self::resolveEmailAddressList($_formData[$field]);
 
-		foreach((array)$_formData['to'] as $address) {
-			$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address), '');
-			foreach((array)$address_array as $addressObject) {
-				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
-				$_emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
-				#$emailName = $mail_bo->encodeHeader($addressObject->personal, 'q');
-				#$_mailObject->AddAddress($emailAddress, $emailName);
-				$_mailObject->AddAddress($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
-			}
-		}
-
-		foreach((array)$_formData['cc'] as $address) {
-			$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
-			foreach((array)$address_array as $addressObject) {
-				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
-				$_emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
-				#$emailName = $mail_bo->encodeHeader($addressObject->personal, 'q');
-				#$_mailObject->AddCC($emailAddress, $emailName);
-				$_mailObject->AddCC($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
-			}
-		}
-
-		foreach((array)$_formData['bcc'] as $address) {
-			$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
-			foreach((array)$address_array as $addressObject) {
-			if ($addressObject->host == '.SYNTAX-ERROR.') continue;
-				$_emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
-				#$emailName = $mail_bo->encodeHeader($addressObject->personal, 'q');
-				#$_mailObject->AddBCC($emailAddress, $emailName);
-				$_mailObject->AddBCC($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
-			}
-		}
-
-		foreach((array)$_formData['replyto'] as $address) {
-			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
-			foreach((array)$address_array as $addressObject) {
-				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
-				$_emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-				#$emailName = $mail_bo->encodeHeader($addressObject->personal, 'q');
-				#$_mailObject->AddBCC($emailAddress, $emailName);
-				$_mailObject->AddReplyto($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
+			foreach((array)$_formData[$field] as $address)
+			{
+				foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
+					if (!$addressObject->valid) continue;
+					$_emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
+					$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$mail_bo->idna2->encode($addressObject->host) : '');
+					$_mailObject->$method($emailAddress, str_replace(array('@'),' ',($addressObject->personal?$addressObject->personal:$_emailAddress)));
+				}
 			}
 		}
 
@@ -2491,9 +2455,8 @@ class mail_compose
 		$this->createMessage($mail, $_formData, $identity);
 		$this->sessionData['bcc'] = self::resolveEmailAddressList($this->sessionData['bcc']);
 		foreach((array)$this->sessionData['bcc'] as $address) {
-			$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
-			foreach((array)$address_array as $addressObject) {
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+			foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
+				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				$mailAddr[] = array($emailAddress, $addressObject->personal);
 			}
 		}
@@ -2768,9 +2731,8 @@ class mail_compose
 		if (count($folder) > 0 || $_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') {
 			//error_log(__METHOD__.__LINE__.array2string($this->sessionData['bcc']));
 			foreach((array)$this->sessionData['bcc'] as $address) {
-				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
-				foreach((array)$address_array as $addressObject) {
-					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				foreach(emailadmin_imapbase::parseAddressList($address) as $addressObject) {
+					$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 					$mailAddr[] = array($emailAddress, $addressObject->personal);
 				}
 			}
