@@ -463,7 +463,7 @@ class filemanager_ui
 			'2' => 'Directories sorted in',
 			'3' => 'Show hidden files',
 			'4' => 'All subdirectories',
-			'5' => 'Files from next subdirectory',
+			'5' => 'Files from links',
 			'0'  => 'Files from subdirectories',
 		);
 
@@ -793,12 +793,13 @@ class filemanager_ui
 			'mindepth' => 1,
 			'maxdepth' => $maxdepth,
 			'dirsontop' => $filter <= 1,
-			'type' => $filter && $filter != 5 ? ($filter == 4 ? 'd' : null) : 'f',
+			'type' => $filter && $filter != 5 ? ($filter == 4 ? 'd' : null) : ($filter == 5 ? 'F':'f'),
 			'order' => $query['order'], 'sort' => $query['sort'],
 			'limit' => (int)$query['num_rows'].','.(int)$query['start'],
 			'need_mime' => true,
 			'name_preg' => $namefilter,
 			'hidden' => $filter == 3,
+			'follow' => $filter == 5,
 		),true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
