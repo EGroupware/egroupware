@@ -1745,25 +1745,34 @@ class mail_compose
 
 	function getAttachment()
 	{
-		if(isset($_GET['filename'])) $attachment['filename']	= $_GET['filename'];
 		if(isset($_GET['tmpname'])) $attachment['tmp_name']	= $_GET['tmpname'];
 		if(isset($_GET['name'])) $attachment['name']	= $_GET['name'];
 		//if(isset($_GET['size'])) $attachment['size']	= $_GET['size'];
 		if(isset($_GET['type'])) $attachment['type']	= $_GET['type'];
 
 		//error_log(__METHOD__.__LINE__.array2string($_GET));
-		if (isset($attachment['filename']) && parse_url($attachment['filename'],PHP_URL_SCHEME) == 'vfs')
+		if (isset($attachment['tmp_name']) && parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs')
 		{
 			egw_vfs::load_wrapper('vfs');
+			$attachment['attachment'] = file_get_contents($attachment['tmp_name']);
 		}
-		$attachment['attachment'] = file_get_contents($attachment['tmp_name']);
+		// attachment data in temp_dir, only use basename of given name, to not allow path traversal
+		elseif(!file_exists($tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['tmp_name'])))
+		{
+			header('HTTP/1.1 404 Not found');
+			die('Attachment '.htmlspecialchars($attachment['tmp_name']).' NOT found!');
+		}
+		else
+		{
+			$attachment['attachment'] = file_get_contents($tmp_path);
+		}
 		//error_log(__METHOD__.__LINE__.' FileSize:'.filesize($attachment['tmp_name']));
 		if ($_GET['mode'] != "save")
 		{
 			if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY')
 			{
 				$sfxMimeType = $attachment['type'];
-				$buff = explode('.',$attachment['filename']);
+				$buff = explode('.',$attachment['tmp_name']);
 				$suffix = '';
 				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
 				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
@@ -1821,12 +1830,10 @@ class mail_compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
-		html::content_header($filename,$attachment['type'],0,True,($_GET['mode'] == "save"));
+		html::content_header($attachment['name'], $attachment['type'], 0, True, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
-		$GLOBALS['egw']->common->egw_exit();
-		exit;
+		common::egw_exit();
 	}
 
 	/**
@@ -2284,22 +2291,29 @@ class mail_compose
 								break;
 
 						}
-					} else {
+					}
+					else
+					{
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
 							egw_vfs::load_wrapper('vfs');
+							$tmp_path = $attachment['file'];
+						}
+						else	// non-vfs file has to be in temp_dir
+						{
+							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
 						}
 						if (isset($attachment['type']) && stripos($attachment['type'],"text/calendar; method=")!==false )
 						{
-							$_mailObject->AltExtended = file_get_contents($attachment['file']);
+							$_mailObject->AltExtended = file_get_contents($tmp_path);
 							$_mailObject->AltExtendedContentType = $attachment['type'];
 						}
 						else
 						{
 							$_mailObject->AddAttachment (
-								$attachment['file'],
+								$tmp_path,
 								$_mailObject->EncodeHeader($attachment['name']),
-								(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
+								strtoupper($attachment['type'])=='MESSAGE/RFC822' ? '7bit' : 'base64',
 								$attachment['type']
 							);
 						}

@@ -2363,7 +2363,6 @@ app.classes.mail = AppJS.extend(
 			case 'TEXT/CALENDAR':
 			case 'TEXT/X-VCALENDAR':
 				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
-				url += '&filename='+attgrid.file;
 				url += '&tmpname='+attgrid.tmp_name;
 				url += '&name='+attgrid.name;
 				//url += '&size='+attgrid.size;
@@ -2408,7 +2407,6 @@ app.classes.mail = AppJS.extend(
 */
 			default:
 				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
-				url += '&filename='+attgrid.file;
 				url += '&tmpname='+attgrid.tmp_name;
 				url += '&name='+attgrid.name;
 				//url += '&size='+attgrid.size;
@@ -2860,10 +2858,10 @@ app.classes.mail = AppJS.extend(
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
-		
-		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name) 
+
+		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name)
 		if (!target.match(/::/g)) target += '::INBOX';
-		
+
 		var self = this;
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){self.unlock_tree();})
 			.sendRequest();
@@ -3636,15 +3634,15 @@ app.classes.mail = AppJS.extend(
 				widget:{},
 				jQClass: '.mailComposeJQueryFolder'
 			}};
-		
+
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
 			widgets[widget].widget = this.et2.getWidgetById(widget);
 			// Add expander button widget to the widgets object
 			widgets[expanderBtn] = {widget:this.et2.getWidgetById(expanderBtn)};
-			
-			if (typeof widgets[widget].widget != 'undefined' 
+
+			if (typeof widgets[widget].widget != 'undefined'
 					&& typeof widgets[expanderBtn].widget != 'undefined'
 					&& widgets[widget].widget.get_value().length == 0)
 			{
