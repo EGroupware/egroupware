@@ -234,7 +234,7 @@
 					<description for="adr_two_locality" value="city"/>
 					<hbox>
 						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64"/>
-						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="250" align="right"/>
+						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242"/>
 					</hbox>
 					<description/>
 				</row>
