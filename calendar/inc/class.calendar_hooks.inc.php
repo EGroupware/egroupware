@@ -50,6 +50,8 @@ class calendar_hooks
 				),
 			),
 			'merge' => true,
+			'entry' => 'Event',
+			'entries' => 'Events',
 		);
 	}
 

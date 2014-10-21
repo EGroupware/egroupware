@@ -383,6 +383,8 @@ class addressbook_hooks
 				),
 			),
 			'merge' => true,
+			'entry' => 'Contact',
+			'entries' => 'Contacts',
 		);
 		return $links;
 	}

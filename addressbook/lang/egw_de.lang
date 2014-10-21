@@ -105,7 +105,6 @@ charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
 choose charset	addressbook	de	Zeichensatz auswählen
-choose export options	addressbook	de	Wählen Sie die Export Optionen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
@@ -130,6 +129,7 @@ contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 contactform	addressbook	de	Kontaktformular
+contacts	common	de	Kontakte
 contacts and account contact-data to ldap	admin	de	Kontakte und Kontaktdaten der Benutzer nach LDAP
 contacts and account contact-data to sql	admin	de	Kontakte und Kontaktdaten der Benutzer nach SQL
 contacts to ldap	admin	de	Kontakte nach LDAP
@@ -369,7 +369,6 @@ phone numbers	common	de	Telefonnummern
 photo	addressbook	de	Foto
 please enter a name for that field !	addressbook	de	Bitte geben Sie einen Namen für das Feld an!
 please select only one category	addressbook	de	Bitte nur eine Kategorie auswählen
-please update the templatename in your customfields section!	addressbook	de	Passen Sie bitte in der Sektion "Benutzerdefinierte Felder" Ihren Templatenamen an!
 postal	common	de	Postanschrift
 pref	addressbook	de	bevorzugt
 preferred email address to use in distribution lists	addressbook	de	Bevorzugte E-Mailadresse für Verteilerlisten
@@ -461,7 +460,6 @@ type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	de	Umwandelung von "%1" zu Benutzer ID nicht möglich. Einstellung des Plug-ins (%2) wird für diesen Benutzer verwendet.
 unable to delete	addressbook	de	Löschen nicht möglich
-unable to import into %1, using %2	addressbook	de	Import in %1 nicht möglich wenn %2 verwendet wird
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
@@ -486,7 +484,6 @@ verification	addressbook	de	Verifikation
 view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht !
-warning: template "%1" not found, using default template instead.	addressbook	de	WARNUNG: Template "%1" nicht gefunden, das Standard-Template wird stattdessen benutzt.
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen geziegt

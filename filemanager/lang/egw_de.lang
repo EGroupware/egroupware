@@ -116,7 +116,7 @@ extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 favorites	filemanager	de	Favoriten
-file	filemanager	de	Datei
+file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
@@ -128,6 +128,7 @@ filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Konfiguration Dateimanager
 filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
+files	common	de	Dateien
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.

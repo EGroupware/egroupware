@@ -129,6 +129,7 @@ contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact settings
 contactform	addressbook	en	Contact form
+contacts	common	en	Contacts
 contacts and account contact-data to ldap	admin	en	Contacts and account contact data to LDAP
 contacts and account contact-data to sql	admin	en	Contacts and account contact data to SQL
 contacts to ldap	admin	en	Contacts to LDAP

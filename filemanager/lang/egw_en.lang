@@ -116,7 +116,7 @@ extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
 failed to create directory!	filemanager	en	Failed to create directory!
 favorites	filemanager	en	Favorites
-file	filemanager	en	File
+file	common	en	File
 file %1 already exists	filemanager	en	File %1 already exists
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 might be too big.
@@ -128,6 +128,7 @@ filemanager	common	en	File Manager
 filemanager configuration	admin	en	File Manager configuration
 filemanager fields:	filemanager	en	Filemanager fields:
 filename must not be empty!	filemanager	en	File name must not be empty!
+files	common	en	Files
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
