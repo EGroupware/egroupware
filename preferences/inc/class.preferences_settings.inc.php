@@ -36,8 +36,8 @@ class preferences_settings
 	/**
 	 * Edit preferences
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content =null
+	 * @param string $msg =''
 	 */
 	function index(array $content=null, $msg='')
 	{
@@ -155,14 +155,14 @@ class preferences_settings
 		}
 
 		$sel_options = $readonlys = null;
-		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
-		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
-		$preserve['type'] = $preserve['old_type'] = $content['type'];
-		if (isset($old_tab)) $content['tabs'] = $old_tab;
+		$data = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
+		$preserve['appname'] = $preserve['old_appname'] = $data['appname'];
+		$preserve['type'] = $preserve['old_type'] = $data['type'];
+		if (isset($old_tab)) $data['tabs'] = $old_tab;
 
 		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 
-		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve, 2);
+		$tpl->exec('preferences.preferences_settings.index', $data, $sel_options, $readonlys, $preserve, 2);
 	}
 
 	/**
@@ -173,7 +173,7 @@ class preferences_settings
 	 * @param array $types setting-name => type
 	 * @param string $appname appname or 'common'
 	 * @param string $type 'user', 'default', 'forced'
-	 * @param boolean $only_verify=false
+	 * @param boolean $only_verify =false
 	 * @return string with verification error or null on success
 	 */
 	function process_array(array &$repository, array $values, array $types, $appname, $type, $only_verify=false)
@@ -455,7 +455,7 @@ class preferences_settings
 		$sel_options['appname'] = array();
 		foreach($GLOBALS['egw']->hooks->hook_implemented('settings') as $app)
 		{
-			if ($app != 'preferences' && $GLOBALS['egw_info']['apps'][$app])
+			if ($app != 'preferences' && $GLOBALS['egw_info']['user']['apps'][$app])
 			{
 				$sel_options['appname'][$app] = $GLOBALS['egw_info']['apps'][$app]['title'];
 			}
@@ -499,7 +499,7 @@ class preferences_settings
 	 *
 	 * @param string|array $default default value(s) to get label for
 	 * @param array $values values optional including optgroups
-	 * @param boolean $lang=true
+	 * @param boolean $lang =true
 	 * @return string comma-separated and translated labels
 	 */
 	protected static function get_default_label($default, array $values, $lang=true)
@@ -543,8 +543,8 @@ class preferences_settings
 	 * Sets $this->appname and $this->settings
 	 *
 	 * @param string $appname appname or 'common'
-	 * @param string $type='user' 'default', 'forced', 'user' or 'group'
-	 * @param int|string $account_id=null account_id for user or group prefs, or "forced" or "default"
+	 * @param string $type ='user' 'default', 'forced', 'user' or 'group'
+	 * @param int|string $account_id =null account_id for user or group prefs, or "forced" or "default"
 	 * @return boolean
 	 */
 	protected function call_hook($appname, $type='user', $account_id=null)
