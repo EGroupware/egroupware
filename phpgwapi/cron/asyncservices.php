@@ -12,7 +12,7 @@
  * @version $Id$
  */
 
-if (!isset($_REQUEST['domain'])) $_REQUEST['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'default';
+if (!isset($_REQUEST['domain'])) $_REQUEST['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'ralfsmacbook.local';//'default';
 $path_to_egroupware = realpath(dirname(__FILE__).'/../..');	//  need to be adapted if this script is moved somewhere else
 
 // remove the comment from one of the following lines to enable loging

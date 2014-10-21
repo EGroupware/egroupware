@@ -163,7 +163,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS egw_vfs::$user changes!
 	 *
-	 * @param string $path='/'
+	 * @param string $path ='/'
 	 */
 	public static function clearstatcache($path='/')
 	{
@@ -185,7 +185,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
 	 *                        If this flag is not set, you should not raise any errors.
 	 * @param string &$opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
-	 * @param array $overwrite_new=null if set create new file with values overwriten by the given ones
+	 * @param array $overwrite_new =null if set create new file with values overwriten by the given ones
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
 	function stream_open ( $url, $mode, $options, &$opened_path, array $overwrite_new=null )
@@ -376,6 +376,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
 				}
 			}
+		}
+		else
+		{
+			$ret = true;
 		}
 		$ret = fclose($this->opened_stream) && $ret;
 
@@ -818,8 +822,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
 	 * @param string $url
-	 * @param int $time=null modification time (unix timestamp), default null = current time
-	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
@@ -895,7 +899,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Chgrp command, not yet a stream-wrapper function, but necessary
 	 *
 	 * @param string $url
-	 * @param int $group
+	 * @param int $owner
 	 * @return boolean
 	 */
 	static function chgrp($url,$owner)
@@ -975,8 +979,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
 	 *
-	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
-	 * @param $options
+	 * @param string $url URL that was passed to opendir() and that this object is expected to explore.
+	 * @param int $options
 	 * @return booelan
 	 */
 	function dir_opendir ( $url, $options )
@@ -1033,7 +1037,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * The last 3 digits are exactly the same thing as what you pass to chmod.
 	 * 040000 defines a directory, and 0100000 defines a file.
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
 	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
 	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
@@ -1042,7 +1046,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @param boolean $eacl_access=null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
+	 * @param boolean $eacl_access =null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
 	 * @return array
 	 */
 	static function url_stat ( $url, $flags, $eacl_access=null )
@@ -1246,7 +1250,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * The readlink value is read by url_stat or dir_opendir and therefore cached in the stat-cache.
 	 *
-	 * @param string $url
+	 * @param string $path
 	 * @return string|boolean content of the symlink or false if $url is no symlink (or not found)
 	 */
 	static function readlink($path)
@@ -1371,9 +1375,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Only root, the owner of the path or an eGW admin (only if there's no owner but a group) are allowd to set eACL's!
 	 *
 	 * @param string $path string with path
-	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int|boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
-	 * @param int $fs_id=null fs_id to use, to not query it again (eg. because it's already deleted)
+	 * @param int $rights =null rights to set, or null to delete the entry
+	 * @param int|boolean $owner =null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int $fs_id =null fs_id to use, to not query it again (eg. because it's already deleted)
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
 	static function eacl($path,$rights=null,$owner=null,$fs_id=null)
@@ -1837,7 +1841,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Read properties for a ressource (file, dir or all files of a dir)
 	 *
 	 * @param array|string|int $path_ids (array of) string with path or integer fs_id
-	 * @param string $ns='http://egroupware.org/' namespace if propfind should be limited to a single one, use null for all
+	 * @param string $ns ='http://egroupware.org/' namespace if propfind should be limited to a single one, use null for all
 	 * @return array|boolean false on error ($path_ids does not exist), array with props (values for keys 'name', 'ns', 'value'), or
 	 * 	fs_id/path => array of props for $depth==1 or is_array($path_ids)
 	 */
