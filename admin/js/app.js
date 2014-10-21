@@ -800,7 +800,7 @@ app.classes.admin = AppJS.extend(
 		var _buttons = [
 				{"button_id": "delete[cancel]","text": this.egw.lang('Cancel'), id: 'delete[cancel]', image: 'cancel', "default":true},
 				{"button_id": "delete[delete]","text": this.egw.lang('Delete'), id: 'delete[delete]', image: 'delete'},
-				{"button_id": "delete[subs]","text": this.egw.lang('Delete including sub-enteries'), id: 'delete[subs]', image: 'delete'},
+				{"button_id": "delete[subs]","text": this.egw.lang('Delete including sub-enteries'), id: 'delete[subs]', image: 'delete'}
 		];
 		var action = _action;
 		var self = this;
