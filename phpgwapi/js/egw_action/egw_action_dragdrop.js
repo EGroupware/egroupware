@@ -132,11 +132,12 @@ function egwDragActionImplementation()
 		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
 		div.append(text);
 
-		// Add notice of Shift key, if supported
+		// Add notice of Ctrl key, if supported
 		if('draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			text.text(egw.lang('Hold Shift to drag %1 to your computer', itemLabel));
+			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemLabel));
 		}
 		// Final html DOM return as helper structor
 		return div;
@@ -173,106 +174,93 @@ function egwDragActionImplementation()
 			}
 			if(action)
 			{
-				// As we are planning to remove this trigger key for drag out action in the future, and as
-				// we have a standard key (ctrl or command key in Mac) in nm context menu to be able to 
-				// disable the context menu, therefore, we will make the Ctrl key a standard key to disabling dd actions too,
-				// which means user also would be able to select content by holding ctrl key.
 				/**
-				 * We found an action with dragType 'file', so by holding Shift
+				 * We found an action with dragType 'file', so by holding Ctrl
 				 * key & dragging, user can drag from browser to system.
 				 * The global data store must provide a full, absolute URL in 'download_url'
 				 * and a mime in 'mime'.
 				 *
 				 * Unfortunately, Native DnD to drag the file conflicts with jQueryUI draggable,
 				 * which handles all the other DnD actions.  We get around this by:
-				 * 1.  Require the user indicate a file drag with Shift key
+				 * 1.  Require the user indicate a file drag with Ctrl key
 				 * 2.  Disable jQueryUI draggable, then turn on native draggable attribute
 				 * This way we can at least toggle which one is operating, so they
 				 * both work alternately if not together.
 				 */
-				// Native DnD - Doesn't play nice with jQueryUI Sortable
-				// Tell jQuery to include this property
-				jQuery.event.props.push('dataTransfer');
+			// Native DnD - Doesn't play nice with jQueryUI Sortable
+			// Tell jQuery to include this property
+			jQuery.event.props.push('dataTransfer');
 
-				$j(node).off("mousedown")
-					.on("mousedown", function(event) {
-						$j(node).draggable("option","disabled",event.shiftKey || event.metaKey || event.ctrlKey);
-						$j(this).attr("draggable", event.shiftKey || event.metaKey ? "true" : "");
+			$j(node).off("mousedown")
+				.on("mousedown", function(event) {
+					$j(node).draggable("option","disabled",event.ctrlKey || event.metaKey);
+					$j(this).attr("draggable", event.ctrlKey || event.metaKey ? "true" : "");
 
-						// Disabling draggable adds some UI classes, but we don't care so remove them
-						$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
-						if(!(event.shiftKey || event.metaKey) || !this.addEventListener) return;
-					})
-					.on("dragstart", function(event) {
-						if(event.dataTransfer == null) {
-							return;
-						}
-						event.dataTransfer.effectAllowed="copy";
+					// Disabling draggable adds some UI classes, but we don't care so remove them
+					$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+					if(!(event.ctrlKey || event.metaKey) || !this.addEventListener) return;
+				})
+				.on("dragstart", function(event) {
+					if(event.dataTransfer == null) {
+						return;
+					}
+					event.dataTransfer.effectAllowed="copy";
 
-						// Get all selected
-						// Multiples aren't supported by event.dataTransfer, yet, so
-						// select only the row they clicked on.
-						// var selected = _context.getSelectedLinks('drag');
-						var selected = [_context];
-						_context.parent.setAllSelected(false);
-						_context.setSelected(true);
+					// Get all selected
+					// Multiples aren't supported by event.dataTransfer, yet, so
+					// select only the row they clicked on.
+					// var selected = _context.getSelectedLinks('drag');
+					var selected = [_context];
+					_context.parent.setAllSelected(false);
+					_context.setSelected(true);
 
-						// Set file data
-						for(var i = 0; i < selected.length; i++)
+					// Set file data
+					for(var i = 0; i < selected.length; i++)
+					{
+						var data = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
+						if(data && data.mime && data.download_url)
 						{
-							var data = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
-							if(data && data.mime && data.download_url)
+							var url = data.download_url;
+
+							// NEED an absolute URL
+							if (url[0] == '/') url = egw.link(url);
+							// egw.link adds the webserver, but that might not be an absolute URL - try again
+							if (url[0] == '/') url = window.location.origin+url;
+
+							// Unfortunately, dragging files is currently only supported by Chrome
+							if(navigator && navigator.userAgent.indexOf('Chrome'))
 							{
-								var url = data.download_url;
-
-								// NEED an absolute URL
-								if (url[0] == '/') url = egw.link(url);
-								// egw.link adds the webserver, but that might not be an absolute URL - try again
-								if (url[0] == '/') url = window.location.origin+url;
-
-								// Unfortunately, dragging files is currently only supported by Chrome
-								if(navigator && navigator.userAgent.indexOf('Chrome'))
-								{
-									event.dataTransfer.setData("DownloadURL", data.mime+':'+data.name+':'+url);
-								}
-								else
-								{
-									// Include URL as a fallback
-									event.dataTransfer.setData("text/uri-list", url);
-								}
+								event.dataTransfer.setData("DownloadURL", data.mime+':'+data.name+':'+url);
+							}
+							else
+							{
+								// Include URL as a fallback
+								event.dataTransfer.setData("text/uri-list", url);
 							}
 						}
-						if(event.dataTransfer.types.length == 0)
-						{
-							// No file data? Abort: drag does nothing
-							event.preventDefault();
-							return;
-						}
+					}
+					if(event.dataTransfer.types.length == 0)
+					{
+						// No file data? Abort: drag does nothing
+						event.preventDefault();
+						return;
+					}
 
-						// Create drag icon
-						_callback.call(_context, _context, ai);
-						// Drag icon must be visible for setDragImage() - we'll remove it on drag
-						$j("body").append(ai.helper);
-						event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
-					})
-					.on("drag", function(e) {
-						// Remove the helper, it has been copied into the dataTransfer object now
-						// Hopefully user didn't notice it...
-						if(e.dataTransfer != null)
-						{
-							ai.helper.remove();
-						}
-					});
+					// Create drag icon
+					_callback.call(_context, _context, ai);
+					// Drag icon must be visible for setDragImage() - we'll remove it on drag
+					$j("body").append(ai.helper);
+					event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
+				})
+				.on("drag", function(e) {
+					// Remove the helper, it has been copied into the dataTransfer object now
+					// Hopefully user didn't notice it...
+					if(e.dataTransfer != null)
+					{
+						ai.helper.remove();
+					}
+				});
 			}
-			else
-			{
-				//Disable dragging to be able to select content of item by holding Ctrl then selecting content 
-				$j(node).off("mousedown")
-					.on("mousedown", function(event) {
-						$j(node).draggable("option","disabled",event.ctrlKey || event.metaKey);
-					});
-			}
-					
 			$j(node).draggable(
 				{
 					"distance": 20,
