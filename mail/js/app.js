@@ -190,7 +190,7 @@ app.classes.mail = AppJS.extend(
 			case 'mail.compose':
 				var that = this;
 				this.mail_isMainWindow = false;
-				this.compose_fieldExpander_hide();
+				this.compose_fieldExpander_init();
 
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
@@ -200,7 +200,7 @@ app.classes.mail = AppJS.extend(
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
 					focus:function(){
-						that.compose_fieldExpander_hide();
+						that.compose_fieldExpander_init();
 						that.compose_fieldExpander();
 					}
 				});
@@ -581,6 +581,7 @@ app.classes.mail = AppJS.extend(
 		if (content['cc'] || content['bcc'])
 		{
 			this.compose_fieldExpander();
+			this.compose_fieldExpander_init();
 		}
 		return success;
 	},
@@ -676,7 +677,7 @@ app.classes.mail = AppJS.extend(
 				{
 					if (typeof content[i] != 'string' || !content[i]) continue;
 					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
-					if (content[i].indexOf('@')<0)
+					if (content[i].indexOf('@')< 0)
 					{
 						remembervalue = content[i];
 					}
@@ -756,16 +757,32 @@ app.classes.mail = AppJS.extend(
 		// Empty values, just in case selected is empty (user cleared selection)
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
+		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		var previewContainer = this.et2.getWidgetById('mailPreviewContainer');
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
 		}
-		//get_class does not exist yet
-		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
-		if (this.et2.getWidgetById('previewAttachmentArea') && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
+
+		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
+			if (!dataElem.data.attachmentsBlock)
+			{
+				if (!dataElem.data.ccaddress)
+				{
+					previewContainer.set_class('previewNoAttachment');
+				}
+				else
+				{
+					previewContainer.set_class('previewNoAttachmentButCC');
+				}
+			}
+			else
+			{
+				jQuery(previewContainer.node).removeClass('previewNoAttachment previewNoAttachmentButCC');
+			}
 		}
 		else
 		{
@@ -3599,21 +3616,40 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Hide Folder, Cc and Bcc rows from the compose popup
-	 *
+	 * Set expandable fields (Folder, Cc and Bcc) based on their content
+	 * - Only fields which have no content should get hidden
 	 */
-	compose_fieldExpander_hide: function ()
+	compose_fieldExpander_init: function ()
 	{
-		var widgets = {cc:{},bcc:{},folder:{}};
+		var widgets = {
+			cc:{
+				widget:{},
+				jQClass: '.mailComposeJQueryCc'
+			},
+			bcc:{
+				widget:{},
+				jQClass: '.mailComposeJQueryBcc'
+			},
+			folder:{
+				widget:{},
+				jQClass: '.mailComposeJQueryFolder'
+			}};
+
 		for(var widget in widgets)
 		{
-			widgets[widget] = this.et2.getWidgetById(widget+'_expander');
-			if (typeof widgets[widget] != 'undefined')
+			var expanderBtn = widget + '_expander';
+			widgets[widget].widget = this.et2.getWidgetById(widget);
+			// Add expander button widget to the widgets object
+			widgets[expanderBtn] = {widget:this.et2.getWidgetById(expanderBtn)};
+
+			if (typeof widgets[widget].widget != 'undefined'
+					&& typeof widgets[expanderBtn].widget != 'undefined'
+					&& widgets[widget].widget.get_value().length == 0)
 			{
-				widgets[widget].set_disabled(false);
+				widgets[expanderBtn].widget.set_disabled(false);
+				jQuery(widgets[widget].jQClass).hide();
 			}
 		}
-		jQuery(".mailComposeJQueryCc,.mailComposeJQueryBcc,.mailComposeJQueryFolder").hide();
 	},
 
 	/**
