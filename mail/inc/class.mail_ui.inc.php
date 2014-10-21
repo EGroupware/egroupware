@@ -1391,7 +1391,7 @@ class mail_ui
 					'toolbarDefault' => true
 				),
 				'drag_mail' => array(
-					'dragType' => array('mail','file'),
+					'dragType' => array('mail'),
 					'type' => 'drag',
 					//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 				)
@@ -2517,16 +2517,19 @@ class mail_ui
 	 *
 	 * @param string|array $ids use splitRowID, to separate values
 	 * @param string $path path in vfs (no egw_vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @return string javascript eg. to close the selector window
+	 * @param boolean $close Return javascript to close the window
+	 * @return string|boolean javascript eg. to close the selector window if $close is true, or success/fail if $close is false
 	 */
-	function vfsSaveMessage($ids,$path)
+	function vfsSaveMessage($ids,$path, $close = true)
 	{
-		error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
+		//error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
 
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
 		}
+		translation::add_app('mail');
+
 		foreach((array)$ids as $id)
 		{
 			$hA = self::splitRowID($id);
@@ -2534,7 +2537,16 @@ class mail_ui
 			$mailbox = $hA['folder'];
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
 			$err=null;
-			if (!($fp = egw_vfs::fopen($file=$path,'wb')) || !fwrite($fp,$message))
+			if(egw_vfs::is_dir($path))
+			{
+				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
+				$file = $path . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
+			}
+			else
+			{
+				$file = $path;
+			}
+			if (!($fp = egw_vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
 				$err .= lang('Error saving %1!',$file);
 				$succeeded = false;
@@ -2546,15 +2558,20 @@ class mail_ui
 			if ($fp) fclose($fp);
 			if ($succeeded)
 			{
-				translation::add_app('mail');
-				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
 				unset($headers['SUBJECT']);//already in filename
 				$infoSection = mail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
 				$props = array(array('name' => 'comment','val' => $infoSection));
 				egw_vfs::proppatch($file,$props);
 			}
 		}
-		egw_framework::window_close(($err?$err:null));
+		if($close)
+		{
+			egw_framework::window_close(($err?$err:null));
+		}
+		else
+		{
+			return $succeeded;
+		}
 	}
 
 	/**

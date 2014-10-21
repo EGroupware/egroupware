@@ -183,6 +183,11 @@ class filemanager_ui
 				'type' => 'drag',
 				'onExecute' => 'javaScript:app.filemanager.drag'
 			),
+			'file_drop_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'onExecute' => 'javaScript:app.filemanager.drop'
+			),
 			'file_drop_move' => array(
 				'icon' => 'stylite/move',
 				'acceptedTypes' => 'file',
@@ -511,7 +516,19 @@ class filemanager_ui
 			case 'copy':
 				foreach($selected as $path)
 				{
-					if (!egw_vfs::is_dir($path))
+					if (strpos($path, 'mail::') === 0 && $path = substr($path, 6))
+					{
+						// Support for dropping mail in filemanager - Pass mail back to mail app
+						if(ExecMethod2('mail.mail_ui.vfsSaveMessage', $path, $dir, false))
+						{
+							++$files;
+						}
+						else
+						{
+							++$errs;
+						}
+					}
+					elseif (!egw_vfs::is_dir($path))
 					{
 						$to = egw_vfs::concat($dir,egw_vfs::basename($path));
 						if ($path != $to && egw_vfs::copy($path,$to))
