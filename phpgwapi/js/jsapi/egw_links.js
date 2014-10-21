@@ -454,7 +454,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				var apps = self.link_app_list('add');
 				for(var app in apps)
 				{
-					var option = jQuery(document.createElement('option')).attr('value', app).text(self.lang(apps[app]));
+					var option = jQuery(document.createElement('option')).attr('value', app)
+						.text(self.lang(self.link_get_registry(app,'entry') || apps[app]));
 					select.append(option);
 				}
 			});

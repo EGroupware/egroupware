@@ -276,6 +276,8 @@ class filemanager_hooks
 				),
 			),
 			'merge' => true,
+			'entry' => 'File',
+			'entries' => 'Files',
 		);
 	}
 }

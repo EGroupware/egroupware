@@ -69,6 +69,8 @@
  *			'edit_popup' => '400x300',
  *			'name' => 'Some name',					// Name to use instead of app-name
  *			'icon' => 'app/icon',					// Optional icon to use instead of app-icon
+ *          'entry' => 'Contact',					// Optional name for single entry of app, eg. "contact" used instead of appname
+ *          'entries' => 'Contacts',				// Optional name for multiple entries of app, eg. "contacts" used instead of appname
  *          'mime' => array(						// Optional register mime-types application can open
  *          	'text/something' => array(
  *          		'mime_id' => 'path',			// one of id (path) or url is required!
@@ -250,7 +252,7 @@ class egw_link extends solink
 					'edit','edit_id','edit_popup',
 					'list','list_popup',
 					'name','icon','query',
-					'mime',
+					'mime','entry','entries',
 				)));
 			}
 		}

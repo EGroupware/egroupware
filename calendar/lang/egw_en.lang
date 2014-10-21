@@ -197,11 +197,13 @@ error: saving the event !!!	calendar	en	Error saving the event!
 error: starttime has to be before the endtime !!!	calendar	en	Error: Start time has to be before the end time !!!
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: The entry has been updated since you opened it for editing!
 error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
+event	common	en	Event
 event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited.
 event deleted	calendar	en	Event deleted.
 event details follow	calendar	en	Event details follow
 event saved	calendar	en	Event saved.
 event will occupy the whole day	calendar	en	Event will occupy the whole day
+events	common	en	Events
 every user can invite other users and groups	admin	en	Every user can invite other users and groups
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
