@@ -2788,18 +2788,6 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	// Tree widget stubs
-	/**
-	 * mail_dragStart - displays information while dragging
-	 *
-	 * @param action
-	 * @param _senders - the representation of the elements dragged
-	 * @return the ddhelper
-	 */
-	mail_dragStart: function(action,_senders) {
-		return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>");
-	},
-
 	/**
 	 * mail_move2folder - implementation of the move action from action menu
 	 *
