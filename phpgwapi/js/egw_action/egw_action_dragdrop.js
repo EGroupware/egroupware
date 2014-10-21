@@ -166,7 +166,7 @@ function egwDragActionImplementation()
 			for(var i = 0; i < groups.drag.length; i++)
 			{
 				// dragType 'file' says it can be dragged as a file
-				if(groups.drag[i].link.actionObj.dragType == 'file')
+				if(groups.drag[i].link.actionObj.dragType == 'file' || groups.drag[i].link.actionObj.dragType.indexOf('file') > -1)
 				{
 					action = groups.drag[i].link.actionObj;
 					break;
