@@ -407,7 +407,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				egw_topWindow().location.href = res.data.url;
 			}
 			// json request was originating from a different window --> redirect that one
-			else if(this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window)
+			else if(this && this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window)
 			{
 				this.DOMContainer.ownerDocument.location.href = res.data.url;
 			}
