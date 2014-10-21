@@ -1,6 +1,10 @@
+%1 active file(s) with same name as directory inactivated!	admin	nl	%1 actieve bestand(en) met dezelfde naam als de map op niet-actief gezet!
+%1 directories %2 found!	admin	nl	1% mappen van %2 gevonden
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
 %1 file	common	nl	%1 bestand
 %1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
+%1 proxy of %2	common	nl	%1 proxy van %2
+%1 to sync	groupdav	nl	%1 om te synchroniseren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
@@ -33,25 +37,37 @@ account is expired	common	nl	Account is verlopen
 accounts	common	nl	Accounts
 acl	common	nl	ACL
 action	common	nl	Actie
+action when category is an email address	groupdav	nl	Actie wanneer categorie een email adres is
 actions	common	nl	Acties
 active	common	nl	Actief
+active directory requires ssl or tls to change passwords!	common	nl	om een wachtwoord van Active directory te wijzigen is SSL of TLS vereist
 add	common	nl	Toevoegen
 add %1 category for	common	nl	%1 Categorie toevoegen voor
+add a new contact	common	nl	Voeg een nieuw contact toe
 add category	common	nl	Categorie toevoegen
+add current	common	nl	Voeg huidige toe
 add shortcut	common	nl	Snelkoppeling toevoegen
 add sub	common	nl	Sub toevoegen
+add user to responsibles	groupdav	nl	Voeg gebruiker toe aan verantwoordelijkheden
+add user to responsibles, removing evtl. previous category user	groupdav	nl	voeg gebruikers toe aan verantwoordelijkheden, verwijder eventuele eerdere categorieën van gebruiker
 addressbook	common	nl	Adresboek
+addressbooks to sync in addition to personal addressbook	groupdav	nl	Adresboeken welke ook moeten worden gesynchroniseerd buiten het eigen adresboek.
 admin	common	nl	Beheer
 administration	common	nl	Beheer
 afghanistan	common	nl	AFGHANISTAN
 albania	common	nl	ALBANIË
 algeria	common	nl	ALGERIJE
 all	common	nl	Alles
+all addressbooks	groupdav	nl	Alle adresboeken
 all fields	common	nl	alle velden
+all in one	groupdav	nl	Alles in een
 all languages	common	nl	alle talen
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	nl	Sta verantwoordelijke gebruikers toe om apparaten welke niet door hun worden ondersteund te wijzigen, doormiddel van gebruik Mail adres of een gebruiker als categorie.
 alphabet	common	nl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alt	common	nl	Alt
 alternate style-sheet:	common	nl	Afwisselende style-sheet:
 american samoa	common	nl	AMERIKAANS SAMOA
+an admin required that you must change your password upon login.	common	nl	Administrator geeft aan dat u, uw wachtwoord moet wijzigen bij aanmelden.
 an error happened	common	nl	Een fout trad op
 an existing and by the webserver readable directory enables the image browser and upload.	common	nl	Een bestaande EN door de webserver leesbare directory maakt het mogelijk om door afbeeldingen te bladeren en te uploaden.
 and	common	nl	En
@@ -62,6 +78,7 @@ antarctica	common	nl	ANTARTICA
 antigua and barbuda	common	nl	ANTIGUA EN BARBUDA
 application	common	nl	Toepassing
 apply	common	nl	Toepassen
+apply the action on the whole query, not only the shown entries	common	nl	Voer de aktie uit op voor de gehele query, NIET alleen voor de getoonde invoer
 april	common	nl	April
 are you sure you want to delete these entries ?	common	nl	Weet u zeker dat uw deze records wilt verwijderen?
 are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
@@ -74,6 +91,7 @@ austria	common	nl	OOSTENRIJK
 author	common	nl	Auteur
 autohide sidebox menu's	common	nl	Automatisch menu's in de zijlijn verbergen
 autohide sidebox menus	common	nl	Automatisch menu's in de zijlijn verbergen
+automatic update check failed, you need to check manually!	common	nl	Automatische bijwerken niet gelukt, u moet handmatig bijwerken !
 automatically hide the sidebox menu's?	common	nl	Automatisch de menu's in de zijlijn verbergen?
 automatically hide the sidebox menus?	common	nl	Automatisch de menu's in de zijlijn verbergen?
 autosave default category	common	nl	Automatisch standaard categorie opslaan
@@ -110,11 +128,16 @@ bulgarian	common	nl	Bulgaars
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
 calendar	common	nl	Agenda
+calendars to sync in addition to personal calendar	groupdav	nl	Agenda's welke naast de eigen agenda moet worden gesynchroniseerd
 cambodia	common	nl	CAMBODJA
 cameroon	common	nl	KAMEROEN
+can't create directory %1 to connect found unconnected nodes to it!	admin	nl	Kan de map %1 niet maken op connectie niet aangesloten nodes gevonden !
 canada	common	nl	CANADA
 cancel	common	nl	Annuleren
 cannot replace %1 because it is a directory	common	nl	Kan %1 niet vervangen omdat het een map is
+cannot set a category as parent, which is part of this categorys subtree!	common	nl	Kan geen categorie als ouder instellen, welke onderdeel is van de sub categorie van deze categorie boom
+cannot set this cat as its own parent!	common	nl	Kan deze categorie als zijn eigen ouder aanmaken
+cant open %1, needs ziparchive	common	nl	Kan 1 niet openen, ZipArchief is benodigd
 cant open '%1' for %2	common	nl	Kan '%1' niet openen voor %2
 cape verde	common	nl	KAAPVERDIË
 caption	common	nl	Opmerking
@@ -123,12 +146,14 @@ categories for	common	nl	categorieën voor
 category	common	nl	Categorie
 category %1 has been added !	common	nl	Categorie %1 is toegevoegd
 category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
+category owner	common	nl	Eigenaar Categorie
 cayman islands	common	nl	KAAIMAN EILANDEN
 cc	common	nl	Cc
 centered	common	nl	gecentreerd
 central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
 chad	common	nl	CHAD
 change	common	nl	Veranderen
+change owner	common	nl	Verander eigenaar
 charset	common	nl	utf-8
 check installation	common	nl	Controleer installatie
 check now	common	nl	Nu controleren
@@ -139,27 +164,37 @@ choose a background color for the icons	common	nl	Kies een achtergrondkleur voor
 choose a background image.	common	nl	Kies een achtergrondafbeelding.
 choose a background style.	common	nl	Kies een achtergrondstijl.
 choose a text color for the icons	common	nl	KIes een tekstkleur voor de pictogrammen
+choose file...	common	nl	Kies bestand...
 choose the category	common	nl	Kies de categorie
 choose the parent category	common	nl	Kies bovenliggende categorie
+choose time	common	nl	Kies tijd
+chosen parent category no longer exists	common	nl	De gekozen hoofd categorie bestaat niet meer
 christmas island	common	nl	CHRISTMASEILAND
 clear	common	nl	Wissen
 clear form	common	nl	Formulier wissen
+clear window	common	nl	Wis Scherm
 click	common	nl	Klik
 click here to resume your egroupware session.	common	nl	Klik hier om je eGroupWare sessie voort te zetten.
 click or mouse over to show menus	common	nl	Klik or Mouse Over om menus weer te geven
 click or mouse over to show menus?	common	nl	Klik or Mouse Over om menus weer te geven?
 click this image on the navbar: %1	common	nl	Klik deze afbeelding op de navigatiebalk: %1
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	nl	Als Client geen specifieke limiet heeft wordt deze gelimiteerd naar aantal dagen. Een te hoge limiet kan met sommige Clients problemen veroorzaken
 close	common	nl	Sluiten
 close sidebox	common	nl	Zijkant box sluiten
 cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
+collection empty.	common	nl	Verzameling leeg.
+collection listing	common	nl	Verzameling overzicht
 colombia	common	nl	COLOMBIA
 common preferences	common	nl	Algemene voorkeuren
 comoros	common	nl	COMOROS
 company	common	nl	Bedrijf
+confirmation required	common	nl	Bevestiging vereist
 congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 contacting server...	common	nl	Verbinden met server...
+content type	common	nl	Type Inhoud
 cook islands	common	nl	COOKEILANDEN
+cookies are required to login to this site	login	nl	Cookies zijn nodig om aan te melden op deze site
 copy	common	nl	Kopiëren
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
@@ -167,6 +202,7 @@ could not contact server. operation timed out!	common	nl	Kon geen verbinding met
 create	common	nl	Maken
 created by	common	nl	Gemaakt door
 croatia	common	nl	KROATIË
+ctrl	common	nl	Ctrl
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
@@ -183,9 +219,13 @@ december	common	nl	December
 default category	common	nl	Standaard Categorie
 default height for the windows	common	nl	Standaard hoogte voor de vensters
 default width for the windows	common	nl	Standaard breedte voor de vensters
+del	common	nl	Verwinder
 delete	common	nl	Verwijderen
 delete category	common	nl	Categorie verwijderen
+delete file	common	nl	Verwijder bestand
 delete row	common	nl	Rij verwijderen
+delete selected entries?	common	nl	Verwijder geselecteerde invoer
+delete these entries	common	nl	Verwijder deze invoer
 delete this entry	common	nl	dit infolog verwijderen
 denmark	common	nl	DENEMARKEN
 description	common	nl	Beschrijving
@@ -202,6 +242,8 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	nl	Uitgeschakeld
 display %s first	jscalendar	nl	%s eerst tonen
 djibouti	common	nl	DJIBOUTI
+do not notify	common	nl	Geen melding maken
+do not notify of these changes	common	nl	Maak geen melding over deze wijzigingen
 do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
 doctype:	common	nl	DOCTYPE:
 document properties	common	nl	Documenteigenschappen
@@ -212,6 +254,7 @@ domestic	common	nl	thuis
 dominica	common	nl	DOMINICA
 dominican republic	common	nl	DOMINICAANSE REPUBLIEK
 done	common	nl	Gereed
+dos international	common	nl	DOS Internationaal
 download	common	nl	Download
 drag to move	jscalendar	nl	Sleep om te verplaatsen
 e-mail	common	nl	Email
@@ -229,6 +272,8 @@ egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
 email	common	nl	Email
 email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv. "%1"
+empty file	common	nl	Leeg bestand
+enable logging	groupdav	nl	Zet log aan
 enabled	common	nl	Geactiveerd
 end date	common	nl	Einddatum
 end time	common	nl	Eindtijd
@@ -243,9 +288,11 @@ error creating %1 %2 directory	common	nl	Error tijdens het creëren van %1 %2 di
 error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory
 error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
 estonia	common	nl	ESTONIA
+etag	common	nl	ETag
 ethiopia	common	nl	ETHIOPIË
 everything	common	nl	Alles
 exact	common	nl	exact
+failed to change password.	common	nl	Wachtwoord wijzigen is niet gelukt
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	nl	Verbinden met server is mislukt of een ongeldige reactie is ontvangen. Probeer opnieuw in te loggen. Neem contact op met de beheerder indien het mislukt.
 falkland islands (malvinas)	common	nl	FALKLAND EILANDEN
 faroe islands	common	nl	LAND EILANDEN
@@ -296,6 +343,7 @@ group has been deleted	common	nl	Groep is verwijderd
 group has been updated	common	nl	Groep is bijgewerkt
 group name	common	nl	groepsnaam
 group public	common	nl	Toegang voor groep
+groupdav	common	nl	CalDAV, CardCAV en GroupDAV server
 groups	common	nl	Groepen
 groups with permission for %1	common	nl	Groepen met toegangsrechten voor %1
 groups without permission for %1	common	nl	Groepen zonder toegangsrechten voor %1
@@ -314,6 +362,7 @@ highest	common	nl	Hoogste
 holy see (vatican city state)	common	nl	VATICAANSTAD
 home	common	nl	Start
 home email	common	nl	email thuis
+home-accounts	common	nl	Gebruiker accounts
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
@@ -330,6 +379,8 @@ indonesia	common	nl	INDONESIË
 insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
 insert column after	common	nl	Kolom invoegen achter
 insert column before	common	nl	Kolom invoegen voor
+insert in %1	common	nl	Voeg toe in %1
+insert in dokument	common	nl	Voeg toe aan document
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
 international	common	nl	Internationaal
@@ -516,6 +567,8 @@ permission denied!	common	nl	Toestemming geweigerd!
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
 personal	common	nl	Persoonlijk
 peru	common	nl	PERU
+pg down	common	nl	Pagina naar benenden
+pg up	common	nl	Pagina omhoog
 philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
 phpgwapi	common	nl	eGroupWare API
@@ -532,7 +585,10 @@ poland	common	nl	POLEN
 portugal	common	nl	PORTUGAL
 postal	common	nl	Post
 powered by	common	nl	Ondersteund door
+pre	common	nl	Voor
 preferences	common	nl	Voorkeuren
+preferences for the %1 template set	preferences	nl	Voorkeur voor set template %1
+prev	common	nl	Vorige
 prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
 prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
 previous page	common	nl	Vorige pagina
@@ -543,6 +599,7 @@ priority	common	nl	Prioriteit
 private	common	nl	Privé
 programs	common	nl	Programma's
 project	common	nl	Project
+properties	common	nl	Eigenschappen
 public	common	nl	publiek
 puerto rico	common	nl	PUERTO RICO
 qatar	common	nl	QATAR
@@ -601,6 +658,7 @@ select user	common	nl	Selecteer gebruiker
 select work email address	common	nl	Selecteer emailadres werk
 selection	common	nl	Selectie
 send	common	nl	Verzend
+send succeeded to %1	common	nl	Verzenden naar %1 gelukt
 senegal	common	nl	SENEGAL
 september	common	nl	September
 serbia	common	nl	Servië
@@ -612,12 +670,14 @@ session has been killed	common	nl	Sessie is beëindigd
 setup	common	nl	Setup
 setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
+shift	common	nl	Shift
 show all	common	nl	laat alles zien
 show all categorys	common	nl	Alle categorieën weergegeven
 show as topmenu	common	nl	Toon als Topmenu
 show clock?	common	nl	Klok weergeven?
 show home and logout button in main application bar?	common	nl	Home en logout knop weergeven in de toepassingen balk?
 show in sidebox	common	nl	Toon in zijkant blok
+show log of following device	groupdav	nl	Toon log van het volgende apparaat
 show logo's on the desktop.	common	nl	Logo's op het bureaublad weergeven.
 show menu	common	nl	toon menu
 show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
@@ -639,7 +699,9 @@ somalia	common	nl	SOMALIË
 sorry, your login has expired	login	nl	Excuses, uw sessie is verlopen
 south africa	common	nl	ZUID AFRIKA
 south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDELIJKE SANDWICHEILANDEN
+space	common	nl	Spatie
 spain	common	nl	SPANJE
+special characters	common	nl	speciale karakters
 sri lanka	common	nl	SRI LANKA
 start date	common	nl	Startdatum
 start time	common	nl	Starttijd
@@ -658,6 +720,7 @@ swaziland	common	nl	SWAZILAND
 sweden	common	nl	ZWEDEN
 switzerland	common	nl	ZWITSERLAND
 syrian arab republic	common	nl	SYRIË
+tab	common	nl	Tab
 table properties	common	nl	Tabel-eigenschappen
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
@@ -701,7 +764,9 @@ tuvalu	common	nl	TUVALU
 type	common	nl	Type
 uganda	common	nl	UGANDA
 ukraine	common	nl	OEKRAÏNE
+un-delete	common	nl	Verwijderen ongedaan maken
 underline	common	nl	Onderstrepen
+unicode	common	nl	Unicode
 united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
 united kingdom	common	nl	VERENIGD KONINKRIJK
 united states	common	nl	VERENIGDE STATES
@@ -712,6 +777,7 @@ update the clock per minute or per second	common	nl	De klok per minuut of per se
 upload	common	nl	Upload
 upload directory does not exist, or is not writeable by webserver	common	nl	Upload map bestaat niet of is niet schrijfbaar voor de webserver
 upload requires the directory to be writable by the webserver!	common	nl	Upload vereist dat de directory door de webserver beschreven kan worden!
+uppercase letters	common	nl	hoofdletters
 url	common	nl	URL
 uruguay	common	nl	URUGUAY
 use button to search for	common	nl	Gebruik knop om te zoeken naar
@@ -729,6 +795,7 @@ value	common	nl	Waarde
 vanuatu	common	nl	VANUATU
 venezuela	common	nl	VENEZUELA
 version	common	nl	Versie
+vfs upload directory	common	nl	VFS map voor upload
 viet nam	common	nl	VIETNAM
 view	common	nl	Bekijken
 virgin islands, british	common	nl	BRITSE MAAGDENEILANDEN
@@ -753,6 +820,8 @@ written by:	common	nl	Geschreven door:
 year	common	nl	Jaar
 yemen	common	nl	JEMEN
 yes	common	nl	Ja
+yes - delete	common	nl	Ja -Verwijder
+yes - delete including sub-entries	common	nl	Ja - Verwijder inclusief alle onderliggende invoer
 you are required to change your password during your first login	common	nl	U moet nadat u voor het eerst bent ingelogd uw wachtwoord wijzigen.
 you can customize how many icons and toolbars the editor shows.	common	nl	U kunt instellen hoeveel pictogrammen en taakbalken de editor moet tonen.
 you have been successfully logged out	login	nl	U bent succesvol afgemeld
@@ -770,7 +839,7 @@ your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> 
 your message has been sent	common	nl	Uw bericht is verzonden
 your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
-your session could not be verified.	login	nl	Uw sessie kon niet geverifieerd worden
+your session timed out, please log in again	login	nl	Uw sessie s verlopen, meld u alstublieft opnieuw aan
 your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
