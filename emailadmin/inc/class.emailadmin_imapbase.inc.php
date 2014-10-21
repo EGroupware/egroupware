@@ -6061,6 +6061,10 @@ class emailadmin_imapbase
 	 */
 	function parseFileIntoMailObject($mailObject,$tmpFileName,&$Header,&$Body)
 	{
+		if (parse_url($tmpFileName, PHP_URL_SCHEME) != 'vfs')
+		{
+			$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($tmpFileName);
+		}
 		$message = file_get_contents($tmpFileName);
 		try
 		{
