@@ -1142,9 +1142,14 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.link.unbind();
 		if(_value.id && _value.app)
 		{
+			this.link.addClass("et2_link");
 			this.link.click( function(){
 				self.egw().open(_value, "", "view",null,_value.app,_value.app);
 			});
+		}
+		else
+		{
+			this.link.removeClass("et2_link");
 		}
 		if(!_value.title) {
 			var self = this;
