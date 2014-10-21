@@ -5570,8 +5570,7 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * checkFileBasics
-	 *	check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+	 * check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
 	 *
 	 * @param array $_formData passed by reference Array with information of name, type, file and size, mimetype may be adapted
 	 * @param string $IDtoAddToFileName id to enrich the returned tmpfilename
@@ -5656,9 +5655,7 @@ class emailadmin_imapbase
 			}
 			// as FreeBSD seems to have problems with the generated temp names we append some more random stuff
 			$randomString = chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90));
-			$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
-				SEP.
-				$GLOBALS['egw_info']['user']['account_id'].
+			$tmpFileName = $GLOBALS['egw_info']['user']['account_id'].
 				trim($IDtoAddToFileName).basename($_formData['file']).'_'.$randomString;
 
 			if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
@@ -5667,11 +5664,11 @@ class emailadmin_imapbase
 			}
 			elseif (is_uploaded_file($_formData['file']))
 			{
-				move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
+				move_uploaded_file($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].SEP.$tmpFileName);	// requirement for safe_mode!
 			}
 			else
 			{
-				rename($_formData['file'],$tmpFileName);
+				rename($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].SEP.$tmpFileName);
 			}
 		} else {
 			//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
@@ -6159,7 +6156,7 @@ class emailadmin_imapbase
 					$i = 0;
 					foreach($address_array as $addressObject)
 					{
-						$mb = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+						$mb = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 						$pName = $addressObject->personal;
 						if ($key=='from')
 						{
