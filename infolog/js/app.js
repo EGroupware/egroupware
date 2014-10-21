@@ -151,6 +151,7 @@ app.classes.infolog = AppJS.extend(
 	setState: function(state)
 	{
 		if (typeof state.state.action == 'undefined') state.state.action = null;
+		if (typeof state.state.search == 'undefined') state.state.search = null;
 
 		return this._super.apply(this, arguments);
 	},
