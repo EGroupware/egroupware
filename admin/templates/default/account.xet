@@ -46,7 +46,7 @@
 					<textbox id="homedirectory" class="et2_fullWidth"/>
 					<description/>
 					<description value="Login shell" for="loginshell"/>
-					<textbox id="Login shell" class="et2_fullWidth"/>
+					<textbox id="loginshell" class="et2_fullWidth"/>
 					<description/>
 				</row>
 				<row>

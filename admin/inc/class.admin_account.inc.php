@@ -135,7 +135,8 @@ class admin_account
 			'changepassword', 'anonymous', 'mustchangepassword',
 			'account_passwd', 'account_passwd2',
 			'account_primary_group',
-			'account_expires'
+			'account_expires',
+			'homedirectory', 'loginshell',
 		) as $c_name => $a_name)
 		{
 			if (is_int($c_name)) $c_name = $a_name;
@@ -264,6 +265,16 @@ class admin_account
 		}
 
 		if (!$data['account_lid'] && !$data['account_id']) return;	// makes no sense to check before
+
+		// set home-directory when account_lid is entered, but only for new accounts
+		if ($changed == 'account_lid' && !$data['account_id'] &&
+			$GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
+			$GLOBALS['egw_info']['server']['ldap_account_home'])
+		{
+			egw_json_response::get()->assign('addressbook-edit_homedirectory', 'value',
+				$GLOBALS['egw_info']['server']['ldap_account_home'].'/'.preg_replace('/[^a-z0-9_.-]/i', '',
+					common::transliterate($data['account_lid'])));
+		}
 
 		// set dummy membership to get no error about no members yet
 		$data['account_memberships'] = array($data['account_primary_user'] = $GLOBALS['egw_info']['user']['account_primary_group']);

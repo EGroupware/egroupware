@@ -1203,6 +1203,25 @@ class common
 	}
 
 	/**
+	 * convert all european special chars to ascii
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	public static function transliterate($str)
+	{
+		static $extra = array(
+			'&szlig;' => 'ss',
+			' ' => '',
+		);
+		$entities = htmlentities($str, ENT_QUOTES,translation::charset());
+		$extra_replaced = str_replace(array_keys($extra),array_values($extra),$entities);
+		$umlauts = preg_replace('/&([aAuUoO])uml;/','\\1e',$extra_replaced);	// replace german umlauts with the letter plus one 'e'
+		$accents = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$umlauts);	// remove all types of acents
+		return preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$accents);	// remove all other entities
+	}
+
+	/**
 	 * Format an email address according to the system standard
 	 *
 	 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese
@@ -1210,24 +1229,15 @@ class common
 	 * @param string $first firstname
 	 * @param string $last lastname
 	 * @param string $account account-name (lid)
-	 * @param string $domain=null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
+	 * @param string $domain =null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
 	 * @return string with email address
 	 */
 	static function email_address($first,$last,$account,$domain=null)
 	{
 		//echo "<p align=right>common::email_address('$first','$last','$account')";
-		// convert all european special chars to ascii, (c) RalfBecker-AT-egroupware.org ;-)
-		static $extra = array(
-			'&szlig;' => 'ss',
-			' ' => '',
-		);
 		foreach (array('first','last','account') as $name)
 		{
-			$entities = htmlentities($$name,ENT_QUOTES,translation::charset());
-			$extra_replaced = str_replace(array_keys($extra),array_values($extra),$entities);
-			$umlauts = preg_replace('/&([aAuUoO])uml;/','\\1e',$extra_replaced);	// replace german umlauts with the letter plus one 'e'
-			$accents = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$umlauts);	// remove all types of acents
-			$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$accents);	// remove all other entities
+			$$name = self::transliterate($$name);
 		}
 		//echo " --> ('$first', '$last', '$account')";
 		if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
