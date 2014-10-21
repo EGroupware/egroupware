@@ -1641,7 +1641,7 @@ div.et2_image_tooltipPopup {
 
 /*egw_action_ddHelper*/
 div.et2_egw_action_ddHelper {
-
+	z-index: 999;
 }
 /* The last div which shows Ctrl tip to user*/
 div.et2_egw_action_ddHelper_tip {
