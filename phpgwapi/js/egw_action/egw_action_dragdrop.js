@@ -97,6 +97,8 @@ function egwDragActionImplementation()
 		var rows = [];
 		// Maximum number of rows to show
 		var maxRows = 3;
+		// item label
+		var itemLabel = egw.lang(egw.link_get_registry(egw.app_name(),_selected.length > 1?'entries':'entry')||egw.app_name());
 		
 		var index = 0;
 		for (var i = 0; i < _selected.length;i++)
@@ -114,11 +116,9 @@ function egwDragActionImplementation()
 				var spanCnt = $j(document.createElement('span'))
 						.addClass('et2_egw_action_ddHelper_itemsCnt')
 						.appendTo(div);
-
-				// TODO: get the right drag item next to the number
-				var itemLabel = '';
-				spanCnt.text(_selected.length + itemLabel);
 				
+				spanCnt.text(_selected.length +' '+ itemLabel);
+				// Number of not shown rows
 				var restRows = _selected.length - maxRows;
 				if (restRows)
 				{
@@ -134,7 +134,7 @@ function egwDragActionImplementation()
 
 		// Add notice of Ctrl key, if supported
 		if('draggable' in document.createElement('span') &&
-			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
+			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
 			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
 			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemLabel));
@@ -312,7 +312,8 @@ function egwDragActionImplementation()
 									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
 							{
 								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-								egw.message(egw.lang('Hold %1 key to select content.', key),'info');
+								// Comment this out ATM till we get the ctrl and content selection functionality working
+								//egw.message(egw.lang('Hold %1 key to select content.', key),'info');
 							}
 							// Invalid target
 							return true;
