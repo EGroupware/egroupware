@@ -99,6 +99,8 @@ class mail_hooks
 					'mime_popup' => '870xegw_getWindowOuterHeight()',
 				),
 			),
+			'entry' => 'Mail',
+			'entries' => 'Mails',
         );
     }
 

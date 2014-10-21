@@ -239,6 +239,7 @@ mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
 mailinglist	mail	en	Mailinglist
+mails	common	en	Mails
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	mark all as read
 mark as deleted	mail	en	mark as deleted

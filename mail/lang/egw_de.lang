@@ -238,6 +238,7 @@ mail source	mail	de	Nachrichtenquelltext anzeigen
 mail-address	mail	de	Mail-Adresse
 mailaccount	mail	de	Mailkonto
 mailinglist	mail	de	Mailingliste
+mails	common	de	Mails
 mark all as read	mail	de	alle als Gelesen markieren
 mark as deleted	mail	de	als gelöscht markieren
 match:	mail	de	Übereinstimmung:
