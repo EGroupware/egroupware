@@ -1,0 +1,17 @@
+<html>
+<head>
+	<title>jQuery - Tap and Hold</title>
+	<script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
+	<script src="https://raw.github.com/zaubersoftware/jquery-tap-and-hold/master/jquery.tapandhold.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".tap").bind("taphold", function(){
+				alert("Hello Tap and Hold World!");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="tap" style="width:200px; height:200px; background-color: blue; margin: 100px 300px;"></div>
+</body>
+</html>

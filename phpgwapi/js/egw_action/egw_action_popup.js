@@ -12,6 +12,7 @@
 /*egw:uses
 	jquery.jquery;
 	egw_menu;
+	/phpgwapi/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
 */
 
 if (typeof window._egwActionClasses == "undefined")
@@ -253,7 +254,7 @@ function egwPopupActionImplementation()
 			$j(_node).bind('taphold', contextHandler);
 		} else {
 			$j(_node).on('contextmenu', contextHandler);
-		}
+	}
 	}
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
