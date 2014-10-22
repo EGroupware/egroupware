@@ -254,7 +254,7 @@ function egwPopupActionImplementation()
 			$j(_node).bind('taphold', contextHandler);
 		} else {
 			$j(_node).on('contextmenu', contextHandler);
-	}
+		}
 	}
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
