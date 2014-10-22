@@ -442,6 +442,17 @@ app.classes.calendar = AppJS.extend(
 					open: function(event,ui){
 						ui.tooltip.removeClass("ui-tooltip");
 						ui.tooltip.addClass("calendar_uitooltip");
+					},
+					close: function( event, ui )
+					{
+						ui.tooltip.hover(
+							function () {
+								if (this.scrollHeight > this.clientHeight)	jQuery(this).stop(true).fadeTo(100, 1);
+							},
+							function () {
+								jQuery(this).fadeOut("100", function(){	jQuery(this).remove();});
+							}
+						);
 					}
 				});
 				ttp.tooltip("enable");
