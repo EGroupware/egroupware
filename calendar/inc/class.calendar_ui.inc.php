@@ -875,7 +875,7 @@ class calendar_ui
 		{
 			$file = Array(
 				'Configuration'=>egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
-				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
+				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
 				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 				'Global Categories' =>egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			);

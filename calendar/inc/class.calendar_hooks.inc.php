@@ -138,7 +138,7 @@ class calendar_hooks
 	{
 		$file = Array(
 			'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
-			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
+			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
 			'Calendar Holiday Management' => egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 			'Global Categories' => egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			'Category ACL' => egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
