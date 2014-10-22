@@ -263,7 +263,7 @@ class accounts_sql
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
-	 * @param int $id numeric account_id
+	 * @param int $account_id numeric account_id
 	 * @return boolean true on success, false otherwise
 	 */
 	function delete($account_id)
@@ -440,7 +440,7 @@ class accounts_sql
 			default:
 				if (is_numeric($param['type']))
 				{
-					$filter['account_id'] = $this->frontend->members($param['type'], true);
+					$filter['account_id'] = $this->frontend->members($param['type'], true, $param['active']);
 					$filter['owner'] = 0;
 					break;
 				}
@@ -544,7 +544,7 @@ class accounts_sql
 	 * - if multiple user have the same email address, the returned user is undefined
 	 *
 	 * @param string $name value to convert
-	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $which ='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
 	 * @return int/false numeric account_id or false on error ($name not found)
 	 */
@@ -597,7 +597,7 @@ class accounts_sql
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int $account_id numerica account_id
-	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string/false converted value or false on error ($account_id not found)
 	 */
 	function id2name($account_id,$which='account_lid')
