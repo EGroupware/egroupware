@@ -200,7 +200,7 @@ class accounts_ads
 	 *
 	 * Can be set via server-config "ads_context", otherwise baseDN is used
 	 *
-	 * @param boolean $set_if_empty=false true set from DN of "Domain Users" group #
+	 * @param boolean $set_if_empty =false true set from DN of "Domain Users" group #
 	 * @return string
 	 */
 	public function ads_context($set_if_empty=false)
@@ -244,7 +244,7 @@ class accounts_ads
 	/**
 	 * Get connection to ldap server from adLDAP
 	 *
-	 * @param boolean $reconnect=false true: reconnect even if already connected
+	 * @param boolean $reconnect =false true: reconnect even if already connected
 	 * @return resource
 	 */
 	public function ldap_connection($reconnect=false)
@@ -373,7 +373,7 @@ class accounts_ads
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
-	 * @param int $id numeric account_id
+	 * @param int $account_id numeric account_id
 	 * @return boolean true on success, false otherwise
 	 */
 	function delete($account_id)
@@ -403,12 +403,12 @@ class accounts_ads
 	/**
 	 * Convert ldap data of a group
 	 *
-	 * @param array $data
+	 * @param array $_data
 	 * @return array
 	 */
-	protected function _ldap2group($data)
+	protected function _ldap2group($_data)
 	{
-		$data = translation::convert($data, 'utf-8');
+		$data = translation::convert($_data, 'utf-8');
 
 		// no need to calculate sid, if already calculated
 		$sid = is_string($data['objectsid']) ? $data['objectsid'] :
@@ -464,12 +464,12 @@ class accounts_ads
 	/**
 	 * Convert ldap data of a user
 	 *
-	 * @param array $data
+	 * @param array $_data
 	 * @return array
 	 */
-	protected function _ldap2user(array $data)
+	protected function _ldap2user(array $_data)
 	{
-		$data = translation::convert($data, 'utf-8');
+		$data = translation::convert($_data, 'utf-8');
 
 		// no need to calculate sid, if already calculated
 		$sid = is_string($data['objectsid']) ? $data['objectsid'] :
@@ -483,7 +483,7 @@ class accounts_ads
 			'account_guid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
 			'account_lid'       => $data['samaccountname'][0],
 			'account_type'      => 'u',
-			'account_primary_group' => -$data['primarygroupid'][0],
+			'account_primary_group' => (string)-$data['primarygroupid'][0],
 			'account_firstname' => $data['givenname'][0],
 			'account_lastname'  => $data['sn'][0],
 			'account_email'     => $data['mail'][0],
@@ -552,15 +552,15 @@ class accounts_ads
 	/**
 	 * Convert when(Created|Changed) attribute to unix timestamp
 	 *
-	 * @param string $when eg. "20130520200000.0Z"
+	 * @param string $_when eg. "20130520200000.0Z"
 	 * @return int
 	 */
-	protected static function _when2ts($when)
+	protected static function _when2ts($_when)
 	{
 		static $utc=null;
 		if (!isset($utc)) $utc = new DateTimeZone('UTC');
 
-		list($when) = explode('.', $when);	// remove .0Z not understood by createFromFormat
+		list($when) = explode('.', $_when);	// remove .0Z not understood by createFromFormat
 		$datetime = egw_time::createFromFormat(self::WHEN_FORMAT, $when, $utc);
 		if (egw_time::$server_timezone) $datetime->setTimezone(egw_time::$server_timezone);
 
@@ -572,7 +572,7 @@ class accounts_ads
 	 *
 	 * @internal
 	 * @param array $data array with account-data in utf-8
-	 * @param array $old=null current data
+	 * @param array $old =null current data
 	 * @return int|false account_id or false on error
 	 */
 	protected function _save_group(array &$data, array $old=null)
@@ -653,7 +653,7 @@ class accounts_ads
 	 *
 	 * @internal
 	 * @param array $data array with account-data in utf-8
-	 * @param array $old=null current data
+	 * @param array $old =null current data
 	 * @return int|false account_id or false on error
 	 */
 	protected function _save_user(array &$data, array $old=null)
@@ -1001,8 +1001,8 @@ class accounts_ads
 	 *
 	 * @param string|array $attr_filter array with attribute => value pairs or filter string or empty
 	 * @param string $account_type u = user, g = group, default null = try both
-	 * @param array $attrs=null default return account_lid, else return raw values from ldap-query
-	 * @param array $accounts=array() array to add filtered accounts too, default empty array
+	 * @param array $attrs =null default return account_lid, else return raw values from ldap-query
+	 * @param array $accounts =array() array to add filtered accounts too, default empty array
 	 * @return array account_id => account_lid or values for $attrs pairs
 	 */
 	protected function filter($attr_filter, $account_type=null, array $attrs=null, array $accounts=array())
@@ -1084,7 +1084,7 @@ class accounts_ads
 	 * - if multiple user have the same email address, the returned user is undefined
 	 *
 	 * @param string $name value to convert
-	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $which ='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
 	 * @return int|false numeric account_id or false on error ($name not found)
 	 */
@@ -1117,7 +1117,7 @@ class accounts_ads
 	 * Calls frontend which uses (cached) read method to fetch all data by account_id.
 	 *
 	 * @param int $account_id numerica account_id
-	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string/false converted value or false on error ($account_id not found)
 	 */
 	public function id2name($account_id, $which='account_lid')
@@ -1128,7 +1128,7 @@ class accounts_ads
 	/**
 	 * Update the last login timestamps and the IP
 	 *
-	 * @param int $account_id
+	 * @param int $_account_id
 	 * @param string $ip
 	 * @return int lastlogin time
 	 */

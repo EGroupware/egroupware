@@ -43,7 +43,7 @@ class admin_ui
 		}
 		$tpl = new etemplate_new('admin.index');
 
-		$content = array();
+		if (!is_array($content)) $content = array();
 		$content['nm'] = array(
 			'get_rows' => 'admin_ui::get_users',
 			'no_cat' => true,
@@ -338,7 +338,7 @@ class admin_ui
 	 *		)),
 	 * ));
 	 *
-	 * @param string $root='/'
+	 * @param string $root ='/'
 	 * @return array
 	 */
 	public static function tree_data($root = '/')

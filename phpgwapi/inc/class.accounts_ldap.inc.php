@@ -295,7 +295,7 @@ class accounts_ldap
 
 						if (!$members) $members = $this->members($data['account_id']);
 						$to_write[$forward] = array();
-						foreach ($members as $member => $account_lid)
+						foreach (array_keys($members) as $member)
 						{
 							if (($email = $this->id2name($member,'account_email')))
 							{
@@ -375,7 +375,7 @@ class accounts_ldap
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
-	 * @param int $id numeric account_id
+	 * @param int $account_id numeric account_id
 	 * @return boolean true on success, false otherwise
 	 */
 	function delete($account_id)
@@ -413,12 +413,12 @@ class accounts_ldap
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
 			array('dn','gidnumber','cn','objectclass','mail'));
 
-		$data = ldap_get_entries($this->ds, $sri);
-		if (!$data['count'])
+		$ldap_data = ldap_get_entries($this->ds, $sri);
+		if (!$ldap_data['count'])
 		{
 			return false;	// group not found
 		}
-		$data = translation::convert($data[0],'utf-8');
+		$data = translation::convert($ldap_data[0],'utf-8');
 
 		$group = array(
 			'account_dn'        => $data['dn'],
@@ -435,7 +435,7 @@ class accounts_ldap
 		{
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
-		foreach($this->group_mail_classes as $objectclass => $forward)
+		foreach(array_keys($this->group_mail_classes) as $objectclass)
 		{
 			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
 			{
@@ -459,12 +459,12 @@ class accounts_ldap
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword','telephonenumber',
 				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
 
-		$data = ldap_get_entries($this->ds, $sri);
-		if (!$data['count'])
+		$ldap_data = ldap_get_entries($this->ds, $sri);
+		if (!$ldap_data['count'])
 		{
 			return false;	// user not found
 		}
-		$data = translation::convert($data[0],'utf-8');
+		$data = translation::convert($ldap_data[0],'utf-8');
 
 		$utc_diff = date('Z');
 		$user = array(
@@ -566,7 +566,6 @@ class accounts_ldap
 		// - if it's set to > 0, it will or already has expired --> acount is active if it not yet expired
 		// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
 		$shadowexpire = ($data['account_expires']-$utc_diff) / (24*3600);
-		$account_expire = $shadowexpire*3600*24+$utc_diff;
 		//echo "<p align=right>account_expires=".date('Y-m-d H:i',$data['account_expires'])." --> $shadowexpire --> ".date('Y-m-d H:i',$account_expire)."</p>\n";
 		$to_write['shadowexpire'] = !$data['account_status'] ?
 			($data['account_expires'] != -1 && $data['account_expires'] < time() ? round($shadowexpire) : 0) :
@@ -676,8 +675,7 @@ class accounts_ldap
 					}
 				}
 				// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
-				$filter .= $this->account_filter;
-				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
+				$filter .= str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$this->account_filter);
 				$filter .= ')';
 
 				if ($param['type'] != 'both')
@@ -694,6 +692,7 @@ class accounts_ldap
 						'account_lastname'  => 'sn',
 						'account_email'     => 'email',
 						'account_fullname'  => 'cn',
+						'account_primary_group' => 'gidnumber',
 					);
 					$orders = explode(',',$param['order']);
 					$order = isset($propertyMap[$orders[0]]) ? $propertyMap[$orders[0]] : 'uid';
@@ -723,7 +722,7 @@ class accounts_ldap
 					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
 					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				}
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp','objectclass'));
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp','objectclass','gidNumber'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 
 				$utc_diff = date('Z');
@@ -740,11 +739,13 @@ class accounts_ldap
 							'account_firstname' => translation::convert($allVals['givenname'][0],'utf-8'),
 							'account_lastname'  => translation::convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
-							'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
+							'account_expires'   => isset($allVals['shadowexpire']) && $allVals['shadowexpire'][0] ? $allVals['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
 							'account_email'     => $allVals['mail'][0],
 							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
+							'account_primary_group' => (string)-$allVals['gidnumber'][0],
 						);
+						error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
 						if ($param['active'] && !$this->frontend->is_active($account))
 						{
 							if (isset($totalcount)) --$totalcount;
@@ -892,14 +893,14 @@ class accounts_ldap
 	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
 	 * - if multiple user have the same email address, the returned user is undefined
 	 *
-	 * @param string $name value to convert
-	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $_name value to convert
+	 * @param string $which ='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type u = user, g = group, default null = try both
 	 * @return int|false numeric account_id or false on error ($name not found)
 	 */
-	function name2id($name,$which='account_lid',$account_type=null)
+	function name2id($_name,$which='account_lid',$account_type=null)
 	{
-		$name = ldap::quote(translation::convert($name,translation::charset(),'utf-8'));
+		$name = ldap::quote(translation::convert($_name,translation::charset(),'utf-8'));
 
 		if ($which == 'account_lid' && $account_type !== 'u') // groups only support account_lid
 		{
@@ -938,7 +939,7 @@ class accounts_ldap
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int $account_id numerica account_id
-	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string/false converted value or false on error ($account_id not found)
 	 */
 	function id2name($account_id,$which='account_lid')
@@ -949,24 +950,14 @@ class accounts_ldap
 	/**
 	 * Update the last login timestamps and the IP
 	 *
-	 * @param int $account_id
+	 * @param int $_account_id
 	 * @param string $ip
 	 * @return int lastlogin time
 	 */
 	function update_lastlogin($_account_id, $ip)
 	{
+		unset($_account_id, $ip);
 		return false;	// not longer supported
-
-		$entry['phpgwaccountlastlogin']     = time();
-		$entry['phpgwaccountlastloginfrom'] = $ip;
-
-		$sri = ldap_search($this->ds, $this->frontend->config['ldap_context'], 'uidnumber=' . (int)$_account_id);
-		$allValues = ldap_get_entries($this->ds, $sri);
-
-		$dn = $allValues[0]['dn'];
-		@ldap_modify($this->ds, $dn, $entry);
-
-		return $allValues[0]['phpgwaccountlastlogin'][0];
 	}
 
 	/**
@@ -994,19 +985,19 @@ class accounts_ldap
 	/**
 	 * Query the members of a group
 	 *
-	 * @param int $gid
+	 * @param int $_gid
 	 * @return array with uidnumber => uid pairs
 	 */
-	function members($gid)
+	function members($_gid)
 	{
-		if (!is_numeric($gid))
+		if (!is_numeric($_gid))
 		{
 			// try to recover
-			$gid = $this->name2id($gid,'account_lid','g');
-			if (!is_numeric($gid)) return false;
+			$_gid = $this->name2id($_gid,'account_lid','g');
+			if (!is_numeric($_gid)) return false;
 		}
 
-		$gid = abs($gid);	// our gid is negative!
+		$gid = abs($_gid);	// our gid is negative!
 
 		$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=$gid))",array('memberuid'));
 		$group = ldap_get_entries($this->ds, $sri);
@@ -1063,8 +1054,8 @@ class accounts_ldap
 	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
-	 * @param boolean $groupOfNames=null should we set the member attribute of groupOfNames (default detect it)
-	 * @param string $use_cn=null if set $cn is used instead $gid and the attributes are returned, not written to ldap
+	 * @param boolean $groupOfNames =null should we set the member attribute of groupOfNames (default detect it)
+	 * @param string $use_cn =null if set $cn is used instead $gid and the attributes are returned, not written to ldap
 	 * @return boolean/array false on failure, array or true otherwise
 	 */
 	function set_members($members,$gid,$groupOfNames=null,$use_cn=null)
@@ -1118,7 +1109,7 @@ class accounts_ldap
 	 * Using the common functions next_id and last_id, find the next available account_id
 	 *
 	 * @internal
-	 * @param $string $account_type='u' (optional, default to 'u')
+	 * @param string $account_type ='u' (optional, default to 'u')
 	 * @return int|boolean integer account_id (negative for groups) or false if none is free anymore
 	 */
 	protected function _get_nextid($account_type='u')

@@ -164,7 +164,7 @@ class accounts
 	/**
 	 * Constructor
 	 *
-	 * @param string|array $backend=null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
+	 * @param string|array $backend =null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
 	 */
 	public function __construct($backend=null)
 	{
@@ -209,7 +209,7 @@ class accounts
 	/**
 	 * Old constructor name
 	 *
-	 * @param int $account_id=0 depricated param to instanciate for the given account_id
+	 * @param int $account_id =0 depricated param to instanciate for the given account_id
 	 * @deprecated use __construct
 	 */
 	function accounts($account_id=0)
@@ -291,7 +291,7 @@ class accounts
 				$members = array();
 				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $grp)
 				{
-					$members = array_unique(array_merge($members, (array)$this->members($grp,true)));
+					$members = array_unique(array_merge($members, (array)$this->members($grp,true,$param['active'])));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = $grp;
 				}
 				$param['type'] = $param['type'] == 'groupmembers+memberships' ? 'both' : 'accounts';
@@ -304,7 +304,7 @@ class accounts
 			if ($app)
 			{
 				// we want the result merged, whatever it takes, as we only care for the ids
-				$valid = $this->split_accounts($app,!in_array($param['type'],array('accounts','groups')) ? 'merge' : $param['type']);
+				$valid = $this->split_accounts($app,!in_array($param['type'],array('accounts','groups')) ? 'merge' : $param['type'],$param['active']);
 			}
 			if (isset($members))
 			{
@@ -411,8 +411,8 @@ class accounts
 	 * All key of the returned array use the 'account_' prefix.
 	 * For backward compatibility some values are additionaly availible without the prefix, using them is depricated!
 	 *
-	 * @param int/string $id numeric account_id or string with account_lid (use of default value of 0 is depricated!!!)
-	 * @param boolean $set_depricated_names=false set _additionaly_ the depricated keys without 'account_' prefix
+	 * @param int|string $id numeric account_id or string with account_lid (use of default value of 0 is depricated!!!)
+	 * @param boolean $set_depricated_names =false set _additionaly_ the depricated keys without 'account_' prefix
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
 	function read($id=0,$set_depricated_names=false)
@@ -475,8 +475,8 @@ class accounts
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
-	 * @param boolean $check_depricated_names=false check _additionaly_ the depricated keys without 'account_' prefix
-	 * @return int/boolean the account_id or false on error
+	 * @param boolean $check_depricated_names =false check _additionaly_ the depricated keys without 'account_' prefix
+	 * @return int|boolean the account_id or false on error
 	 */
 	function save(&$data,$check_depricated_names=false)
 	{
@@ -527,7 +527,7 @@ class accounts
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
-	 * @param int/string $id numeric account_id or string with account_lid
+	 * @param int|string $id numeric account_id or string with account_lid
 	 * @return boolean true on success, false otherwise
 	 */
 	function delete($id)
@@ -566,7 +566,7 @@ class accounts
 	 *
 	 * Can be used static if array with user-data is supplied
 	 *
-	 * @param array $data=null array with account data, not specifying the account is depricated!!!
+	 * @param array $data =null array with account data, not specifying the account is depricated!!!
 	 * @return boolean true=expired (no more login possible), false otherwise
 	 */
 	function is_expired($data=null)
@@ -601,9 +601,9 @@ class accounts
 	 * - if multiple user have the same email address, the returned user is undefined
 	 *
 	 * @param string $name value to convert
-	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
-	 * @param string $account_type=null u = user or g = group, or default null = try both
-	 * @return int/false numeric account_id or false on error ($name not found)
+	 * @param string $which ='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $account_type =null u = user or g = group, or default null = try both
+	 * @return int|false numeric account_id or false on error ($name not found)
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
@@ -630,7 +630,7 @@ class accounts
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int|string $account_id numeric account_id or account_lid
-	 * @param string $which='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
 	 * @return string|boolean converted value or false on error ($account_id not found)
 	 */
 	static function id2name($account_id, $which='account_lid')
@@ -653,7 +653,7 @@ class accounts
 	/**
 	 * get the type of an account: 'u' = user, 'g' = group
 	 *
-	 * @param int/string $accountid numeric account-id or alphanum. account-lid,
+	 * @param int|string $account_id numeric account-id or alphanum. account-lid,
 	 *	if !$accountid account of the user of this session
 	 * @return string/false 'u' = user, 'g' = group or false on error ($accountid not found)
 	 */
@@ -669,7 +669,7 @@ class accounts
 	/**
 	 * check if an account exists and if it is an user or group
 	 *
-	 * @param int/string $account_id numeric account_id or account_lid
+	 * @param int|string $account_id numeric account_id or account_lid
 	 * @return int 0 = acount does not exist, 1 = user, 2 = group
 	 */
 	function exists($account_id)
@@ -718,8 +718,8 @@ class accounts
 	/**
 	 * Get all memberships of an account $account_id / groups the account is a member off
 	 *
-	 * @param int/string $account_id numeric account-id or alphanum. account-lid
-	 * @param boolean $just_id=false return just account_id's or account_id => account_lid pairs
+	 * @param int|string $account_id numeric account-id or alphanum. account-lid
+	 * @param boolean $just_id =false return just account_id's or account_id => account_lid pairs
 	 * @return array with account_id's ($just_id) or account_id => account_lid pairs (!$just_id)
 	 */
 	function memberships($account_id, $just_id=false)
@@ -765,10 +765,10 @@ class accounts
 	/**
 	 * Get all members of the group $account_id
 	 *
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
+	 * @param int|string $account_id ='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
-	 * @param boolean $just_id=false return just an array of id's and not id => lid pairs, default false
-	 * @param boolean $active=false true: return only active (not expired or deactived) members, false: return all accounts
+	 * @param boolean $just_id =false return just an array of id's and not id => lid pairs, default false
+	 * @param boolean $active =false true: return only active (not expired or deactived) members, false: return all accounts
 	 * @return array with account_id ($just_id) or account_id => account_lid pairs (!$just_id)
 	 */
 	function members($account_id, $just_id=false, $active=true)
@@ -814,9 +814,10 @@ class accounts
 	 * @param string $use what should be returned only an array with id's of either 'accounts' or 'groups'.
 	 *	Or an array with arrays for 'both' under the keys 'groups' and 'accounts' or 'merge' for accounts
 	 *	and groups merged into one array
+	 * @param boolean $active =false true: return only active (not expired or deactived) members, false: return all accounts
 	 * @return array/boolean see $use, false on error (wront $use)
 	 */
-	function split_accounts($app_users,$use='both')
+	function split_accounts($app_users,$use='both',$active=true)
 	{
 		if (!is_array($app_users))
 		{
@@ -841,7 +842,7 @@ class accounts
 				$accounts['groups'][$id] = $id;
 				if ($use != 'groups')
 				{
-					foreach((array)$this->members($id, true) as $id)
+					foreach((array)$this->members($id, true, $active) as $id)
 					{
 						$accounts['accounts'][$id] = $id;
 					}
@@ -885,7 +886,7 @@ class accounts
 	 * @param string $account_lid
 	 * @param string $passwd
 	 * @param array $GLOBALS['auto_create_acct'] values for 'firstname', 'lastname', 'email' and 'primary_group'
-	 * @return int/boolean account_id or false on error
+	 * @return int|boolean account_id or false on error
 	 */
 	function auto_add($account_lid, $passwd)
 	{
@@ -1049,7 +1050,7 @@ class accounts
 	 * Read account incl. members/memberships from cache (or backend and cache it)
 	 *
 	 * @param int $account_id
-	 * @param boolean $need_active=false true = 'members-active' required
+	 * @param boolean $need_active =false true = 'members-active' required
 	 * @return array
 	 * @throws egw_exception_wrong_parameter if no integer was passed as $account_id
 	 */
@@ -1191,8 +1192,8 @@ class accounts
 	 * Create a new account with the given $account_info
 	 *
 	 * @deprecated use save
-	 * @param array $data account data for the new account
-	 * @param booelan $default_prefs has no meaning any more, as we use "real" default prefs since 1.0
+	 * @param array $account_info account data for the new account
+	 * @param booelan $default_prefs =true has no meaning any more, as we use "real" default prefs since 1.0
 	 * @return int new nummeric account-id
 	 */
 	function create($account_info,$default_prefs=True)
@@ -1217,13 +1218,13 @@ class accounts
 	 * Get all memberships of an account $accountid / groups the account is a member off
 	 *
 	 * @deprecated use memberships() which account_id => account_lid pairs
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
+	 * @param int|string $_accountid ='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @return array or arrays with keys 'account_id' and 'account_name' for the groups $accountid is a member of
 	 */
-	function membership($accountid = '')
+	function membership($_accountid = '')
 	{
-		$accountid = get_account_id($accountid);
+		$accountid = get_account_id($_accountid);
 
 		if (!($memberships = $this->memberships($accountid)))
 		{
@@ -1242,7 +1243,7 @@ class accounts
 	 * Get all members of the group $accountid
 	 *
 	 * @deprecated use members which returns acount_id => account_lid pairs
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
+	 * @param int|string $accountid ='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @return array of arrays with keys 'account_id' and 'account_name'
 	 */
@@ -1280,7 +1281,7 @@ class accounts
 	 * Gets account-name (lid), firstname and lastname of an account $accountid
 	 *
 	 * @deprecated use read to read account data
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
+	 * @param int|string $accountid ='' numeric account-id or alphanum. account-lid,
 	 *	if !$accountid account of the user of this session
 	 * @param string &$lid on return: alphanumeric account-name (lid)
 	 * @param string &$fname on return: first name
@@ -1307,7 +1308,7 @@ class accounts
 	 * Same effect as instanciating the class with that account, dont do it with $GLOBALS['egw']->account !!!
 	 *
 	 * @deprecated use read to read account data and store it in your own code
-	 * @param int $accountid numeric account-id
+	 * @param int $account_id numeric account-id
 	 * @return array with keys lid, firstname, lastname, fullname, type
 	 */
 	function get_account_data($account_id)
