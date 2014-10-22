@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 48162 2014-08-21 12:20:44Z hnategh $ */
+/* $Id: app.css 48463 2014-09-04 13:37:46Z ralfbecker $ */
 /* Header classes */
 tr.dialogHeader td,
 tr.dialogHeader2 td,
@@ -1053,7 +1053,7 @@ div#calendar-edit #calendar-edit_calendar-edit-details .et2_hbox_right {
   overflow-y: auto;
 }
 div#calendar-edit #calendar-edit_calendar-edit-details .et2_selectbox .ui-multiselect-checkboxes {
-  min-height: 290px;
+  min-height: 229px;
 }
 div#calendar-edit #calendar-edit_calendar-edit-details .et2_selectbox .ui-multiselect-checkboxes li {
   text-indent: -20px;
