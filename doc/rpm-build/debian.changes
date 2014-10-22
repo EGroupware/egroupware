@@ -1,3 +1,24 @@
+egroupware-epl (14.1.20141021-1) hardy; urgency=low
+
+  * SECURITY: path traversal revealing arbitrary files on server fixed, please update ASAP
+  * All apps: Drag and drop entries between lists to link them
+  * Mail: fix copy/move of mails between accounts
+  * Mail: fix for messed up plain-text signature in some cases
+  * Mail: import and display of mails failed, if personal part of addresses contains valid encoded utf-8 characters
+  * Calendar: make custom fields available in table plugins for document merge
+  * Calendar: fixed planner by category view was showing all categories under "None"
+  * Addressbook: with double-click preference set to edit, CRM-view did not open when selected in menu
+  * Addressbook: Fix tab order between zip code and city in AB edit dialog
+  * InfoLog: allow to (re-)set view of entries link to contacts via favorites
+  * Tracker: async job data of tracker got mangled by asyncservice
+  * Timesheet: fix (un)setting project for adding, editing and save&new timesheets
+  * News: fix broken automatic periodical import of news
+  * Filemanager: fixed super-user not able to create top-level directory, eg. /test
+  * Admin/LDAP: show LDAP extra attributes shell/homedir, if enabled in setup
+  * Admin/LDAP: LDAP extra attributes homedirector and loginshell were not stored (home set to /dev/null)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 21 Oct 2014 17:33:58 +0200
+
 egroupware-epl (14.1.20141010-1) hardy; urgency=low
 
   * Mail: fix download/saving of mail or attachments lead to redirect loop on next refresh
