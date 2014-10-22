@@ -18,7 +18,7 @@
  *  tap and hold on touch interfaces.
  */
 (function($) {
-    var TAP_AND_HOLD_TRIGGER_TIMER = 1000;
+    var TAP_AND_HOLD_TRIGGER_TIMER = 600;
     var MAX_DISTANCE_ALLOWED_IN_TAP_AND_HOLD_EVENT = 40;
     var TOUCHSTART = "touchstart";
     var TOUCHEND = "touchend";
