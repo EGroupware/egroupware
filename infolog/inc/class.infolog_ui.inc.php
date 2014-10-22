@@ -1083,7 +1083,7 @@ class infolog_ui
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
-			$actions['tracker'] = array(
+			$actions['to_tracker'] = array(
 				'icon' => 'tracker/navbar',
 				'caption' => 'Tracker',
 				'hint' => 'Convert to a ticket',
@@ -1766,7 +1766,7 @@ class infolog_ui
 			);
 		}
 		// new call via GET or some actions handled here, as they can happen both ways ($_GET[action] or button/action in GUI)
-		if (!$submit || in_array($action,array('sp','copy','schedule','ical','tracker')))
+		if (!$submit || in_array($action,array('sp','copy','schedule','ical','to_tracker')))
 		{
 			switch ($action)
 			{
@@ -1794,7 +1794,7 @@ class infolog_ui
 					}
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
-				case 'tracker':
+				case 'to_tracker':
 					egw::redirect_link('/index.php',array(
 						'menuaction' => 'tracker.tracker_ui.edit',
 						egw_link::get_registry('tracker', 'add_app').'[]' => 'infolog',
@@ -1995,7 +1995,7 @@ class infolog_ui
 				'sp'    => 'Sub-entry',
 				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
 				'ical' => array('label' => 'Export iCal', 'title' => 'Export iCal'),
-				'tracker' => array('label' => 'Tracker', 'title' => 'Convert to a ticket'),
+				'to_tracker' => array('label' => 'Tracker', 'title' => 'Convert to a ticket'),
 			),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
