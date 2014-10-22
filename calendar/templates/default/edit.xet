@@ -27,7 +27,7 @@
 						</hbox>
 					</row>
 					<row>
-						<grid width="445" height="250">
+						<grid width="445">
 							<columns>
 								<column width="80px" height="30px"/>
 								<column/>
