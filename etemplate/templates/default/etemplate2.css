@@ -1489,6 +1489,7 @@ div.ui-toolbar-menulist{
 	float:left;
 	width:80%;
 	height:24px;
+	white-space: nowrap;
 }
 .et2_toolbarDropArea{
 	border: 1px dashed lightgray;
