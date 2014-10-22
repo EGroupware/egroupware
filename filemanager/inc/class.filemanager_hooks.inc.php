@@ -106,7 +106,7 @@ class filemanager_hooks
 
 		$file = Array(
 			'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
-			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
+			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname='.self::$appname.'&ajax=true'),
 			'Check virtual filesystem' => egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
 			'VFS mounts and versioning' => egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index'),
 		);

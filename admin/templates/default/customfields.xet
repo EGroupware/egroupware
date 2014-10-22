@@ -12,8 +12,8 @@
 				<column disabled="@no_add"/>
 			</columns>
 			<rows>
-				<row disabled="@no_edit_types">
-					<description id="app-name"/>
+				<row>
+					<description id="appname"/>
 					<description value="-  type"/>
 					<menulist>
 						<menupopup id="types" no_lang="1" onchange="1"/>
@@ -25,56 +25,61 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.customfields.header_add" template="" lang="" group="0" version="1.9.001">
+		<buttononly label="Add" id="add" onclick="egw.open_link('admin.customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'450x380');"/>
+	</template>
 	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
-		<grid>
+		<grid readonly="true">
 			<columns>
-				<column disabled="!@type2"/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="!@use_private"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column disabled="!@type2" width="50px"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="100px"/>
+				<column width="50px"/>
+				<column width="100px" disabled="!@use_private"/>
+				<column width="60%"/>
+				<column width="50px"/>
+				<column width="50px"/>
+				<column width="120px"/>
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Type"/>
-					<description statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
-					<description value="Label"/>
-					<description value="Type of field"/>
-					<description value="Private"/>
-					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
+					<nextmatch-header label="Type" id="cf_type2"/>
+					<nextmatch-sortheader label="Name" id="cf_name"/>
+					<nextmatch-sortheader label="Label" id="cf_label"/>
+					<nextmatch-header label="Type of field" id="cf_type"/>
+					<nextmatch-header label="Required" id="cf_needed"/>
+					<nextmatch-header label="Private" id="cf_private"/>
+					<nextmatch-header label="Options"/>
 					<vbox>
-						<description value="Length"/>
-						<description value="Rows"/>
+						<nextmatch-header label="Length"/>
+						<nextmatch-header label="Rows"/>
 					</vbox>
-					<description value="Order"/>
-					<description align="center" statustext="deletes this field" value="Action"/>
+					<nextmatch-sortheader label="Order" id="cf_order"/>
+					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
-					<listbox statustext="for which types should this field be used" id="${row}[type2]" no_lang="1" rows="3"/>
-					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="${row}[name]" size="20" maxlength="32"/>
+					<menulist>
+						<menupopup id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All"/>
+					</menulist>
+					<description id="${row}[cf_name]" />
 					<vbox>
-						<textbox statustext="the text displayed to the user" id="${row}[label]" maxlength="255"/>
-						<description id="${row}[label]"/>
+						<description id="${row}[cf_label]" no_lang="1"/>
+						<description id="${row}[cf_label]"/>
 					</vbox>
+					<customfields-types statustext="Type of customfield" id="{$row}[cf_type]"/>
+					<checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0"/>
+					<select-account id="${row}[cf_private]" account_type="both"/>
+					<description id="${row}[cf_values]" no_lang="1"/>
 					<vbox>
-						<customfields-types statustext="Type of customfield" id="{$row}[type]"/>
-						<checkbox label="required" id="${row}[needed]"/>
+						<description id="${row}[cf_len]" no_lang="1"/>
+						<description id="${row}[cf_rows]" no_lang="1"/>
 					</vbox>
-					<taglist-account statustext="Select accounts for which the custom field should be visible" id="${row}[private]" rows="3" account_type="both"/>
-					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="4" cols="30"/>
+					<description id="${row}[cf_order]" no_lang="1"/>
 					<vbox>
-						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
-						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
+						<date-time id="${row}[cf_modified]"/>
+						<select-account id="${row}[cf_modifier]"/>
 					</vbox>
-					<textbox type="integer" statustext="determines the order the fields are displayed" id="${row}[order]" min="1" size="3"/>
-					<hbox>
-						<button statustext="deletes this field" label="Delete" id="delete[$row_cont[name]]"/>
-						<button statustext="creates a new field" label="Create" id="create$row_cont[name]"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>
@@ -83,38 +88,13 @@
 		<grid>
 			<columns>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column width="80%"/>
 			</columns>
 			<rows>
-				<row>
-					<description align="center" id="error_msg" no_lang="1" span="all" class="msg"/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description no_lang="1"/>
-				</row>
 				<row>
 					<template id="admin.customfields.types" content="content_types" span="all"/>
 				</row>
 				<row>
-					<template span="all"/>
-				</row>
-				<row>
-					<template id="admin.customfields.fields" content="fields" span="all"/>
-				</row>
-				<row>
-					<hbox span="all">
-						<button statustext="saves the changes made and leaves" label="Save" id="button[save]"/>
-						<button statustext="applies the changes" label="Apply" id="button[apply]"/>
-						<button statustext="leaves without saveing" label="Cancel" id="button[cancel]"/>
-					</hbox>
+					<nextmatch id="nm" template="admin.customfields.fields" header_row="admin.customfields.header_add" span="all"/>
 				</row>
 			</rows>
 		</grid>
