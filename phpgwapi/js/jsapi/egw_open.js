@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_links;
@@ -19,9 +17,12 @@
 
 /**
  * @augments Class
+ * @param {object} _egw
+ * @param {DOMwindow} _wnd
  */
-egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
-
+egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
+{
+	"use strict";
 
 	/**
 	 * Magic handling for mailto: uris using mail application.
@@ -52,8 +53,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		var content = {
 			to: mailto[1] || [],
 			cc: match['cc']	|| [],
-			bcc: match['bcc'] || [],
-		}
+			bcc: match['bcc'] || []
+		};
 
 		// Get open compose windows
 		var compose = egw.getOpenWindows("mail", /^compose_/);
@@ -61,7 +62,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		{
 			// No compose windows, might be no mail app.js
 			// We really want to use mail_compose() here
-			egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail')
+			egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail');
 		}
 		if(compose.length == 1)
 		{
@@ -120,13 +121,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
 		 * - egw.open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
 		 *
-		 * @param string|int|object id_data either just the id or if app=="" "app:id" or object with all data
+		 * @param {string}|int|object id_data either just the id or if app=="" "app:id" or object with all data
 		 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
-		 * @param string app app-name or empty (app is part of id)
-		 * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
-		 * @param object|string extra extra url parameters to append as object or string
-		 * @param string target target of window to open
-		 * @param string target_app target application to open in that tab
+		 * @param {string} app app-name or empty (app is part of id)
+		 * @param {string} type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+		 * @param {object|string} extra extra url parameters to append as object or string
+		 * @param {string} target target of window to open
+		 * @param {string} target_app target application to open in that tab
 		 * @memberOf egw
 		 */
 		open: function(id_data, app, type, extra, target, target_app)
@@ -234,11 +235,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		/**
 		 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
 		 *
-		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
-		 * @param string _target optional target / window name
-		 * @param string _popup widthxheight, if a popup should be used
-		 * @param string _target_app app-name for opener
-		 * @param boolean _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+		 * @param {string} _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+		 * @param {string} _target optional target / window name
+		 * @param {string} _popup widthxheight, if a popup should be used
+		 * @param {string} _target_app app-name for opener
+		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 		 * - This option only makes sense to be enabled when the open_link requested without user interaction
 		 */
 		open_link: function(_link, _target, _popup, _target_app, _check_popup_blocker)
@@ -253,7 +254,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			if (_check_popup_blocker)
 			{
 				if (this._check_popupBlocker(_link, _target, _popup, _target_app)) return;
-			}	
+			}
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
 			{
@@ -319,18 +320,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				_wnd.location.href = _url;
 			}
 		},
-		
+
 		/**
 		 * Check if browser pop-up blocker is on/off
-		 * 
-		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
-		 * @param string _target optional target / window name
-		 * @param string _popup widthxheight, if a popup should be used
-		 * @param string _target_app app-name for opener
-		 * 
+		 *
+		 * @param {string} _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+		 * @param {string} _target optional target / window name
+		 * @param {string} _popup widthxheight, if a popup should be used
+		 * @param {string} _target_app app-name for opener
+		 *
 		 * @return boolean returns false if pop-up blocker is off
-		 * - returns true if pop-up blocker is on, 
-		 * - and re-call the open_link with provided parameters, after user interaction. 
+		 * - returns true if pop-up blocker is on,
+		 * - and re-call the open_link with provided parameters, after user interaction.
 		 */
 		_check_popupBlocker: function(_link, _target, _popup, _target_app)
 		{
