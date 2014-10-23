@@ -150,9 +150,13 @@ app.classes.infolog = AppJS.extend(
 	 */
 	setState: function(state)
 	{
-		if (typeof state.state.action == 'undefined') state.state.action = null;
-		if (typeof state.state.search == 'undefined') state.state.search = null;
-
+		// as we have to set state.state.action, we have to set all other
+		// for "No filter" favorite to work as expected
+		var to_set = {col_filter: null, filter: '', filter2: '', cat_id: '', search: '', action: null};
+		for(var name in to_set)
+		{
+			if (typeof state.state[name] == 'undefined') state.state[name] = to_set[name];
+		}
 		return this._super.apply(this, arguments);
 	},
 
