@@ -115,7 +115,7 @@ class infolog_hooks
 					'appname'    => $appname,
 					'global_cats'=> True)),
 				'Custom fields, typ and status' => egw::link('/index.php',array(
-					'menuaction' => 'infolog.infolog_customfields.edit'), 'admin'),
+					'menuaction' => 'infolog.infolog_customfields.index'), 'admin'),
 			);
 			if ($location == 'admin')
 			{

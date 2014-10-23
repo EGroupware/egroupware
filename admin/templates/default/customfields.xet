@@ -91,7 +91,7 @@
 			</columns>
 			<rows>
 				<row>
-					<template id="admin.customfields.types" content="content_types" span="all"/>
+					<template id="@type_template" span="all"/>
 				</row>
 				<row>
 					<nextmatch id="nm" template="admin.customfields.fields" header_row="admin.customfields.header_add" span="all"/>

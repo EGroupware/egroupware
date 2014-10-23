@@ -11,10 +11,19 @@
  */
 
 /**
-* Custiomfields class -  manages customfield definitions in egw_config table
-*
-* The repository name (config_name) is 'customfields'.
-*/
+ * Customfields class -  manages customfield definitions in egw_config table
+ *
+ * The repository name (config_name) is 'customfields'.
+ *
+ * Applications can have customfields by sub-type by having a template
+ * named '<appname>.admin.types'.  See admin.customfields.types as an
+ * example, but the template can even be empty if types are handled by the
+ * application in another way.
+ *
+ * Applications can extend this class to customize the custom fields and handle
+ * extra information from the above template by extending and implementing
+ * update() and app_index().
+ */
 class customfields
 {
 
@@ -37,6 +46,12 @@ class customfields
 	*/
 	var $types2 = array();
 	var $content_types,$fields;
+
+	/**
+	 * Currently selected content type (if used by app)
+	 * @var string
+	 */
+	protected $content_type = null;
 
 	var $public_functions = array(
 		'index' => true,
@@ -70,7 +85,7 @@ class customfields
 	public function index($content = array())
 	{
 		// determine appname
-		$this->appname = $_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false);
+		$this->appname = $this->appname ? $this->appname : ($_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false));
 		if(!$this->appname) die(lang('Error! No appname found'));
 
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
@@ -85,22 +100,39 @@ class customfields
 		$test = new etemplate_new();
 		if($test->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 
-		// Handle incoming
+		// Handle incoming - types, options, etc.
 		if($this->manage_content_types)
 		{
-			$this->content_types = config::get_content_types($this->appname);
+			if(count($this->content_types) == 0)
+			{
+				$this->content_types = config::get_content_types($this->appname);
+			}
 			if (count($this->content_types)==0)
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
 				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
 			}
-			if($content['content_types']['delete']) $this->delete_content_type($content);
+			// Set this now, we need to know it for updates
+			$this->content_type = $content['content_types']['types'];
+
+			// Common type changes - add, delete
+			if($content['content_types']['delete'])
+			{
+				$this->delete_content_type($content);
+			}
 			elseif($content['content_types']['create'])
 			{
 				$content['content_types']['types'] = $this->create_content_type($content);
 				unset($content['content_types']['name']);
 			}
+			// No common type change and type didn't change, try an update
+			elseif($this->content_type && is_array($content) && $this->content_type == $content['old_content_type'])
+			{
+				$this->update($content);
+			}
 		}
+
+		// Custom field deleted from nextmatch
 		if($content['nm']['action'] == 'delete')
 		{
 			foreach($this->fields as $name => $data)
@@ -137,16 +169,22 @@ class customfields
 		{
 			foreach($this->content_types as $type => $entry)
 			{
+				if(!is_array($entry))
+				{
+					$this->content_types[$type] = array('name' => $entry);
+					$entry = $this->content_types[$type];
+				}
 				$this->types2[$type] = $entry['name'];
 			}
 			$sel_options['types'] = $sel_options['cf_type2'] = $this->types2;
 
+			$content['type_template'] = $this->appname . '.admin.types';
 			$content['content_types']['appname'] = $this->appname;
 			$content_types = array_keys($this->content_types);
 			$this->content_type = $content['content_types']['types'] ? $content['content_types']['types'] : $content_types[0];
 
 			$content['content_type_options'] = $this->content_types[$this->content_type]['options'];
-			$content['content_type_options']['type'] = $this->content_types[$this->content_type]['name'];
+			$content['content_type_options']['type'] = $this->types2[$this->content_type];
 			if ($this->content_types[$this->content_type]['non_deletable'])
 			{
 				$content['content_types']['non_deletable'] = true;
@@ -173,13 +211,22 @@ class customfields
 			// Disable content types
 			$this->tmpl->disableElement('content_types', true);
 		}
-
-		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
-		
-		$this->tmpl->exec('admin.customfields.index',$content,$sel_options,$readonlys,array(
+		$preserve = array(
 			'appname' => $this->appname,
 			'use_private' => $this->use_private,
-		));
+			'old_content_type' => $this->content_type
+		);
+
+		// Allow extending app a change to change content before display
+		static::app_index($content, $sel_options, $readonlys, $preserve);
+
+		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
+
+		// Some logic to make sure extending class (if there is one) gets called
+		// when etemplate2 comes back instead of parent class
+		$exec = get_class() == get_called_class() ? 'admin.customfields.index' : $this->appname . '.' . get_called_class() . '.index';
+		
+		$this->tmpl->exec($exec,$content,$sel_options,$readonlys,$preserve);
 	}
 
 	/**
@@ -193,7 +240,7 @@ class customfields
 		$cf_id = $_GET['cf_id'] ? (int)$_GET['cf_id'] : (int)$content['cf_id'];
 
 		// determine appname
-		$this->appname = $_GET['appname'] ? $_GET['appname'] : ($content['cf_app'] ? $content['cf_app'] : false);
+		$this->appname = $this->appname ? $this->appname : ($_GET['appname'] ? $_GET['appname'] : ($content['cf_app'] ? $content['cf_app'] : false));
 		if(!$this->appname)
 		{
 			if($cf_id && $this->so)
@@ -295,7 +342,10 @@ class customfields
 		// Show sub-type row, and get types
 		if($this->manage_content_types)
 		{
-			$this->content_types = config::get_content_types($this->appname);
+			if(count($this->content_types) == 0)
+			{
+				$this->content_types = config::get_content_types($this->appname);
+			}
 			if (count($this->content_types)==0)
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
@@ -303,9 +353,9 @@ class customfields
 			}
 			foreach($this->content_types as $type => $entry)
 			{
-				$this->types2[$type] = $entry['name'];
+				$this->types2[$type] = is_array($entry) ? $entry['name'] : $entry;
 			}
-			$sel_options['cf_type2'] = $this->types2 + array('tmpl' => 'template');
+			$sel_options['cf_type2'] = $this->types2;
 		}
 		else
 		{
@@ -320,13 +370,22 @@ class customfields
 	}
 
 	/**
+	 * Allow extending apps a change to interfere and add content to support
+	 * their custom template.  This is called right before etemplate->exec().
+	 */
+	protected function app_index(&$content, &$sel_options, &$readonlys)
+	{
+		// This is just a stub.
+	}
+
+	/**
 	 * Get actions / context menu for index
 	 *
 	 * Changes here, require to log out, as $content['nm'] get stored in session!
 	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
-	private function get_actions()
+	protected function get_actions()
 	{
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
@@ -429,7 +488,6 @@ class customfields
 
 	function update(&$content)
 	{
-		$this->update_fields($content);
 		$this->content_types[$this->content_type]['options'] = $content['content_type_options'];
 		// save changes to repository
 		$this->save_repository();

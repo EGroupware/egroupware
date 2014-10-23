@@ -10,26 +10,19 @@
  * @version $Id$
  */
 
+require_once(EGW_INCLUDE_ROOT . '/admin/inc/class.customfields.inc.php');
 /**
  * Administration of custom fields, type and status
  */
-class infolog_customfields
+class infolog_customfields extends customfields
 {
-	var $public_functions = array(
-		'edit' => True,
-	);
+	public $appname = 'infolog';
 	/**
 	 * Instance of the infolog BO class
 	 *
 	 * @var infolog_bo
 	 */
 	var $bo;
-	/**
-	 * Instance of the etemplate class
-	 *
-	 * @var etemplate
-	 */
-	var $tmpl;
 	/**
 	 * instance of the config class for infolog
 	 *
@@ -45,123 +38,42 @@ class infolog_customfields
 
 	function __construct( )
 	{
+		parent::__construct('infolog');
+		
 		$this->bo = new infolog_bo();
 		$this->tmpl = new etemplate_new();
-		$this->types  = &$this->bo->enums['type'];
+		$this->content_types = &$this->bo->enums['type'];
 		$this->status = &$this->bo->status;
 		$this->config_data = config::read('infolog');
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
 	}
 
-	/**
-	 * Edit/Create an InfoLog Custom fields, typ and status
-	 *
-	 * @param array $content Content from the eTemplate Exec
-	 */
-	function edit($content=null)
-	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Custom fields, typ and status');
-		if (is_array($content))
-		{
-			//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
-			list($action) = @each($content['button']);
-			switch($action)
-			{
-				case 'create':
-					$this->create($content);
-					break;
-				case 'delete':
-					$this->delete($content);
-					break;
-				default:
-					if (!$content['status']['create'] && !$content['status']['delete'] &&
-					    !$content['fields']['create'] && !$content['fields']['delete'])
-					{
-						break;	// typ change
-					}
-				case 'save':
-				case 'apply':
-					$this->update($content);
-					if ($action != 'save')
-					{
-						break;
-					}
-					// fall through
-				case 'cancel':
-					egw::redirect_link('/index.php', array(
-						'menuaction' => 'admin.admin_ui.index',
-						'ajax' => 'true'
-					), 'admin');
-			}
-		}
-		else
-		{
-			list($typ) = each($this->types);
-			$content = array(
-				'type2' => $typ,
-			);
-		}
-		$readonlys = array();
-		$readonlys['button[delete]'] = isset($this->bo->stock_enums['type'][$content['type2']]);
 
-		$content['status'] = array(
-			'default' => $this->status['defaults'][$content['type2']]
-		);
+	/**
+	 * Hook from parent class so we can interfere and add owner & status
+	 */
+	protected function app_index(&$content, &$sel_options, &$readonlys, &$preserve)
+	{
 		$n = 0;
-		foreach($this->status[$content['type2']] as $name => $label)
+		foreach($this->status[$this->content_type] as $name => $label)
 		{
-			$content['status'][++$n] = array(
+			$content['content_type_options']['status'][++$n] = array(
 				'name'     => $name,
 				'label'    => $label,
 				'disabled' => False
 			);
-			$preserv_status[$n]['old_name'] = $name;
-			if (isset($this->bo->stock_status[$content['type2']][$name]))
+			$preserve['content_type_options']['status'][$n]['old_name'] = $name;
+			if (isset($this->bo->stock_status[$this->content_type][$name]))
 			{
-				$readonlys['status']["delete[$name]"] =
-				$readonlys['status'][$n.'[name]'] = True;
+				$readonlys['content_type_options']['status']["delete[$name]"] =
+				$readonlys['content_type_options']['status'][$n.'[name]'] = True;
 			}
-			$readonlys['status']["create$name"] = True;
+			$readonlys['content_type_options']['status']["create$name"] = True;
 		}
-		$content['status'][++$n] = array('name'=>'');	// new line for create
-		$readonlys['status']["delete[]"] = True;
-
-		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
-		$content['fields'] = array();
-		$n = 0;
-		foreach($this->fields as $name => $field)
-		{
-			if (is_array($field['values']))
-			{
-				$values = '';
-				foreach($field['values'] as $var => $value)
-				{
-					$values .= (!empty($values) ? "\n" : '').$var.'='.$value;
-				}
-				$field['values'] = $values;
-			}
-			if (!$field['type2']) $field['type2']='';	// multiselect returns NULL for nothing selected (=All) which stops the autorepeat
-			$content['fields'][++$n] = $field + array(
-				'name'   => $name
-			);
-			$preserv_fields[$n]['old_name'] = $name;
-			$readonlys['fields']["create$name"] = True;
-		}
-		$content['fields'][++$n] = array('type2'=>'','order' => 10 * $n);	// new line for create
-		$readonlys['fields']["delete[]"] = True;
-
-		$content['group_owner'] = $this->group_owners[$content['type2']];
-
-		//echo '<p>'.__METHOD__'.(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
-		//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
-		$this->tmpl->read('infolog.customfields');
-		$this->tmpl->exec('infolog.infolog_customfields.edit',$content,array(
-			'type2'     => $this->types,
-		),$readonlys,array(
-			'status' => $preserv_status,
-			'fields' => $preserv_fields,
-		));
+		$content['content_type_options']['status']['default'] = $this->status['defaults'][$this->content_type];
+		$content['content_type_options']['group_owner'] = $this->group_owners[$this->content_type];
+		$readonlys['content_types']['delete'] = isset($this->bo->stock_enums['type'][$this->content_type]);
 	}
 
 	function update_fields(&$content)
@@ -247,8 +159,8 @@ class infolog_customfields
 
 	function update_status(&$content)
 	{
-		$typ = $content['type2'];
-		$status = &$content['status'];
+		$typ = $this->content_type;
+		$status = &$content['content_type_options']['status'];
 
 		$default = $status['default'];
 		unset($status['default']);
@@ -308,15 +220,14 @@ class infolog_customfields
 	function update(&$content)
 	{
 		$this->update_status($content);
-		$this->update_fields($content);
 
-		if ($content['group_owner'])
+		if ($content['content_type_options']['group_owner'])
 		{
-			$this->group_owners[$content['type2']] = $content['group_owner'];
+			$this->group_owners[$this->content_type] = $content['content_type_options']['group_owner'];
 		}
 		else
 		{
-			unset($this->group_owners[$content['type2']]);
+			unset($this->group_owners[$this->content_type]);
 		}
 		// save changes to repository
 		$this->save_repository();
@@ -329,11 +240,11 @@ class infolog_customfields
 			$content['error_msg'] .= lang("You can't delete one of the stock types !!!");
 			return;
 		}
-		unset($this->types[$content['type2']]);
+		unset($this->content_types[$content['type2']]);
 		unset($this->status[$content['type2']]);
 		unset($this->status['defaults'][$content['type2']]);
 		unset($this->group_owners[$content['type2']]);
-		list($content['type2']) = each($this->types);
+		list($content['type2']) = each($this->content_types);
 
 		// save changes to repository
 		$this->save_repository();
@@ -343,7 +254,7 @@ class infolog_customfields
 	{
 		$new_name = trim($content['new_name']);
 		unset($content['new_name']);
-		if (empty($new_name) || isset($this->types[$new_name]))
+		if (empty($new_name) || isset($this->content_types[$new_name]))
 		{
 			$content['error_msg'] .= empty($new_name) ?
 				lang('You have to enter a name, to create a new typ!!!') :
@@ -351,7 +262,7 @@ class infolog_customfields
 		}
 		else
 		{
-			$this->types[$new_name] = $new_name;
+			$this->content_types[$new_name] = $new_name;
 			$this->status[$new_name] = array(
 				'ongoing' => 'ongoing',
 				'done' => 'done'
@@ -367,7 +278,7 @@ class infolog_customfields
 	function save_repository()
 	{
 		// save changes to repository
-		config::save_value('types',$this->types,'infolog');
+		config::save_value('types',$this->content_types,'infolog');
 		//echo '<p>'.__METHOD__.'() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
 		config::save_value('status',$this->status,'infolog');
 		//echo '<p>'.__METHOD__.'() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";

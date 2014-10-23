@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.customfields.status" template="" lang="" group="0" version="1.2.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column disabled="1"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Name"/>
+					<description value="Label"/>
+					<description value="Translation"/>
+					<description value="Default"/>
+					<description value="Disabled"/>
+					<description align="center" value="Action"/>
+				</row>
+				<row class="row">
+					<textbox statustext="the name used internaly (&lt;= 10 chars), changeing it makes existing data unavailible" id="${row}[name]" size="10" maxlength="40"/>
+					<textbox statustext="the text displayed to the user" id="${row}[label]" size="40"/>
+					<description id="${row}[label]"/>
+					<radio align="center" statustext="default status for a new log entry" id="default" options="$row_cont[name]"/>
+					<checkbox align="center" statustext="disables a status without deleting it" id="${row}[disabled]"/>
+					<hbox>
+						<button statustext="deletes this status" label="Delete" id="delete[$row_cont[name]]"/>
+						<button statustext="creates a new status with the given values" label="Create" id="create$row_cont[name]"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.admin.types" template="" lang="" group="0" version="">
+		<vbox>
+			<template id="admin.customfields.types" content="content_types"/>
+			<grid id="content_type_options">
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<hbox span="all">
+							<description value="Group owner for" class="header"/>
+							<description id="type" class="header"/>
+							<menulist class="infolog_lpadding5">
+								<menupopup type="select-account" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
+							</menulist>
+						</hbox>
+					</row>
+					<row class="header">
+						<description value="Custom status for typ" id="typ" span="all"/>
+					</row>
+					<row>
+						<template id="infolog.customfields.status" content="status" span="all"/>
+					</row>
+				</rows>
+			</grid>
+			<button label="Save" id="save"/>
+			<description value="Custom fields" span="all" class="header"/>
+		</vbox>
+		<styles>.header{
+font-weight: bold;
+}</styles>
+	</template>
+</overlay>
