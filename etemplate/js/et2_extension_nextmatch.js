@@ -414,19 +414,29 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			{
 				if (s == 'col_filter')
 				{
-					for(var c in _set.col_filter)
+					// allow apps setState() to reset all col_filter by using undefined or null for it
+					// they can not pass {} for _set / state.state, if they need to set something
+					if (_set.col_filter === undefined || _set.col_filter === null)
 					{
-						if (this.activeFilters.col_filter[c] !== _set.col_filter[c])
+						this.activeFilters.col_filter = {};
+						changed = true;
+					}
+					else
+					{
+						for(var c in _set.col_filter)
 						{
-							if (_set.col_filter[c])
+							if (this.activeFilters.col_filter[c] !== _set.col_filter[c])
 							{
-								this.activeFilters.col_filter[c] = _set.col_filter[c];
+								if (_set.col_filter[c])
+								{
+									this.activeFilters.col_filter[c] = _set.col_filter[c];
+								}
+								else
+								{
+									delete this.activeFilters.col_filter[c];
+								}
+								changed = true;
 							}
-							else
-							{
-								delete this.activeFilters.col_filter[c];
-							}
-							changed = true;
 						}
 					}
 				}
