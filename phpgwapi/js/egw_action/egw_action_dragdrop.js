@@ -15,6 +15,7 @@
 	egw_action_popup;
 	jquery.jquery;
 	jquery.jquery-ui;
+	/phpgwapi/js/jquery/jquery-ui-touch-punch/touch.js;
 */
 
 /**
@@ -141,7 +142,7 @@ function egwDragActionImplementation()
 		}
 		// Final html DOM return as helper structor
 		return div;
-	}
+	};
 	
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
@@ -261,6 +262,25 @@ function egwDragActionImplementation()
 					}
 				});
 			}
+			// Use Ctrl+Alt key in order to select content
+			$j(node).off("mousedown")
+					.on({
+						mousedown: function(event){
+							if ((event.ctrlKey && event.altKey) || (event.ctrlKey && event.metaKey) && event.which == 1){
+								$j(node).draggable("disable");
+								// Disabling draggable adds some UI classes, but we don't care so remove them
+								$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+							}
+							else if(event.which != 3)
+							{
+								document.getSelection().removeAllRanges();
+							}
+						},
+						mouseup: function (){
+							$j(node).draggable("enable");
+						}
+				
+			});
 			$j(node).draggable(
 				{
 					"distance": 20,
@@ -311,9 +331,18 @@ function egwDragActionImplementation()
 							if (helperTop >= dTarget.offset().top 
 									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
 							{
-								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-								// Comment this out ATM till we get the ctrl and content selection functionality working
-								//egw.message(egw.lang('Hold %1 key to select content.', key),'info');
+								var key1='', key2='';
+								if (["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0)
+								{
+									key1 = 'Ctrl';
+									key2 = 'Alt';
+								}
+								else
+								{
+									key1 ='Command';
+									key2 ='Ctrl'; 
+								}
+								egw.message(egw.lang('Hold %1 + %2 key to select content.', key1, key2),'info');
 							}
 							// Invalid target
 							return true;
