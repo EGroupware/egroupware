@@ -217,7 +217,7 @@ class mail_ui
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 
 		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
-		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID,$_validate=true, $_oldImapServerObject=false, $_reuseCache=true);
+		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID,true, false, true);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
@@ -4033,6 +4033,7 @@ class mail_ui
 			$quota = $this->mail_bo->getQuotaRoot();
 		} catch (Exception $e) {
 			$quota['limit'] = 'NOT SET';
+			error_log(__METHOD__.__LINE__." ".$e->getMessage());
 		}
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
