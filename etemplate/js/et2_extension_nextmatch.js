@@ -105,13 +105,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			"name": "No filter",
 			"type": "boolean",
 			"description": "Hide the first filter",
-			"default": et2_no_init,
+			"default": et2_no_init
 		},
 		"no_filter2": {
 			"name": "No filter2",
 			"type": "boolean",
 			"description": "Hide the second filter",
-			"default": et2_no_init,
+			"default": et2_no_init
 		},
 
 		"onselect": {
@@ -985,7 +985,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				"visibility": (!_colData[x] || _colData[x].disabled) ?
 					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
 				"width": _colData[x] ? _colData[x].width : 0
-			}
+			};
 			if(_colData[x].minWidth)
 			{
 				columnData[x].minWidth = _colData[x].minWidth;
@@ -1624,6 +1624,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * If nextmatch starts disabled, it will need a resize after being shown
 	 * to get all the sizing correct.  Override the parent to add the resize
 	 * when enabling.
+	 *
+	 * @param {boolean} _value
 	 */
 	set_disabled: function(_value)
 	{

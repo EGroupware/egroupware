@@ -29,7 +29,7 @@ class global_stream_wrapper
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
-        $this->stream = &$GLOBALS[$this->name=parse_url($path,PHP_URL_HOST)];
+        $this->stream = &$GLOBALS[$this->name=egw_vfs::parse_url($path,PHP_URL_HOST)];
         $this->pos = 0;
         if (!is_string($this->stream)) return false;
         return true;

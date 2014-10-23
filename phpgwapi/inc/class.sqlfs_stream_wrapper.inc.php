@@ -192,7 +192,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 		$this->operation = self::url2operation($url);
 		$dir = egw_vfs::dirname($url);
 
@@ -546,7 +546,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(egw_vfs::dirname($path),egw_vfs::WRITABLE, $parent_stat))
 		{
@@ -594,9 +594,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
-		$path_from = parse_url($url_from,PHP_URL_PATH);
+		$path_from = egw_vfs::parse_url($url_from,PHP_URL_PATH);
 		$from_dir = egw_vfs::dirname($path_from);
-		$path_to = parse_url($url_to,PHP_URL_PATH);
+		$path_to = egw_vfs::parse_url($url_to,PHP_URL_PATH);
 		$to_dir = egw_vfs::dirname($path_to);
 		$operation = self::url2operation($url_from);
 
@@ -688,7 +688,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__." called from:".function_backtrace());
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (self::url_stat($path,STREAM_URL_STAT_QUIET))
 		{
@@ -702,7 +702,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$parent_path = egw_vfs::dirname($path);
-		if (($query = parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
+		if (($query = egw_vfs::parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
 		$parent = self::url_stat($parent_path,STREAM_URL_STAT_QUIET);
 
 		// check if we should also create all non-existing path components and our parent does not exist,
@@ -775,7 +775,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 		$parent = egw_vfs::dirname($path);
 
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
@@ -830,7 +830,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset($atime);	// not used
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $time)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
 		{
@@ -866,7 +866,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
 		{
@@ -906,7 +906,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
 		{
@@ -947,7 +947,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $mode)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($path,0)))
 		{
@@ -987,7 +987,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		$this->opened_dir = null;
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = self::url_stat($url,0)) || 		// dir not found
 			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
@@ -1059,7 +1059,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags,$eacl_access)");
 
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		// webdav adds a trailing slash to dirs, which causes url_stat to NOT find the file otherwise
 		if ($path != '/' && substr($path,-1) == '/')
@@ -1283,7 +1283,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_link)';
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		$stmt = self::$pdo->prepare($query);
-		unset(self::$stat_cache[parse_url($link,PHP_URL_PATH)]);
+		unset(self::$stat_cache[egw_vfs::parse_url($link,PHP_URL_PATH)]);
 
 		return !!$stmt->execute(array(
 			'fs_name' => egw_vfs::basename($link),
@@ -1314,7 +1314,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function check_extended_acl($url,$check)
 	{
-		$url_path = parse_url($url,PHP_URL_PATH);
+		$url_path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		if (is_null(self::$extended_acl))
 		{
@@ -1384,7 +1384,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if ($path[0] != '/')
 		{
-			$path = parse_url($path,PHP_URL_PATH);
+			$path = egw_vfs::parse_url($path,PHP_URL_PATH);
 		}
 		if (is_null($fs_id))
 		{
@@ -1735,7 +1735,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static protected function _remove_password(&$url)
 	{
-		$parts = parse_url($url);
+		$parts = egw_vfs::parse_url($url);
 
 		if ($parts['pass'] || $parts['scheme'])
 		{
@@ -1757,7 +1757,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (strpos(is_array($url) ? $url['query'] : $url,'storage=') !== false)
 		{
 			$query = null;
-			parse_str(is_array($url) ? $url['query'] : parse_url($url,PHP_URL_QUERY), $query);
+			parse_str(is_array($url) ? $url['query'] : egw_vfs::parse_url($url,PHP_URL_QUERY), $query);
 			switch ($query['storage'])
 			{
 				case 'db':

@@ -178,7 +178,7 @@ class filemanager_admin extends filemanager_ui
 				'url'  => $url,
 			);
 			$readonlys["disable[$path]"] = !$this->versioning || !egw_vfs::$is_root ||
-				parse_url($url,PHP_URL_SCHEME) != $this->versioning;
+				egw_vfs::parse_url($url,PHP_URL_SCHEME) != $this->versioning;
 		}
 		$readonlys['umount[/]'] = $readonlys['umount[/apps]'] = true;	// do not allow to unmount / or /apps
 		$readonlys['url'] = !self::$is_setup;
