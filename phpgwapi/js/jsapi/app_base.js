@@ -140,6 +140,7 @@ var AppJS = Class.extend(
 			egw.debug('log', "Changed et2 object");
 		}
 		this.et2 = et2.widgetContainer;
+		this._fix_iFrameScrolling();
 	},
 
 	/**
@@ -692,5 +693,32 @@ var AppJS = Class.extend(
 			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 
 		return false;
+	},
+	
+	/**
+	 * Fix scrolling iframe browsed by iPhone/iPod/iPad touch devices 
+	 */
+	_fix_iFrameScrolling: function()
+	{
+		if (/iPhone|iPod|iPad/.test(navigator.userAgent))
+		{
+			jQuery("iframe").on({
+				load: function()
+				{
+					var body = this.contentWindow.document.body;
+
+					var div = jQuery(document.createElement("div"))
+							.css ({
+								'height' : jQuery(this.parentNode).height(),
+								'width' : jQuery(this.parentNode).width(),
+								'overflow' : 'scroll'});
+					while (body.firstChild)
+					{
+						div.append(body.firstChild);
+					}
+					jQuery(body).append(div);
+				}
+			});
+		}
 	}
 });
