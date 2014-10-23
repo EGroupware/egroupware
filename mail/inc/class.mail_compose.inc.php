@@ -94,7 +94,7 @@ class mail_compose
 	/**
 	 * changeProfile
 	 *
-	 * @param int $icServerID
+	 * @param int $_icServerID
 	 */
 	function changeProfile($_icServerID)
 	{
@@ -138,7 +138,6 @@ class mail_compose
 		$_contentHasMimeType = array_key_exists('mimeType',(array)$_content);
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
-		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
 
 		// Process different places we can use as a start for composing an email
 		$actionToProcess = 'compose';
@@ -219,15 +218,13 @@ class mail_compose
 				}
 				catch (egw_exception_wrong_userinput $e)
 				{
-					$attachfailed = true;
-					$alert_msg = $e->getMessage();
+					error_log(__METHOD__.__LINE__." ". $e->getMessage());
 				}
 				$upload['file'] = $upload['tmp_name'] = $tmp_filename;
 				$upload['size'] = mail_bo::show_readable_size($upload['size']);
 			}
 		}
 		// check if someone did hit delete on the attachments list
-		$keysToDelete = array();
 		if (!empty($_content['attachments']['delete']))
 		{
 			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']));
@@ -422,7 +419,7 @@ class mail_compose
 				}
 			}
 			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext'], false, false);
-			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,$stripcrl=false,$stripalltags=true);
+			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,false,true);
 
 			$content['body'] = $content['mail_htmltext'];
 			unset($content['mail_htmltext']);
@@ -518,13 +515,13 @@ class mail_compose
 				$_htmlConfig = mail_bo::$htmLawed_config;
 				mail_bo::$htmLawed_config['comment'] = 2;
 				mail_bo::$htmLawed_config['transform_anchor'] = false;
-				$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,$htmlConfig,array(),true):$oldSigText));
+				$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,null,array(),true):$oldSigText));
 				//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
 				if ($_currentMode == 'html')
 				{
 					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
 					$styles = mail_bo::getStyles(array(array('body'=>$content['body'])));
-					if (stripos($content['body'],'style')!==false) translation::replaceTagsCompletley($content['body'],'style',$endtag='',$addbracesforendtag=true); // clean out empty or pagewide style definitions / left over tags
+					if (stripos($content['body'],'style')!==false) translation::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
 				}
 				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],mail_bo::$htmLawed_config,array(),true):$content['body']));
 				mail_bo::$htmLawed_config = $_htmlConfig;
@@ -835,7 +832,7 @@ class mail_compose
 				if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
 				//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($rarr));
 				$karr = array();
-				foreach ($rarr as $ri => $rval)
+				foreach ($rarr as &$rval)
 				{
 					//must contain =
 					if (strpos($rval,'=')!== false)
@@ -1314,7 +1311,7 @@ class mail_compose
 				case 'forward':
 					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asmail');
 					// this fill the session data with the values from the original email
-					foreach ($replyIds as $k => $mail_id)
+					foreach ($replyIds as &$mail_id)
 					{
 						//error_log(__METHOD__.__LINE__.' ID:'.$mail_id.' Mode:'.$mode);
 						$hA = mail_ui::splitRowID($mail_id);
@@ -1595,7 +1592,7 @@ class mail_compose
 			}
 		}
 
-		if($attachments = $mail_bo->getMessageAttachments($_uid,$_partID)) {
+		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
 				$this->addMessageAttachment($_uid, $attachment['partID'],
 					$_folder,
@@ -1658,7 +1655,7 @@ class mail_compose
 			unset($this->sessionData['in-reply-to']);
 			unset($this->sessionData['to']);
 			unset($this->sessionData['cc']);
-			if($attachments = $mail_bo->getMessageAttachments($_uid,$_partID)) {
+			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
 					$this->addMessageAttachment($_uid, $attachment['partID'],
@@ -2184,7 +2181,7 @@ class mail_compose
 		#error_log("bocompose::createMessage:".$realCharset);
 		// this should never happen since we come from the edit dialog
 		if (mail_bo::detect_qp($_formData['body'])) {
-			error_log("Error: bocompose::createMessage found QUOTED-PRINTABLE while Composing Message. Charset:$realCharset Message:".print_r($_formData['body'],true));
+			//error_log("Error: bocompose::createMessage found QUOTED-PRINTABLE while Composing Message. Charset:$realCharset Message:".print_r($_formData['body'],true));
 			$_formData['body'] = preg_replace('/=\r\n/', '', $_formData['body']);
 			$_formData['body'] = quoted_printable_decode($_formData['body']);
 		}
@@ -2845,6 +2842,7 @@ class mail_compose
 			catch (egw_exception $e)
 			{
 				$error = str_replace('"',"'",$e->getMessage());
+				//error_log(__METHOD__.__LINE__." ". $error);
 			}
 		}
 		unset($this->sessionData['lastDrafted']);
@@ -3029,7 +3027,10 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.' IcServer:'.$this->mail_bo->icServer->ImapServerId.':'.array2string($results));
 		if ($_returnList)
 		{
-			foreach ((array)$results as $k => $_result) {$rL[$_result['id']]=$_result['label'];};
+			foreach ((array)$results as $k => $_result)
+			{
+				$rL[$_result['id']] = $_result['label'];
+			}
 			return $rL;
 		}
 		// switch regular JSON response handling off
