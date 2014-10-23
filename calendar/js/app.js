@@ -429,38 +429,50 @@ app.classes.calendar = AppJS.extend(
 		jQuery("body")
 			//mouseover event handler for calendar tooltip
 			.on("mouseover", "div[data-tooltip]",function(){
-				var ttp = jQuery(this).tooltip({
-					items: "[data-tooltip]",
-					content: function()
-					{
-						var elem = jQuery(this);
-						if (elem.is("[data-tooltip]"))
-							return this.getAttribute('data-tooltip') ;
-					},
-					track:true,
+				//Check if the tooltip is already initialized
+				if (!jQuery(this).data('uiTooltip'))
+				{
+					jQuery(this).tooltip({
+						items: "[data-tooltip]",
+						show: false,
+						content: function()
+						{
+							var elem = jQuery(this);
+							if (elem.is("[data-tooltip]"))
+								return this.getAttribute('data-tooltip') ;
+						},
+						track:true,
 
-					open: function(event,ui){
-						ui.tooltip.removeClass("ui-tooltip");
-						ui.tooltip.addClass("calendar_uitooltip");
-					},
-					close: function( event, ui )
-					{
-						ui.tooltip.hover(
-							function () {
-								if (this.scrollHeight > this.clientHeight)	jQuery(this).stop(true).fadeTo(100, 1);
-							},
-							function () {
-								jQuery(this).fadeOut("100", function(){	jQuery(this).remove();});
+						open: function(event,ui){
+							ui.tooltip.removeClass("ui-tooltip");
+							ui.tooltip.addClass("calendar_uitooltip");
+							if (this.scrollHeight > this.clientHeight)
+							{
+								// bind on tooltip close event
+								jQuery(this).on("tooltipclose", function (event, ui){
+									// bind hover handler on tooltip helper in order to be able to freeze the tooltip and scrolling 
+									ui.tooltip.hover(
+										function () {
+											if (this.scrollHeight > this.clientHeight)	jQuery(this).stop(true).fadeTo(100, 1);
+										},
+										function () {
+											jQuery(this).fadeOut("100", function(){	jQuery(this).remove();});
+										}
+									);
+								});
 							}
-						);
-					}
-				});
-				ttp.tooltip("enable");
+						}
+					});
+				}
 			})
 
 			// mousedown event handler for calendar tooltip to remove disable tooltip
 			.on("mousedown", "div[data-tooltip]", function(){
-				jQuery(this).tooltip("disable");
+				// Make sure the tooltip initialized before calling it
+				if (jQuery(this).data('uiTooltip'))
+				{
+					jQuery(this).tooltip("disable");
+				}
 			})
 
 			//onClick event handler for calendar Events
