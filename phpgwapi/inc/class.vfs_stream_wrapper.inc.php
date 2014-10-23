@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -159,9 +159,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			$url = $stat['url'];
 		}
 		// if the url resolves to a symlink to the vfs, resolve this vfs:// url direct
-		if ($url && parse_url($url,PHP_URL_SCHEME) == self::SCHEME)
+		if ($url && self::parse_url($url,PHP_URL_SCHEME) == self::SCHEME)
 		{
-			$url = self::resolve_url(parse_url($url,PHP_URL_PATH));
+			$url = self::resolve_url(self::parse_url($url,PHP_URL_PATH));
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,file_exists=$file_exists,resolve_last_symlink=$resolve_last_symlink) = '$url'$log");
 		return $url;
@@ -204,7 +204,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
 			);
 		}
-		$parts = array_merge(parse_url($path),$defaults);
+		$parts = array_merge(self::parse_url($path),$defaults);
 		if (!$parts['host']) $parts['host'] = 'default';	// otherwise we get an invalid url (scheme:///path/to/something)!
 
 		if (!empty($parts['scheme']) && $parts['scheme'] != self::SCHEME)
@@ -218,7 +218,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			if ($mounted == '/' || $mounted == $parts['path'] || $mounted.'/' == substr($parts['path'],0,strlen($mounted)+1))
 			{
-				$scheme = parse_url($url,PHP_URL_SCHEME);
+				$scheme = self::parse_url($url,PHP_URL_SCHEME);
 				if (is_null(self::$wrappers) || !in_array($scheme,self::$wrappers))
 				{
 					self::load_wrapper($scheme);
@@ -295,7 +295,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$this->opened_stream_mode = $mode;
-		$this->opened_stream_path = $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH);
+		$this->opened_stream_path = $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH);
 		$this->opened_stream_url = $url;
 		$this->opened_stream_is_new = !$stat;
 
@@ -470,7 +470,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_unlink',
-				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url'  => $url,
 				'stat' => $stat,
 			),'',true);
@@ -498,7 +498,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		// if file is moved from one filesystem / wrapper to an other --> copy it (rename fails cross wrappers)
-		if (parse_url($url_from,PHP_URL_SCHEME) == parse_url($url_to,PHP_URL_SCHEME))
+		if (self::parse_url($url_from,PHP_URL_SCHEME) == self::parse_url($url_to,PHP_URL_SCHEME))
 		{
 			self::symlinkCache_remove($path_from);
 			$ret = rename($url_from,$url_to);
@@ -523,8 +523,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_rename',
-				'from' => $path_from[0] == '/' ? $path_from : parse_url($path_from, PHP_URL_PATH),
-				'to' => $path_to[0] == '/' ? $path_to : parse_url($path_to, PHP_URL_PATH),
+				'from' => $path_from[0] == '/' ? $path_from : self::parse_url($path_from, PHP_URL_PATH),
+				'to' => $path_to[0] == '/' ? $path_to : self::parse_url($path_to, PHP_URL_PATH),
 				'url_from' => $url_from,
 				'url_to' => $url_to,
 			),'',true);
@@ -556,7 +556,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_mkdir',
-				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url' => $url,
 			),'',true);
 		}
@@ -589,7 +589,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$GLOBALS['egw']->hooks->process(array(
 				'location' => 'vfs_rmdir',
-				'path' => $path[0] == '/' ? $path : parse_url($path, PHP_URL_PATH),
+				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url' => $url,
 				'stat' => $stat,
 			),'',true);
@@ -620,7 +620,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			{
 				return false;
 			}
-			$k=(string)parse_url($url,PHP_URL_SCHEME);
+			$k=(string)self::parse_url($url,PHP_URL_SCHEME);
 			if (!(is_array($scheme2urls[$k]))) $scheme2urls[$k] = array();
 			$scheme2urls[$k][$path] = $url;
 		}
@@ -648,7 +648,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				// we need to re-translate the urls to pathes, as they can eg. contain symlinks
 				foreach($urls as $path => $url)
 				{
-					if (isset($r[$url]) || isset($r[$url=parse_url($url,PHP_URL_PATH)]))
+					if (isset($r[$url]) || isset($r[$url=self::parse_url($url,PHP_URL_PATH)]))
 					{
 						$ret[$path] = $r[$url];
 					}
@@ -774,7 +774,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		if (($scheme = parse_url($url,PHP_URL_SCHEME)) && !$recheck)
+		if (($scheme = self::parse_url($url,PHP_URL_SCHEME)) && !$recheck)
 		{
 			// check it it's an eGW stream wrapper returning mime-type via url_stat
 			// we need to first check if the constant is defined, as we get a fatal error in php5.3 otherwise
@@ -782,7 +782,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				defined($class.'::STAT_RETURN_MIME_TYPE') &&
 				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
-				$stat = call_user_func(array($class,'url_stat'),parse_url($url,PHP_URL_PATH),0);
+				$stat = call_user_func(array($class,'url_stat'),self::parse_url($url,PHP_URL_PATH),0);
 				if ($stat && $stat[$mime_attr])
 				{
 					$mime = $stat[$mime_attr];
@@ -801,7 +801,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		// using EGw's own mime magic (currently only checking the extension!)
 		if (!$mime)
 		{
-			$mime = mime_magic::filename2mime(parse_url($url,PHP_URL_PATH));
+			$mime = mime_magic::filename2mime(self::parse_url($url,PHP_URL_PATH));
 		}
 		//error_log(__METHOD__."($path,$recheck) mime=$mime");
 		return $mime;
@@ -830,7 +830,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
-		$basepath = parse_url($path,PHP_URL_PATH);
+		$basepath = self::parse_url($path,PHP_URL_PATH);
 		foreach(self::$fstab as $mounted => $url)
 		{
 			if (((egw_vfs::dirname($mounted) == $basepath || egw_vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
@@ -901,7 +901,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					{
 						if ($lpath[0] != '/')	// concat relative path
 						{
-							$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
+							$lpath = egw_vfs::concat(self::parse_url($path,PHP_URL_PATH),'../'.$lpath);
 						}
 						$url = egw_vfs::PREFIX.$lpath;
 						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
@@ -929,7 +929,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			throw $e;
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
-		if (!$stat && $try_create_home && egw_vfs::dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
+		if (!$stat && $try_create_home && egw_vfs::dirname(self::parse_url($path,PHP_URL_PATH)) == '/home' &&
 			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
 			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
 		{
@@ -994,7 +994,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 					if ($lpath[0] != '/')
 					{
-						$lpath = egw_vfs::concat(parse_url($url,PHP_URL_PATH),'../'.$lpath);
+						$lpath = egw_vfs::concat(self::parse_url($url,PHP_URL_PATH),'../'.$lpath);
 					}
 					//self::symlinkCache_add($path,egw_vfs::PREFIX.$lpath);
 					$url = egw_vfs::PREFIX.egw_vfs::concat($lpath,$rel_path);
@@ -1029,7 +1029,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
 
-		if ($target[0] != '/') $target = parse_url($target,PHP_URL_PATH);
+		if ($target[0] != '/') $target = self::parse_url($target,PHP_URL_PATH);
 
 		self::$symlink_cache[$path] = $target;
 
@@ -1230,25 +1230,77 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * Utf-8 save version of parse_url
+	 *
+	 * Does caching withing request, to not have to parse urls over and over again.
+	 *
+	 * @param string $url
+	 * @param int $component =-1 PHP_URL_* constants
+	 * @return array|string|boolean on success array or string, if $component given, or false on failure
+	 */
+	static function parse_url($url, $component=-1)
+	{
+		static $component2str = array(
+			PHP_URL_SCHEME => 'scheme',
+			PHP_URL_HOST => 'host',
+			PHP_URL_PORT => 'port',
+			PHP_URL_USER => 'user',
+			PHP_URL_PASS => 'pass',
+			PHP_URL_PATH => 'path',
+			PHP_URL_QUERY => 'query',
+			PHP_URL_FRAGMENT => 'fragment',
+		);
+		static $cache = array();	// some caching
+
+		$result =& $cache[$url];
+
+		if (!isset($result))
+		{
+			// Build arrays of values we need to decode before parsing
+			static $entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
+			static $replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]");
+			static $str_replace = null;
+			if (!isset($str_replace)) $str_replace = function_exists('mb_str_replace') ? 'mb_str_replace' : 'str_replace';
+
+			// Create encoded URL with special URL characters decoded so it can be parsed
+			// All other characters will be encoded
+			$encodedURL = $str_replace($entities, $replacements, urlencode($url));
+
+			// Parse the encoded URL
+			$result = $encodedParts = parse_url($encodedURL);
+
+			// Now, decode each value of the resulting array
+			if ($encodedParts)
+			{
+				$result = array();
+				foreach ($encodedParts as $key => $value)
+				{
+					$result[$key] = urldecode($str_replace($replacements, $entities, $value));
+				}
+			}
+		}
+		return $component >= 0 ? $result[$component2str[$component]] : $result;
+	}
+
+	/**
 	 * Getting the path from an url (or path) AND removing trailing slashes
 	 *
 	 * @param string $path url or path (might contain trailing slash from WebDAV!)
-	 * @param string $only_remove_scheme=self::SCHEME if given only that scheme get's removed
+	 * @param string $only_remove_scheme =self::SCHEME if given only that scheme get's removed
 	 * @return string path without training slash
 	 */
 	static protected function get_path($path,$only_remove_scheme=self::SCHEME)
 	{
-		$url_parts = parse_url($path);
-		if ($path[0] != '/' && (!$only_remove_scheme || $url_parts['scheme'] == $only_remove_scheme))
+		if ($path[0] != '/' && (!$only_remove_scheme || self::parse_url($path, PHP_URL_SCHEME) == $only_remove_scheme))
 		{
-			$path = $url_parts['path'];
+			$path = self::parse_url($path, PHP_URL_PATH);
 		}
 		// remove trailing slashes eg. added by WebDAV
-		if ($url_parts['path'] != '/')
+		if ($path != '/')
 		{
-			while (substr($path,-1) == '/' && $path != '/')
+			while (mb_substr($path, -1) == '/' && $path != '/')
 			{
-				$path = substr($path,0,-1);
+				$path = mb_substr($path,0,-1);
 			}
 		}
 		return $path;

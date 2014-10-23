@@ -332,7 +332,7 @@ switch($cmd)
 								$mode = $url;	// first param is mode
 								$url = array_shift($argv);
 							}
-							if (parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or egw_vfs::mode2int otherwise!
+							if (egw_vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or egw_vfs::mode2int otherwise!
 
 							if (strpos($mode,'+') !== false || strpos($mode,'-') !== false)
 							{
@@ -357,7 +357,7 @@ switch($cmd)
 							{
 								$owner = $url;	// first param is owner/group
 								$url = array_shift($argv);
-								if (parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
+								if (egw_vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
 								if ($owner == 'root')
 								{
 									$owner = 0;
@@ -383,7 +383,7 @@ switch($cmd)
 							$params = array($url,$owner);
 							break;
 					}
-					if (($scheme = parse_url($url,PHP_URL_SCHEME)))
+					if (($scheme = egw_vfs::parse_url($url,PHP_URL_SCHEME)))
 					{
 						load_wrapper($url);
 					}
@@ -413,7 +413,7 @@ switch($cmd)
 					{
 						if ($argc)
 						{
-							if (!($name = basename(parse_url($url,PHP_URL_PATH)))) $name = '/';
+							if (!($name = basename(egw_vfs::parse_url($url,PHP_URL_PATH)))) $name = '/';
 							echo "\n$name:\n";
 						}
 						// separate evtl. query part, to re-add it after the file-name
@@ -441,7 +441,7 @@ switch($cmd)
 						{
 							if ($argc)
 							{
-								echo "\n".basename(parse_url($url,PHP_URL_PATH)).":\n";
+								echo "\n".basename(egw_vfs::parse_url($url,PHP_URL_PATH)).":\n";
 							}
 							fpassthru($f);
 							fclose($f);
@@ -464,7 +464,7 @@ switch($cmd)
  */
 function load_wrapper($url)
 {
-	$scheme = parse_url($url,PHP_URL_SCHEME);
+	$scheme = egw_vfs::parse_url($url,PHP_URL_SCHEME);
 
 	if (!in_array($scheme,stream_get_wrappers()))
 	{
@@ -479,7 +479,7 @@ function load_wrapper($url)
 			default:
 				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')))
 				{
-					load_egw(parse_url($url,PHP_URL_USER),parse_url($url,PHP_URL_PASS),parse_url($url,PHP_URL_HOST));
+					load_egw(egw_vfs::parse_url($url,PHP_URL_USER),egw_vfs::parse_url($url,PHP_URL_PASS),egw_vfs::parse_url($url,PHP_URL_HOST));
 				}
 				// get eGW's __autoload() function
 				include_once(EGW_API_INC.'/common_functions.inc.php');
@@ -637,7 +637,7 @@ function do_eacl(array $argv)
 function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 {
 	//echo "do_stat($url,$long,$numeric,$full_path)\n";
-	$bname = parse_url($url,PHP_URL_PATH);
+	$bname = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 	if (!$full_path)
 	{
@@ -756,7 +756,7 @@ function _cp($from,$to,$verbose=false,$perms=false)
 
 	if (is_dir($to) || !file_exists($to) && is_dir($from) && $mkdir)
 	{
-		$path = parse_url($from,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($from,PHP_URL_PATH);
 		if (is_dir($to))
 		{
 			list($to,$query) = explode('?',$to,2);

@@ -72,7 +72,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		{
 			return true;
 		}
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
@@ -203,8 +203,8 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	{
 		if($path[0] != '/')
 		{
-			if (strpos($path,'?') !== false) $query = parse_url($path,PHP_URL_QUERY);
-			$path = parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
+			if (strpos($path,'?') !== false) $query = egw_vfs::parse_url($path,PHP_URL_QUERY);
+			$path = egw_vfs::parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
 		}
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 

@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -56,6 +56,9 @@
  *
  * The static egw_vfs::copy() method does exactly that, but you have to do it eg. on your own, if
  * you want to copy eg. an uploaded file into the vfs.
+ *
+ * egw_vfs::parse_url($url, $component=-1), egw_vfs::dirname($url) and egw_vfs::basename($url) work
+ * on urls containing utf-8 characters, which get NOT urlencoded in our VFS!
  */
 class egw_vfs extends vfs_stream_wrapper
 {
@@ -331,7 +334,7 @@ class egw_vfs extends vfs_stream_wrapper
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') already mounted.');
 			return true;	// already mounted
 		}
-		self::load_wrapper(parse_url($url,PHP_URL_SCHEME));
+		self::load_wrapper(self::parse_url($url,PHP_URL_SCHEME));
 
 		if ($check_url && (!file_exists($url) || opendir($url) === false))
 		{
@@ -517,7 +520,7 @@ class egw_vfs extends vfs_stream_wrapper
 						if ($opts['maxdepth']) $opts['maxdepth']++;
 						unset($opts['order']);
 						unset($opts['limit']);
-						foreach(self::find($options['url']?$file:parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)
+						foreach(self::find($options['url']?$file:self::parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)
 						{
 							unset($result[$p]);
 							$result[$p] = $s;
@@ -641,7 +644,7 @@ class egw_vfs extends vfs_stream_wrapper
 			return;	// wrong type
 		}
 		$stat = array_slice($stat,13);	// remove numerical indices 0-12
-		$stat['path'] = parse_url($path,PHP_URL_PATH);
+		$stat['path'] = self::parse_url($path,PHP_URL_PATH);
 		$stat['name'] = $options['remove'] > 0 ? implode('/',array_slice(explode('/',$stat['path']),$options['remove'])) : self::basename($path);
 
 		if ($options['mime'] || $options['need_mime'])
@@ -683,7 +686,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// do we return url or just vfs pathes
 		if (!$options['url'])
 		{
-			$path = parse_url($path,PHP_URL_PATH);
+			$path = self::parse_url($path,PHP_URL_PATH);
 		}
 		$result[$path] = $stat;
 	}
@@ -717,7 +720,7 @@ class egw_vfs extends vfs_stream_wrapper
 		// some precaution to never allow to (recursivly) remove /, /apps or /home
 		foreach((array)$urls as $url)
 		{
-			if (preg_match('/^\/?(home|apps|)\/*$/',parse_url($url,PHP_URL_PATH)))
+			if (preg_match('/^\/?(home|apps|)\/*$/',self::parse_url($url,PHP_URL_PATH)))
 			{
 				throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
 			}
@@ -832,7 +835,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		// check if we use an EGroupwre stream wrapper, or a stock php one
 		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
-		if (($scheme = parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
+		if (($scheme = self::parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
 		{
 			switch($check)
 			{
@@ -1176,7 +1179,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		list($url,$query) = explode('?',$url,2);	// strip the query first, as it can contain slashes
 
-		if ($url == '/' || $url[0] != '/' && parse_url($url,PHP_URL_PATH) == '/')
+		if ($url == '/' || $url[0] != '/' && self::parse_url($url,PHP_URL_PATH) == '/')
 		{
 			//error_log(__METHOD__."($url) returning FALSE: already in root!");
 			return false;
@@ -1275,7 +1278,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		if ($path[0] != '/')
 		{
-			$path = parse_url($path,PHP_URL_PATH);
+			$path = self::parse_url($path,PHP_URL_PATH);
 		}
 		// we do NOT need to encode % itself, as our path are already url encoded, with the exception of ' ' and '+'
 		// we urlencode double quotes '"', as that fixes many problems in html markup
@@ -1585,7 +1588,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			if (substr($file, 0, 6) == '/apps/')
 			{
-				$file = parse_url(egw_vfs::resolve_url_symlinks($path), PHP_URL_PATH);
+				$file = self::parse_url(egw_vfs::resolve_url_symlinks($path), PHP_URL_PATH);
 			}
 
 			//Assemble the thumbnail parameters
