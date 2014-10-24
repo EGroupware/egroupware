@@ -185,6 +185,7 @@ cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 collection empty.	common	en	Collection empty.
 collection listing	common	en	Collection listing
 colombia	common	en	COLOMBIA
+command ⌘	common	en	Command ⌘
 common preferences	common	en	Common preferences
 comoros	common	en	COMOROS
 company	common	en	Company
@@ -373,7 +374,8 @@ height	common	en	Height
 help	common	en	Help
 high	common	en	High
 highest	common	en	Highest
-hold %1 to drag %2 to your computer	common	en	Hold %1 to drag %2 to your computer
+hold [%1] and [%2] key to drag %3 to your desktop	common	en	Hold [%1] and [%2] key to drag %3 to your desktop
+hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select text eg. to copy it
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
 home email	common	en	Home email
@@ -731,6 +733,7 @@ setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 shift	common	en	Shift
+shift ⇧	common	en	Shift ⇧
 show all	common	en	Show all
 show all categorys	common	en	Show all categories
 show as topmenu	common	en	Show as top menu

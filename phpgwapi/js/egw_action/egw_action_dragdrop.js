@@ -83,7 +83,7 @@ function egwDragActionImplementation()
 	ai.helper = null;
 	ai.ddTypes = [];
 	ai.selected = [];
-	
+
 	// Define default helper DOM
 	// default helper also can be called later in application code in order to customization
 	ai.defaultDDHelper = function (_selected)
@@ -94,13 +94,13 @@ function egwDragActionImplementation()
 		var moreRow = $j(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
 		// Main div helper container
 		var div = $j(document.createElement("div")).append(table);
-		
+
 		var rows = [];
 		// Maximum number of rows to show
 		var maxRows = 3;
 		// item label
 		var itemLabel = egw.lang(egw.link_get_registry(egw.app_name(),_selected.length > 1?'entries':'entry')||egw.app_name());
-		
+
 		var index = 0;
 		for (var i = 0; i < _selected.length;i++)
 		{
@@ -117,7 +117,7 @@ function egwDragActionImplementation()
 				var spanCnt = $j(document.createElement('span'))
 						.addClass('et2_egw_action_ddHelper_itemsCnt')
 						.appendTo(div);
-				
+
 				spanCnt.text(_selected.length +' '+ itemLabel);
 				// Number of not shown rows
 				var restRows = _selected.length - maxRows;
@@ -129,7 +129,7 @@ function egwDragActionImplementation()
 				break;
 			}
 		}
-		
+
 		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
 		div.append(text);
 
@@ -137,13 +137,14 @@ function egwDragActionImplementation()
 		if('draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
-			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-			text.text(egw.lang('Hold Alt + Shift key to drag %2 to your computer',key, itemLabel));
+			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ?
+				egw.lang('Alt') : egw.lang('Command ⌘');
+			text.text(egw.lang('Hold [%1] and [%2] key to drag %3 to your desktop', key, egw.lang('Shift ⇧'), itemLabel));
 		}
 		// Final html DOM return as helper structor
 		return div;
 	};
-	
+
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode();
@@ -201,7 +202,7 @@ function egwDragActionImplementation()
 							{
 								// Disabling draggable adds some UI classes, but we don't care so remove them
 								$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
-										
+
 							}
 							else
 							{
@@ -327,7 +328,7 @@ function egwDragActionImplementation()
 						{
 							// Add a basic class to the helper in order to standardize the background layout
 							ai.helper.addClass('et2_egw_action_ddHelper');
-							
+
 							// Append the helper object to the body element - this
 							// fixes a bug in IE: If the element isn't inserted into
 							// the DOM-tree jquery appends it to the parent node.
@@ -351,12 +352,13 @@ function egwDragActionImplementation()
 							// to distinguish whether the action was intended for dragging or selecting content.
 							var tipTelorance = 10;
 							var helperTop = ai.helper.position().top;
-									
-							if (helperTop >= dTarget.offset().top 
+
+							if (helperTop >= dTarget.offset().top
 									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
 							{
-								var key = (["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0)?"Ctrl": "Command";
-								egw.message(egw.lang('Hold %1 key to select content.',key),'info');
+								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ?
+									egw.lang("Ctrl") : egw.lang("Command ⌘");
+								egw.message(egw.lang('Hold [%1] key to select text eg. to copy it', key), 'info');
 							}
 							// Invalid target
 							return true;

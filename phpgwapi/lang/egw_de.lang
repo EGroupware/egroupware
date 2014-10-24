@@ -185,6 +185,7 @@ cocos (keeling) islands	common	de	COCOS INSELN
 collection empty.	common	de	Collection ist leer
 collection listing	common	de	Auflistung der Collection
 colombia	common	de	KOLUMBIEN
+command ⌘	common	de	Cmd ⌘
 common preferences	common	de	Allgemeine Einstellungen
 comoros	common	de	KOMOREN
 company	common	de	Unternehmen
@@ -373,7 +374,8 @@ height	common	de	Höhe
 help	common	de	Hilfe
 high	common	de	Hoch
 highest	common	de	Höchste
-hold %1 to drag %2 to your computer	common	de	%1 Taste halten um %2 auf Ihren Computer zu ziehen
+hold [%1] and [%2] key to drag %3 to your desktop	common	de	[%1] und [%2] Tasten halten um %3 auf Ihren Schreibtisch (Desktop) zu ziehen
+hold [%1] key to select text eg. to copy it	common	de	[%1] Taste halten um Text zu markieren um ihn z.B. zu kopieren
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
 home email	common	de	private E-Mail
@@ -731,6 +733,7 @@ setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
 shift	common	de	Shift
+shift ⇧	common	de	Umschalten ⇧
 show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
