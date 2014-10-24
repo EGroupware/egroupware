@@ -16,11 +16,11 @@
 */
 
 if (typeof window._egwActionClasses == "undefined")
-	window._egwActionClasses = {}
+	window._egwActionClasses = {};
 _egwActionClasses["popup"] = {
 	"actionConstructor": egwPopupAction,
 	"implementation": getPopupImplementation
-}
+};
 
 function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
@@ -38,34 +38,34 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 
 	action.set_default = function(_value) {
 		action["default"] = _value;
-	}
+	};
 
 	action.set_order = function(_value) {
 		action.order = _value;
-	}
+	};
 
 	action.set_group = function(_value) {
 		action.group = _value;
-	}
+	};
 
 	action.set_hint = function(_value) {
 		action.hint = _value;
-	}
+	};
 
 	// If true, the action will be rendered as checkbox
 	action.set_checkbox = function(_value) {
 		action.checkbox = _value;
-	}
+	};
 
 	action.set_checked = function(_value) {
 		action.checked = _value;
-	}
+	};
 
 	// If radioGroup is >0 and the element is a checkbox, radioGroup specifies
 	// the group of radio buttons this one belongs to
 	action.set_radioGroup = function(_value) {
 		action.radioGroup = _value;
-	}
+	};
 
 	action.set_shortcut = function(_value) {
 		if (_value)
@@ -75,7 +75,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 				"shift": false,
 				"ctrl": false,
 				"alt": false
-			}
+			};
 
 			if (typeof _value == "object" && typeof _value.keyCode != "undefined" &&
 			    typeof _value.caption != "undefined")
@@ -93,7 +93,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 		{
 			this.shortcut = false;
 		}
-	}
+	};
 
 	return action;
 }
@@ -107,7 +107,7 @@ function getPopupImplementation()
 	{
 		_popupActionImpl = new egwPopupActionImplementation();
 	}
-	return _popupActionImpl
+	return _popupActionImpl;
 }
 
 function egwPopupActionImplementation()
@@ -118,8 +118,14 @@ function egwPopupActionImplementation()
 
 	/**
 	 * Registers the handler for the default action
+	 *
+	 * @param {DOMNode} _node
+	 * @param {function} _callback
+	 * @param {object} _context
+	 * @returns {boolean}
 	 */
-	ai._registerDefault = function(_node, _callback, _context) {
+	ai._registerDefault = function(_node, _callback, _context)
+	{
 		var defaultHandler = function(e) {
 			if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
 			{
@@ -134,14 +140,14 @@ function egwPopupActionImplementation()
 			_callback.call(_context, "default", ai);
 
 			return false;
-		}
+		};
 
 		if (egwIsMobile()) {
 			$j(_node).bind('click', defaultHandler);
 		} else {
 			_node.ondblclick = defaultHandler;
 		}
-	}
+	};
 
 	ai._getDefaultLink = function(_links) {
 		var defaultAction = null;
@@ -155,7 +161,7 @@ function egwPopupActionImplementation()
 		}
 
 		return defaultAction;
-	}
+	};
 
 	ai._searchShortcut = function (_key, _objs, _links) {
 		for (var i = 0; i < _objs.length; i++)
@@ -174,7 +180,7 @@ function egwPopupActionImplementation()
 				return obj;
 			}
 		}
-	}
+	};
 
 	ai._searchShortcutInLinks = function(_key, _links) {
 		var objs = [];
@@ -187,10 +193,16 @@ function egwPopupActionImplementation()
 		}
 
 		return ai._searchShortcut(_key, objs, _links);
-	}
+	};
 
 	/**
 	 * Handles a key press
+	 *
+	 * @param {object} _key
+	 * @param {type} _selected
+	 * @param {type} _links
+	 * @param {type} _target
+	 * @returns {Boolean}
 	 */
 	ai._handleKeyPress = function(_key, _selected, _links, _target) {
 		// Handle the default
@@ -208,7 +220,7 @@ function egwPopupActionImplementation()
 		{
 			return this.doExecuteImplementation({posx:0,posy:0}, _selected, _links, _target);
 		}
-			
+
 
 		// Check whether the given shortcut exists
 		var obj = this._searchShortcutInLinks(_key, _links);
@@ -219,12 +231,18 @@ function egwPopupActionImplementation()
 		}
 
 		return false;
-	}
+	};
 
 	/**
 	 * Registers the handler for the context menu
+	 *
+	 * @param {DOMNode} _node
+	 * @param {function} _callback
+	 * @param {object} _context
+	 * @returns {boolean}
 	 */
-	ai._registerContext = function(_node, _callback, _context) {
+	ai._registerContext = function(_node, _callback, _context)
+	{
 		var contextHandler = function(e) {
 			//Obtain the event object
 			if (!e)
@@ -268,15 +286,21 @@ function egwPopupActionImplementation()
 			return true;
 		}
 		return false;
-	}
+	};
 
 	ai.doUnregisterAction = function(_aoi)
 	{
 		//
-	}
+	};
 
 	/**
 	 * Builds the context menu and shows it at the given position/DOM-Node.
+	 *
+	 * @param {object} _context
+	 * @param {type} _selected
+	 * @param {type} _links
+	 * @param {type} _target
+	 * @returns {Boolean}
 	 */
 	ai.doExecuteImplementation = function(_context, _selected, _links, _target)
 	{
@@ -301,7 +325,7 @@ function egwPopupActionImplementation()
 				x = $j(node).offset().left;
 				y = $j(node).offset().top;
 
-				_context = {"posx": x, "posy": y}
+				_context = {"posx": x, "posy": y};
 			}
 
 			var menu = ai._buildMenu(_links, _selected, _target);
@@ -319,10 +343,14 @@ function egwPopupActionImplementation()
 		}
 
 		return false;
-	}
+	};
 
 	/**
 	 * Groups and sorts the given action tree layer
+	 *
+	 * @param {type} _layer
+	 * @param {type} _links
+	 * @param {type} _parentGroup
 	 */
 	ai._groupLayers = function(_layer, _links, _parentGroup)
 	{
@@ -407,10 +435,16 @@ function egwPopupActionImplementation()
 		}
 
 		_parentGroup.groups = groups2;
-	}
+	};
 
 	/**
 	 * Build the menu layers
+	 *
+	 * @param {type} _menu
+	 * @param {type} _groups
+	 * @param {type} _selected
+	 * @param {type} _enabled
+	 * @param {type} _target
 	 */
 	ai._buildMenuLayer = function(_menu, _groups, _selected, _enabled, _target)
 	{
@@ -487,10 +521,15 @@ function egwPopupActionImplementation()
 
 			firstGroup = firstGroup && firstElem;
 		}
-	}
+	};
 
 	/**
 	 * Builds the context menu from the given action links
+	 *
+	 * @param {type} _links
+	 * @param {type} _selected
+	 * @param {type} _target
+	 * @returns {egwMenu|egwActionImplementation._buildMenu.menu}
 	 */
 	ai._buildMenu = function(_links, _selected, _target)
 	{
@@ -502,7 +541,7 @@ function egwPopupActionImplementation()
 			_links[k].actionObj.appendToTree(tree);
 		}
 
-		// We need the dummy object container in order to pass the array by 
+		// We need the dummy object container in order to pass the array by
 		// reference
 		var groups = {
 			"groups": []
@@ -520,7 +559,7 @@ function egwPopupActionImplementation()
 		this._buildMenuLayer(menu, groups.groups, _selected, true, _target);
 
 		return menu;
-	}
+	};
 
 	ai._getPageXY = function getPageXY(event)
 	{
@@ -531,7 +570,7 @@ function egwPopupActionImplementation()
 			document.documentElement.scrollLeft;
 
 		return {'posx': (event.clientX + scrollLeft), 'posy': (event.clientY + scrollTop)};
-	}
+	};
 
 	return ai;
 }
