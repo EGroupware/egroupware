@@ -234,28 +234,28 @@ function egwPopupActionImplementation()
 
 			if (_egw_active_menu)
 			{
-				_egw_active_menu.hide()
+				_egw_active_menu.hide();
 			}
-			else if (!e.ctrlKey)
+			else if (!e.ctrlKey && e.which == 3)
 			{
-				_xy = ai._getPageXY(e);
+				var _xy = ai._getPageXY(e);
 				_callback.call(_context, _xy, ai);
 			}
 
-			e.cancelBubble = !e.ctrlKey;
-			if (e.stopPropagation && !e.ctrlKey)
+			e.cancelBubble = !e.ctrlKey || e.which == 1;
+			if (e.stopPropagation && e.cancelBubble)
 			{
 				e.stopPropagation();
 			}
-			return e.ctrlKey;
-		}
+			return !e.cancelBubble;
+		};
 
 		if (egwIsMobile()) {
 			$j(_node).bind('taphold', contextHandler);
 		} else {
 			$j(_node).on('contextmenu', contextHandler);
 		}
-	}
+	};
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{

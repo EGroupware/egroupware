@@ -138,7 +138,7 @@ function egwDragActionImplementation()
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0 && egw.app_name() == 'filemanager') // currently only filemanager supports drag out
 		{
 			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-			text.text(egw.lang('Hold %1 to drag %2 to your computer',key, itemLabel));
+			text.text(egw.lang('Hold Alt + Shift key to drag %2 to your computer',key, itemLabel));
 		}
 		// Final html DOM return as helper structor
 		return div;
@@ -188,99 +188,123 @@ function egwDragActionImplementation()
 				 * This way we can at least toggle which one is operating, so they
 				 * both work alternately if not together.
 				 */
-			// Native DnD - Doesn't play nice with jQueryUI Sortable
-			// Tell jQuery to include this property
-			jQuery.event.props.push('dataTransfer');
+				// Native DnD - Doesn't play nice with jQueryUI Sortable
+				// Tell jQuery to include this property
+				jQuery.event.props.push('dataTransfer');
 
-			$j(node).off("mousedown")
-				.on("mousedown", function(event) {
-					$j(node).draggable("option","disabled",event.ctrlKey || event.metaKey);
-					$j(this).attr("draggable", event.ctrlKey || event.metaKey ? "true" : "");
-
-					// Disabling draggable adds some UI classes, but we don't care so remove them
-					$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
-					if(!(event.ctrlKey || event.metaKey) || !this.addEventListener) return;
-				})
-				.on("dragstart", function(event) {
-					if(event.dataTransfer == null) {
-						return;
-					}
-					event.dataTransfer.effectAllowed="copy";
-
-					// Get all selected
-					// Multiples aren't supported by event.dataTransfer, yet, so
-					// select only the row they clicked on.
-					// var selected = _context.getSelectedLinks('drag');
-					var selected = [_context];
-					_context.parent.setAllSelected(false);
-					_context.setSelected(true);
-
-					// Set file data
-					for(var i = 0; i < selected.length; i++)
-					{
-						var data = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
-						if(data && data.mime && data.download_url)
-						{
-							var url = data.download_url;
-
-							// NEED an absolute URL
-							if (url[0] == '/') url = egw.link(url);
-							// egw.link adds the webserver, but that might not be an absolute URL - try again
-							if (url[0] == '/') url = window.location.origin+url;
-
-							// Unfortunately, dragging files is currently only supported by Chrome
-							if(navigator && navigator.userAgent.indexOf('Chrome'))
+				$j(node).off("mousedown")
+					.on("mousedown", function(event) {
+							var dragOut = _context.isDragOut(event);
+							$j(this).attr("draggable", dragOut? "true" : "");
+							$j(node).draggable("option","disabled",dragOut);
+							if (dragOut)
 							{
-								event.dataTransfer.setData("DownloadURL", data.mime+':'+data.name+':'+url);
+								// Disabling draggable adds some UI classes, but we don't care so remove them
+								$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+										
 							}
 							else
 							{
-								// Include URL as a fallback
-								event.dataTransfer.setData("text/uri-list", url);
+								if (_context.isSelection(event))
+								{
+									$j(node).draggable("disable");
+									// Disabling draggable adds some UI classes, but we don't care so remove them
+									$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+								}
+								else if(event.which != 3)
+								{
+									document.getSelection().removeAllRanges();
+								}
+								if(!(dragOut) || !this.addEventListener) return;
+							}
+					})
+					.on ("mouseup", function (event){
+						if (_context.isSelection(event))
+							$j(node).draggable("enable");
+					})
+					.on("dragstart", function(event) {
+						if(_context.isSelection(event)) return;
+						if(event.dataTransfer == null) {
+							return;
+						}
+						event.dataTransfer.effectAllowed="copy";
+
+						// Get all selected
+						// Multiples aren't supported by event.dataTransfer, yet, so
+						// select only the row they clicked on.
+						// var selected = _context.getSelectedLinks('drag');
+						var selected = [_context];
+						_context.parent.setAllSelected(false);
+						_context.setSelected(true);
+
+						// Set file data
+						for(var i = 0; i < selected.length; i++)
+						{
+							var data = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
+							if(data && data.mime && data.download_url)
+							{
+								var url = data.download_url;
+
+								// NEED an absolute URL
+								if (url[0] == '/') url = egw.link(url);
+								// egw.link adds the webserver, but that might not be an absolute URL - try again
+								if (url[0] == '/') url = window.location.origin+url;
+
+								// Unfortunately, dragging files is currently only supported by Chrome
+								if(navigator && navigator.userAgent.indexOf('Chrome'))
+								{
+									event.dataTransfer.setData("DownloadURL", data.mime+':'+data.name+':'+url);
+								}
+								else
+								{
+									// Include URL as a fallback
+									event.dataTransfer.setData("text/uri-list", url);
+								}
 							}
 						}
-					}
-					if(event.dataTransfer.types.length == 0)
-					{
-						// No file data? Abort: drag does nothing
-						event.preventDefault();
-						return;
-					}
+						if(event.dataTransfer.types.length == 0)
+						{
+							// No file data? Abort: drag does nothing
+							event.preventDefault();
+							return;
+						}
 
-					// Create drag icon
-					_callback.call(_context, _context, ai);
-					// Drag icon must be visible for setDragImage() - we'll remove it on drag
-					$j("body").append(ai.helper);
-					event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
-				})
-				.on("drag", function(e) {
-					// Remove the helper, it has been copied into the dataTransfer object now
-					// Hopefully user didn't notice it...
-					if(e.dataTransfer != null)
-					{
-						ai.helper.remove();
-					}
+						// Create drag icon
+						_callback.call(_context, _context, ai);
+						// Drag icon must be visible for setDragImage() - we'll remove it on drag
+						$j("body").append(ai.helper);
+						event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
+					})
+					.on("drag", function(e) {
+						// Remove the helper, it has been copied into the dataTransfer object now
+						// Hopefully user didn't notice it...
+						if(e.dataTransfer != null)
+						{
+							ai.helper.remove();
+						}
+					});
+			}
+			else
+			{
+				// Use Ctrl key in order to select content
+				$j(node).off("mousedown")
+						.on({
+							mousedown: function(event){
+								if (_context.isSelection(event)){
+									$j(node).draggable("disable");
+									// Disabling draggable adds some UI classes, but we don't care so remove them
+									$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+								}
+								else if(event.which != 3)
+								{
+									document.getSelection().removeAllRanges();
+								}
+							},
+							mouseup: function (){
+								$j(node).draggable("enable");
+							}
 				});
 			}
-			// Use Ctrl+Alt key in order to select content
-			$j(node).off("mousedown")
-					.on({
-						mousedown: function(event){
-							if ((event.ctrlKey && event.altKey) || (event.ctrlKey && event.metaKey) && event.which == 1){
-								$j(node).draggable("disable");
-								// Disabling draggable adds some UI classes, but we don't care so remove them
-								$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
-							}
-							else if(event.which != 3)
-							{
-								document.getSelection().removeAllRanges();
-							}
-						},
-						mouseup: function (){
-							$j(node).draggable("enable");
-						}
-				
-			});
 			$j(node).draggable(
 				{
 					"distance": 20,
@@ -331,18 +355,8 @@ function egwDragActionImplementation()
 							if (helperTop >= dTarget.offset().top 
 									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
 							{
-								var key1='', key2='';
-								if (["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0)
-								{
-									key1 = 'Ctrl';
-									key2 = 'Alt';
-								}
-								else
-								{
-									key1 ='Command';
-									key2 ='Ctrl'; 
-								}
-								egw.message(egw.lang('Hold %1 + %2 key to select content.', key1, key2),'info');
+								var key = (["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0)?"Ctrl": "Command";
+								egw.message(egw.lang('Hold %1 key to select content.',key),'info');
 							}
 							// Invalid target
 							return true;
