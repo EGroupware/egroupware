@@ -28,7 +28,7 @@ td.addressbook_sidebox_header {
   vertical-align: bottom;
 }
 div#addressbook-view.et2_container {
-  height: 0;
+  height: 0 !important;
 }
 td.addressbook_sidebox_toolbar {
   vertical-align: bottom;
@@ -106,8 +106,9 @@ input.et2_radiobox {
 /**
  * Index page
  */
-img.iphoto {
+div#addressbook-index img.iphoto {
   width: 100%;
+  height: auto;
 }
 #addressbook-index_org_view {
   margin: 5px;
@@ -182,7 +183,7 @@ img.iphoto {
   div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view {
     /*.box_shadow_standard_light;*/
     width: auto;
-    margin: 5px 0em 5px 5px;
+    margin: 5px 0em 5px 0px;
     padding: 3px;
     outline: none;
     display: inline-block;
@@ -215,7 +216,7 @@ img.iphoto {
   div#addressbook-index div.et2_hbox_right select.et2_selectbox {
     /*.box_shadow_standard_light;*/
     width: auto;
-    margin: 5px 0em 5px 5px;
+    margin: 5px 0em 5px 0px;
     padding: 3px;
     outline: none;
     display: inline-block;
