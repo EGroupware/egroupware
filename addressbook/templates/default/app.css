@@ -86,8 +86,9 @@ input.et2_radiobox {
 /**
  * Index page
  */
-img.iphoto {
+div#addressbook-index img.iphoto {
 	width: 100%;
+	height: auto;
 }
 #addressbook-index_org_view {
 	margin: 5px;
