@@ -250,10 +250,10 @@ class addressbook_ui extends addressbook_bo
 		}
 		$sel_options['cat_id'] = array('' => lang('all'), '0' => lang('None'));
 
-		// Delete list action depends on permissions
+		// Edit and delete list actions depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
 		{
-			$content['nm']['placeholder_actions'][] = 'delete_list';
+			$content['nm']['placeholder_actions']+= array('rename_list','delete_list');
 		}
 
 		// Search parameter passed in
@@ -481,6 +481,14 @@ class addressbook_ui extends addressbook_bo
 					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
 					'fieldValue' => '!',	// enable if list != ''
+				),
+				'rename_list' => array(
+					'caption' => 'Rename selected distribution list',
+					'icon' => 'edit',
+					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
+					'fieldId' => 'exec[nm][filter2]',
+					'fieldValue' => '!',	// enable if list != ''
+					'onExecute' => 'javaScript:app.addressbook.rename_list'
 				),
 				'delete_list' => array(
 					'caption' => 'Delete selected distribution list!',
@@ -880,6 +888,38 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Rename an existing email list
+	 *
+	 * @param int $list_id
+	 * @param string $new_name
+	 * @return boolean|string
+	 */
+	function ajax_rename_list($list_id, $new_name)
+	{
+		// Check for valid list & permissions
+		if (!$list_id)
+		{
+			egw_json_response::get()->apply('egw.message',lang('You need to select a distribution list'),'error');
+			return;
+		}
+		else if (!$this->check_list((int)$list_id, EGW_ACL_EDIT, $GLOBALS['egw_info']['user']['account_id']))
+		{
+			egw_json_response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
+			return;
+		}
+
+		// Rename
+		$list = $this->read_list((int)$list_id);
+		$list['list_name'] = $new_name;
+
+		$this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
+		
+		egw_json_response::get()->apply('egw.message', array( lang('Distribution list renamed'),'success'));
+		// Success, just update selectbox to new value
+		egw_json_response::get()->data("true");
+	}
+
+	/**
 	 * apply an action to multiple contacts
 	 *
 	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
@@ -989,7 +1029,7 @@ window.egw_LAB.wait(function() {
 					egw_session::appsession($session_name,'addressbook',$query);
 				}
 				return false;
-
+			
 			case 'document':
 				if (!$document) $document = $this->prefs['default_document'];
 				$document_merge = new addressbook_merge();

@@ -446,6 +446,11 @@ app.classes.addressbook = AppJS.extend(
 
 	add_new_list: function(owner)
 	{
+		if(!owner || typeof owner == 'object')
+		{
+			var filter = this.et2.getWidgetById('filter');
+			owner = filter.getValue()||egw.preference('add_default','addressbook');
+		}
 		var name = window.prompt(this.egw.lang('Name for the distribution list'));
 		if (name)
 		{
@@ -454,6 +459,49 @@ app.classes.addressbook = AppJS.extend(
 				'owner': owner
 			},'_self');
 		}
+	},
+
+	/**
+	 * Rename the current distribution list selected in the nextmatch filter2
+	 *
+	 * @param {egwAction} action Action selected in context menu (rename)
+	 * @param {egwActionObject[]} selected The selected row(s).  Not used for this.
+	 */
+	rename_list: function(action, selected)
+	{
+		var lists = this.et2.getWidgetById('filter2');
+		var list = lists.getValue() || 0;
+		var value = null;
+		for(var i = 0; i < lists.options.select_options.length; i++)
+		{
+			if(lists.options.select_options[i].value == list)
+			{
+				value = lists.options.select_options[i];
+			}
+		}
+		et2_dialog.show_prompt(
+			function(button, name) {
+				if(button == et2_dialog.OK_BUTTON)
+				{
+					egw.json('addressbook.addressbook_ui.ajax_rename_list',[list, name],
+						function(result)
+						{
+							if(typeof result == 'object') return; // This response not for us
+							debugger;
+							// Update list
+							if(result)
+							{
+								value.label = name;
+								lists.set_select_options(lists.options.select_options);
+							}
+						}
+					).sendRequest(true);
+				}
+			},
+			this.egw.lang('Name for the distribution list'),
+			this.egw.lang('Rename list'),
+			value.label
+		);
 	},
 
 	filter2_onchange: function()
