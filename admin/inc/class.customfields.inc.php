@@ -271,8 +271,6 @@ class customfields
 					break;
 				case 'save':
 				case 'apply':
-					$content['cf_type2'] = implode(',',(array)$content['cf_type2']);
-					$content['cf_private'] = implode(',',(array)$content['cf_private']);
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
@@ -284,8 +282,15 @@ class customfields
 						}
 						$content['cf_values'] = $values;
 					}
-					$content['cf_values'] = json_encode($content['cf_values']);
-					$this->so->save($content);
+					$update_content = array();
+					foreach($content as $key => $value)
+					{
+						if(substr($key,0,3) == 'cf_')
+						{
+							$update_content[substr($key,3)] = $value;
+						}
+					}
+					egw_customfields::update($update_content);
 					egw_framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
 					if ($action != 'save')
 					{
