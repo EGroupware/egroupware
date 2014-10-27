@@ -1809,6 +1809,13 @@ class calendar_uiviews extends calendar_ui
 				(isset($data['border']) ? '&border='.urlencode($data['border']) : ''));
 		}
 */
+		// Add event description to cal event view body if the event is long enough (3 hours or whole day event)
+		// to be able to show some lines of description text
+		if ($event['whole_day'] || ($event['end'] - $event['start']) >= 10800)
+		{
+			$tpl->set_var('bodydescription', !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '');
+		}
+		
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
 		$html = $tpl->fp('out',$block);
 
