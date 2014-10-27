@@ -2126,7 +2126,7 @@ html {
   margin: 0px !important;
   padding: 0px !important;
   width: 99.9% !important;
-  height: 99% !important;
+  height: 99.9% !important;
 }
 body {
   background-image: none;
@@ -2135,7 +2135,7 @@ body {
   margin: 0px !important;
   padding: 0px !important;
   width: 99.9% !important;
-  height: 99% !important;
+  height: 99.9% !important;
   font-size: 11px;
   line-height: 1.28;
   font-weight: normal;
@@ -2167,12 +2167,12 @@ body {
  *       login page
  */
 #loginMainDiv {
-  padding: 0px;
+  padding: 0;
   min-height: 720px;
   height: 100%;
-  width: auto;
+  width: 100%;
   border-bottom: 0px solid #7E7E7E;
-  margin: 0 -2%;
+  margin: 0;
   background-color: #408dd2;
 }
 #loginMainDiv #divAppIconBar {
@@ -2183,9 +2183,6 @@ body {
   text-align: center;
 }
 #loginMainDiv #divAppIconBar #divLogo {
-  margin-left: -2%;
-  margin-right: -2%;
-  margin-bottom: 2em;
   position: relative;
   top: 1px;
   background-color: #408dd2;
