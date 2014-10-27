@@ -429,15 +429,16 @@ app.classes.calendar = AppJS.extend(
 		jQuery("body")
 			//mouseover event handler for calendar tooltip
 			.on("mouseover", "div[data-tooltip]",function(){
+				var $ttp = jQuery(this);
 				//Check if the tooltip is already initialized
-				if (!jQuery(this).data('uiTooltip'))
+				if (!$ttp.data('uiTooltip'))
 				{
-					jQuery(this).tooltip({
+					$ttp.tooltip({
 						items: "[data-tooltip]",
 						show: false,
 						content: function()
 						{
-							var elem = jQuery(this);
+							var elem = $ttp;
 							if (elem.is("[data-tooltip]"))
 								return this.getAttribute('data-tooltip') ;
 						},
@@ -449,14 +450,16 @@ app.classes.calendar = AppJS.extend(
 							if (this.scrollHeight > this.clientHeight)
 							{
 								// bind on tooltip close event
-								jQuery(this).on("tooltipclose", function (event, ui){
+								$ttp.on("tooltipclose", function (event, ui){
 									// bind hover handler on tooltip helper in order to be able to freeze the tooltip and scrolling 
 									ui.tooltip.hover(
 										function () {
-											if (this.scrollHeight > this.clientHeight)	jQuery(this).stop(true).fadeTo(100, 1);
+											var $ttp_helper = jQuery(this);
+											if (this.scrollHeight > this.clientHeight)	$ttp_helper.stop(true).fadeTo(100, 1);
 										},
 										function () {
-											jQuery(this).fadeOut("100", function(){	jQuery(this).remove();});
+											var $ttp_helper = jQuery(this);
+											$ttp_helper.fadeOut("100", function(){$ttp_helper.remove();});
 										}
 									);
 								});
@@ -464,14 +467,19 @@ app.classes.calendar = AppJS.extend(
 						}
 					});
 				}
+				else
+				{
+					$ttp.tooltip('enable');
+				}
 			})
 
 			// mousedown event handler for calendar tooltip to remove disable tooltip
 			.on("mousedown", "div[data-tooltip]", function(){
+				var $ttp = jQuery(this);
 				// Make sure the tooltip initialized before calling it
-				if (jQuery(this).data('uiTooltip'))
+				if ($ttp.data('uiTooltip'))
 				{
-					jQuery(this).tooltip("disable");
+					$ttp.tooltip("disable");
 				}
 			})
 
