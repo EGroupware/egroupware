@@ -129,6 +129,7 @@ filemanager configuration	admin	en	File Manager configuration
 filemanager fields:	filemanager	en	Filemanager fields:
 filename must not be empty!	filemanager	en	File name must not be empty!
 files	common	en	Files
+files from links	filemanager	en	Files from links
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
