@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-13 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-14 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -67,6 +67,9 @@ define('WEEK_s',7*DAY_s);
  *
  * DB-model uses egw_cal_user.cal_status='X' for participants who got deleted. They never get returned by
  * read or search methods, but influence the ctag of the deleted users calendar!
+ *
+ * DB-model uses egw_cal_user.cal_status='E' for participants only participating in exceptions of recurring
+ * events, so whole recurring event get found for these participants too!
  *
  * All update methods not take care to update modification time of (evtl. existing) series master too,
  * to force an etag, ctag and sync-token change! Methods not doing that are private to this class.
@@ -283,7 +286,7 @@ class calendar_so
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
-			"cal_status != 'X'",
+			"cal_status NOT IN ('X','E')",
 		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date ASC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
@@ -461,12 +464,18 @@ class calendar_so
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
-		//error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
+		error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
-		$cols = self::get_columns('calendar', $this->cal_table);
-		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
-		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end AS recur_enddate,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
-
+		if (isset($params['cols']))
+		{
+			$cols = $params['cols'];
+		}
+		else
+		{
+			$all_cols = self::get_columns('calendar', $this->cal_table);
+			$all_cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
+			$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end AS recur_enddate,".implode(',',$all_cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
+		}
 		$where = array();
 		if (is_array($params['query']))
 		{
@@ -557,27 +566,42 @@ class calendar_so
 					break;
 				case 'showonlypublic':
 					$where['cal_public'] = 1;
-					$where[] = "$this->user_table.cal_status NOT IN ('R','X')"; break;
+					$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+					break;
 				case 'deleted':
-					$where[] = 'cal_deleted IS NOT NULL'; break;
+					$where[] = 'cal_deleted IS NOT NULL';
+					break;
 				case 'unknown':
-					$where[] = "$this->user_table.cal_status='U'"; break;
+					$where[] = "$this->user_table.cal_status='U'";
+					break;
 				case 'not-unknown':
-					$where[] = "$this->user_table.cal_status NOT IN ('U','X')"; break;
+					$where[] = "$this->user_table.cal_status NOT IN ('U','X','E')";
+					break;
 				case 'accepted':
-					$where[] = "$this->user_table.cal_status='A'"; break;
+					$where[] = "$this->user_table.cal_status='A'";
+					break;
 				case 'tentative':
-					$where[] = "$this->user_table.cal_status='T'"; break;
+					$where[] = "$this->user_table.cal_status='T'";
+					break;
 				case 'rejected':
-					$where[] = "$this->user_table.cal_status='R'"; break;
+					$where[] = "$this->user_table.cal_status='R'";
+					break;
 				case 'delegated':
-					$where[] = "$this->user_table.cal_status='D'"; break;
+					$where[] = "$this->user_table.cal_status='D'";
+					break;
 				case 'all':
 				case 'owner':
-					$where[] = "$this->user_table.cal_status!='X'"; break;
+					$where[] = "$this->user_table.cal_status NOT IN ('X','E')";
 					break;
 				default:
-					$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
+					if ($params['enum_recuring'])	// regular UI
+					{
+						$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+					}
+					else	// CalDAV / eSync / iCal need to include 'E' = exceptions
+					{
+						$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
+					}
 					break;
 			}
 		}
@@ -699,14 +723,14 @@ class calendar_so
 							array('range_start AS cal_start','range_end AS cal_end'), $selects[$key]['cols']);
 					}
 				}
-				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+				if (!isset($params['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
 				// restore original cols / selects
 				$selects = $save_selects; unset($save_selects);
 			}
-			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+			if (!isset($params['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
@@ -770,7 +794,7 @@ class calendar_so
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
 			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',$ids).")".
-				($filter != 'everything' ? " AND cal_status!='X'" : '').") utcalid ";
+				($filter != 'everything' ? " AND cal_status NOT IN ('X','E')" : '').") utcalid ";
 			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
@@ -1088,6 +1112,9 @@ ORDER BY cal_user_type, cal_usre_id
 		sort($categories, SORT_NUMERIC);
 
 		$event['cal_category'] = implode(',',$categories);
+		
+		// make sure recurring events never reference to an other recurrent event
+		if ($event['recur_type'] != MCAL_RECUR_NONE) $event['cal_reference'] = 0;
 
 		if ($cal_id)
 		{
@@ -1161,6 +1188,33 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->db->delete($this->repeats_table,array(
 				'cal_id' => $cal_id),
 				__LINE__,__FILE__,'calendar');
+
+			// add exception marker to master, so participants added to exceptions *only* get found
+			if ($event['cal_reference'])
+			{
+				$master_participants = array();
+				foreach($this->db->select($this->user_table, 'cal_user_type,cal_user_id', array(
+					'cal_id' => $event['cal_reference'],
+					'cal_recur_date' => 0,
+					"cal_status != 'X'",	// deleted need to be replaced with exception marker too
+				), __LINE__, __FILE__, 'calendar') as $row)
+				{
+					$master_participants[] = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+				}
+				foreach(array_diff(array_keys((array)$event['cal_participants']), $master_participants) as $uid)
+				{
+					$user_type = $user_id = null;
+					self::split_user($uid, $user_type, $user_id);
+					$this->db->insert($this->user_table, array(
+						'cal_status' => 'E',
+					), array(
+						'cal_id' => $event['cal_reference'],
+						'cal_recur_date' => 0,
+						'cal_user_type' => $user_type,
+						'cal_user_id' => $user_id,
+					), __LINE__, __FILE__, 'calendar');
+				}
+			}
 		}
 		else // write information about recuring event, if recur_type is present in the array
 		{
@@ -1601,9 +1655,9 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_user_id'   => $ids,
 					));
 				}
-				$where[1] = '('.implode(' OR ',$to_or).')';
+				$where[] = '('.implode(' OR ',$to_or).')';
+				$where[] = "cal_status!='E'";	// do NOT delete exception marker
 				$this->db->update($this->user_table,array('cal_status'=>'X'),$where,__LINE__,__FILE__,'calendar');
-				unset($where[1]);
 			}
 		}
 

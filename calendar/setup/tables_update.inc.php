@@ -2292,3 +2292,36 @@ function calendar_upgrade1_9_010()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.011';
 }
 
+/**
+ * Add pseudo-participants with status 'E' to all recurrence-masters of exceptions with participants not in master
+ *
+ * This allows CalDAV and eSync to find the recurring events efficient in calendars of these participants.
+ *
+ * Also fix recurring events containing a reference to an other master, created when an exception is made a recurring event.
+ *
+ * @return type
+ */
+function calendar_upgrade1_9_011()
+{
+	$GLOBALS['egw_setup']->db->query(
+"UPDATE egw_cal
+SET cal_reference=0,cal_etag=cal_etag+1,cal_modifier=0,cal_modified=".time().
+"WHERE cal_reference != 0 AND cal_id IN (SELECT cal_id FROM egw_cal_repeats)", __LINE__, __FILE__);
+
+	foreach($GLOBALS['egw_setup']->db->query(
+"SELECT DISTINCT master.cal_id,egw_cal_user.cal_user_type,egw_cal_user.cal_user_id,'E' AS cal_status
+FROM egw_cal_user
+JOIN egw_cal ON egw_cal_user.cal_id=egw_cal.cal_id
+JOIN egw_cal master ON egw_cal.cal_reference=master.cal_id
+WHERE egw_cal_user.cal_recur_date=0 AND
+(cal_user_type,cal_user_id) NOT IN (
+    SELECT master_user.cal_user_type,master_user.cal_user_id
+    FROM egw_cal_user master_user
+    WHERE master_user.cal_recur_date=0 AND master_user.cal_id=master.cal_id
+)
+ORDER BY master.cal_id DESC", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $row)
+	{
+		$GLOBALS['egw_setup']->db->insert('egw_cal_user', $row, false, __LINE__, __FILE__, 'calendar');
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.1.001';
+}

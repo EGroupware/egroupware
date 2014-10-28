@@ -434,7 +434,7 @@ class calendar_ical extends calendar_boupdate
 
 							if (!($info = $this->resource_info($uid))) continue;
 
-							if ($status == 'X') continue;	// dont include deleted participants
+							if (in_array($status, array('X','E'))) continue;	// dont include deleted participants
 
 							if ($this->log)
 							{
