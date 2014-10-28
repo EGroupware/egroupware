@@ -451,18 +451,38 @@ app.classes.addressbook = AppJS.extend(
 			var filter = this.et2.getWidgetById('filter');
 			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
-		var name = window.prompt(this.egw.lang('Name for the distribution list'));
-		if (name)
-		{
-			egw.open('','addressbook', 'list', {
-				'add_list': name,
-				'owner': owner
-			},'_self');
-		}
+		var lists = this.et2.getWidgetById('filter2');
+		et2_dialog.show_prompt(
+			function(button, name) {
+				if(button == et2_dialog.OK_BUTTON)
+				{
+					egw.json('addressbook.addressbook_ui.ajax_set_list',[0, name, owner],
+						function(result)
+						{
+							if(typeof result == 'object') return; // This response not for us
+							// Update list
+							if(result)
+							{
+								lists.options.select_options.unshift({value:result,label:name});
+								lists.set_select_options(lists.options.select_options);
+
+								// Set to new list so they can see it easily
+								lists.set_value(result);
+							}
+						}
+					).sendRequest(true);
+				}
+			},
+			this.egw.lang('Name for the distribution list'),
+			this.egw.lang('Add a new list...')
+		);
 	},
 
 	/**
 	 * Rename the current distribution list selected in the nextmatch filter2
+	 *
+	 * Differences from add_new_list are in the dialog, parameters sent, and how the
+	 * response is dealt with
 	 *
 	 * @param {egwAction} action Action selected in context menu (rename)
 	 * @param {egwActionObject[]} selected The selected row(s).  Not used for this.
@@ -483,11 +503,10 @@ app.classes.addressbook = AppJS.extend(
 			function(button, name) {
 				if(button == et2_dialog.OK_BUTTON)
 				{
-					egw.json('addressbook.addressbook_ui.ajax_rename_list',[list, name],
+					egw.json('addressbook.addressbook_ui.ajax_set_list',[list, name],
 						function(result)
 						{
 							if(typeof result == 'object') return; // This response not for us
-							debugger;
 							// Update list
 							if(result)
 							{

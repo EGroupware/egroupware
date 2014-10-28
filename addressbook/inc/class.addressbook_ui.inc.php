@@ -890,35 +890,47 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
-	 * Rename an existing email list
+	 * Create or rename an existing email list
 	 *
-	 * @param int $list_id
-	 * @param string $new_name
+	 * @param int $list_id ID of existing list, or 0 for a new one
+	 * @param string $new_name List name
+	 * @param int $owner List owner, or empty for current user
 	 * @return boolean|string
 	 */
-	function ajax_rename_list($list_id, $new_name)
+	function ajax_set_list($list_id, $new_name, $owner = false)
 	{
+		// Set owner to current user, if not set
+		$owner = $owner ? $owner : $GLOBALS['egw_info']['user']['account_id'];
+
 		// Check for valid list & permissions
-		if (!$list_id)
+		if(!(int)$list_id && !$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner))
 		{
-			egw_json_response::get()->apply('egw.message',lang('You need to select a distribution list'),'error');
+			egw_json_response::get()->apply('egw.message', array(  lang('List creation failed, no rights!'),'error'));
 			return;
 		}
-		else if (!$this->check_list((int)$list_id, EGW_ACL_EDIT, $GLOBALS['egw_info']['user']['account_id']))
+		if ((int)$list_id && !$this->check_list((int)$list_id, EGW_ACL_EDIT, $owner))
 		{
 			egw_json_response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
 			return;
 		}
 
+		$list = array('list_owner' => $owner);
+
 		// Rename
-		$list = $this->read_list((int)$list_id);
+		if($list_id)
+		{
+			$list = $this->read_list((int)$list_id);
+		}
 		$list['list_name'] = $new_name;
 
-		$this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
+		$new_id = $this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
 		
-		egw_json_response::get()->apply('egw.message', array( lang('Distribution list renamed'),'success'));
+		egw_json_response::get()->apply('egw.message', array(
+			$new_id == $list_id ? lang('Distribution list renamed') : lang('List created'),
+			'success'
+		));
 		// Success, just update selectbox to new value
-		egw_json_response::get()->data("true");
+		egw_json_response::get()->data($new_id == $list_id ? "true" : $new_id);
 	}
 
 	/**
