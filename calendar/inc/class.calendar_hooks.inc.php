@@ -277,7 +277,7 @@ class calendar_hooks
 			$export_tzs = array('0' => 'Use Event TZ');
 			$export_tzs += egw_time::getTimezones();
 		}
-
+		$link_title_options = ExecMethod('calendar.calendar_bo.get_link_options');
 		$settings = array(
 			'1.section' => array(
 				'type'  => 'section',
@@ -414,6 +414,16 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => 'all',
+			),
+			'link_title' => array(
+				'type'   => 'multiselect',
+				'label'  => 'Link title for events to show',
+				'name'   => 'link_title',
+				'values' => $link_title_options,
+				'help'   => 'What should links to the calendar events display in other applications.',
+				'xmlrpc' => True,
+				'admin'  => false,
+				'default'=> '',
 			),
 			'2.section' => array(
 				'type'  => 'section',

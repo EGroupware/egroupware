@@ -1827,7 +1827,27 @@ class calendar_bo
 		}
 		return $this->cached_holidays[$year];
 	}
-
+	
+	/**
+	 * Get translated calendar event fields, presenting as link title options
+	 *
+	 * @param type $event
+	 * @return array array of selected calendar fields
+	 */
+	function get_link_options ($event)
+	{
+		$options = array (
+			'end' => lang('End date'),
+			'id' => lang('ID'),
+			'owner' => lang('Event owner'),
+			'category' => lang('Category'),
+			'location' => lang('Location'),
+			'creator' => lang('Creator'),
+			'participants' => lang('Participants')
+		);
+		return $options;
+	}
+	
 	/**
 	 * get title for an event identified by $event
 	 *
@@ -1850,6 +1870,35 @@ class calendar_bo
 		if (!is_array($event))
 		{
 			return $event;
+		}
+		$type = explode(',',$this->cal_prefs['link_title']);
+		if (is_array($type))
+		{
+			foreach ($type as &$val)
+			{
+				switch ($val)
+				{
+					case 'end':
+					case 'modified':
+						$extra_fields [$val] = $this->format_date($event[$val]);
+						break;
+					case 'participants':
+						foreach ($event[$val] as $key => $value)
+						{
+							$extra_fields [$val] = accounts::id2name($key);
+						}	
+						break;
+					case 'modifier':
+					case 'creator':
+					case 'owner':
+						$extra_fields [$val] = accounts::id2name($event[$val]);
+						break;
+					default:
+						$extra_fields [] = $event[$val];
+				}
+			}
+			$str_fields = implode(', ',$extra_fields);
+			if (is_array($extra_fields)) return $this->format_date($event['start']) . ': ' . $event['title'] . ($str_fields? ', ' . $str_fields:'');
 		}
 		return $this->format_date($event['start']) . ': ' . $event['title'];
 	}
