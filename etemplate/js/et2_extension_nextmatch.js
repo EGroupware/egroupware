@@ -1929,6 +1929,29 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					self.nextmatch.applyFilters({search: self.search.getValue()});
 				}
 			});
+		// Firefox treats search differently.  Add in the clear button.
+		if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
+		{
+			this.search.input.on("keyup",
+				function(event) {
+					// Insert the button, if needed
+					if(self.search.input.next('span').length == 0)
+					{
+						self.search.input.after(
+							$j('<span class="ui-icon"></span>').click(
+								function() {self.search.input.val('');}
+							)
+						);
+					}
+					if(event.which == 27) // Escape
+					{
+						// Excape clears search
+						self.search.input.val('');
+					}
+					self.search.input.next('span').toggle(self.search.input.val() != '');
+				}
+			);
+		}
 
 		// Add category
 		if(!settings.no_cat) {
