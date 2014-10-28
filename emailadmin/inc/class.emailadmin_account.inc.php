@@ -285,7 +285,7 @@ class emailadmin_account implements ArrayAccess
 	 * Get new Horde_Imap_Client imap server object
 	 *
 	 * @param bool|int|string $_adminConnection create admin connection if true or account_id or imap username
-	 * @param int $_timeout=null timeout in secs, if none given fmail pref or default of 20 is used
+	 * @param int $_timeout =null timeout in secs, if none given fmail pref or default of 20 is used
 	 * @return emailadmin_imap
 	 */
 	public function imapServer($_adminConnection=false, $_timeout=null)
@@ -343,7 +343,7 @@ class emailadmin_account implements ArrayAccess
 	 * Get name and evtl. autoload incomming server class
 	 *
 	 * @param string $imap_type
-	 * @param boolean $old_ic_server=false true: return emailadmin_oldimap as icServer, false: use new emailadmin_imap
+	 * @param boolean $old_ic_server =false true: return emailadmin_oldimap as icServer, false: use new emailadmin_imap
 	 * @return string
 	 */
 	public static function getIcClass($imap_type, $old_ic_server=false)
@@ -531,7 +531,7 @@ class emailadmin_account implements ArrayAccess
 	/**
 	 * Get list of rfc822 addresses for current user eg. to use as from address selection when sending mail
 	 *
-	 * @param callback $formatter=null function to format identity as rfc822 address, default self::rfc822(),
+	 * @param callback $formatter =null function to format identity as rfc822 address, default self::rfc822(),
 	 * @return array acc_id:ident_id:email => rfc822 address pairs, eg. '1:1:rb@stylite.de' => 'Ralf Becker Stylite AG <rb@stylite.de>'
 	 * @todo add aliases for manged mail servers
 	 */
@@ -634,7 +634,7 @@ class emailadmin_account implements ArrayAccess
 	 * Read an identity
 	 *
 	 * @param int $ident_id
-	 * @param boolean $replace_placeholders=false should placeholders like {{n_fn}} be replaced
+	 * @param boolean $replace_placeholders =false should placeholders like {{n_fn}} be replaced
 	 * @return array
 	 * @throws egw_exception_not_found
 	 */
@@ -899,7 +899,7 @@ class emailadmin_account implements ArrayAccess
 	 * Read/return account object for given $acc_id
 	 *
 	 * @param int $acc_id
-	 * @param int $called_for=null if set admin access to given user, default current user
+	 * @param int $called_for =null if set admin access to given user, default current user
 	 *	AND read username/password from current users session, 0: find accounts from all users
 	 * @return email_account
 	 * @throws egw_exception_not_found if account was not found (or not valid for current user)
@@ -989,7 +989,7 @@ class emailadmin_account implements ArrayAccess
 	 * Save account data to db
 	 *
 	 * @param array $data
-	 * @param int $user=null account-id to store account-infos of managed mail-server
+	 * @param int $user =null account-id to store account-infos of managed mail-server
 	 * @return array $data plus added values for keys acc_id, ident_id from insert
 	 * @throws egw_exception_wrong_parameter if called static without data-array
 	 * @throws egw_exception_db
@@ -1109,7 +1109,7 @@ class emailadmin_account implements ArrayAccess
 	 * Check for whom given credentials are to be stored
 	 *
 	 * @param array|emailadmin_account $account
-	 * @param int $account_id=null
+	 * @param int $account_id =null
 	 * @return boolean
 	 */
 	protected static function credentials_valid_for($account, $account_id=null)
@@ -1135,7 +1135,7 @@ class emailadmin_account implements ArrayAccess
 	 * Delete accounts or account related data belonging to given mail or user account
 	 *
 	 * @param int|array $acc_id mail account
-	 * @param int $account_id=null user or group
+	 * @param int $account_id =null user or group
 	 * @return int number of deleted mail accounts or null if only user-data was deleted and no full mail accounts
 	 */
 	public static function delete($acc_id, $account_id=null)
@@ -1183,13 +1183,13 @@ class emailadmin_account implements ArrayAccess
 	/**
 	 * Return array with acc_id => acc_name or account-object pairs
 	 *
-	 * @param boolean|int $only_current_user=true return only accounts for current user or integer account_id of a user
-	 * @param boolean|string $just_name=true true: return self::identity_name, false: return emailadmin_account objects,
+	 * @param boolean|int $only_current_user =true return only accounts for current user or integer account_id of a user
+	 * @param boolean|string $just_name =true true: return self::identity_name, false: return emailadmin_account objects,
 	 *	string with attribute-name: return that attribute, eg. acc_imap_host or 'params' to return all attributes as array
-	 * @param string $order_by='acc_name ASC'
-	 * @param int|boolean $offset=false offset or false to return all
-	 * @param int $num_rows=0 number of rows to return, 0=default from prefs (if $offset !== false)
-	 * @param boolean $replace_placeholders=true should placeholders like {{n_fn}} be replaced
+	 * @param string $order_by ='acc_name ASC'
+	 * @param int|boolean $offset =false offset or false to return all
+	 * @param int $num_rows =0 number of rows to return, 0=default from prefs (if $offset !== false)
+	 * @param boolean $replace_placeholders =true should placeholders like {{n_fn}} be replaced
 	 * @return Iterator with acc_id => acc_name or emailadmin_account objects
 	 */
 	public static function search($only_current_user=true, $just_name=true, $order_by=null, $offset=false, $num_rows=0, $replace_placeholders=true)
@@ -1295,7 +1295,7 @@ class emailadmin_account implements ArrayAccess
 	/**
 	 * Get ID of default mail account for either IMAP or SMTP
 	 *
-	 * @param boolean $smtp=false false: usable for IMAP, true: usable for SMTP
+	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
 	 * @return int
 	 */
 	static function get_default_acc_id($smtp=false)
@@ -1332,8 +1332,8 @@ class emailadmin_account implements ArrayAccess
 	 * build an identity name
 	 *
 	 * @param array|emailadmin_account $account object or values for keys 'ident_(realname|org|email)', 'acc_(id|name|imap_username)'
-	 * @param boolean $replace_placeholders=true should placeholders like {{n_fn}} be replaced
-	 * @param int $account_id=null account_id of user we are called for
+	 * @param boolean $replace_placeholders =true should placeholders like {{n_fn}} be replaced
+	 * @param int $account_id =null account_id of user we are called for
 	 * @return string with htmlencoded angle brackets
 	 */
 	public static function identity_name($account, $replace_placeholders=true, $account_id=null)
