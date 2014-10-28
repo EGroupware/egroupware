@@ -253,7 +253,8 @@ class addressbook_ui extends addressbook_bo
 		// Edit and delete list actions depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
 		{
-			$content['nm']['placeholder_actions']+= array('rename_list','delete_list');
+			$content['nm']['placeholder_actions'][] = 'rename_list';
+			$content['nm']['placeholder_actions'][] = 'delete_list';
 		}
 
 		// Search parameter passed in
@@ -502,6 +503,7 @@ class addressbook_ui extends addressbook_bo
 			if(is_subclass_of('etemplate', 'etemplate_new'))
 			{
 				$actions['lists']['children']['remove_from_list']['fieldId'] = 'filter2';
+				$actions['lists']['children']['rename_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['delete_list']['fieldId'] = 'filter2';
 			}
 		}
