@@ -129,6 +129,7 @@ filemanager configuration	admin	de	Konfiguration Dateimanager
 filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
 files	common	de	Dateien
+files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
