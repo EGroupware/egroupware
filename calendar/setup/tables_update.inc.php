@@ -2305,8 +2305,8 @@ function calendar_upgrade1_9_011()
 {
 	$GLOBALS['egw_setup']->db->query(
 "UPDATE egw_cal
-SET cal_reference=0,cal_etag=cal_etag+1,cal_modifier=0,cal_modified=".time().
-"WHERE cal_reference != 0 AND cal_id IN (SELECT cal_id FROM egw_cal_repeats)", __LINE__, __FILE__);
+SET cal_reference=0,cal_etag=cal_etag+1,cal_modifier=0,cal_modified=".time()."
+WHERE cal_reference != 0 AND cal_id IN (SELECT cal_id FROM egw_cal_repeats)", __LINE__, __FILE__);
 
 	foreach($GLOBALS['egw_setup']->db->query(
 "SELECT DISTINCT master.cal_id,egw_cal_user.cal_user_type,egw_cal_user.cal_user_id,'E' AS cal_status
