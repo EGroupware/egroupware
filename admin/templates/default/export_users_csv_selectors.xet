@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.export_users_csv_selectors" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<menulist>
+						<menupopup type="select-account" label="Group" id="selection[group_id]" options="All,groups"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
