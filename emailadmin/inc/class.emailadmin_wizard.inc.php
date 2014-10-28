@@ -1237,7 +1237,7 @@ class emailadmin_wizard
 			$readonlys['button[multiple]'] = true;
 		}
 		// when called by admin for existing accounts, display further administrative actions
-		if ($content['called_for'] && $content['acc_id'])
+		if ($content['called_for'] && $content['acc_id'] > 0)
 		{
 			$admin_actions = array();
 			foreach($GLOBALS['egw']->hooks->process(array(
