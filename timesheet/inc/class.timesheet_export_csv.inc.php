@@ -83,6 +83,12 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		// support other selectors atm.
 		foreach ($selection as $identifier) {
 			$record = new timesheet_egw_record($identifier);
+
+			// If Project is not set, set it to current project title
+			if(!$record->ts_project && $record->pm_id)
+			{
+				$record->ts_project = egw_link::title ('projectmanager', $record->pm_id);
+			}
 			if($options['convert']) {
 				importexport_export_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $this->selects);
 			} else {
