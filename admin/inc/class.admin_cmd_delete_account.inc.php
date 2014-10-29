@@ -49,16 +49,16 @@ class admin_cmd_delete_account extends admin_cmd
 		$account_id = admin_cmd::parse_account($this->account,$this->is_user);
 		admin_cmd::_instanciate_accounts();
 		$account_lid = admin_cmd::$accounts->id2name($account_id);
-		
+
 		if ($this->is_user && $this->new_user)
 		{
 			$new_user = admin_cmd::parse_account($this->new_user,true);	// true = user, no group
 		}
 		// check creator is still admin and not explicitly forbidden to edit accounts
 		if ($this->creator) $this->_check_admin($this->is_user ? 'account_access' : 'group_access',32);
-		
+
 		if ($check_only) return true;
-		
+
 		// delete the account
 		$GLOBALS['hook_values'] = array(
 			'account_id'  => $account_id,
@@ -71,14 +71,14 @@ class admin_cmd_delete_account extends admin_cmd
 		foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
 		{
 			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
-		}			
+		}
 		if (!$this->is_user) $GLOBALS['egw']->accounts->delete($account_id);	// groups get not deleted via the admin hook, as users
-	
+
 		if ($account_id < 0)
 		{
-			return lang("Group '%1' deleted.",$this->account)."\n\n";
+			return lang("Group '%1' deleted.",$account_lid)."\n\n";
 		}
-		return lang("Account '%1' deleted.",$this->account)."\n\n";
+		return lang("Account '%1' deleted.",$account_lid)."\n\n";
 	}
 
 	/**
