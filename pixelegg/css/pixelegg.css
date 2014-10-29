@@ -2025,6 +2025,20 @@ div.ms-ctn .ms-trigger:hover {
   right: 1px;
   border-radius: 0 3px 3px 0;
 }
+div.ms-sel-ctn .ms-sel-item .ms-edit-btn {
+  width: 7px;
+  cursor: pointer;
+  height: 7px;
+  float: right;
+  margin: 12px -11px 0 3px;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3godEA4rIjo3ogAAAKlJREFUGNOVz6FKRGEQBeBvLrcKgu4DiGC2ibiyyclaRGy+jMGnMJgWwf5HQdaw+w5Gw8ZthrFcYdVF8MRzmIEv/EhrbYxb3MRa2eMQlzjAdgxDh3Oc4Q0jPHXD4RUm2MIeHjPzpW+tHeMEu3jHDAvocIE7LDHHNDM/oMfp8PohM2f+SlWNq+q5qvZjrdxMqaqNlK/xGkfYwQr3EfHaV9X/KBHxmxIR3yifV6A/d1RwogwAAAAASUVORK5CYII=);
+  background-position: 0 -7px;
+}
+div.ms-sel-ctn .ms-sel-item .ms-edit-btn:hover {
+  background-position: 0 0;
+}
 /**
  * EGroupware: CSS with less preprocessor
 
