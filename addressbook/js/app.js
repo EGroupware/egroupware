@@ -438,14 +438,81 @@ app.classes.addressbook = AppJS.extend(
 
 	add_new_list: function(owner)
 	{
-		var name = window.prompt(this.egw.lang('Name for the distribution list'));
-		if (name)
+		if(!owner || typeof owner == 'object')
 		{
-			egw.open('','addressbook', 'list', {
-				'add_list': name,
-				'owner': owner
-			},'_self');
+			var filter = this.et2.getWidgetById('filter');
+			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
+		var lists = this.et2.getWidgetById('filter2');
+		et2_dialog.show_prompt(
+			function(button, name) {
+				if(button == et2_dialog.OK_BUTTON)
+				{
+					egw.json('addressbook.addressbook_ui.ajax_set_list',[0, name, owner],
+						function(result)
+						{
+							if(typeof result == 'object') return; // This response not for us
+							// Update list
+							if(result)
+							{
+								lists.options.select_options.unshift({value:result,label:name});
+								lists.set_select_options(lists.options.select_options);
+
+								// Set to new list so they can see it easily
+								lists.set_value(result);
+							}
+						}
+					).sendRequest(true);
+				}
+			},
+			this.egw.lang('Name for the distribution list'),
+			this.egw.lang('Add a new list...')
+		);
+	},
+
+	/**
+	 * Rename the current distribution list selected in the nextmatch filter2
+	 *
+	 * Differences from add_new_list are in the dialog, parameters sent, and how the
+	 * response is dealt with
+	 *
+	 * @param {egwAction} action Action selected in context menu (rename)
+	 * @param {egwActionObject[]} selected The selected row(s).  Not used for this.
+	 */
+	rename_list: function(action, selected)
+	{
+		var lists = this.et2.getWidgetById('filter2');
+		var list = lists.getValue() || 0;
+		var value = null;
+		for(var i = 0; i < lists.options.select_options.length; i++)
+		{
+			if(lists.options.select_options[i].value == list)
+			{
+				value = lists.options.select_options[i];
+			}
+		}
+		et2_dialog.show_prompt(
+			function(button, name) {
+				if(button == et2_dialog.OK_BUTTON)
+				{
+					egw.json('addressbook.addressbook_ui.ajax_set_list',[list, name],
+						function(result)
+						{
+							if(typeof result == 'object') return; // This response not for us
+							// Update list
+							if(result)
+							{
+								value.label = name;
+								lists.set_select_options(lists.options.select_options);
+							}
+						}
+					).sendRequest(true);
+				}
+			},
+			this.egw.lang('Name for the distribution list'),
+			this.egw.lang('Rename list'),
+			value.label
+		);
 	},
 
 	filter2_onchange: function()

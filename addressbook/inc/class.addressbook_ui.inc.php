@@ -250,9 +250,10 @@ class addressbook_ui extends addressbook_bo
 		}
 		$sel_options['cat_id'] = array('' => lang('all'), '0' => lang('None'));
 
-		// Delete list action depends on permissions
+		// Edit and delete list actions depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
 		{
+			$content['nm']['placeholder_actions'][] = 'rename_list';
 			$content['nm']['placeholder_actions'][] = 'delete_list';
 		}
 
@@ -482,6 +483,14 @@ class addressbook_ui extends addressbook_bo
 					'fieldId' => 'exec[nm][filter2]',
 					'fieldValue' => '!',	// enable if list != ''
 				),
+				'rename_list' => array(
+					'caption' => 'Rename selected distribution list',
+					'icon' => 'edit',
+					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
+					'fieldId' => 'exec[nm][filter2]',
+					'fieldValue' => '!',	// enable if list != ''
+					'onExecute' => 'javaScript:app.addressbook.rename_list'
+				),
 				'delete_list' => array(
 					'caption' => 'Delete selected distribution list!',
 					'confirm' => 'Delete selected distribution list!',
@@ -494,6 +503,7 @@ class addressbook_ui extends addressbook_bo
 			if(is_subclass_of('etemplate', 'etemplate_new'))
 			{
 				$actions['lists']['children']['remove_from_list']['fieldId'] = 'filter2';
+				$actions['lists']['children']['rename_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['delete_list']['fieldId'] = 'filter2';
 			}
 		}
@@ -880,6 +890,50 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Create or rename an existing email list
+	 *
+	 * @param int $list_id ID of existing list, or 0 for a new one
+	 * @param string $new_name List name
+	 * @param int $owner List owner, or empty for current user
+	 * @return boolean|string
+	 */
+	function ajax_set_list($list_id, $new_name, $owner = false)
+	{
+		// Set owner to current user, if not set
+		$owner = $owner ? $owner : $GLOBALS['egw_info']['user']['account_id'];
+
+		// Check for valid list & permissions
+		if(!(int)$list_id && !$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner))
+		{
+			egw_json_response::get()->apply('egw.message', array(  lang('List creation failed, no rights!'),'error'));
+			return;
+		}
+		if ((int)$list_id && !$this->check_list((int)$list_id, EGW_ACL_EDIT, $owner))
+		{
+			egw_json_response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
+			return;
+		}
+
+		$list = array('list_owner' => $owner);
+
+		// Rename
+		if($list_id)
+		{
+			$list = $this->read_list((int)$list_id);
+		}
+		$list['list_name'] = $new_name;
+
+		$new_id = $this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
+		
+		egw_json_response::get()->apply('egw.message', array(
+			$new_id == $list_id ? lang('Distribution list renamed') : lang('List created'),
+			'success'
+		));
+		// Success, just update selectbox to new value
+		egw_json_response::get()->data($new_id == $list_id ? "true" : $new_id);
+	}
+
+	/**
 	 * apply an action to multiple contacts
 	 *
 	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
@@ -989,7 +1043,7 @@ window.egw_LAB.wait(function() {
 					egw_session::appsession($session_name,'addressbook',$query);
 				}
 				return false;
-
+			
 			case 'document':
 				if (!$document) $document = $this->prefs['default_document'];
 				$document_merge = new addressbook_merge();
