@@ -339,6 +339,15 @@ class translation
 				self::$loaded_apps[$app] = $l;	// dont set something not existing to $loaded_apps, no need to load client-side
 			}
 		}
+		// Re-merge custom over instance level, they have higher precidence
+		if($tree_level && !$instance_level && self::$instance_specific_translations)
+		{
+			$custom = egw_cache::getInstance(__CLASS__, 'custom:en');
+			if($custom)
+			{
+				self::$lang_arr = array_merge(self::$lang_arr, $custom);
+			}
+		}
 		//error_log(__METHOD__.'('.array2string($apps).", '$lang') took ".(1000*(microtime(true)-$start))." ms, loaded_apps=".array2string(self::$loaded_apps).", loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr));//.": ".function_backtrace());
 	}
 
